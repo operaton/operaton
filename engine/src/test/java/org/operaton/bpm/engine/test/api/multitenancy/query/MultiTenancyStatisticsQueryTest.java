@@ -102,7 +102,7 @@ class MultiTenancyStatisticsQueryTest {
     identityService.setAuthentication("user", null, null);
 
     DeploymentStatisticsQuery query = managementService.createDeploymentStatisticsQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     Set<String> tenantIds = collectDeploymentTenantIds(query.list());
     assertThat(tenantIds).hasSize(1);
@@ -151,7 +151,7 @@ class MultiTenancyStatisticsQueryTest {
     identityService.setAuthentication("user", null, null);
 
     ProcessDefinitionStatisticsQuery query = managementService.createProcessDefinitionStatisticsQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     Set<String> tenantIds = collectDefinitionTenantIds(query.list());
     assertThat(tenantIds).hasSize(1);
@@ -201,7 +201,7 @@ class MultiTenancyStatisticsQueryTest {
 
     ActivityStatisticsQuery query = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId());
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
   }
 
@@ -213,7 +213,7 @@ class MultiTenancyStatisticsQueryTest {
 
     ActivityStatisticsQuery query = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId());
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
   }
 
@@ -240,7 +240,7 @@ class MultiTenancyStatisticsQueryTest {
 
     ActivityStatisticsQuery query = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId());
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
   }
 

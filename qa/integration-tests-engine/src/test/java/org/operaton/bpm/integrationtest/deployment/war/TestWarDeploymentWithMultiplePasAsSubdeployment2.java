@@ -111,6 +111,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment2 extends AbstractFo
     WebArchive deployment = ShrinkWrap.create(WebArchive.class, "test.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
 
             .addAsLibraries(pa2)
             .addAsLibraries(pa3)

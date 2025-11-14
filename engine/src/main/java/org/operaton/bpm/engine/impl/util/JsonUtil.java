@@ -32,7 +32,7 @@ public final class JsonUtil {
 
   private static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
-  protected static Gson gsonMapper = createGsonMapper();
+  private static final Gson GSON_MAPPER = createGsonMapper();
 
   private JsonUtil() {
   }
@@ -208,13 +208,7 @@ public final class JsonUtil {
       LOG.logJsonException(e);
     }
 
-    if (jsonObject != null) {
-      return jsonObject;
-
-    } else {
-      return createObject();
-
-    }
+    return Objects.requireNonNullElseGet(jsonObject, JsonUtil::createObject);
   }
 
   public static JsonObject asObject(String jsonString) {
@@ -229,13 +223,7 @@ public final class JsonUtil {
       }
     }
 
-    if (jsonObject != null) {
-      return jsonObject;
-
-    } else {
-      return createObject();
-
-    }
+    return Objects.requireNonNullElseGet(jsonObject, JsonUtil::createObject);
   }
 
   public static JsonObject asObject(Map<String, Object> properties) {
@@ -249,13 +237,7 @@ public final class JsonUtil {
         LOG.logJsonException(e);
       }
 
-      if (jsonObject != null) {
-        return jsonObject;
-
-      } else {
-        return createObject();
-
-      }
+      return Objects.requireNonNullElseGet(jsonObject, JsonUtil::createObject);
     } else {
       return createObject();
 
@@ -435,7 +417,7 @@ public final class JsonUtil {
   }
 
   public static String asString(Object data) {
-    return gsonMapper.toJson(data);
+    return GSON_MAPPER.toJson(data);
   }
 
 
@@ -486,13 +468,7 @@ public final class JsonUtil {
       }
     }
 
-    if (rawValue != null) {
-      return rawValue;
-
-    } else {
-      return null;
-
-    }
+    return rawValue;
   }
 
   public static Object asPrimitiveObject(JsonPrimitive jsonValue) {
@@ -532,34 +508,31 @@ public final class JsonUtil {
 
     }
 
-    if (rawObject != null) {
-      return rawObject;
-
-    } else {
-      return null;
-
-    }
+    return rawObject;
   }
 
-  protected static Number parseNumber(String numberString) {
+  private static Number parseNumber(String numberString) {
     if (numberString == null) {
       return null;
     }
 
     try {
       return Integer.parseInt(numberString);
-
-    } catch (NumberFormatException ignored) { }
+    } catch (NumberFormatException ignored) {
+      // try next
+    }
 
     try {
       return Long.parseLong(numberString);
-
-    } catch (NumberFormatException ignored) { }
+    } catch (NumberFormatException ignored) {
+      // try next
+    }
 
     try {
       return Double.parseDouble(numberString);
-
-    } catch (NumberFormatException ignored) { }
+    } catch (NumberFormatException ignored) {
+        // give up
+    }
 
     return null;
   }
@@ -706,7 +679,7 @@ public final class JsonUtil {
   }
 
   public static Gson getGsonMapper() {
-    return gsonMapper;
+    return GSON_MAPPER;
   }
 
   public static Gson createGsonMapper() {

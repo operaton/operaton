@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import junit.framework.AssertionFailedError;
@@ -108,13 +111,13 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
 
     }
     catch (AssertionFailedError e) {
-      LOG.error("ASSERTION FAILED: " + e, e);
+      LOG.error("ASSERTION FAILED: {}", e.getMessage(), e);
       exception = e;
       throw e;
 
     }
     catch (Throwable e) {
-      LOG.error("EXCEPTION: " + e, e);
+      LOG.error("EXCEPTION: {}", e.getMessage(), e);
       exception = e;
       throw e;
 

@@ -40,9 +40,9 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     owner: operaton
     draft: false
     skipTag: false
-    previousTagName: v1.0.0-beta-5
+    previousTagName: v1.0.0
     releaseName: '{{tagName}}'
-    prerelease: # TODO Evaluate JRELEASER_PRERELEASE_ENABLED
+    prerelease:
       enabled: true
     issues:
       enabled: true
@@ -175,19 +175,11 @@ deploy:
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
           - target/staging-deploy
-        retryDelay: 20
-        maxRetries: 80
+        retryDelay: 30
+        maxRetries: 99
     pomchecker:
       # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
       strict: false
-
-catalog:
-  sbom:
-    cyclonedx:
-      active: ALWAYS
-  swid:
-    swid-tag:
-      active: ALWAYS
 
 signing:
   active: ALWAYS
@@ -203,7 +195,12 @@ files:
     - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
     - path: 'distro/sql-script/target/operaton-sql-scripts-{{OPERATON_DATABASE_VERSION}}.tar.gz'
     - path: 'distro/webjar/target/operaton-webapp-webjar-{{projectVersion}}.jar'
+    - path: 'target/sbom/operaton-modules.cyclonedx-json.sbom'
+    - path: 'target/sbom/operaton-webapps.cyclonedx-json.sbom'
     - path: 'target/project-reports.zip'
+    - path: 'target/javadoc.zip'
+    - path: 'target/rest-api.zip'
+    - path: 'target/clirr-reports.zip'
 
 distributions:
   operaton:
@@ -255,7 +252,7 @@ distributions:
       multiPlatform: true
       repository:
         active: RELEASE
-        commitMessage: 'Operaton Tomcat 11 {{tagName}}'
+        commitMessage: 'Operaton Tomcat {{tagName}}'
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com
@@ -282,7 +279,7 @@ distributions:
       multiPlatform: true
       repository:
         active: RELEASE
-        commitMessage: 'Operaton Wildfly 36 {{tagName}}'
+        commitMessage: 'Operaton Wildfly {{tagName}}'
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com

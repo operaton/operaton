@@ -104,6 +104,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment4 extends AbstractFo
             .addAsResource(pa2ProcessesXml, "META-INF/processes.xml")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addAsLibraries(DeploymentHelper.getEngineCdi())
+            .addAsLibraries(DeploymentHelper.getTestingLibs())
 
             .addAsLibraries(pa2)
             .addAsLibraries(pa3)

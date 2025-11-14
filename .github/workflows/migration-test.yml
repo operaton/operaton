@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - release/**
     paths:
       - '**/*.sql'
       - 'qa/test-db-rolling-update/**'

@@ -473,7 +473,7 @@ class CompensateEventTest {
         .processInstanceId(processInstance.getId()).variableName("undoBookHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
@@ -493,7 +493,7 @@ class CompensateEventTest {
         .processInstanceId(processInstance.getId()).variableName("undoBookHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
@@ -511,7 +511,7 @@ class CompensateEventTest {
     HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookSecondHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
@@ -536,18 +536,18 @@ class CompensateEventTest {
     HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookSecondHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
       historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookFlight");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
       historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookHotel");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
     }
   }
@@ -803,10 +803,10 @@ class CompensateEventTest {
     completeTaskWithVariable("Validate Booking", "valid", false);
 
     // first - compensate book flight
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     completeTask("Cancel Flight");
     // second - compensate book hotel
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     completeTask("Cancel Hotel");
     // third - additional compensation handler
     completeTask("Update Customer Record");
@@ -826,7 +826,7 @@ class CompensateEventTest {
     completeTaskWithVariable("Validate Booking", "valid", false);
 
     // compensate the activity within this scope
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     completeTask("Cancel Hotel");
 
     testRule.assertProcessEnded(processInstanceId);
@@ -1115,13 +1115,13 @@ class CompensateEventTest {
       HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService
           .createHistoricVariableInstanceQuery().variableName("compensateScope1Task");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(1);
 
       historicVariableInstanceQuery = historyService
           .createHistoricVariableInstanceQuery().variableName("compensateScope2Task");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(1);
     }
 

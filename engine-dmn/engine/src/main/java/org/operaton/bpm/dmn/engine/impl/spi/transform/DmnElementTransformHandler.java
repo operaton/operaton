@@ -23,10 +23,10 @@ import org.operaton.bpm.model.dmn.instance.DmnModelElementInstance;
  * stored by the static context of DefaultElementTransformHandlerRegistry & can be shared across different
  * DmnEngineConfigurations or ProcessEngineConfiguration.
  *
- * @param <Source> the type of the transformation input
- * @param <Target> the type of the transformation output
+ * @param <SOURCE> the type of the transformation input
+ * @param <TARGET> the type of the transformation output
  */
-public interface DmnElementTransformHandler<Source extends DmnModelElementInstance, Target> {
+public interface DmnElementTransformHandler<SOURCE extends DmnModelElementInstance, TARGET> {
 
   /**
    * Transform a DMN model element
@@ -35,6 +35,6 @@ public interface DmnElementTransformHandler<Source extends DmnModelElementInstan
    * @param element the source element
    * @return the transformed element
    */
-  Target handleElement(DmnElementTransformContext context, Source element);
+  TARGET handleElement(DmnElementTransformContext context, SOURCE element);
 
 }

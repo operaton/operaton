@@ -16,18 +16,25 @@
  */
 package org.operaton.bpm.engine.cdi.test;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.HashSet;
 import java.util.Set;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
+
+import io.quarkus.test.QuarkusUnitTest;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.InjectableInstance;
 import io.quarkus.arc.InstanceHandle;
-import org.junit.After;
-import org.junit.Before;
 
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.CaseService;
@@ -42,11 +49,13 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
+import org.operaton.bpm.engine.experimental.InjectProcessVariable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestHelper;
-import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
+import org.operaton.bpm.engine.test.Deployment;
 
-public class CdiProcessEngineTestCase {
+public abstract class CdiProcessEngineTestCase {
 
   protected String deploymentId;
 
@@ -70,8 +79,16 @@ public class CdiProcessEngineTestCase {
 
   protected Set<InstanceHandle<?>> beanInstanceHandles = new HashSet<>();
 
-  @Before
-  public void before() {
+
+  @RegisterExtension
+  protected static final QuarkusUnitTest unitTest = new QuarkusUnitTest()
+          .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
+                  .addAsResource("application.properties")
+                  .addPackages(true, CdiProcessEngineTestCase.class.getPackage())
+                  .addPackages(true, InjectProcessVariable.class.getPackage()));
+
+  @BeforeEach
+  void before(TestInfo testInfo) throws Throwable {
     Set<String> processEngineNames = BpmPlatform.getProcessEngineService()
         .getProcessEngineNames();
     if (processEngineNames.size() > 1) {
@@ -96,10 +113,45 @@ public class CdiProcessEngineTestCase {
     externalTaskService = processEngine.getExternalTaskService();
     caseService = processEngine.getCaseService();
     decisionService = processEngine.getDecisionService();
+
+    Method testMethod = testInfo.getTestMethod().orElse(null);
+    Assertions.assertNotNull(testMethod);
+
+    Class<?> javaTestClass = testMethod.getDeclaringClass();
+    String testMethodName = testMethod.getName();
+
+    String[] resources = getDeployment(javaTestClass, testMethod);
+
+    deploymentId = deploy(javaTestClass, testMethodName, resources);
   }
 
-  @After
-  public void after() {
+  private String[] getDeployment(Class<?> testClass, Method method) throws Throwable {
+    String[] resources = null;
+    var isDeploymentPresent = false;
+    // Look for @Deployment Annotation
+    for (var annotation : method.getAnnotations()) {
+      // It can be behind a Proxy
+      // Using annotation name comparison here due to isAssignableFrom not working here (probably due to multiple Classloaders involved)
+      if (Proxy.isProxyClass(annotation.getClass()) && Deployment.class.getName().equals(annotation.annotationType().getName())) {
+        resources = (String[]) Proxy.getInvocationHandler(annotation)
+          .invoke(annotation, Deployment.class.getDeclaredMethod("resources"), null);
+        isDeploymentPresent = true;
+        break;
+      } else if (annotation instanceof Deployment deploymentAnnotation) {
+        resources = deploymentAnnotation.resources();
+        isDeploymentPresent = true;
+        break;
+      }
+    }
+    if(isDeploymentPresent) {
+      // if @Deployment Annotation is present but there are no resources specified use test class and method name to create a corresponding resource
+      return resources.length > 0 ? resources : new String[] {TestHelper.getBpmnProcessDefinitionResource(testClass, method.getName())};
+    }
+    return null;
+  }
+
+  @AfterEach
+  void after() {
     Arc.container().requestContext().deactivate();
 
     beanInstanceHandles.forEach(bean -> {
@@ -147,24 +199,14 @@ public class CdiProcessEngineTestCase {
     return instance.get();
   }
 
-  public void deploy(Class<?> testClass, String methodName, String[] resources) {
+  protected BeanManager getBeanManager() {
+    return ProgrammaticBeanLookup.lookup(BeanManager.class);
+  }
+
+  protected String deploy(Class<?> testClass, String methodName, String[] resources) {
     if (resources != null) {
-      deploymentId = TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, methodName);
+      return TestHelper.annotationDeploymentSetUp(processEngine, resources, testClass, methodName);
     }
+    return null;
   }
-
-  @ApplicationScoped
-  static class EngineConfigurer {
-
-    @Produces
-    public QuarkusProcessEngineConfiguration customEngineConfig() {
-
-      QuarkusProcessEngineConfiguration engineConfig = new QuarkusProcessEngineConfiguration();
-      engineConfig.setJobExecutorActivate(false);
-
-      return engineConfig;
-    }
-
-  }
-
 }

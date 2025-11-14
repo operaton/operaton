@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -48,12 +48,7 @@ class Cmmn10CompatibilityTest extends CmmnTest {
     assertThat(taskExecution).isNotNull();
     assertThat(taskExecution.isRequired()).isTrue();
 
-    try {
-      caseService.completeCaseExecution(caseInstanceId);
-      fail("completing the containing stage should not be allowed");
-    } catch (NotAllowedException e) {
-      // happy path
-    }
+    assertThatThrownBy(() -> caseService.completeCaseExecution(caseInstanceId)).isInstanceOf(NotAllowedException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testManualActivationRule.cmmn")
@@ -94,7 +89,7 @@ class Cmmn10CompatibilityTest extends CmmnTest {
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.available().count()).isEqualTo(1);
+    assertThat(query.available().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRuleWithoutEntryCriteria.cmmn")
@@ -112,8 +107,8 @@ class Cmmn10CompatibilityTest extends CmmnTest {
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
-    assertThat(query.count()).isEqualTo(1);
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
+    assertThat(query.active().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testRepetitionRuleCustomStandardEvent.cmmn")
@@ -132,8 +127,8 @@ class Cmmn10CompatibilityTest extends CmmnTest {
         .createCaseExecutionQuery()
         .activityId("PI_HumanTask_1");
     assertThat(query.count()).isEqualTo(2);
-    assertThat(query.enabled().count()).isEqualTo(1);
-    assertThat(query.disabled().count()).isEqualTo(1);
+    assertThat(query.enabled().count()).isOne();
+    assertThat(query.disabled().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/cmm10/Cmmn10CompatibilityTest.testPlanItemEntryCriterion.cmmn")

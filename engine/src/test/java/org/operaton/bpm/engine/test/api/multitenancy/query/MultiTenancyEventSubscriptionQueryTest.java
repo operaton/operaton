@@ -82,13 +82,13 @@ class MultiTenancyEventSubscriptionQueryTest {
         .createEventSubscriptionQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = runtimeService
         .createEventSubscriptionQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -106,7 +106,7 @@ class MultiTenancyEventSubscriptionQueryTest {
         .createEventSubscriptionQuery()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -184,7 +184,7 @@ class MultiTenancyEventSubscriptionQueryTest {
     identityService.setAuthentication("user", null, null);
 
     EventSubscriptionQuery query = runtimeService.createEventSubscriptionQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -194,7 +194,7 @@ class MultiTenancyEventSubscriptionQueryTest {
     EventSubscriptionQuery query = runtimeService.createEventSubscriptionQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).includeEventSubscriptionsWithoutTenantId().count()).isEqualTo(2L);
   }
@@ -206,8 +206,8 @@ class MultiTenancyEventSubscriptionQueryTest {
     EventSubscriptionQuery query = runtimeService.createEventSubscriptionQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test

@@ -304,7 +304,7 @@ class MigrationCompensationTest {
 
     // then
     testHelper.completeTask("userTask1");
-    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isOne();
 
     testHelper.completeTask("userTask2");
     testHelper.completeTask("compensationHandler");

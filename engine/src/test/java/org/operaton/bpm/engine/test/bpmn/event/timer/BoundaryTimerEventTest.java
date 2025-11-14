@@ -283,16 +283,16 @@ class BoundaryTimerEventTest {
   @Test
   void testRepeatingTimerWithCancelActivity() {
     runtimeService.startProcessInstanceByKey("repeatingTimerAndCallActivity");
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     // Firing job should cancel the user task, destroy the scope,
     // re-enter the task and recreate the task. A new timer should also be created.
     // This didn't happen before 5.11 (new jobs kept being created). See ACT-1427
     Job job = managementService.createJobQuery().singleResult();
     managementService.executeJob(job.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Deployment

@@ -398,6 +398,7 @@ public class Scanner {
 				}
 				return fixed(Symbol.GT);
 			case '"', '\'': return nextString();
+			default: break;
 		}
 
 		if (isDigit(c1) || c1 == '.') {
@@ -457,9 +458,11 @@ public class Scanner {
 		}
 
 		if (position == length) {
-			return token = fixed(Symbol.EOF);
+			token = fixed(Symbol.EOF);
+			return token;
 		}
 
-		return token = nextToken();
+		token = nextToken();
+		return token;
 	}
 }

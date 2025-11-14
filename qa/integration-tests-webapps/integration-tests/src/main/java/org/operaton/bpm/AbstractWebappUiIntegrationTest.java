@@ -16,10 +16,7 @@
  */
 package org.operaton.bpm;
 
-import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -42,20 +39,10 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
   @BeforeAll
   static void createDriver() {
-    String chromeDriverExecutable = "chromedriver";
-    if (System.getProperty("os.name").toLowerCase(Locale.US).contains("windows")) {
-      chromeDriverExecutable += ".exe";
-    }
-
-    File chromeDriver = new File("target/chromedriver/" + chromeDriverExecutable);
-    if (!chromeDriver.exists()) {
-      throw new RuntimeException("chromedriver could not be located!");
-    }
 
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
             .withVerbose(true)
             .usingAnyFreePort()
-            .usingDriverExecutable(chromeDriver)
             .build();
 
     ChromeOptions chromeOptions = new ChromeOptions()
@@ -73,8 +60,8 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
 
     return webDriver -> {
       try {
-        return new URI(webDriver.getCurrentUrl()).equals(pageURI);
-      } catch (URISyntaxException e) {
+        return URI.create(webDriver.getCurrentUrl()).equals(pageURI);
+      } catch (IllegalArgumentException e) {
         return false;
       }
     };
@@ -88,7 +75,7 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   }
 
   @BeforeEach
-  void createClient() throws Exception {
+  void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
     appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());

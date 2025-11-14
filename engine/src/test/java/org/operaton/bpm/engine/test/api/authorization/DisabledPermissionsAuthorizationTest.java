@@ -231,7 +231,7 @@ class DisabledPermissionsAuthorizationTest {
     List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().list();
     // then
     assertThat(processDefinitions).isNotNull();
-    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().startablePermissionCheck().startableInTasklist().count()).isOne();
     assertThat(processDefinitions.get(0).getId()).isEqualTo(definition.getId());
     assertThat(processDefinitions.get(0).isStartableInTasklist()).isTrue();
   }

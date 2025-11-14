@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-external-task-client-root</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-external-task-client</artifactId>
   <name>Operaton - Java External Task Client - Client</name>
@@ -20,7 +20,7 @@
     <tomcat.server.port>48005</tomcat.server.port>
     <cargo.timeout>240000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
-    <cargo.start.jvmargs/>
+    <cargo.start.jvmargs>-Dpolyglot.js.nashorn-compat=true</cargo.start.jvmargs>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -289,6 +289,11 @@
                 <groupId>com.sun.istack</groupId>
                 <artifactId>istack-commons-runtime</artifactId>
                 <type>jar</type>
+              </dependency>
+              <!-- required by ClientIT -->
+              <dependency>
+                <groupId>org.graalvm.sdk</groupId>
+                <artifactId>nativeimage</artifactId>
               </dependency>
             </dependencies>
           </container>

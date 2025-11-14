@@ -532,7 +532,7 @@ class AuthCacheTest {
   protected UserAuthentication getAuthByEngine(Authentications authentications, String engineName) {
     return authentications.getAuthentications()
       .stream()
-      .filter(UserAuthentication -> UserAuthentication.getProcessEngineName().equals(engineName))
+      .filter(userAuthentication -> userAuthentication.getProcessEngineName().equals(engineName))
       .findFirst()
       .orElse(null);
   }

@@ -4,6 +4,11 @@
 * [Browse our issues](#browse-our-issues)
 * [Build from source](#build-from-source)
 * [Create a pull request](#create-a-pull-request)
+* [Code Style Guide](#code-style-guide)
+  * [Code Formatting](#code-formatting)
+  * [Naming Conventions](#naming-conventions)
+  * [Documentation Standards](#documentation-standards)
+  * [Architectural Guidelines](#architectural-guidelines)
 * [Contribution checklist](#contribution-checklist)
 * [Commit message conventions](#commit-message-conventions)
 * [Review process](#review-process)
@@ -12,7 +17,7 @@
 
 We would love you to contribute to this project. You can do so in various ways.
 
-If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3dcu23dis-ouyeAbungz_ge_9CactG6w).
+If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3fiodp5cz-vM2h5uDZi9JbCZZqG~6WEA).
 
 ## File bugs or feature requests
 
@@ -40,6 +45,7 @@ You can contribute code that fixes bugs and/or implements features. Here is how 
 1. Select a ticket that you would like to implement. Have a look at [our backlog](https://github.com/operaton/operaton/issues) if you need inspiration. Be aware that some of the issues need good knowledge of the surrounding code.
 1. Looking for some low hanging fruits? Check out the [good first issues](https://github.com/operaton/operaton/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 1. Tell us in the ticket comments that you want to work on your ticket. This is also the place where you can ask questions.
+1. Follow our [Code Style Guide](#code-style-guide) for formatting, naming conventions, and documentation standards.
 1. Check existing Architectural Decision Records (ADRs): Before implementing significant changes, review our [ADRs in docs/decisions/](docs/decisions/) to understand existing architectural decisions that may affect your implementation. If your change conflicts with or extends an existing decision, consider whether a new ADR is needed.
 1. Check your code changes against our [contribution checklist](#contribution-checklist)
 1. [Create a pull request](https://github.com/operaton/operaton/pulls). Note that you can already do this before you have finished your implementation if you would like feedback on your work in progress.
@@ -89,19 +95,174 @@ A pull request can be submitted as follows:
 
 1. [Fork the Operaton repository](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) you are contributing to
 1. Commit and push your changes to a branch in your fork
-1. [Submit a Pull Request to the Operaton repository](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). As the *base* branch (the one that you contribute to), select `master`. This should also be the default in the Github UI.
+1. [Submit a Pull Request to the Operaton repository](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request-from-a-fork). As the *base* branch (the one that you contribute to), select `main`. This should also be the default in the Github UI.
 1. In the pull request description, reference the github issue that your pull request addresses.
+
+# Code Style Guide
+
+This section outlines the coding standards and style guidelines for contributing to Operaton.
+
+## Code Formatting
+
+### Java Code Formatting
+
+Operaton follows consistent Java formatting standards to ensure code readability and maintainability:
+
+* **Indentation**: Use 2 spaces for indentation (no tabs)
+* **Line Length**: Maximum 120 characters per line
+* **Braces**: Use K&R style (opening brace on same line)
+* **Import Organization**: Follow the import order defined in `rewrite.yml`:
+  - `java.*` imports
+  - `jakarta.*` imports
+  - blank line
+  - All other imports (alphabetically)
+  - blank line
+  - `org.operaton.*` imports
+  - blank line
+  - Static imports from `org.operaton.*`
+  - Static imports from all other packages
+
+**Automated Formatting**: The project uses OpenRewrite for automated code formatting and cleanup. Before submitting your PR, run:
+```bash
+.devenv/scripts/maintenance/code-cleanup.sh
+```
+
+**IDE Configuration**: Import the provided [settings files](https://github.com/operaton/operaton/tree/main/settings) for Eclipse or IntelliJ IDEA to ensure consistent formatting.
+
+### JavaScript/TypeScript Code Formatting
+
+Frontend code is automatically formatted using Prettier and linted with ESLint:
+
+* **Indentation**: 2 spaces
+* **Line Length**: 80 characters
+* **Semicolons**: Always required
+* **Quotes**: Single quotes preferred
+* **Bracket Spacing**: No spaces inside object braces
+
+**Automated Formatting**: JavaScript code is automatically formatted on commit via pre-commit hooks.
+
+## Naming Conventions
+
+### Java Naming Conventions
+
+Follow standard Java naming conventions:
+
+* **Classes**: PascalCase (e.g., `ProcessEngineConfiguration`, `ActivityBehavior`)
+* **Interfaces**: PascalCase, often ending with descriptive suffix (e.g., `ProcessEngine`, `TaskListener`)
+* **Methods**: camelCase, use verbs (e.g., `executeActivity()`, `findProcessInstanceById()`)
+* **Variables**: camelCase, use descriptive nouns (e.g., `processInstance`, `taskId`)
+* **Constants**: SCREAMING_SNAKE_CASE (e.g., `DEFAULT_TASK_PRIORITY`, `ENGINE_VERSION`)
+* **Packages**: lowercase, following reverse domain convention (e.g., `org.operaton.bpm.engine.impl`)
+
+### Database and SQL Conventions
+
+* **Table Names**: Use descriptive names with prefixes (e.g., `ACT_RE_PROCDEF` for process definitions)
+* **Column Names**: Use SCREAMING_SNAKE_CASE (e.g., `PROCESS_INSTANCE_ID_`)
+* **Index Names**: Follow pattern `ACT_IDX_[TABLE]_[COLUMN]`
+
+### JavaScript/Frontend Conventions
+
+* **Variables and Functions**: camelCase (e.g., `processInstanceId`, `executeTask()`)
+* **Constants**: SCREAMING_SNAKE_CASE (e.g., `API_BASE_URL`)
+* **Components**: PascalCase for Angular components (e.g., `TaskListController`)
+
+## Documentation Standards
+
+### Javadoc Requirements
+
+All public APIs must include comprehensive Javadoc documentation:
+
+* **Classes**: Describe purpose, main responsibilities, and usage examples
+* **Public Methods**: Include `@param`, `@return`, and `@throws` tags where applicable
+* **Public Fields**: Brief description of purpose and valid values
+* **Deprecated Elements**: Use `@deprecated` with replacement information and removal timeline
+
+**Example**:
+```java
+/**
+ * Executes a BPMN process instance.
+ *
+ * @param processDefinitionKey the key of the process definition to start
+ * @param variables process variables to set on the new instance
+ * @return the started process instance
+ * @throws ProcessEngineException if the process cannot be started
+ * @since 1.0
+ */
+public ProcessInstance startProcessInstanceByKey(String processDefinitionKey, Map<String, Object> variables) {
+  // implementation
+}
+```
+
+### Code Comments
+
+* **Inline Comments**: Use sparingly, focus on explaining "why" not "what"
+* **Complex Logic**: Add comments for non-obvious algorithms or business rules
+* **TODOs**: Include issue references where possible (e.g., `// TODO: Optimize query performance #1234`)
+
+### License Headers
+
+All new files must include the Apache 2.0 license header as specified in the [Copyright section](#copyright).
+
+## Architectural Guidelines
+
+### Design Principles
+
+When contributing to Operaton, follow these architectural principles:
+
+* **Separation of Concerns**: Keep business logic separate from infrastructure concerns
+* **Single Responsibility**: Each class should have one reason to change
+* **Dependency Injection**: Use Spring's dependency injection for loose coupling
+* **API Compatibility**: Maintain backward compatibility for public APIs
+* **Performance**: Consider the impact on engine performance, especially for core execution paths
+
+### Architectural Decision Records (ADRs)
+
+Before implementing significant architectural changes:
+
+1. **Review Existing ADRs**: Check [docs/decisions/](docs/decisions/) for existing decisions that may affect your implementation
+2. **Create New ADRs**: For significant changes, create an ADR following the [MADR template](docs/decisions/adr-template.md)
+3. **Seek Consensus**: Discuss architectural decisions in GitHub issues before implementation
+
+### Module Dependencies
+
+* **Engine Core**: Avoid adding new dependencies to the core engine module
+* **Layer Dependencies**: Respect the layered architecture (API → Implementation → Persistence)
+* **Circular Dependencies**: Strictly avoided between modules
+* **Optional Dependencies**: Mark non-essential dependencies as optional
+
+### Design Patterns
+
+Operaton follows established design patterns:
+
+* **Command Pattern**: For engine operations (e.g., `StartProcessInstanceCmd`)
+* **Strategy Pattern**: For pluggable behavior (e.g., `ActivityBehavior`)
+* **Observer Pattern**: For process listeners and event handling
+* **Factory Pattern**: For creating engine services and configurations
+
+### Testing Architecture
+
+* **Unit Tests**: Use JUnit 5 with AssertJ assertions
+* **Integration Tests**: Use `ProcessEngineExtension` for engine-related tests
+* **Test Isolation**: Each test should be independent and repeatable
+* **Test Naming**: Use descriptive names that explain the scenario being tested
 
 # Contribution checklist
 
 Before submitting your pull request for code review, please go through the following checklist:
 
 1. Is your code formatted according to our code style guidelines?
-    * Java: Please check our [Java Code Style Guidelines](https://github.com/camunda/camunda-bpm-platform/wiki/Coding-Style-Java). You can also import [our template and settings files](https://github.com/operaton/operaton/tree/master/settings) into your IDE before you start coding.
-    * Javascript: Your code is automatically formatted whenever you commit.
+    * Java: Follow our [Code Formatting](#code-formatting) guidelines and use the automated code cleanup script. You can also import [our template and settings files](https://github.com/operaton/operaton/tree/main/settings) into your IDE before you start coding.
+    * JavaScript: Your code is automatically formatted whenever you commit using Prettier and ESLint.
+1. Does your code follow our [Naming Conventions](#naming-conventions)?
+1. Is your code properly documented according to our [Documentation Standards](#documentation-standards)?
+    * Public APIs must have comprehensive Javadoc documentation
+    * All new files must include the Apache 2.0 license header
+1. Does your implementation follow our [Architectural Guidelines](#architectural-guidelines)?
+    * Review existing ADRs if making significant changes
+    * Consider creating a new ADR for major architectural decisions
 1. Is your code covered by unit tests?
     * Ask us if you are not sure where to write the tests or what kind of tests you should write.
-    * Java: Please follow our [testing best practices](https://github.com/camunda/camunda-bpm-platform/wiki/Testing-Best-Practices-Java).
+    * Java: Use JUnit 5 with AssertJ assertions and `ProcessEngineExtension` for engine tests.
     * Have a look at other tests in the same module for how it works.
     * In rare cases, it is not feasible to write an automated test. Please ask us if you think that is the case for your contribution.
 1. Do your commits follow our [commit message conventions](#commit-message-conventions)?
@@ -130,7 +291,7 @@ feat(engine): Support BPEL
 related to #123
 ```
 
-Have a look at the [commit history](https://github.com/operaton/operaton/commits/master) for real-life examples. 
+Have a look at the [commit history](https://github.com/operaton/operaton/commits/main) for real-life examples. 
 
 
 ## \<type\>
@@ -147,7 +308,7 @@ One of the following:
  
 ## \<scope\>
 
-The scope is the module that is changed by the commit. E.g. `engine` in the case of https://github.com/operaton/operaton/tree/master/engine.
+The scope is the module that is changed by the commit. E.g. `engine` in the case of https://github.com/operaton/operaton/tree/main/engine.
 
 Candidates:
 * engine

@@ -75,7 +75,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     Asset paProcessesXml = TestHelper.getStringAsAssetWithReplacements(
             PROCESSES_XML,
             new String[][]{new String[]{"PA_NAME","PA0"}});
-
+    assertThat(paProcessesXml).isNotNull();
 
     Asset[] processAssets = TestHelper.generateProcessAssets(2);
 
@@ -98,7 +98,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     long count = query.count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

@@ -86,13 +86,13 @@ class MultiTenancyExternalTaskQueryTest {
         .createExternalTaskQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = externalTaskService
         .createExternalTaskQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -160,10 +160,10 @@ class MultiTenancyExternalTaskQueryTest {
 
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
 
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -173,8 +173,8 @@ class MultiTenancyExternalTaskQueryTest {
     ExternalTaskQuery query = externalTaskService.createExternalTaskQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test

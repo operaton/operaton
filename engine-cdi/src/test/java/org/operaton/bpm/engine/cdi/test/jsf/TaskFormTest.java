@@ -19,10 +19,9 @@ package org.operaton.bpm.engine.cdi.test.jsf;
 import java.util.Set;
 import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.compat.FoxTaskForm;
 import org.operaton.bpm.engine.cdi.compat.OperatonTaskForm;
@@ -35,11 +34,12 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class TaskFormTest extends CdiProcessEngineTestCase {
+class TaskFormTest extends CdiProcessEngineTestCase {
 
   @Test
-  public void testTaskFormInjectable() {
+  void testTaskFormInjectable() {
+
+    BeanManager beanManager = getBeanManager();
 
     Set<Bean<?>> taskForm = beanManager.getBeans(TaskForm.class);
     try {

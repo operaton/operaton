@@ -79,11 +79,11 @@ class DecisionDefinitionDeployerTest {
     // there should be decision deployment
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one decision definition
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
@@ -104,11 +104,11 @@ class DecisionDefinitionDeployerTest {
     // there should be one deployment
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one case definition
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
@@ -128,11 +128,11 @@ class DecisionDefinitionDeployerTest {
 
     // there should be decision deployment
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one decision definition
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
@@ -222,7 +222,7 @@ class DecisionDefinitionDeployerTest {
 
     // there should be one decision requirements definition
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
 
@@ -254,7 +254,7 @@ class DecisionDefinitionDeployerTest {
   @Test
   void noDrdForSingleDecisionDeployment() {
     // when the DMN file contains only a single decision definition
-    assertThat(repositoryService.createDecisionDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDecisionDefinitionQuery().count()).isOne();
 
     // then no decision requirements definition should be created
     assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isZero();
@@ -319,7 +319,7 @@ class DecisionDefinitionDeployerTest {
 
     // there should be one decision requirements definition
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
     assertThat(decisionRequirementsDefinition.getVersion()).isEqualTo(1);

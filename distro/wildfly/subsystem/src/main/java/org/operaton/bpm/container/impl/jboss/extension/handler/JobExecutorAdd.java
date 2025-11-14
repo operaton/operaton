@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.extension.handler;
 
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -28,7 +27,6 @@ import org.jboss.as.threads.ThreadFactoryService;
 import org.jboss.dmr.ModelNode;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController;
-import org.jboss.msc.service.ServiceController.Mode;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
 import org.jboss.threads.EnhancedQueueExecutor;

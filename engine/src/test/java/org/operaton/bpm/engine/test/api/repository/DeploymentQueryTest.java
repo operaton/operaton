@@ -88,7 +88,7 @@ class DeploymentQueryTest {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentId(deploymentOneId);
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -109,7 +109,7 @@ class DeploymentQueryTest {
     DeploymentQuery query = repositoryService.createDeploymentQuery().deploymentName("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
     assertThat(query.singleResult()).isNotNull();
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -133,7 +133,7 @@ class DeploymentQueryTest {
 
     query = repositoryService.createDeploymentQuery().deploymentNameLike("%two\\_%");
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(query.singleResult().getName()).isEqualTo("org/operaton/bpm/engine/test/repository/two_.bpmn20.xml");
   }
 
@@ -190,7 +190,7 @@ class DeploymentQueryTest {
         .deploymentSource(ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -200,7 +200,7 @@ class DeploymentQueryTest {
         .deploymentSource(null);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test

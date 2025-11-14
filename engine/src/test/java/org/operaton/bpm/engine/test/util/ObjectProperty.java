@@ -25,8 +25,8 @@ public final class ObjectProperty {
   private final Object object;
   private final String propertyName;
 
-  private ObjectProperty(Object Object, String propertyName) {
-    this.object = Object;
+  private ObjectProperty(Object object, String propertyName) {
+    this.object = object;
     this.propertyName = propertyName;
   }
 

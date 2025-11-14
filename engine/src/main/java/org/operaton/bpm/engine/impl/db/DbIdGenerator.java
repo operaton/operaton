@@ -38,11 +38,11 @@ public class DbIdGenerator implements IdGenerator {
 
   @Override
   public synchronized String getNextId() {
-    if (lastId<nextId) {
+    if (lastId < nextId) {
       getNewBlock();
     }
-    long _nextId = nextId++;
-    return Long.toString(_nextId);
+    long nextId = this.nextId++;
+    return Long.toString(nextId);
   }
 
   protected synchronized void getNewBlock() {

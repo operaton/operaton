@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.templateengines.engine.util.Greeter;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -127,13 +127,10 @@ class FreeMarkerScriptEngineTest {
 
   @Test
   void failingEvaluation() {
-    try {
+    assertThatThrownBy(() -> {
       String invalidTemplate = "${}";
       evaluate(invalidTemplate);
-      fail("Expected a ScriptException");
-    } catch (ScriptException e) {
-      // happy path
-    }
+    }).isInstanceOf(ScriptException.class);
   }
 
 }

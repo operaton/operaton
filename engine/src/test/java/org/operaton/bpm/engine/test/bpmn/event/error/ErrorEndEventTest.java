@@ -55,7 +55,7 @@ class ErrorEndEventTest {
     taskService.complete(id);
 
     // then
-    assertThat(taskService.createTaskQuery().taskName("task after catched error").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("task after catched error").count()).isOne();
     // and set the output variable of the called process to the process
     assertThat(runtimeService.getVariable(processInstanceId, "cancelReason")).isNotNull();
     assertThat(runtimeService.getVariable(processInstanceId, "output")).isEqualTo(42);

@@ -28,11 +28,11 @@ import org.operaton.bpm.model.xml.instance.DomElement;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 
-public class IdsElementReferenceCollectionImpl<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceCollectionImpl<Target, Source> {
+public class IdsElementReferenceCollectionImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceCollectionImpl<TARGET, SOURCE> {
 
   protected String separator = " ";
 
-  public IdsElementReferenceCollectionImpl(ChildElementCollection<Source> referenceSourceCollection) {
+  public IdsElementReferenceCollectionImpl(ChildElementCollection<SOURCE> referenceSourceCollection) {
     super(referenceSourceCollection);
   }
 
@@ -49,9 +49,9 @@ public class IdsElementReferenceCollectionImpl<Target extends ModelElementInstan
   @Override
   protected Collection<DomElement> getView(ModelElementInstanceImpl referenceSourceParentElement) {
     DomDocument document = referenceSourceParentElement.getModelInstance().getDocument();
-    Collection<Source> referenceSourceElements = getReferenceSourceCollection().get(referenceSourceParentElement);
+    Collection<SOURCE> referenceSourceElements = getReferenceSourceCollection().get(referenceSourceParentElement);
     Collection<DomElement> referenceTargetElements = new ArrayList<>();
-    for (Source referenceSourceElement : referenceSourceElements) {
+    for (SOURCE referenceSourceElement : referenceSourceElements) {
       List<String> identifiers = getReferenceIdentifiers(referenceSourceElement);
       for (String identifier : identifiers) {
         DomElement referenceTargetElement = document.getElementById(identifier);

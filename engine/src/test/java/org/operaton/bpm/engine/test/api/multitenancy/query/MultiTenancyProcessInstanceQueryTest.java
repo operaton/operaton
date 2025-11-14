@@ -83,13 +83,13 @@ class MultiTenancyProcessInstanceQueryTest {
         .createProcessInstanceQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = runtimeService
         .createProcessInstanceQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -107,7 +107,7 @@ class MultiTenancyProcessInstanceQueryTest {
         .createProcessInstanceQuery()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -161,7 +161,7 @@ class MultiTenancyProcessInstanceQueryTest {
     identityService.setAuthentication("user", null, null);
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -171,9 +171,9 @@ class MultiTenancyProcessInstanceQueryTest {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -183,9 +183,9 @@ class MultiTenancyProcessInstanceQueryTest {
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -204,8 +204,8 @@ class MultiTenancyProcessInstanceQueryTest {
       .processDefinitionWithoutTenantId();
 
     // then
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -226,8 +226,8 @@ class MultiTenancyProcessInstanceQueryTest {
 
     // then
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn("anotherTenantId").count()).isEqualTo(1L);
+    assertThat(query.withoutTenantId().count()).isOne();
+    assertThat(query.tenantIdIn("anotherTenantId").count()).isOne();
 
     // cleanup
     processEngineConfiguration.setTenantIdProvider(null);

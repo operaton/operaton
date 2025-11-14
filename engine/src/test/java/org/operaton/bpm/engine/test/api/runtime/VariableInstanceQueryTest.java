@@ -53,8 +53,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.groups.Tuple.tuple;
 
 /**
@@ -182,7 +181,7 @@ class VariableInstanceQueryTest {
       assertThat(variableInstance.getTypeName()).isEqualTo("string");
     }
 
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("task").variableNameIn("task", "execution").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("task").variableNameIn("task", "execution").count()).isOne();
     assertThat(runtimeService.createVariableInstanceQuery().variableName("task").variableNameIn("process", "execution").count()).isZero();
   }
 
@@ -203,7 +202,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("string%Var");
@@ -501,7 +500,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("intValue");
@@ -530,7 +529,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("intValue");
@@ -719,7 +718,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("longValue");
@@ -748,7 +747,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("longValue");
@@ -937,7 +936,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("doubleValue");
@@ -966,7 +965,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("doubleValue");
@@ -1155,7 +1154,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("shortValue");
@@ -1184,7 +1183,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("shortValue");
@@ -1369,12 +1368,7 @@ class VariableInstanceQueryTest {
     VariableInstanceQuery query = runtimeService.createVariableInstanceQuery().variableValueEquals("bytesVar", bytes);
 
     // then
-    try {
-      query.list();
-      fail("A ProcessEngineException was expected: Variables of type ByteArray cannot be used to query.");
-    } catch (ProcessEngineException e) {
-      // expected exception
-    }
+    assertThatThrownBy(query::list).isInstanceOf(ProcessEngineException.class);
   }
 
   @Test
@@ -1396,7 +1390,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("date");
@@ -1439,7 +1433,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("nullValue");
@@ -1689,7 +1683,7 @@ class VariableInstanceQueryTest {
             .isNotEmpty()
             .hasSize(1);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     VariableInstance variableInstance = result.get(0);
     assertThat(variableInstance.getName()).isEqualTo("taskVariable");
@@ -1844,14 +1838,14 @@ class VariableInstanceQueryTest {
     VariableInstance taskVar = taskVariablesQuery.singleResult();
     assertThat(taskVar).isNotNull();
 
-    assertThat(taskVariablesQuery.count()).isEqualTo(1);
+    assertThat(taskVariablesQuery.count()).isOne();
     assertThat(taskVar.getTypeName()).isEqualTo("string");
     assertThat(taskVar.getName()).isEqualTo("taskVariable");
     assertThat(taskVar.getValue()).isEqualTo("aCustomValue");
 
     VariableInstance processVar = processVariablesQuery.singleResult();
 
-    assertThat(processVariablesQuery.count()).isEqualTo(1);
+    assertThat(processVariablesQuery.count()).isOne();
     assertThat(processVar.getTypeName()).isEqualTo("string");
     assertThat(processVar.getName()).isEqualTo("stringVar");
     assertThat(processVar.getValue()).isEqualTo("test");

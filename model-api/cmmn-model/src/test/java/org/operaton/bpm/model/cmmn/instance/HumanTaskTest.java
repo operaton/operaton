@@ -19,7 +19,7 @@ package org.operaton.bpm.model.cmmn.instance;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -44,13 +44,13 @@ public class HumanTaskTest extends CmmnModelElementInstanceTest {
     return Arrays.asList(
           new AttributeAssumption("performerRef"),
           /** operaton extensions */
-          new AttributeAssumption(CAMUNDA_NS, "assignee"),
-          new AttributeAssumption(CAMUNDA_NS, "candidateGroups"),
-          new AttributeAssumption(CAMUNDA_NS, "candidateUsers"),
-          new AttributeAssumption(CAMUNDA_NS, "dueDate"),
-          new AttributeAssumption(CAMUNDA_NS, "followUpDate"),
-          new AttributeAssumption(CAMUNDA_NS, "formKey"),
-          new AttributeAssumption(CAMUNDA_NS, "priority")
+          new AttributeAssumption(OPERATON_NS, "assignee"),
+          new AttributeAssumption(OPERATON_NS, "candidateGroups"),
+          new AttributeAssumption(OPERATON_NS, "candidateUsers"),
+          new AttributeAssumption(OPERATON_NS, "dueDate"),
+          new AttributeAssumption(OPERATON_NS, "followUpDate"),
+          new AttributeAssumption(OPERATON_NS, "formKey"),
+          new AttributeAssumption(OPERATON_NS, "priority")
         );
   }
 

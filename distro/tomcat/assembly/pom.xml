@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.tomcat</groupId>
     <artifactId>operaton-tomcat</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-tomcat-assembly</artifactId>
   <packaging>pom</packaging>
@@ -65,11 +65,11 @@
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
-      <artifactId>js</artifactId>
+      <artifactId>js-scriptengine</artifactId>
     </dependency>
     <dependency>
       <groupId>org.graalvm.js</groupId>
-      <artifactId>js-scriptengine</artifactId>
+      <artifactId>js-language</artifactId>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
@@ -130,12 +130,6 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>license-book</artifactId>
-      <version>${project.version}</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
       <groupId>org.operaton.template-engines</groupId>
       <artifactId>operaton-template-engines-freemarker</artifactId>
     </dependency>
@@ -146,6 +140,27 @@
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>license-book-placeholer</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <echo file="${project.build.directory}/generated-resources/LICENSE_BOOK.md">
+                  License book placeholder. The actual content is generated when the
+                  "github-ci" profile is active.
+                  Without this file the assembly would fail.
+                </echo>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -165,11 +180,64 @@
               <outputDirectory>target/</outputDirectory>
               <workDirectory>target/assembly/work</workDirectory>
               <tarLongFileMode>gnu</tarLongFileMode>
-              <attach>true</attach>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>github-ci</id>
+      <activation>
+        <property>
+          <name>env.GITHUB_ACTIONS</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>install-python-libs</id>
+                <phase>initialize</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>pip</executable>
+                  <workingDirectory>${maven.multiModuleProjectDirectory}</workingDirectory>
+                  <arguments>
+                    <argument>install</argument>
+                    <argument>pystache</argument>
+                  </arguments>
+                  <skip>false</skip>
+                </configuration>
+              </execution>
+              <execution>
+                <id>generate-license-book</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <executable>python3</executable>
+                  <workingDirectory>${maven.multiModuleProjectDirectory}</workingDirectory>
+                  <arguments>
+                    <argument>distro/license-book/src/main/python/license-book-generator.py</argument>
+                    <argument>--distro=tomcat</argument>
+                  </arguments>
+                  <skip>false</skip>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

@@ -77,9 +77,7 @@ class JsonTreeRemovePropertyTest {
 
   @Test
   void failWhileRemovePropertyByList() {
-    List<String> names = new ArrayList<>();
-    names.add(active);
-    names.add("waldo");
+    List<String> names = List.of(active, "waldo");
     assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.deleteProp(names));
   }
 }

@@ -335,7 +335,7 @@ class SetProcessDefinitionVersionCmdTest {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("userTask");
 
       // check that user task has been reached
-      assertThat(taskService.createTaskQuery().processInstanceId(pi.getId()).count()).isEqualTo(1);
+      assertThat(taskService.createTaskQuery().processInstanceId(pi.getId()).count()).isOne();
 
     // deploy new version of the process definition
     org.operaton.bpm.engine.repository.Deployment deployment = repositoryService

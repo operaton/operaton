@@ -185,7 +185,7 @@ class AuthorizationServiceTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
@@ -209,7 +209,7 @@ class AuthorizationServiceTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
@@ -293,12 +293,7 @@ class AuthorizationServiceTest {
     authorizationService.saveAuthorization(authorization1);
 
     // the second one cannot
-    try {
-      authorizationService.saveAuthorization(authorization2);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2)).isInstanceOf(ProcessEngineException.class);
 
     // but I can add a AUTH_TYPE_REVOKE auth
 
@@ -318,12 +313,7 @@ class AuthorizationServiceTest {
     authorization4.setResourceId("someId");
     authorization4.setUserId("someUser");
 
-    try {
-      authorizationService.saveAuthorization(authorization4);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization4)).isInstanceOf(Exception.class);
   }
 
   @Test
@@ -346,12 +336,7 @@ class AuthorizationServiceTest {
     authorizationService.saveAuthorization(authorization1);
 
     // the second one cannot
-    try {
-      authorizationService.saveAuthorization(authorization2);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2)).isInstanceOf(Exception.class);
 
     // but I can add a AUTH_TYPE_REVOKE auth
 
@@ -371,12 +356,7 @@ class AuthorizationServiceTest {
     authorization4.setResourceId("someId");
     authorization4.setGroupId("someGroup");
 
-    try {
-      authorizationService.saveAuthorization(authorization4);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization4)).isInstanceOf(Exception.class);
 
   }
 
@@ -398,12 +378,7 @@ class AuthorizationServiceTest {
     authorizationService.saveAuthorization(authorization1);
 
     // the second one cannot
-    try {
-      authorizationService.saveAuthorization(authorization2);
-      fail("exception expected");
-    } catch(Exception e) {
-      //expected
-    }
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2)).isInstanceOf(Exception.class);
   }
 
   @Test

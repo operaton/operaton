@@ -165,7 +165,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
   private static Method getPrintMethod() {
     try {
-      return JuelScriptEngine.class.getMethod("print", new Class[] { Object.class });
+      return JuelScriptEngine.class.getMethod("print", Object.class);
     } catch (Exception exp) {
       // Will never occur
       return null;
@@ -174,7 +174,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
   private static Method getImportMethod() {
     try {
-      return JuelScriptEngine.class.getMethod("importFunctions", new Class[] { ScriptContext.class, String.class, Object.class });
+      return JuelScriptEngine.class.getMethod("importFunctions", ScriptContext.class, String.class, Object.class);
     } catch (Exception exp) {
       // Will never occur
       return null;

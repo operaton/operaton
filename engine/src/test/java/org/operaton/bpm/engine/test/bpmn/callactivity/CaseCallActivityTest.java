@@ -33,8 +33,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
@@ -362,12 +361,7 @@ class CaseCallActivityTest extends CmmnTest {
   void testCaseNotFound() {
     // given
 
-    try {
-      // when
-      startProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-      fail("It should not be possible to start a not existing case instance.");
-    } catch (CaseDefinitionNotFoundException e) {
-    }
+    assertThatThrownBy(() -> startProcessInstanceByKey(PROCESS_DEFINITION_KEY)).isInstanceOf(CaseDefinitionNotFoundException.class);
   }
 
   @Deployment(resources = {
@@ -1264,13 +1258,7 @@ class CaseCallActivityTest extends CmmnTest {
     assertThat(subCaseInstance).isNotNull();
     assertThat(subCaseInstance.isActive()).isTrue();
 
-    try {
-      // when
-      complete(humanTaskId);
-      fail("The super process instance is suspended.");
-    } catch (Exception e) {
-      // expected
-    }
+    assertThatThrownBy(() -> complete(humanTaskId)).isInstanceOf(Exception.class);
 
     // complete ////////////////////////////////////////////////////////
     runtimeService.activateProcessInstanceById(superProcessInstanceId);

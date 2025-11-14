@@ -93,7 +93,7 @@ public final class ProcessApplicationContextUtil {
     if (reference == null && areProcessApplicationsRegistered()) {
       ResourceDefinitionEntity previous = definition.getPreviousDefinition();
 
-      // do it in a iterative way instead of recursive to avoid
+      // do it in an iterative way instead of recursive to avoid
       // a possible StackOverflowException in cases with a lot
       // of versions of a definition
       while (previous != null) {

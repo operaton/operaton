@@ -75,8 +75,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -97,8 +97,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -124,8 +124,8 @@ class MultiTenancyCallActivityTest {
         .tenantIdIn(TENANT_TWO).processDefinitionKey("subProcess").latestVersion().singleResult();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).processDefinitionId(latestSubProcessTenantTwo.getId()).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).processDefinitionId(latestSubProcessTenantTwo.getId()).count()).isOne();
   }
 
   @Test
@@ -147,8 +147,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -167,8 +167,8 @@ class MultiTenancyCallActivityTest {
 
     // then
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.activityIdIn("Task_1").tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.activityIdIn("Task_2").tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.activityIdIn("Task_1").tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.activityIdIn("Task_2").tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -286,8 +286,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -308,8 +308,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -332,11 +332,11 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
 
     CaseDefinition latestCaseDefinitionTenantTwo = repositoryService.createCaseDefinitionQuery().tenantIdIn(TENANT_TWO).latestVersion().singleResult();
     query = caseService.createCaseInstanceQuery().caseDefinitionId(latestCaseDefinitionTenantTwo.getId());
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -358,8 +358,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -457,7 +457,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -477,7 +477,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -497,7 +497,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
 
   }
 
@@ -518,7 +518,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -540,7 +540,7 @@ class MultiTenancyCallActivityTest {
 
     // then
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   protected BpmnModelInstance createCallingProcess(String processId, String versionTagValue) {

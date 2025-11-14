@@ -21,7 +21,7 @@ import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 
 /**
@@ -32,7 +32,7 @@ public class OperatonOutTest extends CmmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {
-    return new TypeAssumption(CAMUNDA_NS, false);
+    return new TypeAssumption(OPERATON_NS, false);
   }
 
   @Override
@@ -43,10 +43,10 @@ public class OperatonOutTest extends CmmnModelElementInstanceTest {
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
-      new AttributeAssumption(CAMUNDA_NS, "source"),
-      new AttributeAssumption(CAMUNDA_NS, "sourceExpression"),
-      new AttributeAssumption(CAMUNDA_NS, "variables"),
-      new AttributeAssumption(CAMUNDA_NS, "target")
+      new AttributeAssumption(OPERATON_NS, "source"),
+      new AttributeAssumption(OPERATON_NS, "sourceExpression"),
+      new AttributeAssumption(OPERATON_NS, "variables"),
+      new AttributeAssumption(OPERATON_NS, "target")
     );
   }
 }

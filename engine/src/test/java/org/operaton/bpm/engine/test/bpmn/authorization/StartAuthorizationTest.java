@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.authorization;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -205,17 +206,10 @@ class StartAuthorizationTest {
   }
 
   private boolean containsUserOrGroup(String userId, String groupId, List<IdentityLink> links) {
-    boolean found = false;
-    for (IdentityLink identityLink : links) {
-      if(userId != null && userId.equals(identityLink.getUserId())) {
-        found = true;
-        break;
-      } else if(groupId != null && groupId.equals(identityLink.getGroupId())) {
-        found = true;
-        break;
-      }
-    }
-    return found;
+    return links.stream().anyMatch(identityLink ->
+      Objects.equals(userId, identityLink.getUserId()) ||
+      Objects.equals(groupId, identityLink.getGroupId())
+    );
   }
 
   @Deployment

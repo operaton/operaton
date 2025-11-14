@@ -46,7 +46,10 @@ public final class JsonUtil {
       if (resultFile.exists()) {
         Files.delete(resultFile.toPath());
       }
-      resultFile.createNewFile();
+      boolean created = resultFile.createNewFile();
+      if (!created) {
+        throw new PerfTestException("Cannot create file " + filename);
+      }
 
       mapper.writerWithDefaultPrettyPrinter().writeValue(resultFile, object);
 

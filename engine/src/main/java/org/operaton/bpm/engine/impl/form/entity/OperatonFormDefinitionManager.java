@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.OperatonFormDefinitionEnt
 public class OperatonFormDefinitionManager extends AbstractManager
     implements AbstractResourceDefinitionManager<OperatonFormDefinitionEntity> {
 
+  private static final String OPERATON_FORM_DEFINITION_KEY = "operatonFormDefinitionKey";
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   @Override
@@ -57,8 +58,8 @@ public class OperatonFormDefinitionManager extends AbstractManager
   @Override
   public OperatonFormDefinitionEntity findLatestDefinitionByKeyAndTenantId(String definitionKey, String tenantId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("operatonFormDefinitionKey", definitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(OPERATON_FORM_DEFINITION_KEY, definitionKey);
+    parameters.put(TENANT_ID, tenantId);
 
     if (tenantId == null) {
       return (OperatonFormDefinitionEntity) getDbEntityManager()
@@ -75,8 +76,8 @@ public class OperatonFormDefinitionManager extends AbstractManager
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("operatonFormDefinitionVersion", definitionVersion);
-    parameters.put("operatonFormDefinitionKey", definitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(OPERATON_FORM_DEFINITION_KEY, definitionKey);
+    parameters.put(TENANT_ID, tenantId);
     if (tenantId == null) {
       return (OperatonFormDefinitionEntity) getDbEntityManager()
           .selectOne("selectOperatonFormDefinitionByKeyVersionWithoutTenantId", parameters);
@@ -90,7 +91,7 @@ public class OperatonFormDefinitionManager extends AbstractManager
   public OperatonFormDefinitionEntity findDefinitionByDeploymentAndKey(String deploymentId, String definitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
-    parameters.put("operatonFormDefinitionKey", definitionKey);
+    parameters.put(OPERATON_FORM_DEFINITION_KEY, definitionKey);
     return (OperatonFormDefinitionEntity) getDbEntityManager().selectOne("selectOperatonFormDefinitionByDeploymentAndKey",
         parameters);
   }

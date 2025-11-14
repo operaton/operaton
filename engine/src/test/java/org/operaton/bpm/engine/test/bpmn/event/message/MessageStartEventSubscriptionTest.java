@@ -242,7 +242,7 @@ class MessageStartEventSubscriptionTest {
     String processDefId32 = deployProcess(ONE_TASK_PROCESS);
 
     // assume
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -371,7 +371,7 @@ class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
@@ -388,7 +388,7 @@ class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
@@ -408,7 +408,7 @@ class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId3);
   }
 
@@ -428,7 +428,7 @@ class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 

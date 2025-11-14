@@ -184,7 +184,7 @@ public abstract class AbstractProcessEngineServicesAccessTest {
 
     // then
     // the started process instance is still active and waiting at the user task
-    assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_DEF_KEY).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey(TASK_DEF_KEY).count()).isOne();
   }
 
   @Test

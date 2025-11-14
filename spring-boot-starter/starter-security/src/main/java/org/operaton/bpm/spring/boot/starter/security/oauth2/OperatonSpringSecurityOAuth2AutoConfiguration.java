@@ -28,11 +28,10 @@ import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.client.ClientsConfiguredCondition;
+import org.springframework.boot.autoconfigure.security.oauth2.client.ConditionalOnOAuth2ClientRegistrationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.core.Ordered;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -58,7 +57,7 @@ import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFi
 @AutoConfigureOrder(OperatonSpringSecurityOAuth2AutoConfiguration.OPERATON_OAUTH2_ORDER)
 @AutoConfigureAfter({OperatonBpmAutoConfiguration.class, SpringProcessEngineServicesConfiguration.class})
 @ConditionalOnBean(OperatonBpmProperties.class)
-@Conditional(ClientsConfiguredCondition.class)
+@ConditionalOnOAuth2ClientRegistrationProperties
 @EnableConfigurationProperties(OAuth2Properties.class)
 public class OperatonSpringSecurityOAuth2AutoConfiguration {
 

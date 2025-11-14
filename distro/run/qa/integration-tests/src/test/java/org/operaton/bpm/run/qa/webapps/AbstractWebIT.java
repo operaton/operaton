@@ -16,14 +16,14 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
-import java.util.logging.Logger;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.TestProperties;
 
@@ -34,7 +34,7 @@ import org.operaton.bpm.TestProperties;
  */
 public abstract class AbstractWebIT {
 
-  private static final Logger LOGGER = Logger.getLogger(AbstractWebIT.class.getName());
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractWebIT.class);
 
   protected String appBasePath;
 
@@ -69,22 +69,26 @@ public abstract class AbstractWebIT {
   }
 
   @BeforeEach
-  public void before() throws Exception {
+  public void before() {
     testProperties = new TestProperties(48080);
   }
 
-  public void createClient(String ctxPath) throws Exception {
+  public void createClient(String ctxPath) {
     // Initialize test properties
     testProperties = new TestProperties();
 
     // Get the application base path
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application " + appBasePath);
+    LOGGER.info("Connecting to application {}", appBasePath);
   }
 
-  public void preventRaceConditions() throws InterruptedException {
+  public void preventRaceConditions() {
     // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    Thread.sleep(6 * 1000);
+    try {
+      Thread.sleep(6 * 1000);
+    } catch (InterruptedException ignored) {
+      Thread.currentThread().interrupt();
+    }
   }
 
   protected String getWebappCtxPath() {

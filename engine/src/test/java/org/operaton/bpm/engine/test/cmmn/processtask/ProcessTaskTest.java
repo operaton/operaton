@@ -31,8 +31,7 @@ import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Roman Smirnov
@@ -905,13 +904,7 @@ class ProcessTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(processTaskId);
 
-    try {
-      // when
-      caseExecutionCommandBuilder.manualStart();
-      fail("It should not be possible to start a process instance.");
-    } catch (ProcessEngineException e) {
-      // expected
-    }
+    assertThatThrownBy(caseExecutionCommandBuilder::manualStart).isInstanceOf(ProcessEngineException.class);
 
     // complete //////////////////////////////////////////////////////////
 
@@ -1463,13 +1456,7 @@ class ProcessTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(processTaskId);
 
-    try {
-      // when
-      caseExecutionCommandBuilder.complete();
-      fail("It should not be possible to complete a process task, while the process instance is running.");
-    } catch (NotAllowedException e) {
-      // expected
-    }
+    assertThatThrownBy(caseExecutionCommandBuilder::complete).isInstanceOf(NotAllowedException.class);
 
     // complete ////////////////////////////////////////////////////////
 
@@ -1504,13 +1491,7 @@ class ProcessTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(processTaskId);
 
-    try {
-      // when
-      caseExecutionCommandBuilder.complete();
-      fail("It should not be possible to complete a process task");
-    } catch (Exception e) {
-      // expected
-    }
+    assertThatThrownBy(caseExecutionCommandBuilder::complete).isInstanceOf(Exception.class);
 
     // complete ////////////////////////////////////////////////////////
 

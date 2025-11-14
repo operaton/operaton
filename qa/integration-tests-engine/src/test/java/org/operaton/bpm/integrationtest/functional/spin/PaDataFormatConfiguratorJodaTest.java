@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JodaJsonDataFormatConfigurator;
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.JodaJsonSerializable;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
@@ -54,6 +55,7 @@ public class PaDataFormatConfiguratorJodaTest extends AbstractFoxPlatformIntegra
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(ReferenceStoringProcessApplication.class)
+        .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("org/operaton/bpm/integrationtest/oneTaskProcess.bpmn")
         .addClass(JodaJsonSerializable.class)
         .addClass(JodaJsonDataFormatConfigurator.class)

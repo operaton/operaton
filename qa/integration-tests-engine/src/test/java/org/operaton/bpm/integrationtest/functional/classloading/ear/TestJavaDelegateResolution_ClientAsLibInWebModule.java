@@ -32,7 +32,7 @@ import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -75,12 +75,7 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
   @OperateOnDeployment("clientDeployment")
   void testResolveClass() {
     // assert that we cannot load the delegate here:
-    try {
-      Class.forName("org.operaton.bpm.integrationtest.functional.classloading.ExampleDelegate");
-      fail("CNFE expected");
-    }catch (ClassNotFoundException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> Class.forName("org.operaton.bpm.integrationtest.functional.classloading.ExampleDelegate")).isInstanceOf(ClassNotFoundException.class);
 
     // but the process can since it performs context switch to the process archive vor execution
     runtimeService.startProcessInstanceByKey("testResolveClass");
@@ -92,7 +87,7 @@ public class TestJavaDelegateResolution_ClientAsLibInWebModule extends AbstractF
 
     runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 

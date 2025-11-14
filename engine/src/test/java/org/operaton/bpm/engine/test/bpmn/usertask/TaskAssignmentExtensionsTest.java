@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Testcase for the non-spec extensions to the task candidate use case.
@@ -94,12 +94,7 @@ class TaskAssignmentExtensionsTest {
   void testDuplicateAssigneeDeclaration() {
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testDuplicateAssigneeDeclaration");
     var deploymentBuilder = repositoryService.createDeployment().addClasspathResource(resource);
-    try {
-      deploymentBuilder.deploy();
-      fail("Invalid BPMN 2.0 process should not parse, but it gets parsed sucessfully");
-    } catch (ProcessEngineException e) {
-      // Exception is to be expected
-    }
+    assertThatThrownBy(deploymentBuilder::deploy).isInstanceOf(ProcessEngineException.class);
   }
 
   @Deployment
@@ -129,8 +124,8 @@ class TaskAssignmentExtensionsTest {
 
     // Test the task query find-by-candidate-group operation
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.taskCandidateGroup("management").count()).isEqualTo(1);
-    assertThat(query.taskCandidateGroup("accountancy").count()).isEqualTo(1);
+    assertThat(query.taskCandidateGroup("management").count()).isOne();
+    assertThat(query.taskCandidateGroup("accountancy").count()).isOne();
   }
 
   // Test where the candidate user extension is used together

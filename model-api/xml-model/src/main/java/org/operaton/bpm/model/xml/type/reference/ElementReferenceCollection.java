@@ -25,9 +25,9 @@ import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 /**
  * @author Sebastian Menski
  */
-public interface ElementReferenceCollection<Target extends ModelElementInstance, Source extends ModelElementInstance> extends Reference<Target> {
+public interface ElementReferenceCollection<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends Reference<TARGET> {
 
-  ChildElementCollection<Source> getReferenceSourceCollection();
+  ChildElementCollection<SOURCE> getReferenceSourceCollection();
 
-  Collection<Target> getReferenceTargetElements(ModelElementInstanceImpl referenceSourceElement);
+  Collection<TARGET> getReferenceTargetElements(ModelElementInstanceImpl referenceSourceElement);
 }

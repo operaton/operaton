@@ -43,8 +43,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * @author Sebastian Menski
@@ -243,14 +242,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     var historicCaseInstanceQuery = historicQuery();
 
 
-    try {
-      // oracle handles empty string like null which seems to lead to undefined behavior of the LIKE comparison
-      historicCaseInstanceQuery.caseDefinitionKeyNotIn(emptyCaseDefinitionKeys);
-      fail("Exception expected");
-    }
-    catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseInstanceQuery.caseDefinitionKeyNotIn(emptyCaseDefinitionKeys)).isInstanceOf(NotValidException.class);
 
 
     assertCount(1, historicQuery().caseDefinitionName("One Task Case"));
@@ -352,7 +344,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(historicQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(historicQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(historicQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(historicQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
 
@@ -516,11 +508,11 @@ class HistoricCaseInstanceTest extends CmmnTest {
     // select with distinct
     assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT DISTINCT * FROM " + tableName).list()).hasSize(4);
 
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = '" + id + "'").count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = '" + id + "'").count()).isOne();
     assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT * FROM " + tableName + " H WHERE H.ID_ = '" + id + "'").list()).hasSize(1);
 
     // use parameters
-    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = #{caseInstanceId}").parameter("caseInstanceId", id).count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricCaseInstanceQuery().sql("SELECT count(*) FROM " + tableName + " H WHERE H.ID_ = #{caseInstanceId}").parameter("caseInstanceId", id).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -546,14 +538,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(historicInstance).isNotNull();
     var historicInstanceId = historicInstance.getId();
 
-    try {
-      // should not be able to delete historic case instance cause the case instance is still running
-      historyService.deleteHistoricCaseInstance(historicInstanceId);
-      fail("Exception expected");
-    }
-    catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historyService.deleteHistoricCaseInstance(historicInstanceId)).isInstanceOf(NullValueException.class);
 
     terminate(caseInstanceId);
     close(caseInstanceId);
@@ -564,7 +549,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= HistoryLevel.HISTORY_LEVEL_FULL.getId()) {
       // a user operation log should have been created
-      assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1);
+      assertThat(historyService.createUserOperationLogQuery().count()).isOne();
       UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
       assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_OPERATOR);
       assertThat(entry.getEntityType()).isEqualTo(EntityTypes.CASE_INSTANCE);
@@ -591,7 +576,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
         .superProcessInstanceId(superProcessInstanceId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     HistoricCaseInstance subCaseInstance = query.singleResult();
     assertThat(subCaseInstance).isNotNull();
@@ -633,7 +618,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
         .subProcessInstanceId(subProcessInstanceId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     HistoricCaseInstance caseInstance = query.singleResult();
     assertThat(caseInstance.getId()).isEqualTo(superCaseInstanceId);
@@ -670,7 +655,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
         .superCaseInstanceId(superCaseInstanceId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     HistoricCaseInstance caseInstance = query.singleResult();
     assertThat(caseInstance.getSuperCaseInstanceId()).isEqualTo(superCaseInstanceId);
@@ -712,7 +697,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
         .subCaseInstanceId(subCaseInstanceId);
 
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     HistoricCaseInstance caseInstance = query.singleResult();
     assertThat(caseInstance.getId()).isEqualTo(superCaseInstanceId);
@@ -750,7 +735,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // then
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Deployment(resources = {
@@ -787,7 +772,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // then
     assertThat(query.list()).hasSize(1);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -802,13 +787,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
   @Test
   void testFailQueryByCaseActivityIdNull() {
     var historicCaseInstanceQuery = historyService.createHistoricCaseInstanceQuery();
-    try {
-      historicCaseInstanceQuery.caseActivityIdIn((String) null);
-
-      fail("expected exception");
-    } catch (NullValueException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> historicCaseInstanceQuery.caseActivityIdIn((String) null)).isInstanceOf(NullValueException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn")

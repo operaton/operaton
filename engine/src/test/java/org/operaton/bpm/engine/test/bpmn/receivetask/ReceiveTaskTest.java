@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * see https://app.camunda.com/jira/browse/CAM-1612
@@ -173,7 +173,7 @@ class ReceiveTaskTest {
     testRule.assertProcessEnded(processInstance23.getId());
 
     // expect: other process instance is still running
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance42.getId()).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance42.getId()).count()).isOne();
 
     // then: we can correlate the event subscription to the other process instance
     runtimeService.correlateMessage("newInvoiceMessage", "42");
@@ -356,12 +356,7 @@ class ReceiveTaskTest {
     var eventSubscription = subscriptions.get(0).getEventName();
 
     // then: we can not correlate an event
-    try {
-      runtimeService.correlateMessage(eventSubscription);
-      fail("should throw a mismatch");
-    } catch (MismatchingMessageCorrelationException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage(eventSubscription)).isInstanceOf(MismatchingMessageCorrelationException.class);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTaskCompensate.bpmn20.xml")
@@ -380,7 +375,7 @@ class ReceiveTaskTest {
 
     // expect: after completing the first receive task there is one event subscription for compensation
     assertThat(runtimeService.createEventSubscriptionQuery()
-        .eventType(EventType.COMPENSATE.name()).count()).isEqualTo(1);
+      .eventType(EventType.COMPENSATE.name()).count()).isOne();
 
     // then: we can trigger the second event subscription
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());

@@ -28,20 +28,20 @@ import org.operaton.bpm.model.xml.type.reference.ElementReferenceCollectionBuild
 /**
  * @author Sebastian Menski
  */
-public class ElementReferenceCollectionBuilderImpl<Target extends ModelElementInstance, Source extends ModelElementInstance> implements ElementReferenceCollectionBuilder<Target, Source> {
+public class ElementReferenceCollectionBuilderImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> implements ElementReferenceCollectionBuilder<TARGET, SOURCE> {
 
-  private final Class<Source> childElementType;
-  private final Class<Target> referenceTargetClass;
-  protected ElementReferenceCollectionImpl<Target, Source> elementReferenceCollectionImpl;
+  private final Class<SOURCE> childElementType;
+  private final Class<TARGET> referenceTargetClass;
+  protected ElementReferenceCollectionImpl<TARGET, SOURCE> elementReferenceCollectionImpl;
 
-  public ElementReferenceCollectionBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementCollectionImpl<Source> collection) {
+  public ElementReferenceCollectionBuilderImpl(Class<SOURCE> childElementType, Class<TARGET> referenceTargetClass, ChildElementCollectionImpl<SOURCE> collection) {
     this.childElementType = childElementType;
     this.referenceTargetClass = referenceTargetClass;
     this.elementReferenceCollectionImpl = new ElementReferenceCollectionImpl<>(collection);
   }
 
   @Override
-  public ElementReferenceCollection<Target, Source> build() {
+  public ElementReferenceCollection<TARGET, SOURCE> build() {
     return elementReferenceCollectionImpl;
   }
 

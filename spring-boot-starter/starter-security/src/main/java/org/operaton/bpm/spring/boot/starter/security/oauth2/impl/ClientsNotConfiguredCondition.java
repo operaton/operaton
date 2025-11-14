@@ -16,19 +16,37 @@
  */
 package org.operaton.bpm.spring.boot.starter.security.oauth2.impl;
 
+import java.util.Map;
+
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
-import org.springframework.boot.autoconfigure.security.oauth2.client.ClientsConfiguredCondition;
+import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
+import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
  * Condition that matches if no {@code spring.security.oauth2.client.registration} properties are defined
- * by inverting the outcome of {@link ClientsConfiguredCondition}.
  */
-public class ClientsNotConfiguredCondition extends ClientsConfiguredCondition {
+public class ClientsNotConfiguredCondition extends SpringBootCondition {
+
+  private static final String OAUTH2_CLIENT_REGISTRATION_PROPERTY_PREFIX = "spring.security.oauth2.client.registration";
+
   @Override
   public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    var matchOutcome = super.getMatchOutcome(context, metadata);
-    return new ConditionOutcome(!matchOutcome.isMatch(), matchOutcome.getConditionMessage());
+    return hasClientRegistrations(context) ?
+        new ConditionOutcome(false, "OAuth2 client is configured") :
+        new ConditionOutcome(true, "No OAuth2 client is configured");
+  }
+
+  /**
+   * Checks if any OAuth2 client registrations are present in the active application properties.
+   *
+   * @return true if at least one client registration is present and set, false otherwise
+   */
+  private boolean hasClientRegistrations(ConditionContext context) {
+    Binder binder = Binder.get(context.getEnvironment());
+    return binder.bind(OAUTH2_CLIENT_REGISTRATION_PROPERTY_PREFIX, Map.class)
+        .map(map -> !map.isEmpty())
+        .orElse(false);
   }
 }

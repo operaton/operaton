@@ -35,7 +35,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class SignalEventReceivedBuilderTest {
 
@@ -72,7 +72,7 @@ class SignalEventReceivedBuilderTest {
 
     runtimeService.createSignalEvent("signal").send();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Test
@@ -83,7 +83,7 @@ class SignalEventReceivedBuilderTest {
 
     runtimeService.createSignalEvent("signal").send();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Test
@@ -130,7 +130,7 @@ class SignalEventReceivedBuilderTest {
 
     runtimeService.createSignalEvent("signal").executionId(executionId).send();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Test
@@ -166,7 +166,8 @@ class SignalEventReceivedBuilderTest {
   @Test
   void testNoSignalEventSubscription() {
     // assert that no exception is thrown
-    assertDoesNotThrow(() -> runtimeService.createSignalEvent("signal").send());
+    assertThatCode(() -> runtimeService.createSignalEvent("signal").send())
+        .doesNotThrowAnyException();
   }
 
   @Test

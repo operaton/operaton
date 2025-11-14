@@ -13,7 +13,11 @@ on:
         options:
           - '["17"]'
           - '["21"]'
+          - '["25"]'
           - '["17", "21"]'
+          - '["17", "25"]'
+          - '["21", "25"]'
+          - '["17", "21", "25"]'
       skip_build:
         description: 'Build: By default skipped. Deactivate to perform the regular project build'
         type: boolean
@@ -30,7 +34,7 @@ on:
         description: 'Integration Tests: Test suite to run'
         type: choice
         required: true
-        default: '["engine"]'
+        default: '["engine", "webapps"]'
         options:
           - '["engine"]'
           - '["webapps"]'
@@ -67,10 +71,14 @@ on:
         required: true
         default: false
   pull_request:             # Runs on pull requests to main
-    branches: ["main"]
+    branches:
+      - main
+      - release/**
   push:
     branches:
       # when developing the workflow itself, create this branch and push to it
+      - main
+      - release/**
       - ci-dev/integration-build
 
 concurrency:
@@ -80,7 +88,7 @@ concurrency:
 jobs:
   detect-recent-changes:
     name: Detect recent changes
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     outputs:
       recent_changes: ${{steps.check-commits.outputs.commits}}
     steps:
@@ -102,7 +110,7 @@ jobs:
 
   determine-pr-config:
     name: Determine PR Configuration
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' || github.event_name == 'push'
     outputs:
       needs_integration_build: ${{ steps.check-pr.outputs.needs_build }}
@@ -199,7 +207,7 @@ jobs:
 
   early-exit:
     name: Early Exit Check
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: determine-pr-config
     if: github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'false'
     steps:
@@ -215,8 +223,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21"]') }}
-    runs-on: ubuntu-24.04
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
+    runs-on: ubuntu-latest
     needs: 
       - detect-recent-changes
       - determine-pr-config
@@ -282,12 +290,12 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/project-reports.zip
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
 
   integration-tests:
     name: Integration Tests
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs: 
       - detect-recent-changes
       - determine-pr-config
@@ -300,7 +308,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17"]') }}
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
         testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
@@ -320,6 +328,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
+      - name: Install Chromedriver
+        id: install-chromedriver
+        if: ${{ matrix.testsuite == 'webapps' }}
+        shell: bash
+        run: |
+          .github/scripts/install-chrome-and-driver.sh
       - name: Maven Build
         id: maven-build
         shell: bash
@@ -339,13 +353,13 @@ jobs:
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@3585e9575db828022551b4231f165eb59a0e74e3 #v5.6.2
+        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
@@ -356,6 +370,38 @@ jobs:
           retention-days: 30
           overwrite: true
 
+  documentation:
+    name: Documentation
+    runs-on: ubuntu-latest
+    needs:
+      - detect-recent-changes
+      - determine-pr-config
+      - build
+    if: |
+      always() && !cancelled() && (
+        (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
+        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false')
+      )
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Documentation
+        if: always()
+        run: |
+          .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh
+          .devenv/scripts/build/build-sbom.sh
+          pip install pystache
+      - name: Cache documentation artifacts
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            target/*.zip
+            target/sbom/**
+          key: ${{ github.run_id }}-documentation-artifacts
 
   release:
     name: Release
@@ -363,7 +409,9 @@ jobs:
       - detect-recent-changes
       - determine-pr-config
       - build
-    runs-on: ubuntu-24.04
+      - integration-tests
+      - documentation
+    runs-on: ubuntu-latest
     if: |
       always() && !cancelled() && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
@@ -386,8 +434,17 @@ jobs:
             ./*/staging-deploy/**
             **/target/reports/**
             **/target/surefire-reports/*.xml
-            target/project-reports.zip
+            target/*.zip
           key: ${{ github.run_id }}-build-artifacts
+          fail-on-cache-miss: true
+
+      - name: Restore documentation artifacts cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            target/*.zip
+            target/sbom/**
+          key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 
       - name: Release with JReleaser
@@ -401,26 +458,25 @@ jobs:
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
-          JRELEASER_PRERELEASE_ENABLED: true
         with:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 
       - name: Publish Test Report
         if: ${{ github.event_name == 'schedule' || github.event.inputs.skip_tests == 'false'}}
-        uses: mikepenz/action-junit-report@3585e9575db828022551b4231f165eb59a0e74e3 #v5.6.2
+        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: staging
           path: |
@@ -429,7 +485,7 @@ jobs:
 
   post_release:
     name: Post-Release
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     needs:
       - detect-recent-changes
       - determine-pr-config

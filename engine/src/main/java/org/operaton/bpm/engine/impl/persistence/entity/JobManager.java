@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.Direction;
@@ -185,10 +186,7 @@ public class JobManager extends AbstractManager {
       return false;
     }
 
-    String instance1 = job1.getProcessInstanceId();
-    String instance2 = job2.getProcessInstanceId();
-
-    return instance1 != null && instance1.equals(instance2);
+    return Objects.equals(job1.getProcessInstanceId(), job2.getProcessInstanceId());
   }
 
   protected boolean isJobPriorityInJobExecutorPriorityRange(long jobPriority) {

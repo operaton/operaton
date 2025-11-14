@@ -21,7 +21,7 @@ import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Thorben Lindhauer
@@ -30,24 +30,24 @@ public class OperatonVariableListenerTest extends CmmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {
-    return new TypeAssumption(CAMUNDA_NS, false);
+    return new TypeAssumption(OPERATON_NS, false);
   }
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
     return Arrays.asList(
-        new ChildElementAssumption(CAMUNDA_NS, OperatonField.class),
-        new ChildElementAssumption(CAMUNDA_NS, OperatonScript.class, 0, 1)
+        new ChildElementAssumption(OPERATON_NS, OperatonField.class),
+        new ChildElementAssumption(OPERATON_NS, OperatonScript.class, 0, 1)
     );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return Arrays.asList(
-      new AttributeAssumption(CAMUNDA_NS, "event"),
-      new AttributeAssumption(CAMUNDA_NS, "class"),
-      new AttributeAssumption(CAMUNDA_NS, "expression"),
-      new AttributeAssumption(CAMUNDA_NS, "delegateExpression")
+      new AttributeAssumption(OPERATON_NS, "event"),
+      new AttributeAssumption(OPERATON_NS, "class"),
+      new AttributeAssumption(OPERATON_NS, "expression"),
+      new AttributeAssumption(OPERATON_NS, "delegateExpression")
     );
   }
 

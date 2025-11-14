@@ -20,9 +20,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcessEvent;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -33,12 +31,11 @@ import org.operaton.bpm.engine.test.util.JobExecutorAssert;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(Arquillian.class)
-public class EventNotificationTest extends CdiProcessEngineTestCase {
+class EventNotificationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/cdi/test/impl/event/EventNotificationTest.process1.bpmn20.xml"})
-  public void testReceiveAll() {
+  void testReceiveAll() {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
@@ -57,7 +54,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
   @Deployment(resources = {
       "org/operaton/bpm/engine/cdi/test/impl/event/EventNotificationTest.process1.bpmn20.xml",
       "org/operaton/bpm/engine/cdi/test/impl/event/EventNotificationTest.process2.bpmn20.xml" })
-  public void testSelectEventsPerProcessDefinition() {
+  void testSelectEventsPerProcessDefinition() {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
@@ -72,7 +69,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/cdi/test/impl/event/EventNotificationTest.process1.bpmn20.xml"})
-  public void testSelectEventsPerActivity() {
+  void testSelectEventsPerActivity() {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
@@ -91,7 +88,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/cdi/test/impl/event/EventNotificationTest.process1.bpmn20.xml"})
-  public void testSelectEventsPerTask() {
+  void testSelectEventsPerTask() {
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
@@ -128,7 +125,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testMultiInstanceEvents(){
+  void testMultiInstanceEvents(){
     TestEventListener listenerBean = getBeanInstance(TestEventListener.class);
     listenerBean.reset();
 
@@ -158,7 +155,7 @@ public class EventNotificationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testMultiInstanceEventsAfterExternalTrigger() {
+  void testMultiInstanceEventsAfterExternalTrigger() {
 
     runtimeService.startProcessInstanceByKey("process");
 

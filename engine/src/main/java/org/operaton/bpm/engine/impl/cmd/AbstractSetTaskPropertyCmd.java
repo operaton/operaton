@@ -137,11 +137,11 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Se
    * Ensures the value is not null and returns the value.
    *
    * @param value the value
-   * @param <T>   the type of the value
+   * @param <S>   the type of the value
    * @return the value
    * @throws NullValueException in case the given value is null
    */
-  protected <T> T ensureNotNullAndGet(String variableName, T value) {
+  protected <S> S ensureNotNullAndGet(String variableName, S value) {
     ensureNotNull(variableName, value);
     return value;
   }

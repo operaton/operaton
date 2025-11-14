@@ -496,13 +496,13 @@ class AsyncAfterTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* the gateway
-    assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().active().count()).isOne();
 
     testRule.executeAvailableJobs();
 
     // if the waiting job is executed there should be 2 user tasks
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.active().count()).isEqualTo(1);
+    assertThat(taskQuery.active().count()).isOne();
 
     // finish tasks
     List<Task> tasks = taskQuery.active().list();
@@ -538,7 +538,7 @@ class AsyncAfterTest {
     assertListenerEndInvoked(pi);
 
     // and we will wait *after* the gateway:
-    assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().active().count()).isOne();
   }
 
   /**
@@ -649,7 +649,7 @@ class AsyncAfterTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* execute each service task step-by-step
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1L);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // execute all jobs - one for each service task wrapped in the multi-instance body
     testRule.executeAvailableJobs(5);
 

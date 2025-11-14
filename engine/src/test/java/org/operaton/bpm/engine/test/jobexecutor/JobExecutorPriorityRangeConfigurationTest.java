@@ -26,8 +26,8 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class JobExecutorPriorityRangeConfigurationTest {
 
@@ -77,11 +77,11 @@ class JobExecutorPriorityRangeConfigurationTest {
     config.setJobExecutorPriorityRangeMin(-10L);
     config.setJobExecutorPriorityRangeMax(-5);
 
-    // when
-    assertDoesNotThrow(() -> {
+    // when & then
+    assertThatCode(() -> {
       ProcessEngine engine = config.buildProcessEngine();
       engine.close();
-    });
+    }).doesNotThrowAnyException();
   }
 
   @Test

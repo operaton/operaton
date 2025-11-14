@@ -40,7 +40,8 @@ public interface AuthorizationResource {
 
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  void updateAuthorization(AuthorizationDto Authorization);
+  void updateAuthorization(AuthorizationDto authorization);
+
   @OPTIONS
   @Produces(MediaType.APPLICATION_JSON)
   ResourceOptionsDto availableOperations(@Context UriInfo context);

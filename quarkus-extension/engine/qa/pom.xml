@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.quarkus</groupId>
     <artifactId>operaton-bpm-quarkus-engine-parent</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-bpm-quarkus-engine-qa</artifactId>
   <name>Operaton - Quarkus Extension - Engine - CDI QA</name>
@@ -65,13 +65,6 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit4</classifier>
-      <scope>test</scope>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine</artifactId>
       <classifier>junit5</classifier>
       <scope>test</scope>
       <version>${project.version}</version>
@@ -96,13 +89,8 @@
     </dependency>
     <!-- Test dependencies -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.arquillian.junit</groupId>
-      <artifactId>arquillian-junit-container</artifactId>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-junit5-internal</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

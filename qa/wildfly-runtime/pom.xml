@@ -255,6 +255,7 @@
                       <replacefilter token="@project.version@" value="${project.version}"/>
                       <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
                       <replacefilter token="@version.jython@" value="${version.jython}"/>
+                      <replacefilter token="@version.sqlserver@" value="${version.sqlserver}" />
                     </replace>
                   </target>
                 </configuration>

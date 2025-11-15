@@ -16,8 +16,9 @@
  */
 package org.operaton.bpm.quarkus.engine.test.persistence.conf;
 
-import io.quarkus.test.QuarkusUnitTest;
 import jakarta.enterprise.inject.UnsatisfiedResolutionException;
+
+import io.quarkus.test.QuarkusUnitTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;

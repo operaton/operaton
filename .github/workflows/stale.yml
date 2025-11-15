@@ -28,13 +28,10 @@ jobs:
           stale-issue-label: 'status:stale'
           stale-pr-label: 'status:stale'
 
-          # Timing (extend if your project has slower cycles)
+          # Timing
           days-before-stale: 90
           days-before-close: 14
 
           # Exemptions
-          exempt-issue-milestones: true        
-          exempt-pr-milestones: true           
-          exempt-issue-labels: 'backlog, later, do not stale'
-          exempt-pr-labels: 'work-in-progress, do not stale'
+          exempt-all-milestones: true
 

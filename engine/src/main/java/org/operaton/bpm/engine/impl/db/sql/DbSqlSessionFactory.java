@@ -774,6 +774,7 @@ public class DbSqlSessionFactory implements SessionFactory {
     addDatabaseSpecificStatement(MSSQL, "lockInstallationIdLockProperty", "lockInstallationIdLockProperty_mssql");
     addDatabaseSpecificStatement(MSSQL, "selectEventSubscriptionsByNameAndExecution", "selectEventSubscriptionsByNameAndExecution_mssql");
     addDatabaseSpecificStatement(MSSQL, "selectEventSubscriptionsByExecutionAndType", "selectEventSubscriptionsByExecutionAndType_mssql");
+    addDatabaseSpecificStatement(MSSQL, "selectNextJobsToExecute", "selectNextJobsToExecute_mssql");
     addDatabaseSpecificStatement(MSSQL, "selectHistoricDecisionInstancesByNativeQuery", "selectHistoricDecisionInstancesByNativeQuery_mssql_or_db2");
     addDatabaseSpecificStatement(MSSQL, "deleteByteArraysByRemovalTime", "deleteByteArraysByRemovalTime_mssql");
 

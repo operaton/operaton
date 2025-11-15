@@ -116,4 +116,54 @@ class JobAcquisitionTest {
 
     assertThat(jobExecutor2WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
   }
+
+  @Test
+  @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
+  void testJobLockingFailureWithSkipLocked() {
+    // given: skip locked enabled
+    ((ProcessEngineConfigurationImpl) engineRule.getProcessEngine()
+      .getProcessEngineConfiguration())
+      .setJobExecutorAcquireWithSkipLocked(true);
+
+    int numberOfInstances = 3;
+
+    // when: starting process instances
+    for (int i = 0; i < numberOfInstances; i++) {
+      engineRule.getRuntimeService().startProcessInstanceByKey("simpleAsyncProcess");
+    }
+
+    // when: starting job execution
+    jobExecutor1.start();
+    acquisitionThread1.waitForSync();
+    jobExecutor2.start();
+    acquisitionThread2.waitForSync();
+
+    // when: both acquire concurrently
+    acquisitionThread1.makeContinueAndWaitForSync();
+    acquisitionThread2.makeContinueAndWaitForSync();
+
+    // when: thread 1 completes
+    acquisitionThread1.makeContinueAndWaitForSync();
+
+    // then: all jobs processed
+    assertThat(engineRule.getManagementService().createJobQuery().active().count()).isZero();
+    List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
+    assertThat(jobExecutor1WaitEvents).hasSize(1);
+    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
+
+    // when: thread 2 completes
+    acquisitionThread2.makeContinueAndWaitForSync();
+
+    // then: unlike the test without SKIP LOCKED (testJobLockingFailure),
+    // the second executor does not encounter optimistic locking exceptions
+    // because it skipped the locked jobs during acquisition.
+    // The behavior is different: with SKIP LOCKED, thread 2 simply finds
+    // no jobs to acquire (they were already taken by thread 1) rather than
+    // trying to lock them and failing with OLEs.
+    List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
+    assertThat(jobExecutor2WaitEvents).hasSize(1);
+
+    // The wait behavior may differ from the non-SKIP-LOCKED case
+    // where immediate retry occurs after OLE
+  }
 }

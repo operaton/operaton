@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.openapi.generator.impl;
 
+import com.networknt.schema.SchemaException;
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,10 +28,30 @@ import com.networknt.schema.SchemaRegistry;
 import com.networknt.schema.SpecificationVersion;
 import com.networknt.schema.Error;
 
+/**
+ * Utility class to validate a JSON instance against a JSON Schema using the
+ * <a href="https://github.com/networknt/json-schema-validator">networknt JSON Schema validator</a>.
+ *
+ * <p>Usage:
+ * <pre>
+ * java org.operaton.bpm.engine.rest.openapi.generator.impl.SchemaValidator &lt;json schema&gt; &lt;file to validate&gt;
+ * </pre>
+ */
 public class SchemaValidator {
+  /**
+   * Main entry point.
+   *
+   * @param args command line arguments. Must contain exactly two entries:
+   *             args[0] = path to the JSON Schema file,
+   *             args[1] = path to the JSON instance file to validate.
+   * @throws Exception if reading the schema or instance fails, or if the validation
+   *                   process encounters an unexpected error.
+   * @throws IllegalArgumentException if the argument count is incorrect.
+   * @throws SchemaException if schema validation produces one or more errors.
+   */
   public static void main(String[] args) throws Exception {
     if (args.length != 2) {
-      throw new RuntimeException("Must provide two arguments: <json schema> <file to validate>");
+      throw new IllegalArgumentException("Must provide two arguments: <json schema> <file to validate>");
     }
 
     String jsonSchemaPath = args[0];
@@ -50,7 +71,7 @@ public class SchemaValidator {
                               .map(Error::getMessage)
                               .collect(Collectors.joining("\n"));
 
-      throw new RuntimeException("Schema validation errors\n" + messages);
+      throw new SchemaException("Schema validation errors\n" + messages);
     }
   }
 }

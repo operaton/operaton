@@ -31,8 +31,8 @@ import org.operaton.bpm.model.xml.test.assertions.ChildElementAssert;
 import org.operaton.bpm.model.xml.test.assertions.ModelElementTypeAssert;
 import org.operaton.bpm.model.xml.type.ModelElementType;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public abstract class AbstractModelElementInstanceTest {
 

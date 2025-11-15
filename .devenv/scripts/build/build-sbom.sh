@@ -20,7 +20,10 @@ echo "Generating SBOM files for Operaton modules..."
 if command -v cyclonedx >/dev/null 2>&1; then
   echo "CycloneDX CLI already available."
 else
-  if command -v brew >/dev/null 2>&1; then
+  if [ "$CI" != "" ]; then
+    echo "Installing CycloneDX via Homebrew for CI environment..."
+    /home/linuxbrew/.linuxbrew/bin/brew install cyclonedx/cyclonedx/cyclonedx-cli
+  elif command -v brew >/dev/null 2>&1; then
     echo "CycloneDX CLI not found — installing via Homebrew..."
     brew install cyclonedx/cyclonedx/cyclonedx-cli
   else
@@ -29,6 +32,17 @@ else
     echo "Or install the CycloneDX CLI from https://github.com/CycloneDX/cyclonedx-cli" >&2
     exit 1
   fi
+fi
+
+CYCLONEDX="cyclonedx"
+if command -v cyclonedx >/dev/null 2>&1; then
+  echo "CycloneDX CLI installation verified."
+elif [ -f /home/linuxbrew/.linuxbrew/bin/cyclonedx ]; then
+  CYCLONEDX="/home/linuxbrew/.linuxbrew/bin/cyclonedx"
+  echo "CycloneDX CLI installation verified."
+else
+  echo "❌ CycloneDX CLI installation failed." >&2
+  exit 1
 fi
 
 
@@ -58,7 +72,7 @@ docker run --rm -v "$(pwd)":/repo aquasec/trivy:latest fs --scanners vuln --form
 
 echo "Merging CycloneDX SBOMs for each distribution..."
 for DISTRO in "${DISTROS[@]}"; do
-  cyclonedx merge --input-files \
+  $CYCLONEDX merge --input-files \
     target/sbom/operaton-modules-"$DISTRO".cyclonedx-json.sbom \
     target/sbom/operaton-webapps.cyclonedx-json.sbom \
     --output-file distro/"$DISTRO"/assembly/resources/sbom.cdx.json \

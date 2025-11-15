@@ -20,21 +20,19 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.HashSet;
 import java.util.Set;
-
-import io.quarkus.test.QuarkusUnitTest;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.InjectableInstance;
 import io.quarkus.arc.InstanceHandle;
-
+import io.quarkus.test.QuarkusUnitTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.RegisterExtension;
+
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.CaseService;
@@ -54,6 +52,8 @@ import org.operaton.bpm.engine.experimental.InjectProcessVariable;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.test.Deployment;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public abstract class CdiProcessEngineTestCase {
 
@@ -115,7 +115,7 @@ public abstract class CdiProcessEngineTestCase {
     decisionService = processEngine.getDecisionService();
 
     Method testMethod = testInfo.getTestMethod().orElse(null);
-    Assertions.assertNotNull(testMethod);
+    assertThat(testMethod).isNotNull();
 
     Class<?> javaTestClass = testMethod.getDeclaringClass();
     String testMethodName = testMethod.getName();

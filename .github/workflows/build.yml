@@ -83,7 +83,7 @@ jobs:
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          ./mvnw verify
+          .devenv/scripts/build/build.sh
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()

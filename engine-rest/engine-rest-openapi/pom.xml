@@ -12,7 +12,6 @@
   <properties>
     <generated-directory>${project.build.directory}/generated-sources/openapi-json</generated-directory>
     <generated-file>openapi.json</generated-file>
-    <openapi.generator.version>7.16.0</openapi.generator.version>
     <!-- properties versions used by the openapi client -->
     <!-- update them during openapi.generator version update  -->
     <gson-fire-version>1.9.0</gson-fire-version>
@@ -196,7 +195,7 @@
       <plugin>
         <groupId>org.openapitools</groupId>
         <artifactId>openapi-generator-maven-plugin</artifactId>
-        <version>${openapi.generator.version}</version>
+        <version>7.17.0</version>
         <executions>
           <execution>
             <id>generate-java-client</id>

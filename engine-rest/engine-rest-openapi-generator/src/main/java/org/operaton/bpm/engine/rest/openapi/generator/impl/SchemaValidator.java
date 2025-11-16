@@ -16,17 +16,17 @@
  */
 package org.operaton.bpm.engine.rest.openapi.generator.impl;
 
-import com.networknt.schema.SchemaException;
 import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.networknt.schema.Error;
 import com.networknt.schema.Schema;
+import com.networknt.schema.SchemaException;
 import com.networknt.schema.SchemaRegistry;
 import com.networknt.schema.SpecificationVersion;
-import com.networknt.schema.Error;
 
 /**
  * Utility class to validate a JSON instance against a JSON Schema using the

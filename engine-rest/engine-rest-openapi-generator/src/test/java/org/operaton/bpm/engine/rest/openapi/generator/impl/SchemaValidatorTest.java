@@ -15,11 +15,11 @@
  */
 package org.operaton.bpm.engine.rest.openapi.generator.impl;
 
-import com.networknt.schema.SchemaException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.assertj.core.api.Assertions;
+
+import com.networknt.schema.SchemaException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,24 +27,24 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class SchemaValidatorTest {
+class SchemaValidatorTest {
   Path schema;
   Path instance;
 
   @BeforeEach
-  public void setup() throws Exception {
+  void setup() throws Exception {
     schema = Files.createTempFile("schema", ".json");
     instance = Files.createTempFile("instance", ".json");
   }
 
   @AfterEach
-  public void cleanup() throws Exception {
+  void cleanup() throws Exception {
     Files.deleteIfExists(schema);
     Files.deleteIfExists(instance);
   }
 
   @Test
-  public void validJsonShouldNotThrow() throws Exception {
+  void validJsonShouldNotThrow() throws Exception {
     String schemaJson = """
       {
         "type": "object",
@@ -66,7 +66,7 @@ public class SchemaValidatorTest {
   }
 
   @Test
-  public void invalidJsonShouldThrowSchemaException() throws Exception {
+  void invalidJsonShouldThrowSchemaException() throws Exception {
     String schemaJson = """
       {
         "type": "object",

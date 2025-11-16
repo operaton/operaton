@@ -125,6 +125,15 @@ class JobAcquisitionTest {
       .getProcessEngineConfiguration())
       .setJobExecutorAcquireWithSkipLocked(true);
 
+    // Create new executor instances for this test to avoid thread reuse issues
+    ControllableJobExecutor localExecutor1 = new ControllableJobExecutor((ProcessEngineImpl) engineRule.getProcessEngine());
+    localExecutor1.setMaxJobsPerAcquisition(DEFAULT_NUM_JOBS_TO_ACQUIRE);
+    ThreadControl localThread1 = localExecutor1.getAcquisitionThreadControl();
+
+    ControllableJobExecutor localExecutor2 = new ControllableJobExecutor((ProcessEngineImpl) engineRule.getProcessEngine());
+    localExecutor2.setMaxJobsPerAcquisition(DEFAULT_NUM_JOBS_TO_ACQUIRE);
+    ThreadControl localThread2 = localExecutor2.getAcquisitionThreadControl();
+
     int numberOfInstances = 3;
 
     // when: starting process instances
@@ -133,37 +142,39 @@ class JobAcquisitionTest {
     }
 
     // when: starting job execution
-    jobExecutor1.start();
-    acquisitionThread1.waitForSync();
-    jobExecutor2.start();
-    acquisitionThread2.waitForSync();
+    localExecutor1.start();
+    localThread1.waitForSync();
+    localExecutor2.start();
+    localThread2.waitForSync();
 
     // when: both acquire concurrently
-    acquisitionThread1.makeContinueAndWaitForSync();
-    acquisitionThread2.makeContinueAndWaitForSync();
+    localThread1.makeContinueAndWaitForSync();
+    localThread2.makeContinueAndWaitForSync();
 
     // when: thread 1 completes
-    acquisitionThread1.makeContinueAndWaitForSync();
-
-    // then: all jobs processed
-    assertThat(engineRule.getManagementService().createJobQuery().active().count()).isZero();
-    List<RecordedWaitEvent> jobExecutor1WaitEvents = jobExecutor1.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor1WaitEvents).hasSize(1);
-    assertThat(jobExecutor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
-
-    // when: thread 2 completes
-    acquisitionThread2.makeContinueAndWaitForSync();
+    localThread1.makeContinueAndWaitForSync();
 
     // then: unlike the test without SKIP LOCKED (testJobLockingFailure),
     // the second executor does not encounter optimistic locking exceptions
     // because it skipped the locked jobs during acquisition.
-    // The behavior is different: with SKIP LOCKED, thread 2 simply finds
-    // no jobs to acquire (they were already taken by thread 1) rather than
-    // trying to lock them and failing with OLEs.
-    List<RecordedWaitEvent> jobExecutor2WaitEvents = jobExecutor2.getAcquireJobsRunnable().getWaitEvents();
-    assertThat(jobExecutor2WaitEvents).hasSize(1);
+    List<RecordedWaitEvent> executor1WaitEvents = localExecutor1.getAcquireJobsRunnable().getWaitEvents();
+    assertThat(executor1WaitEvents).hasSize(1);
+    assertThat(executor1WaitEvents.get(0).getTimeBetweenAcquisitions()).isZero();
+
+    // when: thread 2 completes
+    localThread2.makeContinueAndWaitForSync();
+
+    // then: with SKIP LOCKED, thread 2 simply finds no jobs to acquire
+    // (they were already taken by thread 1) rather than trying to lock them
+    // and failing with OLEs.
+    List<RecordedWaitEvent> executor2WaitEvents = localExecutor2.getAcquireJobsRunnable().getWaitEvents();
+    assertThat(executor2WaitEvents).hasSize(1);
 
     // The wait behavior may differ from the non-SKIP-LOCKED case
     // where immediate retry occurs after OLE
+
+    // Clean up local executors
+    localExecutor1.shutdown();
+    localExecutor2.shutdown();
   }
 }

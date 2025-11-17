@@ -17,12 +17,16 @@
 package org.operaton.bpm.engine.rest.sub.impl;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -36,10 +40,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 import static org.mockito.Mockito.times;
 
 class VariableDeserializationTypeValidationTest {
-
-
-  protected AbstractVariablesResource variablesResourceSpy;
-  protected DeserializationTypeValidator validator;
+  AbstractVariablesResource variablesResourceSpy;
+  DeserializationTypeValidator validator;
 
   @BeforeEach
   void setUpMocks() {
@@ -154,58 +156,28 @@ class VariableDeserializationTypeValidationTest {
     Mockito.verifyNoMoreInteractions(validator);
   }
 
-  @Test
-  void shouldFailForSimpleClass() {
-    JavaType type = TypeFactory.defaultInstance().constructType(String.class);
+  @ParameterizedTest(name = "{0}")
+  @MethodSource("validateType_shouldFail_givenInvalidType_args")
+  void validateType_shouldFail_givenInvalidType(String testName, JavaType type, String expectedMessagePart) {
+    // given
     setValidatorMockResult(false);
 
+    // when
     Exception e = assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> variablesResourceSpy.validateType(type)).actual();
-    assertThat(e.getMessage()).contains("[java.lang.String]");
+
+    // then
+    assertThat(e.getMessage()).contains(expectedMessagePart);
   }
 
-  @Test
-  void shouldFailForComplexClass() {
-    JavaType type = TypeFactory.defaultInstance().constructType(Complex.class);
-    setValidatorMockResult(false);
-
-    Exception e = assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> variablesResourceSpy.validateType(type)).actual();
-    assertThat(e.getMessage()).contains("[org.operaton.bpm.engine.rest.sub.impl.VariableDeserializationTypeValidationTest$Complex]");
-  }
-
-  @Test
-  void shouldFailForArrayClass() {
-    JavaType type = TypeFactory.defaultInstance().constructType(Integer[].class);
-    setValidatorMockResult(false);
-
-    Exception e = assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> variablesResourceSpy.validateType(type)).actual();
-    assertThat(e.getMessage()).contains("[java.lang.Integer]");
-  }
-
-  @Test
-  void shouldFailForCollectionClass() {
-    JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>");
-    setValidatorMockResult(false);
-
-    Exception e = assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> variablesResourceSpy.validateType(type)).actual();
-    assertThat(e.getMessage()).contains("[java.util.ArrayList, java.lang.String]");
-  }
-
-  @Test
-  void shouldFailForMapClass() {
-    JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>");
-    setValidatorMockResult(false);
-
-    Exception e = assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> variablesResourceSpy.validateType(type)).actual();
-    assertThat(e.getMessage()).contains("[java.util.HashMap, java.lang.String, java.lang.Integer]");
-  }
-
-  @Test
-  void shouldFailOnceForMapClass() {
-    JavaType type = TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.String>");
-    setValidatorMockResult(false);
-
-    Exception e = assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> variablesResourceSpy.validateType(type)).actual();
-    assertThat(e.getMessage()).contains("[java.util.HashMap, java.lang.String]");
+  static Stream<Arguments> validateType_shouldFail_givenInvalidType_args () {
+    return Stream.of(
+      Arguments.of("Simple Class", TypeFactory.defaultInstance().constructType(String.class), "[java.lang.String]"),
+      Arguments.of("Complex Class", TypeFactory.defaultInstance().constructType(Complex.class), "[org.operaton.bpm.engine.rest.sub.impl.VariableDeserializationTypeValidationTest$Complex]"),
+      Arguments.of("Array Class", TypeFactory.defaultInstance().constructType(Integer[].class), "[java.lang.Integer]"),
+      Arguments.of("Collection Class", TypeFactory.defaultInstance().constructFromCanonical("java.util.ArrayList<java.lang.String>"), "[java.util.ArrayList, java.lang.String]"),
+      Arguments.of("Map Class String,Integer", TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.Integer>"), "[java.util.HashMap, java.lang.String, java.lang.Integer]"),
+      Arguments.of("Map Class String,String", TypeFactory.defaultInstance().constructFromCanonical("java.util.HashMap<java.lang.String, java.lang.String>"), "[java.util.HashMap, java.lang.String]")
+    );
   }
 
   public static class Complex {

@@ -482,6 +482,13 @@
                     <version>[5,)</version>
                   </ignoreVersion>
                 </rule>
+                <rule>
+                  <groupId>org.springframework</groupId>
+                  <ignoreVersion>
+                    <type>range</type>
+                    <version>[7,)</version>
+                  </ignoreVersion>
+                </rule>
                 <!-- JakartaEE 11 -->
                 <rule>
                   <groupId>jakarta.annotation</groupId>

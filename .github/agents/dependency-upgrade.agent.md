@@ -53,3 +53,16 @@ updated-dependencies:
 ```
 
 For `changed_version_segment` use `major`, `minor` or `patch` depending on the version segment of the upgrade.
+
+## Significant Upgrades
+
+Update the changelog `.github/jreleaser/changelog.tpl` for upgrades of
+- Spring Framework
+- Spring Boot
+- Quarkus
+- Tomcat
+- Wildfly
+- Scripting Engines (e.g. GraalVM, Groovy)
+- Jakarta EE
+
+Also update the changelog for major upgrades of other dependencies.

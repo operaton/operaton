@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:e87050c1-a8f1-4358-948c-623ea65dfc18",
+  "serialNumber": "urn:uuid:2662edd2-986d-4125-95a1-2805219474b3",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-17T05:39:23Z",
+    "timestamp": "2025-11-17T10:13:37Z",
     "tools": {
       "components": [
         {
@@ -647,44 +647,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter",
-      "version": "5.14.0",
+      "version": "5.14.1",
       "description": "Module \u0022junit-jupiter\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7ddc03716bc709deb839426691440409"
+          "content": "94e4a8940f6a4d448991be180bf3b1b8"
         },
         {
           "alg": "SHA-1",
-          "content": "0df30c385c7c8ea0e74e3b63d8c6c0fc2b0ecb55"
+          "content": "73861dcfc09f81fa2c21ccea05af56d756d62173"
         },
         {
           "alg": "SHA-256",
-          "content": "a89501c76e91abfdc08201acdaaae681d5c8d59b62f375d5929b6681a0118f43"
+          "content": "4bb306b119bc6b87c874d5cebaa25a8c2956b2548cb0c6a41e8a756bd1dc6327"
         },
         {
           "alg": "SHA-512",
-          "content": "19264c5e304c9c1ed6cb1c64133718e2158f2b41641a66443b1b6acd604260323d14762b810ac60322632f8425a8151d72c025579233942f58c6daf95db47eb8"
+          "content": "92d64dcd78645799ab6ca29d36f4ff428a77b193920946da585e8f4e3be6806dd5d4cbdd72244a8af91a83f236987635b3277d9f0c6d2c894e78e54e40f075fc"
         },
         {
           "alg": "SHA-384",
-          "content": "e7aa6c6ac202ef53fa9ca569130f8d4f543e40f2abeb816bc1f43ca3beb4976ecebfb046b5206bb53e6099ac3d84a7a8"
+          "content": "56fab948ca62c775f060d981408343b9fe5cdd6d800170f2c4cfb996207c838c39a31e1469c1aa9fbf3e794e401fd5a0"
         },
         {
           "alg": "SHA3-384",
-          "content": "ff4ae58981b30357b53760a4f36cd923c4836d9958dbf9ee3fb68187505a2013e55aea74ff3cc864f93116e60f8c801b"
+          "content": "8e4d0a1d93e88af7c4e04754d8f5303349415d75a8a6d586cedb55681741c81157ef27549a5be4885ad99dde2b6bc2ac"
         },
         {
           "alg": "SHA3-256",
-          "content": "7adc0651a63da83abf9e8fee8c99f529778982c57f57148e8e0ac4176bb105de"
+          "content": "7532a2a7d182a53d917c621d99983dd6a998b1c782bee428cd1ca542bdcc1c2a"
         },
         {
           "alg": "SHA3-512",
-          "content": "19ac28d057da5bf183e235687eefec3029d6b1085ded9e91d9d3c63b66b3e9368edd776c411780f03581f53830d3cfc7d6e7cb5df56716f4c25498abd1f10b2e"
+          "content": "1969cc72fd7bde83fdb0bb8e476bb57e63bd3007018cabe87baf44872e83eff07f89af42b8f4d6c492fcbfbf7b4bbbc919dc97c99cb79c067d8f4a822978be04"
         }
       ],
       "licenses": [
@@ -694,7 +694,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -708,44 +708,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-api",
-      "version": "5.14.0",
+      "version": "5.14.1",
       "description": "Module \u0022junit-jupiter-api\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ed392a0bd93155f0fd0674022a8ad32c"
+          "content": "bcb681e3666c53395f9fd917efd80d20"
         },
         {
           "alg": "SHA-1",
-          "content": "4cc3acff995a4ce56ebf735a485800ddede31cb0"
+          "content": "8943c1d7f3ad50a08fa654e92d9241dc632bbc4c"
         },
         {
           "alg": "SHA-256",
-          "content": "d3431a004b83823bcdd95b6738130087ec32b2fb28a5a5deb4fbc16357bab8f9"
+          "content": "16f16f0c3c1ef97adb830484194669ed9683b434ce6f38fe3a01bd2906ae6c59"
         },
         {
           "alg": "SHA-512",
-          "content": "37b3733dfc299e3c9e36be2766385e19001fef391b80d8a7202ab3490b79c024b057b30d60c4e10716bdebe74199e8c22ec50e9e78d8a0b0af1e237b731e31c3"
+          "content": "1347a3d7015cf06a9a38c37b6f35d54face4968a3a50ef390a7d3407fd5a7f32b134d876b8674c27a7f45b087bff0c825ff47db21db69421a6cfc70531a4da19"
         },
         {
           "alg": "SHA-384",
-          "content": "4d189b6b39e6f2c4928a440aad6a6013d963d5673db96d93077c8c285c31a8cf82f3689ac035973489574e34d557e846"
+          "content": "28ae6cc051e4211c3804150ad38caa35b80a2b35bef6dd147fb7386b80958a42e9c92fd545759a14c373ae8d4f761f0f"
         },
         {
           "alg": "SHA3-384",
-          "content": "fb45641b630045aecf9e85e5a77c25cae73fc7fd868c5360a15d630a14937e11b6076e0a48ac8113545408f91c56537d"
+          "content": "9e421116137d7b3078ae69bd64250530f9a3ab783e8609ec0d17485979785c993122443ceaeb753e46ccdca352a3ed8b"
         },
         {
           "alg": "SHA3-256",
-          "content": "7b6a38d882379b043d1a3b03277e262dc043d7c6f81d6530b193f66847c0c115"
+          "content": "d3e8b6d35e4d3b453327d231d15c1ddc0303d54b5c1ac2fc8ca5800b949c5923"
         },
         {
           "alg": "SHA3-512",
-          "content": "994b8430f06ae67d71ede07b843c951c4975dc963b2885fa4a7c4fcd072545027904d0adee58724d89f376e560e508c96bf0b2f80aab6f223d629e7675763443"
+          "content": "0c651a9062f0a8192cd7db6cf0daf7a6badf6c2469d0db2580bb83d5a9d0e289718efb28e00a7ed043374180d622949b758d6e988a743d102dab31531bb13e2e"
         }
       ],
       "licenses": [
@@ -755,7 +755,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -830,44 +830,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.0?type=jar",
+      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
       "group": "org.junit.platform",
       "name": "junit-platform-commons",
-      "version": "1.14.0",
+      "version": "1.14.1",
       "description": "Module \u0022junit-platform-commons\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7f72f4b9a2ee123155ac4e9a011e0d8f"
+          "content": "77af4cdf9410299f74fa244f06565d8b"
         },
         {
           "alg": "SHA-1",
-          "content": "e7e1bbf2044652efc5a2a21f6b8c21173a9b91a1"
+          "content": "3d6d355ba36d7620bfef87b896708a975accc108"
         },
         {
           "alg": "SHA-256",
-          "content": "e543a3a8422f1dfe6047f535305b70c777e0db431f1ef3f55ef5c86ac0bbcb9b"
+          "content": "39a1f247aba3346be0b4e46dbb3c09031c0cfcad111d7d9904795b917e8c1c7a"
         },
         {
           "alg": "SHA-512",
-          "content": "9950518c4136a5e8da32b09bc3fa0c37737c1b68b6ad4933c627cb5d87f763dc148fca59b1e6dec08197e7fa022805435ba9d419ff8e902d4823471a51aae0fd"
+          "content": "528fa274d3b023cc71af4b1f7885226507c31215967793ff1a7f31a968a49e7bd4186ecda956df9f27c26763e134a309bfad6f573574bf32a2b0bbba11c128ed"
         },
         {
           "alg": "SHA-384",
-          "content": "15aa7f23a280c1e76429194a404bf1c0759f0be9694975881e5c1bce20eee8a5f02452faf3531e01135d49d8089cb4aa"
+          "content": "dba88317b03eed3ecb8841bfc16f2a41ab34a9cc552322971a9bae1ac8dce17d6e8455c58c746d560ea963b6b688b929"
         },
         {
           "alg": "SHA3-384",
-          "content": "08051a9059cb5ff7be8ca7697f1101863014085f00a9aeef6fda926f38f15398241e279571696c078e53d95cb2ddadfe"
+          "content": "38b0df32be99ea30fedaa9b4272dfcb7a26e94cc3d5854d7cd7e7d81879f31098e3f30c556c0b58f30983288980515f0"
         },
         {
           "alg": "SHA3-256",
-          "content": "fd7987e0106ff66a6166168b7718014b0b50fa6c6d78fe27e5b3a8331b7ffc6f"
+          "content": "b94a131e89fb79c69c105c8212c30cb39dd2c9207d8a8bf154cf70429e82185f"
         },
         {
           "alg": "SHA3-512",
-          "content": "e9bc6725eb5be42f5b9f6570e1407b327eba3614e6c4849a74bfb8b41172515624a34ae644c4f64f918bad04ddf0be5e73fc5eb7536dc1e77dcdf3663f43b22d"
+          "content": "cfccacb897c4231f7dd880969e9c8b472003e0ee75f6ae775fc3fcba439bf72fa65b89058a14ecd4fb9b9ba161d5d86abca2e23860c12f99aa228feb90160917"
         }
       ],
       "licenses": [
@@ -877,7 +877,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.0?type=jar",
+      "purl": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -952,44 +952,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-params",
-      "version": "5.14.0",
+      "version": "5.14.1",
       "description": "Module \u0022junit-jupiter-params\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "dd4c6213ae046597f04d386cc5038338"
+          "content": "d1abbac56b7938dfa20928bce95af596"
         },
         {
           "alg": "SHA-1",
-          "content": "3027dc3529237b2285b261640134daa217068c96"
+          "content": "8f2932b4a69f3831370fed1c09253108684fb606"
         },
         {
           "alg": "SHA-256",
-          "content": "7fbb51837921c329604ba119dc1af0573d36230ea80f786aa3d4fd8c1dbb8a1b"
+          "content": "c076e3208dbc231d1eb7e2d969578c314c1658fa1a29cc8f0447c804f29327fa"
         },
         {
           "alg": "SHA-512",
-          "content": "3c006ce23e28d447480313b8b7a1a0dfe14c8b795b3fde187a8932c7472d8b4fdfe35761fa423fd711b797f0a568c4b633243539a7bbaaa5e4f008b79e45446e"
+          "content": "07f39b06ee1d5ef026e0118e354a334352eaa3c6011a8c9d13cf90209663ced4c02c098b2981734ebc6c4c93d638d1b5e39f1076fb7722ae99451bf08811fe0f"
         },
         {
           "alg": "SHA-384",
-          "content": "92c1ce8da6bedd46f036e3ec05faa85258b49bef68cd9b73233f143c2a5a609e49257aeddc2ef809f17f2bcbc4e37e07"
+          "content": "0d943c315199d3b8513da1482bdc41bdbbe789870e7759038521b9bce78900428abe945fb036b01c706b6ee2090761e2"
         },
         {
           "alg": "SHA3-384",
-          "content": "eb48e7897d394f31b6abb6d0df26e62c74ff4d07111b5f13ede677d3a06daf0a69a890113505d47f6808d81666631cba"
+          "content": "69a44dd073d174707e1635871fe0b574ef5177a86d27618f32ac8477c8644a05a327c1454bc7563dd3e208046fc50b76"
         },
         {
           "alg": "SHA3-256",
-          "content": "ce3c0b2e2031817b3237d4248008b765605dd69785f61e3290468e63775a7f2a"
+          "content": "c815e6677f9b397d6636b8bea31e6f9408e0004524b936ff3088633e773abfe9"
         },
         {
           "alg": "SHA3-512",
-          "content": "e7864946720ffad2748a8a6c844c0691fda0f0701aaed37a8c4a75f70acf64026e0012af47003c7ed642022178812b7b2fe583053f01dadf4c3690e97260b5dc"
+          "content": "7befa034c4bee8ac6c0b2d2f93d9db4a6a78a52244babe56956cfe4790f8da3108535915761bb0b409d8b6e33ebc7f86a58ada842328b0a0fcc294c2cdf65321"
         }
       ],
       "licenses": [
@@ -999,7 +999,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -1013,44 +1013,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.0?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-engine",
-      "version": "5.14.0",
+      "version": "5.14.1",
       "description": "Module \u0022junit-jupiter-engine\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "5a1f1a143fb48a49ceb29526b3951d5b"
+          "content": "53790c2efbfec436878ce9fcee47a448"
         },
         {
           "alg": "SHA-1",
-          "content": "9da8a108759444556e759f30e663a416a80f402c"
+          "content": "f230d30ae8ce4c4171eaabc086e00a645ad054ed"
         },
         {
           "alg": "SHA-256",
-          "content": "203b7a240b15716f8b881e2dfab0c580f1da5b274a196ff360f8cada2d1752ea"
+          "content": "df44aa18d05ced13fa6836ca214c224caf3fffde4df20e9ce7ddfafb5c9d02f8"
         },
         {
           "alg": "SHA-512",
-          "content": "ae870fa9191d24acce00ae9c6132be08876161d2e2bc19f802c40bbc6c0f7db8fa601af595cd00742dd39cfc26d65f43b2b00a7a8a249061b937ac1a384ebfda"
+          "content": "0e891c3fc3b9750a389048dc7c96759e28bd57ed5b0c10a92af90fac041387acc5d9bf6fdbcb09440a815a597d909ff108f0f7567c7b00379314213ba51013b4"
         },
         {
           "alg": "SHA-384",
-          "content": "582418caadd8ea23d485a9ae0936986a9684f00b21f8ebbbfe4a7d938c48aee3a00309dcaebbae5f72fd2c2b50972cde"
+          "content": "ab2ebc939da5968042000efc2cf03cc13bb062b7abc70edb6ec0ac67b0188832d4aebb83b35feefabb632f4cc79a54a2"
         },
         {
           "alg": "SHA3-384",
-          "content": "94f90f36a2e417bcec2be88e3ba5e79f52ee536b30da92ad82944027f2787d3de84e68ba422643bf4625a9c9624098bf"
+          "content": "688c1caa93b67add62b223d67d9299717371901518f6c01837aad03ae8c8acf4b1f3062e3b24c4179fd854285ab2fb95"
         },
         {
           "alg": "SHA3-256",
-          "content": "04559b6f51de6103a6c3ad8cc6c3f5ae9cd623aa77ff7d087665816e571c40b6"
+          "content": "a11efc51e2500fc24c33ce9968a1af50fc8d4a1ad75a2e8c0c114777c25b1baf"
         },
         {
           "alg": "SHA3-512",
-          "content": "da2ef92e725626fb0083216cb23048d9fcb71db893cc8faca110737481f5475fd099e79677ef687e0ef6c7a1e6e44d08071ae9a2dee150aea2d4e0c74b54e09d"
+          "content": "3f6d47cb2f378aaa3f51cf4a5300f2bb90b69447015adf45b74d5317a62b179ce09495e631387df74ea2403122753adb0705def74d8221032497606e1613c112"
         }
       ],
       "licenses": [
@@ -1060,7 +1060,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.0?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -1074,44 +1074,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.0?type=jar",
+      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
       "group": "org.junit.platform",
       "name": "junit-platform-engine",
-      "version": "1.14.0",
+      "version": "1.14.1",
       "description": "Module \u0022junit-platform-engine\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "80623f8b044fc4fde498e82659a5e9d7"
+          "content": "25445e256638a568aab73229a6a7f7a5"
         },
         {
           "alg": "SHA-1",
-          "content": "77386b812c0e3ba96cdd7c018d2a2f61940ccd8f"
+          "content": "4fd44468a55879fd17ed015476717698f3cf5e85"
         },
         {
           "alg": "SHA-256",
-          "content": "57cd29de834469aee656e5debda1f09f7c59630fd57b90cc0cbaa31726fc4d4a"
+          "content": "a89310dd69dd9ac7031db9997dcab9a1481512fa546077e4219cefa2e287ebc7"
         },
         {
           "alg": "SHA-512",
-          "content": "7785b08821afdf87e234cf41e78ed5d0bb054c0c521836aaa5bee02cc7f3cc7d76eb3eae1fb83b1962e134e53337e3d63d17df1ec86aa8a31f509cd1a85b0114"
+          "content": "8b0e627fb887a5f97b276689ddcbcc1ee7cae232a17a9b14ee9ede516b3488b4ef95168078808113ccf3737947709b295565d5de738491b181cbca717bd0af5f"
         },
         {
           "alg": "SHA-384",
-          "content": "07bea5e62637e8c8ba93434cee3c181e4369a64ee1b9c50a1bb285327a23aee447d11b3aa75d942b0ae4078b42cf3f33"
+          "content": "81f38b791b58f58aa792e056dc580db2733d0fe7fb6ad5a14491a5ef8ccd9803854b8fa980db659aea3a886a2d8d54bd"
         },
         {
           "alg": "SHA3-384",
-          "content": "7c246b8f3af61b45209b943866c7b33f6175a06ba9761837bbb4350bdbaee6035feb945731210b85d3c2e624df756087"
+          "content": "ef4db7406956258b12d829355acbcda90224d8da2b6a294d60f9e4de2250245c44ea67863f0c36d952fbdcded066ffd1"
         },
         {
           "alg": "SHA3-256",
-          "content": "9e179e537037af710ee8497b981ba4c5a24841a24ea3661bc83e2ce4f447cfc8"
+          "content": "ce9bd445040130c3d7816277f33c5a44d95f8d6e9b7c94e79e1a72b84a58dd28"
         },
         {
           "alg": "SHA3-512",
-          "content": "fbe503de3d0ae82e684964000afaaf50143559a09349886516d79ed920b9f36aec6b82f1d87b729090fe5dbc79f32152da7bb1176ac7875730c05e6e370c43b3"
+          "content": "61ea81b60f8717380f82264686eaae9252505dde206807e34483c6d4af2a6398b33469a9e03bf9883c4af41f5854d49741a9dc88696d658000d1a087f798b0bb"
         }
       ],
       "licenses": [
@@ -1121,7 +1121,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.0?type=jar",
+      "purl": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -24075,7 +24075,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "01073114-e89f-420b-ab42-db1097e67ec6",
+      "bom-ref": "1c907317-2411-4128-a26a-074e607e3625",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27870,7 +27870,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9390094d-fe1c-4b31-b004-cf668fd96b41",
+      "bom-ref": "140bcee4-8be5-4001-82b8-54698e51031c",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27946,7 +27946,7 @@
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
@@ -27964,18 +27964,18 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
       "dependsOn": [
         "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.0?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
@@ -27984,7 +27984,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.0?type=jar",
+      "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
       "dependsOn": [
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
@@ -27994,34 +27994,34 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.0?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.platform/junit-platform-engine@1.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.0?type=jar",
+      "ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
       "dependsOn": [
         "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.0?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -28029,7 +28029,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -28037,7 +28037,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -28068,7 +28068,7 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -28076,7 +28076,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar"
       ]
     },
@@ -28089,13 +28089,13 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@1.1.0-SNAPSHOT?type=jar",
@@ -28107,7 +28107,7 @@
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -28118,7 +28118,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -28127,7 +28127,7 @@
       "dependsOn": [
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -28180,11 +28180,11 @@
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -28244,7 +28244,7 @@
         "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.2?type=jar",
         "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.2?type=jar",
         "pkg:maven/org.testcontainers/testcontainers-db2@2.0.2?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -28360,9 +28360,9 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar"
       ]
     },
@@ -28379,9 +28379,9 @@
         "pkg:maven/org.springframework/spring-beans@6.2.12?type=jar",
         "pkg:maven/joda-time/joda-time@2.12.5?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.apache.ant/ant@1.10.15?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
@@ -28838,8 +28838,8 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@3.1.11?type=jar",
         "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
@@ -30072,7 +30072,7 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/com.jayway.jsonpath/json-path@2.9.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar"
       ]
     },
     {
@@ -30162,8 +30162,8 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.12?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.12?type=jar",
@@ -30181,7 +30181,7 @@
       "ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar"
       ]
     },
     {
@@ -30251,7 +30251,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar"
       ]
     },
@@ -30367,7 +30367,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-external-task-client@1.1.0-SNAPSHOT?type=jar"
       ]
@@ -30375,7 +30375,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.operaton.bpm.qa/engine-variable-test@1.1.0-SNAPSHOT?type=war"
       ]
     },
@@ -30384,7 +30384,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -30741,7 +30741,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.24.0?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.0?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
@@ -30806,7 +30806,13 @@
       "dependsOn": []
     },
     {
-      "ref": "01073114-e89f-420b-ab42-db1097e67ec6",
+      "ref": "140bcee4-8be5-4001-82b8-54698e51031c",
+      "dependsOn": [
+        "1c907317-2411-4128-a26a-074e607e3625"
+      ]
+    },
+    {
+      "ref": "1c907317-2411-4128-a26a-074e607e3625",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -30851,12 +30857,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
-      ]
-    },
-    {
-      "ref": "9390094d-fe1c-4b31-b004-cf668fd96b41",
-      "dependsOn": [
-        "01073114-e89f-420b-ab42-db1097e67ec6"
       ]
     },
     {

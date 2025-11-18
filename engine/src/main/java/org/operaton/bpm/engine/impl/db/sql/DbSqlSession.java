@@ -57,7 +57,7 @@ import org.operaton.bpm.engine.impl.util.DatabaseUtil;
 import org.operaton.bpm.engine.impl.util.ExceptionUtil;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.camunda.migration.CamundaToOperatonLiquibaseMigration;
+import org.operaton.camunda.migration.CamundaToOperatonMigrationTask;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -645,7 +645,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       dbSchemaCheckVersion();
 
       try (Connection connection = Context.getProcessEngineConfiguration().getDataSource().getConnection()) {
-        new CamundaToOperatonLiquibaseMigration().execute(connection);
+        new CamundaToOperatonMigrationTask().execute(connection);
       } catch (Exception e) {
         throw LOG.getDatabaseTableNameException(e);
       }

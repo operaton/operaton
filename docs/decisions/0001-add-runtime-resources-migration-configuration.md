@@ -2,6 +2,7 @@
 # These are optional metadata elements. Feel free to remove any of them.
 status: "proposed"
 date: 2025-10-02
+decision-makers: ["@hauptmedia", "@ungerts", "@kthoms", "@SevDan"]
 ---
 
 # Camunda 7 to Operaton Runtime Resources Migration
@@ -10,17 +11,27 @@ date: 2025-10-02
 
 There is a problem with code migration for production runtimes if any platform code with FQN was used in resources like scripts or configurations. It is necessary to migrate it in a database
 
+Artifacts scope:
+* In scope: BPMN, DMN resources (scripts, forms) in runtime tables
+* Out of scope: all resources in history tables 
+
 <!-- This is an optional element. Feel free to remove. -->
 ## Decision Drivers
 
-* Camunda 7 users with large engine instances in production that are difficult to inspect should be able to migrate their data easily
+* Must provide smooth migration with as less as possible extra actions to run processes in new environment
+* Must remain DB-agnostic
+* Must prevent potential data corruption at all cost
+* Should be provided as a part of standard distribution
+* Should avoid manual data transformations (sql scripts, etl tasks etc.)
+* Should be predictable in terms of time, cpu and memory consumption
 
 ## Considered Options
 
 * SQL scripts as a standard engine cross-version migration for any database
 * Liquibase custom task unified for any database
 * Dedicated application/task/module as a standalone application
-* Configuration parameter and custom engine mode for migration
+* Configuration parameter and custom engine mode for data migration
+* Configuration parameter enables special engine mode with data compatibility without changes 
 
 ## Decision Outcome
 
@@ -65,15 +76,24 @@ Create an application that can be deployed separately from the engine to migrate
 
 ### Configuration parameter and custom engine mode for migration
 
-Add one more configuration parameter, `databaseSchemaUpdate`, that enables a new engine mode in which data will be migrated by the engine.
+Add one more configuration parameter, `camundaCompatibilityMode`, that enables a new engine mode in which data will be migrated by the engine for value `data-migration`.
 
 * **Good:** Easy to develop and maintain as Java code.
 * **Good:** Can be used in any engine build option (Liquibase, standalone, Spring Boot).
 * **Good:** Easy to test as a single solution for every DBMS.
 * **Good:** Can be enabled only when needed.
 * **Neutral-Bad:** Relatively separated from the core module, but less than a fully independent module.
-* **Bad:** Cannot be executed together with other `databaseSchemaUpdate` modes.
+* **Bad:** Cannot be executed together with other `camundaCompatibilityMode` modes.
 * **Bad:** Cannot be executed without the engine as a lightweight artifact.
+
+### Configuration parameter enables special engine mode with data compatibility without changes
+
+Add one more configuration parameter, `camundaCompatibilityMode`, that enables a new engine mode that will adjust engine resource selection and interpret Camunda 7 style resources as Operaton resources.
+
+* **Good:** Don't consume any runtime resources
+* **Good:** Easy to use in backward compatible runtime (old artifacts will be used as is) 
+* **Bad:** Untouched data may be a problem in future or causes unpredicted problems
+* **Bad:** 
 
 ## More Information
 

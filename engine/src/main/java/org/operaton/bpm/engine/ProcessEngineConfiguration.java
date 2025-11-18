@@ -104,6 +104,18 @@ public abstract class ProcessEngineConfiguration {
   public static final String DB_SCHEMA_UPDATE_CREATE_DROP = "create-drop";
 
   /**
+   * Migrates the Camunda 7 artifacts data in database to Operaton artifacts data when engine starts in that
+   * compatibility mode.
+   */
+  public static final String DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA = "migrate-data";
+
+  /**
+   * Translates the Camunda 7 artifacts data in database as Operaton artifacts data when engine starts in that
+   * compatibility mode.
+   */
+  public static final String DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE = "translation-mode";
+
+  /**
    * Upon building of the process engine, a check is performed and
    * an update of the schema is performed if it is necessary.
    */
@@ -235,6 +247,7 @@ public abstract class ProcessEngineConfiguration {
   protected String databaseVendor;
   protected String databaseVersion;
   protected String databaseSchemaUpdate = DB_SCHEMA_UPDATE_FALSE;
+  protected String databaseCamundaCompatibility;
   protected String jdbcDriver = "org.h2.Driver";
   protected String jdbcUrl = "jdbc:h2:tcp://localhost/activiti";
   protected String jdbcUsername = "sa";
@@ -585,6 +598,15 @@ public abstract class ProcessEngineConfiguration {
 
   public ProcessEngineConfiguration setDatabaseSchemaUpdate(String databaseSchemaUpdate) {
     this.databaseSchemaUpdate = databaseSchemaUpdate;
+    return this;
+  }
+
+  public String getDatabaseCamundaCompatibility() {
+    return databaseCamundaCompatibility;
+  }
+
+  public ProcessEngineConfiguration setDatabaseCamundaCompatibility(String databaseCamundaCompatibility) {
+    this.databaseCamundaCompatibility = databaseCamundaCompatibility;
     return this;
   }
 

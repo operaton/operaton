@@ -8,7 +8,7 @@ public class DbCamundaDataMigrate {
   public static void main(String[] args) {
     ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResourceDefault()
-        .setDatabaseCamundaCompatibility(ProcessEngineConfigurationImpl.DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA)
+        .setCamundaCompatibilityMode(ProcessEngineConfigurationImpl.DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA)
         .buildProcessEngine();
   }
 }

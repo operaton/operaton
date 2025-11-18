@@ -71,7 +71,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     // create custom script engine lookup to receive a fresh GraalVM JavaScript engine
     processEngineConfiguration.setScriptEngineResolver(new TestScriptEngineResolver(
         processEngineConfiguration.getScriptEngineResolver().getScriptEngineManager()));
-    processEngineConfiguration.setDatabaseCamundaCompatibility(ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE);
+    processEngineConfiguration.setCamundaCompatibilityMode(ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE);
   }
 
   @AfterEach

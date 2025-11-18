@@ -13,7 +13,7 @@
 
     <!-- Database configurations -->
     <property name="databaseSchemaUpdate" value="false" />
-    <property name="databaseCamundaCompatibility" value="migrate-data"/>
+    <property name="camundaCompatibilityMode" value="migrate-data"/>
 
     <!-- job executor configurations -->
     <property name="jobExecutorActivate" value="false" />

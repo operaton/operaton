@@ -87,7 +87,7 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
         .getProcessEngineConfiguration();
 
     if (config != null && ProcessEngineConfigurationImpl.DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE
-        .equals(config.getDatabaseCamundaCompatibility()) && GRAAL_JS_SCRIPT_ENGINE_NAME.equalsIgnoreCase(shortName)) {
+        .equals(config.getCamundaCompatibilityMode()) && GRAAL_JS_SCRIPT_ENGINE_NAME.equalsIgnoreCase(shortName)) {
 
       OperatonClassLoader operatonClassLoader = new OperatonClassLoader(Thread.currentThread().getContextClassLoader());
 
@@ -119,7 +119,7 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
 
       return GraalJSScriptEngine.create(null, builder);
     } else if (ProcessEngineConfigurationImpl.DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE
-        .equals(config.getDatabaseCamundaCompatibility()) && GROOVY_SCRIPTING_LANGUAGE.equalsIgnoreCase(shortName)) {
+        .equals(config.getCamundaCompatibilityMode()) && GROOVY_SCRIPTING_LANGUAGE.equalsIgnoreCase(shortName)) {
       return org.operaton.bpm.engine.impl.scripting.util.OperatonScriptEngineUtil.createGroovyScriptEngine();
     }
 

@@ -17,7 +17,7 @@
       <property name="authorizationEnabled">true</property>
       <property name="jobExecutorDeploymentAware">true</property>
       <property name="historyCleanupBatchWindowStartTime">00:01</property>
-      <property name="databaseCamundaCompatibility">translation-mode</property>
+      <property name="camundaCompatibilityMode">translation-mode</property>
     </properties>
 
     <plugins>

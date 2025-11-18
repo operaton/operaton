@@ -52,7 +52,7 @@ public class CamundaMigrationTest {
 
   @Test
   public void testProcessWithCamundaImportsMigratesSuccessfully() {
-    engineConfig.setDatabaseCamundaCompatibility(ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA);
+    engineConfig.setCamundaCompatibilityMode(ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA);
 
     new SchemaOperationsProcessEngineBuild().execute(commandExecutor);
 

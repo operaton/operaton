@@ -247,7 +247,7 @@ public abstract class ProcessEngineConfiguration {
   protected String databaseVendor;
   protected String databaseVersion;
   protected String databaseSchemaUpdate = DB_SCHEMA_UPDATE_FALSE;
-  protected String databaseCamundaCompatibility;
+  protected String camundaCompatibilityMode;
   protected String jdbcDriver = "org.h2.Driver";
   protected String jdbcUrl = "jdbc:h2:tcp://localhost/activiti";
   protected String jdbcUsername = "sa";
@@ -601,12 +601,12 @@ public abstract class ProcessEngineConfiguration {
     return this;
   }
 
-  public String getDatabaseCamundaCompatibility() {
-    return databaseCamundaCompatibility;
+  public String getCamundaCompatibilityMode() {
+    return camundaCompatibilityMode;
   }
 
-  public ProcessEngineConfiguration setDatabaseCamundaCompatibility(String databaseCamundaCompatibility) {
-    this.databaseCamundaCompatibility = databaseCamundaCompatibility;
+  public ProcessEngineConfiguration setCamundaCompatibilityMode(String camundaCompatibilityMode) {
+    this.camundaCompatibilityMode = camundaCompatibilityMode;
     return this;
   }
 

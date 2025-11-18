@@ -21,7 +21,7 @@ public class CreateCamundaFixturesDataScenario {
 
   @Deployment
   public static String deploy() {
-    return "org/operaton/bpm/qa/rolling/migrate/processWithCamundaScriptTask.bpmn20.xml";
+    return "org/operaton/bpm/qa/upgrade/migrate/processWithCamundaScriptTask.bpmn20.xml";
   }
 
   @DescribesScenario("createCamundaFixturesDataScenario")

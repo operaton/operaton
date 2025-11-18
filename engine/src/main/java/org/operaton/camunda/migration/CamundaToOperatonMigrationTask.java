@@ -41,7 +41,7 @@ public class CamundaToOperatonMigrationTask {
     try (final Statement statement = jdbcConnection.createStatement();
         final PreparedStatement byteArrayStatement = jdbcConnection.prepareStatement(
             "SELECT ID_, REV_, NAME_, DEPLOYMENT_ID_, BYTES_, GENERATED_, TENANT_ID_, TYPE_, CREATE_TIME_, ROOT_PROC_INST_ID_, "
-                + "REMOVAL_TIME_ FROM ACT_GE_BYTEARRAY " + "OFFSET ? " + "LIMIT ? ; ");
+                + "REMOVAL_TIME_ FROM ACT_GE_BYTEARRAY OFFSET ? LIMIT ? ; ");
         final PreparedStatement deploymentStatement = jdbcConnection.prepareStatement(
             "SELECT ID_, NAME_, DEPLOY_TIME_, SOURCE_, TENANT_ID_ FROM ACT_RE_DEPLOYMENT WHERE ID_ = ?;");
         final PreparedStatement insertDeploymentStatement = jdbcConnection.prepareStatement(
@@ -53,7 +53,7 @@ public class CamundaToOperatonMigrationTask {
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ");
         final PreparedStatement selectProcessDefinitionStatement = jdbcConnection.prepareStatement("SELECT ID_, REV_, "
             + "category_, name_, key_, version_, deployment_id_, resource_name_, dgrm_resource_name_, has_start_form_key_, suspension_state_, tenant_id_, version_tag_, history_ttl_, startable_ "
-            + "FROM ACT_RE_PROCDEF WHERE resource_name_ = ? " + "ORDER BY VERSION_ DESC " + "LIMIT 1;");
+            + "FROM ACT_RE_PROCDEF WHERE resource_name_ = ? ORDER BY VERSION_ DESC LIMIT 1;");
         final PreparedStatement insertProcessDefinitionStatement = jdbcConnection.prepareStatement(
             "INSERT INTO ACT_RE_PROCDEF( "
                 + "id_, rev_, category_, name_, key_, version_, deployment_id_, resource_name_, dgrm_resource_name_, has_start_form_key_, suspension_state_, tenant_id_, version_tag_, history_ttl_, startable_) "

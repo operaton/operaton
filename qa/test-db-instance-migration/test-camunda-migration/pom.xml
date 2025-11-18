@@ -14,7 +14,7 @@
   <properties>
     <!-- delete when 7.24 is released -->
     <operaton.version.current>${project.version}</operaton.version.current>
-    <operaton.version.previous>7.23.1</operaton.version.previous>
+    <operaton.version.previous>7.24.0</operaton.version.previous>
   </properties>
 
   <!-- uncomment when 7.24 is released -->

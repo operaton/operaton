@@ -166,6 +166,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.glassfish.jersey.core</groupId>
       <artifactId>jersey-common</artifactId>
       <version>${version.jersey3}</version>

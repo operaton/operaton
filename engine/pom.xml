@@ -106,10 +106,7 @@
           <groupId>com.lihaoyi</groupId>
           <artifactId>geny_2.13</artifactId>
         </exclusion>
-        <exclusion>
-          <groupId>org.scala-lang</groupId>
-          <artifactId>scala-library</artifactId>
-        </exclusion>
+        <!-- scala-library exclusion removed: needed for feel-engine 1.20.0+ due to jackson-module-scala -->
       </exclusions>
     </dependency>
 

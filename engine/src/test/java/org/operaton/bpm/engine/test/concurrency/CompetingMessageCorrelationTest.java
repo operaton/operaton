@@ -66,7 +66,11 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
-  @RequiredDatabase(excludes = DbSqlSessionFactory.H2)
+  // H2: Does not support pessimistic locking behavior reliably in test environment
+  // MSSQL: Uses READ_COMMITTED_SNAPSHOT isolation which relies on optimistic locking instead of pessimistic locks.
+  //        This test specifically requires pessimistic locking behavior (acquiring exclusive locks) which is
+  //        incompatible with snapshot isolation. Running this test with MSSQL causes infinite hangs.
+  @RequiredDatabase(excludes = {DbSqlSessionFactory.H2, DbSqlSessionFactory.MSSQL})
   void testConcurrentExclusiveCorrelation() throws Exception {
     InvocationLogListener.reset();
 
@@ -159,6 +163,10 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
 
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
   @Test
+  // MSSQL: Uses READ_COMMITTED_SNAPSHOT isolation which relies on optimistic locking instead of pessimistic locks.
+  //        This test requires pessimistic locking behavior (acquiring exclusive locks) which is incompatible
+  //        with snapshot isolation. Running this test with MSSQL causes infinite hangs.
+  @RequiredDatabase(excludes = DbSqlSessionFactory.MSSQL)
   void testConcurrentExclusiveCorrelationToDifferentExecutions() {
     InvocationLogListener.reset();
 

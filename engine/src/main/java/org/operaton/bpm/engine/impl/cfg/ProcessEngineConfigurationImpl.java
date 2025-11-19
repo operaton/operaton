@@ -324,7 +324,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public static final String DB_SCHEMA_UPDATE_CREATE = "create";
   public static final String DB_SCHEMA_UPDATE_DROP_CREATE = "drop-create";
-  public static final String DB_DATA_UPDATE_MIGRATE_FROM_CAMUNDA = "migrate-from-camunda";
+
+  public static final String DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA = "migrate-data";
+  public static final String DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE = "translation-mode";
 
   public static final int HISTORYLEVEL_NONE = HistoryLevel.HISTORY_LEVEL_NONE.getId();
   public static final int HISTORYLEVEL_ACTIVITY = HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId();

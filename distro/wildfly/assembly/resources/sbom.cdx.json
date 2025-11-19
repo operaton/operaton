@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:a8cba66e-6bd1-43ee-8a48-0f7a6c5adfa0",
+  "serialNumber": "urn:uuid:dfc55435-71eb-4d9f-af6c-172687e5dcd3",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-17T10:13:38Z",
+    "timestamp": "2025-11-19T10:28:06Z",
     "tools": {
       "components": [
         {
@@ -1401,45 +1401,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.19",
+      "version": "1.5.21",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "9a2b8a489b2c13d0e698a9ac5a236649"
+          "content": "e4aa08ccbae42f0a94ef6d706d0d5cf8"
         },
         {
           "alg": "SHA-1",
-          "content": "227519801110b803afd68449f11209bb60703630"
+          "content": "904915aa29a0bbff111ae90ed85541b2991a72fc"
         },
         {
           "alg": "SHA-256",
-          "content": "0872c1a2a14c29ffcfc0e42227b80f7e99fb17a5456270499ac6cad0d0436f1c"
+          "content": "b2523f7b0dabf4386c81312f0371d267e3a9fbce409046f16b042bf68571ba4a"
         },
         {
           "alg": "SHA-512",
-          "content": "b4f3231d2489c19615520dfd3282cc5c14d92beb72e8bb20a2301df4b89bdac34958dac39dd8864bf826838072cb6a2f1ab97c1db4c05efd8a17218f1004fdcf"
+          "content": "a37432f096f97b5b7610d2887345daddf03cb5fa4518532aa2849bbd6745da1921b87ce4d7b26df8667fdc412ed48ef78ab658d4e44e3c99b17e135e08ef863e"
         },
         {
           "alg": "SHA-384",
-          "content": "cefc2fc248c0c43f03fb94c4224b35b1d8788336cd39ca7746c998603eb1fca8fba33ffbd7ebc9efc550c4ca562c5276"
+          "content": "703c7867632bc76018b0784ec61d92a98073fbb3787e957ae8367d969303e3e269fa5f6a77a6ae1defc32dfc0a29abf0"
         },
         {
           "alg": "SHA3-384",
-          "content": "986daa6c2d54b358beea87e9e4e03d761291ed478f9237a0d14bef13e27301271549a15879edba00afea712c2ba77f8f"
+          "content": "0e23783135a7413f125970ad890ea83bd00e6ab5214ca8dc57ef66522c76047141a465d62bd845cf1944942fbcc61cd2"
         },
         {
           "alg": "SHA3-256",
-          "content": "c11b9a8725e7d7577320c287c1e7b113cd71e43bf2ff7f4cf9551223f171d908"
+          "content": "cbe7e7cba6710228c74753356425d9128a848cdb4b67998e39a2a7328611e309"
         },
         {
           "alg": "SHA3-512",
-          "content": "427b68433aaaa0c143539cb44ce44bb60531460bd6cf5544be9658981477f10c4870bdf63057bbca7f6b9515f3d228daafafe80a5a620eb4994a0e9d00562e96"
+          "content": "698adf9862d8aa8e59b8db1f258623313554334b795aa46c9578c7fae054b7f7d8756b01b4ef3eb2e3b57a7b271b5fa3e0f1f4ad2764b6760701419783203468"
         }
       ],
       "licenses": [
@@ -1455,7 +1455,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -1473,45 +1473,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.19?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.19",
+      "version": "1.5.21",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "15b5536ea5e878a7664275745af16f30"
+          "content": "00c20552b89470eff9f01f21c77d44d7"
         },
         {
           "alg": "SHA-1",
-          "content": "8847d9fcb02c62c338ba26e2b28059dd585ea1a9"
+          "content": "970bf47cbc34d24e47f375b6b4e407d6d699474f"
         },
         {
           "alg": "SHA-256",
-          "content": "9ca72fe31e32fad244ec9339570452e29631f67b7b9a72a7cbecd73c94dc3f3c"
+          "content": "0825ac1fc5296369121e5423e397c52d125b0e3fae743cfc0d8e416159f14f44"
         },
         {
           "alg": "SHA-512",
-          "content": "20f6e485eab6851fa74a68f740c6387ac041e7a2ce7eb2be1ec291ad287cb7154ebbd4514655624e3845269db38cbb57ae7a240f1f79cb4fe5a31f9c70cc4c53"
+          "content": "fdfe6da279fe10fa19bdfc401c5eba4f6a0db7cc4aec9148def5d59a5ffaec0bdd38e0e0c187aa124490129bef0c062719900483e6e7c7f6ff0333c521ed7e1d"
         },
         {
           "alg": "SHA-384",
-          "content": "40896f85789fd1846926bd149facf06ab7d8d2bcf5064164484218cefcebf6f93083ef95be9dcc3f3f82d43707b159ea"
+          "content": "789a53e1890f492b15f318b59583bac246afcaaeca744118c70d5ff5fa2d45cf6b0c3d41afdf56c72b9f5ea0c198f5ab"
         },
         {
           "alg": "SHA3-384",
-          "content": "a43ee6c48fe66b7d7f21489c77f64ca07bf5cbf1745d32b3ca87b7a89ac1dabea76c83a0786288735815eed221e1cd7f"
+          "content": "636c33723cbe6b611bcab962e826ba9c2179c6298218a510f503d0ccf7b5df3aeea60101d57c04b1a5490e8dcb2333e8"
         },
         {
           "alg": "SHA3-256",
-          "content": "639943642d465c4660d283175a1745c9510a06e2cfd97d55e4ccca5b3f1f350c"
+          "content": "7ff9859883b6680b051650aaa1a58558c34a7eaa930f119d8d576b0099b1061a"
         },
         {
           "alg": "SHA3-512",
-          "content": "aeb23e3cc5634a2c6cb33a03580786b9a0f98ff60f6967459ae5f916de35132358f92529621f017480a3b25cedd15ecf68b24432fe228a820eaee21c0d287e5b"
+          "content": "39b1beed6bb2e899c2b8338cdac6d160da624a1dd0961ea5b5c81051af8bf58345ac40111c627f7e7be777de9557bc9ba0797988843e0b364b1e87a5bd35d1f7"
         }
       ],
       "licenses": [
@@ -1527,7 +1527,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.19?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -22239,45 +22239,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.7?type=jar",
+      "bom-ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
       "publisher": "FasterXML",
       "group": "org.openapitools",
       "name": "jackson-databind-nullable",
-      "version": "0.2.7",
+      "version": "0.2.8",
       "description": "JsonNullable wrapper class and Jackson module to support fields with meaningful null values.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b33403b81b342a18e5ee49aa536e142f"
+          "content": "f17521ae6d61c6c7ffb8c096ebdbaccb"
         },
         {
           "alg": "SHA-1",
-          "content": "533eb7555ca3a34b1e2d71905d9fcaf3108dbe4e"
+          "content": "06855fd89850da1c053de99994780eff3f5b9319"
         },
         {
           "alg": "SHA-256",
-          "content": "fa49716778f0eb2ad09a721dfaddb578c920a4dea59c1f8b9fceee8cbe4bb9f8"
+          "content": "0cef88241ce6775f5b24f1a2c993aceb6fed25e15ff285e686e7b6e1f530bec7"
         },
         {
           "alg": "SHA-512",
-          "content": "a1d9a78fa0350e17f3236ac3c7645ee778377d9857ffb23a8c03c885eb0f693459f317e2047abb034add86964df46ed6e7fbbade27340e6a7eda1643cd726a8a"
+          "content": "6f70e5a28286f746dd34588d658b963a35d7ae2f0b306ed7694991e08c4ce3aec2807f9d31eeb853c211f50f45d93cbbf87a8bc623725eb1971a9e91c8855c36"
         },
         {
           "alg": "SHA-384",
-          "content": "b9c8002e63abb9ebc1e2ae7bb5e56d50707bf8ceab50a60d26dc61689c0b0b7ff4cbbbf6fce1120bb96d8d5b61b4a9ce"
+          "content": "e6b0a518dc63d8e3463e316c56938b6e53bcdc4446c2b6b191db17bddb341d88949deea39e0c45151fd2052267827394"
         },
         {
           "alg": "SHA3-384",
-          "content": "8801ab03e28cf60629b79ed8f99ae9f143c43eb43a69d0128a9cd1de9ad23464ed98661293aa0c1f3647251e4e23d150"
+          "content": "0db1ef2525d785605eaa7a0b07d8fd1b4396afca4fc19381dc7db676c29bc33c578d1df09b9b162738d70a33740e1991"
         },
         {
           "alg": "SHA3-256",
-          "content": "e21d785609a10204ab4f3ad9f7844ac24fe6478281405eebcd76c37a2db0392e"
+          "content": "09ea26bef67122fd78f2d9afb8bbaf14b14809b26fbb44aa79c596dc5501fe05"
         },
         {
           "alg": "SHA3-512",
-          "content": "b2da7fbbbbf01107db4a0d1fd997aaaf0c89a38002b4bf32f5792270f8bf5a82bfedf88e467920b7262d09ea71a24126cdca19e320a9efffd1c52494e2455061"
+          "content": "8e7afc6800cda405f09e6014158938f07cf375544718c631de266adb424f048065efb3d536280a206dd49909251822790f5b3b84b847a32c17f7b943729c381a"
         }
       ],
       "licenses": [
@@ -22288,7 +22288,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.7?type=jar",
+      "purl": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/OpenAPITools/jackson-databind-nullable",
@@ -35068,7 +35068,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "1c907317-2411-4128-a26a-074e607e3625",
+      "bom-ref": "5a11da36-cff1-427e-b886-61b2ad258d5d",
       "name": "package-lock.json",
       "properties": [
         {
@@ -38863,7 +38863,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "140bcee4-8be5-4001-82b8-54698e51031c",
+      "bom-ref": "fe11a41c-0372-4eef-87be-2b7afe3029ec",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -39196,19 +39196,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.19?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.19?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
       "dependsOn": []
     },
     {
@@ -39357,7 +39357,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar"
       ]
     },
     {
@@ -40865,7 +40865,7 @@
     {
       "ref": "pkg:maven/org.springframework.boot/spring-boot-starter-logging@3.5.7?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
         "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3?type=jar",
         "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17?type=jar"
       ]
@@ -41167,7 +41167,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.12?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.12?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.19?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar"
       ]
     },
     {
@@ -41292,12 +41292,12 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
-        "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.7?type=jar",
+        "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.7?type=jar",
+      "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar"
       ]
@@ -42968,13 +42968,7 @@
       "dependsOn": []
     },
     {
-      "ref": "140bcee4-8be5-4001-82b8-54698e51031c",
-      "dependsOn": [
-        "1c907317-2411-4128-a26a-074e607e3625"
-      ]
-    },
-    {
-      "ref": "1c907317-2411-4128-a26a-074e607e3625",
+      "ref": "5a11da36-cff1-427e-b886-61b2ad258d5d",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -43019,6 +43013,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "fe11a41c-0372-4eef-87be-2b7afe3029ec",
+      "dependsOn": [
+        "5a11da36-cff1-427e-b886-61b2ad258d5d"
       ]
     },
     {

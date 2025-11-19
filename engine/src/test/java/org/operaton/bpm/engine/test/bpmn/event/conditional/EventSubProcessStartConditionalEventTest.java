@@ -743,7 +743,7 @@ class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventT
     //-> non interrupting conditional event is triggered
     tasksAfterVariableIsSet = taskQuery.list();
     assertThat(tasksAfterVariableIsSet).hasSize(2);
-    assertThat(conditionEventSubscriptionQuery.count()).isEqualTo(1);
+    assertThat(conditionEventSubscriptionQuery.count()).isOne();
   }
 
 
@@ -1299,8 +1299,8 @@ class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventT
 
     // then
     assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(2);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName(VARIABLE_NAME).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("donotloseme").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName(VARIABLE_NAME).count()).isOne();
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("donotloseme").count()).isOne();
   }
 
   @Test
@@ -1320,7 +1320,7 @@ class EventSubProcessStartConditionalEventTest extends AbstractConditionalEventT
 
     // then
     assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(2);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName(VARIABLE_NAME).count()).isEqualTo(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("donotloseme").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName(VARIABLE_NAME).count()).isOne();
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("donotloseme").count()).isOne();
   }
 }

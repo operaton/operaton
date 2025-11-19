@@ -732,7 +732,7 @@ class HistoricProcessInstanceQueryOrTest {
 
     // assume
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").active().count()).isEqualTo(2);
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").suspended().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").suspended().count()).isOne();
 
     // then
     assertThat(historyService.createHistoricProcessInstanceQuery().or().active().variableValueEquals("foo", 0).endOr().list()).hasSize(3);

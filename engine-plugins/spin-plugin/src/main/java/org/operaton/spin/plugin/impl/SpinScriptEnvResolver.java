@@ -33,7 +33,7 @@ public class SpinScriptEnvResolver implements ScriptEnvResolver {
     if(envScript != null) {
       return new String[] { envScript };
     }
-    return null;
+    return new String[0];
   }
 
 }

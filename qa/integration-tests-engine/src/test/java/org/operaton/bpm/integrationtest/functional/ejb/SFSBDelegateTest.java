@@ -27,6 +27,7 @@ import org.operaton.bpm.integrationtest.functional.ejb.beans.SFSBClientDelegate;
 import org.operaton.bpm.integrationtest.functional.ejb.beans.SFSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -56,7 +57,7 @@ public class SFSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolution");
 
-    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), SFSBDelegate.class.getName(), false);
 
@@ -64,7 +65,7 @@ public class SFSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -78,7 +79,7 @@ public class SFSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient");
 
-    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), SFSBDelegate.class.getName(), false);
 
@@ -86,7 +87,7 @@ public class SFSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SFSBDelegate.class.getName())).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }

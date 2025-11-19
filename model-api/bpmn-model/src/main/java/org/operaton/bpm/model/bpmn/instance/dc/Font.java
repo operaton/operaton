@@ -43,7 +43,17 @@ public interface Font extends BpmnModelElementInstance {
 
   Boolean isUnderline();
 
-  void SetUnderline(boolean isUnderline);
+  /**
+   * @deprecated use {@link #setUnderline(boolean)} instead
+   */
+  @Deprecated(since="1.1.0", forRemoval=true)
+  @SuppressWarnings({"java:S100", "java:S1133"})
+  default void SetUnderline(boolean isUnderline) {
+    setUnderline(isUnderline);
+  }
+
+  @SuppressWarnings("java:S1845")
+  void setUnderline(boolean isUnderline);
 
   Boolean isStrikeThrough();
 

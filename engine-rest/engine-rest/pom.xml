@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-engine-rest-core</artifactId>
   <name>Operaton - Engine - REST</name>
@@ -48,7 +48,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.jakarta.rs</groupId>
       <artifactId>jackson-jakarta-rs-json-provider</artifactId>
-      <version>2.20.0</version>
+      <version>${version.jackson}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -315,7 +315,7 @@
       </activation>
       <properties>
         <version.netty>4.2.4.Final</version.netty>
-        <version.undertow>2.3.19.Final</version.undertow>
+        <version.undertow>2.3.20.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>
@@ -495,7 +495,7 @@
              Operaton-supported Wildfly/JBoss EAP version.
              Currently, this is JBoss EAP 7.2. -->
         <version.resteasy>3.6.1.SP2</version.resteasy>
-        <version.netty>4.2.6.Final</version.netty>
+        <version.netty>4.2.7.Final</version.netty>
       </properties>
       <dependencies>
         <dependency>

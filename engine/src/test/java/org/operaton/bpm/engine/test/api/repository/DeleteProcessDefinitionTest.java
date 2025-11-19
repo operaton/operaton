@@ -116,7 +116,7 @@ class DeleteProcessDefinitionTest {
     repositoryService.deleteProcessDefinition(processDefinitions.get(0).getId());
 
     //then only one process definition should remain
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
@@ -139,7 +139,7 @@ class DeleteProcessDefinitionTest {
       // and the cascade flag is per default false
       assertThat(pex.getMessage()).contains("Deletion of process definition without cascading failed.");
     }
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
@@ -271,7 +271,7 @@ class DeleteProcessDefinitionTest {
     //then
     long timerDefinitions = managementService.createJobQuery().processDefinitionKey("one").count();
 
-    assertThat(timerDefinitions).isEqualTo(1);
+    assertThat(timerDefinitions).isOne();
   }
 
   @Test

@@ -35,13 +35,6 @@
       <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
     </dependencySet>
     <dependencySet>
-      <outputDirectory />
-      <includes>
-        <include>org.operaton.bpm:license-book:zip</include>
-      </includes>
-      <unpack>true</unpack>
-    </dependencySet>
-    <dependencySet>
       <outputDirectory>configuration/userlib/</outputDirectory>
       <includes>
         <include>com.h2database:h2</include>
@@ -134,6 +127,14 @@
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory />
+    </file>
+    <file>
+      <source>resources/sbom.cdx.json</source>
+      <outputDirectory></outputDirectory>
+    </file>
+    <file>
+      <source>target/generated-resources/LICENSE_BOOK.md</source>
+      <outputDirectory></outputDirectory>
     </file>
   </files>
 

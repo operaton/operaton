@@ -72,7 +72,7 @@ class SignalEventReceivedBuilderTest {
 
     runtimeService.createSignalEvent("signal").send();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Test
@@ -83,7 +83,7 @@ class SignalEventReceivedBuilderTest {
 
     runtimeService.createSignalEvent("signal").send();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Test
@@ -130,7 +130,7 @@ class SignalEventReceivedBuilderTest {
 
     runtimeService.createSignalEvent("signal").executionId(executionId).send();
 
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().count()).isOne();
   }
 
   @Test

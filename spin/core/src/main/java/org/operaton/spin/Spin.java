@@ -27,6 +27,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  * @author Sebastian Menski
  * @author Daniel Meyer
  */
+@SuppressWarnings({"java:S100", "unused" }) // method name 'S' is acceptable for a factory method
 public abstract class Spin<T extends Spin<?>> {
 
   /**

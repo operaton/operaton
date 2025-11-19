@@ -143,7 +143,7 @@ public class HistoricIdentityLinkLogRestServiceQueryTest extends AbstractRestSer
 
   @Test
   void testSortingParameters() {
-    InOrder inOrder = Mockito.inOrder(mockedQuery);
+    InOrder inOrder = null;
 
     // assignerId
     inOrder = Mockito.inOrder(mockedQuery);

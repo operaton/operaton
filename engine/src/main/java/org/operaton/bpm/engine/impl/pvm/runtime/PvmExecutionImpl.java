@@ -232,7 +232,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     if (currentScope != currentScope.getProcessDefinition()) {
       ActivityImpl currentActivity = (ActivityImpl) currentScope;
 
-      if (currentActivity != null && currentActivity.getIoMapping() != null && !skipIoMapping) {
+      if (currentActivity.getIoMapping() != null && !skipIoMapping) {
         currentActivity.getIoMapping().executeInputParameters(this);
       }
     }
@@ -1671,7 +1671,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @Override
   public void setVariable(String variableName, Object value, String targetActivityId) {
     String activityId = getActivityId();
-    if (activityId != null && activityId.equals(targetActivityId)) {
+    if (activityId != null && Objects.equals(activityId, targetActivityId)) {
       setVariableLocal(variableName, value);
     } else {
       PvmExecutionImpl executionForFlowScope = findExecutionForFlowScope(targetActivityId);
@@ -2194,7 +2194,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
       //activityInstanceId's can be null on transitions, so the activityId must be equal
       (lastActivityInstanceId == null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId) && lastActivityId.equals(currentActivityId))
         //if activityInstanceId's are not null they must be equal -> otherwise execution changed
-        || (lastActivityInstanceId != null && lastActivityInstanceId.equals(currentActivityInstanceId)
+        || (lastActivityInstanceId != null && Objects.equals(lastActivityInstanceId, currentActivityInstanceId)
         && (lastActivityId == null || lastActivityId.equals(currentActivityId)));
 
   }

@@ -93,6 +93,26 @@ This script checks the API compatibility of the main Java modules against a prev
 
 Results are available under `target/reports/clirr/` and in the `target/reports/clirr/clirr.md` file.
 
+## `rest-api-doc.sh`
+
+This script prepares REST API documentation from the OpenAPI specification using [redocly](https://redocly.com/).
+The output is an HTML file and the OpenAPI specification located at `target/rest-api/<VERSION>`.
+
+The version is extracted from the OpenAPI specification file.
+
+The script checks if the OpenAPI specification exists and generates it using Maven if necessary.
+
+**Usage:**
+```bash
+.devenv/scripts/build/rest-api-doc.sh
+```
+
+**Options:** 
+none
+
+**Requirements:**
+
+`jq` must be installed.  
 
 # Directory `maintenance`
 

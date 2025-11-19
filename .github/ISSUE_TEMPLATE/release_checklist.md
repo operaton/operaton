@@ -1,3 +1,14 @@
+---
+name:  🚀 Release Checklist
+about: A checklist for preparing a new release
+title: 'Release 1.x.x'
+type: task
+labels: ["build"]
+assignees: 'kthoms'
+projects: ["operaton/operaton"]
+
+---
+
 **What needs to be done?**
 
 This issue is for managing the release TODO.

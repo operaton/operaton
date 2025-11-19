@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-qa-wildfly-runtime</artifactId>
   <name>Operaton - QA Wildfly Test Runtime</name>
@@ -254,7 +254,10 @@
                       <include name="**/module.xml"/>
                       <replacefilter token="@project.version@" value="${project.version}"/>
                       <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
+                      <replacefilter token="@version.mariadb@" value="${version.mariadb}" />
+                      <replacefilter token="@version.mysql@" value="${version.mysql}"/>
                       <replacefilter token="@version.jython@" value="${version.jython}"/>
+                      <replacefilter token="@version.sqlserver@" value="${version.sqlserver}" />
                     </replace>
                   </target>
                 </configuration>
@@ -377,6 +380,7 @@
                       <include name="**/module.xml"/>
                       <replacefilter token="@project.version@" value="${project.version}"/>
                       <replacefilter token="@version.postgresql@" value="${version.postgresql}"/>
+                      <replacefilter token="@version.mysql@" value="${version.mysql}"/>
                     </replace>
                   </target>
                 </configuration>

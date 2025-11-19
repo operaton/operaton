@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.spin</groupId>
     <artifactId>operaton-spin-root</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-spin-dataformat-all</artifactId>
   <name>Operaton - Spin - All data formats in one</name>
@@ -130,7 +130,7 @@
             <additionalDependency>
               <groupId>junit</groupId>
               <artifactId>junit</artifactId>
-              <version>4.13.1</version>
+              <version>4.13.2</version>
             </additionalDependency>
           </additionalDependencies>
         </configuration>

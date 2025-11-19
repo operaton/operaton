@@ -35,9 +35,11 @@ import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 public abstract class AbstractGetDeployedFormCmd implements Command<InputStream> {
 
   protected static final String EMBEDDED_KEY = "embedded:";
-  protected static final String CAMUNDA_FORMS_KEY = "operaton-forms:";
+  protected static final String OPERATON_FORMS_KEY = "operaton-forms:";
+  protected static final String CAMUNDA_FORMS_KEY = "camunda-forms:";
   protected static final int EMBEDDED_KEY_LENGTH = EMBEDDED_KEY.length();
   protected static final int CAMUNDA_FORMS_KEY_LENGTH = CAMUNDA_FORMS_KEY.length();
+  protected static final int OPERATON_FORMS_KEY_LENGTH = OPERATON_FORMS_KEY.length();
 
   protected static final String DEPLOYMENT_KEY = "deployment:";
   protected static final int DEPLOYMENT_KEY_LENGTH = DEPLOYMENT_KEY.length();
@@ -67,6 +69,8 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
 
     if (resourceName.startsWith(EMBEDDED_KEY)) {
       resourceName = resourceName.substring(EMBEDDED_KEY_LENGTH, resourceName.length());
+    } else if (resourceName.startsWith(OPERATON_FORMS_KEY)) {
+      resourceName = resourceName.substring(OPERATON_FORMS_KEY_LENGTH, resourceName.length());
     } else if (resourceName.startsWith(CAMUNDA_FORMS_KEY)) {
       resourceName = resourceName.substring(CAMUNDA_FORMS_KEY_LENGTH, resourceName.length());
     }

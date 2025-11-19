@@ -4,22 +4,34 @@ name: Mark stale issues & PRs
 
 on:
   schedule:
-  - cron: '10 1 * * 0'
+    - cron: '10 1 * * 0' # runs every Sunday at 01:10 UTC
 
 jobs:
   stale:
-
     runs-on: ubuntu-latest
     permissions:
       issues: write
       pull-requests: write
 
     steps:
-    - uses: actions/stale@v10
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'This issue has been automatically marked as stale because it has not had recent activity.'
-        stale-pr-message: 'This pull request has been automatically marked as stale due to inactivity.'
-        stale-issue-label: 'status:stale'
-        stale-pr-label: 'status:stale'
-        exempt-milestones: '1.x-backlog'
+      - uses: actions/stale@v10
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          # Messages
+          stale-issue-message: 'This issue has been automatically marked as stale because it has not had recent activity.'
+          stale-pr-message: 'This pull request has been automatically marked as stale due to inactivity.'
+          close-issue-message: 'Closing this issue due to prolonged inactivity.'
+          close-pr-message: 'Closing this pull request due to inactivity.'
+
+          # Labels
+          stale-issue-label: 'status:stale'
+          stale-pr-label: 'status:stale'
+
+          # Timing
+          days-before-stale: 90
+          days-before-close: 14
+
+          # Exemptions
+          exempt-all-milestones: true
+

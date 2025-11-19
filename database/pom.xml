@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../parent</relativePath>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-database-settings</artifactId>
@@ -20,10 +20,10 @@
     <version.h2>2.4.240</version.h2>
     <version.h2-v1>1.4.200</version.h2-v1><!-- used for instance migration qa -->
     <version.oracle>23.9.0.25.07</version.oracle>
-    <version.mariadb>1.8.0</version.mariadb>
+    <version.mariadb>3.5.6</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
-    <version.mysql>9.4.0</version.mysql>
-    <version.sqlserver>12.10.1.jre11</version.sqlserver>
+    <version.sqlserver>13.2.1.jre11</version.sqlserver>
+    <version.mysql>9.5.0</version.mysql>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>12.1.2.0</version.db2>
     <version.postgresql>42.7.8</version.postgresql>

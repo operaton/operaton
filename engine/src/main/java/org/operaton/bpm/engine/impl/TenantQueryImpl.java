@@ -94,7 +94,7 @@ public abstract class TenantQueryImpl extends AbstractQuery<TenantQuery, Tenant>
 
   @Override
   public TenantQuery orderByTenantId() {
-    return orderBy(TenantQueryProperty.GROUP_ID);
+    return orderBy(TenantQueryProperty.TENANT_ID);
   }
 
   @Override

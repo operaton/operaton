@@ -55,8 +55,8 @@ public class SignalEventCatchBoundaryWithVariablesTest extends AbstractFoxPlatfo
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
 
     // TODO: THis fails because of http://jira.codehaus.org/browse/ACT-1257,
     // should be fixed and re-enabled :-)

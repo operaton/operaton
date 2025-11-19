@@ -1056,7 +1056,7 @@ public class DelegationAuthorizationTest extends AuthorizationTest {
     assertThat(MyDelegationService.currentAuthentication.getUserId()).isEqualTo(userId);
 
     disableAuthorization();
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     enableAuthorization();
   }
 

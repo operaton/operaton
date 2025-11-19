@@ -54,7 +54,7 @@ public final class CertificateHelper {
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-      return null;
+      return new X509Certificate[0];
     }
 
   }

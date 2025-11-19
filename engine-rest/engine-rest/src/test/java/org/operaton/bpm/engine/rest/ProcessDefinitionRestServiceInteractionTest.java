@@ -36,6 +36,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
@@ -2668,23 +2670,28 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .put(PROCESS_DEFINITION_SUSPENDED_URL);
   }
 
-  @Test
-  void testActivateProcessDefinitionByNothing() {
+  @ParameterizedTest
+  @ValueSource(strings = {"true", "false", "null"})
+  void putProcessDefinitionSuspended_shouldReturnBadRequest_givenInvalidRequest(String suspendedValue) {
     Map<String, Object> params = new HashMap<>();
-    params.put("suspended", false);
+    // invalid because 'processDefinitionId' and 'processDefinitionKey' are both missing
+    // only 'suspended' is provided, or not provided at all
+    if (!"null".equals(suspendedValue)) {
+      params.put("suspended", Boolean.parseBoolean(suspendedValue));
+    }
 
     String message = "Either processDefinitionId or processDefinitionKey should be set to update the suspension state.";
 
     given()
-      .contentType(ContentType.JSON)
-      .body(params)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", is(InvalidRequestException.class.getSimpleName()))
-        .body("message", is(message))
-      .when()
-        .put(PROCESS_DEFINITION_SUSPENDED_URL);
+            .contentType(ContentType.JSON)
+            .body(params)
+            .then()
+            .expect()
+            .statusCode(Status.BAD_REQUEST.getStatusCode())
+            .body("type", is(InvalidRequestException.class.getSimpleName()))
+            .body("message", is(message))
+            .when()
+            .put(PROCESS_DEFINITION_SUSPENDED_URL);
   }
 
   @Test
@@ -2694,44 +2701,6 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
     params.put("processDefinitionId", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID);
 
     String message = "Only processDefinitionKey can be set to update the suspension state.";
-
-    given()
-      .contentType(ContentType.JSON)
-      .body(params)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", is(InvalidRequestException.class.getSimpleName()))
-        .body("message", is(message))
-      .when()
-        .put(PROCESS_DEFINITION_SUSPENDED_URL);
-  }
-
-  @Test
-  void testSuspendProcessDefinitionByNothing() {
-    Map<String, Object> params = new HashMap<>();
-    params.put("suspended", true);
-
-    String message = "Either processDefinitionId or processDefinitionKey should be set to update the suspension state.";
-
-    given()
-      .contentType(ContentType.JSON)
-      .body(params)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", is(InvalidRequestException.class.getSimpleName()))
-        .body("message", is(message))
-      .when()
-        .put(PROCESS_DEFINITION_SUSPENDED_URL);
-  }
-
-  @Test
-  void testSuspendProcessDefinitionThrowsInvalidRequestException() {
-    Map<String, Object> params = new HashMap<>();
-    params.put("suspended", true);
-
-    String message = "Either processDefinitionId or processDefinitionKey should be set to update the suspension state.";
 
     given()
       .contentType(ContentType.JSON)

@@ -173,7 +173,7 @@ class ReceiveTaskTest {
     testRule.assertProcessEnded(processInstance23.getId());
 
     // expect: other process instance is still running
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance42.getId()).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance42.getId()).count()).isOne();
 
     // then: we can correlate the event subscription to the other process instance
     runtimeService.correlateMessage("newInvoiceMessage", "42");
@@ -375,7 +375,7 @@ class ReceiveTaskTest {
 
     // expect: after completing the first receive task there is one event subscription for compensation
     assertThat(runtimeService.createEventSubscriptionQuery()
-        .eventType(EventType.COMPENSATE.name()).count()).isEqualTo(1);
+      .eventType(EventType.COMPENSATE.name()).count()).isOne();
 
     // then: we can trigger the second event subscription
     runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());

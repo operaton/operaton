@@ -112,8 +112,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -130,8 +130,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -153,8 +153,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -176,8 +176,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -220,8 +220,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -238,8 +238,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -261,8 +261,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -284,8 +284,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -328,8 +328,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -346,7 +346,7 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
     assertThat(query.suspended().singleResult().getTenantId()).isNull();
   }
 
@@ -369,8 +369,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -392,7 +392,7 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
     assertThat(query.active().singleResult().getTenantId()).isNull();
   }
 
@@ -436,8 +436,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -454,7 +454,7 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
     assertThat(query.suspended().singleResult().getTenantId()).isNull();
   }
 
@@ -477,8 +477,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -500,7 +500,7 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
     assertThat(query.active().singleResult().getTenantId()).isNull();
   }
 
@@ -521,8 +521,8 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
     engineRule.getIdentityService().clearAuthentication();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -558,11 +558,11 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
 
     engineRule.getIdentityService().clearAuthentication();
 
-    assertThat(query.active().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -583,6 +583,6 @@ class MultiTenancyProcessInstanceSuspensionStateTest {
     assertThat(query.active().count()).isZero();
     assertThat(query.suspended().count()).isEqualTo(3L);
     assertThat(query.suspended().tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(2L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
   }
 }

@@ -95,7 +95,7 @@ public class PaContextSwitchCustomSerializerTest extends AbstractFoxPlatformInte
       return null;
     }, "pa4");
 
-    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricActivityInstanceQuery().activityId("exclusiveGateway").finished().count()).isOne();
 
   }
 

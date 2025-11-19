@@ -678,7 +678,7 @@ class ExternalTaskQueryTest {
   void testProcessDefinitionKey() {
     assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isZero();
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
-    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKey("oneExternalTaskProcess").count()).isOne();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -687,7 +687,7 @@ class ExternalTaskQueryTest {
     assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isZero();
     var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     assertThat(processInstance).isNotNull();
-    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionKeyIn("oneExternalTaskProcess").count()).isOne();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -696,7 +696,7 @@ class ExternalTaskQueryTest {
     assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isZero();
     var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     assertThat(processInstance).isNotNull();
-    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionName("One external task process").count()).isOne();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -705,7 +705,7 @@ class ExternalTaskQueryTest {
     assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isZero();
     var processInstance = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     assertThat(processInstance).isNotNull();
-    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processDefinitionNameLike("One external task proc%").count()).isOne();
   }
 
   @Deployment(resources="org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -725,34 +725,34 @@ class ExternalTaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
     // Test query matches
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 928374L).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("shortVar",  (short) 123).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("integerVar", 1234).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("stringVar", "stringValue").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("booleanVar", true).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nullVar", null).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 928374L).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("shortVar", (short) 123).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("integerVar", 1234).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("stringVar", "stringValue").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("booleanVar", true).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("dateVar", date).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nullVar", null).count()).isOne();
 
     // Test query for other values on existing variables
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 999L).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("shortVar",  (short) 999).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("integerVar", 999).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("stringVar", "999").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("booleanVar", false).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("longVar", 999L).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("shortVar", (short) 999).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("integerVar", 999).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("stringVar", "999").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("booleanVar", false).count()).isZero();
     Calendar otherDate = Calendar.getInstance();
     otherDate.add(Calendar.YEAR, 1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("dateVar", otherDate.getTime()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nullVar", "999").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("dateVar", otherDate.getTime()).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nullVar", "999").count()).isZero();
 
     // Test querying for task variables not equals
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 999L).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("shortVar",  (short) 999).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("integerVar", 999).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("stringVar", "999").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("booleanVar", false).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 999L).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("shortVar", (short) 999).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("integerVar", 999).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("stringVar", "999").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("booleanVar", false).count()).isOne();
 
     // and query for the existing variable with NOT should result in nothing found:
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isEqualTo(0);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("longVar", 928374L).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -766,11 +766,11 @@ class ExternalTaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
     // query for case-insensitive variable name should only return a result if case-insensitive search is used
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableNamesIgnoreCase().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).count()).isZero();
 
     // query should treat all variables case-insensitively, even when flag is set after variable
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isEqualTo(1);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName.toLowerCase(), variableValue).matchVariableNamesIgnoreCase().count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -784,24 +784,24 @@ class ExternalTaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
     // query for existing variable should return one result
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, variableValue).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, variableValue).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isOne();
 
     // query for non existing variable should return zero results
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals("nonExistentVariable", variableValue.toLowerCase()).count()).isZero();
 
     // query for existing variable with different value should return zero results
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, "nonExistentValue").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, "nonExistentValue").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, "nonExistentValue".toLowerCase()).count()).isZero();
 
     // query for case-insensitive variable value should only return a result when case-insensitive search is used
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueEquals(variableName, variableValue.toLowerCase()).count()).isOne();
 
     // query for case-insensitive variable with not equals operator should only return a result when case-sensitive search is used
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotEquals(variableName, variableValue.toLowerCase()).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -811,20 +811,21 @@ class ExternalTaskQueryTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal%").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngValue").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVal%").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal%").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngValue").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVal%").count()).isOne();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVar%").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVar").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVar%").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVar%").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVar").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "%ngVar%").count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("nonExistingVar", "string%").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("nonExistingVar", "string%").count()).isZero();
 
     // test with null value
-    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(() ->
-            externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", null).count());
+    ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery();
+
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(() -> externalTaskQuery.processVariableValueLike("stringVar", null));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -835,21 +836,23 @@ class ExternalTaskQueryTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
+    ExternalTaskQuery externalTaskQuery = externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase();
 
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "stringVal%".toLowerCase()).count()).isOne();
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "%ngValue".toLowerCase()).count()).isOne();
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "%ngVal%".toLowerCase()).count()).isOne();
 
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "stringVar%".toLowerCase()).count()).isZero();
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "%ngVar".toLowerCase()).count()).isZero();
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "%ngVar%".toLowerCase()).count()).isZero();
+
+    assertThat(externalTaskQuery.processVariableValueLike("stringVar", "stringVal".toLowerCase()).count()).isZero();
+    assertThat(externalTaskQuery.processVariableValueLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isZero();
 
     // test with null value
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueLike("stringVar", null).count());
+            externalTaskQuery.processVariableValueLike("stringVar", null));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -859,20 +862,21 @@ class ExternalTaskQueryTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal%").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngValue").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVal%").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal%").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngValue").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVal%").count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVar%").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVar").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVar%").count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVar%").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVar").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "%ngVar%").count()).isOne();
 
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal").count()).isEqualTo(1);
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("nonExistingVar", "string%").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("nonExistingVar", "string%").count()).isZero();
 
     // test with null value
-      assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", null).count());
+    var externalTaskQuery = externalTaskService.createExternalTaskQuery();
+    assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
+            externalTaskQuery.processVariableValueNotLike("stringVar", null));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -882,21 +886,22 @@ class ExternalTaskQueryTest {
     variables.put("stringVar", "stringValue");
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngValue".toLowerCase()).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal%".toLowerCase()).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngValue".toLowerCase()).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVal%".toLowerCase()).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVar%".toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar".toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar%".toLowerCase()).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVar%".toLowerCase()).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar".toLowerCase()).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "%ngVar%".toLowerCase()).count()).isOne();
 
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal".toLowerCase()).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", "stringVal".toLowerCase()).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("nonExistingVar", "stringVal%".toLowerCase()).count()).isZero();
 
     // test with null value
+    var externalTaskQuery = externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase();
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().matchVariableValuesIgnoreCase().processVariableValueNotLike("stringVar", null).count());
+            externalTaskQuery.processVariableValueNotLike("stringVar", null));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -913,87 +918,88 @@ class ExternalTaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess", variables);
 
     // test compare methods with numeric values
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928373).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928374).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928375).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928373).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928374).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("numericVar", 928375).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928373).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928374).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("numericVar", 928375).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928375).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928374).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928373).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928375).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928374).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("numericVar", 928373).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928375).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928374).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928373).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928375).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928374).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("numericVar", 928373).count()).isZero();
 
     // test compare methods with date values
     Date before = new GregorianCalendar(2014, 2, 2, 2, 2, 1).getTime();
     Date after = new GregorianCalendar(2014, 2, 2, 2, 2, 3).getTime();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", before).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", date).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", after).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", before).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", date).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("dateVar", after).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", before).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", after).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", before).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", date).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("dateVar", after).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", after).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", date).count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", before).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", after).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", date).count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("dateVar", before).count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", after).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", date).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", before).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", after).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", date).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("dateVar", before).count()).isZero();
 
     //test with string values
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "aa").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "ab").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "ba").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "aa").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "ab").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("stringVar", "ba").count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "aa").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "ab").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("stringVar", "ba").count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "ba").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "ab").count()).isEqualTo(0);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "ba").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "ab").count()).isZero();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("stringVar", "aa").count()).isZero();
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "ba").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "ab").count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "aa").count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "ba").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "ab").count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("stringVar", "aa").count()).isZero();
 
     // test with null value
+    var externalTaskQuery = externalTaskService.createExternalTaskQuery();
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-        externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("nullVar", null).count());
+        externalTaskQuery.processVariableValueGreaterThan("nullVar", null));
 
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("nullVar", null).count());
+            externalTaskQuery.processVariableValueGreaterThanOrEquals("nullVar", null));
 
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-        externalTaskService.createExternalTaskQuery().processVariableValueLessThan("nullVar", null).count());
+        externalTaskQuery.processVariableValueLessThan("nullVar", null));
 
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nullVar", null).count());
+            externalTaskQuery.processVariableValueLessThanOrEquals("nullVar", null));
 
     // test with boolean value
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("nullVar", true).count());
+            externalTaskQuery.processVariableValueGreaterThan("nullVar", true));
 
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("nullVar", false).count());
+            externalTaskQuery.processVariableValueGreaterThanOrEquals("nullVar", false));
 
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-        externalTaskService.createExternalTaskQuery().processVariableValueLessThan("nullVar", true).count());
+        externalTaskQuery.processVariableValueLessThan("nullVar", true));
 
     assertThatExceptionOfType(ProcessEngineException.class).isThrownBy(()->
-            externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nullVar", false).count());
+            externalTaskQuery.processVariableValueLessThanOrEquals("nullVar", false));
 
     // test non existing variable
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nonExisting", 123).count()).isEqualTo(0);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("nonExisting", 123).count()).isZero();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -1035,7 +1041,7 @@ class ExternalTaskQueryTest {
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -1073,9 +1079,9 @@ class ExternalTaskQueryTest {
             Collections.<String, Object>singletonMap("var", "123"));
 
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueNotEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThan("var", Variables.numberValue(123)).count()).isOne();
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueGreaterThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(5);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("var", Variables.numberValue(123)).count()).isEqualTo(0);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThan("var", Variables.numberValue(123)).count()).isZero();
     assertThat(externalTaskService.createExternalTaskQuery().processVariableValueLessThanOrEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
   }
 
@@ -1087,8 +1093,8 @@ class ExternalTaskQueryTest {
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Collections.<String, Object>singletonMap("var", Long.MAX_VALUE));
 
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isEqualTo(1);
-    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(Long.MAX_VALUE)).count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isOne();
+    assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(Long.MAX_VALUE)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -1102,7 +1108,7 @@ class ExternalTaskQueryTest {
             Collections.<String, Object>singletonMap("var", (long) MAX_DOUBLE_VALUE));
 
     // the query should not find the long variable
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isEqualTo(1);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(MAX_DOUBLE_VALUE)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -1112,13 +1118,13 @@ class ExternalTaskQueryTest {
             Variables.createVariables().putValue("var", 42).putValue("var2", 52.4d));
 
     // querying by 42.4 should not match the integer variable 42
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(42.4d)).count()).isEqualTo(0);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(42.4d)).count()).isZero();
 
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess",
             Collections.<String, Object>singletonMap("var", 42.4d));
 
     // querying by 52 should not find the double variable 52.4
-      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count()).isEqualTo(0);
+      assertThat(externalTaskService.createExternalTaskQuery().processVariableValueEquals("var", Variables.numberValue(52)).count()).isZero();
   }
 
   protected List<ProcessInstance> startInstancesByKey(String processDefinitionKey, int number) {

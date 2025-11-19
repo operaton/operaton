@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine</artifactId>
@@ -350,8 +350,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.graalvm.js</groupId>
+      <groupId>org.graalvm.polyglot</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.graalvm.polyglot</groupId>
+      <artifactId>polyglot</artifactId>
     </dependency>
 
     <dependency>
@@ -504,7 +511,7 @@
             </goals>
             <configuration>
               <excludes>
-                <exclude>org/operaton/bpm/comtainer/impl/jmx/deployment/Mock*.class</exclude>
+                <exclude>org/operaton/bpm/container/impl/jmx/deployment/Mock*.class</exclude>
                 <exclude>org/operaton/bpm/engine/impl/test/*TestCase.class</exclude>
                 <exclude>org/operaton/bpm/engine/test/**</exclude>
               </excludes>
@@ -526,6 +533,11 @@
               <goal>jar</goal>
             </goals>
             <configuration>
+              <includes>
+                <include>org/operaton/bpm/container/impl/jmx/deployment/Mock*.class</include>
+                <include>org/operaton/bpm/engine/impl/test/*TestCase.class</include>
+                <include>org/operaton/bpm/engine/test/**</include>
+              </includes>
               <classifier>junit5</classifier>
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
@@ -564,7 +576,8 @@
                 <compileSourceRoot>${project.basedir}/src/main/junit4</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
                 <compileSourceRoot>${project.basedir}/src/test/java</compileSourceRoot>
-                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot> </compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/test/junit5</compileSourceRoot>
+              </compileSourceRoots>
             </configuration>
           </execution>
           <execution>

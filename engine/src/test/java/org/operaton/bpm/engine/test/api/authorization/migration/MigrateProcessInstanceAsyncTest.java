@@ -168,7 +168,7 @@ public class MigrateProcessInstanceAsyncTest {
     if (authRule.assertScenario(scenario)) {
       assertThat(batch.getCreateUserId()).isEqualTo("userId");
 
-      assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(1);
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isOne();
     }
 
   }
@@ -206,7 +206,7 @@ public class MigrateProcessInstanceAsyncTest {
 
     // then
     if (authRule.assertScenario(scenario)) {
-      assertThat(engineRule.getManagementService().createBatchQuery().count()).isEqualTo(1);
+      assertThat(engineRule.getManagementService().createBatchQuery().count()).isOne();
     }
 
   }

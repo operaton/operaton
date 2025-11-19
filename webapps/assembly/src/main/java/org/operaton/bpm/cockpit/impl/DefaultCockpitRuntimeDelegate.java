@@ -45,7 +45,7 @@ import org.operaton.bpm.webapp.impl.AbstractAppRuntimeDelegate;
  */
 public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<CockpitPlugin> implements CockpitRuntimeDelegate {
 
-  private final  Map<String, CommandExecutor> commandExecutors;
+  private final Map<String, CommandExecutor> commandExecutors;
 
   public DefaultCockpitRuntimeDelegate() {
     super(CockpitPlugin.class);
@@ -60,7 +60,9 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
   @Override
   public CommandExecutor getCommandExecutor(String processEngineName) {
-    return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
+    synchronized (commandExecutors) {
+      return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
+    }
   }
 
   /**

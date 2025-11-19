@@ -65,7 +65,7 @@ public class TestWarDeploymentIsDeployChangedOnly extends AbstractFoxPlatformInt
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
     // validate registrations:
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();

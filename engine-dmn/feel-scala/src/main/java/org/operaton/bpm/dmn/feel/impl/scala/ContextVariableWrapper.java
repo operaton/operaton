@@ -41,11 +41,9 @@ public class ContextVariableWrapper implements VariableProvider {
     if (context.containsVariable(name)) {
       TypedValue typedValue = context.resolve(name);
       Object value = typedValue.getValue();
-      return new Some(value);
-
+      return new Some<>(value);
     } else {
       return camundajar.impl.scala.None$.MODULE$;
-
     }
   }
 

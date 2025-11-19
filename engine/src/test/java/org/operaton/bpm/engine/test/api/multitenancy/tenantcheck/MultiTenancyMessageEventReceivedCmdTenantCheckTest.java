@@ -75,9 +75,9 @@ class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
-    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -98,8 +98,8 @@ class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -122,8 +122,8 @@ class MultiTenancyMessageEventReceivedCmdTenantCheckTest {
     runtimeService.messageEventReceived("message", execution.getId());
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 

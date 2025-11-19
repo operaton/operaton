@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.cdi.test.impl.beans.ProcessScopedMessageBean;
@@ -31,12 +29,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
+class ThreadContextAssociationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testBusinessProcessScopedWithJobExecutor() {
+  void testBusinessProcessScopedWithJobExecutor() {
     String pid = runtimeService.startProcessInstanceByKey("processkey").getId();
 
     JobExecutorAssert.assertThatJobExecutor()

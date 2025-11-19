@@ -140,7 +140,7 @@ class JobDefinitionFunctionalTest {
     testRule.waitForJobExecutorToProcessAllJobs(10000L);
 
     // then the second task is not executed
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     // there is a suspended job instance
     Job job = managementService.createJobQuery()
       .singleResult();

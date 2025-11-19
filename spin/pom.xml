@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
     <relativePath>../parent</relativePath>
   </parent>
   <groupId>org.operaton.spin</groupId>
@@ -13,7 +13,7 @@
   <name>Operaton - Spin - Root</name>
   <description>${project.name}</description>
   <properties>
-    <json-unit.version>4.1.1</json-unit.version>
+    <json-unit.version>5.1.0</json-unit.version>
     <spin.version.old>1.0.0-beta-5</spin.version.old>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
@@ -50,8 +50,16 @@
         <version>${version.groovy}</version>
       </dependency>
       <dependency>
+        <groupId>org.graalvm.polyglot</groupId>
+        <artifactId>js</artifactId>
+        <type>pom</type>
+        <scope>test</scope>
+        <version>${version.graal.js}</version>
+      </dependency>
+      <dependency>
         <groupId>org.graalvm.js</groupId>
         <artifactId>js-scriptengine</artifactId>
+        <scope>test</scope>
         <version>${version.graal.js}</version>
       </dependency>
       <dependency>

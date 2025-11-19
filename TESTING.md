@@ -103,7 +103,7 @@ There is a special profile for the WildFly Application Servers:
 # No Maven? No problem!
 
 This project provides a [Maven Wrapper](https://github.com/takari/maven-wrapper). This feature is useful for developers
-to build and test the project with the same version that Operaton uses. It's also useful for developers that don't want
+to build and test the project with the same version that Operaton uses. It's also useful for developers who don't want
 to install Maven at all. By executing the `./mvnw` script (Unix), or `./mvnw.cmd` script (Windows), a Maven distro will be 
 downloaded and installed in the `$USER_HOME/.m2/wrapper/dists` folder of the system. You can check the download URL in
 the [.mvn/wrapper/maven-wrapper.properties](.mvn/wrapper/maven-wrapper.properties) file.

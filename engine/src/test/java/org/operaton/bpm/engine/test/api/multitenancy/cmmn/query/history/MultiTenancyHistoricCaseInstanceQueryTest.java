@@ -82,13 +82,13 @@ class MultiTenancyHistoricCaseInstanceQueryTest {
         .createHistoricCaseInstanceQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = historyService
         .createHistoricCaseInstanceQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -106,7 +106,7 @@ class MultiTenancyHistoricCaseInstanceQueryTest {
         .createHistoricCaseInstanceQuery()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -160,7 +160,7 @@ class MultiTenancyHistoricCaseInstanceQueryTest {
     identityService.setAuthentication("user", null, null);
 
     HistoricCaseInstanceQuery query = historyService.createHistoricCaseInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -170,9 +170,9 @@ class MultiTenancyHistoricCaseInstanceQueryTest {
     HistoricCaseInstanceQuery query = historyService.createHistoricCaseInstanceQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -182,9 +182,9 @@ class MultiTenancyHistoricCaseInstanceQueryTest {
     HistoricCaseInstanceQuery query = historyService.createHistoricCaseInstanceQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test

@@ -16,11 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.util;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.BpmPlatform;
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -34,44 +30,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Christopher Zell <christopher.zell@camunda.com>
+ * <p>
+ * Under JUnit 5 we register the custom engine inside the test method so the shared process engine
+ * extension stays untouched and CDI picks up the overridden default the same way it did with the JUnit 4 rule.
  */
-@RunWith(Arquillian.class)
-public class InjectCustomProcessEngineTest extends CdiProcessEngineTestCase {
-
-  protected ProcessEngine defaultProcessEngine;
-  protected ProcessEngine processEngine;
-
-  @Before
-  public void init() {
-    processEngine = TestHelper.getProcessEngine("org/operaton/bpm/engine/cdi/test/impl/util/operaton.cfg.xml");
-    defaultProcessEngine = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
-
-    if (defaultProcessEngine != null) {
-      RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(defaultProcessEngine);
-    }
-
-    RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(processEngine);
-  }
-
-  @After
-  @Override
-  public void tearDownCdiProcessEngineTestCase() {
-    RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(processEngine);
-
-    if (defaultProcessEngine != null) {
-      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(defaultProcessEngine);
-    }
-  }
+class InjectCustomProcessEngineTest extends CdiProcessEngineTestCase {
 
   @Test
-  public void testProcessEngineInject() {
-    //given only custom engine exist
+  void testProcessEngineInject() {
+    ProcessEngine previousDefault = BpmPlatform.getProcessEngineService().getDefaultProcessEngine();
+    ProcessEngine customEngine = TestHelper.getProcessEngine("org/operaton/bpm/engine/cdi/test/impl/util/operaton.cfg.xml");
 
-    //when TestClass is created
-    InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
-    assertThat(testClass).isNotNull();
+    try {
+      if (previousDefault != null) {
+        RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(previousDefault);
+      }
 
-    //then custom engine is injected
-    assertThat(testClass.processEngine.getName()).isEqualTo("myCustomEngine");
+      RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(customEngine);
+
+      InjectedProcessEngineBean testClass = ProgrammaticBeanLookup.lookup(InjectedProcessEngineBean.class);
+      assertThat(testClass).isNotNull();
+      assertThat(testClass.processEngine.getName()).isEqualTo("myCustomEngine");
+      assertThat(testClass.processEngine.getProcessEngineConfiguration().getJdbcUrl()).contains("activiti");
+    } finally {
+      RuntimeContainerDelegate.INSTANCE.get().unregisterProcessEngine(customEngine);
+      if (previousDefault != null) {
+        RuntimeContainerDelegate.INSTANCE.get().registerProcessEngine(previousDefault);
+      }
+    }
   }
 }

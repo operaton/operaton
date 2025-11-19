@@ -155,7 +155,7 @@ public class RuntimeServiceTest {
   @Test
   void testStartProcessInstanceByIdNullVariables() {
     runtimeService.startProcessInstanceByKey("oneTaskProcess", (Map<String, Object>) null);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isOne();
   }
 
   @Test
@@ -168,7 +168,7 @@ public class RuntimeServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "123");
     assertThat(processInstance).isNotNull();
     assertThat(processInstance.getBusinessKey()).isEqualTo("123");
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isOne();
 
     // by key with variables
     processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", "456", CollectionUtil.singletonMap("var", "value"));
@@ -193,7 +193,7 @@ public class RuntimeServiceTest {
   @Test
   void testDeleteProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isOne();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), TESTING_INSTANCE_DELETION);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isZero();
@@ -371,7 +371,7 @@ public class RuntimeServiceTest {
     // then
     testRule.assertProcessEnded(instance.getId());
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list()).hasSize(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isOne();
   }
 
   @Deployment(resources = {
@@ -389,8 +389,8 @@ public class RuntimeServiceTest {
     // then
     testRule.assertProcessEnded(instance.getId());
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance.getId()).list()).hasSize(2);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isOne();
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
@@ -410,7 +410,7 @@ public class RuntimeServiceTest {
     // then
     testRule.assertProcessEnded(instance.getId());
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list()).hasSize(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/RuntimeServiceTest.testCascadingDeleteSubprocessInstanceSkipIoMappings.Calling.bpmn20.xml",
@@ -430,8 +430,8 @@ public class RuntimeServiceTest {
     // then
     testRule.assertProcessEnded(instance.getId());
     assertThat(historyService.createHistoricVariableInstanceQuery().processInstanceId(instance2.getId()).list()).hasSize(2);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("inputMappingExecuted").count()).isOne();
+    assertThat(historyService.createHistoricVariableInstanceQuery().variableName("outputMappingExecuted").count()).isOne();
   }
 
   @Deployment(resources = {
@@ -439,7 +439,7 @@ public class RuntimeServiceTest {
   @Test
   void testDeleteProcessInstanceNullReason() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isOne();
 
     // Deleting without a reason should be possible
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
@@ -496,7 +496,7 @@ public class RuntimeServiceTest {
       .isInstanceOf(NotFoundException.class)
       .hasMessageContaining("No process instance found for id");
 
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("oneTaskProcess").count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -535,8 +535,8 @@ public class RuntimeServiceTest {
 
     // when
     // there are two compensation tasks
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerAfterBoundaryTask").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("innerAfterBoundaryTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerAfterBoundaryTask").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("innerAfterBoundaryTask").count()).isOne();
 
     // when the process instance is deleted
     runtimeService.deleteProcessInstance(instance.getId(), "");

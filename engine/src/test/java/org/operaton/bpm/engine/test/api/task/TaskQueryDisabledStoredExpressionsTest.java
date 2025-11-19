@@ -74,7 +74,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
 
     // saving the filter suceeds
     filterService.saveFilter(filter);
-    assertThat(filterService.createFilterQuery().count()).isEqualTo(1);
+    assertThat(filterService.createFilterQuery().count()).isOne();
 
     // cleanup
     filterService.deleteFilter(filter.getId());
@@ -104,7 +104,7 @@ public class TaskQueryDisabledStoredExpressionsTest {
 
     // updating the filter with an expression does not suceed
     filter.setQuery(taskQuery.dueBeforeExpression(STATE_MANIPULATING_EXPRESSION));
-    assertThat(filterService.createFilterQuery().count()).isEqualTo(1);
+    assertThat(filterService.createFilterQuery().count()).isOne();
 
     try {
       filterService.saveFilter(filter);

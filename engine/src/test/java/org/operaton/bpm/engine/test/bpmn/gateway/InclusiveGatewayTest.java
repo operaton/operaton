@@ -106,7 +106,7 @@ class InclusiveGatewayTest {
   @Test
   void testMergingInclusiveGateway() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("inclusiveGwMerging", CollectionUtil.singletonMap("input", 2));
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
   }
@@ -119,7 +119,7 @@ class InclusiveGatewayTest {
     for (Job job : list) {
       managementService.executeJob(job.getId());
     }
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
   }
@@ -456,7 +456,7 @@ class InclusiveGatewayTest {
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     taskService.complete(tasks.get(0).getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     taskService.complete(tasks.get(1).getId());
 
@@ -474,7 +474,7 @@ class InclusiveGatewayTest {
     assertThat(processInstance.getId()).isNotNull();
 
     tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     task = tasks.get(0);
     assertThat(task.getAssignee()).isEqualTo("a");
@@ -519,13 +519,13 @@ class InclusiveGatewayTest {
     Task taskB = taskService.createTaskQuery().taskName("Task B").singleResult();
     assertThat(taskB).isNotNull();
     taskService.complete(taskB.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     // now complete task C. Gateway activates and "Task C" remains
     Task taskC = taskService.createTaskQuery().taskName("Task C").singleResult();
     assertThat(taskC).isNotNull();
     taskService.complete(taskC.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     // check that remaining task is in fact task D
     Task taskD = taskService.createTaskQuery().taskName("Task D").singleResult();

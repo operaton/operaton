@@ -144,7 +144,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       DeploymentEntity deploymentToRegister = initDeployment();
       Map<String, ResourceEntity> resourcesToDeploy =
           resolveResourcesToDeploy(commandContext, deploymentToRegister);
-      Map<String, ResourceEntity> resourcesToIgnore = new HashMap<>(deploymentToRegister.getResources());
+      Map<String, Resource> resourcesToIgnore = new HashMap<>(deploymentToRegister.getResources());
       resourcesToIgnore.keySet().removeAll(resourcesToDeploy.keySet());
 
       // save initial deployment resources before they are replaced with only the deployed ones
@@ -286,7 +286,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
   protected ProcessApplicationRegistration registerProcessApplication(CommandContext commandContext,
       DeploymentEntity deploymentToRegister,
-      CandidateDeployment candidateDeployment, Collection ignoredResources) {
+      CandidateDeployment candidateDeployment, Collection<Resource> ignoredResources) {
 
     ProcessApplicationDeploymentBuilderImpl appDeploymentBuilder = (ProcessApplicationDeploymentBuilderImpl) deploymentBuilder;
     final ProcessApplicationReference appReference = appDeploymentBuilder.getProcessApplicationReference();
@@ -493,7 +493,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
   protected String[] getProcessDefinitionsFromResources(CommandContext commandContext,
       DeploymentEntity deploymentToRegister,
-      Collection ignoredResources) {
+      Collection<Resource> ignoredResources) {
 
     Set<String> processDefinitionKeys = new HashSet<>();
 

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.model</groupId>
     <artifactId>operaton-model-apis</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-xml-model</artifactId>
   <name>Operaton - XML Model API</name>
@@ -12,8 +12,7 @@
   <properties>
     <operaton.artifact>org.operaton.bpm.model.xml</operaton.artifact>
     <operaton.osgi.import.additional>
-      org.assertj.*;resolution:=optional,
-      org.junit.jupiter.api.*;resolution:=optional
+      org.assertj.*;resolution:=optional
     </operaton.osgi.import.additional>
   </properties>
   <dependencies>
@@ -27,6 +26,18 @@
   </dependencies>
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <!-- AbstractModelElementInstanceTest used by other model-api tests -->
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
@@ -60,6 +71,8 @@
             <configuration>
               <excludes>
                 <exclude>org/operaton/bpm/model/xml/impl/**</exclude>
+                <exclude>org/operaton/bpm/model/xml/test/AbstractModelElementInstanceTest</exclude>
+                <exclude>org/operaton/bpm/model/xml/test/AbstractModelElementInstanceTest$*</exclude>
               </excludes>
             </configuration>
             <executions>

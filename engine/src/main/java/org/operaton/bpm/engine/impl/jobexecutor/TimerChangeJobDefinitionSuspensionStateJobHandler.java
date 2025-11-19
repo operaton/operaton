@@ -173,7 +173,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
       return configuration;
     }
 
-    public static JobDefinitionSuspensionStateConfiguration ByProcessDefinitionKeyAndTenantId(String processDefinitionKey, String tenantId, boolean includeProcessInstances) {
+    public static JobDefinitionSuspensionStateConfiguration byProcessDefinitionKeyAndTenantId(String processDefinitionKey, String tenantId, boolean includeProcessInstances) {
       JobDefinitionSuspensionStateConfiguration configuration = byProcessDefinitionKey(processDefinitionKey, includeProcessInstances);
 
       configuration.isTenantIdSet = true;

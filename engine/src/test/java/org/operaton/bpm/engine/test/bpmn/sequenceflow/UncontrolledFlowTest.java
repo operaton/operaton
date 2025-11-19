@@ -60,8 +60,8 @@ class UncontrolledFlowTest {
 
     // then there are two tasks after the sub process
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask1").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask2").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask1").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask2").count()).isOne();
 
     // and then the message for the event subprocess cannot be delivered
     try {

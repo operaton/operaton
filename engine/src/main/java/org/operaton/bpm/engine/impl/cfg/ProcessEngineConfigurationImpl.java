@@ -2894,7 +2894,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public HistoryLevel getDefaultHistoryLevel() {
     if (historyLevels != null) {
       for (HistoryLevel historyLvl : historyLevels) {
-        if (HISTORY_DEFAULT != null && HISTORY_DEFAULT.equalsIgnoreCase(historyLvl.getName())) {
+        if (HISTORY_DEFAULT.equalsIgnoreCase(historyLvl.getName())) {
           return historyLvl;
         }
       }

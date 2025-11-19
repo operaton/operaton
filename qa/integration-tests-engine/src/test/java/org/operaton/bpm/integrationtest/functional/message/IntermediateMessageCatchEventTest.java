@@ -41,7 +41,7 @@ public class IntermediateMessageCatchEventTest extends AbstractFoxPlatformIntegr
     runtimeService.startProcessInstanceByKey("testProcess");
 
     long eventSubscriptionCount = runtimeService.createEventSubscriptionQuery().count();
-    assertThat(eventSubscriptionCount).isEqualTo(1);
+    assertThat(eventSubscriptionCount).isOne();
 
     Execution execution = runtimeService.createExecutionQuery().messageEventSubscriptionName("Test Message").singleResult();
 

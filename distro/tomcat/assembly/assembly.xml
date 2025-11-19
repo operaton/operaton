@@ -14,13 +14,6 @@
 
   <dependencySets>
    <dependencySet>
-      <outputDirectory>/</outputDirectory>
-      <includes>
-        <include>org.operaton.bpm:license-book:zip</include>
-      </includes>
-      <unpack>true</unpack>
-    </dependencySet>
-   <dependencySet>
       <outputDirectory>server/</outputDirectory>
       <includes>
         <include>org.apache.tomcat:tomcat:tar.gz</include>
@@ -52,11 +45,13 @@
         <include>org.apache.groovy:groovy-dateutil:jar:*</include>
         <include>org.apache.groovy:groovy-datetime:jar:*</include>
 
+        <include>org.graalvm.polyglot:*</include>
         <include>org.graalvm.js:*</include>
+        <include>org.graalvm.sdk:*</include>
         <include>org.graalvm.regex:regex:jar:*</include>
-        <include>org.graalvm.truffle:truffle-api:jar:*</include>
-        <include>org.graalvm.sdk:graal-sdk:jar:*</include>
-        <include>com.ibm.icu:icu4j:jar:*</include>
+        <include>org.graalvm.truffle:*</include>
+        <include>org.graalvm.shadowed:icu4j:jar:*</include>
+
         <include>org.slf4j:slf4j-api:jar:*</include>
         <include>org.slf4j:slf4j-jdk14:jar:*</include>
 
@@ -80,7 +75,7 @@
 
   <files>
     <file>
-      <source>src/README.txt</source>
+      <source>resources/README.txt</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory></outputDirectory>
@@ -98,54 +93,62 @@
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start.bat</source>
+      <source>resources/start.bat</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/start.sh</source>
+      <source>resources/start.sh</source>
+      <filtered>true</filtered>
+      <outputDirectory></outputDirectory>
+      <fileMode>0755</fileMode>
+    </file>
+    <file>
+      <source>resources/shutdown.bat</source>
+      <filtered>true</filtered>
+      <outputDirectory></outputDirectory>
+    </file>
+    <file>
+      <source>resources/shutdown.sh</source>
       <filtered>true</filtered>
       <outputDirectory></outputDirectory>
       <fileMode>0755</fileMode>
     </file>
     <file>
-      <source>src/shutdown.bat</source>
-      <filtered>true</filtered>
+      <source>resources/sbom.cdx.json</source>
       <outputDirectory></outputDirectory>
     </file>
     <file>
-      <source>src/shutdown.sh</source>
-      <filtered>true</filtered>
+      <source>target/generated-resources/LICENSE_BOOK.md</source>
       <outputDirectory></outputDirectory>
-      <fileMode>0755</fileMode>
     </file>
 
     <file>
-      <source>src/conf/server.xml</source>
+      <source>resources/conf/server.xml</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/conf/</outputDirectory>
     </file>
 
     <file>
-      <source>src/conf/bpm-platform.xml</source>
+      <source>resources/conf/bpm-platform.xml</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/conf/</outputDirectory>
     </file>
 
     <file>
-      <source>src/tomcat/setenv.bat</source>
+      <source>resources/tomcat/setenv.bat</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/bin/</outputDirectory>
     </file>
     <file>
-      <source>src/tomcat/setenv.sh</source>
+      <source>resources/tomcat/setenv.sh</source>
       <outputDirectory>server/apache-tomcat-${version.tomcat}/bin/</outputDirectory>
     </file>
     <file>
-      <source>src/tomcat/security.txt.example</source>
+      <source>resources/tomcat/security.txt.example</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory />
     </file>
     <file>
-      <source>src/tomcat/SECURITY-BEST-PRACTICES.md</source>
+      <source>resources/tomcat/SECURITY-BEST-PRACTICES.md</source>
       <filtered>true</filtered>
       <lineEnding>crlf</lineEnding>
       <outputDirectory />

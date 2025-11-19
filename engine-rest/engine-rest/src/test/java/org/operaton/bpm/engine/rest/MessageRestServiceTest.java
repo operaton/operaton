@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 import jakarta.ws.rs.core.Response.Status;
 
 import io.restassured.http.ContentType;
@@ -29,6 +30,10 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mockito;
 
 import org.operaton.bpm.engine.AuthorizationException;
@@ -55,6 +60,7 @@ import static io.restassured.path.json.JsonPath.from;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
@@ -621,528 +627,87 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
       .post(MESSAGE_URL);
   }
 
-  @Test
-  void testFailingDueToUnparseableIntegerInCorrelationKeys() {
+  @ParameterizedTest
+  @MethodSource("postMessage_shouldReturnBadRequest_givenUnparseableParameterOfSupportedType_args")
+  void postMessage_shouldReturnBadRequest_givenUnparseableParameterOfSupportedType(String parameterName, Class<?> conversionType) {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
-    String variableType = "Integer";
+    String variableType = conversionType.getSimpleName();
 
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
+    Map<String, Object> variableJson = VariablesBuilder.create()
+            .variable(variableKey, variableValue, variableType).getVariables();
 
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
-    messageParameters.put("correlationKeys", variableJson);
+    messageParameters.put(parameterName, variableJson);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Integer.class)))
-    .when().post(MESSAGE_URL);
+            .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
+            .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+            .body("message", equalTo("Cannot deliver message: "
+                    + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, conversionType)))
+            .when().post(MESSAGE_URL);
   }
 
-  @Test
-  void testFailingDueToUnparseableIntegerInLocalCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Integer";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("localCorrelationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-        .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot deliver message: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Integer.class)))
-        .when().post(MESSAGE_URL);
+  static Stream<Arguments> postMessage_shouldReturnBadRequest_givenUnparseableParameterOfSupportedType_args() {
+    return Stream.of(
+            arguments("correlationKeys",                  Integer.class),
+            arguments("localCorrelationKeys",             Integer.class),
+            arguments("processVariables",                 Integer.class),
+            arguments("processVariablesLocal",            Integer.class),
+            arguments("processVariablesToTriggeredScope", Integer.class),
+            arguments("correlationKeys",                  Short.class),
+            arguments("localCorrelationKeys",             Short.class),
+            arguments("processVariables",                 Short.class),
+            arguments("processVariablesLocal",            Short.class),
+            arguments("processVariablesToTriggeredScope", Short.class),
+            arguments("correlationKeys",                  Long.class),
+            arguments("localCorrelationKeys",             Long.class),
+            arguments("processVariables",                 Long.class),
+            arguments("processVariablesLocal",            Long.class),
+            arguments("processVariablesToTriggeredScope", Long.class),
+            arguments("correlationKeys",                  Double.class),
+            arguments("localCorrelationKeys",             Double.class),
+            arguments("processVariables",                 Double.class),
+            arguments("processVariablesLocal",            Double.class),
+            arguments("processVariablesToTriggeredScope", Double.class),
+            arguments("correlationKeys",                  Date.class),
+            arguments("localCorrelationKeys",             Date.class),
+            arguments("processVariables",                 Date.class),
+            arguments("processVariablesLocal",            Date.class),
+            arguments("processVariablesToTriggeredScope", Date.class)
+    );
   }
 
-  @Test
-  void testFailingDueToUnparseableShortInCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Short";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("correlationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Short.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableShortInLocalCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Short";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("localCorrelationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-        .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot deliver message: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Short.class)))
-        .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableLongInCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Long";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("correlationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Long.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableLongInLocalCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Long";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("localCorrelationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-        .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot deliver message: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Long.class)))
-        .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDoubleInCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Double";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("correlationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Double.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDoubleInLocalCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Double";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("localCorrelationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-        .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot deliver message: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Double.class)))
-        .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDateInCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Date";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("correlationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Date.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDateInLocalCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Date";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("localCorrelationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-        .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot deliver message: "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Date.class)))
-        .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToNotSupportedTypeInCorrelationKeys() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+          "correlationKeys",
+          "localCorrelationKeys",
+          "processVariables",
+          "processVariablesLocal",
+          "processVariablesToTriggeredScope"
+  })
+  void postMessage_shouldReturnBadRequest_givenUnsupportedType(String parameterName) {
     String variableKey = "aVariableKey";
     String variableValue = "1abc";
     String variableType = "X";
 
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
+    Map<String, Object> variableJson = VariablesBuilder.create()
+            .variable(variableKey, variableValue, variableType).getVariables();
 
     String messageName = "aMessageName";
 
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);
-    messageParameters.put("correlationKeys", variableJson);
+    messageParameters.put(parameterName, variableJson);
 
     given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: Unsupported value type 'X'"))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToNotSupportedTypeInLocalCorrelationKeys() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "X";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("localCorrelationKeys", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-        .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Cannot deliver message: Unsupported value type 'X'"))
-        .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableIntegerInProcessVariables() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Integer";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariables", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Integer.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableShortInProcessVariables() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Short";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariables", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Short.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableLongInProcessVariables() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Long";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariables", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Long.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDoubleInProcessVariables() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Double";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariables", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Double.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDateInProcessVariables() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Date";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariables", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Date.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToNotSupportedTypeInProcessVariables() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "X";
-
-    Map<String, Object> variableJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariables", variableJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: Unsupported value type 'X'"))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableIntegerInProcessVariablesLocal() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Integer";
-
-    Map<String, Object> variableLocalJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariablesLocal", variableLocalJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Integer.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToNotSupportedTypeInProcessVariablesLocal() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "X";
-
-    Map<String, Object> variableLocalJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariablesLocal", variableLocalJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: Unsupported value type 'X'"))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDateInProcessVariablesLocal() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Date";
-
-    Map<String, Object> variableLocalJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariablesLocal", variableLocalJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Date.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableIntegerInProcessVariablesToTriggeredScope() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Integer";
-
-    Map<String, Object> variableToTriggeredScopeJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariablesToTriggeredScope", variableToTriggeredScopeJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Integer.class)))
-    .when().post(MESSAGE_URL);
-  }
-
-
-  @Test
-  void testFailingDueToNotSupportedTypeInProcessVariablesToTriggeredScope() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "X";
-
-    Map<String, Object> variableToTriggeredScopeJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariablesToTriggeredScope", variableToTriggeredScopeJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: Unsupported value type 'X'"))
-    .when().post(MESSAGE_URL);
-  }
-
-  @Test
-  void testFailingDueToUnparseableDateInProcessVariablesToTriggeredScope() {
-    String variableKey = "aVariableKey";
-    String variableValue = "1abc";
-    String variableType = "Date";
-
-    Map<String, Object> variableToTriggeredScopeJson = VariablesBuilder.create().variable(variableKey, variableValue, variableType).getVariables();
-
-    String messageName = "aMessageName";
-
-    Map<String, Object> messageParameters = new HashMap<>();
-    messageParameters.put("messageName", messageName);
-    messageParameters.put("processVariablesToTriggeredScope", variableToTriggeredScopeJson);
-
-    given().contentType(POST_JSON_CONTENT_TYPE).body(messageParameters)
-    .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
-    .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-    .body("message", equalTo("Cannot deliver message: "
-        + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, variableType, Date.class)))
-    .when().post(MESSAGE_URL);
+            .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
+            .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+            .body("message", equalTo("Cannot deliver message: Unsupported value type 'X'"))
+            .when().post(MESSAGE_URL);
   }
 
   @Test
@@ -1166,7 +731,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   @Test
-  void testcorrelateAllThrowsAuthorizationException() {
+  void testCorrelateAllThrowsAuthorizationException() {
     String messageName = "aMessageName";
     Map<String, Object> messageParameters = new HashMap<>();
     messageParameters.put("messageName", messageName);

@@ -62,7 +62,7 @@ class ProcessInstantiationAtStartEventTest {
 
     runtimeService.createProcessInstanceById(processDefinition.getId()).execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Test
@@ -70,7 +70,7 @@ class ProcessInstantiationAtStartEventTest {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Test
@@ -116,7 +116,7 @@ class ProcessInstantiationAtStartEventTest {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute(false, false);
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Test

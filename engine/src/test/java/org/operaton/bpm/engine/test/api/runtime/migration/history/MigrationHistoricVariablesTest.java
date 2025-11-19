@@ -115,10 +115,10 @@ class MigrationHistoricVariablesTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then there is still one historic variable instance
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
 
     // and no additional historic details
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
   }
 
   @Test
@@ -149,10 +149,10 @@ class MigrationHistoricVariablesTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then there is still one historic variable instance
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
 
     // and no additional historic details
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
   }
 
   @Test

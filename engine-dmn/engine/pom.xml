@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm.dmn</groupId>
     <artifactId>operaton-engine-dmn-root</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine-dmn</artifactId>
@@ -101,8 +101,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.graalvm.js</groupId>
+      <groupId>org.graalvm.polyglot</groupId>
       <artifactId>js</artifactId>
+      <type>pom</type>
       <scope>test</scope>
     </dependency>
 

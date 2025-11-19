@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormat;
+import org.operaton.spin.impl.xml.dom.format.DomXmlDataFormatReader;
 import org.operaton.spin.xml.JdkUtil;
 import org.operaton.spin.xml.SpinXmlDataFormatException;
 
@@ -47,10 +48,12 @@ class DomXmlDataFormatProtectionTest {
     // given
     String testXml = "org/operaton/spin/xml/dom/format/spi/FeatureSecureProcessing.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
+    DomXmlDataFormatReader reader = format.getReader();
+    var inputStreamReader = new InputStreamReader(testXmlAsStream);
 
     // when
     assertThatThrownBy(() ->
-      format.getReader().readInput(new InputStreamReader(testXmlAsStream)))
+      reader.readInput(inputStreamReader))
         // then
         .isInstanceOf(SpinXmlDataFormatException.class);
   }
@@ -60,10 +63,12 @@ class DomXmlDataFormatProtectionTest {
     // given
     String testXml = "org/operaton/spin/xml/dom/format/spi/XxeProcessing.xml";
     InputStream testXmlAsStream = this.getClass().getClassLoader().getResourceAsStream(testXml);
+    DomXmlDataFormatReader reader = format.getReader();
+    var inputStreamReader = new InputStreamReader(testXmlAsStream);
 
     // when
     assertThatThrownBy(() ->
-      format.getReader().readInput(new InputStreamReader(testXmlAsStream)))
+      reader.readInput(inputStreamReader))
         // then
         .isInstanceOf(SpinXmlDataFormatException.class)
         .hasMessageContaining("SPIN/DOM-XML-01009 Unable to parse input into DOM document")

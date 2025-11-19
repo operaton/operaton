@@ -3,11 +3,15 @@ name: build
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
+      - release/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
       - '.github/jreleaser/changelog.tpl'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -15,7 +19,9 @@ on:
       - 'LICENSE'
       - 'NOTICE'
   pull_request:
-    branches: ["main"]
+    branches:
+      - main
+      - release/**
     paths-ignore:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
@@ -49,7 +55,7 @@ jobs:
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e
+        uses: DavidAnson/markdownlint-cli2-action@30a0e04f1870d58f8d717450cc6134995f993c63
         with:
           globs: |
             docs/decisions/*.md
@@ -79,17 +85,17 @@ jobs:
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          ./mvnw verify
+          .devenv/scripts/build/build.sh
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@3585e9575db828022551b4231f165eb59a0e74e3 #v5.6.2
+        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
@@ -100,7 +106,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
+        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v4
@@ -141,7 +147,7 @@ jobs:
         run: gh cache delete ${{ github.run_id }}-build-artifacts
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
@@ -149,7 +155,7 @@ jobs:
           retention-days: 10
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz

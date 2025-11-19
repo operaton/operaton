@@ -342,7 +342,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     assertThat(returnedTenantId).isEqualTo(MockProvider.EXAMPLE_TENANT_ID);
 
     // validate the task count
-    assertThat(from(content).getLong("count")).isEqualTo(1l);
+    assertThat(from(content).getLong("count")).isOne();
 
     // validate links
     Map<String,Object> selfReference = from(content).getMap("_links.self");

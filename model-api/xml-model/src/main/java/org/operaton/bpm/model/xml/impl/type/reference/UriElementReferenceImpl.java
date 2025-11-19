@@ -19,9 +19,9 @@ package org.operaton.bpm.model.xml.impl.type.reference;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 
-public class UriElementReferenceImpl<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceImpl<Target, Source> {
+public class UriElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceImpl<TARGET, SOURCE> {
 
-  public UriElementReferenceImpl(ChildElement<Source> referenceSourceCollection) {
+  public UriElementReferenceImpl(ChildElement<SOURCE> referenceSourceCollection) {
     super(referenceSourceCollection);
   }
 

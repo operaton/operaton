@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# Copyright 2025 the Operaton contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 if [ ! -f "mvnw" ]; then
   echo "⚠️ Maven Wrapper not found. You must execute this script from the project root directory. Exiting..."
   exit 1
@@ -73,16 +87,13 @@ for POM_FILE in "${POM_FILES[@]}"; do
   sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
 done
 
-echo "🔄 Updating version in license-book.txt"
-sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" ./distro/license-book/src/main/resources/license-book.txt
-
 echo "🔄 Updating version in jreleaser.yml"
 sed -i '' -E "s/previousTagName: v.+/previousTagName: v$CURRENT_VERSION_WITHOUT_SNAPSHOT/" jreleaser.yml
 
 echo "🔄 Updating version in release.yml"
 sed -i '' -E "s/default: '[0-9]+\.[0-9]+\.[0-9]+[^']*'/default: '$NEXT_VERSION_WITHOUT_SNAPSHOT'/" .github/workflows/release.yml
 
-MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json --include license-book.txt .)
+MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json  .)
 if [ -n "$MISSED_FILES" ]; then
   echo "⚠️ The following files still contain the old version:"
   echo "$MISSED_FILES"

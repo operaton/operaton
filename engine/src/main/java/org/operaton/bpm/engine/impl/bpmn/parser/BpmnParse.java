@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.BpmnParseException;
@@ -1501,7 +1502,7 @@ public class BpmnParse extends Parse {
       ArrayList<PvmTransition> flowsWithoutCondition = new ArrayList<>();
       for (PvmTransition flow : activity.getOutgoingTransitions()) {
         Condition condition = (Condition) flow.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-        boolean isDefaultFlow = flow.getId() != null && flow.getId().equals(defaultSequenceFlow);
+        boolean isDefaultFlow = isDefaultFlow(flow, activity);
         boolean hasConditon = condition != null;
 
         if (!hasConditon && !isDefaultFlow) {
@@ -1531,6 +1532,13 @@ public class BpmnParse extends Parse {
              null, activity.getId(), flow.getId());
       }
     }
+  }
+
+  private boolean isDefaultFlow (PvmTransition flow, ActivityImpl activity) {
+    if (flow.getId() == null) {
+      return false;
+    }
+    return Objects.equals(flow.getId(), activity.getProperty(PROPERTYNAME_DEFAULT));
   }
 
   public ActivityImpl parseIntermediateCatchEvent(Element intermediateEventElement, ScopeImpl scopeElement, ActivityImpl eventBasedGateway) {
@@ -2564,7 +2572,7 @@ public class BpmnParse extends Parse {
     Map<String, String> properties = parseOperatonExtensionProperties(operatonPropertiesElement);
     activity.getProperties().set(BpmnProperties.EXTENSION_PROPERTIES, properties);
     List<OperatonErrorEventDefinition> operatonErrorEventDefinitions = parseOperatonErrorEventDefinitions(activity, serviceTaskElement);
-    activity.getProperties().set(BpmnProperties.CAMUNDA_ERROR_EVENT_DEFINITION, operatonErrorEventDefinitions);
+    activity.getProperties().set(BpmnProperties.OPERATON_ERROR_EVENT_DEFINITION, operatonErrorEventDefinitions);
     activity.setActivityBehavior(new ExternalTaskActivityBehavior(topicNameProvider, priorityProvider));
   }
 

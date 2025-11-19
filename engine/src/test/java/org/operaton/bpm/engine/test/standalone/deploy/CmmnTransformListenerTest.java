@@ -63,7 +63,7 @@ class CmmnTransformListenerTest {
     // Check if case definition has different key
     assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase").count()).isZero();
     assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified").count()).isZero();
-    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified-modified").count()).isEqualTo(1);
+    assertThat(repositoryService.createCaseDefinitionQuery().caseDefinitionKey("testCase-modified-modified").count()).isOne();
 
     assertThat(numberOfRegistered(Definitions.class)).isEqualTo(1);
     assertThat(numberOfRegistered(Case.class)).isEqualTo(1);

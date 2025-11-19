@@ -132,7 +132,7 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
         return JobDefinitionSuspensionStateConfiguration.byProcessDefinitionKey(processDefinitionKey, isIncludeSubResources());
 
       } else {
-        return JobDefinitionSuspensionStateConfiguration.ByProcessDefinitionKeyAndTenantId(processDefinitionKey, processDefinitionTenantId, isIncludeSubResources());
+        return JobDefinitionSuspensionStateConfiguration.byProcessDefinitionKeyAndTenantId(processDefinitionKey, processDefinitionTenantId, isIncludeSubResources());
       }
     }
 

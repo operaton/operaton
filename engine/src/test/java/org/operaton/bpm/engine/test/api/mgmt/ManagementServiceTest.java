@@ -427,7 +427,7 @@ class ManagementServiceTest {
         .singleResult();
     assertThat(timerJob.getRetries()).isZero();
 
-    assertThat(runtimeService.createIncidentQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createIncidentQuery().count()).isOne();
 
   }
 

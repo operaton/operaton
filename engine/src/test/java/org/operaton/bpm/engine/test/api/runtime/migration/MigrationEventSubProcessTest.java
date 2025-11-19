@@ -315,7 +315,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().correlateMessage(EventSubProcessModels.MESSAGE_NAME);
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -344,7 +344,7 @@ public class MigrationEventSubProcessTest {
     // and it is possible to trigger the event subprocess
     Job timerJob = testHelper.snapshotAfterMigration.getJobs().get(0);
     rule.getManagementService().executeJob(timerJob.getId());
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -372,7 +372,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().signalEventReceived(EventSubProcessModels.SIGNAL_NAME);
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);

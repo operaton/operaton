@@ -77,7 +77,7 @@ class TaskMetricsTest {
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // assume
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
     // when
     managementService.deleteTaskMetrics(null);
     // then
@@ -90,7 +90,7 @@ class TaskMetricsTest {
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // assume
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
     // when
     managementService.deleteTaskMetrics(getOneMinuteFromNow());
     // then
@@ -103,11 +103,11 @@ class TaskMetricsTest {
     testRule.deploy(USER_TASK_PROCESS);
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // assume
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
     // when
     managementService.deleteTaskMetrics(getOneMinuteAgo());
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -118,7 +118,7 @@ class TaskMetricsTest {
     // when a second instance is started
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -131,7 +131,7 @@ class TaskMetricsTest {
     ClockUtil.setCurrentTime(new Date(5000L));
     taskService.setAssignee(taskService.createTaskQuery().singleResult().getId(), "gonzo");
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(new Date(5000L), null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(new Date(5000L), null)).isOne();
     assertThat(managementService.getUniqueTaskWorkerCount(new Date(4000L), null)).isEqualTo(2L);
   }
 
@@ -145,7 +145,7 @@ class TaskMetricsTest {
     ClockUtil.setCurrentTime(new Date(5000L));
     taskService.setAssignee(taskService.createTaskQuery().singleResult().getId(), "gonzo");
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, new Date(5000L))).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, new Date(5000L))).isOne();
     assertThat(managementService.getUniqueTaskWorkerCount(null, new Date(6000L))).isEqualTo(2L);
   }
 
@@ -156,7 +156,7 @@ class TaskMetricsTest {
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, getOneMinuteFromNow())).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, getOneMinuteFromNow())).isOne();
   }
 
   @Test
@@ -166,7 +166,7 @@ class TaskMetricsTest {
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(getOneMinuteAgo(), null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(getOneMinuteAgo(), null)).isOne();
   }
 
   @Test
@@ -176,7 +176,7 @@ class TaskMetricsTest {
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -191,7 +191,7 @@ class TaskMetricsTest {
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -201,7 +201,7 @@ class TaskMetricsTest {
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -211,7 +211,7 @@ class TaskMetricsTest {
     // when
     runtimeService.startProcessInstanceByKey(PROCESS_KEY);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -257,7 +257,7 @@ class TaskMetricsTest {
     // when
     taskService.claim(taskId, "gonzo");
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -301,7 +301,7 @@ class TaskMetricsTest {
     // when
     taskService.saveTask(newTask);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -313,7 +313,7 @@ class TaskMetricsTest {
     newTask.setAssignee("kermit");
     taskService.saveTask(newTask);
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -329,7 +329,7 @@ class TaskMetricsTest {
     });
     // then
     assertThat(taskService.createTaskQuery().taskId(newTask.getId()).singleResult().getAssignee()).isEqualTo("kermit");
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   @Test
@@ -340,7 +340,7 @@ class TaskMetricsTest {
     // when
     taskService.setAssignee(newTask.getId(), "kermit");
     // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
   }
 
   public static class AssignmentTaskListener implements TaskListener {

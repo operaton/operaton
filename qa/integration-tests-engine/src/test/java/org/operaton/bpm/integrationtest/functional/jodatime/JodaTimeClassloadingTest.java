@@ -49,7 +49,7 @@ public class JodaTimeClassloadingTest extends AbstractFoxPlatformIntegrationTest
 
     // After process start, there should be timer created
     ProcessInstance pi1 = runtimeService.startProcessInstanceByKey("intermediateTimerEventExample", variables1);
-    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isOne();
 
     List<Job> jobs = managementService.createJobQuery().processDefinitionKey("intermediateTimerEventExample").executable().list();
     assertThat(jobs).hasSize(1);

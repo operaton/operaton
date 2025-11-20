@@ -6,5 +6,7 @@
   <dependencies>
     <module name="sun.jdk" />
     <module name="org.slf4j" />
+    <!-- Needed for feel-engine 1.20.0+ due to jackson-module-scala -->
+    <module name="org.scala-lang.scala-library" />
   </dependencies>
 </module>

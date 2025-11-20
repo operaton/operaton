@@ -8,5 +8,9 @@
     <module name="org.slf4j" />
     <!-- Needed for feel-engine 1.20.0+ due to jackson-module-scala -->
     <module name="org.scala-lang.scala-library" />
+    <!-- Needed for feel-engine 1.20.0+ to use Operaton's Jackson version -->
+    <module name="com.fasterxml.jackson.core.jackson-core" slot="@version.jackson@" />
+    <module name="com.fasterxml.jackson.core.jackson-annotations" slot="@version.jackson@" />
+    <module name="com.fasterxml.jackson.core.jackson-databind" slot="@version.jackson@" />
   </dependencies>
 </module>

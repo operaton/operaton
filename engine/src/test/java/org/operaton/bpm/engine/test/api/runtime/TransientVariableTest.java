@@ -760,7 +760,7 @@ class TransientVariableTest {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
       for (char i = 'a'; i < 'm'; i++) {
-        Object value = execution.getVariable("" + i);
+        Object value = execution.getVariable(String.valueOf(i));
         // variable 'j' is a transient null
         if (i != 'j' ) {
           assertThat(value).isNotNull();

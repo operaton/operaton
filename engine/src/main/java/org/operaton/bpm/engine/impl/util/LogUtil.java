@@ -133,7 +133,7 @@ public final class LogUtil {
         return "";
       }
       if (threadLogMode==ThreadLogMode.PRINT_ID) {
-        return ""+threadId;
+        return String.valueOf(threadId);
       }
       return threadIndents.computeIfAbsent(threadIdInteger, i -> "  ".repeat(threadIndents.size()));
     }

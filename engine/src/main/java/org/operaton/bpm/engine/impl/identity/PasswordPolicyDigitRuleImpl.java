@@ -42,7 +42,7 @@ public class PasswordPolicyDigitRuleImpl implements PasswordPolicyRule {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameter = new HashMap<>();
-    parameter.put("minDigit", "" + this.minDigit);
+    parameter.put("minDigit", String.valueOf(this.minDigit));
     return parameter;
   }
 

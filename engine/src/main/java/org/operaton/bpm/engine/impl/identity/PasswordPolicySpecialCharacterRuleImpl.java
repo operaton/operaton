@@ -43,7 +43,7 @@ public class PasswordPolicySpecialCharacterRuleImpl implements PasswordPolicyRul
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameter = new HashMap<>();
-    parameter.put("minSpecial", "" + this.minSpecial);
+    parameter.put("minSpecial", String.valueOf(this.minSpecial));
     return parameter;
   }
 

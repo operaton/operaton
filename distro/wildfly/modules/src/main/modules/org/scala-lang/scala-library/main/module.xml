@@ -1,0 +1,9 @@
+<module xmlns="urn:jboss:module:1.0" name="org.scala-lang.scala-library">
+  <resources>
+    <resource-root path="scala-library-@version.scala@.jar" />
+  </resources>
+
+  <dependencies>
+    <module name="java.base" />
+  </dependencies>
+</module>

@@ -248,6 +248,12 @@
         <version>${version.feel-scala}</version>
         <classifier>scala-shaded</classifier>
       </dependency>
+      <!-- Scala library needed for feel-engine due to ScalaSignature annotations in jackson-module-scala -->
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>2.13.17</version>
+      </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>

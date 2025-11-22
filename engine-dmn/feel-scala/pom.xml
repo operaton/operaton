@@ -21,6 +21,12 @@
       <classifier>scala-shaded</classifier>
     </dependency>
 
+    <!-- Scala library needed for feel-engine due to ScalaSignature annotations -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.operaton.bpm.dmn</groupId>
       <artifactId>operaton-engine-feel-api</artifactId>

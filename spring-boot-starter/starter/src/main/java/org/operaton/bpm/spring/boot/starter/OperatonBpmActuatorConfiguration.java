@@ -27,8 +27,10 @@ import org.springframework.context.annotation.DependsOn;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.health.HealthService;
 import org.operaton.bpm.spring.boot.starter.actuator.JobExecutorHealthIndicator;
 import org.operaton.bpm.spring.boot.starter.actuator.ProcessEngineHealthIndicator;
+import org.operaton.bpm.spring.boot.starter.actuator.OperatonHealthIndicator;
 
 @Configuration
 @ConditionalOnProperty(prefix = "management.health.operaton", name = "enabled", matchIfMissing = true)
@@ -47,5 +49,12 @@ public class OperatonBpmActuatorConfiguration {
   @ConditionalOnMissingBean(name = "processEngineHealthIndicator")
   public HealthIndicator processEngineHealthIndicator(ProcessEngine processEngine) {
     return new ProcessEngineHealthIndicator(processEngine);
+  }
+
+  @Bean
+  @ConditionalOnBean(HealthService.class)
+  @ConditionalOnMissingBean(name = "operatonHealthIndicator")
+  public HealthIndicator operatonHealthIndicator(HealthService healthService) {
+    return new OperatonHealthIndicator(healthService);
   }
 }

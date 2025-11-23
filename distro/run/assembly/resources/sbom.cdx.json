@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:46b17595-50dd-45c4-8136-211f783062cd",
+  "serialNumber": "urn:uuid:2b567e00-6d46-4e82-b94b-422665aad2d5",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-20T03:26:11Z",
+    "timestamp": "2025-11-22T13:12:55Z",
     "tools": {
       "components": [
         {
@@ -24075,7 +24075,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "dfdbe646-2fed-440d-9380-3f0dc77c8a2d",
+      "bom-ref": "ea0d2774-5cb5-4ed8-9c4d-738feb05f93d",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27870,7 +27870,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d0bcd49d-7a08-4a63-88f9-11bdeae673e8",
+      "bom-ref": "3f063799-c33d-48b5-8680-72fcaea852e6",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -30806,13 +30806,13 @@
       "dependsOn": []
     },
     {
-      "ref": "d0bcd49d-7a08-4a63-88f9-11bdeae673e8",
+      "ref": "3f063799-c33d-48b5-8680-72fcaea852e6",
       "dependsOn": [
-        "dfdbe646-2fed-440d-9380-3f0dc77c8a2d"
+        "ea0d2774-5cb5-4ed8-9c4d-738feb05f93d"
       ]
     },
     {
-      "ref": "dfdbe646-2fed-440d-9380-3f0dc77c8a2d",
+      "ref": "ea0d2774-5cb5-4ed8-9c4d-738feb05f93d",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -32400,7 +32400,7 @@
         }
       ],
       "published": "2022-05-01T16:15:08Z",
-      "updated": "2025-11-03T20:15:53Z",
+      "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",
@@ -32506,7 +32506,7 @@
         }
       ],
       "published": "2022-07-15T20:15:08Z",
-      "updated": "2025-07-28T10:15:23Z",
+      "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",
@@ -32613,7 +32613,7 @@
         }
       ],
       "published": "2023-03-30T05:15:07Z",
-      "updated": "2025-11-03T20:16:00Z",
+      "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",
@@ -32720,7 +32720,7 @@
         }
       ],
       "published": "2023-03-30T05:15:07Z",
-      "updated": "2025-11-03T20:16:00Z",
+      "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",
@@ -32827,7 +32827,7 @@
         }
       ],
       "published": "2023-03-30T05:15:07Z",
-      "updated": "2025-11-03T20:16:00Z",
+      "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",
@@ -33146,7 +33146,7 @@
         }
       ],
       "published": "2024-09-09T15:15:12Z",
-      "updated": "2025-11-03T20:17:05Z",
+      "updated": "2025-11-20T18:00:14Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",
@@ -33231,7 +33231,7 @@
         }
       ],
       "published": "2024-09-09T15:15:12Z",
-      "updated": "2025-11-03T20:17:05Z",
+      "updated": "2025-11-20T18:00:14Z",
       "affects": [
         {
           "ref": "pkg:npm/angular@1.8.2",

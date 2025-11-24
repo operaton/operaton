@@ -34,18 +34,15 @@ public class TaskQueryVariableValue extends QueryVariableValue {
   /**
    * <p>
    * The parameters <code>isTaskVariable</code> and
-   * <code> isProcessInstanceVariable</code> have the following meaning:
+   * <code>isProcessInstanceVariable</code> have the following meaning:
    * </p>
    *
    * <ul>
-   * <li>if <code>isTaskVariable == true</code>: only query after task
-   * variables</li>
-   * <li>if
-   * <code>isTaskVariable == false && isProcessInstanceVariable == true</code>:
-   * only query after process instance variables</li>
-   * <li>if
-   * <code>isTaskVariable == false && isProcessInstanceVariable == false</code>:
-   * only query after case instance variables</li>
+   * <li>if <code>isTaskVariable == true</code>: only query after task variables</li>
+   * <li>if <code>isTaskVariable == false && isProcessInstanceVariable == true</code>:
+   *     only query after process instance variables</li>
+   * <li>if <code>isTaskVariable == false && isProcessInstanceVariable == false</code>:
+   *     only query after case instance variables</li>
    * </ul>
    */
   public TaskQueryVariableValue(String name, Object value, QueryOperator operator, boolean isTaskVariable,

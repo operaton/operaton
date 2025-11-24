@@ -119,8 +119,10 @@ public class TimerEntity extends JobEntity {
     String expressionValue = null;
     String expression = jobDefinition.getJobConfiguration().substring(CYCLE_EXPRESSION_START_TYPE_1.length() - 1);
     try {
-      expressionValue = commandContext.getProcessEngineConfiguration().getExpressionManager()
-          .createExpression(expression).getValue(execution).toString();
+      expressionValue = commandContext.getProcessEngineConfiguration()
+          .getExpressionManager()
+          .createExpression(expression)
+          .getValue(execution).toString();
     } catch (Exception e) {
       throw ProcessEngineLogger.UTIL_LOGGER.exceptionWhileParsingCycleExpresison(expression, e);
     }
@@ -161,9 +163,8 @@ public class TimerEntity extends JobEntity {
   }
 
   protected boolean isSameRepeatCycle(String expressionValue) {
-    String[] currentRepeat = repeat.split("/"); // "R3/date/PT2H"
-    String[] newRepeat = expressionValue.split("/"); // "R3/PT2H" or
-                                                     // "R3/date/PT2H"
+    String[] currentRepeat = repeat.split("/");      // "R3/date/PT2H"
+    String[] newRepeat = expressionValue.split("/"); // "R3/PT2H" or "R3/date/PT2H"
     if (currentRepeat.length == 3 && newRepeat.length == 2) {
       return currentRepeat[0].equals(newRepeat[0]) && currentRepeat[2].equals(newRepeat[1]);
     } else if (currentRepeat.length == 3 && newRepeat.length == 3) {
@@ -193,7 +194,9 @@ public class TimerEntity extends JobEntity {
   }
 
   public Date calculateNewDueDate() {
-    BusinessCalendar businessCalendar = Context.getProcessEngineConfiguration().getBusinessCalendarManager()
+    BusinessCalendar businessCalendar = Context
+        .getProcessEngineConfiguration()
+        .getBusinessCalendarManager()
         .getBusinessCalendar(CycleBusinessCalendar.NAME);
     return ((CycleBusinessCalendar) businessCalendar).resolveDuedate(repeat, null, repeatOffset);
   }
@@ -229,13 +232,25 @@ public class TimerEntity extends JobEntity {
 
   @Override
   public String toString() {
-    return this.getClass().getSimpleName() + "[repeat=" + repeat + ", id=" + id + ", revision=" + revision
-        + ", duedate=" + duedate + ", repeatOffset=" + repeatOffset + ", lockOwner=" + lockOwner
-        + ", lockExpirationTime=" + lockExpirationTime + ", executionId=" + executionId + ", processInstanceId="
-        + processInstanceId + ", isExclusive=" + isExclusive + ", retries=" + retries + ", jobHandlerType="
-        + jobHandlerType + ", jobHandlerConfiguration=" + jobHandlerConfiguration + ", exceptionByteArray="
-        + exceptionByteArray + ", exceptionByteArrayId=" + exceptionByteArrayId + ", exceptionMessage="
-        + exceptionMessage + ", deploymentId=" + deploymentId + "]";
+    return this.getClass().getSimpleName()
+      + "[repeat=" + repeat
+      + ", id=" + id
+      + ", revision=" + revision
+      + ", duedate=" + duedate
+      + ", repeatOffset=" + repeatOffset
+      + ", lockOwner=" + lockOwner
+      + ", lockExpirationTime=" + lockExpirationTime
+      + ", executionId=" + executionId
+      + ", processInstanceId=" + processInstanceId
+      + ", isExclusive=" + isExclusive
+      + ", retries=" + retries
+      + ", jobHandlerType=" + jobHandlerType
+      + ", jobHandlerConfiguration=" + jobHandlerConfiguration
+      + ", exceptionByteArray=" + exceptionByteArray
+      + ", exceptionByteArrayId=" + exceptionByteArrayId
+      + ", exceptionMessage=" + exceptionMessage
+      + ", deploymentId=" + deploymentId
+      + "]";
   }
 
   @Override

@@ -25,7 +25,7 @@
     <version.nashorn>15.7</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
-    <version.json-path>2.9.0</version.json-path>
+    <version.json-path>2.10.0</version.json-path>
     <version.json-smart>2.5.2</version.json-smart>
     <version.accessors-smart>2.5.2</version.accessors-smart>
     <version.commons-codec>1.19.0</version.commons-codec>

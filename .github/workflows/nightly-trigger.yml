@@ -22,7 +22,7 @@ jobs:
       has_branches: ${{ steps.list-branches.outputs.has_branches }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 

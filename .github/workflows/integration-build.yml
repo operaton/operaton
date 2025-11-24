@@ -93,7 +93,7 @@ jobs:
       recent_changes: ${{steps.check-commits.outputs.commits}}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Check for recent commits
@@ -119,7 +119,7 @@ jobs:
       databases: ${{ steps.compute-matrix.outputs.databases }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Check PR conditions
@@ -240,7 +240,7 @@ jobs:
       database_version: ${{steps.maven-build.outputs.database_version}}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Cache Maven packages
@@ -314,7 +314,7 @@ jobs:
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Cache Maven packages
@@ -384,7 +384,7 @@ jobs:
       )
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Documentation
@@ -419,7 +419,7 @@ jobs:
       )
     steps:
       - name: Check out the code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{github.event.inputs.release_branch}}

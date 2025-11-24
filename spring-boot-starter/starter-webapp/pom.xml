@@ -17,7 +17,7 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
+      <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>
       <groupId>${project.groupId}</groupId>
       <version>${project.version}</version>
       <scope>test</scope>
@@ -25,6 +25,11 @@
     <dependency>
       <groupId>org.operaton.bpm.webapp</groupId>
       <artifactId>operaton-webapp-webjar</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-resttestclient</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>

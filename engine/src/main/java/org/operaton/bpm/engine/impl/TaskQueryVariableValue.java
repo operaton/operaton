@@ -17,7 +17,7 @@
 package org.operaton.bpm.engine.impl;
 
 import java.io.Serial;
-
+import java.util.Objects;
 
 /**
  * Represents a variable value used in a task query.
@@ -26,33 +26,60 @@ import java.io.Serial;
  */
 public class TaskQueryVariableValue extends QueryVariableValue {
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   protected boolean isProcessInstanceVariable;
 
   /**
-   * <p>The parameters <code>isTaskVariable</code> and <code> isProcessInstanceVariable</code>
-   * have the following meaning:</p>
+   * <p>
+   * The parameters <code>isTaskVariable</code> and
+   * <code> isProcessInstanceVariable</code> have the following meaning:
+   * </p>
    *
    * <ul>
-   *   <li>if <code>isTaskVariable == true</code>: only query after task variables</li>
-   *   <li>if <code>isTaskVariable == false && isProcessInstanceVariable == true</code>:
-   *       only query after process instance variables</li>
-   *   <li>if <code>isTaskVariable == false && isProcessInstanceVariable == false</code>:
-   *       only query after case instance variables</li>
+   * <li>if <code>isTaskVariable == true</code>: only query after task
+   * variables</li>
+   * <li>if
+   * <code>isTaskVariable == false && isProcessInstanceVariable == true</code>:
+   * only query after process instance variables</li>
+   * <li>if
+   * <code>isTaskVariable == false && isProcessInstanceVariable == false</code>:
+   * only query after case instance variables</li>
    * </ul>
    */
-  public TaskQueryVariableValue(String name, Object value, QueryOperator operator, boolean isTaskVariable, boolean isProcessInstanceVariable) {
+  public TaskQueryVariableValue(String name, Object value, QueryOperator operator, boolean isTaskVariable,
+      boolean isProcessInstanceVariable) {
     this(name, value, operator, isTaskVariable, isProcessInstanceVariable, false, false);
   }
 
-  public TaskQueryVariableValue(String name, Object value, QueryOperator operator, boolean isTaskVariable, boolean isProcessInstanceVariable, boolean variableNameIgnoreCase, boolean variableValueIgnoreCase) {
+  public TaskQueryVariableValue(String name, Object value, QueryOperator operator, boolean isTaskVariable,
+      boolean isProcessInstanceVariable, boolean variableNameIgnoreCase, boolean variableValueIgnoreCase) {
     super(name, value, operator, isTaskVariable, variableNameIgnoreCase, variableValueIgnoreCase);
     this.isProcessInstanceVariable = isProcessInstanceVariable;
   }
 
-
   public boolean isProcessInstanceVariable() {
     return isProcessInstanceVariable;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Objects.hash(isProcessInstanceVariable);
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (!super.equals(obj))
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    TaskQueryVariableValue other = (TaskQueryVariableValue) obj;
+    return isProcessInstanceVariable == other.isProcessInstanceVariable;
   }
 }

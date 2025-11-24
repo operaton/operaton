@@ -195,7 +195,7 @@
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-logging-frameworks</artifactId>
-            <version>3.17.0</version>
+            <version>3.19.0</version>
           </dependency>
         </dependencies>
       </plugin>

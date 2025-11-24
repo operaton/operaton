@@ -36,9 +36,9 @@ updates:
       time: "01:30"
     target-branch: "release/1.0.x"
     open-pull-requests-limit: 10
-    allow:
-      - dependency-type: "all"
-        update-types: ["patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -48,9 +48,9 @@ updates:
       - "kthoms"
     target-branch: "release/1.0.x"
     open-pull-requests-limit: 10
-    allow:
-      - dependency-type: "all"
-        update-types: ["patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -60,6 +60,6 @@ updates:
       - "kthoms"
     target-branch: "release/1.0.x"
     open-pull-requests-limit: 10
-    allow:
-      - dependency-type: "all"
-        update-types: ["patch"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]

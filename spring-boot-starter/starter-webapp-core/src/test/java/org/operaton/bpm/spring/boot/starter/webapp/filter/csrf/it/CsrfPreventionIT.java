@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = {"server.error.include-message=always"})
+  properties = {"spring.web.error.include-message=always"})
 @DirtiesContext
 class CsrfPreventionIT {
 

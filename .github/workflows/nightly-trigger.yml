@@ -32,8 +32,8 @@ jobs:
           # Fetch all remote branches
           git fetch --all
 
-          # Get all branches with release/ prefix
-          BRANCHES=$(git branch -r | grep -o 'origin/release/[^ ]*' | sed 's|origin/||' | sort -u)
+          # Get all branches with release/ prefix using git for-each-ref for robustness
+          BRANCHES=$(git for-each-ref --format='%(refname:short)' refs/remotes/origin/release/ | sed 's|origin/||' | sort -u)
 
           if [ -z "$BRANCHES" ]; then
             echo "No release branches found"
@@ -42,6 +42,12 @@ jobs:
           else
             echo "Found release branches:"
             echo "$BRANCHES"
+
+            # Verify jq is available
+            if ! command -v jq &> /dev/null; then
+              echo "Error: jq is required but not installed"
+              exit 1
+            fi
 
             # Convert to JSON array
             JSON_BRANCHES=$(echo "$BRANCHES" | jq -R -s -c 'split("\n") | map(select(. != ""))')

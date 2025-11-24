@@ -100,13 +100,10 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     final ProcessDefinitionImpl processDefinition = processInstance.getProcessDefinition();
 
     CoreModelElement elementToInstantiate = getTargetElement(processDefinition);
-    EnsureUtil.ensureNotNull(NotValidException.class,
-        describeFailure(
-            "Element '" + getTargetElementId() + "' does not exist in process '" + processDefinition.getId() + "'"),
-        "element", elementToInstantiate);
-
-    // rebuild the mapping because the execution tree changes with every
-    // iteration
+    EnsureUtil.ensureNotNull(NotValidException.class, describeFailure(
+        "Element '%s' does not exist in process '%s'".formatted(getTargetElementId(), processDefinition.getId())),
+      "element", elementToInstantiate);
+    // rebuild the mapping because the execution tree changes with every iteration
     final ActivityExecutionTreeMapping mapping = new ActivityExecutionTreeMapping(commandContext, processInstanceId);
 
     // before instantiating an activity, two things have to be determined:
@@ -116,21 +113,17 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     // for which no executions exist yet and that have to be instantiated
     //
     // scopeExecution:
-    // This is typically the execution under which a new sub tree has to be
-    // created.
+    // This is typically the execution under which a new sub tree has to be created.
     // if an explicit ancestor activity instance is set:
     // - this is the scope execution for that ancestor activity instance
-    // - throws exception if that scope execution is not in the parent hierarchy
-    // of the activity to be started
+    // - throws exception if that scope execution is not in the parent hierarchy of the activity to be started
     // if no explicit ancestor activity instance is set:
-    // - this is the execution of the first parent/ancestor flow scope that has
-    // an execution
+    // - this is the execution of the first parent/ancestor flow scope that has an execution
     // - throws an exception if there is more than one such execution
 
     ScopeImpl targetFlowScope = getTargetFlowScope(processDefinition);
 
-    // prepare to walk up the flow scope hierarchy and collect the flow scope
-    // activities
+    // prepare to walk up the flow scope hierarchy and collect the flow scope activities
     ActivityStackCollector stackCollector = new ActivityStackCollector();
     FlowScopeWalker walker = new FlowScopeWalker(targetFlowScope);
     walker.addPreVisitor(stackCollector);
@@ -241,7 +234,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   private void throwIfNoConcurrentInstantiationPossible(ScopeImpl flowScope) {
     if (!supportsConcurrentChildInstantiation(flowScope)) {
       throw new ProcessEngineException(
-          "Concurrent instantiation not possible for " + "activities in scope " + flowScope.getId());
+          "Concurrent instantiation not possible for activities in scope " + flowScope.getId());
     }
   }
 
@@ -252,13 +245,10 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
       startBehavior = topMostActivity.getActivityStartBehavior();
 
       if (!activitiesToInstantiate.isEmpty()) {
-        // this is in BPMN relevant if there is an interrupting event sub
-        // process.
-        // we have to distinguish between instantiation of the start event and
-        // any other activity.
+        // this is in BPMN relevant if there is an interrupting event sub process.
+        // we have to distinguish between instantiation of the start event and any other activity.
         // instantiation of the start event means interrupting behavior;
-        // instantiation
-        // of any other task means no interruption.
+        // instantiation of any other task means no interruption.
         PvmActivity initialActivity = topMostActivity.getProperties().get(BpmnProperties.INITIAL_ACTIVITY);
         PvmActivity secondTopMostActivity = null;
         if (activitiesToInstantiate.size() > 1) {

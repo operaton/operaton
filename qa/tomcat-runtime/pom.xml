@@ -186,7 +186,7 @@
                     <artifactItem>
                       <groupId>io.smallrye</groupId>
                       <artifactId>jandex</artifactId>
-                      <version>3.5.0</version>
+                      <version>3.5.2</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                     <artifactItem>

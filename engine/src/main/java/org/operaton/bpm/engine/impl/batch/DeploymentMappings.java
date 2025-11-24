@@ -21,8 +21,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * List of aggregated information on deployment ids and the number of related
- * resources
+ * List of aggregated information on deployment ids and the number of related resources.
  */
 public class DeploymentMappings extends ArrayList<DeploymentMapping> {
 

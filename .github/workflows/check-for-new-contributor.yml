@@ -19,7 +19,7 @@ jobs:
     if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Check for first-time PR contributor
         uses: actions/github-script@v8
@@ -74,7 +74,7 @@ jobs:
     if: github.event_name == 'issues' && github.event.action == 'opened'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Check for first-time Issue creator
         uses: actions/github-script@v8
@@ -120,7 +120,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'issue_comment' && github.event.action == 'created'
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/github-script@v8
         with:
           script: |

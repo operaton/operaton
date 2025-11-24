@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:2b567e00-6d46-4e82-b94b-422665aad2d5",
+  "serialNumber": "urn:uuid:c28d0807-432b-4393-871c-de30789e980a",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-22T13:12:55Z",
+    "timestamp": "2025-11-24T02:37:15Z",
     "tools": {
       "components": [
         {
@@ -20554,44 +20554,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.jayway.jsonpath/json-path@2.9.0?type=jar",
+      "bom-ref": "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
       "group": "com.jayway.jsonpath",
       "name": "json-path",
-      "version": "2.9.0",
+      "version": "2.10.0",
       "description": "A library to query and verify JSON",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e89678d2e4ff45e4f39a97ccd0223719"
+          "content": "7c016fb8e3b06896a2709adbe1c52cca"
         },
         {
           "alg": "SHA-1",
-          "content": "37fe2217f577b0b68b18e62c4d17a8858ecf9b69"
+          "content": "e1a0b2e6db75401181c9c1c64c6d155ca5c6d608"
         },
         {
           "alg": "SHA-256",
-          "content": "11a9ee6f88bb31f1450108d1cf6441377dec84aca075eb6bb2343be157575bea"
+          "content": "890daa95dd3892d34d9fabc27cd5153656e6f369358625c88f4dc7b79cbd6c5a"
         },
         {
           "alg": "SHA-512",
-          "content": "9a9dbb2cd36662c8049419ed891290602baeca2549eb7df62122cb20c91e66bc8c2c0e5e13199c4a70bf0b6e62ea4c2601f84e4c79d2af25ff1704481c86740a"
+          "content": "954320c585b2eef7612e8804442fffde348934a80928175a14671bffbde6a6f93fd5b27c1d848697417cebd243d91621088f90a4dc49dd1ac0faeb06b5cd43f5"
         },
         {
           "alg": "SHA-384",
-          "content": "e9a54630e2111078c8c77807d9f4433e2f459fb6c41c4afa8c2a3152b62c240ea9be1614022a6a99d5aea8c61865ecfb"
+          "content": "43674f1013da21e8806368535cb2c3d6c611b54f95eff108d10a06d6b42849e0d4be819da2da0cefc98abe7c59faafc2"
         },
         {
           "alg": "SHA3-384",
-          "content": "64286f27125cd6fcc3a16c0b4be106686aef7744ae103bd2160ccca622547653b9fb44e10bc6d510d16b875c95806a10"
+          "content": "7d37b741f324cb9b5de140b19155cb357d2c41a1e983913d95ffa20df4b297e20f9ebf40d651b2342c1509ccc16a9b60"
         },
         {
           "alg": "SHA3-256",
-          "content": "96e06e77b263cd1a3adb8d9c6fa666d11eebab616c4a7fb2ef7f370039a0a4ea"
+          "content": "352f238d8942ac25fc990b72dfdf52829c136fce2167afdf64eca63f3c882108"
         },
         {
           "alg": "SHA3-512",
-          "content": "10bda57556f6ef77669f9c99fda226ff5060d3c1511e561d9e7a49fc2a534b90bc4101ab0e4ef0b420fe43f71083bba1b64ba606348e87459a6183f1d3f7e3df"
+          "content": "593ed41edcb92b771624112029db17c76a7fe9a0c4b3ec4eaa58cfdfa574d66efe3d6a971621d582b8d41f424998b522d4d7de8379d1edfdc56d33297e2c409b"
         }
       ],
       "licenses": [
@@ -20601,7 +20601,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.jayway.jsonpath/json-path@2.9.0?type=jar",
+      "purl": "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/jayway/JsonPath",
@@ -24075,7 +24075,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ea0d2774-5cb5-4ed8-9c4d-738feb05f93d",
+      "bom-ref": "3308e95f-05c6-4357-a2bc-7d26acd773fc",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27870,7 +27870,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3f063799-c33d-48b5-8680-72fcaea852e6",
+      "bom-ref": "f1cb92c3-dafe-4b8a-b10d-274973e84499",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -30071,12 +30071,12 @@
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
-        "pkg:maven/com.jayway.jsonpath/json-path@2.9.0?type=jar",
+        "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.jayway.jsonpath/json-path@2.9.0?type=jar",
+      "ref": "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
       "dependsOn": [
         "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
@@ -30806,13 +30806,7 @@
       "dependsOn": []
     },
     {
-      "ref": "3f063799-c33d-48b5-8680-72fcaea852e6",
-      "dependsOn": [
-        "ea0d2774-5cb5-4ed8-9c4d-738feb05f93d"
-      ]
-    },
-    {
-      "ref": "ea0d2774-5cb5-4ed8-9c4d-738feb05f93d",
+      "ref": "3308e95f-05c6-4357-a2bc-7d26acd773fc",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -30857,6 +30851,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "f1cb92c3-dafe-4b8a-b10d-274973e84499",
+      "dependsOn": [
+        "3308e95f-05c6-4357-a2bc-7d26acd773fc"
       ]
     },
     {

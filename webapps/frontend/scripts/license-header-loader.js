@@ -16,6 +16,7 @@
  */
 
 var fs = require('fs');
+const path = require('path');
 
 const addMissingLicenseHeaders = (filePath, source) => {
   // This fix ensures windows compatibility
@@ -70,13 +71,18 @@ const addMissingLicenseHeaders = (filePath, source) => {
         }
       }
 
-      let packageJsonPath = require.resolve(`${packagePath}/package.json`);
-      const {version, license} = require(packageJsonPath);
-      if (licenseInfo) {
-        return `/*!\n@license ${pkg}@${version}\n${licenseInfo}*/\n${source}`;
-      } else if (license) {
-        console.log(`${pkg} has a "license" property. 🤷‍`);// eslint-disable-line
-        return `/*! @license ${pkg}@${version} (${license}) */\n${source}`;
+      try {
+        let packageJsonPath = require.resolve(`${packagePath}/package.json`);
+        const {version, license} = require(packageJsonPath);
+        if (licenseInfo) {
+          return `/*!\n@license ${pkg}@${version}\n${licenseInfo}*/\n${source}`;
+        } else if (license) {
+          console.log(`${pkg} has a "license" property. 🤷‍`);// eslint-disable-line
+          return `/*! @license ${pkg}@${version} (${license}) */\n${source}`;
+        }
+      } catch (e) {
+        console.log(`Could not resolve ${packagePath}/package.json 🤷‍`);
+        return `/*! @license ${pkg}@unknown (unknown) */\n${source}`;
       }
     }
   } else {

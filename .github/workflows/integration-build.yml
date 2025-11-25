@@ -328,12 +328,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: Install Chromedriver
-        id: install-chromedriver
-        if: ${{ matrix.testsuite == 'webapps' }}
-        shell: bash
-        run: |
-          .github/scripts/install-chrome-and-driver.sh
       - name: Execute Engine Integration Tests
         id: maven-engine-integration-tests
         if: ${{ matrix.testsuite == 'engine' }}
@@ -345,6 +339,7 @@ jobs:
         if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
         run: |
+          .github/scripts/install-chrome-and-driver.sh
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
@@ -353,7 +348,7 @@ jobs:
         run: |
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
-        if: always()
+        if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
         uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml

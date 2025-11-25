@@ -184,6 +184,8 @@ jobs:
       - release
     runs-on: ubuntu-latest
     steps:
+      - name: Collect Workflow Telemetry
+        uses: catchpoint/workflow-telemetry-action@94c3c3d9567a0205de6da68a76c428ce4e769af1 #v2.0.0
       - name: Check out the code
         uses: actions/checkout@v6
         with:

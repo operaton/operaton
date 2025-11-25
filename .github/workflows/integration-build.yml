@@ -312,7 +312,6 @@ jobs:
         (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
-      && (matrix.testsuite != 'webapps' || matrix.database == 'h2')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -335,8 +334,15 @@ jobs:
         shell: bash
         run: |
           .github/scripts/install-chrome-and-driver.sh
-      - name: Execute Integration Tests
-        id: maven-integration-tests
+      - name: Execute Engine Integration Tests
+        id: maven-engine-integration-tests
+        if: ${{ matrix.testsuite == 'engine' }}
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+      - name: Execute Webapps Integration Tests
+        id: maven-webapps-integration-tests
+        if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
         run: |
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build

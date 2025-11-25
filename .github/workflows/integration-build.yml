@@ -299,19 +299,19 @@ jobs:
     needs: 
       - detect-recent-changes
       - determine-pr-config
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
+        testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
+        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
+        database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
     if: |
       always() && !cancelled() && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
         (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
-    strategy:
-      fail-fast: false
-      matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
-        testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine"]') }}
-        distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
-        database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -328,22 +328,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.java }}
-      - name: Install Chromedriver
-        id: install-chromedriver
-        if: ${{ matrix.testsuite == 'webapps' }}
+      - name: Execute Engine Integration Tests
+        id: maven-engine-integration-tests
+        if: ${{ matrix.testsuite == 'engine' }}
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+      - name: Execute Webapps Integration Tests
+        id: maven-webapps-integration-tests
+        if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
         run: |
           .github/scripts/install-chrome-and-driver.sh
-      - name: Maven Build
-        id: maven-build
-        shell: bash
-        run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
-          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-test
-      - name: Execute Integration Tests
-        id: maven-integration-tests
-        shell: bash
-        run: |
           .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
@@ -352,7 +348,7 @@ jobs:
         run: |
           .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-build
       - name: Publish Test Report
-        if: always()
+        if: ${{ matrix.testsuite != 'webapps' || matrix.database == 'h2' }}
         uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
         with:
           report_paths: ${{ github.workspace }}/**/target/*-reports/*.xml

@@ -325,10 +325,10 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
         // Given
         String scriptText = "try {"
-            + "const " + expectedClass + " = Java.type(\"" + processPackage + "." + expectedClass + "\");"
+            + "var " + expectedClass + " = Java.type(\"" + processPackage + "." + expectedClass + "\");"
             + ""
-            + "let error = new " + expectedClass + "(\"" + expectedMessage + "\");"
-            + "let message = error.getErrorCode() || \"Default error code\";"
+            + "var error = new " + expectedClass + "(\"" + expectedMessage + "\");"
+            + "var message = error.getErrorCode() || \"Default error code\";"
             + ""
             + "execution.setVariable('" + errorClassVar + "', error.getClass().getName());"
             + "execution.setVariable('" + errorPackageVar + "', error.getClass().getPackageName());"

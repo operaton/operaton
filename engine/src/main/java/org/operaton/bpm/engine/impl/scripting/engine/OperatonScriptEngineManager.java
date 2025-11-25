@@ -108,7 +108,7 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
       if (config.isEnableScriptEngineLoadExternalResources()) {
         // make sure Graal JS can load external scripts
         //          scriptEngine.getContext().setAttribute("polyglot.js.allowIO", true, ScriptContext.ENGINE_SCOPE);
-        builder.allowIO(true);
+        //        builder.allowIO(true);
       }
       if (config.isEnableScriptEngineNashornCompatibility()) {
         // enable Nashorn compatibility mode

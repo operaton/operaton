@@ -214,7 +214,11 @@ jobs:
           
           DISTROS='["operaton", "tomcat", "wildfly"]'
           # Determine distros based on labels
-          DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
+          if [[ -z "$PR_LABELS" ]]; then
+            DISTRO_LABELS=
+          else
+            DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
+          fi
           if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
             DISTROS= ${{ github.event.inputs.distro_operaton }}
           elif [[ -n "$DISTRO_LABELS" ]]; then
@@ -349,7 +353,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java:      ${{ needs.determine-build-config.outputs.java_versions  }}
+        java:      ${{ needs.determine-build-config.outputs.java_versions }}
         testsuite: ${{ needs.determine-build-config.outputs.test_suites }}
         distro:    ${{ needs.determine-build-config.outputs.distros }}
         database:  ${{ needs.determine-build-config.outputs.databases }}

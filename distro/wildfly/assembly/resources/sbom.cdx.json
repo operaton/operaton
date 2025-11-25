@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:258e56b4-9c72-48c6-8068-b4ef5d944c2d",
+  "serialNumber": "urn:uuid:d0e4aba3-c52b-45b5-ba3f-6d2523b54430",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-25T01:02:39Z",
+    "timestamp": "2025-11-25T07:14:53Z",
     "tools": {
       "components": [
         {
@@ -6047,44 +6047,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.48?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.49?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-jsp-api",
-      "version": "10.1.48",
+      "version": "10.1.49",
       "description": "JSP package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "bdd1b23be1440964e0e550fb7a17d17a"
+          "content": "e4232b09ef04c895b25f5d03466f03c8"
         },
         {
           "alg": "SHA-1",
-          "content": "255511a9920fdb851a8ec634bacb3724d8eccc56"
+          "content": "505c602e494c806a65b3ffd4f06733049bd12529"
         },
         {
           "alg": "SHA-256",
-          "content": "ba06b47bdc68bd8caaf31ecb1789ddd5f14c6197fe8d2de68a2d26e86dd66552"
+          "content": "202d20ec62b64cdf50a055c5e24f582643b6e04f1e855540f9ea782424e0e277"
         },
         {
           "alg": "SHA-512",
-          "content": "bb59ed193f33dec461784d7324e5a62f72a855a961826c71d85a9883ae0f18fb8baa88cfb5b20f4fb0822ccae32b3b855718fae804f80852fc97704fdd1aa2a8"
+          "content": "0fb4dbb1bdf1667a143d8c8b6b69089c09d80872c856a6485997ecbcf4fdfb42a78f0f7ca574d2f6006d5d488f0020c70215a2b1f384c846ccd69ea4e114b398"
         },
         {
           "alg": "SHA-384",
-          "content": "9531f1f68ba81fd9295e49e3702350fa3a72a13d9edeec2121c32bd019fbc26772c4d627df35be86c3db2f48bbc6728a"
+          "content": "4a3ef7b21d74239347f85b1029818814a718a10a4976e6637220c0c33e9ce1316998911339a1892c76f14ddaa0a6d57d"
         },
         {
           "alg": "SHA3-384",
-          "content": "ab21b893d125546438596d0457e2f47066f481146b0b2da7c4dfd8f56ee5fe6fead455338e4651a292a256e9a6f33a6a"
+          "content": "2da80deab6c5d787407b024acc23b0648259b880acb300e80cdfbe49832110e16f4d4132c15b45c96f74070d90b8d6fc"
         },
         {
           "alg": "SHA3-256",
-          "content": "5faec83b6164ba9b9acc5767caf41ad8cd684454224f59b1efb5fa066631a5b7"
+          "content": "680aa285fef3a4af51ce3198558a1fed1908d49e18c802ac4333573b84df6fbb"
         },
         {
           "alg": "SHA3-512",
-          "content": "c7dbcf204bf76ebedf0db475fb8796aa68900d554093573576e3ff4e73d70105413fb9d50807bb481cecaf55ce63c16a88eb0d4d8e309592a79faa69b750e00c"
+          "content": "7c69278b71fb4958a30293a334cf6f9d29e4733bdbda20f7c281f21476a102b4cd83d4a14f68b479ded37ebcacd6c7e9b2b651688283d8f53f0d0d9a13b4f562"
         }
       ],
       "licenses": [
@@ -6094,7 +6094,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.48?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.49?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6104,44 +6104,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.48?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.49?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-el-api",
-      "version": "10.1.48",
+      "version": "10.1.49",
       "description": "Expression language package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b05970e62ac2fdb2f36dcb48cc638bde"
+          "content": "b1843112d3e6945467a31e866394f089"
         },
         {
           "alg": "SHA-1",
-          "content": "ef08f21c1d66f2ebd35f5d0d510459dbb6cbe79e"
+          "content": "179972bf82e64eeda54ebb1e2cb6ae74dbc2b615"
         },
         {
           "alg": "SHA-256",
-          "content": "ab8906876bf1db49b309c998c2b606804653506b91459f76753096098747c2c6"
+          "content": "dfe6e837e120fe9f769e654f0c100ce533100fbc79b2a0f97d3be04c2175b62a"
         },
         {
           "alg": "SHA-512",
-          "content": "40a7f9af730f5fdc5418d95af54e5284b9d40575189faece92c02e7271e2b344316ae38ac36c9470dfc96c6eb39a126476abb9efe7db4e6c2402a9997f1f5659"
+          "content": "9f8e03367dc5edd98ae8a0707a50ef2e234709f234630a0647aef4987fae3cc12e8a83ff859e087eadeb7bfbfa6907ab5fc7dbb9f2312cb80d0d648f9a29cb96"
         },
         {
           "alg": "SHA-384",
-          "content": "5181959872e7197e45884f08bf22496e61392f5f7b4a75492c9352fd61cdde0cb4a6dc9161c14a0cf9b75fc5e73c9580"
+          "content": "fb7d80bbd853612506e6b70bebafa7060b767cdca7998f796877e9197a3a14ebaf1dc094965ddba7afee1483ff155f0c"
         },
         {
           "alg": "SHA3-384",
-          "content": "42fc2b62d042ab708715fcb85886ff56ce07ab578b3c046729175ac31c1dac5b56dbabc583b840256bfef887fab4d31d"
+          "content": "a4cfbe1bea9920784990f8b28845f87a7b469a0485c30f051ed1daafa22008aae32e879373b5f921831276544ebdf600"
         },
         {
           "alg": "SHA3-256",
-          "content": "1651f817f5f724079e90b8725aa2f9d47b80b2279ee614fca221317b992d6e71"
+          "content": "448ed7bca6fb65c88d04b9be692857191df69d363af821190f52e2bf147a72b3"
         },
         {
           "alg": "SHA3-512",
-          "content": "0578426a24bb05135c7d80a978fcca629dd8a3950f398d94a3d9ba1997ac54f20a3ac98444a54b3b1d7b7e55739b958d9468f0cbc144de66e7a8b1c26a8b9be6"
+          "content": "b650c2a743e59c50e68565137a61e88d0d8b40a508405ff5c1dfa87b3a40242a63343fbb0fb7ed52e46b69446fa657deb162af5175e916512cf955c19f426910"
         }
       ],
       "licenses": [
@@ -6151,7 +6151,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.48?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.49?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -6218,44 +6218,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.48?type=jar",
+      "bom-ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.49?type=jar",
       "group": "org.apache.tomcat",
       "name": "tomcat-annotations-api",
-      "version": "10.1.48",
+      "version": "10.1.49",
       "description": "Annotations Package",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "068439e960b8a3860dfa48f756325155"
+          "content": "b6cdfabdbb8064022ce19482c149ea3a"
         },
         {
           "alg": "SHA-1",
-          "content": "8ca74595fff1246dd49fdf4395d1a163f0d25d4a"
+          "content": "233cbd96b0460a9ad2316b24d160897f098151c5"
         },
         {
           "alg": "SHA-256",
-          "content": "7e7f609d23a347adf61277f2c2d9d252a7b9b7447c82f77b14cca9b942c8e1b9"
+          "content": "4ead435dad0891dd72639da51e3bb913cfe2bf8e497f0ccece21f835b7bb860a"
         },
         {
           "alg": "SHA-512",
-          "content": "bb6bbd9c7e39b10273fd3cafd869c513c7ee8987447f49a61b58727886ba13988dc4336e994046444352b6df1ac8c41d6d66b4c268eb24c3f13dd2139f815f44"
+          "content": "9c1860409f8e3e62d31dab2d52f269cd7ce2fa297aa9892a9fceb99c0b0dbdee8ad703d20a4856baeffd079bc31686ca6d9eed6d522206ac226259a2c5ec853b"
         },
         {
           "alg": "SHA-384",
-          "content": "c895ae3717b6cf1951f54691156590c30054d9096879fdef4972115d08e9948d06614cf68ab0fb3fbfe773f147b9a630"
+          "content": "fcf2671eca4408c1ebb334276af63275a0945fac7c1e0508a848edd909ecea434966eee1e4b0e378a90268ca42092d4b"
         },
         {
           "alg": "SHA3-384",
-          "content": "5104b804a4e97a727d9d8c1f7d24d681d485418facfc4d666e86267f809443ff4d41e53441e9606857f40de1300d7357"
+          "content": "74191c3684b0d338f8878852d5bb3506f64680c7498da4d326dd7a0886d0aa05fa53dc185f159daf5bc38fb530fd53fb"
         },
         {
           "alg": "SHA3-256",
-          "content": "f9e2dd24e98e6c999f192efa434427d9c3795dbcb4abbcccc7822137a4f458ca"
+          "content": "e79878a27e1712441ce2b07c6482c292ea2443855c2d4c064482a98a5792038b"
         },
         {
           "alg": "SHA3-512",
-          "content": "e26231185456135185158a1ab49ffb4c745f6b9e875e0ada19ff356f770f65490b8af8bf48efaad703701e32d5db743963d819b77ce592186bc27978c6e0c235"
+          "content": "62e3eae5d22dc7242a6dd47ee1dd15cbe25ed9d68d55e9b26fbe54e907295c39d04838ef25d434078295ca789c14617ab5bcd3ecc3371a54b2c8a5458d8ff2a4"
         }
       ],
       "licenses": [
@@ -6265,7 +6265,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.48?type=jar",
+      "purl": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.49?type=jar",
       "externalReferences": [
         {
           "url": "https://tomcat.apache.org/",
@@ -12683,44 +12683,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.5?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.6?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-observation",
-      "version": "1.15.5",
+      "version": "1.15.6",
       "description": "Module containing Observation related code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2d5bc8b96be029c05d208082bc0d80f4"
+          "content": "320330ce904eddd9b62f7302b603f848"
         },
         {
           "alg": "SHA-1",
-          "content": "60956d6926392e0abef3d34dfcabdc4b013953c8"
+          "content": "f7a8f15624bd90d6b45e04fab98c2fcddbde8e2e"
         },
         {
           "alg": "SHA-256",
-          "content": "69fac03f20b5b6b4f90abcf463682e0134b21e27925b0e223f2c3a64ca04e0c3"
+          "content": "193454b2a7002a6148851a7970034f1ac8cec98f2186258a11671df84237bdcb"
         },
         {
           "alg": "SHA-512",
-          "content": "6d0005cc317c9f265be63753c19e72d8d251498f3edd6f62cbadc919b44cfae247d191fe92c1745cb5877f9fef5b202d6cf3ab1d6a6ed842b85b92dab5389c7e"
+          "content": "acfc76eccf12559857b23c8291cbc3095aafbbfbb8c841198895f1a8affed9324aed082350b360f0b50a08f8e18a51a033567c448195ce37ead6b358ec79fcfd"
         },
         {
           "alg": "SHA-384",
-          "content": "2b9ed081ece40d8db0c0975637316f3fe4ea76607d23217b6ffd4f508d2ed4e55cdb51e77c26fc5c3e9cc6b3ac8020c7"
+          "content": "b608762320e0a92cd2d02f8f0ab97e1dea829317fe6663f35213242bcaf720dc3dd04048014536600d4fa925b00439c4"
         },
         {
           "alg": "SHA3-384",
-          "content": "28e0e80e4c985b8b3fb75bc7137c10ae6e4929ad6d3cfe3bd13d059e6b3ec83cea301626dba4234d59aeed08dbe14a4e"
+          "content": "003a921dfcb66995fe92fd382dd5edc4fac536b347a1f1f428a60fc9b209e3efbb0140611c510decdfc46b47bbe92cd1"
         },
         {
           "alg": "SHA3-256",
-          "content": "9dfcfa56e43fe717b1089bf560a381241c58323e623dddf210e0fcbeac491783"
+          "content": "a41fe8f8ec9aefb19365a4999df083dbd15aacf61cb95eadcbe37ec0289e481e"
         },
         {
           "alg": "SHA3-512",
-          "content": "ad5d021a375d9473e5e2a7d82f28c28677bdc79e7b04c654c82810f7b89a7a5e29f0fb9ee067bfc22b39417100f603bc887da572d781bdc3b17673c065d48c00"
+          "content": "447ea060a811bf31f0cd94a4182d053f852d6bcaba18b6a0e7672c47d13e2b66037ccf23b33ed968dc467059d7a4d0f7fd5cc426a0e2e23fdd508e759ffd2314"
         }
       ],
       "licenses": [
@@ -12730,7 +12730,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.5?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.6?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -12740,44 +12740,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.5?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.6?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-commons",
-      "version": "1.15.5",
+      "version": "1.15.6",
       "description": "Module containing common code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "faed40ee945d639bd7a5bfb9cf11a65a"
+          "content": "84ccf97bad78c44a246cfcde58d1df25"
         },
         {
           "alg": "SHA-1",
-          "content": "c7136877f2d8aed7627ef850f25ad2e6e71271dc"
+          "content": "22800853f712e761cec4b752e47011463dcde70a"
         },
         {
           "alg": "SHA-256",
-          "content": "55fc55ec22f8e2965fa9a7c3521d4e5f1fc020bf236f919a12cbb68cafabf83f"
+          "content": "30ad985adb93e0bdafb02741c75d546c9dc45403e956e0f5ae865fac4280d18d"
         },
         {
           "alg": "SHA-512",
-          "content": "e7e1ee7f804a4e5b8917e5372b7fc24b7bea83c4661856e0efa499b821f8294159454bb37e8c9c17082f241cf4274769cd92b222511a253727d1a915e1098089"
+          "content": "13afba31257c72edbaecd064eaf0b1e575700ed7f22d187c4df750d695f034ff54c8b4860339a0239599c118e9fcbb65033c7d50e95e71ae2183bcd9e0c1d7a9"
         },
         {
           "alg": "SHA-384",
-          "content": "81d40bcf4631e355d92038a9918988aa44ba2f2670654dd7a06882ab43f46c425cf65a027796fbbb5da8ee2e382eda14"
+          "content": "d217ac59af8dc8c3e72c71940b7aad21202306c364198d71d767e71c6e376887f843c4fdb40e103ba99d04b4386d4f48"
         },
         {
           "alg": "SHA3-384",
-          "content": "ac6d397f330657b821332202203f3af2759f2ceee37e912a4d346292f0664559e3a20c437db3ad419f59f8910a07bd98"
+          "content": "fc72ec3ffe43610dd8cd3f1fb1640530651994c3ee878973182449cabdbfac2c830a1ac2cc3bf60cf58863d8366c1c40"
         },
         {
           "alg": "SHA3-256",
-          "content": "b733acd82b7fbb35f4c8f1ddba270586c6e80d05f84bac5c43ef6a3c3796ac1d"
+          "content": "fb18c948396a0f4ca2fd644bd7896f9da0eeb5b6483f765dc9e5867527ebc91c"
         },
         {
           "alg": "SHA3-512",
-          "content": "9fe84e59a9dfe988083380403dc9db16f4d850a8348e5c01ca2f88cde223fed1b88bc8aae4d32ffcf040294503be19e338182b02b69ad6e72a8e98ea300c10c8"
+          "content": "6c38b9ba69a746f745237e5dc6dcdf3114961bf78d2fcb47fc956ca34cb4bca322d16be8e4f2f33036ac142b7d771751e8555377ceffe4c5c7057c1e8f2c16fb"
         }
       ],
       "licenses": [
@@ -12787,7 +12787,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.5?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.6?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -27687,44 +27687,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.2?type=jar",
+      "bom-ref": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.3?type=jar",
       "group": "com.github.ben-manes.caffeine",
       "name": "caffeine",
-      "version": "3.2.2",
+      "version": "3.2.3",
       "description": "A high performance caching library",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "202a61e2492ad488df931367241a110c"
+          "content": "0258f45d43968523cc11beeb01b240f2"
         },
         {
           "alg": "SHA-1",
-          "content": "8b0a31cb57ac00e18161d5586759912bd2637398"
+          "content": "c097f0f6d21a0e6db88ea55836e26419b30dfe19"
         },
         {
           "alg": "SHA-256",
-          "content": "c74a6c72221dfb76eb92f2bb40108ea561a7da2f315dc3b1e64afa8f077f210c"
+          "content": "ca70c90a5d1ce1511880ce9c93d4ad22108f61111d3daf91eb52762b571bd179"
         },
         {
           "alg": "SHA-512",
-          "content": "94179e3a03e58e292632d58036149438be2d9fd6156187650828868f05964f4ecd39bb6e788d9fb71a76cab9421a324aa62b2909aef850d9c48042ff497ee0d1"
+          "content": "7aa65de1cb087aa645d7217bd3162b3842fe40914b590238afc681b1d8b33647efb1fd948d21ed0210a40d4bbda882ed24f3e6d326f9a03131660ae9778bbb7b"
         },
         {
           "alg": "SHA-384",
-          "content": "d7efd8d2ffc45d5342bf87213a70a5c06dbabb19a4d75e6da6240ae468746a83a7ddb68db416a1d4c3ecd96cd6ecab08"
+          "content": "d5f32eb2dfc3a0dd1c60bf2a7b92b4e5fe90dd29c4a7bbd6b261f66976256e4026d4a6d60b2b81a774b28fde49901f2f"
         },
         {
           "alg": "SHA3-384",
-          "content": "08b0d9f875300ed08e14a2c96f8176d65570b854283fcc1ae3346300cc447ad0f3378235877c04bbf82fbf215e326c5d"
+          "content": "811dd5fe983a606177060e218a4982e2e64cd5f1715f5ad436316cd8bfab67e2cd77d83b8901ab40c133c9ad052a5557"
         },
         {
           "alg": "SHA3-256",
-          "content": "6d471055eae75f0eb3282a76ace6e41089701c365446a25f9f436a0dd1b0572d"
+          "content": "306d252b82f5bb4d028feb2769662fde46564fdd2947f7e4d2a275346391644c"
         },
         {
           "alg": "SHA3-512",
-          "content": "c9504d397ad0e47b012ed04f014939a649e4f949739003d340a7f7929bae7e00ad17a29b112fa8c24536d2fc3f11aa69c541f47f550064cb8cc48c71ca1e53b6"
+          "content": "be545922c67934d4bc1a88bcd7338830919de5518cd10e02e64922f10fd8c3615d34a4345ba2500b40afba4d75b466342dfc2dad9efa179c48bf9bebc67cc970"
         }
       ],
       "licenses": [
@@ -27734,7 +27734,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.2?type=jar",
+      "purl": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/ben-manes/caffeine",
@@ -33659,7 +33659,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7c8bbf61-4df3-4a24-babc-234f202724d4",
+      "bom-ref": "37b59f58-bddd-4071-9337-736f2b8269d9",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37454,7 +37454,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "daca665f-f012-4b9a-ac83-ea8e155be8fe",
+      "bom-ref": "8ebfd9e3-9a88-4f57-8b8c-d4eeba6f1c6f",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -38036,9 +38036,9 @@
       "ref": "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.14?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.14?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.48?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.49?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
-        "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.48?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.49?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-api@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jni@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-coyote@11.0.14?type=jar",
@@ -38052,14 +38052,14 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.48?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-jsp-api@10.1.49?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.48?type=jar",
+        "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.49?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-servlet-api@11.0.14?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.48?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-el-api@10.1.49?type=jar",
       "dependsOn": []
     },
     {
@@ -38067,7 +38067,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.48?type=jar",
+      "ref": "pkg:maven/org.apache.tomcat/tomcat-annotations-api@10.1.49?type=jar",
       "dependsOn": []
     },
     {
@@ -39390,7 +39390,7 @@
         "pkg:maven/org.springframework/spring-beans@6.2.12?type=jar",
         "pkg:maven/org.springframework/spring-core@6.2.12?type=jar",
         "pkg:maven/org.springframework/spring-expression@6.2.12?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.15.5?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.6?type=jar"
       ]
     },
     {
@@ -39407,13 +39407,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.5?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.6?type=jar",
       "dependsOn": [
-        "pkg:maven/io.micrometer/micrometer-commons@1.15.5?type=jar"
+        "pkg:maven/io.micrometer/micrometer-commons@1.15.6?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.5?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.6?type=jar",
       "dependsOn": []
     },
     {
@@ -39445,7 +39445,7 @@
       "dependsOn": [
         "pkg:maven/org.springframework/spring-beans@6.2.12?type=jar",
         "pkg:maven/org.springframework/spring-core@6.2.12?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.15.5?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.6?type=jar"
       ]
     },
     {
@@ -41009,7 +41009,7 @@
       "dependsOn": [
         "pkg:maven/org.infinispan.protostream/protostream@5.0.13.Final?type=jar",
         "pkg:maven/org.infinispan.protostream/protostream-types@5.0.13.Final?type=jar",
-        "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.2?type=jar",
+        "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.3?type=jar",
         "pkg:maven/io.reactivex.rxjava3/rxjava@3.1.12?type=jar",
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar"
       ]
@@ -41029,7 +41029,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.2?type=jar",
+      "ref": "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.jspecify/jspecify@1.0.0?type=jar"
       ]
@@ -41049,7 +41049,7 @@
         "pkg:maven/org.infinispan.protostream/protostream@5.0.13.Final?type=jar",
         "pkg:maven/org.infinispan.protostream/protostream-types@5.0.13.Final?type=jar",
         "pkg:maven/org.jgroups/jgroups@5.4.11.Final?type=jar",
-        "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.2?type=jar",
+        "pkg:maven/com.github.ben-manes.caffeine/caffeine@3.2.3?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
         "pkg:maven/org.jboss.threads/jboss-threads@3.9.1?type=jar"
@@ -41425,7 +41425,7 @@
       "dependsOn": []
     },
     {
-      "ref": "7c8bbf61-4df3-4a24-babc-234f202724d4",
+      "ref": "37b59f58-bddd-4071-9337-736f2b8269d9",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -41473,9 +41473,9 @@
       ]
     },
     {
-      "ref": "daca665f-f012-4b9a-ac83-ea8e155be8fe",
+      "ref": "8ebfd9e3-9a88-4f57-8b8c-d4eeba6f1c6f",
       "dependsOn": [
-        "7c8bbf61-4df3-4a24-babc-234f202724d4"
+        "37b59f58-bddd-4071-9337-736f2b8269d9"
       ]
     },
     {

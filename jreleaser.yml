@@ -28,6 +28,8 @@ project:
     - 'bpmn'
     - 'process automation'
     - 'java'
+  snapshot:
+    label: {{SNAPSHOT_LABEL}}
 
 platform:
   replacements:

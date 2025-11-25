@@ -334,12 +334,6 @@ jobs:
         shell: bash
         run: |
           .github/scripts/install-chrome-and-driver.sh
-      - name: Maven Build
-        id: maven-build
-        shell: bash
-        run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-test
-          .devenv/scripts/build/build-and-run-database-update-tests.sh --db=${{ matrix.database }} --no-test
       - name: Execute Integration Tests
         id: maven-integration-tests
         shell: bash

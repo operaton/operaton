@@ -29,6 +29,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -90,7 +91,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     }
   }
 
-  private String stripPath(String paResourcePath, String prefixToRemove) {
+  String stripPath(String paResourcePath, String prefixToRemove) {
     if (paResourcePath == null) {
       return null;
     }
@@ -99,15 +100,15 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     return strippedPath.endsWith("/") ? strippedPath : strippedPath + "/";
   }
 
-  private void scanUrl(URL url,
+  protected void scanUrl(URL url,
                        String paResourceRootPath,
                        boolean isPaLocal,
                        String[] additionalResourceSuffixes,
                        Map<String, byte[]> resourceMap) {
     String urlPath = url.toExternalForm();
-    List<String> protocols = Arrays.asList("file:", "jar:", "wsjar:", "zip:");
+    String [] protocols = { "file:", "jar:", "wsjar:", "zip:" };
 
-    if (protocols.stream().anyMatch(urlPath::startsWith)) {
+    if (Stream.of(protocols).anyMatch(urlPath::startsWith)) {
       urlPath = url.getPath();
       int withinArchive = urlPath.indexOf('!');
       if (withinArchive != -1) {
@@ -128,7 +129,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     scanPath(urlPath, paResourceRootPath, isPaLocal, additionalResourceSuffixes, resourceMap);
   }
 
-  private void scanPath(String urlPath,
+  protected void scanPath(String urlPath,
                         String paResourceRootPath,
                         boolean isPaLocal,
                         String[] additionalResourceSuffixes,
@@ -149,14 +150,13 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     if (file.isDirectory()) {
       String path = file.getPath();
       String rootPath = path.endsWith(File.separator) ? path : path + File.separator;
-      handleDirectory(file, rootPath, paResourceRootPath, paResourceRootPath, isPaLocal, additionalResourceSuffixes,
-          resourceMap);
+      handleDirectory(file, rootPath, paResourceRootPath, paResourceRootPath, isPaLocal, additionalResourceSuffixes, resourceMap);
     } else {
       handleArchive(file, paResourceRootPath, additionalResourceSuffixes, resourceMap);
     }
   }
 
-  private void handleDirectory(File directory,
+  protected void handleDirectory(File directory,
                                String rootPath,
                                String localPath,
                                String paResourceRootPath,
@@ -202,8 +202,9 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
   private void scanResourceRoot(String rootPath, String localPath, String paResourceRootPath, boolean isPaLocal,
       String[] additionalResourceSuffixes, Map<String, byte[]> resourceMap, File[] paths, File path) {
     String modelFileName = path.getPath();
-    if (!path.isDirectory() && ProcessApplicationScanningUtil.isDeployable(modelFileName,
-        additionalResourceSuffixes)) {
+    if (!path.isDirectory() && ProcessApplicationScanningUtil.isDeployable(modelFileName, additionalResourceSuffixes)) {
+      // (1): "...\directory\sub_directory\process.bpmn" -> "sub_directory\process.bpmn"
+      // (2): "sub_directory\process.bpmn" -> "sub_directory/process.bpmn"
       addResource(path, resourceMap, paResourceRootPath, updateResourceFileName(modelFileName, rootPath));
       findDiagramsInPaths(rootPath, paResourceRootPath, resourceMap, path, paths, modelFileName);
     } else if (path.isDirectory()) {
@@ -221,6 +222,8 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     for (File file : paths) {
       String diagramFileName = file.getPath();
       if (!path.isDirectory() && ProcessApplicationScanningUtil.isDiagram(diagramFileName, modelFileName)) {
+        // (1): "...\directory\sub_directory\process.png" -> "sub_directory\process.png"
+        // (2): "sub_directory\process.png" -> "sub_directory/process.png"
         addResource(file, resourceMap, paResourceRootPath, updateResourceFileName(diagramFileName, rootPath));
       }
     }
@@ -230,7 +233,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     return resourceFileName.replace(rootPath, "").replace("\\", "/");
   }
 
-  private void handleArchive(File file,
+  void handleArchive(File file,
                              String paResourceRootPath,
                              String[] additionalResourceSuffixes,
                              Map<String, byte[]> resourceMap) {
@@ -245,7 +248,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     }
   }
 
-  private void handleArchiveEntry(File file,
+  void handleArchiveEntry(File file,
                                   String paResourceRootPath,
                                   String[] additionalResourceSuffixes,
                                   Map<String, byte[]> resourceMap,
@@ -262,7 +265,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     findResourcesForArchiveEntry(file, paResourceRootPath, resourceMap, zipEntry, zipFile, modelFileName);
   }
 
-  private void findResourcesForArchiveEntry(File file,
+  void findResourcesForArchiveEntry(File file,
                                             String paResourceRootPath,
                                             Map<String, byte[]> resourceMap,
                                             ZipEntry zipEntry,
@@ -274,7 +277,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
       String diagramFileName = zipEntry2.getName();
       if (ProcessApplicationScanningUtil.isDiagram(diagramFileName, modelFileName)) {
         diagramFileName = prepareResourceNameFromArchiveEntry(diagramFileName, paResourceRootPath);
-        addResource(zipFile.getInputStream(zipEntry), resourceMap, file.getName() + "!", diagramFileName);
+        addResource(zipFile.getInputStream(zipEntry2), resourceMap, file.getName() + "!", diagramFileName);
       }
     }
   }
@@ -287,7 +290,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     return baseName;
   }
 
-  private void addResource(Object source,
+  protected void addResource(Object source,
                            Map<String, byte[]> resourceMap,
                            String resourceRootPath,
                            String resourceName) {
@@ -312,8 +315,7 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
     }
   }
 
-  private Enumeration<URL> loadClasspathResourceRoots(final ClassLoader classLoader,
-                                                      String strippedPaResourceRootPath) {
+  protected Enumeration<URL> loadClasspathResourceRoots(final ClassLoader classLoader, String strippedPaResourceRootPath) {
     try {
       return classLoader.getResources(strippedPaResourceRootPath);
     } catch (IOException e) {

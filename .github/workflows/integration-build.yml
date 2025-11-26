@@ -389,14 +389,11 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
-          .devenv/scripts/build/build-sbom.sh
-          pip install pystache
       - name: Cache documentation artifacts
         uses: actions/cache/save@v4
         with:
           path: |
             target/*.zip
-            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
 
   release:
@@ -439,7 +436,6 @@ jobs:
         with:
           path: |
             target/*.zip
-            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 

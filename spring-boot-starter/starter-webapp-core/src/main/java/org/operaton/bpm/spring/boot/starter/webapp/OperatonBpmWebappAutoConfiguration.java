@@ -23,7 +23,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -103,15 +102,4 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
       registry.addRedirectViewController("/", applicationPath + "/app/");
     }
   }
-
-    // FIXME: Spring Boot 4 changed the conditional activation of the SecurityFilterChain
-    // or the Order of FilterChains.
-    // This is a temporary workaround to get Spring Security out of the way
-    // when org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter is in charge.
-    @Bean
-    WebSecurityCustomizer webSecurityCustomizer() {
-      return (web) -> {
-        web.ignoring().requestMatchers("/**");
-      };
-    }
 }

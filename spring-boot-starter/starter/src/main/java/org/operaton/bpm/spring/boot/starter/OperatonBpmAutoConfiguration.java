@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,7 +48,7 @@ import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 })
 @Configuration
 @ConditionalOnProperty(prefix = OperatonBpmProperties.PREFIX, name = "enabled", matchIfMissing = true)
-@AutoConfigureAfter(HibernateJpaAutoConfiguration.class)
+@AutoConfigureAfter(name = "org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration")
 public class OperatonBpmAutoConfiguration {
 
   @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")

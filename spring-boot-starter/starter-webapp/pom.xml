@@ -16,6 +16,12 @@
       <artifactId>operaton-bpm-spring-boot-starter-webapp-core</artifactId>
       <version>${project.version}</version>
     </dependency>
+<!--    FIXME: check actuator setup and integration with auth infrastructure -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>
       <groupId>${project.groupId}</groupId>

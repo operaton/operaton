@@ -333,14 +333,14 @@ jobs:
         if: ${{ matrix.testsuite == 'engine' }}
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
       - name: Execute Webapps Integration Tests
         id: maven-webapps-integration-tests
         if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
         run: |
           .github/scripts/install-chrome-and-driver.sh
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
         if: ${{ matrix.database == 'h2' }}

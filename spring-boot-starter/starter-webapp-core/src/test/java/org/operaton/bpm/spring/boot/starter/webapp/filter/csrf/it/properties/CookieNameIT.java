@@ -33,7 +33,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-  "operaton.bpm.webapp.csrf.cookieName=myFancyCookieName"
+  "operaton.bpm.webapp.csrf.cookieName=myFancyCookieName",
+  // FIXME Spring Boot 4
+  "server.servlet.session.cookie.name=myFancyCookieName"
 })
 @DirtiesContext
 class CookieNameIT {
@@ -50,7 +52,7 @@ class CookieNameIT {
   }
 
   @Test
-  @Disabled("FIXME: Spring Boot 4: Filter-(Chain) order issue.")
+  @Disabled("FIXME Spring Boot 4")
   void shouldChangeCookieName() {
     // given
 

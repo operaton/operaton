@@ -48,8 +48,8 @@ parse_args() {
 run_tests () {
   PROFILES=($DATABASE)
 
-  echo "ℹ️ Running unit tests with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") clean verify"
+  echo "ℹ️ Running unit tests for the engine with $DATABASE database using profiles: [${PROFILES[*]}]"
+  echo "$RUNNER verify -pl engine -am -P$(IFS=,; echo "${PROFILES[*]}") verify"
   $RUNNER -P$(IFS=,; echo "${PROFILES[*]}") clean verify
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Tests failed"

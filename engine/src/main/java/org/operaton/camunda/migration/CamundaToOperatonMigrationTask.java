@@ -29,10 +29,12 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  */
 public class CamundaToOperatonMigrationTask {
 
+  public static final String CAMUNDA_TO_OPERATON_RPOPERTY_NAME = "operaton.migratedFromCamunda";
+
+  private static final int BATCH_SIZE = 100;
   private static final String CAMUNDA_LAST_VERSION = "7.24.0";
   private static final String OPERATON_VERSION_PART = "1.0.0";
 
-  private static final int BATCH_SIZE = 100;
 
   private static final TimeBasedGenerator timeBasedGenerator = Generators.timeBasedGenerator(
       EthernetAddress.fromInterface());
@@ -101,13 +103,8 @@ public class CamundaToOperatonMigrationTask {
                 String deploymentSource = deploymentRs.getString(4);
                 String deploymentTenantId = deploymentRs.getString(5);
 
-                final String deploymentNewId = timeBasedGenerator.generate().toString();
-                insertDeploymentStatement.setString(1, deploymentNewId);
-                insertDeploymentStatement.setString(2, deploymentName);
-                insertDeploymentStatement.setString(3, deploymentDeployTime);
-                insertDeploymentStatement.setString(4, deploymentSource);
-                insertDeploymentStatement.setString(5, deploymentTenantId);
-                insertDeploymentStatement.execute();
+                final String deploymentNewId = insertDeployment(insertDeploymentStatement, deploymentName,
+                    deploymentDeployTime, deploymentSource, deploymentTenantId);
 
                 updatedDeployments.put(deploymentId, deploymentNewId);
               }
@@ -117,36 +114,16 @@ public class CamundaToOperatonMigrationTask {
             if (Objects.equals(type, ResourceTypes.REPOSITORY.getValue().toString()) && name.endsWith(".bpmn")) {
               byte[] result = transformBytesForBpmn(bytes);
 
-              insertResourceStatement.setString(1, timeBasedGenerator.generate().toString());
-              insertResourceStatement.setInt(2, rev);
-              insertResourceStatement.setString(3, name);
-              insertResourceStatement.setString(4, deploymentNewId);
-              insertResourceStatement.setBytes(5, result);
-              insertResourceStatement.setBoolean(6, generated);
-              insertResourceStatement.setString(7, tenantId);
-              insertResourceStatement.setString(8, type);
-              insertResourceStatement.setDate(9, createTime);
-              insertResourceStatement.setString(10, rootProcInstId);
-              insertResourceStatement.setString(11, removalTime);
-              insertResourceStatement.execute();
+              insertResource(insertResourceStatement, rev, name, deploymentNewId, result, generated, tenantId, type,
+                  createTime, rootProcInstId, removalTime);
 
               updateBpmnProcessDefinitions(selectProcessDefinitionStatement, name, insertProcessDefinitionStatement,
                   deploymentNewId);
             } else if (Objects.equals(type, ResourceTypes.REPOSITORY.getValue().toString()) && name.endsWith(".dmn")) {
               byte[] result = transformBytesForDmn(bytes);
 
-              insertResourceStatement.setString(1, timeBasedGenerator.generate().toString());
-              insertResourceStatement.setInt(2, rev);
-              insertResourceStatement.setString(3, name);
-              insertResourceStatement.setString(4, deploymentNewId);
-              insertResourceStatement.setBytes(5, result);
-              insertResourceStatement.setBoolean(6, generated);
-              insertResourceStatement.setString(7, tenantId);
-              insertResourceStatement.setString(8, type);
-              insertResourceStatement.setDate(9, createTime);
-              insertResourceStatement.setString(10, rootProcInstId);
-              insertResourceStatement.setString(11, removalTime);
-              insertResourceStatement.execute();
+              insertResource(insertResourceStatement, rev, name, deploymentNewId, result, generated, tenantId, type,
+                  createTime, rootProcInstId, removalTime);
 
               updateDmnProcessDefinitions(selectDecisionDefinitionStatement, name, insertDecisionDefinitionStatement,
                   deploymentNewId);
@@ -166,7 +143,7 @@ public class CamundaToOperatonMigrationTask {
   private boolean isAlreadyMigrated(Statement statement) {
     try {
       final ResultSet resultSet = statement.executeQuery(
-          "SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_ = 'operaton.migratedFromCamunda'");
+          "SELECT VALUE_ FROM ACT_GE_PROPERTY WHERE NAME_ = '" + CAMUNDA_TO_OPERATON_RPOPERTY_NAME + "'");
 
       if (!resultSet.next()) {
         return false;
@@ -182,13 +159,13 @@ public class CamundaToOperatonMigrationTask {
   private void setMigratedProp(Statement statement) {
     try {
       statement.execute("INSERT INTO ACT_GE_PROPERTY (NAME_, VALUE_, REV_) "
-          + "VALUES ('operaton.migratedFromCamunda', true, 1);");
+          + "VALUES ('" + CAMUNDA_TO_OPERATON_RPOPERTY_NAME + "', true, 1);");
     } catch (SQLException e) {
       // do nothing
     }
   }
 
-  private static void updateDmnProcessDefinitions(PreparedStatement selectDecisionDefinitionStatement,
+  private void updateDmnProcessDefinitions(PreparedStatement selectDecisionDefinitionStatement,
                                                   String name,
                                                   PreparedStatement insertDecisionDefinitionStatement,
                                                   String deploymentNewId) throws SQLException {
@@ -210,26 +187,16 @@ public class CamundaToOperatonMigrationTask {
         Integer decisionDefHistoryTtl = decisionDefRS.getInt(13);
         String decisionDefVersionTag = decisionDefRS.getString(14);
 
-        insertDecisionDefinitionStatement.setString(1, timeBasedGenerator.generate().toString());
-        insertDecisionDefinitionStatement.setInt(2, decisionDefRevision);
-        insertDecisionDefinitionStatement.setString(3, decisionDefCategory);
-        insertDecisionDefinitionStatement.setString(4, decisionDefName);
-        insertDecisionDefinitionStatement.setString(5, decisionDefKey);
-        insertDecisionDefinitionStatement.setInt(6, 1 + decisionDefVersion);
-        insertDecisionDefinitionStatement.setString(7, deploymentNewId);
-        insertDecisionDefinitionStatement.setString(8, decisionDefResourceName);
-        insertDecisionDefinitionStatement.setString(9, decisionDefDgrmResourceName);
-        insertDecisionDefinitionStatement.setString(10, decisionDefDecReqId);
-        insertDecisionDefinitionStatement.setString(11, decisionDefDecReqKey);
-        insertDecisionDefinitionStatement.setString(12, decisionDefTenantId);
-        insertDecisionDefinitionStatement.setInt(13, decisionDefHistoryTtl);
-        insertDecisionDefinitionStatement.setString(14, decisionDefVersionTag);
-        insertDecisionDefinitionStatement.execute();
+        insertDecisionDefinition(insertDecisionDefinitionStatement, deploymentNewId, decisionDefRevision,
+            decisionDefCategory, decisionDefName, decisionDefKey, decisionDefVersion, decisionDefResourceName,
+            decisionDefDgrmResourceName, decisionDefDecReqId, decisionDefDecReqKey, decisionDefTenantId,
+            decisionDefHistoryTtl, decisionDefVersionTag);
       }
     }
   }
 
-  private static void updateBpmnProcessDefinitions(PreparedStatement selectProcessDefinitionStatement,
+
+  private void updateBpmnProcessDefinitions(PreparedStatement selectProcessDefinitionStatement,
                                                    String name,
                                                    PreparedStatement insertProcessDefinitionStatement,
                                                    String deploymentNewId) throws SQLException {
@@ -260,28 +227,17 @@ public class CamundaToOperatonMigrationTask {
           Integer processDefHistoryTtl = processDefRS.getInt(14);
           Boolean processDefStartable = processDefRS.getBoolean(15);
 
-          insertProcessDefinitionStatement.setString(1, timeBasedGenerator.generate().toString());
-          insertProcessDefinitionStatement.setInt(2, processDefRevision);
-          insertProcessDefinitionStatement.setString(3, processDefCategory);
-          insertProcessDefinitionStatement.setString(4, processDefName);
-          insertProcessDefinitionStatement.setString(5, processDefKey);
-          insertProcessDefinitionStatement.setInt(6, 1 + processDefVersion);
-          insertProcessDefinitionStatement.setString(7, deploymentNewId);
-          insertProcessDefinitionStatement.setString(8, processDefResourceName);
-          insertProcessDefinitionStatement.setString(9, processDefDgrmResourceName);
-          insertProcessDefinitionStatement.setBoolean(10, processDefHasStartFormKey);
-          insertProcessDefinitionStatement.setInt(11, processDefSuspensionState);
-          insertProcessDefinitionStatement.setString(12, processDefTenantId);
-          insertProcessDefinitionStatement.setString(13, processDefVersionTag);
-          insertProcessDefinitionStatement.setInt(14, processDefHistoryTtl);
-          insertProcessDefinitionStatement.setBoolean(15, processDefStartable);
-          insertProcessDefinitionStatement.execute();
+          insertProcessDefinition(insertProcessDefinitionStatement, deploymentNewId, processDefRevision,
+              processDefCategory, processDefName, processDefKey, processDefVersion, processDefResourceName,
+              processDefDgrmResourceName, processDefHasStartFormKey, processDefSuspensionState, processDefTenantId,
+              processDefVersionTag, processDefHistoryTtl, processDefStartable);
         }
 
       }
       offset += BATCH_SIZE;
     }
   }
+
 
   private boolean isCurrentVersionLastCamunda(Statement statement) throws SQLException {
     boolean isOperaton = false;
@@ -340,5 +296,110 @@ public class CamundaToOperatonMigrationTask {
     Bpmn.writeModelToStream(outputStream, instanceClone);
     return outputStream.toByteArray();
   }
+
+  private void insertResource(PreparedStatement insertResourceStatement,
+                              int rev,
+                              String name,
+                              String deploymentNewId,
+                              byte[] result,
+                              boolean generated,
+                              String tenantId,
+                              String type,
+                              Date createTime,
+                              String rootProcInstId,
+                              String removalTime) throws SQLException {
+    insertResourceStatement.setString(1, timeBasedGenerator.generate().toString());
+    insertResourceStatement.setInt(2, rev);
+    insertResourceStatement.setString(3, name);
+    insertResourceStatement.setString(4, deploymentNewId);
+    insertResourceStatement.setBytes(5, result);
+    insertResourceStatement.setBoolean(6, generated);
+    insertResourceStatement.setString(7, tenantId);
+    insertResourceStatement.setString(8, type);
+    insertResourceStatement.setDate(9, createTime);
+    insertResourceStatement.setString(10, rootProcInstId);
+    insertResourceStatement.setString(11, removalTime);
+    insertResourceStatement.execute();
+  }
+
+  private String insertDeployment(PreparedStatement insertDeploymentStatement,
+                                  String deploymentName,
+                                  String deploymentDeployTime,
+                                  String deploymentSource,
+                                  String deploymentTenantId) throws SQLException {
+    final String deploymentNewId = timeBasedGenerator.generate().toString();
+    insertDeploymentStatement.setString(1, deploymentNewId);
+    insertDeploymentStatement.setString(2, deploymentName);
+    insertDeploymentStatement.setString(3, deploymentDeployTime);
+    insertDeploymentStatement.setString(4, deploymentSource);
+    insertDeploymentStatement.setString(5, deploymentTenantId);
+    insertDeploymentStatement.execute();
+    return deploymentNewId;
+  }
+
+  private void insertDecisionDefinition(PreparedStatement insertDecisionDefinitionStatement,
+                                        String deploymentNewId,
+                                        Integer decisionDefRevision,
+                                        String decisionDefCategory,
+                                        String decisionDefName,
+                                        String decisionDefKey,
+                                        Integer decisionDefVersion,
+                                        String decisionDefResourceName,
+                                        String decisionDefDgrmResourceName,
+                                        String decisionDefDecReqId,
+                                        String decisionDefDecReqKey,
+                                        String decisionDefTenantId,
+                                        Integer decisionDefHistoryTtl,
+                                        String decisionDefVersionTag) throws SQLException {
+    insertDecisionDefinitionStatement.setString(1, timeBasedGenerator.generate().toString());
+    insertDecisionDefinitionStatement.setInt(2, decisionDefRevision);
+    insertDecisionDefinitionStatement.setString(3, decisionDefCategory);
+    insertDecisionDefinitionStatement.setString(4, decisionDefName);
+    insertDecisionDefinitionStatement.setString(5, decisionDefKey);
+    insertDecisionDefinitionStatement.setInt(6, 1 + decisionDefVersion);
+    insertDecisionDefinitionStatement.setString(7, deploymentNewId);
+    insertDecisionDefinitionStatement.setString(8, decisionDefResourceName);
+    insertDecisionDefinitionStatement.setString(9, decisionDefDgrmResourceName);
+    insertDecisionDefinitionStatement.setString(10, decisionDefDecReqId);
+    insertDecisionDefinitionStatement.setString(11, decisionDefDecReqKey);
+    insertDecisionDefinitionStatement.setString(12, decisionDefTenantId);
+    insertDecisionDefinitionStatement.setInt(13, decisionDefHistoryTtl);
+    insertDecisionDefinitionStatement.setString(14, decisionDefVersionTag);
+    insertDecisionDefinitionStatement.execute();
+  }
+
+  private void insertProcessDefinition(PreparedStatement insertProcessDefinitionStatement,
+                                       String deploymentNewId,
+                                       Integer processDefRevision,
+                                       String processDefCategory,
+                                       String processDefName,
+                                       String processDefKey,
+                                       Integer processDefVersion,
+                                       String processDefResourceName,
+                                       String processDefDgrmResourceName,
+                                       Boolean processDefHasStartFormKey,
+                                       Integer processDefSuspensionState,
+                                       String processDefTenantId,
+                                       String processDefVersionTag,
+                                       Integer processDefHistoryTtl,
+                                       Boolean processDefStartable) throws SQLException {
+    insertProcessDefinitionStatement.setString(1, timeBasedGenerator.generate().toString());
+    insertProcessDefinitionStatement.setInt(2, processDefRevision);
+    insertProcessDefinitionStatement.setString(3, processDefCategory);
+    insertProcessDefinitionStatement.setString(4, processDefName);
+    insertProcessDefinitionStatement.setString(5, processDefKey);
+    insertProcessDefinitionStatement.setInt(6, 1 + processDefVersion);
+    insertProcessDefinitionStatement.setString(7, deploymentNewId);
+    insertProcessDefinitionStatement.setString(8, processDefResourceName);
+    insertProcessDefinitionStatement.setString(9, processDefDgrmResourceName);
+    insertProcessDefinitionStatement.setBoolean(10, processDefHasStartFormKey);
+    insertProcessDefinitionStatement.setInt(11, processDefSuspensionState);
+    insertProcessDefinitionStatement.setString(12, processDefTenantId);
+    insertProcessDefinitionStatement.setString(13, processDefVersionTag);
+    insertProcessDefinitionStatement.setInt(14, processDefHistoryTtl);
+    insertProcessDefinitionStatement.setBoolean(15, processDefStartable);
+    insertProcessDefinitionStatement.execute();
+  }
+
 
 }

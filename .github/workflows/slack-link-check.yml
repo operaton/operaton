@@ -35,10 +35,12 @@ jobs:
         id: validate
         if: steps.extract.outputs.slack_url != ''
         run: |
-          STATUS=$(curl -I -s -o /dev/null -w "%{http_code}" "${{ steps.extract.outputs.slack_url }}")
-          echo "HTTP status: $STATUS"
+          # Follow redirects & get final URL
+          FINAL_URL=$(curl -IL -s -o /dev/null -w "%{url_effective}" "${{ steps.extract.outputs.slack_url }}")
+          echo "Final URL: $FINAL_URL"
 
-          if [ "$STATUS" -eq 200 ]; then
+          # Check if invite is valid
+          if echo "$FINAL_URL" | grep -q "/shared_invite/"; then
             echo "valid=true" >> $GITHUB_OUTPUT
           else
             echo "valid=false" >> $GITHUB_OUTPUT

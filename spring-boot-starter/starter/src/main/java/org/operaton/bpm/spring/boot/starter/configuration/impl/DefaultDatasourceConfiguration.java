@@ -16,10 +16,8 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
-import java.util.Optional;
-
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.StringUtils;
 
@@ -32,25 +30,20 @@ public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguratio
   implements OperatonDatasourceConfiguration {
 
   protected PlatformTransactionManager transactionManager;
-
-  @Qualifier("operatonBpmTransactionManager")
   protected PlatformTransactionManager operatonTransactionManager;
-
   protected DataSource dataSource;
-
-  @Qualifier("operatonBpmDataSource")
   protected DataSource operatonDataSource;
 
   public DefaultDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
                                         PlatformTransactionManager transactionManager,
-                                        Optional<PlatformTransactionManager> operatonTransactionManager,
+                                        PlatformTransactionManager operatonTransactionManager,
                                         DataSource dataSource,
-                                        Optional<DataSource> operatonDataSource) {
+                                        DataSource operatonDataSource) {
     super(operatonBpmProperties);
     this.transactionManager = transactionManager;
-    this.operatonTransactionManager = operatonTransactionManager.orElse(null);
+    this.operatonTransactionManager = operatonTransactionManager;
     this.dataSource = dataSource;
-    this.operatonDataSource = operatonDataSource.orElse(null);
+    this.operatonDataSource = operatonDataSource;
   }
 
   @Override

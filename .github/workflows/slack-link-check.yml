@@ -2,30 +2,33 @@ name: Validate Slack Invite Link
 
 on:
   schedule:
-    - cron: "37 15 * * *"   # runs daily at 6 AM UTC
-  workflow_dispatch:      # allows manual run
+    - cron: "36 16 * * *"   # Run daily at 16:36 UTC
+  workflow_dispatch:        # Allow manual run
 
 jobs:
   check-slack-link:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y gh
 
       - name: Extract Slack link from README
         id: extract
         run: |
-          # Extract the first Slack invite URL from README.md
           SLACK_URL=$(grep -o 'https://join.slack.com[^)]*' README.md | head -n 1)
+          echo "Slack URL: $SLACK_URL"
 
           if [ -z "$SLACK_URL" ]; then
-            echo "No Slack link found."
             echo "slack_url=" >> $GITHUB_OUTPUT
             exit 0
           fi
 
-          echo "Found Slack URL: $SLACK_URL"
           echo "slack_url=$SLACK_URL" >> $GITHUB_OUTPUT
 
       - name: Validate Slack invite link
@@ -33,38 +36,45 @@ jobs:
         if: steps.extract.outputs.slack_url != ''
         run: |
           STATUS=$(curl -I -s -o /dev/null -w "%{http_code}" "${{ steps.extract.outputs.slack_url }}")
+          echo "HTTP status: $STATUS"
 
-          echo "HTTP Status: $STATUS"
-
-          if [ "$STATUS" -ne 200 ]; then
-            echo "valid=false" >> $GITHUB_OUTPUT
-          else
+          if [ "$STATUS" -eq 200 ]; then
             echo "valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "valid=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Check if issue already exists
-        id: existing_issue
+        id: issue_check
         if: steps.validate.outputs.valid == 'false'
-        uses: peter-evans/find-issue@v3
-        with:
-          title: "Slack invite link is invalid"
+        run: |
+          # Look for an open issue with this title
+          RESULT=$(gh issue list \
+              --search "Slack invite link is invalid in:title state:open" \
+              --json number --jq '.[0].number')
 
-      - name: Create issue if invalid
-        if: steps.validate.outputs.valid == 'false' && steps.existing_issue.outputs.issue_number == ''
-        uses: peter-evans/create-issue@v5
-        with:
-          title: "Slack invite link is invalid"
-          body: |
-            The Slack invite link found in the README appears to be invalid or expired.
+          if [ -z "$RESULT" ]; then
+            echo "exists=false" >> $GITHUB_OUTPUT
+          else
+            echo "exists=true" >> $GITHUB_OUTPUT
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            **Link scanned:** ${{ steps.extract.outputs.slack_url }}
+      - name: Create issue if invalid and not existing
+        if: steps.validate.outputs.valid == 'false' && steps.issue_check.outputs.exists == 'false'
+        run: |
+          gh issue create \
+            --title "Slack invite link is invalid" \
+            --body "The Slack invite link in the README appears to be invalid.\n\nDetected link: ${{ steps.extract.outputs.slack_url }}" \
+            --repo ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-            Please update it with a new working Slack invite.
-
-      - name: Output result
+      - name: Done
         run: |
           if [ "${{ steps.validate.outputs.valid }}" = "true" ]; then
-            echo "Slack link is valid ✔️"
+            echo "Slack link is valid ✔"
           else
-            echo "Slack link is invalid ❌ — issue created or already exists."
+            echo "Slack link invalid ❌ — issue created (unless already existing)."
           fi

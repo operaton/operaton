@@ -12,7 +12,7 @@
 
 
 [![Forum](https://img.shields.io/badge/forum-Operaton-green)](https://forum.operaton.org/)
-[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-3id7iv5lz-zT7uGVWLCVNG_zpnAGpq9g)
+[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-3fiodp5cz-vM2h5uDZi9JbCZZqG~6WEA)
 
 Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. 
 It can be embedded inside any Java application and any runtime container. 

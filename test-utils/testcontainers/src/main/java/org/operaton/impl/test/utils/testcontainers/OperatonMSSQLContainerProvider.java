@@ -34,6 +34,6 @@ public class OperatonMSSQLContainerProvider extends MSSQLServerContainerProvider
   public JdbcDatabaseContainer newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mssql", tag, "mcr.microsoft.com/mssql/server");
-    return new MSSQLServerContainer(dockerImageName).acceptLicense();
+    return new OperatonMSSQLContainer(dockerImageName).acceptLicense();
   }
 }

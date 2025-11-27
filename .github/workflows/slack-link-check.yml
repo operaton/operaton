@@ -1,0 +1,70 @@
+name: Validate Slack Invite Link
+
+on:
+  schedule:
+    - cron: "37 15 * * *"   # runs daily at 6 AM UTC
+  workflow_dispatch:      # allows manual run
+
+jobs:
+  check-slack-link:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract Slack link from README
+        id: extract
+        run: |
+          # Extract the first Slack invite URL from README.md
+          SLACK_URL=$(grep -o 'https://join.slack.com[^)]*' README.md | head -n 1)
+
+          if [ -z "$SLACK_URL" ]; then
+            echo "No Slack link found."
+            echo "slack_url=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Found Slack URL: $SLACK_URL"
+          echo "slack_url=$SLACK_URL" >> $GITHUB_OUTPUT
+
+      - name: Validate Slack invite link
+        id: validate
+        if: steps.extract.outputs.slack_url != ''
+        run: |
+          STATUS=$(curl -I -s -o /dev/null -w "%{http_code}" "${{ steps.extract.outputs.slack_url }}")
+
+          echo "HTTP Status: $STATUS"
+
+          if [ "$STATUS" -ne 200 ]; then
+            echo "valid=false" >> $GITHUB_OUTPUT
+          else
+            echo "valid=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if issue already exists
+        id: existing_issue
+        if: steps.validate.outputs.valid == 'false'
+        uses: peter-evans/find-issue@v3
+        with:
+          title: "Slack invite link is invalid"
+
+      - name: Create issue if invalid
+        if: steps.validate.outputs.valid == 'false' && steps.existing_issue.outputs.issue_number == ''
+        uses: peter-evans/create-issue@v5
+        with:
+          title: "Slack invite link is invalid"
+          body: |
+            The Slack invite link found in the README appears to be invalid or expired.
+
+            **Link scanned:** ${{ steps.extract.outputs.slack_url }}
+
+            Please update it with a new working Slack invite.
+
+      - name: Output result
+        run: |
+          if [ "${{ steps.validate.outputs.valid }}" = "true" ]; then
+            echo "Slack link is valid ✔️"
+          else
+            echo "Slack link is invalid ❌ — issue created or already exists."
+          fi

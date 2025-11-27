@@ -302,7 +302,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "25"]') }}
+        java: ${{ fromJson('["17"]') }}
         testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
@@ -333,14 +333,14 @@ jobs:
         if: ${{ matrix.testsuite == 'engine' }}
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
       - name: Execute Webapps Integration Tests
         id: maven-webapps-integration-tests
         if: ${{ matrix.testsuite == 'webapps' && matrix.database == 'h2' }}
         shell: bash
         run: |
           .github/scripts/install-chrome-and-driver.sh
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }} --no-build
+          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=${{ matrix.testsuite }} --distro=${{ matrix.distro }} --db=${{ matrix.database }}
       - name: Execute Database Upgrade Tests
         id: maven-db-upgrade-tests
         if: ${{ matrix.database == 'h2' }}
@@ -389,14 +389,11 @@ jobs:
           .devenv/scripts/build/javadoc.sh
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
-          .devenv/scripts/build/build-sbom.sh
-          pip install pystache
       - name: Cache documentation artifacts
         uses: actions/cache/save@v4
         with:
           path: |
             target/*.zip
-            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
 
   release:
@@ -439,7 +436,6 @@ jobs:
         with:
           path: |
             target/*.zip
-            target/sbom/**
           key: ${{ github.run_id }}-documentation-artifacts
           fail-on-cache-miss: true
 
@@ -454,6 +450,8 @@ jobs:
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
+          JRELEASER_PRERELEASE_ENABLED: true
+          JRELEASER_PROJECT_SNAPSHOT_LABEL: ${{needs.build.outputs.project_version}}
         with:
           arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.build.outputs.database_version}}
 

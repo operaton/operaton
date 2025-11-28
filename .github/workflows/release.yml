@@ -250,7 +250,6 @@ jobs:
     needs:
       - prepare
       - release
-      - release_build
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code

@@ -128,5 +128,4 @@ docker run --name operaton-tomcat -p 8080:8080 operaton/tomcat:SNAPSHOT
     - [ ] Release announced in [Forum](https://forum.operaton.org/c/announcements/4)
     - [ ] Release announced in Slack
 - [ ] [`changelog.tpl`](https://github.com/operaton/operaton/blob/main/.github/jreleaser/changelog.tpl) emptied for next release
-- [ ] [`jreleaser.yml`](https://github.com/operaton/operaton/blob/main/jreleaser.yml): `previousTagName` updated
  

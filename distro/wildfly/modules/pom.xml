@@ -310,9 +310,14 @@
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">
                   <include name="**/module.xml"/>
                 </replace>
-                <replace dir="target/modules" token="@version.assertj@" value="${version.assertj}">
-                  <include name="**/module.xml"/>
-                </replace>
+                <!-- Remove test libraries that should not be included in the distribution -->
+                <delete dir="target/modules/org/junit"/>
+                <delete dir="target/modules/org/assertj"/>
+                <delete dir="target/modules/org/apiguardian"/>
+                <delete dir="target/modules/org/opentest4j"/>
+                <delete dir="target/modules/org/ow2/asm"/>
+                <delete dir="target/modules/net/bytebuddy"/>
+                <delete dir="target/modules/jakarta/el"/>
               </target>
             </configuration>
           </execution>

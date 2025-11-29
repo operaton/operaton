@@ -305,4 +305,5 @@ jobs:
         if: ${{github.event.inputs.dry_run == 'false' }}
         with:
           message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
+          pull: '--rebase --autostash'
         continue-on-error: true

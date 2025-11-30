@@ -310,6 +310,9 @@
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">
                   <include name="**/module.xml"/>
                 </replace>
+                <replace dir="target/modules" token="@version.joda-time@" value="${version.joda-time}">
+                  <include name="**/module.xml"/>
+                </replace>
                 <!-- Remove test libraries that should not be included in the distribution -->
                 <delete dir="target/modules/org/junit"/>
                 <delete dir="target/modules/org/assertj"/>

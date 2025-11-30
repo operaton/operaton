@@ -44,6 +44,7 @@ public class SpringLookupManagedProcessEngineTest extends AbstractFoxPlatformInt
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addAsWebInfResource("org/operaton/bpm/integrationtest/deployment/spring/SpringLookupManagedProcessEngineTest-context.xml", "applicationContext.xml")
       .addAsLibraries(DeploymentHelper.getEngineSpring())
+      .addAsLibraries(DeploymentHelper.getTestingLibs())
       .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml")
       .addAsWebInfResource("org/operaton/bpm/integrationtest/deployment/spring/web.xml", "web.xml");
   }

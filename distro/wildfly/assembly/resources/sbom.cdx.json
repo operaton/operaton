@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:75c35209-9589-4b03-9269-a8b631da73e7",
+  "serialNumber": "urn:uuid:55b584fb-7d79-474a-92c4-09c5e5b98b3c",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-11-30T10:44:22Z",
+    "timestamp": "2025-11-30T16:26:48Z",
     "tools": {
       "components": [
         {
@@ -3620,45 +3620,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/joda-time/joda-time@2.12.5?type=jar",
+      "bom-ref": "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
       "publisher": "Joda.org",
       "group": "joda-time",
       "name": "joda-time",
-      "version": "2.12.5",
+      "version": "2.14.0",
       "description": "Date and time library to replace JDK date handling",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a0f575850531c768542236ea245b7516"
+          "content": "ce5d368699f16abb55616b6b9fcb34dd"
         },
         {
           "alg": "SHA-1",
-          "content": "698ce67b5e58becfb4ef2cf0393422775e59dff4"
+          "content": "1fa665c1ce64a2c8c94f63fc5c1ee7bd742d2022"
         },
         {
           "alg": "SHA-256",
-          "content": "10628411ecb40c4634196c544f34681abdeef826f377096357433d1f9a135bc6"
+          "content": "1e2da6f9eb65f20a25d9a3186831ed2b3fb14f7a48e1ef8206135ee58cb143d3"
         },
         {
           "alg": "SHA-512",
-          "content": "300d1acaac8c49e3d6d74077392ecb9aba4115173f8734923413bfb049f01a668f4852099e9682146dd2f41faed244ca2a91c2d70b98930bffb811532f99efdf"
+          "content": "af0a707cb15a273d0169908d518b0bebc5f79aa07a442d9a77b117feaab2916b3729862642d2b465a3ec569540304a622758aac566c0af84123f151d4ebf1f5a"
         },
         {
           "alg": "SHA-384",
-          "content": "acd89d4bfe98d1388b8652995d288ef26441072898d25f68abead84e016d858af7b775cf0e830257c77873c4a7b22139"
+          "content": "2aba3754964f4d470bf3f7188aebc7ddda98f8981f46c5989f1bc3007ceed3a5ce008f5b50450d11e67b1c7bb4eba5b2"
         },
         {
           "alg": "SHA3-384",
-          "content": "8127810bff5cc6993d729e79fbf55e768e386003a7ce7a7a989453a19abee08374f2d9970c805467816626e7903895f6"
+          "content": "c9f59bda7a238f67401d525d0be6db455d4539bcb5d793319d4161c9aded59cd9851bf03977eb21d13b9a120805b9966"
         },
         {
           "alg": "SHA3-256",
-          "content": "da3474a4794021ff9c5137a5fafb8267db03d6c00828387b498ac9808337a886"
+          "content": "cc6863e7c8b47dda46731053f8df85387dd961b4f690c6212a910d6e07962324"
         },
         {
           "alg": "SHA3-512",
-          "content": "6008121bc71023292475f898b9347dfabb34d1d16277e98343d16a5fdba68f8b07ff1ac10534644fe2685afe5fd22f80022d9f935c5817cf801f353ee688f5c1"
+          "content": "59bea4e54b6a967f35a22b26584db889aa5f23a649270ac0cd7af4b713ebe9e68a55d92c27cc64a196ba76bd493eacb280d8bfe7951a32fd3a3cfce534eba8aa"
         }
       ],
       "licenses": [
@@ -3668,7 +3668,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/joda-time/joda-time@2.12.5?type=jar",
+      "purl": "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
       "externalReferences": [
         {
           "url": "https://www.joda.org/joda-time/",
@@ -3683,7 +3683,7 @@
           "type": "distribution-intake"
         },
         {
-          "url": "https://github.com/JodaOrg/joda-time/issues",
+          "url": "https://github.com/JodaOrg/joda-time/issues/",
           "type": "issue-tracker"
         },
         {
@@ -33659,7 +33659,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e38e0410-12c0-4ab8-911b-f4cfc87b2eab",
+      "bom-ref": "b607f018-bbf1-4de3-ac8a-7036a2ac7759",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37454,7 +37454,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "83af592d-fb90-4025-bf2c-b87c4add84ce",
+      "bom-ref": "3528df5f-3acd-4612-9a88-7f24b7885da0",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37962,7 +37962,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@6.2.14?type=jar",
-        "pkg:maven/joda-time/joda-time@2.12.5?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
@@ -38003,7 +38003,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/joda-time/joda-time@2.12.5?type=jar",
+      "ref": "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
       "dependsOn": []
     },
     {
@@ -38855,7 +38855,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@6.2.14?type=jar",
-        "pkg:maven/joda-time/joda-time@2.12.5?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
@@ -39551,7 +39551,7 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
-        "pkg:maven/joda-time/joda-time@2.12.5?type=jar"
+        "pkg:maven/joda-time/joda-time@2.14.0?type=jar"
       ]
     },
     {
@@ -41425,13 +41425,13 @@
       "dependsOn": []
     },
     {
-      "ref": "83af592d-fb90-4025-bf2c-b87c4add84ce",
+      "ref": "3528df5f-3acd-4612-9a88-7f24b7885da0",
       "dependsOn": [
-        "e38e0410-12c0-4ab8-911b-f4cfc87b2eab"
+        "b607f018-bbf1-4de3-ac8a-7036a2ac7759"
       ]
     },
     {
-      "ref": "e38e0410-12c0-4ab8-911b-f4cfc87b2eab",
+      "ref": "b607f018-bbf1-4de3-ac8a-7036a2ac7759",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",

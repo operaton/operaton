@@ -117,7 +117,7 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http,
                                          AuthorizeTokenFilter authorizeTokenFilter,
-                                         @Nullable SsoLogoutSuccessHandler ssoLogoutSuccessHandler) throws Exception {
+                                         @Nullable SsoLogoutSuccessHandler ssoLogoutSuccessHandler) {
 
     logger.info("Enabling Operaton Spring Security oauth2 integration");
 

@@ -250,12 +250,30 @@ jobs:
     needs:
       - prepare
       - release
+      - release_build
     runs-on: ubuntu-latest
     steps:
       - name: Check out the code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+
+      - name: Delete snapshot release
+        if: ${{github.event.inputs.dry_run == 'false' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SNAPSHOT_TAG="v${{ needs.release_build.outputs.version }}-SNAPSHOT"
+          echo "Attempting to delete snapshot release: $SNAPSHOT_TAG"
+
+          # Check if the release exists and delete it
+          if gh release view "$SNAPSHOT_TAG" > /dev/null 2>&1; then
+            echo "Found snapshot release $SNAPSHOT_TAG, deleting..."
+            gh release delete "$SNAPSHOT_TAG" --yes --cleanup-tag
+            echo "Successfully deleted snapshot release $SNAPSHOT_TAG"
+          else
+            echo "Snapshot release $SNAPSHOT_TAG not found, skipping deletion"
+          fi
 
       - name: Set next development version
         id: set-next-version

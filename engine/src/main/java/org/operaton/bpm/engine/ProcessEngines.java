@@ -26,13 +26,11 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -87,66 +85,66 @@ public final class ProcessEngines {
    * style configuration).
    */
   public static synchronized void init(boolean forceCreate) {
-    if (!isInitialized) {
-      if (processEngines == null) {
-        // Create new map to store process-engines if current map is null
-        processEngines = new ConcurrentHashMap<>();
-      }
-      ClassLoader classLoader = ReflectUtil.getClassLoader();
-      Enumeration<URL> resources = null;
-      try {
-        resources = classLoader.getResources("operaton.cfg.xml");
-      } catch (IOException e) {
-        try {
-          resources = classLoader.getResources("activiti.cfg.xml");
-        } catch (IOException ex) {
-          if (forceCreate) {
-            throw new ProcessEngineException(
-                "problem retrieving operaton.cfg.xml and activiti.cfg.xml resources on the classpath: "
-                    + System.getProperty("java.class.path"),
-                ex);
-          } else {
-            return;
-          }
-        }
-      }
+    if (isInitialized) {
+      LOG.processEngineAlreadyInitialized();
+    }
 
-      // Remove duplicated configuration URL's using set. Some classloaders may
-      // return identical URL's twice, causing duplicate startups
-      Set<URL> configUrls = new HashSet<>();
-      while (resources.hasMoreElements()) {
-        configUrls.add(resources.nextElement());
-      }
-      for (Iterator<URL> iterator = configUrls.iterator(); iterator.hasNext();) {
-        URL resource = iterator.next();
-        initProcessEngineFromResource(resource);
-      }
+    if (processEngines == null) {
+      processEngines = new ConcurrentHashMap<>();
+    }
 
+    ClassLoader classLoader = ReflectUtil.getClassLoader();
+    Enumeration<URL> resources = null;
+    try {
+      resources = classLoader.getResources("operaton.cfg.xml");
+    } catch (IOException e) {
       try {
-        resources = classLoader.getResources("activiti-context.xml");
-      } catch (IOException e) {
+        resources = classLoader.getResources("activiti.cfg.xml");
+      } catch (IOException ex) {
         if (forceCreate) {
-          throw new ProcessEngineException("problem retrieving activiti-context.xml resources on the classpath: "
-              + System.getProperty("java.class.path"), e);
+          throw new ProcessEngineException(
+              "problem retrieving operaton.cfg.xml and activiti.cfg.xml resources on the classpath: "
+                  + System.getProperty("java.class.path"), ex);
         } else {
           return;
         }
       }
-      while (resources.hasMoreElements()) {
-        URL resource = resources.nextElement();
-        initProcessEngineFromSpringResource(resource);
-      }
-
-      isInitialized = true;
-    } else {
-      LOG.processEngineAlreadyInitialized();
     }
+
+    // Remove duplicated configuration URL's using set. Some classloaders may
+    // return identical URL's twice, causing duplicate startups
+    Set<URL> configUrls = new HashSet<>();
+    while (resources.hasMoreElements()) {
+      configUrls.add(resources.nextElement());
+    }
+    for (URL resource : configUrls) {
+      initProcessEngineFromResource(resource);
+    }
+
+    try {
+      resources = classLoader.getResources("activiti-context.xml");
+    } catch (IOException e) {
+      if (forceCreate) {
+        throw new ProcessEngineException(
+            "problem retrieving activiti-context.xml resources on the classpath: " + System.getProperty(
+                "java.class.path"), e);
+      } else {
+        return;
+      }
+    }
+
+    while (resources.hasMoreElements()) {
+      URL resource = resources.nextElement();
+      initProcessEngineFromSpringResource(resource);
+    }
+
+    isInitialized = true;
   }
 
   protected static void initProcessEngineFromSpringResource(URL resource) {
     try {
-      Class<?> springConfigurationHelperClass = ReflectUtil
-          .loadClass("org.operaton.bpm.engine.spring.SpringConfigurationHelper");
+      Class<?> springConfigurationHelperClass = ReflectUtil.loadClass(
+          "org.operaton.bpm.engine.spring.SpringConfigurationHelper");
       Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", URL.class);
       ProcessEngine processEngine = (ProcessEngine) method.invoke(null, resource);
 
@@ -156,8 +154,9 @@ public final class ProcessEngines {
       PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.put(resource.toString(), processEngineInfo);
 
     } catch (Exception e) {
-      throw new ProcessEngineException("couldn't initialize process engine from spring configuration resource "
-          + resource.toString() + ": " + e.getMessage(), e);
+      throw new ProcessEngineException(
+          "couldn't initialize process engine from spring configuration resource " + resource.toString() + ": "
+              + e.getMessage(), e);
     }
   }
 
@@ -227,8 +226,8 @@ public final class ProcessEngines {
     InputStream inputStream = null;
     try {
       inputStream = resource.openStream();
-      ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration
-          .createProcessEngineConfigurationFromInputStream(inputStream);
+      ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromInputStream(
+          inputStream);
       return processEngineConfiguration.buildProcessEngine();
 
     } catch (IOException e) {
@@ -238,7 +237,9 @@ public final class ProcessEngines {
     }
   }
 
-  /** Get initialization results. */
+  /**
+   * Get initialization results.
+   */
   public static List<ProcessEngineInfo> getProcessEngineInfos() {
     return PROCESS_ENGINE_INFOS;
   }
@@ -267,10 +268,9 @@ public final class ProcessEngines {
 
   /**
    * obtain a process engine by name.
-   * 
-   * @param processEngineName
-   *          is the name of the process engine or null for the default process
-   *          engine.
+   *
+   * @param processEngineName is the name of the process engine or null for the default process
+   *                          engine.
    */
   public static ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
     if (!isInitialized) {

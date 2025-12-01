@@ -59,5 +59,6 @@ This directory contains the GitHub Actions workflows for the Operaton project. E
 | `actions/setup-java`                   | v4      | Sets up the Java environment.                           |
 | `stefanzweifel/git-auto-commit-action` | v5      | Automatically commits changes to the repository.        |
 | `jreleaser/release-action`             | v2      | Releases the project.                                   |
+| `catchpoint/workflow-telemetry-action` | v2.0.0  | Collects workflow telemetry data.                       |
 
 For more details on each workflow, you can view the workflow files in the [.github/workflows](https://github.com/operaton/operaton/tree/main/.github/workflows) directory.

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:definitions xmlns:ns0="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:ns1="http://camunda.org/schema/modeler/1.0" id="Definitions_SortTest" name="SortOutputOrder" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.34.0" ns1:executionPlatform="Camunda Platform" ns1:executionPlatformVersion="7.23.0">
+  <ns0:decision id="decision_sort_test" name="SortOutputOrder">
+    <ns0:decisionTable id="decisionTable_sort" hitPolicy="PRIORITY">
+      <ns0:input id="input1" label="Score">
+        <ns0:inputExpression id="inputExpression1" typeRef="integer">
+          <ns0:text>Score</ns0:text>
+        </ns0:inputExpression>
+      </ns0:input>
+      <ns0:output id="output1" typeRef="string">
+        <ns0:outputValues>
+          <ns0:text>"Low", "Medium", "High", "Unique"</ns0:text>
+        </ns0:outputValues>
+      </ns0:output>
+      <ns0:rule id="rule1">
+        <ns0:inputEntry>
+          <ns0:text>&lt; 200</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"High"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule2">
+        <ns0:inputEntry>
+          <ns0:text>&gt;= 600</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Low"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule3">
+        <ns0:inputEntry>
+          <ns0:text>&gt;= 300</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Medium"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule4">
+        <ns0:inputEntry>
+          <ns0:text>&gt;= 100</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Low"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule5">
+        <ns0:inputEntry>
+          <ns0:text>&gt;= 400</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"High"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule6">
+        <ns0:inputEntry>
+          <ns0:text>&lt;= 500</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Medium"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule7">
+        <ns0:inputEntry>
+          <ns0:text>999</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry>
+          <ns0:text>"Unique"</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+    </ns0:decisionTable>
+  </ns0:decision>
+</ns0:definitions>

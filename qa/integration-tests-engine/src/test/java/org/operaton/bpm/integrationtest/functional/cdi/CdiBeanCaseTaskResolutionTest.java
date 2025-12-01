@@ -40,7 +40,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 @ExtendWith(ArquillianExtension.class)
-@Disabled("https://github.com/operaton/operaton/issues/616")
 public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name="pa1")

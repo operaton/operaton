@@ -104,7 +104,8 @@ public final class ProcessEngines {
         if (forceCreate) {
           throw new ProcessEngineException(
               "problem retrieving operaton.cfg.xml and activiti.cfg.xml resources on the classpath: "
-                  + System.getProperty("java.class.path"), ex);
+                  + System.getProperty("java.class.path"),
+              ex);
         } else {
           return;
         }
@@ -127,7 +128,8 @@ public final class ProcessEngines {
       if (forceCreate) {
         throw new ProcessEngineException(
             "problem retrieving activiti-context.xml resources on the classpath: " + System.getProperty(
-                "java.class.path"), e);
+                "java.class.path"),
+            e);
       } else {
         return;
       }
@@ -156,7 +158,8 @@ public final class ProcessEngines {
     } catch (Exception e) {
       throw new ProcessEngineException(
           "couldn't initialize process engine from spring configuration resource " + resource.toString() + ": "
-              + e.getMessage(), e);
+              + e.getMessage(),
+          e);
     }
   }
 
@@ -226,8 +229,9 @@ public final class ProcessEngines {
     InputStream inputStream = null;
     try {
       inputStream = resource.openStream();
-      ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromInputStream(
-          inputStream);
+      ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration
+          .createProcessEngineConfigurationFromInputStream(
+              inputStream);
       return processEngineConfiguration.buildProcessEngine();
 
     } catch (IOException e) {
@@ -269,7 +273,8 @@ public final class ProcessEngines {
   /**
    * obtain a process engine by name.
    *
-   * @param processEngineName is the name of the process engine or null for the default process
+   * @param processEngineName is the name of the process engine or null for the
+   *                          default process
    *                          engine.
    */
   public static ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
@@ -307,9 +312,8 @@ public final class ProcessEngines {
       Map<String, ProcessEngine> engines = new HashMap<>(processEngines);
       processEngines = new ConcurrentHashMap<>();
 
-      for (var engineEntry : engines.entrySet()) {
-        String processEngineName = engineEntry.getKey();
-        ProcessEngine processEngine = engineEntry.getValue();
+      for (String processEngineName : engines.keySet()) {
+        ProcessEngine processEngine = engines.get(processEngineName);
         try {
           processEngine.close();
         } catch (Exception e) {
@@ -317,10 +321,6 @@ public final class ProcessEngines {
               processEngineName == null ? "the default process engine" : "process engine " + processEngineName, e);
         }
       }
-
-      PROCESS_ENGINE_INFOS_BY_NAME.clear();
-      PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.clear();
-      PROCESS_ENGINE_INFOS.clear();
 
       isInitialized = false;
     }

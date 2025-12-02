@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter;
 
+import org.operaton.bpm.engine.health.HealthService;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -36,16 +37,17 @@ import org.operaton.bpm.spring.boot.starter.actuator.ProcessEngineHealthIndicato
 @DependsOn("runtimeService")
 public class OperatonBpmActuatorConfiguration {
 
-  @Bean
-  @ConditionalOnBean(name = "jobExecutor")
-  @ConditionalOnMissingBean(name = "jobExecutorHealthIndicator")
-  public HealthIndicator jobExecutorHealthIndicator(JobExecutor jobExecutor) {
-    return new JobExecutorHealthIndicator(jobExecutor);
-  }
+    @Bean
+    @ConditionalOnBean(name = "jobExecutor")
+    @ConditionalOnMissingBean(name = "jobExecutorHealthIndicator")
+    public HealthIndicator jobExecutorHealthIndicator(JobExecutor jobExecutor) {
+        return new JobExecutorHealthIndicator(jobExecutor);
+    }
 
-  @Bean
-  @ConditionalOnMissingBean(name = "processEngineHealthIndicator")
-  public HealthIndicator processEngineHealthIndicator(ProcessEngine processEngine) {
-    return new ProcessEngineHealthIndicator(processEngine);
-  }
+    @Bean
+    @ConditionalOnMissingBean(name = "processEngineHealthIndicator")
+    public HealthIndicator processEngineHealthIndicator(ProcessEngine processEngine, HealthService healthService) {
+        return new ProcessEngineHealthIndicator(processEngine, healthService);
+    }
+
 }

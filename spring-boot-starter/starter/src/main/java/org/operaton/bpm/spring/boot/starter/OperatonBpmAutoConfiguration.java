@@ -43,6 +43,7 @@ import org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion;
 @Import({
   OperatonBpmConfiguration.class,
   OperatonBpmActuatorConfiguration.class,
+  OperatonBpmHealthServiceConfiguration.class,
   OperatonBpmPluginConfiguration.class,
   OperatonBpmTelemetryConfiguration.class,
   SpringProcessEngineServicesConfiguration.class

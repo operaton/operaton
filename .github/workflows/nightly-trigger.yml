@@ -16,7 +16,7 @@ concurrency:
 jobs:
   detect-release-branches:
     name: Detect Release Branches
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       branches: ${{ steps.list-branches.outputs.branches }}
       has_branches: ${{ steps.list-branches.outputs.has_branches }}
@@ -59,7 +59,7 @@ jobs:
     name: Trigger Integration Build for ${{ matrix.release_branch }}
     needs: detect-release-branches
     if: needs.detect-release-branches.outputs.has_branches == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     strategy:
       fail-fast: false
       matrix:

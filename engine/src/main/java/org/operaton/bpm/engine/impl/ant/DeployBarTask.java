@@ -104,6 +104,8 @@ public class DeployBarTask extends Task {
   private void handleMissingProcessEngine() {
     List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
     if (processEngineInfos != null && !processEngineInfos.isEmpty()) {
+      // Since no engine with the given name is found, we can't be 100% sure which ProcessEngineInfo
+      // is causing the error. We should show ALL errors and process engine names / resource URL's.
       String message = getErrorMessage(processEngineInfos, processEngineName);
       throw new ProcessEngineException(message);
     } else {
@@ -149,10 +151,8 @@ public class DeployBarTask extends Task {
       if (engineInfo.getException() != null) {
         builder.append("Error while initializing engine. ");
         if (engineInfo.getException().indexOf("driver on UnpooledDataSource") != -1) {
-          builder.append(
-              "Exception while initializing process engine! Database or database driver might not have been configured correctly.")
-              .append(
-                  "Please consult the user guide for supported database environments or build.properties. Stacktrace: ")
+          builder.append("Exception while initializing process engine! Database or database driver might not have been configured correctly.")
+              .append("Please consult the user guide for supported database environments or build.properties. Stacktrace: ")
               .append(engineInfo.getException());
         } else {
           builder.append("Stacktrace: ").append(engineInfo.getException());

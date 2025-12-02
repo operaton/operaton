@@ -104,7 +104,8 @@ public final class ProcessEngines {
         if (forceCreate) {
           throw new ProcessEngineException(
               "problem retrieving operaton.cfg.xml and activiti.cfg.xml resources on the classpath: "
-                  + System.getProperty("java.class.path"), ex);
+                  + System.getProperty("java.class.path"),
+              ex);
         } else {
           return;
         }
@@ -127,7 +128,8 @@ public final class ProcessEngines {
       if (forceCreate) {
         throw new ProcessEngineException(
             "problem retrieving activiti-context.xml resources on the classpath: " + System.getProperty(
-                "java.class.path"), e);
+                "java.class.path"),
+            e);
       } else {
         return;
       }
@@ -156,7 +158,8 @@ public final class ProcessEngines {
     } catch (Exception e) {
       throw new ProcessEngineException(
         "couldn't initialize process engine from spring configuration resource %s: %s".formatted(resource.toString(),
-          e.getMessage()), e);
+          e.getMessage()),
+          e);
     }
   }
 
@@ -227,7 +230,8 @@ public final class ProcessEngines {
     try {
       inputStream = resource.openStream();
       ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration
-          .createProcessEngineConfigurationFromInputStream(inputStream);
+
+              .createProcessEngineConfigurationFromInputStream(inputStream);
       return processEngineConfiguration.buildProcessEngine();
 
     } catch (IOException e) {
@@ -269,7 +273,8 @@ public final class ProcessEngines {
   /**
    * obtain a process engine by name.
    *
-   * @param processEngineName is the name of the process engine or null for the default process engine.
+   * @param processEngineName is the name of the process engine or null for the
+   *                          default process engine.
    */
   public static ProcessEngine getProcessEngine(String processEngineName, boolean forceCreate) {
     if (!isInitialized) {
@@ -312,10 +317,6 @@ public final class ProcessEngines {
             processEngine.getName() == null ? "the default process engine" : "process engine " + processEngine.getName(), e);
         }
       }
-
-      PROCESS_ENGINE_INFOS_BY_NAME.clear();
-      PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.clear();
-      PROCESS_ENGINE_INFOS.clear();
 
       PROCESS_ENGINE_INFOS_BY_NAME.clear();
       PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.clear();

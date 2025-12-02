@@ -131,24 +131,6 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
     calledElementAttribute.setValue(this, calledElement);
   }
 
-  /**
-   * @deprecated Use {@link #isOperatonAsyncBefore()} instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public boolean isOperatonAsync() {
-    return operatonAsyncAttribute.getValue(this);
-  }
-
-  /**
-   * @deprecated Use setOperatonAsyncBefore() instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public void setOperatonAsync(boolean isOperatonAsync) {
-    operatonAsyncAttribute.setValue(this, isOperatonAsync);
-  }
-
   @Override
   public String getOperatonCalledElementBinding() {
     return operatonCalledElementBindingAttribute.getValue(this);

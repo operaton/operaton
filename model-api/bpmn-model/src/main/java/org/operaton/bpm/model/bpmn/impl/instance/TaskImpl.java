@@ -66,27 +66,6 @@ public class TaskImpl extends ActivityImpl implements Task {
     throw new ModelTypeException("No builder implemented.");
   }
 
-  /** operaton extensions */
-
-  /**
-   * @deprecated Use isOperatonAsyncBefore() instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public boolean isOperatonAsync() {
-    return operatonAsyncAttribute.getValue(this);
-  }
-
-  /**
-   * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public void setOperatonAsync(boolean isOperatonAsync) {
-    operatonAsyncAttribute.setValue(this, isOperatonAsync);
-  }
-
-
   @Override
   public BpmnShape getDiagramElement() {
     return (BpmnShape) super.getDiagramElement();

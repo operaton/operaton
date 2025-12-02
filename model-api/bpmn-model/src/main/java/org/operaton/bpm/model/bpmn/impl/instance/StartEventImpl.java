@@ -110,26 +110,6 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
     isInterruptingAttribute.setValue(this, isInterrupting);
   }
 
-  /** operaton extensions */
-
-  /**
-   * @deprecated Use isOperatonAsyncBefore() instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public boolean isOperatonAsync() {
-    return operatonAsyncAttribute.getValue(this);
-  }
-
-  /**
-   * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  @Override
-  public void setOperatonAsync(boolean isOperatonAsync) {
-    operatonAsyncAttribute.setValue(this, isOperatonAsync);
-  }
-
   @Override
   public String getOperatonFormHandlerClass() {
     return operatonFormHandlerClassAttribute.getValue(this);

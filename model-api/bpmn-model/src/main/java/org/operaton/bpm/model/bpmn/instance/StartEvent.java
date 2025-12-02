@@ -36,16 +36,20 @@ public interface StartEvent extends CatchEvent {
   /** operaton extensions */
 
   /**
-   * @deprecated Use isOperatonAsyncBefore() instead.
+   * @deprecated Use {@link #isOperatonAsyncBefore()} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  boolean isOperatonAsync();
+  default boolean isOperatonAsync() {
+    return isOperatonAsyncBefore();
+  }
 
   /**
-   * @deprecated Use setOperatonAsyncBefore(isOperatonAsyncBefore) instead.
+   * @deprecated Use {@link #setOperatonAsyncBefore(boolean)} instead.
    */
   @Deprecated(forRemoval = true, since = "1.0")
-  void setOperatonAsync(boolean isOperatonAsync);
+  default void setOperatonAsync(boolean isOperatonAsync) {
+    setOperatonAsyncBefore(isOperatonAsync);
+  }
 
   String getOperatonFormHandlerClass();
 

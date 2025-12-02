@@ -6,7 +6,7 @@ on:
   
 jobs:
   add-good-first-issue-comment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: github.event.label.name == 'good first issue'
     steps:
       - name: Checkout repository

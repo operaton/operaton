@@ -144,7 +144,6 @@ public class EventSubscriptionDeclaration implements Serializable {
     eventSubscriptionEntity.setActivityId(activityId);
     eventSubscriptionEntity.setConfiguration(processDefinition.getId());
     eventSubscriptionEntity.setTenantId(processDefinition.getTenantId());
-
     return eventSubscriptionEntity;
   }
 

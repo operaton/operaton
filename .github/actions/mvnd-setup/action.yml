@@ -1,0 +1,71 @@
+# Copyright 2025 the Operaton contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+name: "Setup mvnd"
+description: "Downloads, extracts, and adds mvnd to the runner's PATH."
+
+inputs:
+  mvnd-version:
+    description: "The version of mvnd to install (e.g., 1.0.3)"
+    required: true
+    default: "1.0.3"
+  platform:
+    description: "The runner platform (e.g., linux-amd64, windows-amd64)"
+    required: true
+    default: "linux-amd64"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Define mvnd Variables
+      shell: bash
+      run: |
+        MVND_VERSION="${{ inputs.mvnd-version }}"
+        MVND_PLATFORM="${{ inputs.platform }}"
+        MVND_DIR="$HOME/mvnd"
+        
+        echo "MVND_VERSION=$MVND_VERSION" >> $GITHUB_ENV
+        echo "MVND_PLATFORM=$MVND_PLATFORM" >> $GITHUB_ENV
+        echo "MVND_DIR=$MVND_DIR" >> $GITHUB_ENV
+        
+        MVND_FILENAME="maven-mvnd-$MVND_VERSION-$MVND_PLATFORM.zip"
+        MVND_URL="https://downloads.apache.org/maven/mvnd/$MVND_VERSION/$MVND_FILENAME"
+        
+        echo "MVND_URL=$MVND_URL" >> $GITHUB_ENV
+        echo "MVND_FILENAME=$MVND_FILENAME" >> $GITHUB_ENV
+
+    - name: Download and Extract mvnd
+      shell: bash
+      run: |
+        echo "Downloading ${{ env.MVND_URL }}"
+        # Download the ZIP archive
+        curl -sL ${{ env.MVND_URL }} -o mvnd.zip
+        
+        # Create installation directory
+        mkdir -p ${{ env.MVND_DIR }}
+        
+        # Unzip to the designated directory
+        unzip -q mvnd.zip -d ${{ env.MVND_DIR }}
+        
+        # The extracted folder name contains the version and platform,
+        # so we rename it to a stable path for easier use.
+        EXTRACTED_DIR_NAME="maven-mvnd-${{ env.MVND_VERSION }}-${{ env.MVND_PLATFORM }}"
+        mv ${{ env.MVND_DIR }}/$EXTRACTED_DIR_NAME ${{ env.MVND_DIR }}/mvnd-bin
+
+    - name: Add mvnd to PATH
+      shell: bash
+      run: echo "${{ env.MVND_DIR }}/mvnd-bin/bin" >> $GITHUB_PATH
+
+    - name: Verify mvnd availability
+      shell: bash
+      run: mvnd -v

@@ -12,6 +12,7 @@ decision-makers: ["@hauptmedia", "@ungerts", "@kthoms", "@SevDan"]
 There is an issue with code migration for production runtimes when platform classes referenced by FQNs are used in resources such as scripts or configurations. These references should be migrated inside the database.
 
 Artifacts scope:
+
 * **In scope:** BPMN and DMN resources (scripts, forms) stored in runtime tables
 * **Out of scope:** all resources stored in history tables
 
@@ -104,4 +105,3 @@ Additional insights from the data migration analysis:
 Both SQL scripts and Liquibase custom task prototypes were evaluated but exhibited major limitations and high cost.  
 SQL scripts depend strongly on DBMS type and version, and cannot reliably reproduce time‑based ID generation.  
 The Liquibase custom task approach would require significant changes to the Liquibase artifact, which currently contains only SQL and Liquibase files.
-

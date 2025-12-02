@@ -17,7 +17,7 @@
       <dependency>
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
-        <version>10.0.0</version>
+        <version>${version.jakarta-ee}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

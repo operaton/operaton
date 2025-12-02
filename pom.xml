@@ -14,10 +14,10 @@
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <!-- These properties are used in both the BOM as well as operaton-parent and subprojects -->
     <version.mybatis>3.5.19</version.mybatis>
-    <version.joda-time>2.12.5</version.joda-time>
+    <version.joda-time>2.14.0</version.joda-time>
     <version.uuid-generator>5.1.1</version.uuid-generator>
     <version.feel-scala>1.19.3</version.feel-scala>
-    <version.quarkus>3.30.0</version.quarkus>
+    <version.quarkus>3.30.1</version.quarkus>
     <version.java>17</version.java>
     <version.spring>7.0.1</version.spring>
     <version.spring-boot>4.0.0</version.spring-boot>
@@ -246,7 +246,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-assembly-plugin</artifactId>
-          <version>3.7.1</version>
+          <version>3.8.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -280,7 +280,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-ejb-plugin</artifactId>
-          <version>3.2.1</version>
+          <version>3.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -328,7 +328,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

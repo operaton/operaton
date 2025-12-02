@@ -17,7 +17,6 @@
 package org.operaton.bpm.spring.boot.starter.configuration.impl;
 
 import javax.sql.DataSource;
-
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.util.StringUtils;
 

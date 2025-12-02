@@ -27,7 +27,10 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-  
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
   # Release 1.0.x branch - patch updates only
   - package-ecosystem: "devcontainers"
     directory: "/"

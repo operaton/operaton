@@ -20,7 +20,7 @@
   </description>
 
   <properties>
-    <version.jetty>12.0.27</version.jetty>
+    <version.jetty>12.1.4</version.jetty>
   </properties>
 
   <dependencyManagement>
@@ -45,7 +45,7 @@
       <dependency>
         <groupId>jakarta.platform</groupId>
         <artifactId>jakarta.jakartaee-bom</artifactId>
-        <version>11.0.0</version>
+        <version>${version.jakarta-ee}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -338,8 +338,8 @@
         <version>${version.jetty}</version>
       </dependency>
       <dependency>
-        <groupId>org.eclipse.jetty.ee10</groupId>
-        <artifactId>jetty-ee10-webapp</artifactId>
+        <groupId>org.eclipse.jetty.ee11</groupId>
+        <artifactId>jetty-ee11-webapp</artifactId>
         <version>${version.jetty}</version>
       </dependency>
 

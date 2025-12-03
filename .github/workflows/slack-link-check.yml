@@ -48,11 +48,14 @@ jobs:
 
       - name: Check Slack invite status
         id: check
+        env:
+          SLACK_URL: ${{ steps.extract.outputs.url }}
+          CHROMIUM_PATH: ${{ steps.find_chromium.outputs.path }}
         run: |
           node - << 'EOF'
           const { chromium } = require("playwright");
-          const url = "${{ steps.extract.outputs.url }}";
-          const path = "${{ steps.find_chromium.outputs.path }}";
+          const url = process.env.SLACK_URL;
+          const path = process.env.CHROMIUM_PATH;
 
           (async () => {
             const browser = await chromium.launch({

@@ -32,15 +32,18 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install Playwright core only
         run: npm install playwright
-          
       - name: Extract Slack link from README
         id: extract
         run: |
           url=$(grep -o 'https://join.slack.com[^)]*' README.md | head -n 1)
+          if [ -z "$url" ]; then
+            echo "Error: No Slack URL found in README.md"
+            exit 1
+          fi
           echo "url=$url" >> $GITHUB_OUTPUT
 
       - name: Check Slack invite status

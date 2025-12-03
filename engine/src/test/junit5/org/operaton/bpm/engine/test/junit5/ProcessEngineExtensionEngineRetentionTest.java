@@ -23,15 +23,12 @@ public class ProcessEngineExtensionEngineRetentionTest {
             .build();
 
     @RegisterExtension
-    static  ProcessEngineExtension processEngineClosingExtension = ProcessEngineExtension
+    static ProcessEngineExtension processEngineClosingExtension = ProcessEngineExtension
             .builder()
             .randomEngineName()
             .closeEngineAfterAllTests()
             .build();
 
-
-    private static String processEngineName;
-    private static String processEngineClosingExtensionName;
 
     private static ProcessEngine firstProcessEngine;
     private static ProcessEngine secondProcessEngine;
@@ -42,13 +39,11 @@ public class ProcessEngineExtensionEngineRetentionTest {
 
         @Test
         void testProcessEngineExtensionInitialAvailability() {
-            processEngineName = processEngineExtension.getProcessEngine().getName();
-            processEngineClosingExtensionName = processEngineClosingExtension.getProcessEngine().getName();
-            assertNotNull(processEngineExtension.getProcessEngine());
-            assertNotNull(processEngineClosingExtension.getProcessEngine());
-
             firstProcessEngine = processEngineExtension.getProcessEngine();
             secondProcessEngine = processEngineClosingExtension.getProcessEngine();
+
+            assertThat(firstProcessEngine).isNotNull();
+            assertThat(secondProcessEngine).isNotNull().isNotSameAs(firstProcessEngine);
         }
     }
 

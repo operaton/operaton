@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.operaton.bpm.engine.ProcessEngine;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -31,6 +33,9 @@ public class ProcessEngineExtensionEngineRetentionTest {
     private static String processEngineName;
     private static String processEngineClosingExtensionName;
 
+    private static ProcessEngine firstProcessEngine;
+    private static ProcessEngine secondProcessEngine;
+
     @Nested
     @Order(1)
     class ProcessEngineExtensionFirstTests {
@@ -41,6 +46,9 @@ public class ProcessEngineExtensionEngineRetentionTest {
             processEngineClosingExtensionName = processEngineClosingExtension.getProcessEngine().getName();
             assertNotNull(processEngineExtension.getProcessEngine());
             assertNotNull(processEngineClosingExtension.getProcessEngine());
+
+            firstProcessEngine = processEngineExtension.getProcessEngine();
+            secondProcessEngine = processEngineClosingExtension.getProcessEngine();
         }
     }
 
@@ -51,12 +59,14 @@ public class ProcessEngineExtensionEngineRetentionTest {
         @Test
         void testExtensionsProcessEngineRetention() {
             // Check that same process engine is retained between multiple test classes
-            assertNotNull(processEngineExtension.getProcessEngine());
-            assertEquals(processEngineName, processEngineExtension.getProcessEngine().getName());
+            assertThat(processEngineExtension.getProcessEngine())
+              .isNotNull()
+              .isSameAs(firstProcessEngine);
 
             // Check that process engine is recreated between multiple test classes
-            assertNotNull(processEngineClosingExtension.getProcessEngine());
-            assertNotEquals(processEngineClosingExtensionName, processEngineClosingExtension.getProcessEngine().getName());
+            assertThat(processEngineClosingExtension.getProcessEngine())
+              .isNotNull()
+              .isNotSameAs(secondProcessEngine);
         }
     }
 }

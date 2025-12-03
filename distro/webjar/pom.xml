@@ -25,6 +25,13 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm.webapp</groupId>
+      <artifactId>operaton-webapp</artifactId>
+      <type>war</type>
+    </dependency>
+  </dependencies>
   <build>
     <plugins>
       <!-- first fetch and unpack the war -->

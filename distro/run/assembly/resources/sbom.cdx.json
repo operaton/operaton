@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:2bb22ecc-8c6b-4a49-996a-2a8209969fd5",
+  "serialNumber": "urn:uuid:7ed688e9-f067-44f9-9324-d2f1bd4a6ef7",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-03T22:22:30Z",
+    "timestamp": "2025-12-04T05:10:42Z",
     "tools": {
       "components": [
         {
@@ -18913,45 +18913,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-jsr223",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "75b725d37a35178d258fc2c116b133b7"
+          "content": "3d0621589bd1087cae8d5b3042dac9cf"
         },
         {
           "alg": "SHA-1",
-          "content": "2bb183788fec189d5b6f67cc009032656f8111e3"
+          "content": "8741afa5083f94d37a40772b7fa0aea0e16d5cd5"
         },
         {
           "alg": "SHA-256",
-          "content": "e1ce5e1f28c2d86c39d19120fc6c2b0baa0a926b223837a72de9ec7ba86f3b82"
+          "content": "6594a0dfaa726c13f6df5652c27e796d6521f9b23ddb4c3537f017c9d4ec7dad"
         },
         {
           "alg": "SHA-512",
-          "content": "b0b7b0367b60534c80da3f24d666e75a8f4e94ae1382603fc323e49b855e8342fb5d3c7ac01cb3046b6e86adcfd8bd5a9e352cd1681d79c49d8c0a5809592cb7"
+          "content": "9bdbd02694caff28cce5b5c49f5db7fd8e0a40d3579fab84f87d55eccc0161703a4b288e7a8387841506c444f2a2fc2f51dcbd5f3385a967af0875c865c67252"
         },
         {
           "alg": "SHA-384",
-          "content": "200672e9383db4e6da23660d927ec0e4bdd1960d5edc350e74a9bf8a38faf0ecb808a202cfc8ddac865444d5001742c0"
+          "content": "b7104954685d022dc3a2cd9ec360724e74f6ccfe840a898cb95d76f7582f28620cb07fffa0525b8dafe1f7ee9cac4fb6"
         },
         {
           "alg": "SHA3-384",
-          "content": "8ca8f840b37794b0c26349ccbd14e95fbfa937b24afef365a4d5b02ae5ab08fd7760eeb907c08b7da4942daa9d25c400"
+          "content": "966d9c2ba3e7c4993599c9736c9f1ef63db4e3fbd5ffdb2c9d339c425cd8ed71f3d9afbca9d0368d27c87d3a3cbc7c46"
         },
         {
           "alg": "SHA3-256",
-          "content": "7a3b6a4fa716313c1c124a4a92bf6e996e59570c505011ae2e35697d08418a58"
+          "content": "39349c6f99b2bf3e02359e24f4023cd4d26d0114b4d942cc414fa48d92110db0"
         },
         {
           "alg": "SHA3-512",
-          "content": "5b47b8ddc25ddf00da925f3ac3b4226d1af1c361ca7e4ca8ce09823f5db691a8d23e82bb9bd25116e9f52fa55de6efe361b57940f5967233c4e21e336d179fb9"
+          "content": "12b1c493c56dd961b9e0d65edd5e710467b4270588d592c9e0516db1c5f5fa173c2e718d7f4c7c168b1900d2b412c3a1c5f2a43cfefcf091df950cdbebfd82c5"
         }
       ],
       "licenses": [
@@ -18961,7 +18961,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -19207,45 +19207,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-json",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b2127bbe71a0ef97ba69e358317703d4"
+          "content": "899f1d5271ed41941d92d6b4202da9fd"
         },
         {
           "alg": "SHA-1",
-          "content": "e8beeab3c5b3a07c1addce782c9aeacdaa0e0b05"
+          "content": "47a488a87a4af62b208faea81048f3e54da8810f"
         },
         {
           "alg": "SHA-256",
-          "content": "290b871527020d42761ca12820a28dfa823c0883b27b6ace833b9ec17d95f02c"
+          "content": "0fd0af8c5a94e3915c8eab0967da8dcabe9cbf0b536be29d8f80d586fccf370a"
         },
         {
           "alg": "SHA-512",
-          "content": "37af5cd61d0f5e7b68ec02f443edf50a9d4ea0e85fa9e6dcf1bdde53d5103218305b726adfa36c87d880a76395f46d10eaf6a10498f6e76f1e46e68ee0a3d432"
+          "content": "02ffd847cc1045651a3e70cc8c721fe231b526086df1668e2d79512391883d8afffdf2693c71a85b8c7985c8f3986d82e5c2dbfcd65be8211612463539a73105"
         },
         {
           "alg": "SHA-384",
-          "content": "bf5e1c5ee25f2e27cdbd5616ee6f0d7bb2fb1afded62880ddd05e100557004ca994c4880b3f042b42f56c1f15f89997b"
+          "content": "0d3291a4b6f9ab5183d54bcd004410c6130e25ba3a2ec65e172cff6ba62b043cbc288a07c0c534635f9066d7e07b222b"
         },
         {
           "alg": "SHA3-384",
-          "content": "a915fec06229578ed6f898e24d4846a91c3022bfcefacde4d41f7728074fcfd23f8eb8cdca901ed6f990d46eabf804db"
+          "content": "b83f0504e1fad89d9276c44aefb4e1435c69cd49364d3a28641d32373371118b88363eab8a443fe2cc974a985ae4e4b5"
         },
         {
           "alg": "SHA3-256",
-          "content": "83fb06386afb86cd57d2b0026a881292283275cbac618a1f8e8f19123c938783"
+          "content": "991dac7c6b04ee2d588803f90955e82636def342f2a8879008b7b93ace95a5d5"
         },
         {
           "alg": "SHA3-512",
-          "content": "9db7f9dcb5efb55b73021d67da10e8fe236d650011ff676e95a4f16ce4d2b1206aa90a92fde8add3d227ddce03023d42b96bae8eae0c16fbd7ebe982e36e1769"
+          "content": "d0b3619c4ab40aaec61658235390b8d24b09e2599f6bb7c1ac2bc316c3f9bbce07ec249dab74af636bbeecb7310749cd6d68d5cd636a3412cde5604378c96500"
         }
       ],
       "licenses": [
@@ -19255,7 +19255,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-json@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-json@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -19767,45 +19767,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-xml",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "63be84300a44db78084b9757a16f57fe"
+          "content": "144467e23858f357a361c75b0cf5af18"
         },
         {
           "alg": "SHA-1",
-          "content": "5b15c8c1cd1ea56b62ed99967ee86607d8bb3461"
+          "content": "c39b338c5227fe6ba6fb85a619455ae338343dbf"
         },
         {
           "alg": "SHA-256",
-          "content": "22ca95872d1e6174fc3621cc2ff25c767ac49157b9e9b0dff8ac7531e8e4d25c"
+          "content": "699ec4f7b2c6893037c1305aa320a1ce411e901500226cf7b90250701703f945"
         },
         {
           "alg": "SHA-512",
-          "content": "a8e9d0bde4c7413c2321ff28b8201865c52234dc1010342b74a6ca9864f85f97282c3d9ac646e6020afcf10997d65e45b06317d183db81862a2297966f573276"
+          "content": "99c85afd00abc6cc57e15d3cc6b4e88996ae0c25881fb3f35c34f4b3258ed0e4f3bb0c599627c49f8fe8e2a1a90cbdf455ca196d0597bae66837fbec7222333d"
         },
         {
           "alg": "SHA-384",
-          "content": "09772fa94c014a6605aa488dd7f0df3228220cabc0a418d16b17898f2025d0d6d40b08b7e3e18b10a8f8256c744a38c2"
+          "content": "b4ec6e9763c8f798aff393197d66569625293ffe0f5d14989f2571e9b9508fbf76d71ee78508a895580adcb3f4503957"
         },
         {
           "alg": "SHA3-384",
-          "content": "ae4b3f76f56cc9f0cec925a0f10aa4f1783dff453ce6773a8f5b65e9343fae4828f9d57777ef4a7ce5ef910cfc2f53fc"
+          "content": "fd46012267315066c51a2e3c105a416c827a5a3e771d387cb441dc7d04874466940f65220c9f13ee0f4221ec5601ad23"
         },
         {
           "alg": "SHA3-256",
-          "content": "f9a7e3b1bd3d144cc085b5ce45c0bafe89f484531956e6356cd282181493b650"
+          "content": "30b27774b79cb151025eaf2da2a8fac1510c52aa7cd59418c1cd2c2d6ea7394a"
         },
         {
           "alg": "SHA3-512",
-          "content": "5512d4eabd7df7e4ecaabaabe026742b33489fd1b3570756a14688e7ba262aa83078181248cae1478d89a29b2f00acc26a302a34b020a44b9c66530740b22ab4"
+          "content": "73319b18af44c247c7764fb59bf5c99944ba2b6964b24ff6cd8dd1b5b8c783a1ab5ef0c5149d898dfdd5e2184fea4e614cf5245eef781963ca8febd33260e0f9"
         }
       ],
       "licenses": [
@@ -19815,7 +19815,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-xml@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-xml@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -22039,45 +22039,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6af031509547d926399c30f29333fd7b"
+          "content": "b85fbde526738c04edda7c667b072755"
         },
         {
           "alg": "SHA-1",
-          "content": "53d7b394c0af4828e0119655aa84aabd87a0945c"
+          "content": "c10286b5821abf789dba412c1ae55a24042c44c6"
         },
         {
           "alg": "SHA-256",
-          "content": "1177a82e357b401a1fcbd401fa2aececbecd65b774f0c29bb517b95e1930a909"
+          "content": "3f34a6e4a9104c492dbd397691d3e1d1863568b19c3132471bde0a65611b5156"
         },
         {
           "alg": "SHA-512",
-          "content": "42d55f6345edacd13e95765a370b4faf25b85cb2b553b11d2e65203a5dbdce848d4a6668ddbdf55f8d8649e82a95cf1723fd7dbe7e55ff96ced1f962b70af909"
+          "content": "87e85d8a93b5ec7cf46e5b873605ffd88f3545ce772483bc6370075665d82a5453ead4a292c11b91991e5b48da86fdaba4bedfa59208d576212f8d7bf37795f5"
         },
         {
           "alg": "SHA-384",
-          "content": "a5d08f0eed2b26fcd378122fd0fbfd3c32f5ae519a07a829b571c80066ea1a818d0368743418b48e96b79c2763001485"
+          "content": "5222ea8b8a65224bd52705c00c2d06d413af055bd1bdcd9f3aaf6ab1b2502035b1b72502f1a5b5969253e9b9054cdd8c"
         },
         {
           "alg": "SHA3-384",
-          "content": "933fb7e84c73f5cafaecbb46065d5ba5c9d11d885cd5a272d0144c2a7f7540c54d5ddf672422a3f8e7f07bc26c2c5211"
+          "content": "a60ae19cacaf01fd93e35812009fb2433f38b655c4f1acc2d15486816406751a3009ad5649b1ec8f8c4e224257df5737"
         },
         {
           "alg": "SHA3-256",
-          "content": "aff74923a4641c4dad58763095f56420cdee23475972ce8b4a1d9def5f58a9d2"
+          "content": "da01afb3a1bc4d9c9977fee2750fbab47227ea8cec63d42185f9f896003d1846"
         },
         {
           "alg": "SHA3-512",
-          "content": "f53e234c481580087291df7c17b31058d054b47bc61331658c0cb4657fa864685302d808ec6d22c39dde5f2165ffbba68683acfac0d34e91d92480e857bf25f5"
+          "content": "4a9fb3e6b4fc0398490ce9ec2b7abd7455b12532fe03382c0da1e507ee8a8dd395d5e2463809da84c7924827880407aa6ae3c7855065877998e81599d55e1d42"
         }
       ],
       "licenses": [
@@ -22087,7 +22087,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -22109,45 +22109,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-templates",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ba5a9786ef83a504f19e767935cf223b"
+          "content": "0a954c3bccd865992f8d84cc83bdf62f"
         },
         {
           "alg": "SHA-1",
-          "content": "9c062d65897b145f0af7db5cb61fcba89d62e92c"
+          "content": "f77dcd1bbfdd15d0c9f24af2c2bd599e4b659542"
         },
         {
           "alg": "SHA-256",
-          "content": "c77210eefd4e7d207e1e0e7ef558a21014c30a76a5938b59408a85212891f463"
+          "content": "96568a090564521088cd5138a53c25efa749513b19f519e87df8a0765adcfff4"
         },
         {
           "alg": "SHA-512",
-          "content": "a47f8c78cf3a886bf3fe13186c8e5b0f73a4acc0dc92c261a28c1ade1695892b1b0d12bbf0d476b5300b85903b2df68ca8d0471a7d0dc296e0ff723ffd6ebbe4"
+          "content": "27359c0fc37d1df368af6d3a9743b760c60d9ed8f2f87335ff302de5d33e1c4931d474db3e49e247097a891828a9f81bff57cd99940720f924f88120732905e0"
         },
         {
           "alg": "SHA-384",
-          "content": "c9f0aa8b8cb6ac324e60c9dab5e7ae4b14ccb1c16905fd5f733daf98d04eef545dff803d21b0f8bcf9e446b383cb823b"
+          "content": "3e6a7aa0e8d6c0347ae646791b9a40a15bf46e366aead5a2788dda3b5936e57ebabf1ba1de827d717511e635193bea0d"
         },
         {
           "alg": "SHA3-384",
-          "content": "dca215d796a51a963d00a1fd60468ac8f8788b49bbc22d34a05966796a79b6c9aa5dd89448a0741d8741fdbde07393b0"
+          "content": "f0f98bdbd76e136c152b9fb7126800935fb168f710c9c4aedf4ae1979b0effd19980975edd5498cc098cc2cf4a559dec"
         },
         {
           "alg": "SHA3-256",
-          "content": "e938089c638c3db693e09b7a05fb4d495bf91610f458b96c6984c1f293b69e56"
+          "content": "c33e4b940de3c18030f8423c37723fd83294a7f012cd83743537ddff9b8e814c"
         },
         {
           "alg": "SHA3-512",
-          "content": "aa133e227bde8d7ca13f1e6ff86fc57c8359f6584521df2a12c46d353101f0d5023c904c3b6650872677d1affc4553c14bd664acf0c54de9f446126a5c119c59"
+          "content": "224f066ddb56711de1f00925b104a644ae6d7596e701b9ae7446a767c4a0e6ca75c34b87597d58c39a4d9d1deca0b86a241dc564cbde97ef8e67e8983e8f4ff5"
         }
       ],
       "licenses": [
@@ -22157,7 +22157,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-templates@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-templates@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -22179,45 +22179,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-dateutil",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a120d9236a176cfa62fd97220399a413"
+          "content": "9d30551de7021928d3116cc31ca2b839"
         },
         {
           "alg": "SHA-1",
-          "content": "b565497f6038b16e0cec1b18ee264d4d006102f4"
+          "content": "e513cf3bbf7a1fb6ce6f6402ffbafc4979a2e392"
         },
         {
           "alg": "SHA-256",
-          "content": "e9554539e168e53139e5afd62b03cb610a19f57ee3c5ffd105f450c74f23db38"
+          "content": "520724e9fb8b8dc4dad4ea715b0a90c800f790b6fd6b9836064ba3b7d3c73e74"
         },
         {
           "alg": "SHA-512",
-          "content": "89deea2d5c09a110a096ad127acab49b38cd267474ab67487009fc7bfca5fcfc7a6b0007eed409429f1cf03672bc9690898af4ab27ea833f7c9eda08e90c3b19"
+          "content": "af8dfd6fc25e96ab1e1f269d2ac6b33d5996a993a1243d0c75585616935d1c6b7ad74cef00705af9f1cb481df403266f946b13577584315c4977c9aab3aad5d4"
         },
         {
           "alg": "SHA-384",
-          "content": "72768032e2349f5a35ca0246408c795a33e1684cde741755aae6e5ce49349d1365893e05bea137348fc375a711ba7187"
+          "content": "7ab8e2eac70279dd9e7c4307a77cbeaca2b08a148932ed88ba0bdfb762195ffa8acaca987eefb7e269d8e22956b30b06"
         },
         {
           "alg": "SHA3-384",
-          "content": "4b41968d023f2cac8d44e2db7d64b159ecbcb552e49d4c2a2ec00e02c17d542107f85a8ae5bf22268291f88f60e5ecc7"
+          "content": "52c928827ea95cefe7b67f70f6a1dc97ac2c7a6e648d74e6be92b8bf984c5d41d803705928bfa7b9cc964fcccbce64c2"
         },
         {
           "alg": "SHA3-256",
-          "content": "625ecb82fef4d727dd8243ae1e07566df9769dde3f01745870c4a9de3eca22de"
+          "content": "296e7336648bcaff378c0f0504230779021f51e405c0c65a9d876ad03fbd97af"
         },
         {
           "alg": "SHA3-512",
-          "content": "b61837e010480f1ed5196fba0062c2c130399b0e6bc9a0e7c874e96a2488e045f9127b5e7ca8d506cd478133103434633360beb382aa85011ba1b32d10690ec4"
+          "content": "5d69a0e009693d6471b907fc7591ae7bc0359ae8c902bf2685d7d7aea567ad19773860970d70ab69fe2e854f866da9c7bbbed3dff8fa9ba5582d0f34d616cabf"
         }
       ],
       "licenses": [
@@ -22227,7 +22227,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -22249,45 +22249,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.3?type=jar",
       "publisher": "Apache Software Foundation",
       "group": "org.apache.groovy",
       "name": "groovy-datetime",
-      "version": "5.0.2",
+      "version": "5.0.3",
       "description": "Groovy: A powerful multi-faceted language for the JVM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "672f15dafa53e74e3de79572606bc2d4"
+          "content": "1dfa2a929421b14a609a61d36fc5efb9"
         },
         {
           "alg": "SHA-1",
-          "content": "dfc8776d8fa31dde84b3050616bea38203687ed4"
+          "content": "ed1a891d232260556aff1c549818b94d3b272761"
         },
         {
           "alg": "SHA-256",
-          "content": "192682de13f28badde0d1ffc5822aac833de3606adcc9861632c0ae4a3bdc412"
+          "content": "35cc8c66e5685045b9716d4fbe13f6c9d2e17393e3653bbf6d3d26b9c3a2d277"
         },
         {
           "alg": "SHA-512",
-          "content": "acb0f032eb7bed52cb7c0a286ee55b47aa92905a36ef11c358aa8f6d3e4ed949bb950d7916032143dd7724125db3e2fbaf1a522fb570a4e73b7887e53c88412a"
+          "content": "c8d8bcaf73b1105d61659a71984cde62740b892d4ca3beb763ead3684b038cc5a7bc169aa54c2cabf50167bd3dd633cedfcfddd7c80825f0018b6036e417c4e2"
         },
         {
           "alg": "SHA-384",
-          "content": "141c6b9f14ad4a842e6d5fa277bffe88a28960554e415a2d61305d033d297806692772f415bb5d4630d21e53beff06b3"
+          "content": "81a985570a8bbef80e740341bfa986004875e4de3acc0c96399808989a0156f4eaeb06044ef896356a142f960b365a64"
         },
         {
           "alg": "SHA3-384",
-          "content": "5c2c0ac9615679f18a2e5c6a3661baeda250d8e771171289c0fee3134394e282bb7cbf70ba37deb88f7923c2bfe7340a"
+          "content": "7183ab966c36aa65ed60fce7783b767bea6a47941dcb41340ac028a4b3816fd578549521666d1334fb8c4995ec3b75c6"
         },
         {
           "alg": "SHA3-256",
-          "content": "b411c46fc0314cd88df9ec26862187b60f3d582afc85fa38acb3151cb9101be4"
+          "content": "e7b248ee7f057c3833482996d4f536f1cb8413f751e3c9fec83bbbe6d0dae292"
         },
         {
           "alg": "SHA3-512",
-          "content": "841bdee1615eb0cbdb4ed15ad7e66f40613e0d7974c5fbe788861f8a65ea1a8f9fc5bb530e4bcc1c00df2a734fbc44136803f1001e2bd4bf318e2670290c6ffb"
+          "content": "bbe92097ce233f246dcde1b7b2847e3c6ef9b3c73c31b49fd7c29c52dabc8f442d14814b43c22c6873ecf35047a02c4d9393a2ac595510823eecc58b4eff1e7a"
         }
       ],
       "licenses": [
@@ -22297,7 +22297,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.2?type=jar",
+      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://groovy-lang.org",
@@ -23135,7 +23135,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "6bed86d9-7beb-47b7-94dc-411ba2fbac14",
+      "bom-ref": "7e42e45c-0670-4ea4-9f82-a709b7a274ba",
       "name": "package-lock.json",
       "properties": [
         {
@@ -26930,7 +26930,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "6e4ae3f1-87bb-4739-bf46-6dad1b24bec1",
+      "bom-ref": "72c92d62-b2b7-4295-a768-b5ba5184e8ad",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29578,12 +29578,12 @@
         "pkg:maven/org.operaton.bpm.run/operaton-bpm-run-modules-example-invoice@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.run/operaton-bpm-run-core@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.h2database/h2@2.4.240?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.2?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-json@5.0.2?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-xml@5.0.2?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-templates@5.0.2?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.2?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.3?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-json@5.0.3?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-xml@5.0.3?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-templates@5.0.3?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.3?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-datetime@5.0.3?type=jar"
       ]
     },
     {
@@ -29591,44 +29591,44 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-jsr223@5.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-json@5.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-xml@5.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar",
-        "pkg:maven/org.apache.groovy/groovy-xml@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar",
+        "pkg:maven/org.apache.groovy/groovy-xml@5.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.2?type=jar",
+      "ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.groovy/groovy@5.0.2?type=jar"
+        "pkg:maven/org.apache.groovy/groovy@5.0.3?type=jar"
       ]
     },
     {
@@ -29764,7 +29764,13 @@
       "dependsOn": []
     },
     {
-      "ref": "6bed86d9-7beb-47b7-94dc-411ba2fbac14",
+      "ref": "72c92d62-b2b7-4295-a768-b5ba5184e8ad",
+      "dependsOn": [
+        "7e42e45c-0670-4ea4-9f82-a709b7a274ba"
+      ]
+    },
+    {
+      "ref": "7e42e45c-0670-4ea4-9f82-a709b7a274ba",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -29809,12 +29815,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
-      ]
-    },
-    {
-      "ref": "6e4ae3f1-87bb-4739-bf46-6dad1b24bec1",
-      "dependsOn": [
-        "6bed86d9-7beb-47b7-94dc-411ba2fbac14"
       ]
     },
     {

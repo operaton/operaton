@@ -63,6 +63,7 @@ public class DefaultDatasourceConfiguration extends AbstractOperatonConfiguratio
 
     configuration.setDatabaseType(database.getType());
     configuration.setDatabaseSchemaUpdate(database.getSchemaUpdate());
+    configuration.setCamundaCompatibilityMode(database.getCamundaCompatibilityMode());
 
     if (StringUtils.hasText(database.getTablePrefix())) {
       configuration.setDatabaseTablePrefix(database.getTablePrefix());

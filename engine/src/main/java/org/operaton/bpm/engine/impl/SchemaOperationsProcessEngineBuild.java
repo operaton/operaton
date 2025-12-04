@@ -53,6 +53,11 @@ public class SchemaOperationsProcessEngineBuild implements SchemaOperationsComma
       persistenceSession.dbSchemaUpdate();
     }
 
+    String compatibilityMode = Context.getProcessEngineConfiguration().getCamundaCompatibilityMode();
+    if (ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA.equals(compatibilityMode)) {
+      persistenceSession.dbMigrateDataFromCamunda();
+    }
+
     return null;
   }
 }

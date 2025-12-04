@@ -19,7 +19,7 @@
     <version.jersey3>3.1.11</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
-    <version.groovy>5.0.2</version.groovy>
+    <version.groovy>5.0.3</version.groovy>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>25.0.1</version.graal.js>
     <version.nashorn>15.7</version.nashorn>

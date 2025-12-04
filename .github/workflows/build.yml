@@ -80,12 +80,22 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+          # Use a glob pattern to include all package-lock.json files
+          # This ensures the cache is unique based on ANY lock file change
+          cache-dependency-path: '**/package-lock.json'
+      - name: Setup mvnd
+        uses: ./.github/actions/mvnd-setup
       - name: Maven Build
         id: maven-build
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          .devenv/scripts/build/build.sh
+          .devenv/scripts/build/build.sh --runner=mvnd
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()

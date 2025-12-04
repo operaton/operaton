@@ -180,10 +180,10 @@ jobs:
           echo "java_versions=$JAVA_VERSIONS" >> $GITHUB_OUTPUT
           
           # Determine distros based on labels
-          DISTRO_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("distro:")) | sub("distro:"; "")')
+          DISTRO_LABELS=$(echo "$PR_LABELS" | jq --raw-output '.[] | select(startswith("distro:")) | sub("distro:"; "")')
           if [[ -n "$DISTRO_LABELS" ]]; then
             # Convert to JSON array
-            DISTROS=$(echo "$DISTRO_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
+            DISTROS=$(echo "$DISTRO_LABELS" | jq --raw-input --slurp --compact-output 'split("\n") | map(select(. != ""))')
             echo "🎯 Using specific distros from labels: $DISTROS"
           else
             # Default to all distros
@@ -193,10 +193,10 @@ jobs:
           echo "distros=$DISTROS" >> $GITHUB_OUTPUT
           
           # Determine databases based on labels
-          DATABASE_LABELS=$(echo "$PR_LABELS" | jq -r '.[] | select(startswith("database:")) | sub("database:"; "")')
+          DATABASE_LABELS=$(echo "$PR_LABELS" | jq --raw-output '.[] | select(startswith("database:")) | sub("database:"; "")')
           if [[ -n "$DATABASE_LABELS" ]]; then
             # Convert to JSON array
-            DATABASES=$(echo "$DATABASE_LABELS" | jq -R -s 'split("\n") | map(select(. != ""))')
+            DATABASES=$(echo "$DATABASE_LABELS" | jq --raw-input --slurp --compact-output 'split("\n") | map(select(. != ""))')
             echo "🎯 Using specific databases from labels: $DATABASES"
           else
             # Default to h2 only

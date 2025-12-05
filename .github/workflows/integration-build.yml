@@ -74,12 +74,38 @@ on:
     branches:
       - main
       - release/**
+    paths-ignore:
+      - '.github/workflows/**'
+      - '!.github/workflows/integration-build.yml'
+      - '.github/jreleaser/changelog.tpl'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
+      - '**/*.md'
+      - 'distro/**'
+      - 'settings/**'
+      - '.gitingore'
+      - 'LICENSE'
+      - 'NOTICE'
   push:
     branches:
       # when developing the workflow itself, create this branch and push to it
       - main
       - release/**
       - ci-dev/integration-build
+    paths-ignore:
+      - '.github/workflows/**'
+      - '!.github/workflows/integration-build.yml'
+      - '.github/jreleaser/changelog.tpl'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
+      - '**/*.md'
+      - 'distro/**'
+      - 'settings/**'
+      - '.gitingore'
+      - 'LICENSE'
+      - 'NOTICE'
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"

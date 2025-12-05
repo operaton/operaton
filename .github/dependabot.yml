@@ -66,7 +66,7 @@ updates:
       interval: "weekly"
     reviewers:
       - "kthoms"
-    target-branch: "main"
+    target-branch: "release/1.0.x"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
@@ -76,7 +76,7 @@ updates:
       interval: "weekly"
     reviewers:
       - "kthoms"
-    target-branch: "main"
+    target-branch: "release/1.0.x"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]

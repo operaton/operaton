@@ -16,7 +16,6 @@
  */
 package org.operaton.spin;
 
-import java.util.ServiceLoader;
 
 import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.spin.spi.DataFormat;

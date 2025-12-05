@@ -45,7 +45,7 @@ class ServiceLoaderUtilTest {
   }
 
   @Test
-  void loadSingleService_succeeds_whenImplementationIsReqisteredInMetaInf() {
+  void loadSingleService_succeeds_whenImplementationIsRegisteredInMetaInf() {
     TestService service = ServiceLoaderUtil.loadSingleService(TestService.class);
     assertThat(service.getName()).isEqualTo("TestServiceImpl");
   }

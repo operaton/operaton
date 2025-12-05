@@ -27,6 +27,17 @@ public class ServiceLoaderUtil {
     // utility class
   }
 
+  /**
+   * Loads a single service implementation using {@link ServiceLoader}.
+   * <p>
+   * This method first attempts to load the service using the thread context classloader.
+   * If no implementation is found, it tries again using the classloader of the service class itself.
+   *
+   * @param serviceClass the service class to load
+   * @param <T> the type of the service
+   * @return the first found implementation of the service
+   * @throws IllegalStateException if no implementation is found
+   */
   public static <T> T loadSingleService(Class<T> serviceClass) {
     return ServiceLoader.load(serviceClass)
             .findFirst()

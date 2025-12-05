@@ -19,7 +19,6 @@ package org.operaton.bpm.model.bpmn;
 import java.io.*;
 import java.util.ServiceLoader;
 
-import org.junit.platform.commons.util.ServiceLoaderUtils;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.impl.BpmnParser;
 import org.operaton.bpm.model.bpmn.impl.instance.ActivationConditionImpl;

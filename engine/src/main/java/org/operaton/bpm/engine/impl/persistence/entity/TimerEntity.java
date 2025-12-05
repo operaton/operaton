@@ -21,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.calendar.BusinessCalendar;
@@ -37,7 +38,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.TimerJobConfiguration;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-
 /**
  * @author Tom Baeyens
  */
@@ -49,7 +49,8 @@ public class TimerEntity extends JobEntity {
 
   public static final String TYPE = "timer";
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   protected String repeat;
 
@@ -105,9 +106,7 @@ public class TimerEntity extends JobEntity {
           CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequiresNew();
           RepeatingFailedJobListener listener = createRepeatingFailedJobListener(commandExecutor);
 
-          commandContext.getTransactionContext().addTransactionListener(
-              TransactionState.ROLLED_BACK,
-              listener);
+          commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, listener);
 
           // create a new timer job
           createNewTimerJob(newDueDate);
@@ -144,7 +143,7 @@ public class TimerEntity extends JobEntity {
   protected String adjustRepeatBasedOnNewExpression(String expressionValue) {
     String changedRepeat;
     if (expressionValue.startsWith("R")) { // changed to a repeatable interval
-      if (repeat.startsWith("R") ) {
+      if (repeat.startsWith("R")) {
         if (isSameRepeatCycle(expressionValue)) {
           // the same repeatable interval => keep the start date
           changedRepeat = repeat;
@@ -191,10 +190,7 @@ public class TimerEntity extends JobEntity {
     // create new timer job
     TimerEntity newTimer = new TimerEntity(this);
     newTimer.setDuedate(dueDate);
-    Context
-      .getCommandContext()
-      .getJobManager()
-      .schedule(newTimer);
+    Context.getCommandContext().getJobManager().schedule(newTimer);
   }
 
   public Date calculateNewDueDate() {
@@ -237,24 +233,44 @@ public class TimerEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[repeat=" + repeat
-           + ", id=" + id
-           + ", revision=" + revision
-           + ", duedate=" + duedate
-           + ", repeatOffset=" + repeatOffset
-           + ", lockOwner=" + lockOwner
-           + ", lockExpirationTime=" + lockExpirationTime
-           + ", executionId=" + executionId
-           + ", processInstanceId=" + processInstanceId
-           + ", isExclusive=" + isExclusive
-           + ", retries=" + retries
-           + ", jobHandlerType=" + jobHandlerType
-           + ", jobHandlerConfiguration=" + jobHandlerConfiguration
-           + ", exceptionByteArray=" + exceptionByteArray
-           + ", exceptionByteArrayId=" + exceptionByteArrayId
-           + ", exceptionMessage=" + exceptionMessage
-           + ", deploymentId=" + deploymentId
-           + "]";
+      + "[repeat=" + repeat
+      + ", id=" + id
+      + ", revision=" + revision
+      + ", duedate=" + duedate
+      + ", repeatOffset=" + repeatOffset
+      + ", lockOwner=" + lockOwner
+      + ", lockExpirationTime=" + lockExpirationTime
+      + ", executionId=" + executionId
+      + ", processInstanceId=" + processInstanceId
+      + ", isExclusive=" + isExclusive
+      + ", retries=" + retries
+      + ", jobHandlerType=" + jobHandlerType
+      + ", jobHandlerConfiguration=" + jobHandlerConfiguration
+      + ", exceptionByteArray=" + exceptionByteArray
+      + ", exceptionByteArrayId=" + exceptionByteArrayId
+      + ", exceptionMessage=" + exceptionMessage
+      + ", deploymentId=" + deploymentId
+      + "]";
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Objects.hash(repeat, repeatOffset);
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (!super.equals(obj))
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    TimerEntity other = (TimerEntity) obj;
+    return Objects.equals(repeat, other.repeat) && repeatOffset == other.repeatOffset;
   }
 
 }

@@ -225,12 +225,7 @@ public class ProcessDiagramLayoutFactory {
           if (!columnIsWhite.containsKey(column)) {
             columnIsWhite.put(column, true);
           }
-          int pixel = image.getRGB(column, row);
-          int alpha = (pixel >> 24) & 0xff;
-          int red   = (pixel >> 16) & 0xff;
-          int green = (pixel >>  8) & 0xff;
-          int blue  = (pixel >>  0) & 0xff;
-          if (!(alpha == 0 || (red >= GREY_THRESHOLD && green >= GREY_THRESHOLD && blue >= GREY_THRESHOLD))) {
+          if (!isPixelWhite(image.getRGB(column, row))) {
             rowIsWhite.put(row, false);
             columnIsWhite.put(column, false);
           }
@@ -238,6 +233,32 @@ public class ProcessDiagramLayoutFactory {
       }
     }
   
+    int marginTop = findMarginTop(height, rowIsWhite);    
+    int marginLeft = findMarginLeft(width, columnIsWhite);    
+    int marginRight = findMarginRight(width, columnIsWhite);    
+    int marginBottom = findMarginBottom(height, rowIsWhite);
+    
+    DiagramNode diagramBoundsImage = new DiagramNode();
+    diagramBoundsImage.setX((double) marginLeft);
+    diagramBoundsImage.setY((double) marginTop);
+    diagramBoundsImage.setWidth((double) (width - marginRight - marginLeft));
+    diagramBoundsImage.setHeight((double) (height - marginBottom - marginTop));
+    return diagramBoundsImage;
+  }
+  
+  private boolean isPixelWhite(int pixel) {
+    int alpha = (pixel >> 24) & 0xff;
+    if (alpha == 0) {
+        return true;
+    }
+
+    int red   = (pixel >> 16) & 0xff;
+    int green = (pixel >>  8) & 0xff;
+    int blue  = (pixel >>  0) & 0xff;
+    return red >= GREY_THRESHOLD && green >= GREY_THRESHOLD && blue >= GREY_THRESHOLD;
+}
+
+  private int findMarginTop(int height, Map<Integer, Boolean> rowIsWhite) {
     int marginTop = 0;
     for (int row = 0; row < height; row++) {
       if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
@@ -247,7 +268,10 @@ public class ProcessDiagramLayoutFactory {
         break;
       }
     }
-    
+    return marginTop;
+  }
+
+  private int findMarginLeft(int width, Map<Integer, Boolean> columnIsWhite) {
     int marginLeft = 0;
     for (int column = 0; column < width; column++) {
       if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
@@ -257,7 +281,10 @@ public class ProcessDiagramLayoutFactory {
         break;
       }
     }
-    
+    return marginLeft;
+  }
+  
+  private int findMarginRight(int width, Map<Integer, Boolean> columnIsWhite) {
     int marginRight = 0;
     for (int column = width - 1; column >= 0; column--) {
       if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
@@ -267,7 +294,10 @@ public class ProcessDiagramLayoutFactory {
         break;
       }
     }
-    
+    return marginRight;
+  }
+
+  private int findMarginBottom(int height, Map<Integer, Boolean> rowIsWhite) {
     int marginBottom = 0;
     for (int row = height -1; row >= 0; row--) {
       if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
@@ -277,13 +307,7 @@ public class ProcessDiagramLayoutFactory {
         break;
       }
     }
-    
-    DiagramNode diagramBoundsImage = new DiagramNode();
-    diagramBoundsImage.setX((double) marginLeft);
-    diagramBoundsImage.setY((double) marginTop);
-    diagramBoundsImage.setWidth((double) (width - marginRight - marginLeft));
-    diagramBoundsImage.setHeight((double) (height - marginBottom - marginTop));
-    return diagramBoundsImage;
+    return marginBottom;
   }
 
   protected Map<String, DiagramNode> getElementBoundsFromBpmnDi(Document bpmnModel) {

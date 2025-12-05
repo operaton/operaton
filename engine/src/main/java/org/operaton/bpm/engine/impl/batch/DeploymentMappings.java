@@ -18,13 +18,15 @@ package org.operaton.bpm.engine.impl.batch;
 
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
- * List of aggregated information on deployment ids and the number of related resources
+ * List of aggregated information on deployment ids and the number of related resources.
  */
 public class DeploymentMappings extends ArrayList<DeploymentMapping> {
 
-  @Serial private static final long serialVersionUID = -868922966819588407L;
+  @Serial
+  private static final long serialVersionUID = -868922966819588407L;
 
   protected int overallIdCount;
 
@@ -59,4 +61,23 @@ public class DeploymentMappings extends ArrayList<DeploymentMapping> {
     return overallIdCount;
   }
 
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    result = prime * result + Objects.hash(overallIdCount);
+    return result;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (!super.equals(obj))
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    DeploymentMappings other = (DeploymentMappings) obj;
+    return overallIdCount == other.overallIdCount;
+  }
 }

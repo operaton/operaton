@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -69,8 +70,7 @@ public abstract class SpringProcessEngineTestCase implements ApplicationContextA
 
   protected SpringTestHelper lookupTestHelper()
   {
-    ServiceLoader<SpringTestHelper> serviceLoader = ServiceLoader.load(SpringTestHelper.class);
-    return serviceLoader.iterator().next();
+    return ServiceLoaderUtil.loadSingleService(SpringTestHelper.class);
   }
 
   @BeforeEach

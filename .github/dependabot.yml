@@ -7,18 +7,6 @@
 version: 2
 updates:
   # Main branch - all updates
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    target-branch: "main"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    reviewers:
-      - "kthoms"
-    target-branch: "main"
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -44,30 +32,20 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
-
-  # Release 1.0.x branch - patch updates only
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      time: "01:30"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      time: "01:30"
     reviewers:
       - "kthoms"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    target-branch: "main"
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+
+  # Release 1.0.x branch - patch updates only
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -97,6 +75,28 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "01:30"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "01:30"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]

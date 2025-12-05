@@ -1,17 +1,38 @@
-# Operaton JUnit 5
+# Operaton JUnit 5 / JUnit 6
 
-JUnit 5 extension that allows you to inject a process engine into your test.
+JUnit 5 and JUnit 6 extension that allows you to inject a process engine into your test.
+
+## Compatibility
+
+This extension is compatible with both JUnit 5 and JUnit 6. Operaton provides separate artifacts with classifiers for each version:
+
+- **JUnit 5**: Use the standard artifact (no classifier) or `junit5` classifier
+- **JUnit 6**: Use the `junit6` classifier artifact (requires Java 17+)
+
+> **Note**: JUnit 6 requires Java 17 or later, which is already the minimum requirement for Operaton.
 
 ## Usage
 
 ### Maven dependency
-Add the dependency to your pom.xml
+
+For JUnit 5, add the dependency to your pom.xml:
 
 ```xml
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-junit5</artifactId>
       <version>7.17.0</version>
+      <scope>test</scope>
+    </dependency>
+```
+
+For JUnit 6 compatible engine test classes, use:
+
+```xml
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit6</classifier>
       <scope>test</scope>
     </dependency>
 ```

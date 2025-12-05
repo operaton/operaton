@@ -8,8 +8,8 @@
 
 ## Best Practices for Writing Test Cases
 
-* **Use JUnit 5**, do not write JUnit 4 tests
-* **Leverage the `ProcessEngineExtension`**: In the `operaton-engine` project, if you need a process engine object, use the `org.operaton.bpm.engine.test.extension.ProcessEngineExtension`. This extension integrates seamlessly with JUnit 5 and ensures that the process engine object is reused across test cases and that certain integrity checks are performed after every test. Example:
+* **Use JUnit 5 or JUnit 6**, do not write JUnit 4 tests
+* **Leverage the `ProcessEngineExtension`**: In the `operaton-engine` project, if you need a process engine object, use the `org.operaton.bpm.engine.test.extension.ProcessEngineExtension`. This extension integrates seamlessly with JUnit 5/6 and ensures that the process engine object is reused across test cases and that certain integrity checks are performed after every test. Example:
 
   ```java
   public class MyProcessEngineTest {
@@ -32,12 +32,23 @@
   }
   ```
 
-* Use the JUnit 5 extensions in your `pom.xml`
+* Use the JUnit 5/6 extensions in your `pom.xml`
  
   ```xml
   <dependency>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-bpm-junit5</artifactId>
+    <scope>test</scope>
+  </dependency>
+  ```
+  
+  Or for JUnit 6 compatible artifacts:
+  
+  ```xml
+  <dependency>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine</artifactId>
+    <classifier>junit6</classifier>
     <scope>test</scope>
   </dependency>
   ```

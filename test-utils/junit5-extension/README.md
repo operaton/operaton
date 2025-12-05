@@ -6,10 +6,8 @@ JUnit 5 and JUnit 6 extension that allows you to inject a process engine into yo
 
 This extension is compatible with both JUnit 5 and JUnit 6. Operaton provides separate artifacts with classifiers for each version:
 
-- **JUnit 5**: Use the standard artifact (no classifier) or `junit5` classifier
-- **JUnit 6**: Use the `junit6` classifier artifact (requires Java 17+)
-
-> **Note**: JUnit 6 requires Java 17 or later, which is already the minimum requirement for Operaton.
+- **JUnit 5**: Use the `junit5` classifier artifact
+- **JUnit 6**: Use the `junit6` classifier artifact
 
 ## Usage
 

@@ -8,8 +8,8 @@
 
 ## Best Practices for Writing Test Cases
 
-* **Use JUnit 5 or JUnit 6**, do not write JUnit 4 tests
-* **Leverage the `ProcessEngineExtension`**: In the `operaton-engine` project, if you need a process engine object, use the `org.operaton.bpm.engine.test.extension.ProcessEngineExtension`. This extension integrates seamlessly with JUnit 5/6 and ensures that the process engine object is reused across test cases and that certain integrity checks are performed after every test. Example:
+* **Use JUnit 6 or JUnit 5**, do not write JUnit 4 tests
+* **Leverage the `ProcessEngineExtension`**: In the `operaton-engine` project, if you need a process engine object, use the `org.operaton.bpm.engine.test.extension.ProcessEngineExtension`. This extension integrates seamlessly with JUnit 6/5 and ensures that the process engine object is reused across test cases and that certain integrity checks are performed after every test. Example:
 
   ```java
   public class MyProcessEngineTest {
@@ -32,17 +32,9 @@
   }
   ```
 
-* Use the JUnit 5/6 extensions in your `pom.xml`
+* Use the JUnit 6/5 extensions in your `pom.xml`
  
-  ```xml
-  <dependency>
-    <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-bpm-junit5</artifactId>
-    <scope>test</scope>
-  </dependency>
-  ```
-  
-  Or for JUnit 6 compatible artifacts:
+  For JUnit 6 compatible artifacts:
   
   ```xml
   <dependency>
@@ -52,8 +44,18 @@
     <scope>test</scope>
   </dependency>
   ```
+  
+  Or for JUnit 5:
+  
+  ```xml
+  <dependency>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-bpm-junit5</artifactId>
+    <scope>test</scope>
+  </dependency>
+  ```
 * **Custom ProcessEngine Configuration**: If you need a process engine with custom configuration, use the `ProcessEngineExtension.builder()` method to specify configuration options, as shown in the example above.
-* **Avoid Static Rules and Inheritance**: Instead of extending a base class, favor composition by leveraging ProcessEngineExtension and dependency injection. This approach is cleaner and more flexible in JUnit 5.
+* **Avoid Static Rules and Inheritance**: Instead of extending a base class, favor composition by leveraging ProcessEngineExtension and dependency injection. This approach is cleaner and more flexible in JUnit 6/5.
 * **Consider to use AssertJ**: AssertJ allows a fluent style for writing test assertions. You will find its usage in Operaton's tests as reference.  
 * **Mock when possible**: Use Mockito when you want to test your logic and you could mock away used services. Unit tests are much faster than tests that require a running engine. 
   Consider to make methods under test package-private, so that they can't be accessed outside, but a unit test which is located usually in the same package can do. 

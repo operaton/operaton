@@ -38,7 +38,7 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>test</scope>
-      <classifier>junit5</classifier>
+      <classifier>junit6</classifier>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>

@@ -64,18 +64,20 @@ public class TaskQueryVariableValue extends QueryVariableValue {
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + Objects.hash(isProcessInstanceVariable);
-    return result;
+    return prime * result + Objects.hash(isProcessInstanceVariable);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     TaskQueryVariableValue other = (TaskQueryVariableValue) obj;
     return isProcessInstanceVariable == other.isProcessInstanceVariable;
   }

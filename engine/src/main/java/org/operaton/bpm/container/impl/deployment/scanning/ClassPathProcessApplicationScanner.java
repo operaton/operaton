@@ -16,26 +16,25 @@
  */
 package org.operaton.bpm.container.impl.deployment.scanning;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * <p>Scans for bpmn20.xml files in the classpath of the given classloader.</p>

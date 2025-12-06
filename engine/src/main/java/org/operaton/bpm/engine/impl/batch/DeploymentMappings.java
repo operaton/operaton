@@ -65,18 +65,20 @@ public class DeploymentMappings extends ArrayList<DeploymentMapping> {
   public int hashCode() {
     final int prime = 31;
     int result = super.hashCode();
-    result = prime * result + Objects.hash(overallIdCount);
-    return result;
+    return prime * result + Objects.hash(overallIdCount);
   }
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (!super.equals(obj))
+    }
+    if (!super.equals(obj)) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     DeploymentMappings other = (DeploymentMappings) obj;
     return overallIdCount == other.overallIdCount;
   }

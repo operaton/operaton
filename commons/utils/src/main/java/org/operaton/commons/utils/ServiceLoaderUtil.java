@@ -22,7 +22,7 @@ import java.util.ServiceLoader;
  *
  * @since 1.1
  */
-public class ServiceLoaderUtil {
+public final class ServiceLoaderUtil {
   private ServiceLoaderUtil() {
     // utility class
   }

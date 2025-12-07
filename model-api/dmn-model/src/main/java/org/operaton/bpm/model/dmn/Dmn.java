@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
-import org.operaton.commons.utils.ServiceLoaderUtil;
 
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.*;
 
@@ -49,8 +48,14 @@ public class Dmn {
   private static final DmnParser DMN_PARSER;
 
   static {
-    DmnFactory dmnFactory = ServiceLoaderUtil.loadSingleService(DmnFactory.class);
-    DmnParserFactory dmnParserFactory = ServiceLoaderUtil.loadSingleService(DmnParserFactory.class);
+    DmnFactory dmnFactory = ServiceLoader.load(DmnFactory.class).findFirst().orElse(
+      ServiceLoader.load(DmnFactory.class, Dmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No DmnFactory found"))
+    );
+    DmnParserFactory dmnParserFactory = ServiceLoader.load(DmnParserFactory.class).findFirst().orElse(
+      ServiceLoader.load(DmnParserFactory.class, Dmn.class.getClassLoader()).findFirst()
+        .orElseThrow(() -> new IllegalStateException("No DmnParserFactory found"))
+    );
 
     INSTANCE = dmnFactory.newInstance();
     DMN_PARSER = dmnParserFactory.newInstance();

@@ -30,7 +30,6 @@ import org.operaton.bpm.webapp.plugin.AppPluginRegistry;
 import org.operaton.bpm.webapp.plugin.impl.DefaultAppPluginRegistry;
 import org.operaton.bpm.webapp.plugin.resource.PluginResourceOverride;
 import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
-import org.operaton.commons.utils.ServiceLoaderUtil;
 
 /**
  * @author Daniel Meyer
@@ -78,7 +77,14 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
    * @return
    */
   protected ProcessEngineProvider loadProcessEngineProvider() {
-    return ServiceLoaderUtil.loadSingleService(ProcessEngineProvider.class);
+    ServiceLoader<ProcessEngineProvider> loader = ServiceLoader.load(ProcessEngineProvider.class);
+
+    try {
+      return loader.iterator().next();
+    } catch (NoSuchElementException e) {
+      String message = "No implementation for the %s spi found on classpath".formatted(ProcessEngineProvider.class.getName());
+      throw new IllegalStateException(message, e);
+    }
   }
 
   @Override

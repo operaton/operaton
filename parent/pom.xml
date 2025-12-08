@@ -19,7 +19,7 @@
     <version.jersey3>3.1.11</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
-    <version.groovy>5.0.2</version.groovy>
+    <version.groovy>5.0.3</version.groovy>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>25.0.1</version.graal.js>
     <version.nashorn>15.7</version.nashorn>
@@ -49,7 +49,7 @@
     <version.tomcat>11.0.14</version.tomcat>
     <version.arquillian>1.10.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
-    <version.selenium>4.38.0</version.selenium>
+    <version.selenium>4.39.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
     <version.logback>1.5.21</version.logback>
     <version.freemarker>2.3.34</version.freemarker>

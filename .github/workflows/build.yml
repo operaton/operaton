@@ -12,6 +12,7 @@ on:
       - '.github/jreleaser/changelog.tpl'
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -26,6 +27,9 @@ on:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
       - '.github/jreleaser/changelog.tpl'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -116,7 +120,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        run: |
+          ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=operaton_operaton \
+          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
+              qa/integration-tests-webapps/**,\
+              qa/integration-tests-engine/**,\
+              webapps/**
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v4

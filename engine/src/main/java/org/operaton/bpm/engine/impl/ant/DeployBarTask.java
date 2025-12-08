@@ -31,7 +31,6 @@ import org.apache.tools.ant.types.FileSet;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.impl.util.LogUtil;
 
-
 /**
  * @author Tom Baeyens
  */
@@ -43,69 +42,100 @@ public class DeployBarTask extends Task {
 
   @Override
   public void execute() throws BuildException {
-    List<File> files = new ArrayList<>();
-    if (file!=null) {
-      files.add(file);
-    }
-    if (fileSets!=null) {
-      for (FileSet fileSet: fileSets) {
-        DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
-        File baseDir = directoryScanner.getBasedir();
-        String[] includedFiles = directoryScanner.getIncludedFiles();
-        String[] excludedFiles = directoryScanner.getExcludedFiles();
-        List<String> excludedFilesList = Arrays.asList(excludedFiles);
-        for (String includedFile: includedFiles) {
-          if (!excludedFilesList.contains(includedFile)) {
-            files.add(new File(baseDir, includedFile));
-          }
-        }
-      }
-    }
+    List<File> files = collectFiles();
 
     Thread currentThread = Thread.currentThread();
-    ClassLoader originalClassLoader = currentThread.getContextClassLoader();
-    currentThread.setContextClassLoader(DeployBarTask.class.getClassLoader());
-
-    LogUtil.readJavaUtilLoggingConfigFromClasspath();
+    ClassLoader originalClassLoader = setupClassLoader(currentThread);
 
     try {
-      log("Initializing process engine " + processEngineName);
-      ProcessEngines.init();
-      ProcessEngine processEngine = ProcessEngines.getProcessEngine(processEngineName);
-      if (processEngine == null) {
-        List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
-        if( processEngineInfos != null && !processEngineInfos.isEmpty() )
-        {
-          // Since no engine with the given name is found, we can't be 100% sure which ProcessEngineInfo
-          // is causing the error. We should show ALL errors and process engine names / resource URL's.
-          String message = getErrorMessage(processEngineInfos, processEngineName);
-          throw new ProcessEngineException(message);
-        } else {
-          throw new ProcessEngineException("Could not find a process engine with name '" + processEngineName + "', no engines found. " +
-            "Make sure an engine configuration is present on the classpath");
-        }
-      }
-      RepositoryService repositoryService = processEngine.getRepositoryService();
-
-      log("Starting to deploy " + files.size() + " files");
-      for (File f: files) {
-        String path = f.getAbsolutePath();
-        log("Handling file " + path);
-        try (FileInputStream inputStream = new FileInputStream(f)) {
-          log("deploying bar " + path);
-          repositoryService
-            .createDeployment()
-            .name(f.getName())
-            .addZipInputStream(new ZipInputStream(inputStream))
-            .deploy();
-        }
-        catch (Exception e) {
-          throw new BuildException("couldn't deploy bar "+path+": "+e.getMessage(), e);
-        }
-      }
-
+      ProcessEngine processEngine = initializeProcessEngine();
+      deployFiles(files, processEngine);
     } finally {
       currentThread.setContextClassLoader(originalClassLoader);
+    }
+  }
+
+  private List<File> collectFiles() {
+    List<File> files = new ArrayList<>();
+    if (file != null) {
+      files.add(file);
+    }
+    if (fileSets != null) {
+      collectFilesFromFileSets(files);
+    }
+    return files;
+  }
+
+  private void collectFilesFromFileSets(List<File> files) {
+    for (FileSet fileSet : fileSets) {
+      DirectoryScanner directoryScanner = fileSet.getDirectoryScanner(getProject());
+      File baseDir = directoryScanner.getBasedir();
+      String[] includedFiles = directoryScanner.getIncludedFiles();
+      String[] excludedFiles = directoryScanner.getExcludedFiles();
+      List<String> excludedFilesList = Arrays.asList(excludedFiles);
+
+      for (String includedFile : includedFiles) {
+        if (!excludedFilesList.contains(includedFile)) {
+          files.add(new File(baseDir, includedFile));
+        }
+      }
+    }
+  }
+
+  private ClassLoader setupClassLoader(Thread currentThread) {
+    ClassLoader originalClassLoader = currentThread.getContextClassLoader();
+    currentThread.setContextClassLoader(DeployBarTask.class.getClassLoader());
+    LogUtil.readJavaUtilLoggingConfigFromClasspath();
+    return originalClassLoader;
+  }
+
+  private ProcessEngine initializeProcessEngine() {
+    log("Initializing process engine " + processEngineName);
+    ProcessEngines.init();
+    ProcessEngine processEngine = ProcessEngines.getProcessEngine(processEngineName);
+
+    if (processEngine == null) {
+      handleMissingProcessEngine();
+    }
+
+    return processEngine;
+  }
+
+  private void handleMissingProcessEngine() {
+    List<ProcessEngineInfo> processEngineInfos = ProcessEngines.getProcessEngineInfos();
+    if (processEngineInfos != null && !processEngineInfos.isEmpty()) {
+      // Since no engine with the given name is found, we can't be 100% sure which ProcessEngineInfo
+      // is causing the error. We should show ALL errors and process engine names / resource URL's.
+      String message = getErrorMessage(processEngineInfos, processEngineName);
+      throw new ProcessEngineException(message);
+    } else {
+      throw new ProcessEngineException("Could not find a process engine with name '" + processEngineName +
+          "', no engines found. Make sure an engine configuration is present on the classpath");
+    }
+  }
+
+  private void deployFiles(List<File> files, ProcessEngine processEngine) {
+    RepositoryService repositoryService = processEngine.getRepositoryService();
+    log("Starting to deploy " + files.size() + " files");
+
+    for (File f : files) {
+      deployFile(f, repositoryService);
+    }
+  }
+
+  private void deployFile(File file, RepositoryService repositoryService) {
+    String path = file.getAbsolutePath();
+    log("Handling file " + path);
+
+    try (FileInputStream inputStream = new FileInputStream(file)) {
+      log("deploying bar " + path);
+      repositoryService
+          .createDeployment()
+          .name(file.getName())
+          .addZipInputStream(new ZipInputStream(inputStream))
+          .deploy();
+    } catch (Exception e) {
+      throw new BuildException("couldn't deploy bar " + path + ": " + e.getMessage(), e);
     }
   }
 
@@ -122,8 +152,8 @@ public class DeployBarTask extends Task {
         builder.append("Error while initializing engine. ");
         if (engineInfo.getException().indexOf("driver on UnpooledDataSource") != -1) {
           builder.append("Exception while initializing process engine! Database or database driver might not have been configured correctly.")
-                  .append("Please consult the user guide for supported database environments or build.properties. Stacktrace: ")
-                  .append(engineInfo.getException());
+              .append("Please consult the user guide for supported database environments or build.properties. Stacktrace: ")
+              .append(engineInfo.getException());
         } else {
           builder.append("Stacktrace: ").append(engineInfo.getException());
         }
@@ -139,18 +169,23 @@ public class DeployBarTask extends Task {
   public String getProcessEngineName() {
     return processEngineName;
   }
+
   public void setProcessEngineName(String processEngineName) {
     this.processEngineName = processEngineName;
   }
+
   public File getFile() {
     return file;
   }
+
   public void setFile(File file) {
     this.file = file;
   }
+
   public List<FileSet> getFileSets() {
     return fileSets;
   }
+
   public void setFileSets(List<FileSet> fileSets) {
     this.fileSets = fileSets;
   }

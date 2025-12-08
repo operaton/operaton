@@ -7,18 +7,6 @@
 version: 2
 updates:
   # Main branch - all updates
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: weekly
-    target-branch: "main"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    reviewers:
-      - "kthoms"
-    target-branch: "main"
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -30,30 +18,51 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
-
-  # Release 1.0.x branch - patch updates only
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: weekly
-      time: "01:30"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
+      - dependency-name: "org.jruby:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:maven"
+    milestone: 10
+  - package-ecosystem: "npm"
+    directory: "/webapps/frontend"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:npm"
+    milestone: 10
+  - package-ecosystem: "npm"
+    directory: "/engine-rest/docs"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:npm"
+    milestone: 10
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      time: "01:30"
     reviewers:
       - "kthoms"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    target-branch: "main"
+    labels:
+      - "dependencies:github-action"
+    milestone: 10
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    labels:
+      - "dependencies:devcontainers"
+    milestone: 10
+
+  # Release 1.0.x branch - patch updates only
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -66,3 +75,60 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:maven"
+    milestone: 11
+  - package-ecosystem: "npm"
+    directory: "/webapps/frontend"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:npm"
+    milestone: 11
+  - package-ecosystem: "npm"
+    directory: "/engine-rest/docs"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:npm"
+    milestone: 11
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "01:30"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:github-action"
+    milestone: 11
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "01:30"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:devcontainers"
+    milestone: 11

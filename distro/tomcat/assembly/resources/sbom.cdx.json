@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:bbb4e448-b308-4bed-b84a-09c4a586ac71",
+  "serialNumber": "urn:uuid:eb9d9555-3d3a-4c13-a798-c081ac13c5a4",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-02T05:24:06Z",
+    "timestamp": "2025-12-08T11:56:16Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.67.2"
+          "version": "0.68.1"
         }
       ]
     },
@@ -2431,45 +2431,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+      "bom-ref": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
       "publisher": "FasterXML.com",
       "group": "com.fasterxml.uuid",
       "name": "java-uuid-generator",
-      "version": "5.1.1",
+      "version": "5.2.0",
       "description": "Java UUID Generator (JUG) is a Java library for generating Universally Unique IDentifiers, UUIDs (see http://en.wikipedia.org/wiki/UUID). It can be used either as a component in a bigger application, or as a standalone command line tool. JUG generates UUIDs according to the IETF UUID draft specification. JUG supports 3 original official UUID generation methods as well as later additions (v6, v7)",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a417e6494ba76096deab5bcd334068d6"
+          "content": "285019a0ccc0e0a79cdfd2d667f73e26"
         },
         {
           "alg": "SHA-1",
-          "content": "c968e056738b5a70abec7f395746b33a090a3ad5"
+          "content": "3ca5091c87cd327880f09447e62b86b8b93db256"
         },
         {
           "alg": "SHA-256",
-          "content": "76455a6af3645bd1d3df9edf8fd446c63697371f86a26e4dd44ca856c130f141"
+          "content": "5724d6a0f27db90d45af884f4520bce581f29eebe21840d07cae22b670bb8ebb"
         },
         {
           "alg": "SHA-512",
-          "content": "3ab01704cdee975c1583a22c10b86dc2d78c1ccecbf4fdd8b09c8753f3b42dc8f07a1822987658fab8f41452ae22aa605362ef58356af62579bbc64b11faf9a0"
+          "content": "d1fdaa7adde071beae68363003cadb0ccaa5914cc8fb313f59a18c2b8ed5661551bee9a1f243863f1af506c45d2539bf37fab08ac4dc608bb5bf6a7acaa23362"
         },
         {
           "alg": "SHA-384",
-          "content": "774aa7a1bdd58da317498fbbd1295d7a757980b388c3c4e206d72beac5866195b355355278826761384ca0c953e16c63"
+          "content": "c8204e36cd512ef971631145329d8dfecdde1a64aea4a439b93297c24202b7eb1fab410fb5f953f356cc63e34c5cca0e"
         },
         {
           "alg": "SHA3-384",
-          "content": "6531dde1f4ef38c5ad35b72eb4b28cb7b98f666b694d4555bd517bfc010ac81b33567eb4e8a05d8f0a1c3f012723e997"
+          "content": "eff84b0cc59804a9c6ab03dc252c1164aa6f07475aa60130ba06b3a0a729a33682bbf06a127ab3993bc2ed7f88ee302a"
         },
         {
           "alg": "SHA3-256",
-          "content": "0fd52a0d723b436d301d790176249b6253225492bf891409fbfab989b614152a"
+          "content": "5b299156e5e9eab6fa17995e44b3a20d9e9d904e5e3962b3da02dd9c0dff184a"
         },
         {
           "alg": "SHA3-512",
-          "content": "5731f77c6e524ee6d84ea927d124f092d0f569a9fcd3ca01463ffa55f083f32f839eea52ea4ee8055eda8674b7dfb3d65c537f6c886d1864e9649c1b3a0362bb"
+          "content": "d8448a2458b3d85d0cf16b14bc0f3f00bead80795b97934440f94f72f7cf015ec83136d26a8fc10c6c30e16aa76865fe5b0916a2e7f5b1c00e3031976f8ee826"
         }
       ],
       "licenses": [
@@ -2479,7 +2479,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+      "purl": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/cowtowncoder/java-uuid-generator",
@@ -14715,10 +14715,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-java",
-      "version": "4.38.0",
+      "version": "4.39.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -14762,7 +14762,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -15212,71 +15212,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
-      "group": "org.seleniumhq.selenium",
-      "name": "selenium-devtools-v140",
-      "version": "4.38.0",
-      "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "3c43b62681e18809c9b945d958e321cd"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "4198864cdb524278b8ef86ac263c20fdedb6294b"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "f2a05ae6c294b040922095635dea8611a4fa04c1302ad00be05896d40182cf36"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "f9086c4419871c594ebd7f90569195c275da59c21fc6fcc8aa9139d4d945a4db410fff197e8707f35b704ba236e8931172df90f07ce0c327891b3102f422a646"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "5ad410a499252cbd113e593e8e451f07b93dae6b86a57563b0dd904c82178e45ca7a313f08c7131e7cbc729e357e6d42"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "605686b0ac8086974726a18187368f52bc0ccbc4596e779a2ec8783627e082f3b7c7b4f93a3329473301dcf2ce9bea4e"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "f7eb38011a98e04651ef3f7b30b3f29c8755dd03850ca79ffdb7f7a8d67eaac7"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "ccada08bb7537019c1d2a83a21d2addf851a04caf8769192ee095a656a38b634e45f3b899232fc52b0402a172cc0d1e1ed710accd6362abaeaedf4511921326e"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://selenium.dev/",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/SeleniumHQ/selenium/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-devtools-v141",
-      "version": "4.38.0",
+      "version": "4.39.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -15320,7 +15259,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -15334,10 +15273,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-devtools-v142",
-      "version": "4.38.0",
+      "version": "4.39.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -15381,7 +15320,68 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://selenium.dev/",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/SeleniumHQ/selenium/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
+      "group": "org.seleniumhq.selenium",
+      "name": "selenium-devtools-v143",
+      "version": "4.39.0",
+      "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "744dc3702deee89ea11e23bdfa6166be"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "cb006881fa1ce023591482a37d9a9bcbcc58fe4b"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c205947b928f88ce1296f98c8015dbe40afc800ba3e42be1e3c4e2e32002ff4a"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "84c1d71ca7559afbc6a0d329c002fc39f68fb4baad276eb3f341f3882334ebb7f696f47711bd4aed5e6deed5cef69e1ea8060f58260c2c494134bdc1edf14df0"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "5457d71d6f4462e0f9f6a49964f5957270cd7f46e7193a0d2cad4eae2b63cf5c1ff586cc0b73b722c0e45e253a471db0"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "055e2da56823ceaaee0668e952c15c407049519f3fcf7da0c53f364a561d853fe5e6df7b06f003f329945eebe26d8662"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "750fa354d80abeba81c4ba070eb7c008ceec3a786aaf297536aaa50ff3b754f5"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9927366dc1292746af2e862500a0bb1797bbe63ada2fbf189db6c8780482fe17ea1d3ed62a45aa7cb2401c87fcba3e5b599c228a7604fc37330c0d74610065cf"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -21058,7 +21058,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b9507b26-6a84-4c45-972a-82865b1270bc",
+      "bom-ref": "57fa57db-3558-4ed8-8bf2-1ed9521d879f",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21577,15 +21577,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40ibm/plex@6.4.0",
+      "bom-ref": "pkg:npm/%40ibm/plex@6.4.1",
       "group": "@ibm",
       "name": "plex",
-      "version": "6.4.0",
-      "purl": "pkg:npm/%40ibm/plex@6.4.0",
+      "version": "6.4.1",
+      "purl": "pkg:npm/%40ibm/plex@6.4.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@ibm/plex@6.4.0"
+          "value": "@ibm/plex@6.4.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24853,7 +24853,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "32a540e6-4c53-4183-bd8c-6af04c23c6b3",
+      "bom-ref": "3f9b5af9-b085-45bb-95b6-e070f84ec2ee",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -25120,7 +25120,7 @@
         "pkg:maven/org.scala-lang/scala-library@2.13.15?type=jar",
         "pkg:maven/com.lihaoyi/fastparse_2.13@3.1.1?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar"
+        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar"
       ]
     },
     {
@@ -25148,7 +25148,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+      "ref": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
@@ -25367,7 +25367,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.apache.ant/ant@1.10.15?type=jar",
-        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
         "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
@@ -25826,7 +25826,7 @@
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar"
       ]
@@ -26472,13 +26472,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-chrome-driver@4.31.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-edge-driver@4.31.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-firefox-driver@4.31.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-ie-driver@4.31.0?type=jar",
@@ -26646,7 +26646,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
@@ -26655,7 +26655,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
@@ -26664,7 +26664,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
@@ -26957,7 +26957,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
-        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar"
       ]
     },
@@ -27219,7 +27219,7 @@
         "pkg:maven/org.apache.tomcat/tomcat@11.0.14?type=tar.gz",
         "pkg:maven/com.h2database/h2@2.4.240?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
-        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/org.apache.groovy/groovy@4.0.29?type=jar",
         "pkg:maven/org.apache.groovy/groovy-jsr223@4.0.29?type=jar",
         "pkg:maven/org.apache.groovy/groovy-json@4.0.29?type=jar",
@@ -27422,7 +27422,7 @@
         "pkg:maven/org.apache.tomcat/tomcat@11.0.14?type=tar.gz",
         "pkg:maven/com.h2database/h2@2.4.240?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
-        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.1.1?type=jar",
+        "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/org.apache.groovy/groovy@4.0.29?type=jar",
         "pkg:maven/org.apache.groovy/groovy-jsr223@4.0.29?type=jar",
         "pkg:maven/org.apache.groovy/groovy-json@4.0.29?type=jar",
@@ -27450,17 +27450,17 @@
       "dependsOn": []
     },
     {
-      "ref": "32a540e6-4c53-4183-bd8c-6af04c23c6b3",
+      "ref": "3f9b5af9-b085-45bb-95b6-e070f84ec2ee",
       "dependsOn": [
-        "b9507b26-6a84-4c45-972a-82865b1270bc"
+        "57fa57db-3558-4ed8-8bf2-1ed9521d879f"
       ]
     },
     {
-      "ref": "b9507b26-6a84-4c45-972a-82865b1270bc",
+      "ref": "57fa57db-3558-4ed8-8bf2-1ed9521d879f",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
-        "pkg:npm/%40ibm/plex@6.4.0",
+        "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/angular-animate@1.8.2",
         "pkg:npm/angular-cookies@1.8.2",
         "pkg:npm/angular-data-depend@1.0.0",
@@ -27750,8 +27750,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40ibm/plex@6.4.0",
-      "dependsOn": []
+      "ref": "pkg:npm/%40ibm/plex@6.4.1",
+      "dependsOn": [
+        "pkg:npm/%40ibm/telemetry-js@1.10.1"
+      ]
     },
     {
       "ref": "pkg:npm/%40ibm/telemetry-js@1.10.1",

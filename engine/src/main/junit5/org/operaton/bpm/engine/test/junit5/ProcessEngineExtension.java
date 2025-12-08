@@ -309,27 +309,27 @@ public class ProcessEngineExtension implements TestWatcher,
 
   @Override
   public void afterAll(ExtensionContext context) {
-    try {
-      deleteHistoryCleanupJob();
-      if (closeEngine && processEngine != null) {
+    if (closeEngine && processEngine != null) {
+      try {
+        deleteHistoryCleanupJob();
         processEngine.close();
+      } finally {
+        // null the references after all tests because the instance is hold in static reference
+        processEngine = null;
+        processEngineConfiguration = null;
+        repositoryService = null;
+        runtimeService = null;
+        taskService = null;
+        historyService = null;
+        identityService = null;
+        managementService = null;
+        formService = null;
+        filterService = null;
+        authorizationService = null;
+        caseService = null;
+        externalTaskService = null;
+        decisionService = null;
       }
-    } finally {
-      // null the references after all tests because the instance is hold in static reference
-      processEngine = null;
-      processEngineConfiguration = null;
-      repositoryService = null;
-      runtimeService = null;
-      taskService = null;
-      historyService = null;
-      identityService = null;
-      managementService = null;
-      formService = null;
-      filterService = null;
-      authorizationService = null;
-      caseService = null;
-      externalTaskService = null;
-      decisionService = null;
     }
   }
 
@@ -397,11 +397,9 @@ public class ProcessEngineExtension implements TestWatcher,
                 }
               });
 
-    if (serviceInstance.isPresent()) {
-      getAllFields(testInstance.getClass())
+      serviceInstance.ifPresent(instance -> getAllFields(testInstance.getClass())
               .filter(field -> field.getType() != Object.class && field.getType().isAssignableFrom(serviceType))
-              .forEach(field -> inject(testInstance, field, serviceInstance.get()));
-    }
+              .forEach(field -> inject(testInstance, field, instance)));
   }
 
   // FLUENT BUILDER

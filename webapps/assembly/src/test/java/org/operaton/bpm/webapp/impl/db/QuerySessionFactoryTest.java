@@ -77,7 +77,8 @@ class QuerySessionFactoryTest {
     var document = builder.parse(new ByteArrayInputStream(mappings.getBytes()));
     assertThat(document.getDocumentElement().getNodeName()).isEqualTo("configuration");
 
-    assertThat(mappings)
+    String normalizedMappings = mappings.replace("\r\n", "\n");
+    assertThat(normalizedMappings)
       .contains("<mapper resource=\"foo/mapping1.xml\" />\n")
       .contains("<mapper resource=\"bar/mapping2.xml\" />\n");
   }

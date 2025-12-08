@@ -61,15 +61,28 @@ class TemplateFilterTest {
       .thenReturn(getClass().getResourceAsStream("/WEB-INF/session/web.xml"));
 
     // when
-
     String contents = filter.getWebResourceContents("web.xml");
 
     // then
-    assertThat(contents).
-      isNotEmpty()
-      .startsWith("""
+    assertThat(contents)
+      .isNotEmpty()
+      .isEqualToNormalizingNewlines("""
         <?xml version="1.0" encoding="UTF-8"?>
         <web-app version="6.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+
+          <display-name>Operaton webapp</display-name>
+
+          <filter>
+            <filter-name>SessionCookieFilter</filter-name>
+            <filter-class>org.operaton.bpm.webapp.impl.security.filter.SessionCookieFilter</filter-class>
+          </filter>
+          <filter-mapping>
+            <filter-name>SessionCookieFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+          </filter-mapping>
+
+        </web-app>
         """);
   }
 

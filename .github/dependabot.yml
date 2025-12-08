@@ -20,6 +20,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.jruby:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:maven"
+    milestone: 10
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -27,6 +30,9 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
+    labels:
+      - "dependencies:npm"
+    milestone: 10
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -34,6 +40,9 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
+    labels:
+      - "dependencies:npm"
+    milestone: 10
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -41,11 +50,17 @@ updates:
     reviewers:
       - "kthoms"
     target-branch: "main"
+    labels:
+      - "dependencies:github-action"
+    milestone: 10
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: "weekly"
     target-branch: "main"
+    labels:
+      - "dependencies:devcontainers"
+    milestone: 10
 
   # Release 1.0.x branch - patch updates only
   - package-ecosystem: "maven"
@@ -60,6 +75,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:maven"
+    milestone: 11
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -70,6 +88,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:npm"
+    milestone: 11
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -80,6 +101,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:npm"
+    milestone: 11
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -92,6 +116,9 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:github-action"
+    milestone: 11
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -102,3 +129,6 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:devcontainers"
+    milestone: 11

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:545e479c-1e9d-4ed9-adf1-2c1b78aa836a",
+  "serialNumber": "urn:uuid:c460f4f2-f413-4c8a-878f-52f48cf8720c",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-08T07:11:26Z",
+    "timestamp": "2025-12-08T09:00:28Z",
     "tools": {
       "components": [
         {
@@ -14715,10 +14715,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-java",
-      "version": "4.38.0",
+      "version": "4.39.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -14762,7 +14762,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -15212,71 +15212,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
-      "group": "org.seleniumhq.selenium",
-      "name": "selenium-devtools-v140",
-      "version": "4.38.0",
-      "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "3c43b62681e18809c9b945d958e321cd"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "4198864cdb524278b8ef86ac263c20fdedb6294b"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "f2a05ae6c294b040922095635dea8611a4fa04c1302ad00be05896d40182cf36"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "f9086c4419871c594ebd7f90569195c275da59c21fc6fcc8aa9139d4d945a4db410fff197e8707f35b704ba236e8931172df90f07ce0c327891b3102f422a646"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "5ad410a499252cbd113e593e8e451f07b93dae6b86a57563b0dd904c82178e45ca7a313f08c7131e7cbc729e357e6d42"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "605686b0ac8086974726a18187368f52bc0ccbc4596e779a2ec8783627e082f3b7c7b4f93a3329473301dcf2ce9bea4e"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "f7eb38011a98e04651ef3f7b30b3f29c8755dd03850ca79ffdb7f7a8d67eaac7"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "ccada08bb7537019c1d2a83a21d2addf851a04caf8769192ee095a656a38b634e45f3b899232fc52b0402a172cc0d1e1ed710accd6362abaeaedf4511921326e"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://selenium.dev/",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/SeleniumHQ/selenium/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-devtools-v141",
-      "version": "4.38.0",
+      "version": "4.39.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -15320,7 +15259,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -15334,10 +15273,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-devtools-v142",
-      "version": "4.38.0",
+      "version": "4.39.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -15381,7 +15320,68 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://selenium.dev/",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/SeleniumHQ/selenium/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
+      "group": "org.seleniumhq.selenium",
+      "name": "selenium-devtools-v143",
+      "version": "4.39.0",
+      "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "744dc3702deee89ea11e23bdfa6166be"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "cb006881fa1ce023591482a37d9a9bcbcc58fe4b"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c205947b928f88ce1296f98c8015dbe40afc800ba3e42be1e3c4e2e32002ff4a"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "84c1d71ca7559afbc6a0d329c002fc39f68fb4baad276eb3f341f3882334ebb7f696f47711bd4aed5e6deed5cef69e1ea8060f58260c2c494134bdc1edf14df0"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "5457d71d6f4462e0f9f6a49964f5957270cd7f46e7193a0d2cad4eae2b63cf5c1ff586cc0b73b722c0e45e253a471db0"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "055e2da56823ceaaee0668e952c15c407049519f3fcf7da0c53f364a561d853fe5e6df7b06f003f329945eebe26d8662"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "750fa354d80abeba81c4ba070eb7c008ceec3a786aaf297536aaa50ff3b754f5"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9927366dc1292746af2e862500a0bb1797bbe63ada2fbf189db6c8780482fe17ea1d3ed62a45aa7cb2401c87fcba3e5b599c228a7604fc37330c0d74610065cf"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -21058,7 +21058,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "85e3e556-5ae5-4963-9289-d52a47a354d8",
+      "bom-ref": "8de2b123-ab20-4f70-9537-e9c5941997f7",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24853,7 +24853,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3ebc20f8-ee2a-4af3-9a71-7dd6cbe899d1",
+      "bom-ref": "00567c49-c068-4724-8820-8be9a1bb5e5e",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -25826,7 +25826,7 @@
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar"
       ]
@@ -26472,13 +26472,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-chrome-driver@4.31.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-edge-driver@4.31.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-firefox-driver@4.31.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-ie-driver@4.31.0?type=jar",
@@ -26646,7 +26646,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v140@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
@@ -26655,7 +26655,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
@@ -26664,7 +26664,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.38.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.31.0?type=jar",
@@ -27450,13 +27450,13 @@
       "dependsOn": []
     },
     {
-      "ref": "3ebc20f8-ee2a-4af3-9a71-7dd6cbe899d1",
+      "ref": "00567c49-c068-4724-8820-8be9a1bb5e5e",
       "dependsOn": [
-        "85e3e556-5ae5-4963-9289-d52a47a354d8"
+        "8de2b123-ab20-4f70-9537-e9c5941997f7"
       ]
     },
     {
-      "ref": "85e3e556-5ae5-4963-9289-d52a47a354d8",
+      "ref": "8de2b123-ab20-4f70-9537-e9c5941997f7",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",

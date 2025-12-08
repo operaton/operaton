@@ -65,7 +65,7 @@
     "@babel/core": "7.28.3",
     "@babel/plugin-transform-object-rest-spread": "7.25.9",
     "@babel/plugin-transform-object-assign": "7.25.9",
-    "@babel/preset-env": "7.23.9",
+    "@babel/preset-env": "7.28.5",
     "angular-mocks": "1.8.3",
     "@babel/eslint-parser": "7.28.5",
     "babel-loader": "10.0.0",

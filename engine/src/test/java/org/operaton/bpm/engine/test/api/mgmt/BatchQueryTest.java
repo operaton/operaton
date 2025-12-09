@@ -119,8 +119,9 @@ class BatchQueryTest {
   @Test
   void testBatchQueryByIdNull() {
     var batchQuery = managementService.createBatchQuery();
-    assertThatThrownBy(() -> batchQuery.batchId(null)).isInstanceOf(NullValueException.class)
-        .hasMessageContaining("Batch id is null");
+    assertThatThrownBy(() -> batchQuery.batchId(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Batch id is null");
   }
 
   @Test
@@ -151,8 +152,9 @@ class BatchQueryTest {
   @Test
   void testBatchQueryByTypeNull() {
     var batchQuery = managementService.createBatchQuery();
-    assertThatThrownBy(() -> batchQuery.type(null)).isInstanceOf(NullValueException.class)
-        .hasMessageContaining("Type is null");
+    assertThatThrownBy(() -> batchQuery.type(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Type is null");
   }
 
   @Test
@@ -197,15 +199,17 @@ class BatchQueryTest {
   @Test
   void testBatchQueryOrderingPropertyWithoutOrder() {
     var batchQuery = managementService.createBatchQuery().orderById();
-    assertThatThrownBy(batchQuery::singleResult).isInstanceOf(NotValidException.class)
-        .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
+    assertThatThrownBy(batchQuery::singleResult)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
 
   @Test
   void testBatchQueryOrderWithoutOrderingProperty() {
     var batchQuery = managementService.createBatchQuery();
-    assertThatThrownBy(batchQuery::asc).isInstanceOf(NotValidException.class)
-        .hasMessageContaining("You should call any of the orderBy methods " + "first before specifying a direction");
+    assertThatThrownBy(batchQuery::asc)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("You should call any of the orderBy methods " + "first before specifying a direction");
   }
 
   @Test
@@ -244,7 +248,7 @@ class BatchQueryTest {
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
 
-    assertThat(query.list()).extracting(Batch::getId).contains(batch1.getId(), batch3.getId());
+    assertThat(query.list()).extracting(Batch::getId).containsExactly(batch1.getId(), batch3.getId());
   }
 
 }

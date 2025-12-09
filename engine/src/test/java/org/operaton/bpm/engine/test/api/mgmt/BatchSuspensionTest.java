@@ -75,7 +75,8 @@ public class BatchSuspensionTest {
 
   @AfterEach
   void resetBatchJobsPerSeed() {
-    engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(defaultBatchJobsPerSeed);
+    engineRule.getProcessEngineConfiguration()
+      .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
   }
 
   @Test
@@ -93,14 +94,16 @@ public class BatchSuspensionTest {
 
   @Test
   void shouldFailWhenSuspendingUsingUnknownId() {
-    assertThatThrownBy(() -> managementService.suspendBatchById("unknown")).isInstanceOf(BadUserRequestException.class)
-        .hasMessageContaining("Batch for id 'unknown' cannot be found");
+    assertThatThrownBy(() -> managementService.suspendBatchById("unknown"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Batch for id 'unknown' cannot be found");
   }
 
   @Test
   void shouldFailWhenSuspendingUsingNullId() {
-    assertThatThrownBy(() -> managementService.suspendBatchById(null)).isInstanceOf(BadUserRequestException.class)
-        .hasMessageContaining("batch id is null");
+    assertThatThrownBy(() -> managementService.suspendBatchById(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("batch id is null");
   }
 
   @Test
@@ -233,15 +236,15 @@ public class BatchSuspensionTest {
   @Test
   void shouldFailWhenActivatingUsingUnknownId() {
     assertThatThrownBy(() -> managementService.activateBatchById("unknown"))
-        .isInstanceOf(BadUserRequestException.class)
-        .hasMessageContaining("Batch for id 'unknown' cannot be found");
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Batch for id 'unknown' cannot be found");
   }
 
   @Test
   void shouldFailWhenActivatingUsingNullId() {
     assertThatThrownBy(() -> managementService.activateBatchById(null))
-        .isInstanceOf(BadUserRequestException.class)
-        .hasMessageContaining("batch id is null");
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("batch id is null");
   }
 
   @Test

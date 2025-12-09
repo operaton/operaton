@@ -288,43 +288,43 @@ class JobDefinitionPriorityTest {
   @Test
   void testSetNonExistingJobDefinitionPriority() {
     assertThatThrownBy(
-        () -> managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42))
-        .isInstanceOf(NotFoundException.class)
-        .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
+      () -> managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
 
     assertThatThrownBy(
-        () -> managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42, true))
-        .isInstanceOf(NotFoundException.class)
-        .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
+      () -> managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42, true))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
   }
 
   @Test
   void testResetNonExistingJobDefinitionPriority() {
     assertThatThrownBy(
-        () -> managementService.clearOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId"))
-        .isInstanceOf(NotFoundException.class)
-        .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
+      () -> managementService.clearOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
   }
 
   @Test
   void testSetNullJobDefinitionPriority() {
     assertThatThrownBy(
-        () -> managementService.setOverridingJobPriorityForJobDefinition(null, 42))
-        .isInstanceOf(NotValidException.class)
-        .hasMessageContaining("jobDefinitionId is null");
+      () -> managementService.setOverridingJobPriorityForJobDefinition(null, 42))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("jobDefinitionId is null");
 
     assertThatThrownBy(
-        () -> managementService.setOverridingJobPriorityForJobDefinition(null, 42, true))
-        .isInstanceOf(NotValidException.class)
-        .hasMessageContaining("jobDefinitionId is null");
+      () -> managementService.setOverridingJobPriorityForJobDefinition(null, 42, true))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("jobDefinitionId is null");
   }
 
   @Test
   void testResetNullJobDefinitionPriority() {
     assertThatThrownBy(
-        () -> managementService.clearOverridingJobPriorityForJobDefinition(null))
-        .isInstanceOf(NotValidException.class)
-        .hasMessageContaining("jobDefinitionId is null");
+      () -> managementService.clearOverridingJobPriorityForJobDefinition(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("jobDefinitionId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")

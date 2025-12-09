@@ -199,8 +199,9 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
 
-    assertThatThrownBy(() -> jobQuery.activityId(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided activity id is null");
+    assertThatThrownBy(() -> jobQuery.activityId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided activity id is null");
   }
 
   @TestTemplate
@@ -217,8 +218,9 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
 
-    assertThatThrownBy(() -> jobQuery.jobDefinitionId(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided job definition id is null");
+    assertThatThrownBy(() -> jobQuery.jobDefinitionId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided job definition id is null");
   }
 
   @TestTemplate
@@ -232,8 +234,9 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().processInstanceId("invalid");
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
-    assertThatThrownBy(() -> jobQuery.processInstanceId(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided process instance id is null");
+    assertThatThrownBy(() -> jobQuery.processInstanceId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided process instance id is null");
   }
 
   @TestTemplate
@@ -249,8 +252,9 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().executionId("invalid");
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
-    assertThatThrownBy(() -> jobQuery.executionId(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided execution id is null");
+    assertThatThrownBy(() -> jobQuery.executionId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided execution id is null");
   }
 
   @TestTemplate
@@ -267,8 +271,9 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
 
-    assertThatThrownBy(() -> jobQuery.processDefinitionId(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided job definition id is null");
+    assertThatThrownBy(() -> jobQuery.processDefinitionId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided job definition id is null");
   }
 
   @TestTemplate
@@ -304,8 +309,9 @@ public class JobQueryTest {
     JobQuery query = managementService.createJobQuery().processDefinitionKey("invalid");
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
-    assertThatThrownBy(() -> jobQuery.processDefinitionKey(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided process instance key is null");
+    assertThatThrownBy(() -> jobQuery.processDefinitionKey(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided process instance key is null");
   }
 
   @TestTemplate
@@ -367,8 +373,9 @@ public class JobQueryTest {
   @TestTemplate
   void testInvalidOnlyTimersUsage() {
     var jobQuery = managementService.createJobQuery().timers();
-    assertThatThrownBy(jobQuery::messages).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Cannot combine onlyTimers() with onlyMessages() in the same query");
+    assertThatThrownBy(jobQuery::messages)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot combine onlyTimers() with onlyMessages() in the same query");
   }
 
   @TestTemplate
@@ -575,8 +582,9 @@ public class JobQueryTest {
   @TestTemplate
   void testQueryByExceptionMessageNull() {
     var jobQuery = managementService.createJobQuery();
-    assertThatThrownBy(() -> jobQuery.exceptionMessage(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided exception message is null");
+    assertThatThrownBy(() -> jobQuery.exceptionMessage(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided exception message is null");
   }
 
   @TestTemplate
@@ -597,8 +605,9 @@ public class JobQueryTest {
     verifyQueryResults(query, 0);
     var jobQuery = managementService.createJobQuery();
 
-    assertThatThrownBy(() -> jobQuery.failedActivityId(null)).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Provided activity id is null");
+    assertThatThrownBy(() -> jobQuery.failedActivityId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided activity id is null");
   }
 
 
@@ -835,12 +844,14 @@ public class JobQueryTest {
   @TestTemplate
   void testQueryInvalidSortingUsage() {
     var jobQuery = managementService.createJobQuery().orderByJobId();
-    assertThatThrownBy(jobQuery::list).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("call asc() or desc() after using orderByXX()");
+    assertThatThrownBy(jobQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("call asc() or desc() after using orderByXX()");
 
     var jobQuery2 = managementService.createJobQuery();
-    assertThatThrownBy(jobQuery2::asc).isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("You should call any of the orderBy methods first before specifying a direction");
+    assertThatThrownBy(jobQuery2::asc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("You should call any of the orderBy methods first before specifying a direction");
   }
 
   @TestTemplate

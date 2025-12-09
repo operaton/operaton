@@ -59,11 +59,11 @@ public final class ExceptionUtil {
   }
 
   public static String getExceptionStacktrace(ByteArrayEntity byteArray) {
-    String result = null;
-    if (byteArray != null) {
-      result = StringUtil.fromBytes(byteArray.getBytes());
+    if (byteArray == null) {
+      return null;
     }
-    return result;
+
+   return StringUtil.fromBytes(byteArray.getBytes());
   }
 
   public static ByteArrayEntity createJobExceptionByteArray(byte[] byteArray, ResourceType type) {
@@ -82,15 +82,14 @@ public final class ExceptionUtil {
    * @return persisted entity
    */
   public static ByteArrayEntity createExceptionByteArray(String name, byte[] byteArray, ResourceType type) {
-    ByteArrayEntity result = null;
-
-    if (byteArray != null) {
-      result = new ByteArrayEntity(name, byteArray, type);
-      Context.getCommandContext()
-        .getByteArrayManager()
-        .insertByteArray(result);
+    if (byteArray == null) {
+      return null;
     }
 
+    ByteArrayEntity result = new ByteArrayEntity(name, byteArray, type);
+    Context.getCommandContext()
+      .getByteArrayManager()
+      .insertByteArray(result);
     return result;
   }
 
@@ -98,10 +97,8 @@ public final class ExceptionUtil {
     Throwable cause = persistenceException.getCause();
     if (cause instanceof BatchExecutorException) {
       return cause.getCause();
-
     } else {
       return persistenceException.getCause();
-
     }
   }
 
@@ -111,12 +108,9 @@ public final class ExceptionUtil {
       SQLException nextException = sqlException.getNextException();
       if (nextException != null) {
         return nextException;
-
       } else {
         return sqlException;
-
       }
-
     } else {
       return null;
     }
@@ -129,27 +123,23 @@ public final class ExceptionUtil {
       Throwable processEngineExceptionCause = processEngineException.getCause();
       if (processEngineExceptionCause instanceof PersistenceException persistenceException) {
         return unwrapException(persistenceException);
-
       } else {
         return null;
-
       }
     } else if (cause instanceof PersistenceException persistenceException) {
       return unwrapException(persistenceException);
-
     } else {
       return null;
-
     }
   }
 
   public static boolean checkValueTooLongException(SQLException sqlException) {
     String message = sqlException.getMessage();
-    if (message != null) {
-      message = message.toLowerCase();
-    } else {
+    if (message == null) {
       return false;
     }
+
+    message = message.toLowerCase();
     return message.contains("too long") ||
         message.contains("too large") ||
         message.contains("ora-01461") ||
@@ -171,17 +161,11 @@ public final class ExceptionUtil {
   public static boolean checkConstraintViolationException(ProcessEngineException genericPersistenceException) {
     SQLException sqlException = unwrapException(genericPersistenceException);
 
-    if (sqlException == null) {
+    if (sqlException == null || sqlException.getMessage() == null) {
       return false;
     }
 
-    String message = sqlException.getMessage();
-    if (message != null) {
-      message = message.toLowerCase();
-    } else {
-      return false;
-    }
-
+    String message = sqlException.getMessage().toLowerCase();
     return message.contains("constraint") ||
         message.contains("violat") ||
         message.contains("duplicate") ||
@@ -201,12 +185,11 @@ public final class ExceptionUtil {
 
   public static boolean checkForeignKeyConstraintViolation(SQLException sqlException) {
     String message = sqlException.getMessage();
-    if (message != null) {
-      message = message.toLowerCase();
-    } else {
+    if (message == null) {
       return false;
     }
 
+    message = message.toLowerCase();
     String sqlState = sqlException.getSQLState();
     int errorCode = sqlException.getErrorCode();
 
@@ -231,17 +214,11 @@ public final class ExceptionUtil {
   public static boolean checkVariableIntegrityViolation(PersistenceException persistenceException) {
     SQLException sqlException = unwrapException(persistenceException);
 
-    if (sqlException == null) {
+    if (sqlException == null || sqlException.getMessage() == null) {
       return false;
     }
 
-    String message = sqlException.getMessage();
-    if (message != null) {
-      message = message.toLowerCase();
-    } else {
-      return false;
-    }
-
+    String message = sqlException.getMessage().toLowerCase();
     String sqlState = sqlException.getSQLState();
     int errorCode = sqlException.getErrorCode();
 
@@ -258,7 +235,6 @@ public final class ExceptionUtil {
   }
 
   public enum DEADLOCK_CODES {
-
     MARIADB_MYSQL(1213, "40001"),
     MSSQL(1205, "40001"),
     DB2(-911, "40001"),

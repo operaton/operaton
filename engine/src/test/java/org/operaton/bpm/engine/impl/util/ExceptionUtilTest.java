@@ -30,6 +30,18 @@ import static org.mockito.Mockito.mock;
 class ExceptionUtilTest {
 
   @Test
+  void getExceptionStackTraceReturnsStackTrace() {
+    Throwable throwable = new Throwable();
+    StackTraceElement stackTraceElement = new StackTraceElement("ExceptionUtil", "getExceptionStackTrace",
+        "ExceptionUtil.java", 55);
+    throwable.setStackTrace(new StackTraceElement[]{stackTraceElement});
+
+    String stackTrace = ExceptionUtil.getExceptionStacktrace(throwable).replaceAll("\\s", "");
+
+    assertThat(stackTrace).isEqualTo("java.lang.ThrowableatExceptionUtil.getExceptionStackTrace(ExceptionUtil.java:55)");
+  }
+
+  @Test
   void checkValueTooLongException() {
     assertThat(ExceptionUtil.checkValueTooLongException(mock(SQLException.class))).isFalse();
 

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:b3b3d72d-d8a8-404b-8ae9-8418a3e2ea0b",
+  "serialNumber": "urn:uuid:21ad0f5e-a2d2-4cbc-a50b-cb7ec8a5889f",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-09T13:00:29Z",
+    "timestamp": "2025-12-09T20:31:56Z",
     "tools": {
       "components": [
         {
@@ -12627,40 +12627,6 @@
       "version": "6.2.15.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "2c24ea05639af15d87f15de43a46f930"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "56d48b8fada5747b44e6ab208e382c2e74dc575c"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "211a37676ea74eb7d7d9065cda21d79584237fbd232653736ee4312ef31cb2a1"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "a722c35cd4e49d88db03d7bf72e2b6eac8d9eff4e7bc662c94e420a5bd5cf1fc41a8a3cb9b6135b862233d1876bf3a3023968a791575d09869e2a446f1dfcd9d"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "d4034d17a981e5bd6632bcdabb8bc186a1dd03df69385e103aeb4fb76d17c26d2c114ab6cef70cfc4405d1f37c966632"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "d1a6fcaadc63234f7fd715bc8099ae6186f3788b19c37815949f380355fdd863bcf718eed850918870b9cbd4fcbe9746"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "1a46642a02d33a50c1f4f0461125d69d3844ab9bbb4012f93bb57d3a5eceb257"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "0490eab9ba0e45b350bf7052f430a2f6ed253813dae9d01fd3beb80085337ec1939f8942375f587c1c53501e50f32e79f0ca8ee134afd47b04a2529c98ab8a4c"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -21058,7 +21024,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "f3f3c566-caf3-401b-b7e8-17bd12469898",
+      "bom-ref": "03aafc87-edea-4896-ba7b-6680b1933fa4",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24768,7 +24734,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "8f4a5986-e2b3-442f-adcc-aef287989681",
+      "bom-ref": "62ccd98d-2f76-4ab1-a961-10e2b6a7b061",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27368,13 +27334,7 @@
       "dependsOn": []
     },
     {
-      "ref": "8f4a5986-e2b3-442f-adcc-aef287989681",
-      "dependsOn": [
-        "f3f3c566-caf3-401b-b7e8-17bd12469898"
-      ]
-    },
-    {
-      "ref": "f3f3c566-caf3-401b-b7e8-17bd12469898",
+      "ref": "03aafc87-edea-4896-ba7b-6680b1933fa4",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -27419,6 +27379,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "62ccd98d-2f76-4ab1-a961-10e2b6a7b061",
+      "dependsOn": [
+        "03aafc87-edea-4896-ba7b-6680b1933fa4"
       ]
     },
     {

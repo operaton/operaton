@@ -33,6 +33,22 @@ updates:
     labels:
       - "dependencies:npm"
     milestone: 10
+    groups:
+      angular:
+        patterns:
+          - "angular*"
+      babel:
+        patterns:
+          - "@babel/core"
+          - "@babel/preset-env"
+          - "@babel/eslint-parser"
+      dmn-js:
+        patterns:
+          - "dmn-js"
+          - "dmn-js-decision-table"
+          - "dmn-js-drd"
+          - "dmn-js-literal-expression"
+          - "dmn-js-shared"
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -43,6 +59,10 @@ updates:
     labels:
       - "dependencies:npm"
     milestone: 10
+    groups:
+      react:
+        patterns:
+          - "react*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -91,6 +111,22 @@ updates:
     labels:
       - "dependencies:npm"
     milestone: 11
+    groups:
+      angular:
+        patterns:
+          - "angular*"
+      babel:
+        patterns:
+          - "@babel/core"
+          - "@babel/preset-env"
+          - "@babel/eslint-parser"
+      dmn-js:
+        patterns:
+          - "dmn-js"
+          - "dmn-js-decision-table"
+          - "dmn-js-drd"
+          - "dmn-js-literal-expression"
+          - "dmn-js-shared"
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -104,6 +140,10 @@ updates:
     labels:
       - "dependencies:npm"
     milestone: 11
+    groups:
+      react:
+        patterns:
+          - "react*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

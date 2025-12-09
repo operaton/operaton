@@ -1,0 +1,4 @@
+org.operaton.bpm.engine.impl.migration.validation.instance.NoUnmappedLeafInstanceValidator
+org.operaton.bpm.engine.impl.migration.validation.instance.AsyncAfterMigrationValidator
+org.operaton.bpm.engine.impl.migration.validation.instance.AsyncProcessStartMigrationValidator
+org.operaton.bpm.engine.impl.migration.validation.instance.AsyncMigrationValidator

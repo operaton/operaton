@@ -1,0 +1,11 @@
+org.operaton.bpm.engine.impl.migration.validation.instruction.SameBehaviorInstructionValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventTypeValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.OnlyOnceMappedActivityInstructionValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceBodyValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceInnerActivityValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.CannotRemoveMultiInstanceInnerActivityValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.GatewayMappingValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventScopeInstructionValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.UpdateEventTriggersValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.AdditionalFlowScopeInstructionValidator
+org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator

@@ -55,7 +55,6 @@ public interface ExceptionCodeProvider {
   default Integer provideCode(ProcessEngineException processEngineException) {
     if (processEngineException instanceof OptimisticLockingException) {
       return OPTIMISTIC_LOCKING.getCode();
-
     }
 
     return null;

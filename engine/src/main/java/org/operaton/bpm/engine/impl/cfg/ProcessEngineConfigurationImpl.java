@@ -16,30 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cfg;
 
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
-
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
 import org.apache.ibatis.mapping.Environment;
@@ -50,7 +26,6 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.ibatis.transaction.managed.ManagedTransactionFactory;
-
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
@@ -75,40 +50,20 @@ import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.authorization.Groups;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
-import org.operaton.bpm.engine.impl.AuthorizationServiceImpl;
-import org.operaton.bpm.engine.impl.DecisionServiceImpl;
-import org.operaton.bpm.engine.impl.DefaultArtifactFactory;
+import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.impl.DefaultPriorityProvider;
-import org.operaton.bpm.engine.impl.ExternalTaskServiceImpl;
-import org.operaton.bpm.engine.impl.FilterServiceImpl;
-import org.operaton.bpm.engine.impl.FormServiceImpl;
-import org.operaton.bpm.engine.impl.HistoryServiceImpl;
-import org.operaton.bpm.engine.impl.IdentityServiceImpl;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
-import org.operaton.bpm.engine.impl.ModificationBatchJobHandler;
 import org.operaton.bpm.engine.impl.OptimizeService;
 import org.operaton.bpm.engine.impl.PriorityProvider;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
-import org.operaton.bpm.engine.impl.RestartProcessInstancesJobHandler;
-import org.operaton.bpm.engine.impl.RuntimeServiceImpl;
 import org.operaton.bpm.engine.impl.ServiceImpl;
-import org.operaton.bpm.engine.impl.TaskServiceImpl;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
 import org.operaton.bpm.engine.impl.batch.BatchJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchMonitorJobHandler;
 import org.operaton.bpm.engine.impl.batch.BatchSeedJobHandler;
-import org.operaton.bpm.engine.impl.batch.deletion.DeleteHistoricProcessInstancesJobHandler;
-import org.operaton.bpm.engine.impl.batch.deletion.DeleteProcessInstancesJobHandler;
-import org.operaton.bpm.engine.impl.batch.externaltask.SetExternalTaskRetriesJobHandler;
-import org.operaton.bpm.engine.impl.batch.job.SetJobRetriesJobHandler;
-import org.operaton.bpm.engine.impl.batch.message.MessageCorrelationBatchJobHandler;
-import org.operaton.bpm.engine.impl.batch.removaltime.BatchSetRemovalTimeJobHandler;
-import org.operaton.bpm.engine.impl.batch.removaltime.DecisionSetRemovalTimeJobHandler;
 import org.operaton.bpm.engine.impl.batch.removaltime.ProcessSetRemovalTimeJobHandler;
-import org.operaton.bpm.engine.impl.batch.update.UpdateProcessInstancesSuspendStateJobHandler;
-import org.operaton.bpm.engine.impl.batch.variables.BatchSetVariablesHandler;
 import org.operaton.bpm.engine.impl.bpmn.behavior.ExternalTaskActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
@@ -120,15 +75,12 @@ import org.operaton.bpm.engine.impl.calendar.DueDateBusinessCalendar;
 import org.operaton.bpm.engine.impl.calendar.DurationBusinessCalendar;
 import org.operaton.bpm.engine.impl.calendar.MapBusinessCalendarManager;
 import org.operaton.bpm.engine.impl.cfg.auth.AuthorizationCommandChecker;
-import org.operaton.bpm.engine.impl.cfg.auth.DefaultAuthorizationProvider;
-import org.operaton.bpm.engine.impl.cfg.auth.DefaultPermissionProvider;
 import org.operaton.bpm.engine.impl.cfg.auth.PermissionProvider;
 import org.operaton.bpm.engine.impl.cfg.auth.ResourceAuthorizationProvider;
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantCommandChecker;
 import org.operaton.bpm.engine.impl.cfg.multitenancy.TenantIdProvider;
 import org.operaton.bpm.engine.impl.cfg.standalone.StandaloneTransactionContextFactory;
 import org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd;
-import org.operaton.bpm.engine.impl.cmmn.CaseServiceImpl;
 import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionManager;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionManager;
@@ -137,7 +89,6 @@ import org.operaton.bpm.engine.impl.cmmn.handler.DefaultCmmnElementHandlerRegist
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformFactory;
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformListener;
 import org.operaton.bpm.engine.impl.cmmn.transformer.CmmnTransformer;
-import org.operaton.bpm.engine.impl.cmmn.transformer.DefaultCmmnTransformFactory;
 import org.operaton.bpm.engine.impl.db.DbIdGenerator;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManagerFactory;
 import org.operaton.bpm.engine.impl.db.entitymanager.cache.DbEntityCacheKeyMapping;
@@ -146,12 +97,9 @@ import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.delegate.DefaultDelegateInterceptor;
 import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsCollector;
 import org.operaton.bpm.engine.impl.diagnostics.DiagnosticsRegistry;
-import org.operaton.bpm.engine.impl.digest.Default16ByteSaltGenerator;
 import org.operaton.bpm.engine.impl.digest.PasswordEncryptor;
 import org.operaton.bpm.engine.impl.digest.PasswordManager;
 import org.operaton.bpm.engine.impl.digest.SaltGenerator;
-import org.operaton.bpm.engine.impl.digest.Sha512HashDigest;
-import org.operaton.bpm.engine.impl.dmn.batch.DeleteHistoricDecisionInstancesJobHandler;
 import org.operaton.bpm.engine.impl.dmn.configuration.DmnEngineConfigurationBuilder;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.dmn.deployer.DecisionRequirementsDefinitionDeployer;
@@ -189,7 +137,6 @@ import org.operaton.bpm.engine.impl.form.validator.MinLengthValidator;
 import org.operaton.bpm.engine.impl.form.validator.MinValidator;
 import org.operaton.bpm.engine.impl.form.validator.ReadOnlyValidator;
 import org.operaton.bpm.engine.impl.form.validator.RequiredValidator;
-import org.operaton.bpm.engine.impl.history.DefaultHistoryRemovalTimeProvider;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.HistoryRemovalTimeProvider;
 import org.operaton.bpm.engine.impl.history.event.HistoricDecisionInstanceManager;
@@ -200,14 +147,10 @@ import org.operaton.bpm.engine.impl.history.handler.CompositeHistoryEventHandler
 import org.operaton.bpm.engine.impl.history.handler.DbHistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.impl.history.parser.HistoryParseListener;
-import org.operaton.bpm.engine.impl.history.producer.CacheAwareCmmnHistoryEventProducer;
-import org.operaton.bpm.engine.impl.history.producer.CacheAwareHistoryEventProducer;
 import org.operaton.bpm.engine.impl.history.producer.CmmnHistoryEventProducer;
-import org.operaton.bpm.engine.impl.history.producer.DefaultDmnHistoryEventProducer;
 import org.operaton.bpm.engine.impl.history.producer.DmnHistoryEventProducer;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.history.transformer.CmmnHistoryTransformListener;
-import org.operaton.bpm.engine.impl.identity.DefaultPasswordPolicyImpl;
 import org.operaton.bpm.engine.impl.identity.ReadOnlyIdentityProvider;
 import org.operaton.bpm.engine.impl.identity.WritableIdentityProvider;
 import org.operaton.bpm.engine.impl.identity.db.DbIdentityServiceProvider;
@@ -221,9 +164,26 @@ import org.operaton.bpm.engine.impl.interceptor.CommandInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.DelegateInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.ExceptionCodeInterceptor;
 import org.operaton.bpm.engine.impl.interceptor.SessionFactory;
-import org.operaton.bpm.engine.impl.jobexecutor.*;
+import org.operaton.bpm.engine.impl.jobexecutor.AsyncContinuationJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobPriorityProvider;
+import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
+import org.operaton.bpm.engine.impl.jobexecutor.JobDeclaration;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
+import org.operaton.bpm.engine.impl.jobexecutor.JobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.NotifyAcquisitionRejectedJobsHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.ProcessEventJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.RejectedJobsHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateJobDefinitionHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerActivateProcessDefinitionHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerCatchIntermediateEventJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerExecuteNestedActivityJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerStartEventSubprocessJobHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendJobDefinitionHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerSuspendProcessDefinitionHandler;
+import org.operaton.bpm.engine.impl.jobexecutor.TimerTaskListenerJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.BatchWindowManager;
-import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.DefaultBatchWindowManager;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupBatch;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.historycleanup.HistoryCleanupHelper;
@@ -233,51 +193,68 @@ import org.operaton.bpm.engine.impl.metrics.MetricsReporterIdProvider;
 import org.operaton.bpm.engine.impl.metrics.parser.MetricsBpmnParseListener;
 import org.operaton.bpm.engine.impl.metrics.parser.MetricsCmmnTransformListener;
 import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
-import org.operaton.bpm.engine.impl.migration.DefaultMigrationActivityMatcher;
 import org.operaton.bpm.engine.impl.migration.DefaultMigrationInstructionGenerator;
 import org.operaton.bpm.engine.impl.migration.MigrationActivityMatcher;
 import org.operaton.bpm.engine.impl.migration.MigrationInstructionGenerator;
-import org.operaton.bpm.engine.impl.migration.batch.MigrationBatchJobHandler;
 import org.operaton.bpm.engine.impl.migration.validation.activity.MigrationActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.activity.NoCompensationHandlerActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.activity.SupportedActivityValidator;
 import org.operaton.bpm.engine.impl.migration.validation.activity.SupportedPassiveEventTriggerActivityValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instance.AsyncAfterMigrationValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instance.AsyncMigrationValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instance.AsyncProcessStartMigrationValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.MigratingActivityInstanceValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.MigratingCompensationInstanceValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.MigratingTransitionInstanceValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.NoUnmappedCompensationStartEventValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instance.NoUnmappedLeafInstanceValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instance.SupportedActivityInstanceValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instance.VariableConflictActivityInstanceValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.AdditionalFlowScopeInstructionValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceBodyValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.CannotAddMultiInstanceInnerActivityValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.CannotRemoveMultiInstanceInnerActivityValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.ConditionalEventUpdateEventTriggerValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.GatewayMappingValidator;
 import org.operaton.bpm.engine.impl.migration.validation.instruction.MigrationInstructionValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.OnlyOnceMappedActivityInstructionValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.SameBehaviorInstructionValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventScopeInstructionValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.SameEventTypeValidator;
-import org.operaton.bpm.engine.impl.migration.validation.instruction.UpdateEventTriggersValidator;
 import org.operaton.bpm.engine.impl.mock.MocksResolverFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.GenericManagerFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.Deployer;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.CacheFactory;
-import org.operaton.bpm.engine.impl.persistence.deploy.cache.DefaultCacheFactory;
 import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
-import org.operaton.bpm.engine.impl.persistence.entity.*;
-import org.operaton.bpm.engine.impl.repository.DefaultDeploymentHandlerFactory;
+import org.operaton.bpm.engine.impl.persistence.entity.AttachmentManager;
+import org.operaton.bpm.engine.impl.persistence.entity.AuthorizationManager;
+import org.operaton.bpm.engine.impl.persistence.entity.BatchManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayManager;
+import org.operaton.bpm.engine.impl.persistence.entity.CommentManager;
+import org.operaton.bpm.engine.impl.persistence.entity.DeploymentManager;
+import org.operaton.bpm.engine.impl.persistence.entity.EventSubscriptionManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ExternalTaskManager;
+import org.operaton.bpm.engine.impl.persistence.entity.FilterManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricActivityInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricBatchManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricCaseInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricDetailManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricExternalTaskLogManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricIdentityLinkLogManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricIncidentManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricJobLogManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricProcessInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricStatisticsManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricTaskInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoManager;
+import org.operaton.bpm.engine.impl.persistence.entity.IdentityLinkManager;
+import org.operaton.bpm.engine.impl.persistence.entity.IncidentManager;
+import org.operaton.bpm.engine.impl.persistence.entity.JobDefinitionManager;
+import org.operaton.bpm.engine.impl.persistence.entity.JobManager;
+import org.operaton.bpm.engine.impl.persistence.entity.MeterLogManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionManager;
+import org.operaton.bpm.engine.impl.persistence.entity.PropertyManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ReportManager;
+import org.operaton.bpm.engine.impl.persistence.entity.ResourceManager;
+import org.operaton.bpm.engine.impl.persistence.entity.SchemaLogManager;
+import org.operaton.bpm.engine.impl.persistence.entity.StatisticsManager;
+import org.operaton.bpm.engine.impl.persistence.entity.TableDataManager;
+import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
+import org.operaton.bpm.engine.impl.persistence.entity.TaskReportManager;
+import org.operaton.bpm.engine.impl.persistence.entity.TenantManager;
+import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
+import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceManager;
 import org.operaton.bpm.engine.impl.runtime.ConditionHandler;
 import org.operaton.bpm.engine.impl.runtime.CorrelationHandler;
-import org.operaton.bpm.engine.impl.runtime.DefaultConditionHandler;
-import org.operaton.bpm.engine.impl.runtime.DefaultCorrelationHandler;
-import org.operaton.bpm.engine.impl.runtime.DefaultDeserializationTypeValidator;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.BeansResolverFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
@@ -299,21 +276,61 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
 import org.operaton.bpm.engine.impl.util.ProcessEngineDetails;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.variable.ValueTypeResolverImpl;
-import org.operaton.bpm.engine.impl.variable.serializer.*;
+import org.operaton.bpm.engine.impl.variable.serializer.BooleanValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.ByteArrayValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.DateValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.DefaultVariableSerializers;
+import org.operaton.bpm.engine.impl.variable.serializer.DoubleValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.FileValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.IntegerValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.JavaObjectSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.LongValueSerlializer;
+import org.operaton.bpm.engine.impl.variable.serializer.NullValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.ShortValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.StringValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.TypedValueSerializer;
+import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializerFactory;
+import org.operaton.bpm.engine.impl.variable.serializer.VariableSerializers;
 import org.operaton.bpm.engine.management.Metrics;
 import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.repository.DeploymentHandlerFactory;
+import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.WhitelistingDeserializationTypeValidator;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.ServiceLoader;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd.MAX_THREADS_NUMBER;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * @author Tom Baeyens
@@ -345,26 +362,26 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public static SqlSessionFactory cachedSqlSessionFactory;
 
   protected static final Map<Integer, String> ISOLATION_LEVEL_CONSTANT_NAMES = Map.of(
-      Connection.TRANSACTION_READ_COMMITTED, "READ_COMMITTED",
-      Connection.TRANSACTION_READ_UNCOMMITTED, "READ_UNCOMMITTED",
-      Connection.TRANSACTION_REPEATABLE_READ, "REPEATABLE_READ",
-      Connection.TRANSACTION_SERIALIZABLE, "SERIALIZABLE");
+          Connection.TRANSACTION_READ_COMMITTED, "READ_COMMITTED",
+          Connection.TRANSACTION_READ_UNCOMMITTED, "READ_UNCOMMITTED",
+          Connection.TRANSACTION_REPEATABLE_READ, "REPEATABLE_READ",
+          Connection.TRANSACTION_SERIALIZABLE, "SERIALIZABLE");
 
   // SERVICES /////////////////////////////////////////////////////////////////
 
-  protected volatile RepositoryService repositoryService = new RepositoryServiceImpl();
-  protected volatile RuntimeService runtimeService = new RuntimeServiceImpl();
-  protected volatile HistoryService historyService = new HistoryServiceImpl();
-  protected volatile IdentityService identityService = new IdentityServiceImpl();
-  protected volatile TaskService taskService = new TaskServiceImpl();
-  protected volatile FormService formService = new FormServiceImpl();
+  protected volatile RepositoryService repositoryService = ServiceLoaderUtil.loadSingleService(RepositoryService.class);
+  protected volatile RuntimeService runtimeService = ServiceLoaderUtil.loadSingleService(RuntimeService.class);
+  protected volatile HistoryService historyService = ServiceLoaderUtil.loadSingleService(HistoryService.class);
+  protected volatile IdentityService identityService = ServiceLoaderUtil.loadSingleService(IdentityService.class);
+  protected volatile TaskService taskService = ServiceLoaderUtil.loadSingleService(TaskService.class);
+  protected volatile FormService formService = ServiceLoaderUtil.loadSingleService(FormService.class);
   protected volatile ManagementService managementService = new ManagementServiceImpl(this);
-  protected volatile AuthorizationService authorizationService = new AuthorizationServiceImpl();
-  protected volatile CaseService caseService = new CaseServiceImpl();
-  protected volatile FilterService filterService = new FilterServiceImpl();
-  protected volatile ExternalTaskService externalTaskService = new ExternalTaskServiceImpl();
-  protected volatile DecisionService decisionService = new DecisionServiceImpl();
-  protected volatile OptimizeService optimizeService = new OptimizeService();
+  protected volatile AuthorizationService authorizationService = ServiceLoaderUtil.loadSingleService(AuthorizationService.class);
+  protected volatile CaseService caseService = ServiceLoaderUtil.loadSingleService(CaseService.class);
+  protected volatile FilterService filterService = ServiceLoaderUtil.loadSingleService(FilterService.class);
+  protected volatile ExternalTaskService externalTaskService = ServiceLoaderUtil.loadSingleService(ExternalTaskService.class);
+  protected volatile DecisionService decisionService = ServiceLoaderUtil.loadSingleService(DecisionService.class);
+  protected volatile OptimizeService optimizeService = ServiceLoaderUtil.loadSingleService(OptimizeService.class);
 
   // COMMAND EXECUTORS ////////////////////////////////////////////////////////
 
@@ -457,7 +474,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile SqlSessionFactory sqlSessionFactory;
   protected volatile TransactionFactory transactionFactory;
 
-
   // ID GENERATOR /////////////////////////////////////////////////////////////
   protected volatile IdGenerator idGenerator;
   protected volatile DataSource idGeneratorDataSource;
@@ -507,7 +523,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile FormValidators formValidators;
   protected volatile Map<String, Class<? extends FormFieldValidator>> customFormFieldValidators;
 
-  /** don't throw parsing exceptions for Operaton Forms if set to true*/
+  /**
+   * don't throw parsing exceptions for Operaton Forms if set to true
+   */
   protected volatile boolean disableStrictOperatonFormParsing;
 
   protected volatile List<TypedValueSerializer> customPreVariableSerializers;
@@ -550,7 +568,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    */
   protected volatile boolean cmmnEnabled = true;
 
-    /**
+  /**
    * When set to false, the following behavior changes:
    * <ul>
    * <li>The automated schema maintenance (creating and dropping tables, see property <code>databaseSchemaUpdate</code>)
@@ -687,8 +705,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile HistoryEventHandler historyEventHandler;
 
   /**
-   *  Allows users to add additional {@link HistoryEventHandler}
-   *  instances to process history events.
+   * Allows users to add additional {@link HistoryEventHandler}
+   * instances to process history events.
    */
   protected volatile List<HistoryEventHandler> customHistoryEventHandlers = new ArrayList<>();
 
@@ -879,7 +897,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile Map<String, Integer> parsedBatchOperationsForHistoryCleanup;
 
   /**
-   * Default priority for history cleanup jobs. */
+   * Default priority for history cleanup jobs.
+   */
   protected volatile long historyCleanupJobPriority = DefaultPriorityProvider.DEFAULT_PRIORITY;
 
   /**
@@ -898,7 +917,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected volatile String taskMetricsTimeToLive;
   protected volatile Integer parsedTaskMetricsTimeToLive;
 
-  protected volatile BatchWindowManager batchWindowManager = new DefaultBatchWindowManager();
+  protected volatile BatchWindowManager batchWindowManager = ServiceLoaderUtil.loadSingleService(BatchWindowManager.class);
 
   protected volatile HistoryRemovalTimeProvider historyRemovalTimeProvider;
 
@@ -984,7 +1003,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    */
   protected volatile ExceptionCodeProvider builtinExceptionCodeProvider;
 
-  /** Controls whether the time cycle is re-evaluated when due. */
+  /**
+   * Controls whether the time cycle is re-evaluated when due.
+   */
   protected volatile boolean reevaluateTimeCycleWhenDue;
 
   /**
@@ -1130,14 +1151,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public void initExceptionCodeProvider() {
     if (!isDisableBuiltinExceptionCodeProvider()) {
-      builtinExceptionCodeProvider = new ExceptionCodeProvider() {};
-
+      builtinExceptionCodeProvider = ServiceLoaderUtil.loadSingleService(ExceptionCodeProvider.class);
     }
   }
 
   protected void initTypeValidator() {
     if (deserializationTypeValidator == null) {
-      deserializationTypeValidator = new DefaultDeserializationTypeValidator();
+      deserializationTypeValidator = ServiceLoaderUtil.loadSingleService(DeserializationTypeValidator.class);
     }
     if (deserializationTypeValidator instanceof WhitelistingDeserializationTypeValidator validator) {
       validator.setAllowedClasses(deserializationAllowedClasses);
@@ -1156,16 +1176,17 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     if (!HISTORY_REMOVAL_TIME_STRATEGY_START.equals(historyRemovalTimeStrategy) &&
-      !HISTORY_REMOVAL_TIME_STRATEGY_END.equals(historyRemovalTimeStrategy) &&
-      !HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
+            !HISTORY_REMOVAL_TIME_STRATEGY_END.equals(historyRemovalTimeStrategy) &&
+            !HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
       throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", historyRemovalTimeStrategy,
-        "history removal time strategy must be set to '%s', '%s' or '%s'".formatted(HISTORY_REMOVAL_TIME_STRATEGY_START, HISTORY_REMOVAL_TIME_STRATEGY_END, HISTORY_REMOVAL_TIME_STRATEGY_NONE));
+              "history removal time strategy must be set to '%s', '%s' or '%s'".formatted(HISTORY_REMOVAL_TIME_STRATEGY_START,
+                      HISTORY_REMOVAL_TIME_STRATEGY_END, HISTORY_REMOVAL_TIME_STRATEGY_NONE));
     }
   }
 
   public void initHistoryRemovalTimeProvider() {
     if (historyRemovalTimeProvider == null) {
-      historyRemovalTimeProvider = new DefaultHistoryRemovalTimeProvider();
+      historyRemovalTimeProvider = ServiceLoaderUtil.loadSingleService(HistoryRemovalTimeProvider.class);
     }
   }
 
@@ -1175,7 +1196,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     //validate number of threads
     if (historyCleanupDegreeOfParallelism < 1 || historyCleanupDegreeOfParallelism > MAX_THREADS_NUMBER) {
       throw LOG.invalidPropertyValue("historyCleanupDegreeOfParallelism", String.valueOf(historyCleanupDegreeOfParallelism),
-        "value for number of threads for history cleanup should be between 1 and %s".formatted(HistoryCleanupCmd.MAX_THREADS_NUMBER));
+              "value for number of threads for history cleanup should be between 1 and %s".formatted(
+                      HistoryCleanupCmd.MAX_THREADS_NUMBER));
     }
 
     if (historyCleanupBatchWindowStartTime != null) {
@@ -1190,12 +1212,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     if (historyCleanupBatchSize > HistoryCleanupHandler.MAX_BATCH_SIZE || historyCleanupBatchSize <= 0) {
       throw LOG.invalidPropertyValue("historyCleanupBatchSize", String.valueOf(historyCleanupBatchSize),
-        "value for batch size should be between 1 and %s".formatted(HistoryCleanupHandler.MAX_BATCH_SIZE));
+              "value for batch size should be between 1 and %s".formatted(HistoryCleanupHandler.MAX_BATCH_SIZE));
     }
 
     if (historyCleanupBatchThreshold < 0) {
       throw LOG.invalidPropertyValue("historyCleanupBatchThreshold", String.valueOf(historyCleanupBatchThreshold),
-          "History cleanup batch threshold cannot be negative.");
+              "History cleanup batch threshold cannot be negative.");
     }
 
     initHistoryTimeToLive();
@@ -1213,45 +1235,54 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     if (!HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED.equals(historyCleanupStrategy) &&
-      !HISTORY_CLEANUP_STRATEGY_END_TIME_BASED.equals(historyCleanupStrategy)) {
+            !HISTORY_CLEANUP_STRATEGY_END_TIME_BASED.equals(historyCleanupStrategy)) {
       throw LOG.invalidPropertyValue("historyCleanupStrategy", historyCleanupStrategy,
-        "history cleanup strategy must be either set to '%s' or '%s'".formatted(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED, HISTORY_CLEANUP_STRATEGY_END_TIME_BASED));
+              "history cleanup strategy must be either set to '%s' or '%s'".formatted(HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED,
+                      HISTORY_CLEANUP_STRATEGY_END_TIME_BASED));
     }
 
     if (HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED.equals(historyCleanupStrategy) &&
-      HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
+            HISTORY_REMOVAL_TIME_STRATEGY_NONE.equals(historyRemovalTimeStrategy)) {
       throw LOG.invalidPropertyValue("historyRemovalTimeStrategy", historyRemovalTimeStrategy,
-        "history removal time strategy cannot be set to '%s' in conjunction with '%s' history cleanup strategy".formatted(HISTORY_REMOVAL_TIME_STRATEGY_NONE, HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
+              "history removal time strategy cannot be set to '%s' in conjunction with '%s' history cleanup strategy".formatted(
+                      HISTORY_REMOVAL_TIME_STRATEGY_NONE, HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED));
     }
   }
 
   private void initHistoryCleanupBatchWindowsMap() {
     if (mondayHistoryCleanupBatchWindowStartTime != null || mondayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.MONDAY, new BatchWindowConfiguration(mondayHistoryCleanupBatchWindowStartTime, mondayHistoryCleanupBatchWindowEndTime));
+      historyCleanupBatchWindows.put(Calendar.MONDAY,
+              new BatchWindowConfiguration(mondayHistoryCleanupBatchWindowStartTime, mondayHistoryCleanupBatchWindowEndTime));
     }
 
     if (tuesdayHistoryCleanupBatchWindowStartTime != null || tuesdayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.TUESDAY, new BatchWindowConfiguration(tuesdayHistoryCleanupBatchWindowStartTime, tuesdayHistoryCleanupBatchWindowEndTime));
+      historyCleanupBatchWindows.put(Calendar.TUESDAY,
+              new BatchWindowConfiguration(tuesdayHistoryCleanupBatchWindowStartTime, tuesdayHistoryCleanupBatchWindowEndTime));
     }
 
     if (wednesdayHistoryCleanupBatchWindowStartTime != null || wednesdayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.WEDNESDAY, new BatchWindowConfiguration(wednesdayHistoryCleanupBatchWindowStartTime, wednesdayHistoryCleanupBatchWindowEndTime));
+      historyCleanupBatchWindows.put(Calendar.WEDNESDAY,
+              new BatchWindowConfiguration(wednesdayHistoryCleanupBatchWindowStartTime, wednesdayHistoryCleanupBatchWindowEndTime));
     }
 
     if (thursdayHistoryCleanupBatchWindowStartTime != null || thursdayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.THURSDAY, new BatchWindowConfiguration(thursdayHistoryCleanupBatchWindowStartTime, thursdayHistoryCleanupBatchWindowEndTime));
+      historyCleanupBatchWindows.put(Calendar.THURSDAY,
+              new BatchWindowConfiguration(thursdayHistoryCleanupBatchWindowStartTime, thursdayHistoryCleanupBatchWindowEndTime));
     }
 
     if (fridayHistoryCleanupBatchWindowStartTime != null || fridayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.FRIDAY, new BatchWindowConfiguration(fridayHistoryCleanupBatchWindowStartTime, fridayHistoryCleanupBatchWindowEndTime));
+      historyCleanupBatchWindows.put(Calendar.FRIDAY,
+              new BatchWindowConfiguration(fridayHistoryCleanupBatchWindowStartTime, fridayHistoryCleanupBatchWindowEndTime));
     }
 
-    if (saturdayHistoryCleanupBatchWindowStartTime != null ||saturdayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.SATURDAY, new BatchWindowConfiguration(saturdayHistoryCleanupBatchWindowStartTime, saturdayHistoryCleanupBatchWindowEndTime));
+    if (saturdayHistoryCleanupBatchWindowStartTime != null || saturdayHistoryCleanupBatchWindowEndTime != null) {
+      historyCleanupBatchWindows.put(Calendar.SATURDAY,
+              new BatchWindowConfiguration(saturdayHistoryCleanupBatchWindowStartTime, saturdayHistoryCleanupBatchWindowEndTime));
     }
 
     if (sundayHistoryCleanupBatchWindowStartTime != null || sundayHistoryCleanupBatchWindowEndTime != null) {
-      historyCleanupBatchWindows.put(Calendar.SUNDAY, new BatchWindowConfiguration(sundayHistoryCleanupBatchWindowStartTime, sundayHistoryCleanupBatchWindowEndTime));
+      historyCleanupBatchWindows.put(Calendar.SUNDAY,
+              new BatchWindowConfiguration(sundayHistoryCleanupBatchWindowStartTime, sundayHistoryCleanupBatchWindowEndTime));
     }
   }
 
@@ -1262,9 +1293,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     } else {
       Set<String> batchTypes = invocationsPerBatchJobByBatchType.keySet();
       batchTypes.stream()
-          // batchHandlers contains custom & built-in batch handlers
-          .filter(batchType -> !batchHandlers.containsKey(batchType))
-          .forEach(LOG::invalidBatchTypeForInvocationsPerBatchJob);
+              // batchHandlers contains custom & built-in batch handlers
+              .filter(batchType -> !batchHandlers.containsKey(batchType))
+              .forEach(LOG::invalidBatchTypeForInvocationsPerBatchJob);
     }
   }
 
@@ -1286,7 +1317,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (batchOperationsForHistoryCleanup == null) {
       batchOperationsForHistoryCleanup = new HashMap<>();
     } else {
-      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+      for (var batchOperationEntry : batchOperationsForHistoryCleanup.entrySet()) {
         String batchOperation = batchOperationEntry.getKey();
         String timeToLive = batchOperationEntry.getValue();
         if (!batchHandlers.containsKey(batchOperation)) {
@@ -1303,13 +1334,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     if (batchHandlers != null && batchOperationHistoryTimeToLive != null) {
       batchHandlers.keySet().forEach(batchOperation ->
-        batchOperationsForHistoryCleanup.computeIfAbsent(batchOperation, k -> batchOperationHistoryTimeToLive)
+              batchOperationsForHistoryCleanup.computeIfAbsent(batchOperation, k -> batchOperationHistoryTimeToLive)
       );
     }
 
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();
     if (batchOperationsForHistoryCleanup != null) {
-      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+      for (var batchOperationEntry : batchOperationsForHistoryCleanup.entrySet()) {
         String operation = batchOperationEntry.getKey();
         Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
         parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
@@ -1372,7 +1403,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initFailedJobCommandFactory() {
     if (failedJobCommandFactory == null) {
-      failedJobCommandFactory = new DefaultFailedJobCommandFactory();
+      failedJobCommandFactory = ServiceLoaderUtil.loadSingleService(FailedJobCommandFactory.class);
     }
     if (postParseListeners == null) {
       postParseListeners = new ArrayList<>();
@@ -1389,7 +1420,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
       DefaultIncidentHandler failedJobIncidentHandler = new DefaultIncidentHandler(Incident.FAILED_JOB_HANDLER_TYPE);
       DefaultIncidentHandler failedExternalTaskIncidentHandler = new DefaultIncidentHandler(
-          Incident.EXTERNAL_TASK_HANDLER_TYPE);
+              Incident.EXTERNAL_TASK_HANDLER_TYPE);
 
       if (isCompositeIncidentHandlersEnabled) {
         addIncidentHandler(new CompositeIncidentHandler(failedJobIncidentHandler));
@@ -1413,47 +1444,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (batchHandlers == null) {
       batchHandlers = new HashMap<>();
 
-      MigrationBatchJobHandler migrationHandler = new MigrationBatchJobHandler();
-      batchHandlers.put(migrationHandler.getType(), migrationHandler);
-
-      ModificationBatchJobHandler modificationHandler = new ModificationBatchJobHandler();
-      batchHandlers.put(modificationHandler.getType(), modificationHandler);
-
-      DeleteProcessInstancesJobHandler deleteProcessJobHandler = new DeleteProcessInstancesJobHandler();
-      batchHandlers.put(deleteProcessJobHandler.getType(), deleteProcessJobHandler);
-
-      DeleteHistoricProcessInstancesJobHandler deleteHistoricProcessInstancesJobHandler = new DeleteHistoricProcessInstancesJobHandler();
-      batchHandlers.put(deleteHistoricProcessInstancesJobHandler.getType(), deleteHistoricProcessInstancesJobHandler);
-
-      SetJobRetriesJobHandler setJobRetriesJobHandler = new SetJobRetriesJobHandler();
-      batchHandlers.put(setJobRetriesJobHandler.getType(), setJobRetriesJobHandler);
-
-      SetExternalTaskRetriesJobHandler setExternalTaskRetriesJobHandler = new SetExternalTaskRetriesJobHandler();
-      batchHandlers.put(setExternalTaskRetriesJobHandler.getType(), setExternalTaskRetriesJobHandler);
-
-      RestartProcessInstancesJobHandler restartProcessInstancesJobHandler = new RestartProcessInstancesJobHandler();
-      batchHandlers.put(restartProcessInstancesJobHandler.getType(), restartProcessInstancesJobHandler);
-
-      UpdateProcessInstancesSuspendStateJobHandler suspendProcessInstancesJobHandler = new UpdateProcessInstancesSuspendStateJobHandler();
-      batchHandlers.put(suspendProcessInstancesJobHandler.getType(), suspendProcessInstancesJobHandler);
-
-      DeleteHistoricDecisionInstancesJobHandler deleteHistoricDecisionInstancesJobHandler = new DeleteHistoricDecisionInstancesJobHandler();
-      batchHandlers.put(deleteHistoricDecisionInstancesJobHandler.getType(), deleteHistoricDecisionInstancesJobHandler);
-
-      ProcessSetRemovalTimeJobHandler processSetRemovalTimeJobHandler = new ProcessSetRemovalTimeJobHandler();
-      batchHandlers.put(processSetRemovalTimeJobHandler.getType(), processSetRemovalTimeJobHandler);
-
-      DecisionSetRemovalTimeJobHandler decisionSetRemovalTimeJobHandler = new DecisionSetRemovalTimeJobHandler();
-      batchHandlers.put(decisionSetRemovalTimeJobHandler.getType(), decisionSetRemovalTimeJobHandler);
-
-      BatchSetRemovalTimeJobHandler batchSetRemovalTimeJobHandler = new BatchSetRemovalTimeJobHandler();
-      batchHandlers.put(batchSetRemovalTimeJobHandler.getType(), batchSetRemovalTimeJobHandler);
-
-      BatchSetVariablesHandler batchSetVariablesHandler = new BatchSetVariablesHandler();
-      batchHandlers.put(batchSetVariablesHandler.getType(), batchSetVariablesHandler);
-
-      MessageCorrelationBatchJobHandler messageCorrelationJobHandler = new MessageCorrelationBatchJobHandler();
-      batchHandlers.put(messageCorrelationJobHandler.getType(), messageCorrelationJobHandler);
+      ServiceLoader.load(BatchJobHandler.class).forEach(handler -> batchHandlers.put(handler.getType(), handler));
     }
 
     if (customBatchJobHandlers != null) {
@@ -1464,7 +1455,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     if (removalTimeUpdateChunkSize > ProcessSetRemovalTimeJobHandler.MAX_CHUNK_SIZE || removalTimeUpdateChunkSize <= 0) {
       throw LOG.invalidPropertyValue("removalTimeUpdateChunkSize", String.valueOf(removalTimeUpdateChunkSize),
-        "value for chunk size should be between 1 and %s".formatted(ProcessSetRemovalTimeJobHandler.MAX_CHUNK_SIZE));
+              "value for chunk size should be between 1 and %s".formatted(ProcessSetRemovalTimeJobHandler.MAX_CHUNK_SIZE));
     }
   }
 
@@ -1592,7 +1583,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         }
 
         PooledDataSource pooledDataSource =
-            new PooledDataSource(ReflectUtil.getClassLoader(), jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
+                new PooledDataSource(ReflectUtil.getClassLoader(), jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
 
         if (jdbcMaxActiveConnections > 0) {
           pooledDataSource.setPoolMaximumActiveConnections(jdbcMaxActiveConnections);
@@ -1701,7 +1692,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       }
       LOG.debugDatabaseproductName(databaseProductName);
       databaseType = databaseTypeMappings.getProperty(databaseProductName);
-      ensureNotNull("couldn't deduct database type from database product name '" + databaseProductName + "'", "databaseType", databaseType);
+      ensureNotNull("couldn't deduct database type from database product name '" + databaseProductName + "'", "databaseType",
+              databaseType);
       LOG.debugDatabaseType(databaseType);
 
       initDatabaseVendorAndVersion(databaseMetaData);
@@ -1785,7 +1777,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
           Properties properties = new Properties();
 
           if (isUseSharedSqlSessionFactory) {
-            properties.put("prefix", "${@org.operaton.bpm.engine.impl.context.Context@getProcessEngineConfiguration().databaseTablePrefix}");
+            properties.put("prefix",
+                    "${@org.operaton.bpm.engine.impl.context.Context@getProcessEngineConfiguration().databaseTablePrefix}");
           } else {
             properties.put("prefix", databaseTablePrefix);
           }
@@ -1809,7 +1802,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
             cachedSqlSessionFactory = sqlSessionFactory;
           }
 
-
         } catch (Exception e) {
           throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " + e.getMessage(), e);
         }
@@ -1823,24 +1815,31 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     if (databaseType != null) {
       properties.put("limitBefore", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeStatements().get(databaseType));
       properties.put("limitAfter", DbSqlSessionFactory.getDatabaseSpecificLimitAfterStatements().get(databaseType));
-      properties.put("limitBeforeWithoutOffset", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
-      properties.put("limitAfterWithoutOffset", DbSqlSessionFactory.getDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
+      properties.put("limitBeforeWithoutOffset",
+              DbSqlSessionFactory.getDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
+      properties.put("limitAfterWithoutOffset",
+              DbSqlSessionFactory.getDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
 
-      properties.put("optimizeLimitBeforeWithoutOffset", DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
-      properties.put("optimizeLimitAfterWithoutOffset", DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
+      properties.put("optimizeLimitBeforeWithoutOffset",
+              DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitBeforeWithoutOffsetStatements().get(databaseType));
+      properties.put("optimizeLimitAfterWithoutOffset",
+              DbSqlSessionFactory.getOptimizeDatabaseSpecificLimitAfterWithoutOffsetStatements().get(databaseType));
       properties.put("innerLimitAfter", DbSqlSessionFactory.getDatabaseSpecificInnerLimitAfterStatements().get(databaseType));
       properties.put("limitBetween", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenStatements().get(databaseType));
       properties.put("limitBetweenFilter", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenFilterStatements().get(databaseType));
-      properties.put("limitBetweenAcquisition", DbSqlSessionFactory.getDatabaseSpecificLimitBetweenAcquisitionStatements().get(databaseType));
+      properties.put("limitBetweenAcquisition",
+              DbSqlSessionFactory.getDatabaseSpecificLimitBetweenAcquisitionStatements().get(databaseType));
       properties.put("orderBy", DbSqlSessionFactory.getDatabaseSpecificOrderByStatements().get(databaseType));
-      properties.put("limitBeforeNativeQuery", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeNativeQueryStatements().get(databaseType));
+      properties.put("limitBeforeNativeQuery",
+              DbSqlSessionFactory.getDatabaseSpecificLimitBeforeNativeQueryStatements().get(databaseType));
       properties.put("distinct", DbSqlSessionFactory.getDatabaseSpecificDistinct().get(databaseType));
       properties.put("numericCast", DbSqlSessionFactory.getDatabaseSpecificNumericCast().get(databaseType));
 
       properties.put("limitBeforeInUpdate", DbSqlSessionFactory.getDatabaseSpecificLimitBeforeInUpdate().get(databaseType));
       properties.put("limitAfterInUpdate", DbSqlSessionFactory.getDatabaseSpecificLimitAfterInUpdate().get(databaseType));
 
-      properties.put("countDistinctBeforeStart", DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeStart().get(databaseType));
+      properties.put("countDistinctBeforeStart",
+              DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeStart().get(databaseType));
       properties.put("countDistinctBeforeEnd", DbSqlSessionFactory.getDatabaseSpecificCountDistinctBeforeEnd().get(databaseType));
       properties.put("countDistinctAfterEnd", DbSqlSessionFactory.getDatabaseSpecificCountDistinctAfterEnd().get(databaseType));
 
@@ -1862,7 +1861,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
       properties.put("dayComparator", DbSqlSessionFactory.getDatabaseSpecificDaysComparator().get(databaseType));
 
-      properties.put("collationForCaseSensitivity", DbSqlSessionFactory.getDatabaseSpecificCollationForCaseSensitivity().get(databaseType));
+      properties.put("collationForCaseSensitivity",
+              DbSqlSessionFactory.getDatabaseSpecificCollationForCaseSensitivity().get(databaseType));
 
       properties.put("authJoinStart", DbSqlSessionFactory.getDatabaseSpecificAuthJoinStart().get(databaseType));
       properties.put("authJoinEnd", DbSqlSessionFactory.getDatabaseSpecificAuthJoinEnd().get(databaseType));
@@ -1873,7 +1873,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       properties.put("authJoin1Separator", DbSqlSessionFactory.getDatabaseSpecificAuth1JoinSeparator().get(databaseType));
 
       properties.put("extractTimeUnitFromDate", DbSqlSessionFactory.getDatabaseSpecificExtractTimeUnitFromDate().get(databaseType));
-      properties.put("authCheckMethodSuffix", DbSqlSessionFactory.getDatabaseSpecificAuthCheckMethodSuffix().getOrDefault(databaseType, ""));
+      properties.put("authCheckMethodSuffix",
+              DbSqlSessionFactory.getDatabaseSpecificAuthCheckMethodSuffix().getOrDefault(databaseType, ""));
 
       Map<String, String> constants = DbSqlSessionFactory.getDatabaseSpecificConstants().get(databaseType);
       for (Entry<String, String> entry : constants.entrySet()) {
@@ -2004,7 +2005,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initMigrationActivityMatcher() {
     if (migrationActivityMatcher == null) {
-      migrationActivityMatcher = new DefaultMigrationActivityMatcher();
+      migrationActivityMatcher = ServiceLoaderUtil.loadSingleService(MigrationActivityMatcher.class);
     }
   }
 
@@ -2022,8 +2023,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       migrationActivityValidators.addAll(customPostMigrationActivityValidators);
     }
     migrationInstructionGenerator = migrationInstructionGenerator
-        .migrationActivityValidators(migrationActivityValidators)
-        .migrationInstructionValidators(migrationInstructionValidators);
+            .migrationActivityValidators(migrationActivityValidators)
+            .migrationInstructionValidators(migrationInstructionValidators);
   }
 
   protected void initMigrationInstructionValidators() {
@@ -2069,7 +2070,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
   }
 
-
   /**
    * When providing a schema and a prefix  the prefix has to be the schema ending with a dot.
    */
@@ -2078,7 +2078,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       return;
     }
     if (prefix == null || !prefix.startsWith(schema + ".")) {
-      throw new ProcessEngineException("When setting a schema the prefix has to be schema + '.'. Received schema: " + schema + " prefix: " + prefix);
+      throw new ProcessEngineException(
+              "When setting a schema the prefix has to be schema + '.'. Received schema: " + schema + " prefix: " + prefix);
     }
   }
 
@@ -2145,7 +2146,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     bpmnDeployer.setIdGenerator(idGenerator);
 
     if (bpmnParseFactory == null) {
-      bpmnParseFactory = new DefaultBpmnParseFactory();
+      bpmnParseFactory = ServiceLoaderUtil.loadSingleService(BpmnParseFactory.class);
     }
 
     BpmnParser bpmnParser = new BpmnParser(expressionManager, bpmnParseFactory);
@@ -2186,7 +2187,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     cmmnDeployer.setIdGenerator(idGenerator);
 
     if (cmmnTransformFactory == null) {
-      cmmnTransformFactory = new DefaultCmmnTransformFactory();
+      cmmnTransformFactory = ServiceLoaderUtil.loadSingleService(CmmnTransformFactory.class);
     }
 
     if (cmmnElementHandlerRegistry == null) {
@@ -2317,7 +2318,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     // verify job executor priority range is configured correctly
     if (jobExecutorPriorityRangeMin > jobExecutorPriorityRangeMax) {
       throw ProcessEngineLogger.JOB_EXECUTOR_LOGGER.jobExecutorPriorityRangeException(
-          "jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
+              "jobExecutorPriorityRangeMin can not be greater than jobExecutorPriorityRangeMax");
     }
 
     if (jobExecutorPriorityRangeMin > historyCleanupJobPriority || jobExecutorPriorityRangeMax < historyCleanupJobPriority) {
@@ -2594,11 +2595,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       }
 
       DmnEngineConfigurationBuilder dmnEngineConfigurationBuilder = new DmnEngineConfigurationBuilder(dmnEngineConfiguration)
-          .dmnHistoryEventProducer(dmnHistoryEventProducer)
-          .scriptEngineResolver(scriptingEngines)
-          .feelCustomFunctionProviders(dmnFeelCustomFunctionProviders)
-          .enableFeelLegacyBehavior(dmnFeelEnableLegacyBehavior)
-          .returnBlankTableOutputAsNull(dmnReturnBlankTableOutputAsNull);
+              .dmnHistoryEventProducer(dmnHistoryEventProducer)
+              .scriptEngineResolver(scriptingEngines)
+              .feelCustomFunctionProviders(dmnFeelCustomFunctionProviders)
+              .enableFeelLegacyBehavior(dmnFeelEnableLegacyBehavior)
+              .returnBlankTableOutputAsNull(dmnReturnBlankTableOutputAsNull);
 
       if (dmnElProvider != null) {
         dmnEngineConfigurationBuilder.elProvider(dmnElProvider);
@@ -2620,16 +2621,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       expressionManager = new JuelExpressionManager(beans);
     }
 
-
     expressionManager.addFunction(CommandContextFunctions.CURRENT_USER,
-        ReflectUtil.getMethod(CommandContextFunctions.class, CommandContextFunctions.CURRENT_USER));
+            ReflectUtil.getMethod(CommandContextFunctions.class, CommandContextFunctions.CURRENT_USER));
     expressionManager.addFunction(CommandContextFunctions.CURRENT_USER_GROUPS,
-        ReflectUtil.getMethod(CommandContextFunctions.class, CommandContextFunctions.CURRENT_USER_GROUPS));
+            ReflectUtil.getMethod(CommandContextFunctions.class, CommandContextFunctions.CURRENT_USER_GROUPS));
 
     expressionManager.addFunction(DateTimeFunctions.NOW,
-        ReflectUtil.getMethod(DateTimeFunctions.class, DateTimeFunctions.NOW));
+            ReflectUtil.getMethod(DateTimeFunctions.class, DateTimeFunctions.NOW));
     expressionManager.addFunction(DateTimeFunctions.DATE_TIME,
-        ReflectUtil.getMethod(DateTimeFunctions.class, DateTimeFunctions.DATE_TIME));
+            ReflectUtil.getMethod(DateTimeFunctions.class, DateTimeFunctions.DATE_TIME));
   }
 
   protected void initBusinessCalendarManager() {
@@ -2691,7 +2691,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initArtifactFactory() {
     if (artifactFactory == null) {
-      artifactFactory = new DefaultArtifactFactory();
+      artifactFactory = ServiceLoaderUtil.loadSingleService(ArtifactFactory.class);
     }
   }
 
@@ -2704,7 +2704,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // correlation handler //////////////////////////////////////////////////////
   protected void initCorrelationHandler() {
     if (correlationHandler == null) {
-      correlationHandler = new DefaultCorrelationHandler();
+      correlationHandler = ServiceLoaderUtil.loadSingleService(CorrelationHandler.class);
     }
 
   }
@@ -2712,14 +2712,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // condition handler //////////////////////////////////////////////////////
   protected void initConditionHandler() {
     if (conditionHandler == null) {
-      conditionHandler = new DefaultConditionHandler();
+      conditionHandler = ServiceLoaderUtil.loadSingleService(ConditionHandler.class);
     }
   }
 
   // deployment handler //////////////////////////////////////////////////////
   protected void initDeploymentHandlerFactory() {
     if (deploymentHandlerFactory == null) {
-      deploymentHandlerFactory = new DefaultDeploymentHandlerFactory();
+      deploymentHandlerFactory = ServiceLoaderUtil.loadSingleService(DeploymentHandlerFactory.class);
     }
   }
 
@@ -2727,19 +2727,19 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initHistoryEventProducer() {
     if (historyEventProducer == null) {
-      historyEventProducer = new CacheAwareHistoryEventProducer();
+      historyEventProducer = ServiceLoaderUtil.loadSingleService(HistoryEventProducer.class);
     }
   }
 
   protected void initCmmnHistoryEventProducer() {
     if (cmmnHistoryEventProducer == null) {
-      cmmnHistoryEventProducer = new CacheAwareCmmnHistoryEventProducer();
+      cmmnHistoryEventProducer = ServiceLoaderUtil.loadSingleService(CmmnHistoryEventProducer.class);
     }
   }
 
   protected void initDmnHistoryEventProducer() {
     if (dmnHistoryEventProducer == null) {
-      dmnHistoryEventProducer = new DefaultDmnHistoryEventProducer();
+      dmnHistoryEventProducer = ServiceLoaderUtil.loadSingleService(DmnHistoryEventProducer.class);
     }
   }
 
@@ -2756,23 +2756,23 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // password digest //////////////////////////////////////////////////////////
 
   protected void initPasswordDigest() {
-    if(saltGenerator == null) {
-      saltGenerator = new Default16ByteSaltGenerator();
+    if (saltGenerator == null) {
+      saltGenerator = ServiceLoaderUtil.loadSingleService(SaltGenerator.class);
     }
     if (passwordEncryptor == null) {
-      passwordEncryptor = new Sha512HashDigest();
+      passwordEncryptor = ServiceLoaderUtil.loadSingleService(PasswordEncryptor.class);
     }
-    if(customPasswordChecker == null) {
+    if (customPasswordChecker == null) {
       customPasswordChecker = Collections.emptyList();
     }
-    if(passwordManager == null) {
+    if (passwordManager == null) {
       passwordManager = new PasswordManager(passwordEncryptor, customPasswordChecker);
     }
   }
 
   public void initPasswordPolicy() {
-    if(passwordPolicy == null && enablePasswordPolicy) {
-      passwordPolicy = new DefaultPasswordPolicyImpl();
+    if (passwordPolicy == null && enablePasswordPolicy) {
+      passwordPolicy = ServiceLoaderUtil.loadSingleService(PasswordPolicy.class);
     }
   }
 
@@ -2783,10 +2783,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   protected void initOperationLog() {
-    if(logEntriesPerSyncOperationLimit < -1 || logEntriesPerSyncOperationLimit == 0) {
+    if (logEntriesPerSyncOperationLimit < -1 || logEntriesPerSyncOperationLimit == 0) {
       throw new ProcessEngineException(
-          "Invalid configuration for logEntriesPerSyncOperationLimit. Configured value needs to be either -1 or greater than 0 but was "
-              + logEntriesPerSyncOperationLimit + ".");
+              "Invalid configuration for logEntriesPerSyncOperationLimit. Configured value needs to be either -1 or greater than 0 but was "
+                      + logEntriesPerSyncOperationLimit + ".");
     }
   }
 
@@ -2794,7 +2794,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initCacheFactory() {
     if (cacheFactory == null) {
-      cacheFactory = new DefaultCacheFactory();
+      cacheFactory = ServiceLoaderUtil.loadSingleService(CacheFactory.class);
     }
   }
 
@@ -2802,13 +2802,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initResourceAuthorizationProvider() {
     if (resourceAuthorizationProvider == null) {
-      resourceAuthorizationProvider = new DefaultAuthorizationProvider();
+      resourceAuthorizationProvider = ServiceLoaderUtil.loadSingleService(ResourceAuthorizationProvider.class);
     }
   }
 
   protected void initPermissionProvider() {
     if (permissionProvider == null) {
-      permissionProvider = new DefaultPermissionProvider();
+      permissionProvider = ServiceLoaderUtil.loadSingleService(PermissionProvider.class);
     }
   }
 
@@ -2819,7 +2819,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       } else if (Permissions.TASK_WORK.getName().equals(defaultUserPermissionNameForTask)) {
         defaultUserPermissionForTask = Permissions.TASK_WORK;
       } else {
-        throw LOG.invalidConfigDefaultUserPermissionNameForTask(defaultUserPermissionNameForTask, new String[]{Permissions.UPDATE.getName(), Permissions.TASK_WORK.getName()});
+        throw LOG.invalidConfigDefaultUserPermissionNameForTask(defaultUserPermissionNameForTask,
+                new String[] { Permissions.UPDATE.getName(), Permissions.TASK_WORK.getName() });
       }
     }
   }
@@ -2865,7 +2866,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     ProcessEngineDetails engineInfo = ParseUtil
-        .parseProcessEngineVersion(true);
+            .parseProcessEngineVersion(true);
 
     ProductImpl product = new ProductImpl(PRODUCT_NAME, engineInfo.getVersion(), engineInfo.getEdition(), internals);
 
@@ -2910,7 +2911,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPreCommandInterceptorsTxRequired;
   }
 
-  public ProcessEngineConfigurationImpl setCustomPreCommandInterceptorsTxRequired(List<CommandInterceptor> customPreCommandInterceptorsTxRequired) {
+  public ProcessEngineConfigurationImpl setCustomPreCommandInterceptorsTxRequired(
+          List<CommandInterceptor> customPreCommandInterceptorsTxRequired) {
     this.customPreCommandInterceptorsTxRequired = customPreCommandInterceptorsTxRequired;
     return this;
   }
@@ -2919,7 +2921,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPostCommandInterceptorsTxRequired;
   }
 
-  public ProcessEngineConfigurationImpl setCustomPostCommandInterceptorsTxRequired(List<CommandInterceptor> customPostCommandInterceptorsTxRequired) {
+  public ProcessEngineConfigurationImpl setCustomPostCommandInterceptorsTxRequired(
+          List<CommandInterceptor> customPostCommandInterceptorsTxRequired) {
     this.customPostCommandInterceptorsTxRequired = customPostCommandInterceptorsTxRequired;
     return this;
   }
@@ -2946,7 +2949,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPreCommandInterceptorsTxRequiresNew;
   }
 
-  public ProcessEngineConfigurationImpl setCustomPreCommandInterceptorsTxRequiresNew(List<CommandInterceptor> customPreCommandInterceptorsTxRequiresNew) {
+  public ProcessEngineConfigurationImpl setCustomPreCommandInterceptorsTxRequiresNew(
+          List<CommandInterceptor> customPreCommandInterceptorsTxRequiresNew) {
     this.customPreCommandInterceptorsTxRequiresNew = customPreCommandInterceptorsTxRequiresNew;
     return this;
   }
@@ -2955,7 +2959,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPostCommandInterceptorsTxRequiresNew;
   }
 
-  public ProcessEngineConfigurationImpl setCustomPostCommandInterceptorsTxRequiresNew(List<CommandInterceptor> customPostCommandInterceptorsTxRequiresNew) {
+  public ProcessEngineConfigurationImpl setCustomPostCommandInterceptorsTxRequiresNew(
+          List<CommandInterceptor> customPostCommandInterceptorsTxRequiresNew) {
     this.customPostCommandInterceptorsTxRequiresNew = customPostCommandInterceptorsTxRequiresNew;
     return this;
   }
@@ -2964,7 +2969,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return commandInterceptorsTxRequiresNew;
   }
 
-  public ProcessEngineConfigurationImpl setCommandInterceptorsTxRequiresNew(List<CommandInterceptor> commandInterceptorsTxRequiresNew) {
+  public ProcessEngineConfigurationImpl setCommandInterceptorsTxRequiresNew(
+          List<CommandInterceptor> commandInterceptorsTxRequiresNew) {
     this.commandInterceptorsTxRequiresNew = commandInterceptorsTxRequiresNew;
     return this;
   }
@@ -3270,22 +3276,18 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-
   public List<Deployer> getCustomPreDeployers() {
     return customPreDeployers;
   }
-
 
   public ProcessEngineConfigurationImpl setCustomPreDeployers(List<Deployer> customPreDeployers) {
     this.customPreDeployers = customPreDeployers;
     return this;
   }
 
-
   public List<Deployer> getCustomPostDeployers() {
     return customPostDeployers;
   }
-
 
   public ProcessEngineConfigurationImpl setCustomPostDeployers(List<Deployer> customPostDeployers) {
     this.customPostDeployers = customPostDeployers;
@@ -3300,7 +3302,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.cacheCapacity = cacheCapacity;
   }
 
-  public void setEnableFetchProcessDefinitionDescription(boolean enableFetchProcessDefinitionDescription){
+  public void setEnableFetchProcessDefinitionDescription(boolean enableFetchProcessDefinitionDescription) {
     this.enableFetchProcessDefinitionDescription = enableFetchProcessDefinitionDescription;
   }
 
@@ -3330,23 +3332,19 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return jobHandlers;
   }
 
-
   public ProcessEngineConfigurationImpl setJobHandlers(Map<String, JobHandler> jobHandlers) {
     this.jobHandlers = jobHandlers;
     return this;
   }
 
-
   public SqlSessionFactory getSqlSessionFactory() {
     return sqlSessionFactory;
   }
-
 
   public ProcessEngineConfigurationImpl setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
     this.sqlSessionFactory = sqlSessionFactory;
     return this;
   }
-
 
   public DbSqlSessionFactory getDbSqlSessionFactory() {
     return dbSqlSessionFactory;
@@ -3397,7 +3395,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customFormTypes;
   }
 
-
   public ProcessEngineConfigurationImpl setCustomFormTypes(List<AbstractFormFieldType> customFormTypes) {
     this.customFormTypes = customFormTypes;
     return this;
@@ -3407,17 +3404,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPreVariableSerializers;
   }
 
-
   public ProcessEngineConfigurationImpl setCustomPreVariableSerializers(List<TypedValueSerializer> customPreVariableTypes) {
     this.customPreVariableSerializers = customPreVariableTypes;
     return this;
   }
 
-
   public List<TypedValueSerializer> getCustomPostVariableSerializers() {
     return customPostVariableSerializers;
   }
-
 
   public ProcessEngineConfigurationImpl setCustomPostVariableSerializers(List<TypedValueSerializer> customPostVariableTypes) {
     this.customPostVariableSerializers = customPostVariableTypes;
@@ -3658,7 +3652,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public boolean isDbIdentityUsed() {
     return isDbIdentityUsed;
   }
-
 
   public void setDbIdentityUsed(boolean isDbIdentityUsed) {
     this.isDbIdentityUsed = isDbIdentityUsed;
@@ -3914,7 +3907,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return invocationsPerBatchJobByBatchType;
   }
 
-  public ProcessEngineConfigurationImpl setInvocationsPerBatchJobByBatchType(Map<String, Integer> invocationsPerBatchJobByBatchType) {
+  public ProcessEngineConfigurationImpl setInvocationsPerBatchJobByBatchType(
+          Map<String, Integer> invocationsPerBatchJobByBatchType) {
     this.invocationsPerBatchJobByBatchType = invocationsPerBatchJobByBatchType;
     return this;
   }
@@ -4170,8 +4164,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   /**
    * Sets if deployment processing must be synchronized.
+   *
    * @param deploymentSynchronized {@code true} when deployment must be synchronized,
-   * {@code false} when several depoloyments may be processed in parallel
+   *                               {@code false} when several depoloyments may be processed in parallel
    */
   public void setDeploymentSynchronized(boolean deploymentSynchronized) {
     isDeploymentSynchronized = deploymentSynchronized;
@@ -4445,7 +4440,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return enableScriptEngineLoadExternalResources;
   }
 
-  public ProcessEngineConfigurationImpl setEnableScriptEngineLoadExternalResources(boolean enableScriptEngineLoadExternalResources) {
+  public ProcessEngineConfigurationImpl setEnableScriptEngineLoadExternalResources(
+          boolean enableScriptEngineLoadExternalResources) {
     this.enableScriptEngineLoadExternalResources = enableScriptEngineLoadExternalResources;
     return this;
   }
@@ -4514,7 +4510,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return restrictUserOperationLogToAuthenticatedUsers;
   }
 
-  public ProcessEngineConfigurationImpl setRestrictUserOperationLogToAuthenticatedUsers(boolean restrictUserOperationLogToAuthenticatedUsers) {
+  public ProcessEngineConfigurationImpl setRestrictUserOperationLogToAuthenticatedUsers(
+          boolean restrictUserOperationLogToAuthenticatedUsers) {
     this.restrictUserOperationLogToAuthenticatedUsers = restrictUserOperationLogToAuthenticatedUsers;
     return this;
   }
@@ -4544,7 +4541,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public MigrationActivityMatcher getMigrationActivityMatcher() {
     return migrationActivityMatcher;
   }
-
 
   public void setCustomPreMigrationActivityValidators(List<MigrationActivityValidator> customPreMigrationActivityValidators) {
     this.customPreMigrationActivityValidators = customPreMigrationActivityValidators;
@@ -4586,7 +4582,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return migrationInstructionValidators;
   }
 
-  public void setCustomPostMigrationInstructionValidators(List<MigrationInstructionValidator> customPostMigrationInstructionValidators) {
+  public void setCustomPostMigrationInstructionValidators(
+          List<MigrationInstructionValidator> customPostMigrationInstructionValidators) {
     this.customPostMigrationInstructionValidators = customPostMigrationInstructionValidators;
   }
 
@@ -4594,7 +4591,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPostMigrationInstructionValidators;
   }
 
-  public void setCustomPreMigrationInstructionValidators(List<MigrationInstructionValidator> customPreMigrationInstructionValidators) {
+  public void setCustomPreMigrationInstructionValidators(
+          List<MigrationInstructionValidator> customPreMigrationInstructionValidators) {
     this.customPreMigrationInstructionValidators = customPreMigrationInstructionValidators;
   }
 
@@ -4605,17 +4603,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public List<MigrationInstructionValidator> getDefaultMigrationInstructionValidators() {
     List<MigrationInstructionValidator> validators = new ArrayList<>();
-    validators.add(new SameBehaviorInstructionValidator());
-    validators.add(new SameEventTypeValidator());
-    validators.add(new OnlyOnceMappedActivityInstructionValidator());
-    validators.add(new CannotAddMultiInstanceBodyValidator());
-    validators.add(new CannotAddMultiInstanceInnerActivityValidator());
-    validators.add(new CannotRemoveMultiInstanceInnerActivityValidator());
-    validators.add(new GatewayMappingValidator());
-    validators.add(new SameEventScopeInstructionValidator());
-    validators.add(new UpdateEventTriggersValidator());
-    validators.add(new AdditionalFlowScopeInstructionValidator());
-    validators.add(new ConditionalEventUpdateEventTriggerValidator());
+    for (MigrationInstructionValidator validator : ServiceLoader.load(MigrationInstructionValidator.class)) {
+      validators.add(validator);
+    }
     return validators;
   }
 
@@ -4627,7 +4617,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return migratingActivityInstanceValidators;
   }
 
-  public void setCustomPostMigratingActivityInstanceValidators(List<MigratingActivityInstanceValidator> customPostMigratingActivityInstanceValidators) {
+  public void setCustomPostMigratingActivityInstanceValidators(
+          List<MigratingActivityInstanceValidator> customPostMigratingActivityInstanceValidators) {
     this.customPostMigratingActivityInstanceValidators = customPostMigratingActivityInstanceValidators;
   }
 
@@ -4635,7 +4626,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return customPostMigratingActivityInstanceValidators;
   }
 
-  public void setCustomPreMigratingActivityInstanceValidators(List<MigratingActivityInstanceValidator> customPreMigratingActivityInstanceValidators) {
+  public void setCustomPreMigratingActivityInstanceValidators(
+          List<MigratingActivityInstanceValidator> customPreMigratingActivityInstanceValidators) {
     this.customPreMigratingActivityInstanceValidators = customPreMigratingActivityInstanceValidators;
   }
 
@@ -4653,22 +4645,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public List<MigratingActivityInstanceValidator> getDefaultMigratingActivityInstanceValidators() {
     List<MigratingActivityInstanceValidator> validators = new ArrayList<>();
-
-    validators.add(new NoUnmappedLeafInstanceValidator());
-    validators.add(new VariableConflictActivityInstanceValidator());
-    validators.add(new SupportedActivityInstanceValidator());
-
+    ServiceLoader.load(MigratingActivityInstanceValidator.class).forEach(validators::add);
     return validators;
   }
 
   public List<MigratingTransitionInstanceValidator> getDefaultMigratingTransitionInstanceValidators() {
     List<MigratingTransitionInstanceValidator> validators = new ArrayList<>();
-
-    validators.add(new NoUnmappedLeafInstanceValidator());
-    validators.add(new AsyncAfterMigrationValidator());
-    validators.add(new AsyncProcessStartMigrationValidator());
-    validators.add(new AsyncMigrationValidator());
-
+    ServiceLoader.load(MigratingTransitionInstanceValidator.class).forEach(validators::add);
     return validators;
   }
 
@@ -4871,7 +4854,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * {@code isMetricsEnabled} are true
    *
    * @return {@code true} if both history cleanup metrics and general metrics are enabled,
-   *         {@code false} otherwise.
+   * {@code false} otherwise.
    */
   public boolean isHistoryCleanupMetricsEnabled() {
     return historyCleanupMetricsEnabled && isMetricsEnabled;
@@ -4907,7 +4890,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public ProcessEngineConfigurationImpl setJobExecutorAcquireExclusiveOverProcessHierarchies(boolean jobExecutorAcquireExclusiveOverProcessHierarchies) {
+  public ProcessEngineConfigurationImpl setJobExecutorAcquireExclusiveOverProcessHierarchies(
+          boolean jobExecutorAcquireExclusiveOverProcessHierarchies) {
     this.jobExecutorAcquireExclusiveOverProcessHierarchies = jobExecutorAcquireExclusiveOverProcessHierarchies;
     return this;
   }
@@ -5185,7 +5169,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return enableOptimisticLockingOnForeignKeyViolation;
   }
 
-  public ProcessEngineConfigurationImpl setEnableOptimisticLockingOnForeignKeyViolation(boolean enableOptimisticLockingOnForeignKeyViolation) {
+  public ProcessEngineConfigurationImpl setEnableOptimisticLockingOnForeignKeyViolation(
+          boolean enableOptimisticLockingOnForeignKeyViolation) {
     this.enableOptimisticLockingOnForeignKeyViolation = enableOptimisticLockingOnForeignKeyViolation;
     return this;
   }
@@ -5194,7 +5179,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return dmnFeelCustomFunctionProviders;
   }
 
-  public ProcessEngineConfigurationImpl setDmnFeelCustomFunctionProviders(List<FeelCustomFunctionProvider> dmnFeelCustomFunctionProviders) {
+  public ProcessEngineConfigurationImpl setDmnFeelCustomFunctionProviders(
+          List<FeelCustomFunctionProvider> dmnFeelCustomFunctionProviders) {
     this.dmnFeelCustomFunctionProviders = dmnFeelCustomFunctionProviders;
     return this;
   }
@@ -5220,6 +5206,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public DiagnosticsCollector getDiagnosticsCollector() {
     return diagnosticsCollector;
   }
+
   public void setDiagnosticsCollector(DiagnosticsCollector diagnosticsCollector) {
     this.diagnosticsCollector = diagnosticsCollector;
   }
@@ -5263,7 +5250,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public boolean isLegacyJobRetryBehaviorEnabled() {
     return legacyJobRetryBehaviorEnabled;
   }
-  
+
   public ProcessEngineConfiguration setLegacyJobRetryBehaviorEnabled(boolean legacyJobRetryBehaviorEnabled) {
     this.legacyJobRetryBehaviorEnabled = legacyJobRetryBehaviorEnabled;
     return this;

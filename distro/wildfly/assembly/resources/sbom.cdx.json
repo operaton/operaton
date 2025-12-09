@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:a9771355-0fab-487c-9934-38b1ad5b9f18",
+  "serialNumber": "urn:uuid:a1b221cc-f523-4a48-a2c0-eaefa7413789",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-08T14:22:18Z",
+    "timestamp": "2025-12-09T04:51:47Z",
     "tools": {
       "components": [
         {
@@ -33659,7 +33659,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0533e278-9c6b-444f-8fb8-a998e523d4b3",
+      "bom-ref": "90cf1cce-27f7-4bc9-be75-c400b4c86513",
       "name": "package-lock.json",
       "properties": [
         {
@@ -34530,14 +34530,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-touch@1.8.2",
+      "bom-ref": "pkg:npm/angular-touch@1.8.3",
       "name": "angular-touch",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-touch@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-touch@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-touch@1.8.2"
+          "value": "angular-touch@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34819,14 +34819,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/chart.js@4.5.0",
+      "bom-ref": "pkg:npm/chart.js@4.5.1",
       "name": "chart.js",
-      "version": "4.5.0",
-      "purl": "pkg:npm/chart.js@4.5.0",
+      "version": "4.5.1",
+      "purl": "pkg:npm/chart.js@4.5.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "chart.js@4.5.0"
+          "value": "chart.js@4.5.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35448,14 +35448,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.1.0",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.4.0",
       "name": "dmn-js-decision-table",
-      "version": "17.1.0",
-      "purl": "pkg:npm/dmn-js-decision-table@17.1.0",
+      "version": "17.4.0",
+      "purl": "pkg:npm/dmn-js-decision-table@17.4.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.1.0"
+          "value": "dmn-js-decision-table@17.4.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35669,31 +35669,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.2.4",
+      "bom-ref": "pkg:npm/dompurify@3.3.1",
       "name": "dompurify",
-      "version": "3.2.4",
-      "purl": "pkg:npm/dompurify@3.2.4",
+      "version": "3.3.1",
+      "purl": "pkg:npm/dompurify@3.3.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.2.4"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.2.6",
-      "name": "dompurify",
-      "version": "3.2.6",
-      "purl": "pkg:npm/dompurify@3.2.6",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.2.6"
+          "value": "dompurify@3.3.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37454,7 +37437,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c4982a8d-3b42-4a9b-9116-d19042468919",
+      "bom-ref": "66cbd248-d11e-49c0-9a1d-3ce32d55d527",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -41428,7 +41411,13 @@
       "dependsOn": []
     },
     {
-      "ref": "0533e278-9c6b-444f-8fb8-a998e523d4b3",
+      "ref": "66cbd248-d11e-49c0-9a1d-3ce32d55d527",
+      "dependsOn": [
+        "90cf1cce-27f7-4bc9-be75-c400b4c86513"
+      ]
+    },
+    {
+      "ref": "90cf1cce-27f7-4bc9-be75-c400b4c86513",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -41441,7 +41430,7 @@
         "pkg:npm/angular-resource@1.8.2",
         "pkg:npm/angular-route@1.8.2",
         "pkg:npm/angular-sanitize@1.8.2",
-        "pkg:npm/angular-touch@1.8.2",
+        "pkg:npm/angular-touch@1.8.3",
         "pkg:npm/angular-translate@2.19.0",
         "pkg:npm/angular-ui-bootstrap@2.5.6",
         "pkg:npm/angular@1.8.2",
@@ -41449,19 +41438,19 @@
         "pkg:npm/bpmn-font@0.12.1",
         "pkg:npm/bpmn-js@16.5.0",
         "pkg:npm/camunda-dmn-js@3.2.0",
-        "pkg:npm/chart.js@4.5.0",
+        "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.35.1",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.1.0",
+        "pkg:npm/dmn-js-decision-table@17.4.0",
         "pkg:npm/dmn-js-drd@17.2.0",
         "pkg:npm/dmn-js-literal-expression@17.1.0",
         "pkg:npm/dmn-js-properties-panel@3.2.1",
         "pkg:npm/dmn-js-shared@17.1.0",
         "pkg:npm/dmn-js@17.2.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.2.4",
+        "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@4.3.4",
         "pkg:npm/jquery-ui@1.13.2",
@@ -41473,12 +41462,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
-      ]
-    },
-    {
-      "ref": "c4982a8d-3b42-4a9b-9116-d19042468919",
-      "dependsOn": [
-        "0533e278-9c6b-444f-8fb8-a998e523d4b3"
       ]
     },
     {
@@ -41593,7 +41576,7 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@10.2.2",
-        "pkg:npm/dompurify@3.2.6",
+        "pkg:npm/dompurify@3.3.1",
         "pkg:npm/feelers@1.4.0",
         "pkg:npm/feelin@4.3.0",
         "pkg:npm/flatpickr@4.6.13",
@@ -41825,7 +41808,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-touch@1.8.2",
+      "ref": "pkg:npm/angular-touch@1.8.3",
       "dependsOn": []
     },
     {
@@ -41928,7 +41911,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/chart.js@4.5.0",
+      "ref": "pkg:npm/chart.js@4.5.1",
       "dependsOn": [
         "pkg:npm/%40kurkle/color@0.3.4"
       ]
@@ -42184,12 +42167,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.1.0",
+      "ref": "pkg:npm/dmn-js-decision-table@17.4.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
         "pkg:npm/diagram-js@15.3.0",
-        "pkg:npm/dmn-js-shared@17.1.0",
+        "pkg:npm/dmn-js-shared@17.4.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@4.2.3",
@@ -42270,7 +42253,7 @@
       "ref": "pkg:npm/dmn-js@17.2.0",
       "dependsOn": [
         "pkg:npm/dmn-js-boxed-expression@17.4.0",
-        "pkg:npm/dmn-js-decision-table@17.1.0",
+        "pkg:npm/dmn-js-decision-table@17.4.0",
         "pkg:npm/dmn-js-drd@17.2.0",
         "pkg:npm/dmn-js-literal-expression@17.1.0",
         "pkg:npm/dmn-js-shared@17.1.0"
@@ -42312,13 +42295,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.2.4",
-      "dependsOn": [
-        "pkg:npm/%40types/trusted-types@2.0.7"
-      ]
-    },
-    {
-      "ref": "pkg:npm/dompurify@3.2.6",
+      "ref": "pkg:npm/dompurify@3.3.1",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]

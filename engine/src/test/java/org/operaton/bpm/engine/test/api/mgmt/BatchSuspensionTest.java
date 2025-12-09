@@ -40,9 +40,8 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.EntityTypes.BATCH;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class BatchSuspensionTest {
 
@@ -76,8 +75,7 @@ public class BatchSuspensionTest {
 
   @AfterEach
   void resetBatchJobsPerSeed() {
-    engineRule.getProcessEngineConfiguration()
-      .setBatchJobsPerSeed(defaultBatchJobsPerSeed);
+    engineRule.getProcessEngineConfiguration().setBatchJobsPerSeed(defaultBatchJobsPerSeed);
   }
 
   @Test
@@ -95,24 +93,14 @@ public class BatchSuspensionTest {
 
   @Test
   void shouldFailWhenSuspendingUsingUnknownId() {
-    try {
-      managementService.suspendBatchById("unknown");
-      fail("Exception expected");
-    }
-    catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Batch for id 'unknown' cannot be found");
-    }
+    assertThatThrownBy(() -> managementService.suspendBatchById("unknown")).isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Batch for id 'unknown' cannot be found");
   }
 
   @Test
   void shouldFailWhenSuspendingUsingNullId() {
-    try {
-      managementService.suspendBatchById(null);
-      fail("Exception expected");
-    }
-    catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("batch id is null");
-    }
+    assertThatThrownBy(() -> managementService.suspendBatchById(null)).isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("batch id is null");
   }
 
   @Test
@@ -219,8 +207,7 @@ public class BatchSuspensionTest {
     identityService.clearAuthentication();
 
     // then
-    UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
-      .singleResult();
+    UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
 
     assertThat(entry).isNotNull();
     assertThat(entry.getBatchId()).isEqualTo(batch.getId());
@@ -245,24 +232,16 @@ public class BatchSuspensionTest {
 
   @Test
   void shouldFailWhenActivatingUsingUnknownId() {
-    try {
-      managementService.activateBatchById("unknown");
-      fail("Exception expected");
-    }
-    catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Batch for id 'unknown' cannot be found");
-    }
+    assertThatThrownBy(() -> managementService.activateBatchById("unknown"))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Batch for id 'unknown' cannot be found");
   }
 
   @Test
   void shouldFailWhenActivatingUsingNullId() {
-    try {
-      managementService.activateBatchById(null);
-      fail("Exception expected");
-    }
-    catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("batch id is null");
-    }
+    assertThatThrownBy(() -> managementService.activateBatchById(null))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("batch id is null");
   }
 
   @Test
@@ -370,8 +349,7 @@ public class BatchSuspensionTest {
     identityService.clearAuthentication();
 
     // then
-    UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
-      .singleResult();
+    UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
 
     assertThat(entry).isNotNull();
     assertThat(entry.getBatchId()).isEqualTo(batch.getId());

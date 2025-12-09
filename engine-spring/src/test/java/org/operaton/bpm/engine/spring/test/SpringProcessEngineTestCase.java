@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -39,6 +38,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 
 /**

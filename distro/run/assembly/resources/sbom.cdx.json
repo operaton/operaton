@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:8768ff05-b3ee-475e-b0a7-5837406a44aa",
+  "serialNumber": "urn:uuid:756cabad-20ef-4f7c-90c5-2e47cea490bc",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-08T12:08:59Z",
+    "timestamp": "2025-12-09T13:00:28Z",
     "tools": {
       "components": [
         {
@@ -126,12 +126,12 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
       "publisher": "Operaton",
-      "group": "org.operaton.bpm",
-      "name": "operaton-bpm-archunit",
+      "group": "org.operaton.commons",
+      "name": "operaton-commons-root",
       "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - ArchUnit",
+      "description": "Operaton - Commons - Root POM",
       "licenses": [
         {
           "license": {
@@ -139,10 +139,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
       "externalReferences": [
         {
-          "url": "https://www.operaton.org/operaton-bpm-archunit",
+          "url": "https://www.operaton.org/operaton-commons-root",
           "type": "website"
         },
         {
@@ -150,54 +150,19 @@
           "type": "issue-tracker"
         },
         {
-          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-bpm-archunit",
+          "url": "https://github.com/operaton/operaton",
           "type": "vcs"
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar",
-      "publisher": "TNG Technology Consulting GmbH",
-      "group": "com.tngtech.archunit",
-      "name": "archunit-junit4",
-      "version": "1.4.1",
-      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit-junit4\u0027",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "bcde8b526a261c46e79155d288305716"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "e1d06e165fa9b33630d3b2ad5a60cf85032ce9f1"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "374cddddccf7ebae258e8371e2a593aeb13aec6c335719be2178c0ff46e830a9"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "149b52bf8a8aecc0d565c41d005d012969ed33b447eda47cc3e58c048e09f24dc05b251b9fb06d9eebde6fbb8cb6e2f5f093bf7353b4d20f7c5b753dfa452606"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "4aa2df9a3c881bf4f99dc1d08b28f8f8c886e40682d57b037dd749eb702795f883309d877ba3c218755f18b8e972f708"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "e443b31fd33f7c1a477ce5c2b735dcd9819fc246a0a5ef933364f36856fbcd47bee284b7f85b9b2b537f93b95e222414"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "d435ce20a958fe4149bdbccc0a748aea4d06d1d194412d755097ea63f34baec7"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "171b6f0bf0ca50c352ae9730a45a6ec4178dd866ce4e6a816e83f950d9e11516bd7f1df12f8df1bdf523714340b621089178011be37f538628b6c86b1198c2a6"
-        }
-      ],
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.commons",
+      "name": "operaton-commons-logging",
+      "version": "1.1.0-SNAPSHOT",
+      "description": "Operaton - Commons - Logging",
       "licenses": [
         {
           "license": {
@@ -205,81 +170,18 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
       "externalReferences": [
         {
-          "url": "https://github.com/TNG/ArchUnit",
+          "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-logging",
           "type": "website"
         },
         {
-          "url": "https://github.com/TNG/ArchUnit",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
-      "publisher": "TNG Technology Consulting GmbH",
-      "group": "com.tngtech.archunit",
-      "name": "archunit",
-      "version": "1.4.1",
-      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit\u0027",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "088d0963afbbe003dc67fa1bcf4ebfd9"
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
         },
         {
-          "alg": "SHA-1",
-          "content": "6ba9a48e48eb3f1fc3223fae073afad29774894e"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "6a92458c544308e42ca534cfcbdb6f1947ea4a9ca8717e087cd671d31f2d9b0c"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "07754c07297b1afcce46e2e768abb90058fd7453d9bf9ee9e8e8818e377acd72f2d9a50e006d82981fe20673a4f3ba920ac296047c8507bdb9517f5de0217777"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "519a177e9805a55fa092fa4c04f3e490d294336a5a0f0a36e43c030c387278f058f254515f8810b4de9366f38599fd73"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "e1b751421d0a534435b6d504544892fef0c851b4db0591822b9390b02c5af735a0e9b5684095d4f58c7354c47dd4b33c"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "7ab6d66e3745b5e3eb28d01c6f02d650e2ae0e06af12c665c55f28693984528d"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "87bb25905fdd9fbdd2671bad36d2c1c0adf9c9ff98bc536a30e0a548e66a25a884e9b52dbb8d2320943930c1648e0dcdc465896754c2c3a0a677a416a3fe624c"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        },
-        {
-          "license": {
-            "id": "BSD-4-Clause"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/TNG/ArchUnit",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/TNG/ArchUnit",
+          "url": "https://github.com/operaton/operaton/operaton-commons-logging",
           "type": "vcs"
         }
       ]
@@ -353,171 +255,144 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/junit/junit@4.13.2?type=jar",
-      "publisher": "JUnit",
-      "group": "junit",
-      "name": "junit",
-      "version": "4.13.2",
-      "description": "JUnit is a unit testing framework for Java, created by Erich Gamma and Kent Beck.",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
+      "publisher": "QOS.ch",
+      "group": "ch.qos.logback",
+      "name": "logback-classic",
+      "version": "1.5.21",
+      "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d98a9a02a99a9acd22d7653cbcc1f31f"
+          "content": "e4aa08ccbae42f0a94ef6d706d0d5cf8"
         },
         {
           "alg": "SHA-1",
-          "content": "8ac9e16d933b6fb43bc7f576336b8f4d7eb5ba12"
+          "content": "904915aa29a0bbff111ae90ed85541b2991a72fc"
         },
         {
           "alg": "SHA-256",
-          "content": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3"
+          "content": "b2523f7b0dabf4386c81312f0371d267e3a9fbce409046f16b042bf68571ba4a"
         },
         {
           "alg": "SHA-512",
-          "content": "a31b9950f929a7e5a600d89787ef40e42a8a8e2392e210d0c0f45b3572937670a18a524f1815508cd1152cd1eaa7275cb7430ba45c053be365c83c231bccd3f0"
+          "content": "a37432f096f97b5b7610d2887345daddf03cb5fa4518532aa2849bbd6745da1921b87ce4d7b26df8667fdc412ed48ef78ab658d4e44e3c99b17e135e08ef863e"
         },
         {
           "alg": "SHA-384",
-          "content": "9f85c56a77c699eb87630b9e8224068a34c296bcd9aadb52248dd4665036f5bf1048fe75e5cb590b59e7855ca716acae"
+          "content": "703c7867632bc76018b0784ec61d92a98073fbb3787e957ae8367d969303e3e269fa5f6a77a6ae1defc32dfc0a29abf0"
         },
         {
           "alg": "SHA3-384",
-          "content": "590cfd9396424583879ca8ad732870406bab18325ac72fb2bbe188b9611278d6341700badf7cfc32525b8ff42900c905"
+          "content": "0e23783135a7413f125970ad890ea83bd00e6ab5214ca8dc57ef66522c76047141a465d62bd845cf1944942fbcc61cd2"
         },
         {
           "alg": "SHA3-256",
-          "content": "a06b3fd2fd1d9f4306b58125484e3605a395afe5ffe2c801e43ae462f366a430"
+          "content": "cbe7e7cba6710228c74753356425d9128a848cdb4b67998e39a2a7328611e309"
         },
         {
           "alg": "SHA3-512",
-          "content": "a6d25ce3c14f9065f06dfd0e68e1dad5c03bd5de0a302c44ca4733d2cb87ec1bc6f0abd36d65aeee8caf328b6881432c4b682fa4b4b1fa931c3c950de5129fb2"
+          "content": "698adf9862d8aa8e59b8db1f258623313554334b795aa46c9578c7fae054b7f7d8756b01b4ef3eb2e3b57a7b271b5fa3e0f1f4ad2764b6760701419783203468"
         }
       ],
       "licenses": [
         {
           "license": {
-            "id": "EPL-1.0",
-            "url": "http://www.eclipse.org/legal/epl-v10.html"
+            "id": "EPL-1.0"
+          }
+        },
+        {
+          "license": {
+            "name": "GNU Lesser General Public License",
+            "url": "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
           }
         }
       ],
-      "purl": "pkg:maven/junit/junit@4.13.2?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
       "externalReferences": [
         {
-          "url": "http://junit.org",
+          "url": "http://logback.qos.ch/logback-classic",
           "type": "website"
-        },
-        {
-          "url": "https://github.com/junit-team/junit4/actions",
-          "type": "build-system"
-        },
-        {
-          "url": "https://github.com/junit-team/junit4/wiki/Download-and-Install",
-          "type": "distribution"
         },
         {
           "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
           "type": "distribution-intake"
         },
         {
-          "url": "https://github.com/junit-team/junit4/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/junit-team/junit4",
+          "url": "https://github.com/qos-ch/logback/logback-classic",
           "type": "vcs"
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar",
-      "group": "org.hamcrest",
-      "name": "hamcrest-core",
-      "version": "1.3",
-      "description": "This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
+      "publisher": "QOS.ch",
+      "group": "ch.qos.logback",
+      "name": "logback-core",
+      "version": "1.5.21",
+      "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6393363b47ddcbba82321110c3e07519"
+          "content": "00c20552b89470eff9f01f21c77d44d7"
         },
         {
           "alg": "SHA-1",
-          "content": "42a25dc3219429f0e5d060061f71acb49bf010a0"
+          "content": "970bf47cbc34d24e47f375b6b4e407d6d699474f"
         },
         {
           "alg": "SHA-256",
-          "content": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
+          "content": "0825ac1fc5296369121e5423e397c52d125b0e3fae743cfc0d8e416159f14f44"
         },
         {
           "alg": "SHA-512",
-          "content": "e237ae735aac4fa5a7253ec693191f42ef7ddce384c11d29fbf605981c0be077d086757409acad53cb5b9e53d86a07cc428d459ff0f5b00d32a8cbbca390be49"
+          "content": "fdfe6da279fe10fa19bdfc401c5eba4f6a0db7cc4aec9148def5d59a5ffaec0bdd38e0e0c187aa124490129bef0c062719900483e6e7c7f6ff0333c521ed7e1d"
         },
         {
           "alg": "SHA-384",
-          "content": "4b5297d2a12cc32b824153afc83f1ba9f1869ca288330f0a2f759659d09e4c420eb6ba4a1efbfa0657b625edd41293d5"
+          "content": "789a53e1890f492b15f318b59583bac246afcaaeca744118c70d5ff5fa2d45cf6b0c3d41afdf56c72b9f5ea0c198f5ab"
         },
         {
           "alg": "SHA3-384",
-          "content": "b14d34985c0a78cf0ba19b5a18bffd403e08adcb2afde228ddef6e16121c7046dbebf58c04d3419311c4496c48aa93be"
+          "content": "636c33723cbe6b611bcab962e826ba9c2179c6298218a510f503d0ccf7b5df3aeea60101d57c04b1a5490e8dcb2333e8"
         },
         {
           "alg": "SHA3-256",
-          "content": "f679af77deedf69b3c3066f7916583848c6fd32a950f9c0b0e2ef1da121717ba"
+          "content": "7ff9859883b6680b051650aaa1a58558c34a7eaa930f119d8d576b0099b1061a"
         },
         {
           "alg": "SHA3-512",
-          "content": "bca821931e438a1977b7b4356b5f8cebf485634f82159d505c48267c34e6a0f4fde9c2917331365f66dc0e52e2ca3a2db5256863584110c27ecebefc28741f63"
+          "content": "39b1beed6bb2e899c2b8338cdac6d160da624a1dd0961ea5b5c81051af8bf58345ac40111c627f7e7be777de9557bc9ba0797988843e0b364b1e87a5bd35d1f7"
         }
       ],
       "licenses": [
         {
           "license": {
-            "id": "BSD-3-Clause"
+            "id": "EPL-1.0"
           }
-        }
-      ],
-      "purl": "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/hamcrest/JavaHamcrest/hamcrest-core",
-          "type": "website"
         },
-        {
-          "url": "https://github.com/hamcrest/JavaHamcrest/hamcrest-core",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm.model",
-      "name": "operaton-model-apis",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - Model APIs",
-      "licenses": [
         {
           "license": {
-            "id": "Apache-2.0"
+            "name": "GNU Lesser General Public License",
+            "url": "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
       "externalReferences": [
         {
-          "url": "https://www.operaton.org/operaton-model-apis",
+          "url": "http://logback.qos.ch/logback-core",
           "type": "website"
         },
         {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
         },
         {
-          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-model-apis",
+          "url": "https://github.com/qos-ch/logback/logback-core",
           "type": "vcs"
         }
       ]
@@ -1135,6 +1010,368 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.commons",
+      "name": "operaton-commons-utils",
+      "version": "1.1.0-SNAPSHOT",
+      "description": "Operaton - Commons - Utils",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-utils",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-commons-utils",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm",
+      "name": "operaton-bpm-archunit",
+      "version": "1.1.0-SNAPSHOT",
+      "description": "Operaton - ArchUnit",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-bpm-archunit",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-bpm-archunit",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar",
+      "publisher": "TNG Technology Consulting GmbH",
+      "group": "com.tngtech.archunit",
+      "name": "archunit-junit4",
+      "version": "1.4.1",
+      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit-junit4\u0027",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "bcde8b526a261c46e79155d288305716"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "e1d06e165fa9b33630d3b2ad5a60cf85032ce9f1"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "374cddddccf7ebae258e8371e2a593aeb13aec6c335719be2178c0ff46e830a9"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "149b52bf8a8aecc0d565c41d005d012969ed33b447eda47cc3e58c048e09f24dc05b251b9fb06d9eebde6fbb8cb6e2f5f093bf7353b4d20f7c5b753dfa452606"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "4aa2df9a3c881bf4f99dc1d08b28f8f8c886e40682d57b037dd749eb702795f883309d877ba3c218755f18b8e972f708"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "e443b31fd33f7c1a477ce5c2b735dcd9819fc246a0a5ef933364f36856fbcd47bee284b7f85b9b2b537f93b95e222414"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "d435ce20a958fe4149bdbccc0a748aea4d06d1d194412d755097ea63f34baec7"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "171b6f0bf0ca50c352ae9730a45a6ec4178dd866ce4e6a816e83f950d9e11516bd7f1df12f8df1bdf523714340b621089178011be37f538628b6c86b1198c2a6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/TNG/ArchUnit",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/TNG/ArchUnit",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
+      "publisher": "TNG Technology Consulting GmbH",
+      "group": "com.tngtech.archunit",
+      "name": "archunit",
+      "version": "1.4.1",
+      "description": "A Java architecture test library, to specify and assert architecture rules in plain Java - Module \u0027archunit\u0027",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "088d0963afbbe003dc67fa1bcf4ebfd9"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "6ba9a48e48eb3f1fc3223fae073afad29774894e"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "6a92458c544308e42ca534cfcbdb6f1947ea4a9ca8717e087cd671d31f2d9b0c"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "07754c07297b1afcce46e2e768abb90058fd7453d9bf9ee9e8e8818e377acd72f2d9a50e006d82981fe20673a4f3ba920ac296047c8507bdb9517f5de0217777"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "519a177e9805a55fa092fa4c04f3e490d294336a5a0f0a36e43c030c387278f058f254515f8810b4de9366f38599fd73"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "e1b751421d0a534435b6d504544892fef0c851b4db0591822b9390b02c5af735a0e9b5684095d4f58c7354c47dd4b33c"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "7ab6d66e3745b5e3eb28d01c6f02d650e2ae0e06af12c665c55f28693984528d"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "87bb25905fdd9fbdd2671bad36d2c1c0adf9c9ff98bc536a30e0a548e66a25a884e9b52dbb8d2320943930c1648e0dcdc465896754c2c3a0a677a416a3fe624c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        },
+        {
+          "license": {
+            "id": "BSD-4-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/TNG/ArchUnit",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/TNG/ArchUnit",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/junit/junit@4.13.2?type=jar",
+      "publisher": "JUnit",
+      "group": "junit",
+      "name": "junit",
+      "version": "4.13.2",
+      "description": "JUnit is a unit testing framework for Java, created by Erich Gamma and Kent Beck.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "d98a9a02a99a9acd22d7653cbcc1f31f"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "8ac9e16d933b6fb43bc7f576336b8f4d7eb5ba12"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "8e495b634469d64fb8acfa3495a065cbacc8a0fff55ce1e31007be4c16dc57d3"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a31b9950f929a7e5a600d89787ef40e42a8a8e2392e210d0c0f45b3572937670a18a524f1815508cd1152cd1eaa7275cb7430ba45c053be365c83c231bccd3f0"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "9f85c56a77c699eb87630b9e8224068a34c296bcd9aadb52248dd4665036f5bf1048fe75e5cb590b59e7855ca716acae"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "590cfd9396424583879ca8ad732870406bab18325ac72fb2bbe188b9611278d6341700badf7cfc32525b8ff42900c905"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "a06b3fd2fd1d9f4306b58125484e3605a395afe5ffe2c801e43ae462f366a430"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "a6d25ce3c14f9065f06dfd0e68e1dad5c03bd5de0a302c44ca4733d2cb87ec1bc6f0abd36d65aeee8caf328b6881432c4b682fa4b4b1fa931c3c950de5129fb2"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "EPL-1.0",
+            "url": "http://www.eclipse.org/legal/epl-v10.html"
+          }
+        }
+      ],
+      "purl": "pkg:maven/junit/junit@4.13.2?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://junit.org",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/junit-team/junit4/actions",
+          "type": "build-system"
+        },
+        {
+          "url": "https://github.com/junit-team/junit4/wiki/Download-and-Install",
+          "type": "distribution"
+        },
+        {
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/junit-team/junit4/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/junit-team/junit4",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar",
+      "group": "org.hamcrest",
+      "name": "hamcrest-core",
+      "version": "1.3",
+      "description": "This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "6393363b47ddcbba82321110c3e07519"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "42a25dc3219429f0e5d060061f71acb49bf010a0"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "66fdef91e9739348df7a096aa384a5685f4e875584cce89386a7a47251c4d8e9"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "e237ae735aac4fa5a7253ec693191f42ef7ddce384c11d29fbf605981c0be077d086757409acad53cb5b9e53d86a07cc428d459ff0f5b00d32a8cbbca390be49"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "4b5297d2a12cc32b824153afc83f1ba9f1869ca288330f0a2f759659d09e4c420eb6ba4a1efbfa0657b625edd41293d5"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "b14d34985c0a78cf0ba19b5a18bffd403e08adcb2afde228ddef6e16121c7046dbebf58c04d3419311c4496c48aa93be"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "f679af77deedf69b3c3066f7916583848c6fd32a950f9c0b0e2ef1da121717ba"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "bca821931e438a1977b7b4356b5f8cebf485634f82159d505c48267c34e6a0f4fde9c2917331365f66dc0e52e2ca3a2db5256863584110c27ecebefc28741f63"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/hamcrest/JavaHamcrest/hamcrest-core",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/hamcrest/JavaHamcrest/hamcrest-core",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm.model",
+      "name": "operaton-model-apis",
+      "version": "1.1.0-SNAPSHOT",
+      "description": "Operaton - Model APIs",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-model-apis",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-model-apis",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.model",
@@ -1333,243 +1570,6 @@
         },
         {
           "url": "https://github.com/eclipse-ee4j/el-ri",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
-      "publisher": "Operaton",
-      "group": "org.operaton.commons",
-      "name": "operaton-commons-root",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - Commons - Root POM",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-commons-root",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-      "publisher": "Operaton",
-      "group": "org.operaton.commons",
-      "name": "operaton-commons-logging",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - Commons - Logging",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-logging",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-commons-logging",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
-      "publisher": "QOS.ch",
-      "group": "ch.qos.logback",
-      "name": "logback-classic",
-      "version": "1.5.21",
-      "description": "logback-classic module",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "e4aa08ccbae42f0a94ef6d706d0d5cf8"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "904915aa29a0bbff111ae90ed85541b2991a72fc"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "b2523f7b0dabf4386c81312f0371d267e3a9fbce409046f16b042bf68571ba4a"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "a37432f096f97b5b7610d2887345daddf03cb5fa4518532aa2849bbd6745da1921b87ce4d7b26df8667fdc412ed48ef78ab658d4e44e3c99b17e135e08ef863e"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "703c7867632bc76018b0784ec61d92a98073fbb3787e957ae8367d969303e3e269fa5f6a77a6ae1defc32dfc0a29abf0"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "0e23783135a7413f125970ad890ea83bd00e6ab5214ca8dc57ef66522c76047141a465d62bd845cf1944942fbcc61cd2"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "cbe7e7cba6710228c74753356425d9128a848cdb4b67998e39a2a7328611e309"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "698adf9862d8aa8e59b8db1f258623313554334b795aa46c9578c7fae054b7f7d8756b01b4ef3eb2e3b57a7b271b5fa3e0f1f4ad2764b6760701419783203468"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "EPL-1.0"
-          }
-        },
-        {
-          "license": {
-            "name": "GNU Lesser General Public License",
-            "url": "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
-          }
-        }
-      ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.21?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://logback.qos.ch/logback-classic",
-          "type": "website"
-        },
-        {
-          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/qos-ch/logback/logback-classic",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
-      "publisher": "QOS.ch",
-      "group": "ch.qos.logback",
-      "name": "logback-core",
-      "version": "1.5.21",
-      "description": "logback-core module",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "00c20552b89470eff9f01f21c77d44d7"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "970bf47cbc34d24e47f375b6b4e407d6d699474f"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "0825ac1fc5296369121e5423e397c52d125b0e3fae743cfc0d8e416159f14f44"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "fdfe6da279fe10fa19bdfc401c5eba4f6a0db7cc4aec9148def5d59a5ffaec0bdd38e0e0c187aa124490129bef0c062719900483e6e7c7f6ff0333c521ed7e1d"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "789a53e1890f492b15f318b59583bac246afcaaeca744118c70d5ff5fa2d45cf6b0c3d41afdf56c72b9f5ea0c198f5ab"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "636c33723cbe6b611bcab962e826ba9c2179c6298218a510f503d0ccf7b5df3aeea60101d57c04b1a5490e8dcb2333e8"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "7ff9859883b6680b051650aaa1a58558c34a7eaa930f119d8d576b0099b1061a"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "39b1beed6bb2e899c2b8338cdac6d160da624a1dd0961ea5b5c81051af8bf58345ac40111c627f7e7be777de9557bc9ba0797988843e0b364b1e87a5bd35d1f7"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "EPL-1.0"
-          }
-        },
-        {
-          "license": {
-            "name": "GNU Lesser General Public License",
-            "url": "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
-          }
-        }
-      ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.21?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://logback.qos.ch/logback-core",
-          "type": "website"
-        },
-        {
-          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/qos-ch/logback/logback-core",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-      "publisher": "Operaton",
-      "group": "org.operaton.commons",
-      "name": "operaton-commons-utils",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - Commons - Utils",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-utils",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-commons-utils",
           "type": "vcs"
         }
       ]
@@ -12864,45 +12864,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.14.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core",
-      "version": "6.2.14.Final",
+      "version": "6.2.15.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2d5123fde6f2908f6362052ed88a74d1"
+          "content": "3ef9ecff5326805e4106fc71f46648d8"
         },
         {
           "alg": "SHA-1",
-          "content": "7e58079cf0664cf74bbb9c07694c1c55565625e3"
+          "content": "5fd18f9da69f6715842ea298aed494b40ebc3a34"
         },
         {
           "alg": "SHA-256",
-          "content": "7091447c1a449c486e8c4cd0aadc69e0468f83242fa2f101d5e12ac25b1d969c"
+          "content": "3ef3f1ec9bb7542498a2f3608151332753743e020c304cf10f094b013a76ecbe"
         },
         {
           "alg": "SHA-512",
-          "content": "06eebbb363bd1c725c873f9256c3088066d8d372b4a560a3ff4f540ed0b1f042a1d229a92085875bd050b2c39d1f86330155ffa2a77130805076a47d4406aed6"
+          "content": "de98fbee4a4710558a5edf4fb8b1497b635e81bb230f3338e1769753d7658b61f79faa184ccf0d29821b84d2273f7ce226937de381f43fda480de3f30d502e0a"
         },
         {
           "alg": "SHA-384",
-          "content": "ed1b242df0e0da3f22c0f26801c89e4e2b339f282c93194f88d04a0e76b7fd48c5c973008667258b54a6b241eb959a98"
+          "content": "5eef762cbb34d14fa41ff25dd55ccb0dbc2bfa6e121cb30bc409c748fdc826205a9fad5c05ba7a66e91b40c64f0896b3"
         },
         {
           "alg": "SHA3-384",
-          "content": "ff352aae5f5749365c12a2eabd7396fbc1357eadd3b06f24e948c86e9c7369363ab8c9bef168a4cee0939a9693917ada"
+          "content": "31af46d8db089a97f8013c7d34444dedf1589a8b270326a733358511997decf98ff1b7e4d93304233cc06364c1a9cfe4"
         },
         {
           "alg": "SHA3-256",
-          "content": "707f8acc6c61a0933a7188669a331dcbfc67b79277dfb7fa14ed265cd103904a"
+          "content": "ad8ea1d0e1b05a590bc513eb6170ed7e138cc0701082c5860eb2ada318b85e3c"
         },
         {
           "alg": "SHA3-512",
-          "content": "a9fa60199fbeb2760fc6b01e3b9e7b2ea1d70b5c2fdb464ee5c957d5747b0f69f252976105516f46f4e7aedb980b85155c17802ace8b9451113807a74eb2b435"
+          "content": "3ffe89b4da936aa04ee81c46ae303cc60857e8d54a873bcb357fa5d166dc33bf65f3fbbb16f823a146a2a67b9082eb55c2184c10b98e99bdf7fcf39456048783"
         }
       ],
       "licenses": [
@@ -12913,7 +12913,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.14.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -13009,45 +13009,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.14.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core-spi",
-      "version": "6.2.14.Final",
+      "version": "6.2.15.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f30dea269634344f45ae9f68e76c3305"
+          "content": "2c24ea05639af15d87f15de43a46f930"
         },
         {
           "alg": "SHA-1",
-          "content": "040df1e62720aacb0235b0045709e6058b117ed8"
+          "content": "56d48b8fada5747b44e6ab208e382c2e74dc575c"
         },
         {
           "alg": "SHA-256",
-          "content": "6ef6d319e29ce65146942b85bb21fc6a27408e95c3dc4372906b19747dd90e21"
+          "content": "211a37676ea74eb7d7d9065cda21d79584237fbd232653736ee4312ef31cb2a1"
         },
         {
           "alg": "SHA-512",
-          "content": "bca3e3dd65571501be19940332335147726a91d8ba6d2fed0349bd0ec610ddac0d395ec44eaa0926cb15b34903bc5cc3fa98077d7d9f4da9ca99705d9402aab1"
+          "content": "a722c35cd4e49d88db03d7bf72e2b6eac8d9eff4e7bc662c94e420a5bd5cf1fc41a8a3cb9b6135b862233d1876bf3a3023968a791575d09869e2a446f1dfcd9d"
         },
         {
           "alg": "SHA-384",
-          "content": "39a1a1581f611892a273aa681e85d04bfd0eacb69085404e25682f92b57c89000b016ac9860abbc0397dfe358ec0d3be"
+          "content": "d4034d17a981e5bd6632bcdabb8bc186a1dd03df69385e103aeb4fb76d17c26d2c114ab6cef70cfc4405d1f37c966632"
         },
         {
           "alg": "SHA3-384",
-          "content": "ffbc82b8d81985c0a263f6c46b202c28a0ada2b587ffa89c3c15e4eb40b9c6cb0464aa342d8beca49e28afe5d994e2fb"
+          "content": "d1a6fcaadc63234f7fd715bc8099ae6186f3788b19c37815949f380355fdd863bcf718eed850918870b9cbd4fcbe9746"
         },
         {
           "alg": "SHA3-256",
-          "content": "0927f310070e91700fc925fb3d68674cb7617c2699f08d64fbb90f66dec3a6fd"
+          "content": "1a46642a02d33a50c1f4f0461125d69d3844ab9bbb4012f93bb57d3a5eceb257"
         },
         {
           "alg": "SHA3-512",
-          "content": "4c2a6458449475e0e5aa39cf413f2c2aabf1959a37feaa0c9259f8f049fe5697e12a1f5f2ba17baf9debe7cbd8143e57962a2cd31507941e49baded96e9fce5e"
+          "content": "0490eab9ba0e45b350bf7052f430a2f6ed253813dae9d01fd3beb80085337ec1939f8942375f587c1c53501e50f32e79f0ca8ee134afd47b04a2529c98ab8a4c"
         }
       ],
       "licenses": [
@@ -13058,7 +13058,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.14.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -23135,7 +23135,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7dc2d15c-de38-43bd-ad66-34b738214023",
+      "bom-ref": "f3f3c566-caf3-401b-b7e8-17bd12469898",
       "name": "package-lock.json",
       "properties": [
         {
@@ -23870,14 +23870,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-animate@1.8.2",
+      "bom-ref": "pkg:npm/angular-animate@1.8.3",
       "name": "angular-animate",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-animate@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-animate@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-animate@1.8.2"
+          "value": "angular-animate@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23887,14 +23887,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-cookies@1.8.2",
+      "bom-ref": "pkg:npm/angular-cookies@1.8.3",
       "name": "angular-cookies",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-cookies@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-cookies@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-cookies@1.8.2"
+          "value": "angular-cookies@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23955,14 +23955,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-resource@1.8.2",
+      "bom-ref": "pkg:npm/angular-resource@1.8.3",
       "name": "angular-resource",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-resource@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-resource@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-resource@1.8.2"
+          "value": "angular-resource@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23972,14 +23972,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-route@1.8.2",
+      "bom-ref": "pkg:npm/angular-route@1.8.3",
       "name": "angular-route",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-route@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-route@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-route@1.8.2"
+          "value": "angular-route@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23989,14 +23989,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-sanitize@1.8.2",
+      "bom-ref": "pkg:npm/angular-sanitize@1.8.3",
       "name": "angular-sanitize",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-sanitize@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-sanitize@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-sanitize@1.8.2"
+          "value": "angular-sanitize@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24006,14 +24006,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-touch@1.8.2",
+      "bom-ref": "pkg:npm/angular-touch@1.8.3",
       "name": "angular-touch",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular-touch@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular-touch@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-touch@1.8.2"
+          "value": "angular-touch@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24023,14 +24023,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-translate@2.19.0",
+      "bom-ref": "pkg:npm/angular-translate@2.19.1",
       "name": "angular-translate",
-      "version": "2.19.0",
-      "purl": "pkg:npm/angular-translate@2.19.0",
+      "version": "2.19.1",
+      "purl": "pkg:npm/angular-translate@2.19.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-translate@2.19.0"
+          "value": "angular-translate@2.19.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24057,14 +24057,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular@1.8.2",
+      "bom-ref": "pkg:npm/angular@1.8.3",
       "name": "angular",
-      "version": "1.8.2",
-      "purl": "pkg:npm/angular@1.8.2",
+      "version": "1.8.3",
+      "purl": "pkg:npm/angular@1.8.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "angular@1.8.2"
+          "value": "angular@1.8.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24193,14 +24193,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@16.5.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.9.1",
       "name": "bpmn-js",
-      "version": "16.5.0",
-      "purl": "pkg:npm/bpmn-js@16.5.0",
+      "version": "18.9.1",
+      "purl": "pkg:npm/bpmn-js@18.9.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@16.5.0"
+          "value": "bpmn-js@18.9.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24210,14 +24210,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-moddle@8.1.0",
+      "bom-ref": "pkg:npm/bpmn-moddle@9.0.4",
       "name": "bpmn-moddle",
-      "version": "8.1.0",
-      "purl": "pkg:npm/bpmn-moddle@8.1.0",
+      "version": "9.0.4",
+      "purl": "pkg:npm/bpmn-moddle@9.0.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-moddle@8.1.0"
+          "value": "bpmn-moddle@9.0.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24295,14 +24295,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/chart.js@4.5.0",
+      "bom-ref": "pkg:npm/chart.js@4.5.1",
       "name": "chart.js",
-      "version": "4.5.0",
-      "purl": "pkg:npm/chart.js@4.5.0",
+      "version": "4.5.1",
+      "purl": "pkg:npm/chart.js@4.5.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "chart.js@4.5.0"
+          "value": "chart.js@4.5.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24703,23 +24703,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js-direct-editing@2.1.2",
-      "name": "diagram-js-direct-editing",
-      "version": "2.1.2",
-      "purl": "pkg:npm/diagram-js-direct-editing@2.1.2",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js-direct-editing@2.1.2"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/diagram-js-direct-editing@3.2.0",
       "name": "diagram-js-direct-editing",
       "version": "3.2.0",
@@ -24788,31 +24771,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@13.4.0",
+      "bom-ref": "pkg:npm/diagram-js@15.4.0",
       "name": "diagram-js",
-      "version": "13.4.0",
-      "purl": "pkg:npm/diagram-js@13.4.0",
+      "version": "15.4.0",
+      "purl": "pkg:npm/diagram-js@15.4.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@13.4.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.3.0",
-      "name": "diagram-js",
-      "version": "15.3.0",
-      "purl": "pkg:npm/diagram-js@15.3.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.3.0"
+          "value": "diagram-js@15.4.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24924,14 +24890,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-decision-table@17.1.0",
+      "bom-ref": "pkg:npm/dmn-js-decision-table@17.4.0",
       "name": "dmn-js-decision-table",
-      "version": "17.1.0",
-      "purl": "pkg:npm/dmn-js-decision-table@17.1.0",
+      "version": "17.4.0",
+      "purl": "pkg:npm/dmn-js-decision-table@17.4.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-decision-table@17.1.0"
+          "value": "dmn-js-decision-table@17.4.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25145,31 +25111,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.2.4",
+      "bom-ref": "pkg:npm/dompurify@3.3.1",
       "name": "dompurify",
-      "version": "3.2.4",
-      "purl": "pkg:npm/dompurify@3.2.4",
+      "version": "3.3.1",
+      "purl": "pkg:npm/dompurify@3.3.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.2.4"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.2.6",
-      "name": "dompurify",
-      "version": "3.2.6",
-      "purl": "pkg:npm/dompurify@3.2.6",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.2.6"
+          "value": "dompurify@3.3.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26114,23 +26063,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/moddle-xml@10.1.0",
-      "name": "moddle-xml",
-      "version": "10.1.0",
-      "purl": "pkg:npm/moddle-xml@10.1.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "moddle-xml@10.1.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/moddle-xml@11.0.0",
       "name": "moddle-xml",
       "version": "11.0.0",
@@ -26207,23 +26139,6 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "moddle@5.0.4"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/moddle@6.2.3",
-      "name": "moddle",
-      "version": "6.2.3",
-      "purl": "pkg:npm/moddle@6.2.3",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "moddle@6.2.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26930,7 +26845,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e6ba4afb-aa99-457e-89df-f2652d832727",
+      "bom-ref": "8f4a5986-e2b3-442f-adcc-aef287989681",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26955,10 +26870,10 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-parent@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
+        "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-database-settings@1.1.0-SNAPSHOT?type=pom",
@@ -26970,20 +26885,15 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.0-SNAPSHOT?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
-        "pkg:maven/junit/junit@4.13.2?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
@@ -26993,35 +26903,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/junit/junit@4.13.2?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
-    },
-    {
-      "ref": "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
-      "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@1.1.0-SNAPSHOT?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-      "dependsOn": [
-        "pkg:maven/net.bytebuddy/byte-buddy@1.17.8?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/net.bytebuddy/byte-buddy@1.17.8?type=jar",
-      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
@@ -27077,6 +26963,56 @@
       ]
     },
     {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@1.1.0-SNAPSHOT?type=jar",
+      "dependsOn": [
+        "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
+        "pkg:maven/junit/junit@4.13.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.tngtech.archunit/archunit@1.4.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/junit/junit@4.13.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.hamcrest/hamcrest-core@1.3?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
+      "dependsOn": [
+        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@1.1.0-SNAPSHOT?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "dependsOn": [
+        "pkg:maven/net.bytebuddy/byte-buddy@1.17.8?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/net.bytebuddy/byte-buddy@1.17.8?type=jar",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
@@ -27087,6 +27023,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
@@ -27095,6 +27032,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
@@ -27109,27 +27047,6 @@
     {
       "ref": "pkg:maven/jakarta.el/jakarta.el-api@5.0.1?type=jar",
       "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-root@1.1.0-SNAPSHOT?type=pom",
-      "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.0-SNAPSHOT?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
-      ]
     },
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
@@ -27147,6 +27064,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
@@ -27743,7 +27661,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@1.1.0-SNAPSHOT?classifier=tests\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.14.Final?type=jar"
+        "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar"
       ]
     },
     {
@@ -27773,14 +27691,14 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.14.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
         "pkg:maven/org.jboss/jandex@2.4.5.Final?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.14.Final?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
         "pkg:maven/org.reactivestreams/reactive-streams@1.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar",
         "pkg:maven/org.eclipse.angus/angus-activation@2.0.3?type=jar",
@@ -27797,7 +27715,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.14.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar",
@@ -29764,40 +29682,46 @@
       "dependsOn": []
     },
     {
-      "ref": "7dc2d15c-de38-43bd-ad66-34b738214023",
+      "ref": "8f4a5986-e2b3-442f-adcc-aef287989681",
+      "dependsOn": [
+        "f3f3c566-caf3-401b-b7e8-17bd12469898"
+      ]
+    },
+    {
+      "ref": "f3f3c566-caf3-401b-b7e8-17bd12469898",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
         "pkg:npm/%40ibm/plex@6.4.1",
-        "pkg:npm/angular-animate@1.8.2",
-        "pkg:npm/angular-cookies@1.8.2",
+        "pkg:npm/angular-animate@1.8.3",
+        "pkg:npm/angular-cookies@1.8.3",
         "pkg:npm/angular-data-depend@1.0.0",
         "pkg:npm/angular-loader@1.8.3",
         "pkg:npm/angular-moment@1.3.0",
-        "pkg:npm/angular-resource@1.8.2",
-        "pkg:npm/angular-route@1.8.2",
-        "pkg:npm/angular-sanitize@1.8.2",
-        "pkg:npm/angular-touch@1.8.2",
-        "pkg:npm/angular-translate@2.19.0",
+        "pkg:npm/angular-resource@1.8.3",
+        "pkg:npm/angular-route@1.8.3",
+        "pkg:npm/angular-sanitize@1.8.3",
+        "pkg:npm/angular-touch@1.8.3",
+        "pkg:npm/angular-translate@2.19.1",
         "pkg:npm/angular-ui-bootstrap@2.5.6",
-        "pkg:npm/angular@1.8.2",
+        "pkg:npm/angular@1.8.3",
         "pkg:npm/bootstrap@3.4.1",
         "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@16.5.0",
+        "pkg:npm/bpmn-js@18.9.1",
         "pkg:npm/camunda-dmn-js@3.2.0",
-        "pkg:npm/chart.js@4.5.0",
+        "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.35.1",
         "pkg:npm/dmn-font@0.6.2",
-        "pkg:npm/dmn-js-decision-table@17.1.0",
+        "pkg:npm/dmn-js-decision-table@17.4.0",
         "pkg:npm/dmn-js-drd@17.2.0",
         "pkg:npm/dmn-js-literal-expression@17.1.0",
         "pkg:npm/dmn-js-properties-panel@3.2.1",
         "pkg:npm/dmn-js-shared@17.1.0",
         "pkg:npm/dmn-js@17.2.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.2.4",
+        "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@4.3.4",
         "pkg:npm/jquery-ui@1.13.2",
@@ -29809,12 +29733,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
-      ]
-    },
-    {
-      "ref": "e6ba4afb-aa99-457e-89df-f2652d832727",
-      "dependsOn": [
-        "7dc2d15c-de38-43bd-ad66-34b738214023"
       ]
     },
     {
@@ -29929,7 +29847,7 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@10.2.2",
-        "pkg:npm/dompurify@3.2.6",
+        "pkg:npm/dompurify@3.3.1",
         "pkg:npm/feelers@1.4.0",
         "pkg:npm/feelin@4.3.0",
         "pkg:npm/flatpickr@4.6.13",
@@ -30127,11 +30045,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-animate@1.8.2",
+      "ref": "pkg:npm/angular-animate@1.8.3",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-cookies@1.8.2",
+      "ref": "pkg:npm/angular-cookies@1.8.3",
       "dependsOn": []
     },
     {
@@ -30149,25 +30067,25 @@
       ]
     },
     {
-      "ref": "pkg:npm/angular-resource@1.8.2",
+      "ref": "pkg:npm/angular-resource@1.8.3",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-route@1.8.2",
+      "ref": "pkg:npm/angular-route@1.8.3",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-sanitize@1.8.2",
+      "ref": "pkg:npm/angular-sanitize@1.8.3",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-touch@1.8.2",
+      "ref": "pkg:npm/angular-touch@1.8.3",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular-translate@2.19.0",
+      "ref": "pkg:npm/angular-translate@2.19.1",
       "dependsOn": [
-        "pkg:npm/angular@1.8.2"
+        "pkg:npm/angular@1.8.3"
       ]
     },
     {
@@ -30175,7 +30093,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/angular@1.8.2",
+      "ref": "pkg:npm/angular@1.8.3",
       "dependsOn": []
     },
     {
@@ -30207,11 +30125,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@16.5.0",
+      "ref": "pkg:npm/bpmn-js@18.9.1",
       "dependsOn": [
-        "pkg:npm/bpmn-moddle@8.1.0",
-        "pkg:npm/diagram-js-direct-editing@2.1.2",
-        "pkg:npm/diagram-js@13.4.0",
+        "pkg:npm/bpmn-moddle@9.0.4",
+        "pkg:npm/diagram-js-direct-editing@3.2.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/ids@1.0.5",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@4.2.3",
@@ -30220,11 +30138,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/bpmn-moddle@8.1.0",
+      "ref": "pkg:npm/bpmn-moddle@9.0.4",
       "dependsOn": [
         "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/moddle-xml@10.1.0",
-        "pkg:npm/moddle@6.2.3"
+        "pkg:npm/moddle-xml@11.0.0",
+        "pkg:npm/moddle@7.2.0"
       ]
     },
     {
@@ -30248,7 +30166,7 @@
         "pkg:npm/camunda-dmn-moddle@1.3.0",
         "pkg:npm/diagram-js-grid@1.1.0",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js-drd@17.2.0",
         "pkg:npm/dmn-js-properties-panel@3.2.1",
         "pkg:npm/dmn-js@17.2.0",
@@ -30264,7 +30182,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/chart.js@4.5.0",
+      "ref": "pkg:npm/chart.js@4.5.1",
       "dependsOn": [
         "pkg:npm/%40kurkle/color@0.3.4"
       ]
@@ -30404,17 +30322,9 @@
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js-direct-editing@2.1.2",
-      "dependsOn": [
-        "pkg:npm/diagram-js@13.4.0",
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/min-dom@4.2.1"
-      ]
-    },
-    {
       "ref": "pkg:npm/diagram-js-direct-editing@3.2.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/min-dom@4.2.1"
       ]
@@ -30429,7 +30339,7 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@13.4.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
@@ -30449,22 +30359,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@13.4.0",
-      "dependsOn": [
-        "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
-        "pkg:npm/clsx@2.1.1",
-        "pkg:npm/didi@10.2.2",
-        "pkg:npm/hammerjs@2.0.8",
-        "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/min-dom@4.2.1",
-        "pkg:npm/object-refs@0.4.0",
-        "pkg:npm/path-intersection@3.1.0",
-        "pkg:npm/tiny-svg@3.1.3"
-      ]
-    },
-    {
-      "ref": "pkg:npm/diagram-js@15.3.0",
+      "ref": "pkg:npm/diagram-js@15.4.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
         "pkg:npm/clsx@2.1.1",
@@ -30511,7 +30406,7 @@
       "ref": "pkg:npm/dmn-js-boxed-expression@17.4.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js-shared@17.4.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@4.2.3",
@@ -30520,12 +30415,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-decision-table@17.1.0",
+      "ref": "pkg:npm/dmn-js-decision-table@17.4.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.3.0",
-        "pkg:npm/dmn-js-shared@17.1.0",
+        "pkg:npm/diagram-js@15.4.0",
+        "pkg:npm/dmn-js-shared@17.4.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@4.2.3",
@@ -30538,7 +30433,7 @@
       "ref": "pkg:npm/dmn-js-drd@17.2.0",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.2.0",
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js-shared@17.1.0",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@4.2.3",
@@ -30551,7 +30446,7 @@
       "ref": "pkg:npm/dmn-js-literal-expression@17.1.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js-shared@17.1.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -30574,7 +30469,7 @@
       "ref": "pkg:npm/dmn-js-shared@17.1.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/didi@10.2.2",
         "pkg:npm/dmn-moddle@10.0.0",
         "pkg:npm/ids@1.0.5",
@@ -30590,7 +30485,7 @@
       "ref": "pkg:npm/dmn-js-shared@17.4.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
-        "pkg:npm/diagram-js@15.3.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/didi@10.2.2",
         "pkg:npm/dmn-moddle@11.0.0",
         "pkg:npm/ids@1.0.5",
@@ -30606,7 +30501,7 @@
       "ref": "pkg:npm/dmn-js@17.2.0",
       "dependsOn": [
         "pkg:npm/dmn-js-boxed-expression@17.4.0",
-        "pkg:npm/dmn-js-decision-table@17.1.0",
+        "pkg:npm/dmn-js-decision-table@17.4.0",
         "pkg:npm/dmn-js-drd@17.2.0",
         "pkg:npm/dmn-js-literal-expression@17.1.0",
         "pkg:npm/dmn-js-shared@17.1.0"
@@ -30648,13 +30543,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.2.4",
-      "dependsOn": [
-        "pkg:npm/%40types/trusted-types@2.0.7"
-      ]
-    },
-    {
-      "ref": "pkg:npm/dompurify@3.2.6",
+      "ref": "pkg:npm/dompurify@3.3.1",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -30979,14 +30868,6 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/moddle-xml@10.1.0",
-      "dependsOn": [
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/moddle@6.2.3",
-        "pkg:npm/saxen@8.1.2"
-      ]
-    },
-    {
       "ref": "pkg:npm/moddle-xml@11.0.0",
       "dependsOn": [
         "pkg:npm/min-dash@4.2.3",
@@ -31020,12 +30901,6 @@
       "ref": "pkg:npm/moddle@5.0.4",
       "dependsOn": [
         "pkg:npm/min-dash@3.8.1"
-      ]
-    },
-    {
-      "ref": "pkg:npm/moddle@6.2.3",
-      "dependsOn": [
-        "pkg:npm/min-dash@4.2.3"
       ]
     },
     {
@@ -31206,7 +31081,7 @@
     {
       "ref": "pkg:npm/table-js@9.2.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@13.4.0",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/didi@10.2.2",
         "pkg:npm/ids@1.0.5",
         "pkg:npm/inferno@5.6.3",
@@ -31363,10 +31238,10 @@
       "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -31469,10 +31344,10 @@
       "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -31576,10 +31451,10 @@
       "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -31683,10 +31558,10 @@
       "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -31790,10 +31665,10 @@
       "updated": "2025-11-20T17:53:57Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -31885,10 +31760,10 @@
       "updated": "2025-11-03T20:16:09Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -32109,10 +31984,10 @@
       "updated": "2025-11-20T18:00:14Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -32194,10 +32069,10 @@
       "updated": "2025-11-20T18:00:14Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -32264,10 +32139,10 @@
       "updated": "2025-11-03T20:17:05Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular@1.8.2",
+          "ref": "pkg:npm/angular@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]
@@ -32396,10 +32271,10 @@
       "updated": "2025-11-03T20:18:08Z",
       "affects": [
         {
-          "ref": "pkg:npm/angular-sanitize@1.8.2",
+          "ref": "pkg:npm/angular-sanitize@1.8.3",
           "versions": [
             {
-              "version": "1.8.2",
+              "version": "1.8.3",
               "status": "affected"
             }
           ]

@@ -20,7 +20,7 @@
     "@bpmn-io/dmn-migrate": "0.5.0",
     "@bpmn-io/form-js": "1.8.7",
     "@ibm/plex": "6.4.1",
-    "angular": "1.8.2",
+    "angular": "1.8.3",
     "angular-animate": "1.8.3",
     "angular-cookies": "1.8.2",
     "angular-data-depend": "https://github.com/camunda-third-party/angular-data-depend.git#8e3b66914c611069e3698fd5d4275e6cf8055d01",

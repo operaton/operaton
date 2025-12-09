@@ -35,7 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -287,65 +287,44 @@ class JobDefinitionPriorityTest {
 
   @Test
   void testSetNonExistingJobDefinitionPriority() {
-    try {
-      managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42);
-      fail("should not succeed");
-    } catch (NotFoundException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("job definition with id 'someNonExistingJobDefinitionId' does not exist",
-          e.getMessage());
-    }
+    assertThatThrownBy(
+        () -> managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
 
-    try {
-      managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42, true);
-      fail("should not succeed");
-    } catch (NotFoundException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("job definition with id 'someNonExistingJobDefinitionId' does not exist",
-          e.getMessage());
-    }
+    assertThatThrownBy(
+        () -> managementService.setOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId", 42, true))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
   }
 
   @Test
   void testResetNonExistingJobDefinitionPriority() {
-    try {
-      managementService.clearOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId");
-      fail("should not succeed");
-    } catch (NotFoundException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("job definition with id 'someNonExistingJobDefinitionId' does not exist",
-          e.getMessage());
-    }
+    assertThatThrownBy(
+        () -> managementService.clearOverridingJobPriorityForJobDefinition("someNonExistingJobDefinitionId"))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Job definition with id 'someNonExistingJobDefinitionId' does not exist");
   }
 
   @Test
   void testSetNullJobDefinitionPriority() {
-    try {
-      managementService.setOverridingJobPriorityForJobDefinition(null, 42);
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("jobDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(
+        () -> managementService.setOverridingJobPriorityForJobDefinition(null, 42))
+        .isInstanceOf(NotValidException.class)
+        .hasMessageContaining("jobDefinitionId is null");
 
-    try {
-      managementService.setOverridingJobPriorityForJobDefinition(null, 42, true);
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("jobDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(
+        () -> managementService.setOverridingJobPriorityForJobDefinition(null, 42, true))
+        .isInstanceOf(NotValidException.class)
+        .hasMessageContaining("jobDefinitionId is null");
   }
 
   @Test
   void testResetNullJobDefinitionPriority() {
-    try {
-      managementService.clearOverridingJobPriorityForJobDefinition(null);
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("jobDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(
+        () -> managementService.clearOverridingJobPriorityForJobDefinition(null))
+        .isInstanceOf(NotValidException.class)
+        .hasMessageContaining("jobDefinitionId is null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")

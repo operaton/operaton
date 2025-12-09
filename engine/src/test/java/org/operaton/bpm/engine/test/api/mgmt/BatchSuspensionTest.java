@@ -43,7 +43,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.EntityTypes.BATCH;
 
-public class BatchSuspensionTest {
+class BatchSuspensionTest {
 
   public static final String USER_ID = "userId";
 

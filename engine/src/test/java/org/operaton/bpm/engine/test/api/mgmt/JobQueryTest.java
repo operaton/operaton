@@ -273,7 +273,7 @@ public class JobQueryTest {
 
     assertThatThrownBy(() -> jobQuery.processDefinitionId(null))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Provided job definition id is null");
+      .hasMessageContaining("Provided process definition id is null");
   }
 
   @TestTemplate

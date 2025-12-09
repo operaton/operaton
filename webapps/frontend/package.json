@@ -83,7 +83,7 @@
     "karma": "6.4.2",
     "karma-webpack": "5.0.1",
     "less": "4.2.0",
-    "less-loader": "12.2.0",
+    "less-loader": "12.3.0",
     "license-checker": "25.0.1",
     "mini-css-extract-plugin": "2.8.0",
     "prettier": "1.19.1",

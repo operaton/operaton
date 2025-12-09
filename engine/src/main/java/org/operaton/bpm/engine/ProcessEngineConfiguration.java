@@ -28,13 +28,11 @@ import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.impl.BootstrapEngineCommand;
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.SchemaOperationsProcessEngineBuild;
-import org.operaton.bpm.engine.impl.cfg.BeansConfigurationHelper;
-import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
+import org.operaton.bpm.engine.spi.ProcessEngineConfigurationFactory;
 import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
-
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 /** Configuration information from which a process engine can be build.
  *
@@ -89,6 +87,11 @@ import org.operaton.bpm.engine.variable.type.ValueTypeResolver;
  * @author Tom Baeyens
  */
 public abstract class ProcessEngineConfiguration {
+  private static final ProcessEngineConfigurationFactory PROCESS_ENGINE_CONFIGURATION_FACTORY;
+
+  static {
+    PROCESS_ENGINE_CONFIGURATION_FACTORY = ServiceLoaderUtil.loadSingleService(ProcessEngineConfigurationFactory.class);
+  }
 
   /**
    * Checks the version of the DB schema against the library when
@@ -202,7 +205,6 @@ public abstract class ProcessEngineConfiguration {
    * effectively unusable on most databases.
    */
   public static final String AUTHORIZATION_CHECK_REVOKE_AUTO = "auto";
-  private static final String BEAN_PROCESS_ENGINE_CONFIGURATION = "processEngineConfiguration";
 
   protected String processEngineName = ProcessEngines.NAME_DEFAULT;
   protected int idBlockSize = 100;
@@ -428,39 +430,31 @@ public abstract class ProcessEngineConfiguration {
   public abstract ProcessEngine buildProcessEngine();
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResourceDefault() {
-    ProcessEngineConfiguration processEngineConfiguration = null;
-    try {
-      processEngineConfiguration = createProcessEngineConfigurationFromResource("operaton.cfg.xml",
-              BEAN_PROCESS_ENGINE_CONFIGURATION);
-    } catch (RuntimeException ex) {
-      processEngineConfiguration = createProcessEngineConfigurationFromResource("activiti.cfg.xml",
-              BEAN_PROCESS_ENGINE_CONFIGURATION);
-    }
-    return processEngineConfiguration;
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createProcessEngineConfigurationFromResourceDefault();
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource) {
-    return createProcessEngineConfigurationFromResource(resource, BEAN_PROCESS_ENGINE_CONFIGURATION);
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createProcessEngineConfigurationFromResource(resource);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromResource(String resource, String beanName) {
-    return BeansConfigurationHelper.parseProcessEngineConfigurationFromResource(resource, beanName);
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createProcessEngineConfigurationFromResource(resource, beanName);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromInputStream(InputStream inputStream) {
-    return createProcessEngineConfigurationFromInputStream(inputStream, BEAN_PROCESS_ENGINE_CONFIGURATION);
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createProcessEngineConfigurationFromInputStream(inputStream);
   }
 
   public static ProcessEngineConfiguration createProcessEngineConfigurationFromInputStream(InputStream inputStream, String beanName) {
-    return BeansConfigurationHelper.parseProcessEngineConfigurationFromInputStream(inputStream, beanName);
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createProcessEngineConfigurationFromInputStream(inputStream, beanName);
   }
 
   public static ProcessEngineConfiguration createStandaloneProcessEngineConfiguration() {
-    return new StandaloneProcessEngineConfiguration();
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createStandaloneProcessEngineConfiguration() ;
   }
 
   public static ProcessEngineConfiguration createStandaloneInMemProcessEngineConfiguration() {
-    return new StandaloneInMemProcessEngineConfiguration();
+    return PROCESS_ENGINE_CONFIGURATION_FACTORY.createStandaloneInMemProcessEngineConfiguration();
   }
 
 // TODO add later when we have test coverage for this

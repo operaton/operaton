@@ -40,8 +40,9 @@ import org.operaton.bpm.engine.test.api.runtime.migration.batch.BatchMigrationHe
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.operaton.bpm.engine.EntityTypes.BATCH;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BatchSuspensionTest {
 

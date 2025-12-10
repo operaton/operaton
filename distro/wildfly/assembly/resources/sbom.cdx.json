@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:48bc7697-8af4-44a8-a70d-0a4ee0ecb17a",
+  "serialNumber": "urn:uuid:e1367231-c204-488e-8015-2bb090292d82",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-10T09:21:17Z",
+    "timestamp": "2025-12-10T16:02:20Z",
     "tools": {
       "components": [
         {
@@ -8214,7 +8214,7 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine",
@@ -8228,7 +8228,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine",
@@ -33717,7 +33717,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "44c551a4-8673-4114-b150-d75fa1f7aed7",
+      "bom-ref": "2cee3a6a-0af0-4a2d-adef-4c29359dfd00",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37410,7 +37410,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "106416b6-3d86-458f-bc1c-67b3afa5f3ae",
+      "bom-ref": "b3bbd680-3618-4e9f-8402-56883c14c79b",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -38383,7 +38383,7 @@
       "dependsOn": [
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-depchain@3.3.4?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
         "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@3.1.11?type=jar",
@@ -38810,7 +38810,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
@@ -39526,7 +39526,7 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
@@ -39542,7 +39542,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar"
       ]
     },
@@ -41390,13 +41390,7 @@
       "dependsOn": []
     },
     {
-      "ref": "106416b6-3d86-458f-bc1c-67b3afa5f3ae",
-      "dependsOn": [
-        "44c551a4-8673-4114-b150-d75fa1f7aed7"
-      ]
-    },
-    {
-      "ref": "44c551a4-8673-4114-b150-d75fa1f7aed7",
+      "ref": "2cee3a6a-0af0-4a2d-adef-4c29359dfd00",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -41441,6 +41435,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "b3bbd680-3618-4e9f-8402-56883c14c79b",
+      "dependsOn": [
+        "2cee3a6a-0af0-4a2d-adef-4c29359dfd00"
       ]
     },
     {

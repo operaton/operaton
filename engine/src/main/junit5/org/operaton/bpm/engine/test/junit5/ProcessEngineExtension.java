@@ -189,12 +189,15 @@ public class ProcessEngineExtension implements TestWatcher,
 
   public void initializeProcessEngine() {
     Consumer<ProcessEngineConfigurationImpl> configurator = processEngineConfigurator;
+
+    String engineName = randomName ? ProcessEngineUtils.newRandomProcessEngineName() : ProcessEngines.NAME_DEFAULT;
+
     if (randomName) {
       if (processEngineConfigurator == null) {
-        configurator = config -> config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+        configurator = config -> config.setProcessEngineName(engineName);
       } else {
         configurator = config -> {
-          config.setProcessEngineName(ProcessEngineUtils.newRandomProcessEngineName());
+          config.setProcessEngineName(engineName);
           processEngineConfigurator.accept(config);
         };
       }
@@ -205,7 +208,8 @@ public class ProcessEngineExtension implements TestWatcher,
       processEngine = TestHelper.getProcessEngine(configurationResource, configurator);
     } else {
       LOG.debug("no configuration resource provided. Using default StandaloneInMemProcessEngineConfiguration");
-      processEngine = TestHelper.getProcessEngine(new StandaloneInMemProcessEngineConfiguration(), configurator);
+      processEngine = TestHelper.getProcessEngine(new StandaloneInMemProcessEngineConfiguration()
+              .setJdbcUrl("jdbc:h2:mem:operaton-" + engineName), configurator);
     }
 
     processEngineConfiguration = (ProcessEngineConfigurationImpl) processEngine.getProcessEngineConfiguration();

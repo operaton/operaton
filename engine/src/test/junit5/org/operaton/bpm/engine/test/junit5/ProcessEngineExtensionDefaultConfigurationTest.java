@@ -36,7 +36,7 @@ class ProcessEngineExtensionDefaultConfigurationTest {
   @Test
   void engineExistsWithDefaultConfiguration() {
     var configuration = engine.getProcessEngineConfiguration();
-    assertThat(configuration.getJdbcUrl()).isEqualTo("jdbc:h2:mem:operaton");
+    assertThat(configuration.getJdbcUrl()).isEqualTo("jdbc:h2:mem:operaton-" + engine.getName());
     assertThat(configuration.getJdbcUsername()).isEqualTo("sa");
     assertThat(configuration.getJdbcPassword()).isEqualTo("");
   }

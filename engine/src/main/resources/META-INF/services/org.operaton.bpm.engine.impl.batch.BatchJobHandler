@@ -1,0 +1,14 @@
+org.operaton.bpm.engine.impl.migration.batch.MigrationBatchJobHandler
+org.operaton.bpm.engine.impl.ModificationBatchJobHandler
+org.operaton.bpm.engine.impl.batch.deletion.DeleteProcessInstancesJobHandler
+org.operaton.bpm.engine.impl.batch.deletion.DeleteHistoricProcessInstancesJobHandler
+org.operaton.bpm.engine.impl.batch.job.SetJobRetriesJobHandler
+org.operaton.bpm.engine.impl.batch.externaltask.SetExternalTaskRetriesJobHandler
+org.operaton.bpm.engine.impl.RestartProcessInstancesJobHandler
+org.operaton.bpm.engine.impl.batch.update.UpdateProcessInstancesSuspendStateJobHandler
+org.operaton.bpm.engine.impl.dmn.batch.DeleteHistoricDecisionInstancesJobHandler
+org.operaton.bpm.engine.impl.batch.removaltime.ProcessSetRemovalTimeJobHandler
+org.operaton.bpm.engine.impl.batch.removaltime.DecisionSetRemovalTimeJobHandler
+org.operaton.bpm.engine.impl.batch.removaltime.BatchSetRemovalTimeJobHandler
+org.operaton.bpm.engine.impl.batch.variables.BatchSetVariablesHandler
+org.operaton.bpm.engine.impl.batch.message.MessageCorrelationBatchJobHandler

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:f63177e9-23b4-4657-a5bf-d62c42256b3a",
+  "serialNumber": "urn:uuid:48bc7697-8af4-44a8-a70d-0a4ee0ecb17a",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-10T08:19:09Z",
+    "timestamp": "2025-12-10T09:21:17Z",
     "tools": {
       "components": [
         {
@@ -5470,44 +5470,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+      "bom-ref": "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
       "group": "com.google.code.gson",
       "name": "gson",
-      "version": "2.8.9",
+      "version": "2.13.2",
       "description": "Gson JSON library",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e67627f67e03301092dc7de0a2d7cef8"
+          "content": "a2c47e14ce5e956105458fe455f5d542"
         },
         {
           "alg": "SHA-1",
-          "content": "8a432c1d6825781e21a02db2e2c33c5fde2833b9"
+          "content": "48b8230771e573b54ce6e867a9001e75977fe78e"
         },
         {
           "alg": "SHA-256",
-          "content": "d3999291855de495c94c743761b8ab5176cfeabe281a5ab0d8e8d45326fd703e"
+          "content": "dd0ce1b55a3ed2080cb70f9c655850cda86c206862310009dcb5e5c95265a5e0"
         },
         {
           "alg": "SHA-512",
-          "content": "46501e4dd34c9a6f33ff63aeeec45b049579365c5273490e5dfd5ea4effaeced907d0fc728204c619aa136e867ad826204582ff9ba3080d06693c1c675c8473f"
+          "content": "8974a052656d2e5ec968b6bac2edf51413ffc62040fdc65f14f00597e738ab544d22487f8579ba90618b5a7f94ef33773510fac67b408fee6ed274b38f3d9947"
         },
         {
           "alg": "SHA-384",
-          "content": "2f2897912784595e52d3f8e57741aed7dd866f16a69562d57e0604d85e2fef08b2a32e58afd00d264f66cc6ec775dc79"
+          "content": "98e8afe5b23c43b84e7a57e0e27f683a182fcf97ee3eeb6a1311582f7fecd846c806ffb092b620088dc03d256d8eaf27"
         },
         {
           "alg": "SHA3-384",
-          "content": "3ce084f79191afdbdb0a9aa83073b128f620cf585b65c2e81ba98080fd91e9f327db3f0952903094b7dd387bc802b5ba"
+          "content": "d61d6b1cf6997c75287f454e536f855db8404e5fb9d0b8faa4dcc1e7a60ffefc05c2f92f3514e091808a8677b29f3619"
         },
         {
           "alg": "SHA3-256",
-          "content": "e82ae9fa3a783ee683880d219ab529bb3d0b45ea721d002ee948fad99a67b4f0"
+          "content": "1c051cfe5e630b35d003f96e135de7c5d5cab145b6e1159143570cb246426a0d"
         },
         {
           "alg": "SHA3-512",
-          "content": "25cfe43039c6d41344434f89e9a8ad6f93a341512baf93e894a14a9dfd3af1cb0f0afaed4ade6db3c719f910fd9dfbeb7bec8bcfd7f49ac572ab217bce9e595e"
+          "content": "55ddee7f6c1659ffa82e5c308a0181b459cfeb3442f1f9868ff7e9a3c83376bd2ad527b16d5131df442ffd03d06c35dbd64458df6b02a111c1654f01db381ba5"
         }
       ],
       "licenses": [
@@ -5518,22 +5518,80 @@
           }
         }
       ],
-      "purl": "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+      "purl": "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
       "externalReferences": [
         {
-          "url": "https://github.com/google/gson/gson",
+          "url": "https://github.com/google/gson",
           "type": "website"
-        },
-        {
-          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
         },
         {
           "url": "https://github.com/google/gson/issues",
           "type": "issue-tracker"
         },
         {
-          "url": "https://github.com/google/gson/gson/",
+          "url": "https://github.com/google/gson/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.google.errorprone/error_prone_annotations@2.41.0?type=jar",
+      "publisher": "Google LLC",
+      "group": "com.google.errorprone",
+      "name": "error_prone_annotations",
+      "version": "2.41.0",
+      "description": "Error Prone is a static analysis tool for Java that catches common programming mistakes at compile-time.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "75e3b25da8b8a2136463c4674f5e49bf"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "4381275efdef6ddfae38f002c31e84cd001c97f0"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "a56e782b5b50811ac204073a355a21d915a2107fce13ec711331ad036f660fcc"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "e2eb4bf9f36f95a4d4c5ea344db5cd90a456e63bef8e52932b8f6f4ecfdd59cb2f6c2ce9e67b0070c82177e42885688b95afef591b16001f789b378f18afdf30"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "43700b378624aa37197ef03a6b5ea40b5fbb6c0aa667eadf810ad36f0707dffaf3ea23471f2553327c3f5644cc875ee7"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "8bf3293cf4b72c9a999948f8812190636ef3b0c35bab8dbf9a54c263eeab2a3b3d0774fdcab52c6d114551ff74a8aea2"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "2ca1a59f4fdc37a3c83501542c63842fa4fe40c06f69a59a2a072e4af442a16a"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "6d1f419996b15e5a2bd9b268d166046e38fe9cc6c58fe56aaacbe71b95e3db8c8fe1d226e7f549ea227956feaf3087706bdfa79930fe432298bba9ec06c26a90"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.google.errorprone/error_prone_annotations@2.41.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://errorprone.info/error_prone_annotations",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/google/error-prone/error_prone_annotations",
           "type": "vcs"
         }
       ]
@@ -33659,7 +33717,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "80643f30-d09d-4c1b-b369-19aaa53209c5",
+      "bom-ref": "44c551a4-8673-4114-b150-d75fa1f7aed7",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37352,7 +37410,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c6504974-0bb0-44e7-aa25-b77bc84afe34",
+      "bom-ref": "106416b6-3d86-458f-bc1c-67b3afa5f3ae",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37864,7 +37922,7 @@
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@6.2.14?type=jar",
         "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
-        "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+        "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
@@ -37908,7 +37966,13 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+      "ref": "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
+      "dependsOn": [
+        "pkg:maven/com.google.errorprone/error_prone_annotations@2.41.0?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.google.errorprone/error_prone_annotations@2.41.0?type=jar",
       "dependsOn": []
     },
     {
@@ -38279,7 +38343,7 @@
         "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
         "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
-        "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar"
+        "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar"
       ]
     },
     {
@@ -38757,7 +38821,7 @@
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@6.2.14?type=jar",
         "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
-        "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+        "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
     },
@@ -39585,7 +39649,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
-        "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+        "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
         "pkg:maven/com.networknt/json-schema-validator@2.0.0?type=jar"
       ]
@@ -39685,7 +39749,7 @@
         "pkg:maven/org.operaton.spin/operaton-spin-core@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
-        "pkg:maven/com.google.code.gson/gson@2.8.9?type=jar",
+        "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar"
       ]
@@ -41326,7 +41390,13 @@
       "dependsOn": []
     },
     {
-      "ref": "80643f30-d09d-4c1b-b369-19aaa53209c5",
+      "ref": "106416b6-3d86-458f-bc1c-67b3afa5f3ae",
+      "dependsOn": [
+        "44c551a4-8673-4114-b150-d75fa1f7aed7"
+      ]
+    },
+    {
+      "ref": "44c551a4-8673-4114-b150-d75fa1f7aed7",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -41371,12 +41441,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
-      ]
-    },
-    {
-      "ref": "c6504974-0bb0-44e7-aa25-b77bc84afe34",
-      "dependsOn": [
-        "80643f30-d09d-4c1b-b369-19aaa53209c5"
       ]
     },
     {

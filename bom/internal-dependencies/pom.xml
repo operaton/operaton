@@ -65,7 +65,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-bom</artifactId>
-        <version>6.2.15.Final</version>
+        <version>6.2.14.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

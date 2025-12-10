@@ -34,6 +34,20 @@ This directory contains the GitHub Actions workflows for the Operaton project. E
 - **Triggers**:
     - Manually triggered via `workflow_dispatch` with a Slack URL input
 
+### Nightly Trigger
+
+- **Filename**: `nightly-trigger.yml`
+- **Description**: This workflow triggers nightly integration builds on all release branches. It detects all branches with `release/` prefix and dispatches the Integration Build workflow for each branch with comprehensive test configurations.
+- **Triggers**:
+    - Scheduled daily at 3:00 AM UTC
+    - Manually triggered via `workflow_dispatch`
+- **Features**:
+    - Automatically detects all release branches
+    - Triggers integration builds with Java 17, 21, and 25
+    - Tests engine and webapps test suites
+    - Tests across operaton, tomcat, and wildfly distributions
+    - Tests with h2 and postgresql databases
+
 ## Actions Used
 
 | Action                                 | Version | Description                                             |

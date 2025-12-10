@@ -60,7 +60,6 @@ import org.junit.jupiter.api.condition.EnabledIf;
 import org.operaton.commons.utils.IoUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 class SqlScriptTest {
 
@@ -193,9 +192,7 @@ class SqlScriptTest {
   void executeSqlScript(String baseDirectory, String sqlFolder, String sqlScript) throws LiquibaseException {
     String scriptFileName = "%ssql/%s/%s_%s.sql".formatted(baseDirectory, sqlFolder, databaseType, sqlScript);
     InputStream resourceAsStream = getClass().getClassLoader().getResourceAsStream(scriptFileName);
-    if (resourceAsStream == null) {
-      fail("SQL script not found: " + scriptFileName);
-    }
+    assertThat(resourceAsStream).as("SQL script not found: " + scriptFileName).isNotNull();
     String statements = IoUtil.inputStreamAsString(resourceAsStream);
     SQLFileChange sqlFileChange = new SQLFileChange();
     sqlFileChange.setSql(statements);

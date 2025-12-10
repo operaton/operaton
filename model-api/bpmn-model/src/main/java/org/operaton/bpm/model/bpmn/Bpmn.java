@@ -223,6 +223,7 @@ import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_NS;
@@ -248,14 +249,8 @@ public class Bpmn {
   private static final BpmnParser BPMN_PARSER;
 
   static {
-    BpmnFactory bpmnFactory = ServiceLoader.load(BpmnFactory.class).findFirst().orElse(
-      ServiceLoader.load(BpmnFactory.class, Bpmn.class.getClassLoader()).findFirst()
-        .orElseThrow(() -> new IllegalStateException("No BpmnFactory found"))
-    );
-    BpmnParserFactory bpmnParserFactory = ServiceLoader.load(BpmnParserFactory.class).findFirst().orElse(
-      ServiceLoader.load(BpmnParserFactory.class, Bpmn.class.getClassLoader()).findFirst()
-        .orElseThrow(() -> new IllegalStateException("No BpmnParserFactory found"))
-    );
+    BpmnFactory bpmnFactory = ServiceLoaderUtil.loadSingleService(BpmnFactory.class);
+    BpmnParserFactory bpmnParserFactory = ServiceLoaderUtil.loadSingleService(BpmnParserFactory.class);
 
     INSTANCE = bpmnFactory.newInstance();
     BPMN_PARSER = bpmnParserFactory.newInstance();

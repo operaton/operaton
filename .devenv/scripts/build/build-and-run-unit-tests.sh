@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+# Copyright 2025 the Operaton contributors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 DATABASE="h2-in-memory"
 RUNNER="./mvnw"
 VALID_DATABASES=("h2-in-memory" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "db2-115" "sqlserver")
@@ -48,8 +62,8 @@ parse_args() {
 run_tests () {
   PROFILES=($DATABASE)
 
-  echo "ℹ️ Running unit tests with $DATABASE database using profiles: [${PROFILES[*]}]"
-  echo "$RUNNER -P$(IFS=,; echo "${PROFILES[*]}") clean verify"
+  echo "ℹ️ Running unit tests for the engine with $DATABASE database using profiles: [${PROFILES[*]}]"
+  echo "$RUNNER verify -pl engine -am -P$(IFS=,; echo "${PROFILES[*]}") verify"
   $RUNNER -P$(IFS=,; echo "${PROFILES[*]}") clean verify
   if [[ $? -ne 0 ]]; then
     echo "❌ Error: Tests failed"

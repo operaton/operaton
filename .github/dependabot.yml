@@ -6,20 +6,169 @@
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
- - package-ecosystem: "github-actions"
-   directory: "/"
-   schedule:
-     interval: "weekly"
-   reviewers:
-     - "kthoms"
- - package-ecosystem: "maven"
-   directory: "/"
-   schedule:
-     interval: "daily"
-     time: "01:00"
-   reviewers:
-     - "kthoms"
+  # Main branch - all updates
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "01:00"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "org.jruby:*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:maven"
+    milestone: 10
+  - package-ecosystem: "npm"
+    directory: "/webapps/frontend"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:npm"
+    milestone: 10
+    groups:
+      angular:
+        patterns:
+          - "angular*"
+      babel:
+        patterns:
+          - "@babel/core"
+          - "@babel/preset-env"
+          - "@babel/eslint-parser"
+      dmn-js:
+        patterns:
+          - "dmn-js"
+          - "dmn-js-decision-table"
+          - "dmn-js-drd"
+          - "dmn-js-literal-expression"
+          - "dmn-js-shared"
+  - package-ecosystem: "npm"
+    directory: "/engine-rest/docs"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:npm"
+    milestone: 10
+    groups:
+      react:
+        patterns:
+          - "react*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    labels:
+      - "dependencies:github-action"
+    milestone: 10
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "main"
+    labels:
+      - "dependencies:devcontainers"
+    milestone: 10
+
+  # Release 1.0.x branch - patch updates only
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "01:30"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:maven"
+    milestone: 11
+  - package-ecosystem: "npm"
+    directory: "/webapps/frontend"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:npm"
+    milestone: 11
+    groups:
+      angular:
+        patterns:
+          - "angular*"
+      babel:
+        patterns:
+          - "@babel/core"
+          - "@babel/preset-env"
+          - "@babel/eslint-parser"
+      dmn-js:
+        patterns:
+          - "dmn-js"
+          - "dmn-js-decision-table"
+          - "dmn-js-drd"
+          - "dmn-js-literal-expression"
+          - "dmn-js-shared"
+  - package-ecosystem: "npm"
+    directory: "/engine-rest/docs"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:npm"
+    milestone: 11
+    groups:
+      react:
+        patterns:
+          - "react*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "01:30"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:github-action"
+    milestone: 11
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "01:30"
+    target-branch: "release/1.0.x"
+    open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+      - "dependencies:devcontainers"
+    milestone: 11

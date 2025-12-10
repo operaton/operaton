@@ -382,7 +382,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
             .when()
             .get(PROCESS_DEFINITION_QUERY_URL);
 
-    verify(mockedQuery).processDefinitionKeysIn(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY,
+    verify(mockedQuery).processDefinitionKeyIn(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY,
             MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_KEY);
     verify(mockedQuery).list();
 

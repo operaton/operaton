@@ -247,14 +247,21 @@ class GetHistoricOperationLogsForOptimizeTest {
           assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
         }
     );
-    assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
-    assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo("true");
-    assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(2).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
-    assertThat(userOperationsLog.get(3).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(3).getNewValue()).isEqualTo("true");
+    // Verify suspend operation entries (order within same timestamp may vary by database)
+    assertThat(userOperationsLog.subList(0, 2))
+      .extracting(UserOperationLogEntry::getOperationType)
+      .containsOnly(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
+    assertThat(userOperationsLog.subList(0, 2))
+      .extracting(UserOperationLogEntry::getNewValue)
+      .containsExactlyInAnyOrder(SuspensionState.SUSPENDED.getName(), "true");
+
+    // Verify activate operation entries (order within same timestamp may vary by database)
+    assertThat(userOperationsLog.subList(2, 4))
+      .extracting(UserOperationLogEntry::getOperationType)
+      .containsOnly(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
+    assertThat(userOperationsLog.subList(2, 4))
+      .extracting(UserOperationLogEntry::getNewValue)
+      .containsExactlyInAnyOrder(SuspensionState.ACTIVE.getName(), "true");
   }
 
   @Test
@@ -289,14 +296,21 @@ class GetHistoricOperationLogsForOptimizeTest {
           assertThat(entry.getCategory()).isEqualTo(CATEGORY_OPERATOR);
         }
     );
-    assertThat(userOperationsLog.get(0).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(0).getNewValue()).isEqualTo(SuspensionState.SUSPENDED.getName());
-    assertThat(userOperationsLog.get(1).getOperationType()).isEqualTo(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(1).getNewValue()).isEqualTo("true");
-    assertThat(userOperationsLog.get(2).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(2).getNewValue()).isEqualTo(SuspensionState.ACTIVE.getName());
-    assertThat(userOperationsLog.get(3).getOperationType()).isEqualTo(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
-    assertThat(userOperationsLog.get(3).getNewValue()).isEqualTo("true");
+    // Verify suspend operation entries (order within same timestamp may vary by database)
+    assertThat(userOperationsLog.subList(0, 2))
+      .extracting(UserOperationLogEntry::getOperationType)
+      .containsOnly(OPERATION_TYPE_SUSPEND_PROCESS_DEFINITION);
+    assertThat(userOperationsLog.subList(0, 2))
+      .extracting(UserOperationLogEntry::getNewValue)
+      .containsExactlyInAnyOrder(SuspensionState.SUSPENDED.getName(), "true");
+
+    // Verify activate operation entries (order within same timestamp may vary by database)
+    assertThat(userOperationsLog.subList(2, 4))
+      .extracting(UserOperationLogEntry::getOperationType)
+      .containsOnly(OPERATION_TYPE_ACTIVATE_PROCESS_DEFINITION);
+    assertThat(userOperationsLog.subList(2, 4))
+      .extracting(UserOperationLogEntry::getNewValue)
+      .containsExactlyInAnyOrder(SuspensionState.ACTIVE.getName(), "true");
   }
 
   @Test

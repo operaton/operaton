@@ -3,7 +3,6 @@
   <deployment>
     <dependencies>
       <module name="org.operaton.bpm.operaton-engine" />
-      <module name="org.assertj.assertj-core" />
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

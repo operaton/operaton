@@ -199,6 +199,16 @@
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>junit6-jar</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>junit6</classifier>
+              <classesDirectory>${project.build.directory}/classes-junit6</classesDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -244,6 +254,22 @@
               </compileSourceRoots>
               <!-- Set its own output directory -->
               <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>junit6-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <!-- Specify the extra test source folder -->
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
+              </compileSourceRoots>
+              <!-- Set its own output directory -->
+              <outputDirectory>${project.build.directory}/classes-junit6</outputDirectory>
             </configuration>
           </execution>
         </executions>

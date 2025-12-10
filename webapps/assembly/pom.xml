@@ -109,7 +109,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
+      <classifier>junit6</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -163,6 +163,12 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

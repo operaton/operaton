@@ -17,7 +17,6 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MSSQLServerContainer;
 import org.testcontainers.containers.MSSQLServerContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
@@ -34,6 +33,6 @@ public class OperatonMSSQLContainerProvider extends MSSQLServerContainerProvider
   public JdbcDatabaseContainer newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mssql", tag, "mcr.microsoft.com/mssql/server");
-    return new MSSQLServerContainer(dockerImageName).acceptLicense();
+    return new OperatonMSSQLContainer(dockerImageName).acceptLicense();
   }
 }

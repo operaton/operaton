@@ -27,6 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.application.impl.ejb.DefaultEjbProcessApplication;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,12 +45,16 @@ public class TestJarDeployment extends AbstractFoxPlatformIntegrationTest {
   @Deployment
   @OverProtocol("jmx-as7")
   public static JavaArchive processArchive() {
-    return ShrinkWrap.create(JavaArchive.class)
+    var archive = ShrinkWrap.create(JavaArchive.class)
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(DefaultEjbProcessApplication.class)
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
       .addAsResource("org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml")
       .addAsManifestResource("org/operaton/bpm/integrationtest/deployment/spring/jboss-deployment-structure.xml", "jboss-deployment-structure.xml");
+    for (var lib: DeploymentHelper.getTestingLibs()) {
+      archive.merge(lib);
+    }
+    return archive;
   }
 
   @Test

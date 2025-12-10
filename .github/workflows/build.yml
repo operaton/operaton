@@ -12,6 +12,7 @@ on:
       - '.github/jreleaser/changelog.tpl'
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -26,6 +27,9 @@ on:
       - '.github/workflows/**'
       - '!.github/workflows/build.yml'
       - '.github/jreleaser/changelog.tpl'
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/PULL_REQUEST_TEMPLATE/**'
+      - '.github/dependabot.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -49,13 +53,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           sparse-checkout: |
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@30a0e04f1870d58f8d717450cc6134995f993c63
+        uses: DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101
         with:
           globs: |
             docs/decisions/*.md
@@ -65,7 +69,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Cache Maven packages
@@ -80,12 +84,22 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+          # Use a glob pattern to include all package-lock.json files
+          # This ensures the cache is unique based on ANY lock file change
+          cache-dependency-path: '**/package-lock.json'
+      - name: Setup mvnd
+        uses: ./.github/actions/mvnd-setup
       - name: Maven Build
         id: maven-build
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          .devenv/scripts/build/build.sh
+          .devenv/scripts/build/build.sh --runner=mvnd
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
@@ -106,7 +120,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+        run: |
+          ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=operaton_operaton \
+          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
+              qa/integration-tests-webapps/**,\
+              qa/integration-tests-engine/**,\
+              webapps/**
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v4
@@ -124,7 +144,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache

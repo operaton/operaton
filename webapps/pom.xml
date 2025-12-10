@@ -27,6 +27,8 @@
     <!-- frontend-sources artifact is for internal use only.
     Artifact generation is skipped when it comes to maven central deployment -->
     <skip-zip-frontend-sources>false</skip-zip-frontend-sources>
+    <npm.build.args>install</npm.build.args>
+    <npm.webpack.args>--mode development --config webpack.dev.js</npm.webpack.args>
   </properties>
   <build>
     <plugins>
@@ -58,13 +60,13 @@
             </goals>
           </execution>
           <execution>
-            <id>npm ci</id>
+            <id>npm (clean) install</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>ci</arguments>
+              <arguments>${npm.build.args}</arguments>
             </configuration>
           </execution>
           <execution>
@@ -80,11 +82,11 @@
           <execution>
             <id>Build</id>
             <goals>
-              <goal>npm</goal>
+              <goal>webpack</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>run build</arguments>
+              <arguments>${npm.webpack.args}</arguments>
             </configuration>
           </execution>
         </executions>
@@ -95,7 +97,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.4.0</version>
           <configuration>
             <nonFilteredFileExtensions>
               <nonFilteredFileExtension>pdf</nonFilteredFileExtension>
@@ -114,6 +116,19 @@
       <id>skipFrontendBuild</id>
       <properties>
         <skip.frontend.build>true</skip.frontend.build>
+      </properties>
+    </profile>
+    <profile>
+      <id>github-ci</id>
+      <activation>
+        <property>
+          <name>env.GITHUB_ACTIONS</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <properties>
+        <npm.build.args>ci</npm.build.args>
+        <npm.webpack.args>--mode production --config webpack.prod.js</npm.webpack.args>
       </properties>
     </profile>
   </profiles>

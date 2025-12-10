@@ -92,11 +92,11 @@ public class OperatonBpmConfiguration {
   @ConditionalOnMissingBean(OperatonDatasourceConfiguration.class)
   public static OperatonDatasourceConfiguration operatonDatasourceConfiguration(OperatonBpmProperties operatonBpmProperties,
                                                                                 PlatformTransactionManager transactionManager,
-                                                                                Optional<PlatformTransactionManager> operatonTransactionManager,
+                                                                                @Qualifier("operatonBpmTransactionManager") Optional<PlatformTransactionManager> operatonTransactionManager,
                                                                                 DataSource dataSource,
-                                                                                Optional<DataSource> operatonDataSource) {
-    return new DefaultDatasourceConfiguration(operatonBpmProperties, transactionManager, operatonTransactionManager,
-        dataSource, operatonDataSource);
+                                                                                @Qualifier("operatonBpmDataSource") Optional<DataSource> operatonDataSource) {
+    return new DefaultDatasourceConfiguration(operatonBpmProperties, transactionManager, operatonTransactionManager.orElse(null),
+            dataSource, operatonDataSource.orElse(null));
   }
 
   @Bean

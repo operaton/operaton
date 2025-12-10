@@ -1,0 +1,125 @@
+name: Check Slack Invite Link
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Locate system Chromium/Chrome
+        id: find_chromium
+        run: |
+          for p in \
+            "/usr/bin/google-chrome" \
+            "/usr/bin/chromium" \
+            "/usr/bin/chromium-browser" \
+            "/snap/bin/chromium"
+          do
+            if [ -x "$p" ]; then
+              echo "path=$p" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          done
+          echo "No chromium found"; exit 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Install Playwright core only
+        run: npm install playwright
+      - name: Extract Slack link from README
+        id: extract
+        run: |
+          url=$(grep -o 'https://join.slack.com[^)]*' README.md | head -n 1)
+          if [ -z "$url" ]; then
+            echo "Error: No Slack URL found in README.md"
+            exit 1
+          fi
+          echo "url=$url" >> $GITHUB_OUTPUT
+
+      - name: Check Slack invite status
+        id: check
+        env:
+          SLACK_URL: ${{ steps.extract.outputs.url }}
+          CHROMIUM_PATH: ${{ steps.find_chromium.outputs.path }}
+        run: |
+          node - << 'EOF'
+          const { chromium } = require("playwright");
+          const url = process.env.SLACK_URL;
+          const path = process.env.CHROMIUM_PATH;
+
+          (async () => {
+            const browser = await chromium.launch({
+              executablePath: path,
+              headless: true
+            });
+            let exitCode = 0;
+            try {
+              const page = await browser.newPage();
+              await page.goto(url, { waitUntil: "networkidle" });
+              const final = page.url();
+
+              console.log("Final URL:", final);
+
+              if (final.includes("signup") || final.includes("error")) {
+                exitCode = 10;
+              }
+            } finally {
+              await browser.close();
+              process.exit(exitCode);
+            }
+          })();
+          EOF
+        continue-on-error: true
+
+      - name: Is Expired
+        id: expired
+        run: |
+          if [ "${{ steps.check.outcome }}" = "failure" ]; then
+            echo "expired=true" >> $GITHUB_OUTPUT
+          else
+            echo "expired=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check if issue already exists
+        if: ${{ steps.expired.outputs.expired == 'true' }}
+        id: find_issue
+        uses: actions/github-script@v8
+        with:
+          result-encoding: string
+          script: |
+            const title = "Slack invite link expired";
+
+            const issues = await github.paginate(
+              github.rest.issues.listForRepo,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open"
+              }
+            );
+
+            const found = issues.find(i => i.title === title);
+            return found ? String(found.number) : "";
+
+      - name: Create issue if expired and does not exist
+        if: ${{ steps.expired.outputs.expired == 'true' && steps.find_issue.outputs.result == '' }}
+        uses: actions/github-script@v8
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              assignees: ["kthoms"],
+              title: "Slack invite link expired",
+              body: `Hi,\n\nThe Slack invite link in README appears to be expired.\n\nURL: ${{ steps.extract.outputs.url }}`
+            });

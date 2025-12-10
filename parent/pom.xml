@@ -39,7 +39,7 @@
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.junit5>5.14.1</version.junit5>
     <version.assertj>3.27.6</version.assertj>
-    <version.mockito>5.20.0</version.mockito>
+    <version.mockito>5.21.0</version.mockito>
     <version.jna>5.18.1</version.jna>
     <version.testcontainers>2.0.2</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>

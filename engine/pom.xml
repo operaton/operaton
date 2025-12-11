@@ -648,20 +648,10 @@
           <createDependencyReducedPom>true</createDependencyReducedPom>
           <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
           <artifactSet>
-            <excludes>
-              <exclude>org.operaton.bpm.model:*</exclude>
-              <exclude>org.operaton.bpm.dmn:*</exclude>
-              <exclude>org.operaton.bpm.juel:*</exclude>
-              <exclude>org.operaton.commons:*</exclude>
-              <exclude>org.operaton.connect:*</exclude>
-              <exclude>org.camunda.feel:*</exclude>
-              <exclude>jakarta.*:*</exclude>
-
-              <exclude>org.springframework:*</exclude>
-              <exclude>org.slf4j:*</exclude>
-              <exclude>org.mybatis:mybatis:*</exclude>
-              <exclude>joda-time:*</exclude>
-            </excludes>
+            <includes>
+              <include>com.google.code.gson:*</include>
+              <include>com.cronutils:*</include>
+            </includes>
           </artifactSet>
           <relocations>
             <relocation>

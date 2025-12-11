@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:2e04943b-93c3-46ae-80ba-f110cea25d20",
+  "serialNumber": "urn:uuid:e8694ef0-4f67-42d8-b655-b2b1241f67fc",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-11T07:17:52Z",
+    "timestamp": "2025-12-11T15:27:07Z",
     "tools": {
       "components": [
         {
@@ -13297,35 +13297,35 @@
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2c24ea05639af15d87f15de43a46f930"
+          "content": "3b48167d01c945d8aca6a43a5ea77791"
         },
         {
           "alg": "SHA-1",
-          "content": "56d48b8fada5747b44e6ab208e382c2e74dc575c"
+          "content": "9a885576f7e79827366a994c5356ee264359bc42"
         },
         {
           "alg": "SHA-256",
-          "content": "211a37676ea74eb7d7d9065cda21d79584237fbd232653736ee4312ef31cb2a1"
+          "content": "f173f6fc482f7cf471110ced396869cc43bc90eca36764264d79a88a9747527c"
         },
         {
           "alg": "SHA-512",
-          "content": "a722c35cd4e49d88db03d7bf72e2b6eac8d9eff4e7bc662c94e420a5bd5cf1fc41a8a3cb9b6135b862233d1876bf3a3023968a791575d09869e2a446f1dfcd9d"
+          "content": "9a4d9664608b6a1c9a4594772d0a8803a755ccdc8dec571942ef589aedc843a99de7eb1f365a02515c56ff1948bae01891bcae4b21201a4841ceb50bd1abaeea"
         },
         {
           "alg": "SHA-384",
-          "content": "d4034d17a981e5bd6632bcdabb8bc186a1dd03df69385e103aeb4fb76d17c26d2c114ab6cef70cfc4405d1f37c966632"
+          "content": "20585a26e7778ccd7c771400fedf2c5275fae9f6640e832bf4fb371f5065bf9c67a37d58f16350a90edcb83bd02411c2"
         },
         {
           "alg": "SHA3-384",
-          "content": "d1a6fcaadc63234f7fd715bc8099ae6186f3788b19c37815949f380355fdd863bcf718eed850918870b9cbd4fcbe9746"
+          "content": "84fc81ed66b35caad67919064c0a5d08fc7a1e835d7deaffee462b768ddb0444dfd55956f28775fd0cccafa54c949f03"
         },
         {
           "alg": "SHA3-256",
-          "content": "1a46642a02d33a50c1f4f0461125d69d3844ab9bbb4012f93bb57d3a5eceb257"
+          "content": "62dba7bc0bb84aa3db64d576e8784839b4dc53bb7923d80d435cd576c4481290"
         },
         {
           "alg": "SHA3-512",
-          "content": "0490eab9ba0e45b350bf7052f430a2f6ed253813dae9d01fd3beb80085337ec1939f8942375f587c1c53501e50f32e79f0ca8ee134afd47b04a2529c98ab8a4c"
+          "content": "df6f44834290b550d526299fd23644b4d4e18d3581cf3fc205958f7a7e326e415ddd79eabf8ddf5194c589ea2a572acdae5f6ef5dcf5dea5973b9d7c55b0ded4"
         }
       ],
       "licenses": [
@@ -33717,7 +33717,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9f64c0a4-a3d1-4668-8d40-cf1580b0f149",
+      "bom-ref": "a2ee27fb-b70b-44b3-afcc-37fcb20aefa3",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37410,7 +37410,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "64cf5bba-0793-4ad9-88e7-ed474901c77f",
+      "bom-ref": "ce621307-4765-4112-9061-11dcb2ccfac1",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -41390,13 +41390,7 @@
       "dependsOn": []
     },
     {
-      "ref": "64cf5bba-0793-4ad9-88e7-ed474901c77f",
-      "dependsOn": [
-        "9f64c0a4-a3d1-4668-8d40-cf1580b0f149"
-      ]
-    },
-    {
-      "ref": "9f64c0a4-a3d1-4668-8d40-cf1580b0f149",
+      "ref": "a2ee27fb-b70b-44b3-afcc-37fcb20aefa3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -41441,6 +41435,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "ce621307-4765-4112-9061-11dcb2ccfac1",
+      "dependsOn": [
+        "a2ee27fb-b70b-44b3-afcc-37fcb20aefa3"
       ]
     },
     {

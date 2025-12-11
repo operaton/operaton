@@ -1,8 +1,22 @@
+/*
+ * Copyright 2025 the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.operaton.bpm.engine.impl.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -28,13 +42,9 @@ class JsonUtilTest {
     assertNotNull(result, "Result map should not be null");
     assertEquals(4, result.size(), "Result map should have exactly 4 entries");
     assertEquals("hello", result.get("keyString"));
-    assertInstanceOf(String.class, result.get("keyString"));
     assertEquals(123, ((Number) result.get("keyInt")).intValue());
-    assertInstanceOf(Number.class, result.get("keyInt"));
     assertEquals(45.67, ((Number) result.get("keyDouble")).doubleValue());
-    assertInstanceOf(Number.class, result.get("keyDouble"));
     assertEquals(true, result.get("keyBoolean"));
-    assertInstanceOf(Boolean.class, result.get("keyBoolean"));
   }
 
   @Test
@@ -49,7 +59,7 @@ class JsonUtilTest {
     Map<String, Object> result = JsonUtil.createGsonMapper().<Map<String, Object>>fromJson(json, Map.class);
 
     assertTrue(result.containsKey("nullKey"), "Map should contain the 'nullKey'");
-    assertNull(result.get("nullKey"), "Value for 'nullKey' must be Java null");
+    assertNull(result.get("nullKey"), "Value for 'nullKey' must be null");
     assertEquals("present", result.get("notNullKey"));
   }
 

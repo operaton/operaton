@@ -1,6 +1,6 @@
 <module xmlns="urn:jboss:module:1.1" name="com.ibm.db2.jcc">
   <resources>
-    <resource-root path="jcc-12.1.2.0.jar"/>
+    <resource-root path="jcc-@version.db2@.jar"/>
   </resources>
   
   <dependencies>

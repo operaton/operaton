@@ -461,8 +461,7 @@ public abstract class TestHelper {
     return getProcessEngine(configurationResource, null);
   }
 
-  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
-    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(configurationResource);
+  public static ProcessEngine getProcessEngine(ProcessEngineConfigurationImpl processEngineConfiguration, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
     if (processEngineConfigurator != null) {
       processEngineConfigurator.accept(processEngineConfiguration);
     }
@@ -473,6 +472,11 @@ public abstract class TestHelper {
     ProcessEngine newProcessEngine = processEngineConfiguration.buildProcessEngine();
     LOG.debug("==== PROCESS ENGINE CREATED =========================================================================");
     return newProcessEngine;
+  }
+
+  public static ProcessEngine getProcessEngine(String configurationResource, Consumer<ProcessEngineConfigurationImpl> processEngineConfigurator) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration.createProcessEngineConfigurationFromResource(configurationResource);
+    return getProcessEngine(processEngineConfiguration, processEngineConfigurator);
   }
 
   public static void closeProcessEngines() {

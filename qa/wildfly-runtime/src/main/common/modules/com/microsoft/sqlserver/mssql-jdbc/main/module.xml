@@ -1,6 +1,6 @@
 <module xmlns="urn:jboss:module:1.1" name="com.microsoft.sqlserver.mssql-jdbc">
   <resources>
-    <resource-root path="mssql-jdbc-12.10.1.jre11.jar"/>
+    <resource-root path="mssql-jdbc-@version.sqlserver@.jar"/>
   </resources>
   
   <dependencies>

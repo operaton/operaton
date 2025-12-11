@@ -63,7 +63,7 @@ public final class ExceptionUtil {
       return null;
     }
 
-   return StringUtil.fromBytes(byteArray.getBytes());
+    return StringUtil.fromBytes(byteArray.getBytes());
   }
 
   public static ByteArrayEntity createJobExceptionByteArray(byte[] byteArray, ResourceType type) {

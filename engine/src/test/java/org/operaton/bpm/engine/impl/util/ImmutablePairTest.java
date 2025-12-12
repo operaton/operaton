@@ -79,6 +79,13 @@ class ImmutablePairTest {
   }
 
   @Test
+  void shouldThrowWhenCompareToNull() {
+    assertThatThrownBy(() -> new ImmutablePair<>("foo", "bar").compareTo(null))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("Pair to compare to must not be null");
+  }
+
+  @Test
   void shouldFulfillEqualityRules() {
     assertThat(new ImmutablePair<>(null, "foo")).isEqualTo(new ImmutablePair<>(null, "foo"));
     assertThat(new ImmutablePair<>("foo", null)).isNotEqualTo(new ImmutablePair<>("foo", 0));
@@ -92,5 +99,12 @@ class ImmutablePairTest {
   @Test
   void shouldHaveSameHashCodeAsEqualObject() {
     assertThat(new ImmutablePair<>(null, "foo")).hasSameHashCodeAs(new ImmutablePair<>(null, "foo"));
+  }
+
+  @Test
+  void shouldThrowWhenSetValue() {
+    assertThatThrownBy(() -> new ImmutablePair<>("foo", "bar").setValue("fubar"))
+        .isInstanceOf(UnsupportedOperationException.class)
+        .hasMessageContaining("setValue not allowed for an ImmutablePair");
   }
 }

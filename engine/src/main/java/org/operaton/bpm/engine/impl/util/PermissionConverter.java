@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
@@ -36,23 +35,17 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  *
  */
 public final class PermissionConverter {
-
   private PermissionConverter() {
   }
 
   public static Permission[] getPermissionsForNames(String[] names, int resourceType, ProcessEngineConfiguration engineConfiguration) {
-
-    final Permission[] permissions = new Permission[names.length];
-
-    for (int i = 0; i < names.length; i++) {
-      permissions[i] = ((ProcessEngineConfigurationImpl) engineConfiguration).getPermissionProvider().getPermissionForName(names[i], resourceType);
-    }
-
-    return permissions;
+    return Arrays.stream(names)
+        .map(name -> ((ProcessEngineConfigurationImpl) engineConfiguration).getPermissionProvider()
+            .getPermissionForName(name, resourceType))
+        .toArray(Permission[]::new);
   }
 
   public static String[] getNamesForPermissions(Authorization authorization, Permission[] permissions) {
-
     int type = authorization.getAuthorizationType();
 
     // special case all permissions are granted
@@ -66,17 +59,10 @@ public final class PermissionConverter {
       return new String[] { Permissions.ALL.getName() };
     }
 
-    List<String> names = new ArrayList<>();
-
-    for (Permission permission : permissions) {
-      String name = permission.getName();
-      // filter NONE and ALL from permissions array
-      if (!name.equals(Permissions.NONE.getName()) && !name.equals(Permissions.ALL.getName())) {
-        names.add(name);
-      }
-    }
-
-    return names.toArray(new String[names.size()]);
+    List<String> permissionsToFilter = List.of(Permissions.NONE.getName(), Permissions.ALL.getName());
+    return Arrays.stream(permissions)
+        .map(Permission::getName)
+        .filter(name -> !permissionsToFilter.contains(name))
+        .toArray(String[]::new);
   }
-
 }

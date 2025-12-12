@@ -7,6 +7,7 @@
 
     <module name="java.base" />
     <module name="java.xml" />
+    <module name="org.operaton.commons.operaton-commons-utils" />
     <module name="org.operaton.bpm.model.operaton-xml-model" />
 
   </dependencies>

@@ -59,7 +59,7 @@ jobs:
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@30a0e04f1870d58f8d717450cc6134995f993c63
+        uses: DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101
         with:
           globs: |
             docs/decisions/*.md
@@ -120,7 +120,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=operaton_operaton
+        run: |
+          ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=operaton_operaton \
+          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
+              qa/integration-tests-webapps/**,\
+              qa/integration-tests-engine/**,\
+              webapps/**
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v4

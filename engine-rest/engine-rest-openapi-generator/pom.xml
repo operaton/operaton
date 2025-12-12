@@ -10,7 +10,7 @@
   <name>Operaton - Engine - REST - OpenAPI (JSON Generator)</name>
   <description>${project.name}</description>
   <properties>
-    <version.json-schema-validator>2.0.0</version.json-schema-validator>
+    <version.json-schema-validator>2.0.1</version.json-schema-validator>
   </properties>
   <dependencies>
     <dependency>

@@ -15,6 +15,13 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>jakarta.platform</groupId>
+        <artifactId>jakarta.jakartaee-bom</artifactId>
+        <version>${version.jakarta-ee}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-core-internal-dependencies</artifactId>
         <version>${project.version}</version>

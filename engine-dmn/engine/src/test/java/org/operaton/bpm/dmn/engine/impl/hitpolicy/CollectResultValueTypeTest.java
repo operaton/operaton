@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.dmn.engine.hitpolicy;
+package org.operaton.bpm.dmn.engine.impl.hitpolicy;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,10 +31,10 @@ import org.operaton.bpm.engine.variable.Variables;
  */
 class CollectResultValueTypeTest extends DmnEngineTest {
 
-  private static final String COLLECT_SUM = "HitPolicyTest.collect.sum.single.dmn";
-  private static final String COLLECT_MIN = "HitPolicyTest.collect.min.single.dmn";
-  private static final String COLLECT_MAX = "HitPolicyTest.collect.max.single.dmn";
-  private static final String COLLECT_COUNT = "HitPolicyTest.collect.count.single.dmn";
+  private static final String COLLECT_SUM = "CollectSumHitPolicyHandlerTest.collect.sum.single.dmn";
+  private static final String COLLECT_MIN = "CollectMinHitPolicyHandlerTest.collect.min.single.dmn";
+  private static final String COLLECT_MAX = "CollectMaxHitPolicyHandlerTest.collect.max.single.dmn";
+  private static final String COLLECT_COUNT = "CollectCountHitPolicyHandlerTest.collect.count.single.dmn";
 
   @Test
   @DecisionResource(resource = COLLECT_SUM)

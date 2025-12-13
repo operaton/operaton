@@ -20,6 +20,7 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 import org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions;
 
 class OutputOrderHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
+
   private static final String DMN_THREE_OUTPUTS_COMPOUND = "org/operaton/bpm/dmn/engine/impl/hitpolicy/OutputOrderHitPolicyHandlerTest.test_threeOutputsCompound_shouldSortOverAllOutputs.dmn";
   private static final String DMN_COMPOUND_OUTPUTS_ALL_OUTPUT_NAMES_SET = "org/operaton/bpm/dmn/engine/impl/hitpolicy/OutputOrderHitPolicyHandlerTest.test_compoundOutputs_shouldHaveAllOutputValuesSet.dmn";
   private static final String DMN_COMPOUND_OUTPUTS_PARTIAL_OUTPUT_VALUES = "org/operaton/bpm/dmn/engine/impl/hitpolicy/OutputOrderHitPolicyHandlerTest.test_compoundOutputs_shouldHavePartialOutputValuesSet.dmn";

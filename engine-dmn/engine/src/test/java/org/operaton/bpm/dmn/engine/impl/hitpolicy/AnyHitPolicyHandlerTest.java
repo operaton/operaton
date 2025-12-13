@@ -18,7 +18,8 @@ import static org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions.a
 
 class AnyHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
 
-  private static final String ANY_SINGLE = "org/operaton/bpm/dmn/engine/hitpolicy/HitPolicyTest.any.single.dmn";
+  private static final String ANY_SINGLE =
+      "org/operaton/bpm/dmn/engine/impl/hitpolicy/AnyHitPolicyHandlerTest.any.single.dmn";
   private static final String ANY_COMPOUND =
       "org/operaton/bpm/dmn/engine/impl/hitpolicy/AnyHitPolicyHandlerTest.any.compound.dmn";
 

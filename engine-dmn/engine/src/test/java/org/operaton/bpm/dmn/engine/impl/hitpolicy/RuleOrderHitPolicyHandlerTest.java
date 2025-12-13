@@ -14,9 +14,9 @@ import org.operaton.bpm.dmn.engine.test.DecisionResource;
 class RuleOrderHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
 
   private static final String RULE_ORDER_SINGLE =
-      "org/operaton/bpm/engine/impl/hitpolicy/RuleOrderHitPolicyHandlerTest.ruleOrder.single.dmn";
+      "org/operaton/bpm/dmn/engine/impl/hitpolicy/RuleOrderHitPolicyHandlerTest.ruleOrder.single.dmn";
   private static final String RULE_ORDER_COMPOUND =
-      "org/operaton/bpm/engine/impl/hitpolicy/RuleOrderHitPolicyHandlerTest.ruleOrder.compound.dmn";
+      "org/operaton/bpm/dmn/engine/impl/hitpolicy/RuleOrderHitPolicyHandlerTest.ruleOrder.compound.dmn";
 
   @Test
   @DecisionResource(resource = RULE_ORDER_SINGLE)

@@ -89,6 +89,18 @@ class PriorityHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
     DmnEngineTestAssertions.assertThat(decisionResult).hasSingleResult().hasSingleEntry(expectedResult);
   }
 
+  @Test
+  @DecisionResource(resource = DMN_THREE_OUTPUTS_COMPOUND)
+  void priorityHitPolicyNoMatchingRule_shouldReturnEmptyResult() {
+    // Verwende Eingaben, die in der DMN-Tabelle zu keiner passenden Regel führen.
+    setInputVariables(Map.of("RiskCategory", "None", "IsExistingCustomer", false, "CustomerScore", 0));
+
+    DmnDecisionResult result = evaluateDecision();
+
+    // Erwartung: keine Treffer → leeres DecisionResult
+    assertTrue(result.isEmpty(), "Expected empty decision result for PRIORITY hit policy with no matching rules");
+  }
+
   public static Stream<Arguments> generateSingleUnnamedOutputData() {
     return Stream.of(Arguments.of(400, "Low"),
         Arguments.of(999, "Low"));
@@ -107,9 +119,7 @@ class PriorityHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
 
   public static Stream<Arguments> generateInvalidOutputValueData() {
     return Stream.of(Arguments.of(Map.of("RiskCategory", "None", "IsExistingCustomer", true, "CustomerScore", 100),
-        DmnHitPolicyException.class, "not found in allowed output values for output"),
-      Arguments.of(Map.of("RiskCategory", "None", "IsExistingCustomer", true, "CustomerScore", 1000),
-        DmnHitPolicyException.class, "DMN-03007 Hit policy 'PRIORITY' requires at least one matching rule"));
+        DmnHitPolicyException.class, "not found in allowed output values for output"));
   }
 
   public static Stream<Arguments> generatePartialOutputValuesData() {

@@ -16,15 +16,21 @@
 package org.operaton.bpm.engine.impl.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
@@ -35,247 +41,295 @@ import org.operaton.bpm.engine.impl.cfg.auth.DefaultPermissionProvider;
 @ExtendWith(MockitoExtension.class)
 class PermissionConverterTest {
 
+  private static final String READ = "READ";
+  private static final String UPDATE = "UPDATE";
+  private static final String DELETE = "DELETE";
+  private static final String CREATE = "CREATE";
+  private static final String ALL = "ALL";
+
   @Mock
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
   @Mock
   private Authorization authorization;
 
+  DefaultPermissionProvider permissionProvider;
+
+  @BeforeEach
+  void setUp() {
+    permissionProvider = new DefaultPermissionProvider();
+    lenient().when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
+  }
+
   @Test
   void shouldConvertEmptyPermissionArray() {
-    Permission[] permissions = PermissionConverter.getPermissionsForNames(new String[] {},
+    // given
+    String[] names = {};
+
+    // when
+    Permission[] permissions = PermissionConverter.getPermissionsForNames(names,
         Resources.PROCESS_DEFINITION.resourceType(), processEngineConfiguration);
 
+    // then
     assertThat(permissions).isEmpty();
   }
 
   @Test
   void shouldConvertSinglePermissionName() {
-    DefaultPermissionProvider permissionProvider = new DefaultPermissionProvider();
-    when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
-    String[] names = { "READ" };
+    // given
+    String[] names = { READ };
     int resourceType = Resources.PROCESS_DEFINITION.resourceType();
 
+    // when
     Permission[] permissions = PermissionConverter.getPermissionsForNames(names, resourceType,
         processEngineConfiguration);
 
+    // then
     Stream<String> permissionNames = Arrays.stream(permissions).map(Permission::getName);
     assertThat(permissionNames).containsExactly(names);
   }
 
   @Test
   void shouldConvertMultiplePermissionNames() {
-    DefaultPermissionProvider permissionProvider = new DefaultPermissionProvider();
-    when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
-    String[] names = { "READ", "UPDATE", "DELETE" };
+    // given
+    String[] names = { READ, UPDATE, DELETE };
     int resourceType = Resources.PROCESS_DEFINITION.resourceType();
 
+    // when
     Permission[] permissions = PermissionConverter.getPermissionsForNames(names, resourceType,
         processEngineConfiguration);
 
+    // then
     Stream<String> permissionNames = Arrays.stream(permissions).map(Permission::getName);
     assertThat(permissionNames).containsExactly(names);
   }
 
   @Test
   void shouldThrowExceptionForUnknownPermissionName() {
-    DefaultPermissionProvider permissionProvider = new DefaultPermissionProvider();
-    when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
+    // given
     String[] names = { "read" };
     int resourceType = Resources.PROCESS_DEFINITION.resourceType();
 
-    Exception exception = assertThrows(Exception.class,
-        () -> PermissionConverter.getPermissionsForNames(names, resourceType, processEngineConfiguration));
-
-    String expectedMessage = String.format("The permission '%s' is not valid for '%s' resource type.", names[0],
-        Resources.PROCESS_DEFINITION.name());
-    assertThat(exception).hasMessageContaining(expectedMessage);
+    // when
+    assertThatThrownBy(() -> PermissionConverter.getPermissionsForNames(names, resourceType,
+        processEngineConfiguration))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(String.format("The permission '%s' is not valid for '%s' resource type.", names[0],
+            Resources.PROCESS_DEFINITION.name()));
   }
 
   @Test
-  void shouldConvertDuplicatePermissionNames() {
-    DefaultPermissionProvider permissionProvider = new DefaultPermissionProvider();
-    when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
-    String[] names = { "READ", "UPDATE", "READ" };
+  void shouldConvertDuplicatePermissionNamesAndDeduplicate() {
+    // given
+    String[] names = { READ, UPDATE, READ };
     int resourceType = Resources.PROCESS_DEFINITION.resourceType();
 
+    // when
     Permission[] permissions = PermissionConverter.getPermissionsForNames(names, resourceType,
         processEngineConfiguration);
 
+    // then
     Stream<String> permissionNames = Arrays.stream(permissions).map(Permission::getName);
-    assertThat(permissionNames).containsExactly(names);
+    assertThat(permissionNames).containsExactly(READ, UPDATE);
   }
 
   @Test
   void shouldHandlePermissionsForResourceTypeNotInPermissionEnums() {
-    DefaultPermissionProvider permissionProvider = new DefaultPermissionProvider();
-    when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
-    String[] names = { "CREATE" };
+    // given
+    String[] names = { CREATE };
     int resourceType = Resources.APPLICATION.resourceType();
 
+    // when
     Permission[] permissions = PermissionConverter.getPermissionsForNames(names, resourceType,
         processEngineConfiguration);
 
+    // then
     Stream<String> permissionNames = Arrays.stream(permissions).map(Permission::getName);
     assertThat(permissionNames).containsExactly(names);
   }
 
-  @Test
-  void shouldReturnAllForGlobalAuthorizationWithAllPermissionsGranted() {
-    when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GLOBAL);
+  @ParameterizedTest
+  @ValueSource(ints = { Authorization.AUTH_TYPE_GLOBAL, Authorization.AUTH_TYPE_GRANT })
+  void shouldReturnAllWithForGivenAuthorizationTypeWhenAllPermissionsGranted(int authorizationType) {
+    // given
+    when(authorization.getAuthorizationType()).thenReturn(authorizationType);
     when(authorization.isEveryPermissionGranted()).thenReturn(true);
     Permission[] permissions = { Permissions.READ, Permissions.UPDATE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("ALL");
-  }
-
-  @Test
-  void shouldReturnAllForGrantAuthorizationWithAllPermissionsGranted() {
-    when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
-    when(authorization.isEveryPermissionGranted()).thenReturn(true);
-    Permission[] permissions = { Permissions.READ, Permissions.UPDATE };
-
-    String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
-
-    assertThat(names).containsExactly("ALL");
+    // then
+    assertThat(names).containsExactly(ALL);
   }
 
   @Test
   void shouldReturnAllForRevokeAuthorizationWithAllPermissionsRevoked() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_REVOKE);
     when(authorization.isEveryPermissionRevoked()).thenReturn(true);
     Permission[] permissions = { Permissions.READ, Permissions.UPDATE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("ALL");
+    // then
+    assertThat(names).containsExactly(ALL);
   }
 
   @Test
   void shouldConvertSpecificPermissionsToNames() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.READ, Permissions.UPDATE, Permissions.DELETE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("READ", "UPDATE", "DELETE");
+    // then
+    assertThat(names).containsExactly(READ, UPDATE, DELETE);
   }
 
   @Test
   void shouldFilterOutNonePermission() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.NONE, Permissions.READ, Permissions.UPDATE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("READ", "UPDATE");
+    // then
+    assertThat(names).containsExactly(READ, UPDATE);
   }
 
   @Test
   void shouldFilterOutAllPermission() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.ALL, Permissions.READ, Permissions.UPDATE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("READ", "UPDATE");
+    // then
+    assertThat(names).containsExactly(READ, UPDATE);
   }
 
   @Test
   void shouldFilterOutBothNoneAndAllPermissions() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.NONE, Permissions.READ, Permissions.ALL, Permissions.UPDATE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("READ", "UPDATE");
+    // then
+    assertThat(names).containsExactly(READ, UPDATE);
   }
 
   @Test
   void shouldReturnEmptyArrayWhenOnlyNoneAndAllPermissions() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.NONE, Permissions.ALL };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
+    // then
     assertThat(names).isEmpty();
   }
 
   @Test
   void shouldHandleEmptyPermissionsArray() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = {};
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
+    // then
     assertThat(names).isEmpty();
   }
 
   @Test
   void shouldHandleRevokeAuthorizationWithSpecificPermissions() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_REVOKE);
     when(authorization.isEveryPermissionRevoked()).thenReturn(false);
     Permission[] permissions = { Permissions.READ, Permissions.DELETE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("READ", "DELETE");
+    // then
+    assertThat(names).containsExactly(READ, DELETE);
   }
 
   @Test
   void shouldHandleSinglePermission() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.CREATE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("CREATE");
+    assertThat(names).containsExactly(CREATE);
   }
 
   @Test
   void shouldMaintainOrderOfPermissions() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.CREATE, Permissions.READ, Permissions.UPDATE, Permissions.DELETE };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("CREATE", "READ", "UPDATE", "DELETE");
+    // then
+    assertThat(names).containsExactly(CREATE, READ, UPDATE, DELETE);
   }
 
   @Test
-  void shouldConvertDuplicatePermissionsToNames() {
+  void shouldConvertDuplicatePermissionsToNamesAndDeduplicate() {
+    // given
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     Permission[] permissions = { Permissions.READ, Permissions.UPDATE, Permissions.READ };
 
+    // when
     String[] names = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
-    assertThat(names).containsExactly("READ", "UPDATE", "READ");
+    // then
+    assertThat(names).containsExactly(READ, UPDATE);
   }
 
   @Test
   void shouldRoundTripConversion() {
-    DefaultPermissionProvider permissionProvider = new DefaultPermissionProvider();
-    when(processEngineConfiguration.getPermissionProvider()).thenReturn(permissionProvider);
-    String[] originalNames = { "READ", "UPDATE", "DELETE" };
+    // given
+    String[] originalNames = { READ, UPDATE, DELETE };
     int resourceType = Resources.PROCESS_DEFINITION.resourceType();
 
+    // when
     Permission[] permissions = PermissionConverter.getPermissionsForNames(originalNames, resourceType,
         processEngineConfiguration);
     when(authorization.getAuthorizationType()).thenReturn(Authorization.AUTH_TYPE_GRANT);
     when(authorization.isEveryPermissionGranted()).thenReturn(false);
     String[] convertedNames = PermissionConverter.getNamesForPermissions(authorization, permissions);
 
+    // then
     assertThat(convertedNames).containsExactlyInAnyOrder(originalNames);
   }
 }

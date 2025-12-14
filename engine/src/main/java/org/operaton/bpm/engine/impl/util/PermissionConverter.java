@@ -42,6 +42,7 @@ public final class PermissionConverter {
     return Arrays.stream(names)
         .map(name -> ((ProcessEngineConfigurationImpl) engineConfiguration).getPermissionProvider()
             .getPermissionForName(name, resourceType))
+        .distinct()
         .toArray(Permission[]::new);
   }
 
@@ -63,6 +64,7 @@ public final class PermissionConverter {
     return Arrays.stream(permissions)
         .map(Permission::getName)
         .filter(name -> !permissionsToFilter.contains(name))
+        .distinct()
         .toArray(String[]::new);
   }
 }

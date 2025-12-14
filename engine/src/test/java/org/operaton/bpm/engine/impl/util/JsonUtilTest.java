@@ -33,7 +33,7 @@ class JsonUtilTest {
             }
             """;
 
-    Map<String, Object> result = JsonUtil.createGsonMapper().<Map<String, Object>>fromJson(json, Map.class);
+    Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
     assertThat(result).isNotNull();
     assertThat(result.size()).isEqualTo(4);
@@ -52,7 +52,7 @@ class JsonUtilTest {
             }
             """;
 
-    Map<String, Object> result = JsonUtil.createGsonMapper().<Map<String, Object>>fromJson(json, Map.class);
+    Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
     assertThat(result).containsKey("nullKey");
     assertThat(result.get("nullKey")).isNull();
@@ -70,7 +70,7 @@ class JsonUtilTest {
             }
             """;
 
-    Map<String, Object> result = JsonUtil.createGsonMapper().<Map<String, Object>>fromJson(json, Map.class);
+    Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
     assertThat(result).hasSize(2);
     assertThat(result).containsKey("primitiveKey");
@@ -83,7 +83,7 @@ class JsonUtilTest {
   void createGsonMapper_emptyObject() {
     String json = "{}";
 
-    Map<String, Object> result = JsonUtil.createGsonMapper().<Map<String, Object>>fromJson(json, Map.class);
+    Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
     assertThat(result).isNotNull();
     assertThat(result).isEmpty();
@@ -93,7 +93,7 @@ class JsonUtilTest {
   void createGsonMapper_invalidInputNonObject() {
     String json = "[1, 2, 3]";
 
-    Map<String, Object> result = JsonUtil.createGsonMapper().<Map<String, Object>>fromJson(json, Map.class);
+    Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
     assertThat(result).isNotNull();
     assertThat(result).isEmpty();

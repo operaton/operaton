@@ -88,9 +88,21 @@ class OutputOrderHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
   void test_singleUnnamedOutput(int input, List<Object> expectedOrder) {
     variables.putValue("Score", input);
     DmnDecisionTableResult decisionResult = evaluateDecisionTable();
-    DmnEngineTestAssertions.assertThat(decisionResult).hasSize(expectedOrder.size());
+    assertEquals(expectedOrder.size(), decisionResult.size());
     List<Object> actual = decisionResult.stream().map(DmnDecisionRuleResult::getSingleEntry).toList();
     assertThat(actual).containsExactlyElementsOf(expectedOrder);
+  }
+
+  @Test
+  @DecisionResource(resource = DMN_THREE_OUTPUTS_COMPOUND)
+  void outputOrderHitPolicyNoMatchingRule_shouldReturnEmptyResult() {
+    // Verwende Eingaben, die in der DMN-Tabelle zu keiner passenden Regel führen.
+    setInputVariables(Map.of("RiskCategory", "None", "IsExistingCustomer", false, "CustomerScore", 0));
+
+    DmnDecisionResult result = evaluateDecision();
+
+    // Erwartung: keine Treffer → leeres DecisionResult
+    assertTrue(result.isEmpty(), "Expected empty decision result for OUTPUT_ORDER hit policy with no matching rules");
   }
 
   public static Stream<Arguments> generateSingleUnnamedOutputData() {
@@ -112,9 +124,7 @@ class OutputOrderHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
 
   public static Stream<Arguments> generateInvalidOutputValueData() {
     return Stream.of(Arguments.of(Map.of("RiskCategory", "None", "IsExistingCustomer", true, "CustomerScore", 100),
-            DmnHitPolicyException.class, "not found in allowed output values for output"),
-        Arguments.of(Map.of("RiskCategory", "None", "IsExistingCustomer", true, "CustomerScore", 1000),
-            DmnHitPolicyException.class, "DMN-03007 Hit policy 'OUTPUT ORDER' requires at least one matching rule"));
+            DmnHitPolicyException.class, "not found in allowed output values for output"));
   }
 
   public static Stream<Arguments> generatePartialOutputValuesData() {

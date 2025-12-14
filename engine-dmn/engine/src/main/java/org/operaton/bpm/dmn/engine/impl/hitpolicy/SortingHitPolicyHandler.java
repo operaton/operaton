@@ -63,10 +63,17 @@ public abstract sealed class SortingHitPolicyHandler implements DmnHitPolicyHand
    * <ol>
    *   <li>Validates the event and decision logic are of the expected implementation types</li>
    *   <li>Performs hit-policy-specific output validation via {@link #checkOutputs}</li>
-   *   <li>Ensures at least one rule matches (required for PRIORITY and OUTPUT_ORDER)</li>
+   *   <li>Returns the evaluation event unchanged if no rules match, resulting in an empty
+   *       {@code DmnDecisionResult}</li>
    *   <li>For single matching rules: validates output values against allowed values</li>
    *   <li>For multiple matching rules: applies sorting logic via {@link #evaluatePolicy}</li>
    * </ol>
+   *
+   * <p>If no rules match (i.e. {@code matchingRules} is empty), this method does not
+   * throw an exception. Instead, it returns the unchanged evaluation event. The caller
+   * will then create a {@code DmnDecisionResult} / {@code DmnDecisionTableResult} with
+   * no rule results. This behavior is aligned with the other hit policies and ensures
+   * a consistent result contract for the DMN engine.</p>
    *
    * @param decisionTableEvaluationEvent the event representing the evaluation of a decision table,
    *                                     containing matching rules and evaluation context
@@ -74,7 +81,6 @@ public abstract sealed class SortingHitPolicyHandler implements DmnHitPolicyHand
    *         (either validated single rule or sorted multiple rules)
    * @throws DmnHitPolicyException if:
    *         <ul>
-   *           <li>No matching rules exist (both PRIORITY and OUTPUT_ORDER require at least one)</li>
    *           <li>The event is not of type {@link DmnDecisionTableEvaluationEventImpl}</li>
    *           <li>The decision logic is not of type {@link DmnDecisionTableImpl}</li>
    *           <li>Output validation fails (e.g., output value not in allowed values list)</li>
@@ -92,7 +98,10 @@ public abstract sealed class SortingHitPolicyHandler implements DmnHitPolicyHand
     checkOutputs(matchingRules, outputs);
 
     if (matchingRules.isEmpty()) {
-      throw LOG.hitPolicyRequiresAtLeastOneMatchingRule(getHitPolicyEntry().getHitPolicy());
+      // No matching rules: return unchanged event so that callers obtain an empty
+      // DmnDecisionResult / DmnDecisionTableResult. This behavior is consistent
+      // across all hit policies.
+      return evaluationEvent;
     } else if (matchingRules.size() == 1) {
       validateSingleRuleOutputs(matchingRules.get(0), outputs);
     } else {

@@ -109,7 +109,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
@@ -167,7 +167,7 @@ jobs:
         run: gh cache delete ${{ github.run_id }}-build-artifacts
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
@@ -175,7 +175,7 @@ jobs:
           retention-days: 10
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz

@@ -73,13 +73,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -129,7 +129,7 @@ jobs:
               webapps/**
         continue-on-error: true
       - name: Cache build artifacts
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -148,7 +148,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: |
             distro/**/target/operaton-*.gz

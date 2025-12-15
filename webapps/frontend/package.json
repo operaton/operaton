@@ -39,7 +39,7 @@
     "chart.js": "^4.5.1",
     "clipboard": "2.0.11",
     "cmmn-js": "0.20.0",
-    "core-js": "3.35.1",
+    "core-js": "3.47.0",
     "dmn-font": "0.6.2",
     "dmn-js": "17.4.0",
     "dmn-js-decision-table": "17.4.0",

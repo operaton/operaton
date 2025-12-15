@@ -1,8 +1,6 @@
 name: Integration Build
 
 on:
-  schedule:
-    - cron: "0 2 * * *"     # Runs at 2:00 AM UTC daily
   workflow_dispatch:        # Allows manual trigger
     inputs:
       java_version:

@@ -36,6 +36,35 @@ on:
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Build profile to use'
+        type: choice
+        required: true
+        default: 'normal'
+        options:
+          - 'fast'
+          - 'normal'
+          - 'max'
+      reports:
+        description: 'Enable build reports'
+        type: boolean
+        required: true
+        default: false
+      runner:
+        description: 'Maven runner to use'
+        type: choice
+        required: true
+        default: 'mvnd'
+        options:
+          - 'mvnw'
+          - 'mvnd'
+      skip_tests:
+        description: 'Skip test execution'
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
@@ -99,7 +128,33 @@ jobs:
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          .devenv/scripts/build/build.sh --runner=mvnd
+          
+          # Build command construction
+          BUILD_CMD=".devenv/scripts/build/build.sh"
+          
+          # Add profile parameter
+          PROFILE="${{ github.event.inputs.profile || 'normal' }}"
+          BUILD_CMD="$BUILD_CMD --profile=$PROFILE"
+          
+          # Add runner parameter
+          RUNNER="${{ github.event.inputs.runner || 'mvnd' }}"
+          BUILD_CMD="$BUILD_CMD --runner=$RUNNER"
+          
+          # Add reports flag if enabled
+          REPORTS="${{ github.event.inputs.reports || 'false' }}"
+          if [ "$REPORTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --reports"
+          fi
+          
+          # Add skip-tests flag if enabled
+          SKIP_TESTS="${{ github.event.inputs.skip_tests || 'false' }}"
+          if [ "$SKIP_TESTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --skip-tests"
+          fi
+          
+          echo "ℹ️ Executing: $BUILD_CMD"
+          $BUILD_CMD
+          
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()

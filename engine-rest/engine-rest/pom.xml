@@ -495,7 +495,7 @@
              Operaton-supported Wildfly/JBoss EAP version.
              Currently, this is JBoss EAP 7.2. -->
         <version.resteasy>3.6.3.SP1</version.resteasy>
-        <version.netty>4.2.8.Final</version.netty>
+        <version.netty>4.2.9.Final</version.netty>
       </properties>
       <dependencies>
         <dependency>

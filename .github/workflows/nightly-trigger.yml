@@ -55,7 +55,7 @@ jobs:
             JSON_BRANCHES=$(echo "$BRANCHES" | jq -R -s -c 'split("\n") | map(select(. != ""))')
             echo "branches=$JSON_BRANCHES" >> $GITHUB_OUTPUT
             echo "has_branches=true" >> $GITHUB_OUTPUT
-            
+
             # Combine main and release branches
             ALL_BRANCHES=$(echo "$BRANCHES" | sed '1s/^/main\n/' | jq -R -s -c 'split("\n") | map(select(. != ""))')
             echo "all_branches=$ALL_BRANCHES" >> $GITHUB_OUTPUT

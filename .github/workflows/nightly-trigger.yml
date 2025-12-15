@@ -66,11 +66,13 @@ jobs:
         release_branch: ${{ fromJson(needs.detect-release-branches.outputs.branches) }}
     steps:
       - name: Trigger Integration Build Workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Triggering integration build for branch: ${{ matrix.release_branch }}"
 
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{

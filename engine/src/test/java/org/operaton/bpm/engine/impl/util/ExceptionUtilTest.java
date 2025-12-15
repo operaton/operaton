@@ -30,49 +30,104 @@ import static org.mockito.Mockito.mock;
 class ExceptionUtilTest {
 
   @Test
-  void checkValueTooLongException() {
-    assertThat(ExceptionUtil.checkValueTooLongException(mock(SQLException.class))).isFalse();
+  void getExceptionStackTraceReturnsStackTrace() {
+    // given
+    Throwable throwable = new Throwable();
+    StackTraceElement stackTraceElement = new StackTraceElement("ExceptionUtil", "getExceptionStackTrace",
+        "ExceptionUtil.java", 55);
+    throwable.setStackTrace(new StackTraceElement[]{stackTraceElement});
 
+    // when
+    String stackTrace = ExceptionUtil.getExceptionStacktrace(throwable);
+
+    // then
+    assertThat(stackTrace).isEqualTo("java.lang.Throwable\n\tat ExceptionUtil.getExceptionStackTrace(ExceptionUtil.java:55)\n");
+  }
+
+  @Test
+  void checkValueTooLongException() {
+    // when
+    boolean resultForUnknown = ExceptionUtil.checkValueTooLongException(mock(SQLException.class));
+    // then
+    assertThat(resultForUnknown).isFalse();
+
+    // given
     SQLException tooLong = mock(SQLException.class);
     doReturn("too long").when(tooLong).getMessage();
-    assertThat(ExceptionUtil.checkValueTooLongException(tooLong)).isTrue();
+
+    // when
+    boolean resultForTooLong = ExceptionUtil.checkValueTooLongException(tooLong);
+    // then
+    assertThat(resultForTooLong).isTrue();
   }
 
   @Test
   void checkConstraintViolationException() {
-    assertThat(ExceptionUtil.checkConstraintViolationException(new ProcessEngineException(new PersistenceException(mock(SQLException.class))))).isFalse();
+    // given
+    PersistenceException pe = new PersistenceException(mock(SQLException.class));
+    // when / then
+    assertThat(ExceptionUtil.checkConstraintViolationException(new ProcessEngineException(pe))).isFalse();
 
+    // given
     SQLException constraintViolation = mock(SQLException.class);
     doReturn("ora-00001").when(constraintViolation).getMessage();
-    assertThat(ExceptionUtil.checkConstraintViolationException(new ProcessEngineException(new PersistenceException(constraintViolation)))).isTrue();
+
+    // when
+    boolean result = ExceptionUtil.checkConstraintViolationException(new ProcessEngineException(new PersistenceException(constraintViolation)));
+    // then
+    assertThat(result).isTrue();
   }
 
   @Test
   void checkForeignKeyConstraintViolation() {
-    assertThat(ExceptionUtil.checkForeignKeyConstraintViolation(mock(SQLException.class))).isFalse();
+    // when
+    boolean unknown = ExceptionUtil.checkForeignKeyConstraintViolation(mock(SQLException.class));
+    // then
+    assertThat(unknown).isFalse();
 
+    // given
     SQLException constraintViolation = mock(SQLException.class);
     doReturn("integrity constraint").when(constraintViolation).getMessage();
-    assertThat(ExceptionUtil.checkForeignKeyConstraintViolation(constraintViolation)).isTrue();
+
+    // when
+    boolean result = ExceptionUtil.checkForeignKeyConstraintViolation(constraintViolation);
+    // then
+    assertThat(result).isTrue();
   }
 
   @Test
   void checkVariableIntegrityViolation() {
-    assertThat(ExceptionUtil.checkVariableIntegrityViolation(new PersistenceException(mock(SQLException.class)))).isFalse();
+    // when
+    boolean none = ExceptionUtil.checkVariableIntegrityViolation(new PersistenceException(mock(SQLException.class)));
+    // then
+    assertThat(none).isFalse();
 
+    // given
     SQLException integrityViolation = mock(SQLException.class);
     doReturn("act_uniq_variable").when(integrityViolation).getMessage();
     doReturn("23505").when(integrityViolation).getSQLState();
-    assertThat(ExceptionUtil.checkVariableIntegrityViolation(new PersistenceException(integrityViolation))).isTrue();
+
+    // when
+    boolean result = ExceptionUtil.checkVariableIntegrityViolation(new PersistenceException(integrityViolation));
+    // then
+    assertThat(result).isTrue();
   }
 
   @Test
   void checkDeadlockException() {
-    assertThat(ExceptionUtil.checkDeadlockException(mock(SQLException.class))).isFalse();
+    // when
+    boolean none = ExceptionUtil.checkDeadlockException(mock(SQLException.class));
+    // then
+    assertThat(none).isFalse();
 
+    // given
     SQLException deadlock = mock(SQLException.class);
     doReturn("40P01").when(deadlock).getSQLState();  // PostgreSQL
-    assertThat(ExceptionUtil.checkDeadlockException(deadlock)).isTrue();
+
+    // when
+    boolean result = ExceptionUtil.checkDeadlockException(deadlock);
+    // then
+    assertThat(result).isTrue();
   }
 
 }

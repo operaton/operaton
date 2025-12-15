@@ -23,6 +23,14 @@ updates:
     labels:
       - "dependencies:maven"
     milestone: 10
+    groups:
+      httpcomponents5:
+        patterns:
+          - "org.apache.httpcomponents.core5:*"
+          - "org.apache.httpcomponents.client5:*"
+      httpcomponents4:
+        patterns:
+          - "org.apache.httpcomponents:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -98,6 +106,14 @@ updates:
     labels:
       - "dependencies:maven"
     milestone: 11
+    groups:
+      httpcomponents5:
+        patterns:
+          - "org.apache.httpcomponents.core5:*"
+          - "org.apache.httpcomponents.client5:*"
+      httpcomponents4:
+        patterns:
+          - "org.apache.httpcomponents:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:

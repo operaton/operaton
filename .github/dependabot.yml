@@ -57,6 +57,12 @@ updates:
           - "dmn-js-drd"
           - "dmn-js-literal-expression"
           - "dmn-js-shared"
+      eslint:
+        patterns:
+          - "eslint*"
+      webpack:
+        patterns:
+          - "webpack*"
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -143,6 +149,12 @@ updates:
           - "dmn-js-drd"
           - "dmn-js-literal-expression"
           - "dmn-js-shared"
+      eslint:
+        patterns:
+          - "eslint*"
+      webpack:
+        patterns:
+          - "webpack*"
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:

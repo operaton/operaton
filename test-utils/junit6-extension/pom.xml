@@ -20,7 +20,9 @@
   </dependencies>
   <build>
     <plugins>
-      <!-- Unpack the junit5-extension jar and repackage it as junit6 -->
+      <!-- Unpack the junit5-extension jar and repackage it with junit6 artifact name.
+           Note: JUnit 6 doesn't exist as a separate version; this artifact provides the same
+           JUnit 5-compatible functionality under a different artifactId for clarity. -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:379165a9-914e-4669-823e-d2dd7e4f3412",
+  "serialNumber": "urn:uuid:a54ef10e-29c9-4f86-9b2d-f22c2bf2680d",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-15T14:53:14Z",
+    "timestamp": "2025-12-15T15:10:16Z",
     "tools": {
       "components": [
         {
@@ -21116,7 +21116,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "a62bb23d-d9c1-4798-8e63-3f56b9496196",
+      "bom-ref": "bd6867b3-29c9-4766-91d6-3e7d67a7ec47",
       "name": "package-lock.json",
       "properties": [
         {
@@ -22548,14 +22548,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.35.1",
+      "bom-ref": "pkg:npm/core-js@3.47.0",
       "name": "core-js",
-      "version": "3.35.1",
-      "purl": "pkg:npm/core-js@3.35.1",
+      "version": "3.47.0",
+      "purl": "pkg:npm/core-js@3.47.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.35.1"
+          "value": "core-js@3.47.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24809,7 +24809,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "85d9e6fd-f5fc-40ac-ac96-0397ceda1f97",
+      "bom-ref": "f4b3fc23-9790-46cc-a29e-4a2e9035f9f8",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27415,13 +27415,7 @@
       "dependsOn": []
     },
     {
-      "ref": "85d9e6fd-f5fc-40ac-ac96-0397ceda1f97",
-      "dependsOn": [
-        "a62bb23d-d9c1-4798-8e63-3f56b9496196"
-      ]
-    },
-    {
-      "ref": "a62bb23d-d9c1-4798-8e63-3f56b9496196",
+      "ref": "bd6867b3-29c9-4766-91d6-3e7d67a7ec47",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -27445,7 +27439,7 @@
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.35.1",
+        "pkg:npm/core-js@3.47.0",
         "pkg:npm/dmn-font@0.6.2",
         "pkg:npm/dmn-js-decision-table@17.4.0",
         "pkg:npm/dmn-js-drd@17.4.0",
@@ -27466,6 +27460,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
         "pkg:npm/superagent@8.1.2"
+      ]
+    },
+    {
+      "ref": "f4b3fc23-9790-46cc-a29e-4a2e9035f9f8",
+      "dependsOn": [
+        "bd6867b3-29c9-4766-91d6-3e7d67a7ec47"
       ]
     },
     {
@@ -28014,7 +28014,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.35.1",
+      "ref": "pkg:npm/core-js@3.47.0",
       "dependsOn": []
     },
     {

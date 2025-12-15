@@ -12,6 +12,12 @@ permissions:
   pull-requests: write
   issues: write
 
+# Note: The whitelist fetching logic is duplicated across jobs because:
+# 1. GitHub Actions composite actions would require a checkout step (defeating the optimization)
+# 2. Reusable workflows cannot be used for jobs within the same workflow
+# 3. The duplication is minimal (~15 lines) and keeps the workflow self-contained
+# 4. Each job needs to fetch independently to avoid inter-job dependencies
+
 jobs:
   greet-first-time-pr:
     name: Greet First-Time PR Contributors

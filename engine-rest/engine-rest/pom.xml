@@ -126,7 +126,7 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-bpm-junit6</artifactId>
       <scope>test</scope>
     </dependency>
     <!-- only included to prevent java.lang.ClassNotFoundException: org.apache.jasper.servlet.JspServlet -->

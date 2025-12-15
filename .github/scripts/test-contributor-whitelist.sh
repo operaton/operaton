@@ -61,6 +61,11 @@ echo ""
 echo "Test 6: Validating username format..."
 # GitHub usernames can be 1-39 characters, alphanumeric and hyphens
 # Cannot start or end with hyphen, but single characters are allowed
+# Pattern: ^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$
+#   - Starts with alphanumeric
+#   - Optionally followed by any number of alphanumeric or hyphens
+#   - Must end with alphanumeric (unless single character)
+#   - The ? makes the middle group optional for single-character usernames
 invalid_usernames=$(echo "$whitelist" | grep -v -E '^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$' || true)
 if [ -z "$invalid_usernames" ]; then
     echo "✓ All usernames have valid format"

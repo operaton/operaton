@@ -27,7 +27,7 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
-            
+
             const author = context.actor;
             const { owner, repo } = context.repo;
             const prTitle = context.payload.pull_request.title;
@@ -67,7 +67,8 @@ jobs:
             }else if (alreadyConfirmed) {
               console.log("Contributor already confirmed license + CoC. Skipping greeting.");
             }
-
+  #Check if the actor is not in the whitelist
+  # Second part of the next if-clause ensures that PR is from a different fork
   greet-first-time-issue:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
@@ -82,7 +83,7 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
-            
+
             const author = context.actor;
             const { owner, repo } = context.repo;
             const issueTitle = context.payload.issue.title;
@@ -129,7 +130,7 @@ jobs:
             const author = context.actor;
             const { owner, repo } = context.repo;
             const commentBody = context.payload.comment.body;
-            
+
             const issueAuthor = context.payload.issue.user.login;
             const isPullRequest = !!context.payload.issue.pull_request;
             
@@ -162,18 +163,18 @@ jobs:
               owner,
               repo
             });
-            
+
             const userComments = allComments.filter(c => c.user.login === author);
             const commentCount = userComments.length;
-            
+
             console.log(`Found ${commentCount} comment(s) from ${author}.`);
-            
+
             if (commentCount === 1 || commentBody.includes('[FORCE GREETING]')) {
               let commentMessage = fs.readFileSync(
                 path.join(process.env.GITHUB_WORKSPACE, '.github/templates/first_comment_on_issue.md'),
                 'utf8'
               ).replace(/\$\{author\}/g, author);
-            
+
               await github.rest.issues.createComment({
                 owner,
                 repo,
@@ -181,3 +182,4 @@ jobs:
                 body: commentMessage
               });
             }
+

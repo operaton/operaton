@@ -1,5 +1,0 @@
-# List of GitHub usernames who have already contributed to the repository
-# This file is used by the first-time contributor workflow to skip greeting
-# existing contributors. Add one username per line.
-# Format: one GitHub username per line (case-sensitive)
-kthoms

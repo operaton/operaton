@@ -12,55 +12,37 @@ permissions:
   pull-requests: write
   issues: write
 
-# Note: The whitelist fetching logic is duplicated across jobs because:
-# 1. GitHub Actions composite actions would require a checkout step (defeating the optimization)
-# 2. Reusable workflows cannot be used for jobs within the same workflow
-# 3. The duplication is minimal (~15 lines) and keeps the workflow self-contained
-# 4. Each job needs to fetch independently to avoid inter-job dependencies
+env:
+  # Whitelist of GitHub usernames who have already contributed to the repository
+  # These users will not receive first-time contributor greetings
+  CONTRIBUTOR_WHITELIST: 'kthoms'
 
 jobs:
   greet-first-time-pr:
     name: Greet First-Time PR Contributors
     runs-on: ubuntu-slim
     # Only run for PRs from forks (different repository) and not from operaton/operaton
+    # Skip if the PR author is in the contributor whitelist
     if: |
       github.event_name == 'pull_request_target' && 
       github.event.action == 'opened' && 
-      github.event.pull_request.head.repo.full_name != github.repository
+      github.event.pull_request.head.repo.full_name != github.repository &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
       - name: Check for first-time PR contributor
         uses: actions/github-script@v8
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
+            
             const author = context.actor;
             const { owner, repo } = context.repo;
             const prTitle = context.payload.pull_request.title;
             const prBody = context.payload.pull_request.body || "";
-
-            // Fetch contributor whitelist from repository
-            console.log('Fetching contributor whitelist...');
-            let whitelist = [];
-            try {
-              const whitelistContent = await github.rest.repos.getContent({
-                owner,
-                repo,
-                path: '.github/contributor-whitelist.txt',
-                ref: context.payload.repository.default_branch
-              });
-              const decoded = Buffer.from(whitelistContent.data.content, 'base64').toString('utf8');
-              whitelist = decoded.split('\n')
-                .map(line => line.trim())
-                .filter(line => line && !line.startsWith('#'));
-              console.log(`Loaded ${whitelist.length} whitelisted contributors`);
-            } catch (error) {
-              console.log('No whitelist found or error loading it:', error.message);
-            }
-
-            // Check if author is in whitelist
-            if (whitelist.includes(author)) {
-              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
-              return;
-            }
 
             console.log(`Checking for past PRs from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -81,14 +63,10 @@ jobs:
               /Code\s+of\s+Conduct/i.test(prBody);
 
             if ((prCount === 1 || prTitle.includes('[FORCE GREETING]')) && !alreadyConfirmed) {
-              // Fetch PR welcome template from repository
-              const templateContent = await github.rest.repos.getContent({
-                owner,
-                repo,
-                path: '.github/templates/pr_welcome.md',
-                ref: context.payload.repository.default_branch
-              });
-              let prMessage = Buffer.from(templateContent.data.content, 'base64').toString('utf8');
+              let prMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/pr_welcome.md'),
+                'utf8'
+              );
               prMessage = prMessage.replace(/\$\{author\}/g, author);
 
               await github.rest.issues.createComment({
@@ -104,40 +82,25 @@ jobs:
   greet-first-time-issue:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+    # Skip if the issue author is in the contributor whitelist
+    if: |
+      github.event_name == 'issues' && 
+      github.event.action == 'opened' &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
       - name: Check for first-time Issue creator
         uses: actions/github-script@v8
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
+            
             const author = context.actor;
             const { owner, repo } = context.repo;
             const issueTitle = context.payload.issue.title;
-
-            // Fetch contributor whitelist from repository
-            console.log('Fetching contributor whitelist...');
-            let whitelist = [];
-            try {
-              const whitelistContent = await github.rest.repos.getContent({
-                owner,
-                repo,
-                path: '.github/contributor-whitelist.txt',
-                ref: context.payload.repository.default_branch
-              });
-              const decoded = Buffer.from(whitelistContent.data.content, 'base64').toString('utf8');
-              whitelist = decoded.split('\n')
-                .map(line => line.trim())
-                .filter(line => line && !line.startsWith('#'));
-              console.log(`Loaded ${whitelist.length} whitelisted contributors`);
-            } catch (error) {
-              console.log('No whitelist found or error loading it:', error.message);
-            }
-
-            // Check if author is in whitelist
-            if (whitelist.includes(author)) {
-              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
-              return;
-            }
 
             console.log(`Checking for past Issues from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -153,14 +116,10 @@ jobs:
             console.log(`Found ${issueCount} Issue(s) from ${author}.`);
 
             if (issueCount === 1 || issueTitle.includes('[FORCE GREETING]')) {
-              // Fetch issue welcome template from repository
-              const templateContent = await github.rest.repos.getContent({
-                owner,
-                repo,
-                path: '.github/templates/issue_welcome.md',
-                ref: context.payload.repository.default_branch
-              });
-              let issueMessage = Buffer.from(templateContent.data.content, 'base64').toString('utf8');
+              let issueMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/issue_welcome.md'),
+                'utf8'
+              );
               issueMessage = issueMessage.replace(/\$\{author\}/g, author);
 
               await github.rest.issues.createComment({
@@ -174,11 +133,18 @@ jobs:
   greet-first-time-comment:
     name: Greet First-Time Issue Commenters
     runs-on: ubuntu-slim
-    if: github.event_name == 'issue_comment' && github.event.action == 'created'
+    # Skip if the commenter is in the contributor whitelist
+    if: |
+      github.event_name == 'issue_comment' && 
+      github.event.action == 'created' &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
+      - uses: actions/checkout@v6
       - uses: actions/github-script@v8
         with:
           script: |
+            const fs = require('fs');
+            const path = require('path');
             const author = context.actor;
             const { owner, repo } = context.repo;
             const commentBody = context.payload.comment.body;
@@ -186,31 +152,6 @@ jobs:
             const issueAuthor = context.payload.issue.user.login;
             if (author === issueAuthor) {
               console.log(`${author} is the author of this issue/PR. Skipping greeting.`);
-              return;
-            }
-
-            // Fetch contributor whitelist from repository
-            console.log('Fetching contributor whitelist...');
-            let whitelist = [];
-            try {
-              const whitelistContent = await github.rest.repos.getContent({
-                owner,
-                repo,
-                path: '.github/contributor-whitelist.txt',
-                ref: context.payload.repository.default_branch
-              });
-              const decoded = Buffer.from(whitelistContent.data.content, 'base64').toString('utf8');
-              whitelist = decoded.split('\n')
-                .map(line => line.trim())
-                .filter(line => line && !line.startsWith('#'));
-              console.log(`Loaded ${whitelist.length} whitelisted contributors`);
-            } catch (error) {
-              console.log('No whitelist found or error loading it:', error.message);
-            }
-
-            // Check if author is in whitelist
-            if (whitelist.includes(author)) {
-              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
               return;
             }
             
@@ -226,15 +167,10 @@ jobs:
             console.log(`Found ${commentCount} comment(s) from ${author}.`);
             
             if (commentCount === 1 || commentBody.includes('[FORCE GREETING]')) {
-              // Fetch comment welcome template from repository
-              const templateContent = await github.rest.repos.getContent({
-                owner,
-                repo,
-                path: '.github/templates/first_comment_on_issue.md',
-                ref: context.payload.repository.default_branch
-              });
-              let commentMessage = Buffer.from(templateContent.data.content, 'base64').toString('utf8');
-              commentMessage = commentMessage.replace(/\$\{author\}/g, author);
+              let commentMessage = fs.readFileSync(
+                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/first_comment_on_issue.md'),
+                'utf8'
+              ).replace(/\$\{author\}/g, author);
             
               await github.rest.issues.createComment({
                 owner,

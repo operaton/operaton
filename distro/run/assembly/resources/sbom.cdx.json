@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:07dd6fa6-2640-444c-b64d-fa0f8731e52d",
+  "serialNumber": "urn:uuid:a4e44047-9224-4a34-b0db-6616502132cd",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-15T16:11:13Z",
+    "timestamp": "2025-12-16T07:53:42Z",
     "tools": {
       "components": [
         {
@@ -3854,44 +3854,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ede6b754f397248623c32da69a2bdedf"
+          "content": "045f51ed521606b180b7ab088e258c4c"
         },
         {
           "alg": "SHA-1",
-          "content": "8b9f7ca7931621161b009a757ff8cd5ae0de4926"
+          "content": "457576cfd348a4c564569a7e9fc7a3b53f476454"
         },
         {
           "alg": "SHA-256",
-          "content": "edd5740fd67f1a1edd7dae4b08eef333c81cbe84a9d437f14ecdb9b82bc04688"
+          "content": "7461ddfff4daa2511060376dc247c60d89b9c7b7aaa4b80fe14402707a2e3ed0"
         },
         {
           "alg": "SHA-512",
-          "content": "08224dc6c98675d453cf48f3e13f9b4f5b2c58218c57b98ffe20ba45548616b41f0f64c70552d548718bc1a77fe02d89ba23af6fcf4bcf1c9c4824b1fc08d605"
+          "content": "bd0409ab606631fe3752dd3079a3451fcd59886a69c3d8763dc0a1c4e5e94be3af452300bb35a0b7bfee21d271bff061c28defe49d0fb7c107d88fdeaead1ecf"
         },
         {
           "alg": "SHA-384",
-          "content": "c2424481ec81ff13c05df21b8c5aaebcb0d4ffdd69c84b8229a25763d946947d42639f4bf9958880a8e1e11669796aec"
+          "content": "05b54b910531e187fdab07b4d8a85a8ea085521888edc6d2a4626b3c48eed1d28d1d6d57a33ab290ad73a4769c578183"
         },
         {
           "alg": "SHA3-384",
-          "content": "02abf9a59ea96beede79d68555c6f1a0e608592d13752c469f606563f4f5997bcaea7755973d5d42682d521dc5b307d0"
+          "content": "a760105e514692111ddd96a40edffd7eaa84c4bfe4c58d00e2dafb8753956f4fc71f65bc81987132573339989abab33a"
         },
         {
           "alg": "SHA3-256",
-          "content": "ed3ff8f737c7e0ebe75d97fc756c38da5e74f3c8472cda9e667845b0c32ad960"
+          "content": "c61b5ce0bb25407b7640242dfb270b1b0ca064aa20e7f063c6d9111e53ce7a7e"
         },
         {
           "alg": "SHA3-512",
-          "content": "c6e30bbad3015624147e7314578ed12997a7819f50641d69feb63190b6079471eaf83998c8bf6381bac6c903c51abcd6706a1ff3cff6024729436c7f827c2ada"
+          "content": "93a20cc2cf3e0c4bc362c52a3892b083a009acc4d109cff0f06a6fc5ea606ce6379ced3055b277de014ea91f87210a696993162b4e25e06f0393d00aefb7f052"
         }
       ],
       "licenses": [
@@ -3902,7 +3902,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4604,10 +4604,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-mysql",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -4652,7 +4652,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4670,10 +4670,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-jdbc",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -4718,7 +4718,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4736,10 +4736,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-database-commons",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -4784,7 +4784,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4802,10 +4802,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-mariadb",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -4850,7 +4850,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4868,10 +4868,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-postgresql",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -4916,7 +4916,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4934,10 +4934,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-mssqlserver",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -4982,7 +4982,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -5000,10 +5000,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-oracle-xe",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -5048,7 +5048,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -5066,10 +5066,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.3?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-db2",
-      "version": "2.0.2",
+      "version": "2.0.3",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
@@ -5114,7 +5114,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.2?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -5157,6 +5157,37 @@
         },
         {
           "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-bpm-junit5",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@1.1.0-SNAPSHOT?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm",
+      "name": "operaton-bpm-junit6",
+      "version": "1.1.0-SNAPSHOT",
+      "description": "Operaton - JUnit 6 Extension",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@1.1.0-SNAPSHOT?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-junit6",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-bpm-junit6",
           "type": "vcs"
         }
       ]
@@ -23193,7 +23224,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ce01fc6f-d8b6-44df-a96f-02d0e8a4385e",
+      "bom-ref": "92dec32a-66c9-480d-8461-0197fdb4f945",
       "name": "package-lock.json",
       "properties": [
         {
@@ -23892,15 +23923,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40paralleldrive/cuid2@2.2.2",
+      "bom-ref": "pkg:npm/%40paralleldrive/cuid2@2.3.1",
       "group": "@paralleldrive",
       "name": "cuid2",
-      "version": "2.2.2",
-      "purl": "pkg:npm/%40paralleldrive/cuid2@2.2.2",
+      "version": "2.3.1",
+      "purl": "pkg:npm/%40paralleldrive/cuid2@2.3.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@paralleldrive/cuid2@2.2.2"
+          "value": "@paralleldrive/cuid2@2.3.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25322,14 +25353,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@4.3.4",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.3.3",
       "name": "fast-xml-parser",
-      "version": "4.3.4",
-      "purl": "pkg:npm/fast-xml-parser@4.3.4",
+      "version": "5.3.3",
+      "purl": "pkg:npm/fast-xml-parser@5.3.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@4.3.4"
+          "value": "fast-xml-parser@5.3.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25458,14 +25489,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/formidable@2.1.5",
+      "bom-ref": "pkg:npm/formidable@3.5.4",
       "name": "formidable",
-      "version": "2.1.5",
-      "purl": "pkg:npm/formidable@2.1.5",
+      "version": "3.5.4",
+      "purl": "pkg:npm/formidable@3.5.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "formidable@2.1.5"
+          "value": "formidable@3.5.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26597,23 +26628,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/semver@7.7.2",
-      "name": "semver",
-      "version": "7.7.2",
-      "purl": "pkg:npm/semver@7.7.2",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "semver@7.7.2"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/side-channel-list@1.0.0",
       "name": "side-channel-list",
       "version": "1.0.0",
@@ -26682,14 +26696,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/strnum@1.1.2",
+      "bom-ref": "pkg:npm/strnum@2.1.2",
       "name": "strnum",
-      "version": "1.1.2",
-      "purl": "pkg:npm/strnum@1.1.2",
+      "version": "2.1.2",
+      "purl": "pkg:npm/strnum@2.1.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "strnum@1.1.2"
+          "value": "strnum@2.1.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26716,14 +26730,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/superagent@8.1.2",
+      "bom-ref": "pkg:npm/superagent@10.2.3",
       "name": "superagent",
-      "version": "8.1.2",
-      "purl": "pkg:npm/superagent@8.1.2",
+      "version": "10.2.3",
+      "purl": "pkg:npm/superagent@10.2.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "superagent@8.1.2"
+          "value": "superagent@10.2.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26886,7 +26900,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "606eb203-ca77-40af-9e8a-2f4ac6c36f7c",
+      "bom-ref": "352f9503-2316-4998-b892-0dcb4e7f2904",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27241,6 +27255,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.qa/operaton-qa@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@1.1.0-SNAPSHOT?type=pom",
@@ -27256,18 +27271,18 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers@2.0.2?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.2?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.2?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.2?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.2?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.2?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.2?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.3?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
@@ -27329,51 +27344,51 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.2?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.2?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.3?type=jar"
       ]
     },
     {
@@ -27383,6 +27398,12 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.22?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@1.1.0-SNAPSHOT?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar"
       ]
     },
     {
@@ -27859,7 +27880,7 @@
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-depchain@3.3.4?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@3.1.11?type=jar",
         "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
@@ -29729,13 +29750,13 @@
       "dependsOn": []
     },
     {
-      "ref": "606eb203-ca77-40af-9e8a-2f4ac6c36f7c",
+      "ref": "352f9503-2316-4998-b892-0dcb4e7f2904",
       "dependsOn": [
-        "ce01fc6f-d8b6-44df-a96f-02d0e8a4385e"
+        "92dec32a-66c9-480d-8461-0197fdb4f945"
       ]
     },
     {
-      "ref": "ce01fc6f-d8b6-44df-a96f-02d0e8a4385e",
+      "ref": "92dec32a-66c9-480d-8461-0197fdb4f945",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -29770,7 +29791,7 @@
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@4.3.4",
+        "pkg:npm/fast-xml-parser@5.3.3",
         "pkg:npm/jquery-ui@1.13.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.21",
@@ -29779,7 +29800,7 @@
         "pkg:npm/q@1.5.1",
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.7",
-        "pkg:npm/superagent@8.1.2"
+        "pkg:npm/superagent@10.2.3"
       ]
     },
     {
@@ -30082,7 +30103,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40paralleldrive/cuid2@2.2.2",
+      "ref": "pkg:npm/%40paralleldrive/cuid2@2.3.1",
       "dependsOn": [
         "pkg:npm/%40noble/hashes@1.8.0"
       ]
@@ -30627,9 +30648,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@4.3.4",
+      "ref": "pkg:npm/fast-xml-parser@5.3.3",
       "dependsOn": [
-        "pkg:npm/strnum@1.1.2"
+        "pkg:npm/strnum@2.1.2"
       ]
     },
     {
@@ -30695,12 +30716,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/formidable@2.1.5",
+      "ref": "pkg:npm/formidable@3.5.4",
       "dependsOn": [
-        "pkg:npm/%40paralleldrive/cuid2@2.2.2",
+        "pkg:npm/%40paralleldrive/cuid2@2.3.1",
         "pkg:npm/dezalgo@1.0.4",
-        "pkg:npm/once@1.4.0",
-        "pkg:npm/qs@6.13.0"
+        "pkg:npm/once@1.4.0"
       ]
     },
     {
@@ -31043,10 +31063,6 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/semver@7.7.2",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:npm/side-channel-list@1.0.0",
       "dependsOn": [
         "pkg:npm/es-errors@1.3.0",
@@ -31083,7 +31099,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/strnum@1.1.2",
+      "ref": "pkg:npm/strnum@2.1.2",
       "dependsOn": []
     },
     {
@@ -31091,18 +31107,17 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/superagent@8.1.2",
+      "ref": "pkg:npm/superagent@10.2.3",
       "dependsOn": [
         "pkg:npm/component-emitter@1.3.1",
         "pkg:npm/cookiejar@2.1.4",
         "pkg:npm/debug@4.4.1",
         "pkg:npm/fast-safe-stringify@2.1.1",
         "pkg:npm/form-data@4.0.4",
-        "pkg:npm/formidable@2.1.5",
+        "pkg:npm/formidable@3.5.4",
         "pkg:npm/methods@1.1.2",
         "pkg:npm/mime@2.6.0",
-        "pkg:npm/qs@6.13.0",
-        "pkg:npm/semver@7.7.2"
+        "pkg:npm/qs@6.13.0"
       ]
     },
     {

@@ -25,11 +25,11 @@ var BOOLEAN_PATTERN = /^(true|false)$/;
 
 var DATE_PATTERN = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
 
-var {validate} = require('fast-xml-parser/src/validator');
+var {XMLValidator} = require('fast-xml-parser');
 
 var isValidXML = function(value) {
   if (!value) return false;
-  return validate(value) === true;
+  return XMLValidator.validate(value) === true;
 };
 
 var isValidJSON = function(value) {

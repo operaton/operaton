@@ -60,6 +60,7 @@ updates:
       eslint:
         patterns:
           - "eslint*"
+          - "prettier"
       webpack:
         patterns:
           - "webpack*"
@@ -152,6 +153,7 @@ updates:
       eslint:
         patterns:
           - "eslint*"
+          - "prettier"
       webpack:
         patterns:
           - "webpack*"

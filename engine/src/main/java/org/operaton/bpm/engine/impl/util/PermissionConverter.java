@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.util;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Permission;

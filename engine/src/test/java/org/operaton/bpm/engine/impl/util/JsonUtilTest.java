@@ -15,10 +15,11 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class JsonUtilTest {
 
@@ -36,11 +37,11 @@ class JsonUtilTest {
     Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
     assertThat(result).isNotNull();
-    assertThat(result.size()).isEqualTo(4);
-    assertThat(result.get("keyString")).isEqualTo("hello");
+    assertThat(result).hasSize(4);
+    assertThat(result).containsEntry("keyString", "hello");
     assertThat(((Number) result.get("keyInt")).intValue()).isEqualTo(123);
     assertThat(((Number) result.get("keyDouble")).doubleValue()).isEqualTo(45.67);
-    assertThat(result.get("keyBoolean")).isEqualTo(true);
+    assertThat(result).containsEntry("keyBoolean", true);
   }
 
   @Test
@@ -56,7 +57,7 @@ class JsonUtilTest {
 
     assertThat(result).containsKey("nullKey");
     assertThat(result.get("nullKey")).isNull();
-    assertThat(result.get("notNullKey")).isEqualTo("present");
+    assertThat(result).containsEntry("notNullKey", "present");
   }
 
   @Test
@@ -72,11 +73,12 @@ class JsonUtilTest {
 
     Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
-    assertThat(result).hasSize(2);
-    assertThat(result).containsKey("primitiveKey");
-    assertThat(result).containsKey("nullKey");
-    assertThat(result).doesNotContainKey("objectKey");
-    assertThat(result).doesNotContainKey("arrayKey");
+    assertThat(result)
+            .hasSize(2)
+            .containsKey("primitiveKey")
+            .containsKey("nullKey")
+            .doesNotContainKey("objectKey")
+            .doesNotContainKey("arrayKey");
   }
 
   @Test

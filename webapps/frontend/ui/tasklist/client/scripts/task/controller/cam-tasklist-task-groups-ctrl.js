@@ -27,7 +27,7 @@ module.exports = [
   '$q',
   'Notifications',
   'camAPI',
-  function($scope, $translate, $q, Notifications, camAPI) {
+  function ($scope, $translate, $q, Notifications, camAPI) {
     // setup //////////////////////////////////////////////
 
     var Task = camAPI.resource('task');
@@ -51,9 +51,9 @@ module.exports = [
       'FAILURE',
       'INIT_GROUPS_FAILURE',
       'ADD_GROUP_FAILED',
-      'REMOVE_GROUP_FAILED'
+      'REMOVE_GROUP_FAILED',
     ])
-      .then(function(result) {
+      .then(function (result) {
         messages.failure = result.FAILURE;
         messages.initGroupsFailed = result.INIT_GROUPS_FAILURE;
         messages.addGroupFailed = result.ADD_GROUP_FAILED;
@@ -63,31 +63,32 @@ module.exports = [
 
     // observe ////////////////////////////////////////////////////////
 
-    $scope.modalGroupsState = taskGroupsData.observe('groups', function(
-      groups
-    ) {
-      $scope._groups = angular.copy(groups) || [];
-      $scope.validateNewGroup();
-    });
+    $scope.modalGroupsState = taskGroupsData.observe(
+      'groups',
+      function (groups) {
+        $scope._groups = angular.copy(groups) || [];
+        $scope.validateNewGroup();
+      },
+    );
 
-    taskGroupsData.observe('task', function(_task) {
+    taskGroupsData.observe('task', function (_task) {
       task = _task;
     });
 
     // actions ///////////////////////////////////////////////////////
 
-    $scope.$watch('modalGroupsState.$error', function(error) {
+    $scope.$watch('modalGroupsState.$error', function (error) {
       if (error) {
         Notifications.addError({
           status: messages.failure,
           message: messages.initGroupsFailed,
           exclusive: true,
-          scope: $scope
+          scope: $scope,
         });
       }
     });
 
-    $scope.addGroup = function() {
+    $scope.addGroup = function () {
       var taskId = task.id;
 
       groupsChanged();
@@ -95,7 +96,7 @@ module.exports = [
       delete newGroup.error;
 
       $scope.loading = true;
-      Task.identityLinksAdd(taskId, newGroup, function(err) {
+      Task.identityLinksAdd(taskId, newGroup, function (err) {
         $scope.loading = false;
         if (err) {
           return errorHandler('TASK_UPDATE_ERROR', err);
@@ -109,7 +110,7 @@ module.exports = [
       });
     };
 
-    $scope.removeGroup = function(group, index) {
+    $scope.removeGroup = function (group, index) {
       var taskId = task.id;
 
       groupsChanged();
@@ -117,22 +118,22 @@ module.exports = [
       Task.identityLinksDelete(
         taskId,
         {type: GROUP_TYPE, groupId: group.id},
-        function(err) {
+        function (err) {
           if (err) {
             return Notifications.addError({
               status: messages.failure,
               message: messages.removeGroupFailed,
               exclusive: true,
-              scope: $scope
+              scope: $scope,
             });
           }
 
           $scope._groups.splice(index, 1);
-        }
+        },
       );
     };
 
-    $scope.validateNewGroup = function() {
+    $scope.validateNewGroup = function () {
       delete newGroup.error;
 
       if ($scope.taskGroupForm && $scope.taskGroupForm.newGroup) {
@@ -156,16 +157,16 @@ module.exports = [
       }
     };
 
-    $scope.isEnabled = function() {
+    $scope.isEnabled = function () {
       return !$scope.loading && $scope.isValid();
     };
 
-    $scope.isValid = function() {
+    $scope.isValid = function () {
       if (!newGroup.groupId || newGroup.error) {
         return false;
       }
 
       return true;
     };
-  }
+  },
 ];

@@ -27,8 +27,8 @@
  */
 'use strict';
 
-var Filter = function() {
-  return function(duration) {
+var Filter = function () {
+  return function (duration) {
     if (!duration) {
       return;
     }

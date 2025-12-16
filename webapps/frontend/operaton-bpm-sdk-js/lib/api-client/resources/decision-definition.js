@@ -64,10 +64,10 @@ DecisionDefinition.path = 'decision-definition';
  *                                                Will return less results, if there are no more results left.
  * @param {Function} done
  */
-DecisionDefinition.list = function(params, done) {
+DecisionDefinition.list = function (params, done) {
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -76,9 +76,9 @@ DecisionDefinition.list = function(params, done) {
  * @param  {uuid}     id   The id of the decision definition to be retrieved.
  * @param  {Function} done
  */
-DecisionDefinition.get = function(id, done) {
+DecisionDefinition.get = function (id, done) {
   return this.http.get(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
@@ -87,9 +87,9 @@ DecisionDefinition.get = function(id, done) {
  * @param  {uuid}     id   The id of the decision definition.
  * @param  {Function} done
  */
-DecisionDefinition.getXml = function(id, done) {
+DecisionDefinition.getXml = function (id, done) {
   return this.http.get(this.path + '/' + id + '/xml', {
-    done: done
+    done: done,
   });
 };
 
@@ -101,7 +101,7 @@ DecisionDefinition.getXml = function(id, done) {
  * @param {String} [params.key]             The key of the decision definition (the latest version thereof) to be evaluated. Must be omitted if id is provided.
  * @param {String} [params.variables]       A JSON object containing the input variables of the decision. Each key corresponds to a variable name and each value to a variable value.
  */
-DecisionDefinition.evaluate = function(params, done) {
+DecisionDefinition.evaluate = function (params, done) {
   return this.http.post(
     this.path +
       '/' +
@@ -109,8 +109,8 @@ DecisionDefinition.evaluate = function(params, done) {
       '/evaluate',
     {
       data: params,
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -121,12 +121,12 @@ DecisionDefinition.evaluate = function(params, done) {
  * @param {Object} [params]
  * @param {Number} [params.historyTimeToLive]  New value for historyTimeToLive field of process definition. Can be null.
  */
-DecisionDefinition.updateHistoryTimeToLive = function(id, params, done) {
+DecisionDefinition.updateHistoryTimeToLive = function (id, params, done) {
   var url = this.path + '/' + id + '/history-time-to-live';
 
   return this.http.put(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

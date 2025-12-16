@@ -21,7 +21,7 @@ var events = require('./events');
 
 var PAGE_SIZE = 10;
 
-var Batch = function(camAPI, localConf, configuration) {
+var Batch = function (camAPI, localConf, configuration) {
   this._sdk = camAPI;
   this._localConf = localConf;
   this.shouldLoadHistory = configuration.getBatchOperationAutoLoadEnded();
@@ -29,16 +29,16 @@ var Batch = function(camAPI, localConf, configuration) {
   this.sortingProperties = {
     runtime: 'batch-runtime-sort',
     history: 'batch-history-sort',
-    job: 'batch-job-sort'
+    job: 'batch-job-sort',
   };
 
   var runtimeSorting = this._loadLocal('runtime', {
     sortBy: 'batchId',
-    sortOrder: 'asc'
+    sortOrder: 'asc',
   });
   var historySorting = this._loadLocal('history', {
     sortBy: 'startTime',
-    sortOrder: 'desc'
+    sortOrder: 'desc',
   });
 
   this._batches = {
@@ -49,20 +49,20 @@ var Batch = function(camAPI, localConf, configuration) {
       data: null,
       users: {},
       sorting: runtimeSorting,
-      query: {}
+      query: {},
     },
     history: {
       state: 'INITIAL',
       currentPage: 1,
       count: 0,
       data: null,
-      sorting: historySorting
+      sorting: historySorting,
     },
     selection: {
       state: 'INITIAL',
       type: null,
-      data: {}
-    }
+      data: {},
+    },
   };
 
   var jobSorting = this._loadLocal('job', {sortBy: 'jobId', sortOrder: 'asc'});
@@ -72,56 +72,56 @@ var Batch = function(camAPI, localConf, configuration) {
     currentPage: 1,
     count: 0,
     data: [],
-    sorting: jobSorting
+    sorting: jobSorting,
   };
 
   this.deleteModal = {
-    instance: null
+    instance: null,
   };
 
   var self = this;
-  events.on('delete:cancel', function() {
+  events.on('delete:cancel', function () {
     self.deleteModal.instance && self.deleteModal.instance.dismiss('cancel');
     self.deleteModal.instance = null;
   });
 
-  events.on('delete:confirm', function(params) {
+  events.on('delete:confirm', function (params) {
     self._remove(params);
   });
 };
 
-Batch.prototype._loadLocal = function(type, defaultValue) {
+Batch.prototype._loadLocal = function (type, defaultValue) {
   var localConf = this._localConf;
   return localConf && localConf.get(this.sortingProperties[type], defaultValue);
 };
 
-Batch.prototype._saveLocal = function(type, value) {
+Batch.prototype._saveLocal = function (type, value) {
   var localConf = this._localConf;
   localConf && localConf.set(this.sortingProperties[type], value);
 };
 
-Batch.prototype.openDeleteModal = function() {
+Batch.prototype.openDeleteModal = function () {
   events.emit('deleteModal:open', this.deleteModal);
 };
 
-Batch.prototype.onBatchSortChange = function(type, sorting) {
+Batch.prototype.onBatchSortChange = function (type, sorting) {
   this._batches[type].sorting = sorting;
   this._saveLocal(type, sorting);
   this._load(type);
 };
 
-Batch.prototype.onJobSortChange = function(sorting) {
+Batch.prototype.onJobSortChange = function (sorting) {
   this._jobs.sorting = sorting;
   this._saveLocal('job', sorting);
   this._loadFailedJobs(this.getSelection());
 };
 
-Batch.prototype._remove = function(params) {
+Batch.prototype._remove = function (params) {
   var obj = this._batches.selection;
   params.id = obj.data.id;
   var self = this;
 
-  let cb = err => {
+  let cb = (err) => {
     self.deleteModal.instance && self.deleteModal.instance.close();
     self.deleteModal.instance = null;
 
@@ -143,8 +143,8 @@ Batch.prototype._remove = function(params) {
   }
 };
 
-var handleRetryResponse = function(context) {
-  return function(err) {
+var handleRetryResponse = function (context) {
+  return function (err) {
     if (err) {
       events.emit('job:retry:failed', err);
     } else {
@@ -155,29 +155,29 @@ var handleRetryResponse = function(context) {
   };
 };
 
-Batch.prototype.retryAll = function() {
+Batch.prototype.retryAll = function () {
   return this._sdk.resource('job-definition').setRetries(
     {
       id: this._batches.selection.data.batchJobDefinitionId,
-      retries: 1
+      retries: 1,
     },
-    handleRetryResponse(this)
+    handleRetryResponse(this),
   );
 };
 
-Batch.prototype.retryJob = function(job) {
+Batch.prototype.retryJob = function (job) {
   return this._sdk.resource('job').setRetries(
     {
       id: job.id,
-      retries: 1
+      retries: 1,
     },
-    handleRetryResponse(this)
+    handleRetryResponse(this),
   );
 };
 
-Batch.prototype.deleteJob = function(job) {
+Batch.prototype.deleteJob = function (job) {
   var self = this;
-  return this._sdk.resource('job').delete(job.id, function(err) {
+  return this._sdk.resource('job').delete(job.id, function (err) {
     if (err) {
       events.emit('job:delete:failed', err);
     } else {
@@ -188,7 +188,7 @@ Batch.prototype.deleteJob = function(job) {
   });
 };
 
-Batch.prototype.getProgressPercentage = function(batch, type) {
+Batch.prototype.getProgressPercentage = function (batch, type) {
   switch (type) {
     case 'success':
       return (
@@ -207,11 +207,11 @@ Batch.prototype.getProgressPercentage = function(batch, type) {
   }
 };
 
-Batch.prototype.getProgressRoundedPercentage = function(batch, type) {
+Batch.prototype.getProgressRoundedPercentage = function (batch, type) {
   return Math.round(this.getProgressPercentage(batch, type));
 };
 
-Batch.prototype.getProgressAbsolute = function(batch, type) {
+Batch.prototype.getProgressAbsolute = function (batch, type) {
   switch (type) {
     case 'success':
       return batch.completedJobs;
@@ -222,66 +222,66 @@ Batch.prototype.getProgressAbsolute = function(batch, type) {
   }
 };
 
-Batch.prototype.isSelected = function(batch) {
+Batch.prototype.isSelected = function (batch) {
   return this._batches.selection.data.id === batch.id;
 };
 
-Batch.prototype.getJobs = function() {
+Batch.prototype.getJobs = function () {
   return this._jobs.data;
 };
 
-Batch.prototype.getStacktraceUrl = function(job) {
+Batch.prototype.getStacktraceUrl = function (job) {
   return this._sdk.baseUrl + '/job/' + job.id + '/stacktrace';
 };
 
-Batch.prototype.getJobCount = function() {
+Batch.prototype.getJobCount = function () {
   return this._jobs.count;
 };
 
-Batch.prototype.getLoadingState = function(type) {
+Batch.prototype.getLoadingState = function (type) {
   if (type === 'jobs') {
     return this._jobs.state;
   }
   return this._batches[type].state;
 };
 
-Batch.prototype.getBatches = function(type) {
+Batch.prototype.getBatches = function (type) {
   return this._batches[type].data;
 };
 
-Batch.prototype.getFullName = function(createUserId) {
+Batch.prototype.getFullName = function (createUserId) {
   let user = this._batches.runtime.users[createUserId];
   return user ? user.firstName + ' ' + user.lastName : createUserId;
 };
 
-Batch.prototype.getSelection = function() {
+Batch.prototype.getSelection = function () {
   return this._batches.selection.data;
 };
 
-Batch.prototype.getSelectionType = function() {
+Batch.prototype.getSelectionType = function () {
   return this._batches.selection.type;
 };
 
-Batch.prototype.getBatchCount = function(type) {
+Batch.prototype.getBatchCount = function (type) {
   return this._batches[type].count;
 };
 
-Batch.prototype.getPageSize = function() {
+Batch.prototype.getPageSize = function () {
   return PAGE_SIZE;
 };
 
-Batch.prototype.getCurrentPage = function(type) {
+Batch.prototype.getCurrentPage = function (type) {
   if (type === 'jobs') {
     return this._jobs.currentPage;
   }
   return this._batches[type].currentPage;
 };
 
-Batch.prototype.getSuspendedState = function() {
+Batch.prototype.getSuspendedState = function () {
   return this.getSelection().suspended;
 };
 
-Batch.prototype.toggleSuspension = function() {
+Batch.prototype.toggleSuspension = function () {
   var self = this;
   var selection = this.getSelection();
   selection.state = 'LOADING';
@@ -289,25 +289,25 @@ Batch.prototype.toggleSuspension = function() {
   return this._sdk.resource('batch').suspended(
     {
       id: selection.id,
-      suspended: !selection.suspended
+      suspended: !selection.suspended,
     },
-    function(err) {
+    function (err) {
       if (err) {
         throw err;
       } // notification?? but how?
       self.loadDetails(selection.id, 'runtime');
-    }
+    },
   );
 };
 
-Batch.prototype.updatePage = function(type) {
+Batch.prototype.updatePage = function (type) {
   if (type === 'job') {
     return this._loadFailedJobs(this.getSelection());
   }
   this._load(type);
 };
 
-Batch.prototype.load = function() {
+Batch.prototype.load = function () {
   this._load('runtime');
 
   if (this.shouldLoadHistory) {
@@ -315,15 +315,15 @@ Batch.prototype.load = function() {
   }
 };
 
-Batch.prototype.loadHistory = function() {
+Batch.prototype.loadHistory = function () {
   this.shouldLoadHistory = true;
   this._load('history');
 };
 
-Batch.prototype.loadPeriodically = function(interval) {
+Batch.prototype.loadPeriodically = function (interval) {
   var self = this;
   this.load();
-  this.intervalHandle = window.setInterval(function() {
+  this.intervalHandle = window.setInterval(function () {
     self.load();
 
     // also update the state of the currently selected batch
@@ -337,25 +337,25 @@ Batch.prototype.loadPeriodically = function(interval) {
   }, interval);
 };
 
-Batch.prototype.stopLoadingPeriodically = function() {
+Batch.prototype.stopLoadingPeriodically = function () {
   window.clearInterval(this.intervalHandle);
 };
 
-Batch.prototype.loadDetails = function(id, type) {
+Batch.prototype.loadDetails = function (id, type) {
   var obj = this._batches.selection;
   obj.state = 'LOADING';
   obj.type = type;
   var self = this;
 
-  var cb = function(err, data) {
-    var loadingFailed = function(errMsg) {
+  var cb = function (err, data) {
+    var loadingFailed = function (errMsg) {
       events.emit('load:details:failed');
 
       obj.data = errMsg;
       obj.state = 'ERROR';
     };
 
-    var loadingSuccessful = function() {
+    var loadingSuccessful = function () {
       events.emit('load:details:completed');
 
       obj.state = 'LOADED';
@@ -377,7 +377,7 @@ Batch.prototype.loadDetails = function(id, type) {
     } else {
       obj.data = data.length ? data[0] : data;
 
-      var cb = function(err, data) {
+      var cb = function (err, data) {
         if (err) {
           if (err.status === 404) {
             obj.data.user = userId;
@@ -415,7 +415,7 @@ Batch.prototype.loadDetails = function(id, type) {
   }
 };
 
-Batch.prototype._loadFailedJobs = function(data) {
+Batch.prototype._loadFailedJobs = function (data) {
   var jobId = data.batchJobDefinitionId;
   var obj = this._jobs;
 
@@ -427,12 +427,12 @@ Batch.prototype._loadFailedJobs = function(data) {
     noRetriesLeft: true,
     firstResult: (obj.currentPage - 1) * PAGE_SIZE,
     maxResults: PAGE_SIZE,
-    sorting: [this._jobs.sorting]
+    sorting: [this._jobs.sorting],
   };
 
   this._sdk.resource('job').list(
     params,
-    function(err, data) {
+    function (err, data) {
       if (err) {
         obj.data = err.message;
         obj.state = 'ERROR';
@@ -441,17 +441,17 @@ Batch.prototype._loadFailedJobs = function(data) {
 
         delete params.sorting;
 
-        this._sdk.resource('job').count(params, function(err, data) {
+        this._sdk.resource('job').count(params, function (err, data) {
           obj.state = data ? 'LOADED' : 'EMPTY';
           obj.count = data;
           events.emit('load:jobs:completed');
         });
       }
-    }.bind(this)
+    }.bind(this),
   );
 };
 
-Batch.prototype._load = function(type) {
+Batch.prototype._load = function (type) {
   var obj = this._batches[type];
 
   if (!obj.data) {
@@ -460,29 +460,29 @@ Batch.prototype._load = function(type) {
 
   var params = {
     firstResult: (obj.currentPage - 1) * PAGE_SIZE,
-    maxResults: PAGE_SIZE
+    maxResults: PAGE_SIZE,
   };
 
-  var countCb = function(err, data) {
+  var countCb = function (err, data) {
     obj.state = data.count ? 'LOADED' : 'EMPTY';
     obj.count = data.count;
     events.emit('load:' + type + ':completed');
   };
-  var cb = function(err, data) {
+  var cb = function (err, data) {
     obj.data = data.items || data;
 
     if (type === 'runtime') {
       // fetch unique usernames
-      let uniqueUserIds = new Set(data.map(item => item.createUserId));
+      let uniqueUserIds = new Set(data.map((item) => item.createUserId));
       this._sdk.resource('user').list(
         {
           idIn: Array.from(uniqueUserIds).toString(),
-          maxResults: uniqueUserIds.size
+          maxResults: uniqueUserIds.size,
         },
         (err, data) => {
           obj.users = {};
-          data.forEach(item => (obj.users[item.id] = item));
-        }
+          data.forEach((item) => (obj.users[item.id] = item));
+        },
       );
     }
 
@@ -516,7 +516,7 @@ Batch.prototype._load = function(type) {
   }
 };
 
-Batch.prototype.onBatchQueryChange = function(type, query) {
+Batch.prototype.onBatchQueryChange = function (type, query) {
   if (JSON.stringify(query) === JSON.stringify(this._batches[type].query)) {
     return;
   }
@@ -539,7 +539,7 @@ Batch.prototype.sortingKeys = [
   'tenantId',
   'batchJobDefinitionId',
   'monitorJobDefinitionId',
-  'seedJobDefinitionId'
+  'seedJobDefinitionId',
 ];
 
 module.exports = Batch;

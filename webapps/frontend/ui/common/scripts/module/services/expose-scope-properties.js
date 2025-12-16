@@ -17,16 +17,16 @@
 
 'use strict';
 
-module.exports = function() {
-  return function($scope, target, properties) {
-    var descriptors = properties.reduce(function(descriptors, property) {
+module.exports = function () {
+  return function ($scope, target, properties) {
+    var descriptors = properties.reduce(function (descriptors, property) {
       descriptors[property] = {
-        get: function() {
+        get: function () {
           return $scope[property];
         },
-        set: function(value) {
+        set: function (value) {
           $scope[property] = value;
-        }
+        },
       };
 
       return descriptors;

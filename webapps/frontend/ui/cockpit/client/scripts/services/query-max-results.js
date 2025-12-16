@@ -21,36 +21,36 @@ var angular = require('angular');
 
 module.exports = [
   '$q',
-  function($q) {
+  function ($q) {
     function queryMaxResults(queryParams, query, count) {
       var deferred = $q.defer();
 
       query(queryParams)
-        .then(data => {
+        .then((data) => {
           deferred.resolve(data);
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.status === 400) {
-            count(queryParams).then(data => {
+            count(queryParams).then((data) => {
               query(angular.extend({maxResults: data.count}, queryParams))
-                .then(data => {
+                .then((data) => {
                   deferred.resolve(data);
                 })
-                .catch(error => {
+                .catch((error) => {
                   if (error.status === 400) {
                     var maxResults = 50;
                     query(
                       angular.extend(
                         {
-                          maxResults: maxResults
+                          maxResults: maxResults,
                         },
-                        queryParams
-                      )
+                        queryParams,
+                      ),
                     )
-                      .then(data => {
+                      .then((data) => {
                         deferred.resolve(data);
                       })
-                      .catch(error => {
+                      .catch((error) => {
                         deferred.reject(error);
                       });
                   }
@@ -63,5 +63,5 @@ module.exports = [
     }
 
     return queryMaxResults;
-  }
+  },
 ];

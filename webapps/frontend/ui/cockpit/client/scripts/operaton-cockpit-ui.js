@@ -58,11 +58,11 @@ export function init(pluginDependencies) {
     require('./pages/main').name,
     require('./resources/main').name,
     require('./services/main').name,
-    require('./navigation/main').name
+    require('./navigation/main').name,
   ].concat(
-    pluginDependencies.map(function(el) {
+    pluginDependencies.map(function (el) {
       return el.ngModuleName;
-    })
+    }),
   );
 
   var appNgModule = angular.module(APP_NAME, ngDependencies);
@@ -86,7 +86,7 @@ export function init(pluginDependencies) {
     '$qProvider',
     '$compileProvider',
     '$provide',
-    function(
+    function (
       $routeProvider,
       UriProvider,
       $modalProvider,
@@ -95,12 +95,12 @@ export function init(pluginDependencies) {
       $animateProvider,
       $qProvider,
       $compileProvider,
-      $provide
+      $provide,
     ) {
       translatePaginationCtrls($provide);
 
       $compileProvider.aHrefSanitizationTrustedUrlList(
-        /^\s*(https?|s?ftp|mailto|tel|file|blob):/
+        /^\s*(https?|s?ftp|mailto|tel|file|blob):/,
       );
       $routeProvider.otherwise({redirectTo: '/dashboard'});
 
@@ -110,19 +110,19 @@ export function init(pluginDependencies) {
       UriProvider.replace('adminbase://', getUri('app-root') + '/app/admin/');
       UriProvider.replace(
         'tasklistbase://',
-        getUri('app-root') + '/app/tasklist/'
+        getUri('app-root') + '/app/tasklist/',
       );
       UriProvider.replace('cockpit://', getUri('cockpit-api'));
       UriProvider.replace(
         'admin://',
-        getUri('admin-api') || getUri('cockpit-api') + '../admin/'
+        getUri('admin-api') || getUri('cockpit-api') + '../admin/',
       );
       UriProvider.replace('plugin://', getUri('cockpit-api') + 'plugin/');
       UriProvider.replace('engine://', getUri('engine-api'));
 
       UriProvider.replace(':engine', [
         '$window',
-        function($window) {
+        function ($window) {
           var uri = $window.location.href;
 
           var match = uri.match(/\/app\/cockpit\/([\w-]+)(|\/)/);
@@ -131,19 +131,19 @@ export function init(pluginDependencies) {
           } else {
             throw new Error('no process engine selected');
           }
-        }
+        },
       ]);
 
       $modalProvider.options = {
         animation: true,
         backdrop: true,
-        keyboard: true
+        keyboard: true,
       };
 
       $tooltipProvider.options({
         animation: true,
         popupDelay: 100,
-        appendToBody: true
+        appendToBody: true,
       });
 
       $locationProvider.hashPrefix('');
@@ -151,50 +151,50 @@ export function init(pluginDependencies) {
       $animateProvider.classNameFilter(/angular-animate/);
 
       $qProvider.errorOnUnhandledRejections(DEV_MODE); // eslint-disable-line
-    }
+    },
   ];
 
   appNgModule.provider(
     'configuration',
     require('./../../../common/scripts/services/cam-configuration')(
       window.camCockpitConf,
-      'Cockpit'
-    )
+      'Cockpit',
+    ),
   );
   appNgModule.config(ModuleConfig);
 
   require('./../../../common/scripts/services/locales')(
     appNgModule,
     getUri('app-root'),
-    'cockpit'
+    'cockpit',
   );
 
   appNgModule.config([
     'camDateFormatProvider',
-    function(camDateFormatProvider) {
+    function (camDateFormatProvider) {
       var formats = {
         monthName: 'MMMM',
         day: 'DD',
         abbr: 'lll',
         normal: 'YYYY-MM-DD[T]HH:mm:ss', // yyyy-MM-dd'T'HH:mm:ss => 2013-01-23T14:42:45
         long: 'LLLL',
-        short: 'LL'
+        short: 'LL',
       };
 
       for (var f in formats) {
         camDateFormatProvider.setDateFormat(formats[f], f);
       }
-    }
+    },
   ]);
 
   require('../../../common/scripts/services/plugins/addPlugins')(
     window.camCockpitConf,
     appNgModule,
-    'cockpit'
+    'cockpit',
   ).then(() => {
     angular.bootstrap(document.documentElement, [
       appNgModule.name,
-      'cam.cockpit.custom'
+      'cam.cockpit.custom',
     ]);
 
     if (top !== window) {

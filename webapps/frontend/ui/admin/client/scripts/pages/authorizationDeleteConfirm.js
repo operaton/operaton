@@ -29,7 +29,7 @@ module.exports = [
   'formatPermissions',
   'getResource',
   'getType',
-  function(
+  function (
     $scope,
     $q,
     $location,
@@ -40,7 +40,7 @@ module.exports = [
     authorizationToDelete,
     formatPermissions,
     getResource,
-    getType
+    getType,
   ) {
     var DELETE_SUCCESS = 'SUCCESS';
 
@@ -50,20 +50,20 @@ module.exports = [
     $scope.getResource = getResource;
     $scope.getType = getType;
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       $modalInstance.close(status);
     };
 
-    $scope.performDelete = function() {
+    $scope.performDelete = function () {
       AuthorizationResource.delete({action: authorizationToDelete.id})
-        .$promise.then(function() {
+        .$promise.then(function () {
           $scope.status = DELETE_SUCCESS;
         })
-        .catch(function() {});
+        .catch(function () {});
     };
-  }
+  },
 ];

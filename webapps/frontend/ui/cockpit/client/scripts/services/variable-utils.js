@@ -21,21 +21,21 @@ const angular = require('angular');
 
 module.exports = [
   'fixDate',
-  fixDate => {
+  (fixDate) => {
     const generatePayload = ({payload = {variables: {}}, variables}) => {
       if (variables) {
         if (!payload.variables) {
           payload.variables = {};
         }
 
-        variables.forEach(variable => {
+        variables.forEach((variable) => {
           const name = variable.variable.name;
           payload.variables[name] = angular.copy(variable.variable);
           delete payload.variables[name].name;
 
           if (variable.variable.type === 'Date') {
             payload.variables[name].value = fixDate(
-              payload.variables[name].value
+              payload.variables[name].value,
             );
           }
 
@@ -43,7 +43,7 @@ module.exports = [
             payload.variables[name].valueInfo = payload.variables[name]
               .valueInfo || {
               objectTypeName: '',
-              serializationDataFormat: ''
+              serializationDataFormat: '',
             };
           } else {
             delete payload.variables[name].valueInfo;
@@ -55,5 +55,5 @@ module.exports = [
     };
 
     return {generatePayload: generatePayload};
-  }
+  },
 ];

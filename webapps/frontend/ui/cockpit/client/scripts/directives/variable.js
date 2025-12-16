@@ -28,33 +28,33 @@ var template = require('./variable.html?raw');
 
 module.exports = [
   'typeUtils',
-  function(typeUtils) {
+  function (typeUtils) {
     return {
       restrict: 'EAC',
       scope: {
         variable: '=',
         form: '@',
-        readonly: '='
+        readonly: '=',
       },
       replace: true,
       template: template,
-      link: function(scope, element) {
+      link: function (scope, element) {
         var inPlaceEdit = element.attr('inline-edit') !== undefined,
           oldVariableValue,
           oldVariableValueBoolean = true;
 
-        var getForm = function() {
+        var getForm = function () {
           return angular.element('[name="' + scope.form + '"]').scope()[
             scope.form
           ];
         };
 
-        var customJsonXmlValidator = function(type, value) {
+        var customJsonXmlValidator = function (type, value) {
           var valid = typeUtils.isType(value, type);
           getForm().$setValidity('customValidation', valid);
         };
 
-        scope.changeVariableValue = function() {
+        scope.changeVariableValue = function () {
           var type = scope.variable.type;
           var newValue = scope.variable.value;
           if (['Json', 'Xml'].indexOf(type) > -1) {
@@ -64,59 +64,59 @@ module.exports = [
 
         scope.autofocus = !!(element.attr('autofocus') !== undefined);
 
-        scope.isBoolean = function(variable) {
+        scope.isBoolean = function (variable) {
           return variable.type.toLowerCase() === 'boolean';
         };
 
-        scope.isInteger = function(variable) {
+        scope.isInteger = function (variable) {
           return variable.type.toLowerCase() === 'integer';
         };
 
-        scope.isShort = function(variable) {
+        scope.isShort = function (variable) {
           return variable.type.toLowerCase() === 'short';
         };
 
-        scope.isLong = function(variable) {
+        scope.isLong = function (variable) {
           return variable.type.toLowerCase() === 'long';
         };
 
-        scope.isDouble = function(variable) {
+        scope.isDouble = function (variable) {
           return variable.type.toLowerCase() === 'double';
         };
 
-        scope.isFloat = function(variable) {
+        scope.isFloat = function (variable) {
           return variable.type.toLowerCase() === 'float';
         };
 
-        scope.isString = function(variable) {
+        scope.isString = function (variable) {
           return variable.type.toLowerCase() === 'string';
         };
 
-        scope.isDate = function(variable) {
+        scope.isDate = function (variable) {
           return variable.type.toLowerCase() === 'date';
         };
 
-        scope.isNull = function(variable) {
+        scope.isNull = function (variable) {
           return variable.type.toLowerCase() === 'null';
         };
 
-        scope.isObject = function(variable) {
+        scope.isObject = function (variable) {
           return variable.type.toLowerCase() === 'object';
         };
 
-        scope.isInPlaceEdit = function() {
+        scope.isInPlaceEdit = function () {
           return inPlaceEdit;
         };
 
-        scope.isJSON = function(variable) {
+        scope.isJSON = function (variable) {
           return variable.type.toLowerCase() === 'json';
         };
 
-        scope.isXML = function(variable) {
+        scope.isXML = function (variable) {
           return variable.type.toLowerCase() === 'xml';
         };
 
-        scope.$watch('variable.type', function(newValue, oldValue) {
+        scope.$watch('variable.type', function (newValue, oldValue) {
           if (oldValue === newValue) {
             return;
           }
@@ -147,7 +147,7 @@ module.exports = [
             scope.variable.valueInfo = scope.variable.valueInfo || {};
           }
         });
-      }
+      },
     };
-  }
+  },
 ];

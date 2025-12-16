@@ -22,7 +22,7 @@
  */
 var utils = (module.exports = {typeUtils: require('./forms/type-util')});
 
-utils.solveHALEmbedded = function(results) {
+utils.solveHALEmbedded = function (results) {
   function isId(str) {
     if (str.slice(-2) !== 'Id') {
       return false;
@@ -62,7 +62,7 @@ utils.solveHALEmbedded = function(results) {
           for (var e in embedded) {
             if (embedded[e].id === results._embedded[name][i][prop]) {
               results._embedded[name][i]._embedded[prop.slice(0, -2)] = [
-                embedded[e]
+                embedded[e],
               ];
             }
           }
@@ -78,16 +78,16 @@ utils.solveHALEmbedded = function(results) {
 // https://github.com/caolan/async/blob/master/lib/async.js
 
 function _eachSeries(arr, iterator, callback) {
-  callback = callback || function() {};
+  callback = callback || function () {};
   if (!arr.length) {
     return callback();
   }
   var completed = 0;
-  var iterate = function() {
-    iterator(arr[completed], function(err) {
+  var iterate = function () {
+    iterator(arr[completed], function (err) {
       if (err) {
         callback(err);
-        callback = function() {};
+        callback = function () {};
       } else {
         completed += 1;
         if (completed >= arr.length) {
@@ -121,15 +121,15 @@ function _eachSeries(arr, iterator, callback) {
  *   // result will be { a: 1, b: undefined }
  * });
  */
-utils.series = function(tasks, callback) {
-  return new Promise(function(resolve, reject) {
-    callback = callback || function() {};
+utils.series = function (tasks, callback) {
+  return new Promise(function (resolve, reject) {
+    callback = callback || function () {};
 
     var results = {};
     _eachSeries(
       Object.keys(tasks),
-      function(k, callback) {
-        tasks[k](function(err) {
+      function (k, callback) {
+        tasks[k](function (err) {
           var args = Array.prototype.slice.call(arguments, 1);
           if (args.length <= 1) {
             args = args[0];
@@ -138,10 +138,10 @@ utils.series = function(tasks, callback) {
           callback(err);
         });
       },
-      function(err) {
+      function (err) {
         err ? reject(err) : resolve(results);
         callback(err, results);
-      }
+      },
     );
   });
 };
@@ -152,7 +152,7 @@ utils.series = function(tasks, callback) {
  * @param {string} string
  * @returns {string}
  */
-utils.escapeUrl = function(string) {
+utils.escapeUrl = function (string) {
   return encodeURIComponent(string)
     .replace(/\//g, '%2F')
     .replace(/%2F/g, '%252F')
@@ -165,7 +165,7 @@ utils.escapeUrl = function(string) {
  *
  * @returns {function}
  */
-utils.debouncePromiseFactory = function() {
+utils.debouncePromiseFactory = function () {
   let latestPromise = null;
 
   /**
@@ -174,7 +174,7 @@ utils.debouncePromiseFactory = function() {
    * @param {promise} promise
    * @returns {promise}
    */
-  return async promise => {
+  return async (promise) => {
     latestPromise = promise;
 
     const result = await promise;

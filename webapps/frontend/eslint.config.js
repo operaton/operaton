@@ -58,6 +58,8 @@ module.exports = [
         require: 'readonly',
         exports: 'readonly',
         console: 'readonly',
+        Buffer: 'readonly',
+        global: 'readonly',
 
         // Browser environment
         window: 'readonly',
@@ -65,6 +67,18 @@ module.exports = [
         navigator: 'readonly',
         localStorage: 'readonly',
         sessionStorage: 'readonly',
+        setTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearTimeout: 'readonly',
+        clearInterval: 'readonly',
+        fetch: 'readonly',
+        top: 'readonly',
+        FormData: 'readonly',
+        Blob: 'readonly',
+        FileReader: 'readonly',
+        btoa: 'readonly',
+        atob: 'readonly',
+        getComputedStyle: 'readonly',
 
         // Test globals
         expect: 'readonly',
@@ -77,6 +91,7 @@ module.exports = [
 
         // RequireJS
         requirejs: 'readonly',
+        define: 'readonly',
       },
     },
     plugins: {
@@ -85,12 +100,20 @@ module.exports = [
     rules: {
       ...prettierConfig.rules,
       'prettier/prettier': 'error',
-      'space-before-blocks': [2, 'always'],
-      'space-before-function-paren': [2, 'never'],
-      semi: [2, 'always'],
+      // Removed space-before-blocks, space-before-function-paren, and semi
+      // as they conflict with prettier's formatting
       'no-console': 1,
       'no-self-assign': 0,
       'no-useless-escape': 'off',
+      // Allow unused vars that start with underscore (common pattern for intentionally unused params)
+      'no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ];

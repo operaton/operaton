@@ -36,7 +36,7 @@ resourcesModule.factory('IncidentResource', incidentResource);
 resourcesModule.factory('ProcessInstanceResource', processInstanceResource);
 resourcesModule.factory(
   'LocalExecutionVariableResource',
-  localExecutionVariableResource
+  localExecutionVariableResource,
 );
 resourcesModule.factory('JobResource', jobResource);
 resourcesModule.factory('TaskResource', taskResource);

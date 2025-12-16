@@ -46,9 +46,9 @@ Deployment.path = 'deployment';
  * @param	 {String} [options.tenantId]
  * @param  {Function} done
  */
-Deployment.create = function(options, done) {
+Deployment.create = function (options, done) {
   var fields = {
-    'deployment-name': options.deploymentName
+    'deployment-name': options.deploymentName,
   };
 
   var files = Array.isArray(options.files) ? options.files : [options.files];
@@ -73,7 +73,7 @@ Deployment.create = function(options, done) {
     data: {},
     fields: fields,
     attachments: files,
-    done: done
+    done: done,
   });
 };
 
@@ -89,7 +89,7 @@ Deployment.create = function(options, done) {
  *
  * @param  {Function} done
  */
-Deployment.delete = function(id, options, done) {
+Deployment.delete = function (id, options, done) {
   var path = this.path + '/' + id;
 
   if (options) {
@@ -105,7 +105,7 @@ Deployment.delete = function(id, options, done) {
   }
 
   return this.http.del(path, {
-    done: done
+    done: done,
   });
 };
 
@@ -137,50 +137,50 @@ Deployment.delete = function(id, options, done) {
  *                                          no more results left.
  * @param  {Function} done
  */
-Deployment.list = function() {
+Deployment.list = function () {
   return AbstractClientResource.list.apply(this, arguments);
 };
 
 /**
  * Returns information about a deployment resources for the given deployment.
  */
-Deployment.get = function(id, done) {
+Deployment.get = function (id, done) {
   return this.http.get(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
 /**
  * Returns a list of deployment resources for the given deployment.
  */
-Deployment.getResources = function(id, done) {
+Deployment.getResources = function (id, done) {
   return this.http.get(this.path + '/' + id + '/resources', {
-    done: done
+    done: done,
   });
 };
 
 /**
  * Returns a deployment resource for the given deployment and resource id.
  */
-Deployment.getResource = function(deploymentId, resourceId, done) {
+Deployment.getResource = function (deploymentId, resourceId, done) {
   return this.http.get(
     this.path + '/' + deploymentId + '/resources/' + resourceId,
     {
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
 /**
  * Returns the binary content of a single deployment resource for the given deployment.
  */
-Deployment.getResourceData = function(deploymentId, resourceId, done) {
+Deployment.getResourceData = function (deploymentId, resourceId, done) {
   return this.http.get(
     this.path + '/' + deploymentId + '/resources/' + resourceId + '/data',
     {
       accept: '*/*',
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -193,13 +193,13 @@ Deployment.getResourceData = function(deploymentId, resourceId, done) {
  * @param  {Array} [options.resourceNames]
  * @param  {Function} done
  */
-Deployment.redeploy = function(options, done) {
+Deployment.redeploy = function (options, done) {
   var id = options.id;
   delete options.id;
 
   return this.http.post(this.path + '/' + id + '/redeploy', {
     data: options,
-    done: done || function() {}
+    done: done || function () {},
   });
 };
 

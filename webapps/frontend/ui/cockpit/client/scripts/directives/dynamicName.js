@@ -38,17 +38,17 @@
 module.exports = [
   '$interpolate',
   '$compile',
-  function($interpolate, $compile) {
+  function ($interpolate, $compile) {
     return {
       restrict: 'A',
       priority: 9999,
       terminal: true, //Pause Compilation
-      link: function(scope, element, attr) {
+      link: function (scope, element, attr) {
         element.attr('name', $interpolate(attr.camDynamicName)(scope));
 
         //Resume compilation at priority 9999 so that our directive doesn't get re-compiled
         $compile(element, null, 9999)(scope);
-      }
+      },
     };
-  }
+  },
 ];

@@ -30,12 +30,12 @@ const addMissingLicenseHeaders = (filePath, source) => {
     if (rowFile.includes('node_modules')) {
       pkg = rowFile.replace(
         /^(.*)node_modules\/(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
-        (match, p1, p2, p3) => p2 || p3
+        (match, p1, p2, p3) => p2 || p3,
       );
     } else if (!rowFile.includes('operaton-bpm-sdk-js')) {
       pkg = rowFile.replace(
         /^(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
-        (match, p1, p2) => p2 || p1
+        (match, p1, p2) => p2 || p1,
       );
     }
 
@@ -48,23 +48,23 @@ const addMissingLicenseHeaders = (filePath, source) => {
       let licenseInfo = null;
       try {
         licenseInfo = fs.readFileSync(`${packagePath}/LICENSE`, 'utf8');
-      } catch (e) {
+      } catch (_e) {
         try {
           licenseInfo = fs.readFileSync(`${packagePath}/LICENSE.md`, 'utf8');
-        } catch (e) {
+        } catch (_e) {
           try {
             licenseInfo = fs.readFileSync(
               `${packagePath}/LICENSE-MIT.txt`,
-              'utf8'
+              'utf8',
             );
-          } catch (e) {
+          } catch (_e) {
             try {
               licenseInfo = fs.readFileSync(
                 `${packagePath}/LICENSE.txt`,
-                'utf8'
+                'utf8',
               );
-            } catch (e) {
-              console.log(`${pkg} has no license file. 🤷‍`);// eslint-disable-line
+            } catch (_e) {
+              console.log(`${pkg} has no license file. 🤷‍`); // eslint-disable-line
             }
           }
         }
@@ -84,6 +84,6 @@ const addMissingLicenseHeaders = (filePath, source) => {
   }
 };
 
-module.exports = function(source) {
+module.exports = function (source) {
   return addMissingLicenseHeaders(this.resourcePath, source);
 };

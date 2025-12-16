@@ -22,7 +22,7 @@ const operatonPlugins = [
   'admin-plugin-adminEE',
   'cockpit-plugin-cockpitPlugins',
   'cockpit-plugin-cockpitEE',
-  'tasklist-plugin-tasklistPlugins'
+  'tasklist-plugin-tasklistPlugins',
 ];
 
 function withSuffix(string, suffix) {
@@ -41,28 +41,28 @@ module.exports = async function loadPlugins(config, appName) {
   const customScripts = config.customScripts || [];
 
   const JARScripts = window.PLUGIN_PACKAGES.filter(
-    el =>
+    (el) =>
       !operatonPlugins.includes(el.name) &&
-      !el.name.startsWith(`${appName}-plugin-legacy`)
-  ).map(el => {
+      !el.name.startsWith(`${appName}-plugin-legacy`),
+  ).map((el) => {
     addCssSource(`${el.location}/plugin.css?bust=${CAMUNDA_VERSION}`); // eslint-disable-line
     return `${el.location}/${el.main}?bust=${CAMUNDA_VERSION}`; // eslint-disable-line
   });
 
   const baseImportPath = `${appRoot}/app/${appName}/`;
-  const fetchers = customScripts.map(url =>
+  const fetchers = customScripts.map((url) =>
     // eslint-disable-next-line
     _import(
       baseImportPath + withSuffix(url, '.js') + `?bust=${CAMUNDA_VERSION}` // eslint-disable-line
     ).catch(
       e => console.error(e) // eslint-disable-line
-    )
+    ),
   );
 
   fetchers.push(
-    ...JARScripts.map(url => {
+    ...JARScripts.map((url) => {
       return _import(url).catch(e => console.error(e)); // eslint-disable-line
-    })
+    }),
   );
 
   return (await Promise.all(fetchers)).reduce((acc, module) => {

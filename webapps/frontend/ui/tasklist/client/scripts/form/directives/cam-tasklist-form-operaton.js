@@ -25,7 +25,7 @@ module.exports = [
   '$translate',
   'Notifications',
   'unfixDate',
-  function(camAPI, $translate, Notifications, unfixDate) {
+  function (camAPI, $translate, Notifications, unfixDate) {
     return {
       restrict: 'A',
 
@@ -35,12 +35,12 @@ module.exports = [
 
       template: '',
 
-      link: function($scope, $element, attrs, formController) {
+      link: function ($scope, $element, attrs, formController) {
         const Task = camAPI.resource('task');
         const ProcessDefinition = camAPI.resource('process-definition');
         const taskId = formController.getParams().taskId;
         const savedState = JSON.parse(
-          localStorage.getItem(`operaton-form:${taskId}`) || '{}'
+          localStorage.getItem(`operaton-form:${taskId}`) || '{}',
         );
         let form;
         let variables = []; // initialize it with empty array for start event forms without taskId
@@ -48,57 +48,57 @@ module.exports = [
 
         formController.notifyFormValidated(false);
 
-        const loadVariables = function() {
+        const loadVariables = function () {
           if (!taskId) {
             return;
           }
 
           return Task.formVariables({
             id: taskId,
-            deserializeValues: false
+            deserializeValues: false,
           })
-            .then(result => {
+            .then((result) => {
               variables = result;
             })
-            .catch(err => {
+            .catch((err) => {
               return $translate('LOAD_VARIABLES_FAILURE')
-                .then(function(translated) {
+                .then(function (translated) {
                   Notifications.addError({
                     status: translated,
                     message: err.message,
-                    scope: $scope
+                    scope: $scope,
                   });
                 })
                 .catch(angular.noop);
             });
         };
 
-        const checkVariableTypeJson = variable =>
+        const checkVariableTypeJson = (variable) =>
           variable.type === 'Json' ||
           variable?.valueInfo?.serializationDataFormat === 'application/json';
 
-        const convertVariableValues = schema => {
+        const convertVariableValues = (schema) => {
           const schemaValuesKeySet = new Set(
             schema.components.map(({valuesKey}) => {
               if (valuesKey) {
                 return valuesKey;
               }
-            })
+            }),
           );
 
           const fromShortcutFormat = (schemaValuesKeySet, variable, name) => {
             if (Array.from(schemaValuesKeySet).includes(name)) {
-              const checkShortcutFormat = value =>
-                value.every(i => typeof i === 'string');
+              const checkShortcutFormat = (value) =>
+                value.every((i) => typeof i === 'string');
               if (checkShortcutFormat(variable.value)) {
-                variable.value = variable.value.map(element => {
+                variable.value = variable.value.map((element) => {
                   return {label: element, value: element};
                 });
               }
             }
           };
 
-          Object.entries(variables).forEach(entry => {
+          Object.entries(variables).forEach((entry) => {
             const [name, variable] = entry;
 
             if (variable.type === 'Date') {
@@ -119,7 +119,7 @@ module.exports = [
               acc[key] = valuesKey;
               return acc;
             },
-            {}
+            {},
           );
 
           convertVariableValues(schema);
@@ -129,7 +129,7 @@ module.exports = [
           }, {});
 
           form = new Form({
-            container: $element[0]
+            container: $element[0],
           });
 
           await form.importSchema(schema, {...data, ...savedState});
@@ -141,7 +141,7 @@ module.exports = [
             }
           });
 
-          form.on('changed', evt => {
+          form.on('changed', (evt) => {
             formController.notifyFormDirty(true);
 
             const hasError = !!Object.keys(evt.errors).length;
@@ -206,30 +206,30 @@ module.exports = [
                 res[key] = {
                   type,
                   valueInfo,
-                  value: JSON.stringify(value)
+                  value: JSON.stringify(value),
                 };
               } else {
                 res[key] = {value};
               }
               return res;
             },
-            {}
+            {},
           );
 
           if (taskId) {
             return await Task.submitForm({
               id: taskId,
-              variables: variablePayload
+              variables: variablePayload,
             });
           } else {
             return await ProcessDefinition.submitForm({
               id: formController.getParams().processDefinitionId,
-              variables: variablePayload
+              variables: variablePayload,
             });
           }
         }
 
-        formController.registerCompletionHandler(async cb => {
+        formController.registerCompletionHandler(async (cb) => {
           try {
             const result = await handleSubmit();
             clearSave();
@@ -241,7 +241,7 @@ module.exports = [
 
         function handleAsynchronousFormKey(formInfo) {
           fetch(formInfo.key + `?noCache=${Date.now()}`)
-            .then(async res => {
+            .then(async (res) => {
               if (res.status !== 200) {
                 throw new Error(res.statusText);
               }
@@ -251,13 +251,13 @@ module.exports = [
               await loadVariables();
               await renderForm(json);
             })
-            .catch(err => {
+            .catch((err) => {
               formController.notifyFormInitializationFailed(err);
             });
         }
 
         $scope.$watch('asynchronousFormKey', handleAsynchronousFormKey, true);
-      }
+      },
     };
-  }
+  },
 ];

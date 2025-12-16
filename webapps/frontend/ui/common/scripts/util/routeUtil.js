@@ -37,7 +37,7 @@ var utils = {};
  * @param {Object} currentSearch  - The parsed object of the route "search" part
  * @return {string}               - A URL string to be redirected to
  */
-utils.redirectToRuntime = function(params, currentPath, currentSearch) {
+utils.redirectToRuntime = function (params, currentPath, currentSearch) {
   var redirectUrl = currentPath + '/runtime';
 
   return utils.redirectTo(redirectUrl, currentSearch, true);
@@ -53,18 +53,18 @@ utils.redirectToRuntime = function(params, currentPath, currentSearch) {
  * @param {Object} currentSearch  - The parsed object of the route "search" part
  * @return {string}               - A URL string to be redirected to
  */
-utils.replaceLastPathFragment = function(
+utils.replaceLastPathFragment = function (
   replacement,
   currentPath,
   currentSearch,
-  keepSearchParams
+  keepSearchParams,
 ) {
   var redirectUrl = currentPath.replace(/[^/]*$/, replacement);
 
   return utils.redirectTo(redirectUrl, currentSearch, keepSearchParams);
 };
 
-utils.redirectTo = function(redirectUrl, currentSearch, keepSearchParams) {
+utils.redirectTo = function (redirectUrl, currentSearch, keepSearchParams) {
   var search = [],
     key;
 

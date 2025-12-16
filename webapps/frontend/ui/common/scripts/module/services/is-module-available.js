@@ -19,11 +19,11 @@
 
 var angular = require('operaton-commons-ui/vendor/angular');
 
-module.exports = function() {
-  return function(moduleName) {
+module.exports = function () {
+  return function (moduleName) {
     try {
       return !!angular.module(moduleName);
-    } catch (err) {
+    } catch (_err) {
       return false;
     }
   };

@@ -23,7 +23,7 @@ var angular = require('angular'),
 
 var ngModule = angular.module(
   'tasklist.plugin.standaloneTask.navbar.action',
-  []
+  [],
 );
 
 ngModule.config(createTaskPlugin);

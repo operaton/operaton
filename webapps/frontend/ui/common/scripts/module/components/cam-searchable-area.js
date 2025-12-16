@@ -19,7 +19,7 @@
 
 var template = require('./cam-searchable-area.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     transclude: true,
@@ -36,7 +36,7 @@ module.exports = function() {
       textEmpty: '@',
       storageGroup: '=',
       searchId: '@?',
-      blocked: '='
-    }
+      blocked: '=',
+    },
   };
 };

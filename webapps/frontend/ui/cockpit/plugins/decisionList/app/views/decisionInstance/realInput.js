@@ -21,20 +21,23 @@ var angular = require('operaton-commons-ui/vendor/angular');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.decisionInstance.table', {
       id: 'realInput',
-      initialize: function(data) {
+      initialize: function (data) {
         var realInput, dataEl;
         var inputHeaders = angular.element('th[data-col-id]');
 
         inputHeaders &&
-          inputHeaders.each(function(idx, inputHeader) {
-            dataEl = data.decisionInstance.inputs.filter(function(inputObject) {
-              return (
-                inputObject.clauseId === inputHeader.getAttribute('data-col-id')
-              );
-            })[0];
+          inputHeaders.each(function (idx, inputHeader) {
+            dataEl = data.decisionInstance.inputs.filter(
+              function (inputObject) {
+                return (
+                  inputObject.clauseId ===
+                  inputHeader.getAttribute('data-col-id')
+                );
+              },
+            )[0];
 
             if (dataEl) {
               realInput = document.createElement('span');
@@ -49,14 +52,14 @@ module.exports = [
                 realInput.className = 'dmn-input-object';
                 realInput.setAttribute(
                   'title',
-                  'Variable value of type ' + dataEl.type + ' is not shown'
+                  'Variable value of type ' + dataEl.type + ' is not shown',
                 );
                 realInput.textContent = ' = [' + dataEl.type + ']';
               }
               inputHeader.firstChild.appendChild(realInput);
             }
           });
-      }
+      },
     });
-  }
+  },
 ];

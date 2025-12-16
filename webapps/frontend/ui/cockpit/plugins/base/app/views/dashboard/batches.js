@@ -19,19 +19,19 @@
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.navigation', {
       id: 'batch',
       label: 'COCKPIT_BATCHES',
       pagePath: '#/batch',
       template: '<!-- nothing to show, but needed -->',
-      controller: function() {},
-      checkActive: function(path) {
+      controller: function () {},
+      checkActive: function (path) {
         var ending = '#/batch';
         var parts = (path || '').split('?');
         return parts.length && parts[0].slice(0 - ending.length) === ending;
       },
-      priority: -5
+      priority: -5,
     });
-  }
+  },
 ];

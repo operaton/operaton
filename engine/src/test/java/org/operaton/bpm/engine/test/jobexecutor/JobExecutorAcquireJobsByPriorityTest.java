@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.Deployment;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -85,12 +86,11 @@ class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcquireJob
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/jobPrioProcess.bpmn20.xml")
   void testMixedPriorityAcquisition() {
     // jobs with priority 10
-    startProcess("jobPrioProcess", "task1", 5);
+    assertThatCode(() -> startProcess("jobPrioProcess", "task1", 5)).doesNotThrowAnyException();
 
     // jobs with priority 5
-    startProcess("jobPrioProcess", "task2", 5);
+    assertThatCode(() -> startProcess("jobPrioProcess", "task2", 5)).doesNotThrowAnyException();
 
     // set some job priorities to NULL indicating that they were produced without priorities
   }
-
 }

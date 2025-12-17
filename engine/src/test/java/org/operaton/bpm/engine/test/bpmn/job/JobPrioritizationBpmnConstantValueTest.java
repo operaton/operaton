@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.job;
 
 import java.util.List;
 
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -231,13 +233,12 @@ class JobPrioritizationBpmnConstantValueTest {
 
     // deploying a process definition where the activity
     // has a priority but defines no jobs succeeds
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
-      .createDeployment()
-      .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnTest.testParsePriorityOnNonAsyncActivity.bpmn20.xml")
-      .deploy();
+    org.operaton.bpm.engine.repository.DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnTest.testParsePriorityOnNonAsyncActivity.bpmn20.xml");
+    AtomicReference<org.operaton.bpm.engine.repository.Deployment> deployment = new AtomicReference<>();
+    assertThatCode(() -> deployment.set(deploymentBuilder.deploy())).doesNotThrowAnyException();
 
     // cleanup
-    repositoryService.deleteDeployment(deployment.getId());
+    repositoryService.deleteDeployment(deployment.get().getId());
   }
 
   @Test

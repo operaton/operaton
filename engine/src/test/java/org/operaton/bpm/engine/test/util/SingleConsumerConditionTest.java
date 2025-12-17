@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Timeout;
 
 import org.operaton.bpm.engine.impl.util.SingleConsumerCondition;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class SingleConsumerConditionTest {
@@ -36,7 +37,7 @@ class SingleConsumerConditionTest {
     condition.signal();
 
     // then
-    condition.await(100000);
+    assertThatCode(() -> condition.await(100000)).doesNotThrowAnyException();
   }
 
   @Test
@@ -56,7 +57,7 @@ class SingleConsumerConditionTest {
     consumer.join();
 
     // then
-    condition.await(100000);
+    assertThatCode(() -> condition.await(100000)).doesNotThrowAnyException();
   }
 
   @Test

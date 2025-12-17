@@ -118,24 +118,28 @@ public class ActivityCountAggregator extends TabularResultAggregator {
       resultTable.add(activitiesMap);
     }
 
+    passResult.getActivityResults().values().stream().flatMap(List::stream).forEach(activityResult -> {
+      String activityId = activityResult.getActivityId();
+      int startSlot = calculateTimeSlot(activityResult.getStartTime(), firstTimestamp);
+      int endSlot = calculateTimeSlot(activityResult.getEndTime(), firstTimestamp);
+      resultTable.get(startSlot).get(activityId).incrementStarted();
+      resultTable.get(endSlot).get(activityId).incrementEnded();
+      resultTable.get(endSlot).get(activityId).addDuration(activityResult.getDuration());
+    });
 
-    for (List<ActivityPerfTestResult> activityResults : passResult.getActivityResults().values()) {
-      for (ActivityPerfTestResult activityResult : activityResults) {
-        String activityId = activityResult.getActivityId();
-        int startSlot = calculateTimeSlot(activityResult.getStartTime(), firstTimestamp);
-        int endSlot = calculateTimeSlot(activityResult.getEndTime(), firstTimestamp);
-        resultTable.get(startSlot).get(activityId).incrementStarted();
-        resultTable.get(endSlot).get(activityId).incrementEnded();
-        resultTable.get(endSlot).get(activityId).addDuration(activityResult.getDuration());
-      }
-    }
-
-    ArrayList<Object> row = null;
     Map<String, ActivityCount> sumMap = new HashMap<>();
     for (String activity : watchActivities) {
       sumMap.put(activity, new ActivityCount());
     }
 
+    addWatchActivities(tabularResultSet, watchActivities, resultTable, sumMap);
+  }
+
+  private static void addWatchActivities(TabularResultSet tabularResultSet,
+                                         List<String> watchActivities,
+                                         List<Map<String, ActivityCount>> resultTable,
+                                         Map<String, ActivityCount> sumMap) {
+    ArrayList<Object> row;
     long sumActivitiesEnded = 0;
     for (int i = 0; i < resultTable.size(); i++) {
       row = new ArrayList<>();

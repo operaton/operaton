@@ -131,6 +131,7 @@ jobs:
                 });
 
                 // Check if any status check failed or is pending
+                // Empty state means no statuses have been reported yet
                 if (status.state !== 'success' && status.state !== '') {
                   if (status.state === 'pending') {
                     console.log(`  ⏳ Status checks are still pending`);
@@ -232,13 +233,19 @@ jobs:
                 }
 
                 // Merge the PR using squash
+                // Truncate PR body to avoid excessively long commit messages
+                const prBody = pr.body || '';
+                const truncatedBody = prBody.length > 500
+                  ? prBody.substring(0, 500) + '...\n\n(truncated)'
+                  : prBody;
+
                 await github.rest.pulls.merge({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   pull_number: pr.number,
                   merge_method: 'squash',
                   commit_title: pr.title,
-                  commit_message: `Auto-merged by auto-merge workflow\n\n${pr.body || ''}`
+                  commit_message: `Auto-merged by auto-merge workflow\n\n${truncatedBody}`
                 });
 
                 console.log(`  ✅ Successfully merged PR #${pr.number} using squash`);

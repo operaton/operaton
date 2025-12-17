@@ -22,7 +22,7 @@ jobs:
           NONINTERACTIVE: '1'
         run: |
           echo "Installing Homebrew..."
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+          /bin/bash -c "$(curl -fsS https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
           # Persist brew environment for subsequent steps
           echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bashrc
           echo >> /home/runner/.bashrc

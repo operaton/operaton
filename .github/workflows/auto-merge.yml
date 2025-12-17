@@ -31,7 +31,7 @@ jobs:
             // Since js-yaml is not available in github-script,
             // we use Python to convert YAML to JSON
             // Note: This reads from our own repository file, not user input
-            const configPath = '.github/workflows/auto-merge.config.yml';
+            const configPath = '.github/auto-merge.config.yml';
             const yamlContent = fs.readFileSync(configPath, 'utf8');
             const jsonStr = execSync(
               `python3 -c "import yaml, json, sys; print(json.dumps(yaml.safe_load(sys.stdin.read())))"`,

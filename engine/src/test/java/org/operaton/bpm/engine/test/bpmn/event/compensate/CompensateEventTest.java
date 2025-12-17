@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -39,6 +38,7 @@ import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -89,20 +89,14 @@ class CompensateEventTest {
     final String PROCESS_MODEL_WITH_REF_AFTER = "org/operaton/bpm/engine/test/bpmn/event/compensate/compensation_reference-after.bpmn";
 
     //when model with ref before is deployed
-    org.operaton.bpm.engine.repository.DeploymentBuilder deploymentBuilder1 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE);
-    AtomicReference<org.operaton.bpm.engine.repository.Deployment> deployment1 = new AtomicReference<>();
-    assertThatCode(() -> deployment1.set(deploymentBuilder1.deploy())).doesNotThrowAnyException();
+    DeploymentBuilder deploymentBuilder1 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE);
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder1.deploy())).doesNotThrowAnyException();
     //then no problem will occur
 
     //when model with ref after is deployed
-    org.operaton.bpm.engine.repository.DeploymentBuilder deploymentBuilder2 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER);
-    AtomicReference<org.operaton.bpm.engine.repository.Deployment> deployment2 = new AtomicReference<>();
-    assertThatCode(() -> deployment2.set(deploymentBuilder2.deploy())).doesNotThrowAnyException();
+    DeploymentBuilder deploymentBuilder2 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER);
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder2.deploy())).doesNotThrowAnyException();
     //then also no problem should occur
-
-    //clean up
-    repositoryService.deleteDeployment(deployment1.get().getId());
-    repositoryService.deleteDeployment(deployment2.get().getId());
   }
 
   @Deployment

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.bpmn.job;
 
 import java.util.List;
 
-import java.util.concurrent.atomic.AtomicReference;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -230,21 +229,16 @@ class JobPrioritizationBpmnConstantValueTest {
 
   @Test
   void testParsePriorityOnNonAsyncActivity() {
-
     // deploying a process definition where the activity
     // has a priority but defines no jobs succeeds
-    org.operaton.bpm.engine.repository.DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnTest.testParsePriorityOnNonAsyncActivity.bpmn20.xml");
-    AtomicReference<org.operaton.bpm.engine.repository.Deployment> deployment = new AtomicReference<>();
-    assertThatCode(() -> deployment.set(deploymentBuilder.deploy())).doesNotThrowAnyException();
-
-    // cleanup
-    repositoryService.deleteDeployment(deployment.get().getId());
+    var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnTest.testParsePriorityOnNonAsyncActivity.bpmn20.xml");
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder.deploy())).doesNotThrowAnyException();
   }
 
   @Test
   void testTimerStartEventPriorityOnProcessDefinition() {
     // given a timer start job
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
+    var deployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnConstantValueTest.testTimerStartEventPriorityOnProcessDefinition.bpmn20.xml")
         .deploy();
@@ -261,7 +255,7 @@ class JobPrioritizationBpmnConstantValueTest {
   @Test
   void testTimerStartEventPriorityOnActivity() {
     // given a timer start job
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
+    var deployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnConstantValueTest.testTimerStartEventPriorityOnActivity.bpmn20.xml")
         .deploy();

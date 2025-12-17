@@ -25,7 +25,7 @@ var DEFAULT_OPTIONS = {
   hideLoadVariablesButton: true,
   autoFocus: true,
   disableForm: false,
-  disableAddVariableButton: false
+  disableAddVariableButton: false,
 };
 
 module.exports = [
@@ -40,7 +40,7 @@ module.exports = [
   '$location',
   'search',
   'camAPI',
-  function(
+  function (
     $rootScope,
     $scope,
     $translate,
@@ -51,19 +51,19 @@ module.exports = [
     assignNotification,
     $location,
     search,
-    camAPI
+    camAPI,
   ) {
-    $scope.$on('authentication.login.required', function() {
+    $scope.$on('authentication.login.required', function () {
       $scope.$dismiss();
     });
 
     function errorNotification(src, err) {
       $translate(src)
-        .then(function(translated) {
+        .then(function (translated) {
           Notifications.addError({
             status: translated,
             message: err ? err.message : '',
-            scope: $scope
+            scope: $scope,
           });
         })
         .catch(angular.noop);
@@ -71,10 +71,10 @@ module.exports = [
 
     function successNotification(src) {
       $translate(src)
-        .then(function(translated) {
+        .then(function (translated) {
           Notifications.addMessage({
             duration: 3000,
-            status: translated
+            status: translated,
           });
         })
         .catch(angular.noop);
@@ -96,70 +96,70 @@ module.exports = [
     var page = ($scope.page = {
       total: 0,
       current: 1,
-      searchValue: null
+      searchValue: null,
     });
 
-    $scope.triggerOnStart = function() {};
+    $scope.triggerOnStart = function () {};
 
     // observe /////////////////////////////////////////////////////////////////////////////////////
 
-    processStartData.observe('processDefinitionQuery', function(_query) {
+    processStartData.observe('processDefinitionQuery', function (_query) {
       query = angular.copy(_query);
 
       page.size = _query.maxResults;
       page.current = _query.firstResult / page.size + 1;
     });
 
-    $scope.startFormState = processStartData.observe('startForm', function(
-      startForm
-    ) {
-      $scope.startForm = angular.copy(startForm);
-    });
+    $scope.startFormState = processStartData.observe(
+      'startForm',
+      function (startForm) {
+        $scope.startForm = angular.copy(startForm);
+      },
+    );
 
     $scope.processDefinitionState = processStartData.observe(
       'processDefinitions',
-      function(processDefinitions) {
+      function (processDefinitions) {
         page.total = processDefinitions.count;
 
-        $scope.processDefinitions = processDefinitions.items.sort(function(
-          a,
-          b
-        ) {
-          // order by process definition name / key and secondary by tenant id
-          var aName = (a.name || a.key).toLowerCase();
-          var bName = (b.name || b.key).toLowerCase();
+        $scope.processDefinitions = processDefinitions.items.sort(
+          function (a, b) {
+            // order by process definition name / key and secondary by tenant id
+            var aName = (a.name || a.key).toLowerCase();
+            var bName = (b.name || b.key).toLowerCase();
 
-          var aTenantId = a.tenantId ? a.tenantId.toLowerCase() : '';
-          var bTenantId = b.tenantId ? b.tenantId.toLowerCase() : '';
+            var aTenantId = a.tenantId ? a.tenantId.toLowerCase() : '';
+            var bTenantId = b.tenantId ? b.tenantId.toLowerCase() : '';
 
-          if (aName < bName) return -1;
-          else if (aName > bName) return 1;
-          else if (aTenantId < bTenantId) return -1;
-          else if (aTenantId > bTenantId) return 1;
-          else return 0;
-        });
+            if (aName < bName) return -1;
+            else if (aName > bName) return 1;
+            else if (aTenantId < bTenantId) return -1;
+            else if (aTenantId > bTenantId) return 1;
+            else return 0;
+          },
+        );
 
         if (page.total > 0) {
-          $timeout(function() {
+          $timeout(function () {
             var element = document.querySelectorAll(
-              'div.modal-content ul.processes a'
+              'div.modal-content ul.processes a',
             )[0];
             if (element) {
               element.focus();
             }
           });
         }
-      }
+      },
     );
 
     // select process definition view //////////////////////////////////////////////////////
 
-    $scope.pageChange = function() {
+    $scope.pageChange = function () {
       query.firstResult = page.size * (page.current - 1);
       processStartData.set('processDefinitionQuery', query);
     };
 
-    $scope.lookupProcessDefinitionByName = debounce(function() {
+    $scope.lookupProcessDefinitionByName = debounce(function () {
       var nameLike = page.searchValue;
 
       if (!nameLike) {
@@ -174,7 +174,7 @@ module.exports = [
       processStartData.set('processDefinitionQuery', query);
     }, 2000);
 
-    $scope.selectProcessDefinition = function(processDefinition) {
+    $scope.selectProcessDefinition = function (processDefinition) {
       $scope.PROCESS_TO_START_SELECTED = true;
 
       var processDefinitionId = processDefinition.id;
@@ -188,7 +188,7 @@ module.exports = [
         processDefinitionId: processDefinitionId,
         processDefinitionKey: processDefinitionKey,
         deploymentId: deploymentId,
-        processDefinitionName: processDefinitionName
+        processDefinitionName: processDefinitionName,
       };
 
       var searchData = {processStart: processDefinitionKey};
@@ -199,7 +199,7 @@ module.exports = [
       search.updateSilently(searchData);
 
       processStartData.set('currentProcessDefinitionId', {
-        id: processDefinitionId
+        id: processDefinitionId,
       });
     };
 
@@ -211,7 +211,7 @@ module.exports = [
         active: true,
         startableInTasklist: true,
         startablePermissionCheck: true,
-        maxResults: 1
+        maxResults: 1,
       };
 
       var tenantId = $location.search()['processTenant'];
@@ -221,7 +221,7 @@ module.exports = [
 
       camAPI
         .resource('process-definition')
-        .list(processQuery, function(err, res) {
+        .list(processQuery, function (err, res) {
           if (err || res.items.length === 0) {
             return err;
           }
@@ -235,10 +235,10 @@ module.exports = [
     $scope.$invalid = true;
     $scope.requestInProgress = false;
 
-    $scope.$on('embedded.form.rendered', function() {
-      $timeout(function() {
+    $scope.$on('embedded.form.rendered', function () {
+      $timeout(function () {
         var focusElement = document.querySelectorAll(
-          '.modal-body .form-container input'
+          '.modal-body .form-container input',
         )[0];
         if (focusElement) {
           focusElement.focus();
@@ -246,16 +246,16 @@ module.exports = [
       });
     });
 
-    $scope.back = function() {
+    $scope.back = function () {
       $scope.$invalid = true;
       $scope.requestInProgress = false;
       $scope.PROCESS_TO_START_SELECTED = false;
       $scope.options = DEFAULT_OPTIONS;
       processStartData.set('currentProcessDefinitionId', {id: null});
 
-      $timeout(function() {
+      $timeout(function () {
         var element = document.querySelectorAll(
-          'div.modal-content ul.processes a'
+          'div.modal-content ul.processes a',
         )[0];
         if (element) {
           element.focus();
@@ -264,7 +264,7 @@ module.exports = [
     };
 
     var executeAfterDestroy = [];
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       var job;
       while ((job = executeAfterDestroy.pop())) {
         if (typeof job === 'function') {
@@ -274,7 +274,7 @@ module.exports = [
     });
 
     // will be called when the form has been submitted
-    $scope.completionCallback = function(err, result) {
+    $scope.completionCallback = function (err, result) {
       if (err) {
         $scope.requestInProgress = false;
 
@@ -285,32 +285,32 @@ module.exports = [
         return;
       }
 
-      executeAfterDestroy.push(function() {
+      executeAfterDestroy.push(function () {
         successNotification('PROCESS_START_OK');
         assignNotification({
           assignee: $rootScope.authentication.name,
           processInstanceId: result.id,
-          maxResults: 15
+          maxResults: 15,
         });
       });
       $scope.$close();
     };
 
     // will be called on initialization of the 'form'-directive
-    $scope.registerCompletionHandler = function(fn) {
+    $scope.registerCompletionHandler = function (fn) {
       // register a handler when a process should be started
-      $scope.triggerOnStart = fn || function() {};
+      $scope.triggerOnStart = fn || function () {};
     };
 
     // will be triggered when the user select on 'Start'
-    $scope.startProcessInstance = function() {
+    $scope.startProcessInstance = function () {
       $scope.requestInProgress = true;
       $scope.triggerOnStart();
     };
 
     // will be called the validation state has been changed
-    $scope.notifyFormValidation = function(invalid) {
+    $scope.notifyFormValidation = function (invalid) {
       $scope.$invalid = invalid;
     };
-  }
+  },
 ];

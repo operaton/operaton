@@ -40,9 +40,9 @@ Telemetry.path = 'telemetry';
  *
  * @param  {Function} done
  */
-Telemetry.get = function(done) {
+Telemetry.get = function (done) {
   return this.http.get(this.path + '/configuration', {
-    done: done
+    done: done,
   });
 };
 
@@ -53,14 +53,14 @@ Telemetry.get = function(done) {
  * @param  {Boolean}  payload.enableTelemetry  Specifies if the data collection should be sent or not.
  * @param  {Function} done
  */
-Telemetry.configure = function(payload, done) {
+Telemetry.configure = function (payload, done) {
   if (typeof payload === 'boolean') {
     payload = {enableTelemetry: payload};
   }
 
   return this.http.post(this.path + '/configuration', {
     data: payload,
-    done: done
+    done: done,
   });
 };
 
@@ -70,7 +70,7 @@ Telemetry.configure = function(payload, done) {
  * @param  {Object}   payload
  * @param  {Function} done
  */
-Telemetry.fetchData = function(payload, done) {
+Telemetry.fetchData = function (payload, done) {
   if (typeof payload === 'function') {
     done = payload;
     payload = {};
@@ -81,7 +81,7 @@ Telemetry.fetchData = function(payload, done) {
 
   return this.http.get(this.path + '/data', {
     data: payload,
-    done: done
+    done: done,
   });
 };
 

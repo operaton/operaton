@@ -47,10 +47,10 @@ Tenant.path = 'tenant';
  * @param  {String}   tenant.name
  * @param  {Function} done
  */
-Tenant.create = function(options, done) {
+Tenant.create = function (options, done) {
   return this.http.post(this.path + '/create', {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -64,7 +64,7 @@ Tenant.create = function(options, done) {
  * @param {String} [options.groupMember]  Only retrieve tenants where the given group id is a member of.
  * @param  {Function} done
  */
-Tenant.count = function(options, done) {
+Tenant.count = function (options, done) {
   if (typeof options === 'function') {
     done = options;
     options = {};
@@ -74,7 +74,7 @@ Tenant.count = function(options, done) {
 
   return this.http.get(this.path + '/count', {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -84,7 +84,7 @@ Tenant.count = function(options, done) {
  * @param  {String} [options.id]    The id of the tenant, can be a property (id) of an object
  * @param  {Function} done
  */
-Tenant.get = function(options, done) {
+Tenant.get = function (options, done) {
   var id;
 
   if (typeof options === 'string') {
@@ -97,7 +97,7 @@ Tenant.get = function(options, done) {
 
   return this.http.get(this.path + '/' + utils.escapeUrl(id), {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -124,7 +124,7 @@ Tenant.get = function(options, done) {
  *
  * @param  {Function} done
  */
-Tenant.list = function(options, done) {
+Tenant.list = function (options, done) {
   if (typeof options === 'function') {
     done = options;
     options = {};
@@ -134,7 +134,7 @@ Tenant.list = function(options, done) {
 
   return this.http.get(this.path, {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -145,7 +145,7 @@ Tenant.list = function(options, done) {
  * @param {String} [options.userId]   The id of user to add to the tenant
  * @param  {Function} done
  */
-Tenant.createUserMember = function(options, done) {
+Tenant.createUserMember = function (options, done) {
   return this.http.put(
     this.path +
       '/' +
@@ -154,8 +154,8 @@ Tenant.createUserMember = function(options, done) {
       utils.escapeUrl(options.userId),
     {
       data: options,
-      done: done || noop
-    }
+      done: done || noop,
+    },
   );
 };
 
@@ -166,7 +166,7 @@ Tenant.createUserMember = function(options, done) {
  * @param {String} [options.groupId]   The id of group to add to the tenant
  * @param  {Function} done
  */
-Tenant.createGroupMember = function(options, done) {
+Tenant.createGroupMember = function (options, done) {
   return this.http.put(
     this.path +
       '/' +
@@ -175,8 +175,8 @@ Tenant.createGroupMember = function(options, done) {
       utils.escapeUrl(options.groupId),
     {
       data: options,
-      done: done || noop
-    }
+      done: done || noop,
+    },
   );
 };
 
@@ -187,7 +187,7 @@ Tenant.createGroupMember = function(options, done) {
  * @param {String} [options.userId]   The id of user to add to the tenant
  * @param  {Function} done
  */
-Tenant.deleteUserMember = function(options, done) {
+Tenant.deleteUserMember = function (options, done) {
   return this.http.del(
     this.path +
       '/' +
@@ -196,8 +196,8 @@ Tenant.deleteUserMember = function(options, done) {
       utils.escapeUrl(options.userId),
     {
       data: options,
-      done: done || noop
-    }
+      done: done || noop,
+    },
   );
 };
 
@@ -208,7 +208,7 @@ Tenant.deleteUserMember = function(options, done) {
  * @param {String} [options.groupId]   The id of group to add to the tenant
  * @param  {Function} done
  */
-Tenant.deleteGroupMember = function(options, done) {
+Tenant.deleteGroupMember = function (options, done) {
   return this.http.del(
     this.path +
       '/' +
@@ -217,8 +217,8 @@ Tenant.deleteGroupMember = function(options, done) {
       utils.escapeUrl(options.groupId),
     {
       data: options,
-      done: done || noop
-    }
+      done: done || noop,
+    },
   );
 };
 
@@ -228,10 +228,10 @@ Tenant.deleteGroupMember = function(options, done) {
  * @param  {Object}   tenant   is an object representation of a tenant
  * @param  {Function} done
  */
-Tenant.update = function(options, done) {
+Tenant.update = function (options, done) {
   return this.http.put(this.path + '/' + utils.escapeUrl(options.id), {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -241,14 +241,14 @@ Tenant.update = function(options, done) {
  * @param  {Object}   tenant   is an object representation of a tenant
  * @param  {Function} done
  */
-Tenant.delete = function(options, done) {
+Tenant.delete = function (options, done) {
   return this.http.del(this.path + '/' + utils.escapeUrl(options.id), {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
-Tenant.options = function(options, done) {
+Tenant.options = function (options, done) {
   var id;
 
   if (typeof options === 'function') {
@@ -264,8 +264,8 @@ Tenant.options = function(options, done) {
   return this.http.options(this.path + '/' + utils.escapeUrl(id), {
     done: done || noop,
     headers: {
-      Accept: 'application/json'
-    }
+      Accept: 'application/json',
+    },
   });
 };
 module.exports = Tenant;

@@ -40,12 +40,12 @@ Migration.path = 'migration';
  * @param  {String}   [params.targetProcessDefinitionId]
  * @param  {Function} done
  */
-Migration.generate = function(params, done) {
+Migration.generate = function (params, done) {
   var path = this.path + '/generate';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -56,12 +56,12 @@ Migration.generate = function(params, done) {
  * @param  {String}   [params.processInstanceIds]
  * @param  {Function} done
  */
-Migration.execute = function(params, done) {
+Migration.execute = function (params, done) {
   var path = this.path + '/execute';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -72,21 +72,21 @@ Migration.execute = function(params, done) {
  * @param  {String}   [params.processInstanceIds]
  * @param  {Function} done
  */
-Migration.executeAsync = function(params, done) {
+Migration.executeAsync = function (params, done) {
   var path = this.path + '/executeAsync';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-Migration.validate = function(params, done) {
+Migration.validate = function (params, done) {
   var path = this.path + '/validate';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

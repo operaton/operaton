@@ -22,9 +22,9 @@ var template = require('./systemSettingsGeneral.html?raw');
 var Controller = [
   '$scope',
   'Uri',
-  function($scope, Uri) {
+  function ($scope, Uri) {
     $scope.processEngineName = Uri.appUri(':engine');
-  }
+  },
 ];
 
 module.exports = [
@@ -35,7 +35,7 @@ module.exports = [
       label: 'SYSTEM_GENERAL',
       template: template,
       controller: Controller,
-      priority: 1000
+      priority: 1000,
     });
-  }
+  },
 ];

@@ -22,31 +22,31 @@ const annotationModal = require('./cam-annotation-modal');
 
 module.exports = [
   '$uibModal',
-  function($modal) {
+  function ($modal) {
     return {
       scope: {
         annotation: '<',
         readonly: '=?',
-        onSubmit: '&'
+        onSubmit: '&',
       },
 
       template,
 
-      link: function($scope) {
+      link: function ($scope) {
         $scope.openModal = () => {
           $modal
             .open(
               annotationModal(
                 $scope.annotation,
                 !!$scope.readonly,
-                $scope.onSubmit()
-              )
+                $scope.onSubmit(),
+              ),
             )
-            .result.then(res => {
+            .result.then((res) => {
               $scope.annotation = res;
             });
         };
-      }
+      },
     };
-  }
+  },
 ];

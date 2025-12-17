@@ -31,14 +31,14 @@ var ngModule = angular.module('cockpit.plugin.jobDefinition.actions', []);
 ngModule.config(overrideJobPriorityAction);
 ngModule.controller(
   'JobDefinitionOverrideJobPriorityController',
-  overrideJobPriorityDialog
+  overrideJobPriorityDialog,
 );
 
 // bulk override job priority action
 ngModule.config(bulkOverrideJobPriorityAction);
 ngModule.controller(
   'BulkJobDefinitionOverrideJobPriorityController',
-  bulkOverrideJobPriorityDialog
+  bulkOverrideJobPriorityDialog,
 );
 
 module.exports = ngModule;

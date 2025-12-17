@@ -19,7 +19,7 @@
 
 var template = require('./decisions-table.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     template: template,
@@ -27,13 +27,13 @@ module.exports = function() {
       decisionCount: '=',
       decisions: '=',
       isDrdAvailable: '=',
-      pagination: '='
+      pagination: '=',
     },
     controller: [
       '$scope',
       'localConf',
       '$translate',
-      function($scope, localConf, $translate) {
+      function ($scope, localConf, $translate) {
         // prettier-ignore
         $scope.headColumns = [
           {class: 'name', request: 'name', sortable: true, content: $translate.instant('PLUGIN_DECISION_TABLE_NAME')},
@@ -44,12 +44,12 @@ module.exports = function() {
         // Default sorting
         var defaultValue = {
           sortBy: 'name',
-          sortOrder: 'asc'
+          sortOrder: 'asc',
         };
         $scope.sortObj = loadLocal(defaultValue);
 
         // Update Table
-        $scope.onSortChange = function(sortObj) {
+        $scope.onSortChange = function (sortObj) {
           sortObj = sortObj || $scope.sortObj;
           $scope.sortObj = sortObj;
 
@@ -59,7 +59,7 @@ module.exports = function() {
         function loadLocal(defaultValue) {
           return localConf.get('sortDecDefTable', defaultValue);
         }
-      }
-    ]
+      },
+    ],
   };
 };

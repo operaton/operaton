@@ -52,5 +52,5 @@ module.exports = angular.module('cam.commons', [
   'ui.bootstrap',
   'pascalprecht.translate',
   'ngCookies',
-  'ngAnimate'
+  'ngAnimate',
 ]);

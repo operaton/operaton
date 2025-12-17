@@ -34,7 +34,7 @@ var ngDeps = [
   'ngRoute',
   deploymentsModule.name,
   resourcesModule.name,
-  resourceDetailsModule.name
+  resourceDetailsModule.name,
 ];
 
 var deploymentModule = angular.module('cam.cockpit.repository', ngDeps);
@@ -43,7 +43,7 @@ deploymentModule.config(routes);
 
 deploymentModule.controller(
   'camCockpitRepositoryViewCtrl',
-  camCockpitRepositoryViewCtrl
+  camCockpitRepositoryViewCtrl,
 );
 
 module.exports = deploymentModule;

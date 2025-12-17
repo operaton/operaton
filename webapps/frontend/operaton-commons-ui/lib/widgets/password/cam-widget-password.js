@@ -24,21 +24,21 @@ module.exports = [
   'camAPI',
   'debounce',
   '$timeout',
-  function(camAPI, debounce, $timeout) {
+  function (camAPI, debounce, $timeout) {
     return {
       scope: {
         profile: '=camWidgetPasswordProfile',
         password: '=camWidgetPasswordPassword',
-        isValid: '=?camWidgetPasswordValid'
+        isValid: '=?camWidgetPasswordValid',
       },
 
-      link: function($scope) {
+      link: function ($scope) {
         var passwordPolicyProvider = camAPI.resource('password-policy');
         var variablePolicyIsActive = false;
         $scope.loadingState = 'DEACTIVATED';
 
         function createRules() {
-          passwordPolicyProvider.get().then(function(res) {
+          passwordPolicyProvider.get().then(function (res) {
             if (!res) {
               variablePolicyIsActive = false;
               $scope.isValid = true;
@@ -55,7 +55,7 @@ module.exports = [
         }
         createRules();
 
-        var handlePasswordUpdate = function() {
+        var handlePasswordUpdate = function () {
           if (!variablePolicyIsActive) return;
 
           $scope.isValid = false;
@@ -69,23 +69,23 @@ module.exports = [
         };
 
         let profile = null;
-        $timeout(function() {
+        $timeout(function () {
           $scope.$watch(
             'profile',
-            value => {
+            (value) => {
               if (value) {
                 profile = value;
                 handlePasswordUpdate();
               }
             },
-            true
+            true,
           );
         });
 
-        let sanitize = value => value || '';
+        let sanitize = (value) => value || '';
 
         // Wait a second for more user input before validating
-        var createRestCall = debounce(function() {
+        var createRestCall = debounce(function () {
           if (!$scope.password) {
             return;
           }
@@ -98,10 +98,10 @@ module.exports = [
                   id: sanitize(profile.id),
                   firstName: sanitize(profile.firstName),
                   lastName: sanitize(profile.lastName),
-                  email: sanitize(profile.email)
-                }
+                  email: sanitize(profile.email),
+                },
               },
-              function(err, res) {
+              function (err, res) {
                 if (err) {
                   $scope.loadingState = 'NOT_OK';
                   $scope.tooltip = 'PASSWORD_POLICY_TOOLTIP_ERROR';
@@ -118,14 +118,14 @@ module.exports = [
 
                   $scope.rules = res.rules;
                 }
-              }
+              },
             )
             .catch(angular.noop);
         }, 1000);
 
         $scope.$watch('[password]', handlePasswordUpdate, true);
       },
-      template: template
+      template: template,
     };
-  }
+  },
 ];

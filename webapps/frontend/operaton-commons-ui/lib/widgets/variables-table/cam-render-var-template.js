@@ -21,16 +21,16 @@ var $ = require('jquery');
 
 module.exports = [
   '$compile',
-  function($compile) {
+  function ($compile) {
     return {
       template: '<div></div>',
 
       scope: {
         info: '=',
-        headerName: '='
+        headerName: '=',
       },
 
-      link: function($scope, element) {
+      link: function ($scope, element) {
         var obj = $scope.info.additions[$scope.headerName] || {};
         obj.scopeVariables = obj.scopeVariables || {};
 
@@ -43,7 +43,7 @@ module.exports = [
         element.html('<div>' + obj.html + '</div>');
 
         $compile($('div', element)[0])($scope);
-      }
+      },
     };
-  }
+  },
 ];

@@ -31,7 +31,7 @@ module.exports = [
   '$rootScope',
   'search',
   'debounce',
-  function($q, $document, $compile, $location, $rootScope, search, debounce) {
+  function ($q, $document, $compile, $location, $rootScope, search, debounce) {
     return {
       scope: {
         diagramData: '=',
@@ -43,12 +43,12 @@ module.exports = [
         onRootChange: '&',
         onMouseEnter: '&',
         onMouseLeave: '&',
-        bpmnJsConf: '=?'
+        bpmnJsConf: '=?',
       },
 
       template: template,
 
-      link: function($scope, $element) {
+      link: function ($scope, $element) {
         var viewer = null;
         var canvas = null;
         var visitedRoots = [];
@@ -71,25 +71,25 @@ module.exports = [
         // --- CONTROL FUNCTIONS ---
         $scope.control = $scope.control || {};
 
-        $scope.control.highlight = function(id) {
+        $scope.control.highlight = function (id) {
           canvas.addMarker(id, 'highlight');
 
           $element.find('[data-element-id="' + id + '"]>.djs-outline').attr({
             rx: '14px',
-            ry: '14px'
+            ry: '14px',
           });
         };
 
-        $scope.control.clearHighlight = function(id) {
+        $scope.control.clearHighlight = function (id) {
           canvas.removeMarker(id, 'highlight');
         };
 
-        $scope.control.isHighlighted = function(id) {
+        $scope.control.isHighlighted = function (id) {
           return canvas.hasMarker(id, 'highlight');
         };
 
         // config: text, tooltip, color, position
-        $scope.control.createBadge = function(id, config) {
+        $scope.control.createBadge = function (id, config) {
           var overlays = viewer.get('overlays');
 
           var htmlElement;
@@ -112,13 +112,13 @@ module.exports = [
           var overlayId = overlays.add(id, {
             position: config.position || {
               bottom: 0,
-              right: 0
+              right: 0,
             },
             show: {
               minZoom: -Infinity,
-              maxZoom: +Infinity
+              maxZoom: +Infinity,
             },
-            html: htmlElement
+            html: htmlElement,
           });
 
           $compile(htmlElement)($scope);
@@ -127,38 +127,38 @@ module.exports = [
         };
 
         // removes all badges for an element with a given id
-        $scope.control.removeBadges = function(id) {
+        $scope.control.removeBadges = function (id) {
           viewer.get('overlays').remove({element: id});
         };
 
         // removes a single badge with a given id
-        $scope.control.removeBadge = function(id) {
+        $scope.control.removeBadge = function (id) {
           viewer.get('overlays').remove(id);
         };
 
-        $scope.control.getViewer = function() {
+        $scope.control.getViewer = function () {
           return viewer;
         };
 
-        $scope.control.scrollToElement = function(elementId) {
+        $scope.control.scrollToElement = function (elementId) {
           var element = $scope.control.getElement(elementId);
           canvas.scrollToElement(element);
         };
 
-        $scope.control.getElement = function(elementId) {
+        $scope.control.getElement = function (elementId) {
           return viewer.get('elementRegistry').get(elementId);
         };
 
-        $scope.control.getElements = function(filter) {
+        $scope.control.getElements = function (filter) {
           return viewer.get('elementRegistry').filter(filter);
         };
 
         $scope.loaded = false;
-        $scope.control.isLoaded = function() {
+        $scope.control.isLoaded = function () {
           return $scope.loaded;
         };
 
-        $scope.control.addAction = function(config) {
+        $scope.control.addAction = function (config) {
           var container = $element.find('.actions');
           var htmlElement = config.html;
           container.append(htmlElement);
@@ -167,20 +167,20 @@ module.exports = [
 
         var heatmapImage;
 
-        $scope.control.addImage = function(image, x, y) {
+        $scope.control.addImage = function (image, x, y) {
           return preloadImage(image).then(
-            function(preloadedElement) {
+            function (preloadedElement) {
               var width = preloadedElement.offsetWidth;
               var height = preloadedElement.offsetHeight;
               var imageElement = $document[0].createElementNS(
                 'http://www.w3.org/2000/svg',
-                'image'
+                'image',
               );
 
               imageElement.setAttributeNS(
                 'http://www.w3.org/1999/xlink',
                 'xlink:href',
-                image
+                image,
               );
               imageElement.setAttributeNS(null, 'width', width);
               imageElement.setAttributeNS(null, 'height', height);
@@ -193,9 +193,9 @@ module.exports = [
               heatmapImage = angular.element(imageElement);
               return heatmapImage;
             },
-            function(preloadedElement) {
+            function (preloadedElement) {
               $document[0].body.removeChild(preloadedElement);
-            }
+            },
           );
         };
 
@@ -209,11 +209,11 @@ module.exports = [
             .css('top', '-9999em')
             .attr('src', img)[0];
 
-          imageElement.onload = function() {
+          imageElement.onload = function () {
             deferred.resolve(imageElement);
           };
 
-          imageElement.onerror = function() {
+          imageElement.onerror = function () {
             deferred.reject(imageElement);
           };
 
@@ -230,7 +230,7 @@ module.exports = [
           bpmnJsConf.additionalModules &&
           !Array.isArray(bpmnJsConf.additionalModules)
         ) {
-          angular.forEach(ModuleLoader.load(), function(module, name) {
+          angular.forEach(ModuleLoader.load(), function (module, name) {
             if (bpmnJsConf.additionalModules[name]) {
               bpmnJsModules.push(module);
             }
@@ -245,12 +245,12 @@ module.exports = [
           width: '100%',
           height: '100%',
           canvas: {
-            deferUpdate: false
+            deferUpdate: false,
           },
           key: $scope.key,
           disableNavigation: $scope.disableNavigation,
           additionalModules: bpmnJsModules,
-          moddleExtensions: window.bpmnJsModdleExtensions || {}
+          moddleExtensions: window.bpmnJsModdleExtensions || {},
         });
 
         if (!viewer.cached) {
@@ -272,7 +272,7 @@ module.exports = [
         var originalShow = viewer
           .get('overlays')
           .show.bind(viewer.get('overlays'));
-        viewer.get('overlays').show = function() {
+        viewer.get('overlays').show = function () {
           viewer.get('eventBus').fire('overlays.show');
           originalShow();
         };
@@ -280,30 +280,30 @@ module.exports = [
         var originalHide = viewer
           .get('overlays')
           .hide.bind(viewer.get('overlays'));
-        viewer.get('overlays').hide = function() {
+        viewer.get('overlays').hide = function () {
           viewer.get('eventBus').fire('overlays.hide');
           originalHide();
         };
 
-        var showAgain = debounce(function() {
+        var showAgain = debounce(function () {
           viewer.get('overlays').show();
         }, 300);
 
         var originalViewboxChanged = viewer
           .get('canvas')
           ._viewboxChanged.bind(viewer.get('canvas'));
-        var debouncedOriginal = debounce(function() {
+        var debouncedOriginal = debounce(function () {
           originalViewboxChanged();
           viewer.get('overlays').hide();
           showAgain();
         }, 0);
-        viewer.get('canvas')._viewboxChanged = function() {
+        viewer.get('canvas')._viewboxChanged = function () {
           debouncedOriginal();
         };
 
         var diagramData = null;
 
-        $scope.$watch('diagramData', function(newValue) {
+        $scope.$watch('diagramData', function (newValue) {
           if (newValue) {
             diagramData = newValue;
             renderDiagram();
@@ -329,9 +329,8 @@ module.exports = [
 
             var useDefinitions = typeof diagramData === 'object';
 
-            var importFunction = (useDefinitions
-              ? viewer.open
-              : viewer.importXML
+            var importFunction = (
+              useDefinitions ? viewer.open : viewer.importXML
             ).bind(viewer);
 
             var diagram = diagramData;
@@ -344,27 +343,27 @@ module.exports = [
 
               // we are using internal API, so we have to make sure the correct
               // events are fired to add drilldown overlays
-              viewer.on('import.render.complete', function() {
+              viewer.on('import.render.complete', function () {
                 viewer.get('eventBus').fire('import.done');
               });
             }
 
             importFunction(diagram)
-              .then(function({warnings: warn}) {
+              .then(function ({warnings: warn}) {
                 var applyFunction = useDefinitions
-                  ? function(fn) {
+                  ? function (fn) {
                       fn();
                     }
                   : $scope.$apply.bind($scope);
 
-                applyFunction(function() {
+                applyFunction(function () {
                   $scope.warn = warn;
 
                   handleViewerLoad();
                   return $scope.onLoad();
                 });
               })
-              .catch(err => {
+              .catch((err) => {
                 $scope.error = err;
               });
           }
@@ -373,7 +372,7 @@ module.exports = [
         function restoreViewport() {
           if (canvas) {
             var viewbox = JSON.parse(
-              ($location.search() || {}).viewbox || '{}'
+              ($location.search() || {}).viewbox || '{}',
             )[definitions.id];
 
             var rootId = ($location.search() || {}).rootElement;
@@ -391,7 +390,7 @@ module.exports = [
           }
         }
 
-        var mouseReleaseCallback = function() {
+        var mouseReleaseCallback = function () {
           $scope.grabbing = false;
           document.removeEventListener('mouseup', mouseReleaseCallback);
           $scope.$apply();
@@ -417,23 +416,23 @@ module.exports = [
           $scope.$apply();
         }
 
-        var onViewboxChange = debounce(function(e) {
+        var onViewboxChange = debounce(function (e) {
           var viewbox = JSON.parse(($location.search() || {}).viewbox || '{}');
 
           viewbox[definitions.id] = {
             x: e.viewbox.x,
             y: e.viewbox.y,
             width: e.viewbox.width,
-            height: e.viewbox.height
+            height: e.viewbox.height,
           };
 
           search.updateSilently({
-            viewbox: JSON.stringify(viewbox)
+            viewbox: JSON.stringify(viewbox),
           });
 
           var phase = $rootScope.$$phase;
           if (phase !== '$apply' && phase !== '$digest') {
-            $scope.$apply(function() {
+            $scope.$apply(function () {
               $location.replace();
             });
           } else {
@@ -441,7 +440,7 @@ module.exports = [
           }
         }, 500);
 
-        var onRootChange = function(e, context) {
+        var onRootChange = function (e, context) {
           var rootElement = context.element;
 
           $scope.onRootChange();
@@ -450,7 +449,7 @@ module.exports = [
           }
 
           search.updateSilently({
-            rootElement: rootElement.id
+            rootElement: rootElement.id,
           });
 
           // viewport for visited roots is handled correctly by bpmn-js
@@ -480,43 +479,43 @@ module.exports = [
           eventBus.off('root.set', onRootChange);
 
           search.updateSilently({
-            rootElement: null
+            rootElement: null,
           });
         }
 
-        $scope.zoomIn = function() {
+        $scope.zoomIn = function () {
           viewer.get('zoomScroll').zoom(1, {
             x: $element[0].offsetWidth / 2,
-            y: $element[0].offsetHeight / 2
+            y: $element[0].offsetHeight / 2,
           });
         };
 
-        $scope.zoomOut = function() {
+        $scope.zoomOut = function () {
           viewer.get('zoomScroll').zoom(-1, {
             x: $element[0].offsetWidth / 2,
-            y: $element[0].offsetHeight / 2
+            y: $element[0].offsetHeight / 2,
           });
         };
 
-        $scope.resetZoom = function() {
+        $scope.resetZoom = function () {
           canvas.resized();
           canvas.zoom('fit-viewport', 'auto');
         };
 
         $scope.control.resetZoom = $scope.resetZoom;
 
-        $scope.control.refreshZoom = function() {
+        $scope.control.refreshZoom = function () {
           canvas.resized();
           canvas.zoom(canvas.zoom(), 'auto');
         };
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
           detatchDiagram();
           clearEventListeners();
           viewer.get('overlays').clear();
           Viewer.cacheViewer({key: $scope.key, viewer: viewer});
         });
-      }
+      },
     };
-  }
+  },
 ];

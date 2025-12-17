@@ -76,10 +76,10 @@ Incident.path = 'incident';
  *
  * @param  {RequestCallback}  done
  */
-Incident.get = function(params, done) {
+Incident.get = function (params, done) {
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -110,10 +110,10 @@ Incident.get = function(params, done) {
  *
  * @param  {RequestCallback}  done
  */
-Incident.count = function(params, done) {
+Incident.count = function (params, done) {
   return this.http.get(this.path + '/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -126,10 +126,10 @@ Incident.count = function(params, done) {
  * @param {Function} done
  */
 
-Incident.setAnnotation = function(params, done) {
+Incident.setAnnotation = function (params, done) {
   return this.http.put(this.path + '/' + params.id + '/annotation', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -140,9 +140,9 @@ Incident.setAnnotation = function(params, done) {
  * @param {Function} done
  */
 
-Incident.clearAnnotation = function(id, done) {
+Incident.clearAnnotation = function (id, done) {
   return this.http.delete(this.path + '/' + id + '/annotation', {
-    done: done
+    done: done,
   });
 };
 

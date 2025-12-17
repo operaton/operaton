@@ -25,7 +25,7 @@ var callActivity = require('./callActivity');
 
 var ngModule = angular.module(
   'cockpit.plugin.base.views.definition.diagram-plugins',
-  [camCommon.name]
+  [camCommon.name],
 );
 
 ngModule.config(instanceCount);

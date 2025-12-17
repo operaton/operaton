@@ -23,5 +23,5 @@ var angular = require('angular'),
 
 module.exports = angular.module('cockpit.plugin.jobDefinition', [
   viewsModule.name,
-  actionsModule.name
+  actionsModule.name,
 ]);

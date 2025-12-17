@@ -28,27 +28,27 @@ module.exports = [
   'camAPI',
   'fixDate',
   'unfixDate',
-  function($modal, $timeout, camAPI, fixDate, unfixDate) {
+  function ($modal, $timeout, camAPI, fixDate, unfixDate) {
     var Task = camAPI.resource('task');
 
     return {
       scope: {
         taskData: '=',
         successHandler: '&',
-        errorHandler: '&'
+        errorHandler: '&',
       },
 
       template: template,
-      link: function($scope, $element) {
+      link: function ($scope, $element) {
         var taskMetaData = $scope.taskData.newChild($scope);
 
-        $scope.successHandler() || function() {};
-        var errorHandler = $scope.errorHandler() || function() {};
+        $scope.successHandler() || function () {};
+        var errorHandler = $scope.errorHandler() || function () {};
 
         /**
          * observe task changes
          */
-        taskMetaData.observe('task', function(task) {
+        taskMetaData.observe('task', function (task) {
           $scope.task = angular.copy(task);
 
           if ($scope.task) {
@@ -57,18 +57,18 @@ module.exports = [
           }
         });
 
-        taskMetaData.observe('assignee', function(assignee) {
+        taskMetaData.observe('assignee', function (assignee) {
           $scope.assignee = angular.copy(assignee);
         });
 
         /**
          * observe task changes
          */
-        taskMetaData.observe('isAssignee', function(isAssignee) {
+        taskMetaData.observe('isAssignee', function (isAssignee) {
           $scope.isAssignee = isAssignee;
         });
 
-        taskMetaData.observe('groups', function(groups) {
+        taskMetaData.observe('groups', function (groups) {
           groups = groups || [];
           var groupNames = [];
           for (var i = 0, group; (group = groups[i]); i++) {
@@ -93,7 +93,7 @@ module.exports = [
         }
 
         function saveDate(propName) {
-          return function(varValue) {
+          return function (varValue) {
             setEditingState(propName, false);
             $scope.task[propName] = varValue;
 
@@ -101,20 +101,20 @@ module.exports = [
 
             document
               .querySelector(
-                '[cam-widget-inline-field].' + propName.toLowerCase() + '-date'
+                '[cam-widget-inline-field].' + propName.toLowerCase() + '-date',
               )
               .focus();
           };
         }
 
         function resetProperty(propName) {
-          return function() {
+          return function () {
             $scope.task[propName] = null;
             updateTask();
 
             document
               .querySelector(
-                '[cam-widget-inline-field].' + propName.toLowerCase() + '-date'
+                '[cam-widget-inline-field].' + propName.toLowerCase() + '-date',
               )
               .focus();
           };
@@ -129,7 +129,7 @@ module.exports = [
           toSend.due = fixDate(toSend.due);
           toSend.followUp = fixDate(toSend.followUp);
 
-          Task.update(toSend, function(err) {
+          Task.update(toSend, function (err) {
             reload();
             if (err) {
               return errorHandler('TASK_UPDATE_ERROR', err);
@@ -139,7 +139,7 @@ module.exports = [
 
         function focusAssignee() {
           var el = document.querySelector(
-            '[cam-tasklist-task-meta] [cam-widget-inline-field][value="assignee.id"]'
+            '[cam-tasklist-task-meta] [cam-widget-inline-field][value="assignee.id"]',
           );
           if (el) {
             el.focus();
@@ -152,9 +152,9 @@ module.exports = [
         }
 
         function notifyOnStartEditing(property) {
-          return function() {
+          return function () {
             if (property === 'assignee') {
-              return validateAssignee($scope.assignee.id, function() {
+              return validateAssignee($scope.assignee.id, function () {
                 setEditingState(property, true);
               });
             }
@@ -163,16 +163,16 @@ module.exports = [
         }
 
         function notifyOnCancelEditing(property) {
-          return function() {
+          return function () {
             var el;
             setEditingState(property, false);
             if (property === 'assignee') {
               el = document.querySelector(
-                '[cam-tasklist-task-meta] [cam-widget-inline-field][value="assignee.id"]'
+                '[cam-tasklist-task-meta] [cam-widget-inline-field][value="assignee.id"]',
               );
             } else {
               el = document.querySelector(
-                '[cam-widget-inline-field].' + property.toLowerCase() + '-date'
+                '[cam-widget-inline-field].' + property.toLowerCase() + '-date',
               );
             }
             if (el) {
@@ -199,15 +199,15 @@ module.exports = [
         $scope.editingState = {
           followUp: false,
           due: false,
-          assignee: false
+          assignee: false,
         };
 
         $scope.now = new Date().toJSON();
 
-        $scope.openDatepicker = function(evt) {
+        $scope.openDatepicker = function (evt) {
           if (evt.keyCode === 13 && evt.target === evt.currentTarget) {
             // we can not trigger events in an event handler, because 'apply is already in progress' ;)
-            $timeout(function() {
+            $timeout(function () {
               // activate the inline edit field
               evt.target.firstChild.click();
             });
@@ -242,9 +242,9 @@ module.exports = [
           userResource.list(
             {
               maxResults: 1, // we don't do suggestions, yet
-              id: newId
+              id: newId,
             },
-            function(err, results) {
+            function (err, results) {
               if (newId !== targetElement.value) {
                 $scope.validationInProgress = false;
                 return validateAssignee(targetElement, done);
@@ -254,20 +254,20 @@ module.exports = [
               $scope.validationInProgress = false;
 
               done();
-            }
+            },
           );
         }
 
         // this is used by the inline-field widget to allow or reject the change
-        $scope.isInvalidUser = function() {
+        $scope.isInvalidUser = function () {
           // must wait for 'validationInProgress' to be back to 'false'
           return $scope.validationInProgress || !$scope.validAssignee;
         };
 
         // used on keydown
-        $scope.editAssignee = function(evt) {
-          $timeout(function() {
-            validateAssignee(evt.target, function() {
+        $scope.editAssignee = function (evt) {
+          $timeout(function () {
+            validateAssignee(evt.target, function () {
               if (evt.keyCode === 13 && evt.target === evt.currentTarget) {
                 evt.target.firstChild.click();
               }
@@ -279,29 +279,29 @@ module.exports = [
 
         var notifications = {
           assigned: {
-            error: 'ASSIGNED_ERROR'
+            error: 'ASSIGNED_ERROR',
           },
 
           assigneeReseted: {
-            error: 'ASSIGNEE_RESET_ERROR'
+            error: 'ASSIGNEE_RESET_ERROR',
           },
 
           claimed: {
-            error: 'CLAIM_ERROR'
+            error: 'CLAIM_ERROR',
           },
 
           unclaimed: {
-            error: 'UNCLAIM_ERROR'
-          }
+            error: 'UNCLAIM_ERROR',
+          },
         };
 
         $scope.startEditingAssignee = notifyOnStartEditing('assignee');
         $scope.cancelEditingAssignee = notifyOnCancelEditing('assignee');
 
-        $scope.assign = function(varValue) {
+        $scope.assign = function (varValue) {
           var original = $scope.assignee ? $scope.assignee.id : '';
 
-          validateAssignee($element.find('.assignee input')[0], function() {
+          validateAssignee($element.find('.assignee input')[0], function () {
             if (!$scope.validAssignee) {
               varValue = original;
               $scope.validAssignee = true;
@@ -323,10 +323,10 @@ module.exports = [
           });
         };
 
-        var claim = ($scope.claim = function() {
+        var claim = ($scope.claim = function () {
           var assignee = $scope.$root.authentication.name;
           $scope.submitInProgress = true;
-          Task.claim($scope.task.id, assignee, function(err) {
+          Task.claim($scope.task.id, assignee, function (err) {
             doAfterAssigneeLoaded.push(focusAssignee);
             doAfterAssigneeLoaded.push(() => ($scope.submitInProgress = false));
             notify('claimed')(err);
@@ -334,35 +334,35 @@ module.exports = [
         });
         $scope.$on('shortcut:claimTask', claim);
 
-        var unclaim = ($scope.unclaim = function() {
+        var unclaim = ($scope.unclaim = function () {
           $scope.submitInProgress = true;
-          Task.unclaim($scope.task.id, function(err) {
+          Task.unclaim($scope.task.id, function (err) {
             doAfterAssigneeLoaded.push(focusAssignee);
             doAfterAssigneeLoaded.push(() => ($scope.submitInProgress = false));
             notify('unclaimed')(err);
           });
         });
 
-        var setAssignee = ($scope.setAssignee = function(newAssignee) {
-          Task.assignee($scope.task.id, newAssignee, function(err) {
+        var setAssignee = ($scope.setAssignee = function (newAssignee) {
+          Task.assignee($scope.task.id, newAssignee, function (err) {
             doAfterAssigneeLoaded.push(focusAssignee);
             notify('assigned')(err);
           });
         });
 
-        var resetAssignee = ($scope.resetAssignee = function() {
-          Task.assignee($scope.task.id, null, function(err) {
+        var resetAssignee = ($scope.resetAssignee = function () {
+          Task.assignee($scope.task.id, null, function (err) {
             doAfterAssigneeLoaded.push(focusAssignee);
             notify('assigneeReseted')(err);
           });
         });
 
-        $scope.hasAssignee = function() {
+        $scope.hasAssignee = function () {
           // empty string is also a valid assignee
           return $scope.task?.assignee != null;
         };
 
-        $scope.editGroups = function() {
+        $scope.editGroups = function () {
           var groupsChanged;
 
           $modal
@@ -375,18 +375,18 @@ module.exports = [
               template: editGroupsFormTemplate,
               controller: 'camGroupEditModalCtrl',
               resolve: {
-                taskMetaData: function() {
+                taskMetaData: function () {
                   return taskMetaData;
                 },
-                groupsChanged: function() {
-                  return function() {
+                groupsChanged: function () {
+                  return function () {
                     groupsChanged = true;
                   };
                 },
-                errorHandler: function() {
+                errorHandler: function () {
                   return $scope.errorHandler;
-                }
-              }
+                },
+              },
             })
             .result.then(dialogClosed, dialogClosed);
 
@@ -398,8 +398,8 @@ module.exports = [
               // okay, here is where it gets ugly: since the groups have changed, a listener to the event we just fired
               // will update the task. that means that the complete html of the task is going to be replaced at some point in the future
               // after this replacement, we have to set the focus to the groups trigger again
-              doAfterGroupsLoaded.push(function() {
-                $timeout(function() {
+              doAfterGroupsLoaded.push(function () {
+                $timeout(function () {
                   document.querySelector('.meta .groups a').focus();
                 });
               });
@@ -410,16 +410,16 @@ module.exports = [
         };
 
         var doAfterGroupsLoaded = [];
-        $scope.$watch('groupNames', function() {
-          doAfterGroupsLoaded.forEach(function(fct) {
+        $scope.$watch('groupNames', function () {
+          doAfterGroupsLoaded.forEach(function (fct) {
             fct();
           });
           doAfterGroupsLoaded = [];
         });
 
         var doAfterAssigneeLoaded = [];
-        $scope.$watch('assignee', function() {
-          doAfterAssigneeLoaded.forEach(function(fct) {
+        $scope.$watch('assignee', function () {
+          doAfterAssigneeLoaded.forEach(function (fct) {
             $timeout(fct);
           });
           doAfterAssigneeLoaded = [];
@@ -428,7 +428,7 @@ module.exports = [
         function notify(action) {
           var messages = notifications[action];
 
-          return function(err) {
+          return function (err) {
             if (err) {
               return errorHandler(messages.error, err);
             }
@@ -436,7 +436,7 @@ module.exports = [
             reload();
           };
         }
-      }
+      },
     };
-  }
+  },
 ];

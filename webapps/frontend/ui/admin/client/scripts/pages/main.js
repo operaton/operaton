@@ -49,7 +49,7 @@ ngModule.config(authorizations);
 ngModule.controller('AuthorizationCreateController', authorizationCreate);
 ngModule.controller(
   'ConfirmDeleteAuthorizationController',
-  authorizationDeleteConfirm
+  authorizationDeleteConfirm,
 );
 ngModule.config(dashboard);
 ngModule.config(users);

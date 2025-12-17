@@ -29,9 +29,10 @@ module.exports = (annotation, readOnly, callback) => {
       'configuration',
       'camAPI',
       '$translate',
-      function($scope, Notifications, configuration, camAPI, $translate) {
+      function ($scope, Notifications, configuration, camAPI, $translate) {
         $scope.readOnly = readOnly;
-        $scope.maxAnnotationLength = configuration.getUserOperationLogAnnotationLength();
+        $scope.maxAnnotationLength =
+          configuration.getUserOperationLogAnnotationLength();
         $scope.text = annotation || '';
         $scope.dirty = false;
         $scope.valid = true;
@@ -44,19 +45,19 @@ module.exports = (annotation, readOnly, callback) => {
               Notifications.addMessage({
                 status: $translate.instant('SUCCESS'),
                 message: $translate.instant(
-                  'PLGN_AUDIT_EDIT_NOTIFICATION_SUCCESS'
+                  'PLGN_AUDIT_EDIT_NOTIFICATION_SUCCESS',
                 ),
-                exclusive: true
+                exclusive: true,
               });
               $scope.dirty = false;
             })
-            .catch(err => {
+            .catch((err) => {
               Notifications.addError({
                 status: $translate.instant('ERROR'),
                 message:
                   $translate.instant('PLGN_AUDIT_EDIT_NOTIFICATION_FAILURE') +
                   err,
-                exclusive: true
+                exclusive: true,
               });
               $scope.text = annotation;
             })
@@ -64,7 +65,7 @@ module.exports = (annotation, readOnly, callback) => {
               $scope.loadingState = 'DONE';
             });
         };
-      }
-    ]
+      },
+    ],
   };
 };

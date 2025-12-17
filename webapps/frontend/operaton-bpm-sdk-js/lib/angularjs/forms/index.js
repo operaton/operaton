@@ -31,32 +31,32 @@ var ngModule = angular.module('cam.embedded.forms', []);
  */
 ngModule.directive('camVariableName', [
   '$rootScope',
-  function($rootScope) {
+  function ($rootScope) {
     return {
       require: 'ngModel',
-      link: function(scope, elm, attrs, ctrl) {
-        elm.on('camFormVariableApplied', function(evt, value) {
+      link: function (scope, elm, attrs, ctrl) {
+        elm.on('camFormVariableApplied', function (evt, value) {
           var phase = $rootScope.$$phase;
           // only apply if not already in digest / apply
           if (phase !== '$apply' && phase !== '$digest') {
-            scope.$apply(function() {
+            scope.$apply(function () {
               ctrl.$setViewValue(value);
             });
           } else {
             ctrl.$setViewValue(value);
           }
         });
-      }
+      },
     };
-  }
+  },
 ]);
 
 ngModule.directive('camVariableType', [
-  function() {
+  function () {
     return {
       require: 'ngModel',
-      link: function($scope, $element, $attrs, ctrl) {
-        var validate = function(viewValue) {
+      link: function ($scope, $element, $attrs, ctrl) {
+        var validate = function (viewValue) {
           var type = $attrs.camVariableType;
 
           ctrl.$setValidity('camVariableType', true);
@@ -86,17 +86,17 @@ ngModule.directive('camVariableType', [
         ctrl.$parsers.unshift(validate);
         ctrl.$formatters.push(validate);
 
-        $attrs.$observe('camVariableType', function() {
+        $attrs.$observe('camVariableType', function () {
           return validate(ctrl.$viewValue);
         });
 
-        $element.bind('change', function() {
+        $element.bind('change', function () {
           validate(ctrl.$viewValue);
           $scope.$apply();
         });
-      }
+      },
     };
-  }
+  },
 ]);
 
 module.exports = OperatonFormAngular;

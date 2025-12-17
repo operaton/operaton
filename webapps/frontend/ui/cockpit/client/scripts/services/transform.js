@@ -21,27 +21,28 @@ var BpmnIO = require('bpmn-js/lib/NavigatedViewer').default;
 
 var Service = [
   '$q',
-  function($q) {
+  function ($q) {
     return {
-      transformBpmn20Xml: function(bpmn20Xml) {
+      transformBpmn20Xml: function (bpmn20Xml) {
         var deferred = $q.defer();
 
         BpmnIO.prototype.options = {};
         var moddle = BpmnIO.prototype._createModdle({
-          moddleExtensions: window.bpmnJsModdleExtensions || {}
+          moddleExtensions: window.bpmnJsModdleExtensions || {},
         });
-        moddle
-          .fromXML(bpmn20Xml, 'bpmn:Definitions')
-          .then(function({rootElement: definitions, elementsById}) {
-            deferred.resolve({
-              definitions: definitions,
-              bpmnElements: elementsById
-            });
+        moddle.fromXML(bpmn20Xml, 'bpmn:Definitions').then(function ({
+          rootElement: definitions,
+          elementsById,
+        }) {
+          deferred.resolve({
+            definitions: definitions,
+            bpmnElements: elementsById,
           });
+        });
 
         return deferred.promise;
-      }
+      },
     };
-  }
+  },
 ];
 module.exports = Service;

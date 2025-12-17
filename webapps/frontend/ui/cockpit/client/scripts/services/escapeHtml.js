@@ -18,14 +18,14 @@
 'use strict';
 
 module.exports = [
-  function() {
+  function () {
     return {
-      escape: function(html) {
+      escape: function (html) {
         var text = document.createTextNode(html);
         var div = document.createElement('div');
         div.appendChild(text);
         return div.innerHTML;
-      }
+      },
     };
-  }
+  },
 ];

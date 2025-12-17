@@ -28,7 +28,7 @@ var Controller = [
   'dataDepend',
   'Views',
   '$translate',
-  function($scope, $route, page, dataDepend, Views, $translate) {
+  function ($scope, $route, page, dataDepend, Views, $translate) {
     $scope.selectedReportId =
       (($route.current || {}).params || {}).reportType || null;
 
@@ -39,7 +39,7 @@ var Controller = [
       return Views.getProviders(_options);
     }
 
-    var getDefaultReport = function(reports) {
+    var getDefaultReport = function (reports) {
       if (!reports || !$scope.selectedReportId) {
         return;
       }
@@ -64,22 +64,22 @@ var Controller = [
         page.breadcrumbsAdd([
           {
             label: $translate.instant('REPORTS_VIEW_BREAD_CRUMB'),
-            href: '#/reports'
+            href: '#/reports',
           },
           {
-            label: reportTypePlugin[0].label
-          }
+            label: reportTypePlugin[0].label,
+          },
         ]);
 
         page.titleSet(
           $translate.instant('REPORTS_VIEW_TITLE_SET', {
-            name: $translate.instant(reportTypePlugin[0].label)
-          })
+            name: $translate.instant(reportTypePlugin[0].label),
+          }),
         );
       }
     } else {
       page.breadcrumbsAdd({
-        label: $translate.instant('REPORTS_VIEW_BREAD_CRUMB')
+        label: $translate.instant('REPORTS_VIEW_BREAD_CRUMB'),
       });
 
       page.titleSet($translate.instant('REPORTS_VIEW_BREAD_CRUMB'));
@@ -97,26 +97,26 @@ var Controller = [
 
     $scope.getPluginProviders = getPluginProviders;
 
-    $scope.$on('$routeChanged', function() {
+    $scope.$on('$routeChanged', function () {
       var _plugin = getDefaultReport(plugins);
       reportData.set('plugin', _plugin);
     });
 
     $scope.reportTitle =
       (($scope.getPluginProviders() || [])[0] || {}).label || null;
-  }
+  },
 ];
 
 var RouteConfig = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/reports/:reportType?', {
       template: template,
       controller: Controller,
       authentication: 'required',
-      reloadOnSearch: false
+      reloadOnSearch: false,
     });
-  }
+  },
 ];
 
 module.exports = RouteConfig;

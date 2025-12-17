@@ -21,7 +21,7 @@ var template = require('./cam-tasklist-sorting-inputs.html?raw');
 
 module.exports = [
   '$translate',
-  function($translate) {
+  function ($translate) {
     return {
       restrict: 'AC',
 
@@ -33,12 +33,12 @@ module.exports = [
         change: '=',
         applyHandler: '&',
         resetFunction: '=',
-        variable: '='
+        variable: '=',
       },
 
       controller: [
         '$scope',
-        function($scope) {
+        function ($scope) {
           $scope.variableTypes = {
             Boolean: $translate.instant('BOOLEAN'),
             Double: $translate.instant('DOUBLE'),
@@ -46,14 +46,14 @@ module.exports = [
             Integer: $translate.instant('INTEGER'),
             Long: $translate.instant('LONG'),
             Short: $translate.instant('SHORT'),
-            String: $translate.instant('STRING')
+            String: $translate.instant('STRING'),
           };
 
-          $scope.applySorting = function(evt) {
+          $scope.applySorting = function (evt) {
             $scope.applyHandler({$event: evt});
           };
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

@@ -19,11 +19,11 @@
 
 var UriFilter = [
   'Uri',
-  function(Uri) {
-    return function(input) {
+  function (Uri) {
+    return function (input) {
       return Uri.appUri(input);
     };
-  }
+  },
 ];
 
 module.exports = UriFilter;

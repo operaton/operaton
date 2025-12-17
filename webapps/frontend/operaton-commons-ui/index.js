@@ -76,13 +76,13 @@ function requirejsConf(options) {
       'angular-bootstrap': 'angular-ui-bootstrap',
       prismjs: 'vendor/prism',
       'bpmn-io': 'node_modules/bower-bpmn-js/dist/bpmn-navigated-viewer',
-      'dmn-io': 'node_modules/camunda-dmn-js'
+      'dmn-io': 'node_modules/camunda-dmn-js',
     },
 
     shim: {
       angular: {
         deps: ['jquery'],
-        exports: 'angular'
+        exports: 'angular',
       },
 
       'operaton-commons-ui': [
@@ -93,7 +93,7 @@ function requirejsConf(options) {
         'angular-translate',
         'angular-bootstrap',
         'moment',
-        'placeholders-js'
+        'placeholders-js',
       ],
       'angular-animate': ['angular'],
       'angular-cookies': ['angular'],
@@ -104,28 +104,28 @@ function requirejsConf(options) {
       'angular-sanitize': ['angular'],
       'angular-touch': ['angular'],
       'angular-bootstrap': ['angular'],
-      'angular-translate': ['angular']
+      'angular-translate': ['angular'],
     },
 
     packages: [
       {
         name: 'operaton-commons-ui',
         location: 'lib',
-        main: 'index'
+        main: 'index',
       },
       {
         name: 'operaton-commons-ui/util',
         location: 'lib/util',
-        main: 'index'
-      }
-    ]
+        main: 'index',
+      },
+    ],
   };
 
   // prefix all the paths
-  _.each(conf.paths, function(val, key) {
+  _.each(conf.paths, function (val, key) {
     conf.paths[key] = options.pathPrefix + '/' + val;
   });
-  _.each(conf.packages, function(val, key) {
+  _.each(conf.packages, function (val, key) {
     if (conf.packages[key].location) {
       conf.packages[key].location =
         options.pathPrefix + '/' + conf.packages[key].location;
@@ -139,8 +139,8 @@ module.exports = {
   // @name operaton-commons-ui.utils
   utils: {
     // @name operaton-commons-ui.utils._
-    _: _
+    _: _,
   },
 
-  requirejs: requirejsConf
+  requirejs: requirejsConf,
 };

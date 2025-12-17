@@ -30,16 +30,16 @@ var ProcessEngineSelectionController = [
   'Uri',
   'Notifications',
   '$translate',
-  function($scope, $http, $location, $window, Uri, Notifications, $translate) {
+  function ($scope, $http, $location, $window, Uri, Notifications, $translate) {
     var current = Uri.appUri(':engine');
     var enginesByName = {};
 
     $http
       .get(Uri.appUri('engine://engine/'))
-      .then(function(response) {
+      .then(function (response) {
         $scope.engines = response.data;
 
-        angular.forEach($scope.engines, function(engine) {
+        angular.forEach($scope.engines, function (engine) {
           enginesByName[engine.name] = engine;
         });
 
@@ -48,32 +48,32 @@ var ProcessEngineSelectionController = [
         if (!$scope.currentEngine) {
           Notifications.addError({
             status: $translate.instant(
-              'DIRECTIVE_ENGINE_SELECT_STATUS_NOT_FOUND'
+              'DIRECTIVE_ENGINE_SELECT_STATUS_NOT_FOUND',
             ),
             message: $translate.instant(
-              'DIRECTIVE_ENGINE_SELECT_MESSAGE_NOT_FOUND'
+              'DIRECTIVE_ENGINE_SELECT_MESSAGE_NOT_FOUND',
             ),
-            scope: $scope
+            scope: $scope,
           });
           $location.path('/dashboard');
         }
       })
       .catch(angular.noop);
-  }
+  },
 ];
 
-module.exports = function() {
+module.exports = function () {
   return {
     template: template,
     replace: true,
     controller: ProcessEngineSelectionController,
-    link: function(scope, element, attrs) {
+    link: function (scope, element, attrs) {
       var divider;
 
-      scope.$watch(attrs.ngShow, function(newValue) {
+      scope.$watch(attrs.ngShow, function (newValue) {
         if (newValue && !divider) {
           divider = $('<li class="divider-vertical"></li>').insertAfter(
-            element
+            element,
           );
         }
 
@@ -83,11 +83,11 @@ module.exports = function() {
         }
       });
 
-      scope.$on('$destroy', function() {
+      scope.$on('$destroy', function () {
         if (divider) {
           divider.remove();
         }
       });
-    }
+    },
   };
 };

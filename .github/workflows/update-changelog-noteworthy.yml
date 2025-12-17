@@ -28,10 +28,10 @@ jobs:
             const eventName = context.eventName;
             const isIssue = eventName === 'issues';
             const isPR = eventName === 'pull_request';
-            
+
             let sourceNumber, sourceTitle, sourceBody, sourceUrl, sourceLabels;
             let relatedPRs = [];
-            
+
             if (isIssue) {
               const issue = context.payload.issue;
               sourceNumber = issue.number;
@@ -39,9 +39,9 @@ jobs:
               sourceBody = issue.body || '';
               sourceUrl = issue.html_url;
               sourceLabels = issue.labels.map(l => l.name);
-              
+
               console.log(`📝 Processing closed issue #${sourceNumber}: ${sourceTitle}`);
-              
+
               // Find related PRs that reference this issue
               const { data: searchResults } = await github.rest.search.issuesAndPullRequests({
                 q: `is:pr repo:${context.repo.owner}/${context.repo.repo} #${sourceNumber} in:body`,
@@ -49,10 +49,10 @@ jobs:
                 order: 'desc',
                 per_page: 10
               });
-              
+
               // Filter to only merged PRs
               relatedPRs = searchResults.items.filter(pr => pr.pull_request && pr.state === 'closed');
-              
+
               // Get full PR details for each
               for (let i = 0; i < relatedPRs.length; i++) {
                 const { data: prDetail } = await github.rest.pulls.get({
@@ -60,7 +60,7 @@ jobs:
                   repo: context.repo.repo,
                   pull_number: relatedPRs[i].number
                 });
-                
+
                 // Only include if actually merged
                 if (prDetail.merged_at) {
                   relatedPRs[i] = prDetail;
@@ -69,27 +69,27 @@ jobs:
                   i--;
                 }
               }
-              
+
               console.log(`Found ${relatedPRs.length} related merged PR(s)`);
             } else {
               const pr = context.payload.pull_request;
-              
+
               // Only process if the PR was actually merged
               if (!pr.merged_at) {
                 console.log(`⏭️  PR #${pr.number} was closed but not merged - skipping`);
                 return;
               }
-              
+
               sourceNumber = pr.number;
               sourceTitle = pr.title;
               sourceBody = pr.body || '';
               sourceUrl = pr.html_url;
               sourceLabels = pr.labels.map(l => l.name);
               relatedPRs = [pr];
-              
+
               console.log(`📝 Processing merged PR #${sourceNumber}: ${sourceTitle}`);
             }
-            
+
             // Determine the category based on labels
             let category = 'features'; // default
             const labelToCategoryMap = {
@@ -100,16 +100,16 @@ jobs:
               'enhancement': 'features',
               'feature': 'features'
             };
-            
+
             for (const label of sourceLabels) {
               if (labelToCategoryMap[label]) {
                 category = labelToCategoryMap[label];
                 break;
               }
             }
-            
+
             console.log(`📂 Category: ${category}`);
-            
+
             // Collect PR details
             let prDetailsMarkdown = '';
             if (relatedPRs.length > 0) {
@@ -124,50 +124,50 @@ jobs:
                 prDetailsMarkdown += `  - Merged: ${pr.merged_at}\n`;
               }
             }
-            
+
             // Create detailed issue body with instructions for Copilot
             const issueBody = `## Task: Update Changelog for Noteworthy Change
 
-This issue was automatically created to document a noteworthy change in the changelog.
-
-### Source ${isIssue ? 'Issue' : 'Pull Request'}
-
-- **Number**: #${sourceNumber}
-- **Title**: ${sourceTitle}
-- **URL**: ${sourceUrl}
-- **Category**: ${category}
-- **Labels**: ${sourceLabels.join(', ')}
-
-${prDetailsMarkdown}
-
-### Instructions
-
-Please update the changelog template file \`.github/jreleaser/changelog.tpl\` with a detailed description of this change.
-
-**Requirements:**
-
-1. Add an entry to the "New and Noteworthy" section in the changelog template
-2. Create a concise but informative description (2-3 sentences) that explains:
-   - What was changed or added
-   - Why it's noteworthy for users
-   - Any important details or breaking changes
-3. Include links to the ${isIssue ? 'original issue' : 'pull request'}${relatedPRs.length > 1 ? ' and all related PRs' : ''}
-4. Follow the existing format and style in the changelog
-5. Place the entry in the appropriate location within the "New and Noteworthy" section
-
-**Example format:**
-\`\`\`markdown
-- **${sourceTitle}**: Brief description of what this change brings to users and why it matters. 
-  Any additional context or important notes. ([#${sourceNumber}](${sourceUrl})${relatedPRs.length > 0 ? `, [#${relatedPRs[0].number}](${relatedPRs[0].html_url})` : ''})
-\`\`\`
-
-**Note**: Review the ${isIssue ? 'issue description and' : ''} pull request${relatedPRs.length > 1 ? 's' : ''} to understand the full context of the changes before creating the changelog entry.
-
-### Source Description
-
-${sourceBody}
-`;
+            This issue was automatically created to document a noteworthy change in the changelog.
             
+            ### Source ${isIssue ? 'Issue' : 'Pull Request'}
+            
+            - **Number**: #${sourceNumber}
+            - **Title**: ${sourceTitle}
+            - **URL**: ${sourceUrl}
+            - **Category**: ${category}
+            - **Labels**: ${sourceLabels.join(', ')}
+              
+              ${prDetailsMarkdown}
+              
+              ### Instructions
+              
+              Please update the changelog template file \`.github/jreleaser/changelog.tpl\` with a detailed description of this change.
+            
+              **Requirements:**
+              
+              1. Add an entry to the "New and Noteworthy" section in the changelog template
+            2. Create a concise but informative description (2-3 sentences) that explains:
+              - What was changed or added
+              - Why it's noteworthy for users
+              - Any important details or breaking changes
+            3. Include links to the ${isIssue ? 'original issue' : 'pull request'}${relatedPRs.length > 1 ? ' and all related PRs' : ''}
+              4. Follow the existing format and style in the changelog
+              5. Place the entry in the appropriate location within the "New and Noteworthy" section
+            
+              **Example format:**
+              \`\`\`markdown
+            - **${sourceTitle}**: Brief description of what this change brings to users and why it matters.
+                                Any additional context or important notes. ([#${sourceNumber}](${sourceUrl})${relatedPRs.length > 0 ? `, [#${relatedPRs[0].number}](${relatedPRs[0].html_url})` : ''})
+              \`\`\`
+            
+            **Note**: Review the ${isIssue ? 'issue description and' : ''} pull request${relatedPRs.length > 1 ? 's' : ''} to understand the full context of the changes before creating the changelog entry.
+            
+            ### Source Description
+            
+              ${sourceBody}
+            `;
+  
             // Create the issue
             const newIssue = await github.rest.issues.create({
               owner: context.repo.owner,
@@ -177,7 +177,6 @@ ${sourceBody}
               labels: ['documentation', 'build'],
               assignees: ['copilot']
             });
-            
+              
             console.log(`✅ Created issue #${newIssue.data.number} for Copilot to update changelog`);
-            console.log(`📝 Issue URL: ${newIssue.data.html_url}`);
-
+            console.log(`📝 Issue URL: ${newIssue.data.html_url}`)

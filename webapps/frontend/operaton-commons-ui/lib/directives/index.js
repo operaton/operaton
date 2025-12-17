@@ -33,7 +33,7 @@ require('angular-ui-bootstrap');
 
 var directivesModule = angular.module('operaton.common.directives', [
   'ui.bootstrap',
-  util.name
+  util.name,
 ]);
 
 directivesModule.directive('email', email);
@@ -49,19 +49,19 @@ directivesModule.directive('instantTypeahead', instantTypeahead);
 directivesModule.config([
   '$uibModalProvider',
   '$uibTooltipProvider',
-  function($modalProvider, $tooltipProvider) {
+  function ($modalProvider, $tooltipProvider) {
     $modalProvider.options = {
       animation: true,
       backdrop: true, //can be also false or 'static'
-      keyboard: true
+      keyboard: true,
     };
 
     $tooltipProvider.options({
       animation: true,
       popupDelay: 100,
-      appendToBody: true
+      appendToBody: true,
     });
-  }
+  },
 ]);
 
 module.exports = directivesModule;

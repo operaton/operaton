@@ -70,7 +70,7 @@ function LineChart(options) {
   this.timeLabelFormats = options.timeLabelFormats || {
     day: 'HH:mm',
     week: 'dd DD',
-    month: 'DD MMM'
+    month: 'DD MMM',
   };
 
   this.tickSize = options.tickSize || 10;
@@ -91,11 +91,11 @@ proto._selectedOut = null;
 
 proto._eventHandlers = {};
 
-proto._eventHandlers.mouseout = function(evt) {
+proto._eventHandlers.mouseout = function (evt) {
   this.drawMouseHint().drawSelection(evt);
 };
 
-proto._eventHandlers.mousemove = function(evt) {
+proto._eventHandlers.mousemove = function (evt) {
   var offset = this.cursorPosition(evt);
 
   this._hoveredSelectionHandle = this.hoveredSelectionHandle(evt);
@@ -113,7 +113,7 @@ proto._eventHandlers.mousemove = function(evt) {
   this.drawMouseHint(offset.left, offset.top).drawSelection(evt);
 };
 
-proto._eventHandlers.mousedown = function(evt) {
+proto._eventHandlers.mousedown = function (evt) {
   var pos = this.cursorPosition(evt);
   var verticalScaleX = this.verticalScaleX();
   var innerW = this.innerW();
@@ -128,7 +128,7 @@ proto._eventHandlers.mousedown = function(evt) {
     if (!this._mouseIsDown) {
       this._selectedIn = Math.min(
         Math.max(pos.left, verticalScaleX),
-        verticalScaleX + innerW
+        verticalScaleX + innerW,
       );
       this._selectedOut = null;
     }
@@ -140,7 +140,7 @@ proto._eventHandlers.mousedown = function(evt) {
   this.drawMouseHint(pos.left, pos.top).drawSelection(evt);
 };
 
-proto._eventHandlers.mouseup = function(evt) {
+proto._eventHandlers.mouseup = function (evt) {
   var pos = this.cursorPosition(evt);
   var verticalScaleX = this.verticalScaleX();
   var innerW = this.innerW();
@@ -152,7 +152,7 @@ proto._eventHandlers.mouseup = function(evt) {
   if (this._mouseIsDown) {
     this._selectedOut = Math.max(
       Math.min(pos.left, verticalScaleX + innerW),
-      verticalScaleX
+      verticalScaleX,
     );
   }
   this._mouseIsDown = false;
@@ -164,7 +164,7 @@ proto._eventHandlers.mouseup = function(evt) {
       start: null,
       end: null,
       in: null,
-      out: null
+      out: null,
     });
   }
 
@@ -175,12 +175,12 @@ proto._eventHandlers.mouseup = function(evt) {
       start: this.momentAtX(this._selectedIn),
       end: this.momentAtX(this._selectedOut),
       in: this._selectedIn,
-      out: this._selectedOut
+      out: this._selectedOut,
     });
   }
 };
 
-proto._eventHandlers.wheel = function(evt) {
+proto._eventHandlers.wheel = function (evt) {
   if (!this._selectedIn || !this._selectedOut) {
     return;
   }
@@ -192,7 +192,7 @@ proto._eventHandlers.wheel = function(evt) {
 
   var speed = Math.max(
     Math.round(Math.abs(this._selectedOut - this._selectedIn) / 10),
-    1
+    1,
   );
   if (evt.deltaY > 0) {
     this._selectedIn += speed;
@@ -208,41 +208,41 @@ proto._eventHandlers.wheel = function(evt) {
     start: this.momentAtX(this._selectedIn),
     end: this.momentAtX(this._selectedOut),
     in: this._selectedIn,
-    out: this._selectedOut
+    out: this._selectedOut,
   });
 };
 
-proto.cursorPosition = function(evt) {
+proto.cursorPosition = function (evt) {
   var rect = this.canvas.getBoundingClientRect();
   return {
     left: evt.clientX - rect.left,
-    top: evt.clientY - rect.top
+    top: evt.clientY - rect.top,
   };
 };
 
-proto.bindEvents = function() {
-  Object.keys(proto._eventHandlers).forEach(function(evtName) {
+proto.bindEvents = function () {
+  Object.keys(proto._eventHandlers).forEach(function (evtName) {
     this.canvas.addEventListener(
       evtName,
       proto._eventHandlers[evtName].bind(this),
-      false
+      false,
     );
   }, this);
   return this;
 };
 
-proto.unbindEvents = function() {
-  Object.keys(proto._eventHandlers).forEach(function(evtName) {
+proto.unbindEvents = function () {
+  Object.keys(proto._eventHandlers).forEach(function (evtName) {
     this.canvas.removeEventListener(
       evtName,
       proto._eventHandlers[evtName].bind(this),
-      false
+      false,
     );
   }, this);
   return this;
 };
 
-proto._clearCache = function() {
+proto._clearCache = function () {
   this._verticalLabels = null;
   this._verticalScaleX = null;
   this._horizontalScaleY = null;
@@ -252,7 +252,7 @@ proto._clearCache = function() {
   this._selectedOut = null;
 };
 
-proto.resize = function(width, height, disableSelection) {
+proto.resize = function (width, height, disableSelection) {
   this._clearCache();
 
   if (!this.canvas) {
@@ -275,46 +275,46 @@ proto.resize = function(width, height, disableSelection) {
       start: null,
       end: null,
       in: null,
-      out: null
+      out: null,
     });
   }
   return this;
 };
 
-proto.max = function(index) {
+proto.max = function (index) {
   var val = 0;
   if (!arguments.length) {
-    (this.data || []).forEach(function(set, i) {
+    (this.data || []).forEach(function (set, i) {
       val = Math.max(val, this.max(i));
     }, this);
     return val;
   }
 
-  (this.data[index] || []).forEach(function(d) {
+  (this.data[index] || []).forEach(function (d) {
     val = Math.max(d.value, val);
   }, this);
 
   return val;
 };
 
-proto.min = function(index) {
+proto.min = function (index) {
   var val = this.max();
   if (!arguments.length) {
-    (this.data || []).forEach(function(set, i) {
+    (this.data || []).forEach(function (set, i) {
       val = Math.min(val, this.min(i));
     }, this);
     return val;
   }
 
   val = this.max(index);
-  (this.data[index] || []).forEach(function(d) {
+  (this.data[index] || []).forEach(function (d) {
     val = Math.min(d.value, val);
   }, this);
 
   return val;
 };
 
-proto.momentAtX = function(x) {
+proto.momentAtX = function (x) {
   var moment = this.moment;
   var labelFrom = this.labelFrom;
   var labelTo = this.labelTo;
@@ -322,15 +322,15 @@ proto.momentAtX = function(x) {
   var msPerPx = labelDiff / this.innerW();
   return moment(
     new Date(msPerPx * (x - this.verticalScaleX()) + this.labelFrom),
-    moment.ISO_8601
+    moment.ISO_8601,
   );
 };
 
-proto.valueAtY = function(y) {
+proto.valueAtY = function (y) {
   return y;
 };
 
-proto.setData = function(data, newTimespan, newInterval) {
+proto.setData = function (data, newTimespan, newInterval) {
   this._clearCache();
   var moment = this.moment;
   var abbreviateNumber = this.abbreviateNumber;
@@ -349,9 +349,9 @@ proto.setData = function(data, newTimespan, newInterval) {
     [
       {
         value: 0,
-        timestamp: emptyDate.format(this.dateformat)
-      }
-    ]
+        timestamp: emptyDate.format(this.dateformat),
+      },
+    ],
   ];
   if (!data || !data.length || !data[0]) {
     data = defaultData;
@@ -415,12 +415,12 @@ proto.setData = function(data, newTimespan, newInterval) {
         labelFrom
           .clone()
           .add(c * unitCount, unit)
-          .format(timeLabelFormats[timespan])
+          .format(timeLabelFormats[timespan]),
       );
     }
   }
 
-  this.data = data.map(function(set) {
+  this.data = data.map(function (set) {
     if (!set || !set.length) {
       set = [{value: 0}];
     }
@@ -432,7 +432,7 @@ proto.setData = function(data, newTimespan, newInterval) {
     var to = moment(set[set.length - 1].timestamp, timestampFormat);
     var milliDiff = to - labelsStart;
 
-    return set.map(function(item) {
+    return set.map(function (item) {
       var millis = moment(item.timestamp, timestampFormat);
       item.positionPercent = (to - millis) / milliDiff;
       return item;
@@ -443,7 +443,7 @@ proto.setData = function(data, newTimespan, newInterval) {
 };
 
 proto._verticalLabels = null;
-proto.verticalLabels = function() {
+proto.verticalLabels = function () {
   if (this._verticalLabels) {
     return this._verticalLabels;
   }
@@ -453,7 +453,7 @@ proto.verticalLabels = function() {
   var tt = 0;
   var innerW = this.innerW();
 
-  timeLabels.forEach(function(l) {
+  timeLabels.forEach(function (l) {
     tt += ctx.measureText(l).width + textPadding * 2;
   });
 
@@ -463,7 +463,7 @@ proto.verticalLabels = function() {
 };
 
 proto._innerW = null;
-proto.innerW = function() {
+proto.innerW = function () {
   if (this._innerW) {
     return this._innerW;
   }
@@ -475,7 +475,7 @@ proto.innerW = function() {
   var tm = 0;
   var textPadding = this.textPadding;
   var timeLabels = this.timeLabels;
-  timeLabels.forEach(function(l) {
+  timeLabels.forEach(function (l) {
     tm = Math.max(tm, ctx.measureText(l).width + textPadding * 2);
   });
 
@@ -487,7 +487,7 @@ proto.innerW = function() {
 };
 
 proto._innerH = null;
-proto.innerH = function() {
+proto.innerH = function () {
   if (this._innerH) {
     return this._innerH;
   }
@@ -502,7 +502,7 @@ proto.innerH = function() {
 };
 
 proto._verticalScaleX = null;
-proto.verticalScaleX = function() {
+proto.verticalScaleX = function () {
   if (this._verticalScaleX) {
     return this._verticalScaleX;
   }
@@ -512,10 +512,10 @@ proto.verticalScaleX = function() {
   var textPadding = this.textPadding;
   var tickSize = this.tickSize;
 
-  valueLabels.forEach(function(l) {
+  valueLabels.forEach(function (l) {
     verticalScaleX = Math.max(
       verticalScaleX,
-      ctx.measureText(l || '0').width + textPadding * 4 + tickSize
+      ctx.measureText(l || '0').width + textPadding * 4 + tickSize,
     );
   });
   verticalScaleX =
@@ -527,7 +527,7 @@ proto.verticalScaleX = function() {
 };
 
 proto._horizontalScaleY = null;
-proto.horizontalScaleY = function() {
+proto.horizontalScaleY = function () {
   if (this._horizontalScaleY) {
     return this._horizontalScaleY;
   }
@@ -542,14 +542,14 @@ proto.horizontalScaleY = function() {
   var horizontalScaleY = 0;
 
   if (vertLabel) {
-    timeLabels.forEach(function(l) {
+    timeLabels.forEach(function (l) {
       horizontalScaleY = Math.max(
         horizontalScaleY,
-        ctx.measureText(l).width + textPadding * 4 + tickSize
+        ctx.measureText(l).width + textPadding * 4 + tickSize,
       );
     });
     horizontalScaleY = Math.round(
-      Math.max(horizontalScaleY, tickSize + textPadding)
+      Math.max(horizontalScaleY, tickSize + textPadding),
     );
   } else {
     horizontalScaleY = fontSize + textPadding * 2 + tickSize;
@@ -560,7 +560,7 @@ proto.horizontalScaleY = function() {
   return horizontalScaleY;
 };
 
-proto.drawMouseHint = function(x, y) {
+proto.drawMouseHint = function (x, y) {
   var ctx = this.ctx;
   var innerW = this.innerW();
   var height = ctx.canvas.height;
@@ -597,7 +597,7 @@ proto.drawMouseHint = function(x, y) {
   return this;
 };
 
-proto.drawSelection = function(evt) {
+proto.drawSelection = function (evt) {
   var ctx = this.ctx;
   var innerH = this.innerH();
   var innerW = this.innerW();
@@ -620,9 +620,9 @@ proto.drawSelection = function(evt) {
         padding,
         Math.min(
           offset.left - this._selectedIn,
-          verticalScaleX + innerW - this._selectedIn
+          verticalScaleX + innerW - this._selectedIn,
         ),
-        innerH
+        innerH,
       );
     }
 
@@ -632,7 +632,7 @@ proto.drawSelection = function(evt) {
         Math.max(offset.left, verticalScaleX),
         padding,
         Math.min(this._selectedIn - offset.left, innerW),
-        innerH
+        innerH,
       );
     }
 
@@ -665,14 +665,14 @@ proto.drawSelection = function(evt) {
       verticalScaleX,
       padding,
       this._selectedIn - verticalScaleX,
-      innerH
+      innerH,
     );
     // right rect
     ctx.fillRect(
       this._selectedOut,
       padding,
       innerW + verticalScaleX - this._selectedOut,
-      innerH
+      innerH,
     );
 
     ctx.beginPath();
@@ -726,7 +726,7 @@ proto.drawSelection = function(evt) {
   return this;
 };
 
-proto.hoveredSelectionHandle = function(evt) {
+proto.hoveredSelectionHandle = function (evt) {
   if (!this._selectedIn || !this._selectedOut) return false;
   var offset = this.cursorPosition(evt);
   var ctx = this.ctx;
@@ -763,12 +763,12 @@ proto.hoveredSelectionHandle = function(evt) {
 /**
  * returns the smallest power of 10 that is greater than max
  */
-proto.maxLog = function() {
+proto.maxLog = function () {
   var max = this.max() || 1;
   return Math.ceil(log10(max));
 };
 
-proto.drawRulers = function() {
+proto.drawRulers = function () {
   var ctx = this.offCtx; // for compositing with mouse interaction, draw on the canvas which is not in the DOM
   var lineWidth = this.lineWidth;
   var padding = Math.max(2 * lineWidth, 10);
@@ -821,7 +821,7 @@ proto.drawRulers = function() {
     ctx.textBaseline = 'top';
   }
 
-  timeLabels.forEach(function(label, l) {
+  timeLabels.forEach(function (label, l) {
     var tx = verticalScaleX + l * (innerW / (timeLabels.length - 1));
 
     ctx.beginPath();
@@ -839,7 +839,7 @@ proto.drawRulers = function() {
       ctx.fillText(
         timeLabels[l],
         tx,
-        height - (horizontalScaleY - (tickSize + textPadding))
+        height - (horizontalScaleY - (tickSize + textPadding)),
       );
     }
   });
@@ -861,7 +861,7 @@ proto.drawRulers = function() {
     ctx.fillText(
       abbreviateNumber(valueLabel) || 0,
       verticalScaleX - (tickSize + textPadding),
-      yPosition
+      yPosition,
     );
 
     if (index < valueLabels.length - 1) {
@@ -875,7 +875,7 @@ proto.drawRulers = function() {
   return this;
 };
 
-proto.draw = function() {
+proto.draw = function () {
   var ctx = this.offCtx; // for compositing with mouse interaction, draw on the canvas which is not in the DOM
   var lineWidth = this.lineWidth;
   var padding = Math.max(2 * lineWidth, 10);
@@ -912,7 +912,7 @@ proto.draw = function() {
   }
 
   // draw the data
-  this.data.forEach(function(set, index) {
+  this.data.forEach(function (set, index) {
     var right;
     var top;
     var mom;
@@ -924,7 +924,7 @@ proto.draw = function() {
     ctx.strokeStyle = color;
 
     ctx.beginPath();
-    set.forEach(function(item, i) {
+    set.forEach(function (item, i) {
       mom = moment(item.timestamp, moment.ISO_8601);
       // record is older than the from label
       if (mom <= labelFrom) {
@@ -936,7 +936,7 @@ proto.draw = function() {
         ctx.moveTo(verticalScaleX, height - horizontalScaleY);
         ctx.lineTo(
           pxFromLeft(mom.clone().subtract(interval, 'seconds')),
-          height - horizontalScaleY
+          height - horizontalScaleY,
         );
       }
 
@@ -979,7 +979,7 @@ proto.draw = function() {
   return this.drawRulers().drawMouseHint();
 };
 
-proto.remove = function() {
+proto.remove = function () {
   this.unbindEvents();
   this.canvas.parentNode.removeChild(this.canvas);
 };

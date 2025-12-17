@@ -19,7 +19,7 @@
 
 module.exports = [
   '$timeout',
-  function($timeout) {
+  function ($timeout) {
     /**
      * Debounce a function call, making it callable an arbitrary number of times before it is actually executed once.
      *
@@ -36,7 +36,7 @@ module.exports = [
     return function debounce(fn, wait) {
       var timer;
 
-      var debounced = function() {
+      var debounced = function () {
         var context = this,
           args = arguments;
 
@@ -46,7 +46,7 @@ module.exports = [
           $timeout.cancel(timer);
         }
 
-        timer = $timeout(function() {
+        timer = $timeout(function () {
           timer = null;
           debounced.$loading = false;
           fn.apply(context, args);
@@ -55,5 +55,5 @@ module.exports = [
 
       return debounced;
     };
-  }
+  },
 ];

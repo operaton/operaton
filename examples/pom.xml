@@ -33,7 +33,7 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <scope>test</scope>
-      <classifier>junit5</classifier>
+      <classifier>junit6</classifier>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
@@ -53,7 +53,7 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-bpm-junit6</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

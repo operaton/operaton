@@ -60,7 +60,7 @@ var angular = require('angular'),
 var ngModule = angular.module('cockpit.plugin.base.views', [
   camCommon.name,
   diagramInstancePlugins.name,
-  diagramDefinitionPlugins.name
+  diagramDefinitionPlugins.name,
 ]);
 
 ngModule.config(dashboardDeployments);
@@ -77,7 +77,7 @@ ngModule.config(calledProcessDefinitionTable);
 ngModule.config(updateSuspensionStateAction);
 ngModule.controller(
   'UpdateProcessDefinitionSuspensionStateController',
-  updateSuspensionStateDialog
+  updateSuspensionStateDialog,
 );
 ngModule.config(pdIncidentsTab);
 
@@ -92,13 +92,13 @@ ngModule.controller('ExternalTaskRetryController', externalTaskRetryDialog);
 cancelProcessInstanceAction(ngModule);
 ngModule.controller(
   'CancelProcessInstanceController',
-  cancelProcessInstanceDialog
+  cancelProcessInstanceDialog,
 );
 ngModule.config(addVariableAction);
 ngModule.config(updateSuspensionStateActionPI);
 ngModule.controller(
   'UpdateProcessInstanceSuspensionStateController',
-  updateSuspensionStateDialogPI
+  updateSuspensionStateDialogPI,
 );
 ngModule.config(incidentJobRetryAction);
 ngModule.config(incidentExternalTaskRetryAction);

@@ -36,6 +36,35 @@ on:
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Build profile to use'
+        type: choice
+        required: true
+        default: 'normal'
+        options:
+          - 'fast'
+          - 'normal'
+          - 'max'
+      reports:
+        description: 'Enable build reports'
+        type: boolean
+        required: true
+        default: false
+      runner:
+        description: 'Maven runner to use'
+        type: choice
+        required: true
+        default: 'mvnd'
+        options:
+          - 'mvnw'
+          - 'mvnd'
+      skip_tests:
+        description: 'Skip test execution'
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
@@ -59,7 +88,7 @@ jobs:
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@30a0e04f1870d58f8d717450cc6134995f993c63
+        uses: DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101
         with:
           globs: |
             docs/decisions/*.md
@@ -73,13 +102,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
           restore-keys: ${{ runner.os }}-m2
       - name: Cache SonarCloud packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -99,7 +128,33 @@ jobs:
         shell: bash
         run: |
           .github/scripts/jacoco-create-flag-files.sh
-          .devenv/scripts/build/build.sh --runner=mvnd
+
+          # Build command construction
+          BUILD_CMD=".devenv/scripts/build/build.sh"
+
+          # Add profile parameter
+          PROFILE="${{ github.event.inputs.profile || 'normal' }}"
+          BUILD_CMD="$BUILD_CMD --profile=$PROFILE"
+
+          # Add runner parameter
+          RUNNER="${{ github.event.inputs.runner || 'mvnd' }}"
+          BUILD_CMD="$BUILD_CMD --runner=$RUNNER"
+
+          # Add reports flag if enabled
+          REPORTS="${{ github.event.inputs.reports || 'false' }}"
+          if [ "$REPORTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --reports"
+          fi
+
+          # Add skip-tests flag if enabled
+          SKIP_TESTS="${{ github.event.inputs.skip_tests || 'false' }}"
+          if [ "$SKIP_TESTS" = "true" ]; then
+            BUILD_CMD="$BUILD_CMD --skip-tests"
+          fi
+
+          echo "ℹ️ Executing: $BUILD_CMD"
+          $BUILD_CMD
+
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
@@ -109,7 +164,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
@@ -129,7 +184,7 @@ jobs:
               webapps/**
         continue-on-error: true
       - name: Cache build artifacts
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -148,7 +203,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v5
         with:
           path: |
             distro/**/target/operaton-*.gz
@@ -167,7 +222,7 @@ jobs:
         run: gh cache delete ${{ github.run_id }}-build-artifacts
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
@@ -175,7 +230,7 @@ jobs:
           retention-days: 10
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz

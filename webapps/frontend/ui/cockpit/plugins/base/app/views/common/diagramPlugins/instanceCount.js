@@ -21,14 +21,14 @@ var angular = require('angular');
 
 var template = require('./instanceCount.html?raw');
 
-module.exports = function(
+module.exports = function (
   $scope,
   control,
   processData,
   processDiagram,
   Loaders,
   $rootScope,
-  callbacks
+  callbacks,
 ) {
   // the getViewer() method only exists in the instance context, but not in the definition context.
   var viewer = control.getViewer ? control.getViewer() : control;
@@ -37,19 +37,19 @@ module.exports = function(
   var stopLoading = Loaders.startLoading();
   var overlaysNodes = {};
 
-  var createOverlayNodes = function(element, data) {
+  var createOverlayNodes = function (element, data) {
     var nodes = getOverlayNodes(element, data);
 
     const overlayId = overlays.add(element.id, {
       position: {
         bottom: 0,
-        left: 0
+        left: 0,
       },
       show: {
         minZoom: -Infinity,
-        maxZoom: +Infinity
+        maxZoom: +Infinity,
       },
-      html: nodes.html
+      html: nodes.html,
     });
     $scope.countOverlayIds = $scope.countOverlayIds
       ? $scope.countOverlayIds
@@ -59,7 +59,7 @@ module.exports = function(
     return nodes;
   };
 
-  callbacks.observe(function(sources) {
+  callbacks.observe(function (sources) {
     stopLoading();
     var overlaysToCreate = {};
 
@@ -82,7 +82,7 @@ module.exports = function(
       }
       overlaysToCreate[element.id] = overlaysToCreate[element.id] || {
         node: overlaysNodes[element.id],
-        data: {}
+        data: {},
       };
 
       var overlayData = overlaysToCreate[element.id].data;
@@ -114,7 +114,7 @@ module.exports = function(
 
       if (overlaysNodes[element.id]) {
         overlaysToCreate[element.id] = overlaysToCreate[element.id] || {
-          node: overlaysNodes[element.id]
+          node: overlaysNodes[element.id],
         };
         overlaysToCreate[element.id].data = data;
 
@@ -130,7 +130,7 @@ module.exports = function(
 
     callbacks.toggleIsLoading && callbacks.toggleIsLoading();
     $rootScope.$broadcast(
-      'cockpit.plugin.base.views:diagram-plugins:instance-plugin-loaded'
+      'cockpit.plugin.base.views:diagram-plugins:instance-plugin-loaded',
     );
   });
 
@@ -140,19 +140,19 @@ module.exports = function(
     var nodes = {
       html: html,
       instancesNode: html.find('.instance-count'),
-      incidentsNode: html.find('.instance-incidents')
+      incidentsNode: html.find('.instance-incidents'),
     };
 
     html.on('click', clickListener);
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       html.off('click', clickListener);
     });
 
     return nodes;
   }
 
-  var currentFilter = processData.observe('filter', function(filter) {
+  var currentFilter = processData.observe('filter', function (filter) {
     currentFilter = filter;
   });
 
@@ -174,7 +174,7 @@ module.exports = function(
           if (multiInstance) {
             activityIds.splice(
               activityIds.indexOf(activityId + '#multiInstanceBody'),
-              1
+              1,
             );
           }
         } else {
@@ -193,7 +193,7 @@ module.exports = function(
 
     newFilter.activityIds = activityIds;
 
-    $scope.$apply(function() {
+    $scope.$apply(function () {
       processData.set('filter', newFilter);
     });
   }

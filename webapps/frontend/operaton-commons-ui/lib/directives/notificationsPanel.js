@@ -41,14 +41,14 @@ module.exports = [
   'Notifications',
   '$filter',
   '$sce',
-  function(Notifications, $filter, $sce) {
+  function (Notifications, $filter, $sce) {
     return {
       restrict: 'EA',
       scope: {
-        filter: '=notificationsFilter'
+        filter: '=notificationsFilter',
       },
       template: notificationsTemplate,
-      link: function(scope) {
+      link: function (scope) {
         var filter = scope.filter;
 
         function matchesFilter(notification) {
@@ -62,7 +62,7 @@ module.exports = [
         var notifications = (scope.notifications = []);
 
         var consumer = {
-          add: function(notification) {
+          add: function (notification) {
             if (matchesFilter(notification)) {
               notifications.push(notification);
               return true;
@@ -70,21 +70,21 @@ module.exports = [
               return false;
             }
           },
-          remove: function(notification) {
+          remove: function (notification) {
             var idx = notifications.indexOf(notification);
             if (idx != -1) {
               notifications.splice(idx, 1);
             }
-          }
+          },
         };
 
         Notifications.registerConsumer(consumer);
 
-        scope.removeNotification = function(notification) {
+        scope.removeNotification = function (notification) {
           notifications.splice(notifications.indexOf(notification), 1);
         };
 
-        scope.notificationClass = function(notification) {
+        scope.notificationClass = function (notification) {
           var classes = ['danger', 'error', 'success', 'warning', 'info'];
 
           var type = 'info';
@@ -96,14 +96,14 @@ module.exports = [
           return 'alert-' + type;
         };
 
-        scope.trustHTML = function(msg) {
+        scope.trustHTML = function (msg) {
           return $sce.trustAsHtml(msg);
         };
 
-        scope.$on('$destroy', function() {
+        scope.$on('$destroy', function () {
           Notifications.unregisterConsumer(consumer);
         });
-      }
+      },
     };
-  }
+  },
 ];

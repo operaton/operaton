@@ -30,7 +30,7 @@ var angular = require('operaton-commons-ui/vendor/angular'),
   camCockpitDeleteDeploymentModalCtrl = require('./plugins/actions/delete/modals/cam-cockpit-delete-deployment-modal-ctrl');
 
 var deploymentsModule = angular.module('cam.cockpit.repository.deployments', [
-  'ui.bootstrap'
+  'ui.bootstrap',
 ]);
 
 /* controllers */
@@ -41,7 +41,7 @@ deploymentsModule.directive('camDeployments', camCockpitDeployments);
 deploymentsModule.directive('camDeployment', camCockpitDeployment);
 deploymentsModule.directive(
   'camDeploymentsSortingChoices',
-  camCockpitDeploymentsSortingChoices
+  camCockpitDeploymentsSortingChoices,
 );
 
 /* plugins */
@@ -50,7 +50,7 @@ deploymentsModule.config(camCockpitDeleteDeploymentPlugin);
 /* modals */
 deploymentsModule.controller(
   'camDeleteDeploymentModalCtrl',
-  camCockpitDeleteDeploymentModalCtrl
+  camCockpitDeleteDeploymentModalCtrl,
 );
 
 module.exports = deploymentsModule;

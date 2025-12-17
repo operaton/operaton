@@ -17,9 +17,9 @@
     <version.joda-time>2.14.0</version.joda-time>
     <version.uuid-generator>5.2.0</version.uuid-generator>
     <version.feel-scala>1.19.3</version.feel-scala>
-    <version.quarkus>3.30.2</version.quarkus>
+    <version.quarkus>3.30.3</version.quarkus>
     <version.java>17</version.java>
-    <version.spring>6.2.14</version.spring>
+    <version.spring>6.2.15</version.spring>
     <version.spring-boot>3.5.8</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.release>17</maven.compiler.release>
@@ -110,7 +110,7 @@
       <plugin>
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
-        <version>6.25.0</version>
+        <version>6.26.0</version>
         <configuration>
           <activeRecipes>
             <recipe>org.operaton.recipe.CodeCleanup</recipe>
@@ -190,12 +190,12 @@
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-testing-frameworks</artifactId>
-            <version>3.23.0</version>
+            <version>3.24.0</version>
           </dependency>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-logging-frameworks</artifactId>
-            <version>3.19.1</version>
+            <version>3.20.0</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -624,6 +624,7 @@
         <module>freemarker-template-engine</module>
         <module>test-utils/testcontainers</module>
         <module>test-utils/junit5-extension</module>
+        <module>test-utils/junit6-extension</module>
         <module>test-utils/assert</module>
         <module>test-utils/archunit</module>
         <module>engine</module>
@@ -655,6 +656,7 @@
         <module>freemarker-template-engine</module>
         <module>test-utils/testcontainers</module>
         <module>test-utils/junit5-extension</module>
+        <module>test-utils/junit6-extension</module>
         <module>test-utils/assert</module>
         <module>test-utils/archunit</module>
         <module>engine</module>
@@ -766,6 +768,7 @@
         <module>distro/sql-script</module>
         <module>clients/java</module>
         <module>test-utils/junit5-extension</module>
+        <module>test-utils/junit6-extension</module>
         <module>test-utils/archunit</module>
         <module>test-utils/assert</module>
         <module>test-utils/testcontainers</module>

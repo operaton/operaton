@@ -112,13 +112,13 @@ Task.path = 'task';
  *                                                          Will return less results, if there are no more results left.
  * @param {Function} done
  */
-Task.list = function(params, done) {
+Task.list = function (params, done) {
   done = done || noop;
   var deferred = Q.defer();
 
   this.http.get(this.path, {
     data: params,
-    done: function(err, data) {
+    done: function (err, data) {
       if (err) {
         done(err);
         return deferred.reject(err);
@@ -143,7 +143,7 @@ Task.list = function(params, done) {
 
       done(null, data);
       deferred.resolve(data);
-    }
+    },
   });
 
   return deferred.promise;
@@ -154,9 +154,9 @@ Task.list = function(params, done) {
  * @param  {uuid}     taskId   of the task to be requested
  * @param  {Function} done
  */
-Task.get = function(taskId, done) {
+Task.get = function (taskId, done) {
   return this.http.get(this.path + '/' + taskId, {
-    done: done
+    done: done,
   });
 };
 
@@ -165,9 +165,9 @@ Task.get = function(taskId, done) {
  * @param  {uuid}     taskId   of the task for which the comments are requested
  * @param  {Function} done
  */
-Task.comments = function(taskId, done) {
+Task.comments = function (taskId, done) {
   return this.http.get(this.path + '/' + taskId + '/comment', {
-    done: done
+    done: done,
   });
 };
 
@@ -176,9 +176,9 @@ Task.comments = function(taskId, done) {
  * @param  {uuid}     taskId   of the task for which the identity links are requested
  * @param  {Function} done
  */
-Task.identityLinks = function(taskId, done) {
+Task.identityLinks = function (taskId, done) {
   return this.http.get(this.path + '/' + taskId + '/identity-links', {
-    done: done
+    done: done,
   });
 };
 
@@ -191,7 +191,7 @@ Task.identityLinks = function(taskId, done) {
  * @param  {String} [params.type]     Sets the type of the link. Must be provided
  * @param  {Function} done
  */
-Task.identityLinksAdd = function(taskId, params, done) {
+Task.identityLinksAdd = function (taskId, params, done) {
   if (arguments.length === 2) {
     done = arguments[1];
     params = arguments[0];
@@ -199,7 +199,7 @@ Task.identityLinksAdd = function(taskId, params, done) {
   }
   return this.http.post(this.path + '/' + taskId + '/identity-links', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -212,7 +212,7 @@ Task.identityLinksAdd = function(taskId, params, done) {
  * @param  {String} [params.type]     Specifies the type of the link. Must be provided.
  * @param  {Function} done
  */
-Task.identityLinksDelete = function(taskId, params, done) {
+Task.identityLinksDelete = function (taskId, params, done) {
   if (arguments.length === 2) {
     done = arguments[1];
     params = arguments[0];
@@ -221,7 +221,7 @@ Task.identityLinksDelete = function(taskId, params, done) {
 
   return this.http.post(this.path + '/' + taskId + '/identity-links/delete', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -234,10 +234,10 @@ Task.identityLinksDelete = function(taskId, params, done) {
  * @param  {String}   [params.processInstanceId] The id of the process instance the comment is related to.
  * @param  {Function} done
  */
-Task.createComment = function(taskId, params, done) {
+Task.createComment = function (taskId, params, done) {
   return this.http.post(this.path + '/' + taskId + '/comment/create', {
     data: typeof params === 'string' ? {message: params} : params,
-    done: done
+    done: done,
   });
 };
 
@@ -247,10 +247,10 @@ Task.createComment = function(taskId, params, done) {
  * @param  {Object}   task   is an object representation of a task
  * @param  {Function} done
  */
-Task.create = function(task, done) {
+Task.create = function (task, done) {
   return this.http.post(this.path + '/create', {
     data: task,
-    done: done
+    done: done,
   });
 };
 
@@ -260,10 +260,10 @@ Task.create = function(task, done) {
  * @param  {Object}   task   is an object representation of a task
  * @param  {Function} done
  */
-Task.update = function(task, done) {
+Task.update = function (task, done) {
   return this.http.put(this.path + '/' + task.id, {
     data: task,
-    done: done
+    done: done,
   });
 };
 
@@ -293,9 +293,9 @@ Task.update = function(task, done) {
  * @param  {String}   userId
  * @param  {Function} done
  */
-Task.assignee = function(taskId, userId, done) {
+Task.assignee = function (taskId, userId, done) {
   var data = {
-    userId: userId
+    userId: userId,
   };
 
   if (arguments.length === 2) {
@@ -306,7 +306,7 @@ Task.assignee = function(taskId, userId, done) {
 
   return this.http.post(this.path + '/' + taskId + '/assignee', {
     data: data,
-    done: done
+    done: done,
   });
 };
 
@@ -319,9 +319,9 @@ Task.assignee = function(taskId, userId, done) {
  * @param  {String}   userId
  * @param  {Function} done
  */
-Task.delegate = function(taskId, userId, done) {
+Task.delegate = function (taskId, userId, done) {
   var data = {
-    userId: userId
+    userId: userId,
   };
 
   if (arguments.length === 2) {
@@ -332,7 +332,7 @@ Task.delegate = function(taskId, userId, done) {
 
   return this.http.post(this.path + '/' + taskId + '/delegate', {
     data: data,
-    done: done
+    done: done,
   });
 };
 
@@ -348,9 +348,9 @@ Task.delegate = function(taskId, userId, done) {
  * @param  {String}   userId
  * @param  {Function} done
  */
-Task.claim = function(taskId, userId, done) {
+Task.claim = function (taskId, userId, done) {
   var data = {
-    userId: userId
+    userId: userId,
   };
 
   if (arguments.length === 2) {
@@ -361,7 +361,7 @@ Task.claim = function(taskId, userId, done) {
 
   return this.http.post(this.path + '/' + taskId + '/claim', {
     data: data,
-    done: done
+    done: done,
   });
 };
 
@@ -373,13 +373,13 @@ Task.claim = function(taskId, userId, done) {
  * @param  {String}   taskId
  * @param  {Function} done
  */
-Task.unclaim = function(taskId, done) {
+Task.unclaim = function (taskId, done) {
   if (typeof taskId !== 'string') {
     taskId = taskId.taskId;
   }
 
   return this.http.post(this.path + '/' + taskId + '/unclaim', {
-    done: done
+    done: done,
   });
 };
 
@@ -397,7 +397,7 @@ Task.unclaim = function(taskId, done) {
  * @param  {Object}   data
  * @param  {Function} done
  */
-Task.submitForm = function(data, done) {
+Task.submitForm = function (data, done) {
   done = done || noop;
   if (!data.id) {
     var err = new Error('Task submitForm needs a task id.');
@@ -407,9 +407,9 @@ Task.submitForm = function(data, done) {
 
   return this.http.post(this.path + '/' + data.id + '/submit-form', {
     data: {
-      variables: data.variables
+      variables: data.variables,
     },
-    done: done
+    done: done,
   });
 };
 
@@ -421,7 +421,7 @@ Task.submitForm = function(data, done) {
  * @param  {Object.<String, *>} [params.variables]    Process variables which need to be updated.
  * @param  {Function} done
  */
-Task.complete = function(params, done) {
+Task.complete = function (params, done) {
   done = done || noop;
 
   if (!params.id) {
@@ -432,9 +432,9 @@ Task.complete = function(params, done) {
 
   return this.http.post(this.path + '/' + params.id + '/complete', {
     data: {
-      variables: params.variables
+      variables: params.variables,
     },
-    done: done
+    done: done,
   });
 };
 
@@ -447,11 +447,11 @@ Task.complete = function(params, done) {
  * @param  {Object.<String, *>} [data.variables]      Process variables which need to be updated.
  * @param  {Function}           done
  */
-Task.bpmnEscalation = function(data, done) {
+Task.bpmnEscalation = function (data, done) {
   done = done || noop;
   if (!data.id || !data.escalationCode) {
     var err = new Error(
-      'Task bpmnEscalation needs a task id and escalation code.'
+      'Task bpmnEscalation needs a task id and escalation code.',
     );
     done(err);
     return Q.reject(err);
@@ -460,9 +460,9 @@ Task.bpmnEscalation = function(data, done) {
   return this.http.post(this.path + '/' + data.id + '/bpmnEscalation', {
     data: {
       escalationCode: data.escalationCode,
-      variables: data.variables
+      variables: data.variables,
     },
-    done: done
+    done: done,
   });
 };
 
@@ -476,7 +476,7 @@ Task.bpmnEscalation = function(data, done) {
  * @param  {Object.<String, *>} [data.variables]    Process variables which need to be updated.
  * @param  {Function}           done
  */
-Task.bpmnError = function(data, done) {
+Task.bpmnError = function (data, done) {
   done = done || noop;
   if (!data.id || !data.errorCode) {
     var err = new Error('Task bpmnError needs a task id and error code.');
@@ -488,13 +488,13 @@ Task.bpmnError = function(data, done) {
     data: {
       variables: data.variables,
       errorCode: data.errorCode,
-      errorMessage: data.errorMessage
+      errorMessage: data.errorMessage,
     },
-    done: done
+    done: done,
   });
 };
 
-Task.formVariables = function(data, done) {
+Task.formVariables = function (data, done) {
   done = done || noop;
   var pointer = '';
   if (data.key) {
@@ -508,7 +508,7 @@ Task.formVariables = function(data, done) {
   }
 
   var queryData = {
-    deserializeValues: data.deserializeValues
+    deserializeValues: data.deserializeValues,
   };
 
   if (data.names) {
@@ -517,7 +517,7 @@ Task.formVariables = function(data, done) {
 
   return this.http.get(this.path + '/' + pointer + '/form-variables', {
     data: queryData,
-    done: done
+    done: done,
   });
 };
 
@@ -526,9 +526,9 @@ Task.formVariables = function(data, done) {
  * @param  {uuid}     taskId   of the task for which the form is requested
  * @param  {Function} done
  */
-Task.form = function(taskId, done) {
+Task.form = function (taskId, done) {
   return this.http.get(this.path + '/' + taskId + '/form', {
-    done: done
+    done: done,
   });
 };
 
@@ -542,13 +542,13 @@ Task.form = function(taskId, done) {
  * @param {String} [params.valueInfo]  A JSON object containing additional, value-type-dependent properties.
  * @param {Function} done
  */
-Task.localVariable = function(params, done) {
+Task.localVariable = function (params, done) {
   return this.http.put(
     this.path + '/' + params.id + '/localVariables/' + params.varId,
     {
       data: params,
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -557,9 +557,9 @@ Task.localVariable = function(params, done) {
  * @param  {uuid}     taskId   of the task for which the variables are requested
  * @param  {Function} done
  */
-Task.localVariables = function(taskId, done) {
+Task.localVariables = function (taskId, done) {
   return this.http.get(this.path + '/' + taskId + '/localVariables', {
-    done: done
+    done: done,
   });
 };
 
@@ -568,17 +568,17 @@ Task.localVariables = function(taskId, done) {
  * Updates precede deletions.
  * So, if a variable is updated AND deleted, the deletion overrides the update.
  */
-Task.modifyVariables = function(data, done) {
+Task.modifyVariables = function (data, done) {
   return this.http.post(this.path + '/' + data.id + '/localVariables', {
     data: data,
-    done: done
+    done: done,
   });
 };
 
 /**
  * Removes a local variable from a task.
  */
-Task.deleteVariable = function(data, done) {
+Task.deleteVariable = function (data, done) {
   return this.http.del(
     this.path +
       '/' +
@@ -586,8 +586,8 @@ Task.deleteVariable = function(data, done) {
       '/localVariables/' +
       utils.escapeUrl(data.varId),
     {
-      done: done
-    }
+      done: done,
+    },
   );
 };
 

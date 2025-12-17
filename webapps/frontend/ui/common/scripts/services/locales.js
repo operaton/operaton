@@ -19,14 +19,14 @@
 var moment = require('operaton-commons-ui/vendor/moment'),
   angular = require('operaton-commons-ui/vendor/angular');
 
-module.exports = function(ngModule, appRoot, appName) {
+module.exports = function (ngModule, appRoot, appName) {
   ngModule.factory('sanitizeMissingTranslationKey', [
     '$translateSanitization',
-    function($sanitize) {
-      return function(translationKey) {
+    function ($sanitize) {
+      return function (translationKey) {
         return $sanitize.sanitize(translationKey, 'text', 'escape');
       };
-    }
+    },
   ]);
 
   ngModule.factory('localeLoader', [
@@ -34,15 +34,15 @@ module.exports = function(ngModule, appRoot, appName) {
     '$http',
     'Notifications',
     'configuration',
-    function($q, $http, Notifications, configuration) {
-      return function(options) {
+    function ($q, $http, Notifications, configuration) {
+      return function (options) {
         if (
           !options ||
           !angular.isString(options.prefix) ||
           !angular.isString(options.suffix)
         ) {
           throw new Error(
-            "Couldn't load static files, no prefix or suffix specified!"
+            "Couldn't load static files, no prefix or suffix specified!",
           );
         }
 
@@ -68,10 +68,10 @@ module.exports = function(ngModule, appRoot, appName) {
               // Use `now` instead of `window.bust` to update translations without rebuilding the app
               params: {bust: CAMUNDA_VERSION} // eslint-disable-line
             },
-            options.$http
-          )
+            options.$http,
+          ),
         )
-          .then(function(response) {
+          .then(function (response) {
             configuration.clearTranslationData();
             configuration.set(cacheKey, JSON.stringify(response.data));
             if (!cachedLocalesData) {
@@ -82,14 +82,14 @@ module.exports = function(ngModule, appRoot, appName) {
               deferred.resolve(response.data.labels);
             }
           })
-          .catch(function(response) {
+          .catch(function (response) {
             // error notification
             Notifications.addError({
               status: 'Error in localization configuration',
               message:
                 '"' +
                 options.key +
-                '" is declared as available locale, but no such locale file exists.'
+                '" is declared as available locale, but no such locale file exists.',
             });
 
             if (!cachedLocalesData) {
@@ -103,15 +103,15 @@ module.exports = function(ngModule, appRoot, appName) {
 
         return deferred.promise;
       };
-    }
+    },
   ]);
 
   ngModule.config([
     '$translateProvider',
     'configurationProvider',
-    function($translateProvider, configurationProvider) {
+    function ($translateProvider, configurationProvider) {
       $translateProvider.useMissingTranslationHandler(
-        'sanitizeMissingTranslationKey'
+        'sanitizeMissingTranslationKey',
       );
       var avail = configurationProvider.getAvailableLocales();
       var fallback = configurationProvider.getFallbackLocale();
@@ -119,7 +119,7 @@ module.exports = function(ngModule, appRoot, appName) {
       $translateProvider.useLoader('localeLoader', {
         prefix: appRoot + '/app/' + appName + '/locales/',
         suffix: '.json',
-        callback: function(err, data, locale) {
+        callback: function (err, data, locale) {
           if (!err && data && data.dateLocales) {
             var abbreviation = locale || fallback;
             if (moment.locales().indexOf(abbreviation) > -1) {
@@ -129,14 +129,14 @@ module.exports = function(ngModule, appRoot, appName) {
               moment.defineLocale(abbreviation, data.dateLocales);
             }
           }
-        }
+        },
       });
 
       $translateProvider.registerAvailableLanguageKeys(avail);
       $translateProvider.fallbackLanguage(fallback);
       $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
-      $translateProvider.determinePreferredLanguage(function() {
+      $translateProvider.determinePreferredLanguage(function () {
         var nav = window.navigator;
         var browserLang = (
           (angular.isArray(nav.languages)
@@ -153,6 +153,6 @@ module.exports = function(ngModule, appRoot, appName) {
           return fallback;
         }
       });
-    }
+    },
   ]);
 };

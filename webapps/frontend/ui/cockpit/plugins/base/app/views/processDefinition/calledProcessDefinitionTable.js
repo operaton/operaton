@@ -24,7 +24,7 @@ var template = require('./called-process-definition-table.html?raw');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.processDefinition.runtime.tab', {
       id: 'call-process-definitions-table',
       label: 'PLUGIN_CALLED_PROCESS_DEFINITIONS_LABEL',
@@ -36,13 +36,13 @@ module.exports = [
         'PluginProcessDefinitionResource',
         '$translate',
         'localConf',
-        function(
+        function (
           $scope,
           $location,
           $q,
           PluginProcessDefinitionResource,
           $translate,
-          localConf
+          localConf,
         ) {
           var filter;
           var processData = $scope.processData.newChild($scope);
@@ -58,10 +58,10 @@ module.exports = [
           $scope.sortObj = loadLocal({
             sortBy: 'key',
             sortOrder: 'asc',
-            sortReverse: false
+            sortReverse: false,
           });
 
-          $scope.onSortChange = function(sortObj) {
+          $scope.onSortChange = function (sortObj) {
             sortObj = sortObj || $scope.sortObj;
             // sortReverse required by anqular-sorting;
             sortObj.sortReverse = sortObj.sortOrder !== 'asc';
@@ -76,15 +76,16 @@ module.exports = [
             return localConf.get('sortCalledProcessDefTab', defaultValue);
           }
 
-          $scope.getSearchQueryForSearchType = searchWidgetUtils.getSearchQueryForSearchType.bind(
-            null,
-            'activityIdIn'
-          );
+          $scope.getSearchQueryForSearchType =
+            searchWidgetUtils.getSearchQueryForSearchType.bind(
+              null,
+              'activityIdIn',
+            );
 
           processData.provide('calledProcessDefinitions', [
             'processDefinition',
             'filter',
-            function(processDefinition, newFilter) {
+            function (processDefinition, newFilter) {
               filter = angular.copy(newFilter);
 
               delete filter.page;
@@ -103,35 +104,35 @@ module.exports = [
               $scope.loadingState = 'LOADING';
               return PluginProcessDefinitionResource.getCalledProcessDefinitions(
                 {id: processDefinition.id},
-                filter
+                filter,
               ).$promise;
-            }
+            },
           ]);
 
           processData.observe(
             [
               'calledProcessDefinitions',
               'staticCalledProcessDefinitions',
-              'bpmnElements'
+              'bpmnElements',
             ],
-            function(
+            function (
               calledProcessDefinitions,
               staticCalledProcessDefinitions,
-              bpmnElements
+              bpmnElements,
             ) {
               const filteredStaticCalledDefs = applyFilterToStaticCalled(
-                staticCalledProcessDefinitions
+                staticCalledProcessDefinitions,
               );
               $scope.calledProcessDefinitions = createTableEntries(
                 calledProcessDefinitions,
                 filteredStaticCalledDefs,
-                bpmnElements
+                bpmnElements,
               );
 
               $scope.loadingState = $scope.calledProcessDefinitions.length
                 ? 'LOADED'
                 : 'EMPTY';
-            }
+            },
           );
 
           /**
@@ -142,21 +143,21 @@ module.exports = [
            */
           function mergeInstanceAndDefinitionDtos(
             runningProcessDefinitions,
-            staticCalledProcesses
+            staticCalledProcesses,
           ) {
             const map = {};
-            runningProcessDefinitions.forEach(dto => {
+            runningProcessDefinitions.forEach((dto) => {
               const newDto = angular.copy(dto);
               newDto.state = 'PLUGIN_CALLED_PROCESS_DEFINITIONS_RUNNING_LABEL';
               map[newDto.id] = newDto;
             });
 
-            staticCalledProcesses.forEach(dto => {
+            staticCalledProcesses.forEach((dto) => {
               const newDto = angular.copy(dto);
               if (map[dto.id]) {
                 const merged = new Set([
                   ...map[newDto.id].calledFromActivityIds,
-                  ...newDto.calledFromActivityIds
+                  ...newDto.calledFromActivityIds,
                 ]);
                 map[dto.id].calledFromActivityIds = Array.from(merged).sort();
                 map[dto.id].state =
@@ -175,17 +176,17 @@ module.exports = [
             if (filter.activityIdIn && filter.activityIdIn.length) {
               const selectedIds = new Set(filter.activityIdIn);
               return staticCalledDefinitions
-                .map(dto => {
+                .map((dto) => {
                   const newDto = angular.copy(dto);
-                  const intersection = dto.calledFromActivityIds.filter(e =>
-                    selectedIds.has(e)
+                  const intersection = dto.calledFromActivityIds.filter((e) =>
+                    selectedIds.has(e),
                   );
                   if (intersection.length) {
                     newDto.calledFromActivityIds = intersection;
                     return newDto;
                   }
                 })
-                .filter(dto => dto !== undefined);
+                .filter((dto) => dto !== undefined);
             }
             return staticCalledDefinitions;
           }
@@ -193,29 +194,29 @@ module.exports = [
           function createTableEntries(
             runningProcessDefinitions,
             staticCalledProcesses,
-            bpmnElements
+            bpmnElements,
           ) {
             const mergedDefinitions = mergeInstanceAndDefinitionDtos(
               runningProcessDefinitions,
-              staticCalledProcesses
+              staticCalledProcesses,
             );
 
-            const tableEntries = mergedDefinitions.map(dto => {
-              const calledFromActivities = dto.calledFromActivityIds.map(id =>
-                extractActivityFromDiagram(bpmnElements, id)
+            const tableEntries = mergedDefinitions.map((dto) => {
+              const calledFromActivities = dto.calledFromActivityIds.map((id) =>
+                extractActivityFromDiagram(bpmnElements, id),
               );
 
               return angular.extend({}, dto, {
                 calledFromActivities: calledFromActivities,
-                label: dto.name || dto.key
+                label: dto.name || dto.key,
               });
             });
 
-            return tableEntries.map(dto => {
+            return tableEntries.map((dto) => {
               if (
                 tableEntries.find(
-                  otherDto =>
-                    dto.name === otherDto.name && otherDto.id !== dto.id
+                  (otherDto) =>
+                    dto.name === otherDto.name && otherDto.id !== dto.id,
                 )
               ) {
                 dto.label = dto.label + ':' + dto.version;
@@ -235,12 +236,12 @@ module.exports = [
             return {
               id: activityId,
               name:
-                (activityBpmnElement && activityBpmnElement.name) || activityId
+                (activityBpmnElement && activityBpmnElement.name) || activityId,
             };
           }
-        }
+        },
       ],
-      priority: 5
+      priority: 5,
     });
-  }
+  },
 ];

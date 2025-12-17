@@ -27,7 +27,7 @@ module.exports = [
   'Views',
   '$translate',
   'configuration',
-  function(
+  function (
     $scope,
     $location,
     Notifications,
@@ -37,7 +37,7 @@ module.exports = [
     processData,
     Views,
     $translate,
-    configuration
+    configuration,
   ) {
     var BEFORE_CANCEL = 'beforeCancellation',
       PERFORM_CANCEL = 'performCancellation',
@@ -45,7 +45,8 @@ module.exports = [
       CANCEL_FAILED = 'cancellationFailed';
 
     var SKIP_CUSTOM_LISTENERS = configuration.getSkipCustomListeners();
-    var SKIP_IO_MAPPINGS = ($scope.SKIP_IO_MAPPINGS = configuration.getSkipIoMappings());
+    var SKIP_IO_MAPPINGS = ($scope.SKIP_IO_MAPPINGS =
+      configuration.getSkipIoMappings());
 
     $scope.processInstance = processInstance;
 
@@ -53,78 +54,78 @@ module.exports = [
 
     $scope.options = {
       skipCustomListeners: SKIP_CUSTOM_LISTENERS.default,
-      skipIoMappings: SKIP_IO_MAPPINGS.default
+      skipIoMappings: SKIP_IO_MAPPINGS.default,
     };
 
     $scope.hideSkipCustomListeners = SKIP_CUSTOM_LISTENERS.hidden;
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
-    cancelProcessInstanceData.provide('subProcessInstances', function() {
+    cancelProcessInstanceData.provide('subProcessInstances', function () {
       return ProcessInstanceResource.query(
         {
           firstResult: 0,
-          maxResults: 5
+          maxResults: 5,
         },
         {
-          superProcessInstance: processInstance.id
-        }
+          superProcessInstance: processInstance.id,
+        },
       ).$promise;
     });
 
-    cancelProcessInstanceData.provide('subProcessInstancesCount', function() {
+    cancelProcessInstanceData.provide('subProcessInstancesCount', function () {
       return ProcessInstanceResource.count({
-        superProcessInstance: processInstance.id
+        superProcessInstance: processInstance.id,
       }).$promise;
     });
 
     cancelProcessInstanceData.observe(
       ['subProcessInstancesCount', 'subProcessInstances'],
-      function(subProcessInstancesCount, subProcessInstances) {
+      function (subProcessInstancesCount, subProcessInstances) {
         $scope.subProcessInstancesCount = subProcessInstancesCount.count;
         $scope.subProcessInstances = subProcessInstances;
 
         $scope.status = BEFORE_CANCEL;
-      }
+      },
     );
 
-    $scope.cancelProcessInstance = function() {
+    $scope.cancelProcessInstance = function () {
       $scope.status = PERFORM_CANCEL;
 
       $scope.processInstance.$delete(
         $scope.options,
-        function() {
+        function () {
           // success
           $scope.status = CANCEL_SUCCESS;
           Notifications.addMessage({
             status: $translate.instant('PLUGIN_CANCEL_PROCESS_STATUS_DELETED'),
-            message: $translate.instant('PLUGIN_CANCEL_PROCESS_MESSAGE_1')
+            message: $translate.instant('PLUGIN_CANCEL_PROCESS_MESSAGE_1'),
           });
         },
-        function(err) {
+        function (err) {
           // failure
           $scope.status = CANCEL_FAILED;
           Notifications.addError({
             status: $translate.instant('PLUGIN_CANCEL_PROCESS_STATUS_FAILED'),
             message: $translate.instant('PLUGIN_CANCEL_PROCESS_MESSAGE_2', {
-              message: err.data.message
+              message: err.data.message,
             }),
-            exclusive: ['type']
+            exclusive: ['type'],
           });
-        }
+        },
       );
     };
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       $modalInstance.close(status);
 
       // if the cancellation of the process instance was successful,
       if (status === CANCEL_SUCCESS) {
         var historyProvider = Views.getProvider({
           id: 'history',
-          component: 'cockpit.processInstance.view'
+          component: 'cockpit.processInstance.view',
         });
 
         var path;
@@ -145,5 +146,5 @@ module.exports = [
         $location.replace();
       }
     };
-  }
+  },
 ];

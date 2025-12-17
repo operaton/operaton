@@ -26,7 +26,7 @@ module.exports = [
   'deployment',
   '$translate',
   'configuration',
-  function(
+  function (
     $scope,
     $q,
     camAPI,
@@ -34,7 +34,7 @@ module.exports = [
     deploymentData,
     deployment,
     $translate,
-    configuration
+    configuration,
   ) {
     var Deployment = camAPI.resource('deployment');
     var ProcessInstance = camAPI.resource('process-instance');
@@ -43,13 +43,14 @@ module.exports = [
     var deleteDeploymentData = deploymentData.newChild($scope);
 
     var SKIP_CUSTOM_LISTENERS = configuration.getSkipCustomListeners();
-    var SKIP_IO_MAPPINGS = ($scope.SKIP_IO_MAPPINGS = configuration.getSkipIoMappings());
+    var SKIP_IO_MAPPINGS = ($scope.SKIP_IO_MAPPINGS =
+      configuration.getSkipIoMappings());
     var CASCADE = configuration.getCascade();
 
     var options = ($scope.options = {
       cascade: CASCADE.default,
       skipCustomListeners: SKIP_CUSTOM_LISTENERS.default,
-      skipIoMappings: SKIP_IO_MAPPINGS.default
+      skipIoMappings: SKIP_IO_MAPPINGS.default,
     });
 
     $scope.hideSkipCustomListeners = SKIP_CUSTOM_LISTENERS.hidden;
@@ -57,40 +58,40 @@ module.exports = [
     $scope.deployment = deployment;
     $scope.status;
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $scope.$dismiss();
     });
 
     // provide /////////////////////////////////////////////////////////
 
-    deleteDeploymentData.provide('processInstanceCount', function() {
+    deleteDeploymentData.provide('processInstanceCount', function () {
       var deferred = $q.defer();
 
       ProcessInstance.count(
         {
-          deploymentId: deployment.id
+          deploymentId: deployment.id,
         },
-        function(err, res) {
+        function (err, res) {
           if (err) {
             // reject error but do not handle the error
             return deferred.reject(err);
           }
 
           deferred.resolve(res);
-        }
+        },
       );
 
       return deferred.promise;
     });
 
-    deleteDeploymentData.provide('caseInstanceCount', function() {
+    deleteDeploymentData.provide('caseInstanceCount', function () {
       var deferred = $q.defer();
 
       CaseInstance.count(
         {
-          deploymentId: deployment.id
+          deploymentId: deployment.id,
         },
-        function(err, res) {
+        function (err, res) {
           if (err) {
             // reject error but do not handle the error
             // it can happen that the case engine is disabled,
@@ -100,7 +101,7 @@ module.exports = [
             return deferred.reject(err);
           }
           deferred.resolve(res);
-        }
+        },
       );
 
       return deferred.promise;
@@ -110,21 +111,21 @@ module.exports = [
 
     $scope.processInstanceCountState = deleteDeploymentData.observe(
       'processInstanceCount',
-      function(count) {
+      function (count) {
         $scope.processInstanceCount = count;
-      }
+      },
     );
 
     $scope.caseInstanceCountState = deleteDeploymentData.observe(
       'caseInstanceCount',
-      function(count) {
+      function (count) {
         $scope.caseInstanceCount = count;
-      }
+      },
     );
 
     // delete deployment ///////////////////////////////////////////////
 
-    $scope.countsLoaded = function() {
+    $scope.countsLoaded = function () {
       return (
         $scope.processInstanceCountState &&
         ($scope.processInstanceCountState.$loaded ||
@@ -135,7 +136,7 @@ module.exports = [
       );
     };
 
-    var hasInstances = ($scope.hasInstances = function() {
+    var hasInstances = ($scope.hasInstances = function () {
       return (
         ($scope.processInstanceCount &&
           $scope.processInstanceCount.count > 0) ||
@@ -143,11 +144,11 @@ module.exports = [
       );
     });
 
-    $scope.canDeleteDeployment = function() {
+    $scope.canDeleteDeployment = function () {
       return !options.cascade && hasInstances() ? false : true;
     };
 
-    $scope.getInfoSnippet = function() {
+    $scope.getInfoSnippet = function () {
       var info = [$translate.instant('REPOSITORY_DEPLOYMENTS_INFO_THERE_ARE')];
 
       if (
@@ -157,10 +158,12 @@ module.exports = [
         info.push($scope.processInstanceCount.count);
         $scope.processInstanceCount && $scope.processInstanceCount.count > 1
           ? info.push(
-              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_RUNNING_PLURAL')
+              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_RUNNING_PLURAL'),
             )
           : info.push(
-              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_RUNNING_SINGULAR')
+              $translate.instant(
+                'REPOSITORY_DEPLOYMENTS_INFO_RUNNING_SINGULAR',
+              ),
             );
       }
 
@@ -176,10 +179,10 @@ module.exports = [
         info.push($scope.caseInstanceCount);
         $scope.caseInstanceCount > 1
           ? info.push(
-              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_OPEN_PLURAL')
+              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_OPEN_PLURAL'),
             )
           : info.push(
-              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_OPEN_SINGULAR')
+              $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_OPEN_SINGULAR'),
             );
       }
 
@@ -189,26 +192,26 @@ module.exports = [
       return info;
     };
 
-    $scope.deleteDeployment = function() {
+    $scope.deleteDeployment = function () {
       $scope.status = 'PERFORM_DELETE';
 
-      Deployment.delete(deployment.id, options, function(err) {
+      Deployment.delete(deployment.id, options, function (err) {
         $scope.status = null;
 
         if (err) {
           return Notifications.addError({
             status: $translate.instant(
-              'REPOSITORY_DEPLOYMENTS_INFO_MSN_STATUS'
+              'REPOSITORY_DEPLOYMENTS_INFO_MSN_STATUS',
             ),
             message: $translate.instant('REPOSITORY_DEPLOYMENTS_INFO_MSN_MSN', {
-              message: err.message
+              message: err.message,
             }),
-            exclusive: true
+            exclusive: true,
           });
         }
 
         $scope.$close();
       });
     };
-  }
+  },
 ];

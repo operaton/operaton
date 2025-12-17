@@ -19,8 +19,8 @@
 
 module.exports = [
   '$location',
-  function($location) {
-    return function() {
+  function ($location) {
+    return function () {
       var path = $location.path();
 
       return (
@@ -30,5 +30,5 @@ module.exports = [
         path !== '/welcome'
       );
     };
-  }
+  },
 ];

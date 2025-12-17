@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ExtendWith(ProcessEngineExtension.class)
 class CommandInvocationContextTest {
@@ -41,7 +42,7 @@ class CommandInvocationContextTest {
   void testGetCurrentCommand() {
     Command<?> outerCommand = new SelfAssertingCommand(new SelfAssertingCommand(null));
 
-    processEngineConfiguration.getCommandExecutorTxRequired().execute(outerCommand);
+    assertThatCode(() -> processEngineConfiguration.getCommandExecutorTxRequired().execute(outerCommand)).doesNotThrowAnyException();
   }
 
   protected class SelfAssertingCommand implements Command<Void> {

@@ -59,7 +59,7 @@ History.path = 'history';
  * @param {Number}   [params.maxResults]            Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  * @param {Function} done
  */
-History.userOperationCount = function(params, done) {
+History.userOperationCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -67,7 +67,7 @@ History.userOperationCount = function(params, done) {
 
   return this.http.get(this.path + '/user-operation/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -75,7 +75,7 @@ History.userOperationCount = function(params, done) {
  * Queries for user operation log entries that fulfill the given parameters
  * This method takes the same parameters as `History.userOperationCount`.
  */
-History.userOperation = function(params, done) {
+History.userOperation = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -83,7 +83,7 @@ History.userOperation = function(params, done) {
 
   return this.http.get(this.path + '/user-operation', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -96,13 +96,13 @@ History.userOperation = function(params, done) {
  * @param {Function} done
  */
 
-History.setUserOperationAnnotation = function(params, done) {
+History.setUserOperationAnnotation = function (params, done) {
   return this.http.put(
     this.path + '/user-operation/' + params.id + '/set-annotation',
     {
       data: params,
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -113,12 +113,12 @@ History.setUserOperationAnnotation = function(params, done) {
  * @param {Function} done
  */
 
-History.clearUserOperationAnnotation = function(id, done) {
+History.clearUserOperationAnnotation = function (id, done) {
   return this.http.put(
     this.path + '/user-operation/' + id + '/clear-annotation',
     {
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -177,7 +177,7 @@ History.clearUserOperationAnnotation = function(id, done) {
 
  * @param  {Function} done
  */
-History.processInstance = function(params, done) {
+History.processInstance = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -198,7 +198,7 @@ History.processInstance = function(params, done) {
   return this.http.post(this.path + '/process-instance', {
     data: body,
     query: query,
-    done: done
+    done: done,
   });
 };
 
@@ -206,7 +206,7 @@ History.processInstance = function(params, done) {
  * Query for the number of historic process instances that fulfill the given parameters.
  * This method takes the same message body as `History.processInstance`.
  */
-History.processInstanceCount = function(params, done) {
+History.processInstanceCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -214,7 +214,7 @@ History.processInstanceCount = function(params, done) {
 
   return this.http.post(this.path + '/process-instance/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -226,7 +226,7 @@ History.processInstanceCount = function(params, done) {
  * @param done - a callback function
  * @returns {*}
  */
-History.deleteProcessInstancesAsync = function(params, done) {
+History.deleteProcessInstancesAsync = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -234,7 +234,7 @@ History.deleteProcessInstancesAsync = function(params, done) {
 
   return this.http.post(this.path + '/process-instance/delete', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -246,7 +246,10 @@ History.deleteProcessInstancesAsync = function(params, done) {
  * @param done - a callback function
  * @returns {*}
  */
-History.setRemovalTimeToHistoricProcessInstancesAsync = function(params, done) {
+History.setRemovalTimeToHistoricProcessInstancesAsync = function (
+  params,
+  done,
+) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -254,7 +257,7 @@ History.setRemovalTimeToHistoricProcessInstancesAsync = function(params, done) {
 
   return this.http.post(this.path + '/process-instance/set-removal-time', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -266,9 +269,9 @@ History.setRemovalTimeToHistoricProcessInstancesAsync = function(params, done) {
  * @param done - a callback function
  * @returns {*}
  */
-History.setRemovalTimeToHistoricDecisionInstancesAsync = function(
+History.setRemovalTimeToHistoricDecisionInstancesAsync = function (
   params,
-  done
+  done,
 ) {
   if (typeof params === 'function') {
     done = arguments[0];
@@ -277,7 +280,7 @@ History.setRemovalTimeToHistoricDecisionInstancesAsync = function(
 
   return this.http.post(this.path + '/decision-instance/set-removal-time', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -289,7 +292,7 @@ History.setRemovalTimeToHistoricDecisionInstancesAsync = function(
  * @param done - a callback function
  * @returns {*}
  */
-History.setRemovalTimeToHistoricBatchesAsync = function(params, done) {
+History.setRemovalTimeToHistoricBatchesAsync = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -297,7 +300,7 @@ History.setRemovalTimeToHistoricBatchesAsync = function(params, done) {
 
   return this.http.post(this.path + '/batch/set-removal-time', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -329,7 +332,7 @@ History.setRemovalTimeToHistoricBatchesAsync = function(params, done) {
  * @param  {Number}   [params.maxResults]                         Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  * @param  {Function} done
  */
-History.decisionInstance = function(params, done) {
+History.decisionInstance = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -337,7 +340,7 @@ History.decisionInstance = function(params, done) {
 
   return this.http.get(this.path + '/decision-instance', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -345,7 +348,7 @@ History.decisionInstance = function(params, done) {
  * Query for the number of historic decision instances that fulfill the given parameters.
  * This method takes the same parameters as `History.decisionInstance`.
  */
-History.decisionInstanceCount = function(params, done) {
+History.decisionInstanceCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -353,7 +356,7 @@ History.decisionInstanceCount = function(params, done) {
 
   return this.http.get(this.path + '/decision-instance/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -365,7 +368,7 @@ History.decisionInstanceCount = function(params, done) {
  * @param done - a callback function
  * @returns {*}
  */
-History.deleteDecisionInstancesAsync = function(params, done) {
+History.deleteDecisionInstancesAsync = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -373,7 +376,7 @@ History.deleteDecisionInstancesAsync = function(params, done) {
 
   return this.http.post(this.path + '/decision-instance/delete', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -381,7 +384,7 @@ History.deleteDecisionInstancesAsync = function(params, done) {
  * Query for historic batches that fulfill given parameters. Parameters may be the properties of batches, such as the id or type.
  * The size of the result set can be retrieved by using the GET query count.
  */
-History.batch = function(params, done) {
+History.batch = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -389,16 +392,16 @@ History.batch = function(params, done) {
 
   return this.http.get(this.path + '/batch', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
 /**
  * Retrieves a single historic batch according to the HistoricBatch interface in the engine.
  */
-History.singleBatch = function(id, done) {
+History.singleBatch = function (id, done) {
   return this.http.get(this.path + '/batch/' + id, {
-    done: done
+    done: done,
   });
 };
 
@@ -406,7 +409,7 @@ History.singleBatch = function(id, done) {
  * Request the number of historic batches that fulfill the query criteria.
  * Takes the same filtering parameters as the GET query.
  */
-History.batchCount = function(params, done) {
+History.batchCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -414,15 +417,15 @@ History.batchCount = function(params, done) {
 
   return this.http.get(this.path + '/batch/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-History.batchDelete = function(id, done) {
+History.batchDelete = function (id, done) {
   var path = this.path + '/batch/' + id;
 
   return this.http.del(path, {
-    done: done
+    done: done,
   });
 };
 
@@ -436,7 +439,7 @@ History.batchDelete = function(id, done) {
  * @param  {Object}   [params.startedBefore]        Date before which the process instance were started
  * @param  {Function} done
  */
-History.report = function(params, done) {
+History.report = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -447,7 +450,7 @@ History.report = function(params, done) {
 
   return this.http.get(this.path + '/process-instance/report', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -461,7 +464,7 @@ History.report = function(params, done) {
  * @param  {Object}   [params.startedBefore]        Date before which the process instance were started
  * @param  {Function} done
  */
-History.reportAsCsv = function(params, done) {
+History.reportAsCsv = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -473,7 +476,7 @@ History.reportAsCsv = function(params, done) {
   return this.http.get(this.path + '/process-instance/report', {
     data: params,
     accept: 'text/csv',
-    done: done
+    done: done,
   });
 };
 
@@ -568,7 +571,7 @@ History.reportAsCsv = function(params, done) {
 
  * @param  {Function} done
  */
-History.task = function(params, done) {
+History.task = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -589,7 +592,7 @@ History.task = function(params, done) {
   return this.http.post(this.path + '/task', {
     data: body,
     query: query,
-    done: done
+    done: done,
   });
 };
 
@@ -597,7 +600,7 @@ History.task = function(params, done) {
  * Query for the number of historic task instances that fulfill the given parameters.
  * This method takes the same parameters as `History.task`.
  */
-History.taskCount = function(params, done) {
+History.taskCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -605,7 +608,7 @@ History.taskCount = function(params, done) {
 
   return this.http.post(this.path + '/task/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -622,7 +625,7 @@ History.taskCount = function(params, done) {
  * @param  {String}   [params.periodUnit]         Can be one of `month` or `quarter`, defaults to `month`
  * @param  {Function}  done
  */
-History.taskDurationReport = function(params, done) {
+History.taskDurationReport = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -633,7 +636,7 @@ History.taskDurationReport = function(params, done) {
 
   return this.http.get(this.path + '/task/report', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -653,7 +656,7 @@ History.taskDurationReport = function(params, done) {
  * @param done
  * @returns {*}
  */
-History.taskReport = function(params, done) {
+History.taskReport = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -663,7 +666,7 @@ History.taskReport = function(params, done) {
 
   return this.http.get(this.path + '/task/report', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -740,7 +743,7 @@ History.taskReport = function(params, done) {
 
  * @param  {Function} done
  */
-History.caseInstance = function(params, done) {
+History.caseInstance = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -761,7 +764,7 @@ History.caseInstance = function(params, done) {
   return this.http.post(this.path + '/case-instance', {
     data: body,
     query: query,
-    done: done
+    done: done,
   });
 };
 
@@ -769,7 +772,7 @@ History.caseInstance = function(params, done) {
  * Query for the number of historic case instances that fulfill the given parameters.
  * This method takes the same parameters as `History.caseInstance`.
  */
-History.caseInstanceCount = function(params, done) {
+History.caseInstanceCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -777,7 +780,7 @@ History.caseInstanceCount = function(params, done) {
 
   return this.http.post(this.path + '/case-instance/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -839,7 +842,7 @@ History.caseInstanceCount = function(params, done) {
 
  * @param  {Function} done
  */
-History.caseActivityInstance = function(params, done) {
+History.caseActivityInstance = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -847,7 +850,7 @@ History.caseActivityInstance = function(params, done) {
 
   return this.http.get(this.path + '/case-activity-instance', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -855,7 +858,7 @@ History.caseActivityInstance = function(params, done) {
  * Query for the number of historic case activity instances that fulfill the given parameters.
  * This method takes the same parameters as `History.caseActivityInstance`.
  */
-History.caseActivityInstanceCount = function(params, done) {
+History.caseActivityInstanceCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -863,7 +866,7 @@ History.caseActivityInstanceCount = function(params, done) {
 
   return this.http.get(this.path + '/case-activity-instance/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -892,7 +895,7 @@ History.caseActivityInstanceCount = function(params, done) {
  * @param {Number}  params.firstResult            Pagination of results. Specifies the index of the first result to return.
  * @param {Number}  params.maxResults             Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  */
-History.activityInstance = function(params, done) {
+History.activityInstance = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -900,7 +903,7 @@ History.activityInstance = function(params, done) {
 
   return this.http.get(this.path + '/activity-instance', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -925,7 +928,7 @@ History.activityInstance = function(params, done) {
  * @param {String}  params.sortBy               Sort the results lexicographically by a given criterion. Valid values are incidentId, incidentMessage, createTime, endTime, incidentType, executionId, activityId, processInstanceId, processDefinitionId, causeIncidentId, rootCauseIncidentId, configuration, tenantId and incidentState. Must be used in conjunction with the sortOrder parameter.
  * @param {String}  params.sortOrder            Sort the results in a given order. Values may be asc for ascending order or desc for descending order. Must be used in conjunction with the sortBy parameter.
  */
-History.incident = function(params, done) {
+History.incident = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -933,7 +936,7 @@ History.incident = function(params, done) {
 
   return this.http.get(this.path + '/incident', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -963,7 +966,7 @@ History.incident = function(params, done) {
 
  * @param  {Function} done
  */
-History.variableInstance = function(params, done) {
+History.variableInstance = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -984,7 +987,7 @@ History.variableInstance = function(params, done) {
   return this.http.post(this.path + '/variable-instance', {
     data: body,
     query: query,
-    done: done
+    done: done,
   });
 };
 
@@ -992,7 +995,7 @@ History.variableInstance = function(params, done) {
  * Query for the number of historic variable instances that fulfill the given parameters.
  * This method takes the same parameters as `History.variableInstance`.
  */
-History.variableInstanceCount = function(params, done) {
+History.variableInstanceCount = function (params, done) {
   if (typeof params === 'function') {
     done = arguments[0];
     params = {};
@@ -1000,19 +1003,19 @@ History.variableInstanceCount = function(params, done) {
 
   return this.http.post(this.path + '/variable-instance/count', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-History.caseActivityStatistics = function(params, done) {
+History.caseActivityStatistics = function (params, done) {
   var id = params.id || params;
 
   return this.http.get(this.path + '/case-definition/' + id + '/statistics', {
-    done: done
+    done: done,
   });
 };
 
-History.drdStatistics = function(id, params, done) {
+History.drdStatistics = function (id, params, done) {
   var url =
     this.path + '/decision-requirements-definition/' + id + '/statistics';
 
@@ -1023,14 +1026,14 @@ History.drdStatistics = function(id, params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
 /**
  * Query for the history cleanup configuration
  */
-History.cleanupConfiguration = function(params, done) {
+History.cleanupConfiguration = function (params, done) {
   var url = this.path + '/cleanup/configuration';
 
   if (typeof params === 'function') {
@@ -1040,7 +1043,7 @@ History.cleanupConfiguration = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1048,11 +1051,11 @@ History.cleanupConfiguration = function(params, done) {
  * Delete the history of a single variable
  */
 
-History.deleteVariable = function(id, done) {
+History.deleteVariable = function (id, done) {
   var url = this.path + '/variable-instance/' + id;
 
   return this.http.del(url, {
-    done: done
+    done: done,
   });
 };
 
@@ -1060,18 +1063,18 @@ History.deleteVariable = function(id, done) {
  * Delete the history of a single variable
  */
 
-History.deleteAllVariables = function(id, done) {
+History.deleteAllVariables = function (id, done) {
   var url = this.path + '/process-instance/' + id + '/variable-instances';
 
   return this.http.del(url, {
-    done: done
+    done: done,
   });
 };
 
 /**
  * Query for the history cleanup job
  */
-History.cleanupJobs = function(params, done) {
+History.cleanupJobs = function (params, done) {
   var url = this.path + '/cleanup/jobs';
 
   if (typeof params === 'function') {
@@ -1081,7 +1084,7 @@ History.cleanupJobs = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1090,7 +1093,7 @@ History.cleanupJobs = function(params, done) {
  * @param  {Object}      [params]
  * @param  {Boolean}     [params.executeAtOnce]        Execute job in nearest future
  */
-History.cleanup = function(params, done) {
+History.cleanup = function (params, done) {
   var url = this.path + '/cleanup';
 
   if (typeof params === 'function') {
@@ -1100,7 +1103,7 @@ History.cleanup = function(params, done) {
 
   return this.http.post(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1112,7 +1115,7 @@ History.cleanup = function(params, done) {
  * @param  {Number}      [params.firstResult]                  Pagination of results. Specifies the index of the first result to return.
  * @param  {Number}      [params.maxResults]                   Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  */
-History.cleanableProcessCount = function(params, done) {
+History.cleanableProcessCount = function (params, done) {
   var url =
     this.path + '/process-definition/cleanable-process-instance-report/count';
 
@@ -1123,7 +1126,7 @@ History.cleanableProcessCount = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1131,7 +1134,7 @@ History.cleanableProcessCount = function(params, done) {
  * Query for the report results about a process definition and finished process instances relevant to history cleanup
  * This method takes the same parameterers as 'History.cleanableProcessInstanceCount'
  */
-History.cleanableProcess = function(params, done) {
+History.cleanableProcess = function (params, done) {
   var url = this.path + '/process-definition/cleanable-process-instance-report';
 
   if (typeof params === 'function') {
@@ -1141,7 +1144,7 @@ History.cleanableProcess = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1152,7 +1155,7 @@ History.cleanableProcess = function(params, done) {
  * @param  {Number}      [params.firstResult]                  Pagination of results. Specifies the index of the first result to return.
  * @param  {Number}      [params.maxResults]                   Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  */
-History.cleanableCaseCount = function(params, done) {
+History.cleanableCaseCount = function (params, done) {
   var url = this.path + '/case-definition/cleanable-case-instance-report/count';
 
   if (typeof params === 'function') {
@@ -1162,7 +1165,7 @@ History.cleanableCaseCount = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1170,7 +1173,7 @@ History.cleanableCaseCount = function(params, done) {
  * Query for the report results about a case definition and finished case instances relevant to history cleanup
  * This method takes the same parameterers as 'History.cleanableCaseInstanceCount '
  */
-History.cleanableCase = function(params, done) {
+History.cleanableCase = function (params, done) {
   var url = this.path + '/case-definition/cleanable-case-instance-report';
 
   if (typeof params === 'function') {
@@ -1180,7 +1183,7 @@ History.cleanableCase = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1192,7 +1195,7 @@ History.cleanableCase = function(params, done) {
  * @param  {Number}      [params.firstResult]                      Pagination of results. Specifies the index of the first result to return.
  * @param  {Number}      [params.maxResults]                       Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  */
-History.cleanableDecisionCount = function(params, done) {
+History.cleanableDecisionCount = function (params, done) {
   var url =
     this.path + '/decision-definition/cleanable-decision-instance-report/count';
 
@@ -1203,7 +1206,7 @@ History.cleanableDecisionCount = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1211,7 +1214,7 @@ History.cleanableDecisionCount = function(params, done) {
  * Query for the report results about a decision definition and finished decision instances relevant to history cleanup
  * This method takes the same parameterers as 'History.cleanableDecisionInstanceCount '
  */
-History.cleanableDecision = function(params, done) {
+History.cleanableDecision = function (params, done) {
   var url =
     this.path + '/decision-definition/cleanable-decision-instance-report';
 
@@ -1222,7 +1225,7 @@ History.cleanableDecision = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1232,7 +1235,7 @@ History.cleanableDecision = function(params, done) {
  * @param  {Number}      [params.firstResult]                      Pagination of results. Specifies the index of the first result to return.
  * @param  {Number}      [params.maxResults]                       Pagination of results. Specifies the maximum number of results to return. Will return less results if there are no more results left.
  */
-History.cleanableBatchCount = function(params, done) {
+History.cleanableBatchCount = function (params, done) {
   var url = this.path + '/batch/cleanable-batch-report/count';
 
   if (typeof params === 'function') {
@@ -1242,7 +1245,7 @@ History.cleanableBatchCount = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -1250,7 +1253,7 @@ History.cleanableBatchCount = function(params, done) {
  * Query for the report about historic batch operations relevant to history cleanup
  * This method takes the same parameterers as 'History.cleanableBatchCount'
  */
-History.cleanableBatch = function(params, done) {
+History.cleanableBatch = function (params, done) {
   var url = this.path + '/batch/cleanable-batch-report';
 
   if (typeof params === 'function') {
@@ -1260,11 +1263,11 @@ History.cleanableBatch = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-History.jobLogList = function(params, done) {
+History.jobLogList = function (params, done) {
   var url = this.path + '/job-log';
 
   if (typeof params === 'function') {
@@ -1274,11 +1277,11 @@ History.jobLogList = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-History.jobLogCount = function(params, done) {
+History.jobLogCount = function (params, done) {
   var url = this.path + '/job-log/count';
 
   if (typeof params === 'function') {
@@ -1288,15 +1291,14 @@ History.jobLogCount = function(params, done) {
 
   return this.http.get(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-History.externalTaskLogList = helpers.createSimpleGetQueryFunction(
-  '/external-task-log'
-);
+History.externalTaskLogList =
+  helpers.createSimpleGetQueryFunction('/external-task-log');
 History.externalTaskLogCount = helpers.createSimpleGetQueryFunction(
-  '/external-task-log/count'
+  '/external-task-log/count',
 );
 
 module.exports = History;

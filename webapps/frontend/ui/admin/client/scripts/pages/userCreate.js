@@ -26,7 +26,7 @@ var Controller = [
   'Notifications',
   '$location',
   '$translate',
-  function($scope, page, UserResource, Notifications, $location, $translate) {
+  function ($scope, page, UserResource, Notifications, $location, $translate) {
     $scope.$root.showBreadcrumbs = true;
 
     page.titleSet($translate.instant('USERS_CREATE_USER'));
@@ -36,12 +36,12 @@ var Controller = [
     page.breadcrumbsAdd([
       {
         label: $translate.instant('USERS_USERS'),
-        href: '#/users/'
+        href: '#/users/',
       },
       {
         label: $translate.instant('USERS_CREATE'),
-        href: '#/users-create'
-      }
+        href: '#/users-create',
+      },
     ]);
 
     // data model for user profile
@@ -49,54 +49,54 @@ var Controller = [
       id: '',
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
     };
 
     // data model for credentials
     $scope.credentials = {
       password: '',
       password2: '',
-      valid: true
+      valid: true,
     };
 
-    $scope.createUser = function() {
+    $scope.createUser = function () {
       var user = {
         profile: $scope.profile,
-        credentials: {password: $scope.credentials.password}
+        credentials: {password: $scope.credentials.password},
       };
 
       UserResource.createUser(user).$promise.then(
-        function() {
+        function () {
           Notifications.addMessage({
             type: 'success',
             status: $translate.instant('NOTIFICATIONS_STATUS_SUCCESS'),
             message: $translate.instant('USERS_CREATE_SUCCESS', {
-              user: user.profile.id
-            })
+              user: user.profile.id,
+            }),
           });
           $location.path('/users');
         },
-        function(err) {
+        function (err) {
           Notifications.addError({
             status: $translate.instant('NOTIFICATIONS_STATUS_FAILED'),
             message: $translate.instant('USERS_CREATE_FAILED', {
-              message: err.data.message
+              message: err.data.message,
             }),
-            exclusive: true
+            exclusive: true,
           });
-        }
+        },
       );
     };
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/user-create', {
       template: template,
       controller: Controller,
-      authentication: 'required'
+      authentication: 'required',
     });
-  }
+  },
 ];

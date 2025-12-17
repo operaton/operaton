@@ -27,14 +27,14 @@ var ProcessInstanceRuntimeTabController = require('./controllers/process-instanc
 var viewConfig = require('./view-provider.config');
 
 var ngModule = angular.module('cockpit.plugin.process-instance-runtime-tab', [
-  camCommon.name
+  camCommon.name,
 ]);
 
 ngModule.factory('externalTasks', externalTasks);
 
 ngModule.controller(
   'ProcessInstanceRuntimeTabController',
-  ProcessInstanceRuntimeTabController
+  ProcessInstanceRuntimeTabController,
 );
 
 ngModule.config(viewConfig);

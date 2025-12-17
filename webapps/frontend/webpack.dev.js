@@ -24,24 +24,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = (_env, argv = {}) => {
   const eeBuild = !!argv.eeBuild;
 
-  const commonConfig = require(path.resolve(
-    __dirname,
-    './webpack.common.js'
-  ))(_env, {...argv, eeBuild, devMode: true});
+  const commonConfig = require(path.resolve(__dirname, './webpack.common.js'))(
+    _env,
+    {...argv, eeBuild, devMode: true},
+  );
 
   const addEngines = engines => {
     return engines.flatMap(engine => [
       {
         context: [`/operaton/app/*/${engine}/`],
         target: 'http://localhost:8081/',
-        pathRewrite: path => {
+        pathRewrite: (path) => {
           return path.replace(`/${engine}`, '').replace('/operaton', '');
         }
       },
       {
         context: `/operaton/app/*/${engine}/setup/`,
         target: 'http://localhost:8081/',
-        pathRewrite: path => {
+        pathRewrite: (path) => {
           return path
             .replace(`/${engine}`, '')
             .replace('/operaton', '')
@@ -53,14 +53,14 @@ module.exports = (_env, argv = {}) => {
 
   const developmentConfig = {
     output: {
-      publicPath: '/'
+      publicPath: '/',
     },
     devtool: 'source-map',
     devServer: {
       port: 8081,
       static: {
         directory: path.resolve(__dirname, './public'),
-        publicPath: '/app'
+        publicPath: '/app',
       },
       server: "http",
       client: {
@@ -72,13 +72,13 @@ module.exports = (_env, argv = {}) => {
           target: 'http://localhost:8080/operaton/api',
           logLevel: 'debug',
           pathRewrite: {
-            '^/api': ''
-          }
+            '^/api': '',
+          },
         },
         {
           context: ['/operaton-welcome'],
           target: 'http://localhost:8080/',
-          logLevel: 'debug'
+          logLevel: 'debug',
         },
 
           ...addEngines(['default', 'engine2', 'engine3']),
@@ -96,19 +96,19 @@ module.exports = (_env, argv = {}) => {
   };
 
   const merged = merge(commonConfig, developmentConfig);
-  merged.plugins.forEach(plugin => {
+  merged.plugins.forEach((plugin) => {
     const eeApps = ['admin', 'cockpit'];
     function getPluginDeps(appName) {
       const pluginDependencies = [];
       if (appName !== 'welcome') {
         pluginDependencies.push({
           ngModuleName: `${appName}.plugin.${appName}Plugins`,
-          requirePackageName: `${appName}-plugin-${appName}Plugins`
+          requirePackageName: `${appName}-plugin-${appName}Plugins`,
         });
         if (eeBuild && eeApps.includes(appName)) {
           pluginDependencies.push({
             ngModuleName: `${appName}.plugin.${appName}EE`,
-            requirePackageName: `${appName}-plugin-${appName}EE`
+            requirePackageName: `${appName}-plugin-${appName}EE`,
           });
         }
       }
@@ -121,13 +121,13 @@ module.exports = (_env, argv = {}) => {
         pluginPackages.push({
           name: `${appName}-plugin-${appName}Plugins`,
           location: `/plugin/${appName}/app/`,
-          main: 'plugin.js'
+          main: 'plugin.js',
         });
         if (eeBuild && eeApps.includes(appName)) {
           pluginPackages.push({
             name: `${appName}-plugin-${appName}EE`,
             location: `/plugin/${appName}EE/app/`,
-            main: 'plugin.js'
+            main: 'plugin.js',
           });
         }
       }
@@ -142,7 +142,7 @@ module.exports = (_env, argv = {}) => {
         appRoot: '/operaton',
         appBase: `/operaton/app/${options['appName']}/{ENGINE}/`,
         pluginDeps: getPluginDeps(options['appName']),
-        pluginPackages: getPluginPackages(options['appName'])
+        pluginPackages: getPluginPackages(options['appName']),
       };
     }
   });

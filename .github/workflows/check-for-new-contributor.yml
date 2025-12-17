@@ -131,9 +131,30 @@ jobs:
             const commentBody = context.payload.comment.body;
             
             const issueAuthor = context.payload.issue.user.login;
+            const isPullRequest = !!context.payload.issue.pull_request;
+            
+            // Skip if the author is commenting on their own issue/PR
             if (author === issueAuthor) {
               console.log(`${author} is the author of this issue/PR. Skipping greeting.`);
               return;
+            }
+            
+            // Skip if this is a PR and the commenter has already opened a PR
+            // (they would have already been greeted in their PR)
+            if (isPullRequest) {
+              console.log(`Checking if ${author} has opened PRs before...`);
+              const allIssues = await github.paginate(github.rest.issues.listForRepo, {
+                owner,
+                repo,
+                creator: author,
+                state: 'all'
+              });
+              
+              const prs = allIssues.filter(issue => issue.pull_request);
+              if (prs.length > 0) {
+                console.log(`${author} has already opened ${prs.length} PR(s). Skipping comment greeting to avoid double posting.`);
+                return;
+              }
             }
             
             console.log(`Checking for past comments from ${author}...`);

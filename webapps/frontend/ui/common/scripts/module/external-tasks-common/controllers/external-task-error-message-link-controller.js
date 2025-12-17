@@ -21,7 +21,7 @@ module.exports = [
   '$scope',
   'Uri',
   'exposeScopeProperties',
-  ExternalTaskErrorMessageLink
+  ExternalTaskErrorMessageLink,
 ];
 
 function ExternalTaskErrorMessageLink($scope, Uri, exposeScopeProperties) {
@@ -30,7 +30,7 @@ function ExternalTaskErrorMessageLink($scope, Uri, exposeScopeProperties) {
   this.Uri = Uri;
 }
 
-ExternalTaskErrorMessageLink.prototype.getStacktraceUrl = function() {
+ExternalTaskErrorMessageLink.prototype.getStacktraceUrl = function () {
   var abstractUrl =
     'engine://engine/:engine/external-task/' + this.taskId + '/errorDetails';
 

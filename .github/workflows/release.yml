@@ -160,7 +160,7 @@ jobs:
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -185,7 +185,7 @@ jobs:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -231,14 +231,14 @@ jobs:
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: staging
           path: |

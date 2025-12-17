@@ -141,7 +141,7 @@ Variable.path = 'variable-instance';
  *
  * @param  {RequestCallback}  done
  */
-Variable.instances = function(params, done) {
+Variable.instances = function (params, done) {
   var body = {};
   var query = {};
   var queryParams = ['firstResult', 'maxResults', 'deserializeValues'];
@@ -157,7 +157,7 @@ Variable.instances = function(params, done) {
   return this.http.post(this.path, {
     data: body,
     query: query,
-    done: done
+    done: done,
   });
 };
 
@@ -166,12 +166,12 @@ Variable.instances = function(params, done) {
  * Same parameters as instances
  */
 
-Variable.count = function(params, done) {
+Variable.count = function (params, done) {
   var path = this.path + '/count';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

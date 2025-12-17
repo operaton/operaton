@@ -75,7 +75,7 @@ function OperatonForm(options) {
 
   var done = (options.done =
     options.done ||
-    function(err) {
+    function (err) {
       if (err) throw err;
     });
 
@@ -92,8 +92,8 @@ function OperatonForm(options) {
   ) {
     return done(
       new Error(
-        "Cannot initialize Taskform: either 'taskId' or 'processDefinitionId' or 'processDefinitionKey' must be provided"
-      )
+        "Cannot initialize Taskform: either 'taskId' or 'processDefinitionId' or 'processDefinitionKey' must be provided",
+      ),
     );
   }
 
@@ -111,16 +111,16 @@ function OperatonForm(options) {
   if (!this.formElement && !this.containerElement) {
     return done(
       new Error(
-        "OperatonForm needs to be initilized with either 'formElement' or 'containerElement'"
-      )
+        "OperatonForm needs to be initilized with either 'formElement' or 'containerElement'",
+      ),
     );
   }
 
   if (!this.formElement && !this.formUrl) {
     return done(
       new Error(
-        "Operaton form needs to be intialized with either 'formElement' or 'formUrl'"
-      )
+        "Operaton form needs to be intialized with either 'formElement' or 'formUrl'",
+      ),
     );
   }
 
@@ -129,7 +129,7 @@ function OperatonForm(options) {
    * @type {VariableManager}
    */
   this.variableManager = new VariableManager({
-    client: this.client
+    client: this.client,
   });
 
   /**
@@ -141,7 +141,7 @@ function OperatonForm(options) {
     ChoicesFieldHandler,
     FileDownloadHandler,
     ErrorButtonHandler,
-    EscalationButtonHandler
+    EscalationButtonHandler,
   ];
 
   this.businessKey = null;
@@ -161,11 +161,11 @@ function OperatonForm(options) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.initializeHandler = function(FieldHandler) {
+OperatonForm.prototype.initializeHandler = function (FieldHandler) {
   var self = this;
   var selector = FieldHandler.selector;
 
-  $(selector, self.formElement).each(function() {
+  $(selector, self.formElement).each(function () {
     self.fields.push(new FieldHandler(this, self.variableManager, self));
   });
 };
@@ -173,10 +173,10 @@ OperatonForm.prototype.initializeHandler = function(FieldHandler) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.initialize = function(done) {
+OperatonForm.prototype.initialize = function (done) {
   done =
     done ||
-    function(err) {
+    function (err) {
       if (err) throw err;
     };
   var self = this;
@@ -185,7 +185,7 @@ OperatonForm.prototype.initialize = function(done) {
   if (this.formUrl) {
     this.client.http.load(this.formUrl, {
       accept: '*/*',
-      done: function(err, result) {
+      done: function (err, result) {
         if (err) {
           return done(err);
         }
@@ -197,7 +197,7 @@ OperatonForm.prototype.initialize = function(done) {
           done(error);
         }
       },
-      data: extend({noCache: Date.now()}, this.options.urlParams || {})
+      data: extend({noCache: Date.now()}, this.options.urlParams || {}),
     });
   } else {
     try {
@@ -211,7 +211,7 @@ OperatonForm.prototype.initialize = function(done) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.renderForm = function(formHtmlSource) {
+OperatonForm.prototype.renderForm = function (formHtmlSource) {
   // apppend the form html to the container element,
   // we also wrap the formHtmlSource to limit the risks of breaking
   // the structure of the document
@@ -232,7 +232,7 @@ OperatonForm.prototype.renderForm = function(formHtmlSource) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.initializeForm = function(done) {
+OperatonForm.prototype.initializeForm = function (done) {
   var self = this;
 
   // handle form scripts
@@ -247,7 +247,7 @@ OperatonForm.prototype.initializeForm = function(done) {
   // fire form loaded
   this.fireEvent('form-loaded');
 
-  this.fetchVariables(function(err, result) {
+  this.fetchVariables(function (err, result) {
     if (err) {
       throw err;
     }
@@ -278,7 +278,7 @@ OperatonForm.prototype.initializeForm = function(done) {
   });
 };
 
-OperatonForm.prototype.initializeFieldHandlers = function() {
+OperatonForm.prototype.initializeFieldHandlers = function () {
   for (var FieldHandler in this.formFieldHandlers) {
     this.initializeHandler(this.formFieldHandlers[FieldHandler]);
   }
@@ -287,23 +287,23 @@ OperatonForm.prototype.initializeFieldHandlers = function() {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.initializeFormScripts = function() {
+OperatonForm.prototype.initializeFormScripts = function () {
   var formScriptElements = $(
     'script[' + constants.DIRECTIVE_CAM_SCRIPT + ']',
-    this.formElement
+    this.formElement,
   );
   for (var i = 0; i < formScriptElements.length; i++) {
     this.scripts.push(formScriptElements[i].text);
   }
 };
 
-OperatonForm.prototype.executeFormScripts = function() {
+OperatonForm.prototype.executeFormScripts = function () {
   for (var i = 0; i < this.scripts.length; i++) {
     this.executeFormScript(this.scripts[i]);
   }
 };
 
-OperatonForm.prototype.executeFormScript = function(script) {
+OperatonForm.prototype.executeFormScript = function (script) {
   /*eslint-disable */
   /* jshint unused: false */
   (function(camForm) {
@@ -325,7 +325,7 @@ OperatonForm.prototype.executeFormScript = function(script) {
  * the `store` event and set `storePrevented` to
  * something truthy.
  */
-OperatonForm.prototype.store = function(callback) {
+OperatonForm.prototype.store = function (callback) {
   var formId = this.taskId || this.processDefinitionId || this.caseInstanceId;
 
   if (!formId) {
@@ -375,7 +375,7 @@ OperatonForm.prototype.store = function(callback) {
  * @memberof CamSDK.form.OperatonForm.prototype
  * @return {Boolean} `true` if there is something who can be restored
  */
-OperatonForm.prototype.isRestorable = function() {
+OperatonForm.prototype.isRestorable = function () {
   var formId = this.taskId || this.processDefinitionId || this.caseInstanceId;
 
   if (!formId) {
@@ -391,7 +391,7 @@ OperatonForm.prototype.isRestorable = function() {
   var stored = localStorage.getItem('camForm:' + formId);
   try {
     stored = JSON.parse(stored);
-  } catch (error) {
+  } catch (_error) {
     return false;
   }
 
@@ -412,7 +412,7 @@ OperatonForm.prototype.isRestorable = function() {
  * the `restore` event and set `restorePrevented` to
  * something truthy.
  */
-OperatonForm.prototype.restore = function(callback) {
+OperatonForm.prototype.restore = function (callback) {
   var stored;
   var vars = this.variableManager.variables;
   var formId = this.taskId || this.processDefinitionId || this.caseDefinitionId;
@@ -452,7 +452,7 @@ OperatonForm.prototype.restore = function(callback) {
     } else {
       vars[name] = {
         name: name,
-        value: stored[name]
+        value: stored[name],
       };
     }
   }
@@ -465,7 +465,7 @@ OperatonForm.prototype.restore = function(callback) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.submit = function(callback) {
+OperatonForm.prototype.submit = function (callback) {
   var formId = this.taskId || this.processDefinitionId;
 
   // fire submit event (event handler may prevent submit from being performed)
@@ -485,9 +485,9 @@ OperatonForm.prototype.submit = function(callback) {
   }
 
   var self = this;
-  this.transformFiles(function() {
+  this.transformFiles(function () {
     // submit the form variables
-    self.submitVariables(function(err, result) {
+    self.submitVariables(function (err, result) {
       if (err) {
         self.fireEvent('submit-failed', err);
         return callback && callback(err);
@@ -505,7 +505,7 @@ OperatonForm.prototype.submit = function(callback) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.error = function(errorCode, errorMessage, callback) {
+OperatonForm.prototype.error = function (errorCode, errorMessage, callback) {
   var formId = this.taskId || this.processDefinitionId;
 
   this.errorPrevented = false;
@@ -524,15 +524,15 @@ OperatonForm.prototype.error = function(errorCode, errorMessage, callback) {
   }
 
   var self = this;
-  this.transformFiles(function() {
+  this.transformFiles(function () {
     // submit the form variables
     var data = {
       variables: self.parseVariables(),
       id: self.taskId,
       errorCode: errorCode,
-      errorMessage: errorMessage
+      errorMessage: errorMessage,
     };
-    self.client.resource('task').bpmnError(data, function(err, result) {
+    self.client.resource('task').bpmnError(data, function (err, result) {
       if (err) {
         self.fireEvent('error-failed', err);
         return callback && callback(err);
@@ -550,7 +550,7 @@ OperatonForm.prototype.error = function(errorCode, errorMessage, callback) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.escalate = function(escalationCode, callback) {
+OperatonForm.prototype.escalate = function (escalationCode, callback) {
   var formId = this.taskId || this.processDefinitionId;
 
   this.escalationPrevented = false;
@@ -569,14 +569,14 @@ OperatonForm.prototype.escalate = function(escalationCode, callback) {
   }
 
   var self = this;
-  this.transformFiles(function() {
+  this.transformFiles(function () {
     // submit the form variables
     var data = {
       variables: self.parseVariables(),
       id: self.taskId,
-      escalationCode: escalationCode
+      escalationCode: escalationCode,
     };
-    self.client.resource('task').bpmnEscalation(data, function(err, result) {
+    self.client.resource('task').bpmnEscalation(data, function (err, result) {
       if (err) {
         self.fireEvent('escalation-failed', err);
         return callback && callback(err);
@@ -591,17 +591,17 @@ OperatonForm.prototype.escalate = function(escalationCode, callback) {
   });
 };
 
-OperatonForm.prototype.transformFiles = function(callback) {
+OperatonForm.prototype.transformFiles = function (callback) {
   var that = this;
   var counter = 1;
 
-  var callCallback = function() {
+  var callCallback = function () {
     if (--counter === 0) {
       callback();
     }
   };
 
-  var bytesToSize = function(bytes) {
+  var bytesToSize = function (bytes) {
     if (bytes === 0) return '0 Byte';
     var k = 1000;
     var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -623,15 +623,15 @@ OperatonForm.prototype.transformFiles = function(callback) {
             'Maximum file size of ' +
               bytesToSize(
                 parseInt(element.getAttribute('cam-max-filesize'), 10) ||
-                  5000000
+                  5000000,
               ) +
-              ' exceeded.'
+              ' exceeded.',
           );
         }
         var reader = new FileReader();
         /* jshint ignore:start */
-        reader.onloadend = (function(i, element, fileVar) {
-          return function(e) {
+        reader.onloadend = (function (i, element, fileVar) {
+          return function (e) {
             var binary = '';
             var bytes = new Uint8Array(e.target.result);
             var len = bytes.byteLength;
@@ -645,7 +645,7 @@ OperatonForm.prototype.transformFiles = function(callback) {
             if (fileVar.type.toLowerCase() === 'file') {
               fileVar.valueInfo = {
                 filename: element.files[0].name,
-                mimeType: element.files[0].type
+                mimeType: element.files[0].type,
               };
             }
 
@@ -658,7 +658,7 @@ OperatonForm.prototype.transformFiles = function(callback) {
       } else {
         fileVar.value = '';
         fileVar.valueInfo = {
-          filename: ''
+          filename: '',
         };
       }
     }
@@ -670,13 +670,13 @@ OperatonForm.prototype.transformFiles = function(callback) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.fetchVariables = function(done) {
-  done = done || function() {};
+OperatonForm.prototype.fetchVariables = function (done) {
+  done = done || function () {};
   var names = this.variableManager.variableNames();
   if (names.length) {
     var data = {
       names: names,
-      deserializeValues: false
+      deserializeValues: false,
     };
 
     // pass either the taskId, processDefinitionId or processDefinitionKey
@@ -696,12 +696,12 @@ OperatonForm.prototype.fetchVariables = function(done) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.parseVariables = function() {
+OperatonForm.prototype.parseVariables = function () {
   var varManager = this.variableManager;
   var vars = varManager.variables;
 
   // The default display value is different from the original value in varManager
-  this.fields.forEach(function(field) {
+  this.fields.forEach(function (field) {
     if (vars[field.variableName]) {
       vars[field.variableName].defaultValue = field.originalValue;
 
@@ -737,7 +737,7 @@ OperatonForm.prototype.parseVariables = function() {
       variableData[v] = {
         value: val,
         type: vars[v].type,
-        valueInfo: vars[v].valueInfo
+        valueInfo: vars[v].valueInfo,
       };
     }
   }
@@ -747,8 +747,8 @@ OperatonForm.prototype.parseVariables = function() {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.submitVariables = function(done) {
-  done = done || function() {};
+OperatonForm.prototype.submitVariables = function (done) {
+  done = done || function () {};
 
   var data = {variables: this.parseVariables()};
 
@@ -772,7 +772,7 @@ OperatonForm.prototype.submitVariables = function(done) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.storeOriginalValues = function(variables) {
+OperatonForm.prototype.storeOriginalValues = function (variables) {
   for (var v in variables) {
     this.variableManager.setOriginalValue(v, variables[v].value);
   }
@@ -781,7 +781,7 @@ OperatonForm.prototype.storeOriginalValues = function(variables) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.mergeVariables = function(variables) {
+OperatonForm.prototype.mergeVariables = function (variables) {
   var vars = this.variableManager.variables;
 
   for (var v in variables) {
@@ -811,7 +811,7 @@ OperatonForm.prototype.mergeVariables = function(variables) {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.applyVariables = function() {
+OperatonForm.prototype.applyVariables = function () {
   for (var i in this.fields) {
     this.fields[i].applyValue();
   }
@@ -820,7 +820,7 @@ OperatonForm.prototype.applyVariables = function() {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.retrieveVariables = function() {
+OperatonForm.prototype.retrieveVariables = function () {
   for (var i in this.fields) {
     this.fields[i].getValue();
   }
@@ -829,7 +829,7 @@ OperatonForm.prototype.retrieveVariables = function() {
 /**
  * @memberof CamSDK.form.OperatonForm.prototype
  */
-OperatonForm.prototype.fireEvent = function(eventName, obj) {
+OperatonForm.prototype.fireEvent = function (eventName, obj) {
   this.trigger(eventName, obj);
 };
 
@@ -846,7 +846,7 @@ OperatonForm.fields.ChoicesFieldHandler = ChoicesFieldHandler;
 /**
  * @memberof CamSDK.form.OperatonForm
  */
-OperatonForm.cleanLocalStorage = function(timestamp) {
+OperatonForm.cleanLocalStorage = function (timestamp) {
   for (var i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     if (key.indexOf('camForm:') === 0) {

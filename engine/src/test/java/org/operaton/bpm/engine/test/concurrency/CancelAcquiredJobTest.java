@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -59,10 +61,6 @@ class CancelAcquiredJobTest {
     // move clock by 20 seconds -> both jobs are acquirable:
     ClockUtil.setCurrentTime(new Date(System.currentTimeMillis() + (20 * 1000)));
 
-    testRule.waitForJobExecutorToProcessAllJobs(6000);
-
+    assertThatCode(() -> testRule.waitForJobExecutorToProcessAllJobs(6000)).doesNotThrowAnyException();
   }
-
-
-
 }

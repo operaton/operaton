@@ -32,6 +32,12 @@
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-engine</artifactId>
+        <version>${project.version}</version>
+        <classifier>junit6</classifier>
+      </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-engine-cdi</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -157,6 +163,11 @@
       <dependency>
         <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-bpm-junit5</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.operaton.bpm</groupId>
+        <artifactId>operaton-bpm-junit6</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

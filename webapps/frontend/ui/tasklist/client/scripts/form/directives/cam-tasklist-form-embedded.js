@@ -27,7 +27,7 @@ module.exports = [
   'camAPI',
   '$timeout',
   'Uri',
-  function(CamForm, camAPI, $timeout, Uri) {
+  function (CamForm, camAPI, $timeout, Uri) {
     return {
       restrict: 'A',
 
@@ -37,13 +37,13 @@ module.exports = [
 
       template: template,
 
-      link: function($scope, $element, attrs, formController) {
+      link: function ($scope, $element, attrs, formController) {
         var container = $($element[0]).find('.form-container');
         var camForm = null;
         var initialVariables = null;
         var form = ($scope.form = {
           $valid: false,
-          $invalid: true
+          $invalid: true,
         });
 
         function clearVariableManager() {
@@ -68,22 +68,22 @@ module.exports = [
         $scope.$watch('asynchronousFormKey', handleAsynchronousFormKey, true);
 
         $scope.$watch(
-          function() {
+          function () {
             return form && form.$valid;
           },
-          function(value) {
+          function (value) {
             formController.notifyFormValidated(!value);
-          }
+          },
         );
 
         // watch for changes in the form
         $scope.$watch(
-          function() {
+          function () {
             return form && form.$dirty;
           },
-          function(value) {
+          function (value) {
             formController.notifyFormDirty(value);
-          }
+          },
         );
 
         function showForm(container, tasklistForm, params) {
@@ -96,12 +96,12 @@ module.exports = [
           angular.extend(params, {
             urlParams: {
               userId: $scope.$root.authentication.name,
-              engineName: Uri.appUri(':engine')
+              engineName: Uri.appUri(':engine'),
             },
             containerElement: container,
             client: camAPI,
             formUrl: formUrl,
-            done: done
+            done: done,
           });
 
           if (params.taskId) {
@@ -112,7 +112,7 @@ module.exports = [
           camForm = new CamForm(params);
         }
 
-        var done = function(err, _camForm) {
+        var done = function (err, _camForm) {
           if (err) {
             return formController.notifyFormInitializationFailed(err);
           }
@@ -133,11 +133,10 @@ module.exports = [
           $scope.$root.$broadcast('embedded.form.rendered');
         };
 
-        $scope.$on('shortcut:focusForm', function() {
+        $scope.$on('shortcut:focusForm', function () {
           if (camForm) {
-            var focusElement = camForm.formElement[0].querySelectorAll(
-              'input'
-            )[0];
+            var focusElement =
+              camForm.formElement[0].querySelectorAll('input')[0];
             if (focusElement) {
               focusElement.focus();
             }
@@ -150,8 +149,8 @@ module.exports = [
           }
         };
 
-        var localCallback = function(callback) {
-          return function(err, result) {
+        var localCallback = function (callback) {
+          return function (err, result) {
             if (err) {
               clearVariableManager();
             }
@@ -159,17 +158,17 @@ module.exports = [
             return callback(err, result);
           };
         };
-        var complete = function(callback) {
+        var complete = function (callback) {
           camForm.submit(localCallback(callback));
         };
 
-        var save = function(evt) {
+        var save = function (evt) {
           form.$setPristine();
           camForm.store();
 
           // manually trigger a mouseleave event to make the tooltip disappear
           evt &&
-            $timeout(function() {
+            $timeout(function () {
               angular.element(evt.target).triggerHandler($.Event('mouseleave'));
             });
         };
@@ -177,10 +176,10 @@ module.exports = [
         formController.registerCompletionHandler(complete);
         formController.registerSaveHandler(save);
 
-        $scope.$on('authentication.login.required', function() {
+        $scope.$on('authentication.login.required', function () {
           save();
         });
-      }
+      },
     };
-  }
+  },
 ];

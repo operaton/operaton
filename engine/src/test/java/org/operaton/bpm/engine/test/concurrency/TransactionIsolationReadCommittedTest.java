@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import java.util.Date;
 import java.util.List;
 
@@ -63,26 +65,26 @@ class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
    */
   @Test
   void testTransactionIsolation() {
+    assertThatCode(() -> {
+      thread1 = executeControllableCommand(new TestCommand("p1"));
 
-    thread1 = executeControllableCommand(new TestCommand("p1"));
+      // wait for Thread 1 to perform INSERT
+      thread1.waitForSync();
 
-    // wait for Thread 1 to perform INSERT
-    thread1.waitForSync();
+      thread2 = executeControllableCommand(new TestCommand("p2"));
 
-    thread2 = executeControllableCommand(new TestCommand("p2"));
+      // wait for Thread 2 to perform INSERT
+      thread2.waitForSync();
 
-    // wait for Thread 2 to perform INSERT
-    thread2.waitForSync();
+      // wait for Thread 2 to perform SELECT
+      thread2.makeContinue();
 
-    // wait for Thread 2 to perform SELECT
-    thread2.makeContinue();
+      // wait for Thread 1  to perform same SELECT => deadlock
+      thread1.makeContinue();
 
-    // wait for Thread 1  to perform same SELECT => deadlock
-    thread1.makeContinue();
-
-    thread2.waitForSync();
-    thread1.waitForSync();
-
+      thread2.waitForSync();
+      thread1.waitForSync();
+    }).doesNotThrowAnyException();
   }
 
   static class TestCommand extends ControllableCommand<Void> {

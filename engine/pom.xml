@@ -383,7 +383,7 @@
 
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-bpm-junit6</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -544,6 +544,21 @@
               <classesDirectory>${project.build.directory}/classes-junit5</classesDirectory>
             </configuration>
           </execution>
+          <execution>
+            <id>junit6-jar</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <includes>
+                <include>org/operaton/bpm/container/impl/jmx/deployment/Mock*.class</include>
+                <include>org/operaton/bpm/engine/impl/test/*TestCase.class</include>
+                <include>org/operaton/bpm/engine/test/**</include>
+              </includes>
+              <classifier>junit6</classifier>
+              <classesDirectory>${project.build.directory}/classes-junit6</classesDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -608,6 +623,20 @@
                 <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
               </compileSourceRoots>
               <outputDirectory>${project.build.directory}/classes-junit5</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>junit6-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <compileSourceRoots>
+                <compileSourceRoot>${project.basedir}/src/main/junit-shared</compileSourceRoot>
+                <compileSourceRoot>${project.basedir}/src/main/junit5</compileSourceRoot>
+              </compileSourceRoots>
+              <outputDirectory>${project.build.directory}/classes-junit6</outputDirectory>
             </configuration>
           </execution>
         </executions>

@@ -17,12 +17,12 @@
 
 'use strict';
 
-module.exports = function() {
+module.exports = function () {
   return {
-    link: function(scope, element) {
+    link: function (scope, element) {
       var processData = scope.processData;
       var selectedActivityInstanceQuery = element.attr(
-        'cam-select-activity-instance'
+        'cam-select-activity-instance',
       );
 
       if (!processData) {
@@ -31,20 +31,20 @@ module.exports = function() {
 
       if (!selectedActivityInstanceQuery) {
         throw new Error(
-          'No activity instance id query given in @cam-select-activity'
+          'No activity instance id query given in @cam-select-activity',
         );
       }
 
-      element.on('click', function(event) {
+      element.on('click', function (event) {
         event.preventDefault();
 
-        scope.$apply(function() {
+        scope.$apply(function () {
           // refresh view with selected activity instance id
           processData.set('filter', {
-            activityInstanceIds: [scope.$eval(selectedActivityInstanceQuery)]
+            activityInstanceIds: [scope.$eval(selectedActivityInstanceQuery)],
           });
         });
       });
-    }
+    },
   };
 };

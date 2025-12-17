@@ -27,16 +27,16 @@
  */
 module.exports = [
   '$interval',
-  function($interval) {
+  function ($interval) {
     return {
       restrict: 'A',
 
       require: 'ngModel',
 
-      link: function(scope, element, attrs, model) {
+      link: function (scope, element, attrs, model) {
         // console.info('start watching for auto-filled field', attrs.name);
 
-        var interval = $interval(function() {
+        var interval = $interval(function () {
           var value = element.val();
           if (value !== model.$viewValue) {
             model.$setViewValue(value);
@@ -53,7 +53,7 @@ module.exports = [
             $interval.cancel(interval);
           }
         }, 500);
-      }
+      },
     };
-  }
+  },
 ];

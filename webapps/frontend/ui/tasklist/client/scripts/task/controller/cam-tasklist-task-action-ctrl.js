@@ -21,13 +21,13 @@ module.exports = [
   '$scope',
   'Views',
   'CamForm',
-  function($scope, Views, CamForm) {
+  function ($scope, Views, CamForm) {
     var taskData = ($scope.taskData = $scope.tasklistData.newChild($scope));
 
     /**
      * expose current task as scope variable
      */
-    taskData.observe('task', function(task) {
+    taskData.observe('task', function (task) {
       $scope.task = task;
     });
 
@@ -40,7 +40,7 @@ module.exports = [
 
     $scope.taskVars = {read: ['task', 'taskData']};
     $scope.taskActions = Views.getProviders({
-      component: 'tasklist.task.action'
+      component: 'tasklist.task.action',
     });
-  }
+  },
 ];

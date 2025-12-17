@@ -17,21 +17,21 @@
 
 'use strict';
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'EAC',
-    link: function(scope, element, attrs) {
+    link: function (scope, element, attrs) {
       element.addClass('circle');
 
-      scope.$watch(attrs.incidents, function() {
+      scope.$watch(attrs.incidents, function () {
         updateStateCircle();
       });
 
-      scope.$watch(attrs.incidentscount, function() {
+      scope.$watch(attrs.incidentscount, function () {
         updateStateCircle();
       });
 
-      scope.$watch(attrs.running, function() {
+      scope.$watch(attrs.running, function () {
         updateStateCircle();
       });
 
@@ -100,6 +100,6 @@ module.exports = function() {
           .addClass('circle-blue')
           .addClass('animate-spin');
       }
-    }
+    },
   };
 };

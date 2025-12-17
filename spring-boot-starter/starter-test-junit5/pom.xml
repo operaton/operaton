@@ -28,13 +28,15 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <artifactId>operaton-bpm-junit6</artifactId>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
+      <!-- Note: JUnit 6 is not a separate version from JUnit 5. The junit6 classifier
+           provides the same JUnit 5 test helper classes from the engine module. -->
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
+      <classifier>junit6</classifier>
       <scope>compile</scope>
     </dependency>
   </dependencies>

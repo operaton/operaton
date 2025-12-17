@@ -47,7 +47,7 @@ module.exports = [
   '$filter',
   '$document',
   '$uibModal',
-  function($timeout, $filter, $document, $modal) {
+  function ($timeout, $filter, $document, $modal) {
     return {
       scope: {
         varValue: '=value',
@@ -66,12 +66,12 @@ module.exports = [
         dateFormat: '=?',
         datePickerOptions: '=?',
 
-        disableAutoselect: '=?'
+        disableAutoselect: '=?',
       },
 
       template: template,
 
-      link: function(scope, element) {
+      link: function (scope, element) {
         scope.formData = {};
 
         var $scrollableParentEl = $(getScrollParent(element[0]));
@@ -81,7 +81,8 @@ module.exports = [
 
         var dateFilter = $filter('date');
 
-        var dateRegex = /(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)(?:.(\d\d\d)| )?$/;
+        var dateRegex =
+          /(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)(?:.(\d\d\d)| )?$/;
 
         scope.editing = false;
         scope.varTypeOriginal = scope.varType;
@@ -90,10 +91,10 @@ module.exports = [
         scope.hasCustomDateFormat = !!scope.dateFormat;
         scope.dateFormat = scope.dateFormat || "yyyy-MM-dd'T'HH:mm:ss";
 
-        scope.$on('$locationChangeSuccess', function() {
+        scope.$on('$locationChangeSuccess', function () {
           scope.cancelChange();
         });
-        scope.$on('$destroy', function() {
+        scope.$on('$destroy', function () {
           removeFromBody(true);
         });
 
@@ -117,7 +118,7 @@ module.exports = [
               HOURS,
               MINUTES,
               SECONDS,
-              MILLISECONDS
+              MILLISECONDS,
             );
           }
         }
@@ -138,7 +139,7 @@ module.exports = [
               'text',
               'time',
               'url',
-              'week'
+              'week',
             ].indexOf(scope.varType) > -1
           );
         }
@@ -149,10 +150,10 @@ module.exports = [
           scope.invalid = false;
           scope.formData.editValue = scope.varValue;
 
-          scope.validator = scope.validator || function() {};
-          scope.onStart = scope.onStart || function() {};
-          scope.onCancel = scope.onCancel || function() {};
-          scope.change = scope.change || function() {};
+          scope.validator = scope.validator || function () {};
+          scope.onStart = scope.onStart || function () {};
+          scope.onCancel = scope.onCancel || function () {};
+          scope.change = scope.change || function () {};
           scope.options = scope.options || [];
           scope.allowNonOptions = scope.allowNonOptions || false;
           scope.flexible = scope.flexible || false;
@@ -193,7 +194,7 @@ module.exports = [
         function positionElements() {
           var offset = {
             left: $(element).offset().left - $scrollableParentEl.offset().left,
-            top: $(element).offset().top - $scrollableParentEl.offset().top
+            top: $(element).offset().top - $scrollableParentEl.offset().top,
           };
 
           var outerRightOffset = $ctrlsEl.outerWidth() + offset.left;
@@ -210,7 +211,7 @@ module.exports = [
               .css({
                 left:
                   offset.left + ($ctrlsEl.outerWidth() - $btnsEl.outerWidth()),
-                top: offset.top + $ctrlsEl.outerHeight()
+                top: offset.top + $ctrlsEl.outerHeight(),
               });
           } else {
             $btnsEl
@@ -220,13 +221,13 @@ module.exports = [
                 left:
                   offset.left +
                   ($(element).outerWidth() - $btnsEl.outerWidth()),
-                top: offset.top - $btnsEl.outerHeight()
+                top: offset.top - $btnsEl.outerHeight(),
               });
           }
 
           $ctrlsEl.show().css({
             left: offset.left,
-            top: offset.top + $(element).outerHeight()
+            top: offset.top + $(element).outerHeight(),
           });
 
           if (isDate()) {
@@ -239,17 +240,19 @@ module.exports = [
         }
 
         function appendToBody() {
-          $ctrlsEl = ($ctrlsEl && $ctrlsEl.length
-            ? $ctrlsEl
-            : $(element[0].querySelector('.field-control'))
+          $ctrlsEl = (
+            $ctrlsEl && $ctrlsEl.length
+              ? $ctrlsEl
+              : $(element[0].querySelector('.field-control'))
           ).hide();
           if (!bodyDirectChild($ctrlsEl)) {
             $scrollableParentEl.append($ctrlsEl);
           }
 
-          $btnsEl = ($btnsEl && $btnsEl.length
-            ? $btnsEl
-            : $(element[0].querySelector('.btn-group'))
+          $btnsEl = (
+            $btnsEl && $btnsEl.length
+              ? $btnsEl
+              : $(element[0].querySelector('.btn-group'))
           ).hide();
           if (!bodyDirectChild($btnsEl)) {
             $scrollableParentEl.append($btnsEl);
@@ -259,7 +262,7 @@ module.exports = [
         }
 
         function removeFromBody(force) {
-          $timeout(function() {
+          $timeout(function () {
             if (scope.editing && !force) {
               return;
             }
@@ -284,7 +287,7 @@ module.exports = [
           );
         }
 
-        scope.$watch('editing', function(after, before) {
+        scope.$watch('editing', function (after, before) {
           if (after === before) {
             return;
           }
@@ -322,7 +325,7 @@ module.exports = [
           scope.$apply(scope.cancelChange);
         }
 
-        scope.changeType = function() {
+        scope.changeType = function () {
           if (scope.varType !== 'text') {
             scope.varType = 'text';
           } else {
@@ -334,7 +337,7 @@ module.exports = [
           scope.simpleField = isSimpleField();
         };
 
-        scope.startEditing = function() {
+        scope.startEditing = function () {
           if (!scope.editing) {
             reset();
 
@@ -354,8 +357,8 @@ module.exports = [
             // input field is rendered and we can open the typeahead dropdown (first timeout). However, the instantTypeahead directive does
             // not immediately register its functions to prevent IE from going crazy. Therefore, we have to wait for another cycle
             // (second timeout), before triggering an input event on the input field can open the instant typeahead dropdown.
-            $timeout(function() {
-              $timeout(function() {
+            $timeout(function () {
+              $timeout(function () {
                 // and reset the edit value, so that the user can type
                 scope.formData.editValue = savedEditValue;
 
@@ -367,15 +370,15 @@ module.exports = [
                     angular
                       .element(
                         element[0].querySelector(
-                          '[ng-model="formData.editValue"]'
-                        )
+                          '[ng-model="formData.editValue"]',
+                        ),
                       )
                       .val(savedEditValue.value);
                   }
 
-                  $timeout(function() {
+                  $timeout(function () {
                     var elems = $(
-                      element[0].querySelector('li[ng-mouseenter]')
+                      element[0].querySelector('li[ng-mouseenter]'),
                     );
                     var compareValue = isValueOfTypeObject
                       ? savedEditValue.value
@@ -393,14 +396,14 @@ module.exports = [
               });
             });
 
-            $timeout(function() {
+            $timeout(function () {
               angular
                 .element(
-                  element[0].querySelector('[ng-model="formData.editValue"]')
+                  element[0].querySelector('[ng-model="formData.editValue"]'),
                 )
                 .triggerHandler('click');
 
-              $timeout(function() {
+              $timeout(function () {
                 $('[ng-model="formData.editValue"]').focus();
                 $('[ng-model="formData.editValue"]').select();
                 $document.bind('click', stopEditing);
@@ -409,13 +412,13 @@ module.exports = [
           }
         };
 
-        scope.applyChange = function(selection, evt) {
+        scope.applyChange = function (selection, evt) {
           scope.invalid = scope.validator(scope);
 
           if (!scope.invalid) {
             if (scope.simpleField) {
               scope.formData.editValue = parseValue(
-                $('[ng-model="formData.editValue"]').val()
+                $('[ng-model="formData.editValue"]').val(),
               );
 
               scope.varValue = scope.formData.editValue;
@@ -433,7 +436,7 @@ module.exports = [
             } else if (isDate()) {
               scope.varValue = dateFilter(
                 scope.formData.dateValue,
-                scope.dateFormat
+                scope.dateFormat,
               );
             }
 
@@ -458,7 +461,7 @@ module.exports = [
           return value;
         }
 
-        scope.cancelChange = function() {
+        scope.cancelChange = function () {
           if (scope.editing) {
             scope.editing = false;
             scope.onCancel(scope);
@@ -467,20 +470,20 @@ module.exports = [
           }
         };
 
-        scope.changeDate = function(pickerScope) {
+        scope.changeDate = function (pickerScope) {
           let dateValue = pickerScope.formData.dateValue;
           if (scope.hasCustomDateFormat) {
             dateValue = dateFilter(
               pickerScope.formData.dateValue,
-              scope.dateFormat
+              scope.dateFormat,
             );
           }
           scope.formData.editValue = scope.formData.dateValue = dateValue;
         };
 
-        scope.selectNextInlineField = function(reversed) {
+        scope.selectNextInlineField = function (reversed) {
           var allFields = $(
-            "[cam-widget-inline-field][type='text'], [cam-widget-inline-field][type='option']"
+            "[cam-widget-inline-field][type='text'], [cam-widget-inline-field][type='option']",
           );
           for (
             var i = reversed * (allFields.length - 1);
@@ -488,11 +491,11 @@ module.exports = [
             i += !reversed * 2 - 1
           ) {
             if (allFields[i] === element[0]) {
-              $timeout(function() {
+              $timeout(function () {
                 var element = $(allFields[i + !reversed * 2 - 1]);
                 element.find('.view-value').click();
                 // after clicking the next inline field, wait for the input to appear, then select all
-                $timeout(function() {
+                $timeout(function () {
                   element.find('input').select();
                 });
               });
@@ -500,39 +503,39 @@ module.exports = [
             }
           }
           // take the first/last one
-          $timeout(function() {
+          $timeout(function () {
             $(allFields[reversed * allFields.length - 1])
               .find('.view-value')
               .click();
           });
         };
 
-        scope.trapKeyboard = function(evt, reverse) {
+        scope.trapKeyboard = function (evt, reverse) {
           if (isDate() && evt.keyCode === 9) {
             // only trap tab key on date inputs
             if (!reverse && !evt.shiftKey) {
               // focus the date picker
               $(
-                '.cam-widget-inline-field.field-control > .datepicker > table'
+                '.cam-widget-inline-field.field-control > .datepicker > table',
               )[0].focus();
               evt.preventDefault();
             } else if (reverse && evt.shiftKey) {
               // focus the cancel button
               $(
-                '.cam-widget-inline-field.btn-group > button[ng-click="cancelChange($event)"]'
+                '.cam-widget-inline-field.btn-group > button[ng-click="cancelChange($event)"]',
               )[0].focus();
               evt.preventDefault();
             }
           }
         };
 
-        scope.cancelOnEsc = function(evt) {
+        scope.cancelOnEsc = function (evt) {
           if (isDate() && evt.keyCode === 27) {
             scope.cancelChange();
           }
         };
 
-        scope.handleKeydown = function(evt) {
+        scope.handleKeydown = function (evt) {
           if (evt.keyCode === 13) {
             scope.applyChange(scope.selection, evt);
             evt.preventDefault();
@@ -548,9 +551,9 @@ module.exports = [
         };
 
         scope.selection = null;
-        scope.saveSelection = function(selection) {
+        scope.saveSelection = function (selection) {
           scope.selection = selection;
-          $timeout(function() {
+          $timeout(function () {
             // check if the selection has been applied
             if (scope.selection === selection) {
               scope.applyChange(selection);
@@ -561,19 +564,17 @@ module.exports = [
         scope.expandValue = () => {
           const modalClose = () =>
             $timeout(() => {
-              $('[ng-model="formData.editValue"]')
-                .focus()
-                .select();
+              $('[ng-model="formData.editValue"]').focus().select();
               $document.bind('click', stopEditing);
             });
 
           $modal
             .open({
               resolve: {
-                formData: () => scope.formData
+                formData: () => scope.formData,
               },
               controller: dialogController,
-              template: dialogTemplate
+              template: dialogTemplate,
             })
             .result.then(modalClose)
             .catch(modalClose);
@@ -581,7 +582,7 @@ module.exports = [
         };
       },
 
-      transclude: true
+      transclude: true,
     };
-  }
+  },
 ];

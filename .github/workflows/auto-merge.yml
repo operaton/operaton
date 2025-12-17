@@ -293,7 +293,7 @@ jobs:
                     console.log(`  ℹ️  PR #${pr.number} already approved`);
                   }
                 } else {
-                  console.log(`  ⏭️  Skipping approval for PR from github-actions[bot] (cannot approve own PR)`);
+                  console.log(`  ⏭️  Skipping approval for PR from ${pr.user.login} (cannot approve own PR)`);
                 }
 
                 // Merge the PR using squash

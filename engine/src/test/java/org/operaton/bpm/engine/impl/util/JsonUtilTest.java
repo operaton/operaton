@@ -36,9 +36,10 @@ class JsonUtilTest {
 
     Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
-    assertThat(result).isNotNull();
-    assertThat(result).hasSize(4);
-    assertThat(result).containsEntry("keyString", "hello");
+    assertThat(result)
+            .isNotNull()
+            .hasSize(4)
+            .containsEntry("keyString", "hello");
     assertThat(((Number) result.get("keyInt")).intValue()).isEqualTo(123);
     assertThat(((Number) result.get("keyDouble")).doubleValue()).isEqualTo(45.67);
     assertThat(result).containsEntry("keyBoolean", true);

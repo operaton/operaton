@@ -266,29 +266,34 @@ jobs:
               console.log(`\n🚀 Processing PR #${pr.number}: ${pr.title}`);
 
               try {
-                // Check if already approved by this workflow
-                const { data: reviews } = await github.rest.pulls.listReviews({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: pr.number
-                });
-
-                const alreadyApproved = reviews.some(
-                  review => review.user.login === 'github-actions[bot]' && review.state === 'APPROVED'
-                );
-
-                if (!alreadyApproved) {
-                  // Approve the PR
-                  await github.rest.pulls.createReview({
+                // Skip approval for PRs from github-actions[bot] since it cannot approve its own PRs
+                if (pr.user.login !== 'github-actions[bot]') {
+                  // Check if already approved by this workflow
+                  const { data: reviews } = await github.rest.pulls.listReviews({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    pull_number: pr.number,
-                    event: 'APPROVE',
-                    body: '✅ Auto-approved by auto-merge workflow - all checks passed and dependency is allowlisted.'
+                    pull_number: pr.number
                   });
-                  console.log(`  ✅ Approved PR #${pr.number}`);
+
+                  const alreadyApproved = reviews.some(
+                    review => review.user.login === 'github-actions[bot]' && review.state === 'APPROVED'
+                  );
+
+                  if (!alreadyApproved) {
+                    // Approve the PR
+                    await github.rest.pulls.createReview({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      pull_number: pr.number,
+                      event: 'APPROVE',
+                      body: '✅ Auto-approved by auto-merge workflow - all checks passed and dependency is allowlisted.'
+                    });
+                    console.log(`  ✅ Approved PR #${pr.number}`);
+                  } else {
+                    console.log(`  ℹ️  PR #${pr.number} already approved`);
+                  }
                 } else {
-                  console.log(`  ℹ️  PR #${pr.number} already approved`);
+                  console.log(`  ⏭️  Skipping approval for PR from github-actions[bot] (cannot approve own PR)`);
                 }
 
                 // Merge the PR using squash

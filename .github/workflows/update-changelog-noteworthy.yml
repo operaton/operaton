@@ -175,7 +175,7 @@ jobs:
               title: `Update changelog: ${sourceTitle}`,
               body: issueBody,
               labels: ['documentation', 'build'],
-              assignees: ['copilot']
+              assignees: ['apps/copilot-swe-agent']
             });
               
             console.log(`✅ Created issue #${newIssue.data.number} for Copilot to update changelog`);

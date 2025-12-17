@@ -19,9 +19,10 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Collect and merge eligible PRs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         uses: actions/github-script@v8
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const { execSync } = require('child_process');
@@ -50,29 +51,18 @@ jobs:
 
             console.log(`\n🔍 Found ${pullRequests.length} open PR(s)`);
 
-            // Function to check if dependency matches pattern
-            function matchesPattern(dependency, pattern) {
+            // Function to check if title matches pattern
+            function titleMatchesPattern(title, pattern) {
               if (pattern === '*') return true;
 
-              // Convert wildcard pattern to regex
+              // Convert wildcard pattern to regex for substring matching
+              // Escape special regex characters except *
               const regexPattern = pattern
-                .replace(/\./g, '\\.')
+                .replace(/[.+?^${}()|[\]\\]/g, '\\$&')
                 .replace(/\*/g, '.*');
-              const regex = new RegExp(`^${regexPattern}$`);
+              const regex = new RegExp(regexPattern);
 
-              return regex.test(dependency);
-            }
-
-            // Function to extract dependency from PR title
-            function extractDependency(title) {
-              // Dependabot PR titles typically follow patterns like:
-              // "Bump org.springframework.boot:spring-boot-starter-parent from 3.2.0 to 3.2.1"
-              // "Bump eslint from 8.0.0 to 8.1.0 in /webapps/frontend"
-              const bumpMatch = title.match(/^Bump\s+([^\s]+)/i);
-              if (bumpMatch) {
-                return bumpMatch[1];
-              }
-              return null;
+              return regex.test(title);
             }
 
             // Function to check if PR matches any rule
@@ -89,18 +79,11 @@ jobs:
                 return false;
               }
 
-              // Extract dependency name from PR title
-              const dependency = extractDependency(pr.title);
-              if (!dependency) {
-                console.log(`  ⚠️  Could not extract dependency from title: ${pr.title}`);
-                return false;
-              }
-
-              // Check if dependency matches any include pattern
-              const matches = rule.includes.some(pattern => matchesPattern(dependency, pattern));
+              // Check if title matches any include pattern
+              const matches = rule.includes.some(pattern => titleMatchesPattern(pr.title, pattern));
 
               if (matches) {
-                console.log(`  ✅ Dependency "${dependency}" matches pattern in rule`);
+                console.log(`  ✅ Title "${pr.title}" matches pattern in rule`);
               }
 
               return matches;

@@ -24,12 +24,18 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const yaml = require('js-yaml');
+            const { execSync } = require('child_process');
 
-            // Load configuration
+            // Load configuration from YAML file
+            // Since js-yaml is not available in github-script,
+            // we use Python to convert YAML to JSON
             const configPath = '.github/workflows/auto-merge.config.yml';
-            const configContent = fs.readFileSync(configPath, 'utf8');
-            const config = yaml.load(configContent);
+            const yamlContent = fs.readFileSync(configPath, 'utf8');
+            const jsonStr = execSync(
+              `python3 -c "import yaml, json, sys; print(json.dumps(yaml.safe_load(sys.stdin.read())))"`,
+              { input: yamlContent, encoding: 'utf8' }
+            );
+            const config = JSON.parse(jsonStr);
 
             console.log('📋 Loaded auto-merge configuration');
             console.log(`Found ${config['auto-merge-rules'].length} rule(s)`);
@@ -131,10 +137,13 @@ jobs:
                 });
 
                 // Check if any status check failed or is pending
-                // Empty state means no statuses have been reported yet
-                if (status.state !== 'success' && status.state !== '') {
+                // Note: Empty state means no status checks are configured
+                // We only proceed if state is explicitly 'success'
+                if (status.state !== 'success') {
                   if (status.state === 'pending') {
                     console.log(`  ⏳ Status checks are still pending`);
+                  } else if (status.state === '') {
+                    console.log(`  ⚠️  No status checks configured`);
                   } else {
                     console.log(`  ❌ Status checks failed or are in error state: ${status.state}`);
                   }

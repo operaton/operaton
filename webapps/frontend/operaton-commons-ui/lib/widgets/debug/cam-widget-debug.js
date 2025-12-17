@@ -20,7 +20,7 @@
 var template = require('./cam-widget-debug.html?raw');
 
 module.exports = [
-  function() {
+  function () {
     return {
       template: template,
 
@@ -32,16 +32,16 @@ module.exports = [
         extendedInfo: '=',
         tooltip: '@camWidgetDebugTooltip',
         tooltipPlacement: '@camWidgetDebugTooltipPlacement',
-        disableToggleButton: '='
+        disableToggleButton: '=',
       },
 
-      link: function(scope, element, attrs) {
+      link: function (scope, element, attrs) {
         scope.varName = attrs.displayName || attrs.debugged;
         scope.extended = attrs.extended !== undefined;
-        scope.toggleOpen = function() {
+        scope.toggleOpen = function () {
           scope.open = !scope.open;
         };
-      }
+      },
     };
-  }
+  },
 ];

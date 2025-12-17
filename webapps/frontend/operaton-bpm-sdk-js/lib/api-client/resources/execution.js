@@ -37,7 +37,7 @@ Execution.path = 'execution';
 /**
  * Deletes a variable in the context of a given execution. Deletion does not propagate upwards in the execution hierarchy.
  */
-Execution.deleteVariable = function(data, done) {
+Execution.deleteVariable = function (data, done) {
   return this.http.del(
     this.path +
       '/' +
@@ -45,8 +45,8 @@ Execution.deleteVariable = function(data, done) {
       '/localVariables/' +
       utils.escapeUrl(data.varId),
     {
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -56,10 +56,10 @@ Execution.deleteVariable = function(data, done) {
  * Updates precede deletions.
  * So, if a variable is updated AND deleted, the deletion overrides the update.
  */
-Execution.modifyVariables = function(data, done) {
+Execution.modifyVariables = function (data, done) {
   return this.http.post(this.path + '/' + data.id + '/localVariables', {
     data: data,
-    done: done
+    done: done,
   });
 };
 

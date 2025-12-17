@@ -32,7 +32,7 @@ formModule.directive('camTasklistForm', camTasklistForm);
 formModule.directive('camTasklistFormGeneric', camTasklistFormGeneric);
 formModule.directive(
   'camTasklistFormGenericVariables',
-  camTasklistFormGenericVariables
+  camTasklistFormGenericVariables,
 );
 formModule.directive('camTasklistFormEmbedded', camTasklistFormEmbedded);
 formModule.directive('camTasklistFormExternal', camTasklistFormExternal);

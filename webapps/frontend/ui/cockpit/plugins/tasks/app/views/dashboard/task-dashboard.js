@@ -21,7 +21,7 @@ var template = require('./task-dashboard.html?raw');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.tasks.dashboard', {
       id: 'task-dashboard',
       label: 'PLUGIN_TASK_DASHBOARD_TITLE',
@@ -35,7 +35,7 @@ module.exports = [
         'search',
         'Notifications',
         '$translate',
-        function(
+        function (
           $scope,
           $q,
           Views,
@@ -43,7 +43,7 @@ module.exports = [
           dataDepend,
           search,
           Notifications,
-          $translate
+          $translate,
         ) {
           var tasksPluginData = dataDepend.create($scope);
 
@@ -56,51 +56,51 @@ module.exports = [
               state: undefined,
               label: $translate.instant('PLUGIN_TASK_ASSIGNED_TO_USER'),
               count: 0,
-              search: 'openAssignedTasks'
+              search: 'openAssignedTasks',
             },
             {
               // assigned to groups
               state: undefined,
               label: $translate.instant('PLUGIN_TASK_ASSIGNED_TO_ONE'),
               count: 0,
-              search: 'openGroupTasks'
+              search: 'openGroupTasks',
             },
             {
               // assigned neither to groups nor to users
               state: undefined,
               label: $translate.instant('PLUGIN_TASK_ASSIGNED_UNASSIGNED'),
               count: 0,
-              search: 'openUnassignedTasks'
-            }
+              search: 'openUnassignedTasks',
+            },
           ];
 
           // -- provide task data --------------
-          var provideResourceData = function(
+          var provideResourceData = function (
             resourceName,
             resource,
             method,
-            params
+            params,
           ) {
             var deferred = $q.defer();
 
-            var getErrorStatus = function() {
+            var getErrorStatus = function () {
               if (method === 'countByCandidateGroup') {
                 return $translate.instant('PLUGIN_TASK_ERROR_COUNT');
               }
 
               return $translate.instant('PLUGIN_TASK_ERROR_FETCH', {
-                res: resourceName
+                res: resourceName,
               });
             };
 
-            var resourceCallback = function(err, res) {
+            var resourceCallback = function (err, res) {
               if (err) {
                 Notifications.addError({
                   status: $translate.instant(
                     'PLUGIN_TASK_ASSIGNED_ERR_COULD_NOT',
-                    {err: getErrorStatus()}
+                    {err: getErrorStatus()},
                   ),
-                  message: err.toString()
+                  message: err.toString(),
                 });
                 deferred.reject(err);
               } else {
@@ -117,33 +117,33 @@ module.exports = [
             return deferred.promise;
           };
 
-          var defaultParameter = function() {
+          var defaultParameter = function () {
             return {
-              unfinished: true
+              unfinished: true,
             };
           };
 
-          tasksPluginData.provide('openTaskCount', function() {
+          tasksPluginData.provide('openTaskCount', function () {
             return provideResourceData(
               $translate.instant('PLUGIN_TASK_ERROR_OPEN_TASKS'),
               HistoryResource,
               'taskCount',
-              defaultParameter()
+              defaultParameter(),
             );
           });
 
-          tasksPluginData.provide('assignedToUserCount', function() {
+          tasksPluginData.provide('assignedToUserCount', function () {
             var params = defaultParameter();
             params.assigned = true;
             return provideResourceData(
               $translate.instant('PLUGIN_TASK_ERROR_ASSIGNED_TO_USERS'),
               HistoryResource,
               'taskCount',
-              params
+              params,
             );
           });
 
-          tasksPluginData.provide('assignedToGroupCount', function() {
+          tasksPluginData.provide('assignedToGroupCount', function () {
             var params = defaultParameter();
             params.unassigned = true;
             params.withCandidateGroups = true;
@@ -151,11 +151,11 @@ module.exports = [
               $translate.instant('PLUGIN_TASK_ERROR_ASSIGNED_TO_GROUPS'),
               HistoryResource,
               'taskCount',
-              params
+              params,
             );
           });
 
-          tasksPluginData.provide('notAssignedCount', function() {
+          tasksPluginData.provide('notAssignedCount', function () {
             var params = defaultParameter();
             params.unassigned = true;
             params.withoutCandidateGroups = true;
@@ -163,17 +163,17 @@ module.exports = [
               $translate.instant('PLUGIN_TASK_ERROR_UNASSIGNED'),
               HistoryResource,
               'taskCount',
-              params
+              params,
             );
           });
 
-          tasksPluginData.provide('countByCandidateGroup', function() {
+          tasksPluginData.provide('countByCandidateGroup', function () {
             return provideResourceData(
               $translate.instant('PLUGIN_TASK_ERROR_PER_GROUP'),
               TaskReportResource,
-              'countByCandidateGroup'
-            ).then(function(candidateGroups) {
-              var groupIds = candidateGroups.map(function(group) {
+              'countByCandidateGroup',
+            ).then(function (candidateGroups) {
+              var groupIds = candidateGroups.map(function (group) {
                 return group.groupName;
               });
 
@@ -184,13 +184,13 @@ module.exports = [
                 .resource('group')
                 .list({
                   idIn: groupIds,
-                  maxResults: groupIds.length
+                  maxResults: groupIds.length,
                 })
-                .then(function(groupDefinitions) {
-                  return candidateGroups.map(function(group) {
+                .then(function (groupDefinitions) {
+                  return candidateGroups.map(function (group) {
                     group.id = group.groupName;
 
-                    var groupDef = groupDefinitions.filter(function(def) {
+                    var groupDef = groupDefinitions.filter(function (def) {
                       return def.id === group.groupName;
                     })[0];
 
@@ -201,9 +201,9 @@ module.exports = [
                     return group;
                   });
                 })
-                .catch(function() {
+                .catch(function () {
                   // When the query fails, still display the IDs
-                  return candidateGroups.map(function(group) {
+                  return candidateGroups.map(function (group) {
                     group.id = group.groupName;
                     return group;
                   });
@@ -215,56 +215,56 @@ module.exports = [
 
           $scope.openTasksState = tasksPluginData.observe(
             ['openTaskCount'],
-            function(_count) {
+            function (_count) {
               $scope.openTasksCount = _count.count || 0;
-            }
+            },
           );
 
           $scope.taskStatistics[0].state = tasksPluginData.observe(
             ['assignedToUserCount'],
-            function(_userCount) {
+            function (_userCount) {
               $scope.taskStatistics[0].count = _userCount.count || 0;
-            }
+            },
           );
 
           $scope.taskStatistics[1].state = tasksPluginData.observe(
             ['assignedToGroupCount'],
-            function(_groupCount) {
+            function (_groupCount) {
               $scope.taskStatistics[1].count = _groupCount.count || 0;
-            }
+            },
           );
 
           $scope.taskStatistics[2].state = tasksPluginData.observe(
             ['notAssignedCount'],
-            function(_notAssignedCount) {
+            function (_notAssignedCount) {
               $scope.taskStatistics[2].count = _notAssignedCount.count || 0;
-            }
+            },
           );
 
           $scope.taskGroupState = tasksPluginData.observe(
             ['countByCandidateGroup'],
-            function(_candidateGroupCounts) {
+            function (_candidateGroupCounts) {
               $scope.taskGroups = _candidateGroupCounts;
-            }
+            },
           );
 
-          $scope.formatGroupName = function(name) {
+          $scope.formatGroupName = function (name) {
             return name == null
               ? $translate.instant('PLUGIN_TASK_ASSIGNED_WITHOUT_GROUP')
               : name;
           };
 
           var taskDashboardPlugins = Views.getProviders({
-            component: 'cockpit.tasks.dashboard'
+            component: 'cockpit.tasks.dashboard',
           });
           var hasSearchPlugin = ($scope.hasSearchPlugin =
-            taskDashboardPlugins.filter(function(plugin) {
+            taskDashboardPlugins.filter(function (plugin) {
               return plugin.id === 'search-tasks';
             }).length > 0);
 
           // -- SEARCH PLUGIN REQUIRED ------
           if (hasSearchPlugin) {
-            var addTermToSearch = function(type, operator, value) {
+            var addTermToSearch = function (type, operator, value) {
               if (arguments.length < 3) {
                 operator = 'eq';
                 value = '';
@@ -274,18 +274,18 @@ module.exports = [
                 type: type,
                 operator: operator,
                 value: value,
-                name: ''
+                name: '',
               };
             };
 
             // we take all data from unfinished tasks for the open task dashboard
-            var resetSearch = function() {
+            var resetSearch = function () {
               return [addTermToSearch('unfinished')];
             };
 
             var searchLinks = resetSearch();
 
-            $scope.createSearch = function(identifier, group) {
+            $scope.createSearch = function (identifier, group) {
               if (group === 'statistics') {
                 switch (identifier) {
                   case 'openAssignedTasks':
@@ -303,7 +303,7 @@ module.exports = [
               } else {
                 if (identifier != null) {
                   searchLinks.push(
-                    addTermToSearch('taskHadCandidateGroup', 'eq', identifier)
+                    addTermToSearch('taskHadCandidateGroup', 'eq', identifier),
                   );
                 } else {
                   // without group!
@@ -314,15 +314,15 @@ module.exports = [
 
               search.updateSilently(
                 {searchQuery: JSON.stringify(searchLinks)},
-                true
+                true,
               );
               searchLinks = resetSearch();
             };
           }
-        }
+        },
       ],
 
-      priority: 0
+      priority: 0,
     });
-  }
+  },
 ];

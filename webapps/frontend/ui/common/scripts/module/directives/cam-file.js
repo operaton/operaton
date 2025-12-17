@@ -19,24 +19,24 @@
 
 module.exports = [
   'readFiles',
-  function(readFiles) {
+  function (readFiles) {
     return {
       restrict: 'A',
       scope: {
-        onChange: '&camFile'
+        onChange: '&camFile',
       },
-      link: function($scope, $element) {
-        $element[0].addEventListener('change', function($event) {
-          $scope.$apply(function() {
-            readFiles($element[0].files).then(function(files) {
+      link: function ($scope, $element) {
+        $element[0].addEventListener('change', function ($event) {
+          $scope.$apply(function () {
+            readFiles($element[0].files).then(function (files) {
               $scope.onChange({
                 $event: $event,
-                files: files
+                files: files,
               });
             });
           });
         });
-      }
+      },
     };
-  }
+  },
 ];

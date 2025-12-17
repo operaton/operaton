@@ -27,24 +27,24 @@ const Controller = [
   '$translate',
   '$location',
   'hasPlugin',
-  function(
+  function (
     camAPI,
     $modalInstance,
     $scope,
     Notifications,
     $translate,
     $location,
-    hasPlugin
+    hasPlugin,
   ) {
     const resource = camAPI.resource($scope.resource);
     const hasBatchOperationPlugin = hasPlugin(
       'cockpit.navigation',
-      'batch_operation'
+      'batch_operation',
     );
     $scope.showLinkToBatchProcess =
       hasBatchOperationPlugin &&
       ['process-definition', 'decision-definition'].includes(
-        $scope.$parent?.resource
+        $scope.$parent?.resource,
       );
     $scope.status = null;
     $scope.mode = 'UPDATE';
@@ -60,13 +60,13 @@ const Controller = [
           {
             type: 'PIprocessDefinitionKey',
             operator: 'eq',
-            value: $scope.definition.key
+            value: $scope.definition.key,
           },
           {
             type: 'PIfinished',
             operator: 'eq',
-            value: ''
-          }
+            value: '',
+          },
         ]);
       } else {
         operation = 'DECISION_SET_REMOVAL_TIME';
@@ -74,15 +74,15 @@ const Controller = [
           {
             type: 'decisionDefinitionKeyIn',
             operator: 'In',
-            value: [$scope.definition.key]
-          }
+            value: [$scope.definition.key],
+          },
         ]);
       }
 
       $scope.$dismiss();
       $location.path('/batch/operation').search({
         batchSearchQuery,
-        operation
+        operation,
       });
     };
 
@@ -102,24 +102,24 @@ const Controller = [
       $scope.ttl = $scope.mode === 'REMOVE' ? null : $scope.ttl;
       resource
         .updateHistoryTimeToLive($scope.definition.id, {
-          historyTimeToLive: $scope.ttl
+          historyTimeToLive: $scope.ttl,
         })
-        .then(function() {
+        .then(function () {
           $scope.status = 'SUCCESS';
           $scope.definition.historyTimeToLive = $scope.ttl;
 
           Notifications.addMessage({
             status: $translate.instant('TIME_TO_LIVE_POPUP_STATE_STATUS'),
-            message: $translate.instant('TIME_TO_LIVE_POPUP_STATE_SUCCESS')
+            message: $translate.instant('TIME_TO_LIVE_POPUP_STATE_SUCCESS'),
           });
         })
-        .catch(function(error) {
+        .catch(function (error) {
           $scope.status = 'FAIL';
           $scope.definition.historyTimeToLive = lastValue;
 
           Notifications.addError({
             status: $translate.instant('PAGES_STATUS_COMMUNICATION_ERROR'),
-            message: error
+            message: error,
           });
         });
     };
@@ -132,13 +132,13 @@ const Controller = [
       return +$scope.definition.historyTimeToLive;
     };
 
-    $scope.close = res => $modalInstance.close(res ? res : $scope.status);
+    $scope.close = (res) => $modalInstance.close(res ? res : $scope.status);
 
     let lastValue = getAndCorrectTimeToLiveValue();
-  }
+  },
 ];
 
 module.exports = {
   template: template,
-  controller: Controller
+  controller: Controller,
 };

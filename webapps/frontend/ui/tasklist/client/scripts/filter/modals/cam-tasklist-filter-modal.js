@@ -61,10 +61,12 @@ var dateProperties = [
   'dueBefore',
   'dueAfter',
   'followUpBefore',
-  'followUpAfter'
+  'followUpAfter',
 ];
-var completeDateExp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})([+-][0-9]{4}|Z)$/;
-var simpleDateExp = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
+var completeDateExp =
+  /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})([+-][0-9]{4}|Z)$/;
+var simpleDateExp =
+  /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
 
 var varExp = /Variables$/;
 function isQueryVariable(key) {
@@ -77,7 +79,7 @@ function isExpression(value) {
 }
 
 function cleanJson(obj) {
-  each(Object.keys(obj), function(key) {
+  each(Object.keys(obj), function (key) {
     // property with name starting with "$" or empty arrays are removed
     if (key[0] === '$' || (isArray(obj[key]) && !obj[key].length)) {
       delete obj[key];
@@ -98,7 +100,7 @@ module.exports = [
   'filtersData',
   'fixDate',
   'unfixDate',
-  function(
+  function (
     $scope,
     $translate,
     $q,
@@ -107,15 +109,14 @@ module.exports = [
     filter,
     filtersData,
     fixDate,
-    unfixDate
+    unfixDate,
   ) {
     var Filter = camAPI.resource('filter');
 
-    var filterModalData = ($scope.filterModalData = filtersData.newChild(
-      $scope
-    ));
+    var filterModalData = ($scope.filterModalData =
+      filtersData.newChild($scope));
 
-    $scope.$on('$locationChangeStart', function() {
+    $scope.$on('$locationChangeStart', function () {
       $scope.$dismiss();
     });
 
@@ -138,7 +139,7 @@ module.exports = [
     $scope.filter.properties.description = $scope.filter.properties.description;
     $scope.filter.properties.priority = parseInt(
       $scope.filter.properties.priority || 0,
-      10
+      10,
     );
     $scope.filter.properties.color =
       $scope.filter.properties.color || DEFAULT_COLOR;
@@ -179,12 +180,12 @@ module.exports = [
 
         query.push({
           key: key,
-          value: value
+          value: value,
         });
       } else {
         queryVariables.push({
           key: key,
-          value: value
+          value: value,
         });
       }
     }
@@ -197,16 +198,16 @@ module.exports = [
 
     filterModalData.provide('userFilterAccess', [
       'filter',
-      function(filter) {
+      function (filter) {
         var deferred = $q.defer();
 
         if (!filter || !filter.id) {
           // no filter
           deferred.resolve({
-            links: []
+            links: [],
           });
         } else {
-          Filter.authorizations(filter.id, function(err, resp) {
+          Filter.authorizations(filter.id, function (err, resp) {
             if (err) {
               deferred.reject(err);
             } else {
@@ -216,43 +217,43 @@ module.exports = [
         }
 
         return deferred.promise;
-      }
+      },
     ]);
 
     filterModalData.provide('accesses', [
       'userFilterAccess',
-      function(access) {
+      function (access) {
         var accesses = {};
-        each(access.links, function(link) {
+        each(access.links, function (link) {
           accesses[link.rel] = true;
         });
         return accesses;
-      }
+      },
     ]);
 
     // observe date //////////////////////////////////////////////////////////
 
-    filterModalData.observe('accesses', function(accesses) {
+    filterModalData.observe('accesses', function (accesses) {
       $scope.accesses = accesses;
     });
 
     // provider ////////////////////////////////////
 
-    var defaultValidationProvider = function() {
+    var defaultValidationProvider = function () {
       return false;
     };
 
     $scope.isValid = defaultValidationProvider;
 
-    $scope.registerValidationProvider = function(fn) {
+    $scope.registerValidationProvider = function (fn) {
       $scope.isValid = fn || defaultValidationProvider;
     };
 
-    var postFilterSavedProvider = function(filter, callback) {
+    var postFilterSavedProvider = function (filter, callback) {
       return callback();
     };
 
-    $scope.registerPostFilterSavedProvider = function(fn) {
+    $scope.registerPostFilterSavedProvider = function (fn) {
       postFilterSavedProvider = fn || postFilterSavedProvider;
     };
 
@@ -260,18 +261,18 @@ module.exports = [
 
     function errorNotification(src, err, exclusive) {
       $translate(src)
-        .then(function(translated) {
+        .then(function (translated) {
           Notifications.addError({
             status: translated,
             message: err ? err.message : '',
             exclusive: exclusive,
-            scope: $scope
+            scope: $scope,
           });
         })
         .catch(angular.noop);
     }
 
-    $scope.submit = function() {
+    $scope.submit = function () {
       $scope.submitInProgress = true;
       $scope.$broadcast('pre-submit');
 
@@ -337,13 +338,13 @@ module.exports = [
           color: $scope.filter.properties.color || DEFAULT_COLOR,
           refresh: $scope.filter.properties.refresh,
           variables: $scope.filter.properties.variables,
-          showUndefinedVariable: $scope.filter.properties.showUndefinedVariable
-        }
+          showUndefinedVariable: $scope.filter.properties.showUndefinedVariable,
+        },
       };
 
       cleanJson(toSave);
 
-      Filter.save(toSave, function(err, filterResponse) {
+      Filter.save(toSave, function (err, filterResponse) {
         $scope.submitInProgress = false;
         if (err) {
           return errorNotification('FILTER_SAVE_ERROR', err, true);
@@ -351,7 +352,7 @@ module.exports = [
 
         toSave.id = filterId = filterId || filterResponse.id;
 
-        postFilterSavedProvider(toSave, function(err) {
+        postFilterSavedProvider(toSave, function (err) {
           if (err) {
             if (isArray(err) && err.length) {
               for (var i = 0, error; (error = err[i]); i++) {
@@ -370,17 +371,17 @@ module.exports = [
 
     // deletion ////////////////////////////////////////////////////////////////////
 
-    $scope.abortDeletion = function() {
+    $scope.abortDeletion = function () {
       $scope.deletion = false;
     };
 
-    $scope.confirmDeletion = function() {
+    $scope.confirmDeletion = function () {
       $scope.deletion = true;
     };
 
-    $scope.delete = function() {
+    $scope.delete = function () {
       $scope.submitInProgress = true;
-      Filter.delete($scope.filter.id, function(err) {
+      Filter.delete($scope.filter.id, function (err) {
         $scope.submitInProgress = false;
         if (err) {
           return errorNotification('FILTER_DELETION_ERROR', err, true);
@@ -389,5 +390,5 @@ module.exports = [
         $scope.$close();
       });
     };
-  }
+  },
 ];

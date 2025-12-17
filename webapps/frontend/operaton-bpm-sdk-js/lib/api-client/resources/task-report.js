@@ -38,9 +38,9 @@ TaskReport.path = 'task/report';
  *
  * @param {Function} done
  */
-TaskReport.countByCandidateGroup = function(done) {
+TaskReport.countByCandidateGroup = function (done) {
   return this.http.get(this.path + '/candidate-group-count', {
-    done: done
+    done: done,
   });
 };
 
@@ -54,10 +54,10 @@ TaskReport.countByCandidateGroup = function(done) {
  * @param  {Object}   [params.startedBefore]        Date before which the process instance were started
  * @param  {Function} done
  */
-TaskReport.countByCandidateGroupAsCsv = function(done) {
+TaskReport.countByCandidateGroupAsCsv = function (done) {
   return this.http.get(this.path + '/candidate-group-count', {
     accept: 'text/csv',
-    done: done
+    done: done,
   });
 };
 

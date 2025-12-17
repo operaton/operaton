@@ -43,7 +43,7 @@ var taskModule = angular.module('cam.tasklist.task', [
   apiClient.name,
   'ui.bootstrap',
   'cam.tasklist.form',
-  'angularMoment'
+  'angularMoment',
 ]);
 
 /**

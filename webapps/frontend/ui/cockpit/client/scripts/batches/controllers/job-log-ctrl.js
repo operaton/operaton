@@ -22,7 +22,7 @@ module.exports = [
   '$translate',
   'localConf',
   'Uri',
-  function($scope, camAPI, job, $translate, localConf, Uri) {
+  function ($scope, camAPI, job, $translate, localConf, Uri) {
     $scope.loadingState = 'LOADING';
 
     // prettier-ignore
@@ -38,23 +38,23 @@ module.exports = [
             {class: 'priority', request: 'jobPriority', sortable: true, content: $translate.instant('PLGN_HIST_PRIORITY')}
           ];
 
-    $scope.getHistoricJobLogStacktraceUrl = function(log) {
+    $scope.getHistoricJobLogStacktraceUrl = function (log) {
       return Uri.appUri(
-        'engine://engine/:engine/history/job-log/' + log.id + '/stacktrace'
+        'engine://engine/:engine/history/job-log/' + log.id + '/stacktrace',
       );
     };
 
     // Default sorting, newest failure on top
     $scope.sortObj = {sortBy: 'timestamp', sortOrder: 'desc'};
 
-    $scope.onSortChange = function(sortObj) {
+    $scope.onSortChange = function (sortObj) {
       $scope.sortObj = sortObj || $scope.sortObj;
       updateView();
     };
 
     var pages = ($scope.pages = {total: 0, current: 1, size: 10});
 
-    $scope.getState = function(log) {
+    $scope.getState = function (log) {
       if (log.creationLog) {
         return 'Created';
       }
@@ -69,7 +69,7 @@ module.exports = [
       }
     };
 
-    var updateView = ($scope.updateView = function() {
+    var updateView = ($scope.updateView = function () {
       $scope.loadingState = 'LOADING';
 
       camAPI
@@ -78,9 +78,9 @@ module.exports = [
           jobId: job.id,
           maxResults: pages.size,
           firstResult: (pages.current - 1) * pages.size,
-          ...$scope.sortObj
+          ...$scope.sortObj,
         })
-        .then(res => {
+        .then((res) => {
           $scope.logs = res;
           $scope.loadingState = res.length ? 'LOADED' : 'EMPTY';
         })
@@ -92,10 +92,10 @@ module.exports = [
     camAPI
       .resource('history')
       .jobLogCount({jobId: job.id})
-      .then(res => {
+      .then((res) => {
         pages.total = res.count;
       });
 
     updateView();
-  }
+  },
 ];

@@ -18,8 +18,8 @@
 'use strict';
 var moment = require('operaton-bpm-sdk-js/vendor/moment');
 
-module.exports = function() {
-  return function(value) {
+module.exports = function () {
+  return function (value) {
     if (value) {
       return moment(value, moment.ISO_8601).format('YYYY-MM-DDTHH:mm:ss.SSSZZ');
     }

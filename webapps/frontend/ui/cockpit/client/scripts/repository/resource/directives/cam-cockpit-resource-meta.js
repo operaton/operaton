@@ -20,18 +20,18 @@
 var template = require('./cam-cockpit-resource-meta.html?raw');
 
 module.exports = [
-  function() {
+  function () {
     return {
       scope: {
         resourceData: '=',
-        control: '='
+        control: '=',
       },
 
       template: template,
 
       controller: [
         '$scope',
-        function($scope) {
+        function ($scope) {
           // fields ////////////////////////////////////////////////////
 
           var resourceMetaData = $scope.resourceData.newChild($scope);
@@ -39,7 +39,7 @@ module.exports = [
 
           // observe //////////////////////////////////////////////////
 
-          resourceMetaData.observe('resource', function(resource) {
+          resourceMetaData.observe('resource', function (resource) {
             if (resource) {
               var parts = (resource.name || resource.id).split('/');
               resource._filename = parts.pop();
@@ -49,11 +49,11 @@ module.exports = [
             $scope.resource = resource;
           });
 
-          resourceMetaData.observe('definitions', function(definitions) {
+          resourceMetaData.observe('definitions', function (definitions) {
             $scope.definitions = definitions;
           });
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

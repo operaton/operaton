@@ -23,7 +23,7 @@ module.exports = [
   '$scope',
   'exposeScopeProperties',
   'search',
-  ExternalTasksTabController
+  ExternalTasksTabController,
 ];
 
 module.exports.ExternalTasksTabController = ExternalTasksTabController;
@@ -32,7 +32,7 @@ function ExternalTasksTabController($scope, exposeScopeProperties, search) {
   exposeScopeProperties($scope, this, ['onLoad']);
 
   // reset Page when changing Tabs
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', function () {
     search('page', null);
   });
 
@@ -41,7 +41,7 @@ function ExternalTasksTabController($scope, exposeScopeProperties, search) {
   processData.observe('filter', this.onFilterChanged.bind(this));
 }
 
-ExternalTasksTabController.prototype.onFilterChanged = function(filter) {
+ExternalTasksTabController.prototype.onFilterChanged = function (filter) {
   if (this.isFilterChanged(filter)) {
     this.filter = filter;
 
@@ -51,14 +51,14 @@ ExternalTasksTabController.prototype.onFilterChanged = function(filter) {
   }
 };
 
-ExternalTasksTabController.prototype.isFilterChanged = function(filter) {
+ExternalTasksTabController.prototype.isFilterChanged = function (filter) {
   var lastActivities = getActivityIdsFromFilter(this.filter);
   var currentActivities = getActivityIdsFromFilter(filter);
 
   return !this.filter || !angular.equals(lastActivities, currentActivities);
 };
 
-ExternalTasksTabController.prototype.onPaginationChange = function(pages) {
+ExternalTasksTabController.prototype.onPaginationChange = function (pages) {
   this.pages = pages;
 
   if (this.filter) {
@@ -66,14 +66,14 @@ ExternalTasksTabController.prototype.onPaginationChange = function(pages) {
   }
 };
 
-ExternalTasksTabController.prototype.loadTasks = function() {
+ExternalTasksTabController.prototype.loadTasks = function () {
   this.loadingState = 'LOADING';
 
   this.onLoad({
     pages: angular.copy(this.pages), //just a defensive copy
-    activityIds: getActivityIdsFromFilter(this.filter)
+    activityIds: getActivityIdsFromFilter(this.filter),
   }).then(
-    function(data) {
+    function (data) {
       this.total = data.count;
 
       if (!data.list) {
@@ -81,7 +81,7 @@ ExternalTasksTabController.prototype.loadTasks = function() {
       } else {
         this.loadingState = 'LOADED';
       }
-    }.bind(this)
+    }.bind(this),
   );
 };
 

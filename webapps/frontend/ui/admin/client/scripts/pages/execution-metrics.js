@@ -35,7 +35,7 @@ const metrics = {
   DI: 'decision-instances',
   TU: 'task-users',
   FNI: 'flow-node-instances',
-  EDE: 'executed-decision-elements'
+  EDE: 'executed-decision-elements',
 };
 const localConfContractStartDate = 'metricsContractStartDate';
 const datasetMetricColors = {
@@ -43,7 +43,7 @@ const datasetMetricColors = {
   DI: 'hsl(302, 70%, 41%)',
   TU: 'hsl(14, 70%, 41%)',
   FNI: 'hsl(86, 70%, 41%)',
-  EDE: 'hsl(158, 70%, 41%)'
+  EDE: 'hsl(158, 70%, 41%)',
 };
 
 const Controller = [
@@ -54,14 +54,14 @@ const Controller = [
   'localConf',
   'PluginMetricsResource',
   '$translate',
-  function(
+  function (
     $scope,
     $filter,
     camAPI,
     configuration,
     localConf,
     PluginMetricsResource,
-    $translate
+    $translate,
   ) {
     const telemetryResource = camAPI.resource('telemetry');
     const dateFilter = $filter('date');
@@ -72,9 +72,7 @@ const Controller = [
     if (startDate) {
       $scope.startDate = startDate;
     } else {
-      startDate = moment()
-        .startOf('year')
-        .toDate();
+      startDate = moment().startOf('year').toDate();
     }
     $scope.startDate = dateFilter(startDate, fmtDatePicker);
 
@@ -98,8 +96,8 @@ const Controller = [
         $scope.telemetryData = $translate.instant(
           'DIAGNOSTICS_FETCH_DATA_ERROR_MESSAGE',
           {
-            err
-          }
+            err,
+          },
         );
       }
     });
@@ -113,27 +111,27 @@ const Controller = [
         Chart.LinearScale,
         Chart.CategoryScale,
         Chart.Legend,
-        Chart.Tooltip
+        Chart.Tooltip,
       );
       $scope.chart = new Chart.Chart(ctx, {
         type: 'bar',
         data: {
           labels: [],
-          datasets: []
+          datasets: [],
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           interaction: {
             mode: 'index',
-            intersect: false
-          }
-        }
+            intersect: false,
+          },
+        },
       });
     };
 
-    const updateMonthlyChart = monthlyMetrics => {
-      const createDataset = metricsKey => {
+    const updateMonthlyChart = (monthlyMetrics) => {
+      const createDataset = (metricsKey) => {
         let data = [];
         for (const monthlyMetric of monthlyMetrics) {
           data.push(monthlyMetric[metrics[metricsKey]]?.sum || 0);
@@ -141,7 +139,7 @@ const Controller = [
         return {
           label: metricsKey,
           data: data,
-          backgroundColor: datasetMetricColors[metricsKey]
+          backgroundColor: datasetMetricColors[metricsKey],
         };
       };
 
@@ -154,13 +152,13 @@ const Controller = [
         datasets.push(createDataset('EDE'));
       }
 
-      $scope.chart.data.labels = monthlyMetrics.map(a => a.labelFmt);
+      $scope.chart.data.labels = monthlyMetrics.map((a) => a.labelFmt);
       $scope.chart.data.datasets = datasets;
       $scope.chart.update();
     };
 
     // sets loading state to error and updates error message
-    const setInputError = error => {
+    const setInputError = (error) => {
       $scope.loadingStateMonthly = $scope.loadingStateAnnual = 'ERROR';
       $scope.loadingErrorMonthly = $scope.loadingErrorAnnual = error;
     };
@@ -177,11 +175,11 @@ const Controller = [
       }
     };
 
-    $scope.getSubscriptionMonthStyle = metric => {
+    $scope.getSubscriptionMonthStyle = (metric) => {
       return metric.activeYear ? {} : {opacity: 0.7};
     };
 
-    const formatSubscriptionYear = label => {
+    const formatSubscriptionYear = (label) => {
       const date = moment($scope.startDate).year(label);
       const endDate = date.clone().add(1, 'years');
       const translationId = endDate.isAfter(moment())
@@ -190,7 +188,7 @@ const Controller = [
 
       return $translate.instant(translationId, {
         from: date.format(fmtDateTable),
-        to: endDate.format(fmtDateTable)
+        to: endDate.format(fmtDateTable),
       });
     };
 
@@ -212,7 +210,7 @@ const Controller = [
         const label = createGroupLabel(
           metricUsage.subscriptionYear,
           metricUsage.subscriptionMonth,
-          day
+          day,
         );
         let labelFmt;
         if (angular.isFunction(labelFormat)) {
@@ -229,13 +227,13 @@ const Controller = [
         }
         metricsGroupMap[label][metricUsage.metric] = {
           sum: metricUsage.sum,
-          sumFmt: metricUsage.sum.toLocaleString() || 0
+          sumFmt: metricUsage.sum.toLocaleString() || 0,
         };
       }
       return metricsGroupMap;
     };
 
-    const mapToList = metricsGroupMap => {
+    const mapToList = (metricsGroupMap) => {
       // sort descending by date labels
       return Object.values(metricsGroupMap).sort((a, b) => b.label - a.label);
     };
@@ -247,13 +245,13 @@ const Controller = [
           groupBy: 'month',
           metrics: Array.from(metrics).toString(),
           startDate,
-          endDate
+          endDate,
         }).$promise.then(
-          monthlyMetrics => {
+          (monthlyMetrics) => {
             prepareTableData(monthlyMetrics, null, monthlyMetricUsageMap);
             resolve();
           },
-          err => reject(err)
+          (err) => reject(err),
         );
       });
     };
@@ -261,23 +259,13 @@ const Controller = [
     const calculateContractDates = () => {
       // calculate active subscription month
       let activeMonth = moment($scope.startDate).startOf('day');
-      while (
-        activeMonth
-          .clone()
-          .add(1, 'month')
-          .isBefore(moment())
-      ) {
+      while (activeMonth.clone().add(1, 'month').isBefore(moment())) {
         activeMonth.add(1, 'month');
       }
       $scope.activeMonth = activeMonth;
       // calculate active subscription year
       let activeYear = moment($scope.startDate).startOf('day');
-      while (
-        activeYear
-          .clone()
-          .add(1, 'year')
-          .isBefore(moment())
-      ) {
+      while (activeYear.clone().add(1, 'year').isBefore(moment())) {
         activeYear.add(1, 'year');
       }
       $scope.activeYear = activeYear;
@@ -294,14 +282,14 @@ const Controller = [
         monthlyMetricUsageMap[label] = {
           label,
           labelFmt: label,
-          activeYear: !month.isBefore($scope.activeYear)
+          activeYear: !month.isBefore($scope.activeYear),
         };
 
         // prefill data
-        Object.values(metrics).forEach(metricName => {
+        Object.values(metrics).forEach((metricName) => {
           monthlyMetricUsageMap[label][metricName] = {
             sum: 0,
-            sumFmt: 0
+            sumFmt: 0,
           };
         });
 
@@ -330,7 +318,7 @@ const Controller = [
         getMonthlyMetrics(requestMetrics, prevSubStart),
         // load TU metrics for current and last subscription year
         getMonthlyMetrics([metrics.TU], curSubStart),
-        getMonthlyMetrics([metrics.TU], prevSubStart, curSubStart)
+        getMonthlyMetrics([metrics.TU], prevSubStart, curSubStart),
       ];
 
       debounceMonthly(Promise.all(series))
@@ -357,7 +345,7 @@ const Controller = [
           $scope.loadingStateMonthly = 'LOADED';
           $scope.$apply();
         })
-        .catch(err => {
+        .catch((err) => {
           $scope.loadingStateMonthly = 'ERROR';
           $scope.loadingErrorMonthly = getApiError(err);
         });
@@ -368,21 +356,21 @@ const Controller = [
       debounceAnnual(
         PluginMetricsResource.getAggregated({
           subscriptionStartDate: $scope.startDate,
-          groupBy: 'year'
-        }).$promise
+          groupBy: 'year',
+        }).$promise,
       )
-        .then(annualMetrics => {
+        .then((annualMetrics) => {
           let annualMetricsMap = prepareTableData(
             annualMetrics,
-            formatSubscriptionYear
+            formatSubscriptionYear,
           );
           // fill missing values
           for (const annualMetrics in annualMetricsMap) {
-            Object.values(metrics).forEach(metricName => {
+            Object.values(metrics).forEach((metricName) => {
               if (!annualMetricsMap[annualMetrics][metricName]) {
                 annualMetricsMap[annualMetrics][metricName] = {
                   sum: 0,
-                  sumFmt: 0
+                  sumFmt: 0,
                 };
               }
             });
@@ -392,13 +380,13 @@ const Controller = [
             $scope.annualMetrics.length === 0 ? 'EMPTY' : 'LOADED';
           $scope.$apply();
         })
-        .catch(err => {
+        .catch((err) => {
           $scope.loadingStateAnnual = 'ERROR';
           $scope.loadingErrorAnnual = getApiError(err);
         });
     };
 
-    const getApiError = err => {
+    const getApiError = (err) => {
       let msg;
       if (err.data?.type) {
         msg = err.data.type;
@@ -410,14 +398,14 @@ const Controller = [
       }
 
       return $translate.instant('EXECUTION_METRICS_FETCH_DATA_ERROR_MESSAGE', {
-        msg
+        msg,
       });
     };
 
-    $scope.getClipboardText = metric => {
+    $scope.getClipboardText = (metric) => {
       let str = '';
       str += `${metric.labelFmt}\n`;
-      Object.keys(metrics).forEach(metricKey => {
+      Object.keys(metrics).forEach((metricKey) => {
         str += `- ${metricKey}: ${metric[metrics[metricKey]].sumFmt}\n`;
       });
       str += '\n';
@@ -441,7 +429,7 @@ const Controller = [
     initChart();
     calculateContractDates();
     load();
-  }
+  },
 ];
 
 module.exports = [
@@ -452,7 +440,7 @@ module.exports = [
       label: 'EXECUTION_METRICS',
       template: template,
       controller: Controller,
-      priority: 900
+      priority: 900,
     });
-  }
+  },
 ];

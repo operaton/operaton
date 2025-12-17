@@ -33,22 +33,22 @@ var ChoicesFieldHandler = AbstractFormField.extend(
     /**
      * Prepares an instance
      */
-    initialize: function() {
+    initialize: function () {
       // read variable definitions from markup
       var variableName = (this.variableName = this.element.attr(
-        constants.DIRECTIVE_CAM_VARIABLE_NAME
+        constants.DIRECTIVE_CAM_VARIABLE_NAME,
       ));
       var variableType = (this.variableType = this.element.attr(
-        constants.DIRECTIVE_CAM_VARIABLE_TYPE
+        constants.DIRECTIVE_CAM_VARIABLE_TYPE,
       ));
       var choicesVariableName = (this.choicesVariableName = this.element.attr(
-        constants.DIRECTIVE_CAM_CHOICES
+        constants.DIRECTIVE_CAM_CHOICES,
       ));
 
       // crate variable
       this.variableManager.createVariable({
         name: variableName,
-        type: variableType
+        type: variableType,
       });
 
       // fetch choices variable
@@ -67,12 +67,12 @@ var ChoicesFieldHandler = AbstractFormField.extend(
      *
      * @return {CamSDK.form.ChoicesFieldHandler} Chainable method.
      */
-    applyValue: function() {
+    applyValue: function () {
       var selectedIndex = this.element[0].selectedIndex;
       // if cam-choices variable is defined, apply options
       if (this.choicesVariableName) {
         var choicesVariableValue = this.variableManager.variableValue(
-          this.choicesVariableName
+          this.choicesVariableName,
         );
         if (choicesVariableValue) {
           // array
@@ -83,8 +83,8 @@ var ChoicesFieldHandler = AbstractFormField.extend(
                 this.element.append(
                   $('<option>', {
                     value: val,
-                    text: val
-                  })
+                    text: val,
+                  }),
                 );
               }
             }
@@ -95,8 +95,8 @@ var ChoicesFieldHandler = AbstractFormField.extend(
                 this.element.append(
                   $('<option>', {
                     value: p,
-                    text: choicesVariableValue[p]
-                  })
+                    text: choicesVariableValue[p],
+                  }),
                 );
               }
             }
@@ -122,7 +122,7 @@ var ChoicesFieldHandler = AbstractFormField.extend(
 
         // Update the ui after the current digest cycle
         var that = this;
-        window.setTimeout(function() {
+        window.setTimeout(function () {
           that.element.change();
         }, 0);
       }
@@ -135,14 +135,14 @@ var ChoicesFieldHandler = AbstractFormField.extend(
      *
      * @return {*} when multiple choices are possible an array of values, otherwise a single value
      */
-    getValue: function() {
+    getValue: function () {
       // read value from html control
       var value;
       var multiple = this.element.prop('multiple');
 
       if (multiple) {
         value = [];
-        this.element.find('option:selected').each(function() {
+        this.element.find('option:selected').each(function () {
           value.push($(this).val());
         });
       } else {
@@ -153,12 +153,12 @@ var ChoicesFieldHandler = AbstractFormField.extend(
       this.variableManager.variableValue(this.variableName, value);
 
       return value;
-    }
+    },
   },
   /** @lends CamSDK.form.ChoicesFieldHandler */
   {
-    selector: 'select[' + constants.DIRECTIVE_CAM_VARIABLE_NAME + ']'
-  }
+    selector: 'select[' + constants.DIRECTIVE_CAM_VARIABLE_NAME + ']',
+  },
 );
 
 module.exports = ChoicesFieldHandler;

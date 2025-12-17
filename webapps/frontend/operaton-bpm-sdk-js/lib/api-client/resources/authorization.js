@@ -55,10 +55,10 @@ Authorization.path = 'authorization';
  *                                        Specifies the maximum number of results to return.
  * @param {Function} done
  */
-Authorization.list = function(params, done) {
+Authorization.list = function (params, done) {
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -68,9 +68,9 @@ Authorization.list = function(params, done) {
  * @param  {uuid}     authorizationId     of the authorization to be requested
  * @param  {Function} done
  */
-Authorization.get = function(authorizationId, done) {
+Authorization.get = function (authorizationId, done) {
   return this.http.get(this.path + '/' + authorizationId, {
-    done: done
+    done: done,
   });
 };
 
@@ -80,10 +80,10 @@ Authorization.get = function(authorizationId, done) {
  * @param  {Object}   authorization       is an object representation of an authorization
  * @param  {Function} done
  */
-Authorization.create = function(authorization, done) {
+Authorization.create = function (authorization, done) {
   return this.http.post(this.path + '/create', {
     data: authorization,
-    done: done
+    done: done,
   });
 };
 
@@ -93,10 +93,10 @@ Authorization.create = function(authorization, done) {
  * @param  {Object}   authorization       is an object representation of an authorization
  * @param  {Function} done
  */
-Authorization.update = function(authorization, done) {
+Authorization.update = function (authorization, done) {
   return this.http.put(this.path + '/' + authorization.id, {
     data: authorization,
-    done: done
+    done: done,
   });
 };
 
@@ -111,10 +111,10 @@ Authorization.update = function(authorization, done) {
  *                                    otherwise created
  * @param  {Function} done
  */
-Authorization.save = function(authorization, done) {
+Authorization.save = function (authorization, done) {
   return Authorization[authorization.id ? 'update' : 'create'](
     authorization,
-    done
+    done,
   );
 };
 
@@ -124,16 +124,16 @@ Authorization.save = function(authorization, done) {
  * @param  {uuid}     id   of the authorization to delete
  * @param  {Function} done
  */
-Authorization.delete = function(id, done) {
+Authorization.delete = function (id, done) {
   return this.http.del(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
-Authorization.check = function(authorization, done) {
+Authorization.check = function (authorization, done) {
   return this.http.get(this.path + '/check', {
     data: authorization,
-    done: done
+    done: done,
   });
 };
 

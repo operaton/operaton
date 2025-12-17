@@ -22,10 +22,10 @@ var builtInResources = {
   user: 1,
   group: 2,
   'group membership': 3,
-  authorization: 4
+  authorization: 4,
 };
 
-var mapParameters = function(permissionName, resource, resourceId) {
+var mapParameters = function (permissionName, resource, resourceId) {
   var request = {};
 
   request.permissionName = permissionName;
@@ -42,14 +42,14 @@ var mapParameters = function(permissionName, resource, resourceId) {
 module.exports = [
   '$animate',
   'AuthorizationResource',
-  function($animate, AuthorizationResource) {
+  function ($animate, AuthorizationResource) {
     return {
       transclude: 'element',
       priority: 1000,
       terminal: true,
       restrict: 'A',
-      compile: function(element, attr, transclude) {
-        return function($scope, $element) {
+      compile: function (element, attr, transclude) {
+        return function ($scope, $element) {
           var childElement, childScope;
 
           var permission = attr.authPermission;
@@ -58,9 +58,9 @@ module.exports = [
           var invertCheck = attr.authInverse === 'true';
 
           AuthorizationResource.check(
-            mapParameters(permission, resourceName, resourceId)
+            mapParameters(permission, resourceName, resourceId),
           )
-            .$promise.then(function(response) {
+            .$promise.then(function (response) {
               if (childElement) {
                 $animate.leave(childElement);
                 childElement = undefined;
@@ -76,15 +76,15 @@ module.exports = [
                 (!response.authorized && invertCheck)
               ) {
                 childScope = $scope.$new();
-                transclude(childScope, function(clone) {
+                transclude(childScope, function (clone) {
                   childElement = clone;
                   $animate.enter(clone, $element.parent(), $element);
                 });
               }
             })
-            .catch(function() {});
+            .catch(function () {});
         };
-      }
+      },
     };
-  }
+  },
 ];

@@ -29,7 +29,7 @@ module.exports = [
   '$translate',
   'processData',
   'camAPI',
-  function(
+  function (
     $scope,
     $q,
     Notifications,
@@ -38,14 +38,14 @@ module.exports = [
     $timeout,
     $translate,
     processData,
-    camAPI
+    camAPI,
   ) {
     var jobDefinitions = [];
 
     processData.observe([
       'processDefinition',
       'bpmnElements',
-      function(processDefinition, bpmnElements) {
+      function (processDefinition, bpmnElements) {
         // Load Job Definitions
         function fetchDefinitions(firstResult) {
           camAPI
@@ -53,16 +53,16 @@ module.exports = [
             .list({
               processDefinitionId: processDefinition.id,
               firstResult: firstResult,
-              maxResults: 2000
+              maxResults: 2000,
             })
-            .then(function(res) {
+            .then(function (res) {
               jobDefinitions = jobDefinitions.concat(
-                res.map(function(jobDef) {
+                res.map(function (jobDef) {
                   jobDef.activityName =
                     bpmnElements[jobDef.activityId] &&
                     bpmnElements[jobDef.activityId].name;
                   return jobDef;
-                })
+                }),
               );
               summarizePages.total = jobDefinitions.length;
 
@@ -71,14 +71,14 @@ module.exports = [
 
                 $modalInstance.opened
                   .then(
-                    $timeout(function() {
+                    $timeout(function () {
                       Notifications.addError({
                         status: 'Error',
                         message:
                           'This process definition has no job definitions associated with. The job priority cannot be overridden.',
-                        exclusive: true
+                        exclusive: true,
                       });
-                    }, 0)
+                    }, 0),
                   )
                   .catch(angular.noop);
                 return;
@@ -92,7 +92,7 @@ module.exports = [
             });
         }
         fetchDefinitions(0);
-      }
+      },
     ]);
 
     $scope.status;
@@ -106,23 +106,23 @@ module.exports = [
     var summarizePages = ($scope.summarizePages = {
       size: 5,
       total: 0,
-      current: 1
+      current: 1,
     });
 
     var data = ($scope.data = {
       priority: null,
-      includeJobs: false
+      includeJobs: false,
     });
 
     $scope.setJobPriority = true;
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       var response = {};
       response.status = $scope.status;
       $modalInstance.close(response);
     });
 
-    $scope.$watch('summarizePages.current', function(newValue) {
+    $scope.$watch('summarizePages.current', function (newValue) {
       if (!newValue) {
         return;
       }
@@ -144,7 +144,7 @@ module.exports = [
       }
     }
 
-    $scope.submit = function() {
+    $scope.submit = function () {
       var setJobPriority = $scope.setJobPriority;
       if (!setJobPriority) {
         data = {};
@@ -157,19 +157,19 @@ module.exports = [
       $scope.status = PERFORM;
 
       doOverride(jobDefinitions)
-        .then(function() {
+        .then(function () {
           if (!finishedWithFailures) {
             if ($scope.setJobPriority) {
               Notifications.addMessage({
                 status: $translate.instant('BULK_OVERRIDE_STATUS_FINISHED'),
                 message: $translate.instant('BULK_OVERRIDE_MESSAGE'),
-                exclusive: true
+                exclusive: true,
               });
             } else {
               Notifications.addMessage({
                 status: $translate.instant('BULK_OVERRIDE_STATUS_FINISHED'),
                 message: $translate.instant('BULK_OVERRIDE_CLEARING_MESSAGE'),
-                exclusive: true
+                exclusive: true,
               });
             }
           } else {
@@ -177,13 +177,13 @@ module.exports = [
               Notifications.addError({
                 status: $translate.instant('BULK_OVERRIDE_STATUS_FINISHED'),
                 message: $translate.instant('BULK_OVERRIDE_ERROR_1'),
-                exclusive: true
+                exclusive: true,
               });
             } else {
               Notifications.addError({
                 status: $translate.instant('BULK_OVERRIDE_STATUS_FINISHED'),
                 message: $translate.instant('BULK_OVERRIDE_ERROR_2'),
-                exclusive: true
+                exclusive: true,
               });
             }
           }
@@ -202,10 +202,10 @@ module.exports = [
         jobDefinition.status = PERFORM;
         JobDefinitionResource.setJobPriority(
           {
-            id: jobDefinition.id
+            id: jobDefinition.id,
           },
           data,
-          function() {
+          function () {
             jobDefinition.status = SUCCESS;
 
             // we want to show a summarize, when all requests
@@ -215,7 +215,7 @@ module.exports = [
               deferred.resolve();
             }
           },
-          function(error) {
+          function (error) {
             finishedWithFailures = true;
 
             jobDefinition.status = FAILED;
@@ -227,7 +227,7 @@ module.exports = [
             if (count === 0) {
               deferred.resolve();
             }
-          }
+          },
         );
       }
 
@@ -238,7 +238,7 @@ module.exports = [
       return deferred.promise;
     }
 
-    $scope.isValid = function() {
+    $scope.isValid = function () {
       var formScope = angular
         .element('[name="overrideJobPriorityForm"]')
         .scope();
@@ -250,10 +250,10 @@ module.exports = [
       );
     };
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       var response = {};
       response.status = status;
       $modalInstance.close(response);
     };
-  }
+  },
 ];

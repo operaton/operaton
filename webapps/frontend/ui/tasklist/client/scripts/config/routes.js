@@ -21,16 +21,16 @@ var tasklistTemplate = require('./../index.html?raw');
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider
       .when('/', {
         template: tasklistTemplate,
         controller: 'camTasklistViewCtrl',
         authentication: 'required',
-        reloadOnSearch: false
+        reloadOnSearch: false,
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/',
       });
-  }
+  },
 ];

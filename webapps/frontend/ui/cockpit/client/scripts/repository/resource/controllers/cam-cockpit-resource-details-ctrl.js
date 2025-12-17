@@ -26,20 +26,19 @@ module.exports = [
   'camAPI',
   'Views',
   '$translate',
-  function($scope, $q, Uri, camAPI, Views, $translate) {
+  function ($scope, $q, Uri, camAPI, Views, $translate) {
     // utilities ///////////////////////////////////////////////////
 
     var isObject = angular.isObject;
 
-    var checkResource = function(name, pattern) {
+    var checkResource = function (name, pattern) {
       return name && pattern.test(name.toLowerCase());
     };
 
     // fields //////////////////////////////////////////////////////
 
-    var resourceDetailsData = ($scope.resourceDetailsData = $scope.repositoryData.newChild(
-      $scope
-    ));
+    var resourceDetailsData = ($scope.resourceDetailsData =
+      $scope.repositoryData.newChild($scope));
 
     var control = ($scope.control = {});
 
@@ -54,56 +53,62 @@ module.exports = [
 
     // type of a resource //////////////////////////////////////////
 
-    var getResourceName = function(resource) {
+    var getResourceName = function (resource) {
       if (isObject(resource)) {
         return resource.name;
       }
       return resource;
     };
 
-    var isBpmnResource = (control.isBpmnResource = $scope.isBpmnResource = function(
-      resource
-    ) {
-      var resourceName = getResourceName(resource);
-      return checkResource(resourceName, BPMN_PATTERN);
-    });
+    var isBpmnResource =
+      (control.isBpmnResource =
+      $scope.isBpmnResource =
+        function (resource) {
+          var resourceName = getResourceName(resource);
+          return checkResource(resourceName, BPMN_PATTERN);
+        });
 
-    var isCmmnResource = (control.isCmmnResource = $scope.isCmmnResource = function(
-      resource
-    ) {
-      var resourceName = getResourceName(resource);
-      return checkResource(resourceName, CMMN_PATTERN);
-    });
+    var isCmmnResource =
+      (control.isCmmnResource =
+      $scope.isCmmnResource =
+        function (resource) {
+          var resourceName = getResourceName(resource);
+          return checkResource(resourceName, CMMN_PATTERN);
+        });
 
-    var isDmnResource = (control.isDmnResource = $scope.isDmnResource = function(
-      resource
-    ) {
-      var resourceName = getResourceName(resource);
-      return checkResource(resourceName, DMN_PATTERN);
-    });
+    var isDmnResource =
+      (control.isDmnResource =
+      $scope.isDmnResource =
+        function (resource) {
+          var resourceName = getResourceName(resource);
+          return checkResource(resourceName, DMN_PATTERN);
+        });
 
-    var isImageResource = (control.isImageResource = $scope.isImageResource = function(
-      resource
-    ) {
-      var resourceName = getResourceName(resource);
-      return checkResource(resourceName, IMAGE_PATTERN);
-    });
+    var isImageResource =
+      (control.isImageResource =
+      $scope.isImageResource =
+        function (resource) {
+          var resourceName = getResourceName(resource);
+          return checkResource(resourceName, IMAGE_PATTERN);
+        });
 
-    var isHtmlResource = (control.isHtmlResource = $scope.isHtmlResource = function(
-      resource
-    ) {
-      var resourceName = getResourceName(resource);
-      return checkResource(resourceName, HTML_PATTERN);
-    });
+    var isHtmlResource =
+      (control.isHtmlResource =
+      $scope.isHtmlResource =
+        function (resource) {
+          var resourceName = getResourceName(resource);
+          return checkResource(resourceName, HTML_PATTERN);
+        });
 
-    var isFormResource = (control.isFormResource = $scope.isFormResource = function(
-      resource
-    ) {
-      var resourceName = getResourceName(resource);
-      return checkResource(resourceName, FORM_PATTERN);
-    });
+    var isFormResource =
+      (control.isFormResource =
+      $scope.isFormResource =
+        function (resource) {
+          var resourceName = getResourceName(resource);
+          return checkResource(resourceName, FORM_PATTERN);
+        });
 
-    control.isUnkownResource = $scope.isUnkownResource = function(resource) {
+    control.isUnkownResource = $scope.isUnkownResource = function (resource) {
       return (
         !isBpmnResource(resource) &&
         !isCmmnResource(resource) &&
@@ -120,9 +125,9 @@ module.exports = [
 
     // download link ////////////////////////////////////////////////
 
-    control.downloadLink = $scope.downloadLink = function(
+    control.downloadLink = $scope.downloadLink = function (
       deployment,
-      resource
+      resource,
     ) {
       return (
         deployment &&
@@ -132,7 +137,7 @@ module.exports = [
             deployment.id +
             '/resources/' +
             resource.id +
-            '/data'
+            '/data',
         )
       );
     };
@@ -142,7 +147,7 @@ module.exports = [
     resourceDetailsData.provide('binary', [
       'resource',
       'currentDeployment',
-      function(resource, deployment) {
+      function (resource, deployment) {
         var deferred = $q.defer();
 
         if (!resource) {
@@ -159,24 +164,24 @@ module.exports = [
                 deployment.id +
                 '/resources/' +
                 resource.id +
-                '/data'
-            )
+                '/data',
+            ),
           )
-            .then(async res => {
+            .then(async (res) => {
               const result = await res.text();
               deferred.resolve({data: result});
             })
-            .catch(err => {
+            .catch((err) => {
               deferred.reject(err);
             });
         }
 
         return deferred.promise;
-      }
+      },
     ]);
 
     var pages = {current: 1, size: 50, total: 0};
-    resourceDetailsData.provide('pages', function() {
+    resourceDetailsData.provide('pages', function () {
       return pages;
     });
 
@@ -184,7 +189,7 @@ module.exports = [
       'currentDeployment',
       'resource',
       'pages',
-      function(deployment, resource, pages) {
+      function (deployment, resource, pages) {
         var deferred = $q.defer();
 
         $scope.loadingState = 'LOADING';
@@ -210,15 +215,15 @@ module.exports = [
             Service.count(
               {
                 deploymentId: deployment.id,
-                resourceName: resource.name
+                resourceName: resource.name,
               },
-              function(err, res) {
+              function (err, res) {
                 function handleError(err) {
                   $scope.loadingState = 'ERROR';
                   $scope.textError =
                     err.message ||
                     $translate.instant(
-                      'REPOSITORY_DEPLOYMENT_RESOURCE_CTRL_MSN'
+                      'REPOSITORY_DEPLOYMENT_RESOURCE_CTRL_MSN',
                     );
                 }
 
@@ -239,43 +244,43 @@ module.exports = [
                     deploymentId: deployment.id,
                     resourceName: resource.name,
                     maxResults: pages.size,
-                    firstResult: pages.size * (pages.current - 1)
+                    firstResult: pages.size * (pages.current - 1),
                   },
-                  function(err, res) {
+                  function (err, res) {
                     if (err) {
                       handleError(err);
                       return deferred.reject(err);
                     }
 
                     deferred.resolve(bpmnResource ? res.items : res);
-                  }
+                  },
                 );
-              }
+              },
             );
           }
         }
 
         return deferred.promise;
-      }
+      },
     ]);
 
     // observe /////////////////////////////////////////////////
 
-    resourceDetailsData.observe('resource', function(resource) {
+    resourceDetailsData.observe('resource', function (resource) {
       $scope.resource = resource;
     });
 
-    resourceDetailsData.observe('currentDeployment', function(deployment) {
+    resourceDetailsData.observe('currentDeployment', function (deployment) {
       $scope.deployment = deployment;
     });
 
     // plugins //////////////////////////////////////////////////
 
     $scope.resourceVars = {
-      read: ['control', 'deployment', 'resource', 'resourceDetailsData']
+      read: ['control', 'deployment', 'resource', 'resourceDetailsData'],
     };
     $scope.resourceActions = Views.getProviders({
-      component: PLUGIN_ACTION_COMPONENT
+      component: PLUGIN_ACTION_COMPONENT,
     });
-  }
+  },
 ];

@@ -17,9 +17,9 @@
 
 'use strict';
 
-(function(factory) {
+(function (factory) {
   factory(typeof window !== 'undefined' ? window : global);
-})(function(root) {
+})(function (root) {
   root = root || {};
   module.exports =
     root.jQuery || (root.angular ? root.angular.element : false) || root.Zepto;

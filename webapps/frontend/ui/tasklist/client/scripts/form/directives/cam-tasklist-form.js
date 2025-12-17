@@ -35,9 +35,9 @@ function compact(arr) {
   return a;
 }
 
-var noop = function() {};
+var noop = function () {};
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
 
@@ -73,7 +73,7 @@ module.exports = function() {
        * is a callback which will called when the validation state of the
        * form changes (pass the flag '$invalid').
        */
-      onFormValidation: '&'
+      onFormValidation: '&',
     },
 
     template: template,
@@ -81,9 +81,9 @@ module.exports = function() {
     controller: [
       '$scope',
       'Uri',
-      function($scope, Uri) {
+      function ($scope, Uri) {
         $scope.taskRemoved = false;
-        $scope.$on('taskremoved', function() {
+        $scope.$on('taskremoved', function () {
           $scope.taskRemoved = true;
         });
 
@@ -108,7 +108,7 @@ module.exports = function() {
 
         // handle tasklist form ///////////////////////////////////////////////////
 
-        $scope.$watch('tasklistForm', function(value) {
+        $scope.$watch('tasklistForm', function (value) {
           $scope.$loaded = false;
           if (value) {
             parseForm(value);
@@ -118,7 +118,7 @@ module.exports = function() {
 
         $scope.asynchronousFormKey = {
           loaded: false,
-          failure: false
+          failure: false,
         };
 
         var API = this;
@@ -157,13 +157,13 @@ module.exports = function() {
               key = Uri.appUri(
                 'engine://engine/:engine/task/' +
                   $scope.params.taskId +
-                  '/deployed-form'
+                  '/deployed-form',
               );
             } else {
               key = Uri.appUri(
                 'engine://engine/:engine/process-definition/' +
                   $scope.params.processDefinitionId +
-                  '/deployed-start-form'
+                  '/deployed-start-form',
               );
             }
 
@@ -187,7 +187,7 @@ module.exports = function() {
             if (applicationContextPath) {
               key = compact([
                 applicationContextPath,
-                key.substring(APP_KEY.length)
+                key.substring(APP_KEY.length),
               ])
                 .join('/')
                 // prevents multiple "/" in the URI
@@ -195,7 +195,7 @@ module.exports = function() {
               setAsynchronousFormKey(key);
             } else {
               API.notifyFormInitializationFailed({
-                message: 'EMPTY_CONTEXT_PATH'
+                message: 'EMPTY_CONTEXT_PATH',
               });
             }
           } else if (key.indexOf(DEPLOYMENT_KEY) === 0) {
@@ -203,13 +203,13 @@ module.exports = function() {
               key = Uri.appUri(
                 'engine://engine/:engine/task/' +
                   $scope.params.taskId +
-                  '/deployed-form'
+                  '/deployed-form',
               );
             } else {
               key = Uri.appUri(
                 'engine://engine/:engine/process-definition/' +
                   $scope.params.processDefinitionId +
-                  '/deployed-start-form'
+                  '/deployed-start-form',
               );
             }
 
@@ -227,19 +227,19 @@ module.exports = function() {
 
         // completion /////////////////////////////////////////////
 
-        var completionCallback = function(err, result) {
+        var completionCallback = function (err, result) {
           $scope.onFormCompletionCallback(err, result);
           $scope.completeInProgress = false;
         };
 
-        var complete = ($scope.complete = function() {
+        var complete = ($scope.complete = function () {
           $scope.completeInProgress = true;
           $scope.completionHandler(completionCallback);
         });
 
         $scope.onFormCompletion(complete);
 
-        $scope.showCompleteButton = function() {
+        $scope.showCompleteButton = function () {
           return (
             $scope.options &&
             !$scope.options.hideCompleteButton &&
@@ -247,14 +247,15 @@ module.exports = function() {
           );
         };
 
-        var disableCompleteButton = ($scope.disableCompleteButton = function() {
-          return (
-            $scope.taskRemoved ||
-            $scope.completeInProgress ||
-            $scope.$invalid ||
-            ($scope.options && $scope.options.disableCompleteButton)
-          );
-        });
+        var disableCompleteButton = ($scope.disableCompleteButton =
+          function () {
+            return (
+              $scope.taskRemoved ||
+              $scope.completeInProgress ||
+              $scope.$invalid ||
+              ($scope.options && $scope.options.disableCompleteButton)
+            );
+          });
 
         var attemptComplete = function attemptComplete() {
           var canComplete = !disableCompleteButton();
@@ -263,19 +264,19 @@ module.exports = function() {
 
         // save ///////////////////////////////////////////////////
 
-        $scope.save = function(evt) {
+        $scope.save = function (evt) {
           $scope.saveHandler(evt);
         };
 
         // API ////////////////////////////////////////////////////
 
-        this.notifyFormInitialized = function() {
+        this.notifyFormInitialized = function () {
           $scope.$loaded = true;
 
           apply();
         };
 
-        this.notifyFormInitializationFailed = function(error) {
+        this.notifyFormInitializationFailed = function (error) {
           $scope.tasklistForm.$error = error;
           // mark the form as initialized
           this.notifyFormInitialized();
@@ -285,43 +286,43 @@ module.exports = function() {
           this.notifyFormValidated(true);
         };
 
-        this.notifyFormCompleted = function(err) {
+        this.notifyFormCompleted = function (err) {
           $scope.onFormCompletion(err);
         };
 
-        this.notifyFormValidated = function(invalid) {
+        this.notifyFormValidated = function (invalid) {
           $scope.$invalid = invalid;
           $scope.onFormValidation(invalid);
           apply();
         };
 
-        this.notifyFormDirty = function(dirty) {
+        this.notifyFormDirty = function (dirty) {
           $scope.$dirty = dirty;
           apply();
         };
 
-        this.getOptions = function() {
+        this.getOptions = function () {
           return $scope.options || {};
         };
 
-        this.getTasklistForm = function() {
+        this.getTasklistForm = function () {
           return $scope.tasklistForm;
         };
 
-        this.getParams = function() {
+        this.getParams = function () {
           return $scope.params || {};
         };
 
-        this.registerCompletionHandler = function(fn) {
+        this.registerCompletionHandler = function (fn) {
           $scope.completionHandler = fn || noop;
         };
 
-        this.registerSaveHandler = function(fn) {
+        this.registerSaveHandler = function (fn) {
           $scope.saveHandler = fn || noop;
         };
 
         this.attemptComplete = attemptComplete;
-      }
-    ]
+      },
+    ],
   };
 };

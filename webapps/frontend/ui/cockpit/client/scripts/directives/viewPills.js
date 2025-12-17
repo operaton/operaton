@@ -18,21 +18,21 @@
 'use strict';
 
 module.exports = [
-  function() {
+  function () {
     var ViewPillsController = [
       '$scope',
       'Views',
       '$location',
       'routeUtil',
-      function($scope, Views, $location, routeUtil) {
+      function ($scope, Views, $location, routeUtil) {
         var providers = Views.getProviders({component: $scope.id});
         $scope.providers = providers;
 
-        var isActive = ($scope.isActive = function(provider) {
+        var isActive = ($scope.isActive = function (provider) {
           return $location.path().indexOf('/' + provider.id) != -1;
         });
 
-        $scope.getUrl = function(provider) {
+        $scope.getUrl = function (provider) {
           var replacement = provider.id,
             currentPath = $location.path(),
             currentSearch = $location.search(),
@@ -46,17 +46,17 @@ module.exports = [
               replacement,
               currentPath,
               currentSearch,
-              keepSearchParams
+              keepSearchParams,
             )
           );
         };
-      }
+      },
     ];
 
     return {
       restrict: 'EAC',
       scope: {
-        id: '@'
+        id: '@',
       },
       template:
         '<ul class="nav nav-pills">' +
@@ -65,7 +65,7 @@ module.exports = [
         '  </li>' +
         '</ul>',
       replace: true,
-      controller: ViewPillsController
+      controller: ViewPillsController,
     };
-  }
+  },
 ];

@@ -30,7 +30,7 @@ module.exports = [
   'fixDate',
   '$translate',
   '$rootScope',
-  function(
+  function (
     $scope,
     $http,
     $filter,
@@ -40,7 +40,7 @@ module.exports = [
     processDefinition,
     fixDate,
     $translate,
-    $rootScope
+    $rootScope,
   ) {
     var BEFORE_UPDATE = 'BEFORE_UPDATE',
       PERFORM_UPDATE = 'PERFORM_UDPATE',
@@ -57,14 +57,14 @@ module.exports = [
     $scope.data = {
       includeInstances: true,
       executeImmediately: true,
-      executionDate: dateFilter(Date.now(), dateFormat)
+      executionDate: dateFilter(Date.now(), dateFormat),
     };
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
-    $scope.updateSuspensionState = function() {
+    $scope.updateSuspensionState = function () {
       $scope.status = PERFORM_UPDATE;
 
       var data = {};
@@ -80,65 +80,65 @@ module.exports = [
           Uri.appUri(
             'engine://engine/:engine/process-definition/' +
               processDefinition.id +
-              '/suspended/'
+              '/suspended/',
           ),
-          data
+          data,
         )
-        .then(function() {
+        .then(function () {
           $scope.status = UPDATE_SUCCESS;
 
           if ($scope.data.executeImmediately) {
             $rootScope.$broadcast(
               '$processDefinition.suspensionState.changed',
-              processDefinition
+              processDefinition,
             );
 
             Notifications.addMessage({
               status: $translate.instant(
-                'PLUGIN_UPDATE_SUSPENSION_STATE_STATUS_FINISHED'
+                'PLUGIN_UPDATE_SUSPENSION_STATE_STATUS_FINISHED',
               ),
               message: $translate.instant(
-                'PLUGIN_UPDATE_SUSPENSION_STATE_MESSAGE_1'
+                'PLUGIN_UPDATE_SUSPENSION_STATE_MESSAGE_1',
               ),
-              exclusive: true
+              exclusive: true,
             });
           } else {
             Notifications.addMessage({
               status: $translate.instant(
-                'PLUGIN_UPDATE_SUSPENSION_STATE_STATUS_FINISHED'
+                'PLUGIN_UPDATE_SUSPENSION_STATE_STATUS_FINISHED',
               ),
               message: $translate.instant(
-                'PLUGIN_UPDATE_SUSPENSION_STATE_MESSAGE_2'
+                'PLUGIN_UPDATE_SUSPENSION_STATE_MESSAGE_2',
               ),
-              exclusive: true
+              exclusive: true,
             });
           }
         })
-        .catch(function(response) {
+        .catch(function (response) {
           $scope.status = UPDATE_FAILED;
           var errorMessage;
           if ($scope.data.executeImmediately) {
             errorMessage = $translate.instant(
               'PLUGIN_UPDATE_SUSPENSION_STATE_MESSAGE_3',
-              {message: response.data.message}
+              {message: response.data.message},
             );
           } else {
             errorMessage = $translate.instant(
               'PLUGIN_UPDATE_SUSPENSION_STATE_MESSAGE_4',
-              {message: response.data.message}
+              {message: response.data.message},
             );
           }
           Notifications.addError({
             status: $translate.instant(
-              'PLUGIN_UPDATE_SUSPENSION_STATE_STATUS_FINISHED'
+              'PLUGIN_UPDATE_SUSPENSION_STATE_STATUS_FINISHED',
             ),
             message: errorMessage,
-            exclusive: true
+            exclusive: true,
           });
         });
     };
 
-    $scope.isValid = function() {
+    $scope.isValid = function () {
       var formScope = angular
         .element('[name="updateSuspensionStateForm"]')
         .scope();
@@ -147,7 +147,7 @@ module.exports = [
         : false;
     };
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       var response = {};
 
       response.status = status;
@@ -157,5 +157,5 @@ module.exports = [
 
       $modalInstance.close(response);
     };
-  }
+  },
 ];

@@ -17,14 +17,15 @@
 
 'use strict';
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     require: 'ngModel',
-    link: function(scope, element, attrs, model) {
-      var pattern = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
+    link: function (scope, element, attrs, model) {
+      var pattern =
+        /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
 
-      var dateParser = function(value) {
+      var dateParser = function (value) {
         var isValidPattern = pattern.test(value);
         var isValidValue = isValidPattern
           ? !isNaN(new Date(value).getTime())
@@ -36,7 +37,7 @@ module.exports = function() {
 
       model.$parsers.push(dateParser);
 
-      var dateFormatter = function(value) {
+      var dateFormatter = function (value) {
         // if the value is not set,
         // then ignore it!
         if (!value) {
@@ -64,6 +65,6 @@ module.exports = function() {
       };
 
       model.$formatters.push(dateFormatter);
-    }
+    },
   };
 };

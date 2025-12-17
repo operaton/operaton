@@ -29,11 +29,11 @@ apiModule.factory('camAPI', [
   'camAPIHttpClient',
   '$window',
   'Uri',
-  function(camAPIHttpClient, $window, Uri) {
+  function (camAPIHttpClient, $window, Uri) {
     var conf = {
       apiUri: 'engine-rest/api/engine',
       HttpClient: camAPIHttpClient,
-      engine: Uri.appUri(':engine')
+      engine: Uri.appUri(':engine'),
     };
     if ($window.tasklistConf) {
       for (var c in $window.tasklistConf) {
@@ -42,7 +42,7 @@ apiModule.factory('camAPI', [
     }
 
     return new CamSDK.Client(conf);
-  }
+  },
 ]);
 
 module.exports = apiModule;

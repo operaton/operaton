@@ -45,12 +45,12 @@ Modification.path = 'modification';
  * @param  {String}   [params.annotation]
  * @param  {Function} done
  */
-Modification.execute = function(params, done) {
+Modification.execute = function (params, done) {
   var path = this.path + '/execute';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -66,12 +66,12 @@ Modification.execute = function(params, done) {
  * @param  {String}   [params.annotation]
  * @param  {Function} done
  */
-Modification.executeAsync = function(params, done) {
+Modification.executeAsync = function (params, done) {
   var path = this.path + '/executeAsync';
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

@@ -20,7 +20,7 @@
 module.exports = [
   '$q',
   'camAPI',
-  function($q, camAPI) {
+  function ($q, camAPI) {
     var decisionDefinitionService = camAPI.resource('decision-definition');
     var drdService = camAPI.resource('drd');
 
@@ -31,13 +31,13 @@ module.exports = [
       sortBy: 'name',
       sortOrder: 'asc',
       firstResult: 0,
-      maxResults: 50
+      maxResults: 50,
     };
 
     function getDecisions(params) {
       return decisionDefinitionService
         .list(Object.assign({}, defaultParams, params))
-        .then(function(result) {
+        .then(function (result) {
           decisions = result;
 
           if (drds) result = connectDrdsToDecisionDefinitions(drds, result);
@@ -49,7 +49,7 @@ module.exports = [
     function getDrds(params) {
       return drdService
         .list(Object.assign({}, defaultParams, params))
-        .then(function(result) {
+        .then(function (result) {
           drds = result;
 
           if (decisions)
@@ -61,19 +61,19 @@ module.exports = [
 
     function getDecisionsLists(decParams, drdParams) {
       var decisionsProm = decisionDefinitionService.list(
-        Object.assign({}, defaultParams, decParams)
+        Object.assign({}, defaultParams, decParams),
       );
 
       var decisionsCountProm = decisionDefinitionService.count({
-        latestVersion: true
+        latestVersion: true,
       });
 
       var drdsProm = drdService.list(
-        Object.assign({}, defaultParams, drdParams)
+        Object.assign({}, defaultParams, drdParams),
       );
 
       var drdsCountProm = drdService.count({
-        latestVersion: true
+        latestVersion: true,
       });
 
       return $q
@@ -81,32 +81,32 @@ module.exports = [
           decisions: decisionsProm,
           decisionsCount: decisionsCountProm,
           drds: drdsProm,
-          drdsCount: drdsCountProm
+          drdsCount: drdsCountProm,
         })
-        .then(function(results) {
+        .then(function (results) {
           drds = results.drds;
           decisions = results.decisions;
 
           decisions = results.decisions = connectDrdsToDecisionDefinitions(
             results.drds,
-            results.decisions
+            results.decisions,
           );
           results.drdsCount = results.drdsCount.count;
 
           return results;
         })
-        .catch(function() {});
+        .catch(function () {});
     }
 
     function connectDrdsToDecisionDefinitions(drds, decisions) {
-      return decisions.map(function(decision) {
+      return decisions.map(function (decision) {
         if (decision.decisionRequirementsDefinitionId) {
           decision.drd = findDrdById(
             drds,
-            decision.decisionRequirementsDefinitionId
+            decision.decisionRequirementsDefinitionId,
           ) || {
             key: decision.decisionRequirementsDefinitionKey,
-            id: decision.decisionRequirementsDefinitionId
+            id: decision.decisionRequirementsDefinitionId,
           };
         }
 
@@ -115,7 +115,7 @@ module.exports = [
     }
 
     function findDrdById(drds, id) {
-      return drds.filter(function(drd) {
+      return drds.filter(function (drd) {
         return drd.id === id;
       })[0];
     }
@@ -123,7 +123,7 @@ module.exports = [
     return {
       getDecisionsLists: getDecisionsLists,
       getDecisions: getDecisions,
-      getDrds: getDrds
+      getDrds: getDrds,
     };
-  }
+  },
 ];

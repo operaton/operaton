@@ -22,7 +22,7 @@ window.$ = window.jQuery = require('jquery');
 import {
   requirejs,
   define,
-  require as rjsrequire
+  require as rjsrequire,
 } from 'exports-loader?exports=requirejs,define,require!requirejs/require';
 
 window.define = define;
@@ -39,7 +39,7 @@ requirejs.config({
   urlArgs: `bust=${CAMUNDA_VERSION}` // eslint-disable-line
 });
 
-const loadConfig = (async function() {
+const loadConfig = (async function () {
   const configPath =
     baseImportPath + 'scripts/config.js?bust=' + new Date().getTime();
   const config = (await _import(configPath)).default; // eslint-disable-line
@@ -48,17 +48,17 @@ const loadConfig = (async function() {
   return config;
 })();
 
-define('operaton-tasklist-bootstrap', function() {
+define('operaton-tasklist-bootstrap', function () {
   'use strict';
-  const bootstrap = config => {
+  const bootstrap = (config) => {
     requirejs.config({
-      baseUrl: '../../../lib'
+      baseUrl: '../../../lib',
     });
 
     var operatonTasklistUi = require('./operaton-tasklist-ui');
     operatonTasklistUi.exposePackages(window);
 
-    requirejs([`${appRoot}/lib/globalize.js`], function(globalize) {
+    requirejs([`${appRoot}/lib/globalize.js`], function (globalize) {
       globalize(
         requirejs,
         [
@@ -66,27 +66,27 @@ define('operaton-tasklist-bootstrap', function() {
           'operaton-commons-ui',
           'operaton-bpm-sdk-js',
           'jquery',
-          'angular-data-depend'
+          'angular-data-depend',
         ],
-        window
+        window,
       );
 
       var pluginPackages = window.PLUGIN_PACKAGES || [];
       var pluginDependencies = window.PLUGIN_DEPENDENCIES || [];
 
       pluginPackages = pluginPackages.filter(
-        el =>
+        (el) =>
           el.name === 'tasklist-plugin-tasklistPlugins' ||
-          el.name.startsWith('tasklist-plugin-legacy')
+          el.name.startsWith('tasklist-plugin-legacy'),
       );
 
       pluginDependencies = pluginDependencies.filter(
-        el =>
+        (el) =>
           el.requirePackageName === 'tasklist-plugin-tasklistPlugins' ||
-          el.requirePackageName.startsWith('tasklist-plugin-legacy')
+          el.requirePackageName.startsWith('tasklist-plugin-legacy'),
       );
 
-      pluginPackages.forEach(function(plugin) {
+      pluginPackages.forEach(function (plugin) {
         var node = document.createElement('link');
         node.setAttribute('rel', 'stylesheet');
         node.setAttribute(
@@ -100,17 +100,17 @@ define('operaton-tasklist-bootstrap', function() {
         packages: pluginPackages,
         baseUrl: './',
         paths: {
-          ngDefine: `${appRoot}/lib/ngDefine`
-        }
+          ngDefine: `${appRoot}/lib/ngDefine`,
+        },
       });
 
       var dependencies = ['angular', 'ngDefine'].concat(
-        pluginDependencies.map(function(plugin) {
+        pluginDependencies.map(function (plugin) {
           return plugin.requirePackageName;
-        })
+        }),
       );
 
-      requirejs(dependencies, function(angular) {
+      requirejs(dependencies, function (angular) {
         // we now loaded the tasklist and the plugins, great
         // before we start initializing the tasklist though (and leave the requirejs context),
         // lets see if we should load some custom scripts first
@@ -118,9 +118,9 @@ define('operaton-tasklist-bootstrap', function() {
         if (config && config.csrfCookieName) {
           angular.module('cam.commons').config([
             '$httpProvider',
-            function($httpProvider) {
+            function ($httpProvider) {
               $httpProvider.defaults.xsrfCookieName = config.csrfCookieName;
-            }
+            },
           ]);
         }
 
@@ -146,9 +146,9 @@ define('operaton-tasklist-bootstrap', function() {
             'enforceDefine',
             'xhtml',
             'urlArgs',
-            'scriptType'
+            'scriptType',
             // 'skipDataMain' // not relevant either
-          ].forEach(function(prop) {
+          ].forEach(function (prop) {
             if (custom[prop]) {
               conf[prop] = custom[prop];
             }
@@ -158,7 +158,7 @@ define('operaton-tasklist-bootstrap', function() {
           requirejs.config({baseUrl: '../', ...conf});
 
           // load the dependencies and bootstrap the AngularJS application
-          requirejs(custom.deps || [], function() {
+          requirejs(custom.deps || [], function () {
             // create a AngularJS module (with possible AngularJS module dependencies)
             // on which the custom scripts can register their
             // directives, controllers, services and all when loaded
@@ -181,7 +181,7 @@ define('operaton-tasklist-bootstrap', function() {
           // executed yet and the angular modules provided by those plugins will
           // not have been defined yet. Placing a new require call here will put
           // the bootstrapping of the angular app at the end of the queue
-          rjsrequire([], function() {
+          rjsrequire([], function () {
             clearAmdGlobals();
             operatonTasklistUi.init(pluginDependencies);
           });
@@ -200,9 +200,9 @@ define('operaton-tasklist-bootstrap', function() {
     });
   };
 
-  loadConfig.then(config => {
+  loadConfig.then((config) => {
     bootstrap(config);
   });
 });
 
-requirejs(['operaton-tasklist-bootstrap'], function() {});
+requirejs(['operaton-tasklist-bootstrap'], function () {});

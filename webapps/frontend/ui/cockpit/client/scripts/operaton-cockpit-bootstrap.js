@@ -23,7 +23,7 @@ window.$ = window.jQuery = require('jquery');
 import {
   requirejs,
   define,
-  require as rjsrequire
+  require as rjsrequire,
 } from 'exports-loader?exports=requirejs,define,require!requirejs/require';
 
 window.define = define;
@@ -44,7 +44,7 @@ function withSuffix(string, suffix) {
   return !string.endsWith(suffix) ? string + suffix : string;
 }
 
-const loadConfig = (async function() {
+const loadConfig = (async function () {
   const configPath =
     baseImportPath + 'scripts/config.js?bust=' + new Date().getTime();
   const config = (await _import(configPath)).default; // eslint-disable-line
@@ -54,7 +54,7 @@ const loadConfig = (async function() {
       el => _import(withSuffix(baseImportPath + el, '.js')) // eslint-disable-line
     );
     const bpmnJsModules = await Promise.all(fetchers);
-    config.bpmnJs.additionalModules = bpmnJsModules.map(el => el.default);
+    config.bpmnJs.additionalModules = bpmnJsModules.map((el) => el.default);
   }
 
   window.camCockpitConf = config;
@@ -62,17 +62,17 @@ const loadConfig = (async function() {
   return config;
 })();
 
-define('operaton-cockpit-bootstrap', function() {
+define('operaton-cockpit-bootstrap', function () {
   'use strict';
-  const bootstrap = config => {
+  const bootstrap = (config) => {
     requirejs.config({
-      baseUrl: '../../../lib'
+      baseUrl: '../../../lib',
     });
 
     var operatonCockpitUi = require('./operaton-cockpit-ui');
     operatonCockpitUi.exposePackages(window);
 
-    requirejs([`${appRoot}/lib/globalize.js`], function(globalize) {
+    requirejs([`${appRoot}/lib/globalize.js`], function (globalize) {
       globalize(
         requirejs,
         [
@@ -82,28 +82,28 @@ define('operaton-cockpit-bootstrap', function() {
           'jquery',
           'angular-data-depend',
           'moment',
-          'events'
+          'events',
         ],
-        window
+        window,
       );
 
       var pluginPackages = window.PLUGIN_PACKAGES || [];
       var pluginDependencies = window.PLUGIN_DEPENDENCIES || [];
 
       pluginPackages = pluginPackages.filter(
-        el =>
+        (el) =>
           el.name === 'cockpit-plugin-cockpitPlugins' ||
           el.name === 'cockpit-plugin-cockpitEE' ||
-          el.name.startsWith('cockpit-plugin-legacy')
+          el.name.startsWith('cockpit-plugin-legacy'),
       );
       pluginDependencies = pluginDependencies.filter(
-        el =>
+        (el) =>
           el.requirePackageName === 'cockpit-plugin-cockpitPlugins' ||
           el.requirePackageName === 'cockpit-plugin-cockpitEE' ||
-          el.requirePackageName.startsWith('cockpit-plugin-legacy')
+          el.requirePackageName.startsWith('cockpit-plugin-legacy'),
       );
 
-      pluginPackages.forEach(function(plugin) {
+      pluginPackages.forEach(function (plugin) {
         var node = document.createElement('link');
         node.setAttribute('rel', 'stylesheet');
         node.setAttribute(
@@ -117,17 +117,17 @@ define('operaton-cockpit-bootstrap', function() {
         packages: pluginPackages,
         baseUrl: './',
         paths: {
-          ngDefine: `${appRoot}/lib/ngDefine`
-        }
+          ngDefine: `${appRoot}/lib/ngDefine`,
+        },
       });
 
       var dependencies = ['jquery', 'angular', 'ngDefine', 'moment'].concat(
-        pluginDependencies.map(function(plugin) {
+        pluginDependencies.map(function (plugin) {
           return plugin.requirePackageName;
-        })
+        }),
       );
 
-      requirejs(dependencies, function(jquery, angular) {
+      requirejs(dependencies, function (jquery, angular) {
         // we now loaded the cockpit and the plugins, great
         // before we start initializing the cockpit though (and leave the requirejs context),
         // lets see if we should load some custom scripts first
@@ -135,9 +135,9 @@ define('operaton-cockpit-bootstrap', function() {
         if (config && config.csrfCookieName) {
           angular.module('cam.commons').config([
             '$httpProvider',
-            function($httpProvider) {
+            function ($httpProvider) {
               $httpProvider.defaults.xsrfCookieName = config.csrfCookieName;
-            }
+            },
           ]);
         }
 
@@ -166,9 +166,9 @@ define('operaton-cockpit-bootstrap', function() {
             'enforceDefine',
             'xhtml',
             'urlArgs',
-            'scriptType'
+            'scriptType',
             // 'skipDataMain' // not relevant either
-          ].forEach(function(prop) {
+          ].forEach(function (prop) {
             if (custom[prop]) {
               conf[prop] = custom[prop];
             }
@@ -182,7 +182,7 @@ define('operaton-cockpit-bootstrap', function() {
           var bpmnJsAdditionalModules = (config.bpmnJs || {}).additionalModules;
 
           if (bpmnJsAdditionalModules) {
-            angular.forEach(bpmnJsAdditionalModules, function(module, name) {
+            angular.forEach(bpmnJsAdditionalModules, function (module, name) {
               conf['paths'][name] = bpmnJsAdditionalModules[name];
               custom['deps'].push(name);
             });
@@ -193,40 +193,38 @@ define('operaton-cockpit-bootstrap', function() {
           if (bpmnJsModdleExtensions) {
             var moddleExtensions = {};
 
-            angular.forEach(bpmnJsModdleExtensions, function(
-              path,
-              extensionName
-            ) {
-              moddleExtensions[extensionName] = jquery.getJSON(
-                '../' + path + '.json',
-                function(moddleExtension) {
-                  return moddleExtension;
-                }
-              );
-            });
+            angular.forEach(
+              bpmnJsModdleExtensions,
+              function (path, extensionName) {
+                moddleExtensions[extensionName] = jquery.getJSON(
+                  '../' + path + '.json',
+                  function (moddleExtension) {
+                    return moddleExtension;
+                  },
+                );
+              },
+            );
 
             window.bpmnJsModdleExtensions = {};
 
-            var promises = Object.keys(moddleExtensions).map(function(
-              extensionName
-            ) {
-              return moddleExtensions[extensionName];
-            });
+            var promises = Object.keys(moddleExtensions).map(
+              function (extensionName) {
+                return moddleExtensions[extensionName];
+              },
+            );
 
-            jquery.when(promises).then(function() {
+            jquery.when(promises).then(function () {
               // wait until promises are resolved: fail || success
-              angular.forEach(moddleExtensions, function(
-                promise,
-                extensionName
-              ) {
-                promise
-                  .done(function(moddleExtension) {
-                    window.bpmnJsModdleExtensions[
-                      extensionName
-                    ] = moddleExtension;
-                  })
-                  .fail(function(response) {
-                    if (response.status === 404) {
+              angular.forEach(
+                moddleExtensions,
+                function (promise, extensionName) {
+                  promise
+                    .done(function (moddleExtension) {
+                      window.bpmnJsModdleExtensions[extensionName] =
+                        moddleExtension;
+                    })
+                    .fail(function (response) {
+                      if (response.status === 404) {
                       /* eslint-disable */
                       console.error(
                         'bpmn-js moddle extension "' +

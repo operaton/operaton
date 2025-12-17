@@ -27,7 +27,7 @@ module.exports = [
   '$translate',
   'unfixDate',
   'Uri',
-  function(camAPI, Notifications, $translate, unfixDate, Uri) {
+  function (camAPI, Notifications, $translate, unfixDate, Uri) {
     return {
       restrict: 'A',
 
@@ -35,7 +35,7 @@ module.exports = [
 
       template: template,
 
-      link: function($scope, $element, attrs, formController) {
+      link: function ($scope, $element, attrs, formController) {
         /**
          * initial setup
          */
@@ -49,7 +49,7 @@ module.exports = [
         var emptyVariable = {
           name: '',
           value: '',
-          type: ''
+          type: '',
         };
 
         var variableTypes = ($scope.variableTypes = {
@@ -59,7 +59,7 @@ module.exports = [
           Short: 'text',
           Double: 'text',
           String: 'text',
-          Date: 'text'
+          Date: 'text',
         });
 
         /**
@@ -78,7 +78,7 @@ module.exports = [
             : CaseInstance;
           resource
             .get(id)
-            .then(function(res) {
+            .then(function (res) {
               if (res.businessKey) {
                 $scope.showBusinessKey = true;
                 $scope.businessKey = res.businessKey;
@@ -93,19 +93,19 @@ module.exports = [
          * scope methods
          */
 
-        $scope.$watch('tasklistForm', function() {
+        $scope.$watch('tasklistForm', function () {
           $scope.variablesLoaded = false;
         });
 
-        $scope.addVariable = function() {
+        $scope.addVariable = function () {
           var newVariable = angular.copy(emptyVariable);
           $scope.variables.push(newVariable);
         };
 
-        $scope.removeVariable = function(delta) {
+        $scope.removeVariable = function (delta) {
           var vars = [];
 
-          angular.forEach($scope.variables, function(variable, d) {
+          angular.forEach($scope.variables, function (variable, d) {
             if (d != delta) {
               vars.push(variable);
             }
@@ -114,35 +114,35 @@ module.exports = [
           $scope.variables = vars;
         };
 
-        $scope.getVariableNames = function() {
-          return $scope.variables.map(function(variable) {
+        $scope.getVariableNames = function () {
+          return $scope.variables.map(function (variable) {
             return variable.name;
           });
         };
 
-        $scope.loadVariables = function() {
+        $scope.loadVariables = function () {
           $scope.variablesLoaded = true;
           Task.formVariables(
             {
               id: formController.getParams().taskId,
-              deserializeValues: false
+              deserializeValues: false,
             },
-            function(err, result) {
+            function (err, result) {
               if (err) {
                 $scope.variablesLoaded = false;
                 return $translate('LOAD_VARIABLES_FAILURE')
-                  .then(function(translated) {
+                  .then(function (translated) {
                     Notifications.addError({
                       status: translated,
                       message: err.message,
-                      scope: $scope
+                      scope: $scope,
                     });
                   })
                   .catch(angular.noop);
               }
 
               var variableAdded = false;
-              angular.forEach(result, function(value, name) {
+              angular.forEach(result, function (value, name) {
                 if (variableTypes[value.type]) {
                   var parsedValue = value.value;
 
@@ -153,7 +153,7 @@ module.exports = [
                     name: name,
                     value: parsedValue,
                     type: value.type,
-                    fixedName: true
+                    fixedName: true,
                   });
                   variableAdded = true;
                 }
@@ -163,7 +163,7 @@ module.exports = [
                     name: name,
                     value: value.value,
                     type: value.type,
-                    valueInfo: value.valueInfo
+                    valueInfo: value.valueInfo,
                   });
                   variableAdded = true;
                 }
@@ -178,27 +178,27 @@ module.exports = [
                         formController.getParams().taskId +
                         '/variables/' +
                         name +
-                        '/data'
+                        '/data',
                     ),
-                    readonly: true
+                    readonly: true,
                   });
                 }
               });
               if (!variableAdded) {
                 $translate('NO_TASK_VARIABLES')
-                  .then(function(translated) {
+                  .then(function (translated) {
                     Notifications.addMessage({
                       duration: 5000,
                       status: translated,
-                      scope: $scope
+                      scope: $scope,
                     });
                   })
                   .catch(angular.noop);
               }
-            }
+            },
           );
         };
-      }
+      },
     };
-  }
+  },
 ];

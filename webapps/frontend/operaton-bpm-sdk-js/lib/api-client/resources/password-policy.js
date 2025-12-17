@@ -38,9 +38,9 @@ PasswordPolicy.path = 'identity/password-policy';
  *
  * @param {Function} done
  */
-PasswordPolicy.get = function(done) {
+PasswordPolicy.get = function (done) {
   return this.http.get(this.path, {
-    done: done
+    done: done,
   });
 };
 
@@ -51,13 +51,13 @@ PasswordPolicy.get = function(done) {
  * @param {String}   [params.password]  Password to be validated
  * @param {Function} done
  */
-PasswordPolicy.validate = function(params, done) {
+PasswordPolicy.validate = function (params, done) {
   if (typeof params === 'string') {
     params = {password: params};
   }
   return this.http.post(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 

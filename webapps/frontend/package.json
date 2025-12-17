@@ -85,7 +85,7 @@
     "less": "4.2.0",
     "less-loader": "12.3.0",
     "license-checker": "25.0.1",
-    "mini-css-extract-plugin": "2.8.0",
+    "mini-css-extract-plugin": "2.9.4",
     "prettier": "3.7.4",
     "raw-loader": "4.0.2",
     "svg-inline-loader": "0.8.2",

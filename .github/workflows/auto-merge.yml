@@ -72,7 +72,23 @@ jobs:
                 return false;
               }
 
+              // If rule has a title pattern, check if PR title matches
+              if (rule.title) {
+                const titleMatches = titleMatchesPattern(pr.title, rule.title);
+                if (titleMatches) {
+                  console.log(`  ✅ Title "${pr.title}" matches pattern "${rule.title}" in rule`);
+                  return true;
+                }
+                return false;
+              }
+
+              // Otherwise, check labels and includes (legacy behavior for dependency PRs)
               // Check labels - all required labels must be present
+              if (!rule.labels || !rule.includes) {
+                console.log(`  ⚠️  Rule must have either 'title' or both 'labels' and 'includes'`);
+                return false;
+              }
+
               const prLabels = pr.labels.map(l => l.name);
               const hasAllLabels = rule.labels.every(label => prLabels.includes(label));
               if (!hasAllLabels) {

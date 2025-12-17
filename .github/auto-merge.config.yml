@@ -4,9 +4,10 @@
 
 # Configuration format:
 # - author: GitHub username (e.g., 'dependabot[bot]')
-#   labels: List of labels that must be present on the PR
-#   includes: List of dependency patterns to allow
+#   labels: List of labels that must be present on the PR (optional)
+#   includes: List of dependency patterns to allow (optional, used with labels)
 #            (supports wildcards with *)
+#   title: Exact title match or pattern to match PR titles (optional, alternative to includes)
 
 auto-merge-rules:
   # OpenRewrite dependencies - can be auto-merged after successful build
@@ -73,6 +74,10 @@ auto-merge-rules:
     labels: ['dependencies:github-action']
     includes:
       - 'actions/*'
+
+  # Code cleanup PRs created by github-actions bot can be auto-merged
+  - author: 'github-actions[bot]'
+    title: '*Code cleanup*'
 
 # Note: 3rd party GitHub Actions (not actions/*) are NOT allowlisted
 #       for security reasons (require manual review)

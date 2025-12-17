@@ -205,7 +205,7 @@ jobs:
           perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1false/' -i jreleaser.yml
 
       - name: Release with JReleaser
-        uses: jreleaser/release-action@v2
+        uses: jreleaser/release-action@90ac653bb9c79d11179e65d81499f3f34527dcd5 # v2.5.0
         env:
           JRELEASER_PROJECT_VERSION: ${{needs.release_build.outputs.version}}
           JRELEASER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -136,14 +136,16 @@ jobs:
                   ref: sha
                 });
 
-                // Check if any status check failed or is pending
-                // Note: Empty state means no status checks are configured
-                // We only proceed if state is explicitly 'success'
-                if (status.state !== 'success') {
+                // Check combined status and check runs
+                // status.total_count = 0 means no status checks configured
+                // status.state can be 'success', 'pending', 'failure', 'error', or ''
+                const hasStatusChecks = status.total_count > 0;
+                const hasCheckRuns = checkRuns.check_runs.length > 0;
+
+                // If there are status checks, verify they passed
+                if (hasStatusChecks && status.state !== 'success') {
                   if (status.state === 'pending') {
                     console.log(`  ⏳ Status checks are still pending`);
-                  } else if (status.state === '') {
-                    console.log(`  ⚠️  No status checks configured`);
                   } else {
                     console.log(`  ❌ Status checks failed or are in error state: ${status.state}`);
                   }
@@ -167,6 +169,12 @@ jobs:
                   if (failedChecks.length > 0) {
                     console.log(`  ❌ ${failedChecks.length} check(s) failed`);
                   }
+                  return false;
+                }
+
+                // Ensure at least one type of check exists
+                if (!hasStatusChecks && !hasCheckRuns) {
+                  console.log(`  ⚠️  No status checks or check runs found - skipping for safety`);
                   return false;
                 }
 

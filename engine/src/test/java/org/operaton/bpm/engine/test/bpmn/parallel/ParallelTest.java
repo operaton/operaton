@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parallel;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -35,6 +37,6 @@ class ParallelTest {
   @Deployment
   @Test
   void testParallel() {
-    runtimeService.startProcessInstanceByKey("myProc");
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("myProc")).doesNotThrowAnyException();
   }
 }

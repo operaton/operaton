@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -42,7 +44,6 @@ class BoundaryTimerEventFullHistoryTest {
   @Test
   void testSetProcessVariablesFromTaskWhenTimerOnTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerVariablesProcess");
-    runtimeService.setVariable(processInstance.getId(), "myVar", 123456L);
+    assertThatCode(() -> runtimeService.setVariable(processInstance.getId(), "myVar", 123456L)).doesNotThrowAnyException();
   }
-
 }

@@ -117,12 +117,12 @@ class ManagementServiceTest {
 
   @Test
   void testExecuteJobNullJobId() {
-    executeJobExpectingException(managementService, null, "jobId is null");
+    assertThatCode(() -> executeJobExpectingException(managementService, null, "jobId is null")).doesNotThrowAnyException();
   }
 
   @Test
   void testExecuteJobUnexistingJob() {
-    executeJobExpectingException(managementService, "unexistingjob", "No job found with id");
+    assertThatCode(() -> executeJobExpectingException(managementService, "unexistingjob", "No job found with id")).doesNotThrowAnyException();
   }
 
 

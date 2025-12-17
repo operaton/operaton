@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -228,22 +229,16 @@ class JobPrioritizationBpmnConstantValueTest {
 
   @Test
   void testParsePriorityOnNonAsyncActivity() {
-
     // deploying a process definition where the activity
     // has a priority but defines no jobs succeeds
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
-      .createDeployment()
-      .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnTest.testParsePriorityOnNonAsyncActivity.bpmn20.xml")
-      .deploy();
-
-    // cleanup
-    repositoryService.deleteDeployment(deployment.getId());
+    var deploymentBuilder = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnTest.testParsePriorityOnNonAsyncActivity.bpmn20.xml");
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder.deploy())).doesNotThrowAnyException();
   }
 
   @Test
   void testTimerStartEventPriorityOnProcessDefinition() {
     // given a timer start job
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
+    var deployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnConstantValueTest.testTimerStartEventPriorityOnProcessDefinition.bpmn20.xml")
         .deploy();
@@ -260,7 +255,7 @@ class JobPrioritizationBpmnConstantValueTest {
   @Test
   void testTimerStartEventPriorityOnActivity() {
     // given a timer start job
-    org.operaton.bpm.engine.repository.Deployment deployment = repositoryService
+    var deployment = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/JobPrioritizationBpmnConstantValueTest.testTimerStartEventPriorityOnActivity.bpmn20.xml")
         .deploy();

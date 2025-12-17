@@ -64,6 +64,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 import static org.assertj.core.api.Assumptions.assumeThat;
@@ -827,7 +828,7 @@ class BpmnParseTest {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonInSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      assertThatCode(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy()).doesNotThrowAnyException();
     } finally {
       processEngineConfiguration.setDisableStrictCallActivityValidation(false);
     }
@@ -856,7 +857,7 @@ class BpmnParseTest {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      assertThatCode(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy()).doesNotThrowAnyException();
     } finally {
       processEngineConfiguration.setDisableStrictCallActivityValidation(false);
     }
@@ -910,7 +911,7 @@ class BpmnParseTest {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonInTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      assertThatCode(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy()).doesNotThrowAnyException();
     } finally {
       processEngineConfiguration.setDisableStrictCallActivityValidation(false);
     }
@@ -939,7 +940,7 @@ class BpmnParseTest {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testNoOperatonOutSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      assertThatCode(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy()).doesNotThrowAnyException();
     } finally {
       processEngineConfiguration.setDisableStrictCallActivityValidation(false);
     }
@@ -968,7 +969,7 @@ class BpmnParseTest {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutSourceThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      assertThatCode(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy()).doesNotThrowAnyException();
     } finally {
       processEngineConfiguration.setDisableStrictCallActivityValidation(false);
     }
@@ -1022,7 +1023,7 @@ class BpmnParseTest {
       processEngineConfiguration.setDisableStrictCallActivityValidation(true);
 
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testEmptyOperatonOutTargetThrowsError");
-      repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy();
+      assertThatCode(() -> repositoryService.createDeployment().name(resource).addClasspathResource(resource).deploy()).doesNotThrowAnyException();
     } finally {
       processEngineConfiguration.setDisableStrictCallActivityValidation(false);
     }

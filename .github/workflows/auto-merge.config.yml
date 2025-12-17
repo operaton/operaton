@@ -1,0 +1,80 @@
+# Auto-merge configuration
+# This file defines which dependencies can be automatically merged
+# by the auto-merge workflow after all checks have passed.
+
+# Configuration format:
+# - author: GitHub username (e.g., 'dependabot[bot]')
+#   labels: List of labels that must be present on the PR
+#   includes: List of dependency patterns to allow
+#            (supports wildcards with *)
+
+auto-merge-rules:
+  # OpenRewrite dependencies - can be auto-merged after successful build
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:maven']
+    includes:
+      - 'org.openrewrite*'
+      - 'org.openrewrite.recipe*'
+
+  # NPM dependencies - all can be merged after successful build
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:npm']
+    includes:
+      - '*'
+
+  # Additional Maven dependencies that are safe to auto-merge
+  # Note: DB drivers are NOT included as they require integration tests
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:maven']
+    includes:
+      - 'org.springframework:spring-framework-bom'
+      - 'org.junit*'
+      - 'org.assertj*'
+      - 'org.mockito*'
+      - 'com.google.guava*'
+      - 'org.apache.commons*'
+      - 'org.slf4j*'
+      - 'ch.qos.logback*'
+      - 'org.apache.httpcomponents*'
+      - 'com.networknt:json-schema-validator'
+      - 'com.fasterxml.uuid:java-uuid-generator'
+      - 'com.unboundid:unboundid-ldapsdk'
+      - 'com.nimbusds:nimbus-jose-jwt'
+      - 'io.smallrye:jandex'
+      - 'joda-time:joda-time'
+      - 'org.xmlunit:xmlunit-core'
+      - 'org.wiremock:wiremock'
+      - 'com.jayway.jsonpath:json-path'
+      - 'org.openapitools:jackson-databind-nullable'
+      - 'org.seleniumhq.selenium:selenium-java'
+      - 'com.h2database:h2'
+      - 'io.netty:*'
+      - 'io.swagger*'
+      - 'net.javacrumbs.json-unit:*'
+      - 'version.quarkus'
+      - 'version.mockito'
+      - 'version.groovy'
+      - 'version.logback'
+      - 'version.jna'
+      - 'version.asm'
+      - 'okhttp-version'
+      - 'org.apache.maven.plugins'
+      - 'org.codehaus.mojo:*'
+      - 'org.codehaus.cargo:cargo-maven3-plugin'
+
+  # Devcontainer dependencies can be auto-merged
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:devcontainers']
+    includes:
+      - '*'
+
+  # GitHub Actions from GitHub (actions/*) can be auto-merged
+  - author: 'dependabot[bot]'
+    labels: ['dependencies:github-action']
+    includes:
+      - 'actions/*'
+
+# Note: 3rd party GitHub Actions (not actions/*) are NOT allowlisted
+#       for security reasons (require manual review)
+# Note: DB drivers (postgresql, mysql, oracle, etc.) are NOT
+#       allowlisted as they require integration tests

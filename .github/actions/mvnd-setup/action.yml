@@ -21,8 +21,14 @@ inputs:
     default: "1.0.3"
   platform:
     description: "The runner platform (e.g., linux-amd64, windows-amd64)"
+    type: choice
     required: true
     default: "linux-amd64"
+    options:
+      - "linux-amd64"
+      - "darwin-aarch64"
+      - "darwin-amd64"
+      - "windows-amd64"
 
 runs:
   using: "composite"

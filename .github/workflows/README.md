@@ -48,6 +48,21 @@ This directory contains the GitHub Actions workflows for the Operaton project. E
     - Tests across operaton, tomcat, and wildfly distributions
     - Tests with h2 and postgresql databases
 
+### Update Changelog for Noteworthy Changes
+
+- **Filename**: `update-changelog-noteworthy.yml`
+- **Description**: This workflow automatically updates the changelog template (`.github/jreleaser/changelog.tpl`) when an issue or pull request is closed and labeled with "noteworthy". It extracts relevant information about the feature or changes and documents them in the "New and Noteworthy" section.
+- **Triggers**:
+    - When an issue is closed with the "noteworthy" label
+    - When a pull request is merged with the "noteworthy" label
+- **Features**:
+    - Automatically identifies related PRs for issues
+    - Categorizes changes based on labels (bug fixes, features, documentation, etc.)
+    - Adds changelog entries with links to issues and PRs
+    - Prevents duplicate entries
+    - Commits changes automatically with descriptive commit messages
+- **Usage**: Simply add the "noteworthy" label to any issue or PR that should be highlighted in the changelog before closing/merging it.
+
 ## Actions Used
 
 | Action                                 | Version | Description                                             |

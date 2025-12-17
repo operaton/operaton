@@ -75,6 +75,18 @@ We use [labels](https://github.com/operaton/operaton/labels) to mark and group o
 * `duplicate`: This issue or pull request already exists
 * `invalid`: This will not be worked on
 * `wontfix`: This will not be worked on
+* `noteworthy`: Marks changes that should be highlighted in the release changelog
+
+## Noteworthy Changes and Automated Changelog
+
+If you're working on a feature, bugfix, or enhancement that should be highlighted in the release notes, add the `noteworthy` label to your issue or pull request before closing/merging it. Our automated workflow will:
+
+1. Extract the title and relevant information from the issue/PR
+2. Identify related pull requests (if labeling an issue)
+3. Add an entry to the "New and Noteworthy" section in `.github/jreleaser/changelog.tpl`
+4. Automatically commit and push the changelog update
+
+The workflow runs automatically when an issue or PR with the `noteworthy` label is closed or merged. The changelog entry will include links to the issue and all related PRs, making it easy for users to find more information about the change.
 
 # Build from source
 

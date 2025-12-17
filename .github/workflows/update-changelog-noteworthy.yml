@@ -54,7 +54,7 @@ jobs:
               
               // Find related PRs that reference this issue
               const { data: searchResults } = await github.rest.search.issuesAndPullRequests({
-                q: `is:pr repo:${context.repo.owner}/${context.repo.repo} ${issueNumber} in:body`,
+                q: `is:pr repo:${context.repo.owner}/${context.repo.repo} #${issueNumber} in:body`,
                 sort: 'created',
                 order: 'desc',
                 per_page: 10
@@ -134,11 +134,7 @@ jobs:
               
               console.log(`📊 PR Details: ${prDetails}`);
             }
-            
-            // Use AI to generate a concise summary
-            // For now, we'll create a structured summary manually
-            // In a future enhancement, this could use OpenAI or similar
-            
+
             // Create the changelog entry
             const changelogEntry = {
               title: summary,
@@ -175,8 +171,8 @@ jobs:
             // Create the new entry
             let newEntry = `- ${summary}`;
             if (isIssue && relatedPRs.length > 0) {
-              newEntry += ` ([#${issueNumber}](${issueUrl})`;
-              newEntry += `, ${relatedPRs.map(pr => `[#${pr.number}](${pr.html_url})`).join(', ')})`;
+              newEntry += ` ([#${issueNumber}](${issueUrl}), `;
+              newEntry += `${relatedPRs.map(pr => `[#${pr.number}](${pr.html_url})`).join(', ')})`;
             } else if (isPR) {
               newEntry += ` ([#${issueNumber}](${issueUrl}))`;
             }
@@ -198,6 +194,9 @@ jobs:
             console.log(`📝 Entry: ${newEntry}`);
 
       - name: Commit and Push Changes
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -208,6 +207,9 @@ jobs:
             exit 0
           fi
           
+          # Determine the number to use in commit message
+          NUMBER="${ISSUE_NUMBER:-$PR_NUMBER}"
+          
           git add .github/jreleaser/changelog.tpl
-          git commit -m "docs: update changelog for noteworthy change #${{ github.event.issue.number || github.event.pull_request.number }}"
+          git commit -m "docs: update changelog for noteworthy change #${NUMBER}"
           git push

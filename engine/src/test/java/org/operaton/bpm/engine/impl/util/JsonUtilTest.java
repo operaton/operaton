@@ -88,8 +88,7 @@ class JsonUtilTest {
 
     Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
-    assertThat(result).isNotNull();
-    assertThat(result).isEmpty();
+    assertThat(result).isNotNull().isEmpty();
   }
 
   @Test
@@ -98,7 +97,6 @@ class JsonUtilTest {
 
     Map<String, Object> result = JsonUtil.createGsonMapper().fromJson(json, Map.class);
 
-    assertThat(result).isNotNull();
-    assertThat(result).isEmpty();
+    assertThat(result).isNotNull().isEmpty();
   }
 }

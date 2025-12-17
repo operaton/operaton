@@ -138,13 +138,13 @@ jobs:
 
                 // Check if any check run failed or is pending
                 const failedOrPendingChecks = checkRuns.check_runs.filter(
-                  run => run.status !== 'completed' || run.conclusion !== 'success'
+                  run => run.status !== 'completed' || run.conclusion !== 'success' && run.conclusion !== 'skipped'
                 );
 
                 if (failedOrPendingChecks.length > 0) {
                   const pendingChecks = failedOrPendingChecks.filter(run => run.status !== 'completed');
                   const failedChecks = failedOrPendingChecks.filter(
-                    run => run.status === 'completed' && run.conclusion !== 'success'
+                    run => run.status === 'completed' && run.conclusion !== 'success' && run.conclusion !== 'skipped'
                   );
 
                   if (pendingChecks.length > 0) {

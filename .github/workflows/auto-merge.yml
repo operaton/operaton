@@ -192,6 +192,37 @@ jobs:
                 continue;
               }
 
+              // Check if PR has merge conflicts
+              if (pr.mergeable_state === 'dirty') {
+                console.log(`  ⚠️  PR has merge conflicts - requesting rebase`);
+                
+                // Check if we already commented about rebase
+                const { data: comments } = await github.rest.issues.listComments({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number
+                });
+                
+                const hasRebaseComment = comments.some(
+                  comment => comment.user.login === 'github-actions[bot]' && 
+                             comment.body.includes('@dependabot rebase')
+                );
+                
+                if (!hasRebaseComment) {
+                  await github.rest.issues.createComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    body: '@dependabot rebase'
+                  });
+                  console.log(`  💬 Requested rebase from dependabot`);
+                } else {
+                  console.log(`  ℹ️  Rebase already requested`);
+                }
+                
+                continue;
+              }
+
               // Check if all checks have passed
               const checksPassed = await allChecksPassed(pr);
 

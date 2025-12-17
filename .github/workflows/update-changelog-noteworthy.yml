@@ -1,0 +1,213 @@
+name: Update Changelog for Noteworthy Changes
+
+on:
+  issues:
+    types: [closed]
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: read
+
+jobs:
+  update-changelog:
+    name: Update Changelog
+    runs-on: ubuntu-latest
+    # Only run if the issue/PR has the "noteworthy" label
+    if: |
+      (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'noteworthy')) ||
+      (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'noteworthy'))
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Extract and Update Changelog
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            
+            // Get the event data
+            const eventName = context.eventName;
+            const isIssue = eventName === 'issues';
+            const isPR = eventName === 'pull_request';
+            
+            let issueNumber, issueTitle, issueBody, issueUrl, issueLabels;
+            let relatedPRs = [];
+            
+            if (isIssue) {
+              const issue = context.payload.issue;
+              issueNumber = issue.number;
+              issueTitle = issue.title;
+              issueBody = issue.body || '';
+              issueUrl = issue.html_url;
+              issueLabels = issue.labels.map(l => l.name);
+              
+              console.log(`📝 Processing closed issue #${issueNumber}: ${issueTitle}`);
+              
+              // Find related PRs that reference this issue
+              const { data: searchResults } = await github.rest.search.issuesAndPullRequests({
+                q: `is:pr repo:${context.repo.owner}/${context.repo.repo} ${issueNumber} in:body`,
+                sort: 'created',
+                order: 'desc',
+                per_page: 10
+              });
+              
+              // Filter to only merged PRs
+              relatedPRs = searchResults.items.filter(pr => pr.pull_request && pr.state === 'closed');
+              
+              // Get full PR details for each
+              for (let i = 0; i < relatedPRs.length; i++) {
+                const { data: prDetail } = await github.rest.pulls.get({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: relatedPRs[i].number
+                });
+                
+                // Only include if actually merged
+                if (prDetail.merged_at) {
+                  relatedPRs[i] = prDetail;
+                } else {
+                  relatedPRs.splice(i, 1);
+                  i--;
+                }
+              }
+              
+              console.log(`Found ${relatedPRs.length} related merged PR(s)`);
+            } else {
+              const pr = context.payload.pull_request;
+              
+              // Only process if the PR was actually merged
+              if (!pr.merged_at) {
+                console.log(`⏭️  PR #${pr.number} was closed but not merged - skipping`);
+                return;
+              }
+              
+              issueNumber = pr.number;
+              issueTitle = pr.title;
+              issueBody = pr.body || '';
+              issueUrl = pr.html_url;
+              issueLabels = pr.labels.map(l => l.name);
+              relatedPRs = [pr];
+              
+              console.log(`📝 Processing merged PR #${issueNumber}: ${issueTitle}`);
+            }
+            
+            // Determine the category based on labels
+            let category = 'features'; // default
+            const labelToCategoryMap = {
+              'bug': 'fixes',
+              'fix': 'fixes',
+              'documentation': 'documentation',
+              'backport': 'backports',
+              'enhancement': 'features',
+              'feature': 'features'
+            };
+            
+            for (const label of issueLabels) {
+              if (labelToCategoryMap[label]) {
+                category = labelToCategoryMap[label];
+                break;
+              }
+            }
+            
+            console.log(`📂 Category: ${category}`);
+            
+            // Create a summary of the change
+            let summary = issueTitle;
+            
+            // If we have PR information, extract key details
+            if (relatedPRs.length > 0) {
+              const prDetails = relatedPRs.map(pr => {
+                const files = pr.changed_files || 0;
+                const additions = pr.additions || 0;
+                const deletions = pr.deletions || 0;
+                return `PR #${pr.number}: ${files} files changed (+${additions}/-${deletions})`;
+              }).join(', ');
+              
+              console.log(`📊 PR Details: ${prDetails}`);
+            }
+            
+            // Use AI to generate a concise summary
+            // For now, we'll create a structured summary manually
+            // In a future enhancement, this could use OpenAI or similar
+            
+            // Create the changelog entry
+            const changelogEntry = {
+              title: summary,
+              issueNumber: isIssue ? issueNumber : null,
+              prNumbers: relatedPRs.map(pr => pr.number),
+              category: category,
+              url: issueUrl,
+              timestamp: new Date().toISOString()
+            };
+            
+            console.log(`📋 Changelog entry:`, JSON.stringify(changelogEntry, null, 2));
+            
+            // Read the changelog template
+            const changelogPath = '.github/jreleaser/changelog.tpl';
+            let changelogContent = fs.readFileSync(changelogPath, 'utf8');
+
+            // Find the "New and Noteworthy" section
+            const noteworthySection = '## New and Noteworthy';
+            const noteworthySectionIndex = changelogContent.indexOf(noteworthySection);
+
+            if (noteworthySectionIndex === -1) {
+              console.log('⚠️  Could not find "New and Noteworthy" section in changelog.tpl');
+              return;
+            }
+
+            // Find the end of the "New and Noteworthy" section (next ## heading)
+            const nextSectionIndex = changelogContent.indexOf('\n## ', noteworthySectionIndex + noteworthySection.length);
+
+            // Extract the section content
+            const sectionEndIndex = nextSectionIndex !== -1 ? nextSectionIndex : changelogContent.length;
+            const beforeSection = changelogContent.substring(0, sectionEndIndex);
+            const afterSection = changelogContent.substring(sectionEndIndex);
+
+            // Create the new entry
+            let newEntry = `- ${summary}`;
+            if (isIssue && relatedPRs.length > 0) {
+              newEntry += ` ([#${issueNumber}](${issueUrl})`;
+              newEntry += `, ${relatedPRs.map(pr => `[#${pr.number}](${pr.html_url})`).join(', ')})`;
+            } else if (isPR) {
+              newEntry += ` ([#${issueNumber}](${issueUrl}))`;
+            }
+
+            // Check if entry already exists to avoid duplicates
+            if (beforeSection.includes(newEntry)) {
+              console.log('ℹ️  Entry already exists in changelog, skipping');
+              return;
+            }
+
+            // Add the new entry at the end of the section
+            // Ensure there's a newline before the next section
+            const newChangelogContent = beforeSection + '\n' + newEntry + '\n' + afterSection;
+
+            // Write the updated changelog
+            fs.writeFileSync(changelogPath, newChangelogContent, 'utf8');
+
+            console.log(`✅ Updated ${changelogPath} with new entry`);
+            console.log(`📝 Entry: ${newEntry}`);
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Check if there are changes
+          if git diff --quiet .github/jreleaser/changelog.tpl; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          git add .github/jreleaser/changelog.tpl
+          git commit -m "docs: update changelog for noteworthy change #${{ github.event.issue.number || github.event.pull_request.number }}"
+          git push

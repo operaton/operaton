@@ -29,6 +29,7 @@ jobs:
             // Load configuration from YAML file
             // Since js-yaml is not available in github-script,
             // we use Python to convert YAML to JSON
+            // Note: This reads from our own repository file, not user input
             const configPath = '.github/workflows/auto-merge.config.yml';
             const yamlContent = fs.readFileSync(configPath, 'utf8');
             const jsonStr = execSync(
@@ -242,7 +243,7 @@ jobs:
                     repo: context.repo.repo,
                     pull_number: pr.number,
                     event: 'APPROVE',
-                    body: '✅ Auto-approved by auto-merge workflow - all checks passed and dependency is whitelisted.'
+                    body: '✅ Auto-approved by auto-merge workflow - all checks passed and dependency is allowlisted.'
                   });
                   console.log(`  ✅ Approved PR #${pr.number}`);
                 } else {

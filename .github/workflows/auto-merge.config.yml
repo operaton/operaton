@@ -43,7 +43,7 @@ auto-merge-rules:
     includes:
       - '*'
 
-# Note: dependencies:github-action PRs are NOT auto-merged
-#       for security reasons
+# Note: dependencies:github-action PRs are NOT allowlisted
+#       for security reasons (require manual review)
 # Note: DB drivers (postgresql, mysql, oracle, etc.) are NOT
-#       auto-merged as they require integration tests
+#       allowlisted as they require integration tests

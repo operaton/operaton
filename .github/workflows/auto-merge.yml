@@ -85,7 +85,10 @@ jobs:
               // Otherwise, check labels and includes (legacy behavior for dependency PRs)
               // Check labels - all required labels must be present
               if (!rule.labels || !rule.includes) {
-                console.log(`  ⚠️  Rule must have either 'title' or both 'labels' and 'includes'`);
+                console.log(
+                  `  ⚠️  Invalid rule: at least one matching criterion is required (either 'title' or both 'labels' and 'includes'). ` +
+                  `Rules without these (e.g. only 'author') are rejected to avoid overly permissive auto-merging.`
+                );
                 return false;
               }
 
@@ -286,7 +289,7 @@ jobs:
                       repo: context.repo.repo,
                       pull_number: pr.number,
                       event: 'APPROVE',
-                      body: '✅ Auto-approved by auto-merge workflow - all checks passed and dependency is allowlisted.'
+                      body: '✅ Auto-approved by auto-merge workflow - all checks passed and PR meets the auto-merge criteria.'
                     });
                     console.log(`  ✅ Approved PR #${pr.number}`);
                   } else {

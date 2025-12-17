@@ -30,14 +30,16 @@ module.exports = (_env, argv = {}) => {
   ))(_env, {...argv, eeBuild, devMode: true});
 
   const addEngines = engines => {
-    return engines.reduce((acc, engine) => {
-      acc[`/operaton/app/*/${engine}/`] = {
+    return engines.flatMap(engine => [
+      {
+        context: [`/operaton/app/*/${engine}/`],
         target: 'http://localhost:8081/',
         pathRewrite: path => {
           return path.replace(`/${engine}`, '').replace('/operaton', '');
         }
-      };
-      acc[`/operaton/app/*/${engine}/setup/`] = {
+      },
+      {
+        context: `/operaton/app/*/${engine}/setup/`,
         target: 'http://localhost:8081/',
         pathRewrite: path => {
           return path
@@ -45,17 +47,13 @@ module.exports = (_env, argv = {}) => {
             .replace('/operaton', '')
             .replace('/setup', '');
         }
-      };
-      return acc;
-    }, {});
+      }
+    ]);
   };
 
   const developmentConfig = {
     output: {
       publicPath: '/'
-    },
-    entry: {
-      client: 'webpack-dev-server/client?http://localhost:8081?live-reload=true'
     },
     devtool: 'source-map',
     devServer: {
@@ -64,35 +62,35 @@ module.exports = (_env, argv = {}) => {
         directory: path.resolve(__dirname, './public'),
         publicPath: '/app'
       },
-      https: false,
-      proxy: {
-        '/api': {
+      server: "http",
+      client: {
+        webSocketURL: 'ws://localhost:8081/ws',
+      },
+      proxy: [
+        {
+          context: ['/api'],
           target: 'http://localhost:8080/operaton/api',
           logLevel: 'debug',
           pathRewrite: {
             '^/api': ''
           }
         },
-        '/operaton-welcome': {
+        {
+          context: ['/operaton-welcome'],
           target: 'http://localhost:8080/',
           logLevel: 'debug'
         },
-        ...addEngines(['default', 'engine2', 'engine3']),
-        '/operaton/*': {
+
+          ...addEngines(['default', 'engine2', 'engine3']),
+        {
+          context: (path) => path.startsWith('/operaton/'),
           target: 'http://localhost:8081/',
           logLevel: 'debug',
-          pathRewrite: path => {
-            return path.replace('/operaton', '');
-          }
-        },
-        '/operaton/api/*': {
-          target: 'http://localhost:8081/',
-          logLevel: 'debug',
-          pathRewrite: path => {
+          pathRewrite: (path) => {
             return path.replace('/operaton', '');
           }
         }
-      },
+      ],
       open: ['/operaton/app/cockpit/default/']
     }
   };

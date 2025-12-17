@@ -199,12 +199,8 @@ public class CmmnActivity extends CoreActivity {
       listenerCache = resolvedBuiltInVariableListeners;
     }
 
-    Map<String, List<VariableListener<?>>> resolvedListenersForEvent = listenerCache.get(eventName);
-
-    if (resolvedListenersForEvent == null) {
-      resolvedListenersForEvent = new HashMap<>();
-      listenerCache.put(eventName, resolvedListenersForEvent);
-
+    return listenerCache.computeIfAbsent(eventName, k -> {
+      Map<String, List<VariableListener<?>>> resolvedListenersForEvent2 = new HashMap<>();
       CmmnActivity currentActivity = this;
 
       while (currentActivity != null) {
@@ -216,13 +212,12 @@ public class CmmnActivity extends CoreActivity {
         }
 
         if (localListeners != null && !localListeners.isEmpty()) {
-          resolvedListenersForEvent.put(currentActivity.getId(), localListeners);
+          resolvedListenersForEvent2.put(currentActivity.getId(), localListeners);
         }
 
         currentActivity = currentActivity.getParent();
       }
-    }
-
-    return resolvedListenersForEvent;
+      return resolvedListenersForEvent2;
+    });
   }
 }

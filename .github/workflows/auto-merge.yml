@@ -1,0 +1,251 @@
+name: Auto-Merge Dependabot PRs
+
+on:
+  schedule:
+    # Run at 4:00 AM UTC daily
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    name: Auto-merge eligible PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Collect and merge eligible PRs
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const yaml = require('js-yaml');
+
+            // Load configuration
+            const configPath = '.github/workflows/auto-merge.config.yml';
+            const configContent = fs.readFileSync(configPath, 'utf8');
+            const config = yaml.load(configContent);
+
+            console.log('📋 Loaded auto-merge configuration');
+            console.log(`Found ${config['auto-merge-rules'].length} rule(s)`);
+
+            // Get all open pull requests
+            const { data: pullRequests } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+
+            console.log(`\n🔍 Found ${pullRequests.length} open PR(s)`);
+
+            // Function to check if dependency matches pattern
+            function matchesPattern(dependency, pattern) {
+              if (pattern === '*') return true;
+
+              // Convert wildcard pattern to regex
+              const regexPattern = pattern
+                .replace(/\./g, '\\.')
+                .replace(/\*/g, '.*');
+              const regex = new RegExp(`^${regexPattern}$`);
+
+              return regex.test(dependency);
+            }
+
+            // Function to extract dependency from PR title
+            function extractDependency(title) {
+              // Dependabot PR titles typically follow patterns like:
+              // "Bump org.springframework.boot:spring-boot-starter-parent from 3.2.0 to 3.2.1"
+              // "Bump eslint from 8.0.0 to 8.1.0 in /webapps/frontend"
+              const bumpMatch = title.match(/^Bump\s+([^\s]+)/i);
+              if (bumpMatch) {
+                return bumpMatch[1];
+              }
+              return null;
+            }
+
+            // Function to check if PR matches any rule
+            function matchesRule(pr, rule) {
+              // Check author
+              if (pr.user.login !== rule.author) {
+                return false;
+              }
+
+              // Check labels - all required labels must be present
+              const prLabels = pr.labels.map(l => l.name);
+              const hasAllLabels = rule.labels.every(label => prLabels.includes(label));
+              if (!hasAllLabels) {
+                return false;
+              }
+
+              // Extract dependency name from PR title
+              const dependency = extractDependency(pr.title);
+              if (!dependency) {
+                console.log(`  ⚠️  Could not extract dependency from title: ${pr.title}`);
+                return false;
+              }
+
+              // Check if dependency matches any include pattern
+              const matches = rule.includes.some(pattern => matchesPattern(dependency, pattern));
+
+              if (matches) {
+                console.log(`  ✅ Dependency "${dependency}" matches pattern in rule`);
+              }
+
+              return matches;
+            }
+
+            // Function to check if all checks have passed
+            async function allChecksPassed(pr) {
+              try {
+                // Get the latest commit SHA
+                const { data: commits } = await github.rest.pulls.listCommits({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number
+                });
+
+                if (commits.length === 0) {
+                  return false;
+                }
+
+                const latestCommit = commits[commits.length - 1];
+                const sha = latestCommit.sha;
+
+                // Get combined status for the commit
+                const { data: status } = await github.rest.repos.getCombinedStatusForRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: sha
+                });
+
+                // Get check runs for the commit
+                const { data: checkRuns } = await github.rest.checks.listForRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: sha
+                });
+
+                // Check if any status check failed or is pending
+                if (status.state !== 'success' && status.state !== '') {
+                  if (status.state === 'pending') {
+                    console.log(`  ⏳ Status checks are still pending`);
+                  } else {
+                    console.log(`  ❌ Status checks failed or are in error state: ${status.state}`);
+                  }
+                  return false;
+                }
+
+                // Check if any check run failed or is pending
+                const failedOrPendingChecks = checkRuns.check_runs.filter(
+                  run => run.status !== 'completed' || run.conclusion !== 'success'
+                );
+
+                if (failedOrPendingChecks.length > 0) {
+                  const pendingChecks = failedOrPendingChecks.filter(run => run.status !== 'completed');
+                  const failedChecks = failedOrPendingChecks.filter(
+                    run => run.status === 'completed' && run.conclusion !== 'success'
+                  );
+
+                  if (pendingChecks.length > 0) {
+                    console.log(`  ⏳ ${pendingChecks.length} check(s) still pending`);
+                  }
+                  if (failedChecks.length > 0) {
+                    console.log(`  ❌ ${failedChecks.length} check(s) failed`);
+                  }
+                  return false;
+                }
+
+                console.log(`  ✅ All checks passed`);
+                return true;
+              } catch (error) {
+                console.log(`  ⚠️  Error checking status: ${error.message}`);
+                return false;
+              }
+            }
+
+            // Collect eligible PRs
+            const eligiblePRs = [];
+
+            for (const pr of pullRequests) {
+              console.log(`\n📝 Checking PR #${pr.number}: ${pr.title}`);
+              console.log(`   Author: ${pr.user.login}`);
+              console.log(`   Labels: ${pr.labels.map(l => l.name).join(', ') || 'none'}`);
+
+              // Check if PR matches any rule
+              let matchedRule = null;
+              for (const rule of config['auto-merge-rules']) {
+                if (matchesRule(pr, rule)) {
+                  matchedRule = rule;
+                  break;
+                }
+              }
+
+              if (!matchedRule) {
+                console.log(`  ⏭️  Does not match any auto-merge rule`);
+                continue;
+              }
+
+              // Check if all checks have passed
+              const checksPassed = await allChecksPassed(pr);
+
+              if (checksPassed) {
+                console.log(`  ✨ PR is eligible for auto-merge`);
+                eligiblePRs.push(pr);
+              }
+            }
+
+            console.log(`\n\n🎯 Summary: ${eligiblePRs.length} PR(s) eligible for auto-merge`);
+
+            // Approve and merge eligible PRs
+            for (const pr of eligiblePRs) {
+              console.log(`\n🚀 Processing PR #${pr.number}: ${pr.title}`);
+
+              try {
+                // Check if already approved by this workflow
+                const { data: reviews } = await github.rest.pulls.listReviews({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number
+                });
+
+                const alreadyApproved = reviews.some(
+                  review => review.user.login === 'github-actions[bot]' && review.state === 'APPROVED'
+                );
+
+                if (!alreadyApproved) {
+                  // Approve the PR
+                  await github.rest.pulls.createReview({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    pull_number: pr.number,
+                    event: 'APPROVE',
+                    body: '✅ Auto-approved by auto-merge workflow - all checks passed and dependency is whitelisted.'
+                  });
+                  console.log(`  ✅ Approved PR #${pr.number}`);
+                } else {
+                  console.log(`  ℹ️  PR #${pr.number} already approved`);
+                }
+
+                // Merge the PR using squash
+                await github.rest.pulls.merge({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  merge_method: 'squash',
+                  commit_title: pr.title,
+                  commit_message: `Auto-merged by auto-merge workflow\n\n${pr.body || ''}`
+                });
+
+                console.log(`  ✅ Successfully merged PR #${pr.number} using squash`);
+
+              } catch (error) {
+                console.log(`  ❌ Error processing PR #${pr.number}: ${error.message}`);
+              }
+            }
+
+            console.log(`\n✨ Auto-merge workflow completed`);

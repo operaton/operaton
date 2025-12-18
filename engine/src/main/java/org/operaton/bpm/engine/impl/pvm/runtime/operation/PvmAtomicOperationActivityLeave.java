@@ -62,7 +62,7 @@ public class PvmAtomicOperationActivityLeave implements PvmAtomicOperation {
         throw new PvmException("couldn't leave activity <"+activity.getProperty("type")+" id=\""+activity.getId()+"\" ...>: "+e.getMessage(), e);
       }
     } else {
-      throw new PvmException("Behavior of current activity is not an instance of %s. Execution %s".formatted(FlowNodeActivityBehavior.class.getSimpleName(), execution));
+      throw new PvmException("Behavior of current activity is not an instance of " + FlowNodeActivityBehavior.class.getSimpleName() + ". Execution " + execution);
     }
   }
 

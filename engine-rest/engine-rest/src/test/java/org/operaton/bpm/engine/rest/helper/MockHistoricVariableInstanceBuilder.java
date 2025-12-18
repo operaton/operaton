@@ -245,7 +245,6 @@ public class MockHistoricVariableInstanceBuilder {
     when(mockVariable.getProcessInstanceId()).thenReturn(processInstanceId);
     when(mockVariable.getExecutionId()).thenReturn(executionId);
     when(mockVariable.getErrorMessage()).thenReturn(errorMessage);
-    when(mockVariable.getActivtyInstanceId()).thenReturn(activityInstanceId);
     when(mockVariable.getActivityInstanceId()).thenReturn(activityInstanceId);
     when(mockVariable.getCaseDefinitionKey()).thenReturn(caseDefinitionKey);
     when(mockVariable.getCaseDefinitionId()).thenReturn(caseDefinitionId);

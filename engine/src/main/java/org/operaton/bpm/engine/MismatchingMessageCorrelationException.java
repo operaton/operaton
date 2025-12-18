@@ -32,18 +32,16 @@ public class MismatchingMessageCorrelationException extends
   }
 
   public MismatchingMessageCorrelationException(String messageName, String reason) {
-    this("Cannot correlate message '" + messageName + "': " + reason);
+    this("Cannot correlate message '%s': %s".formatted(messageName, reason));
   }
 
   public MismatchingMessageCorrelationException(String messageName,
       String businessKey, Map<String, Object> correlationKeys) {
-    this("Cannot correlate message '" + messageName + "' with process instance business key '" + businessKey
-        + "' and correlation keys " + correlationKeys);
+    this("Cannot correlate message '%s' with process instance business key '%s' and correlation keys %s".formatted(messageName, businessKey, correlationKeys));
   }
 
   public MismatchingMessageCorrelationException(String messageName,
       String businessKey, Map<String, Object> correlationKeys, String reason) {
-    this("Cannot correlate message '" + messageName + "' with process instance business key '" + businessKey
-        + "' and correlation keys " + correlationKeys + ": " + reason);
+    this("Cannot correlate message '%s' with process instance business key '%s' and correlation keys %s: %s".formatted(messageName, businessKey, correlationKeys, reason));
   }
 }

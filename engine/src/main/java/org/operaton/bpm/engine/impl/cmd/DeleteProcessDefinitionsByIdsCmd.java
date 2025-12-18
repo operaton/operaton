@@ -109,7 +109,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
     String processDefinitionId = processDefinitionIds.iterator().next();
     ensureNotNull("processDefinitionId", processDefinitionId);
     ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
-    ensureNotNull(NotFoundException.class, "No process definition found with id '" + processDefinitionId + "'", "processDefinition", processDefinition);
+    ensureNotNull(NotFoundException.class, "No process definition found with id '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     return processDefinition;
   }

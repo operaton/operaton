@@ -91,7 +91,7 @@ public class JuelFormEngine implements FormEngine {
       .getResourceManager()
       .findResourceByDeploymentIdAndResourceName(deploymentId, formKey);
 
-    ensureNotNull("Form with formKey '" + formKey + "' does not exist", "resourceStream", resourceStream);
+    ensureNotNull("Form with formKey '%s' does not exist".formatted(formKey), "resourceStream", resourceStream);
 
     byte[] resourceBytes = resourceStream.getBytes();
     return new String(resourceBytes, UTF_8);

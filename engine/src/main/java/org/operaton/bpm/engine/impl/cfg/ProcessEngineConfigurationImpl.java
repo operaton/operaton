@@ -1701,7 +1701,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       }
       LOG.debugDatabaseproductName(databaseProductName);
       databaseType = databaseTypeMappings.getProperty(databaseProductName);
-      ensureNotNull("couldn't deduct database type from database product name '" + databaseProductName + "'", "databaseType", databaseType);
+      ensureNotNull("couldn't deduct database type from database product name '%s'".formatted(databaseProductName), "databaseType", databaseType);
       LOG.debugDatabaseType(databaseType);
 
       initDatabaseVendorAndVersion(databaseMetaData);

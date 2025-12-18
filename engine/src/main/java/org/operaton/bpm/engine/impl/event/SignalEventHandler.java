@@ -44,7 +44,7 @@ public class SignalEventHandler extends EventHandlerImpl {
   @SuppressWarnings("unused")
   protected void handleStartEvent(EventSubscriptionEntity eventSubscription, Map<String, Object> payload, String businessKey, CommandContext commandContext) {
     String processDefinitionId = eventSubscription.getConfiguration();
-    ensureNotNull("Configuration of signal start event subscription '" + eventSubscription.getId() + "' contains no process definition id.",
+    ensureNotNull("Configuration of signal start event subscription '%s' contains no process definition id.".formatted(eventSubscription.getId()),
         processDefinitionId);
 
     DeploymentCache deploymentCache = Context.getProcessEngineConfiguration().getDeploymentCache();

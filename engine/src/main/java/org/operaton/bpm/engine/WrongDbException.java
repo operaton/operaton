@@ -35,7 +35,7 @@ public class WrongDbException extends ProcessEngineException {
   final String dbVersion;
 
   public WrongDbException(String libraryVersion, String dbVersion) {
-    this("version mismatch: activiti library version is '%s', db version is %s Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or value=\"create-drop\" (use create-drop for testing only!) in bean processEngineConfiguration in operaton.cfg.xml for automatic schema creation".formatted(libraryVersion, dbVersion),
+    this("version mismatch: Operaton library version is '%s', db version is %s Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or value=\"create-drop\" (use create-drop for testing only!) in bean processEngineConfiguration in operaton.cfg.xml for automatic schema creation".formatted(libraryVersion, dbVersion),
         libraryVersion, dbVersion);
   }
 

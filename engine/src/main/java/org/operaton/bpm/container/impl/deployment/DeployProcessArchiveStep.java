@@ -215,13 +215,12 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
     String processEngineName = processArchive.getProcessEngineName();
     if (processEngineName != null) {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName);
-      ensureNotNull("Cannot deploy process archive '" + processArchive.getName() + "' to process engine '" + processEngineName
-          + "' no such process engine exists", "processEngine", processEngine);
+      ensureNotNull("Cannot deploy process archive '%s' to process engine '%s' no such process engine exists".formatted(processArchive.getName(), processEngineName), "processEngine", processEngine);
       return processEngine;
 
     } else {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, defaultDeployToProcessEngineName);
-      ensureNotNull("Cannot deploy process archive '" + processArchive.getName() + "' to default process: no such process engine exists", "processEngine",
+      ensureNotNull("Cannot deploy process archive '%s' to default process: no such process engine exists".formatted(processArchive.getName()), "processEngine",
           processEngine);
       return processEngine;
     }

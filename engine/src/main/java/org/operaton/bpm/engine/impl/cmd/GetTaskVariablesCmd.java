@@ -58,7 +58,7 @@ public class GetTaskVariablesCmd implements Command<VariableMap>, Serializable {
       .getTaskManager()
       .findTaskById(taskId);
 
-    ensureNotNull("task " + taskId + " doesn't exist", "task", task);
+    ensureNotNull("task %s doesn't exist".formatted(taskId), "task", task);
 
     checkGetTaskVariables(task, commandContext);
 

@@ -49,14 +49,14 @@ public class GetStartFormCmd implements Command<StartFormData>, Serializable {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
-    ensureNotNull("No process definition found for id '" + processDefinitionId + "'", "processDefinition", processDefinition);
+    ensureNotNull("No process definition found for id '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);
     }
 
     StartFormHandler startFormHandler = processDefinition.getStartFormHandler();
-    ensureNotNull("No startFormHandler defined in process '" + processDefinitionId + "'", "startFormHandler", startFormHandler);
+    ensureNotNull("No startFormHandler defined in process '%s'".formatted(processDefinitionId), "startFormHandler", startFormHandler);
 
     return startFormHandler.createStartFormData(processDefinition);
   }

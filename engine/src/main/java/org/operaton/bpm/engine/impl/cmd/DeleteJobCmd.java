@@ -49,7 +49,7 @@ public class DeleteJobCmd implements Command<Object>, Serializable {
     ensureNotNull("jobId", jobId);
 
     JobEntity job = commandContext.getJobManager().findJobById(jobId);
-    ensureNotNull("No job found with id '" + jobId + "'", "job", job);
+    ensureNotNull("No job found with id '%s'".formatted(jobId), "job", job);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateJob(job);

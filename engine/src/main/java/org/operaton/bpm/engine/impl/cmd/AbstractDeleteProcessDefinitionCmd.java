@@ -45,7 +45,7 @@ public abstract class AbstractDeleteProcessDefinitionCmd implements Command<Void
 
     ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
-    ensureNotNull(NotFoundException.class, "No process definition found with id '" + processDefinitionId + "'",
+    ensureNotNull(NotFoundException.class, "No process definition found with id '%s'".formatted(processDefinitionId),
       "processDefinition", processDefinition);
 
     List<CommandChecker> commandCheckers = commandContext.getProcessEngineConfiguration().getCommandCheckers();

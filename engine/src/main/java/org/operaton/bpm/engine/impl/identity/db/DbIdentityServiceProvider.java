@@ -339,8 +339,8 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
     TenantEntity tenant = findTenantById(tenantId);
     GroupEntity group = findGroupById(groupId);
 
-    ensureNotNull("No tenant found with id '" + tenantId + "'.", "tenant", tenant);
-    ensureNotNull("No group found with id '" + groupId + "'.", "group", group);
+    ensureNotNull("No tenant found with id '%s'.".formatted(tenantId), "tenant", tenant);
+    ensureNotNull("No group found with id '%s'.".formatted(groupId), "group", group);
 
     TenantMembershipEntity membership = new TenantMembershipEntity();
     membership.setTenant(tenant);

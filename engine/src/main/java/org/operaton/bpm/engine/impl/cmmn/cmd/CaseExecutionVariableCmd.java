@@ -70,7 +70,7 @@ public class CaseExecutionVariableCmd implements Command<Void>, Serializable {
       .getCaseExecutionManager()
       .findCaseExecutionById(caseExecutionId);
 
-    ensureNotNull(CaseExecutionNotFoundException.class, "There does not exist any case execution with id: '" + caseExecutionId + "'", "caseExecution", caseExecution);
+    ensureNotNull(CaseExecutionNotFoundException.class, "There does not exist any case execution with id: '%s'".formatted(caseExecutionId), "caseExecution", caseExecution);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateCaseInstance(caseExecution);

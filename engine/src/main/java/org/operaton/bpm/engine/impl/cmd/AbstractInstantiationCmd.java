@@ -185,7 +185,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
     ActivityInstance ancestorInstance = findActivityInstance(tree, ancestorActivityInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
-        describeFailure("Ancestor activity instance '" + ancestorActivityInstanceId + "' does not exist"),
+        describeFailure("Ancestor activity instance '%s' does not exist".formatted(ancestorActivityInstanceId)),
         "ancestorInstance", ancestorInstance);
 
     // determine ancestor activity scope execution and activity
@@ -201,8 +201,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getCurrentElement());
 
     if (!flowScopeExecutions.contains(ancestorScopeExecution)) {
-      throw new NotValidException(describeFailure("Scope execution for '" + ancestorActivityInstanceId
-          + "' cannot be found in parent hierarchy of flow element '" + elementToInstantiate.getId() + "'"));
+      throw new NotValidException(describeFailure("Scope execution for '%s' cannot be found in parent hierarchy of flow element '%s'".formatted(ancestorActivityInstanceId, elementToInstantiate.getId())));
     }
 
     return ancestorScopeExecution;

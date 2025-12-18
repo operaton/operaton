@@ -41,7 +41,7 @@ public class TaskAlreadyClaimedException extends ProcessEngineException {
     private final String taskAssignee;
 
     public TaskAlreadyClaimedException(String taskId, String taskAssignee) {
-        super("Task '" + taskId + "' is already claimed by someone else.");
+        super("Task '%s' is already claimed by someone else.".formatted(taskId));
         this.taskId = taskId;
         this.taskAssignee = taskAssignee;
     }

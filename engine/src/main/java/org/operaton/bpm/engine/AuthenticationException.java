@@ -24,15 +24,15 @@ public class AuthenticationException extends ProcessEngineException {
   @Serial private static final long serialVersionUID = 1L;
 
   public AuthenticationException(String userId) {
-    super("The user with id '" + userId + "' is permanently locked. Please contact your admin to unlock the account.");
+    super("The user with id '%s' is permanently locked. Please contact your admin to unlock the account.".formatted(userId));
   }
 
   public AuthenticationException(String userId, Date lockExpirationDate) {
-    super("The user with id '" + userId + "' is locked. The lock will expire at " + lockExpirationDate);
+    super("The user with id '%s' is locked. The lock will expire at %s".formatted(userId, lockExpirationDate));
   }
 
   public AuthenticationException(String userId, String message) {
-    super("The user with id '" + userId + "' tries to login without success. " + message);
+    super("The user with id '%s' tries to login without success. %s".formatted(userId, message));
   }
 
 }

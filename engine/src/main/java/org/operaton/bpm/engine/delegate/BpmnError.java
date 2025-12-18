@@ -70,7 +70,7 @@ public class BpmnError extends ProcessEngineException {
     if (message == null) {
       return "";
     } else {
-      return message + " (errorCode='" + errorCode + "')";
+      return "%s (errorCode='%s')".formatted(message, errorCode);
     }
   }
 
@@ -85,7 +85,7 @@ public class BpmnError extends ProcessEngineException {
 
   @Override
   public String toString() {
-    return super.toString() + " (errorCode='" + errorCode + "')";
+    return "%s (errorCode='%s')".formatted(super.toString(), errorCode);
   }
 
   protected void setMessage(String errorMessage) {

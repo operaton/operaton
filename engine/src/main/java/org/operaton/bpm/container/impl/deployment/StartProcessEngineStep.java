@@ -108,7 +108,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
 
     if(processEngineXml.getJobAcquisitionName() != null && !processEngineXml.getJobAcquisitionName().isEmpty()) {
       JobExecutor jobExecutor = getJobExecutorService(serviceContainer);
-      ensureNotNull("Cannot find referenced job executor with name '" + processEngineXml.getJobAcquisitionName() + "'", "jobExecutor", jobExecutor);
+      ensureNotNull("Cannot find referenced job executor with name '%s'".formatted(processEngineXml.getJobAcquisitionName()), "jobExecutor", jobExecutor);
 
       // set JobExecutor on process engine
       configurationImpl.setJobExecutor(jobExecutor);

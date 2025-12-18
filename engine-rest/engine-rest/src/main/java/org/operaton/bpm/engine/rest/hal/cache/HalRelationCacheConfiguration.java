@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.rest.hal.cache;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -100,11 +98,7 @@ public class HalRelationCacheConfiguration {
   protected void parseCacheConfigurations(JsonNode jsonConfiguration) {
     JsonNode jsonNode = jsonConfiguration.get(CONFIG_CACHES);
     if (jsonNode != null) {
-      Iterator<Entry<String, JsonNode>> cacheConfigs = jsonNode.fields();
-      while (cacheConfigs.hasNext()) {
-        Entry<String, JsonNode> cacheConfiguration = cacheConfigs.next();
-        parseCacheConfiguration(cacheConfiguration.getKey(), cacheConfiguration.getValue());
-      }
+      jsonNode.properties().stream().forEach(entry -> parseCacheConfiguration(entry.getKey(), entry.getValue()));
     }
   }
 

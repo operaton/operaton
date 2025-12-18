@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +28,8 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 
 /**

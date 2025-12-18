@@ -55,7 +55,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   protected void ensureDefaultInitialExists() {
-    ensureNotNull("Process '" + name + "' has no default start activity (e.g. none start event), hence you cannot use 'startProcessInstanceBy...' but have to start it using one of the modeled start events (e.g. message start events)", "initial", initial);
+    ensureNotNull("Process '%s' has no default start activity (e.g. none start event), hence you cannot use 'startProcessInstanceBy...' but have to start it using one of the modeled start events (e.g. message start events)".formatted(name), "initial", initial);
   }
 
   @Override

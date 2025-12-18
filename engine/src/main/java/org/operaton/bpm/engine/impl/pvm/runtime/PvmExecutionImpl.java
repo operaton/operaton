@@ -763,7 +763,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
-      throw new PvmException("couldn't process signal '" + signalName + "' on activity '" + activity.getId() + "': " + e.getMessage(), e);
+      throw new PvmException("couldn't process signal '%s' on activity '%s': %s".formatted(signalName, activity.getId(), e.getMessage()), e);
     }
   }
 
@@ -805,8 +805,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     ActivityStartBehavior activityStartBehavior = activity.getActivityStartBehavior();
     if (!isScope() && ActivityStartBehavior.DEFAULT != activityStartBehavior) {
-      throw new ProcessEngineException("Activity '" + activity + "' with start behavior '" + activityStartBehavior + "'"
-        + "cannot be executed by non-scope execution.");
+      throw new ProcessEngineException("Activity '%s' with start behavior '%s' cannot be executed by non-scope execution.".formatted(activity, activityStartBehavior));
     }
 
     PvmActivity activityImpl = activity;

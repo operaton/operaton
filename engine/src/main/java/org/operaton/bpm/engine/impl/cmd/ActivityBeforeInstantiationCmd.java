@@ -55,8 +55,7 @@ public class ActivityBeforeInstantiationCmd extends AbstractInstantiationCmd {
 
     // forbid instantiation of compensation boundary events
     if (activity != null && "compensationBoundaryCatch".equals(activity.getProperty("type"))) {
-      throw new ProcessEngineException("Cannot start before activity " + activityId + "; activity " +
-        "is a compensation boundary event.");
+      throw new ProcessEngineException("Cannot start before activity %s; activity is a compensation boundary event.".formatted(activityId));
     }
 
     return super.execute(commandContext);

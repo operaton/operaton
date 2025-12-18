@@ -52,7 +52,7 @@ public class GetFormKeyCmd implements Command<String> {
   public GetFormKeyCmd(String processDefinitionId, String taskDefinitionKey) {
     setProcessDefinitionId(processDefinitionId);
     if (taskDefinitionKey == null || taskDefinitionKey.isEmpty()) {
-      throw new ProcessEngineException("The task definition key is mandatory, but '" + taskDefinitionKey + "' has been provided.");
+      throw new ProcessEngineException("The task definition key is mandatory, but '%s' has been provided.".formatted(taskDefinitionKey));
     }
     this.taskDefinitionKey = taskDefinitionKey;
   }

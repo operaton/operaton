@@ -331,7 +331,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
 
     if (!executions.isEmpty()) {
       if (executions.size() > 1) {
-        throw new ProcessEngineException("Executions for activity " + scope + " ambiguous");
+        throw new ProcessEngineException("Executions for activity %s ambiguous".formatted(scope));
       }
 
       return executions.iterator().next();

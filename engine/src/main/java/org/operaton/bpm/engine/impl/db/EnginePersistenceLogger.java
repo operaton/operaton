@@ -58,7 +58,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
     StringBuilder message = new StringBuilder();
     message.append("[\n");
     for( Object object : list ) {
-      message.append("  %s\n".formatted(object.toString()));
+      message.append("  %s%n".formatted(object.toString()));
     }
     message.append("]");
 
@@ -69,7 +69,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
     StringBuilder message = new StringBuilder();
     message.append("[\n");
     for( Map.Entry<String, ?> entry : map.entrySet() ) {
-      message.append("  %s: %s\n".formatted(entry.getKey(), entry.getValue().toString()));
+      message.append("  %s: %s%n".formatted(entry.getKey(), entry.getValue().toString()));
     }
     message.append("]");
     return message.toString();
@@ -828,9 +828,9 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
         final List<SQLException> relatedSqlExceptions = findRelatedSqlExceptions(exCause);
         StringBuilder sb = new StringBuilder();
         for (SQLException sqlException : relatedSqlExceptions) {
-          sb.append("%s\n".formatted(sqlException));
+          sb.append("%s%n".formatted(sqlException));
         }
-        message.append("\n%s".formatted(sb));
+        message.append("%n%s".formatted(sb));
       }
       exCause = exCause.getCause();
     } while (exCause != null);

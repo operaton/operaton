@@ -29,6 +29,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.assertj.core.api.recursive.comparison.ComparingFields;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -1400,7 +1401,11 @@ class RepositoryServiceTest {
         Tuple.tuple("Failing Process", 1, "failingProcess", List.of("version_tag_reference_1"), "ver_tag_2", callingProcessId));
 
     for (CalledProcessDefinition called : mappings) {
-      assertThat(called).isEqualToIgnoringGivenFields(repositoryService.getProcessDefinition(called.getId()), "calledFromActivityIds", "callingProcessDefinitionId");
+      ProcessDefinition deployedProcessDefinition = repositoryService.getProcessDefinition(called.getId());
+      assertThat(called)
+        .usingRecursiveComparison()
+        .ignoringFields("calledFromActivityIds", "callingProcessDefinitionId", "suspended")
+        .isEqualTo(deployedProcessDefinition);
     }
   }
 

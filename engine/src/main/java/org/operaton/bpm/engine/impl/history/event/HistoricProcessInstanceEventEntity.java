@@ -144,26 +144,16 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[businessKey=" + businessKey
-           + ", startUserId=" + startUserId
-           + ", superProcessInstanceId=" + superProcessInstanceId
-           + ", rootProcessInstanceId=" + rootProcessInstanceId
-           + ", superCaseInstanceId=" + superCaseInstanceId
-           + ", deleteReason=" + deleteReason
-           + ", durationInMillis=" + durationInMillis
-           + ", startTime=" + startTime
-           + ", endTime=" + endTime
-           + ", removalTime=" + removalTime
-           + ", endActivityId=" + endActivityId
-           + ", startActivityId=" + startActivityId
-           + ", id=" + id
-           + ", eventType=" + eventType
-           + ", executionId=" + executionId
-           + ", processDefinitionId=" + processDefinitionId
-           + ", processInstanceId=" + processInstanceId
-           + ", tenantId=" + tenantId
-           + ", restartedProcessInstanceId=" + restartedProcessInstanceId
-           + "]";
+           + "[businessKey=%s, startUserId=".formatted(businessKey) + startUserId
+           + ", superProcessInstanceId=%s, rootProcessInstanceId=".formatted(superProcessInstanceId) + rootProcessInstanceId
+           + ", superCaseInstanceId=%s, deleteReason=".formatted(superCaseInstanceId) + deleteReason
+           + ", durationInMillis=%s, startTime=".formatted(durationInMillis) + startTime
+           + ", endTime=%s, removalTime=".formatted(endTime) + removalTime
+           + ", endActivityId=%s, startActivityId=".formatted(endActivityId) + startActivityId
+           + ", id=%s, eventType=".formatted(id) + eventType
+           + ", executionId=%s, processDefinitionId=".formatted(executionId) + processDefinitionId
+           + ", processInstanceId=%s, tenantId=".formatted(processInstanceId) + tenantId
+           + ", restartedProcessInstanceId=%s]".formatted(restartedProcessInstanceId);
   }
 
 }

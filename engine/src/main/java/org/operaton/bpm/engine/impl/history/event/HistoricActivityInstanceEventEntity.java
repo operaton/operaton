@@ -178,25 +178,15 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[activityId=" + activityId
-           + ", activityName=" + activityName
-           + ", activityType=" + activityType
-           + ", activityInstanceId=" + activityInstanceId
-           + ", activityInstanceState=" + activityInstanceState
-           + ", parentActivityInstanceId=" + parentActivityInstanceId
-           + ", calledProcessInstanceId=" + calledProcessInstanceId
-           + ", calledCaseInstanceId=" + calledCaseInstanceId
-           + ", taskId=" + taskId
-           + ", taskAssignee=" + taskAssignee
-           + ", durationInMillis=" + durationInMillis
-           + ", startTime=" + startTime
-           + ", endTime=" + endTime
-           + ", eventType=" + eventType
-           + ", executionId=" + executionId
-           + ", processDefinitionId=" + processDefinitionId
-           + ", rootProcessInstanceId=" + rootProcessInstanceId
-           + ", processInstanceId=" + processInstanceId
-           + ", tenantId=" + tenantId
-           + "]";
+           + "[activityId=%s, activityName=".formatted(activityId) + activityName
+           + ", activityType=%s, activityInstanceId=".formatted(activityType) + activityInstanceId
+           + ", activityInstanceState=%s, parentActivityInstanceId=".formatted(activityInstanceState) + parentActivityInstanceId
+           + ", calledProcessInstanceId=%s, calledCaseInstanceId=".formatted(calledProcessInstanceId) + calledCaseInstanceId
+           + ", taskId=%s, taskAssignee=".formatted(taskId) + taskAssignee
+           + ", durationInMillis=%s, startTime=".formatted(durationInMillis) + startTime
+           + ", endTime=%s, eventType=".formatted(endTime) + eventType
+           + ", executionId=%s, processDefinitionId=".formatted(executionId) + processDefinitionId
+           + ", rootProcessInstanceId=%s, processInstanceId=".formatted(rootProcessInstanceId) + processInstanceId
+           + ", tenantId=%s]".formatted(tenantId);
   }
 }

@@ -322,9 +322,7 @@ public class CommandLogger extends ProcessEngineLogger {
   }
 
   public void warnResetToBuiltinCode(Integer builtinCode, int initialCode) {
-    logWarn("049", "You are trying to override the built-in code {} with {}. "
-        + "Falling back to built-in code. If you want to override built-in error codes, "
-        + "please disable the built-in error code provider.", builtinCode, initialCode);
+    logWarn("049", "You are trying to override the built-in code {} with {}. %splease disable the built-in error code provider.".formatted("Falling back to built-in code. If you want to override built-in error codes, "), builtinCode, initialCode);
   }
 
   public ProcessEngineException exceptionSettingJobRetriesAsyncNoJobsSpecified() {

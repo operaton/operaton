@@ -212,30 +212,18 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[taskId=" + taskId
-        + ", deploymentId=" + deploymentId
-        + ", processDefinitionKey=" + processDefinitionKey
-        + ", jobId=" + jobId
-        + ", jobDefinitionId=" + jobDefinitionId
-        + ", batchId=" + batchId
-        + ", operationId=" + operationId
-        + ", operationType=" + operationType
-        + ", userId=" + userId
-        + ", timestamp=" + timestamp
-        + ", property=" + property
-        + ", orgValue=" + orgValue
-        + ", newValue=" + newValue
-        + ", id=" + id
-        + ", eventType=" + eventType
-        + ", executionId=" + executionId
-        + ", processDefinitionId=" + processDefinitionId
-        + ", rootProcessInstanceId=" + rootProcessInstanceId
-        + ", processInstanceId=" + processInstanceId
-        + ", externalTaskId=" + externalTaskId
-        + ", tenantId=" + tenantId
-        + ", entityType=" + entityType
-        + ", category=" + category
-        + ", annotation=" + annotation
+        + "[taskId=%s, deploymentId=".formatted(taskId) + deploymentId
+        + ", processDefinitionKey=%s, jobId=".formatted(processDefinitionKey) + jobId
+        + ", jobDefinitionId=%s, batchId=".formatted(jobDefinitionId) + batchId
+        + ", operationId=%s, operationType=".formatted(operationId) + operationType
+        + ", userId=%s, timestamp=".formatted(userId) + timestamp
+        + ", property=%s, orgValue=".formatted(property) + orgValue
+        + ", newValue=%s, id=".formatted(newValue) + id
+        + ", eventType=%s, executionId=".formatted(eventType) + executionId
+        + ", processDefinitionId=%s, rootProcessInstanceId=".formatted(processDefinitionId) + rootProcessInstanceId
+        + ", processInstanceId=%s, externalTaskId=".formatted(processInstanceId) + externalTaskId
+        + ", tenantId=%s, entityType=".formatted(tenantId) + entityType
+        + ", category=%s, annotation=".formatted(category) + annotation
         + "]";
   }
 }

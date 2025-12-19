@@ -76,9 +76,8 @@ public class CorrelationSet {
 
   @Override
   public String toString() {
-    return "CorrelationSet [businessKey=" + businessKey + ", processInstanceId=" + processInstanceId + ", processDefinitionId=" + processDefinitionId
-        + ", correlationKeys=" + correlationKeys + ", localCorrelationKeys=" + localCorrelationKeys + ", tenantId=" + tenantId +
-        ", isTenantIdSet=" + isTenantIdSet + ", isExecutionsOnly=" + isExecutionsOnly + "]";
+    return "CorrelationSet [businessKey=%s, processInstanceId=".formatted(businessKey) + processInstanceId + ", processDefinitionId=%s, correlationKeys=".formatted(processDefinitionId) + correlationKeys + ", localCorrelationKeys=%s, tenantId=".formatted(localCorrelationKeys) + tenantId +
+        ", isTenantIdSet=%s, isExecutionsOnly=".formatted(isTenantIdSet) + isExecutionsOnly + "]";
   }
 
 }

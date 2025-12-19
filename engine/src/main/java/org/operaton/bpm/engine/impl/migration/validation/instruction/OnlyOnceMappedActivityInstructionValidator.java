@@ -34,7 +34,7 @@ public class OnlyOnceMappedActivityInstructionValidator implements MigrationInst
   }
 
   protected void addFailure(String sourceActivityId, List<ValidatingMigrationInstruction> migrationInstructions, MigrationInstructionValidationReportImpl report) {
-    report.addFailure("There are multiple mappings for source activity id '" + sourceActivityId +"': " +
+    report.addFailure("There are multiple mappings for source activity id '%s': ".formatted(sourceActivityId) +
       StringUtil.join(new StringUtil.StringIterator<ValidatingMigrationInstruction>(migrationInstructions.iterator()) {
         @Override
         public String next() {

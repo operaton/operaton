@@ -134,7 +134,7 @@ public class ProcessDefinitionBuilder {
       String destinationActivityName = (String) unresolvedTransition[1];
       ActivityImpl destination = processDefinition.findActivity(destinationActivityName);
       if (destination == null) {
-        throw new RuntimeException("destination '"+destinationActivityName+"' not found.  (referenced from transition in '"+trans.getSource().getId()+"')");
+        throw new RuntimeException("destination '%s' not found.  (referenced from transition in '".formatted(destinationActivityName)+trans.getSource().getId()+"')");
       }
       trans.setDestination(destination);
     }

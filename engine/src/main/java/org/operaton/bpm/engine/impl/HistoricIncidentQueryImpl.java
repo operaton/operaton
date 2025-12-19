@@ -227,7 +227,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
   @Override
   public HistoricIncidentQuery open() {
     if (incidentState != null) {
-      throw new ProcessEngineException("Already querying for incident state <" + incidentState + ">");
+      throw new ProcessEngineException("Already querying for incident state <%s>".formatted(incidentState));
     }
     incidentState = IncidentState.DEFAULT;
     return this;
@@ -236,7 +236,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
   @Override
   public HistoricIncidentQuery resolved() {
     if (incidentState != null) {
-      throw new ProcessEngineException("Already querying for incident state <" + incidentState + ">");
+      throw new ProcessEngineException("Already querying for incident state <%s>".formatted(incidentState));
     }
     incidentState = IncidentState.RESOLVED;
     return this;
@@ -245,7 +245,7 @@ public class HistoricIncidentQueryImpl extends AbstractVariableQueryImpl<Histori
   @Override
   public HistoricIncidentQuery deleted() {
     if (incidentState != null) {
-      throw new ProcessEngineException("Already querying for incident state <" + incidentState + ">");
+      throw new ProcessEngineException("Already querying for incident state <%s>".formatted(incidentState));
     }
     incidentState = IncidentState.DELETED;
     return this;

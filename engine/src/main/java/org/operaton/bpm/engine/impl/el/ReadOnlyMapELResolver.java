@@ -54,7 +54,7 @@ public class ReadOnlyMapELResolver extends ELResolver {
   @Override
   public void setValue(ELContext context, Object base, Object property, Object value) {
     if(base == null && wrappedMap.containsKey(property)) {
-      throw new ProcessEngineException("Cannot set value of '" + property + "', it's readonly!");
+      throw new ProcessEngineException("Cannot set value of '%s', it's readonly!".formatted(property));
     }
   }
 

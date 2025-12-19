@@ -254,15 +254,10 @@ public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity,
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=" + id
-           + ", type=" + type
-           + ", userId=" + userId
-           + ", groupId=" + groupId
-           + ", taskId=" + taskId
-           + ", processDefId=" + processDefId
-           + ", task=" + task
-           + ", processDef=" + processDef
-           + ", tenantId=" + tenantId
-           + "]";
+           + "[id=%s, type=".formatted(id) + type
+           + ", userId=%s, groupId=".formatted(userId) + groupId
+           + ", taskId=%s, processDefId=".formatted(taskId) + processDefId
+           + ", task=%s, processDef=".formatted(task) + processDef
+           + ", tenantId=%s]".formatted(tenantId);
   }
 }

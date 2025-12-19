@@ -453,13 +453,10 @@ public class BatchEntity implements Batch, DbEntity, HasDbReferences, Nameable, 
   @Override
   public String toString() {
     return "BatchEntity{" +
-      "batchHandler=" + batchJobHandler +
-      ", id='" + id + '\'' +
+      "batchHandler=%s, id='".formatted(batchJobHandler) + id + '\'' +
       ", type='" + type + '\'' +
-      ", size=" + totalJobs +
-      ", jobCreated=" + jobsCreated +
-      ", batchJobsPerSeed=" + batchJobsPerSeed +
-      ", invocationsPerBatchJob=" + invocationsPerBatchJob +
+      ", size=%s, jobCreated=".formatted(totalJobs) + jobsCreated +
+      ", batchJobsPerSeed=%s, invocationsPerBatchJob=".formatted(batchJobsPerSeed) + invocationsPerBatchJob +
       ", seedJobDefinitionId='" + seedJobDefinitionId + '\'' +
       ", monitorJobDefinitionId='" + seedJobDefinitionId + '\'' +
       ", batchJobDefinitionId='" + batchJobDefinitionId + '\'' +

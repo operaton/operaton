@@ -50,7 +50,7 @@ public class BaseCallableElement {
     Object result = definitionKeyValueProvider.getValue(variableScope);
 
     if (result != null && !(result instanceof String)) {
-      throw new ClassCastException("Cannot cast '"+result+"' to String");
+      throw new ClassCastException("Cannot cast '%s' to String".formatted(result));
     }
 
     return (String) result;
@@ -98,7 +98,7 @@ public class BaseCallableElement {
       } else if (result instanceof Integer integer) {
         return integer;
       } else {
-        throw new ProcessEngineException("It is not possible to transform '"+result+"' into an integer.");
+        throw new ProcessEngineException("It is not possible to transform '%s' into an integer.".formatted(result));
       }
     }
 
@@ -120,7 +120,7 @@ public class BaseCallableElement {
       if (result instanceof String string) {
         return string;
       } else {
-        throw new ProcessEngineException("It is not possible to transform '"+result+"' into a string.");
+        throw new ProcessEngineException("It is not possible to transform '%s' into a string.".formatted(result));
       }
     }
 

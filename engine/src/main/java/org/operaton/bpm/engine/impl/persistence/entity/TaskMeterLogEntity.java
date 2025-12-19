@@ -55,7 +55,7 @@ public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializab
       digest.update(assignee.getBytes(StandardCharsets.UTF_8));
       return ByteBuffer.wrap(digest.digest(), 0, 8).getLong();
     } catch (NoSuchAlgorithmException e) {
-      throw new ProcessEngineException("Cannot lookup hash algorithm '" + algorithm + "'");
+      throw new ProcessEngineException("Cannot lookup hash algorithm '%s'".formatted(algorithm));
     }
   }
 

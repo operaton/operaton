@@ -193,20 +193,13 @@ public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, Hi
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=" + id
-           + ", revision=" + revision
-           + ", name=" + name
-           + ", description=" + description
-           + ", type=" + type
-           + ", taskId=" + taskId
-           + ", processInstanceId=" + processInstanceId
-           + ", rootProcessInstanceId=" + rootProcessInstanceId
-           + ", removalTime=" + removalTime
-           + ", url=" + url
-           + ", contentId=" + contentId
-           + ", content=" + content
-           + ", tenantId=" + tenantId
-           + ", createTime=" + createTime
+           + "[id=%s, revision=".formatted(id) + revision
+           + ", name=%s, description=".formatted(name) + description
+           + ", type=%s, taskId=".formatted(type) + taskId
+           + ", processInstanceId=%s, rootProcessInstanceId=".formatted(processInstanceId) + rootProcessInstanceId
+           + ", removalTime=%s, url=".formatted(removalTime) + url
+           + ", contentId=%s, content=".formatted(contentId) + content
+           + ", tenantId=%s, createTime=".formatted(tenantId) + createTime
            + "]";
   }
 }

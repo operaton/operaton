@@ -109,7 +109,7 @@ public class HtmlFormEngine implements FormEngine {
   protected static final String DATE_ERROR_TYPE = "date";
 
   /* form element selector */
-  protected static final String FORM_ELEMENT_SELECTOR = "this." + GENERATED_FORM_NAME + ".%s";
+  protected static final String FORM_ELEMENT_SELECTOR = "this.%s.%s".formatted(GENERATED_FORM_NAME);
 
   /* expressions */
   protected static final String INVALID_EXPRESSION = FORM_ELEMENT_SELECTOR + ".$invalid";
@@ -448,7 +448,7 @@ public class HtmlFormEngine implements FormEngine {
     secondDivElement
         .attribute(NG_SHOW_ATTRIBUTE, secondExpression)
         .attribute(CLASS_ATTRIBUTE, HELP_BLOCK_CLASS)
-        .textContent(INVALID_DATE_FIELD_MESSAGE + "'" + formField.getType().getInformation(DATE_PATTERN_ATTRIBUTE) + "'");
+        .textContent(INVALID_DATE_FIELD_MESSAGE + "'%s'".formatted(formField.getType().getInformation(DATE_PATTERN_ATTRIBUTE)));
 
     documentBuilder
         .startElement(secondDivElement)

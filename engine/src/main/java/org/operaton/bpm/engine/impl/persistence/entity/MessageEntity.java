@@ -71,24 +71,15 @@ public class MessageEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[repeat=" + repeat
-           + ", id=" + id
-           + ", revision=" + revision
-           + ", duedate=" + duedate
-           + ", lockOwner=" + lockOwner
-           + ", lockExpirationTime=" + lockExpirationTime
-           + ", executionId=" + executionId
-           + ", processInstanceId=" + processInstanceId
-           + ", isExclusive=" + isExclusive
-           + ", retries=" + retries
-           + ", jobHandlerType=" + jobHandlerType
-           + ", jobHandlerConfiguration=" + jobHandlerConfiguration
-           + ", exceptionByteArray=" + exceptionByteArray
-           + ", exceptionByteArrayId=" + exceptionByteArrayId
-           + ", exceptionMessage=" + exceptionMessage
-           + ", deploymentId=" + deploymentId
-           + ", createTime=" + createTime
-           + "]";
+           + "[repeat=%s, id=".formatted(repeat) + id
+           + ", revision=%s, duedate=".formatted(revision) + duedate
+           + ", lockOwner=%s, lockExpirationTime=".formatted(lockOwner) + lockExpirationTime
+           + ", executionId=%s, processInstanceId=".formatted(executionId) + processInstanceId
+           + ", isExclusive=%s, retries=".formatted(isExclusive) + retries
+           + ", jobHandlerType=%s, jobHandlerConfiguration=".formatted(jobHandlerType) + jobHandlerConfiguration
+           + ", exceptionByteArray=%s, exceptionByteArrayId=".formatted(exceptionByteArray) + exceptionByteArrayId
+           + ", exceptionMessage=%s, deploymentId=".formatted(exceptionMessage) + deploymentId
+           + ", createTime=%s]".formatted(createTime);
   }
 
 }

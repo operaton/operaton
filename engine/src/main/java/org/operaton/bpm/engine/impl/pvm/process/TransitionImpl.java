@@ -87,7 +87,7 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
 
   @Override
   public String toString() {
-    return "("+source.getId()+")--"+(id!=null?id+"-->(":">(")+destination.getId()+")";
+    return "(%s)--".formatted(source.getId())+(id!=null?id+"-->(":">(")+destination.getId()+")";
   }
 
   // getters and setters //////////////////////////////////////////////////////

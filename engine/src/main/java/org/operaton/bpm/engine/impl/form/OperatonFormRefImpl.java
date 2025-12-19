@@ -58,6 +58,6 @@ public class OperatonFormRefImpl implements OperatonFormRef {
 
   @Override
   public String toString() {
-    return "OperatonFormRefImpl [key=" + key + ", binding=" + binding + ", version=" + version + "]";
+    return "OperatonFormRefImpl [key=%s, binding=".formatted(key) + binding + ", version=%s]".formatted(version);
   }
 }

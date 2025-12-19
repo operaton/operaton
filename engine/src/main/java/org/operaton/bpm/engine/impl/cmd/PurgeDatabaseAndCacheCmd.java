@@ -96,9 +96,7 @@ public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport>, Serializa
           List<Class<? extends DbEntity>> entities = commandContext.getTableDataManager().getEntities(tableName);
 
           if (entities.isEmpty()) {
-            throw new ProcessEngineException("No mapped implementation of "
-                                            + DbEntity.class.getName()
-                                            + " was found for: "
+            throw new ProcessEngineException("No mapped implementation of %s was found for: ".formatted(DbEntity.class.getName())
                                             + tableName);
           }
 

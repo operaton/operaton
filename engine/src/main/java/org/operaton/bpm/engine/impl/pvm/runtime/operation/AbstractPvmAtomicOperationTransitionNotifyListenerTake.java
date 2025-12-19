@@ -45,8 +45,7 @@ public abstract class AbstractPvmAtomicOperationTransitionNotifyListenerTake ext
       execution.performOperation(TRANSITION_INTERRUPT_FLOW_SCOPE);
       break;
     default:
-      throw new ProcessEngineException("Unsupported start behavior for activity '"+destination
-          +"' started from a sequence flow: "+destination.getActivityStartBehavior());
+      throw new ProcessEngineException("Unsupported start behavior for activity '%s' started from a sequence flow: ".formatted(destination)+destination.getActivityStartBehavior());
     }
   }
 

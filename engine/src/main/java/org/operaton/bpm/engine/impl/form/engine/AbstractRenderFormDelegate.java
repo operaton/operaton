@@ -98,7 +98,7 @@ public abstract class AbstractRenderFormDelegate {
   protected static final String DATE_ERROR_TYPE = "date";
 
   /* form element selector */
-  protected static final String FORM_ELEMENT_SELECTOR = "this." + GENERATED_FORM_NAME + ".%s";
+  protected static final String FORM_ELEMENT_SELECTOR = "this.%s.%s".formatted(GENERATED_FORM_NAME);
 
   /* expressions */
   protected static final String INVALID_EXPRESSION = FORM_ELEMENT_SELECTOR + ".$invalid";
@@ -119,7 +119,7 @@ public abstract class AbstractRenderFormDelegate {
   /* messages */
   protected static final String REQUIRED_FIELD_MESSAGE = "Required field";
   protected static final String TYPE_FIELD_MESSAGE = "Only a %s value is allowed";
-  protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '" + DATE_FORMAT + "'";
+  protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '%s'".formatted(DATE_FORMAT);
 
   protected String renderFormData(FormData formData) {
 

@@ -172,29 +172,17 @@ public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent 
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[taskId" + taskId
-           + ", assignee=" + assignee
-           + ", owner=" + owner
-           + ", name=" + name
-           + ", description=" + description
-           + ", dueDate=" + dueDate
-           + ", followUpDate=" + followUpDate
-           + ", priority=" + priority
-           + ", parentTaskId=" + parentTaskId
-           + ", deleteReason=" + deleteReason
-           + ", taskDefinitionKey=" + taskDefinitionKey
-           + ", durationInMillis=" + durationInMillis
-           + ", startTime=" + startTime
-           + ", endTime=" + endTime
-           + ", id=" + id
-           + ", eventType=" + eventType
-           + ", executionId=" + executionId
-           + ", processDefinitionId=" + processDefinitionId
-           + ", rootProcessInstanceId=" + rootProcessInstanceId
-           + ", processInstanceId=" + processInstanceId
-           + ", activityInstanceId=" + activityInstanceId
-           + ", tenantId=" + tenantId
-           + ", taskState=" + taskState
-           + "]";
+           + "[taskId%s, assignee=".formatted(taskId) + assignee
+           + ", owner=%s, name=".formatted(owner) + name
+           + ", description=%s, dueDate=".formatted(description) + dueDate
+           + ", followUpDate=%s, priority=".formatted(followUpDate) + priority
+           + ", parentTaskId=%s, deleteReason=".formatted(parentTaskId) + deleteReason
+           + ", taskDefinitionKey=%s, durationInMillis=".formatted(taskDefinitionKey) + durationInMillis
+           + ", startTime=%s, endTime=".formatted(startTime) + endTime
+           + ", id=%s, eventType=".formatted(id) + eventType
+           + ", executionId=%s, processDefinitionId=".formatted(executionId) + processDefinitionId
+           + ", rootProcessInstanceId=%s, processInstanceId=".formatted(rootProcessInstanceId) + processInstanceId
+           + ", activityInstanceId=%s, tenantId=".formatted(activityInstanceId) + tenantId
+           + ", taskState=%s]".formatted(taskState);
   }
 }

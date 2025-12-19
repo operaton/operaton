@@ -88,8 +88,7 @@ public class TaskReportResultEntity implements HistoricTaskInstanceReportResult 
   public String toString() {
     return this.getClass().getSimpleName()
     + "[" +
-      "count=" + count +
-      ", processDefinitionKey='" + processDefinitionKey + '\'' +
+      "count=%s, processDefinitionKey='".formatted(count) + processDefinitionKey + '\'' +
       ", processDefinitionId='" + processDefinitionId + '\'' +
       ", processDefinitionName='" + processDefinitionName + '\'' +
       ", taskName='" + taskName + '\'' +

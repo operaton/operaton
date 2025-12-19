@@ -272,7 +272,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
       ScopeImpl scopeToCancel = topMostActivity.getEventScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
       if (executionToCancel != null) {
-        executionToCancel.deleteCascade("Cancelling activity " + topMostActivity + " executed.", skipCustomListeners,
+        executionToCancel.deleteCascade("Cancelling activity %s executed.".formatted(topMostActivity), skipCustomListeners,
             skipIoMappings);
         instantiate(executionToCancel.getParent(), activitiesToInstantiate, elementToInstantiate);
       } else {
@@ -284,7 +284,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     case INTERRUPT_EVENT_SCOPE: {
       ScopeImpl scopeToCancel = topMostActivity.getEventScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity " + topMostActivity + " executed.", skipCustomListeners,
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();
@@ -294,7 +294,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     case INTERRUPT_FLOW_SCOPE: {
       ScopeImpl scopeToCancel = topMostActivity.getFlowScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity " + topMostActivity + " executed.", skipCustomListeners,
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();

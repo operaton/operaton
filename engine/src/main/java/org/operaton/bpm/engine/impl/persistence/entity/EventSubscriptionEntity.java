@@ -99,7 +99,7 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
 
   protected void processEventSync(Object payload, Object payloadLocal, Object payloadToTriggeredScope, String businessKey) {
     EventHandler eventHandler = Context.getProcessEngineConfiguration().getEventHandler(eventType);
-    ensureNotNull("Could not find eventhandler for event of type '" + eventType + "'", "eventHandler", eventHandler);
+    ensureNotNull("Could not find eventhandler for event of type '%s'".formatted(eventType), "eventHandler", eventHandler);
     eventHandler.handleEvent(this, payload, payloadLocal, payloadToTriggeredScope, businessKey, Context.getCommandContext());
   }
 
@@ -386,16 +386,11 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=" + id
-           + ", eventType=" + eventType
-           + ", eventName=" + eventName
-           + ", executionId=" + executionId
-           + ", processInstanceId=" + processInstanceId
-           + ", activityId=" + activityId
-           + ", tenantId=" + tenantId
-           + ", configuration=" + configuration
-           + ", revision=" + revision
-           + ", created=" + created
+           + "[id=%s, eventType=".formatted(id) + eventType
+           + ", eventName=%s, executionId=".formatted(eventName) + executionId
+           + ", processInstanceId=%s, activityId=".formatted(processInstanceId) + activityId
+           + ", tenantId=%s, configuration=".formatted(tenantId) + configuration
+           + ", revision=%s, created=".formatted(revision) + created
            + "]";
   }
 }

@@ -304,8 +304,7 @@ public class DecisionDefinitionEntity extends DmnDecisionImpl implements Decisio
       ", name='" + name + '\'' +
       ", category='" + category + '\'' +
       ", key='" + key + '\'' +
-      ", version=" + version +
-      ", versionTag=" + versionTag +
+      ", version=%s, versionTag=".formatted(version) + versionTag +
       ", decisionRequirementsDefinitionId='" + decisionRequirementsDefinitionId + '\'' +
       ", decisionRequirementsDefinitionKey='" + decisionRequirementsDefinitionKey + '\'' +
       ", deploymentId='" + deploymentId + '\'' +

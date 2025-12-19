@@ -43,7 +43,7 @@ public class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache
 
   @Override
   protected void checkDefinitionFound(String definitionId, DecisionRequirementsDefinitionEntity definition) {
-    ensureNotNull("no deployed decision requirements definition found with id '" + definitionId + "'",
+    ensureNotNull("no deployed decision requirements definition found with id '%s'".formatted(definitionId),
         "decisionRequirementsDefinition", definition);
   }
 
@@ -74,6 +74,6 @@ public class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache
 
   @Override
   protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, DecisionRequirementsDefinitionEntity definition) {
-    ensureNotNull("deployment '" + deploymentId + "' didn't put decision requirements definition '" + definitionId + "' in the cache", "cachedDecisionRequirementsDefinition", definition);
+    ensureNotNull("deployment '%s' didn't put decision requirements definition '".formatted(deploymentId) + definitionId + "' in the cache", "cachedDecisionRequirementsDefinition", definition);
   }
 }

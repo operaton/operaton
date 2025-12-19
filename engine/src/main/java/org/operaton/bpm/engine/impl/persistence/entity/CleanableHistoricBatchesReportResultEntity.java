@@ -64,10 +64,8 @@ public class CleanableHistoricBatchesReportResultEntity implements CleanableHist
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[batchType = " + batchType
-        + ", historyTimeToLive = " + historyTimeToLive
-        + ", finishedBatchesCount = " + finishedBatchesCount
-        + ", cleanableBatchesCount = " + cleanableBatchesCount
+        + "[batchType = %s, historyTimeToLive = ".formatted(batchType) + historyTimeToLive
+        + ", finishedBatchesCount = %s, cleanableBatchesCount = ".formatted(finishedBatchesCount) + cleanableBatchesCount
         + "]";
   }
 }

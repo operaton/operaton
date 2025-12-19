@@ -82,8 +82,7 @@ public class MembershipEntity implements Serializable, DbEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[user=" + user
-           + ", group=" + group
+           + "[user=%s, group=".formatted(user) + group
            + "]";
   }
 }

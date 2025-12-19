@@ -44,8 +44,7 @@ public class Direction {
   @Override
   public String toString() {
     return "Direction["
-      + "name=" + name
-      + "]";
+      + "name=%s]".formatted(name);
   }
 
   public static Direction findByName(String directionName) {

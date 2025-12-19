@@ -55,7 +55,7 @@ public class CreateIncidentCmd implements Command<Incident> {
 
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(executionId);
     EnsureUtil.ensureNotNull(BadUserRequestException.class,
-        "Cannot find an execution with executionId '" + executionId + "'", "execution", execution);
+        "Cannot find an execution with executionId '%s'".formatted(executionId), "execution", execution);
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "Execution must be related to an activity", "activity",
         execution.getActivity());
 

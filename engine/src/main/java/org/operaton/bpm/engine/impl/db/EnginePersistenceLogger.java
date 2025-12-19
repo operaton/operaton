@@ -50,9 +50,7 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  */
 public class EnginePersistenceLogger extends ProcessEngineLogger {
 
-  protected static final String HINT_TEXT = "Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or " +
-                                            "value=\"create-drop\" (use create-drop for testing only!) in bean " +
-                                            "processEngineConfiguration in operaton.cfg.xml for automatic schema creation";
+  protected static final String HINT_TEXT = "Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or %sprocessEngineConfiguration in operaton.cfg.xml for automatic schema creation".formatted("value=\"create-drop\" (use create-drop for testing only!) in bean ");
 
   protected String buildStringFromList(Collection<?> list) {
     StringBuilder message = new StringBuilder();
@@ -718,9 +716,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   public ProcessEngineException batchingNotSupported(DbOperation operation) {
     throw new ProcessEngineException(exceptionMessage(
         "089",
-        "Batching not supported: The jdbc driver in use does not return the number of "
-        + "affected rows when executing statement batches. "
-        + "Consider setting the engine configuration property 'jdbcBatchProcessing' to false."
+        "Batching not supported: The jdbc driver in use does not return the number of %sConsider setting the engine configuration property 'jdbcBatchProcessing' to false.".formatted("affected rows when executing statement batches. ")
         + "Failed operation: {}",
         operation));
   }
@@ -793,9 +789,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   public void concurrentModificationFailureIgnored(DbOperation operation) {
     logDebug(
       "110",
-      "An OptimisticLockingListener attempted to ignore a failure of: {}. "
-      + "Since the database aborted the transaction, ignoring the failure "
-      + "is not possible and an exception is thrown instead.",
+      "An OptimisticLockingListener attempted to ignore a failure of: {}. %sis not possible and an exception is thrown instead.".formatted("Since the database aborted the transaction, ignoring the failure "),
       operation
     );
   }

@@ -84,7 +84,7 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
       if(validatorObject instanceof FormFieldValidator formFieldValidator) {
         validator = formFieldValidator;
       } else {
-        throw new ProcessEngineException("Validator class '"+clazz+"' is not an instance of "+ FormFieldValidator.class.getName());
+        throw new ProcessEngineException("Validator class '%s' is not an instance of ".formatted(clazz)+ FormFieldValidator.class.getName());
       }
     } else {
       //resolve validator using expression
@@ -92,7 +92,7 @@ public class DelegateFormFieldValidator implements FormFieldValidator {
       if (validatorObject instanceof FormFieldValidator formFieldValidator) {
         validator = formFieldValidator;
       } else {
-        throw new ProcessEngineException("Validator expression '"+delegateExpression+"' does not resolve to instance of "+ FormFieldValidator.class.getName());
+        throw new ProcessEngineException("Validator expression '%s' does not resolve to instance of ".formatted(delegateExpression)+ FormFieldValidator.class.getName());
       }
     }
 

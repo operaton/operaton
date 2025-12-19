@@ -52,8 +52,7 @@ public class DelegateExpressionCaseVariableListener implements CaseVariableListe
         .getDelegateInterceptor()
         .handleInvocation(new CaseVariableListenerInvocation(listenerInstance, variableInstance));
     } else {
-      throw new ProcessEngineException("Delegate expression " + expression
-              + " did not resolve to an implementation of " + CaseVariableListener.class);
+      throw new ProcessEngineException("Delegate expression %s did not resolve to an implementation of ".formatted(expression) + CaseVariableListener.class);
     }
   }
 

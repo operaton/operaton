@@ -43,8 +43,7 @@ public class IncidentStatisticsEntity implements IncidentStatistics {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[incidentType=" + incidentType
-           + ", incidentCount=" + incidentCount
+           + "[incidentType=%s, incidentCount=".formatted(incidentType) + incidentCount
            + "]";
   }
 

@@ -49,7 +49,7 @@ public class VariableConflictActivityInstanceValidator implements MigratingActiv
         for (var entry : dependentVariablesByName.entrySet()) {
           String variableName = entry.getKey();
           if (entry.getValue().size() > 1) {
-            instanceReport.addFailure("The variable '" + variableName + "' exists in both, this scope and "
+            instanceReport.addFailure("The variable '%s' exists in both, this scope and ".formatted(variableName)
                 + "concurrent local in the parent scope. "
                 + "Migrating to a non-scope activity would overwrite one of them.");
           }

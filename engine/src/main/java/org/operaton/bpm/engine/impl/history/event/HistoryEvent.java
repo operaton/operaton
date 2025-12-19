@@ -330,14 +330,10 @@ public class HistoryEvent implements Serializable, DbEntity, HistoricEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=" + id
-           + ", eventType=" + eventType
-           + ", executionId=" + executionId
-           + ", processDefinitionId=" + processDefinitionId
-           + ", processInstanceId=" + processInstanceId
-           + ", rootProcessInstanceId=" + rootProcessInstanceId
-           + ", removalTime=" + removalTime
-           + "]";
+           + "[id=%s, eventType=".formatted(id) + eventType
+           + ", executionId=%s, processDefinitionId=".formatted(executionId) + processDefinitionId
+           + ", processInstanceId=%s, rootProcessInstanceId=".formatted(processInstanceId) + rootProcessInstanceId
+           + ", removalTime=%s]".formatted(removalTime);
   }
 
 }

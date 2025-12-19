@@ -58,9 +58,7 @@ public class ConfigurationLogger extends ProcessEngineLogger {
 
   public void usingDeprecatedHistoryLevelVariable() {
     logWarn(
-        "006", "Using deprecated history level 'variable'. " +
-            "This history level is deprecated and replaced by 'activity'. " +
-            "Consider using 'ACTIVITY' instead.");
+        "006", "Using deprecated history level 'variable'. %sConsider using 'ACTIVITY' instead.".formatted("This history level is deprecated and replaced by 'activity'. "));
   }
 
   public ProcessEngineException invalidConfigDefaultUserPermissionNameForTask(String defaultUserPermissionNameForTask, String[] validPermissionNames) {
@@ -106,9 +104,7 @@ public class ConfigurationLogger extends ProcessEngineLogger {
 
   public void invalidBatchTypeForInvocationsPerBatchJob(String batchType) {
     logWarn(
-        "014", "The configuration property 'invocationsPerJobByBatchType' " +
-            "contains an invalid batch type '{}' which is neither a custom nor a built-in " +
-            "batch type", batchType);
+        "014", "The configuration property 'invocationsPerJobByBatchType' %sbatch type".formatted("contains an invalid batch type '{}' which is neither a custom nor a built-in "), batchType);
   }
 
   public void invalidPropertyValue(Exception e) {
@@ -124,9 +120,7 @@ public class ConfigurationLogger extends ProcessEngineLogger {
    */
   public void logModelHTTLLongerThanGlobalConfiguration(String definitionKey) {
     logWarn(
-        "017", "definitionKey: {}; "
-            + "The specified Time To Live (TTL) in the model is longer than the global TTL configuration. "
-            + "The historic data related to this model will be cleaned up at later point comparing to the other processes.",
+        "017", "definitionKey: {}; %sThe historic data related to this model will be cleaned up at later point comparing to the other processes.".formatted("The specified Time To Live (TTL) in the model is longer than the global TTL configuration. "),
             definitionKey);
   }
 
@@ -141,17 +135,13 @@ public class ConfigurationLogger extends ProcessEngineLogger {
 
   public ProcessEngineException invalidTransactionIsolationLevel(String transactionIsolationLevel) {
     return new ProcessEngineException(exceptionMessage("019",
-        "The transaction isolation level set for the database is '{}' which differs from the recommended value. "
-            + "Please change the isolation level to 'READ_COMMITTED' or set property 'skipIsolationLevelCheck' to true. "
-            + "Please keep in mind that some levels are known to cause deadlocks and other unexpected behaviours.",
+        "The transaction isolation level set for the database is '{}' which differs from the recommended value. %sPlease keep in mind that some levels are known to cause deadlocks and other unexpected behaviours.".formatted("Please change the isolation level to 'READ_COMMITTED' or set property 'skipIsolationLevelCheck' to true. "),
         transactionIsolationLevel));
 
   }
 
   public void logSkippedIsolationLevelCheck(String transactionIsolationLevel) {
-    logWarn("020", "The transaction isolation level set for the database is '{}' which differs from the recommended value "
-            + "and property skipIsolationLevelCheck is enabled. "
-            + "Please keep in mind that levels different from 'READ_COMMITTED' are known to cause deadlocks and other unexpected behaviours.",
+    logWarn("020", "The transaction isolation level set for the database is '{}' which differs from the recommended value %sPlease keep in mind that levels different from 'READ_COMMITTED' are known to cause deadlocks and other unexpected behaviours.".formatted("and property skipIsolationLevelCheck is enabled. "),
         transactionIsolationLevel);
   }
 }

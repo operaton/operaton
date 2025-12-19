@@ -190,7 +190,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
         return innerActivity;
       }
     }
-    throw new ProcessEngineException("inner activity of multi instance body activity '" + miBodyActivity.getId() + "' not found");
+    throw new ProcessEngineException("inner activity of multi instance body activity '%s' not found".formatted(miBodyActivity.getId()));
   }
 
   protected void setLoopVariable(ActivityExecution execution, String variableName, Object value) {

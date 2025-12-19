@@ -193,22 +193,14 @@ public class HistoricCaseActivityInstanceEventEntity extends HistoricScopeInstan
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[caseActivityId=" + caseActivityId
-           + ", caseActivityName=" + caseActivityName
-           + ", caseActivityInstanceId=" + id
-           + ", caseActivityInstanceState=" + caseActivityInstanceState
-           + ", parentCaseActivityInstanceId=" + parentCaseActivityInstanceId
-           + ", taskId=" + taskId
-           + ", calledProcessInstanceId=" + calledProcessInstanceId
-           + ", calledCaseInstanceId=" + calledCaseInstanceId
-           + ", durationInMillis=" + durationInMillis
-           + ", createTime=" + startTime
-           + ", endTime=" + endTime
-           + ", eventType=" + eventType
-           + ", caseExecutionId=" + caseExecutionId
-           + ", caseDefinitionId=" + caseDefinitionId
-           + ", caseInstanceId=" + caseInstanceId
-           + ", tenantId=" + tenantId
+           + "[caseActivityId=%s, caseActivityName=".formatted(caseActivityId) + caseActivityName
+           + ", caseActivityInstanceId=%s, caseActivityInstanceState=".formatted(id) + caseActivityInstanceState
+           + ", parentCaseActivityInstanceId=%s, taskId=".formatted(parentCaseActivityInstanceId) + taskId
+           + ", calledProcessInstanceId=%s, calledCaseInstanceId=".formatted(calledProcessInstanceId) + calledCaseInstanceId
+           + ", durationInMillis=%s, createTime=".formatted(durationInMillis) + startTime
+           + ", endTime=%s, eventType=".formatted(endTime) + eventType
+           + ", caseExecutionId=%s, caseDefinitionId=".formatted(caseExecutionId) + caseDefinitionId
+           + ", caseInstanceId=%s, tenantId=".formatted(caseInstanceId) + tenantId
            + "]";
   }
 }

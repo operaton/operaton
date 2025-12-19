@@ -177,7 +177,7 @@ public class TimerEntity extends JobEntity {
 
   public static String replaceRepeatCycleAndDate(String repeatExpression) {
     if (repeatExpression.split("/").length == 2) {
-      return repeatExpression.replace("/", "/" + SIMPLE_DATE_FORMAT.format(ClockUtil.getCurrentTime()) + "/");
+      return repeatExpression.replace("/", "/%s/".formatted(SIMPLE_DATE_FORMAT.format(ClockUtil.getCurrentTime())));
     }
     return repeatExpression; // expression include start date
   }
@@ -233,24 +233,15 @@ public class TimerEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[repeat=" + repeat
-      + ", id=" + id
-      + ", revision=" + revision
-      + ", duedate=" + duedate
-      + ", repeatOffset=" + repeatOffset
-      + ", lockOwner=" + lockOwner
-      + ", lockExpirationTime=" + lockExpirationTime
-      + ", executionId=" + executionId
-      + ", processInstanceId=" + processInstanceId
-      + ", isExclusive=" + isExclusive
-      + ", retries=" + retries
-      + ", jobHandlerType=" + jobHandlerType
-      + ", jobHandlerConfiguration=" + jobHandlerConfiguration
-      + ", exceptionByteArray=" + exceptionByteArray
-      + ", exceptionByteArrayId=" + exceptionByteArrayId
-      + ", exceptionMessage=" + exceptionMessage
-      + ", deploymentId=" + deploymentId
-      + "]";
+      + "[repeat=%s, id=".formatted(repeat) + id
+      + ", revision=%s, duedate=".formatted(revision) + duedate
+      + ", repeatOffset=%s, lockOwner=".formatted(repeatOffset) + lockOwner
+      + ", lockExpirationTime=%s, executionId=".formatted(lockExpirationTime) + executionId
+      + ", processInstanceId=%s, isExclusive=".formatted(processInstanceId) + isExclusive
+      + ", retries=%s, jobHandlerType=".formatted(retries) + jobHandlerType
+      + ", jobHandlerConfiguration=%s, exceptionByteArray=".formatted(jobHandlerConfiguration) + exceptionByteArray
+      + ", exceptionByteArrayId=%s, exceptionMessage=".formatted(exceptionByteArrayId) + exceptionMessage
+      + ", deploymentId=%s]".formatted(deploymentId);
   }
 
   @Override

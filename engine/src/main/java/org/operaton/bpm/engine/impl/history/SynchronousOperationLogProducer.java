@@ -93,8 +93,7 @@ public interface SynchronousOperationLogProducer<T> {
       }
       if (logEntriesPerSyncOperationLimit != UNLIMITED_LOG && logEntriesPerSyncOperationLimit < propChangesForOperation.size()) {
         throw new ProcessEngineException(
-            "Maximum number of operation log entries for operation type synchronous APIs reached. Configured limit is "
-                + logEntriesPerSyncOperationLimit + " but " + propChangesForOperation.size() + " entities were affected by API call.");
+            "Maximum number of operation log entries for operation type synchronous APIs reached. Configured limit is %s but ".formatted(logEntriesPerSyncOperationLimit) + propChangesForOperation.size() + " entities were affected by API call.");
       } else {
         // produce one operation log per affected entity
         for (Entry<T, List<PropertyChange>> propChanges : propChangesForOperation.entrySet()) {

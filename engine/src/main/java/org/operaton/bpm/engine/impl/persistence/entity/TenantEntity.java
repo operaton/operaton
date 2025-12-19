@@ -85,7 +85,7 @@ public class TenantEntity implements Tenant, Serializable, DbEntity, HasDbRevisi
 
   @Override
   public String toString() {
-    return "TenantEntity [id=" + id + ", name=" + name + ", revision=" + revision + "]";
+    return "TenantEntity [id=%s, name=".formatted(id) + name + ", revision=%s]".formatted(revision);
   }
 
 }

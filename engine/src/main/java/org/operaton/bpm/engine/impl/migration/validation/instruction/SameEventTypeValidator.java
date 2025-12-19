@@ -39,7 +39,7 @@ public class SameEventTypeValidator implements MigrationInstructionValidator {
       String targetType = targetActivity.getProperties().get(BpmnProperties.TYPE);
 
       if (!sourceType.equals(targetType)) {
-        report.addFailure("Events are not of the same type (" + sourceType + " != " + targetType + ")");
+        report.addFailure("Events are not of the same type (%s != ".formatted(sourceType) + targetType + ")");
       }
     }
   }

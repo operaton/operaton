@@ -86,6 +86,8 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
 
   protected boolean returnBlankTableOutputAsNull;
 
+  protected boolean previewFeaturesEnabled;
+
   @Override
   public DmnEngine buildEngine() {
     init();
@@ -629,6 +631,33 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
    */
   public DefaultDmnEngineConfiguration setReturnBlankTableOutputAsNull(boolean returnBlankTableOutputAsNull) {
     this.returnBlankTableOutputAsNull = returnBlankTableOutputAsNull;
+    return this;
+  }
+
+  /**
+   * @return whether preview features are enabled or not
+   */
+  public boolean isPreviewFeaturesEnabled() {
+    return previewFeaturesEnabled;
+  }
+
+  /**
+   * Controls whether the preview features are enabled or not
+   *
+   * @param previewFeaturesEnabled the preview features enabled flag
+   */
+  public void setPreviewFeaturesEnabled(boolean previewFeaturesEnabled) {
+    this.previewFeaturesEnabled = previewFeaturesEnabled;
+  }
+
+  /**
+   * Controls whether the preview features are enabled or not
+   *
+   * @param previewFeaturesEnabled the preview features enabled flag
+   * @return this
+   */
+  public DefaultDmnEngineConfiguration previewFeaturesEnabled(boolean previewFeaturesEnabled) {
+    setPreviewFeaturesEnabled(previewFeaturesEnabled);
     return this;
   }
 

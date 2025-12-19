@@ -325,6 +325,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public static final String DB_SCHEMA_UPDATE_CREATE = "create";
   public static final String DB_SCHEMA_UPDATE_DROP_CREATE = "drop-create";
 
+  public static final String PROPERTY_PREVIEW_FEATURES_ENABLED = "operaton.preview.features.enabled";
+
+  protected boolean previewFeaturesEnabled;
+
   public static final int HISTORYLEVEL_NONE = HistoryLevel.HISTORY_LEVEL_NONE.getId();
   public static final int HISTORYLEVEL_ACTIVITY = HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId();
   public static final int HISTORYLEVEL_AUDIT = HistoryLevel.HISTORY_LEVEL_AUDIT.getId();
@@ -1049,19 +1053,36 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.builtinExceptionCodeProvider = builtinExceptionCodeProvider;
   }
 
-  // buildProcessEngine ///////////////////////////////////////////////////////
+    // buildProcessEngine ///////////////////////////////////////////////////////
 
-  @Override
-  public ProcessEngine buildProcessEngine() {
+    @Override
+    public ProcessEngine buildProcessEngine() {
     init();
     processEngine = new ProcessEngineImpl(this);
     invokePostProcessEngineBuild(processEngine);
     return processEngine;
-  }
+    }
+
+    public boolean isPreviewFeaturesEnabled() {
+    return previewFeaturesEnabled;
+    }
+
+    public void setPreviewFeaturesEnabled(boolean previewFeaturesEnabled) {
+    this.previewFeaturesEnabled = previewFeaturesEnabled;
+    }
+
+    protected void initPreviewFeatures() {
+    if (!previewFeaturesEnabled) {
+      String propertyValue = System.getProperty(PROPERTY_PREVIEW_FEATURES_ENABLED);
+      if (propertyValue != null) {
+        previewFeaturesEnabled = Boolean.parseBoolean(propertyValue);
+      }
+    }
+    }
 
   // init /////////////////////////////////////////////////////////////////////
 
-  protected void init() {
+    protected void init() {
     invokePreInit();
     initDefaultCharset();
     initHistoryLevel();
@@ -1076,6 +1097,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     initFormTypes();
     initFormFieldValidators();
     initScripting();
+    initPreviewFeatures();
     initDmnEngine();
     initBusinessCalendarManager();
     initCommandContextFactory();
@@ -2586,19 +2608,21 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
   }
 
-  protected void initDmnEngine() {
+    protected void initDmnEngine() {
     if (dmnEngine == null) {
 
       if (dmnEngineConfiguration == null) {
         dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
       }
 
+      DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) this.dmnEngineConfiguration;
       DmnEngineConfigurationBuilder dmnEngineConfigurationBuilder = new DmnEngineConfigurationBuilder(dmnEngineConfiguration)
           .dmnHistoryEventProducer(dmnHistoryEventProducer)
           .scriptEngineResolver(scriptingEngines)
           .feelCustomFunctionProviders(dmnFeelCustomFunctionProviders)
           .enableFeelLegacyBehavior(dmnFeelEnableLegacyBehavior)
-          .returnBlankTableOutputAsNull(dmnReturnBlankTableOutputAsNull);
+          .returnBlankTableOutputAsNull(dmnReturnBlankTableOutputAsNull)
+          .previewFeaturesEnabled(previewFeaturesEnabled);
 
       if (dmnElProvider != null) {
         dmnEngineConfigurationBuilder.elProvider(dmnElProvider);
@@ -2606,14 +2630,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         dmnEngineConfigurationBuilder.elProvider(elProviderCompatible.toElProvider());
       }
 
-      dmnEngineConfiguration = dmnEngineConfigurationBuilder.build();
+      this.dmnEngineConfiguration = dmnEngineConfigurationBuilder.build();
 
-      dmnEngine = dmnEngineConfiguration.buildEngine();
+      dmnEngine = this.dmnEngineConfiguration.buildEngine();
 
     } else if (dmnEngineConfiguration == null) {
       dmnEngineConfiguration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     }
-  }
+    }
 
   protected void initExpressionManager() {
     if (expressionManager == null) {

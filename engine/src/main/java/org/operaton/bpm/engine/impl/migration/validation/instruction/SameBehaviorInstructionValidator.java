@@ -63,8 +63,7 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     Class<?> targetBehaviorClass = targetActivity.getActivityBehavior().getClass();
 
     if (!sameBehavior(sourceBehaviorClass, targetBehaviorClass)) {
-      report.addFailure("Activities have incompatible types "
-          + "(" + sourceBehaviorClass.getSimpleName() + " is not compatible with " + targetBehaviorClass.getSimpleName() + ")");
+      report.addFailure("Activities have incompatible types (%s is not compatible with %s)".formatted(sourceBehaviorClass.getSimpleName(), targetBehaviorClass.getSimpleName()));
     }
   }
 

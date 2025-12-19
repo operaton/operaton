@@ -50,6 +50,7 @@ import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_P
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("deprecation")
 public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
 
   protected static Attribute<String> nameAttribute;
@@ -57,8 +58,14 @@ public class PlanItemImpl extends CmmnElementImpl implements PlanItem {
   protected static ChildElement<ItemControl> itemControlChild;
 
   // cmmn 1.0
+  /**
+   * @deprecated CMMN 1.1 entryCriteriaRefCollection is replaced by entryCriterionCollection
+   */
   @Deprecated(since = "1.0")
   protected static AttributeReferenceCollection<Sentry> entryCriteriaRefCollection;
+  /**
+   * @deprecated CMMN 1.1 exitCriteriaRefCollection is replaced by exitCriterionCollection
+   */
   @Deprecated(since = "1.0")
   protected static AttributeReferenceCollection<Sentry> exitCriteriaRefCollection;
 

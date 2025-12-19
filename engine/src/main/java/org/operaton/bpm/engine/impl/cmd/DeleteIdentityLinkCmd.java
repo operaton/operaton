@@ -80,7 +80,7 @@ public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializab
 
     TaskManager taskManager = commandContext.getTaskManager();
     task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkDeleteIdentityLink(task, commandContext);
 

@@ -86,7 +86,7 @@ public class UpdateCommentCmd implements Command<Object>, Serializable {
 
   protected TaskEntity updateTaskComment(String taskId, CommandContext commandContext, CommentEntity comment) {
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
-    ensureNotNull("No task exists with taskId: " + taskId, "task", task);
+    ensureNotNull("No task exists with taskId: %s".formatted(taskId), "task", task);
 
     checkTaskWork(task, commandContext);
     updateComment(commandContext, comment);

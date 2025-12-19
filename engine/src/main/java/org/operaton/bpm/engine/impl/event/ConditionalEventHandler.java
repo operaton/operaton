@@ -49,7 +49,7 @@ public class ConditionalEventHandler implements EventHandler {
     if (activityBehavior instanceof ConditionalEventBehavior conditionalBehavior) {
       conditionalBehavior.leaveOnSatisfiedCondition(eventSubscription, variableEvent);
     } else {
-      throw new ProcessEngineException("Conditional Event has not correct behavior: " + activityBehavior);
+      throw new ProcessEngineException("Conditional Event has not correct behavior: %s".formatted(activityBehavior));
     }
   }
 

@@ -50,7 +50,7 @@ public class DeleteHistoricVariableInstanceCmd implements Command<Void>, Seriali
     ensureNotEmpty(BadUserRequestException.class,"variableInstanceId", variableInstanceId);
 
     HistoricVariableInstanceEntity variable = commandContext.getHistoricVariableInstanceManager().findHistoricVariableInstanceByVariableInstanceId(variableInstanceId);
-    ensureNotNull(NotFoundException.class, "No historic variable instance found with id: " + variableInstanceId, "variable", variable);
+    ensureNotNull(NotFoundException.class, "No historic variable instance found with id: %s".formatted(variableInstanceId), "variable", variable);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricVariableInstance(variable);

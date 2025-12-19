@@ -59,7 +59,7 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Seriali
 
     if (failIfNotExists) {
       if (processInstanceIds.size() == 1) {
-        ensureNotEmpty(BadUserRequestException.class, "No historic process instance found with id: " + processInstanceIds.get(0), "historicProcessInstanceIds",
+        ensureNotEmpty(BadUserRequestException.class, "No historic process instance found with id: %s".formatted(processInstanceIds.get(0)), "historicProcessInstanceIds",
             instances);
       } else {
         ensureNotEmpty(BadUserRequestException.class, "No historic process instances found", "historicProcessInstanceIds", instances);
@@ -75,14 +75,14 @@ public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Seriali
         checker.checkDeleteHistoricProcessInstance(historicProcessInstance);
       }
 
-      ensureNotNull(BadUserRequestException.class, "Process instance is still running, cannot delete historic process instance: " + historicProcessInstance, "instance.getEndTime()", historicProcessInstance.getEndTime());
+      ensureNotNull(BadUserRequestException.class, "Process instance is still running, cannot delete historic process instance: %s".formatted(historicProcessInstance), "instance.getEndTime()", historicProcessInstance.getEndTime());
     }
 
     if(failIfNotExists) {
       ArrayList<String> nonExistingIds = new ArrayList<>(processInstanceIds);
       nonExistingIds.removeAll(existingIds);
       if(!nonExistingIds.isEmpty()) {
-        throw new BadUserRequestException("No historic process instance found with id: " + nonExistingIds);
+        throw new BadUserRequestException("No historic process instance found with id: %s".formatted(nonExistingIds));
       }
     }
 

@@ -150,7 +150,7 @@ public final class HistoryCleanupHelper {
 
   public static int[][] listMinuteChunks(int numberOfChunks) throws IllegalArgumentException {
     if(numberOfChunks <= 0 || numberOfChunks > 60){
-      throw new IllegalArgumentException("Number of chunks must be greater than 0, but is " + numberOfChunks);
+      throw new IllegalArgumentException("Number of chunks must be greater than 0, but is %s".formatted(numberOfChunks));
     }
     final int[][] minuteChunks = new int[numberOfChunks][2];
     int chunkLength = 60 / numberOfChunks;

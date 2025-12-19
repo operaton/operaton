@@ -49,7 +49,7 @@ public class GetIdentityLinksForProcessDefinitionCmd implements Command<List<Ide
       .getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
 
-    ensureNotNull("Cannot find process definition with id " + processDefinitionId, "processDefinition", processDefinition);
+    ensureNotNull("Cannot find process definition with id %s".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     return (List) processDefinition.getIdentityLinks();
   }

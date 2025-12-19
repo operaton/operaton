@@ -64,7 +64,7 @@ public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInsta
 
     BpmnModelInstance modelInstance = deploymentCache.findBpmnModelInstanceForProcessDefinition(processDefinitionId);
 
-    ensureNotNull("no BPMN model instance found for process definition id " + processDefinitionId, "modelInstance", modelInstance);
+    ensureNotNull("no BPMN model instance found for process definition id %s".formatted(processDefinitionId), "modelInstance", modelInstance);
     return modelInstance;
   }
 }

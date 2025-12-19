@@ -85,8 +85,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
 
     // take the specified transitions
     if (transitionsToTake.isEmpty()) {
-      throw new ProcessEngineException(execution.toString() + ": No outgoing transitions from "
-          + "activity " + activity);
+      throw new ProcessEngineException("%s: No outgoing transitions from activity %s".formatted(execution.toString(), activity));
     }
     else if (transitionsToTake.size() == 1) {
       propagatingExecution.setTransition(transitionsToTake.get(0));

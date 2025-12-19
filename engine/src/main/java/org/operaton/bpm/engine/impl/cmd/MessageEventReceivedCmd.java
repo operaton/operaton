@@ -84,8 +84,8 @@ public class MessageEventReceivedCmd implements Command<Void>, Serializable {
           executionId, EventType.MESSAGE.name(), exclusive);
     }
 
-    ensureNotEmpty("Execution with id '" + executionId + "' does not have a subscription to a message event with name '" + messageName + "'", "eventSubscriptions", eventSubscriptions);
-    ensureNumberOfElements("More than one matching message subscription found for execution " + executionId, "eventSubscriptions", eventSubscriptions, 1);
+    ensureNotEmpty("Execution with id '%s' does not have a subscription to a message event with name '%s'".formatted(executionId, messageName), "eventSubscriptions", eventSubscriptions);
+    ensureNumberOfElements("More than one matching message subscription found for execution %s".formatted(executionId), "eventSubscriptions", eventSubscriptions, 1);
 
     // there can be only one:
     EventSubscriptionEntity eventSubscriptionEntity = eventSubscriptions.get(0);

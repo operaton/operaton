@@ -54,7 +54,7 @@ public class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefin
 
     List<ProcessDefinition> processDefinitions = commandContext.getProcessDefinitionManager()
       .findDefinitionsByKeyAndTenantId(processDefinitionKey, tenantId, isTenantIdSet);
-    ensureNotEmpty(NotFoundException.class, "No process definition found with key '" + processDefinitionKey + "'",
+    ensureNotEmpty(NotFoundException.class, "No process definition found with key '%s'".formatted(processDefinitionKey),
       "processDefinitions", processDefinitions);
 
     for (ProcessDefinition processDefinition: processDefinitions) {

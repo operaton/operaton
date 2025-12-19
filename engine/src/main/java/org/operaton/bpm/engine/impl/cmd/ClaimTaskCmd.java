@@ -51,7 +51,7 @@ public class ClaimTaskCmd implements Command<Void>, Serializable {
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkClaimTask(task, commandContext);
 

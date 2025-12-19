@@ -61,7 +61,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
 
     ValueType type = value.getType();
     if (type != null && type.isAbstract()) {
-      throw new ProcessEngineException("Cannot serialize value of abstract type " + type.getName());
+      throw new ProcessEngineException("Cannot serialize value of abstract type %s".formatted(type.getName()));
     }
 
     for (TypedValueSerializer<?> serializer : serializerList) {

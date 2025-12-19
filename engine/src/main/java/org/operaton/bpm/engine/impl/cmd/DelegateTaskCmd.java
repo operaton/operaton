@@ -50,7 +50,7 @@ public class DelegateTaskCmd implements Command<Object>, Serializable {
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkDelegateTask(task, commandContext);
 

@@ -55,7 +55,7 @@ public class TimerCatchIntermediateEventJobHandler extends TimerEventJobHandler 
       throw e;
     }
     catch (Exception e) {
-      throw new ProcessEngineException("exception during timer execution: " + e.getMessage(), e);
+      throw new ProcessEngineException("exception during timer execution: %s".formatted(e.getMessage()), e);
     }
   }
 }

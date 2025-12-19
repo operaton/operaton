@@ -35,7 +35,7 @@ public class DefaultArtifactFactory implements ArtifactFactory {
     try {
       return clazz.getDeclaredConstructor().newInstance();
     } catch (Exception e) {
-      throw new ProcessEngineException("couldn't instantiate class " + clazz.getName(), e);
+      throw new ProcessEngineException("couldn't instantiate class %s".formatted(clazz.getName()), e);
     }
   }
 }

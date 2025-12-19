@@ -116,20 +116,6 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     caseFileModelChild.setChild(this, caseFileModel);
   }
 
-  @Override
-  public Integer getOperatonHistoryTimeToLive() {
-    String ttl = getOperatonHistoryTimeToLiveString();
-    if (ttl != null) {
-      return Integer.parseInt(ttl);
-    }
-    return null;
-  }
-
-  @Override
-  public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
-    setOperatonHistoryTimeToLiveString(String.valueOf(historyTimeToLive));
-  }
-
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Case.class, CMMN_ELEMENT_CASE)
         .extendsType(CmmnElement.class)

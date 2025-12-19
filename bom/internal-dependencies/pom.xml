@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent/pom.xml</relativePath>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
 
   <artifactId>operaton-core-internal-dependencies</artifactId>

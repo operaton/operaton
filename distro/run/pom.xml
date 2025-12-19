@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
     <relativePath>../../database</relativePath>
   </parent>
   <groupId>org.operaton.bpm.run</groupId>

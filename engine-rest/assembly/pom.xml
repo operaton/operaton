@@ -3,7 +3,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
 
   <artifactId>operaton-engine-rest</artifactId>

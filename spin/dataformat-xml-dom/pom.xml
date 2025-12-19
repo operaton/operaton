@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.spin</groupId>
     <artifactId>operaton-spin-root</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <artifactId>operaton-spin-dataformat-xml-dom</artifactId>
   <name>Operaton - Spin - DOM XML data format</name>

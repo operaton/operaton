@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-root</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <groupId>org.operaton.bpm.springboot</groupId>
   <artifactId>operaton-bpm-spring-boot-starter-test-junit5</artifactId>

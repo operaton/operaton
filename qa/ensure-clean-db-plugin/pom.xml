@@ -4,7 +4,7 @@
   <parent>
     <artifactId>operaton-qa</artifactId>
     <groupId>org.operaton.bpm.qa</groupId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <artifactId>operaton-qa-ensure-clean-db</artifactId>
   <name>Operaton - QA - Ensure clean DB plugin</name>

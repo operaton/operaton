@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>operaton-bpm-spring-boot-starter-qa</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <artifactId>qa-request-scope</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Request Scope</name>

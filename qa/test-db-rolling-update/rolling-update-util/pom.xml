@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-rolling-update</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <artifactId>operaton-qa-db-rolling-update-util</artifactId>
   <name>Operaton - QA - upgrade - rolling update util</name>

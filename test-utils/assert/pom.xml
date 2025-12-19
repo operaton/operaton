@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <artifactId>operaton-bpm-assert-root</artifactId>
   <packaging>pom</packaging>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.run</groupId>
     <artifactId>operaton-bpm-run-root</artifactId>
-    <version>1.0.2-SNAPSHOT</version>
+    <version>1.0.2</version>
   </parent>
   <artifactId>operaton-bpm-run-core</artifactId>
   <name>Operaton - Run - Core</name>

@@ -19,6 +19,8 @@ package org.operaton.bpm.spring.boot.starter.property;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.core.env.EnvironmentCapable;
 import org.springframework.test.context.ActiveProfiles;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -30,7 +32,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = NONE)
 @ActiveProfiles("test")
-class OperatonBpmPropertiesTest extends AbstractOperatonBpmPropertiesTest<OperatonBpmProperties> {
+class OperatonBpmPropertiesTest {
+
+  private final Bindable<OperatonBpmProperties> bindable = Bindable.of(OperatonBpmProperties.class);
 
   @Test
   void initResourcePatterns() {

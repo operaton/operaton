@@ -45,7 +45,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
 
   public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {
     if (jobId == null || jobId.isEmpty()) {
-      throw new ProcessEngineException("The job id is mandatory, but '" + jobId + "' has been provided.");
+      throw new ProcessEngineException("The job id is mandatory, but '%s' has been provided.".formatted(jobId));
     }
     this.jobId = jobId;
     this.newDuedate = newDuedate;
@@ -75,7 +75,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
 
       job.setDuedate(newDuedate);
     } else {
-      throw new ProcessEngineException("No job found with id '" + jobId + "'.");
+      throw new ProcessEngineException("No job found with id '%s'.".formatted(jobId));
     }
     return null;
   }

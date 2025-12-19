@@ -103,7 +103,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
     ExecutionManager executionManager = commandContext.getExecutionManager();
     final ExecutionEntity processInstance = executionManager.findExecutionById(processInstanceId);
     if (processInstance == null) {
-      throw new ProcessEngineException("No process instance found for id = '" + processInstanceId + "'.");
+      throw new ProcessEngineException("No process instance found for id = '%s'.".formatted(processInstanceId));
     } else if (!processInstance.isProcessInstanceExecution()) {
       throw new ProcessEngineException(
         "A process instance id is required, but the provided id " +

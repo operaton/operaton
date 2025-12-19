@@ -110,7 +110,7 @@ public abstract class TimerChangeJobDefinitionSuspensionStateJobHandler implemen
         }
 
       } else {
-        throw new ProcessEngineException("Unexpected job handler configuration for property '" + JOB_HANDLER_CFG_BY + "': " + by);
+        throw new ProcessEngineException("Unexpected job handler configuration for property '%s': %s".formatted(JOB_HANDLER_CFG_BY, by));
       }
 
       builder.includeJobs(includeJobs);

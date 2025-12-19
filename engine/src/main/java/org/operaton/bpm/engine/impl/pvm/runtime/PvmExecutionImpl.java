@@ -754,7 +754,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @Override
   public void signal(String signalName, Object signalData) {
     if (getActivity() == null) {
-      throw new PvmException("cannot signal execution " + this.id + ": it has no current activity");
+      throw new PvmException("cannot signal execution %s: it has no current activity".formatted(this.id));
     }
 
     SignallableActivityBehavior activityBehavior = (SignallableActivityBehavior) activity.getActivityBehavior();

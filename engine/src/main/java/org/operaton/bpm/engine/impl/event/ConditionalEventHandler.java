@@ -41,7 +41,7 @@ public class ConditionalEventHandler implements EventHandler {
     if (payload == null || payload instanceof VariableEvent) {
       variableEvent = (VariableEvent) payload;
     } else {
-      throw new ProcessEngineException("Payload have to be " + VariableEvent.class.getName() + ", to evaluate condition.");
+      throw new ProcessEngineException("Payload have to be %s, to evaluate condition.".formatted(VariableEvent.class.getName()));
     }
 
     ActivityImpl activity = eventSubscription.getActivity();

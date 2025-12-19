@@ -38,7 +38,7 @@ public class TimerCatchIntermediateEventJobHandler extends TimerEventJobHandler 
     String activityId = configuration.getTimerElementKey();
     ActivityImpl intermediateEventActivity = execution.getProcessDefinition().findActivity(activityId);
 
-    ensureNotNull("Error while firing timer: intermediate event activity " + configuration + " not found", "intermediateEventActivity", intermediateEventActivity);
+    ensureNotNull("Error while firing timer: intermediate event activity %s not found".formatted(configuration), "intermediateEventActivity", intermediateEventActivity);
 
     try {
       if(activityId.equals(execution.getActivityId())) {

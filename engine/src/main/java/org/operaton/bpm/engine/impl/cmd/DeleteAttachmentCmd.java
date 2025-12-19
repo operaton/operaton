@@ -55,12 +55,12 @@ public class DeleteAttachmentCmd implements Command<Object>, Serializable {
       attachment = (AttachmentEntity) commandContext
           .getAttachmentManager()
           .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);
-      ensureNotNull("No attachment exist for task id '" + taskId + " and attachmentId '" + attachmentId + "'.", "attachment", attachment);
+      ensureNotNull("No attachment exist for task id '%s' and attachmentId '%s'.".formatted(taskId, attachmentId), "attachment", attachment);
     } else {
       attachment = commandContext
           .getDbEntityManager()
           .selectById(AttachmentEntity.class, attachmentId);
-      ensureNotNull("No attachment exist with attachmentId '" + attachmentId + "'.", "attachment", attachment);
+      ensureNotNull("No attachment exist with attachmentId '%s'.".formatted(attachmentId), "attachment", attachment);
     }
 
     commandContext

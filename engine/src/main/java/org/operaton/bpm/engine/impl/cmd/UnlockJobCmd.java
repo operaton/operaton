@@ -51,7 +51,7 @@ public class UnlockJobCmd implements Command<Void> {
     JobEntity job = getJob();
 
     if (Context.getJobExecutorContext() == null) {
-      EnsureUtil.ensureNotNull("Job with id " + jobId + " does not exist", "job", job);
+      EnsureUtil.ensureNotNull("Job with id %s does not exist".formatted(jobId), "job", job);
     }
     else if (Context.getJobExecutorContext() != null && job == null) {
       // CAM-1842

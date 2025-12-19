@@ -69,7 +69,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
   @Override
   public Void execute(final CommandContext commandContext) {
     final JobEntity job = commandContext.getJobManager().findJobById(jobId);
-    ensureNotNull(NotFoundException.class, "No job found with id '" + jobId + "'", "job", job);
+    ensureNotNull(NotFoundException.class, "No job found with id '%s'".formatted(jobId), "job", job);
 
     // allow timer jobs only
     checkJobType(job);

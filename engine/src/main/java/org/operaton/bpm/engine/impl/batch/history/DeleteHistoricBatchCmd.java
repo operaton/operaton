@@ -37,7 +37,7 @@ public class DeleteHistoricBatchCmd implements Command<Object> {
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "Historic batch id must not be null", "historic batch id", batchId);
 
     HistoricBatchEntity historicBatch = commandContext.getHistoricBatchManager().findHistoricBatchById(batchId);
-    EnsureUtil.ensureNotNull(BadUserRequestException.class, "Historic batch for id '" + batchId + "' cannot be found", "historic batch", historicBatch);
+    EnsureUtil.ensureNotNull(BadUserRequestException.class, "Historic batch for id '%s' cannot be found".formatted(batchId), "historic batch", historicBatch);
 
     checkAccess(commandContext, historicBatch);
 

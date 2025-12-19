@@ -125,7 +125,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   public <T extends DbEntity> T selectById(Class<T> type, String id) {
     String selectStatement = dbSqlSessionFactory.getSelectStatement(type);
     String mappedSelectStatement = dbSqlSessionFactory.mapStatement(selectStatement);
-    ensureNotNull("no select statement for " + type + " in the ibatis mapping files", "selectStatement", selectStatement);
+    ensureNotNull("no select statement for %s in the ibatis mapping files".formatted(type), "selectStatement", selectStatement);
 
     Object result = ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.selectOne(mappedSelectStatement, id));
     fireEntityLoaded(result);
@@ -295,7 +295,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     // get statement
     String insertStatement = dbSqlSessionFactory.getInsertStatement(dbEntity);
     insertStatement = dbSqlSessionFactory.mapStatement(insertStatement);
-    ensureNotNull("no insert statement for " + dbEntity.getClass() + " in the ibatis mapping files", "insertStatement", insertStatement);
+    ensureNotNull("no insert statement for %s in the ibatis mapping files".formatted(dbEntity.getClass()), "insertStatement", insertStatement);
 
     // execute the insert
     executeInsertEntity(insertStatement, dbEntity);

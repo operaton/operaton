@@ -82,12 +82,12 @@ public class CreateCaseInstanceCmd implements Command<CaseInstance>, Serializabl
     if (caseDefinitionId!=null) {
       caseDefinition =  findById(deploymentCache, caseDefinitionId);
 
-      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for id = '" + caseDefinitionId + "'", "caseDefinition", caseDefinition);
+      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for id = '%s'".formatted(caseDefinitionId), "caseDefinition", caseDefinition);
 
     } else {
       caseDefinition = findByKey(deploymentCache, caseDefinitionKey);
 
-      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for key '" + caseDefinitionKey + "'", "caseDefinition", caseDefinition);
+      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for key '%s'".formatted(caseDefinitionKey), "caseDefinition", caseDefinition);
     }
 
     return caseDefinition;

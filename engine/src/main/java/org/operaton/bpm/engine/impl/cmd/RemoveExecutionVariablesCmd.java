@@ -46,7 +46,7 @@ public class RemoveExecutionVariablesCmd extends AbstractRemoveVariableCmd {
       .getExecutionManager()
       .findExecutionById(entityId);
 
-    ensureNotNull("execution " + entityId + " doesn't exist", "execution", execution);
+    ensureNotNull("execution %s doesn't exist".formatted(entityId), "execution", execution);
 
     checkRemoveExecutionVariables(execution);
 

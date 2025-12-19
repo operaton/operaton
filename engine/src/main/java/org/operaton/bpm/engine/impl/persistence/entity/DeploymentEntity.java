@@ -225,8 +225,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, name=%s, resources=%s, deploymentTime=".formatted(id, name).formatted(resources) + deploymentTime
-           + ", validatingSchema=%s, isNew=%s, source=%s, tenantId=".formatted(validatingSchema, isNew).formatted(source) + tenantId
+           + "[id=%s, name=%s, resources=%s, deploymentTime=%s, validatingSchema=%s, isNew=%s, source=%s, tenantId=".formatted(id, name, resources, deploymentTime).formatted(validatingSchema, isNew, source) + tenantId
            + "]";
   }
 

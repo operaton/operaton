@@ -504,10 +504,8 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, incidentTimestamp=%s, incidentType=%s, executionId=".formatted(id, incidentTimestamp).formatted(incidentType) + executionId
-           + ", activityId=%s, processInstanceId=%s, processDefinitionId=%s, causeIncidentId=".formatted(activityId, processInstanceId).formatted(processDefinitionId) + causeIncidentId
-           + ", rootCauseIncidentId=%s, configuration=%s, tenantId=%s, incidentMessage=".formatted(rootCauseIncidentId, configuration).formatted(tenantId) + incidentMessage
-           + ", jobDefinitionId=%s, failedActivityId=%s, annotation=%s]".formatted(jobDefinitionId, failedActivityId).formatted(annotation);
+           + "[id=%s, incidentTimestamp=%s, incidentType=%s, executionId=%s, activityId=%s, processInstanceId=%s, processDefinitionId=%s, causeIncidentId=".formatted(id, incidentTimestamp, incidentType, executionId).formatted(activityId, processInstanceId, processDefinitionId) + causeIncidentId
+           + ", rootCauseIncidentId=%s, configuration=%s, tenantId=%s, incidentMessage=%s, jobDefinitionId=%s, failedActivityId=%s, annotation=%s]".formatted(rootCauseIncidentId, configuration, tenantId, incidentMessage).formatted(jobDefinitionId, failedActivityId, annotation);
   }
 
   @Override

@@ -212,12 +212,9 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[taskId=%s, deploymentId=%s, processDefinitionKey=%s, jobId=".formatted(taskId, deploymentId).formatted(processDefinitionKey) + jobId
-        + ", jobDefinitionId=%s, batchId=%s, operationId=%s, operationType=".formatted(jobDefinitionId, batchId).formatted(operationId) + operationType
-        + ", userId=%s, timestamp=%s, property=%s, orgValue=".formatted(userId, timestamp).formatted(property) + orgValue
-        + ", newValue=%s, id=%s, eventType=%s, executionId=".formatted(newValue, id).formatted(eventType) + executionId
-        + ", processDefinitionId=%s, rootProcessInstanceId=%s, processInstanceId=%s, externalTaskId=".formatted(processDefinitionId, rootProcessInstanceId).formatted(processInstanceId) + externalTaskId
-        + ", tenantId=%s, entityType=%s, category=%s, annotation=".formatted(tenantId, entityType).formatted(category) + annotation
+        + "[taskId=%s, deploymentId=%s, processDefinitionKey=%s, jobId=%s, jobDefinitionId=%s, batchId=%s, operationId=%s, operationType=".formatted(taskId, deploymentId, processDefinitionKey, jobId).formatted(jobDefinitionId, batchId, operationId) + operationType
+        + ", userId=%s, timestamp=%s, property=%s, orgValue=%s, newValue=%s, id=%s, eventType=%s, executionId=".formatted(userId, timestamp, property, orgValue).formatted(newValue, id, eventType) + executionId
+        + ", processDefinitionId=%s, rootProcessInstanceId=%s, processInstanceId=%s, externalTaskId=%s, tenantId=%s, entityType=%s, category=%s, annotation=".formatted(processDefinitionId, rootProcessInstanceId, processInstanceId, externalTaskId).formatted(tenantId, entityType, category) + annotation
         + "]";
   }
 }

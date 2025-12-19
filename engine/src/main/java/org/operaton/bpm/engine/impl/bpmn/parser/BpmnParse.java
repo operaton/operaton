@@ -4052,7 +4052,7 @@ public class BpmnParse extends Parse {
     version = callingActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, versionAttributeName);
 
     if (binding != null && binding.equals(CallableElementBinding.VERSION) && version == null) {
-      addError("Missing attribute '%s' when '%s' has value '%s'".formatted(versionAttributeName, bindingAttributeName).formatted(CallableElementBinding.VERSION.getValue()), callingActivityElement);
+      addError("Missing attribute '%s' when '%s' has value '%s'".formatted(versionAttributeName, bindingAttributeName, CallableElementBinding.VERSION.getValue()), callingActivityElement);
     }
 
     ParameterValueProvider versionProvider = createParameterValueProvider(version, expressionManager);
@@ -4067,7 +4067,7 @@ public class BpmnParse extends Parse {
     versionTag = callingActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, versionTagAttributeName);
 
     if (binding != null && binding.equals(CallableElementBinding.VERSION_TAG) && versionTag == null) {
-      addError("Missing attribute '%s' when '%s' has value '%s'".formatted(versionTagAttributeName, bindingAttributeName).formatted(CallableElementBinding.VERSION_TAG.getValue()), callingActivityElement);
+      addError("Missing attribute '%s' when '%s' has value '%s'".formatted(versionTagAttributeName, bindingAttributeName, CallableElementBinding.VERSION_TAG.getValue()), callingActivityElement);
     }
 
     ParameterValueProvider versionTagProvider = createParameterValueProvider(versionTag, expressionManager);

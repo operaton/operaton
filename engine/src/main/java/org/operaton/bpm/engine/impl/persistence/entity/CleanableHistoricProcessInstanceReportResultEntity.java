@@ -105,8 +105,7 @@ public class CleanableHistoricProcessInstanceReportResultEntity implements Clean
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[processDefinitionId = %s, processDefinitionKey = %s, processDefinitionName = %s, processDefinitionVersion = ".formatted(processDefinitionId, processDefinitionKey).formatted(processDefinitionName) + processDefinitionVersion
-        + ", historyTimeToLive = %s, finishedProcessInstanceCount = %s, cleanableProcessInstanceCount = %s, tenantId = ".formatted(historyTimeToLive, finishedProcessInstanceCount).formatted(cleanableProcessInstanceCount) + tenantId
+        + "[processDefinitionId = %s, processDefinitionKey = %s, processDefinitionName = %s, processDefinitionVersion = %s, historyTimeToLive = %s, finishedProcessInstanceCount = %s, cleanableProcessInstanceCount = %s, tenantId = ".formatted(processDefinitionId, processDefinitionKey, processDefinitionName, processDefinitionVersion).formatted(historyTimeToLive, finishedProcessInstanceCount, cleanableProcessInstanceCount) + tenantId
         + "]";
   }
 }

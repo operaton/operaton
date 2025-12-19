@@ -547,8 +547,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
   @Override
   public String toString() {
     return "ExternalTaskEntity [").formatted(id) + revision
-        + ", topicName=%s, workerId=%s, lockExpirationTime=%s, priority=".formatted(topicName, workerId).formatted(lockExpirationTime) + priority
-        + ", errorMessage=%s, errorDetailsByteArray=%s, errorDetailsByteArrayId=%s, executionId=".formatted(errorMessage, errorDetailsByteArray).formatted(errorDetailsByteArrayId) + executionId + "]";
+        + ", topicName=%s, workerId=%s, lockExpirationTime=%s, priority=%s, errorMessage=%s, errorDetailsByteArray=%s, errorDetailsByteArrayId=%s, executionId=".formatted(topicName, workerId, lockExpirationTime, priority).formatted(errorMessage, errorDetailsByteArray, errorDetailsByteArrayId) + executionId + "]";
   }
 
   public void unlock() {

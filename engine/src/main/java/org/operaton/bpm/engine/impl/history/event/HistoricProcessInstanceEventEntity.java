@@ -144,11 +144,9 @@ public class HistoricProcessInstanceEventEntity extends HistoricScopeInstanceEve
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[businessKey=%s, startUserId=%s, superProcessInstanceId=%s, rootProcessInstanceId=".formatted(businessKey, startUserId).formatted(superProcessInstanceId) + rootProcessInstanceId
-           + ", superCaseInstanceId=%s, deleteReason=%s, durationInMillis=%s, startTime=".formatted(superCaseInstanceId, deleteReason).formatted(durationInMillis) + startTime
-           + ", endTime=%s, removalTime=%s, endActivityId=%s, startActivityId=".formatted(endTime, removalTime).formatted(endActivityId) + startActivityId
-           + ", id=%s, eventType=%s, executionId=%s, processDefinitionId=".formatted(id, eventType).formatted(executionId) + processDefinitionId
-           + ", processInstanceId=%s, tenantId=%s, restartedProcessInstanceId=%s]".formatted(processInstanceId, tenantId).formatted(restartedProcessInstanceId);
+           + "[businessKey=%s, startUserId=%s, superProcessInstanceId=%s, rootProcessInstanceId=%s, superCaseInstanceId=%s, deleteReason=%s, durationInMillis=%s, startTime=".formatted(businessKey, startUserId, superProcessInstanceId, rootProcessInstanceId).formatted(superCaseInstanceId, deleteReason, durationInMillis) + startTime
+           + ", endTime=%s, removalTime=%s, endActivityId=%s, startActivityId=%s, id=%s, eventType=%s, executionId=%s, processDefinitionId=".formatted(endTime, removalTime, endActivityId, startActivityId).formatted(id, eventType, executionId) + processDefinitionId
+           + ", processInstanceId=%s, tenantId=%s, restartedProcessInstanceId=%s]".formatted(processInstanceId, tenantId, restartedProcessInstanceId);
   }
 
 }

@@ -668,10 +668,8 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[id=%s, revision=%s, name=%s, processDefinitionId=".formatted(id, revision).formatted(name) + processDefinitionId
-      + ", processInstanceId=%s, executionId=%s, caseInstanceId=%s, caseExecutionId=".formatted(processInstanceId, executionId).formatted(caseInstanceId) + caseExecutionId
-      + ", taskId=%s, activityInstanceId=%s, tenantId=%s, longValue=".formatted(taskId, activityInstanceId).formatted(tenantId) + longValue
-      + ", doubleValue=%s, textValue=%s, textValue2=%s, byteArrayValueId=".formatted(doubleValue, textValue).formatted(textValue2) + getByteArrayValueId()
+      + "[id=%s, revision=%s, name=%s, processDefinitionId=%s, processInstanceId=%s, executionId=%s, caseInstanceId=%s, caseExecutionId=".formatted(id, revision, name, processDefinitionId).formatted(processInstanceId, executionId, caseInstanceId) + caseExecutionId
+      + ", taskId=%s, activityInstanceId=%s, tenantId=%s, longValue=%s, doubleValue=%s, textValue=%s, textValue2=%s, byteArrayValueId=".formatted(taskId, activityInstanceId, tenantId, longValue).formatted(doubleValue, textValue, textValue2) + getByteArrayValueId()
       + ", configuration=%s, isConcurrentLocal=%s]".formatted(configuration, isConcurrentLocal);
   }
 

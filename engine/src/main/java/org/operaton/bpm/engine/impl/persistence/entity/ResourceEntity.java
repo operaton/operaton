@@ -121,8 +121,7 @@ public class ResourceEntity implements Serializable, DbEntity, Resource {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, name=%s, deploymentId=%s, generated=".formatted(id, name).formatted(deploymentId) + generated
-           + ", tenantId=%s, type=%s, createTime=%s]".formatted(tenantId, type).formatted(createTime);
+           + "[id=%s, name=%s, deploymentId=%s, generated=%s, tenantId=%s, type=%s, createTime=%s]".formatted(id, name, deploymentId, generated).formatted(tenantId, type, createTime);
   }
 
 }

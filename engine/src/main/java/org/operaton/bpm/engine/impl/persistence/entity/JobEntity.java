@@ -717,11 +717,9 @@ public abstract class JobEntity extends AcquirableJobEntity
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=%s, duedate=%s, lockOwner=".formatted(id, revision).formatted(duedate) + lockOwner
-           + ", lockExpirationTime=%s, executionId=%s, processInstanceId=%s, isExclusive=".formatted(lockExpirationTime, executionId).formatted(processInstanceId) + isExclusive
-           + ", jobDefinitionId=%s, jobHandlerType=%s, jobHandlerConfiguration=%s, exceptionByteArray=".formatted(jobDefinitionId, jobHandlerType).formatted(jobHandlerConfiguration) + exceptionByteArray
-           + ", exceptionByteArrayId=%s, exceptionMessage=%s, failedActivityId=%s, deploymentId=".formatted(exceptionByteArrayId, exceptionMessage).formatted(failedActivityId) + deploymentId
-           + ", priority=%s, tenantId=%s, batchId=%s]".formatted(priority, tenantId).formatted(batchId);
+           + "[id=%s, revision=%s, duedate=%s, lockOwner=%s, lockExpirationTime=%s, executionId=%s, processInstanceId=%s, isExclusive=".formatted(id, revision, duedate, lockOwner).formatted(lockExpirationTime, executionId, processInstanceId) + isExclusive
+           + ", jobDefinitionId=%s, jobHandlerType=%s, jobHandlerConfiguration=%s, exceptionByteArray=%s, exceptionByteArrayId=%s, exceptionMessage=%s, failedActivityId=%s, deploymentId=".formatted(jobDefinitionId, jobHandlerType, jobHandlerConfiguration, exceptionByteArray).formatted(exceptionByteArrayId, exceptionMessage, failedActivityId) + deploymentId
+           + ", priority=%s, tenantId=%s, batchId=%s]".formatted(priority, tenantId, batchId);
   }
 
 }

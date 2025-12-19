@@ -425,13 +425,10 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[id=%s, processDefinitionKey=%s, processDefinitionId=%s, rootProcessInstanceId=".formatted(id, processDefinitionKey).formatted(processDefinitionId) + rootProcessInstanceId
-      + ", removalTime=%s, processInstanceId=%s, taskId=%s, executionId=".formatted(removalTime, processInstanceId).formatted(taskId) + executionId
-      + ", tenantId=%s, activityInstanceId=%s, caseDefinitionKey=%s, caseDefinitionId=".formatted(tenantId, activityInstanceId).formatted(caseDefinitionKey) + caseDefinitionId
-      + ", caseInstanceId=%s, caseExecutionId=%s, name=%s, createTime=".formatted(caseInstanceId, caseExecutionId).formatted(name) + createTime
+      + "[id=%s, processDefinitionKey=%s, processDefinitionId=%s, rootProcessInstanceId=%s, removalTime=%s, processInstanceId=%s, taskId=%s, executionId=".formatted(id, processDefinitionKey, processDefinitionId, rootProcessInstanceId).formatted(removalTime, processInstanceId, taskId) + executionId
+      + ", tenantId=%s, activityInstanceId=%s, caseDefinitionKey=%s, caseDefinitionId=%s, caseInstanceId=%s, caseExecutionId=%s, name=%s, createTime=".formatted(tenantId, activityInstanceId, caseDefinitionKey, caseDefinitionId).formatted(caseInstanceId, caseExecutionId, name) + createTime
       + ", revision=%s, serializerName=%s, longValue=%s, doubleValue=".formatted(revision, getSerializerName()).formatted(longValue) + doubleValue
-      + ", textValue=%s, textValue2=%s, state=%s, byteArrayId=".formatted(textValue, textValue2).formatted(state) + getByteArrayId()
-      + "]";
+      + ", textValue=%s, textValue2=%s, state=%s, byteArrayId=%s]".formatted(textValue, textValue2, state, getByteArrayId());
   }
 
 }

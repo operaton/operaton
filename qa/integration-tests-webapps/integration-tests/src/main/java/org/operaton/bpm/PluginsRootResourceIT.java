@@ -16,9 +16,9 @@
  */
 package org.operaton.bpm;
 
-import java.util.Arrays;
 import java.util.Collection;
 
+import java.util.List;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,13 +49,13 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   @Parameters(name = "Asset: {0}, Allowed: {1}")
   public static Collection<Object[]> getAssets() {
-    return Arrays.asList(new Object[][] {
-            { "app/plugin.js", true },
-            { "app/plugin.css", true },
-            { "app/asset.js", false },
-            { "../..", false },
-            { "../../annotations-api.jar", false },
-    });
+    return List.of(
+      new Object[]{ "app/plugin.js", true },
+      new Object[]{ "app/plugin.css", true },
+      new Object[]{ "app/asset.js", false },
+      new Object[]{ "../..", false },
+      new Object[]{ "../../annotations-api.jar", false }
+    );
   }
 
   @Test

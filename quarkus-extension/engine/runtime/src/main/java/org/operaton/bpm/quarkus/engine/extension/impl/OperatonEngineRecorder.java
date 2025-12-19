@@ -16,17 +16,19 @@
  */
 package org.operaton.bpm.quarkus.engine.extension.impl;
 
+import io.agroal.api.AgroalDataSource;
+import io.quarkus.agroal.runtime.AgroalDataSourceUtil;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.inject.spi.BeanManager;
 
-import io.quarkus.agroal.runtime.DataSources;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Recorder;
 import io.smallrye.context.SmallRyeManagedExecutor;
+import java.util.Optional;
 import org.eclipse.microprofile.context.ManagedExecutor;
 
 import org.operaton.bpm.container.RuntimeContainerDelegate;
@@ -64,8 +66,10 @@ public class OperatonEngineRecorder {
     PropertyHelper.applyProperties(configuration, config.genericConfig(), PropertyHelper.KEBAB_CASE);
 
     if (configuration.getDataSource() == null) {
-      String datasource = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);
-      configuration.setDataSource(DataSources.fromName(datasource));
+      String datasourceName = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);
+      AgroalDataSource dataSource = Optional.ofNullable(AgroalDataSourceUtil.dataSourceInstance(datasourceName).orNull())
+        .orElseThrow(() -> new IllegalStateException("Agroal datasource '%s' not found".formatted(datasourceName)));
+      configuration.setDataSource(dataSource);
     }
 
     if (configuration.getTransactionManager() == null) {

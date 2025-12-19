@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -295,21 +296,15 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
                            String resourceName) {
     String resourcePath = (resourceRootPath == null ? "" : resourceRootPath).concat(resourceName);
     LOG.debugDiscoveredResource(resourcePath);
-    InputStream inputStream = null;
 
-    try {
-      if (source instanceof File file) {
-        inputStream = new FileInputStream(file);
-      } else {
-        inputStream = (InputStream) source;
-      }
+    try (InputStream inputStream = source instanceof File file ? new FileInputStream(file) : (InputStream) source) {
       byte[] bytes = IoUtil.readInputStream(inputStream, resourcePath);
       resourceMap.put(resourceName, bytes);
     } catch (IOException e) {
-      throw LOG.cannotOpenFileInputStream(((File) source).getAbsolutePath(), e);
-    } finally {
-      if (inputStream != null) {
-        IoUtil.closeSilently(inputStream);
+      if (source instanceof File file) {
+        throw LOG.cannotOpenFileInputStream(file.getAbsolutePath(), e);
+      } else {
+        throw LOG.cannotOpenFileInputStream(resourcePath, e);
       }
     }
   }

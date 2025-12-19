@@ -650,13 +650,13 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       ensureNotNull("Case execution '%s': has no current activity".formatted(id), "activity", cmmnActivity);
 
       CmmnSentryDeclaration sentryDeclaration = cmmnActivity.getSentry(sentryId);
-      ensureNotNull("Case execution '%s': has no declaration for sentry '".formatted(id)+sentryId+"'", "sentryDeclaration", sentryDeclaration);
+      ensureNotNull("Case execution '%s': has no declaration for sentry '%s'".formatted(id, sentryId), "sentryDeclaration", sentryDeclaration);
 
       CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
-      ensureNotNull("Sentry declaration '%s' has no defined ifPart, but there should be one defined for case execution '".formatted(sentryId)+id+"'.", "ifPartDeclaration", ifPartDeclaration);
+      ensureNotNull("Sentry declaration '%s' has no defined ifPart, but there should be one defined for case execution '%s'.".formatted(sentryId, id), "ifPartDeclaration", ifPartDeclaration);
 
       Expression condition = ifPartDeclaration.getCondition();
-      ensureNotNull("A condition was expected for ifPart of Sentry declaration '%s' for case execution '".formatted(sentryId)+id+"'.", "condition", condition);
+      ensureNotNull("A condition was expected for ifPart of Sentry declaration '%s' for case execution '%s'.".formatted(sentryId, id), "condition", condition);
 
       Object result = condition.getValue(this);
       ensureInstanceOf("condition expression returns non-Boolean", "result", result, Boolean.class);

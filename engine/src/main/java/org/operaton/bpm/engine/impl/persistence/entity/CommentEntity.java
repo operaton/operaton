@@ -230,13 +230,8 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, type=".formatted(id) + type
-           + ", userId=%s, time=".formatted(userId) + time
-           + ", taskId=%s, processInstanceId=".formatted(taskId) + processInstanceId
-           + ", rootProcessInstanceId=%s, revision= ".formatted(rootProcessInstanceId)+ revision
-           + ", removalTime=%s, action=".formatted(removalTime) + action
-           + ", message=%s, fullMessage=".formatted(message) + fullMessage
-           + ", tenantId=%s]".formatted(tenantId);
+           + "[id=%s, type=%s, userId=%s, time=%s, taskId=%s, processInstanceId=%s, rootProcessInstanceId=%s, revision=%s, removalTime=%s, action=%s, message=%s, fullMessage=%s, tenantId=%s]".formatted(
+               id, type, userId, time, taskId, processInstanceId, rootProcessInstanceId, revision, removalTime, action, message, fullMessage, tenantId);
   }
 
   @Override

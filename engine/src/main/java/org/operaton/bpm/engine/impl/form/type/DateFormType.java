@@ -72,7 +72,7 @@ public class DateFormType extends AbstractFormFieldType {
       try {
         return Variables.dateValue((Date) dateFormat.parseObject(strValue), propertyValue.isTransient());
       } catch (ParseException e) {
-        throw new ProcessEngineException("Could not parse value '%s' as date using date format '".formatted(value)+datePattern+"'.");
+        throw new ProcessEngineException("Could not parse value '%s' as date using date format '%s'.".formatted(value, datePattern));
       }
     }
     else {
@@ -88,7 +88,7 @@ public class DateFormType extends AbstractFormFieldType {
       return Variables.stringValue(dateFormat.format(modelValue.getValue()), modelValue.isTransient());
     }
     else {
-      throw new ProcessEngineException("Expected value to be of type '%s' but got '".formatted(ValueType.DATE)+modelValue.getType()+"'.");
+      throw new ProcessEngineException("Expected value to be of type '%s' but got '%s'.".formatted(ValueType.DATE, modelValue.getType()));
     }
   }
 

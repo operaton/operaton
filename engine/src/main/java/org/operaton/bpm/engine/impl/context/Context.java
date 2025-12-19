@@ -226,7 +226,7 @@ public final class Context {
 
 
     } catch (ProcessApplicationUnavailableException e) {
-      throw new ProcessEngineException("Cannot switch to process application '%s' for execution: ".formatted(paName)+e.getMessage(), e);
+      throw new ProcessEngineException("Cannot switch to process application '%s' for execution: %s".formatted(paName, e.getMessage()), e);
     }
   }
 }

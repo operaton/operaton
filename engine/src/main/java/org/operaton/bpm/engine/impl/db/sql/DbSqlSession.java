@@ -681,7 +681,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   public String getResourceForDbOperation(String directory, String operation, String component) {
     String databaseType = dbSqlSessionFactory.getDatabaseType();
-    return "org/operaton/bpm/engine/db/%s/activiti.".formatted(directory) + databaseType + ".%s.".formatted(operation)+component+".sql";
+    return "org/operaton/bpm/engine/db/%s/activiti.%s.%s.%s.sql".formatted(directory, databaseType, operation, component);
   }
 
   public void executeSchemaResource(String operation, String component, String resourceName, boolean isOptional) {

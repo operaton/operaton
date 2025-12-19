@@ -23,7 +23,7 @@ import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.spi.el.DmnScriptEngineResolver;
 import org.operaton.bpm.dmn.engine.impl.spi.el.ElProvider;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnTransformer;
-import org.operaton.bpm.feel.impl.scala.function.FeelCustomFunctionProvider;
+import org.operaton.bpm.dmn.feel.impl.scala.function.FeelCustomFunctionProvider;
 import org.operaton.bpm.engine.impl.dmn.transformer.DecisionDefinitionHandler;
 import org.operaton.bpm.engine.impl.dmn.transformer.DecisionRequirementsDefinitionTransformHandler;
 import org.operaton.bpm.engine.impl.history.parser.HistoryDecisionEvaluationListener;

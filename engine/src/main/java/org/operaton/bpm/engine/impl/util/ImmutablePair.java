@@ -151,6 +151,6 @@ public class ImmutablePair<L, R> implements Entry<L, R>, Serializable, Comparabl
 
   @Override
   public String toString() {
-    return "(" + this.getLeft() + ',' + this.getRight() + ')';
+    return "(%s,%s)".formatted(this.getLeft(), this.getRight());
   }
 }

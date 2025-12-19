@@ -32,14 +32,14 @@ var ResponseErrorHandlerInitializer = [
   'shouldDisplayAuthenticationError',
   '$translate',
   'configuration',
-  function(
+  function (
     $rootScope,
     $location,
     Notifications,
     AuthenticationService,
     shouldDisplayAuthenticationError,
     $translate,
-    configuration
+    configuration,
   ) {
     function addError(error) {
       error.http = true;
@@ -76,12 +76,12 @@ var ResponseErrorHandlerInitializer = [
             addError({
               status: $translate.instant('PAGES_STATUS_SERVER_ERROR'),
               message: data.message,
-              exceptionType: data.exceptionType
+              exceptionType: data.exceptionType,
             });
           } else {
             addError({
               status: $translate.instant('PAGES_STATUS_SERVER_ERROR'),
-              message: $translate.instant('PAGES_MSG_SERVER_ERROR')
+              message: $translate.instant('PAGES_MSG_SERVER_ERROR'),
             });
           }
           break;
@@ -89,7 +89,7 @@ var ResponseErrorHandlerInitializer = [
         case 0:
           addError({
             status: $translate.instant('PAGES_STATUS_REQUEST_TIMEOUT'),
-            message: $translate.instant('PAGES_MSG_REQUEST_TIMEOUT')
+            message: $translate.instant('PAGES_MSG_REQUEST_TIMEOUT'),
           });
           break;
 
@@ -113,36 +113,36 @@ var ResponseErrorHandlerInitializer = [
                 {
                   permissionName: data.permissionName.toLowerCase(),
                   resourceName: data.resourceName.toLowerCase(),
-                  resourceId: data.resourceId
-                }
+                  resourceId: data.resourceId,
+                },
               );
             } else {
-              var missingAuths = data.missingAuthorizations.map(function(
-                missingAuth
-              ) {
-                return (
-                  "'" +
-                  missingAuth.permissionName +
-                  "'" +
-                  ' ' +
-                  missingAuth.resourceName +
-                  's'
-                );
-              });
+              var missingAuths = data.missingAuthorizations.map(
+                function (missingAuth) {
+                  return (
+                    "'" +
+                    missingAuth.permissionName +
+                    "'" +
+                    ' ' +
+                    missingAuth.resourceName +
+                    's'
+                  );
+                },
+              );
 
               message = $translate.instant('PAGES_MSG_ACCESS_DENIED', {
-                missingAuths: missingAuths.join()
+                missingAuths: missingAuths.join(),
               });
             }
 
             addError({
               status: $translate.instant('PAGES_STATUS_ACCESS_DENIED'),
-              message: message
+              message: message,
             });
           } else {
             addError({
               status: $translate.instant('PAGES_STATUS_ACCESS_DENIED'),
-              message: $translate.instant('PAGES_MSG_ACTION_DENIED')
+              message: $translate.instant('PAGES_MSG_ACTION_DENIED'),
             });
           }
           break;
@@ -151,7 +151,7 @@ var ResponseErrorHandlerInitializer = [
           if (shouldDisplayAuthenticationError()) {
             addError({
               status: $translate.instant('PAGES_STATUS_NOT_FOUND'),
-              message: $translate.instant('PAGES_MSG_NOT_FOUND')
+              message: $translate.instant('PAGES_MSG_NOT_FOUND'),
             });
           }
           break;
@@ -159,15 +159,15 @@ var ResponseErrorHandlerInitializer = [
           addError({
             status: $translate.instant('PAGES_STATUS_COMMUNICATION_ERROR'),
             message: $translate.instant('PAGES_MSG_COMMUNICATION_ERROR', {
-              status: status
-            })
+              status: status,
+            }),
           });
       }
     }
 
     // triggered by httpStatusInterceptor
     $rootScope.$on('httpError', handleHttpError);
-  }
+  },
 ];
 
 var ProcessEngineSelectionController = [
@@ -178,16 +178,16 @@ var ProcessEngineSelectionController = [
   'Uri',
   'Notifications',
   '$translate',
-  function($scope, $http, $location, $window, Uri, Notifications, $translate) {
+  function ($scope, $http, $location, $window, Uri, Notifications, $translate) {
     var current = Uri.appUri(':engine');
     var enginesByName = {};
 
     $http
       .get(Uri.appUri('engine://engine/'))
-      .then(function(response) {
+      .then(function (response) {
         $scope.engines = response.data;
 
-        angular.forEach($scope.engines, function(engine) {
+        angular.forEach($scope.engines, function (engine) {
           enginesByName[engine.name] = engine;
         });
 
@@ -197,30 +197,30 @@ var ProcessEngineSelectionController = [
           Notifications.addError({
             status: $translate.instant('PAGES_STATUS_NOT_FOUND'),
             message: $translate.instant('PAGES_MSG_ENGINE_NOT_EXISTS'),
-            scope: $scope
+            scope: $scope,
           });
           $location.path('/');
         }
       })
       .catch(angular.noop);
 
-    $scope.$watch('currentEngine', function(engine) {
+    $scope.$watch('currentEngine', function (engine) {
       if (engine && current !== engine.name) {
         $window.location.href = Uri.appUri('app://../' + engine.name + '/');
       }
     });
-  }
+  },
 ];
 
 var NavigationController = [
   '$scope',
   '$location',
-  function($scope, $location) {
-    $scope.activeClass = function(link) {
+  function ($scope, $location) {
+    $scope.activeClass = function (link) {
       var path = $location.absUrl();
       return path.indexOf(link) != -1 ? 'active' : '';
     };
-  }
+  },
 ];
 
 var AuthenticationController = [
@@ -230,25 +230,25 @@ var AuthenticationController = [
   '$location',
   'Notifications',
   'AuthenticationService',
-  function(
+  function (
     $scope,
     $window,
     $cacheFactory,
     $location,
     Notifications,
-    AuthenticationService
+    AuthenticationService,
   ) {
-    $scope.logout = function() {
+    $scope.logout = function () {
       AuthenticationService.logout();
     };
-  }
+  },
 ];
 
 module.exports = pagesModule
   .run(ResponseErrorHandlerInitializer)
   .controller(
     'ProcessEngineSelectionController',
-    ProcessEngineSelectionController
+    ProcessEngineSelectionController,
   )
   .controller('AuthenticationController', AuthenticationController)
   .controller('NavigationController', NavigationController);

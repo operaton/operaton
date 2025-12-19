@@ -88,7 +88,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
       }
     }
     catch (MalformedURLException e) {
-      throw new ProcessEngineException("'" + url + "' is not a valid Operaton configuration resource location.", e);
+      throw new ProcessEngineException("'%s' is not a valid Operaton configuration resource location.".formatted(url), e);
     }
 
     return fileLocation;

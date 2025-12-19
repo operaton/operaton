@@ -29,18 +29,18 @@ class HtmlAdditionalAttributesPlugin {
   apply(compiler) {
     compiler.hooks.compilation.tap(
       HtmlAdditionalAttributesPlugin.name,
-      compilation => {
+      (compilation) => {
         HtmlWebPackPlugin.getHooks(compilation).alterAssetTags.tap(
           HtmlAdditionalAttributesPlugin.name,
-          config => {
-            config.assetTags.scripts.forEach(script => {
+          (config) => {
+            config.assetTags.scripts.forEach((script) => {
               script.attributes['$CSP_NONCE'] = true;
               script.attributes.charset = 'UTF-8';
             });
             return config;
-          }
+          },
         );
-      }
+      },
     );
   }
 }
@@ -48,29 +48,29 @@ class HtmlAdditionalAttributesPlugin {
 module.exports = (_env, argv = {}) => {
   const eeBuild = !!argv.eeBuild;
 
-  const commonConfig = require(path.resolve(
-    __dirname,
-    './webpack.common.js'
-  ))(_env, {...argv, eeBuild});
+  const commonConfig = require(path.resolve(__dirname, './webpack.common.js'))(
+    _env,
+    {...argv, eeBuild},
+  );
 
   const productionConfig = {
     output: {
-      clean: true
+      clean: true,
     },
     module: {
       rules: [
         {
           test: /\.js$/,
           include: /node_modules/,
-          use: [path.resolve(__dirname, './scripts/license-header-loader.js')]
-        }
-      ]
+          use: [path.resolve(__dirname, './scripts/license-header-loader.js')],
+        },
+      ],
     },
     plugins: [
       new webpack.BannerPlugin(
-        fs.readFileSync('./license-banner.txt', 'utf-8')
+        fs.readFileSync('./license-banner.txt', 'utf-8'),
       ),
-      new HtmlAdditionalAttributesPlugin()
+      new HtmlAdditionalAttributesPlugin(),
     ],
     optimization: {
       minimize: true,
@@ -84,12 +84,12 @@ module.exports = (_env, argv = {}) => {
                   'comment2' === comment.type)
               );
             },
-            banner: licenseFile => {
+            banner: (licenseFile) => {
               return `For license information, please see ${licenseFile}`;
-            }
+            },
           },
-          exclude: [/scripts\/config\.js/, /lib\/globalize\.js/]
-        })
+          exclude: [/scripts\/config\.js/, /lib\/globalize\.js/],
+        }),
       ],
       // Bundle all third-party modules into the lib/deps.js bundle
       splitChunks: {
@@ -97,23 +97,23 @@ module.exports = (_env, argv = {}) => {
           commons: {
             test: /[\\/]node_modules[\\/]/,
             name: 'lib/deps',
-            chunks: 'all'
-          }
-        }
-      }
-    }
+            chunks: 'all',
+          },
+        },
+      },
+    },
   };
 
   const merged = merge(commonConfig, productionConfig);
 
-  merged.plugins.forEach(plugin => {
+  merged.plugins.forEach((plugin) => {
     if (plugin instanceof HtmlWebPackPlugin) {
       plugin.options = {
         ...plugin.options,
         appRoot: '$APP_ROOT',
         appBase: '$BASE',
         pluginDeps: '$PLUGIN_DEPENDENCIES',
-        pluginPackages: '$PLUGIN_PACKAGES'
+        pluginPackages: '$PLUGIN_PACKAGES',
       };
     }
   });

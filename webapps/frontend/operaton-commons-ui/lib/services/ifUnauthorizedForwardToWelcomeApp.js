@@ -19,8 +19,8 @@
 
 module.exports = [
   'Uri',
-  function(Uri) {
-    return headers => {
+  function (Uri) {
+    return (headers) => {
       if (headers) {
         const apps = headers['x-authorized-apps']?.split(',');
         if (apps) {
@@ -31,5 +31,5 @@ module.exports = [
         }
       }
     };
-  }
+  },
 ];

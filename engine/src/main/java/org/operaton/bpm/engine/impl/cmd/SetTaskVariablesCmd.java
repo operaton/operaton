@@ -53,7 +53,7 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
       .getTaskManager()
       .findTaskById(entityId);
 
-    ensureNotNull("task " + entityId + " doesn't exist", "task", task);
+    ensureNotNull("task %s doesn't exist".formatted(entityId), "task", task);
 
     checkSetTaskVariables(task);
 

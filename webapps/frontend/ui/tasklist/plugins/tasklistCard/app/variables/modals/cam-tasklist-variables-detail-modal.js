@@ -22,8 +22,8 @@ module.exports = [
   '$http',
   'Uri',
   'details',
-  function($scope, $http, Uri, details) {
-    $scope.$on('$locationChangeSuccess', function() {
+  function ($scope, $http, Uri, details) {
+    $scope.$on('$locationChangeSuccess', function () {
       $scope.$dismiss();
     });
 
@@ -45,13 +45,13 @@ module.exports = [
         $http({
           method: 'GET',
           url: Uri.appUri(
-            'engine://engine/:engine' + $scope.variable._links.self.href
-          )
+            'engine://engine/:engine' + $scope.variable._links.self.href,
+          ),
         })
-          .then(function(response) {
+          .then(function (response) {
             $scope.valueDeserialized = JSON.stringify(response.data.value);
           })
-          .catch(function(response) {
+          .catch(function (response) {
             $scope.deserializationError = response.data.message;
           });
 
@@ -61,8 +61,8 @@ module.exports = [
         $scope.value = $scope.variable.value;
     }
 
-    $scope.selectTab = function(tab) {
+    $scope.selectTab = function (tab) {
       $scope.selectedTab = tab;
     };
-  }
+  },
 ];

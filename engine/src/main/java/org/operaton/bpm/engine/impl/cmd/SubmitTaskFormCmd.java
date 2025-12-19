@@ -65,7 +65,7 @@ public class SubmitTaskFormCmd implements Command<VariableMap>, Serializable {
     ensureNotNull("taskId", taskId);
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkTaskWork(task);

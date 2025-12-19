@@ -35,7 +35,7 @@ jobs:
           node-version: 20
 
       - name: Install Playwright core only
-        run: npm install playwright
+        run: npm install --ignore-scripts playwright
       - name: Extract Slack link from README
         id: extract
         run: |

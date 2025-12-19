@@ -412,7 +412,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    */
   public void propagateEnd() {
     if (!isEnded()) {
-      throw new ProcessEngineException(toString() + " must have ended before ending can be propagated");
+      throw new ProcessEngineException("%s must have ended before ending can be propagated".formatted(toString()));
     }
 
     if (isProcessInstanceExecution()) {
@@ -461,7 +461,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   public PvmExecutionImpl createConcurrentExecution() {
     if (!isScope()) {
-      throw new ProcessEngineException("Cannot create concurrent execution for " + this);
+      throw new ProcessEngineException("Cannot create concurrent execution for %s".formatted(this));
     }
 
     // The following covers the three cases in which a concurrent execution may be created
@@ -754,7 +754,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @Override
   public void signal(String signalName, Object signalData) {
     if (getActivity() == null) {
-      throw new PvmException("cannot signal execution " + this.id + ": it has no current activity");
+      throw new PvmException("cannot signal execution %s: it has no current activity".formatted(this.id));
     }
 
     SignallableActivityBehavior activityBehavior = (SignallableActivityBehavior) activity.getActivityBehavior();
@@ -763,13 +763,13 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
     } catch (RuntimeException e) {
       throw e;
     } catch (Exception e) {
-      throw new PvmException("couldn't process signal '" + signalName + "' on activity '" + activity.getId() + "': " + e.getMessage(), e);
+      throw new PvmException("couldn't process signal '%s' on activity '%s': %s".formatted(signalName, activity.getId(), e.getMessage()), e);
     }
   }
 
   public void take() {
     if (this.transition == null) {
-      throw new PvmException(toString() + ": no transition to take specified");
+      throw new PvmException("%s: no transition to take specified".formatted(toString()));
     }
     TransitionImpl transitionImpl = transition;
     setActivity(transitionImpl.getSource());
@@ -805,8 +805,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
     ActivityStartBehavior activityStartBehavior = activity.getActivityStartBehavior();
     if (!isScope() && ActivityStartBehavior.DEFAULT != activityStartBehavior) {
-      throw new ProcessEngineException("Activity '" + activity + "' with start behavior '" + activityStartBehavior + "'"
-        + "cannot be executed by non-scope execution.");
+      throw new ProcessEngineException("Activity '%s' with start behavior '%s' cannot be executed by non-scope execution.".formatted(activity, activityStartBehavior));
     }
 
     PvmActivity activityImpl = activity;

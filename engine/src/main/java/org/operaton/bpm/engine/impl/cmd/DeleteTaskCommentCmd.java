@@ -57,7 +57,7 @@ public class DeleteTaskCommentCmd implements Command<Object>, Serializable {
     ensureNotNull(BadUserRequestException.class, "taskId", taskId);
 
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
-    ensureNotNull("No task exists with taskId: " + taskId, "task", task);
+    ensureNotNull("No task exists with taskId: %s".formatted(taskId), "task", task);
     checkTaskWork(task, commandContext);
 
     if (commentId != null) {

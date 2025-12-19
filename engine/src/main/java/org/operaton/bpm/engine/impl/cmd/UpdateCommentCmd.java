@@ -63,17 +63,17 @@ public class UpdateCommentCmd implements Command<Object>, Serializable {
     String oldMessage = comment != null ? comment.getMessage() : "";
     if (processInstanceId == null) {
       ensureNotNull("taskId", taskId);
-      ensureNotNull("No comment exists with commentId: " + commentId + " and taskId: " + taskId, "comment", comment);
+      ensureNotNull("No comment exists with commentId: %s and taskId: %s".formatted(commentId, taskId), "comment", comment);
       TaskEntity task = updateTaskComment(taskId, commandContext, comment);
       commandContext.getOperationLogManager()
           .logCommentOperation(UserOperationLogEntry.OPERATION_TYPE_UPDATE_COMMENT, task, getPropertyChange(oldMessage));
       task.triggerUpdateEvent();
     } else {
       ensureNotNull("processInstanceId", processInstanceId);
-      ensureNotNull("No comment exists with commentId: " + commentId + " and processInstanceId: " + processInstanceId,
+      ensureNotNull("No comment exists with commentId: %s and processInstanceId: %s".formatted(commentId, processInstanceId),
           "comment", comment);
       ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
-      ensureNotNull("No processInstance exists with processInstanceId: " + processInstanceId, "processInstance",
+      ensureNotNull("No processInstance exists with processInstanceId: %s".formatted(processInstanceId), "processInstance",
           processInstance);
       updateProcessInstanceComment(processInstanceId, commandContext, comment);
       commandContext.getOperationLogManager()
@@ -86,7 +86,7 @@ public class UpdateCommentCmd implements Command<Object>, Serializable {
 
   protected TaskEntity updateTaskComment(String taskId, CommandContext commandContext, CommentEntity comment) {
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
-    ensureNotNull("No task exists with taskId: " + taskId, "task", task);
+    ensureNotNull("No task exists with taskId: %s".formatted(taskId), "task", task);
 
     checkTaskWork(task, commandContext);
     updateComment(commandContext, comment);

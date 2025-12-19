@@ -684,32 +684,32 @@ public final class JsonUtil {
 
   public static Gson createGsonMapper() {
     return new GsonBuilder()
-      .serializeNulls()
-      .registerTypeAdapter(Map.class, (JsonDeserializer<Map<String, Object>>) (json, typeOfT, context) -> {
+        .serializeNulls()
+        .registerTypeAdapter(Map.class, (JsonDeserializer<Map<String, Object>>) (json, typeOfT, context) -> {
+          Map<String, Object> map = new HashMap<>();
 
-        Map<String, Object> map = new HashMap<>();
+          getObject(json)
+              .entrySet()
+              .stream()
+              .filter(entry -> entry != null && entry.getValue() != null)
+              .forEach(entry -> putEntry(entry, map));
 
-        for (Map.Entry<String, JsonElement> entry : getObject(json).entrySet()) {
-          if (entry != null) {
-            String key = entry.getKey();
-            JsonElement jsonElement = entry.getValue();
+          return map;
+        })
+        .create();
+  }
 
-            if (jsonElement != null && jsonElement.isJsonNull()) {
-              map.put(key, null);
+  private static void putEntry(Map.Entry<String, JsonElement> entry, Map<String, Object> map) {
+    String key = entry.getKey();
+    JsonElement jsonElement = entry.getValue();
 
-            } else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
-
-              Object rawValue = asPrimitiveObject((JsonPrimitive) jsonElement);
-              if (rawValue != null) {
-                map.put(key, rawValue);
-
-              }
-            }
-          }
-        }
-
-        return map;
-      })
-      .create();
+    if (jsonElement.isJsonNull()) {
+      map.put(key, null);
+    } else if (jsonElement.isJsonPrimitive()) {
+      Object rawValue = asPrimitiveObject((JsonPrimitive) jsonElement);
+      if (rawValue != null) {
+        map.put(key, rawValue);
+      }
+    }
   }
 }

@@ -55,7 +55,7 @@ public class GetDeploymentResourceForIdCmd implements Command<InputStream>, Seri
     ResourceEntity resource = commandContext
       .getResourceManager()
       .findResourceByDeploymentIdAndResourceId(deploymentId, resourceId);
-    ensureNotNull("no resource found with id '" + resourceId + "' in deployment '" + deploymentId + "'", "resource", resource);
+    ensureNotNull("no resource found with id '%s' in deployment '%s'".formatted(resourceId, deploymentId), "resource", resource);
     return new ByteArrayInputStream(resource.getBytes());
   }
 

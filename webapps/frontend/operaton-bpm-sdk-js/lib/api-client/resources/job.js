@@ -33,9 +33,9 @@ var Job = AbstractClientResource.extend();
  */
 Job.path = 'job';
 
-Job.get = function(id, done) {
+Job.get = function (id, done) {
   return this.http.get(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
@@ -70,7 +70,7 @@ Job.get = function(id, done) {
  *                                                  null,lock expiration is in future
  * @param  {Function} done
  */
-Job.list = function(params, done) {
+Job.list = function (params, done) {
   var path = this.path;
 
   // those parameters have to be passed in the query and not body
@@ -81,7 +81,7 @@ Job.list = function(params, done) {
 
   return this.http.post(path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
@@ -92,24 +92,24 @@ Job.list = function(params, done) {
  * @param  {String}   params.retries The number of retries to set that a job has left.
  * @param  {Function} done
  */
-Job.setRetries = function(params, done) {
+Job.setRetries = function (params, done) {
   return this.http.put(this.path + '/' + params.id + '/retries', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-Job.delete = function(id, done) {
+Job.delete = function (id, done) {
   return this.http.del(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
-Job.stacktrace = function(id, done) {
+Job.stacktrace = function (id, done) {
   var url = this.path + '/' + id + '/stacktrace';
   return this.http.get(url, {
     accept: 'text/plain',
-    done: done
+    done: done,
   });
 };
 
@@ -120,14 +120,14 @@ Job.stacktrace = function(id, done) {
  * @param {Bool}      params.creationDateBased    Base recalculation on Job creation date. Default: true
  * @param {Function}  done
  */
-Job.recalculateDuedate = function(params, done) {
+Job.recalculateDuedate = function (params, done) {
   var url = this.path + '/' + params.id + '/duedate/recalculate';
 
   if (params.creationDateBased == false) {
     url += '?creationDateBased=' + params.creationDateBased;
   }
   return this.http.post(url, {
-    done: done
+    done: done,
   });
 };
 
@@ -139,20 +139,20 @@ Job.recalculateDuedate = function(params, done) {
  * @param  {Function} done
  */
 
-Job.setDuedate = function(params, done) {
+Job.setDuedate = function (params, done) {
   var url = this.path + '/' + params.id + '/duedate';
   return this.http.put(url, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-Job.suspended = function(params, done) {
+Job.suspended = function (params, done) {
   return this.http.put(this.path + '/' + params.id + '/suspended', {
     data: {
-      suspended: !!params.suspended
+      suspended: !!params.suspended,
     },
-    done: done
+    done: done,
   });
 };
 

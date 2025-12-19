@@ -151,7 +151,7 @@ class MultiTenancyDecisionTaskTest {
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', version = '2' and tenant-id 'tenant1'");
+      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', version = '2' and tenant-id = 'tenant1'");
     }
   }
 

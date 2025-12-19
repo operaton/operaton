@@ -24,10 +24,10 @@ var $ = require('jquery');
 
 function stringifySortings(sortingQuery) {
   return JSON.stringify(
-    sortingQuery.map(function(sorting) {
+    sortingQuery.map(function (sorting) {
       var obj = {
         sortBy: sorting.by,
-        sortOrder: sorting.order
+        sortOrder: sorting.order,
       };
 
       if (sorting.by.indexOf('Variable') > -1) {
@@ -38,7 +38,7 @@ function stringifySortings(sortingQuery) {
       }
 
       return obj;
-    })
+    }),
   );
 }
 
@@ -47,27 +47,27 @@ module.exports = [
   '$translate',
   '$location',
   '$timeout',
-  function(search, $translate, $location, $timeout) {
+  function (search, $translate, $location, $timeout) {
     return {
       restrict: 'A',
 
       scope: {
-        tasklistData: '='
+        tasklistData: '=',
       },
 
       template: template,
 
-      controller: [function() {}],
+      controller: [function () {}],
 
-      link: function(scope, element) {
+      link: function (scope, element) {
         var $bdy = $('body');
         var $newSort = element.find('.new-sort .dropdown-menu');
 
         scope.sortings = [
           {
             order: 'desc',
-            by: 'created'
-          }
+            by: 'created',
+          },
         ];
 
         scope.openDropdowns = [];
@@ -81,7 +81,7 @@ module.exports = [
             $timeout.cancel(plannedRefresh);
           }
 
-          plannedRefresh = $timeout(function() {
+          plannedRefresh = $timeout(function () {
             var columns = $(element).parents('.columns');
             var viewElement = $(element).parents('view');
             var headers = columns.find('.cell.top');
@@ -117,10 +117,10 @@ module.exports = [
           dueDate: $translate.instant('DUE_DATE'),
           followUpDate: $translate.instant('FOLLOW_UP_DATE'),
           nameCaseInsensitive: $translate.instant('TASK_NAME'),
-          assignee: $translate.instant('ASSIGNEE')
+          assignee: $translate.instant('ASSIGNEE'),
         };
 
-        scope.byLabel = function(index) {
+        scope.byLabel = function (index) {
           if (!scope.sortings[index]) {
             return '';
           }
@@ -143,10 +143,10 @@ module.exports = [
          */
         var tasklistData = scope.tasklistData.newChild(scope);
 
-        tasklistData.observe('taskListQuery', function(taskListQuery) {
+        tasklistData.observe('taskListQuery', function (taskListQuery) {
           if (taskListQuery) {
             var urlSortings = JSON.parse(
-              ($location.search() || {}).sorting || '[]'
+              ($location.search() || {}).sorting || '[]',
             );
 
             scope.sortedOn = [];
@@ -154,7 +154,7 @@ module.exports = [
 
             scope.availableOptions = angular.copy(scope.uniqueProps);
 
-            scope.sortings = urlSortings.map(function(sorting) {
+            scope.sortings = urlSortings.map(function (sorting) {
               scope.sortedOn.push(sorting.sortBy);
               scope.openDropdowns.push(false);
 
@@ -162,7 +162,7 @@ module.exports = [
 
               var returned = {
                 order: sorting.sortOrder,
-                by: sorting.sortBy
+                by: sorting.sortBy,
               };
 
               if (sorting.parameters) {
@@ -176,7 +176,7 @@ module.exports = [
               // sort by created (descending) by default
               scope.sortings.push({
                 order: 'desc',
-                by: 'created'
+                by: 'created',
               });
               scope.updateSortings();
             }
@@ -185,7 +185,7 @@ module.exports = [
           }
         });
 
-        scope.$watch('sortings.length', function(now, before) {
+        scope.$watch('sortings.length', function (now, before) {
           if (now !== before) {
             scope.updateSortings();
           }
@@ -203,7 +203,7 @@ module.exports = [
 
         scope.$watch(
           'openDropdowns',
-          function(now) {
+          function (now) {
             var index = now.indexOf(true);
             var els = element
               .find('li.sorting-choice .dropdown-menu')
@@ -212,10 +212,10 @@ module.exports = [
               positionDropdown(angular.element(els[index]));
             }
           },
-          true
+          true,
         );
 
-        scope.$watch('openDropdownNew', function(now) {
+        scope.$watch('openDropdownNew', function (now) {
           if (now) {
             positionDropdown($newSort);
           } else {
@@ -223,24 +223,24 @@ module.exports = [
           }
         });
 
-        scope.changeSorting = function(idx, id, type, value) {
+        scope.changeSorting = function (idx, id, type, value) {
           scope.sortings[idx].by = id;
           delete scope.sortings[idx].parameters;
           if (type) {
             scope.sortings[idx].parameters = {
               variable: value,
-              type: type
+              type: type,
             };
           }
 
           scope.updateSortings();
 
           // wait for the html to be updated
-          $timeout(function() {
+          $timeout(function () {
             var element = document.querySelector(
               '[cam-sorting-choices] li:nth-child(0n+' +
                 (idx + 1) +
-                ') a.dropdown-toggle'
+                ') a.dropdown-toggle',
             );
             if (element) {
               element.focus();
@@ -249,14 +249,14 @@ module.exports = [
         };
 
         scope.resetFunctions = [];
-        scope.openDropdown = function(idx, open) {
+        scope.openDropdown = function (idx, open) {
           if (open) {
             var sorting = scope.sortings[idx];
             if (sorting) {
               scope.resetFunctions[idx](
                 sorting.by,
                 sorting.parameters && sorting.parameters.type,
-                sorting.parameters && sorting.parameters.variable
+                sorting.parameters && sorting.parameters.variable,
               );
             } else {
               scope.resetFunctions[idx]();
@@ -265,15 +265,15 @@ module.exports = [
         };
 
         // should NOT manipulate the `scope.sortings`!
-        scope.updateSortings = function() {
+        scope.updateSortings = function () {
           scope.openDropdowns = [];
-          scope.sortedOn = scope.sortings.map(function(sorting) {
+          scope.sortedOn = scope.sortings.map(function (sorting) {
             scope.openDropdowns.push(false);
             return sorting.by;
           });
 
           search.updateSilently({
-            sorting: stringifySortings(scope.sortings)
+            sorting: stringifySortings(scope.sortings),
           });
 
           tasklistData.changed('taskListQuery');
@@ -284,24 +284,24 @@ module.exports = [
         /**
          * Invoked when adding a sorting object
          */
-        scope.addSorting = function(id, type, value) {
+        scope.addSorting = function (id, type, value) {
           var newSorting = {
             order: 'desc',
-            by: id
+            by: id,
           };
           if (type) {
             newSorting.parameters = {
               variable: value,
-              type: type
+              type: type,
             };
           }
           scope.sortings.push(newSorting);
 
           scope.updateSortings();
 
-          $timeout(function() {
+          $timeout(function () {
             var element = document.querySelector(
-              '[cam-sorting-choices] li:last-child a.dropdown-toggle'
+              '[cam-sorting-choices] li:last-child a.dropdown-toggle',
             );
             if (element) {
               element.focus();
@@ -314,21 +314,21 @@ module.exports = [
         /**
          * Invoked when removing a sorting object
          */
-        scope.removeSorting = function(index) {
+        scope.removeSorting = function (index) {
           scope.sortings.splice(index, 1);
           scope.updateSortings();
 
-          $timeout(function() {
+          $timeout(function () {
             var element;
             if (scope.sortings.length !== index) {
               element = document.querySelector(
                 '[cam-sorting-choices] li.sorting-choice:nth-child(0n+' +
                   (index + 1) +
-                  ') a:first-child'
+                  ') a:first-child',
               );
             } else {
               element = document.querySelector(
-                '[cam-sorting-choices] li.sorting-choice:nth-last-child(0n+2) a:first-child'
+                '[cam-sorting-choices] li.sorting-choice:nth-last-child(0n+2) a:first-child',
               );
             }
             if (element) {
@@ -340,25 +340,25 @@ module.exports = [
         /**
          * invoked when the sort order is changed
          */
-        scope.changeOrder = function(index) {
+        scope.changeOrder = function (index) {
           scope.sortings[index].order =
             scope.sortings[index].order === 'asc' ? 'desc' : 'asc';
 
           scope.updateSortings();
 
           // wait for the html to be updated
-          $timeout(function() {
+          $timeout(function () {
             var element = document.querySelector(
               '[cam-sorting-choices] li:nth-child(0n+' +
                 (index + 1) +
-                ') a.sort-direction'
+                ') a.sort-direction',
             );
             if (element) {
               element.focus();
             }
           });
         };
-      }
+      },
     };
-  }
+  },
 ];

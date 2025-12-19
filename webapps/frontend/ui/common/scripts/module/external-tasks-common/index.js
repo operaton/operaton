@@ -42,18 +42,18 @@ ngModule.directive('externalTaskActivityLink', externalTaskActivityLink);
 ngModule.directive('externalTasksTab', externalTasksTab);
 ngModule.directive(
   'externalTaskErrorMessageLink',
-  externalTaskErrorMessageLink
+  externalTaskErrorMessageLink,
 );
 
 // Controllers
 ngModule.controller(
   'ExternalTaskActivityLinkController',
-  ExternalTaskActivityLinkController
+  ExternalTaskActivityLinkController,
 );
 ngModule.controller('ExternalTasksTabController', ExternalTasksTabController);
 ngModule.controller(
   'ExternalTaskErrorMessageLinkController',
-  ExternalTaskErrorMessageLinkController
+  ExternalTaskErrorMessageLinkController,
 );
 
 module.exports = ngModule;

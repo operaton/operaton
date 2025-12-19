@@ -17,7 +17,7 @@
 
 'use strict';
 
-module.exports = function(obj, includePrototype) {
+module.exports = function (obj, includePrototype) {
   if (!includePrototype) {
     return Object.keys(obj);
   }

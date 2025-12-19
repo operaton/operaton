@@ -19,13 +19,13 @@
 
 module.exports = [
   '$rootScope',
-  function($rootScope) {
+  function ($rootScope) {
     var activeLoaders = [];
     var eventName = 'LoaderService:active-loaders-changed';
 
     return {
       startLoading: startLoading,
-      addStatusListener: addStatusListener
+      addStatusListener: addStatusListener,
     };
 
     /**
@@ -34,8 +34,8 @@ module.exports = [
      * @returns {stopLoading}
      */
     function startLoading() {
-      var stopLoading = function() {
-        activeLoaders = activeLoaders.filter(function(loader) {
+      var stopLoading = function () {
+        activeLoaders = activeLoaders.filter(function (loader) {
           return loader !== stopLoading;
         });
         fireChanges();
@@ -64,7 +64,7 @@ module.exports = [
     function addStatusListener($scope, callback) {
       callback(getLoadingStatus());
 
-      return $scope.$on(eventName, function() {
+      return $scope.$on(eventName, function () {
         var status = getLoadingStatus();
 
         callback(status);
@@ -74,5 +74,5 @@ module.exports = [
     function getLoadingStatus() {
       return activeLoaders.length === 0 ? 'LOADED' : 'LOADING';
     }
-  }
+  },
 ];

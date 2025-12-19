@@ -80,7 +80,7 @@ public class CompensationEventHandler implements EventHandler {
 
 
       } catch (Exception e) {
-        throw new ProcessEngineException("Error while handling compensation event " + eventSubscription, e);
+        throw new ProcessEngineException("Error while handling compensation event %s".formatted(eventSubscription), e);
       }
     }
   }

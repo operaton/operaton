@@ -57,7 +57,7 @@ public class GetTaskVariableCmdTyped implements Command<TypedValue>, Serializabl
       .getTaskManager()
       .findTaskById(taskId);
 
-    ensureNotNull("task " + taskId + " doesn't exist", "task", task);
+    ensureNotNull("task %s doesn't exist".formatted(taskId), "task", task);
 
     checkGetTaskVariableTyped(task, commandContext);
 

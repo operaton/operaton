@@ -43,7 +43,7 @@
     <version.assertj>3.27.6</version.assertj>
     <version.mockito>5.21.0</version.mockito>
     <version.jna>5.18.1</version.jna>
-    <version.testcontainers>2.0.2</version.testcontainers>
+    <version.testcontainers>2.0.3</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>
     <!-- application servers -->
@@ -53,7 +53,7 @@
     <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
     <version.selenium>4.39.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
-    <version.logback>1.5.21</version.logback>
+    <version.logback>1.5.22</version.logback>
     <version.freemarker>2.3.34</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.nodejs>22.13.0</version.nodejs>

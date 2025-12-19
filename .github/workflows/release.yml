@@ -160,7 +160,7 @@ jobs:
         with:
           message: "chore(release) Releasing version ${{steps.version.outputs.version}}"
       - name: Cache build artifacts
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -185,7 +185,7 @@ jobs:
           fetch-depth: 0
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -205,7 +205,7 @@ jobs:
           perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1false/' -i jreleaser.yml
 
       - name: Release with JReleaser
-        uses: jreleaser/release-action@v2
+        uses: jreleaser/release-action@90ac653bb9c79d11179e65d81499f3f34527dcd5 # v2.5.0
         env:
           JRELEASER_PROJECT_VERSION: ${{needs.release_build.outputs.version}}
           JRELEASER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -231,14 +231,14 @@ jobs:
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: staging
           path: |
@@ -291,9 +291,11 @@ jobs:
 
       - name: Notify Docker Repository
         if: ${{github.event.inputs.dry_run == 'false' }}
+        env:
+          DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
+            -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{"ref":"main","inputs":{"version": "${{ needs.release_build.outputs.version}}","snapshot": "false"}}' \

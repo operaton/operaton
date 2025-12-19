@@ -56,7 +56,7 @@ public class GetDeploymentResourceCmd implements Command<InputStream>, Serializa
     ResourceEntity resource = commandContext
       .getResourceManager()
       .findResourceByDeploymentIdAndResourceName(deploymentId, resourceName);
-    ensureNotNull(DeploymentResourceNotFoundException.class, "no resource found with name '" + resourceName + "' in deployment '" + deploymentId + "'", "resource", resource);
+    ensureNotNull(DeploymentResourceNotFoundException.class, "no resource found with name '%s' in deployment '%s'".formatted(resourceName, deploymentId), "resource", resource);
     return new ByteArrayInputStream(resource.getBytes());
   }
 

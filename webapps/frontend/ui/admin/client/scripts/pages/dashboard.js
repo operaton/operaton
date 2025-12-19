@@ -28,16 +28,16 @@ var Controller = [
   'page',
   '$injector',
   '$translate',
-  function($scope, Views, page, $injector, $translate) {
+  function ($scope, Views, page, $injector, $translate) {
     var $rootScope = $scope.$root;
 
     $scope.dashboardPlugins = Views.getProviders({
-      component: 'admin.dashboard.section'
-    }).map(function(plugin) {
+      component: 'admin.dashboard.section',
+    }).map(function (plugin) {
       if (isArray(plugin.access)) {
         var fn = $injector.invoke(plugin.access);
 
-        fn(function(err, access) {
+        fn(function (err, access) {
           if (err) {
             throw err;
           }
@@ -59,17 +59,17 @@ var Controller = [
     page.breadcrumbsClear();
 
     page.titleSet($translate.instant('DASHBOARD_DASHBOARD'));
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/', {
       template: template,
       controller: Controller,
       authentication: 'required',
-      reloadOnSearch: false
+      reloadOnSearch: false,
     });
-  }
+  },
 ];

@@ -38,6 +38,7 @@ import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -62,6 +63,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer
@@ -87,20 +89,14 @@ class CompensateEventTest {
     final String PROCESS_MODEL_WITH_REF_AFTER = "org/operaton/bpm/engine/test/bpmn/event/compensate/compensation_reference-after.bpmn";
 
     //when model with ref before is deployed
-    org.operaton.bpm.engine.repository.Deployment deployment1 = repositoryService.createDeployment()
-            .addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE)
-            .deploy();
+    DeploymentBuilder deploymentBuilder1 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE);
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder1.deploy())).doesNotThrowAnyException();
     //then no problem will occur
 
     //when model with ref after is deployed
-    org.operaton.bpm.engine.repository.Deployment deployment2 = repositoryService.createDeployment()
-            .addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER)
-            .deploy();
+    DeploymentBuilder deploymentBuilder2 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER);
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder2.deploy())).doesNotThrowAnyException();
     //then also no problem should occur
-
-    //clean up
-    repositoryService.deleteDeployment(deployment1.getId());
-    repositoryService.deleteDeployment(deployment2.getId());
   }
 
   @Deployment

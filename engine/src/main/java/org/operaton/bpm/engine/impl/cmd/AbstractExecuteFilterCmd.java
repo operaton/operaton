@@ -53,7 +53,7 @@ public abstract class AbstractExecuteFilterCmd implements Serializable {
       .getFilterManager()
       .findFilterById(filterId);
 
-    ensureNotNull("No filter found for id '" + filterId + "'", "filter", filter);
+    ensureNotNull("No filter found for id '%s'".formatted(filterId), "filter", filter);
 
     if (extendingQuery != null) {
       ((AbstractQuery<?, ?>) extendingQuery).validate();

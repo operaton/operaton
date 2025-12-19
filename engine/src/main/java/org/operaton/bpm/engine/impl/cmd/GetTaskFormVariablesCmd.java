@@ -49,7 +49,7 @@ public class GetTaskFormVariablesCmd extends AbstractGetFormVariablesCmd {
     final TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(resourceId);
 
-    ensureNotNull(BadUserRequestException.class, "Cannot find task with id '" + resourceId + "'.", "task", task);
+    ensureNotNull(BadUserRequestException.class, "Cannot find task with id '%s'.".formatted(resourceId), "task", task);
 
     checkGetTaskFormVariables(task, commandContext);
 

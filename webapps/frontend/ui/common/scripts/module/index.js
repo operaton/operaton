@@ -70,13 +70,13 @@ ngModule.factory('exposeScopeProperties', exposeScopeProperties);
 ngModule.factory('Loaders', loaders);
 ngModule.factory(
   'integrateActivityInstanceFilter',
-  integrateActivityInstanceFilter
+  integrateActivityInstanceFilter,
 );
 ngModule.factory('params', params);
 ngModule.factory('createListQueryFunction', createListQueryFunction);
 ngModule.factory(
   'createIsSearchQueryChangedFunction',
-  createIsSearchQueryChangedFunction
+  createIsSearchQueryChangedFunction,
 );
 ngModule.factory('readFiles', readFiles);
 ngModule.factory('upload', upload);
@@ -105,7 +105,7 @@ ngModule.controller('CamPaginationController', CamPaginationController);
 ngModule.controller('CamTabsController', CamTabsController);
 ngModule.controller(
   'CamPaginationSearchIntegrationController',
-  CamPaginationSearchIntegrationController
+  CamPaginationSearchIntegrationController,
 );
 
 // Values

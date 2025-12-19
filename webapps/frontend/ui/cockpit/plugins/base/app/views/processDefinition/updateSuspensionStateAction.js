@@ -23,7 +23,7 @@ var angular = require('angular');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView(
       'cockpit.processDefinition.runtime.action',
       {
@@ -33,23 +33,23 @@ module.exports = [
         controller: [
           '$scope',
           '$uibModal',
-          function($scope, $modal) {
-            $scope.openDialog = function() {
+          function ($scope, $modal) {
+            $scope.openDialog = function () {
               var dialog = $modal.open({
                 resolve: {
-                  processData: function() {
+                  processData: function () {
                     return $scope.processData;
                   },
-                  processDefinition: function() {
+                  processDefinition: function () {
                     return $scope.processDefinition;
-                  }
+                  },
                 },
                 controller: 'UpdateProcessDefinitionSuspensionStateController',
-                template: dialogTemplate
+                template: dialogTemplate,
               });
 
               dialog.result
-                .then(function(result) {
+                .then(function (result) {
                   // dialog closed. YEA!
                   if (result.status === 'SUCCESS') {
                     if (result.executeImmediately) {
@@ -58,16 +58,16 @@ module.exports = [
 
                     $scope.processData.set(
                       'filter',
-                      angular.extend({}, $scope.filter)
+                      angular.extend({}, $scope.filter),
                     );
                   }
                 })
                 .catch(angular.noop);
             };
-          }
+          },
         ],
-        priority: 50
-      }
+        priority: 50,
+      },
     );
-  }
+  },
 ];

@@ -59,7 +59,7 @@ function toArray(obj) {
 function once(func) {
   var ran = false,
     memo;
-  return function() {
+  return function () {
     if (ran) return memo;
     ran = true;
     memo = func.apply(this, arguments);
@@ -82,7 +82,7 @@ function ensureEvents(obj, name) {
  * Add the relevant Events methods to an object
  * @param  {*} obj
  */
-Events.attach = function(obj) {
+Events.attach = function (obj) {
   obj.on = this.on;
   obj.once = this.once;
   obj.off = this.off;
@@ -95,7 +95,7 @@ Events.attach = function(obj) {
  * @param  {String}   eventName
  * @param  {Function} callback
  */
-Events.on = function(eventName, callback) {
+Events.on = function (eventName, callback) {
   ensureEvents(this, eventName);
 
   this._events[eventName].push(callback);
@@ -108,9 +108,9 @@ Events.on = function(eventName, callback) {
  * @param  {String}   eventName
  * @param  {Function} callback
  */
-Events.once = function(eventName, callback) {
+Events.once = function (eventName, callback) {
   var self = this;
-  var cb = once(function() {
+  var cb = once(function () {
     self.off(eventName, once);
     callback.apply(this, arguments);
   });
@@ -123,7 +123,7 @@ Events.once = function(eventName, callback) {
  * @param  {String}   eventName
  * @param  {Function} [callback]
  */
-Events.off = function(eventName, callback) {
+Events.off = function (eventName, callback) {
   ensureEvents(this, eventName);
 
   if (!callback) {
@@ -148,7 +148,7 @@ Events.off = function(eventName, callback) {
  * @param  {String} eventName
  * @param {...*} [params]
  */
-Events.trigger = function() {
+Events.trigger = function () {
   var args = toArray(arguments);
   var eventName = args.shift();
   ensureEvents(this, eventName);

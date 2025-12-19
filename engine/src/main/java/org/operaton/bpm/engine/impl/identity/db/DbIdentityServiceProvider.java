@@ -278,9 +278,9 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
   public IdentityOperationResult createMembership(String userId, String groupId) {
     checkAuthorization(Permissions.CREATE, Resources.GROUP_MEMBERSHIP, groupId);
     UserEntity user = findUserById(userId);
-    ensureNotNull("No user found with id '" + userId + "'.", "user", user);
+    ensureNotNull("No user found with id '%s'.".formatted(userId), "user", user);
     GroupEntity group = findGroupById(groupId);
-    ensureNotNull("No group found with id '" + groupId + "'.", "group", group);
+    ensureNotNull("No group found with id '%s'.".formatted(groupId), "group", group);
     MembershipEntity membership = new MembershipEntity();
     membership.setUser(user);
     membership.setGroup(group);
@@ -319,8 +319,8 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
     TenantEntity tenant = findTenantById(tenantId);
     UserEntity user = findUserById(userId);
 
-    ensureNotNull("No tenant found with id '" + tenantId + "'.", "tenant", tenant);
-    ensureNotNull("No user found with id '" + userId + "'.", "user", user);
+    ensureNotNull("No tenant found with id '%s'.".formatted(tenantId), "tenant", tenant);
+    ensureNotNull("No user found with id '%s'.".formatted(userId), "user", user);
 
     TenantMembershipEntity membership = new TenantMembershipEntity();
     membership.setTenant(tenant);
@@ -339,8 +339,8 @@ public class DbIdentityServiceProvider extends DbReadOnlyIdentityServiceProvider
     TenantEntity tenant = findTenantById(tenantId);
     GroupEntity group = findGroupById(groupId);
 
-    ensureNotNull("No tenant found with id '" + tenantId + "'.", "tenant", tenant);
-    ensureNotNull("No group found with id '" + groupId + "'.", "group", group);
+    ensureNotNull("No tenant found with id '%s'.".formatted(tenantId), "tenant", tenant);
+    ensureNotNull("No group found with id '%s'.".formatted(groupId), "group", group);
 
     TenantMembershipEntity membership = new TenantMembershipEntity();
     membership.setTenant(tenant);

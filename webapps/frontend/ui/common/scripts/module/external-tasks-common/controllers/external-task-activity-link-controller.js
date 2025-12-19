@@ -26,7 +26,7 @@ module.exports = [
   '$location',
   'params',
   'searchWidgetUtils',
-  ExternalTaskActivityLink
+  ExternalTaskActivityLink,
 ];
 
 function ExternalTaskActivityLink(
@@ -35,12 +35,12 @@ function ExternalTaskActivityLink(
   search,
   $location,
   params,
-  searchWidgetUtils
+  searchWidgetUtils,
 ) {
   exposeScopeProperties($scope, this, [
     'activityId',
     'bpmnElements',
-    'searchQueryType'
+    'searchQueryType',
   ]);
 
   this.search = search;
@@ -49,7 +49,7 @@ function ExternalTaskActivityLink(
   this.searchWidgetUtils = searchWidgetUtils;
 }
 
-ExternalTaskActivityLink.prototype.getLink = function() {
+ExternalTaskActivityLink.prototype.getLink = function () {
   //search returns object that when modified changes query parameters
   //which is not desired here, hence it is needed to actually copy this object.
   var params = angular.copy(this.search());
@@ -60,8 +60,8 @@ ExternalTaskActivityLink.prototype.getLink = function() {
       this.searchWidgetUtils.replaceActivitiesInSearchQuery(
         searchQuery,
         this.searchQueryType,
-        [this.activityId]
-      )
+        [this.activityId],
+      ),
     );
   } else {
     params.activityIds = this.activityId;
@@ -70,7 +70,7 @@ ExternalTaskActivityLink.prototype.getLink = function() {
   return '#' + this.path + '?' + this.params(params);
 };
 
-ExternalTaskActivityLink.prototype.getActivityName = function() {
+ExternalTaskActivityLink.prototype.getActivityName = function () {
   var activityId = this.activityId;
 
   if (this.bpmnElements[activityId] && this.bpmnElements[activityId].name) {

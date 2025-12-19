@@ -51,8 +51,7 @@ public class EventHandlerImpl implements EventHandler {
     PvmExecutionImpl execution = eventSubscription.getExecution();
     ActivityImpl activity = eventSubscription.getActivity();
 
-    ensureNotNull("Error while sending signal for event subscription '" + eventSubscription.getId() + "': "
-      + "no activity associated with event subscription", "activity", activity);
+    ensureNotNull("Error while sending signal for event subscription '%s': no activity associated with event subscription".formatted(eventSubscription.getId()), "activity", activity);
 
     if (payload instanceof Map) {
       execution.setVariables((Map<String, Object>)payload);

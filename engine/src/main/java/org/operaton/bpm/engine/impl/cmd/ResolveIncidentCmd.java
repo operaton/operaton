@@ -47,7 +47,7 @@ public class ResolveIncidentCmd implements Command<Void> {
   public Void execute(CommandContext commandContext) {
     final Incident incident = commandContext.getIncidentManager().findIncidentById(incidentId);
 
-    EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '" + incidentId + "'",
+    EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '%s'".formatted(incidentId),
         "incident", incident);
 
     if ("failedJob".equals(incident.getIncidentType()) || "failedExternalTask".equals(incident.getIncidentType())) {

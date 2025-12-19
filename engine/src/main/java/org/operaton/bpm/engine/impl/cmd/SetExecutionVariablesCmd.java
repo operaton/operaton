@@ -66,7 +66,7 @@ public class SetExecutionVariablesCmd extends AbstractSetVariableCmd {
       .findExecutionById(entityId);
 
     if (failIfNotExists) {
-      ensureNotNull("execution " + entityId + " doesn't exist", "execution", execution);
+      ensureNotNull("execution %s doesn't exist".formatted(entityId), "execution", execution);
     }
 
     if(execution != null) {

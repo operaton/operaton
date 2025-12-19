@@ -48,7 +48,7 @@ public class FindActiveActivityIdsCmd implements Command<List<String>>, Serializ
     // fetch execution
     ExecutionManager executionManager = commandContext.getExecutionManager();
     ExecutionEntity execution = executionManager.findExecutionById(executionId);
-    ensureNotNull("execution " + executionId + " doesn't exist", "execution", execution);
+    ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
 
     checkGetActivityIds(execution, commandContext);
 

@@ -43,7 +43,7 @@ public class GetDeploymentCaseDiagramCmd implements Command<InputStream>, Serial
 
   public GetDeploymentCaseDiagramCmd(String caseDefinitionId) {
     if (caseDefinitionId == null || caseDefinitionId.isEmpty()) {
-      throw new ProcessEngineException("The case definition id is mandatory, but '" + caseDefinitionId + "' has been provided.");
+      throw new ProcessEngineException("The case definition id is mandatory, but '%s' has been provided.".formatted(caseDefinitionId));
     }
     this.caseDefinitionId = caseDefinitionId;
   }

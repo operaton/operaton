@@ -29,6 +29,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 
 /**
  * @author Daniel Meyer
@@ -59,10 +61,6 @@ class CancelAcquiredJobTest {
     // move clock by 20 seconds -> both jobs are acquirable:
     ClockUtil.setCurrentTime(new Date(System.currentTimeMillis() + (20 * 1000)));
 
-    testRule.waitForJobExecutorToProcessAllJobs(6000);
-
+    assertThatCode(() -> testRule.waitForJobExecutorToProcessAllJobs(6000)).doesNotThrowAnyException();
   }
-
-
-
 }

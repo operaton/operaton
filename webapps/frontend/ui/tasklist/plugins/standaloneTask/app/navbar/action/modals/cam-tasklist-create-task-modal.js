@@ -24,13 +24,13 @@ module.exports = [
   '$translate',
   'Notifications',
   'camAPI',
-  function($scope, $translate, Notifications, camAPI) {
+  function ($scope, $translate, Notifications, camAPI) {
     var NEW_TASK = {
       name: null,
       assignee: null,
       tenantId: null,
       description: null,
-      priority: 50 // default value
+      priority: 50, // default value
     };
 
     var Task = camAPI.resource('task');
@@ -39,34 +39,34 @@ module.exports = [
 
     var _form = null;
 
-    $scope.setNewTaskForm = function(innerForm) {
+    $scope.setNewTaskForm = function (innerForm) {
       _form = innerForm;
     };
 
-    $scope.$on('$locationChangeSuccess', function() {
+    $scope.$on('$locationChangeSuccess', function () {
       $scope.$dismiss();
     });
 
-    var isValid = ($scope.isValid = function() {
+    var isValid = ($scope.isValid = function () {
       return _form && _form.$valid;
     });
 
-    $scope.save = function() {
+    $scope.save = function () {
       if (!isValid()) {
         return;
       }
       $scope.submitInProgress = true;
 
-      Task.create(task, function(err) {
+      Task.create(task, function (err) {
         $scope.submitInProgress = false;
         if (err) {
           $translate('TASK_SAVE_ERROR')
-            .then(function(translated) {
+            .then(function (translated) {
               Notifications.addError({
                 status: translated,
                 message: err ? err.message : '',
                 exclusive: true,
-                scope: $scope
+                scope: $scope,
               });
             })
             .catch(angular.noop);
@@ -75,5 +75,5 @@ module.exports = [
         }
       });
     };
-  }
+  },
 ];

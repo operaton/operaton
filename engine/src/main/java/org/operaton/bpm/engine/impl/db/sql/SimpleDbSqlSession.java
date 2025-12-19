@@ -79,7 +79,7 @@ public class SimpleDbSqlSession extends DbSqlSession {
     // get statement
     String insertStatement = dbSqlSessionFactory.getInsertStatement(dbEntity);
     insertStatement = dbSqlSessionFactory.mapStatement(insertStatement);
-    ensureNotNull("no insert statement for " + dbEntity.getClass() + " in the ibatis mapping files", "insertStatement", insertStatement);
+    ensureNotNull("no insert statement for %s in the ibatis mapping files".formatted(dbEntity.getClass()), "insertStatement", insertStatement);
 
     // execute the insert
     try {
@@ -99,7 +99,7 @@ public class SimpleDbSqlSession extends DbSqlSession {
 
     // get statement
     String deleteStatement = dbSqlSessionFactory.getDeleteStatement(dbEntity.getClass());
-    ensureNotNull("no delete statement for " + dbEntity.getClass() + " in the ibatis mapping files", "deleteStatement", deleteStatement);
+    ensureNotNull("no delete statement for %s in the ibatis mapping files".formatted(dbEntity.getClass()), "deleteStatement", deleteStatement);
 
     LOG.executeDatabaseOperation("DELETE", dbEntity);
 
@@ -134,7 +134,7 @@ public class SimpleDbSqlSession extends DbSqlSession {
     final DbEntity dbEntity = operation.getEntity();
 
     String updateStatement = dbSqlSessionFactory.getUpdateStatement(dbEntity);
-    ensureNotNull("no update statement for " + dbEntity.getClass() + " in the ibatis mapping files", "updateStatement", updateStatement);
+    ensureNotNull("no update statement for %s in the ibatis mapping files".formatted(dbEntity.getClass()), "updateStatement", updateStatement);
 
     LOG.executeDatabaseOperation("UPDATE", dbEntity);
 

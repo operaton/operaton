@@ -46,7 +46,7 @@ public class GetTaskFormCmd implements Command<TaskFormData>, Serializable {
   public TaskFormData execute(CommandContext commandContext) {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("No task found for taskId '" + taskId + "'", "task", task);
+    ensureNotNull("No task found for taskId '%s'".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadTaskVariable(task);
@@ -54,7 +54,7 @@ public class GetTaskFormCmd implements Command<TaskFormData>, Serializable {
 
     if (task.getTaskDefinition() != null) {
       TaskFormHandler taskFormHandler = task.getTaskDefinition().getTaskFormHandler();
-      ensureNotNull("No taskFormHandler specified for task '" + taskId + "'", "taskFormHandler", taskFormHandler);
+      ensureNotNull("No taskFormHandler specified for task '%s'".formatted(taskId), "taskFormHandler", taskFormHandler);
 
       return taskFormHandler.createTaskForm(task);
     } else {

@@ -305,7 +305,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
       if (instance.getParentActivityInstanceId() != null) {
         ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
         if (parentInstance == null) {
-          throw new ProcessEngineException("No parent activity instance with id " + instance.getParentActivityInstanceId() + " generated");
+          throw new ProcessEngineException("No parent activity instance with id %s generated".formatted(instance.getParentActivityInstanceId()));
         }
         putListElement(childActivityInstances, parentInstance, instance);
       }
@@ -315,7 +315,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
       if (instance.getParentActivityInstanceId() != null) {
         ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
         if (parentInstance == null) {
-          throw new ProcessEngineException("No parent activity instance with id " + instance.getParentActivityInstanceId() + " generated");
+          throw new ProcessEngineException("No parent activity instance with id %s generated".formatted(instance.getParentActivityInstanceId()));
         }
         putListElement(childTransitionInstances, parentInstance, instance);
       }

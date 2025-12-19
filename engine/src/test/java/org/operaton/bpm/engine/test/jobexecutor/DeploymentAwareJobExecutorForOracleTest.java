@@ -28,6 +28,8 @@ import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 class DeploymentAwareJobExecutorForOracleTest {
 
   @RegisterExtension
@@ -44,7 +46,7 @@ class DeploymentAwareJobExecutorForOracleTest {
     Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
 
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   @Test
@@ -54,7 +56,7 @@ class DeploymentAwareJobExecutorForOracleTest {
     // when
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   @Test
@@ -66,7 +68,7 @@ class DeploymentAwareJobExecutorForOracleTest {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     }
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   @Test
@@ -78,7 +80,7 @@ class DeploymentAwareJobExecutorForOracleTest {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     }
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   @Test
@@ -90,7 +92,7 @@ class DeploymentAwareJobExecutorForOracleTest {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     }
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {

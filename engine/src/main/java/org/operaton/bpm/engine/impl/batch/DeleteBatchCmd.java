@@ -44,7 +44,7 @@ public class DeleteBatchCmd implements Command<Void> {
     ensureNotNull(BadUserRequestException.class, "Batch id must not be null", "batch id", batchId);
 
     BatchEntity batchEntity = commandContext.getBatchManager().findBatchById(batchId);
-    ensureNotNull(BadUserRequestException.class, "Batch for id '" + batchId + "' cannot be found", "batch", batchEntity);
+    ensureNotNull(BadUserRequestException.class, "Batch for id '%s' cannot be found".formatted(batchId), "batch", batchEntity);
 
     checkAccess(commandContext, batchEntity);
     writeUserOperationLog(commandContext, batchEntity.getTenantId());

@@ -59,7 +59,7 @@ public class GetDeploymentCmmnModelInstanceCmd implements Command<CmmnModelInsta
         .getDeploymentCache()
         .findCmmnModelInstanceForCaseDefinition(caseDefinitionId);
 
-    ensureNotNull(CmmnModelInstanceNotFoundException.class, "No CMMN model instance found for case definition id " + caseDefinitionId, "modelInstance", modelInstance);
+    ensureNotNull(CmmnModelInstanceNotFoundException.class, "No CMMN model instance found for case definition id %s".formatted(caseDefinitionId), "modelInstance", modelInstance);
     return modelInstance;
   }
 

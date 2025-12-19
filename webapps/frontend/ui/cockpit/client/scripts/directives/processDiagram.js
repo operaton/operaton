@@ -27,7 +27,7 @@ var DirectiveController = [
   '$injector',
   'Views',
   'configuration',
-  function($scope, $compile, $injector, Views, configuration) {
+  function ($scope, $compile, $injector, Views, configuration) {
     $scope.bpmnJsConf = configuration.getBpmnJs();
 
     $scope.vars = {read: ['processData', 'bpmnElement', 'pageData', 'viewer']};
@@ -36,7 +36,7 @@ var DirectiveController = [
       : [];
 
     $scope.overlayProviders = Views.getProviders({
-      component: $scope.overlayProviderComponent
+      component: $scope.overlayProviderComponent,
     });
 
     var overlay =
@@ -46,7 +46,7 @@ var DirectiveController = [
 
     var bpmnElements, selection;
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $scope.processDiagram = null;
       $scope.overlayProviders = null;
 
@@ -55,7 +55,7 @@ var DirectiveController = [
       var canvas = viewer.get('canvas');
       var elementRegistry = viewer.get('elementRegistry');
 
-      elementRegistry.forEach(function(shape) {
+      elementRegistry.forEach(function (shape) {
         var bo = shape.businessObject;
         if (bo.$instanceOf('bpmn:FlowNode')) {
           canvas.removeMarker(bo.id, 'selectable');
@@ -66,7 +66,7 @@ var DirectiveController = [
 
     $scope.control = {};
 
-    $scope.$on('resize', function() {
+    $scope.$on('resize', function () {
       if ($scope.control.refreshZoom) {
         $scope.control.refreshZoom();
       }
@@ -75,7 +75,7 @@ var DirectiveController = [
     /**
      * If the process diagram changes, then the diagram will be rendered.
      */
-    $scope.$watch('processDiagram', function(newValue) {
+    $scope.$watch('processDiagram', function (newValue) {
       if (newValue && newValue.$loaded !== false) {
         bpmnElements = newValue.bpmnElements;
         $scope.diagramData = newValue.bpmnDefinition;
@@ -84,11 +84,11 @@ var DirectiveController = [
 
     $scope.diagramLoaded = false;
     $scope.diagramEnabled = false;
-    $scope.$watch('collapsed', function(collapsed) {
+    $scope.$watch('collapsed', function (collapsed) {
       $scope.diagramEnabled = $scope.diagramLoaded || !collapsed;
     });
 
-    $scope.onLoad = function() {
+    $scope.onLoad = function () {
       $scope.diagramLoaded = true;
       $scope.viewer = $scope.control.getViewer();
       decorateDiagram($scope.processDiagram.bpmnElements);
@@ -101,26 +101,26 @@ var DirectiveController = [
       updateSelection(selection);
 
       //Apply diagram provider plugins
-      diagramPlugins.forEach(function(plugin) {
+      diagramPlugins.forEach(function (plugin) {
         $injector.invoke(plugin.overlay, null, {
           control: $scope.control,
           processData: $scope.processData,
           processDiagram: $scope.processDiagram,
           pageData: $scope.pageData,
-          $scope: $scope
+          $scope: $scope,
         });
       });
     };
 
-    var isElementSelectable = function(element) {
+    var isElementSelectable = function (element) {
       return (
         element.isSelectable ||
         ($scope.selectAll && element.$instanceOf('bpmn:FlowNode'))
       );
     };
 
-    $scope.onClick = function(element, $event) {
-      safeApply(function() {
+    $scope.onClick = function (element, $event) {
+      safeApply(function () {
         // don't select invisible elements (process, collaboration, subprocess-plane)
         var isRoot = !element.parent;
 
@@ -131,7 +131,7 @@ var DirectiveController = [
         ) {
           $scope.onElementClick({
             id: element.businessObject.id,
-            $event: $event
+            $event: $event,
           });
         } else {
           $scope.onElementClick({id: null, $event: $event});
@@ -147,7 +147,7 @@ var DirectiveController = [
       }
     }
 
-    $scope.onMouseEnter = function(element) {
+    $scope.onMouseEnter = function (element) {
       if (
         bpmnElements[element.businessObject.id] &&
         isElementSelectable(bpmnElements[element.businessObject.id])
@@ -160,14 +160,14 @@ var DirectiveController = [
       }
     };
 
-    $scope.onMouseLeave = function(element) {
+    $scope.onMouseLeave = function (element) {
       if (
         bpmnElements[element.businessObject.id] &&
         isElementSelectable(bpmnElements[element.businessObject.id]) &&
         (!selection || selection.indexOf(element.businessObject.id) === -1) &&
         (!selection ||
           selection.indexOf(
-            element.businessObject.id + '#multiInstanceBody'
+            element.businessObject.id + '#multiInstanceBody',
           ) === -1)
       ) {
         $scope.control
@@ -196,7 +196,7 @@ var DirectiveController = [
 
         newOverlay.css({
           width: elem.width,
-          height: elem.height
+          height: elem.height,
         });
 
         $compile(newOverlay)(childScope);
@@ -206,10 +206,10 @@ var DirectiveController = [
             html: newOverlay,
             position: {
               top: 0,
-              left: 0
-            }
+              left: 0,
+            },
           });
-        } catch (exception) {
+        } catch (_exception) {
           // do nothing
         }
       }
@@ -219,26 +219,26 @@ var DirectiveController = [
 
     function addActions() {
       $scope.actionProviders = Views.getProviders({
-        component: $scope.actionProviderComponent
+        component: $scope.actionProviderComponent,
       });
       var actionElement = angular.element(actions);
       var childScope = $scope.$new();
       $compile(actionElement)(childScope);
       $scope.control.addAction({
-        html: actionElement
+        html: actionElement,
       });
     }
 
     /*------------------- Handle selected activity id---------------------*/
 
-    $scope.$watch('selection.activityIds', function(newValue) {
+    $scope.$watch('selection.activityIds', function (newValue) {
       updateSelection(newValue);
     });
 
     function updateSelection(newSelection) {
       if ($scope.control.isLoaded && $scope.control.isLoaded()) {
         if (selection) {
-          angular.forEach(selection, function(elementId) {
+          angular.forEach(selection, function (elementId) {
             if (
               elementId.indexOf('#multiInstanceBody') !== -1 &&
               elementId.indexOf('#multiInstanceBody') === elementId.length - 18
@@ -252,7 +252,7 @@ var DirectiveController = [
         }
 
         if (newSelection) {
-          angular.forEach(newSelection, function(elementId) {
+          angular.forEach(newSelection, function (elementId) {
             if (
               elementId.indexOf('#multiInstanceBody') !== -1 &&
               elementId.indexOf('#multiInstanceBody') === elementId.length - 18
@@ -271,18 +271,18 @@ var DirectiveController = [
       selection = newSelection;
     }
 
-    $scope.onRootChange = function() {
+    $scope.onRootChange = function () {
       var canvas = $scope.control.getViewer().get('canvas');
       var rootElement = canvas.getRootElement();
       var elementsOnRoot =
-        selection?.filter(el => canvas.findRoot(el) === rootElement) || [];
+        selection?.filter((el) => canvas.findRoot(el) === rootElement) || [];
 
       $scope.callbacks?.handleRootChange?.(elementsOnRoot, canvas);
     };
 
     /*------------------- Handle scroll to bpmn element ---------------------*/
 
-    $scope.$watch('selection.scrollToBpmnElement', function(newValue) {
+    $scope.$watch('selection.scrollToBpmnElement', function (newValue) {
       if (newValue) {
         scrollToBpmnElement(newValue);
       }
@@ -303,10 +303,10 @@ var DirectiveController = [
         $scope.control.scrollToElement(elementId);
       }
     }
-  }
+  },
 ];
 
-var Directive = function() {
+var Directive = function () {
   return {
     restrict: 'EAC',
     scope: {
@@ -322,13 +322,13 @@ var Directive = function() {
       actionProviderComponent: '@',
       diagramProviderComponent: '@',
       selectAll: '&',
-      collapsed: '='
+      collapsed: '=',
     },
     controller: DirectiveController,
     template: template,
-    link: function($scope) {
+    link: function ($scope) {
       $scope.selectAll = $scope.$eval($scope.selectAll);
-    }
+    },
   };
 };
 

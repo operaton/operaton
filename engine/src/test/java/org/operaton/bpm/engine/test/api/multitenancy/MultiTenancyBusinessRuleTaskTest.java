@@ -309,7 +309,7 @@ public class MultiTenancyBusinessRuleTaskTest {
 
       fail("expected exception");
     } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', version = '2' and tenant-id 'tenant1'");
+      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', version = '2' and tenant-id = 'tenant1'");
     }
   }
 
@@ -341,7 +341,7 @@ public class MultiTenancyBusinessRuleTaskTest {
       fail("expected exception");
     } catch (ProcessEngineException e) {
       // then
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', versionTag = '0.0.2' and tenant-id 'tenant1': decisionDefinition is null");
+      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', versionTag = '0.0.2' and tenant-id = 'tenant1': decisionDefinition is null");
     }
   }
 

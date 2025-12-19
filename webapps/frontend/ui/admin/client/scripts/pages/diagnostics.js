@@ -24,23 +24,23 @@ var Controller = [
   'camAPI',
   'Notifications',
   '$translate',
-  function($scope, camAPI, Notifications, $translate) {
+  function ($scope, camAPI, Notifications, $translate) {
     var telemetryResource = camAPI.resource('telemetry');
 
-    telemetryResource.fetchData(function(err, res) {
+    telemetryResource.fetchData(function (err, res) {
       if (err) {
         const msg = err.message;
         Notifications.addError({
           status: $translate.instant('ERROR'),
           message: $translate.instant('DIAGNOSTICS_FETCH_DATA_ERROR_MESSAGE', {
-            msg
-          })
+            msg,
+          }),
         });
       } else {
         $scope.data = res;
       }
     });
-  }
+  },
 ];
 
 module.exports = [
@@ -51,7 +51,7 @@ module.exports = [
       label: 'DIAGNOSTICS',
       template: template,
       controller: Controller,
-      priority: 950
+      priority: 950,
     });
-  }
+  },
 ];

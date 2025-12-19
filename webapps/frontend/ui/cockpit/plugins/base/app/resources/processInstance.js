@@ -20,33 +20,33 @@
 module.exports = [
   '$resource',
   'Uri',
-  function($resource, Uri) {
+  function ($resource, Uri) {
     return $resource(
       Uri.appUri('plugin://base/:engine/process-instance/:id/:action'),
       {id: '@id'},
       {
         query: {
           method: 'POST',
-          isArray: true
+          isArray: true,
         },
 
         delete: {
           url: Uri.appUri('engine://engine/:engine/process-instance/:id'),
-          method: 'DELETE'
+          method: 'DELETE',
         },
 
         count: {
           method: 'POST',
           isArray: false,
-          params: {id: 'count'}
+          params: {id: 'count'},
         },
 
         processInstances: {
           method: 'POST',
           isArray: true,
           params: {
-            action: 'called-process-instances'
-          }
+            action: 'called-process-instances',
+          },
         },
 
         // deprecated
@@ -54,10 +54,10 @@ module.exports = [
           method: 'POST',
           isArray: true,
           params: {
-            action: 'called-process-instances'
-          }
-        }
-      }
+            action: 'called-process-instances',
+          },
+        },
+      },
     );
-  }
+  },
 ];

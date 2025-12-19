@@ -39,7 +39,7 @@ public class RegisterDeploymentCmd implements Command<Void> {
   public Void execute(CommandContext commandContext) {
     Deployment deployment = commandContext.getDeploymentManager().findDeploymentById(deploymentId);
 
-    ensureNotNull("Deployment " + deploymentId + " does not exist", "deployment", deployment);
+    ensureNotNull("Deployment %s does not exist".formatted(deploymentId), "deployment", deployment);
 
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkRegisterDeployment);
 

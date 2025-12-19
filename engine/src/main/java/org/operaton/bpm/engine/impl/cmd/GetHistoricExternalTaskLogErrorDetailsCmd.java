@@ -39,7 +39,7 @@ public class GetHistoricExternalTaskLogErrorDetailsCmd implements Command<String
         .getHistoricExternalTaskLogManager()
         .findHistoricExternalTaskLogById(historicExternalTaskLogId);
 
-    ensureNotNull("No historic external task log found with id " + historicExternalTaskLogId, "historicExternalTaskLog", event);
+    ensureNotNull("No historic external task log found with id %s".formatted(historicExternalTaskLogId), "historicExternalTaskLog", event);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadHistoricExternalTaskLog(event);

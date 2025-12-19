@@ -19,29 +19,31 @@
 
 var INTEGER_PATTERN = /^-?[\d]+$/;
 
-var FLOAT_PATTERN = /^(0|(-?(((0|[1-9]\d*)\.\d+)|([1-9]\d*))))([eE][-+]?[0-9]+)?$/;
+var FLOAT_PATTERN =
+  /^(0|(-?(((0|[1-9]\d*)\.\d+)|([1-9]\d*))))([eE][-+]?[0-9]+)?$/;
 
 var BOOLEAN_PATTERN = /^(true|false)$/;
 
-var DATE_PATTERN = /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
+var DATE_PATTERN =
+  /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(|\.[0-9]{0,4})$/;
 
-var {validate} = require('fast-xml-parser/src/validator');
+var {XMLValidator} = require('fast-xml-parser');
 
-var isValidXML = function(value) {
+var isValidXML = function (value) {
   if (!value) return false;
-  return validate(value) === true;
+  return XMLValidator.validate(value) === true;
 };
 
-var isValidJSON = function(value) {
+var isValidJSON = function (value) {
   try {
     JSON.parse(value);
     return true;
-  } catch (e) {
+  } catch (_e) {
     return false;
   }
 };
 
-var isType = function(value, type) {
+var isType = function (value, type) {
   switch (type) {
     case 'Integer':
     case 'Long':
@@ -61,7 +63,7 @@ var isType = function(value, type) {
   }
 };
 
-var convertToType = function(value, type) {
+var convertToType = function (value, type) {
   if (typeof value === 'string') {
     value = value.trim();
   }
@@ -94,11 +96,11 @@ var convertToType = function(value, type) {
  * @see https://app.camunda.com/jira/browse/CAM-4746
  *
  */
-var pad = function(number) {
+var pad = function (number) {
   return number < 10 ? '0' + number : number;
 };
 
-var dateToString = function(date) {
+var dateToString = function (date) {
   if (typeof date === 'object' && typeof date.getFullYear === 'function') {
     var year = date.getFullYear(),
       month = pad(date.getMonth() + 1),
@@ -116,5 +118,5 @@ var dateToString = function(date) {
 module.exports = {
   convertToType: convertToType,
   isType: isType,
-  dateToString: dateToString
+  dateToString: dateToString,
 };

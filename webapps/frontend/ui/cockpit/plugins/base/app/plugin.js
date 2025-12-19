@@ -32,5 +32,5 @@ var angular = require('angular'),
 module.exports = angular.module('cockpit.plugin.base', [
   viewsModule.name,
   resourcesModule.name,
-  dataModule.name
+  dataModule.name,
 ]);

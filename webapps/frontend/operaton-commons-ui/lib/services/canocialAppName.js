@@ -20,8 +20,8 @@
 const base = document.querySelector('base');
 const canonicalAppName = base.getAttribute('app-name');
 
-module.exports = function() {
-  this.$get = function() {
+module.exports = function () {
+  this.$get = function () {
     return canonicalAppName;
   };
 };

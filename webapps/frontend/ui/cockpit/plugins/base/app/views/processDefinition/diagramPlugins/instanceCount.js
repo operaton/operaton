@@ -23,7 +23,7 @@ var template = require('./overlayAction.html?raw');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView(
       'cockpit.processDefinition.diagram.action',
       {
@@ -37,14 +37,14 @@ module.exports = [
           '$rootScope',
           '$translate',
           'configuration',
-          function(
+          function (
             $scope,
             Loaders,
             get,
             $filter,
             $rootScope,
             $translate,
-            configuration
+            configuration,
           ) {
             $scope.enabled = configuration.getRuntimeActivityInstanceMetrics();
 
@@ -52,7 +52,7 @@ module.exports = [
             $scope.isLoading = false;
             $scope.countOverlayIds = [];
 
-            $scope.toggleOverlay = function() {
+            $scope.toggleOverlay = function () {
               $scope.toggle = !$scope.toggle;
               if ($scope.toggle) {
                 showOverlays();
@@ -73,7 +73,7 @@ module.exports = [
                 getData: getInstancesCountsForElement,
                 updateOverlayNodes: updateOverlayNodes,
                 isActive: isActive,
-                toggleIsLoading: toggleIsLoading
+                toggleIsLoading: toggleIsLoading,
               };
 
               instanceCount(
@@ -83,31 +83,32 @@ module.exports = [
                 $scope.processDiagram,
                 Loaders,
                 $rootScope,
-                callbacks
+                callbacks,
               );
             }
 
             function removeOverlays() {
               const overlays = $scope.viewer.get('overlays');
-              $scope.countOverlayIds.forEach(id => {
+              $scope.countOverlayIds.forEach((id) => {
                 overlays.remove(id);
               });
               $scope.countOverlayIds = [];
             }
 
-            $scope.processData.observe('processDiagram', function(
-              processDiagram
-            ) {
-              $scope.processDiagram = processDiagram;
-              $scope.toggle && showOverlays();
-            });
+            $scope.processData.observe(
+              'processDiagram',
+              function (processDiagram) {
+                $scope.processDiagram = processDiagram;
+                $scope.toggle && showOverlays();
+              },
+            );
 
             function observe(callback) {
               $scope.processData.observe(
                 ['activityInstanceStatistics'],
-                function(activityInstanceStatistics) {
+                function (activityInstanceStatistics) {
                   callback([activityInstanceStatistics]);
-                }
+                },
               );
             }
 
@@ -115,27 +116,27 @@ module.exports = [
               return data.instances || data.incidents;
             }
 
-            var getIncidentCount = function(incidents) {
+            var getIncidentCount = function (incidents) {
               if (!incidents) {
                 return 0;
               }
 
-              return incidents.reduce(function(sum, incident) {
+              return incidents.reduce(function (sum, incident) {
                 return sum + incident.incidentCount;
               }, 0);
             };
 
             function getInstancesCountsForElement(
               element,
-              activityInstanceStatistics
+              activityInstanceStatistics,
             ) {
               var stats = getStatsWithId(
                 activityInstanceStatistics,
-                element.id
+                element.id,
               );
               var statsMi = getStatsWithId(
                 activityInstanceStatistics,
-                element.id + '#multiInstanceBody'
+                element.id + '#multiInstanceBody',
               );
 
               var statsIncidents = get(stats, ['incidents'], []);
@@ -146,12 +147,12 @@ module.exports = [
               return {
                 instances:
                   get(stats, ['instances'], 0) + get(statsMi, ['instances'], 0),
-                incidents: incidentsCount
+                incidents: incidentsCount,
               };
             }
 
             function getStatsWithId(activityInstanceStatistics, id) {
-              return activityInstanceStatistics.filter(function(entry) {
+              return activityInstanceStatistics.filter(function (entry) {
                 return entry.id === id;
               })[0];
             }
@@ -164,13 +165,13 @@ module.exports = [
               setTextContent(
                 nodes.instancesNode,
                 data.instances,
-                data.childInstances && '...'
+                data.childInstances && '...',
               );
 
               setTextContent(
                 nodes.incidentsNode,
                 data.incidents,
-                data.childIncidents
+                data.childIncidents,
               );
 
               if (!data.instances && !data.childInstances) {
@@ -180,10 +181,10 @@ module.exports = [
                 nodes.instancesNode.tooltip({
                   container: 'body',
                   title: $translate.instant(
-                    'PLUGIN_ACTIVITY_INSTANCE_RUNNING_ACTIVITY_INSTANCES'
+                    'PLUGIN_ACTIVITY_INSTANCE_RUNNING_ACTIVITY_INSTANCES',
                   ),
                   placement: 'top',
-                  animation: false
+                  animation: false,
                 });
               }
 
@@ -192,18 +193,18 @@ module.exports = [
                 nodes.incidentsNode.tooltip({
                   container: 'body',
                   title: $translate.instant(
-                    'PLUGIN_ACTIVITY_INSTANCE_OPEN_INCIDENTS'
+                    'PLUGIN_ACTIVITY_INSTANCE_OPEN_INCIDENTS',
                   ),
                   placement: 'top',
-                  animation: false
+                  animation: false,
                 });
               } else {
                 nodes.incidentsNode.hide();
               }
             }
-          }
-        ]
-      }
+          },
+        ],
+      },
     );
-  }
+  },
 ];

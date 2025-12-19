@@ -160,7 +160,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     ActivityImpl activity = new ActivityImpl(activityId, processDefinition);
     if (activityId!=null) {
       if (processDefinition.findActivity(activityId) != null) {
-        throw new PvmException("duplicate activity id '" + activityId + "'");
+        throw new PvmException("duplicate activity id '%s'".formatted(activityId));
       }
       if (backlog.containsKey(activityId)) {
         backlog.remove(activityId);

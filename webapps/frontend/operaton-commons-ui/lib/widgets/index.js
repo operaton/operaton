@@ -50,7 +50,7 @@ var widgetModule = angular.module('operaton.common.widgets', [
   filtersModule.name,
   directivesModule.name,
   searchModule.name,
-  'ui.bootstrap'
+  'ui.bootstrap',
 ]);
 
 widgetModule.factory('widgetLocalConf', localConf);

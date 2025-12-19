@@ -30,7 +30,7 @@ var Controller = [
   'dataDepend',
   'page',
   '$translate',
-  function(
+  function (
     $scope,
     $location,
     $timeout,
@@ -38,7 +38,7 @@ var Controller = [
     Data,
     dataDepend,
     page,
-    $translate
+    $translate,
   ) {
     var $rootScope = $scope.$root;
 
@@ -46,22 +46,22 @@ var Controller = [
 
     $scope.dashboardVars = {read: ['processData']};
     $scope.dashboardProviders = Views.getProviders({
-      component: 'cockpit.processes.dashboard'
+      component: 'cockpit.processes.dashboard',
     });
 
     Data.instantiateProviders('cockpit.dashboard.data', {
       $scope: $scope,
-      processData: processData
+      processData: processData,
     });
 
     // INITIALIZE PLUGINS
     var dashboardPlugins = Views.getProviders({
-      component: 'cockpit.processes.dashboard'
+      component: 'cockpit.processes.dashboard',
     });
 
     var initData = {
       $scope: $scope,
-      processData: processData
+      processData: processData,
     };
 
     for (var i = 0; i < dashboardPlugins.length; i++) {
@@ -72,9 +72,9 @@ var Controller = [
 
     var search = $location.search();
     if (search.targetPlugin) {
-      $timeout(function() {
+      $timeout(function () {
         var el = angular.element(
-          '[data-plugin-id="' + search.targetPlugin + '"]'
+          '[data-plugin-id="' + search.targetPlugin + '"]',
         );
         if (el.length) {
           el[0].scrollIntoView();
@@ -87,23 +87,23 @@ var Controller = [
     page.breadcrumbsClear();
 
     page.breadcrumbsAdd({
-      label: $translate.instant('PROCESS_PROCESSES')
+      label: $translate.instant('PROCESS_PROCESSES'),
     });
 
     page.titleSet($translate.instant('PROCESS_PROCESSES'));
-  }
+  },
 ];
 
 var RouteConfig = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/processes', {
       template: template,
       controller: Controller,
       authentication: 'required',
-      reloadOnSearch: false
+      reloadOnSearch: false,
     });
-  }
+  },
 ];
 
 module.exports = RouteConfig;

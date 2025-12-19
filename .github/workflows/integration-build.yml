@@ -1,8 +1,6 @@
 name: Integration Build
 
 on:
-  schedule:
-    - cron: "0 2 * * *"     # Runs at 2:00 AM UTC daily
   workflow_dispatch:        # Allows manual trigger
     inputs:
       java_version:
@@ -143,6 +141,7 @@ jobs:
       java_versions: ${{ steps.compute-matrix.outputs.java_versions }}
       distros: ${{ steps.compute-matrix.outputs.distros }}
       databases: ${{ steps.compute-matrix.outputs.databases }}
+      testsuites: ${{ steps.compute-matrix.outputs.testsuites }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -156,10 +155,10 @@ jobs:
         run: |
           echo "PR Labels: $PR_LABELS"
           echo "PR Author: $PR_AUTHOR"
-          
+
           # Define whitelisted authors (core team members who don't need full integration tests)
           WHITELISTED_AUTHORS="kthoms,javahippie"
-          
+
           # Check if author is whitelisted
           if echo "$WHITELISTED_AUTHORS" | grep -q "$PR_AUTHOR"; then
             echo "ℹ️ PR author $PR_AUTHOR is whitelisted"
@@ -168,7 +167,7 @@ jobs:
             echo "ℹ️ PR author $PR_AUTHOR is NOT whitelisted"
             AUTHOR_WHITELISTED=false
           fi
-          
+
           # Check if PR is from Dependabot
           if [[ "$PR_AUTHOR" == "dependabot"* ]]; then
             echo "🤖 PR is from Dependabot"
@@ -193,7 +192,7 @@ jobs:
             echo "✅ PR doesn't require integration build"
             NEEDS_BUILD=false
           fi
-          
+
           echo "needs_build=$NEEDS_BUILD" >> $GITHUB_OUTPUT
       - name: Compute matrix values
         id: compute-matrix
@@ -204,7 +203,19 @@ jobs:
           # Java version is always 17 for PR builds
           JAVA_VERSIONS='["17"]'
           echo "java_versions=$JAVA_VERSIONS" >> $GITHUB_OUTPUT
-          
+
+          # Determine testsuites based on labels
+          if echo "$PR_LABELS" | grep -q '"dependencies:npm"'; then
+            # NPM dependency updates affect frontend, run webapps tests
+            TESTSUITES='["webapps"]'
+            echo "🎯 Using webapps testsuite for npm dependencies: $TESTSUITES"
+          else
+            # Default to engine tests for other PRs
+            TESTSUITES='["engine"]'
+            echo "🎯 Using default engine testsuite: $TESTSUITES"
+          fi
+          echo "testsuites=$TESTSUITES" >> $GITHUB_OUTPUT
+
           # Determine distros based on labels
           DISTRO_LABELS=$(echo "$PR_LABELS" | jq --raw-output '.[] | select(startswith("distro:")) | sub("distro:"; "")')
           if [[ -n "$DISTRO_LABELS" ]]; then
@@ -217,7 +228,7 @@ jobs:
             echo "🎯 Using default distros: $DISTROS"
           fi
           echo "distros=$DISTROS" >> $GITHUB_OUTPUT
-          
+
           # Determine databases based on labels
           DATABASE_LABELS=$(echo "$PR_LABELS" | jq --raw-output '.[] | select(startswith("database:")) | sub("database:"; "")')
           if [[ -n "$DATABASE_LABELS" ]]; then
@@ -251,7 +262,7 @@ jobs:
       matrix:
         java: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.java_versions) || fromJson(github.event.inputs.java_version || '["17", "21", "25"]') }}
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - detect-recent-changes
       - determine-pr-config
     if: |
@@ -270,7 +281,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -295,7 +306,7 @@ jobs:
           echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
           echo "database_version=$DATABASE_VERSION"
           SKIP_TESTS=${{ github.event.inputs.skip_tests || (github.event_name == 'schedule' && false) }}
-          
+
           CMD=".devenv/scripts/build/build.sh --profile=max --reports"
           if [ "$SKIP_TESTS" = "true" ]; then
               CMD="$CMD --skip-tests"
@@ -307,7 +318,7 @@ jobs:
           find target -name maven-metadata.* -delete
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Cache build artifacts
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -322,14 +333,14 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
-    needs: 
+    needs:
       - detect-recent-changes
       - determine-pr-config
     strategy:
       fail-fast: false
       matrix:
         java: ${{ fromJson('["17"]') }}
-        testsuite: ${{ github.event_name == 'pull_request' && fromJson('["engine"]') || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
+        testsuite: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.testsuites) || fromJson(github.event.inputs.testsuite || '["engine", "webapps"]') }}
         distro: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.distros) || (github.event_name == 'schedule' && fromJson('["operaton", "tomcat", "wildfly"]') || fromJson(github.event.inputs.distro || '["operaton", "tomcat", "wildfly"]')) }}
         database: ${{ github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true' && fromJson(needs.determine-pr-config.outputs.databases) || (github.event_name == 'schedule' && fromJson('["h2", "postgresql"]') || fromJson(github.event.inputs.database || '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]')) }}
     if: |
@@ -344,7 +355,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -381,7 +392,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
@@ -416,7 +427,7 @@ jobs:
           .devenv/scripts/build/check-api-compatibility.sh
           .devenv/scripts/build/rest-api-doc.sh
       - name: Cache documentation artifacts
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: |
             target/*.zip
@@ -444,7 +455,7 @@ jobs:
           ref: ${{github.event.inputs.release_branch}}
 
       - name: Restore build artifacts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             distro/**/*.tar.gz
@@ -458,7 +469,7 @@ jobs:
           fail-on-cache-miss: true
 
       - name: Restore documentation artifacts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             target/*.zip
@@ -466,7 +477,7 @@ jobs:
           fail-on-cache-miss: true
 
       - name: Release with JReleaser
-        uses: jreleaser/release-action@v2
+        uses: jreleaser/release-action@90ac653bb9c79d11179e65d81499f3f34527dcd5 # v2.5.0
         env:
           JRELEASER_PROJECT_VERSION: ${{needs.build.outputs.project_version}}
           JRELEASER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -489,14 +500,14 @@ jobs:
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: staging
           path: |
@@ -518,9 +529,11 @@ jobs:
       )
     steps:
       - name: Notify Docker Repository
+        env:
+          DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}" \
+            -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             -d '{"ref":"main","inputs":{"version": "${{ needs.build.outputs.version}}","snapshot": "true"}}' \

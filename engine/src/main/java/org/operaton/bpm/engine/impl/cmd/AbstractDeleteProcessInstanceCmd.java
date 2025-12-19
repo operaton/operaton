@@ -77,7 +77,7 @@ public abstract class AbstractDeleteProcessInstanceCmd {
       return;
     }
 
-    ensureNotNull(NotFoundException.class, "No process instance found for id '" + processInstanceId + "'",
+    ensureNotNull(NotFoundException.class, "No process instance found for id '%s'".formatted(processInstanceId),
         "processInstance", execution);
 
     checkDeleteProcessInstance(execution, commandContext);

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +31,8 @@ import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEn
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer

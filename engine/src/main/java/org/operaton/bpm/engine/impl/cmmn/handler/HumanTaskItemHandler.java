@@ -228,7 +228,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
   }
 
   protected void initializeTaskDescription(CmmnElement element, TaskDefinition taskDefinition, CmmnHandlerContext context) {
-    String description = getDesciption(element);
+    String description = getDescription(element);
     if (description != null && ! description.isEmpty()) {
       ExpressionManager expressionManager = context.getExpressionManager();
       Expression descriptionExpression = expressionManager.createExpression(description);

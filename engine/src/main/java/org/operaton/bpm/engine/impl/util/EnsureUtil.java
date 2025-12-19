@@ -208,7 +208,7 @@ public final class EnsureUtil {
 
   public static void ensureLessThan(String message, String variable, long value1, long value2) {
     if (value1 >= value2) {
-      throw generateException(ProcessEngineException.class, message, variable, "is not less than" + value2);
+      throw generateException(ProcessEngineException.class, message, variable, "is not less than %s".formatted(value2));
     }
   }
 
@@ -222,7 +222,7 @@ public final class EnsureUtil {
 
   public static void ensureGreaterThanOrEqual(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, long value1, long value2) {
     if (value1 < value2) {
-      throw generateException(exceptionClass, message, variableName, "is not greater than or equal to " + value2);
+      throw generateException(exceptionClass, message, variableName, "is not greater than or equal to %s".formatted(value2));
     }
   }
 
@@ -242,7 +242,7 @@ public final class EnsureUtil {
     ensureNotNull(exceptionClass, message, variableName, value);
     Class<?> valueClass = value.getClass();
     if (!expectedClass.isAssignableFrom(valueClass)) {
-      throw generateException(exceptionClass, message, variableName, "has class " + valueClass.getName() + " and not " + expectedClass.getName());
+      throw generateException(exceptionClass, message, variableName, "has class %s and not %s".formatted(valueClass.getName(), expectedClass.getName()));
     }
   }
 
@@ -363,7 +363,7 @@ public final class EnsureUtil {
   public static void ensureNumberOfElements(Class<? extends ProcessEngineException> exceptionClass, String message, String variableName, Collection collection, int elements) {
     ensureNotNull(exceptionClass, message, variableName, collection);
     if (collection.size() != elements) {
-      throw generateException(exceptionClass, message, variableName, "does not have " + elements + " elements");
+      throw generateException(exceptionClass, message, variableName, "does not have %s elements".formatted(elements));
     }
   }
 
@@ -374,8 +374,8 @@ public final class EnsureUtil {
   public static void ensureValidIndividualResourceId(Class<? extends ProcessEngineException> exceptionClass, String message, String id) {
     ensureNotNull(exceptionClass, message, "id", id);
     if (Authorization.ANY.equals(id)) {
-      throw generateException(exceptionClass, message, "id", "cannot be "
-          + Authorization.ANY + ". " + Authorization.ANY + " is a reserved identifier.");
+      throw generateException(exceptionClass, message, "id", "cannot be %s. %s is a reserved identifier.".formatted(
+          Authorization.ANY, Authorization.ANY));
     }
   }
 
@@ -395,7 +395,7 @@ public final class EnsureUtil {
     Pattern pattern = Pattern.compile(resourcePattern);
 
     if (!pattern.matcher(resourceId).matches()) {
-      throw generateException(ProcessEngineException.class, resourceType + " has an invalid id", "'" + resourceId + "'", "is not a valid resource identifier.");
+      throw generateException(ProcessEngineException.class, "%s has an invalid id".formatted(resourceType), "'%s'".formatted(resourceId), "is not a valid resource identifier.");
     }
   }
 
@@ -448,7 +448,9 @@ public final class EnsureUtil {
   }
 
   protected static String formatMessage(String message, String variableName, String description) {
-    return formatMessageElement(message, ": ") + formatMessageElement(variableName, " ") + description;
+    String messageElement = formatMessageElement(message, ": ");
+    String variableElement = formatMessageElement(variableName, " ");
+    return "%s%s%s".formatted(messageElement, variableElement, description);
   }
 
   protected static String formatMessageElement(String element, String delimiter) {

@@ -65,7 +65,7 @@ public final class IoUtil {
 
     if (resourceAsStream == null)
     {
-      throw new ProcessEngineException("resource " + resourceName + " not found");
+      throw new ProcessEngineException("resource '%s' not found".formatted(resourceName));
     }
 
     int next;

@@ -81,7 +81,7 @@ public final class ClassDelegateUtil {
     }
     else {
       Field field = ReflectUtil.getField(declaration.getName(), target);
-      ensureNotNull("Field definition uses unexisting field '" + declaration.getName() + "' on class " + target.getClass().getName(), "field", field);
+      ensureNotNull("Field definition uses unexisting field '%s' on class %s".formatted(declaration.getName(), target.getClass().getName()), "field", field);
       // Check if the delegate field's type is correct
       if (!fieldTypeCompatible(declaration, field)) {
         throw LOG.incompatibleTypeForFieldDeclaration(declaration, target, field);

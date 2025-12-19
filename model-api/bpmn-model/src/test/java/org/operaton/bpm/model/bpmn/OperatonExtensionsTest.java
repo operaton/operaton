@@ -182,7 +182,7 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testHistoryTimeToLive(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(modelInstance);
-    assertThat(process.getOperatonHistoryTimeToLive()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE);
+    assertThat(process.getOperatonHistoryTimeToLiveString()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE.toString());
   }
 
   @MethodSource("parameters")

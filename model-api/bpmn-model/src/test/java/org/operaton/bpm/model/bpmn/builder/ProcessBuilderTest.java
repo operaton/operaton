@@ -512,7 +512,7 @@ public class ProcessBuilderTest {
     Process process = modelInstance.getModelElementById(PROCESS_ID);
     assertThat(process.getOperatonJobPriority()).isEqualTo("${somePriority}");
     assertThat(process.getOperatonTaskPriority()).isEqualTo(TEST_PROCESS_TASK_PRIORITY);
-    assertThat(process.getOperatonHistoryTimeToLive()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE);
+    assertThat(process.getOperatonHistoryTimeToLiveString()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE.toString());
     assertThat(process.isOperatonStartableInTasklist()).isEqualTo(TEST_STARTABLE_IN_TASKLIST);
     assertThat(process.getOperatonVersionTag()).isEqualTo(TEST_VERSION_TAG);
   }

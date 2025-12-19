@@ -48,4 +48,9 @@ public interface OperatonEngineConfig {
    */
   Optional<String> datasource();
 
+  /**
+   * Enables experimental preview features on the process engine level. Defaults to false.
+   */
+  Optional<Boolean> previewFeaturesEnabled();
+
 }

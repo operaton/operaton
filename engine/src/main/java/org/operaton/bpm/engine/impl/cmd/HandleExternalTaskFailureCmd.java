@@ -72,6 +72,6 @@ public class HandleExternalTaskFailureCmd extends HandleExternalTaskCmd {
 
   @Override
   public String getErrorMessageOnWrongWorkerAccess() {
-    return "Failure of External Task " + externalTaskId + " cannot be reported by worker '" + workerId;
+    return "Failure of External Task %s cannot be reported by worker '%s'".formatted(externalTaskId, workerId);
   }
 }

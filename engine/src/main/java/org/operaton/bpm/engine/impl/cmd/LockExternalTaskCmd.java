@@ -39,7 +39,7 @@ public class LockExternalTaskCmd extends HandleExternalTaskCmd {
 
   @Override
   public String getErrorMessageOnWrongWorkerAccess() {
-    return "External Task " + externalTaskId + " cannot be locked by worker '" + workerId;
+    return "External Task %s cannot be locked by worker '%s'".formatted(externalTaskId, workerId);
   }
 
   /*

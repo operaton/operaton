@@ -121,7 +121,7 @@ public class EntityRemoveRule extends TestWatcher {
       return method.getAnnotation(annotation);
     } catch (NoSuchMethodException e) {
       throw new RuntimeException(
-          "Failed to fetch annotation | annotationName: " + annotation.getName() + ", methodName: " + methodName, e);
+          "Failed to fetch annotation | annotationName: %s, methodName: ".formatted(annotation.getName()) + methodName, e);
     }
   }
 

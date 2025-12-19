@@ -106,7 +106,7 @@ public final class Removable {
     ThrowingRunnable runnable = mappings.get(clazz);
 
     if (runnable == null) {
-      throw new UnsupportedOperationException("class " + clazz.getName() + " is not supported yet for Removal");
+      throw new UnsupportedOperationException("class %s is not supported yet for Removal".formatted(clazz.getName()));
     }
 
     if (!isInitialized()) {

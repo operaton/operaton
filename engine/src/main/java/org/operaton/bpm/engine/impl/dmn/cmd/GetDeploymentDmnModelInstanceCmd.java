@@ -53,7 +53,7 @@ public class GetDeploymentDmnModelInstanceCmd implements Command<DmnModelInstanc
 
     DmnModelInstance modelInstance = deploymentCache.findDmnModelInstanceForDecisionDefinition(decisionDefinitionId);
 
-    ensureNotNull(DmnModelInstanceNotFoundException.class, "No DMN model instance found for decision definition id " + decisionDefinitionId, "modelInstance",
+    ensureNotNull(DmnModelInstanceNotFoundException.class, "No DMN model instance found for decision definition id %s".formatted(decisionDefinitionId), "modelInstance",
         modelInstance);
     return modelInstance;
   }

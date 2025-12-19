@@ -412,7 +412,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
    */
   public void propagateEnd() {
     if (!isEnded()) {
-      throw new ProcessEngineException(toString() + " must have ended before ending can be propagated");
+      throw new ProcessEngineException("%s must have ended before ending can be propagated".formatted(toString()));
     }
 
     if (isProcessInstanceExecution()) {
@@ -461,7 +461,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   public PvmExecutionImpl createConcurrentExecution() {
     if (!isScope()) {
-      throw new ProcessEngineException("Cannot create concurrent execution for " + this);
+      throw new ProcessEngineException("Cannot create concurrent execution for %s".formatted(this));
     }
 
     // The following covers the three cases in which a concurrent execution may be created
@@ -769,7 +769,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   public void take() {
     if (this.transition == null) {
-      throw new PvmException(toString() + ": no transition to take specified");
+      throw new PvmException("%s: no transition to take specified".formatted(toString()));
     }
     TransitionImpl transitionImpl = transition;
     setActivity(transitionImpl.getSource());

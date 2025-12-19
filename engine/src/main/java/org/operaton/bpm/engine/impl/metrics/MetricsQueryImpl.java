@@ -142,7 +142,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
   @Override
   public void setMaxResults(int maxResults) {
     if (maxResults > DEFAULT_LIMIT_SELECT_INTERVAL) {
-      throw new ProcessEngineException("Metrics interval query row limit can't be set larger than " + DEFAULT_LIMIT_SELECT_INTERVAL + '.');
+      throw new ProcessEngineException("Metrics interval query row limit can't be set larger than %s.".formatted(DEFAULT_LIMIT_SELECT_INTERVAL));
     }
     this.maxResults = maxResults;
   }

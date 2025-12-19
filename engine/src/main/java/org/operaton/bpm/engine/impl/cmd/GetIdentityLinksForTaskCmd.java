@@ -52,7 +52,7 @@ public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>>, 
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkGetIdentityLink(task, commandContext);
 

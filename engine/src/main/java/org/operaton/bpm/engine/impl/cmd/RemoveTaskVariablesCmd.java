@@ -47,7 +47,7 @@ public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
       .getTaskManager()
       .findTaskById(entityId);
 
-    ensureNotNull("Cannot find task with id " + entityId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(entityId), "task", task);
 
     checkRemoveTaskVariables(task);
 

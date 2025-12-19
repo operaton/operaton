@@ -64,7 +64,7 @@ public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void>, Se
       .getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
 
-    EnsureUtil.ensureNotNull("Cannot find process definition with id " + processDefinitionId, "processDefinition", processDefinition);
+    EnsureUtil.ensureNotNull("Cannot find process definition with id %s".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     processDefinition.addIdentityLink(userId, groupId);
     return null;

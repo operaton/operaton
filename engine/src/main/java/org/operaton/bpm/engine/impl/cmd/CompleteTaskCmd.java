@@ -65,7 +65,7 @@ public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkCompleteTask(task, commandContext);
 

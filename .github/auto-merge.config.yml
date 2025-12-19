@@ -52,6 +52,7 @@ auto-merge-rules:
       - 'io.netty:*'
       - 'io.swagger*'
       - 'net.javacrumbs.json-unit:*'
+      - 'version.spring-boot'
       - 'version.quarkus'
       - 'version.mockito'
       - 'version.groovy'

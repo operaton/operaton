@@ -142,12 +142,9 @@ public class HistoricCaseInstanceEventEntity extends HistoricScopeInstanceEvent 
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[businessKey=%s, startUserId=".formatted(businessKey) + createUserId
-      + ", superCaseInstanceId=%s, superProcessInstanceId=".formatted(superCaseInstanceId) + superProcessInstanceId
-      + ", durationInMillis=%s, createTime=".formatted(durationInMillis) + startTime
-      + ", closeTime=%s, id=".formatted(endTime) + id
-      + ", eventType=%s, caseExecutionId=".formatted(eventType) + caseExecutionId
-      + ", caseDefinitionId=%s, caseInstanceId=".formatted(caseDefinitionId) + caseInstanceId
+      + "[businessKey=%s, startUserId=%s, superCaseInstanceId=%s, superProcessInstanceId=".formatted(businessKey, createUserId).formatted(superCaseInstanceId) + superProcessInstanceId
+      + ", durationInMillis=%s, createTime=%s, closeTime=%s, id=".formatted(durationInMillis, startTime).formatted(endTime) + id
+      + ", eventType=%s, caseExecutionId=%s, caseDefinitionId=%s, caseInstanceId=".formatted(eventType, caseExecutionId).formatted(caseDefinitionId) + caseInstanceId
       + ", tenantId=%s]".formatted(tenantId);
   }
 }

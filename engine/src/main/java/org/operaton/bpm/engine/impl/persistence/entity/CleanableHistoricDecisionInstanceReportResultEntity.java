@@ -104,10 +104,8 @@ public class CleanableHistoricDecisionInstanceReportResultEntity implements Clea
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[decisionDefinitionId = %s, decisionDefinitionKey = ".formatted(decisionDefinitionId) + decisionDefinitionKey
-        + ", decisionDefinitionName = %s, decisionDefinitionVersion = ".formatted(decisionDefinitionName) + decisionDefinitionVersion
-        + ", historyTimeToLive = %s, finishedDecisionInstanceCount = ".formatted(historyTimeToLive) + finishedDecisionInstanceCount
-        + ", cleanableDecisionInstanceCount = %s, tenantId = ".formatted(cleanableDecisionInstanceCount) + tenantId
+        + "[decisionDefinitionId = %s, decisionDefinitionKey = %s, decisionDefinitionName = %s, decisionDefinitionVersion = ".formatted(decisionDefinitionId, decisionDefinitionKey).formatted(decisionDefinitionName) + decisionDefinitionVersion
+        + ", historyTimeToLive = %s, finishedDecisionInstanceCount = %s, cleanableDecisionInstanceCount = %s, tenantId = ".formatted(historyTimeToLive, finishedDecisionInstanceCount).formatted(cleanableDecisionInstanceCount) + tenantId
         + "]";
   }
 

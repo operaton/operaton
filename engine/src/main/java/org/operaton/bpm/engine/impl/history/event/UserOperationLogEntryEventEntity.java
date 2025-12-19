@@ -212,18 +212,12 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[taskId=%s, deploymentId=".formatted(taskId) + deploymentId
-        + ", processDefinitionKey=%s, jobId=".formatted(processDefinitionKey) + jobId
-        + ", jobDefinitionId=%s, batchId=".formatted(jobDefinitionId) + batchId
-        + ", operationId=%s, operationType=".formatted(operationId) + operationType
-        + ", userId=%s, timestamp=".formatted(userId) + timestamp
-        + ", property=%s, orgValue=".formatted(property) + orgValue
-        + ", newValue=%s, id=".formatted(newValue) + id
-        + ", eventType=%s, executionId=".formatted(eventType) + executionId
-        + ", processDefinitionId=%s, rootProcessInstanceId=".formatted(processDefinitionId) + rootProcessInstanceId
-        + ", processInstanceId=%s, externalTaskId=".formatted(processInstanceId) + externalTaskId
-        + ", tenantId=%s, entityType=".formatted(tenantId) + entityType
-        + ", category=%s, annotation=".formatted(category) + annotation
+        + "[taskId=%s, deploymentId=%s, processDefinitionKey=%s, jobId=".formatted(taskId, deploymentId).formatted(processDefinitionKey) + jobId
+        + ", jobDefinitionId=%s, batchId=%s, operationId=%s, operationType=".formatted(jobDefinitionId, batchId).formatted(operationId) + operationType
+        + ", userId=%s, timestamp=%s, property=%s, orgValue=".formatted(userId, timestamp).formatted(property) + orgValue
+        + ", newValue=%s, id=%s, eventType=%s, executionId=".formatted(newValue, id).formatted(eventType) + executionId
+        + ", processDefinitionId=%s, rootProcessInstanceId=%s, processInstanceId=%s, externalTaskId=".formatted(processDefinitionId, rootProcessInstanceId).formatted(processInstanceId) + externalTaskId
+        + ", tenantId=%s, entityType=%s, category=%s, annotation=".formatted(tenantId, entityType).formatted(category) + annotation
         + "]";
   }
 }

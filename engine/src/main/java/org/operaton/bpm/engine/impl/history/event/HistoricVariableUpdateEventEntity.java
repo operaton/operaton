@@ -123,16 +123,11 @@ public class HistoricVariableUpdateEventEntity extends HistoricDetailEventEntity
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[variableName=%s, variableInstanceId=".formatted(variableName) + variableInstanceId
-           + ", revision=%s, serializerName=".formatted(revision) + serializerName
-           + ", longValue=%s, doubleValue=".formatted(longValue) + doubleValue
-           + ", textValue=%s, textValue2=".formatted(textValue) + textValue2
-           + ", byteArrayId=%s, activityInstanceId=".formatted(byteArrayId) + activityInstanceId
-           + ", scopeActivityInstanceId=%s, eventType=".formatted(scopeActivityInstanceId) + eventType
-           + ", executionId=%s, id=".formatted(executionId) + id
-           + ", processDefinitionId=%s, processInstanceId=".formatted(processDefinitionId) + processInstanceId
-           + ", taskId=%s, timestamp=".formatted(taskId) + timestamp
-           + ", tenantId=%s, isInitial=".formatted(tenantId) + isInitial
+           + "[variableName=%s, variableInstanceId=%s, revision=%s, serializerName=".formatted(variableName, variableInstanceId).formatted(revision) + serializerName
+           + ", longValue=%s, doubleValue=%s, textValue=%s, textValue2=".formatted(longValue, doubleValue).formatted(textValue) + textValue2
+           + ", byteArrayId=%s, activityInstanceId=%s, scopeActivityInstanceId=%s, eventType=".formatted(byteArrayId, activityInstanceId).formatted(scopeActivityInstanceId) + eventType
+           + ", executionId=%s, id=%s, processDefinitionId=%s, processInstanceId=".formatted(executionId, id).formatted(processDefinitionId) + processInstanceId
+           + ", taskId=%s, timestamp=%s, tenantId=%s, isInitial=".formatted(taskId, timestamp).formatted(tenantId) + isInitial
            + "]";
   }
 

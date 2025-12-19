@@ -172,17 +172,11 @@ public class HistoricTaskInstanceEventEntity extends HistoricScopeInstanceEvent 
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[taskId%s, assignee=".formatted(taskId) + assignee
-           + ", owner=%s, name=".formatted(owner) + name
-           + ", description=%s, dueDate=".formatted(description) + dueDate
-           + ", followUpDate=%s, priority=".formatted(followUpDate) + priority
-           + ", parentTaskId=%s, deleteReason=".formatted(parentTaskId) + deleteReason
-           + ", taskDefinitionKey=%s, durationInMillis=".formatted(taskDefinitionKey) + durationInMillis
-           + ", startTime=%s, endTime=".formatted(startTime) + endTime
-           + ", id=%s, eventType=".formatted(id) + eventType
-           + ", executionId=%s, processDefinitionId=".formatted(executionId) + processDefinitionId
-           + ", rootProcessInstanceId=%s, processInstanceId=".formatted(rootProcessInstanceId) + processInstanceId
-           + ", activityInstanceId=%s, tenantId=".formatted(activityInstanceId) + tenantId
-           + ", taskState=%s]".formatted(taskState);
+           + "[taskId%s, assignee=%s, owner=%s, name=".formatted(taskId, assignee).formatted(owner) + name
+           + ", description=%s, dueDate=%s, followUpDate=%s, priority=".formatted(description, dueDate).formatted(followUpDate) + priority
+           + ", parentTaskId=%s, deleteReason=%s, taskDefinitionKey=%s, durationInMillis=".formatted(parentTaskId, deleteReason).formatted(taskDefinitionKey) + durationInMillis
+           + ", startTime=%s, endTime=%s, id=%s, eventType=".formatted(startTime, endTime).formatted(id) + eventType
+           + ", executionId=%s, processDefinitionId=%s, rootProcessInstanceId=%s, processInstanceId=".formatted(executionId, processDefinitionId).formatted(rootProcessInstanceId) + processInstanceId
+           + ", activityInstanceId=%s, tenantId=%s, taskState=%s]".formatted(activityInstanceId, tenantId).formatted(taskState);
   }
 }

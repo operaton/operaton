@@ -55,13 +55,9 @@ public class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity i
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[instances=%s, failedJobs=".formatted(instances) + failedJobs
-           + ", id=%s, deploymentId=".formatted(id) + deploymentId
-           + ", description=%s, historyLevel=".formatted(description) + historyLevel
-           + ", category=%s, hasStartFormKey=".formatted(category) + hasStartFormKey
-           + ", diagramResourceName=%s, key=".formatted(diagramResourceName) + key
-           + ", name=%s, resourceName=".formatted(name) + resourceName
-           + ", revision=%s, version=".formatted(revision) + version
-           + ", suspensionState=%s]".formatted(suspensionState);
+           + "[instances=%s, failedJobs=%s, id=%s, deploymentId=".formatted(instances, failedJobs).formatted(id) + deploymentId
+           + ", description=%s, historyLevel=%s, category=%s, hasStartFormKey=".formatted(description, historyLevel).formatted(category) + hasStartFormKey
+           + ", diagramResourceName=%s, key=%s, name=%s, resourceName=".formatted(diagramResourceName, key).formatted(name) + resourceName
+           + ", revision=%s, version=%s, suspensionState=%s]".formatted(revision, version).formatted(suspensionState);
   }
 }

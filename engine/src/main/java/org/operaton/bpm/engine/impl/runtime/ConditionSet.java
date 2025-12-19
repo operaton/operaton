@@ -57,8 +57,7 @@ public class ConditionSet {
 
   @Override
   public String toString() {
-    return "ConditionSet [businessKey=%s, processDefinitionId=".formatted(businessKey) + processDefinitionId
-        + ", variables=%s, tenantId=".formatted(variables) + tenantId + ", isTenantIdSet=%s]".formatted(isTenantIdSet);
+    return "ConditionSet [businessKey=%s, processDefinitionId=%s, variables=%s, tenantId=".formatted(businessKey, processDefinitionId).formatted(variables) + tenantId + ", isTenantIdSet=%s]".formatted(isTenantIdSet);
   }
 
 }

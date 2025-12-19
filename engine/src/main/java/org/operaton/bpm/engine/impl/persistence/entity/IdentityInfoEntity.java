@@ -159,10 +159,8 @@ public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Ser
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=".formatted(id) + revision
-           + ", type=%s, userId=".formatted(type) + userId
-           + ", key=%s, value=".formatted(key) + value
-           + ", password=%s, parentId=".formatted(password) + parentId
+           + "[id=%s, revision=%s, type=%s, userId=".formatted(id, revision).formatted(type) + userId
+           + ", key=%s, value=%s, password=%s, parentId=".formatted(key, value).formatted(password) + parentId
            + ", details=%s]".formatted(details);
   }
 }

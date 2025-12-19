@@ -110,7 +110,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
-      ensureNotNull("Cannot find execution with id '%s' referenced from job '".formatted(executionId) + this + "'", "execution", getExecution());
+      ensureNotNull("Cannot find execution with id '%s' referenced from job '%s'".formatted(executionId, this), "execution", getExecution());
     }
 
     // initialize activity id
@@ -122,7 +122,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     preExecute(commandContext);
     JobHandler jobHandler = getJobHandler();
     JobHandlerConfiguration configuration = getJobHandlerConfiguration();
-    ensureNotNull("Cannot find job handler '%s' from job '".formatted(jobHandlerType) + this + "'", "jobHandler", jobHandler);
+    ensureNotNull("Cannot find job handler '%s' from job '%s'".formatted(jobHandlerType, this), "jobHandler", jobHandler);
     jobHandler.execute(configuration, execution, commandContext, tenantId);
     postExecute(commandContext);
   }
@@ -717,16 +717,11 @@ public abstract class JobEntity extends AcquirableJobEntity
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=".formatted(id) + revision
-           + ", duedate=%s, lockOwner=".formatted(duedate) + lockOwner
-           + ", lockExpirationTime=%s, executionId=".formatted(lockExpirationTime) + executionId
-           + ", processInstanceId=%s, isExclusive=".formatted(processInstanceId) + isExclusive
-           + ", jobDefinitionId=%s, jobHandlerType=".formatted(jobDefinitionId) + jobHandlerType
-           + ", jobHandlerConfiguration=%s, exceptionByteArray=".formatted(jobHandlerConfiguration) + exceptionByteArray
-           + ", exceptionByteArrayId=%s, exceptionMessage=".formatted(exceptionByteArrayId) + exceptionMessage
-           + ", failedActivityId=%s, deploymentId=".formatted(failedActivityId) + deploymentId
-           + ", priority=%s, tenantId=".formatted(priority) + tenantId
-           + ", batchId=%s]".formatted(batchId);
+           + "[id=%s, revision=%s, duedate=%s, lockOwner=".formatted(id, revision).formatted(duedate) + lockOwner
+           + ", lockExpirationTime=%s, executionId=%s, processInstanceId=%s, isExclusive=".formatted(lockExpirationTime, executionId).formatted(processInstanceId) + isExclusive
+           + ", jobDefinitionId=%s, jobHandlerType=%s, jobHandlerConfiguration=%s, exceptionByteArray=".formatted(jobDefinitionId, jobHandlerType).formatted(jobHandlerConfiguration) + exceptionByteArray
+           + ", exceptionByteArrayId=%s, exceptionMessage=%s, failedActivityId=%s, deploymentId=".formatted(exceptionByteArrayId, exceptionMessage).formatted(failedActivityId) + deploymentId
+           + ", priority=%s, tenantId=%s, batchId=%s]".formatted(priority, tenantId).formatted(batchId);
   }
 
 }

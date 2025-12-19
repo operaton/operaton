@@ -68,13 +68,13 @@ public class CaseDefinitionCache extends ResourceDefinitionCache<CaseDefinitionE
 
   @Override
   protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key '%s' and tenant-id '".formatted(definitionKey) + tenantId + "'",
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key '%s' and tenant-id '%s'".formatted(definitionKey, tenantId),
       VAR_CASE_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s', version = '".formatted(definitionKey) + definitionVersion + "'"
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s', version = '%s'".formatted(definitionKey, definitionVersion)
         + " and tenant-id = '%s'".formatted(tenantId), VAR_CASE_DEFINITION, definition);
   }
 
@@ -84,13 +84,13 @@ public class CaseDefinitionCache extends ResourceDefinitionCache<CaseDefinitionE
 
   @Override
   protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s' in deployment = '".formatted(definitionKey) + deploymentId + "'",
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s' in deployment = '%s'".formatted(definitionKey, deploymentId),
       VAR_CASE_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, CaseDefinitionEntity definition) {
-    ensureNotNull("deployment '%s' didn't put case definition '".formatted(deploymentId) + definitionId + "' in the cache",
+    ensureNotNull("deployment '%s' didn't put case definition '%s' in the cache".formatted(deploymentId, definitionId),
       VAR_CACHED_CASE_DEFINITION, definition);
   }
 }

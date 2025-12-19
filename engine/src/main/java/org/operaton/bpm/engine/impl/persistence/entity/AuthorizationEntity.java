@@ -326,10 +326,8 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=".formatted(id) + revision
-           + ", authorizationType=%s, permissions=".formatted(authorizationType) + permissions
-           + ", userId=%s, groupId=".formatted(userId) + groupId
-           + ", resourceType=%s, resourceId=".formatted(resourceType) + resourceId
+           + "[id=%s, revision=%s, authorizationType=%s, permissions=".formatted(id, revision).formatted(authorizationType) + permissions
+           + ", userId=%s, groupId=%s, resourceType=%s, resourceId=".formatted(userId, groupId).formatted(resourceType) + resourceId
            + "]";
   }
 }

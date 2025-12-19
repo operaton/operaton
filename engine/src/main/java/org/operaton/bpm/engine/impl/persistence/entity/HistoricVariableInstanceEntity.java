@@ -425,18 +425,12 @@ public class HistoricVariableInstanceEntity implements ValueFields, HistoricVari
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[id=%s, processDefinitionKey=".formatted(id) + processDefinitionKey
-      + ", processDefinitionId=%s, rootProcessInstanceId=".formatted(processDefinitionId) + rootProcessInstanceId
-      + ", removalTime=%s, processInstanceId=".formatted(removalTime) + processInstanceId
-      + ", taskId=%s, executionId=".formatted(taskId) + executionId
-      + ", tenantId=%s, activityInstanceId=".formatted(tenantId) + activityInstanceId
-      + ", caseDefinitionKey=%s, caseDefinitionId=".formatted(caseDefinitionKey) + caseDefinitionId
-      + ", caseInstanceId=%s, caseExecutionId=".formatted(caseInstanceId) + caseExecutionId
-      + ", name=%s, createTime=".formatted(name) + createTime
-      + ", revision=%s, serializerName=".formatted(revision) + getSerializerName()
-      + ", longValue=%s, doubleValue=".formatted(longValue) + doubleValue
-      + ", textValue=%s, textValue2=".formatted(textValue) + textValue2
-      + ", state=%s, byteArrayId=".formatted(state) + getByteArrayId()
+      + "[id=%s, processDefinitionKey=%s, processDefinitionId=%s, rootProcessInstanceId=".formatted(id, processDefinitionKey).formatted(processDefinitionId) + rootProcessInstanceId
+      + ", removalTime=%s, processInstanceId=%s, taskId=%s, executionId=".formatted(removalTime, processInstanceId).formatted(taskId) + executionId
+      + ", tenantId=%s, activityInstanceId=%s, caseDefinitionKey=%s, caseDefinitionId=".formatted(tenantId, activityInstanceId).formatted(caseDefinitionKey) + caseDefinitionId
+      + ", caseInstanceId=%s, caseExecutionId=%s, name=%s, createTime=".formatted(caseInstanceId, caseExecutionId).formatted(name) + createTime
+      + ", revision=%s, serializerName=%s, longValue=%s, doubleValue=".formatted(revision, getSerializerName()).formatted(longValue) + doubleValue
+      + ", textValue=%s, textValue2=%s, state=%s, byteArrayId=".formatted(textValue, textValue2).formatted(state) + getByteArrayId()
       + "]";
   }
 

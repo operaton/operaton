@@ -111,7 +111,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
         TimerStartEventSubprocessJobHandler.TYPE.equals(type) ||
         TimerTaskListenerJobHandler.TYPE.equals(type)) ||
         !(job instanceof TimerEntity)) {
-      throw new ProcessEngineException("Only timer jobs can be recalculated, but the job with id '%s' is of type '".formatted(jobId) + type + "'.");
+      throw new ProcessEngineException("Only timer jobs can be recalculated, but the job with id '%s' is of type '%s'.".formatted(jobId, type));
     }
   }
 

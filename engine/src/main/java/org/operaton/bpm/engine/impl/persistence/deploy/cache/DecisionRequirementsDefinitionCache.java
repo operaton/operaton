@@ -74,6 +74,6 @@ public class DecisionRequirementsDefinitionCache extends ResourceDefinitionCache
 
   @Override
   protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, DecisionRequirementsDefinitionEntity definition) {
-    ensureNotNull("deployment '%s' didn't put decision requirements definition '".formatted(deploymentId) + definitionId + "' in the cache", "cachedDecisionRequirementsDefinition", definition);
+    ensureNotNull("deployment '%s' didn't put decision requirements definition '%s' in the cache".formatted(deploymentId, definitionId), "cachedDecisionRequirementsDefinition", definition);
   }
 }

@@ -104,10 +104,8 @@ public class CleanableHistoricCaseInstanceReportResultEntity implements Cleanabl
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[caseDefinitionId = %s, caseDefinitionKey = ".formatted(caseDefinitionId) + caseDefinitionKey
-        + ", caseDefinitionName = %s, caseDefinitionVersion = ".formatted(caseDefinitionName) + caseDefinitionVersion
-        + ", historyTimeToLive = %s, finishedCaseInstanceCount = ".formatted(historyTimeToLive) + finishedCaseInstanceCount
-        + ", cleanableCaseInstanceCount = %s, tenantId = ".formatted(cleanableCaseInstanceCount) + tenantId
+        + "[caseDefinitionId = %s, caseDefinitionKey = %s, caseDefinitionName = %s, caseDefinitionVersion = ".formatted(caseDefinitionId, caseDefinitionKey).formatted(caseDefinitionName) + caseDefinitionVersion
+        + ", historyTimeToLive = %s, finishedCaseInstanceCount = %s, cleanableCaseInstanceCount = %s, tenantId = ".formatted(historyTimeToLive, finishedCaseInstanceCount).formatted(cleanableCaseInstanceCount) + tenantId
         + "]";
   }
 }

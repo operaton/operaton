@@ -178,15 +178,10 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[activityId=%s, activityName=".formatted(activityId) + activityName
-           + ", activityType=%s, activityInstanceId=".formatted(activityType) + activityInstanceId
-           + ", activityInstanceState=%s, parentActivityInstanceId=".formatted(activityInstanceState) + parentActivityInstanceId
-           + ", calledProcessInstanceId=%s, calledCaseInstanceId=".formatted(calledProcessInstanceId) + calledCaseInstanceId
-           + ", taskId=%s, taskAssignee=".formatted(taskId) + taskAssignee
-           + ", durationInMillis=%s, startTime=".formatted(durationInMillis) + startTime
-           + ", endTime=%s, eventType=".formatted(endTime) + eventType
-           + ", executionId=%s, processDefinitionId=".formatted(executionId) + processDefinitionId
-           + ", rootProcessInstanceId=%s, processInstanceId=".formatted(rootProcessInstanceId) + processInstanceId
-           + ", tenantId=%s]".formatted(tenantId);
+           + "[activityId=%s, activityName=%s, activityType=%s, activityInstanceId=".formatted(activityId, activityName).formatted(activityType) + activityInstanceId
+           + ", activityInstanceState=%s, parentActivityInstanceId=%s, calledProcessInstanceId=%s, calledCaseInstanceId=".formatted(activityInstanceState, parentActivityInstanceId).formatted(calledProcessInstanceId) + calledCaseInstanceId
+           + ", taskId=%s, taskAssignee=%s, durationInMillis=%s, startTime=".formatted(taskId, taskAssignee).formatted(durationInMillis) + startTime
+           + ", endTime=%s, eventType=%s, executionId=%s, processDefinitionId=".formatted(endTime, eventType).formatted(executionId) + processDefinitionId
+           + ", rootProcessInstanceId=%s, processInstanceId=%s, tenantId=%s]".formatted(rootProcessInstanceId, processInstanceId).formatted(tenantId);
   }
 }

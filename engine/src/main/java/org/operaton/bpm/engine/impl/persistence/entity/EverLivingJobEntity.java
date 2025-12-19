@@ -55,14 +55,10 @@ public class EverLivingJobEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=".formatted(id) + revision
-           + ", duedate=%s, lockOwner=".formatted(duedate) + lockOwner
-           + ", lockExpirationTime=%s, executionId=".formatted(lockExpirationTime) + executionId
-           + ", processInstanceId=%s, isExclusive=".formatted(processInstanceId) + isExclusive
-           + ", retries=%s, jobHandlerType=".formatted(retries) + jobHandlerType
-           + ", jobHandlerConfiguration=%s, exceptionByteArray=".formatted(jobHandlerConfiguration) + exceptionByteArray
-           + ", exceptionByteArrayId=%s, exceptionMessage=".formatted(exceptionByteArrayId) + exceptionMessage
-           + ", deploymentId=%s]".formatted(deploymentId);
+           + "[id=%s, revision=%s, duedate=%s, lockOwner=".formatted(id, revision).formatted(duedate) + lockOwner
+           + ", lockExpirationTime=%s, executionId=%s, processInstanceId=%s, isExclusive=".formatted(lockExpirationTime, executionId).formatted(processInstanceId) + isExclusive
+           + ", retries=%s, jobHandlerType=%s, jobHandlerConfiguration=%s, exceptionByteArray=".formatted(retries, jobHandlerType).formatted(jobHandlerConfiguration) + exceptionByteArray
+           + ", exceptionByteArrayId=%s, exceptionMessage=%s, deploymentId=%s]".formatted(exceptionByteArrayId, exceptionMessage).formatted(deploymentId);
   }
 
 }

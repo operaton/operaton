@@ -716,16 +716,14 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   public ProcessEngineException batchingNotSupported(DbOperation operation) {
     throw new ProcessEngineException(exceptionMessage(
         "089",
-        "Batching not supported: The jdbc driver in use does not return the number of %sConsider setting the engine configuration property 'jdbcBatchProcessing' to false.".formatted("affected rows when executing statement batches. ")
-        + "Failed operation: {}",
+        "Batching not supported: The jdbc driver in use does not return the number of %sConsider setting the engine configuration property 'jdbcBatchProcessing' to false.%splease check your process engine configuration.".formatted("affected rows when executing statement batches. ", "Failed operation: {}",
         operation));
   }
 
   public ProcessEngineException disabledHistoricInstancePermissionsException() {
     return  new BadUserRequestException(exceptionMessage(
         "090",
-        "Historic instance permissions are disabled, " +
-            "please check your process engine configuration."
+        "Historic instance permissions are disabled, ")
     ));
   }
 

@@ -107,9 +107,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
     } else if (!processInstance.isProcessInstanceExecution()) {
       throw new ProcessEngineException(
         "A process instance id is required, but the provided id " +
-        "'%s' ".formatted(processInstanceId) +
-        "points to a child execution of process instance " +
-        "'%s'. ".formatted(processInstance.getProcessInstanceId()) +
+        "'%s' %s'%s'. ".formatted(processInstanceId, "points to a child execution of process instance ").formatted(processInstance.getProcessInstanceId()) +
         "Please invoke the %s with a root execution id.".formatted(getClass().getSimpleName()));
     }
     ProcessDefinitionImpl currentProcessDefinitionImpl = processInstance.getProcessDefinition();
@@ -223,9 +221,7 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
           "The new process definition " +
           "(key = '%s') ".formatted(newProcessDefinition.getKey()) +
           "does not contain the current activity " +
-          "(id = '%s') ".formatted(activityId) +
-          "of the process instance " +
-          "(id = '%s').".formatted(processInstanceId));
+          "(id = '%s') %s(id = '%s').".formatted(activityId, "of the process instance ").formatted(processInstanceId));
         }
 
         // clear cached activity so that outgoing transitions are refreshed

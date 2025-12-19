@@ -504,14 +504,10 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, incidentTimestamp=".formatted(id) + incidentTimestamp
-           + ", incidentType=%s, executionId=".formatted(incidentType) + executionId
-           + ", activityId=%s, processInstanceId=".formatted(activityId) + processInstanceId
-           + ", processDefinitionId=%s, causeIncidentId=".formatted(processDefinitionId) + causeIncidentId
-           + ", rootCauseIncidentId=%s, configuration=".formatted(rootCauseIncidentId) + configuration
-           + ", tenantId=%s, incidentMessage=".formatted(tenantId) + incidentMessage
-           + ", jobDefinitionId=%s, failedActivityId=".formatted(jobDefinitionId) + failedActivityId
-           + ", annotation=%s]".formatted(annotation);
+           + "[id=%s, incidentTimestamp=%s, incidentType=%s, executionId=".formatted(id, incidentTimestamp).formatted(incidentType) + executionId
+           + ", activityId=%s, processInstanceId=%s, processDefinitionId=%s, causeIncidentId=".formatted(activityId, processInstanceId).formatted(processDefinitionId) + causeIncidentId
+           + ", rootCauseIncidentId=%s, configuration=%s, tenantId=%s, incidentMessage=".formatted(rootCauseIncidentId, configuration).formatted(tenantId) + incidentMessage
+           + ", jobDefinitionId=%s, failedActivityId=%s, annotation=%s]".formatted(jobDefinitionId, failedActivityId).formatted(annotation);
   }
 
   @Override

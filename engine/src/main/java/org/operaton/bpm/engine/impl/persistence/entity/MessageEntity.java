@@ -71,14 +71,10 @@ public class MessageEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[repeat=%s, id=".formatted(repeat) + id
-           + ", revision=%s, duedate=".formatted(revision) + duedate
-           + ", lockOwner=%s, lockExpirationTime=".formatted(lockOwner) + lockExpirationTime
-           + ", executionId=%s, processInstanceId=".formatted(executionId) + processInstanceId
-           + ", isExclusive=%s, retries=".formatted(isExclusive) + retries
-           + ", jobHandlerType=%s, jobHandlerConfiguration=".formatted(jobHandlerType) + jobHandlerConfiguration
-           + ", exceptionByteArray=%s, exceptionByteArrayId=".formatted(exceptionByteArray) + exceptionByteArrayId
-           + ", exceptionMessage=%s, deploymentId=".formatted(exceptionMessage) + deploymentId
+           + "[repeat=%s, id=%s, revision=%s, duedate=".formatted(repeat, id).formatted(revision) + duedate
+           + ", lockOwner=%s, lockExpirationTime=%s, executionId=%s, processInstanceId=".formatted(lockOwner, lockExpirationTime).formatted(executionId) + processInstanceId
+           + ", isExclusive=%s, retries=%s, jobHandlerType=%s, jobHandlerConfiguration=".formatted(isExclusive, retries).formatted(jobHandlerType) + jobHandlerConfiguration
+           + ", exceptionByteArray=%s, exceptionByteArrayId=%s, exceptionMessage=%s, deploymentId=".formatted(exceptionByteArray, exceptionByteArrayId).formatted(exceptionMessage) + deploymentId
            + ", createTime=%s]".formatted(createTime);
   }
 

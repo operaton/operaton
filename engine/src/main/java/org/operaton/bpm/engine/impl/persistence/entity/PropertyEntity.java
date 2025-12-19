@@ -96,7 +96,6 @@ public class PropertyEntity implements DbEntity, HasDbRevision, Serializable {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[name=%s, revision=".formatted(name) + revision
-           + ", value=%s]".formatted(value);
+           + "[name=%s, revision=%s, value=%s]".formatted(name, revision).formatted(value);
   }
 }

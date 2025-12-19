@@ -496,7 +496,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
       if (validateExistence) {
         EnsureUtil.ensureNotNull(
-            "Cannot find execution with id %s for external task ".formatted(executionId) + id,
+            "Cannot find execution with id %s for external task %sid=%s, revision=".formatted(executionId, id,
             "execution",
             execution);
       }
@@ -546,12 +546,9 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
   @Override
   public String toString() {
-    return "ExternalTaskEntity ["
-        + "id=%s, revision=".formatted(id) + revision
-        + ", topicName=%s, workerId=".formatted(topicName) + workerId
-        + ", lockExpirationTime=%s, priority=".formatted(lockExpirationTime) + priority
-        + ", errorMessage=%s, errorDetailsByteArray=".formatted(errorMessage) + errorDetailsByteArray
-        + ", errorDetailsByteArrayId=%s, executionId=".formatted(errorDetailsByteArrayId) + executionId + "]";
+    return "ExternalTaskEntity [").formatted(id) + revision
+        + ", topicName=%s, workerId=%s, lockExpirationTime=%s, priority=".formatted(topicName, workerId).formatted(lockExpirationTime) + priority
+        + ", errorMessage=%s, errorDetailsByteArray=%s, errorDetailsByteArrayId=%s, executionId=".formatted(errorMessage, errorDetailsByteArray).formatted(errorDetailsByteArrayId) + executionId + "]";
   }
 
   public void unlock() {

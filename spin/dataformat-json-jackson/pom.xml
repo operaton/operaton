@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.spin</groupId>
     <artifactId>operaton-spin-root</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-spin-dataformat-json-jackson</artifactId>
   <name>Operaton - Spin - Jackson JSON data format</name>

@@ -4,7 +4,7 @@
   <parent>
     <artifactId>operaton-engine-plugins</artifactId>
     <groupId>org.operaton.bpm</groupId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-engine-plugin-spin</artifactId>
   <name>Operaton - Engine Plugins - Spin</name>

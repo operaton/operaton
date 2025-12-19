@@ -96,10 +96,10 @@ class ProcessTest extends BpmnModelElementInstanceTest {
   void testOperatonHistoryTimeToLive() {
     //given
     Process proc = modelInstance.newInstance(Process.class);
-    assertThat(proc.getOperatonHistoryTimeToLive()).isNull();
+    assertThat(proc.getOperatonHistoryTimeToLiveString()).isNull();
     //when
-    proc.setOperatonHistoryTimeToLive(BpmnTestConstants.TEST_HISTORY_TIME_TO_LIVE);
+    proc.setOperatonHistoryTimeToLiveString(BpmnTestConstants.TEST_HISTORY_TIME_TO_LIVE.toString());
     //then
-    assertThat(proc.getOperatonHistoryTimeToLive()).isEqualTo(BpmnTestConstants.TEST_HISTORY_TIME_TO_LIVE);
+    assertThat(proc.getOperatonHistoryTimeToLiveString()).isEqualTo(BpmnTestConstants.TEST_HISTORY_TIME_TO_LIVE.toString());
   }
 }

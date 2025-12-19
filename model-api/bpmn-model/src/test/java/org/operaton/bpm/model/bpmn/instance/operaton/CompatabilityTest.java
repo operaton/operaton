@@ -64,7 +64,7 @@ class CompatabilityTest {
     process.setOperatonJobPriority(priority);
     process.setOperatonTaskPriority(priority);
     Integer historyTimeToLive = 10;
-    process.setOperatonHistoryTimeToLive(historyTimeToLive);
+    process.setOperatonHistoryTimeToLiveString(historyTimeToLive.toString());
     process.setOperatonIsStartableInTasklist(false);
     process.setOperatonVersionTag("v1.0.0");
     assertThat(process.getAttributeValueNs(BpmnModelConstants.CAMUNDA_NS, BpmnModelConstants.OPERATON_ATTRIBUTE_JOB_PRIORITY)).isEqualTo(priority);

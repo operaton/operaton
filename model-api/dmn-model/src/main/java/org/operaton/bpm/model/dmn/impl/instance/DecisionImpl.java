@@ -172,7 +172,7 @@ public class DecisionImpl extends DrgElementImpl implements Decision {
 
   @Override
   public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
-    setOperatonHistoryTimeToLiveString(String.valueOf(historyTimeToLive));
+    setOperatonHistoryTimeToLiveString(historyTimeToLive != null ? String.valueOf(historyTimeToLive) : null);
   }
 
   @Override

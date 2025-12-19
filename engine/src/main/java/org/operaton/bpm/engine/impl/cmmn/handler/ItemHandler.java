@@ -669,7 +669,15 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     return new ArrayList<>();
   }
 
+  /**
+   * @deprecated use {@link #getDescription(CmmnElement)} instead
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
   protected String getDesciption(CmmnElement element) {
+    return getDescription(element);
+  }
+
+  protected String getDescription(CmmnElement element) {
     String description = element.getDescription();
 
     if (description == null) {

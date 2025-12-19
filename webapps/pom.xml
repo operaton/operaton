@@ -27,8 +27,6 @@
     <!-- frontend-sources artifact is for internal use only.
     Artifact generation is skipped when it comes to maven central deployment -->
     <skip-zip-frontend-sources>false</skip-zip-frontend-sources>
-    <npm.build.args>install</npm.build.args>
-    <npm.webpack.args>--mode development --config webpack.dev.js</npm.webpack.args>
   </properties>
   <build>
     <plugins>
@@ -60,13 +58,13 @@
             </goals>
           </execution>
           <execution>
-            <id>npm (clean) install</id>
+            <id>npm ci</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>${npm.build.args}</arguments>
+              <arguments>ci</arguments>
             </configuration>
           </execution>
           <execution>
@@ -82,11 +80,11 @@
           <execution>
             <id>Build</id>
             <goals>
-              <goal>webpack</goal>
+              <goal>npm</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>${npm.webpack.args}</arguments>
+              <arguments>run build</arguments>
             </configuration>
           </execution>
         </executions>
@@ -116,19 +114,6 @@
       <id>skipFrontendBuild</id>
       <properties>
         <skip.frontend.build>true</skip.frontend.build>
-      </properties>
-    </profile>
-    <profile>
-      <id>github-ci</id>
-      <activation>
-        <property>
-          <name>env.GITHUB_ACTIONS</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <properties>
-        <npm.build.args>ci</npm.build.args>
-        <npm.webpack.args>--mode production --config webpack.prod.js</npm.webpack.args>
       </properties>
     </profile>
   </profiles>

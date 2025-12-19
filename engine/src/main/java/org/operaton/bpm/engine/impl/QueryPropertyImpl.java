@@ -91,9 +91,7 @@ public class QueryPropertyImpl implements QueryProperty {
 
   @Override
   public String toString() {
-    return "QueryProperty["
-      + "name=%s, function=".formatted(name) + function
-      + "]";
+    return "QueryProperty[name=%s, function=%s]".formatted(name, function);
   }
 
 }

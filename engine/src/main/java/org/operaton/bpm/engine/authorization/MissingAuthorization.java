@@ -51,8 +51,7 @@ public class MissingAuthorization {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[permissionName=%s, resourceType=".formatted(permissionName) + resourceType
-        + ", resourceId=%s]".formatted(resourceId);
+        + "[permissionName=%s, resourceType=%s, resourceId=%s]".formatted(permissionName, resourceType, resourceId);
   }
 
   @Override

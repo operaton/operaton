@@ -263,8 +263,7 @@ public class CmmnBehaviorLogger extends ProcessEngineLogger {
   public ProcessEngineException decisionDefinitionEvaluationFailed(CmmnActivityExecution execution, Exception cause) {
     return new ProcessEngineException(exceptionMessage(
       "019",
-      "Could not evaluate decision in case execution '"+execution.getId()+"'. Reason: {}",
-      cause.getMessage()),
+      "Could not evaluate decision in case execution '%s'. Reason: %s".formatted(execution.getId(), cause.getMessage())),
       cause
     );
   }

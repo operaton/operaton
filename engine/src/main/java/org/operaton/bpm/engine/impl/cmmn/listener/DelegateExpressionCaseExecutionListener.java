@@ -55,8 +55,7 @@ public class DelegateExpressionCaseExecutionListener implements CaseExecutionLis
         .getDelegateInterceptor()
         .handleInvocation(new CaseExecutionListenerInvocation(listenerInstance, caseExecution));
     } else {
-      throw new ProcessEngineException("Delegate expression " + expression
-              + " did not resolve to an implementation of " + CaseExecutionListener.class);
+      throw new ProcessEngineException("Delegate expression %s did not resolve to an implementation of ".formatted(expression) + CaseExecutionListener.class);
     }
   }
 

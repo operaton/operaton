@@ -126,7 +126,7 @@ public class ActivityCancellationCmd extends AbstractProcessInstanceModification
 
   @Override
   protected String describe() {
-    return "Cancel all instances of activity '" + activityId + "'";
+    return "Cancel all instances of activity '%s'".formatted(activityId);
   }
 
   public List<AbstractInstanceCancellationCmd> createActivityInstanceCancellations(ActivityInstance activityInstanceTree, CommandContext commandContext) {

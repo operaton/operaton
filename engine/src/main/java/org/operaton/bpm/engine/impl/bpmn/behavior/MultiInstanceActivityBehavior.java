@@ -190,7 +190,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
         return innerActivity;
       }
     }
-    throw new ProcessEngineException("inner activity of multi instance body activity '" + miBodyActivity.getId() + "' not found");
+    throw new ProcessEngineException("inner activity of multi instance body activity '%s' not found".formatted(miBodyActivity.getId()));
   }
 
   protected void setLoopVariable(ActivityExecution execution, String variableName, Object value) {
@@ -199,7 +199,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
 
   protected Integer getLoopVariable(ActivityExecution execution, String variableName) {
     IntegerValue value = execution.getVariableLocalTyped(variableName);
-    ensureNotNull("The variable \"" + variableName + "\" could not be found in execution with id " + execution.getId(), "value", value);
+    ensureNotNull("The variable '%s' could not be found in execution with id".formatted(variableName, execution.getId()), "value", value);
     return value.getValue();
   }
 

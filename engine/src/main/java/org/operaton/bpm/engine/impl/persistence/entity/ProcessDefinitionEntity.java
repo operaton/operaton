@@ -188,7 +188,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   @Override
   public String toString() {
-    return "ProcessDefinitionEntity["+id+"]";
+    return "ProcessDefinitionEntity[%s]".formatted(id);
   }
 
   /**

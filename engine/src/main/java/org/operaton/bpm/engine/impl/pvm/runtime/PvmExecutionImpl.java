@@ -1645,9 +1645,9 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
   @Override
   public String toString() {
     if (isProcessInstanceExecution()) {
-      return "ProcessInstance[" + getToStringIdentity() + "]";
+      return "ProcessInstance[%s]".formatted(getToStringIdentity());
     } else {
-      return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[" + getToStringIdentity() + "]";
+      return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[%s]".formatted(getToStringIdentity());
     }
   }
 

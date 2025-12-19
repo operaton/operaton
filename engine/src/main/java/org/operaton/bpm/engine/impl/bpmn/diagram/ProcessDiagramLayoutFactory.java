@@ -374,7 +374,7 @@ public class ProcessDiagramLayoutFactory {
       for (Entry<String, DiagramNode> entry : elementBoundsFromBpmnDi.entrySet()) {
         String elementId = entry.getKey();
         DiagramNode elementBounds = entry.getValue();
-        String expression = "local-name(//bpmn:*[@id = '" + elementId + "'])";
+        String expression = "local-name(//bpmn:*[@id = '%s'])".formatted(elementId);
         try {
           XPathExpression xPathExpression = xPath.compile(expression);
           String elementLocalName = xPathExpression.evaluate(bpmnModel);
@@ -386,7 +386,7 @@ public class ProcessDiagramLayoutFactory {
             elementBounds.setY(elementBounds.getY() - elementBounds.getHeight()/2);
           }
         } catch (XPathExpressionException e) {
-          throw new ProcessEngineException("Error while evaluating the following XPath expression on a BPMN XML document: '" + expression + "'.", e);
+          throw new ProcessEngineException("Error while evaluating the following XPath expression on a BPMN XML document: '%s'.".formatted(expression), e);
         }
         mapOfFixedBounds.put(elementId, elementBounds);
       }

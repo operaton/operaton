@@ -65,12 +65,9 @@ public class ProcessElementInstanceImpl implements ProcessElementInstance {
 
   @Override
   public String toString() {
-    return this.getClass().getSimpleName()
-           + "[id=" + id
-           + ", parentActivityInstanceId=" + parentActivityInstanceId
-           + ", processInstanceId=" + processInstanceId
-           + ", processDefinitionId=" + processDefinitionId
-           + "]";
+    return this.getClass().getSimpleName() +
+        "%s[id=%s, parentActivityInstanceId=%s, processInstanceId=%s, processDefinitionId=%s]"
+        .formatted(id, parentActivityInstanceId, processInstanceId, processDefinitionId);
   }
 
 }

@@ -283,7 +283,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
           .getValue(null);
       }
       catch (ProcessEngineException e) {
-        throw new ProcessEngineException("Unable to resolve expression '%s' for method '".formatted(expression) + methodName + "' on class '%s'".formatted(getClass().getCanonicalName()), e);
+        throw new ProcessEngineException("Unable to resolve expression '%s' for method '%s' on class '%s'".formatted(expression, methodName, getClass().getCanonicalName()), e);
       }
 
       // automatically convert DateTime to date
@@ -295,9 +295,9 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
         Method method = getMethod(methodName);
         method.invoke(this, value);
       } catch (InvocationTargetException e) {
-        throw new ProcessEngineException("Unable to invoke method '%s' on class '".formatted(methodName) + getClass().getCanonicalName() + "'", e);
+        throw new ProcessEngineException("Unable to invoke method '%s' on class '%s'".formatted(methodName, getClass().getCanonicalName()), e);
       } catch (IllegalAccessException e) {
-        throw new ProcessEngineException("Unable to access method '%s' on class '".formatted(methodName) + getClass().getCanonicalName() + "'", e);
+        throw new ProcessEngineException("Unable to access method '%s' on class '%s'".formatted(methodName, getClass().getCanonicalName()), e);
       }
     }
   }
@@ -308,7 +308,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
         return method;
       }
     }
-    throw new ProcessEngineException("Unable to find method '%s' on class '".formatted(methodName) + getClass().getCanonicalName() + "'");
+    throw new ProcessEngineException("Unable to find method '%s' on class '%s'".formatted(methodName, getClass().getCanonicalName()));
   }
 
   public T extend(T extendingQuery) {

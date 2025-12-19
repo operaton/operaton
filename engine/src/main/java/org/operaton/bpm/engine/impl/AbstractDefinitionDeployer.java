@@ -345,7 +345,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
     int definitionVersion = newDefinition.getVersion();
 
     String definitionId = definitionKey
-      + ":%s:".formatted(definitionVersion) + nextId;
+      + ":%s:%s".formatted(definitionVersion, nextId);
 
     // ACT-115: maximum id length is 64 characters
     if (definitionId.length() > 64) {

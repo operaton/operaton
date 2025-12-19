@@ -17,14 +17,20 @@
 package org.operaton.bpm.spring.boot.starter.property;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
-class OperatonBpmPropertiesTest {
+@SpringBootTest(webEnvironment = NONE)
+@ActiveProfiles("test")
+class OperatonBpmPropertiesTest extends AbstractOperatonBpmPropertiesTest<OperatonBpmProperties> {
 
   @Test
   void initResourcePatterns() {
@@ -48,5 +54,16 @@ class OperatonBpmPropertiesTest {
     assertThatIllegalArgumentException().isThrownBy(() -> databaseProperty.setSchemaUpdate("foo"));
   }
 
+  @Test
+  void shouldBindPreviewFeaturesEnabledProperty() {
+    // given
+    TestPropertyValues.of("operaton.bpm.preview-features-enabled=true")
+      .applyTo(environment);
+
+    binder.bind(OperatonBpmProperties.PREFIX, Bindable.ofInstance(properties));
+
+    // then
+    assertThat(properties.getPreviewFeaturesEnabled()).isTrue();
+  }
 
 }

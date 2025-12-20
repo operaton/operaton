@@ -23,69 +23,96 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.operaton.bpm.dmn.engine.DmnEngine;
 import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ProcessEnginePreviewFeaturesConfigurationTest {
 
+  private static final Logger LOG = LoggerFactory.getLogger(ProcessEnginePreviewFeaturesConfigurationTest.class);
+
+  private ProcessEngine processEngine;
+
   @AfterEach
-  void clearSystemProperty() {
-    System.clearProperty(ProcessEngineConfigurationImpl.PROPERTY_PREVIEW_FEATURES_ENABLED);
+  void unregisterEngine() {
+    if (processEngine != null) {
+      try {
+        ProcessEngines.unregister(processEngine);
+      } catch (Exception e) {
+        LOG.warn("Error while unregistering process engine", e);
+      }
+
+      try {
+        processEngine.close();
+      } catch (Exception e) {
+        LOG.warn("Error while closing process engine", e);
+      } finally {
+        processEngine = null;
+      }
+    }
   }
 
   @Test
   void shouldDefaultToFalseWhenNotConfigured() {
     // given
-    StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
+    NoSchemaStandaloneInMemProcessEngineConfiguration configuration =
+        new NoSchemaStandaloneInMemProcessEngineConfiguration();
 
     // when
-    configuration.buildProcessEngine();
+    processEngine = configuration.buildProcessEngine();
 
     // then
     assertThat(configuration.isPreviewFeaturesEnabled()).isFalse();
   }
 
-  @Test
-  void shouldRespectExplicitConfigurationOverSystemProperty() {
-    // given
-    System.setProperty(ProcessEngineConfigurationImpl.PROPERTY_PREVIEW_FEATURES_ENABLED, "true");
-
-    StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
-    configuration.setPreviewFeaturesEnabled(false);
-
-    // when
-    configuration.buildProcessEngine();
-
-    // then
-    assertThat(configuration.isPreviewFeaturesEnabled()).isFalse();
-  }
-
-  @Test
-  void shouldUseSystemPropertyWhenNotExplicitlyConfigured() {
-    // given
-    System.setProperty(ProcessEngineConfigurationImpl.PROPERTY_PREVIEW_FEATURES_ENABLED, "true");
-    StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
-
-    // when
-    configuration.buildProcessEngine();
-
-    // then
-    assertThat(configuration.isPreviewFeaturesEnabled()).isTrue();
-  }
 
   @Test
   void shouldPropagatePreviewFeaturesToDmnEngineConfiguration() {
     // given
-    StandaloneInMemProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration();
+    NoSchemaStandaloneInMemProcessEngineConfiguration configuration =
+        new NoSchemaStandaloneInMemProcessEngineConfiguration();
     configuration.setPreviewFeaturesEnabled(true);
 
     // when
-    configuration.buildProcessEngine();
+    processEngine = configuration.buildProcessEngine();
 
     // then
     DmnEngine dmnEngine = configuration.getDmnEngine();
     assertThat(dmnEngine).isNotNull();
 
-    DefaultDmnEngineConfiguration dmnConfiguration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
+    DefaultDmnEngineConfiguration dmnConfiguration =
+        (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     assertThat(dmnConfiguration.isPreviewFeaturesEnabled()).isTrue();
   }
-}
 
+  /**
+   * <p>Test configuration that does not perform any schema operations when the
+   * engine is built.</p>
+   *
+   * <p>This avoids triggering real database schema operations (e.g.
+   * <code>ENGINE-03017</code>) while still fully initializing the process engine
+   * configuration including the preview features logic.</p>
+   */
+  private static class NoSchemaStandaloneInMemProcessEngineConfiguration
+      extends StandaloneInMemProcessEngineConfiguration {
+
+    @Override
+    public ProcessEngine buildProcessEngine() {
+      init();
+      return new NoSchemaProcessEngineImpl(this);
+    }
+
+    private static class NoSchemaProcessEngineImpl extends ProcessEngineImpl {
+      NoSchemaProcessEngineImpl(ProcessEngineConfigurationImpl processEngineConfiguration) {
+        super(processEngineConfiguration);
+      }
+
+      @Override
+      protected void executeSchemaOperations() {
+        // nop - do not execute create schema operations
+      }
+    }
+  }
+}

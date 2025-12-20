@@ -326,8 +326,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public static final String DB_SCHEMA_UPDATE_CREATE = "create";
   public static final String DB_SCHEMA_UPDATE_DROP_CREATE = "drop-create";
 
-  public static final String PROPERTY_PREVIEW_FEATURES_ENABLED = "operaton.preview.features.enabled";
-
   protected boolean previewFeaturesEnabled;
 
   public static final int HISTORYLEVEL_NONE = HistoryLevel.HISTORY_LEVEL_NONE.getId();
@@ -1073,12 +1071,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     protected void initPreviewFeatures() {
-    if (!previewFeaturesEnabled) {
-      String propertyValue = System.getProperty(PROPERTY_PREVIEW_FEATURES_ENABLED);
-      if (propertyValue != null) {
-        previewFeaturesEnabled = Boolean.parseBoolean(propertyValue);
-      }
-    }
+    // Preview features are disabled by default and can only be enabled via explicit configuration
     }
 
   // init /////////////////////////////////////////////////////////////////////

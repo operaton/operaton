@@ -194,12 +194,4 @@ public class OperatonBpmConfiguration {
     return new OperatonIntegrationDeterminator(processEngine);
   }
 
-  protected void initProcessEngineConfigurationSpringBean(final SpringServletProcessEngineConfigurationImpl configuration, final OperatonBpmProperties properties) {
-    // ...existing engine configuration mapping...
-    Boolean previewFeaturesEnabled = properties.getPreviewFeaturesEnabled();
-    if (previewFeaturesEnabled != null) {
-      configuration.setPreviewFeaturesEnabled(previewFeaturesEnabled);
-    }
-    // ...existing code...
-  }
 }

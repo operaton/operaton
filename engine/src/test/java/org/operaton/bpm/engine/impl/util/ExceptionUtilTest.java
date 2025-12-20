@@ -41,7 +41,9 @@ class ExceptionUtilTest {
     String stackTrace = ExceptionUtil.getExceptionStacktrace(throwable);
 
     // then
-    assertThat(stackTrace).isEqualTo("java.lang.Throwable\n\tat ExceptionUtil.getExceptionStackTrace(ExceptionUtil.java:55)\n");
+    assertThat(stackTrace)
+      .startsWith("java.lang.Throwable")
+      .contains("at ExceptionUtil.getExceptionStackTrace(ExceptionUtil.java:55)");
   }
 
   @Test

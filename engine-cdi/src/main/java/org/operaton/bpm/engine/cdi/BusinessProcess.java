@@ -449,9 +449,11 @@ public class BusinessProcess implements Serializable {
    * Set a value for a process variable.
    * <p />
    *
+   * <p>
    * <strong>NOTE:</strong> If no execution is currently associated,
    * the value is temporarily cached and flushed to the process instance
    * at the end of the unit of work
+   * </p>
    *
    * @param variableName
    *          the name of the process variable for which a value is to be set
@@ -548,9 +550,11 @@ public class BusinessProcess implements Serializable {
    * Set a value for a local process variable.
    * <p />
    *
+   * <p>
    * <strong>NOTE:</strong> If a task or execution is currently associated,
    * the value is temporarily cached and flushed to the process instance
    * at the end of the unit of work - otherwise an Exception will be thrown
+   * </p>
    *
    * @param variableName
    *          the name of the local process variable for which a value is to be set

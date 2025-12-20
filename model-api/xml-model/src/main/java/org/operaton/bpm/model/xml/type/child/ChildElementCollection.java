@@ -35,9 +35,11 @@ public interface ChildElementCollection<T extends ModelElementInstance> {
   /**
    * Indicates whether the collection is immutable.
    *
+   * <p>
    * If the collection is immutable, all state-altering operations such
    * as {@link Collection#add(Object)} or {@link Collection#remove(Object)}
    * will throw an {@link UnsupportedOperationException}.
+   * </p>
    *
    * @return true if the collection is mutable, false otherwise.
    */

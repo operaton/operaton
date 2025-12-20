@@ -24,7 +24,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 /**
  * {@link JobHandler} implementation for timer task listeners which can be defined for user tasks.
  *
+ * <p>
  * The configuration contains the id of the activity as well as the id of the task listener.
+ * </p>
  *
  */
 public class TimerTaskListenerJobHandler extends TimerEventJobHandler {

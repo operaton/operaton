@@ -34,7 +34,9 @@ public interface FormData {
    * which is the template for the form.  But users are free to
    * use this property differently.
    *
+   * <p>
    * A form can be referenced either through a form key or through a {@link OperatonFormRef}.
+   * </p>
    *
    */
   String getFormKey();
@@ -44,7 +46,9 @@ public interface FormData {
    * Operaton Form deployed to the engine with any deployment. It is also possible
    * to specify a specific version of a deployed form.
    *
+   * <p>
    * A form can be referenced either through a form key or through a {@link OperatonFormRef}.
+   * </p>
    *
    */
   OperatonFormRef getOperatonFormRef();

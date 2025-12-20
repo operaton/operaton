@@ -72,8 +72,10 @@ public interface HistoricExternalTaskLog {
   /**
    * Returns the message of the error that occurred by executing the associated external task.
    *
+   * <p>
    * To get the full error details,
    * use {@link HistoryService#getHistoricExternalTaskLogErrorDetails(String)}
+   * </p>
    */
   String getErrorMessage();
 

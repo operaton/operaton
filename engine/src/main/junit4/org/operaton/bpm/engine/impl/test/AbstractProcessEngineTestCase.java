@@ -53,7 +53,9 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
    *   * operaton-engine-spring
    *   * operaton-identity-ldap
    *
+   * <p>
    * It should be removed once those Test classes are migrated to JUnit 4.
+   * </p>
    */
 
   private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();

@@ -118,9 +118,11 @@ public class ExecuteJobsRunnable implements Runnable {
    * Switch the context classloader to the ProcessEngine's
    * to assure the loading of the engine classes during job execution<br>
    *
+   * <p>
    * <b>Note</b>: this method is overridden by
    * org.operaton.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable#switchClassLoader()
    * - where the classloader switch is not required
+   * </p>
    *
    * @see https://app.camunda.com/jira/browse/CAM-10379
    *

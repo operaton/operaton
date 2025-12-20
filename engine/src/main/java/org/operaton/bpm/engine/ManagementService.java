@@ -65,8 +65,10 @@ import org.operaton.bpm.engine.telemetry.TelemetryData;
 /**
  * Service for admin and maintenance operations on the process engine.
  *
+ * <p>
  * These operations will typically not be used in a workflow driven application,
  * but are used in for example the operational console.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez
@@ -808,9 +810,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that a job has left.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobId id of the job to modify, cannot be null.
    * @param retries number of retries.
@@ -826,9 +830,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobIds ids of the jobs to modify, cannot be null.
    * @param retries number of retries.
@@ -845,9 +851,11 @@ public interface ManagementService {
   /**
    * Creates a fluent builder to set the number of retries on one or multiple {@link Job jobs}.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @see SetJobRetriesBuilder
    *
@@ -860,9 +868,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobIds ids of the jobs to modify, cannot be null.
    * @param retries number of retries.
@@ -877,9 +887,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobQuery query that identifies which jobs should be modified, cannot be null.
    * @param retries number of retries.
@@ -894,12 +906,16 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
+   * <p>
    * Either jobIds or jobQuery has to be provided. If both are provided resulting list
    * of affected jobs will contain jobs matching query as well as jobs defined in the list.
+   * </p>
    *
    * @param jobIds ids of the jobs to modify.
    * @param jobQuery query that identifies which jobs should be modified.
@@ -915,12 +931,16 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
+   * <p>
    * Either jobIds or jobQuery has to be provided. If both are provided resulting list
    * of affected jobs will contain jobs matching query as well as jobs defined in the list.
+   * </p>
    *
    * @param processInstanceIds ids of the process instances that for which jobs retries will be set
    * @param query query that identifies process instances with jobs that have to be modified
@@ -935,13 +955,17 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
+   * <p>
    * processInstanceIds, processInstanceQuery or historicProcessInstanceQuery has to be provided.
    * If all are provided, resulting list of affected jobs will contain jobs related to the
    * query as well as jobs related to instances in the list.
+   * </p>
    *
    * @param processInstanceIds ids of the process instances that for which jobs retries will be set
    * @param processInstanceQuery query that identifies process instances with jobs
@@ -962,9 +986,11 @@ public interface ManagementService {
   /**
    * Creates a fluent builder to set the number of retries for one or multiple jobs asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @see SetJobRetriesByJobsAsyncBuilder
    *
@@ -977,9 +1003,11 @@ public interface ManagementService {
   /**
    * Creates a fluent builder to set the number of retries for one or multiple jobs referenced by process asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @see SetJobRetriesByProcessAsyncBuilder
    *
@@ -1368,8 +1396,10 @@ public interface ManagementService {
   /**
    * Deletes a batch instance and the corresponding job definitions.
    *
+   * <p>
    * If cascade is set to true the historic batch instances and the
    * historic jobs logs are also removed.
+   * </p>
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
@@ -1413,7 +1443,9 @@ public interface ManagementService {
    * <a href="https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Telemetry</a>
    * page in the Operaton docs.
    *
+   * <p>
    * The engine collects information about multiple aspects of the installation.
+   * </p>
    *
    * @see <a href="https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton Documentation: Telemetry</a>
    */

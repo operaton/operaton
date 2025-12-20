@@ -57,23 +57,33 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
  * {@link Command} that changes the process definition version of an existing
  * process instance.
  *
+ * <p>
  * Warning: This command will NOT perform any migration magic and simply set the
  * process definition version in the database, assuming that the user knows,
  * what he or she is doing.
+ * </p>
  *
+ * <p>
  * This is only useful for simple migrations. The new process definition MUST
  * have the exact same activity id to make it still run.
+ * </p>
  *
+ * <p>
  * Furthermore, activities referenced by sub-executions and jobs that belong to
  * the process instance MUST exist in the new process definition version.
+ * </p>
  *
+ * <p>
  * The command will fail, if there is already a {@link ProcessInstance} or
  * {@link HistoricProcessInstance} using the new process definition version and
  * the same business key as the {@link ProcessInstance} that is to be migrated.
+ * </p>
  *
+ * <p>
  * If the process instance is not currently waiting but actively running, then
  * this would be a case for optimistic locking, meaning either the version
  * update or the "real work" wins, i.e., this is a race condition.
+ * </p>
  *
  * @see http://forums.activiti.org/en/viewtopic.php?t=2918
  * @author Falko Menge

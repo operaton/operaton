@@ -22,8 +22,10 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 /**
  * Util class for manipulating bit-flag in ints.
  *
+ * <p>
  * Currently, only 8-bits are supporten, but can be extended to use all
  * 31 bits in the integer (1st of 32 bits is used for sign).
+ * </p>
  *
  * @author Frederik Heremans
  */

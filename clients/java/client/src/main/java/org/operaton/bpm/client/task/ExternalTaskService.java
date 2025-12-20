@@ -35,8 +35,10 @@ public interface ExternalTaskService {
   /**
    * Locks a task by a given amount of time.
    *
+   * <p>
    * Note: This method should be used to lock external tasks
    * that have been obtained without using the fetch & lock API.
+   * </p>
    *
    * @param externalTaskId the id of the external task whose lock will be extended
    * @param lockDuration specifies the lock duration in milliseconds
@@ -52,8 +54,10 @@ public interface ExternalTaskService {
   /**
    * Locks a task by a given amount of time.
    *
+   * <p>
    * Note: This method should be used to lock external tasks
    * that have been obtained without using the fetch & lock API.
+   * </p>
    *
    * @param externalTask which lock will be extended
    * @param lockDuration specifies the lock duration in milliseconds

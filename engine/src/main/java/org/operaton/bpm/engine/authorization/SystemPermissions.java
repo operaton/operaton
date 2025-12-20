@@ -29,9 +29,11 @@ public enum SystemPermissions implements Permission {
    * is revoked. This does not implicate that all individual
    * permissions are revoked.
    *
+   * <p>
    * Example: If the UPDATE permission is revoked then the ALL
    * permission is revoked as well, because the user is not authorized
    * to execute all actions anymore.
+   * </p>
    */
   ALL("ALL", Integer.MAX_VALUE),
 

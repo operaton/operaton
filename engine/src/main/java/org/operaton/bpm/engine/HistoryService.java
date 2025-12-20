@@ -251,8 +251,10 @@ public interface HistoryService {
   /**
    * Creates a new programmatic query to search for {@link HistoricDecisionInstance}s.
    *
+   * <p>
    * If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#DECISION_DEFINITION}
    * then the result of the query is empty.
+   * </p>
    */
   HistoricDecisionInstanceQuery createHistoricDecisionInstanceQuery();
 

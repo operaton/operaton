@@ -52,9 +52,11 @@ public interface SetRemovalTimeToHistoricProcessInstancesBuilder {
    * Takes additionally those historic process instances into account that are part of
    * the hierarchy of the given historic process instance.
    *
+   * <p>
    * If the root process instance id of the given historic process instance is {@code null},
    * the hierarchy is ignored. This is the case for instances that were started with a version
    * prior 7.10.
+   * </p>
    *
    * @return the builder.
    */
@@ -79,10 +81,14 @@ public interface SetRemovalTimeToHistoricProcessInstancesBuilder {
    * The value must be a positive integer value that doesn't exceed the
    * {@link ProcessSetRemovalTimeJobHandler#MAX_CHUNK_SIZE}.
    *
+   * <p>
    * Only has an effect if {@link #updateInChunks()} is invoked as well.
+   * </p>
    *
+   * <p>
    * If undefined, the operation uses the `removalTimeUpdateChunkSize` defined
    * in the process engine configuration.
+   * </p>
    *
    * @since 7.20
    *

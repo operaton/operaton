@@ -111,7 +111,9 @@ public class RewindableReader extends Reader {
   /**
    * Rewinds the reader such that the initial characters are returned when invoking read().
    *
+   * <p>
    * Throws an exception if more than the buffering limit has already been read.
+   * </p>
    * @throws IOException
    */
   public void rewind() throws IOException {

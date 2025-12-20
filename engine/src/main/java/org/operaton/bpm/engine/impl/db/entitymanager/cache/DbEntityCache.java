@@ -48,12 +48,18 @@ public class DbEntityCache {
   /**
    * The cache itself: maps entity types (classes) to maps indexed by id (primary key).
    *
+   * <p>
    * The motivation for indexing by type (class) is
+   * </p>
    *
+   * <p>
    * a) multiple entities of different types could have the same value as primary key. In the
    *    process engine, TaskEntity and HistoricTaskEntity have the same id value.
+   * </p>
    *
+   * <p>
    * b) performance (?)
+   * </p>
    */
   protected Map<Class<?>, Map<String, CachedDbEntity>> cachedEntites = new HashMap<>();
 

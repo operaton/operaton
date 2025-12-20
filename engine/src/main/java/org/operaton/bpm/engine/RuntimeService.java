@@ -88,17 +88,21 @@ public interface RuntimeService {
    * Starts a new process instance in the latest version of the process
    * definition with the given key.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added
    * a database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionKey
    *          key of process definition, cannot be null.
@@ -118,17 +122,21 @@ public interface RuntimeService {
    * Starts a new process instance in the latest version of the process
    * definition with the given key.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added
    * a database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionKey
    *          key of process definition, cannot be null.
@@ -163,19 +171,25 @@ public interface RuntimeService {
   /**
    * Starts a new process instance in the latest version of the process definition with the given key.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added a
    * database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
+   * <p>
    * The combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionKey key of process definition, cannot be null.
    * @param variables the variables to pass, can be null.
@@ -193,19 +207,25 @@ public interface RuntimeService {
   /**
    * Starts a new process instance in the latest version of the process definition with the given key.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added a
    * database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
+   * <p>
    * The combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    * @param processDefinitionKey key of process definition, cannot be null.
    * @param variables the variables to pass, can be null.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
@@ -237,17 +257,21 @@ public interface RuntimeService {
   /**
    * Starts a new process instance in the exactly specified version of the process definition with the given id.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added
    * a database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionId the id of the process definition, cannot be null.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
@@ -264,17 +288,21 @@ public interface RuntimeService {
   /**
    * Starts a new process instance in the exactly specified version of the process definition with the given id.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added
    * a database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionId the id of the process definition, cannot be null.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
@@ -307,17 +335,21 @@ public interface RuntimeService {
   /**
    * Starts a new process instance in the exactly specified version of the process definition with the given id.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added
    * a database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionId the id of the process definition, cannot be null.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
@@ -335,17 +367,21 @@ public interface RuntimeService {
   /**
    * Starts a new process instance in the exactly specified version of the process definition with the given id.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition WHEN you have added
    * a database constraint for it.
    * In this case, only Process instance from different process definition are allowed to have the
    * same business key and the combination of processdefinitionKey-businessKey must be unique.
+   * </p>
    *
    * @param processDefinitionId the id of the process definition, cannot be null.
    * @param businessKey a key that uniquely identifies the process instance in the context of the
@@ -587,7 +623,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instance.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceId id of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -605,7 +643,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds id's of process instances to delete, cannot be null if processInstanceQuery is null.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
@@ -623,7 +663,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds id's of process instances to delete, cannot be null if processInstanceQuery is null.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
@@ -641,7 +683,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds id's of process instances to delete, cannot be null if processInstanceQuery is null.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
@@ -661,7 +705,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds id's of process instances to delete.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
@@ -687,7 +733,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds id's of process instances to delete.
    * @param processInstanceQuery query that will be used to fetch affected process instances.
@@ -715,7 +763,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceQuery query that will be used to fetch affected process instances.
    *                             Cannot be null.
@@ -732,10 +782,14 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instances asynchronously using Batch operation.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
+   * <p>
    * If both process instances list and query are provided, process instances containing in both sets
    * will be deleted.
+   * </p>
    *
    * @param processInstanceIds id's of process instances to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -751,7 +805,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instance.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceId id of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -771,7 +827,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instance.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceId id of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -795,7 +853,9 @@ public interface RuntimeService {
   /**
    * Delete existing runtime process instances.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds ids of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -818,7 +878,9 @@ public interface RuntimeService {
   /**
    * Delete existing runtime process instances.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds ids of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -843,7 +905,9 @@ public interface RuntimeService {
   /**
    * Delete existing runtime process instances.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceIds ids of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -868,9 +932,13 @@ public interface RuntimeService {
   /**
    * Delete existing runtime process instances.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
+   * <p>
    * Does not fail if a process instance was not found.
+   * </p>
    *
    * @param processInstanceIds ids of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -893,7 +961,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instance.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceId id of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -917,7 +987,9 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instance.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param processInstanceId id of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -943,9 +1015,13 @@ public interface RuntimeService {
   /**
    * Delete an existing runtime process instance.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
+   * <p>
    * Does not fail if a process instance was not found.
+   * </p>
    *
    * @param processInstanceId id of process instance to delete, cannot be null.
    * @param deleteReason reason for deleting, which will be stored in the history. Can be null.
@@ -970,7 +1046,9 @@ public interface RuntimeService {
    * Finds the activity ids for all executions that are waiting in activities.
    * This is a list because a single activity can be active multiple times.
    *
+   * <p>
    * Deletion propagates upward as far as necessary.
+   * </p>
    *
    * @param executionId id of the process instance or the execution, cannot be null.
    *
@@ -1037,8 +1115,10 @@ public interface RuntimeService {
   /**
    * Sends an external trigger to an activity instance that is waiting inside the given execution.
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the signal
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param executionId id of process instance or execution to signal, cannot be null.
    *
@@ -1055,8 +1135,10 @@ public interface RuntimeService {
   /**
    * Sends an external trigger to an activity instance that is waiting inside the given execution.
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the signal
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param executionId id of process instance or execution to signal, cannot be null.
    * @param signalName name of the signal (can be null)
@@ -1074,8 +1156,10 @@ public interface RuntimeService {
   /**
    * Sends an external trigger to an activity instance that is waiting inside the given execution.
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the signal
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param executionId id of process instance or execution to signal, cannot be null.
    * @param processVariables a map of process variables
@@ -1899,7 +1983,9 @@ public interface RuntimeService {
    * been received. Delivers the signal to all executions waiting on
    * the signal and to all process definitions that can started by this signal. <p/>
    *
+   * <p>
    * <strong>NOTE:</strong> Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param signalName
    *          the name of the signal event
@@ -1917,7 +2003,9 @@ public interface RuntimeService {
    * been received. Delivers the signal to all executions waiting on
    * the signal and to all process definitions that can started by this signal. <p/>
    *
+   * <p>
    * <strong>NOTE:</strong> Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param signalName
    *          the name of the signal event
@@ -1938,8 +2026,10 @@ public interface RuntimeService {
    * execution referenced by 'executionId'.
    * The waiting execution is notified synchronously.
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the signal
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param signalName
    *          the name of the signal event
@@ -1961,8 +2051,10 @@ public interface RuntimeService {
    * execution referenced by 'executionId'.
    * The waiting execution is notified synchronously.
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the signal
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param signalName
    *          the name of the signal event
@@ -1994,10 +2086,14 @@ public interface RuntimeService {
    * Notifies the process engine that a message event with name 'messageName' has
    * been received and has been correlated to an execution with id 'executionId'.
    *
+   * <p>
    * The waiting execution is notified synchronously.
+   * </p>
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the message
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param messageName
    *          the name of the message event
@@ -2017,10 +2113,14 @@ public interface RuntimeService {
    * Notifies the process engine that a message event with the name 'messageName' has
    * been received and has been correlated to an execution with id 'executionId'.
    *
+   * <p>
    * The waiting execution is notified synchronously.
+   * </p>
    *
+   * <p>
    * Note that you need to provide the exact execution that is waiting for the message
    * if the process instance contains multiple executions.
+   * </p>
    *
    * @param messageName
    *          the name of the message event
@@ -2053,7 +2153,9 @@ public interface RuntimeService {
    * Correlates a message to either an execution that is waiting for this message or a process definition
    * that can be started by this message.
    *
+   * <p>
    * Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param messageName
    *          the name of the message event; if null, matches any event
@@ -2288,10 +2390,12 @@ public interface RuntimeService {
    * blocks the caller until the migration was completed. The migration can only be
    * successfully completed if all process instances can be migrated.
    *
+   * <p>
    * If the migration is executed asynchronously a {@link Batch} is immediately returned.
    * The migration is then executed as jobs from the process engine and the batch can
    * be used to track the progress of the migration. The Batch splits the migration
    * in smaller chunks which will be executed independently.
+   * </p>
    *
    * @param migrationPlan the migration plan to executed
    * @return a fluent builder
@@ -2303,15 +2407,19 @@ public interface RuntimeService {
    * and instantiations via a fluent builder. Returns a fluent builder that can be used to specify
    * modification instructions and set process instances that should be modified.
    *
+   * <p>
    * The modification can
    * either be executed synchronously or asynchronously. A synchronously modification
    * blocks the caller until the modification was completed. The modification can only be
    * successfully completed if all process instances can be modified.
+   * </p>
    *
+   * <p>
    * If the modification is executed asynchronously a {@link Batch} is immediately returned.
    * The modification is then executed as jobs from the process engine and the batch can
    * be used to track the progress of the modification. The Batch splits the modification
    * in smaller chunks which will be executed independently.
+   * </p>
    *
    * @param processDefinitionId the process definition that instances are modified of
    * @return a fluent builder

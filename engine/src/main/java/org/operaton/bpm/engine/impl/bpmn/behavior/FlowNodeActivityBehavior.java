@@ -27,7 +27,9 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
  * Superclass for all 'connectable' BPMN 2.0 process elements: tasks, gateways and events.
  * This means that any subclass can be the source or target of a sequenceflow.
  *
+ * <p>
  * Corresponds with the notion of the 'flownode' in BPMN 2.0.
+ * </p>
  *
  * @author Joram Barrez
  */

@@ -28,12 +28,16 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
  * Special exception that can be used to throw a BPMN Error from
  * {@link JavaDelegate}s and expressions.
  *
+ * <p>
  * This should only be used for business faults, which shall be handled by a
  * Boundary Error Event or Error Event Sub-Process modeled in the process
  * definition. Technical errors should be represented by other exception types.
+ * </p>
  *
+ * <p>
  * This class represents an actual instance of a BPMN Error, whereas
  * {@link Error} represents an Error definition.
+ * </p>
  *
  * @author Falko Menge
  */

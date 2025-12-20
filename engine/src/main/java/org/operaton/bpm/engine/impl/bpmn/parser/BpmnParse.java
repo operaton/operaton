@@ -168,7 +168,9 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
 /**
  * Specific parsing of one BPMN 2.0 XML file, created by the {@link BpmnParser}.
  *
+ * <p>
  * Instances of this class should not be reused and are also not threadsafe.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Bernd Ruecker
@@ -320,9 +322,11 @@ public class BpmnParse extends Parse {
    * Mapping containing values stored during the first phase of parsing since
    * other elements can reference these messages.
    *
+   * <p>
    * All the map's elements are defined outside the process definition(s), which
    * means that this map doesn't need to be re-initialized for each new process
    * definition.
+   * </p>
    */
   protected Map<String, MessageDefinition> messages = new HashMap<>();
   protected Map<String, SignalDefinition> signals = new HashMap<>();
@@ -737,7 +741,9 @@ public class BpmnParse extends Parse {
   /**
    * Parses a scope: a process, subprocess, etc.
    *
+   * <p>
    * Note that a process definition is a scope on itself.
+   * </p>
    *
    * @param scopeElement
    *          The XML element defining the scope
@@ -3011,7 +3017,9 @@ public class BpmnParse extends Parse {
    * Parses the given String as a list of comma separated entries, where an
    * entry can possibly be an expression that has comma's.
    *
+   * <p>
    * If somebody is smart enough to write a regex for this, please let us know.
+   * </p>
    *
    * @return the entries of the comma separated list, trimmed.
    */
@@ -3249,9 +3257,11 @@ public class BpmnParse extends Parse {
    * Parses the boundary events of a certain 'level' (process, subprocess or
    * other scope).
    *
+   * <p>
    * Note that the boundary events are not parsed during the parsing of the bpmn
    * activities, since the semantics are different (boundaryEvent needs to be
    * added as nested activity to the reference activity on PVM level).
+   * </p>
    *
    * @param parentElement
    *          The 'parent' element that contains the activities (process,
@@ -4201,7 +4211,9 @@ public class BpmnParse extends Parse {
    * Parses the properties of an element (if any) that can contain properties
    * (processes, activities, etc.)
    *
+   * <p>
    * Returns true if property subelemens are found.
+   * </p>
    *
    * @param element
    *          The element that can contain properties.

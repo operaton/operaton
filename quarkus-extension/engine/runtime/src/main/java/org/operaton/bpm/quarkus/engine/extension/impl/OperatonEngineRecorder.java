@@ -66,7 +66,7 @@ public class OperatonEngineRecorder {
     // apply properties from config before any other configuration.
     PropertyHelper.applyProperties(configuration, config.genericConfig(), PropertyHelper.KEBAB_CASE);
 
-    config.previewFeaturesEnabled().ifPresent(configuration::setPreviewFeaturesEnabled);
+    configuration.setPreviewFeaturesEnabled(config.previewFeaturesEnabled().orElse(false));
 
     if (configuration.getDataSource() == null) {
       String datasourceName = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);

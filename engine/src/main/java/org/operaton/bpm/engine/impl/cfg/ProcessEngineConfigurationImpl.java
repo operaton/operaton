@@ -326,8 +326,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public static final String DB_SCHEMA_UPDATE_CREATE = "create";
   public static final String DB_SCHEMA_UPDATE_DROP_CREATE = "drop-create";
 
-  protected boolean previewFeaturesEnabled;
-
   public static final int HISTORYLEVEL_NONE = HistoryLevel.HISTORY_LEVEL_NONE.getId();
   public static final int HISTORYLEVEL_ACTIVITY = HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId();
   public static final int HISTORYLEVEL_AUDIT = HistoryLevel.HISTORY_LEVEL_AUDIT.getId();
@@ -994,6 +992,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    * Size of batch in which removal time data will be updated. {@link ProcessSetRemovalTimeJobHandler#MAX_CHUNK_SIZE} must be respected.
    */
   protected int removalTimeUpdateChunkSize = 500;
+
+  protected volatile boolean previewFeaturesEnabled = false;
 
   /**
    * This legacy behavior sets the retry counter to 3 in the context when running a job for the first time.

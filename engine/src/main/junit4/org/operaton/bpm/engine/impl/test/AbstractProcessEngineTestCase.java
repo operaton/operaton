@@ -286,7 +286,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     List<Job> jobs = managementService.createJobQuery().withRetriesLeft().list();
 
     if (jobs.isEmpty()) {
-      assertTrue("executed less jobs than expected. expected <%s> actual <".formatted(expectedExecutions) + jobsExecuted + ">",
+      assertTrue("executed less jobs than expected. expected <%s> actual <%s>".formatted(expectedExecutions, jobsExecuted),
           jobsExecuted == expectedExecutions || ignoreLessExecutions);
       return;
     }
@@ -298,7 +298,7 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
       } catch (Exception e) {}
     }
 
-    assertTrue("executed more jobs than expected. expected <%s> actual <".formatted(expectedExecutions) + jobsExecuted + ">",
+    assertTrue("executed more jobs than expected. expected <%s> actual <%s>".formatted(expectedExecutions, jobsExecuted),
         jobsExecuted <= expectedExecutions);
 
     if (recursive) {

@@ -216,7 +216,7 @@ public class ProcessInstanceSnapshot {
       return collectedDefinitions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job definition for activity %s and job handler type ".formatted(activityId) + jobHandlerType);
+      throw new RuntimeException("There is more than one job definition for activity %s and job handler type %s".formatted(activityId, jobHandlerType));
     }
   }
 

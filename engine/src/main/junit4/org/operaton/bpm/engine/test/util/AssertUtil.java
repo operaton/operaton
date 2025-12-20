@@ -33,6 +33,8 @@ public final class AssertUtil {
    * Drop milliseconds since older MySQL versions cannot store them
    */
   public static void assertEqualsSecondPrecision(Date expected, Date actual) {
-    assertThat(actual.getTime() / 1000L).as("expected %s but got ".formatted(expected) + actual).isEqualTo(expected.getTime() / 1000L);
+    assertThat(actual.getTime() / 1000L)
+        .as("expected %s but got %s".formatted(expected, actual))
+        .isEqualTo(expected.getTime() / 1000L);
   }
 }

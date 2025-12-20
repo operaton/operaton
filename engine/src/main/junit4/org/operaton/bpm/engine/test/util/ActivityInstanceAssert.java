@@ -71,9 +71,8 @@ public final class ActivityInstanceAssert {
     protected void assertTreeMatch(ActivityInstance expected, ActivityInstance actual) {
       boolean treesMatch = isTreeMatched(expected, actual);
       if (!treesMatch) {
-        fail("Could not match expected tree \n%s \n\n with actual tree \n\n ".formatted(expected) + actual);
+        fail("Could not match expected tree %n%s %n%n with actual tree %n%n %s".formatted(expected, actual));
       }
-
     }
 
 

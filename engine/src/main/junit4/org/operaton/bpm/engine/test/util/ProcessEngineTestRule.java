@@ -81,7 +81,9 @@ public class ProcessEngineTestRule extends TestWatcher {
       .processInstanceId(processInstanceId)
       .singleResult();
 
-    assertThat(processInstance).describedAs("Process instance with id %s is not finished".formatted(processInstanceId)).isNull();
+    assertThat(processInstance)
+        .describedAs("Process instance with id %s is not finished".formatted(processInstanceId))
+        .isNull();
   }
 
   public void assertProcessNotEnded(final String processInstanceId) {
@@ -104,7 +106,9 @@ public class ProcessEngineTestRule extends TestWatcher {
       .caseInstanceId(caseInstanceId)
       .singleResult();
 
-    assertThat(caseInstance).describedAs("Case instance with id %s is not finished".formatted(caseInstanceId)).isNull();
+    assertThat(caseInstance)
+        .describedAs("Case instance with id %s is not finished".formatted(caseInstanceId))
+        .isNull();
   }
 
   public DeploymentWithDefinitions deploy(BpmnModelInstance... bpmnModelInstances) {
@@ -248,7 +252,9 @@ public class ProcessEngineTestRule extends TestWatcher {
   public void completeTask(String taskKey) {
     TaskService taskService = processEngine.getTaskService();
     Task task = taskService.createTaskQuery().taskDefinitionKey(taskKey).singleResult();
-    assertThat(task).as("Expected a task with key '%s' to exist".formatted(taskKey)).isNotNull();
+    assertThat(task)
+        .as("Expected a task with key '%s' to exist".formatted(taskKey))
+        .isNotNull();
     taskService.complete(task.getId());
   }
 
@@ -302,7 +308,7 @@ public class ProcessEngineTestRule extends TestWatcher {
     if ( (actual==null)
       || (actual.indexOf(expected)==-1)
       ) {
-      throw new AssertionFailedError("expected presence of [%s], but was [".formatted(expected)+actual+"]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
 

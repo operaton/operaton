@@ -2606,7 +2606,7 @@ public class BpmnParse extends Parse {
 
       if (("wait".equals(fieldName) || "redirectError".equals(fieldName) || "cleanEnv".equals(fieldName)) && !TRUE.equalsIgnoreCase(fieldValue)
           && !FALSE.equalsIgnoreCase(fieldValue)) {
-        addError("undefined value for shell %s parameter :%sor one of child elements string|expression".formatted(fieldName, fieldValue, serviceTaskElement);
+        addError("undefined value for shell %s parameter :%s or one of child elements string|expression".formatted(fieldName, fieldValue), serviceTaskElement);
       }
 
     }
@@ -2648,8 +2648,7 @@ public class BpmnParse extends Parse {
     }
 
     if (fieldDeclaration == null) {
-      addError(
-          "One of the following is mandatory on a field declaration: one of attributes stringValue|expression "),
+      addError("One of the following is mandatory on a field declaration: one of attributes stringValue|expression ",
           serviceTaskElement);
     }
     return fieldDeclaration;
@@ -3857,7 +3856,7 @@ public class BpmnParse extends Parse {
 
       for (String variableEvent : variableEventsList) {
         if (!VARIABLE_EVENTS.contains(variableEvent)) {
-          addWarning("Variable event: %s is not valid. Possible variable change events are: %s:".formatted(variableEvent, Arrays.toString(VARIABLE_EVENTS.toArray()),
+          addWarning("Variable event: %s is not valid. Possible variable change events are: %s:".formatted(variableEvent, Arrays.toString(VARIABLE_EVENTS.toArray())),
               element, conditionalActivityId);
         }
       }
@@ -4405,7 +4404,7 @@ public class BpmnParse extends Parse {
     String language = conditionExprElement.attribute(PROPERTYNAME_LANGUAGE);
     String resource = conditionExprElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, PROPERTYNAME_RESOURCE);
     if (type != null) {
-      String value = type.contains(":") ? resolveName(type) : BpmnParser.BPMN20_NS) + type;
+      String value = type.contains(":") ? resolveName(type) : BpmnParser.BPMN20_NS + type;
       if (!ATTRIBUTEVALUE_T_FORMAL_EXPRESSION.equals(value)) {
         addError("Invalid type, only tFormalExpression is currently supported", conditionExprElement, ancestorElementId);
       }

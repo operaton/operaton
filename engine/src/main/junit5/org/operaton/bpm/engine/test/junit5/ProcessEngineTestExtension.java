@@ -110,7 +110,9 @@ public class ProcessEngineTestExtension
       .processInstanceId(processInstanceId)
       .singleResult();
 
-    assertThat(processInstance).describedAs("Process instance with id %s is not finished".formatted(processInstanceId)).isNull();
+    assertThat(processInstance)
+        .describedAs("Process instance with id %s is not finished".formatted(processInstanceId))
+        .isNull();
   }
 
   public void assertProcessNotEnded(final String processInstanceId) {
@@ -133,7 +135,9 @@ public class ProcessEngineTestExtension
       .caseInstanceId(caseInstanceId)
       .singleResult();
 
-    assertThat(caseInstance).describedAs("Case instance with id %s is not finished".formatted(caseInstanceId)).isNull();
+    assertThat(caseInstance)
+        .describedAs("Case instance with id %s is not finished".formatted(caseInstanceId))
+        .isNull();
   }
 
   public DeploymentWithDefinitions deploy(BpmnModelInstance... bpmnModelInstances) {
@@ -339,7 +343,7 @@ public class ProcessEngineTestExtension
     if ( (actual==null)
       || (actual.indexOf(expected)==-1)
       ) {
-      throw new AssertionFailedError("expected presence of [%s], but was [".formatted(expected)+actual+"]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
 

@@ -109,7 +109,7 @@ public class HtmlFormEngine implements FormEngine {
   protected static final String DATE_ERROR_TYPE = "date";
 
   /* form element selector */
-  protected static final String FORM_ELEMENT_SELECTOR = "this.%s.%s".formatted(GENERATED_FORM_NAME);
+  protected static final String FORM_ELEMENT_SELECTOR = "this." + GENERATED_FORM_NAME + ".%s";
 
   /* expressions */
   protected static final String INVALID_EXPRESSION = FORM_ELEMENT_SELECTOR + ".$invalid";
@@ -127,7 +127,7 @@ public class HtmlFormEngine implements FormEngine {
   /* messages */
   protected static final String REQUIRED_FIELD_MESSAGE = "Required field";
   protected static final String TYPE_FIELD_MESSAGE = "Only a %s value is allowed";
-  protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern ";
+  protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern";
 
   protected static final String DATE_PATTERN_ATTRIBUTE = "datePattern";
 
@@ -448,7 +448,7 @@ public class HtmlFormEngine implements FormEngine {
     secondDivElement
         .attribute(NG_SHOW_ATTRIBUTE, secondExpression)
         .attribute(CLASS_ATTRIBUTE, HELP_BLOCK_CLASS)
-        .textContent(INVALID_DATE_FIELD_MESSAGE + "'%s'".formatted(formField.getType().getInformation(DATE_PATTERN_ATTRIBUTE)));
+        .textContent("%s '%s'".formatted(INVALID_DATE_FIELD_MESSAGE, formField.getType().getInformation(DATE_PATTERN_ATTRIBUTE)));
 
     documentBuilder
         .startElement(secondDivElement)

@@ -350,7 +350,7 @@ public class OperatonBpmProperties {
   }
 
   public Boolean getPreviewFeaturesEnabled() {
-    return previewFeaturesEnabled;
+    return previewFeaturesEnabled != null ? previewFeaturesEnabled : Boolean.FALSE;
   }
 
   public void setPreviewFeaturesEnabled(Boolean previewFeaturesEnabled) {

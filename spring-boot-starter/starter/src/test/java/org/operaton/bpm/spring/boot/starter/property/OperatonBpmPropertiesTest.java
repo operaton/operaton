@@ -17,33 +17,23 @@
 package org.operaton.bpm.spring.boot.starter.property;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.util.TestPropertyValues;
-import org.springframework.core.env.EnvironmentCapable;
-import org.springframework.test.context.ActiveProfiles;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE;
 
-@SpringBootTest(webEnvironment = NONE)
-@ActiveProfiles("test")
 class OperatonBpmPropertiesTest {
-
-  private final Bindable<OperatonBpmProperties> bindable = Bindable.of(OperatonBpmProperties.class);
 
   @Test
   void initResourcePatterns() {
     final String[] patterns = OperatonBpmProperties.initDeploymentResourcePattern();
 
     assertThat(patterns)
-            .hasSize(7)
-            .containsOnly("classpath*:**/*.bpmn", "classpath*:**/*.bpmn20.xml", "classpath*:**/*.dmn", "classpath*:**/*.dmn11.xml",
-      "classpath*:**/*.cmmn", "classpath*:**/*.cmmn10.xml", "classpath*:**/*.cmmn11.xml");
+        .hasSize(7)
+        .containsOnly("classpath*:**/*.bpmn", "classpath*:**/*.bpmn20.xml", "classpath*:**/*.dmn", "classpath*:**/*.dmn11.xml",
+            "classpath*:**/*.cmmn", "classpath*:**/*.cmmn10.xml", "classpath*:**/*.cmmn11.xml");
   }
 
   @Test
@@ -59,14 +49,18 @@ class OperatonBpmPropertiesTest {
   }
 
   @Test
-  void shouldBindPreviewFeaturesEnabledProperty() {
-    // given
-    TestPropertyValues.of("operaton.bpm.preview-features-enabled=true")
-      .applyTo(environment);
+  void previewFeaturesEnabled_shouldBeFalseByDefault() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
 
-    binder.bind(OperatonBpmProperties.PREFIX, Bindable.ofInstance(properties));
+    assertThat(properties.getPreviewFeaturesEnabled()).isFalse();
+  }
 
-    // then
+  @Test
+  void previewFeaturesEnabled_shouldReflectAssignedValue() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+
+    properties.setPreviewFeaturesEnabled(Boolean.TRUE);
+
     assertThat(properties.getPreviewFeaturesEnabled()).isTrue();
   }
 

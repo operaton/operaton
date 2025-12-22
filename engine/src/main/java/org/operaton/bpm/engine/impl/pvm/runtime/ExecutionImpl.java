@@ -285,9 +285,9 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   @Override
   public String toString() {
     if (isProcessInstanceExecution()) {
-      return "ProcessInstance[%s]".formatted(getToStringIdentity());
+      return "ProcessInstance["+getToStringIdentity()+"]";
     } else {
-      return (isEventScope? "EventScope":"")+(isConcurrent? "Concurrent" : "")+(isScope() ? "Scope" : "")+"Execution[%s]".formatted(getToStringIdentity());
+      return (isEventScope? "EventScope":"")+(isConcurrent? "Concurrent" : "")+(isScope() ? "Scope" : "")+"Execution["+getToStringIdentity()+"]";
     }
   }
 

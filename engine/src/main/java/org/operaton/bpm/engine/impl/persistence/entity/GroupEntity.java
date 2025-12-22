@@ -101,6 +101,10 @@ public class GroupEntity implements Group, Serializable, DbEntity, HasDbRevision
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=%s, name=%s, type=%s]".formatted(id, revision, name, type);
+           + "[id=" + id
+           + ", revision=" + revision
+           + ", name=" + name
+           + ", type=" + type
+           + "]";
   }
 }

@@ -496,7 +496,7 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
       if (validateExistence) {
         EnsureUtil.ensureNotNull(
-            "Cannot find execution with id %s for external task %s".formatted(executionId, id),
+            "Cannot find execution with id " + executionId + " for external task " + id,
             "execution",
             execution);
       }

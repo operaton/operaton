@@ -47,6 +47,8 @@ public class TaskCountByCandidateGroupResultEntity implements TaskCountByCandida
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[taskCount=%s, groupName='%s']".formatted(taskCount, groupName);
+      + "[taskCount=" + taskCount
+      + ", groupName='" + groupName
+      + ']';
   }
 }

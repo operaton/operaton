@@ -177,7 +177,7 @@ public class TimerEntity extends JobEntity {
 
   public static String replaceRepeatCycleAndDate(String repeatExpression) {
     if (repeatExpression.split("/").length == 2) {
-      return repeatExpression.replace("/", "/%s/".formatted(SIMPLE_DATE_FORMAT.format(ClockUtil.getCurrentTime())));
+      return repeatExpression.replace("/", "/" + SIMPLE_DATE_FORMAT.format(ClockUtil.getCurrentTime()) + "/");
     }
     return repeatExpression; // expression include start date
   }

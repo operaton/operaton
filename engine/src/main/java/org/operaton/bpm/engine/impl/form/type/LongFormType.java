@@ -49,7 +49,7 @@ public class LongFormType extends SimpleFormFieldType {
         return Variables.longValue(Long.valueOf(value.toString()), propertyValue.isTransient());
       }
       else {
-        throw new ProcessEngineException("Value '%s' is not of type Long.".formatted(value));
+        throw new ProcessEngineException("Value '"+value+"' is not of type Long.");
       }
     }
   }

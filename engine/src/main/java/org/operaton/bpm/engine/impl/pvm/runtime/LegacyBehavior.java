@@ -107,11 +107,11 @@ public final class LegacyBehavior {
     ensureConcurrentScope(execution);
     LOG.debugCancelConcurrentScopeExecution(execution);
 
-    execution.interrupt("Scope %s cancelled.".formatted(cancelledScopeActivity));
+    execution.interrupt("Scope "+cancelledScopeActivity+" cancelled.");
     // <!> HACK set to event scope activity and leave activity instance
     execution.setActivity(cancelledScopeActivity);
     execution.leaveActivityInstance();
-    execution.interrupt("Scope %s cancelled.".formatted(cancelledScopeActivity));
+    execution.interrupt("Scope "+cancelledScopeActivity+" cancelled.");
     execution.destroy();
   }
 

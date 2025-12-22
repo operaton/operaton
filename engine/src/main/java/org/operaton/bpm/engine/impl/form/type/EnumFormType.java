@@ -57,7 +57,7 @@ public class EnumFormType extends SimpleFormFieldType {
       return Variables.stringValue((String) value, propertyValue.isTransient());
     }
     else {
-      throw new ProcessEngineException("Value '%s' is not of type String.".formatted(value));
+      throw new ProcessEngineException("Value '"+value+"' is not of type String.");
     }
   }
 

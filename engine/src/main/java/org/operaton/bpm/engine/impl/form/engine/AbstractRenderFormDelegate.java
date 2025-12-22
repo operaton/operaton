@@ -119,7 +119,7 @@ public abstract class AbstractRenderFormDelegate {
   /* messages */
   protected static final String REQUIRED_FIELD_MESSAGE = "Required field";
   protected static final String TYPE_FIELD_MESSAGE = "Only a %s value is allowed";
-  protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '%s'".formatted(DATE_FORMAT);
+  protected static final String INVALID_DATE_FIELD_MESSAGE = "Invalid date format: the date should have the pattern '" + DATE_FORMAT + "'";
 
   protected String renderFormData(FormData formData) {
 

@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Map;
 import org.operaton.bpm.dmn.engine.DmnDecisionResult;
+import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
+import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.test.DmnEngineTest;
 
 public abstract class SortingHitPolicyHandlerTest extends DmnEngineTest {
@@ -63,4 +65,12 @@ public abstract class SortingHitPolicyHandlerTest extends DmnEngineTest {
   private String createPositionErrorMessage(int position, Map<String, Object> expected, Map<String, Object> actual) {
     return String.format("Result at position %d does not match. Expected: %s, Actual: %s", position, expected, actual);
   }
+
+  @Override
+  protected DmnEngineConfiguration getDmnEngineConfiguration() {
+    DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
+    configuration.setPreviewFeaturesEnabled(true);
+    return configuration;
+  }
+
 }

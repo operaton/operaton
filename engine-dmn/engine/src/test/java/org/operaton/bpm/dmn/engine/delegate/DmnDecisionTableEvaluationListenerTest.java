@@ -43,17 +43,19 @@ class DmnDecisionTableEvaluationListenerTest extends DmnEngineTest {
   private static final String DMN_FILE = "org/operaton/bpm/dmn/engine/delegate/DmnDecisionTableListenerTest.test.dmn";
 
   static DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
+  static TestDecisionTableEvaluationListenerConfiguration configuration;
   TestDecisionTableEvaluationListener listener;
 
   @Override
   protected DmnEngineConfiguration getDmnEngineConfiguration() {
-    return new TestDecisionTableEvaluationListenerConfiguration()
-      .enableFeelLegacyBehavior(true);
+    return configuration;
   }
 
   @BeforeAll
   static void initHitPolicyHandlerRegistry() {
-    hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry();
+    configuration = new TestDecisionTableEvaluationListenerConfiguration();;
+    configuration.enableFeelLegacyBehavior(true);
+    hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry(configuration);
   }
 
   @BeforeEach

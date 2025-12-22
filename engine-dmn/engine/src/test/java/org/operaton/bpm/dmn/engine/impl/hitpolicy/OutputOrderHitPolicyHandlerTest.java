@@ -17,7 +17,6 @@ import org.operaton.bpm.dmn.engine.DmnDecisionRuleResult;
 import org.operaton.bpm.dmn.engine.DmnDecisionTableResult;
 import org.operaton.bpm.dmn.engine.impl.transform.DmnTransformException;
 import org.operaton.bpm.dmn.engine.test.DecisionResource;
-import org.operaton.bpm.dmn.engine.test.asserts.DmnEngineTestAssertions;
 
 class OutputOrderHitPolicyHandlerTest extends SortingHitPolicyHandlerTest {
 

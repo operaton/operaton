@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandler;
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistry;
 import org.operaton.bpm.model.dmn.BuiltinAggregator;
@@ -68,6 +69,12 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
 
   protected static final Map<HitPolicyEntry, DmnHitPolicyHandler> handlers = new ConcurrentHashMap<>(getDefaultHandlers());
 
+  protected final DefaultDmnEngineConfiguration defaultDmnEngineConfiguration;
+
+  public DefaultHitPolicyHandlerRegistry(DefaultDmnEngineConfiguration defaultDmnEngineConfiguration) {
+    this.defaultDmnEngineConfiguration = defaultDmnEngineConfiguration;
+  }
+
   /**
    * Creates and initializes the map of default hit policy handlers.
    *
@@ -104,6 +111,11 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
   /**
    * Retrieves the hit policy handler for the specified hit policy and aggregator combination.
    *
+   * <p>If no {@link DefaultDmnEngineConfiguration} is provided or preview features are disabled via
+   * {@link DefaultDmnEngineConfiguration#isPreviewFeaturesEnabled()}, handlers for
+   * {@link HitPolicy#PRIORITY} and {@link HitPolicy#OUTPUT_ORDER} are not available and this method
+   * returns {@code null} for these hit policies.</p>
+   *
    * @param hitPolicy the hit policy to look up, must not be null
    * @param builtinAggregator the aggregator to look up, or null for policies without aggregation
    * @return the registered handler, or null if no handler is found for this combination
@@ -111,6 +123,11 @@ public class DefaultHitPolicyHandlerRegistry implements DmnHitPolicyHandlerRegis
    */
   @Override
   public DmnHitPolicyHandler getHandler(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator) {
+    if (defaultDmnEngineConfiguration == null || !defaultDmnEngineConfiguration.isPreviewFeaturesEnabled()) {
+      if (Objects.equals(hitPolicy, HitPolicy.PRIORITY) || Objects.equals(hitPolicy, HitPolicy.OUTPUT_ORDER)) {
+        return null;
+      }
+    }
     return handlers.get(new HitPolicyEntry(hitPolicy, builtinAggregator));
   }
 

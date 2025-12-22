@@ -56,7 +56,8 @@ public final class HistoryLevelSetupCommand implements Command<Void> {
       }
     } else {
       if (configuredHistoryLevel.getId() != databaseHistoryLevel.getId()) {
-        throw new ProcessEngineException("historyLevel mismatch: configuration says %s and database says %s".formatted(configuredHistoryLevel, databaseHistoryLevel));
+        throw new ProcessEngineException("historyLevel mismatch: configuration says " + configuredHistoryLevel
+            + " and database says " + databaseHistoryLevel);
       }
     }
 

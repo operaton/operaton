@@ -68,9 +68,9 @@ public class LaunchThread extends Thread {
 
   @Override
   public void run() {
-    task.log("launching cmd '%s' in dir '%s'".formatted(cmdString(cmd), dir));
+    task.log("launching cmd '"+cmdString(cmd)+"' in dir '"+dir+"'");
     if (msg!=null) {
-      task.log("waiting for launch completion msg '%s'...".formatted(msg));
+      task.log("waiting for launch completion msg '"+msg+"'...");
     } else {
       task.log("not waiting for a launch completion msg.");
     }

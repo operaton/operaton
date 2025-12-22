@@ -96,7 +96,7 @@ public class TenantMembershipEntity implements Serializable, DbEntity {
 
   @Override
   public String toString() {
-    return "TenantMembershipEntity [id=%s, tenant=%s, user=%s, group=%s]".formatted(id, tenant, user, group);
+    return "TenantMembershipEntity [id=" + id + ", tenant=" + tenant + ", user=" + user + ", group=" + group + "]";
   }
 
 }

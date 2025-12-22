@@ -115,7 +115,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
         .getBusinessCalendar(type.calendarName);
 
     if (description==null) {
-      throw new ProcessEngineException("Timer '%s' was not configured with a valid duration/time".formatted(context.getActivityId()));
+      throw new ProcessEngineException("Timer '"+context.getActivityId()+"' was not configured with a valid duration/time");
     }
 
     String dueDateString = null;
@@ -136,15 +136,13 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
       duedate = date;
     }
     else {
-      throw new ProcessEngineException("Timer '%s' was not configured with a valid duration/time, either hand in a java.util.Date or a String in format 'yyyy-MM-dd'T'hh:mm:ss'"
-          .formatted(context.getActivityId()));
+      throw new ProcessEngineException("Timer '"+context.getActivityId()+"' was not configured with a valid duration/time, either hand in a java.util.Date or a String in format 'yyyy-MM-dd'T'hh:mm:ss'");
     }
 
     if (duedate==null) {
       if (creationDateBased) {
         if (job.getCreateTime() == null) {
-          throw new ProcessEngineException("Timer '%s' has no creation time and cannot be recalculated based on creation date. Either recalculate on your own or trigger recalculation with creationDateBased set to false."
-              .formatted(context.getActivityId()));
+          throw new ProcessEngineException("Timer '"+context.getActivityId()+"' has no creation time and cannot be recalculated based on creation date. Either recalculate on your own or trigger recalculation with creationDateBased set to false.");
         }
         duedate = businessCalendar.resolveDuedate(dueDateString, job.getCreateTime());
       } else {

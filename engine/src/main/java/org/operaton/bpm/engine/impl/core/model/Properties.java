@@ -184,7 +184,7 @@ public class Properties {
     Map<K, V> map = get(property);
 
     if (!property.allowsOverwrite() && map.containsKey(key)) {
-      throw new ProcessEngineException("Cannot overwrite property key %s. Key already exists.".formatted(key));
+      throw new ProcessEngineException("Cannot overwrite property key " + key + ". Key already exists");
     }
 
     map.put(key, value);
@@ -239,7 +239,7 @@ public class Properties {
 
   @Override
   public String toString() {
-    return "Properties [properties=%s]".formatted(properties);
+    return "Properties [properties=" + properties + "]";
   }
 
 }

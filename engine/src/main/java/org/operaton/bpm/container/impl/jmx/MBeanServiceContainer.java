@@ -63,7 +63,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
     ObjectName serviceName = getObjectName(name);
 
     if (getService(serviceName) != null) {
-      throw new ProcessEngineException("Cannot register service %s with MBeans Container, service with same name already registered.".formatted(serviceName));
+      throw new ProcessEngineException("Cannot register service " + serviceName + " with MBeans Container, service with same name already registered.");
     }
 
     final MBeanServer beanServer = getmBeanServer();
@@ -114,7 +114,7 @@ public class MBeanServiceContainer implements PlatformServiceContainer {
 
     final PlatformService<Object> service = getService(serviceName);
 
-    ensureNotNull("Cannot stop service %s: no such service registered".formatted(serviceName), "service", service);
+    ensureNotNull("Cannot stop service " + serviceName + ": no such service registered", "service", service);
     ProcessEngineException unregisteringServiceException = null;
 
     try {

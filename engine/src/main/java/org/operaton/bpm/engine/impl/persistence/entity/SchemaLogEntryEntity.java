@@ -79,6 +79,9 @@ public class SchemaLogEntryEntity implements SchemaLogEntry, DbEntity, Serializa
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[id=%s, timestamp=%s, version=%s]".formatted(id, timestamp, version);
+        + "[id=" + id
+        + ", timestamp=" + timestamp
+        + ", version=" + version
+        + "]";
   }
 }

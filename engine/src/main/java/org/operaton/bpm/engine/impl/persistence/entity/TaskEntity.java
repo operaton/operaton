@@ -483,7 +483,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
           .getTaskManager()
           .findTaskById(parentTaskId);
 
-      ensureNotNull(NullValueException.class, "Parent task with id '%s' does not exist".formatted(parentTaskId), PARENT_TASK, parentTaskEntity);
+      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", PARENT_TASK, parentTaskEntity);
 
       if (parentTaskEntity.suspensionState == SuspensionState.SUSPENDED.getStateCode()) {
         throw LOG.suspendedEntityException("parent task", id);
@@ -888,7 +888,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public String toString() {
-    return "Task[%s]".formatted(id);
+    return "Task["+id+"]";
   }
 
   // special setters //////////////////////////////////////////////////////////
@@ -1235,7 +1235,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public boolean triggerTimeoutEvent(String timeoutId) {
     TaskListener taskListener = getTimeoutListener(timeoutId);
     if (taskListener == null) {
-      throw LOG.invokeTaskListenerException(new NotFoundException("Cannot find timeout taskListener with id '%s' for task %s".formatted(timeoutId, this.id)));
+      throw LOG.invokeTaskListenerException(new NotFoundException("Cannot find timeout taskListener with id '"
+          + timeoutId + "' for task " + this.id));
     }
     return invokeListener(TaskListener.EVENTNAME_TIMEOUT, taskListener);
   }

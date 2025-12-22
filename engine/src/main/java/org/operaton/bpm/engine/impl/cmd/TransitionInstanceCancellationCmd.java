@@ -46,7 +46,7 @@ public class TransitionInstanceCancellationCmd extends AbstractInstanceCancellat
     ActivityInstance instance = commandContext.runWithoutAuthorization(new GetActivityInstanceCmd(processInstanceId));
     TransitionInstance instanceToCancel = findTransitionInstance(instance, transitionInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
-        describeFailure("Transition instance '%s' does not exist".formatted(transitionInstanceId)),
+        describeFailure("Transition instance '" + transitionInstanceId + "' does not exist"),
         "transitionInstance",
         instanceToCancel);
 
@@ -55,7 +55,7 @@ public class TransitionInstanceCancellationCmd extends AbstractInstanceCancellat
 
   @Override
   protected String describe() {
-    return "Cancel transition instance '%s'".formatted(transitionInstanceId);
+    return "Cancel transition instance '" + transitionInstanceId + "'";
   }
 
 

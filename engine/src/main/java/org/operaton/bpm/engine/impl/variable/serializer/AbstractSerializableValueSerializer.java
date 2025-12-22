@@ -77,7 +77,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
           serializedByteValue = serializeToByteArray(objectToSerialize);
           serializedStringValue = getSerializedStringValue(serializedByteValue);
         } catch(Exception e) {
-          throw new ProcessEngineException("Cannot serialize object in variable '%s': %s".formatted(valueFields.getName(), e.getMessage()), e);
+          throw new ProcessEngineException("Cannot serialize object in variable '"+valueFields.getName()+"': "+e.getMessage(), e);
         }
       }
     }
@@ -114,7 +114,7 @@ public abstract class AbstractSerializableValueSerializer<T extends Serializable
         try {
           deserializedObject = deserializeFromByteArray(serializedByteValue, valueFields);
         } catch (Exception e) {
-          throw new ProcessEngineException("Cannot deserialize object in variable '%s': %s".formatted(valueFields.getName(), e.getMessage()), e);
+          throw new ProcessEngineException("Cannot deserialize object in variable '"+valueFields.getName()+"': "+e.getMessage(), e);
         }
       }
       return createDeserializedValue(deserializedObject, serializedStringValue, valueFields, asTransientValue);

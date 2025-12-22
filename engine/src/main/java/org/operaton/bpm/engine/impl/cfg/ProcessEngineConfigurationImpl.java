@@ -1296,7 +1296,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         try {
           ParseUtil.parseHistoryTimeToLive(timeToLive);
         } catch (Exception e) {
-          throw LOG.invalidPropertyValue("history time to live for %s batch operations".formatted(batchOperation), timeToLive, e);
+          throw LOG.invalidPropertyValue("history time to live for " + batchOperation + " batch operations", timeToLive, e);
         }
       }
     }
@@ -1583,7 +1583,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         try {
           dataSource = (DataSource) new InitialContext().lookup(dataSourceJndiName);
         } catch (Exception e) {
-          throw new ProcessEngineException("couldn't lookup datasource from %s: %s".formatted(dataSourceJndiName, e.getMessage()), e);
+          throw new ProcessEngineException("couldn't lookup datasource from " + dataSourceJndiName + ": " + e.getMessage(), e);
         }
 
       } else if (jdbcUrl != null) {
@@ -2078,7 +2078,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       return;
     }
     if (prefix == null || !prefix.startsWith(schema + ".")) {
-      throw new ProcessEngineException("When setting a schema the prefix has to be schema + '.'. Received schema: %s prefix: %s".formatted(schema, prefix));
+      throw new ProcessEngineException("When setting a schema the prefix has to be schema + '.'. Received schema: " + schema + " prefix: " + prefix);
     }
   }
 
@@ -2785,8 +2785,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected void initOperationLog() {
     if(logEntriesPerSyncOperationLimit < -1 || logEntriesPerSyncOperationLimit == 0) {
       throw new ProcessEngineException(
-          "Invalid configuration for logEntriesPerSyncOperationLimit. Configured value needs to be either -1 or greater than 0 but was %s."
-              .formatted(logEntriesPerSyncOperationLimit));
+          "Invalid configuration for logEntriesPerSyncOperationLimit. Configured value needs to be either -1 or greater than 0 but was "
+              + logEntriesPerSyncOperationLimit + ".");
     }
   }
 

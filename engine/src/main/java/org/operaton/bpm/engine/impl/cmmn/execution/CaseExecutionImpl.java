@@ -313,9 +313,9 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   @Override
   public String toString() {
     if (isCaseInstanceExecution()) {
-      return "CaseInstance[%s]".formatted(getToStringIdentity());
+      return "CaseInstance[" + getToStringIdentity() + "]";
     } else {
-      return "CmmnExecution[%s]".formatted(getToStringIdentity());
+      return "CmmnExecution["+getToStringIdentity() + "]";
     }
   }
 

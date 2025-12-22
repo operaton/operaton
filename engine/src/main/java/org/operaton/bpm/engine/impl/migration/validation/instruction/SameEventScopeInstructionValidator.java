@@ -48,15 +48,15 @@ public class SameEventScopeInstructionValidator implements MigrationInstructionV
       // target event scope is allowed to be null for user tasks with timeout listeners
       // if all listeners are removed in the target
       if (!isUserTaskWithTimeoutListener(sourceActivity)) {
-        report.addFailure("The source activity's event scope (%s) must be mapped but the target activity has no event scope"
-            .formatted(sourceEventScope.getId()));
+        report.addFailure("The source activity's event scope (" + sourceEventScope.getId() + ") must be mapped but the "
+            + "target activity has no event scope");
       }
     }
     else {
       ScopeImpl mappedSourceEventScope = findMappedEventScope(sourceEventScope, instruction, instructions);
       if (mappedSourceEventScope == null || !mappedSourceEventScope.getId().equals(targetEventScope.getId())) {
-        report.addFailure("The source activity's event scope (%s) must be mapped to the target activity's event scope (%s)"
-            .formatted(sourceEventScope.getId(), targetEventScope.getId()));
+        report.addFailure("The source activity's event scope (" + sourceEventScope.getId() + ") "
+            + "must be mapped to the target activity's event scope (" + targetEventScope.getId() + ")");
       }
     }
   }
@@ -91,8 +91,8 @@ public class SameEventScopeInstructionValidator implements MigrationInstructionV
   @SuppressWarnings("unused")
   protected void addFailure(ValidatingMigrationInstruction instruction,
       MigrationInstructionValidationReportImpl report, String sourceScopeId, String targetScopeId) {
-    report.addFailure("The source activity's event scope (%s) must be mapped to the target activity's event scope (%s)"
-        .formatted(sourceScopeId, targetScopeId));
+    report.addFailure("The source activity's event scope (" + sourceScopeId + ") "
+        + "must be mapped to the target activity's event scope (" + targetScopeId + ")");
   }
 
 }

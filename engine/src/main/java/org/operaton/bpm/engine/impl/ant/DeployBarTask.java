@@ -109,13 +109,14 @@ public class DeployBarTask extends Task {
       String message = getErrorMessage(processEngineInfos, processEngineName);
       throw new ProcessEngineException(message);
     } else {
-      throw new ProcessEngineException("Could not find a process engine with name '%s', no engines found. Make sure an engine configuration is present on the classpath".formatted(processEngineName));
+      throw new ProcessEngineException("Could not find a process engine with name '" + processEngineName +
+          "', no engines found. Make sure an engine configuration is present on the classpath");
     }
   }
 
   private void deployFiles(List<File> files, ProcessEngine processEngine) {
     RepositoryService repositoryService = processEngine.getRepositoryService();
-    log("Starting to deploy %s files".formatted(files.size()));
+    log("Starting to deploy " + files.size() + " files");
 
     for (File f : files) {
       deployFile(f, repositoryService);
@@ -134,7 +135,7 @@ public class DeployBarTask extends Task {
           .addZipInputStream(new ZipInputStream(inputStream))
           .deploy();
     } catch (Exception e) {
-      throw new BuildException("couldn't deploy bar %s: ".formatted(path) + e.getMessage(), e);
+      throw new BuildException("couldn't deploy bar " + path + ": " + e.getMessage(), e);
     }
   }
 

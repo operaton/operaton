@@ -638,7 +638,7 @@ public class DbEntityManager implements Session, EntityLoadListener {
   }
 
   protected void validateId(DbEntity dbEntity) {
-    EnsureUtil.ensureValidIndividualResourceId("Entity %s has an invalid id".formatted(dbEntity), dbEntity.getId());
+    EnsureUtil.ensureValidIndividualResourceId("Entity " + dbEntity + " has an invalid id", dbEntity.getId());
   }
 
   public <T extends DbEntity> List<T> pruneDeletedEntities(List<T> listToPrune) {

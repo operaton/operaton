@@ -204,7 +204,7 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
 
     Object autoCompleteProperty = activity.getProperty(PROPERTY_AUTO_COMPLETE);
     if (autoCompleteProperty != null) {
-      String message = "Property autoComplete expression returns non-Boolean: %s (%s)".formatted(autoCompleteProperty, autoCompleteProperty.getClass().getName());
+      String message = "Property autoComplete expression returns non-Boolean: "+autoCompleteProperty+" ("+autoCompleteProperty.getClass().getName()+")";
       ensureInstanceOf(message, "autoComplete", autoCompleteProperty, Boolean.class);
 
       return (Boolean) autoCompleteProperty;

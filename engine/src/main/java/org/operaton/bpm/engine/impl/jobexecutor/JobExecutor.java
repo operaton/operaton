@@ -45,7 +45,7 @@ public abstract class JobExecutor {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-  protected String name = "JobExecutor[%s]".formatted(getClass().getName());
+  protected String name = "JobExecutor["+getClass().getName()+"]";
   protected List<ProcessEngineImpl> processEngines = new CopyOnWriteArrayList<>();
   protected AcquireJobsCommandFactory acquireJobsCmdFactory;
   protected AcquireJobsRunnable acquireJobsRunnable;

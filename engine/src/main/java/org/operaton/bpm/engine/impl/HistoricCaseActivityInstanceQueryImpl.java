@@ -387,7 +387,7 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
   }
 
   private void ensureCaseActivityInstanceStateIsNull() {
-    ensureNull(NotValidException.class, "Already querying for case activity instance state '%s'".formatted(caseActivityInstanceState),
+    ensureNull(NotValidException.class, "Already querying for case activity instance state '" + caseActivityInstanceState + "'",
       CASE_ACTIVITY_STATE, caseActivityInstanceState);
   }
 

@@ -77,7 +77,7 @@ public abstract class CoreActivity extends CoreModelElement {
 
   @Override
   public String toString() {
-    return "Activity(%s)".formatted(id);
+    return "Activity("+id+")";
   }
 
 }

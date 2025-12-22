@@ -63,20 +63,20 @@ public class JuelExpression implements Expression {
         .handleInvocation(invocation);
       return invocation.getInvocationResult();
     } catch (PropertyNotFoundException pnfe) {
-      throw new ProcessEngineException("Unknown property used in expression: %s. Cause: %s".formatted(expressionText, pnfe.getMessage()), pnfe);
+      throw new ProcessEngineException("Unknown property used in expression: " + expressionText+". Cause: "+pnfe.getMessage(), pnfe);
     } catch (MethodNotFoundException mnfe) {
-      throw new ProcessEngineException("Unknown method used in expression: %s. Cause: %s".formatted(expressionText, mnfe.getMessage()), mnfe);
+      throw new ProcessEngineException("Unknown method used in expression: " + expressionText+". Cause: "+mnfe.getMessage(), mnfe);
     } catch(ELException ele) {
       Throwable cause = ele.getCause();
       if (cause != null) {
         throw new ProcessEngineException(cause);
 
       } else {
-        throw new ProcessEngineException("Error while evaluating expression: %s. Cause: %s".formatted(expressionText, ele.getMessage()), ele);
+        throw new ProcessEngineException("Error while evaluating expression: " + expressionText + ". Cause: " + ele.getMessage(), ele);
 
       }
     } catch (Exception e) {
-      throw new ProcessEngineException("Error while evaluating expression: %s. Cause: %s".formatted(expressionText, e.getMessage()), e);
+      throw new ProcessEngineException("Error while evaluating expression: " + expressionText+". Cause: "+e.getMessage(), e);
     }
   }
 
@@ -94,7 +94,7 @@ public class JuelExpression implements Expression {
         .getDelegateInterceptor()
         .handleInvocation(invocation);
     } catch (Exception e) {
-      throw new ProcessEngineException("Error while evaluating expression: %s. Cause: %s".formatted(expressionText, e.getMessage()), e);
+      throw new ProcessEngineException("Error while evaluating expression: " + expressionText+". Cause: "+e.getMessage(), e);
     }
   }
 

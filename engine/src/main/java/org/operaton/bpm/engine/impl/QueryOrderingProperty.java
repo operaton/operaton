@@ -125,8 +125,13 @@ public class QueryOrderingProperty implements Serializable {
 
   @Override
   public String toString() {
-    return "QueryOrderingProperty[relation=%s, queryProperty=%s, direction=%s, relationConditions=%s]"
-            .formatted(relation, queryProperty, direction, getRelationConditionsString());
+
+    return "QueryOrderingProperty["
+      + "relation=" + relation
+      + ", queryProperty=" + queryProperty
+      + ", direction=" + direction
+      + ", relationConditions=" + getRelationConditionsString()
+      + "]";
   }
 
   public String getRelationConditionsString() {

@@ -89,7 +89,7 @@ public class EvaluateDecisionTableCmd implements Command<DmnDecisionTableResult>
       return evaluateDecisionTable(decisionDefinition, variables);
     }
     catch (Exception e) {
-      throw new ProcessEngineException("Exception while evaluating decision with key '%s'".formatted(decisionDefinitionKey), e);
+      throw new ProcessEngineException("Exception while evaluating decision with key '"+decisionDefinitionKey+"'", e);
     }
   }
 

@@ -83,6 +83,8 @@ public class DefaultJobPriorityProvider extends DefaultPriorityProvider<JobDecla
   }
 
   protected String describeContext(JobDeclaration<?, ?> jobDeclaration, ExecutionEntity executionEntity) {
-    return "Job %s/%s instantiated in context of %s".formatted(jobDeclaration.getActivityId(), jobDeclaration.getJobHandlerType(), executionEntity);
+    return "Job " + jobDeclaration.getActivityId()
+      + "/" + jobDeclaration.getJobHandlerType() + " instantiated "
+      + "in context of " + executionEntity;
   }
 }

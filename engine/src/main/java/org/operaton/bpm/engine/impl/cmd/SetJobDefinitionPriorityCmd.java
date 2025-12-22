@@ -56,7 +56,7 @@ public class SetJobDefinitionPriorityCmd implements Command<Void> {
     JobDefinitionEntity jobDefinition = commandContext.getJobDefinitionManager().findById(jobDefinitionId);
 
     ensureNotNull(NotFoundException.class,
-        "Job definition with id '%s' does not exist".formatted(jobDefinitionId),
+        "Job definition with id '" + jobDefinitionId + "' does not exist",
         "jobDefinition",
         jobDefinition);
 

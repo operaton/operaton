@@ -254,7 +254,7 @@ public abstract class PlanItemDefinitionActivityBehavior implements CmmnActivity
   protected CmmnActivity getActivity(CmmnActivityExecution execution) {
     String id = execution.getId();
     CmmnActivity activity = execution.getActivity();
-    ensureNotNull(PvmException.class, "Case execution '%s': has no current activity.".formatted(id), "activity", activity);
+    ensureNotNull(PvmException.class, "Case execution '"+id+"': has no current activity.", "activity", activity);
 
     return activity;
   }

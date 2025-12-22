@@ -42,8 +42,8 @@ public class CannotAddMultiInstanceBodyValidator implements MigrationInstruction
     flowScopeWalker.walkWhile(element -> element == null || !instructions.getInstructionsByTargetScope(element).isEmpty());
 
     if (miBodyCollector.firstMiBody != null) {
-      report.addFailure("Target activity '%s' is a descendant of multi-instance body '%s' that is not mapped from the source process definition."
-          .formatted(targetActivity.getId(), miBodyCollector.firstMiBody.getId()));
+      report.addFailure("Target activity '" + targetActivity.getId() + "' is a descendant of multi-instance body '" +
+        miBodyCollector.firstMiBody.getId() + "' that is not mapped from the source process definition.");
     }
   }
 

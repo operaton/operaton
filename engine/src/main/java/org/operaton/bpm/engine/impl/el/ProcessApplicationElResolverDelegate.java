@@ -54,7 +54,7 @@ public class ProcessApplicationElResolverDelegate extends AbstractElResolverDele
         return processApplication.getElResolver();
 
       } catch (ProcessApplicationUnavailableException e) {
-        throw new ProcessEngineException("Cannot access process application '%s'".formatted(processApplicationReference.getName()), e);
+        throw new ProcessEngineException("Cannot access process application '"+processApplicationReference.getName()+"'", e);
       }
 
     } else {

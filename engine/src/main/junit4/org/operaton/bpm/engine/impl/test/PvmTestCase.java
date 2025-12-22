@@ -48,7 +48,7 @@ public class PvmTestCase extends TestCase {
     if ( (actual==null)
          || (actual.indexOf(expected)==-1)
        ) {
-      throw new AssertionFailedError("expected presence of ["+expected+"], but was ["+actual+"]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
 

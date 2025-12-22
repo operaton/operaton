@@ -52,7 +52,7 @@ public class StateHandlerAnnotationBeanFactoryPostProcessor implements BeanFacto
 
         if (!beanAlreadyConfigured(registry, registryBeanName, ActivitiStateHandlerRegistry.class)) {
             String registryName = ActivitiStateHandlerRegistry.class.getName();
-            log.info(() -> "registering a " + registryName + " instance under bean name " + ActivitiContextUtils.ACTIVITI_REGISTRY_BEAN_NAME + ".");
+            log.info(() -> "registering a %s instance under bean name %s.".formatted(registryName, ActivitiContextUtils.ACTIVITI_REGISTRY_BEAN_NAME));
 
             RootBeanDefinition rootBeanDefinition = new RootBeanDefinition();
             rootBeanDefinition.setBeanClassName(registryName);

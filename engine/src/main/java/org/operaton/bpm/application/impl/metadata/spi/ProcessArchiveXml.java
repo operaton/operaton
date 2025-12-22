@@ -61,22 +61,17 @@ public interface ProcessArchiveXml {
    * <p> The path is interpreted as
    * <ul>
    *
-   * <p>
    *   <li>
    *     <em>local to the root of the classpath.</em>
    *     By default or if the prefix "classpath:" is used, the path is interpreted as relative to the root
    *     of the classloader. Example: "path/to/my/processes" or "classpath:path/to/my/processes")
    *   </li>
-   * </p>
    *
-   * <p>
    *   <li>
    *     <em>relative to the process archive's definig metafile (processes.xml).</em>
    *     If the prefix "pa:" is used, the path is interpreted as relative to the metafile defining the
    *     process archive. Consider the situation of a process application packaged as a WAR file:
-   * </p>
-   *
-   * <p>
+   *     <p>
    *     The deployment structure could look like this:
    *     <pre>
    *     |-- My-Application.war
@@ -86,17 +81,17 @@ public interface ProcessArchiveXml {
    *                     |-- META-INF/processes.xml  (1)
    *                     |-- opps/openOpportunity.bpmn
    *                     |-- leads/openLead.bpmn
-   * </p>
    *
-   * <p>
    *                 |-- Invoice-Processes.jar
    *                     |-- META-INF/processes.xml  (2)
    *    </pre>
+   *    </p>
+   *    <p>
    *    If the process archive(s) defined in (1) uses a path prefixed with "pa:", like for instance "pa:opps/",
    *    only the "opps/"-folder of sales-processes.jar is scanned. More precisely, a "pa-local path", is resolved
    *    relative to the the parent directory of the META-INF-directory containing the defining processes.xml file.
    *    This implies, that using a pa-local path in (1), no processes from (2) are visible.
-   *    <p />
+   *    </p>
    *   </li>
    * </ul>
    * </p>

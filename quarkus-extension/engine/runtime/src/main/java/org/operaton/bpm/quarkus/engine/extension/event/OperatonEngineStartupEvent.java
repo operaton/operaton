@@ -28,13 +28,11 @@ package org.operaton.bpm.quarkus.engine.extension.event;
  * This event is observed in the following way:
  * </p>
  *
- * <p>
  * <code><pre>
  *     void onOperatonEngineStart(@Observes OperatonEngineStartupEvent event) {
  *         LOGGER.info("The Operaton engine is started");
  *     }
  * </pre></code>
- * </p>
  */
 public class OperatonEngineStartupEvent {
 }

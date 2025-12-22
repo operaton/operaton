@@ -38,16 +38,12 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
  * &#64;ExtendWith(FeelExtension.class)
  * public class YourTest {
  *
- * <p>
  *   &#64;RegisterExtension
  *   public static FeelExtension feelExtension = FeelExtension.buildWithFunctionProvider();
- * </p>
  *
- * <p>
  *   ...
  * }
  * </pre>
- * </p>
  *
  * <p>
  * The FeelEngine and FunctionProvider will be made available to the test class

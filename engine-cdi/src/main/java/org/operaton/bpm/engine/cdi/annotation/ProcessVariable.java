@@ -32,7 +32,6 @@ import jakarta.inject.Qualifier;
  * </ul>
  * In both cases, the process variable with the name 'accountNumber' is
  * injected. NOTE: injection points must be of type 'object'.
- * <p />
  *
  * <p>
  * Can also be used to declare bean-properties to hold process variables in
@@ -41,9 +40,7 @@ import jakarta.inject.Qualifier;
  * {@code @ProcessVariable }
  * String accountNumber;  // will be added as a process
  *                        // variable to the 'billingProcess'
- * </p>
  *
- * <p>
  * {@code @StartProcess("billingProcess")}
  * public void startBillingProcess() {
  *  ...

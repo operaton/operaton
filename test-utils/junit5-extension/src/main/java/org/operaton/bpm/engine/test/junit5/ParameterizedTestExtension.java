@@ -55,16 +55,11 @@ import static java.util.Arrays.asList;
  * with @Paramater(0), @Parameter(1). This extension implements the same
  * mechanism for JUnit 5.
  *
- * <p>
  * To migrate the tests you can follow the following recipe:
- * </p>
  *
- * <p>
  * <ol>
  * <li>Remove the junit 4 imports
- * </p>
  *
- * <p>
  * <pre>
  * import org.junit.After;
  * import org.junit.Assert;
@@ -74,43 +69,28 @@ import static java.util.Arrays.asList;
  * import org.junit.runners.Parameterized;
  * import org.junit.runners.Parameterized.Parameters;
  * </pre>
- * </p>
  *
- * <p>
  * </li>
- * </p>
  *
- * <p>
  * <li>Add the imports for junit 5 and this class
- * </p>
  *
- * <p>
  * <pre>
  * import org.junit.jupiter.api.*;
  * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
  * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
  * import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
  * </pre>
- * </p>
  *
- * <p>
  * </li>
  * <li>Replace the class @RunWith(Parameterized.class) annotation
  * with @Parameterized</li>
- * </p>
  *
- * <p>
  * <li>Replace @Before with @BeforeEach and @After with @AfterEach</li>
- * </p>
  *
- * <p>
  * <li>Replace each @Test with @TestTemplate</li>
- * </p>
  *
- * <p>
  * <li>Use assertion methods from Assertions instead from Assert</li>
  * </ol>
- * </p>
  *
  */
 public class ParameterizedTestExtension implements TestTemplateInvocationContextProvider {

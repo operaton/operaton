@@ -51,7 +51,6 @@ public interface AuthorizationQuery extends Query<AuthorizationQuery, Authorizat
    * If this method is called multiple times, all passed-in permissions will be checked with AND semantics.
    * Example:
    *
-   * <p>
    * <pre>
    * authorizationQuery.userId("user1")
    *   .resourceType("processDefinition")
@@ -61,7 +60,6 @@ public interface AuthorizationQuery extends Query<AuthorizationQuery, Authorizat
    *   .hasPermission(Permissions.DELETE)
    *   .list();
    * </pre>
-   * </p>
    *
    * <p>
    * Selects all Authorization objects which provide READ,UPDATE,DELETE

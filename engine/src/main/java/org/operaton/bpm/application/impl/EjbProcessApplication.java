@@ -45,14 +45,11 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * {@literal @}TransactionAttribute(TransactionAttributeType.REQUIRED)
  * public class DefaultEjbProcessApplication extends EjbProcessApplication {
  *
- * <p>
  *   {@literal @}PostConstruct
  *   public void deploy() {
  *     super.deploy();
  *   }
- * </p>
  *
- * <p>
  *   {@literal @}PreDestroy
  *   public void undeploy() {
  *     super.undeploy();
@@ -61,7 +58,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * </pre>
  * <p>(the same Metadata can of course be provided using an XML-based <code>ejb-jar.xml</code>
  * deployment descriptor</p>
- * </p>
  *
  * <h2>Invocation Semantics</h2>
  * <p>This allows the process engine as well as other applications to invoke this EJB Process
@@ -88,13 +84,9 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  *                                        |                    |
  *                                        |                    |
  *                                        +--------------------+
- * </p>
  *
- * <p>
  * </pre>
- * </p>
  *
- * <p>
  * <h2>Process Application Reference</h2>
  * <p>When the process application registers with a process engine
  * (see {@link ManagementService#registerProcessApplication(String, ProcessApplicationReference)},
@@ -103,7 +95,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
  * of the Ejb Containers naming context and passes a reference containing the EJBProcessApplication's
  * Component Name to the process engine. Whenever the process engine needs access to process application,
  * the actual component instance is looked up and invoked.</p>
- * </p>
  *
  * @author Daniel Meyer
  *

@@ -417,7 +417,7 @@ public interface IdentityService {
    * a call to {@link #clearAuthentication()} once the interaction is terminated.
    *
    * <p>
-   *  @param authenticatedUserId the id of the current user.
+   *  @param userId the id of the current user.
    *  @param groups the groups of the current user.
    * </p>
    */
@@ -429,11 +429,9 @@ public interface IdentityService {
    * thread will have access to this authentication. Should be followed by
    * a call to {@link #clearAuthentication()} once the interaction is terminated.
    *
-   * <p>
    *  @param userId the id of the current user.
    *  @param groups the groups of the current user.
    *  @param tenantIds the tenants of the current user.
-   * </p>
    */
   void setAuthentication(String userId, List<String> groups, List<String> tenantIds);
 

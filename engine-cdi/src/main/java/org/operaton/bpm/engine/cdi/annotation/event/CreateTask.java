@@ -23,13 +23,11 @@ import jakarta.inject.Qualifier;
 /**
  * Can be used to qualify events fired when a task is created.
  *
- * <p>
  * <pre>
  * public void onApproveRegistrationTaskCreate(@Observes @CreateTask("approveRegistration") BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
- * </p>
  *
  * @author Daniel Meyer
  * @author Sebastian Menski

@@ -54,18 +54,14 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
    *        |-- META-INF/processes.xml
    *        |-- org/operaton/bpm/integrationtest/deployment/ear/paAsEjbModule-process.bpmn20.xml
    *
-   * <p>
    *    |-- fox-platform-client.jar
    *        |-- META-INF/MANIFEST.MF
-   * </p>
    *
-   * <p>
    *    |-- test.war
    *        |-- META-INF/MANIFEST.MF
    *        |-- WEB-INF/beans.xml
    *        |-- + test classes
    * </pre>
-   * </p>
    */
   @Deployment
   public static EnterpriseArchive paAsEjbModule() {

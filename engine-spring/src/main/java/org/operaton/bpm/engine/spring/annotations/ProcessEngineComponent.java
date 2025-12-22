@@ -23,7 +23,6 @@ import java.lang.annotation.*;
  * that is so annotated to respond to events ("states") in a Operaton process.
  * Generically, it is a class that has been adapted to be usable in a Operaton process.
  *
- * <p>
  * <p/>
  * For example, suppose we have registered a BPMN process that has
  * the following declaration:
@@ -43,7 +42,6 @@ import java.lang.annotation.*;
  * <code>public void confirmReceipt(..)</code> would be treated the same as
  * <p/>
  * <code>@State( "confirm-receipt") public void confirmReceipt (..)</code>,
- * </p>
  *
  * @author Josh Long
  * @since 1.0

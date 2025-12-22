@@ -50,18 +50,14 @@ import org.operaton.bpm.engine.ProcessEngine;
  * {@literal @}ProcessApplication("My Process Application")
  * public class MyProcessApplication extends ServletProcessApplication {
  *
- * <p>
  *  {@literal @}PostDeploy
  *  public void startProcess(ProcessEngine processEngine) {
  *    processEngine.getRuntimeService()
  *      .startProcessInstanceByKey("invoiceProcess");
  *  }
- * </p>
  *
- * <p>
  * }
  * </pre>
- * </p>
  *
  * <p>A method annotated with <code>{@literal @}PostDeploy</code> may additionally take the following set of
  * parameters, in any oder:

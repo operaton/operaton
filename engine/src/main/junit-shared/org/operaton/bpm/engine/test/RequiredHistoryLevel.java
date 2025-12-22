@@ -30,24 +30,16 @@ import java.lang.annotation.RetentionPolicy;
  * <pre>
  * package org.example;
  *
- * <p>
  * ...
- * </p>
  *
- * <p>
  * public class ExampleTest {
- * </p>
  *
- * <p>
  *   &#64;RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
  *   public void testWithHistory() {
- * </p>
  *
- * <p>
  *     // test something with the history service (e.g. variables)
  *   }
  * </pre>
- * </p>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited

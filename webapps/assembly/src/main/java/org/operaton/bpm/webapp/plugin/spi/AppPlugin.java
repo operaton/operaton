@@ -25,9 +25,8 @@ import org.operaton.bpm.webapp.plugin.spi.impl.AbstractAppPlugin;
 /**
  * The service provider interface (SPI) that must be provided by a webapplication plugin.
  *
- * A implementation of this SPI publishes
- *
  * <p>
+ * An implementation of this SPI publishes
  * <ul>
  *   <li>a unique ID</li>
  *   <li>a directory that contains the plugins client-side assets (HTML + JavaScript files)</li>

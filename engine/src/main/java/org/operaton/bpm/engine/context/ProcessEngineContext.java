@@ -49,7 +49,6 @@ import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
  *
  * Example on declaring a new Process Engine Context:
  *
- * <p>
  * <pre>
  *  try {
  *    ProcessEngineContext.requiresNew();
@@ -58,7 +57,6 @@ import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
  *    ProcessEngineContext.clear();
  *  }
  * </pre>
- * </p>
  */
 public final class ProcessEngineContext {
 

@@ -51,12 +51,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * &#64;RegisterExtension
  * static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
  *
- * <p>
  * &#64;RegisterExtension
  * AuthorizationTestExtension authExtension = new AuthorizationTestExtension(engineExtension);
- * </p>
  *
- * <p>
  * // In a test method:
  * &#64;Test
  * public void testSomething() {
@@ -66,7 +63,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *   assertTrue(authExtension.assertScenario(myScenario));
  * }
  * </pre>
- * </p>
  */
 public class AuthorizationTestExtension implements BeforeEachCallback, AfterEachCallback {
 

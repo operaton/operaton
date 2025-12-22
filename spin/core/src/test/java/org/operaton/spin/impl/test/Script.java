@@ -44,17 +44,13 @@ import java.lang.annotation.Target;
  *   public void scriptNameWithoutExtension() {
  *     \\...
  *   }
- * </p>
  *
- * <p>
  *   {@literal @}Test
  *   {@literal @}Script("scriptNameWithoutExtension")
  *   public void notTheScriptName() {
  *     \\...
  *   }
- * </p>
  *
- * <p>
  *   {@literal @}Test
  *   {@literal @}Script(
  *     name = "scriptNameWithoutExtension",
@@ -66,9 +62,7 @@ import java.lang.annotation.Target;
  *   public void notTheScriptName() {
  *     \\...
  *   }
- * </p>
  *
- * <p>
  *   {@literal @}Test
  *   {@literal @}Script(
  *     name = "scriptNameWithoutExtension",

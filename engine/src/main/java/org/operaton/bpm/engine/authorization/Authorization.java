@@ -33,12 +33,10 @@ import org.operaton.bpm.engine.identity.User;
  *   except the distinct user 'admin'.</li>
  * </ul>
  *
- * <p>
  * <h2>Identities</h2>
  * <p>Operaton distinguishes two types of identities: <em>users</em> and
  * <em>groups</em>. Authorizations can either range over all users
  * (userId = {@link #ANY}), an individual {@link User} or a {@link Group} of users.</p>
- * </p>
  *
  * <h2>Permissions</h2>
  * <p>A {@link Permission} defines the way an identity is allowed to interact
@@ -191,7 +189,6 @@ public interface Authorization {
    * </ul>
    * </p>
    *
-   * <p>
    *  @param a set of permissions.
    * */
   void setPermissions(Permission[] permissions);
@@ -266,10 +263,12 @@ public interface Authorization {
    * belongs to a historic instance when its resource type is {@link Resources#HISTORIC_TASK}.
    * </p>
    *
-   * @return  <ul>
+   * @return
+   *   <ul>
    *   <li>the date the historic instance authorization is cleaned up
    *   <li>{@code null} if not related to a historic instance resource
    *   <li>{@code null} if removal time strategy is end and the top-level instance is not finished
+   *   </ul>
    */
   Date getRemovalTime();
 
@@ -283,9 +282,11 @@ public interface Authorization {
    * {@link Resources#HISTORIC_TASK}.
    * </p>
    *
-   * @return <ul>
+   * @return
+   *   <ul>
    *   <li>the process instance id of the top-level (root) process instance
    *   <li>{@code null} if not related to a historic instance resource
+   *   </ul>
    */
   String getRootProcessInstanceId();
 

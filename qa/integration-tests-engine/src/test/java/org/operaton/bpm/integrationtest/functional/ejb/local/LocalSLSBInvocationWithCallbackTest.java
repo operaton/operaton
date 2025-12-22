@@ -51,17 +51,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * </ul>
  * </p>
  *
- *
- * Expected Control flow:
- * </p>
- *
  * <p>
+ * Expected Control flow:
+ *
  * <pre>
  *    test.war                                 service.war
  *    ========                                 ===========
- * </p>
  *
- * <p>
  * start (unit test)
  *   Process (1)
  *      |

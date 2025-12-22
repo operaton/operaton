@@ -48,7 +48,6 @@ public interface HistoricIdentityLinkLog {
    * Returns the type of link (Candidate or Assignee or Owner).
    * See {@link IdentityLinkType} for the native supported types by the process engine.
    *
-   * <p>
    * */
   String getType();
 

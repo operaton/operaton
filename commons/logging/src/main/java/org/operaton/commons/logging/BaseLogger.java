@@ -26,50 +26,33 @@ import org.slf4j.helpers.MessageFormatter;
  * Base class for implementing a logger class. A logger class is a class with
  * dedicated methods for each log message:
  *
- * <p>
  * <pre>
  * public class MyLogger extends BaseLogger {
- * </p>
  *
- * <p>
  *   public static MyLogger LOG = createLogger(MyLogger.class, "MYPROJ", "org.example", "01");
- * </p>
  *
- * <p>
  *   public void engineStarted(long currentTime) {
  *     logInfo("100", "My super engine has started at '{}'", currentTime);
  *   }
- * </p>
  *
- * <p>
  * }
  * </pre>
- * </p>
  *
- * <p>
  * The logger can then be used in the following way:
- * </p>
  *
- * <p>
  * <pre>
  * LOG.engineStarted(System.currentTimeMilliseconds());
  * </pre>
- * </p>
  *
- * <p>
  * This will print the following message:
  * <pre>
  * INFO  org.example - MYPROJ-01100 My super engine has started at '4234234523'
  * </pre>
- * </p>
  *
- * <p>
  * <h2>Slf4j</h2>
  * This class uses slf4j as logging API. The class ensures that log messages and exception
  * messages are always formatted using the same template.
- * </p>
  *
- * <p>
  * <h2>Log message format</h2>
  * The log message format produced by this class is as follows:
  * <pre>
@@ -79,7 +62,6 @@ import org.slf4j.helpers.MessageFormatter;
  * <pre>
  * MYPROJ-01100 My super engine has started at '4234234523'
  * </pre>
- * </p>
  *
  * @author Daniel Meyer
  * @author Sebastian Menski

@@ -38,9 +38,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * meaning that no backoff is applied. In case the condition for increasing backoff applies, the backoff
  * level is incremented. The actual time to wait is then computed as follows
  *
- * <p>
  * <pre>timeToWait = baseBackoffTime * (backoffFactor ^ (backoffLevel - 1))</pre>
- * </p>
  *
  * <p>Accordingly, the maximum possible backoff level is
  *

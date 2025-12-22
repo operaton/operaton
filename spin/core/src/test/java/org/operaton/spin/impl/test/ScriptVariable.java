@@ -25,7 +25,6 @@ import java.lang.annotation.Target;
  * Annotation to define script variable bindings. Either used directly
  * in on the test method (if only one variable should be defined)
  *
- * <p>
  * <pre>
  *   {@literal @}Test
  *   {@literal @}Script
@@ -34,13 +33,9 @@ import java.lang.annotation.Target;
  *     //...
  *   }
  * </pre>
- * </p>
  *
- * <p>
  * or in a list as the variables argument of the {@literal @}{@link Script} Annotation
- * </p>
  *
- * <p>
  * <pre>
  *   {@literal @}Test
  *   {@literal @}Script{
@@ -53,7 +48,6 @@ import java.lang.annotation.Target;
  *     //...
  *   }
  * </pre>
- * </p>
  *
  * @author Sebastian Menski
  */

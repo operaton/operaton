@@ -54,7 +54,6 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
    *          |-- META-INF/processes.xml
    *          |-- org/operaton/bpm/integrationtest/testDeployProcessArchive.bpmn20.xml
    *
-   * <p>
    *    |-- fox-platform-client.jar  <<===============================||
    *                                                                  ||  Class-Path reference
    *    |-- test.war (contains the test-class but also processes)     ||
@@ -62,7 +61,6 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
    *        |-- WEB-INF/beans.xml
    *        |-- + test classes
    * </pre>
-   * </p>
    */
   @Deployment
   public static EnterpriseArchive onePaAsLib() {

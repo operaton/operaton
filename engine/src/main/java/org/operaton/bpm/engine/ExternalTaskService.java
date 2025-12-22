@@ -76,9 +76,7 @@ public interface ExternalTaskService {
    * <p>
    *   Returns only tasks that the currently authenticated user has at least one
    *   permission out of all of the following groups for:
-   * </p>
    *
-   * <p>
    *   <ul>
    *     <li>{@link Permissions#READ} on {@link Resources#PROCESS_INSTANCE}</li>
    *     <li>{@link Permissions#READ_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
@@ -458,9 +456,7 @@ public interface ExternalTaskService {
    * <p>
    *   Queries for tasks that the currently authenticated user has at least one
    *   of the following permissions for:
-   * </p>
    *
-   * <p>
    *   <ul>
    *     <li>{@link Permissions#READ} on {@link Resources#PROCESS_INSTANCE}</li>
    *     <li>{@link Permissions#READ_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>

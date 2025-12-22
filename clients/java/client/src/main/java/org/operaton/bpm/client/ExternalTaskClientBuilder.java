@@ -52,30 +52,21 @@ public interface ExternalTaskClientBuilder {
    * {@code
    * public class CustomUrlResolver implements UrlResolver {
    * protected String serviceId;
-   * </p>
    *
-   * <p>
    * protected DiscoveryClient discoveryClient;
-   * </p>
    *
-   * <p>
    *   protected String getRandomServiceInstance() {
    *     List serviceInstances = discoveryClient.getInstances(serviceId);
    *     Random random = new Random();
-   * </p>
    *
-   * <p>
    *     return serviceInstances.get(random.nextInt(serviceInstances.size())).getUri().toString();
    *   }
-   * </p>
    *
-   * <p>
    *   public String getBaseUrl() {
    *     return getRandomServiceInstance();
    *   }
    * }
    * </pre>
-   * </p>
    * @param urlResolver of the Operaton 7 REST API
    * @return the builder
    */

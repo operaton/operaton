@@ -41,9 +41,7 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * It is sufficient adding a custom
  * subclass of {@link ServletProcessApplication} annotated with
  * <code>{@literal @}ProcessApplication</code> to your application:
- * </p>
  *
- * <p>
  * <pre>
  * {@literal @}ProcessApplication("Loan Approval App")
  * public class LoanApprovalApplication extends ServletProcessApplication {
@@ -84,13 +82,9 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  *                                        |                    |
  *                                        |                    |
  *                                        +--------------------+
- * </p>
  *
- * <p>
  * </pre>
- * </p>
  *
- * <p>
  * <h2>Process Application Reference</h2>
  * <p>
  * The process engine holds a {@link WeakReference} to the

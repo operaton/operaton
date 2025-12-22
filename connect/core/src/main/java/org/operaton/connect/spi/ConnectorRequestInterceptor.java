@@ -56,12 +56,10 @@ public interface ConnectorRequestInterceptor {
    *    Object rawRequest = invocation.getTarget();
    *    // cast rawRequest to the low-level connector implementation object and work with it.
    *
-   * <p>
    *    // finally
    *    return invocation.proceed();
    *  }
    * </pre>
-   * </p>
    *
    * @param invocation the invocation
    * @return the result of the invocation

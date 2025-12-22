@@ -26,23 +26,16 @@ import java.lang.annotation.RetentionPolicy;
  * <pre>
  * package org.example;
  *
- * <p>
  * ...
- * </p>
  *
- * <p>
  * public class ExampleTest {
- * </p>
  *
- * <p>
  *   &#64;Deployment
  *   public void testForADeploymentWithASingleResource() {
  *     // a deployment will be available in the engine repository
  *     // containing the single resource <b>org/example/ExampleTest.testForADeploymentWithASingleResource.bpmn20.xml</b>
  *   }
- * </p>
  *
- * <p>
  *   &#64;Deployment(resources = {
  *     "org/example/processOne.bpmn20.xml",
  *     "org/example/processTwo.bpmn20.xml",
@@ -52,36 +45,26 @@ import java.lang.annotation.RetentionPolicy;
  *     // containing the three resources
  *   }
  * </pre>
- * </p>
  *
  * <p>Usage - Example 2 (class-level annotation):</p>
  * <pre>
  * package org.example;
- * </p>
  *
- * <p>
  * ...
- * </p>
  *
- * <p>
  * &#64;Deployment
  * public class ExampleTest2 {
- * </p>
  *
- * <p>
  *   public void testForADeploymentWithASingleResource() {
  *     // a deployment will be available in the engine repository
  *     // containing the single resource <b>org/example/ExampleTest2.bpmn20.xml</b>
  *   }
- * </p>
  *
- * <p>
  *   &#64;Deployment(resources = "org/example/process.bpmn20.xml")
  *   public void testForADeploymentWithASingleResource() {
  *     // the method-level annotation overrides the class-level annotation
  *   }
  * </pre>
- * </p>
  *
  * @author Dave Syer
  * @author Tom Baeyens

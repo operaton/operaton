@@ -41,14 +41,10 @@ import org.operaton.bpm.spring.boot.starter.SpringBootProcessApplication;
  * &#64;EnableProcessApplication("myProcessApplicationName")
  * public class MyApplication {
  *
- * <p>
  * ...
- * </p>
  *
- * <p>
  * }
  * </pre>
- * </p>
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

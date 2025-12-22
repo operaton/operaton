@@ -30,10 +30,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * algorithm is used for the encryption.
  *
  * <p>
- * Default algorithms:
- * Version:           |    Algorithm
- * <= Operaton 7.6     | SHA1
- * >= Operaton 7.7     | SHA512
+ * Default algorithm: SHA512
  * </p>
  */
 public class PasswordManager {

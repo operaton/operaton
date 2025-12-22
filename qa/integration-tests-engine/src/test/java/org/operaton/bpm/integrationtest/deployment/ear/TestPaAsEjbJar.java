@@ -54,11 +54,9 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
    *        |-- META-INF/processes.xml
    *        |-- META-INF/beans.xml
    *
-   * <p>
    *    |-- operaton-engine-cdi.jar
    *        |-- META-INF/MANIFEST.MF
    * </pre>
-   * </p>
    */
   @Deployment
   public static EnterpriseArchive paAsEjbModule() {

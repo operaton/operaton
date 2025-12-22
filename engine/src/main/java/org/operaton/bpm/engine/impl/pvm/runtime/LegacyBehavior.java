@@ -38,15 +38,16 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
 
 /**
  * This class encapsulates legacy runtime behavior for the process engine.
- *<p>
+ * <p>
  * Since 7.3 the behavior of certain bpmn elements has changed slightly.
- *<p>
+ * <p>
  *
  * 1. Some elements which did not used to be scopes are now scopes:
  * <ul>
  *  <li>Sequential multi instance Embedded Subprocess: is now a scope, used to be non-scope.</li>
  *  <li>Event subprocess: is now a scope, used to be non-scope.</li>
  * </ul>
+ * </p>
  *
  * <p>
  * 2. In certain situations, executions which were both scope and concurrent were created.
@@ -57,7 +58,6 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  * The new behavior is that the existing scope execution will not be made concurrent, instead,
  * a new, concurrent execution will be created and be interleaved between the parent and the
  * existing scope execution.
- *<p>
  * </p>
  *
  * @author Daniel Meyer

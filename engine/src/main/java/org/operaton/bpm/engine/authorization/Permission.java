@@ -26,6 +26,7 @@ package org.operaton.bpm.engine.authorization;
  * up an authorization are coded into a single integer.
  * The implication of this design is that a permission must have a unique integer value
  * and it must be a power of two, ie 2^0, 2^1, 2^2, 2^3, 2^4 ...
+ * </p>
  *
  * <p>
  * The permission can then be added to an authorization using bitwise OR:

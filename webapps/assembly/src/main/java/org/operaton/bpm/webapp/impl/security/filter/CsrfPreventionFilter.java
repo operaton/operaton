@@ -68,9 +68,7 @@ import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
  *              |/ Response to POST Request       |
  *              |---------------------------------|
  *              |\                                |
- * </p>
  *
- * <p>
  * Negative scenario:
  *           Client                            Server
  *              |                                 |
@@ -81,9 +79,7 @@ import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
  *              |/Request is rejected             |
  *              |---------------------------------|
  *              |\                                |
- * </p>
  *
- * <p>
  *           Client                            Server
  *              |                                 |
  *              | POST Request with invalid token\| JSESSIONID

@@ -54,14 +54,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  *                   |-- directory/process4.bpmn
  *                   |-- alternateDirectory/process5.bpmn
  *
- * <p>
  *               |-- pa3.jar
  *                   |-- META-INF/processes.xml            (3)
  *                   |-- process6.bpmn
  *                   |-- directory/process7.bpmn
  *                   |-- alternateDirectory/process8.bpmn
  * </pre>
- * </p>
  *
  *
  * @author Daniel Meyer

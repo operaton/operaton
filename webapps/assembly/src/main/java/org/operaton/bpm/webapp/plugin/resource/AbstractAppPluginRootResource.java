@@ -38,9 +38,12 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 /**
  * A resource class that provides a plugins restful API.
  *
+ * <p>
  * Subclasses of this class may provide subresources using annotated getters
  * in order to be multi-engine aware.
+ * </p>
  *
+ * <p>
  * Subresources must properly initialize the subresources via
  * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
  *
@@ -54,6 +57,7 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  *   }
  * }
  * </pre>
+ * </p>
  *
  * @author nico.rehwaldt
  * @author Daniel Meyer

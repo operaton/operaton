@@ -131,8 +131,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * of variable is determined based on the value, using types configured in
    * {@link ProcessEngineConfigurationImpl#getVariableSerializers()}.
    *
+   * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable
@@ -145,8 +147,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * Only select cases instances which have a global variable with the given name, but
    * with a different value than the passed value.
    *
+   * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name name of the variable, cannot be null
    * @param value the value of the variable
@@ -160,8 +164,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
   /**
    * Only select cases instances which have a global variable value greater than the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name variable name, cannot be null
    * @param value variable value, cannot be null
@@ -175,8 +181,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * Only select cases instances which have a global variable value greater than or equal to
    * the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
+   * </p>
    *
    * @param name variable name, cannot be null
    * @param value variable value, cannot be null
@@ -189,8 +197,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
   /**
    * Only select cases instances which have a global variable value less than the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name variable name, cannot be null
    * @param value variable value, cannot be null
@@ -203,8 +213,10 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
   /**
    * Only select cases instances which have a global variable value less than or equal to the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name variable name, cannot be null
    * @param value variable value, cannot be null

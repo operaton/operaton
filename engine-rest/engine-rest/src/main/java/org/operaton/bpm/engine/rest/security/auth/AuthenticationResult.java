@@ -24,10 +24,12 @@ import org.operaton.bpm.engine.IdentityService;
  * Serves as DTO to hold the result of an authentication request performed
  * through an {@link AuthenticationProvider}.
  *
+ * <p>
  * Note that when implementing a custom {@link AuthenticationProvider}, it is
  * not required to set groups or tenants for an AuthenticationResult, as they
  * will be resolved later via the {@link IdentityService} (e.g.
  * {@link ProcessEngineAuthenticationFilter#setAuthenticatedUser}).
+ * </p>
  */
 public class AuthenticationResult {
 

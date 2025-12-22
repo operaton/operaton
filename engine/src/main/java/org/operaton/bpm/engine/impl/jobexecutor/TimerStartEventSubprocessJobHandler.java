@@ -24,7 +24,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 /**
  * {@link JobHandler} implementation for timer start events which are embedded into an event subprocess.
  *
+ * <p>
  * The configuration is the id of the start event activity.
+ * </p>
  *
  * @author Daniel Meyer
  * @author Kristin Polenz

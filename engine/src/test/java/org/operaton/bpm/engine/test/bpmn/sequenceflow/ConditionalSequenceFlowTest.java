@@ -87,11 +87,15 @@ class ConditionalSequenceFlowTest {
    * Test that Conditional Sequence Flows throw an exception, if no condition
    * evaluates to true.
    *
+   * <p>
    * BPMN 2.0.1 p. 427 (PDF 457):
    * "Multiple outgoing Sequence Flows with conditions behaves as an inclusive split."
+   * </p>
    *
+   * <p>
    * BPMN 2.0.1 p. 436 (PDF 466):
    * "The inclusive gateway throws an exception in case all conditions evaluate to false and a default flow has not been specified."
+   * </p>
    *
    * @see <a href="https://app.camunda.com/jira/browse/CAM-1773">https://app.camunda.com/jira/browse/CAM-1773</a>
    */

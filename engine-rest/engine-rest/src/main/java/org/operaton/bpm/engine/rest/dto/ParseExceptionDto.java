@@ -28,8 +28,10 @@ import org.operaton.bpm.engine.ResourceReport;
 /**
  * Dto for {@link ParseException}
  *
+ * <p>
  * The exception contains a list of errors and warning that occurred during
  * parsing.
+ * </p>
  */
 public class ParseExceptionDto extends ExceptionDto {
 

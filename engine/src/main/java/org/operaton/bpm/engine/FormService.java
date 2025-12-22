@@ -93,16 +93,20 @@ public interface FormService {
   /**
    * Start a new process instance with the user data that was entered as properties in a start form.
    *
+   * <p>
    * A business key can be provided to associate the process instance with a
    * certain identifier that has a clear business meaning. For example in an
    * order process, the business key could be an order id. This business key can
    * then be used to easily look up that process instance , see
    * {@link ProcessInstanceQuery#processInstanceBusinessKey(String)}. Providing such a business
    * key is definitely a best practice.
+   * </p>
    *
+   * <p>
    * Note that a business key MUST be unique for the given process definition.
    * Process instance from different process definition are allowed to have the
    * same business key.
+   * </p>
    *
    * @param processDefinitionId the id of the process definition, cannot be null.
    * @param businessKey a key that uniquely identifies the process instance in the context or the
@@ -292,9 +296,11 @@ public interface FormService {
   /**
    * Retrieves a user defined reference to a start form.
    *
+   * <p>
    * In the Explorer app, it is assumed that the form key specifies a resource
    * in the deployment, which is the template for the form.  But users are free
    * to use this property differently.
+   * </p>
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
@@ -304,12 +310,16 @@ public interface FormService {
   /**
    * Retrieves a user defined reference to a task form.
    *
+   * <p>
    * In the Explorer app, it is assumed that the form key specifies a resource
    * in the deployment, which is the template for the form.  But users are free
    * to use this property differently.
+   * </p>
    *
+   * <p>
    * Both arguments can be obtained from {@link Task} instances returned by any
    * {@link TaskQuery}.
+   * </p>
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.

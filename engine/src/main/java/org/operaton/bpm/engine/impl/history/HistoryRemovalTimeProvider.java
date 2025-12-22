@@ -35,12 +35,16 @@ public interface HistoryRemovalTimeProvider {
   /**
    * Calculates the removal time of historic entities related to processes.
    *
+   * <p>
    * START: the removal time is set for each historic entity separately on occurrence (creation).
    *        {@link HistoricProcessInstanceEventEntity#getEndTime()} is {@code null}
+   * </p>
    *
+   * <p>
    * END:   the removal time is updated simultaneously for all historic entities which belong to
    *        the root process instance when it ends.
    *        {@link HistoricProcessInstanceEventEntity#getEndTime()} is not {@code null}
+   * </p>
    *
    * @param historicRootProcessInstance which is either in state running or ended
    * @param processDefinition of the historic root process instance
@@ -60,11 +64,15 @@ public interface HistoryRemovalTimeProvider {
   /**
    * Calculates the removal time of historic batches.
    *
+   * <p>
    * START: the removal time is set for the historic batch entity on start.
    *        {@link HistoricBatchEntity#getEndTime()} is {@code null}
+   * </p>
    *
+   * <p>
    * END:   the removal time is set for the historic batch entity on end.
    *        {@link HistoricBatchEntity#getEndTime()} is not {@code null}
+   * </p>
    *
    * @param historicBatch which is either in state running or ended
    * @return the removal time of historic entities

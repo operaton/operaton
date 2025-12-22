@@ -34,9 +34,11 @@ public final class CompareUtil {
   /**
    * Checks if any of the values are not in an ascending order. The check is done based on the {@link Comparable#compareTo(Object)} method.
    *
+   * <p>
    * E.g. if we have {@code minPriority = 10}, {@code priority = 13} and {@code maxPriority = 5} and
    * {@code Integer[] values = {minPriority, priority, maxPriority}}. Then a call to {@link CompareUtil#areNotInAscendingOrder(Comparable[] values)}
    * will return {@code true}
+   * </p>
    *
    * @param values to validate
    * @param <T> the type of the comparable
@@ -53,9 +55,11 @@ public final class CompareUtil {
   /**
    * Checks if any of the values are not in an ascending order. The check is done based on the {@link Comparable#compareTo(Object)} method.
    *
+   * <p>
    * E.g. if we have {@code minPriority = 10}, {@code priority = 13} and {@code maxPriority = 5} and
    * {@code List<Integer> values = {minPriority, priority, maxPriority}}. Then a call to {@link CompareUtil#areNotInAscendingOrder(List values)}
    * will return {@code true}
+   * </p>
    *
    * @param values to validate
    * @param <T> the type of the comparable

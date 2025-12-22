@@ -66,7 +66,9 @@ public class ProcessDiagramLayoutFactory {
    * Provides positions and dimensions of elements in a process diagram as
    * provided by {@link RepositoryService#getProcessDiagram(String)}.
    *
+   * <p>
    * Currently, it only supports BPMN 2.0 models.
+   * </p>
    *
    * @param bpmnXmlStream
    *          BPMN 2.0 XML file

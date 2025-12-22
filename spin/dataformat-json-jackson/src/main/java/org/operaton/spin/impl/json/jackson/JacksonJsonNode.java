@@ -88,7 +88,9 @@ public class JacksonJsonNode extends SpinJsonNode {
   /**
    * fetch correct array index if index is less than 0
    *
+   * <p>
    * ArrayNode will convert all negative integers into 0...
+   * </p>
    *
    * @param index wanted index
    * @return {@link Integer} new index

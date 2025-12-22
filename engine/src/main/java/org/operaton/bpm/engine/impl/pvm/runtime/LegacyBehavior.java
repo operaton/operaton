@@ -74,9 +74,13 @@ public final class LegacyBehavior {
    * Prunes a concurrent scope. This can only happen if
    * (a) the process instance has been migrated from a previous version to a new version of the process engine
    *
+   * <p>
    * This is an inverse operation to {@link #createConcurrentScope(PvmExecutionImpl)}.
+   * </p>
    *
+   * <p>
    * See: javadoc of this class for note about concurrent scopes.
+   * </p>
    *
    * @param execution
    */
@@ -90,7 +94,9 @@ public final class LegacyBehavior {
    * Cancels an execution which is both concurrent and scope. This can only happen if
    * (a) the process instance has been migrated from a previous version to a new version of the process engine
    *
+   * <p>
    * See: javadoc of this class for note about concurrent scopes.
+   * </p>
    *
    * @param execution the concurrent scope execution to destroy
    * @param cancelledScopeActivity the activity that cancels the execution; it must hold that
@@ -112,7 +118,9 @@ public final class LegacyBehavior {
    * Destroys a concurrent scope Execution. This can only happen if
    * (a) the process instance has been migrated from a previous version to a 7.3+ version of the process engine
    *
+   * <p>
    * See: javadoc of this class for note about concurrent scopes.
+   * </p>
    *
    * @param execution the execution to destroy
    */
@@ -354,13 +362,17 @@ public final class LegacyBehavior {
    * Tolerates the broken execution trees fixed with CAM-3727 where there may be more
    * ancestor scope executions than ancestor flow scopes;
    *
+   * <p>
    * In that case, the argument execution is removed, the parent execution of the argument
    * is returned such that one level of mismatch is corrected.
+   * </p>
    *
+   * <p>
    * Note that this does not necessarily skip the correct scope execution, since
    * the broken parent-child relationships may be anywhere in the tree (e.g. consider a non-interrupting
    * boundary event followed by a subprocess (i.e. scope), when the subprocess ends, we would
    * skip the subprocess's execution).
+   * </p>
    *
    */
   public static PvmExecutionImpl determinePropagatingExecutionOnEnd(PvmExecutionImpl propagatingExecution, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
@@ -503,8 +515,10 @@ public final class LegacyBehavior {
    * When deploying an async job definition for an activity wrapped in an miBody, set the activity id to the
    * miBody except the wrapped activity is marked as async.
    *
+   * <p>
    * Background: in <= 7.2 async job definitions were created for the inner activity, although the
    * semantics are that they are executed before the miBody is entered
+   * </p>
    */
   public static void migrateMultiInstanceJobDefinitions(ProcessDefinitionEntity processDefinition, List<JobDefinitionEntity> jobDefinitions) {
     for (JobDefinitionEntity jobDefinition : jobDefinitions) {
@@ -544,8 +558,10 @@ public final class LegacyBehavior {
    * When executing an async job for an activity wrapped in an miBody, set the execution to the
    * miBody except the wrapped activity is marked as async.
    *
+   * <p>
    * Background: in <= 7.2 async jobs were created for the inner activity, although the
    * semantics are that they are executed before the miBody is entered
+   * </p>
    */
   public static void repairMultiInstanceAsyncJob(ExecutionEntity execution) {
     ActivityImpl activity = execution.getActivity();

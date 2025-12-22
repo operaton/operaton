@@ -28,10 +28,12 @@ import org.joda.time.format.ISODateTimeFormat;
  * Utility for {@link DateTime} that uses the JVM timezone
  * for date / time related operations.
  *
+ * <p>
  * This is important as the JVM timezone and the system timezone may
  * differ which leads to different behavior in
  * {@link java.text.SimpleDateFormat} (using JVM default timezone) and
  * JODA time (using system default timezone).
+ * </p>
  *
  * @author Nico Rehwaldt
  *

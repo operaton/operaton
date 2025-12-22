@@ -47,8 +47,10 @@ public class TablePage {
    * The actual content of the database table, stored as a list of mappings of
    * the form {colum name, value}.
    *
+   * <p>
    * This means that every map object in the list corresponds with one row in
    * the database table.
+   * </p>
    */
   protected List<Map<String, Object>> rowData;
 

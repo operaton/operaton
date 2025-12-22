@@ -431,10 +431,12 @@ public interface ExternalTaskService {
   /**
    * Sets the retries for external tasks using a fluent builder.
    *
+   * <p>
    * Specify the instances by calling one of the following methods, like
    * <i>externalTaskIds</i>. To set the retries call
    * {@link UpdateExternalTaskRetriesBuilder#set(int)} or
    * {@link UpdateExternalTaskRetriesBuilder#setAsync(int)}.
+   * </p>
    *
    * @since 7.8
    */

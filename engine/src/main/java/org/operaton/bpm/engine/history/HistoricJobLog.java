@@ -77,8 +77,10 @@ public interface HistoricJobLog {
   /**
    * Returns the message of the exception that occurred by executing the associated job.
    *
+   * <p>
    * To get the full exception stacktrace,
    * use {@link HistoryService#getHistoricJobLogExceptionStacktrace(String)}
+   * </p>
    */
   String getJobExceptionMessage();
 

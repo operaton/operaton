@@ -37,6 +37,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  * of type object, it does not fail with a OLE if the variable is also
  * concurrently deleted.
  *
+ * <p>
  * Some context: this failed if the variable instance entity was first loaded,
  * and, before loading the byte array, both the variable and the byte array were
  * deleted by a concurrent transaction AND that transaction was comitted, before
@@ -45,7 +46,9 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  * byteArrayId value on the VariableInstanceEntity which in turn triggered an
  * update of the variable instance entity itself which failed with OLE because
  * the VariableInstanceEntity was already deleted.
+ * </p>
  *
+ * <p>
  * +
  * |
  * |    Test Thread           Async Thread
@@ -68,6 +71,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
  * |         |                 (this must not perform
  * |         v                 update to VarInst)
  * v  time
+ * </p>
  
  *
  * @author Daniel Meyer

@@ -112,11 +112,13 @@ public interface HistoricProcessInstance {
   /**
    * Return current state of HistoricProcessInstance, following values are recognized during process engine operations:
    *
+   * <p>
    *  STATE_ACTIVE - running process instance
    *  STATE_SUSPENDED - suspended process instances
    *  STATE_COMPLETED - completed through normal end event
    *  STATE_EXTERNALLY_TERMINATED - terminated externally, for instance through REST API
    *  STATE_INTERNALLY_TERMINATED - terminated internally, for instance by terminating boundary event
+   * </p>
    */
   String getState();
 

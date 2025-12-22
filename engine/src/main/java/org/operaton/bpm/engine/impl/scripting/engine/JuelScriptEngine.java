@@ -34,8 +34,10 @@ import org.operaton.bpm.impl.juel.SimpleResolver;
 /**
  * ScriptEngine that used JUEL for script evaluation and compilation (JSR-223).
  *
+ * <p>
  * Uses EL 1.1 if available, to resolve expressions. Otherwise it reverts to EL
  * 1.0, using {@link ExpressionFactoryResolver}.
+ * </p>
  *
  * @author Frederik Heremans
  */

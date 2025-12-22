@@ -70,8 +70,10 @@ public final class ProcessEngineContext {
    * in a try-finally block to ensure that {@link #clear()} is called
    * under any circumstances.
    *
+   * <p>
    * Please see the {@link ProcessEngineContext} class documentation for
    * a more detailed description on the purpose of this method.
+   * </p>
    */
   public static void requiresNew() {
     ProcessEngineContextImpl.set(true);

@@ -30,8 +30,10 @@ import jakarta.ws.rs.ext.Provider;
 /**
  * a provider that is in conflict with the jackson provider.
  *
+ * <p>
  * The produced content type has to be lexicographically sortable before 'application/json' to ensure it is picked instead of jackson
  * by the JAX-RS runtime in case there is no content type defined in the response by the resource method.
+ * </p>
  * @author Thorben Lindhauer
  *
  */

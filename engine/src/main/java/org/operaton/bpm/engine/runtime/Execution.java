@@ -21,7 +21,9 @@ package org.operaton.bpm.engine.runtime;
 /**
  * Represent a 'path of execution' in a process instance.
  *
+ * <p>
  * Note that a {@link ProcessInstance} also is an execution.
+ * </p>
  *
  * @author Joram Barrez
  */

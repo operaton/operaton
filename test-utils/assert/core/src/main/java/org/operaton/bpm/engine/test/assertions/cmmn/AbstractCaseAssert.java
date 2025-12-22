@@ -53,8 +53,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'available'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -65,8 +67,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'enabled'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -77,8 +81,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'disabled'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -89,8 +95,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'active'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -101,8 +109,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'completed'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -113,8 +123,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'closed'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -125,8 +137,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is 'terminated'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this status makes sense
+   * </p>
    *
    * @return  this
    */
@@ -138,8 +152,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * Verifies the expectation that the {@link CaseExecution} is the
    * 'case' instance.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this assertion makes sense
+   * </p>
    *
    * @return  this
    */
@@ -153,8 +169,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is a 'stage'
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this assertion makes sense
+   * </p>
    *
    * @return  this
    */
@@ -166,8 +184,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is a 'humanTask'
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this assertion makes sense
+   * </p>
    *
    * @return  this
    */
@@ -179,8 +199,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is a 'processTask'
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this assertion makes sense
+   * </p>
    *
    * @return  this
    */
@@ -192,8 +214,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is a 'caseTask'
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this assertion makes sense
+   * </p>
    *
    * @return  this
    */
@@ -205,8 +229,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Verifies the expectation that the {@link CaseExecution} is a 'milestone'
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this assertion makes sense
+   * </p>
    *
    * @return  this
    */
@@ -275,8 +301,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'humanTask'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   query CaseExecutionQuery further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -300,8 +328,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'humanTask'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   activityId activity if further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -324,8 +354,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'caseTask'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   query CaseExecutionQuery further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -349,8 +381,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'caseTask'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   activityId activity if further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -373,8 +407,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'processTask'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   query CaseExecutionQuery further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -398,8 +434,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'processTask'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   activityId activity if further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -422,8 +460,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'stage'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   query CaseExecutionQuery further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -447,8 +487,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'stage'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   activityId activity if further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -471,8 +513,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'milestone'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   query CaseExecutionQuery further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the
@@ -496,8 +540,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * to the actual caseExecution under test of this assertion as well as to the type
    * 'milestone'.
    *
+   * <p>
    * Change visibility to public for those inheriting classes for whose
    * underlying objects under test this method makes sense
+   * </p>
    *
    * @param   activityId activity if further narrowing down the search for
    * 					caseExecutions. The query is automatically narrowed down to the

@@ -31,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test covers the use-case where two competing transactions
  * attempt to lock (by ID) the same external task. The test steps are:
  *
+ * <p>
  * 0. External Task is created.
  * 1. TX1 validates that there is no lock on the task, and waits for sync;
  * 2. TX2 validates that there is no lock on the task, and waits for sync;
@@ -39,6 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 5. TX1 flushes the result and commits.
  * 6. TX2 attempts to flush the result and receives
  *    an OLE since the lock was already updated by TX1.
+ * </p>
  */
 class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
 

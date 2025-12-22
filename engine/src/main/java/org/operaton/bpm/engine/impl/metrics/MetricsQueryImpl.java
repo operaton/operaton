@@ -89,7 +89,9 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
    * Contains the command implementation which should be executed either
    * metric sum or select metric grouped by time interval.
    *
+   * <p>
    * Note: this enables to quit with the enum distinction
+   * </p>
    */
   protected Command<Object> callback;
 

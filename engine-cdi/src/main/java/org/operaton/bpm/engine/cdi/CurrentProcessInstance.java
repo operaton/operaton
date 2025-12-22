@@ -33,8 +33,10 @@ import org.operaton.bpm.engine.task.Task;
  * dependency injection. A process instance can be managed, using the
  * {@link BusinessProcess}-bean.
  *
+ * <p>
  * The producer methods provided by this class have been extracted from the
  * {@link BusinessProcess}-bean in order to allow for specializing it.
+ * </p>
  *
  * @author Falko Menge
  */

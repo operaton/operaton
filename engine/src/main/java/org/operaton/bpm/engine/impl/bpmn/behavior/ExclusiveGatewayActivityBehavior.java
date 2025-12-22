@@ -40,13 +40,17 @@ public class ExclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
    * (where the condition evaluates to true), is not valid for an exclusive
    * gateway.
    *
+   * <p>
    * Hence, this behaviour is overriden and replaced by the correct behavior:
    * selecting the first sequence flow which condition evaluates to true
    * (or which hasn't got a condition) and leaving the activity through that
    * sequence flow.
+   * </p>
    *
+   * <p>
    * If no sequence flow is selected (ie all conditions evaluate to false),
    * then the default sequence flow is taken (if defined).
+   * </p>
    */
   @Override
   public void doLeave(ActivityExecution execution) {

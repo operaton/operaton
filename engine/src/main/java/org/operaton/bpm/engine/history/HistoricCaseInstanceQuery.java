@@ -97,8 +97,10 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
   /** Only select historic case instances having a sub case instance
    * with the given case instance id.
    *
+   * <p>
    * Note that there will always be maximum only <b>one</b>
    * such case instance that can be the result of this query.
+   * </p>
    */
   HistoricCaseInstanceQuery subCaseInstanceId(String subCaseInstanceId);
 
@@ -108,8 +110,10 @@ public interface HistoricCaseInstanceQuery extends Query<HistoricCaseInstanceQue
   /** Only select historic case instances having a sub process instance
    * with the given process instance id.
    *
+   * <p>
    * Note that there will always be maximum only <b>one</b>
    * such case instance that can be the result of this query.
+   * </p>
    */
   HistoricCaseInstanceQuery subProcessInstanceId(String subProcessInstanceId);
 

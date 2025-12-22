@@ -1277,17 +1277,21 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * Fetch all the executions inside the same process instance as list and then
    * reconstruct the complete execution tree.
    *
+   * <p>
    * In many cases this is an optimization over fetching the execution tree
    * lazily. Usually we need all executions anyway and it is preferable to fetch
    * more data in a single query (maybe even too much data) then to run multiple
    * queries, each returning a fraction of the data.
+   * </p>
    *
+   * <p>
    * The most important consideration here is network roundtrip: If the process
    * engine and database run on separate hosts, network roundtrip has to be
    * added to each query. Economizing on the number of queries economizes on
    * network roundtrip. The tradeoff here is network roundtrip vs. throughput:
    * multiple roundtrips carrying small chucks of data vs. a single roundtrip
    * carrying more data.
+   * </p>
    *
    */
   protected void ensureExecutionTreeInitialized() {

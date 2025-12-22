@@ -565,7 +565,9 @@ public interface RepositoryService {
    * Provides positions and dimensions of elements in a process diagram as
    * provided by {@link RepositoryService#getProcessDiagram(String)}.
    *
+   * <p>
    * This method requires a process model and a diagram image to be deployed.
+   * </p>
    *
    * @param processDefinitionId id of a {@link ProcessDefinition}, cannot be null.
    * @return Map with process element ids as keys and positions and dimensions as values.

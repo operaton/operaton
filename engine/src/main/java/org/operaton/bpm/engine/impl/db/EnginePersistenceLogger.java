@@ -728,8 +728,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   public ProcessEngineException disabledHistoricInstancePermissionsException() {
     return  new BadUserRequestException(exceptionMessage(
         "090",
-        "Historic instance permissions are disabled, " +
-            "please check your process engine configuration."
+        "Historic instance permissions are disabled, please check your process engine configuration."
     ));
   }
 

@@ -200,7 +200,8 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
       String key = definition.getKey();
 
       if (keys.contains(key)) {
-        throw new ProcessEngineException("The deployment contains definitions with the same key '" + key + "' (id attribute), this is not allowed");
+        throw new ProcessEngineException("The deployment contains definitions with the same key '%s' (id attribute), this is not allowed"
+            .formatted(key));
       }
 
       keys.add(key);
@@ -352,9 +353,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
     String definitionKey = newDefinition.getKey();
     int definitionVersion = newDefinition.getVersion();
 
-    String definitionId = definitionKey
-      + ":" + definitionVersion
-      + ":" + nextId;
+    String definitionId = "%s:%s:%s".formatted(definitionKey, definitionVersion, nextId);
 
     // ACT-115: maximum id length is 64 characters
     if (definitionId.length() > 64) {

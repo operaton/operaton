@@ -32,7 +32,7 @@ public class DatabasePrefixHandler {
   protected Pattern pattern = Pattern.compile("^\\{(.*?)\\}");
 
   public String generatePrefix(String algorithmName){
-    return "{" + algorithmName + "}";
+    return "{%s}".formatted(algorithmName);
   }
 
   public String retrieveAlgorithmName(String encryptedPasswordWithPrefix) {

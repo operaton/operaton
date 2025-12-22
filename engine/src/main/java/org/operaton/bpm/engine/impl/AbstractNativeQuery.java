@@ -167,7 +167,7 @@ public abstract class AbstractNativeQuery<T extends NativeQuery< ? , ? >, U> imp
     if (results.size() == 1) {
       return results.get(0);
     } else if (results.size() > 1) {
-      throw new ProcessEngineException("Query return " + results.size() + " results instead of max 1");
+      throw new ProcessEngineException("Query return %s results instead of max 1".formatted(results.size()));
     }
     return null;
   }

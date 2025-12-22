@@ -248,7 +248,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
     if (results.size() == 1) {
       return results.get(0);
     } else if (results.size() > 1) {
-     throw new ProcessEngineException("Query return "+results.size()+" results instead of max 1");
+     throw new ProcessEngineException("Query return %s results instead of max 1".formatted(results.size()));
     }
     return null;
   }
@@ -283,7 +283,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
           .getValue(null);
       }
       catch (ProcessEngineException e) {
-        throw new ProcessEngineException("Unable to resolve expression '" + expression + "' for method '" + methodName + "' on class '" + getClass().getCanonicalName() + "'", e);
+        throw new ProcessEngineException("Unable to resolve expression '%s' for method '%s' on class '%s'".formatted(expression, methodName, getClass().getCanonicalName()), e);
       }
 
       // automatically convert DateTime to date
@@ -295,9 +295,9 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
         Method method = getMethod(methodName);
         method.invoke(this, value);
       } catch (InvocationTargetException e) {
-        throw new ProcessEngineException("Unable to invoke method '" + methodName + "' on class '" + getClass().getCanonicalName() + "'", e);
+        throw new ProcessEngineException("Unable to invoke method '%s' on class '%s'".formatted(methodName, getClass().getCanonicalName()), e);
       } catch (IllegalAccessException e) {
-        throw new ProcessEngineException("Unable to access method '" + methodName + "' on class '" + getClass().getCanonicalName() + "'", e);
+        throw new ProcessEngineException("Unable to access method '%s' on class '%s'".formatted(methodName, getClass().getCanonicalName()), e);
       }
     }
   }
@@ -308,11 +308,11 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
         return method;
       }
     }
-    throw new ProcessEngineException("Unable to find method '" + methodName + "' on class '" + getClass().getCanonicalName() + "'");
+    throw new ProcessEngineException("Unable to find method '%s' on class '%s'".formatted(methodName, getClass().getCanonicalName()));
   }
 
   public T extend(T extendingQuery) {
-    throw new ProcessEngineException("Extending of query type '" + extendingQuery.getClass().getCanonicalName() + "' currently not supported");
+    throw new ProcessEngineException("Extending of query type '%s' currently not supported".formatted(extendingQuery.getClass().getCanonicalName()));
   }
 
   protected void mergeOrdering(AbstractQuery<?, ?> extendedQuery, AbstractQuery<?, ?> extendingQuery) {

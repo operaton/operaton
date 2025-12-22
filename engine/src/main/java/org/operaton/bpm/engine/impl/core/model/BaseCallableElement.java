@@ -98,7 +98,7 @@ public class BaseCallableElement {
       } else if (result instanceof Integer integer) {
         return integer;
       } else {
-        throw new ProcessEngineException("It is not possible to transform '%s' into an integer.".formatted(result));
+        throw new ProcessEngineException("It is not possible to transform '%s' into an Integer.".formatted(result));
       }
     }
 
@@ -120,7 +120,7 @@ public class BaseCallableElement {
       if (result instanceof String string) {
         return string;
       } else {
-        throw new ProcessEngineException("It is not possible to transform '%s' into a string.".formatted(result));
+        throw new ProcessEngineException("It is not possible to transform '%s' into a String.".formatted(result));
       }
     }
 

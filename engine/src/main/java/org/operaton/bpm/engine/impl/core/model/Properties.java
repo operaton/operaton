@@ -184,7 +184,7 @@ public class Properties {
     Map<K, V> map = get(property);
 
     if (!property.allowsOverwrite() && map.containsKey(key)) {
-      throw new ProcessEngineException("Cannot overwrite property key %s. Key already exists".formatted(key));
+      throw new ProcessEngineException("Cannot overwrite property key %s. Key already exists.".formatted(key));
     }
 
     map.put(key, value);

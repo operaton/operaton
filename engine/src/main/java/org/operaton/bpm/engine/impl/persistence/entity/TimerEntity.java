@@ -233,9 +233,24 @@ public class TimerEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[repeat=%s, id=%s, revision=%s, duedate=%s, repeatOffset=%s, lockOwner=%s, lockExpirationTime=%s, executionId=".formatted(repeat, id, revision, duedate).formatted(repeatOffset, lockOwner, lockExpirationTime) + executionId
-      + ", processInstanceId=%s, isExclusive=%s, retries=%s, jobHandlerType=%s, jobHandlerConfiguration=%s, exceptionByteArray=%s, exceptionByteArrayId=%s, exceptionMessage=".formatted(processInstanceId, isExclusive, retries, jobHandlerType).formatted(jobHandlerConfiguration, exceptionByteArray, exceptionByteArrayId) + exceptionMessage
-      + ", deploymentId=%s]".formatted(deploymentId);
+      + "[repeat=" + repeat
+      + ", id=" + id
+      + ", revision=" + revision
+      + ", duedate=" + duedate
+      + ", repeatOffset=" + repeatOffset
+      + ", lockOwner=" + lockOwner
+      + ", lockExpirationTime=" + lockExpirationTime
+      + ", executionId=" + executionId
+      + ", processInstanceId=" + processInstanceId
+      + ", isExclusive=" + isExclusive
+      + ", retries=" + retries
+      + ", jobHandlerType=" + jobHandlerType
+      + ", jobHandlerConfiguration=" + jobHandlerConfiguration
+      + ", exceptionByteArray=" + exceptionByteArray
+      + ", exceptionByteArrayId=" + exceptionByteArrayId
+      + ", exceptionMessage=" + exceptionMessage
+      + ", deploymentId=" + deploymentId
+      + "]";
   }
 
   @Override

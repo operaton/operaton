@@ -106,8 +106,16 @@ public class TransitionInstanceImpl extends ProcessElementInstanceImpl implement
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[executionId=%s, targetActivityId=%s, activityName=%s, activityType=%s, id=%s, parentActivityInstanceId=%s, processInstanceId=%s, processDefinitionId=".formatted(executionId, activityId, activityName, activityType).formatted(id, parentActivityInstanceId, processInstanceId) + processDefinitionId
-           + ", incidentIds=%s, incidents=".formatted(Arrays.toString(incidentIds)) + Arrays.toString(incidents)
+           + "[executionId=" + executionId
+           + ", targetActivityId=" + activityId
+           + ", activityName=" + activityName
+           + ", activityType=" + activityType
+           + ", id=" + id
+           + ", parentActivityInstanceId=" + parentActivityInstanceId
+           + ", processInstanceId=" + processInstanceId
+           + ", processDefinitionId=" + processDefinitionId
+           + ", incidentIds=" + Arrays.toString(incidentIds)
+           + ", incidents=" + Arrays.toString(incidents)
            + "]";
   }
 

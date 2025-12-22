@@ -37,7 +37,7 @@ public abstract class AbstractTextValueValidator implements FormFieldValidator {
       return validate(string, configuration);
     }
 
-    throw new ProcessEngineException("String validator %s cannot be used on non-string value of type ".formatted(getClass().getSimpleName())+submittedValue.getClass());
+    throw new ProcessEngineException("String validator %s cannot be used on non-string value of type %s".formatted(getClass().getSimpleName(), submittedValue.getClass()));
   }
 
   protected abstract boolean validate(String submittedValue, String configuration);

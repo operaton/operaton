@@ -98,8 +98,19 @@ public class HistoricDetailEventEntity extends HistoryEvent  {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[activityInstanceId=%s, taskId=%s, timestamp=%s, eventType=%s, executionId=%s, processDefinitionId=%s, rootProcessInstanceId=%s, removalTime=".formatted(activityInstanceId, taskId, timestamp, eventType).formatted(executionId, processDefinitionId, rootProcessInstanceId) + removalTime
-           + ", processInstanceId=%s, id=%s, tenantId=%s, userOperationId=%s]".formatted(processInstanceId, id, tenantId, userOperationId);
+           + "[activityInstanceId=" + activityInstanceId
+           + ", taskId=" + taskId
+           + ", timestamp=" + timestamp
+           + ", eventType=" + eventType
+           + ", executionId=" + executionId
+           + ", processDefinitionId=" + processDefinitionId
+           + ", rootProcessInstanceId=" + rootProcessInstanceId
+           + ", removalTime=" + removalTime
+           + ", processInstanceId=" + processInstanceId
+           + ", id=" + id
+           + ", tenantId=" + tenantId
+           + ", userOperationId=" + userOperationId
+           + "]";
   }
 
 }

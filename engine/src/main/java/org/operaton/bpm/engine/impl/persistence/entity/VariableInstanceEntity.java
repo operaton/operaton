@@ -668,9 +668,25 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-      + "[id=%s, revision=%s, name=%s, processDefinitionId=%s, processInstanceId=%s, executionId=%s, caseInstanceId=%s, caseExecutionId=".formatted(id, revision, name, processDefinitionId).formatted(processInstanceId, executionId, caseInstanceId) + caseExecutionId
-      + ", taskId=%s, activityInstanceId=%s, tenantId=%s, longValue=%s, doubleValue=%s, textValue=%s, textValue2=%s, byteArrayValueId=".formatted(taskId, activityInstanceId, tenantId, longValue).formatted(doubleValue, textValue, textValue2) + getByteArrayValueId()
-      + ", configuration=%s, isConcurrentLocal=%s]".formatted(configuration, isConcurrentLocal);
+      + "[id=" + id
+      + ", revision=" + revision
+      + ", name=" + name
+      + ", processDefinitionId=" + processDefinitionId
+      + ", processInstanceId=" + processInstanceId
+      + ", executionId=" + executionId
+      + ", caseInstanceId=" + caseInstanceId
+      + ", caseExecutionId=" + caseExecutionId
+      + ", taskId=" + taskId
+      + ", activityInstanceId=" + activityInstanceId
+      + ", tenantId=" + tenantId
+      + ", longValue=" + longValue
+      + ", doubleValue=" + doubleValue
+      + ", textValue=" + textValue
+      + ", textValue2=" + textValue2
+      + ", byteArrayValueId=" + getByteArrayValueId()
+      + ", configuration=" + configuration
+      + ", isConcurrentLocal=" + isConcurrentLocal
+      + "]";
   }
 
   @Override

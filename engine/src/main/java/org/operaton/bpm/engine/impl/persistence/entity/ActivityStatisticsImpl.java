@@ -63,7 +63,10 @@ public class ActivityStatisticsImpl implements ActivityStatistics {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, instances=%s, failedJobs=%s]".formatted(id, instances, failedJobs);
+           + "[id=" + id
+           + ", instances=" + instances
+           + ", failedJobs=" + failedJobs
+           + "]";
   }
 
 }

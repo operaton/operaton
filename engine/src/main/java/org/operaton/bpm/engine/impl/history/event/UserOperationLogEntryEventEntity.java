@@ -212,9 +212,30 @@ public class UserOperationLogEntryEventEntity extends HistoryEvent implements Us
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[taskId=%s, deploymentId=%s, processDefinitionKey=%s, jobId=%s, jobDefinitionId=%s, batchId=%s, operationId=%s, operationType=".formatted(taskId, deploymentId, processDefinitionKey, jobId).formatted(jobDefinitionId, batchId, operationId) + operationType
-        + ", userId=%s, timestamp=%s, property=%s, orgValue=%s, newValue=%s, id=%s, eventType=%s, executionId=".formatted(userId, timestamp, property, orgValue).formatted(newValue, id, eventType) + executionId
-        + ", processDefinitionId=%s, rootProcessInstanceId=%s, processInstanceId=%s, externalTaskId=%s, tenantId=%s, entityType=%s, category=%s, annotation=".formatted(processDefinitionId, rootProcessInstanceId, processInstanceId, externalTaskId).formatted(tenantId, entityType, category) + annotation
+        + "[taskId=" + taskId
+        + ", deploymentId=" + deploymentId
+        + ", processDefinitionKey=" + processDefinitionKey
+        + ", jobId=" + jobId
+        + ", jobDefinitionId=" + jobDefinitionId
+        + ", batchId=" + batchId
+        + ", operationId=" + operationId
+        + ", operationType=" + operationType
+        + ", userId=" + userId
+        + ", timestamp=" + timestamp
+        + ", property=" + property
+        + ", orgValue=" + orgValue
+        + ", newValue=" + newValue
+        + ", id=" + id
+        + ", eventType=" + eventType
+        + ", executionId=" + executionId
+        + ", processDefinitionId=" + processDefinitionId
+        + ", rootProcessInstanceId=" + rootProcessInstanceId
+        + ", processInstanceId=" + processInstanceId
+        + ", externalTaskId=" + externalTaskId
+        + ", tenantId=" + tenantId
+        + ", entityType=" + entityType
+        + ", category=" + category
+        + ", annotation=" + annotation
         + "]";
   }
 }

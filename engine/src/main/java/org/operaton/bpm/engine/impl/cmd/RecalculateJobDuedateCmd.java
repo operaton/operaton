@@ -134,7 +134,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
   protected TimerDeclarationImpl findTimerDeclarationForActivity(CommandContext commandContext, JobEntity job) {
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(job.getExecutionId());
     if (execution == null) {
-      throw new ProcessEngineException("No execution found with id '%s' for job id '".formatted(job.getExecutionId()) + jobId + "'.");
+      throw new ProcessEngineException("No execution found with id '%s' for job id '%s'".formatted(job.getExecutionId(), jobId));
     }
     ActivityImpl activity = execution.getProcessDefinition().findActivity(job.getActivityId());
     if (activity != null) {

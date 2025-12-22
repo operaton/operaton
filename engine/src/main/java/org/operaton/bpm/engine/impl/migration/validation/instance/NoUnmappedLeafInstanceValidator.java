@@ -48,8 +48,8 @@ public class NoUnmappedLeafInstanceValidator implements
       MigratingActivityInstanceValidationReportImpl ancestorInstanceReport) {
     if (isInvalid(migratingInstance)) {
       ancestorInstanceReport.addFailure(
-            "Cannot migrate subscription for compensation handler '%s'. ".formatted(migratingInstance.getSourceScope().getId())
-          + "There is no migration instruction for the compensation boundary event");
+            "Cannot migrate subscription for compensation handler '%s'. There is no migration instruction for the compensation boundary event"
+                .formatted(migratingInstance.getSourceScope().getId()));
     }
   }
 
@@ -58,8 +58,8 @@ public class NoUnmappedLeafInstanceValidator implements
       MigratingActivityInstanceValidationReportImpl ancestorInstanceReport) {
     if (isInvalid(migratingInstance)) {
       ancestorInstanceReport.addFailure(
-          "Cannot migrate subscription for compensation handler '%s'. ".formatted(migratingInstance.getEventSubscription().getSourceScope().getId())
-        + "There is no migration instruction for the compensation start event");
+          "Cannot migrate subscription for compensation handler '%s'. There is no migration instruction for the compensation start event"
+              .formatted(migratingInstance.getEventSubscription().getSourceScope().getId()));
     }
   }
 

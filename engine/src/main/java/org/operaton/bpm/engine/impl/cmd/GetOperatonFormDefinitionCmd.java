@@ -48,7 +48,8 @@ public class GetOperatonFormDefinitionCmd implements Command<OperatonFormDefinit
     } else if (DefaultFormHandler.FORM_REF_BINDING_VERSION.equals(binding)) {
       definition = manager.findDefinitionByKeyVersionAndTenantId(key, operatonFormRef.getVersion(), null);
     } else {
-      throw new BadUserRequestException("Unsupported binding type for operatonFormRef. Expected to be one of %s but was:".formatted(DefaultFormHandler.ALLOWED_FORM_REF_BINDINGS) + binding);
+      throw new BadUserRequestException("Unsupported binding type for operatonFormRef. Expected to be one of %s but was: %s"
+          .formatted(DefaultFormHandler.ALLOWED_FORM_REF_BINDINGS, binding));
     }
 
     return definition;

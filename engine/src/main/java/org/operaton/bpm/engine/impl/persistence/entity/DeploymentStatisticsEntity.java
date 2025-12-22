@@ -57,7 +57,14 @@ public class DeploymentStatisticsEntity extends DeploymentEntity implements Depl
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[instances=%s, failedJobs=%s, id=%s, name=%s, resources=%s, deploymentTime=%s, validatingSchema=%s, isNew=".formatted(instances, failedJobs, id, name).formatted(resources, deploymentTime, validatingSchema) + isNew
+           + "[instances=" + instances
+           + ", failedJobs=" + failedJobs
+           + ", id=" + id
+           + ", name=" + name
+           + ", resources=" + resources
+           + ", deploymentTime=" + deploymentTime
+           + ", validatingSchema=" + validatingSchema
+           + ", isNew=" + isNew
            + "]";
   }
 }

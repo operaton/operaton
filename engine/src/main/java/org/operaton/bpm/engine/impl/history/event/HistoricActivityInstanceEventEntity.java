@@ -178,6 +178,25 @@ public class HistoricActivityInstanceEventEntity extends HistoricScopeInstanceEv
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[activityId=%s, activityName=%s, activityType=%s, activityInstanceId=%s, activityInstanceState=%s, parentActivityInstanceId=%s, calledProcessInstanceId=%s, calledCaseInstanceId=%s, taskId=%s, taskAssignee=%s, durationInMillis=%s, startTime=%s, endTime=%s, eventType=%s, executionId=%s, processDefinitionId=%s, rootProcessInstanceId=%s, processInstanceId=%s, tenantId=%s]".formatted(activityId, activityName, activityType, activityInstanceId, activityInstanceState, parentActivityInstanceId, calledProcessInstanceId, calledCaseInstanceId, taskId, taskAssignee, durationInMillis, startTime, endTime, eventType, executionId, processDefinitionId, rootProcessInstanceId, processInstanceId, tenantId);
+           + "[activityId=" + activityId
+           + ", activityName=" + activityName
+           + ", activityType=" + activityType
+           + ", activityInstanceId=" + activityInstanceId
+           + ", activityInstanceState=" + activityInstanceState
+           + ", parentActivityInstanceId=" + parentActivityInstanceId
+           + ", calledProcessInstanceId=" + calledProcessInstanceId
+           + ", calledCaseInstanceId=" + calledCaseInstanceId
+           + ", taskId=" + taskId
+           + ", taskAssignee=" + taskAssignee
+           + ", durationInMillis=" + durationInMillis
+           + ", startTime=" + startTime
+           + ", endTime=" + endTime
+           + ", eventType=" + eventType
+           + ", executionId=" + executionId
+           + ", processDefinitionId=" + processDefinitionId
+           + ", rootProcessInstanceId=" + rootProcessInstanceId
+           + ", processInstanceId=" + processInstanceId
+           + ", tenantId=" + tenantId
+           + "]";
   }
 }

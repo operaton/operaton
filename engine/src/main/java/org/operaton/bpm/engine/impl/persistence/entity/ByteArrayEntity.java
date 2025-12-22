@@ -167,8 +167,16 @@ public class ByteArrayEntity implements Serializable, DbEntity, HasDbRevision {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=%s, name=%s, deploymentId=%s, tenantId=%s, type=%s, createTime=%s, rootProcessInstanceId=".formatted(id, revision, name, deploymentId).formatted(tenantId, type, createTime) + rootProcessInstanceId
-           + ", removalTime=%s]".formatted(removalTime);
+           + "[id=" + id
+           + ", revision=" + revision
+           + ", name=" + name
+           + ", deploymentId=" + deploymentId
+           + ", tenantId=" + tenantId
+           + ", type=" + type
+           + ", createTime=" + createTime
+           + ", rootProcessInstanceId=" + rootProcessInstanceId
+           + ", removalTime=" + removalTime
+           + "]";
   }
 
 }

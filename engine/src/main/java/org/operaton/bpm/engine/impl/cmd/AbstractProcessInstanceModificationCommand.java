@@ -185,14 +185,14 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     }
 
     if (retainedExecutionsForInstance.size() != 1) {
-      throw new ProcessEngineException("There are %s (!= 1) executions for activity instance ".formatted(retainedExecutionsForInstance.size()) + activityInstance.getId());
+      throw new ProcessEngineException("There are %s (!= 1) executions for activity instance %s".formatted(retainedExecutionsForInstance.size(), activityInstance.getId()));
     }
 
     return retainedExecutionsForInstance.iterator().next();
   }
 
   protected String describeFailure(String detailMessage) {
-    return "Cannot perform instruction: %s; ".formatted(describe()) + detailMessage;
+    return "Cannot perform instruction: %s; %s".formatted(describe(), detailMessage);
   }
 
   protected abstract String describe();

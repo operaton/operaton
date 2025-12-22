@@ -53,9 +53,8 @@ public class MigrationInstructionValidationReportImpl implements MigrationInstru
 
   @Override
   public String toString() {
-    return "MigrationInstructionValidationReportImpl{" +
-      "migrationInstruction=%s, failures=".formatted(migrationInstruction) + failures +
-      '}';
+    return "MigrationInstructionValidationReportImpl{migrationInstruction=%s, failures=%s}"
+        .formatted(migrationInstruction, failures);
   }
 
 }

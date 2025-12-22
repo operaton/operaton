@@ -140,7 +140,7 @@ public class ProcessInstanceSnapshot {
       return collectedEventsubscriptions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one event subscription for activity %s and event ".formatted(activityId) + eventName);
+      throw new RuntimeException("There is more than one event subscription for activity %s and event %s".formatted(activityId, eventName));
     }
   }
 

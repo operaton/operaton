@@ -878,9 +878,8 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
 
       } catch(ClassCastException e) {
         ModelElementType elementType = modelElementInstance.getElementType();
-        throw new ProcessEngineException("Cannot cast %s to CmmnElement. ".formatted(modelElementInstance)
-            + "Is of type %s Namespace ".formatted(elementType.getTypeName())
-            + elementType.getTypeNamespace(), e);
+        throw new ProcessEngineException("Cannot cast %s to CmmnElement. Is of type %s Namespace %s"
+            .formatted(modelElementInstance, elementType.getTypeName(), elementType.getTypeNamespace()), e);
       }
 
     } else {

@@ -202,8 +202,15 @@ public class UserEntity implements User, Serializable, DbEntity, HasDbRevision {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, revision=%s, firstName=%s, lastName=%s, email=%s, password=******".formatted(id, revision, firstName, lastName).formatted(email) // sensitive for logging
+           + "[id=" + id
+           + ", revision=" + revision
+           + ", firstName=" + firstName
+           + ", lastName=" + lastName
+           + ", email=" + email
+           + ", password=******" // sensitive for logging
            + ", salt=******" // sensitive for logging
-           + ", lockExpirationTime=%s, attempts=%s]".formatted(lockExpirationTime, attempts);
+           + ", lockExpirationTime=" + lockExpirationTime
+           + ", attempts=" + attempts
+           + "]";
   }
 }

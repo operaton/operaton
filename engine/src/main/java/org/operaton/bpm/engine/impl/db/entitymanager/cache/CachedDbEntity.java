@@ -69,7 +69,7 @@ public class CachedDbEntity implements Recyclable {
 
   @Override
   public String toString() {
-    return entityState + " %s[".formatted(dbEntity.getClass().getSimpleName())+dbEntity.getId()+"]";
+    return entityState + " %s[%s]".formatted(dbEntity.getClass().getSimpleName(), dbEntity.getId());
   }
 
   public void determineEntityReferences() {

@@ -156,7 +156,14 @@ public class AcquirableJobEntity implements DbEntity, HasDbRevision {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[id=%s, revision=%s, lockOwner=%s, lockExpirationTime=%s, duedate=%s, rootProcessInstanceId=%s, processInstanceId=%s, isExclusive=".formatted(id, revision, lockOwner, lockExpirationTime).formatted(duedate, rootProcessInstanceId, processInstanceId) + isExclusive
+        + "[id=" + id
+        + ", revision=" + revision
+        + ", lockOwner=" + lockOwner
+        + ", lockExpirationTime=" + lockExpirationTime
+        + ", duedate=" + duedate
+        + ", rootProcessInstanceId=" + rootProcessInstanceId
+        + ", processInstanceId=" + processInstanceId
+        + ", isExclusive=" + isExclusive
         + "]";
   }
 

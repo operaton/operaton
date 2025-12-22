@@ -38,7 +38,8 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
       try {
         configuration = Double.parseDouble(configurationString);
       } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Double value %s: configuration %s cannot be parsed as Double.".formatted(submittedValue, configurationString));
+        throw new FormFieldConfigurationException(configurationString, "Cannot validate Double value %s: configuration %s cannot be parsed as Double."
+            .formatted(submittedValue, configurationString));
       }
       return validate(doubleValue, configuration);
     }
@@ -50,7 +51,8 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
       try {
         configuration = Float.parseFloat(configurationString);
       } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Float value %s: configuration %s cannot be parsed as Float.".formatted(submittedValue, configurationString));
+        throw new FormFieldConfigurationException(configurationString, "Cannot validate Float value %s: configuration %s cannot be parsed as Float."
+            .formatted(submittedValue, configurationString));
       }
       return validate(floatValue, configuration);
     }
@@ -62,7 +64,8 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
       try {
         configuration = Long.parseLong(configurationString);
       } catch(NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Long value %s: configuration %s cannot be parsed as Long.".formatted(submittedValue, configurationString));
+        throw new FormFieldConfigurationException(configurationString, "Cannot validate Long value %s: configuration %s cannot be parsed as Long."
+            .formatted(submittedValue, configurationString));
       }
       return validate(longValue, configuration);
     }
@@ -74,7 +77,8 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
       try {
         configuration = Integer.parseInt(configurationString);
       } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Integer value %s: configuration %s cannot be parsed as Integer.".formatted(submittedValue, configurationString));
+        throw new FormFieldConfigurationException(configurationString, "Cannot validate Integer value %s: configuration %s cannot be parsed as Integer."
+            .formatted(submittedValue, configurationString));
       }
       return validate(integerValue, configuration);
     }
@@ -91,7 +95,8 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
       return validate(shortValue, configuration);
     }
 
-    throw new FormFieldValidationException("Numeric validator %s cannot be used on non-numeric value ".formatted(getClass().getSimpleName())+submittedValue);
+    throw new FormFieldValidationException("Numeric validator %s cannot be used on non-numeric value "
+        .formatted(getClass().getSimpleName())+submittedValue);
   }
 
   protected boolean isNullValid() {

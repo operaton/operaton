@@ -58,7 +58,12 @@ public class DurationReportResultEntity extends ReportResultEntity implements Du
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-        + "[period=%s, periodUnit=%s, minimum=%s, maximum=%s, average=%s]".formatted(period, periodUnit, minimum, maximum).formatted(average);
+        + "[period=" + period
+        + ", periodUnit=" + periodUnit
+        + ", minimum=" + minimum
+        + ", maximum=" + maximum
+        + ", average=" + average
+        + "]";
   }
 
 }

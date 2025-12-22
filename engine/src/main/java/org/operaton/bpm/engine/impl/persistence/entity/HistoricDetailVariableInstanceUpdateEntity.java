@@ -142,9 +142,24 @@ public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariable
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[variableName=%s, variableInstanceId=%s, revision=%s, serializerName=%s, longValue=%s, doubleValue=%s, textValue=%s, textValue2=".formatted(variableName, variableInstanceId, revision, serializerName).formatted(longValue, doubleValue, textValue) + textValue2
-           + ", byteArrayId=%s, activityInstanceId=%s, eventType=%s, executionId=%s, id=%s, processDefinitionId=%s, processInstanceId=%s, taskId=".formatted(byteArrayId, activityInstanceId, eventType, executionId).formatted(id, processDefinitionId, processInstanceId) + taskId
-           + ", timestamp=%s]".formatted(timestamp);
+           + "[variableName=" + variableName
+           + ", variableInstanceId=" + variableInstanceId
+           + ", revision=" + revision
+           + ", serializerName=" + serializerName
+           + ", longValue=" + longValue
+           + ", doubleValue=" + doubleValue
+           + ", textValue=" + textValue
+           + ", textValue2=" + textValue2
+           + ", byteArrayId=" + byteArrayId
+           + ", activityInstanceId=" + activityInstanceId
+           + ", eventType=" + eventType
+           + ", executionId=" + executionId
+           + ", id=" + id
+           + ", processDefinitionId=" + processDefinitionId
+           + ", processInstanceId=" + processInstanceId
+           + ", taskId=" + taskId
+           + ", timestamp=" + timestamp
+           + "]";
   }
 
 }

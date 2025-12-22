@@ -1235,7 +1235,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public boolean triggerTimeoutEvent(String timeoutId) {
     TaskListener taskListener = getTimeoutListener(timeoutId);
     if (taskListener == null) {
-      throw LOG.invokeTaskListenerException(new NotFoundException("Cannot find timeout taskListener with id '%s' for task ".formatted(timeoutId) + this.id));
+      throw LOG.invokeTaskListenerException(new NotFoundException("Cannot find timeout taskListener with id '%s' for task %s".formatted(timeoutId, this.id)));
     }
     return invokeListener(TaskListener.EVENTNAME_TIMEOUT, taskListener);
   }

@@ -54,9 +54,7 @@ public class ValidatingMigrationInstructionImpl implements ValidatingMigrationIn
 
   @Override
   public String toString() {
-    return "ValidatingMigrationInstructionImpl{" +
-      "sourceActivity=%s, targetActivity=".formatted(sourceActivity) + targetActivity +
-      '}';
+    return "ValidatingMigrationInstructionImpl{sourceActivity=%s, targetActivity=%s}".formatted(sourceActivity, targetActivity);
   }
 
 }

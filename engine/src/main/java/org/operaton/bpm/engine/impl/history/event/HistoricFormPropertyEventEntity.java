@@ -53,8 +53,17 @@ public class HistoricFormPropertyEventEntity extends HistoricDetailEventEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[propertyId=%s, propertyValue=%s, activityInstanceId=%s, eventType=%s, executionId=%s, id=%s, processDefinitionId=%s, processInstanceId=".formatted(propertyId, propertyValue, activityInstanceId, eventType).formatted(executionId, id, processDefinitionId) + processInstanceId
-           + ", taskId=%s, tenantId=%s]".formatted(taskId, tenantId);
+           + "[propertyId=" + propertyId
+           + ", propertyValue=" + propertyValue
+           + ", activityInstanceId=" + activityInstanceId
+           + ", eventType=" + eventType
+           + ", executionId=" + executionId
+           + ", id=" + id
+           + ", processDefinitionId=" + processDefinitionId
+           + ", processInstanceId=" + processInstanceId
+           + ", taskId=" + taskId
+           + ", tenantId=" + tenantId
+           + "]";
   }
 
 }

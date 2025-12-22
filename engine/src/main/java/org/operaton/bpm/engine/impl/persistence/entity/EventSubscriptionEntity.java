@@ -386,7 +386,16 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[id=%s, eventType=%s, eventName=%s, executionId=%s, processInstanceId=%s, activityId=%s, tenantId=%s, configuration=".formatted(id, eventType, eventName, executionId).formatted(processInstanceId, activityId, tenantId) + configuration
-           + ", revision=%s, created=%s]".formatted(revision, created);
+           + "[id=" + id
+           + ", eventType=" + eventType
+           + ", eventName=" + eventName
+           + ", executionId=" + executionId
+           + ", processInstanceId=" + processInstanceId
+           + ", activityId=" + activityId
+           + ", tenantId=" + tenantId
+           + ", configuration=" + configuration
+           + ", revision=" + revision
+           + ", created=" + created
+           + "]";
   }
 }

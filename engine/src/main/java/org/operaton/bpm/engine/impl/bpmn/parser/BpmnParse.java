@@ -3718,7 +3718,8 @@ public class BpmnParse extends Parse {
           addError("The same scope can not contains an escalation event subprocess without escalation code and another one with escalation code. "
               + "The escalation event subprocess without escalation code catch all escalation events.", element, escalationElementId);
         } else if (existingEscalationEventDefinition.getEscalationCode().equals(escalationEventDefinition.getEscalationCode())) {
-          addError("multiple escalation event subprocesses with the same escalationCode '%s' are not supported on same scope".formatted(escalationEventDefinition.getEscalationCode()), element, escalationElementId);
+          addError("multiple escalation event subprocesses with the same escalationCode '%s' are not supported on same scope"
+              .formatted(escalationEventDefinition.getEscalationCode()), element, escalationElementId);
         }
       } else if (!existingEscalationEventDefinition.getEscalationHandler().isSubProcessScope()
           && !escalationEventDefinition.getEscalationHandler().isSubProcessScope()) {
@@ -3730,7 +3731,8 @@ public class BpmnParse extends Parse {
           addError("The same scope can not contains an escalation boundary event without escalation code and another one with escalation code. "
               + "The escalation boundary event without escalation code catch all escalation events.", element, escalationElementId);
         } else if (existingEscalationEventDefinition.getEscalationCode().equals(escalationEventDefinition.getEscalationCode())) {
-          addError("multiple escalation boundary events with the same escalationCode '%s' are not supported on same scope".formatted(escalationEventDefinition.getEscalationCode()), element, escalationElementId);
+          addError("multiple escalation boundary events with the same escalationCode '%s' are not supported on same scope"
+              .formatted(escalationEventDefinition.getEscalationCode()), element, escalationElementId);
         }
       }
     }
@@ -3856,8 +3858,8 @@ public class BpmnParse extends Parse {
 
       for (String variableEvent : variableEventsList) {
         if (!VARIABLE_EVENTS.contains(variableEvent)) {
-          addWarning("Variable event: %s is not valid. Possible variable change events are: %s:".formatted(variableEvent, Arrays.toString(VARIABLE_EVENTS.toArray())),
-              element, conditionalActivityId);
+          addWarning("Variable event: %s is not valid. Possible variable change events are: %s:"
+              .formatted(variableEvent, Arrays.toString(VARIABLE_EVENTS.toArray())), element, conditionalActivityId);
         }
       }
 
@@ -4051,7 +4053,8 @@ public class BpmnParse extends Parse {
     version = callingActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, versionAttributeName);
 
     if (binding != null && binding.equals(CallableElementBinding.VERSION) && version == null) {
-      addError("Missing attribute '%s' when '%s' has value '%s'".formatted(versionAttributeName, bindingAttributeName, CallableElementBinding.VERSION.getValue()), callingActivityElement);
+      addError("Missing attribute '%s' when '%s' has value '%s'"
+          .formatted(versionAttributeName, bindingAttributeName, CallableElementBinding.VERSION.getValue()), callingActivityElement);
     }
 
     ParameterValueProvider versionProvider = createParameterValueProvider(version, expressionManager);
@@ -4066,7 +4069,8 @@ public class BpmnParse extends Parse {
     versionTag = callingActivityElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, versionTagAttributeName);
 
     if (binding != null && binding.equals(CallableElementBinding.VERSION_TAG) && versionTag == null) {
-      addError("Missing attribute '%s' when '%s' has value '%s'".formatted(versionTagAttributeName, bindingAttributeName, CallableElementBinding.VERSION_TAG.getValue()), callingActivityElement);
+      addError("Missing attribute '%s' when '%s' has value '%s'"
+          .formatted(versionTagAttributeName, bindingAttributeName, CallableElementBinding.VERSION_TAG.getValue()), callingActivityElement);
     }
 
     ParameterValueProvider versionTagProvider = createParameterValueProvider(versionTag, expressionManager);
@@ -4218,7 +4222,8 @@ public class BpmnParse extends Parse {
     // If name isn't given, use the id as name
     if (name == null) {
       if (id == null) {
-        addError("Invalid property usage on line %s: no id or name specified.".formatted(propertyElement.getLine()), propertyElement, activity.getId());
+        addError("Invalid property usage on line %s: no id or name specified."
+            .formatted(propertyElement.getLine()), propertyElement, activity.getId());
       } else {
         name = id;
       }
@@ -4312,7 +4317,8 @@ public class BpmnParse extends Parse {
         String linkName = eventLinkSources.get(destinationRef);
         destinationRef = eventLinkTargets.get(linkName);
         if (destinationRef == null) {
-          addError("sequence flow points to link event source with name '%s' but no event target with that name exists. Most probably your link events are not configured correctly.".formatted(linkName), sequenceFlowElement);
+          addError("sequence flow points to link event source with name '%s' but no event target with that name exists. ".formatted(linkName)
+              + "Most probably your link events are not configured correctly.", sequenceFlowElement);
           // we cannot do anything useful now
           return;
         }
@@ -4329,13 +4335,15 @@ public class BpmnParse extends Parse {
 
       if ((sourceActivity == null && compensationHandlers.containsKey(sourceRef))
           || (sourceActivity != null && sourceActivity.isCompensationHandler())) {
-        addError("Invalid outgoing sequence flow of compensation activity '%s'. A compensation activity should not have an incoming or outgoing sequence flow.".formatted(sourceRef),
+        addError("Invalid outgoing sequence flow of compensation activity '%s'. ".formatted(sourceRef)
+            + "A compensation activity should not have an incoming or outgoing sequence flow.",
             sequenceFlowElement,
             sourceRef,
             id);
       } else if ((destinationActivity == null && compensationHandlers.containsKey(destinationRef))
           || (destinationActivity != null && destinationActivity.isCompensationHandler())) {
-        addError("Invalid incoming sequence flow of compensation activity '%s'. A compensation activity should not have an incoming or outgoing sequence flow.".formatted(destinationRef),
+        addError("Invalid incoming sequence flow of compensation activity '%s'. ".formatted(destinationRef)
+            +"A compensation activity should not have an incoming or outgoing sequence flow.",
             sequenceFlowElement,
             destinationRef,
             id);
@@ -4347,7 +4355,8 @@ public class BpmnParse extends Parse {
         // ignore
       } else if (destinationActivity.getActivityBehavior() instanceof IntermediateCatchEventActivityBehavior && (destinationActivity.getEventScope() != null)
           && (destinationActivity.getEventScope().getActivityBehavior() instanceof EventBasedGatewayActivityBehavior)) {
-        addError("Invalid incoming sequenceflow for intermediateCatchEvent with id '%s' connected to an event-based gateway.".formatted(destinationActivity.getId()),
+        addError("Invalid incoming sequenceflow for intermediateCatchEvent with id '%s' connected to an event-based gateway."
+                .formatted(destinationActivity.getId()),
             sequenceFlowElement);
       } else if (sourceActivity.getActivityBehavior() instanceof SubProcessActivityBehavior
           && sourceActivity.isTriggeredByEvent()) {
@@ -4404,7 +4413,7 @@ public class BpmnParse extends Parse {
     String language = conditionExprElement.attribute(PROPERTYNAME_LANGUAGE);
     String resource = conditionExprElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, PROPERTYNAME_RESOURCE);
     if (type != null) {
-      String value = type.contains(":") ? resolveName(type) : BpmnParser.BPMN20_NS + type;
+      String value = type.contains(":") ? resolveName(type) : BpmnParser.BPMN20_NS + ":" + type;
       if (!ATTRIBUTEVALUE_T_FORMAL_EXPRESSION.equals(value)) {
         addError("Invalid type, only tFormalExpression is currently supported", conditionExprElement, ancestorElementId);
       }
@@ -4648,7 +4657,7 @@ public class BpmnParse extends Parse {
                                                          // might still
                                                          // reference
                                                          // 'something'
-        addError("Invalid reference in 'bpmnElement' attribute, sequenceFlow %snot found".formatted(sequenceFlowId), bpmnEdgeElement);
+        addError("Invalid reference in 'bpmnElement' attribute, sequenceFlow %s not found".formatted(sequenceFlowId), bpmnEdgeElement);
       }
     } else {
       addError("'bpmnElement' attribute is required on BPMNEdge", bpmnEdgeElement);
@@ -4896,7 +4905,8 @@ public class BpmnParse extends Parse {
     }
     if (eventNameContainsExpression) {
       String messageStartName = messageStartEventSubscriptionDeclaration.getUnresolvedEventName();
-      addError("Invalid message name '%s' for element '%s': expressions in the message start event name are not allowed!".formatted(messageStartName, element.getTagName()), element, parentElementId);
+      addError("Invalid message name '%s' for element '%s': expressions in the message start event name are not allowed!"
+          .formatted(messageStartName, element.getTagName()), element, parentElementId);
     }
   }
 

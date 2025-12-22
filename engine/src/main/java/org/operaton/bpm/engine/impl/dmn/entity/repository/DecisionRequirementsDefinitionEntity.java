@@ -244,7 +244,8 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
 
   @Override
   public String toString() {
-    return "DecisionRequirementsDefinitionEntity [id=%s, revision=%s, name=%s, category=%s, key=%s, version=%s, deploymentId=%s, tenantId=%s]".formatted(id, revision, name, category, key, version, deploymentId, tenantId);
+    return "DecisionRequirementsDefinitionEntity [id=" + id + ", revision=" + revision + ", name=" + name + ", category=" + category + ", key=" + key
+        + ", version=" + version + ", deploymentId=" + deploymentId + ", tenantId=" + tenantId + "]";
   }
 
 }

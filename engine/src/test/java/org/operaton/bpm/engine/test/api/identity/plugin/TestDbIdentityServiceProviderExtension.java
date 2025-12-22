@@ -31,9 +31,7 @@ import org.operaton.bpm.engine.impl.identity.db.DbIdentityServiceProvider;
  *  The checkPassword method must return true, because exactly the requested user with the
  *  requested Password will be created within this Method
  *
- * <p>
  *  @author Simon Jonischkeit
- * </p>
  */
 public class TestDbIdentityServiceProviderExtension extends DbIdentityServiceProvider{
 

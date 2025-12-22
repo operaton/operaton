@@ -8,6 +8,7 @@
   "dependencies": {
     "redoc": "2.5.2",
     "react": "19.1.4",
-    "react-dom": "19.1.4"
+    "react-dom": "19.1.4",
+    "call-me-maybe": "^1.0.2"
   }
 }

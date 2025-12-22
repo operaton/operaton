@@ -17,7 +17,10 @@
 package org.operaton.bpm.quarkus.engine.extension.impl;
 
 import io.agroal.api.AgroalDataSource;
+import io.quarkus.agroal.DataSource;
 import io.quarkus.agroal.runtime.AgroalDataSourceUtil;
+import io.quarkus.agroal.runtime.DataSources;
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import java.util.ArrayList;
 import java.util.List;
 import jakarta.enterprise.inject.spi.BeanManager;
@@ -68,7 +71,7 @@ public class OperatonEngineRecorder {
     if (configuration.getDataSource() == null) {
       String datasourceName = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);
       AgroalDataSource dataSource = Optional.ofNullable(AgroalDataSourceUtil.dataSourceInstance(datasourceName).orNull())
-        .orElseThrow(() -> new IllegalStateException("Agroal datasource '%s' not found".formatted(datasourceName)));
+        .orElseThrow(() -> new UnsatisfiedResolutionException("Agroal datasource '%s' not found".formatted(datasourceName)));
       configuration.setDataSource(dataSource);
     }
 

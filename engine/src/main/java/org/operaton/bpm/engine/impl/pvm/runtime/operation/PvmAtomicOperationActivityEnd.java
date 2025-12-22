@@ -108,8 +108,8 @@ public class PvmAtomicOperationActivityEnd implements PvmAtomicOperation {
       }
       else {
         // activity behavior is not composite => this is unexpected
-        throw new ProcessEngineException("Expected behavior of composite scope "+activity
-            +" to be a CompositeActivityBehavior but got "+activityBehavior);
+        throw new ProcessEngineException("Expected behavior of composite scope %s to be a CompositeActivityBehavior but got %s"
+            .formatted(activity, activityBehavior));
       }
     }
   }

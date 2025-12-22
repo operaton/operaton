@@ -42,8 +42,8 @@ public class NoUnmappedCompensationStartEventValidator implements MigratingCompe
     if (eventHandlerActivity.isTriggeredByEvent()
         && eventSubscription.getTargetScope() == null
         && !migratingInstance.getChildren().isEmpty()) {
-      ancestorInstanceReport.addFailure("Cannot migrate subscription for compensation handler '" + eventSubscription.getSourceScope().getId() + "'. "
-          + "There is no migration instruction for the compensation start event");
+      ancestorInstanceReport.addFailure("Cannot migrate subscription for compensation handler '%s'. There is no migration instruction for the compensation start event."
+          .formatted(eventSubscription.getSourceScope().getId()));
     }
   }
 

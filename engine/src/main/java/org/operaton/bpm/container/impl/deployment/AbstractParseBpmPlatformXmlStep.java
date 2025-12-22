@@ -173,11 +173,11 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
 
   public URL lookupBpmPlatformXmlLocationFromEnvironmentVariable() {
     String bpmPlatformXmlLocation = System.getenv(BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE);
-    String logStatement = "environment variable [" + BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE + "]";
+    String logStatement = "environment variable [%s]".formatted(BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE);
 
     if (bpmPlatformXmlLocation == null) {
       bpmPlatformXmlLocation = System.getProperty(BPM_PLATFORM_XML_SYSTEM_PROPERTY);
-      logStatement = "system property [" + BPM_PLATFORM_XML_SYSTEM_PROPERTY + "]";
+      logStatement = "system property [%s]".formatted(BPM_PLATFORM_XML_SYSTEM_PROPERTY);
     }
 
     URL fileLocation = checkValidBpmPlatformXmlResourceLocation(bpmPlatformXmlLocation);

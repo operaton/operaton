@@ -80,11 +80,11 @@ public class FormPropertyHandler {
 
   public void submitFormProperty(VariableScope variableScope, VariableMap variables) {
     if (!isWritable && variables.containsKey(id)) {
-      throw new ProcessEngineException("form property '"+id+"' is not writable");
+      throw new ProcessEngineException("form property '%s' is not writable".formatted(id));
     }
 
     if (isRequired && !variables.containsKey(id) && defaultExpression == null) {
-      throw new ProcessEngineException("form property '"+id+"' is required");
+      throw new ProcessEngineException("form property '%s' is required".formatted(id));
     }
 
     Object modelValue = null;
@@ -102,7 +102,7 @@ public class FormPropertyHandler {
       } else if (expressionValue != null) {
         modelValue = expressionValue.toString();
       } else if (isRequired) {
-        throw new ProcessEngineException("form property '"+id+"' is required");
+        throw new ProcessEngineException("form property '%s' is required".formatted(id));
       }
     }
 

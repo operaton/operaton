@@ -55,7 +55,7 @@ public class SignalCmd implements Command<Object>, Serializable {
     ExecutionEntity execution = commandContext
           .getExecutionManager()
           .findExecutionById(executionId);
-    ensureNotNull(BadUserRequestException.class, "execution "+executionId+" doesn't exist", "execution", execution);
+    ensureNotNull(BadUserRequestException.class, "execution %s doesn't exist".formatted(executionId), "execution", execution);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);

@@ -37,7 +37,6 @@ import org.operaton.bpm.engine.runtime.Job;
  *
  * @author Roman Smirnov
  *
- * @since 7.3
  */
 public interface HistoricJobLog {
 
@@ -70,7 +69,6 @@ public interface HistoricJobLog {
   /**
    * Returns the priority of the associated job when <code>this</code> log entry was created.
    *
-   * @since 7.4
    */
   long getJobPriority();
 

@@ -691,7 +691,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableTyped(String taskId, String variableName);
 
@@ -720,7 +719,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableTyped(String taskId, String variableName, boolean deserializeValue);
 
@@ -767,7 +765,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableLocalTyped(String taskId, String variableName);
 
@@ -796,7 +793,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableLocalTyped(String taskId, String variableName, boolean deserializeValue);
 
@@ -841,7 +837,6 @@ public interface TaskService {
    *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
-   * @since 7.2
    */
   VariableMap getVariablesTyped(String taskId);
 
@@ -867,7 +862,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesTyped(String taskId, boolean deserializeValues);
 
@@ -914,7 +908,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String taskId);
 
@@ -940,7 +933,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String taskId, boolean deserializeValues);
 
@@ -985,7 +977,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    * */
   VariableMap getVariablesTyped(String taskId, Collection<String> variableNames, boolean deserializeValues);
 
@@ -1030,7 +1021,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String taskId, Collection<String> variableNames, boolean deserializeValues);
 

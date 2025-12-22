@@ -31,7 +31,6 @@ package org.operaton.bpm.engine;
  * The CDI specific version utilizes the BeanManager to resolve the
  * Contextual Instances.
  *
- * @since 7.2.0
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
 public interface ArtifactFactory {

@@ -73,7 +73,6 @@ public class ProcessVariables {
   }
 
   /**
-   * @since 7.3
    */
   @Produces
   @ProcessVariableTyped
@@ -92,7 +91,6 @@ public class ProcessVariables {
   }
 
   /**
-   * @since 7.3
    */
   @Produces
   @Named
@@ -127,7 +125,6 @@ public class ProcessVariables {
   }
 
   /**
-   * @since 7.3
    */
   @Produces
   @ProcessVariableLocalTyped
@@ -146,7 +143,6 @@ public class ProcessVariables {
   }
 
   /**
-   * @since 7.3
    */
   @Produces
   @Named

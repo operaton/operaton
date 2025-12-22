@@ -70,7 +70,6 @@ public interface SetRemovalTimeToHistoricProcessInstancesBuilder {
    * multiple executions of the resulting jobs, preventing the database
    * transaction from timing out by limiting the number of rows to update.
    *
-   * @since 7.20
    *
    * @return the builder.
    */
@@ -90,7 +89,6 @@ public interface SetRemovalTimeToHistoricProcessInstancesBuilder {
    * in the process engine configuration.
    * </p>
    *
-   * @since 7.20
    *
    * @return the builder.
    */

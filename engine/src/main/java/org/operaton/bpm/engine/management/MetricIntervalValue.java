@@ -23,7 +23,6 @@ import java.util.Date;
  * timestamp and corresponding value.
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
- * @since 7.6.0
  */
 public interface MetricIntervalValue {
 

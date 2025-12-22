@@ -51,7 +51,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  * </p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface HistoryLevel {
 

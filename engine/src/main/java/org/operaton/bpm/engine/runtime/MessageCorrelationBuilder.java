@@ -226,7 +226,6 @@ public interface MessageCorrelationBuilder {
    *          {@link Resources#PROCESS_DEFINITION}.</li>
    *
    * @return The result of the message correlation. Result contains either the execution id or the start event activity id and the process definition.
-   * @since 7.6
    */
   MessageCorrelationResult correlateWithResult();
 
@@ -297,7 +296,6 @@ public interface MessageCorrelationBuilder {
    *
    * @return The result list of the message correlations. Each result contains
    * either the execution id or the start event activity id and the process definition.
-   * @since 7.6
    */
   List<MessageCorrelationResult> correlateAllWithResult();
 

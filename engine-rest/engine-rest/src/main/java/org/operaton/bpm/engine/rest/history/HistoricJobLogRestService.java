@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.rest.sub.history.HistoricJobLogResource;
 /**
  * @author Roman Smirnov
  *
- * @since 7.3
  *
  */
 @Path(HistoricJobLogRestService.PATH)

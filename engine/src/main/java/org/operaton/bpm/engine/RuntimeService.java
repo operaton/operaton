@@ -2167,7 +2167,9 @@ public interface RuntimeService {
    *  </li>
    * </ul>
    *
+   * <p>
    * Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param messageName
    *          the name of the message event; if null, matches any event
@@ -2196,7 +2198,9 @@ public interface RuntimeService {
    *  </li>
    * </ul>
    *
+   * <p>
    * Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param messageName
    *          the name of the message event; if null, matches any event
@@ -2225,7 +2229,9 @@ public interface RuntimeService {
    * </ul>
    * and updates the process instance variables.
    *
+   * <p>
    * Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param messageName
    *          the name of the message event; if null, matches any event
@@ -2257,7 +2263,9 @@ public interface RuntimeService {
    * </ul>
    * and updates the process instance variables.
    *
+   * <p>
    * Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param messageName
    *          the name of the message event; if null, matches any event
@@ -2290,7 +2298,9 @@ public interface RuntimeService {
    * </ul>
    * and updates the process instance variables.
    *
+   * <p>
    * Notification and instantiation happen synchronously.
+   * </p>
    *
    * @param messageName
    *          the name of the message event; if null, matches any event

@@ -27,9 +27,11 @@ package org.operaton.bpm.engine;
  *     &lt;serviceTask operaton:class=""org.mypackage.MyJavaDelegate".. /&gt;
  * </pre>
  *
+ * <p>
  * The default implementation uses Class.newInstance to create artifacts.
  * The CDI specific version utilizes the BeanManager to resolve the
  * Contextual Instances.
+ * </p>
  *
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */

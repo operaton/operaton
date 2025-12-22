@@ -19,6 +19,7 @@ package org.operaton.bpm.engine;
 /**
  * Provides access to all the services that expose the BPM and workflow operations.
  *
+ * <p>
  * <ul>
  * <li>
  * <b>{@link org.operaton.bpm.engine.RuntimeService}: </b> Allows the creation of
@@ -38,10 +39,13 @@ package org.operaton.bpm.engine;
  *  <li>
  * <b>{@link org.operaton.bpm.engine.HistoryService}: </b> Service exposing information about
  * ongoing and past process instances.</li>
+ * </p>
  *
+ * <p>
  * <li><b>{@link org.operaton.bpm.engine.AuthorizationService}:</b> Service allowing
  * to manage access permissions for users and groups.</b>
  * </ul>
+ * </p>
  *
  *
  * Typically, there will be only one central ProcessEngine instance needed in a

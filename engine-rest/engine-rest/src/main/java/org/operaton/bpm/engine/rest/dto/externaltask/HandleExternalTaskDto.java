@@ -20,6 +20,7 @@ package org.operaton.bpm.engine.rest.dto.externaltask;
  * Base DTO class for Worker-related External Task operations.
  * Contains the <code>workerId</code> property.
  *
+ * <p>
  * Used in:
  * <ul>
  *   <li>{@link LockExternalTaskDto}</li>
@@ -27,9 +28,12 @@ package org.operaton.bpm.engine.rest.dto.externaltask;
  *   <li>{@link ExternalTaskFailureDto}</li>
  *   <li>{@link CompleteExternalTaskDto}</li>
  * </ul>
+ * </p>
  *
+ * <p>
  * Note: the {@link ExternalTaskBpmnError} class doesn't extend this class. Any adjustments made here
  * should be mirrored in that class as well.
+ * </p>
  */
 public class HandleExternalTaskDto {
 

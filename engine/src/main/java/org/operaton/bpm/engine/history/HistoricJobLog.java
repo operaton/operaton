@@ -32,8 +32,10 @@ import org.operaton.bpm.engine.runtime.Job;
  *   <li>job was deleted</li>
  * </ul>
  *
+ * <p>
  * An instance of {@link HistoricJobLog} represents a state in
  * the lifecycle of a {@link Job job}.
+ * </p>
  *
  * @author Roman Smirnov
  *

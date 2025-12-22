@@ -41,13 +41,17 @@ public interface PersistenceSession extends Session {
    * <p>This method modifies the operation's state, i.e. {@link DbOperation#getState()} will
    * be updated by calling this method:
    *
+   * <p>
    * <ul>
    * <li>Successful operations: {@link State#APPLIED}
    * <li>Failed operations: {@link State#FAILED_ERROR} or {@link State#FAILED_CONCURRENT_MODIFICATION}.
    * <li>Remaining operations: {@link State#NOT_APPLIED}
    * </ul>
+   * </p>
    *
+   * <p>
    * In addition, the number of affected rows and failure (if any) is updated in the operation.
+   * </p>
    *
    * @throws Exception in case of an unexpected error that is unrelated to an operation result.
    *   The caller should rollback the transaction in this case

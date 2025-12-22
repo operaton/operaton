@@ -28,9 +28,11 @@ public interface UpdateExternalTaskRetriesBuilder extends UpdateExternalTaskRetr
   /**
    * Sets the retries for external tasks.
    *
+   * <p>
    * If the new value is 0, a new incident with a <code>null</code> message is created.
    * If the old value is 0 and the new value is greater than 0, an existing incident
    * is resolved.
+   * </p>
    *
    * @param retries
    *
@@ -55,9 +57,11 @@ public interface UpdateExternalTaskRetriesBuilder extends UpdateExternalTaskRetr
    * Sets the retries for external tasks asynchronously as batch. The returned batch
    * can be used to track the progress.
    *
+   * <p>
    * If the new value is 0, a new incident with a <code>null</code> message is created.
    * If the old value is 0 and the new value is greater than 0, an existing incident
    * is resolved.
+   * </p>
    *
    * @param retries
    *

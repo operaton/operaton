@@ -41,6 +41,7 @@ import org.operaton.bpm.engine.repository.DeploymentBuilder;
  * <p>Adding a ProcessApplication class to your Java Application provides your applications with the
  * following services:
  *
+ * <p>
  * <ul>
  * <li><strong>Bootstrapping</strong> embedded process engine(s) or looking up container managed process engine(s).
  * You can define multiple process engines in a file named processes.xml which is added to your application.

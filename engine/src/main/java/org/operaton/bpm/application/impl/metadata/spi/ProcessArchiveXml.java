@@ -71,7 +71,7 @@ public interface ProcessArchiveXml {
    *     <em>relative to the process archive's definig metafile (processes.xml).</em>
    *     If the prefix "pa:" is used, the path is interpreted as relative to the metafile defining the
    *     process archive. Consider the situation of a process application packaged as a WAR file:
-   *
+   *     <p>
    *     The deployment structure could look like this:
    *     <pre>
    *     |-- My-Application.war
@@ -85,11 +85,13 @@ public interface ProcessArchiveXml {
    *                 |-- Invoice-Processes.jar
    *                     |-- META-INF/processes.xml  (2)
    *    </pre>
+   *    </p>
+   *    <p>
    *    If the process archive(s) defined in (1) uses a path prefixed with "pa:", like for instance "pa:opps/",
    *    only the "opps/"-folder of sales-processes.jar is scanned. More precisely, a "pa-local path", is resolved
    *    relative to the the parent directory of the META-INF-directory containing the defining processes.xml file.
    *    This implies, that using a pa-local path in (1), no processes from (2) are visible.
-   *    <p />
+   *    </p>
    *   </li>
    * </ul>
    * </p>

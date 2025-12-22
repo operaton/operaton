@@ -58,7 +58,7 @@ public abstract class PvmAtomicOperationCancelActivity implements PvmAtomicOpera
       // and will have no more child executions. In PvmAtomicOperationCancelScope the scope is cancelled due to
       // a boundary event firing. In that case the execution has not completed all the work in the current scope / activity
       // and it is necessary to delete the complete hierarchy of executions below and including the execution itself.
-      execution.deleteCascade("Cancel scope activity %s executed.".formatted(cancellingActivity));
+      execution.deleteCascade("Cancel scope activity "+cancellingActivity+" executed.");
       propagatingExecution = execution.getParent();
     }
 

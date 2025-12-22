@@ -75,7 +75,8 @@ public class AuthorizationException extends ProcessEngineException {
 
   public AuthorizationException(String userId, MissingAuthorization exceptionInfo) {
     super(
-        "The user with id '%s' does not have %s.".formatted(userId, generateMissingAuthorizationMessage(exceptionInfo)));
+        "The user with id '"+userId+
+        "' does not have "+generateMissingAuthorizationMessage(exceptionInfo)+".");
     this.userId = userId;
     missingAuthorizations = new ArrayList<>();
     missingAuthorizations.add(exceptionInfo);

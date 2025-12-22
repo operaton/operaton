@@ -62,6 +62,6 @@ public class ProcessApplicationIdentifier {
     if (paName == null && processApplication != null) {
       paName = processApplication.getName();
     }
-    return "ProcessApplicationIdentifier[name=%s]".formatted(paName);
+    return "ProcessApplicationIdentifier[name=" + paName + "]";
   }
 }

@@ -50,10 +50,10 @@ public class FormFieldValidationConstraintHandler {
 
       FormFieldValidatorContext context = new DefaultFormFieldValidatorContext(variableScope, config, submittedValues, formFieldHandler);
       if(!validator.validate(submittedValue, context)) {
-        throw new FormFieldValidatorException(formFieldHandler.getId(), name, config, submittedValue, "Invalid value submitted for form field '%s': validation of ".formatted(formFieldHandler.getId())+this+" failed.");
+        throw new FormFieldValidatorException(formFieldHandler.getId(), name, config, submittedValue, "Invalid value submitted for form field '"+formFieldHandler.getId()+"': validation of "+this+" failed.");
       }
     } catch(FormFieldValidationException e) {
-      throw new FormFieldValidatorException(formFieldHandler.getId(), name, config, submittedValue, "Invalid value submitted for form field '%s': validation of ".formatted(formFieldHandler.getId())+this+" failed.", e);
+      throw new FormFieldValidatorException(formFieldHandler.getId(), name, config, submittedValue, "Invalid value submitted for form field '"+formFieldHandler.getId()+"': validation of "+this+" failed.", e);
     }
   }
 
@@ -85,7 +85,7 @@ public class FormFieldValidationConstraintHandler {
 
   @Override
   public String toString() {
-    return name + (config != null ? ("(%s)".formatted(config)) : "");
+    return name + (config != null ? ("("+config+")") : "");
   }
 
 }

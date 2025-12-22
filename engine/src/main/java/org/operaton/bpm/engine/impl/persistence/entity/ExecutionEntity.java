@@ -1506,9 +1506,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public String toString() {
     if (isProcessInstanceExecution()) {
-      return "ProcessInstance[%s]".formatted(getToStringIdentity());
+      return "ProcessInstance[" + getToStringIdentity() + "]";
     } else {
-      return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[%s]".formatted(getToStringIdentity());
+      return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[" + getToStringIdentity() + "]";
     }
   }
 

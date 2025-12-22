@@ -64,7 +64,8 @@ public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializab
     // Special treatment for assignee and owner: group cannot be used and userId may be null
     if (IdentityLinkType.ASSIGNEE.equals(type) || IdentityLinkType.OWNER.equals(type)) {
       if (groupId != null) {
-        throw new ProcessEngineException("Incompatible usage: cannot use type '%s' together with a groupId".formatted(type));
+        throw new ProcessEngineException("Incompatible usage: cannot use type '" + type
+          + "' together with a groupId");
       }
     } else {
       if (userId == null && groupId == null) {

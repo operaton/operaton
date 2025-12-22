@@ -75,7 +75,7 @@ public class GatewayMappingValidator implements MigrationInstructionValidator {
     ScopeImpl flowScope = sourceActivity.getFlowScope();
 
     if (flowScope != flowScope.getProcessDefinition() && instructions.getInstructionsBySourceScope(flowScope).isEmpty()) {
-      report.addFailure("The gateway's flow scope '%s' must be mapped".formatted(flowScope.getId()));
+      report.addFailure("The gateway's flow scope '" + flowScope.getId() + "' must be mapped");
     }
   }
 
@@ -86,7 +86,7 @@ public class GatewayMappingValidator implements MigrationInstructionValidator {
         instructions.getInstructionsByTargetScope(targetActivity);
 
     if (instructionsToTargetGateway.size() > 1) {
-      report.addFailure("Only one gateway can be mapped to gateway '%s'".formatted(targetActivity.getId()));
+      report.addFailure("Only one gateway can be mapped to gateway '" + targetActivity.getId() + "'");
     }
   }
 

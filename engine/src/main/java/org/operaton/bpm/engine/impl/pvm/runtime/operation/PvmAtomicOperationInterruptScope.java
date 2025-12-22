@@ -40,7 +40,7 @@ public abstract class PvmAtomicOperationInterruptScope implements PvmAtomicOpera
       execution.remove();
     }
 
-    scopeExecution.interrupt("Interrupting activity %s executed.".formatted(interruptingActivity));
+    scopeExecution.interrupt("Interrupting activity "+interruptingActivity+" executed.");
 
     scopeExecution.setActivity(interruptingActivity);
     scopeExecution.setActive(true);

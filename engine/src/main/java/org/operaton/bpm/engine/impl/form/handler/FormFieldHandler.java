@@ -88,7 +88,7 @@ public class FormFieldHandler {
       try {
         formValue = type.convertToFormValue(value);
       } catch (Exception exception) {
-        throw new FormFieldValidationException(id, "failed to convert '%s'".formatted(id), exception);
+        throw new FormFieldValidationException(id, "failed to convert '" + id + "'", exception);
       }
       formField.setValue(formValue);
     }

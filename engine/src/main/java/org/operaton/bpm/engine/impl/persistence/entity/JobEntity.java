@@ -110,7 +110,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
-      ensureNotNull("Cannot find execution with id '%s' referenced from job '%s'".formatted(executionId, this), "execution", getExecution());
+      ensureNotNull("Cannot find execution with id '" + executionId + "' referenced from job '" + this + "'", "execution", getExecution());
     }
 
     // initialize activity id
@@ -122,7 +122,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     preExecute(commandContext);
     JobHandler jobHandler = getJobHandler();
     JobHandlerConfiguration configuration = getJobHandlerConfiguration();
-    ensureNotNull("Cannot find job handler '%s' from job '%s'".formatted(jobHandlerType, this), "jobHandler", jobHandler);
+    ensureNotNull("Cannot find job handler '" + jobHandlerType + "' from job '" + this + "'", "jobHandler", jobHandler);
     jobHandler.execute(configuration, execution, commandContext, tenantId);
     postExecute(commandContext);
   }

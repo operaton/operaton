@@ -62,7 +62,7 @@ public class FormTypes {
     } else if (typeText!=null) {
       formType = formTypes.get(typeText);
       if (formType==null) {
-        bpmnParse.addError("unknown type '%s'".formatted(typeText), formFieldElement);
+        bpmnParse.addError("unknown type '"+typeText+"'", formFieldElement);
       }
     }
     return formType;

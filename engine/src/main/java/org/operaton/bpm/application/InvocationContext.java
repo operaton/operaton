@@ -35,7 +35,7 @@ public class InvocationContext {
 
   @Override
   public String toString() {
-    return "InvocationContext [execution=%s]".formatted(execution);
+    return "InvocationContext [execution=" + execution + "]";
   }
 
 }

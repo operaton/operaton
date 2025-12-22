@@ -110,7 +110,7 @@ public class StatisticsManager extends AbstractManager {
     if (isAuthorizationEnabled() && getCurrentAuthentication() != null && commandContext.isAuthorizationCheckEnabled()) {
       String processDefinitionId = query.getProcessDefinitionId();
       ProcessDefinitionEntity definition = getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
-      ensureNotNull("no deployed process definition found with id '%s'".formatted(processDefinitionId), "processDefinition", definition);
+      ensureNotNull("no deployed process definition found with id '" + processDefinitionId + "'", "processDefinition", definition);
       getAuthorizationManager().checkAuthorization(READ, PROCESS_DEFINITION, definition.getKey());
     }
   }
@@ -130,7 +130,7 @@ public class StatisticsManager extends AbstractManager {
     if (isAuthorizationEnabled() && getCurrentAuthentication() != null && commandContext.isAuthorizationCheckEnabled()) {
       String decisionRequirementsDefinitionId = query.getDecisionRequirementsDefinitionId();
       DecisionRequirementsDefinition definition = getDecisionRequirementsDefinitionManager().findDecisionRequirementsDefinitionById(decisionRequirementsDefinitionId);
-      ensureNotNull("no deployed decision requirements definition found with id '%s'".formatted(decisionRequirementsDefinitionId), "decisionRequirementsDefinition", definition);
+      ensureNotNull("no deployed decision requirements definition found with id '" + decisionRequirementsDefinitionId + "'", "decisionRequirementsDefinition", definition);
       getAuthorizationManager().checkAuthorization(READ, DECISION_REQUIREMENTS_DEFINITION, definition.getKey());
     }
   }

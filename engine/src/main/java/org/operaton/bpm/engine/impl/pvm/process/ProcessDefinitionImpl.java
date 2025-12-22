@@ -177,7 +177,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
 
   @Override
   public String toString() {
-    return "ProcessDefinition(%s)".formatted(id);
+    return "ProcessDefinition("+id+")";
   }
 
   @Override

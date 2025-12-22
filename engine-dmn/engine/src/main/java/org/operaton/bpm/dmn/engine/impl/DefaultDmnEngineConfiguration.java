@@ -82,7 +82,7 @@ public class DefaultDmnEngineConfiguration extends DmnEngineConfiguration {
   protected String defaultOutputEntryExpressionLanguage;
   protected String defaultLiteralExpressionLanguage;
 
-  protected DmnTransformer transformer = new DefaultDmnTransformer();
+  protected DmnTransformer transformer = new DefaultDmnTransformer(this);
 
   protected boolean returnBlankTableOutputAsNull;
 

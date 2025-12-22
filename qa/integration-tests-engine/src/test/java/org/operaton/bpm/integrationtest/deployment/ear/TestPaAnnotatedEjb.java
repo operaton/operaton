@@ -45,14 +45,18 @@ public class TestPaAnnotatedEjb extends AbstractFoxPlatformIntegrationTest {
    *        |-- AbstractFoxPlatformIntegrationTest.class
    *        |-- TestPaAnnotatedEjb.class
    *
+   * <p>
    *        |-- AnnotatedEjbPa.class
    *        |-- process.bpmn
    *        |-- deployment-descriptor-with-custom-filename.xml
    *        |-- META-INF/beans.xml
+   * </p>
    *
+   * <p>
    *    |-- operaton-engine-cdi.jar
    *        |-- META-INF/MANIFEST.MF
    * </pre>
+   * </p>
    */
   @Deployment
   public static EnterpriseArchive paAsEjbModule() {

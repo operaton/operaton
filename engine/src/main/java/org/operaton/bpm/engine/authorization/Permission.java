@@ -27,13 +27,16 @@ package org.operaton.bpm.engine.authorization;
  * The implication of this design is that a permission must have a unique integer value
  * and it must be a power of two, ie 2^0, 2^1, 2^2, 2^3, 2^4 ...
  *
+ * <p>
  * The permission can then be added to an authorization using bitwise OR:
  * <pre>
  *        Auth: 0000001001001
  * Perm to add: 0000000010000
  * bit OR (|) : 0000001011001
  * </pre>
+ * </p>
  *
+ * <p>
  * and removed using bitwise AND of the inverted value:
  * <pre>
  *        Auth: 0000001001001
@@ -41,7 +44,9 @@ package org.operaton.bpm.engine.authorization;
  * invert (~) : 1111111110111
  * bit AND (&): 0000001000001
  * </pre>
+ * </p>
  *
+ * <p>
  * <h2>Defining a custom Permission</h2>
  * The XxxPermissions classes contains the values of the  built-in
  * permissions (i.e. {@link Permissions}, {@link ProcessDefinitionPermissions},
@@ -54,6 +59,7 @@ package org.operaton.bpm.engine.authorization;
  * You must implement also {@link #getTypes()} and make sure that
  * the permission values are not already reserved for the desired
  * {@link Resource}.</p>
+ * </p>
  *
  *
  * @author Daniel Meyer

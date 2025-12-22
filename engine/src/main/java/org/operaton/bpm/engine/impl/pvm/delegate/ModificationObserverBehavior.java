@@ -22,11 +22,13 @@ import java.util.List;
  * When a (scope) activity behavior implements this behavior,
  * its scope execution is notified in case of an external modification about the following:
  *
+ * <p>
  * <ul>
  *   <li> the scope execution is newly created
  *   <li> a new concurrent execution is created in that scope
  *   <li> a concurrent execution is removed in that scope
  * </ul>
+ * </p>
  *
  * @author Thorben Lindhauer
  */

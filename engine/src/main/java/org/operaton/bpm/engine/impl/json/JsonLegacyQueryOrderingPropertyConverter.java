@@ -30,13 +30,17 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * Deserializes query ordering properties from the deprecated 7.2 format in which
  * the SQL-like orderBy parameter was used.
  *
+ * <p>
  * Is able to deserialize strings like:
+ * </p>
  *
+ * <p>
  * <ul>
  *   <li>RES.ID_ asc</li>
  *   <li>LOWER(RES.NAME_) desc</li>
  *   <li>RES.ID_ asc, RES.NAME_ desc</li>
  * </ul>
+ * </p>
  *
  * @author Thorben Lindhauer
  */

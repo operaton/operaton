@@ -25,11 +25,13 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 /**
  * Can be used to qualify events with details about a {@link ProcessDefinition}:
  *
+ * <p>
  * <pre>
  * public void onSthRelatedToBilling(@Observes @BusinessProcessDefinition(&quot;billingProcess&quot;) BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

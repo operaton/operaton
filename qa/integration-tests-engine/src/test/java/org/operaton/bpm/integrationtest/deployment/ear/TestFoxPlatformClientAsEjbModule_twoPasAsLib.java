@@ -58,6 +58,7 @@ public class TestFoxPlatformClientAsEjbModule_twoPasAsLib extends AbstractFoxPla
    *          |-- META-INF/processes.xml
    *          |-- org/operaton/bpm/integrationtest/deployment/ear/process2.bpmn20.xml
    *
+   * <p>
    *    |-- fox-platform-client.jar  <<===============================||
    *                                                                  ||  Class-Path reference
    *    |-- test.war (contains the test-class but also processes)     ||
@@ -65,6 +66,7 @@ public class TestFoxPlatformClientAsEjbModule_twoPasAsLib extends AbstractFoxPla
    *        |-- WEB-INF/beans.xml
    *        |-- + test classes
    * </pre>
+   * </p>
    */
   @Deployment
   public static EnterpriseArchive twoPasAsLib() {

@@ -62,7 +62,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This extension provides many of the utility methods from your former JUnit 4
  * rule. It now has a default no-args constructor that creates a ProcessEngine
  * using the default configuration. This allows you to register it via:
+ * </p>
  *
+ * <p>
  * <pre>
  * &#64;RegisterExtension
  * protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension();

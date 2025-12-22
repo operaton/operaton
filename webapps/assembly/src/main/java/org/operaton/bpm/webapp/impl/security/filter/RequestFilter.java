@@ -28,8 +28,10 @@ import java.util.regex.Pattern;
  *
  * Example uris:
  *
+ * <p>
  * <code>/some/url/{param1}/{param2}/{param3:.*}</code>
  * <code>/some/url/{param1:foo}/.*</code>
+ * </p>
  *
  * @author Daniel Meyer
  * @author nico.rehwaldt

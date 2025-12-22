@@ -46,15 +46,19 @@ import static org.assertj.core.api.Assertions.assertThat;
  *                      defines pa2 using classpath:alternateDirectory/
  *               |-- process0.bpmn
  *
+ * <p>
  *           |-- lib/
  *               |-- pa2.jar
  *                   |-- process0.bpmn
  *                   |-- directory/process1.bpmn
+ * </p>
  *
+ * <p>
  *               |-- pa3.jar
  *                   |-- process0.bpmn
  *                   |-- alternateDirectory/process2.bpmn
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  *

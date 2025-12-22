@@ -65,8 +65,10 @@ public class Variables {
    *   .serializationDataFormat(Variables.SerializationDataFormats.JSON)
    *   .create();
    *
+   * <p>
    * execution.setVariable("someVariable", customerDataValue);
    * </pre>
+   * </p>
    *
    * <p>Note that not all of the formats provided here are supported out of the box.</p>
    *

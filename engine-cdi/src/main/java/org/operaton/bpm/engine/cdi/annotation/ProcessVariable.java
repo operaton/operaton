@@ -34,18 +34,22 @@ import jakarta.inject.Qualifier;
  * injected. NOTE: injection points must be of type 'object'.
  * <p />
  *
+ * <p>
  * Can also be used to declare bean-properties to hold process variables in
  * combination with the {@link StartProcess} annotation:
  * <pre>
  * {@code @ProcessVariable }
  * String accountNumber;  // will be added as a process
  *                        // variable to the 'billingProcess'
+ * </p>
  *
+ * <p>
  * {@code @StartProcess("billingProcess")}
  * public void startBillingProcess() {
  *  ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

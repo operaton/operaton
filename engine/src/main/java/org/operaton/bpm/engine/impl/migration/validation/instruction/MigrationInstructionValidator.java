@@ -27,7 +27,9 @@ public interface MigrationInstructionValidator {
    * Check that a migration instruction is valid for a migration plan. If it is invalid
    * a failure has to added to the validation report.
    *
+   * <p>
    *  @param instruction the instruction to validate
+   * </p>
    * @param instructions the complete migration plan to validate
    * @param report the validation report
    */

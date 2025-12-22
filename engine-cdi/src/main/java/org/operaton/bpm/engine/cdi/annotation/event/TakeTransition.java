@@ -23,11 +23,13 @@ import jakarta.inject.Qualifier;
 /**
  * Can be used to qualify events fired when a transition is taken
  *
+ * <p>
  * <pre>
  * public void onTakeT1(@Observes @TakeTransition(&quot;t1&quot;) BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

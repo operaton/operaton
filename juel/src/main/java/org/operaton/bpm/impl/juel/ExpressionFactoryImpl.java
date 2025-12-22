@@ -29,12 +29,15 @@ import jakarta.el.ExpressionFactory;
 /**
  * Expression factory implementation.
  *
+ * <p>
  * This class is also used as an EL "service provider". The <em>JUEL</em> jar file specifies this
  * class as el expression factory implementation in
  * <code>META-INF/services/jakarta.el.ExpressionFactory</code>. Calling
  * {@link ExpressionFactory#newInstance()} will then return an instance of this class, configured as
  * described below.
+ * </p>
  *
+ * <p>
  * If no properties are specified at construction time, properties are read from
  * <ol>
  * <li>
@@ -49,7 +52,9 @@ import jakarta.el.ExpressionFactory;
  * <code>JAVA_HOME/lib/el.properties</code> or {@link System#getProperties()}.</li>
  * </ol>
  * There are also constructors to explicitly pass in an instance of {@link Properties}.
+ * </p>
  *
+ * <p>
  * Having this, the following properties are read:
  * <ul>
  * <li>
@@ -64,6 +69,7 @@ import jakarta.el.ExpressionFactory;
  * <code>jakarta.el.varArgs</code> - support function/method calls using varargs (boolean, default is
  * <code>false</code>).</li>
  * </ul>
+ * </p>
  *
  * @author Christoph Beck
  */

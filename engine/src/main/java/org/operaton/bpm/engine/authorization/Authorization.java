@@ -33,10 +33,12 @@ import org.operaton.bpm.engine.identity.User;
  *   except the distinct user 'admin'.</li>
  * </ul>
  *
+ * <p>
  * <h2>Identities</h2>
  * <p>Operaton distinguishes two types of identities: <em>users</em> and
  * <em>groups</em>. Authorizations can either range over all users
  * (userId = {@link #ANY}), an individual {@link User} or a {@link Group} of users.</p>
+ * </p>
  *
  * <h2>Permissions</h2>
  * <p>A {@link Permission} defines the way an identity is allowed to interact
@@ -163,12 +165,14 @@ public interface Authorization {
    * Allows checking whether this authorization grants / revokes a set of permissions.
    * Usually the set of built-in permissions is used: {@link Permissions#values()}
    *
+   * <p>
    * The return value of this method depends on the type of the authorization:
    * <ul>
    *  <li>For {@link #AUTH_TYPE_GLOBAL}: all permissions in the parameter list granted by this authorization are returned. </li>
    *  <li>For {@link #AUTH_TYPE_GRANT}: all permissions in the parameter list granted by this authorization are returned. </li>
    *  <li>For {@link #AUTH_TYPE_REVOKE}: all permissions in the parameter list revoked by this authorization are returned. </li>
    * </ul>
+   * </p>
    *
    * @param an array of permissions to check for.
    * @return Returns the set of {@link Permission Permissions} provided by this {@link Authorization}.
@@ -178,13 +182,16 @@ public interface Authorization {
   /**
    * Sets the permissions to the provided value. Replaces all permissions.
    *
+   * <p>
    * The effect of this method depends on the type of this authorization:
    * <ul>
    *  <li>For {@link #AUTH_TYPE_GLOBAL}: all provided permissions are granted.</li>
    *  <li>For {@link #AUTH_TYPE_GRANT}: all provided permissions are granted.</li>
    *  <li>For {@link #AUTH_TYPE_REVOKE}: all provided permissions are revoked.</li>
    * </ul>
+   * </p>
    *
+   * <p>
    *  @param a set of permissions.
    * */
   void setPermissions(Permission[] permissions);
@@ -254,8 +261,10 @@ public interface Authorization {
   /**
    * The removal time indicates the date a historic instance authorization is cleaned up
    *
+   * <p>
    * A removal time can only be assigned to a historic instance authorization. An authorization
    * belongs to a historic instance when its resource type is {@link Resources#HISTORIC_TASK}.
+   * </p>
    *
    * @return  <ul>
    *   <li>the date the historic instance authorization is cleaned up
@@ -268,9 +277,11 @@ public interface Authorization {
    * The process instance id of the top-level (root) process instance the historic instance
    * authorization is related to
    *
+   * <p>
    * A root process instance id is only assigned to a historic instance authorization. An
    * authorization is related to a historic instance when its resource type is
    * {@link Resources#HISTORIC_TASK}.
+   * </p>
    *
    * @return <ul>
    *   <li>the process instance id of the top-level (root) process instance

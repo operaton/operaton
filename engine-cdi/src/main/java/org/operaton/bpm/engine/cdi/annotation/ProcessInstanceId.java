@@ -29,15 +29,19 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  * <p />
  * Example:
  *
+ * <p>
  * <pre>
  * {@code @Inject} @ProcessInstanceId String pid;
  * </pre>
  * <p />
  * Note that the {@link ProcessInstance} is also available for injection:
+ * </p>
  *
+ * <p>
  * <pre>
  * {@code @Inject} ProcessInstance pi;
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

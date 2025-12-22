@@ -53,22 +53,30 @@ public interface IdentityService {
    * <li> {@link #saveUser(User)} </li>
    * <li> {@link #deleteUser(String)} </li>
    *
+   * <p>
    * <li> {@link #newGroup(String)} </li>
    * <li> {@link #saveGroup(Group)} </li>
    * <li> {@link #deleteGroup(String)} </li>
+   * </p>
    *
+   * <p>
    * <li> {@link #newTenant(String)} </li>
    * <li> {@link #saveTenant(Tenant)} </li>
    * <li> {@link #deleteTenant(String)} </li>
+   * </p>
    *
+   * <p>
    * <li> {@link #createMembership(String, String)} </li>
    * <li> {@link #deleteMembership(String, String)} </li>
+   * </p>
    *
+   * <p>
    * <li> {@link #createTenantUserMembership(String, String)} </li>
    * <li> {@link #createTenantGroupMembership(String, String)} </li>
    * <li> {@link #deleteTenantUserMembership(String, String)} </li>
    * <li> {@link #deleteTenantGroupMembership(String, String)} </li>
    * </ul>
+   * </p>
    *
    * <p>If these methods are invoked on a read-only identity service implementation,
    * the invocation will throw an {@link UnsupportedOperationException}.</p>
@@ -408,8 +416,10 @@ public interface IdentityService {
    * thread will have access to this authentication. Should be followed by
    * a call to {@link #clearAuthentication()} once the interaction is terminated.
    *
+   * <p>
    *  @param authenticatedUserId the id of the current user.
    *  @param groups the groups of the current user.
+   * </p>
    */
   void setAuthentication(String userId, List<String> groups);
 
@@ -419,9 +429,11 @@ public interface IdentityService {
    * thread will have access to this authentication. Should be followed by
    * a call to {@link #clearAuthentication()} once the interaction is terminated.
    *
+   * <p>
    *  @param userId the id of the current user.
    *  @param groups the groups of the current user.
    *  @param tenantIds the tenants of the current user.
+   * </p>
    */
   void setAuthentication(String userId, List<String> groups, List<String> tenantIds);
 

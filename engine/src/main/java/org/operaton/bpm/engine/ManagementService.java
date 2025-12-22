@@ -285,11 +285,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobById(String)
    * @see #activateJobByJobDefinitionId(String)
@@ -311,11 +313,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionId(String)
    */
@@ -336,11 +340,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionKey(String)
    */
@@ -365,11 +371,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobById(String)
    * @see #activateJobByJobDefinitionId(String)
@@ -395,11 +403,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionId(String)
    */
@@ -424,11 +434,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionKey(String)
    */
@@ -507,11 +519,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobById(String)
    * @see #suspendJobByJobDefinitionId(String)
@@ -533,11 +547,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionId(String)
    */
@@ -558,11 +574,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionKey(String)
    */
@@ -587,11 +605,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobById(String)
    * @see #suspendJobByJobDefinitionId(String)
@@ -617,11 +637,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionId(String)
    */
@@ -646,11 +668,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionKey(String)
    */
@@ -1147,11 +1171,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If cascade is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
+   * </p>
    *
    */
   void setOverridingJobPriorityForJobDefinition(String jobDefinitionId, long priority, boolean cascade);

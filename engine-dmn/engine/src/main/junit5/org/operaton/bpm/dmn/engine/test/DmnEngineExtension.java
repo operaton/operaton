@@ -33,14 +33,20 @@ import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
  * <pre>
  * public class YourDmnTest {
  *
+ * <p>
  *   public class YourDmnTest {
+ * </p>
  *
+ * <p>
  *     &#64;RegisterExtension
  *     public static DmnEngineExtension dmnEngineExtension = new DmnEngineExtension();
+ * </p>
  *
+ * <p>
  *     ...
  *   }
  * </pre>
+ * </p>
  *
  * <p>
  * The DMN engine will be made available to the test class

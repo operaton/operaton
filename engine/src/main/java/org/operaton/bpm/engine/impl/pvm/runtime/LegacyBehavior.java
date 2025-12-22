@@ -48,6 +48,7 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  *  <li>Event subprocess: is now a scope, used to be non-scope.</li>
  * </ul>
  *
+ * <p>
  * 2. In certain situations, executions which were both scope and concurrent were created.
  * This used to be the case if a scope execution already had a single scope child execution
  * and then concurrency was introduced (by a on interrupting boundary event or
@@ -57,6 +58,7 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  * a new, concurrent execution will be created and be interleaved between the parent and the
  * existing scope execution.
  *<p>
+ * </p>
  *
  * @author Daniel Meyer
  */

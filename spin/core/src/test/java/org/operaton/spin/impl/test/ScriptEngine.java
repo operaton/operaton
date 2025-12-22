@@ -25,12 +25,14 @@ import java.lang.annotation.Target;
  * Annotation to define a {@link ScriptEngine} of a test class
  * using the {@link ScriptEngineRule}.
  *
+ * <p>
  * <pre>
  *   {@literal @}ScriptEngine("python")
  *   public class SpinXmlPythonTest extends SpinXmlScriptTest {
  *     // ...
  *   }
  * </pre>
+ * </p>
  *
  * @author Sebastian Menski
  */

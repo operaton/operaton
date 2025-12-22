@@ -31,12 +31,16 @@ import org.operaton.bpm.dmn.engine.DmnEngineConfiguration;
  * <pre>
  * public class YourDmnTest {
  *
+ * <p>
  *   &#64;Rule
  *   public DmnEngineRule dmnEngineRule = new DmnEngineRule();
+ * </p>
  *
+ * <p>
  *   ...
  * }
  * </pre>
+ * </p>
  *
  * <p>
  * The DMN engine will be made available to the test class

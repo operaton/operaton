@@ -23,11 +23,13 @@ import jakarta.inject.Qualifier;
 /**
  * Can be used to qualify events fired when an activity is started
  *
+ * <p>
  * <pre>
  * public void beforeCreditAccount(@Observes @StartActivity(&quot;creditAccount&quot;) BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

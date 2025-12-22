@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
  * or request) is associated with a task. This has the same effect as
  * calling {@link BusinessProcess#completeTask()}.
  *
+ * <p>
  * <p />
  * Example: after this method returns, the current task is completed
  * <pre>
@@ -40,6 +41,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
  * }
  * </pre>
  * If the annotated method throws an exception, the task is not completed.
+ * </p>
  *
  * @see BusinessProcess#startTask(String)
  * @see BusinessProcess#completeTask()

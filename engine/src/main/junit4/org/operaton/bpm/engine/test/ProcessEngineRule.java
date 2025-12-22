@@ -45,9 +45,12 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * <pre>
  * public class YourTest {
  *
+ * <p>
  *   &#64;Rule
  *   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+ * </p>
  *
+ * <p>
  *   ...
  * }
  * </pre>

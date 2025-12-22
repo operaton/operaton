@@ -118,6 +118,7 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    *
+   * <p>
    * */
   HistoricActivityInstanceQuery createHistoricActivityInstanceQuery();
 
@@ -212,6 +213,7 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    *
+   * <p>
    * */
   UserOperationLogQuery createUserOperationLogQuery();
 

@@ -62,6 +62,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * How migration works:
  *
+ * <p>
  * <ol>
  *   <li>Validate migration instructions.
  *   <li>Delete activity instances that are not going to be migrated, invoking execution listeners
@@ -71,6 +72,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *       and io mappings. This is performed in a top-down fashion in the activity instance tree and
  *       ensures that the "upstream" tree is always consistent with respect to the new process definition.
  * </ol>
+ * </p>
  * @author Thorben Lindhauer
  */
 public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements Command<Void> {

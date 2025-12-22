@@ -26,10 +26,12 @@ import org.operaton.bpm.engine.EntityTypes;
  * actions such as creating a new task, completing a task,
  * canceling a process instance, ...
  *
+ * <p>
  * <h2>Operation Type</h2>
  * <p>The type of the operation which has been performed. A user may create a new task,
  * complete a task, delegate a tasks, etc... Check this class for a list of built-in
  * operation type constants.</p>
+ * </p>
  *
  * <h2>Entity Type</h2>
  * <p>The type of the entity on which the operation was performed. Operations may be

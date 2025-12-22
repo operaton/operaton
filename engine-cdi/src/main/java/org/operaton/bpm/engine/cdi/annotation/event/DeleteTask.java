@@ -23,11 +23,13 @@ import jakarta.inject.Qualifier;
 /**
  * Can be used to qualify events fired when a task is deleted.
  *
+ * <p>
  * <pre>
  * public void onApproveRegistrationTaskDelete(@Observes @DeleteTask("approveRegistration") BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  * @author Sebastian Menski

@@ -73,6 +73,7 @@ import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
  * <code>@ExtendWith(ProcessEngineExtension.class)</code>
  * class YourTest {
  *
+ * <p>
  *   ProcessEngine processEngine;
  *   RuntimeService runtimeService;
  *   TaskService taskService;
@@ -80,6 +81,7 @@ import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
  *   ...
  * }
  * </pre>
+ * </p>
  *
  * <p>
  * For advanced usage, where specific configurations are required, the extension can be registered
@@ -91,14 +93,18 @@ import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
  *    .configurationResource("customConfiguration.xml")
  *    .build();
  * </pre>
+ * </p>
  *
+ * <p>
  * <h3>Annotations:</h3>
  * <ul>
  * <li>{@link Deployment} - Deploys a specified deployment before each test and
  * cascades deletion after each test execution.</li>
  * <li>{@link RequiredHistoryLevel} - Skips tests if the engine's history level does not meet the required level.</li>
  * </ul>
+ * </p>
  *
+ * <p>
  * <h3>Injected Services:</h3>
  * <p>
  * In addition to {@link ProcessEngine}, the extension also injects various BPM services:
@@ -125,7 +131,9 @@ import org.operaton.bpm.engine.test.util.ProcessEngineUtils;
  * <li>{@code useProcessEngine(ProcessEngine)} - Reuses an existing process engine instance.</li>
  * <li>{@code manageDeployment(Deployment)} - Adds deployments that will be managed and cleaned up after tests.</li>
  * </ul>
+ * </p>
  *
+ * <p>
  * <h3>Setting History Level:</h3>
  * <p>
  * If you need the history service for your tests then you can specify the

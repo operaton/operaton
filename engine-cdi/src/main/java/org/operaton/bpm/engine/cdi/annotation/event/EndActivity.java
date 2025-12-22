@@ -23,11 +23,13 @@ import jakarta.inject.Qualifier;
 /**
  * Can be used to qualify events fired when an activity is ended / left
  *
+ * <p>
  * <pre>
  * public void onCreditAccountCompleted(@Observes @EndActivity(&quot;creditAccount&quot;) BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  */

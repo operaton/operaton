@@ -61,17 +61,22 @@ public interface ProcessArchiveXml {
    * <p> The path is interpreted as
    * <ul>
    *
+   * <p>
    *   <li>
    *     <em>local to the root of the classpath.</em>
    *     By default or if the prefix "classpath:" is used, the path is interpreted as relative to the root
    *     of the classloader. Example: "path/to/my/processes" or "classpath:path/to/my/processes")
    *   </li>
+   * </p>
    *
+   * <p>
    *   <li>
    *     <em>relative to the process archive's definig metafile (processes.xml).</em>
    *     If the prefix "pa:" is used, the path is interpreted as relative to the metafile defining the
    *     process archive. Consider the situation of a process application packaged as a WAR file:
+   * </p>
    *
+   * <p>
    *     The deployment structure could look like this:
    *     <pre>
    *     |-- My-Application.war
@@ -81,7 +86,9 @@ public interface ProcessArchiveXml {
    *                     |-- META-INF/processes.xml  (1)
    *                     |-- opps/openOpportunity.bpmn
    *                     |-- leads/openLead.bpmn
+   * </p>
    *
+   * <p>
    *                 |-- Invoice-Processes.jar
    *                     |-- META-INF/processes.xml  (2)
    *    </pre>

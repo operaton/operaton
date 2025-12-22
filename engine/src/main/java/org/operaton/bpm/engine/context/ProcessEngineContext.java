@@ -49,6 +49,7 @@ import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
  *
  * Example on declaring a new Process Engine Context:
  *
+ * <p>
  * <pre>
  *  try {
  *    ProcessEngineContext.requiresNew();
@@ -57,6 +58,7 @@ import org.operaton.bpm.engine.impl.context.ProcessEngineContextImpl;
  *    ProcessEngineContext.clear();
  *  }
  * </pre>
+ * </p>
  */
 public final class ProcessEngineContext {
 
@@ -97,6 +99,7 @@ public final class ProcessEngineContext {
    *
    * An alternative to calling:
    *
+   * <p>
    * <code>
    *   try {
    *     requiresNew();
@@ -105,6 +108,7 @@ public final class ProcessEngineContext {
    *     clear();
    *   }
    * </code>
+   * </p>
    *
    * @param callable the callable to execute
    * @return what is defined by the callable passed to the method

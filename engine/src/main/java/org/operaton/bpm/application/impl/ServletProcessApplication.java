@@ -41,14 +41,18 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  * It is sufficient adding a custom
  * subclass of {@link ServletProcessApplication} annotated with
  * <code>{@literal @}ProcessApplication</code> to your application:
+ * </p>
  *
+ * <p>
  * <pre>
  * {@literal @}ProcessApplication("Loan Approval App")
  * public class LoanApprovalApplication extends ServletProcessApplication {
  * // empty implementation
  * }
  * </pre>
+ * </p>
  *
+ * <p>
  * This, in combination with a <code>META-INF/processes.xml</code> file is
  * sufficient for making sure that the process application class is picked up at
  * runtime.
@@ -80,9 +84,13 @@ import org.operaton.bpm.engine.impl.util.ClassLoaderUtil;
  *                                        |                    |
  *                                        |                    |
  *                                        +--------------------+
+ * </p>
  *
+ * <p>
  * </pre>
+ * </p>
  *
+ * <p>
  * <h2>Process Application Reference</h2>
  * <p>
  * The process engine holds a {@link WeakReference} to the

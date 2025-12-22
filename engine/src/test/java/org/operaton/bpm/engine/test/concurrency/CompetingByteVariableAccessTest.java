@@ -35,13 +35,17 @@ import static org.assertj.core.api.Assertions.assertThat;
  *  t=1: fetch byte variable
  *  t=4: update byte variable value
  *
+ * <p>
  * thread2:
  *  t=2: fetch and delete byte variable and entity
  *  t=3: commit transaction
  * </pre>
+ * </p>
  *
+ * <p>
  * This test ensures that thread1's command fails with an OptimisticLockingException,
  * not with a NullPointerException or something in that direction.
+ * </p>
  *
  * @author Thorben Lindhauer
  */

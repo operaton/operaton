@@ -23,11 +23,13 @@ import jakarta.inject.Qualifier;
 /**
  * Can be used to qualify events fired when a task is completed.
  *
+ * <p>
  * <pre>
  * public void onApproveRegistrationTaskComplete(@Observes @CompleteTask("approveRegistration") BusinessProcessEvent evt) {
  *   // ...
  * }
  * </pre>
+ * </p>
  *
  * @author Daniel Meyer
  * @author Sebastian Menski

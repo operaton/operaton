@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.externaltask.ExternalTask;
  * An instance of {@link HistoricExternalTaskLog} represents the latest historic
  * state in the lifecycle of a {@link ExternalTask task}.
  *
- * @since 7.7
  */
 public interface HistoricExternalTaskLog {
 

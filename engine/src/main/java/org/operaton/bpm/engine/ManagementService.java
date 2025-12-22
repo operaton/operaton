@@ -1105,7 +1105,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void setJobPriority(String jobId, long priority);
 
@@ -1125,7 +1124,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void setOverridingJobPriorityForJobDefinition(String jobDefinitionId, long priority);
 
@@ -1155,7 +1153,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void setOverridingJobPriorityForJobDefinition(String jobDefinitionId, long priority, boolean cascade);
 
@@ -1173,7 +1170,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void clearOverridingJobPriorityForJobDefinition(String jobDefinitionId);
 
@@ -1290,7 +1286,6 @@ public interface ManagementService {
 
   /**
    * @return a new metrics Query.
-   * @since 7.3
    */
   MetricsQuery createMetricsQuery();
 
@@ -1302,7 +1297,6 @@ public interface ManagementService {
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    *
    * @param timestamp or null
-   * @since 7.3
    */
   void deleteMetrics(Date timestamp);
 
@@ -1316,7 +1310,6 @@ public interface ManagementService {
    *
    * @param timestamp or null
    * @param reporter or null
-   * @since 7.4
    */
   void deleteMetrics(Date timestamp, String reporter);
 
@@ -1351,7 +1344,6 @@ public interface ManagementService {
   /**
    * Creates a query to search for {@link org.operaton.bpm.engine.batch.Batch} instances.
    *
-   * @since 7.5
    */
   BatchQuery createBatchQuery();
 
@@ -1370,7 +1362,6 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#BATCH}.
    *
-   * @since 7.5
    */
   void suspendBatchById(String batchId);
 
@@ -1389,7 +1380,6 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#BATCH}.
    *
-   * @since 7.5
    */
   void activateBatchById(String batchId);
 
@@ -1404,21 +1394,18 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
    *
-   * @since 7.5
    */
   void deleteBatch(String batchId, boolean cascade);
 
   /**
    * Query for the statistics of the batch execution jobs of a batch.
    *
-   * @since 7.5
    */
   BatchStatisticsQuery createBatchStatisticsQuery();
 
   /**
    * Query for entries of the database schema log.
    *
-   * @since 7.11
    */
   SchemaLogQuery createSchemaLogQuery();
 

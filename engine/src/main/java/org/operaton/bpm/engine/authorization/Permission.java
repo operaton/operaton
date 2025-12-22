@@ -57,7 +57,6 @@ package org.operaton.bpm.engine.authorization;
  *
  *
  * @author Daniel Meyer
- * @since 7.0
  */
 public interface Permission {
 

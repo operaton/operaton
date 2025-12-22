@@ -304,7 +304,6 @@ public interface ExternalTaskService {
    * @param externalTaskId the id of the external task to report a bpmn error
    * @param workerId the id of the worker that reports the bpmn error
    * @param errorCode the error code of the corresponding bmpn error
-   * @since 7.5
    *
    * @throws NotFoundException if no external task with the given id exists
    * @throws BadUserRequestException if the task is assigned to a different worker
@@ -326,7 +325,6 @@ public interface ExternalTaskService {
    * @param workerId the id of the worker that reports the bpmn error
    * @param errorCode the error code of the corresponding bmpn error
    * @param errorMessage the error message of the corresponding bmpn error
-   * @since 7.10
    *
    * @throws NotFoundException if no external task with the given id exists
    * @throws BadUserRequestException if the task is assigned to a different worker
@@ -350,7 +348,6 @@ public interface ExternalTaskService {
    * @param errorCode the error code of the corresponding bmpn error
    * @param errorMessage the error message of the corresponding bmpn error
    * @param variables the variables to pass to the execution
-   * @since 7.10
    *
    * @throws NotFoundException if no external task with the given id exists
    * @throws BadUserRequestException if the task is assigned to a different worker
@@ -438,7 +435,6 @@ public interface ExternalTaskService {
    * {@link UpdateExternalTaskRetriesBuilder#setAsync(int)}.
    * </p>
    *
-   * @since 7.8
    */
   UpdateExternalTaskRetriesSelectBuilder updateRetries();
 
@@ -505,7 +501,6 @@ public interface ExternalTaskService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
-   * @since 7.6
    */
   String getExternalTaskErrorDetails(String externalTaskId);
 }

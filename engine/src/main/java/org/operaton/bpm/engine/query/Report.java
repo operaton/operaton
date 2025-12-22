@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.history.DurationReportResult;
  *
  * @author Roman Smirnov
  *
- * @since 7.5
  */
 public interface Report {
 

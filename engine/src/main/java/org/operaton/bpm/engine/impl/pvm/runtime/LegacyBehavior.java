@@ -59,7 +59,6 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  *<p>
  *
  * @author Daniel Meyer
- * @since 7.3
  */
 public final class LegacyBehavior {
 

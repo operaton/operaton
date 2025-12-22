@@ -527,7 +527,6 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.3
    */
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId);
 
@@ -555,7 +554,6 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.3
    */
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, String businessKey);
 
@@ -585,7 +583,6 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.3
    */
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, Map<String, Object> processVariables);
 
@@ -616,7 +613,6 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#PROCESS_INSTANCE}
    *          and no {@link Permissions#CREATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.3
    */
   ProcessInstance startProcessInstanceByMessageAndProcessDefinitionId(String messageName, String processDefinitionId, String businessKey, Map<String, Object> processVariables);
 
@@ -1108,7 +1104,6 @@ public interface RuntimeService {
    *          if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
    *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.0
    */
   ActivityInstance getActivityInstance(String processInstanceId);
 
@@ -1208,7 +1203,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   VariableMap getVariablesTyped(String executionId);
@@ -1229,7 +1223,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   VariableMap getVariablesTyped(String executionId, boolean deserializeValues);
@@ -1289,7 +1282,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String executionId, boolean deserializeValues);
 
@@ -1327,7 +1319,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   VariableMap getVariablesTyped(String executionId, Collection<String> variableNames, boolean deserializeValues);
@@ -1366,7 +1357,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   VariableMap getVariablesLocalTyped(String executionId, Collection<String> variableNames, boolean deserializeValues);
@@ -1407,7 +1397,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   <T extends TypedValue> T getVariableTyped(String executionId, String variableName);
@@ -1430,7 +1419,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   <T extends TypedValue> T getVariableTyped(String executionId, String variableName, boolean deserializeValue);
@@ -1471,7 +1459,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   <T extends TypedValue> T getVariableLocalTyped(String executionId, String variableName);
@@ -1494,7 +1481,6 @@ public interface RuntimeService {
    *          <li> In case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} config is enabled and
    *          the user has no {@link ProcessDefinitionPermisions#READ_INSTANCE_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li>
    *
-   * @since 7.2
    *
    */
   <T extends TypedValue> T getVariableLocalTyped(String executionId, String variableName, boolean deserializeValue);
@@ -2498,7 +2484,6 @@ public interface RuntimeService {
    * @param incidentId of the incident that the annotation is updated at
    * @param annotation that is set to the incident
    *
-   * @since 7.15
    */
   void setAnnotationForIncidentById(String incidentId, String annotation);
 
@@ -2513,7 +2498,6 @@ public interface RuntimeService {
    *
    * @param incidentId of the incident that the annotation is cleared at
    *
-   * @since 7.15
    */
   void clearAnnotationForIncidentById(String incidentId);
 

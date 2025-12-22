@@ -91,7 +91,6 @@ import org.operaton.bpm.engine.identity.User;
  * </p>
  *
  * @author Daniel Meyer
- * @since 7.0
  *
  */
 public interface Authorization {

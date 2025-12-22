@@ -66,7 +66,6 @@ import org.operaton.bpm.engine.authorization.Resources;
  * </p>
  *
  * @author Daniel Meyer
- * @since 7.0
  */
 public interface AuthorizationService {
 

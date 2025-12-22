@@ -68,7 +68,6 @@ public interface IdentityLink {
   /**
    * The id of the tenant associated with this identity link.
    *
-   * @since 7.5
    *
    */
   String getTenantId();

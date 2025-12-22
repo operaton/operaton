@@ -209,7 +209,6 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
    * <p><strong>Note:</strong><br>
    * Please note that a {@link HistoricFormField historic form field event} can occur only once.</p>
    *
-   * @since 7.3
    */
   HistoricDetailQuery orderPartiallyByOccurrence();
 }

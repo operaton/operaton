@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricJobLogDto;
 /**
  * @author Roman Smirnov
  *
- * @since 7.3
  *
  */
 public interface HistoricJobLogResource {

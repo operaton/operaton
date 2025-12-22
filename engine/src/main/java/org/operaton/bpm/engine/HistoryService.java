@@ -587,7 +587,6 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    *
-   * @since 7.3
    */
   HistoricJobLogQuery createHistoricJobLogQuery();
 
@@ -602,14 +601,12 @@ public interface HistoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.3
    */
   String getHistoricJobLogExceptionStacktrace(String historicJobLogId);
 
   /**
    * Creates a new programmatic query to create a historic process instance report.
    *
-   * @since 7.5
    */
   HistoricProcessInstanceReport createHistoricProcessInstanceReport();
 
@@ -619,49 +616,42 @@ public interface HistoryService {
    * <p>Subsequent builder methods throw {@link AuthorizationException} when the user has no
    * {@link Permissions#READ_HISTORY} permission on any {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.6
    */
   HistoricTaskInstanceReport createHistoricTaskInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic process instance report.
    *
-   * @since 7.8
    */
   CleanableHistoricProcessInstanceReport createCleanableHistoricProcessInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic decision instance report.
    *
-   * @since 7.8
    */
   CleanableHistoricDecisionInstanceReport createCleanableHistoricDecisionInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic case instance report.
    *
-   * @since 7.8
    */
   CleanableHistoricCaseInstanceReport createCleanableHistoricCaseInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic batch report.
    *
-   * @since 7.8
    */
   CleanableHistoricBatchReport createCleanableHistoricBatchReport();
 
   /**
    * Creates a query to search for {@link org.operaton.bpm.engine.batch.history.HistoricBatch} instances.
    *
-   * @since 7.5
    */
   HistoricBatchQuery createHistoricBatchQuery();
 
   /**
    * Deletes a historic batch instance. All corresponding historic job logs are deleted as well;
    *
-   * @since 7.5
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
@@ -673,7 +663,6 @@ public interface HistoryService {
    * Query for the statistics of DRD evaluation.
    *
    * @param decisionRequirementsDefinitionId - id of decision requirement definition
-   * @since 7.6
    */
   HistoricDecisionInstanceStatisticsQuery createHistoricDecisionInstanceStatisticsQuery(String decisionRequirementsDefinitionId);
 
@@ -689,7 +678,6 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    *
-   * @since 7.7
    */
   HistoricExternalTaskLogQuery createHistoricExternalTaskLogQuery();
 
@@ -704,7 +692,6 @@ public interface HistoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.7
    */
   String getHistoricExternalTaskLogErrorDetails(String historicExternalTaskLogId);
 
@@ -730,7 +717,6 @@ public interface HistoryService {
    * <p>To create the batch and complete the configuration chain, call
    * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#executeAsync()}.
    *
-   * @since 7.11
    */
   SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder setRemovalTimeToHistoricProcessInstances();
 
@@ -756,7 +742,6 @@ public interface HistoryService {
    * <p>To create the batch and complete the configuration chain, call
    * {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#executeAsync()}.
    *
-   * @since 7.11
    */
   SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder setRemovalTimeToHistoricDecisionInstances();
 
@@ -778,7 +763,6 @@ public interface HistoryService {
    * <p>To create the batch and complete the configuration chain, call
    * {@link SetRemovalTimeToHistoricBatchesBuilder#executeAsync()}.
    *
-   * @since 7.11
    */
   SetRemovalTimeSelectModeForHistoricBatchesBuilder setRemovalTimeToHistoricBatches();
 
@@ -801,7 +785,6 @@ public interface HistoryService {
    * @param operationId of the user operation log entries that are updated
    * @param annotation that is set to the user operation log entries
    *
-   * @since 7.12
    */
   void setAnnotationForOperationLogById(String operationId, String annotation);
 
@@ -823,7 +806,6 @@ public interface HistoryService {
    *
    * @param operationId of the user operation log entries that are updated
    *
-   * @since 7.12
    */
   void clearAnnotationForOperationLogById(String operationId);
 

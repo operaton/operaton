@@ -21,7 +21,6 @@ package org.operaton.bpm.engine.impl.history.event;
  *
  * @author Daniel Meyer
  * @author Ingo Richtsmeier
- * @since 7.2
  */
 @SuppressWarnings("java:S1192")
 public enum HistoryEventTypes implements HistoryEventType {
@@ -97,98 +96,84 @@ public enum HistoryEventTypes implements HistoryEventType {
   /**
    * fired when a job is created.
    *
-   * @since 7.3
    */
   JOB_CREATE("job", "create"),
 
   /**
    * fired when a job is failed.
    *
-   * @since 7.3
    */
   JOB_FAIL("job", "fail"),
 
   /**
    * fired when a job is succeeded.
    *
-   * @since 7.3
    */
   JOB_SUCCESS("job", "success"),
 
   /**
    * fired when a job is deleted.
    *
-   * @since 7.3
    */
   JOB_DELETE("job", "delete"),
 
   /**
    * fired when a decision is evaluated.
    *
-   * @since 7.4
    */
   DMN_DECISION_EVALUATE("decision", "evaluate"),
 
   /**
    * fired when a batch was started.
    *
-   * @since 7.5
    */
   BATCH_START("batch", "start"),
 
   /**
    * fired when a batch was completed.
    *
-   * @since 7.5
    */
   BATCH_END("batch", "end"),
 
   /**
    * fired when a batch was updated.
    *
-   * @since 7.18
    */
   BATCH_UPDATE("batch", "update"),
 
   /**
    * fired when an identity link is added
    *
-   * @since 7.5
    */
   IDENTITY_LINK_ADD("identity-link-add", "add-identity-link"),
 
   /**
    * fired when an identity link is removed
    *
-   * @since 7.5
    */
   IDENTITY_LINK_DELETE("identity-link-delete", "delete-identity-link"),
 
   /**
    * fired when an external task is created.
    *
-   * @since 7.7
    */
   EXTERNAL_TASK_CREATE("external-task", "create"),
 
   /**
    * fired when an external task has failed.
    *
-   * @since 7.7
    */
   EXTERNAL_TASK_FAIL("external-task", "fail"),
 
   /**
    * fired when an external task has succeeded.
    *
-   * @since 7.7
    */
   EXTERNAL_TASK_SUCCESS("external-task", "success"),
 
   /**
    * fired when an external task is deleted.
    *
-   * @since 7.7
    */
   EXTERNAL_TASK_DELETE("external-task", "delete"),
 
@@ -196,7 +181,6 @@ public enum HistoryEventTypes implements HistoryEventType {
   /**
    * fired when used operation log is created.
    *
-   * @since 7.10, 7.9.1, 7.8.7
    */
   USER_OPERATION_LOG("user-operation-log", "create");
 

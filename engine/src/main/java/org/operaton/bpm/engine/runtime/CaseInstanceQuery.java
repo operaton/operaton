@@ -69,7 +69,6 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
   /**
    * Selects the case instances which belong to the given deployment id.
    *
-   * @since 7.4
    */
   CaseInstanceQuery deploymentId(String deploymentId);
 
@@ -77,7 +76,6 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * Select the case instances which are a sub case instance of the given
    * super process instance.
    *
-   * @since 7.3
    */
   CaseInstanceQuery superProcessInstanceId(String superProcessInstanceId);
 
@@ -86,7 +84,6 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * process instance. Note that there will always be at most <b>one</b>
    * such case instance that can be the result of this query.
    *
-   * @since 7.3
    */
   CaseInstanceQuery subProcessInstanceId(String subProcessInstanceId);
 
@@ -94,7 +91,6 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * Select the case instances which are a sub case instance of the given
    * super case instance.
    *
-   * @since 7.3
    */
   CaseInstanceQuery superCaseInstanceId(String superCaseInstanceId);
 
@@ -103,7 +99,6 @@ public interface CaseInstanceQuery extends Query<CaseInstanceQuery, CaseInstance
    * case instance. Note that there will always be at most <b>one</b>
    * such process instance that can be the result of this query.
    *
-   * @since 7.3
    */
   CaseInstanceQuery subCaseInstanceId(String subCaseInstanceId);
 

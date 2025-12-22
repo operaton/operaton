@@ -247,7 +247,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   /**
    * Contains observers which are observe the execution.
    * 
-   * @since 7.6
    */
   protected transient List<ExecutionObserver> executionObservers = new ArrayList<>();
 

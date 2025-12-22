@@ -28,7 +28,6 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
  * See: {@link ModelInstance#validate(java.util.Collection)}.
  *
  * @author Daniel Meyer
- * @since 7.6
  */
 public interface ValidationResults {
 

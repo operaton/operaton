@@ -58,7 +58,7 @@ public class ResolveIncidentCmd implements Command<Void> {
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(incident.getExecutionId());
 
     EnsureUtil.ensureNotNull(BadUserRequestException.class,
-        "Cannot find an execution for an incident with id '%s'".formatted(incidentId), "execution", execution);
+        "Cannot find an execution for an incident with id '" + incidentId + "'", "execution", execution);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);

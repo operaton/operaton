@@ -56,7 +56,7 @@ public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellatio
 
     ActivityInstance instanceToCancel = findActivityInstance(instance, activityInstanceId);
     EnsureUtil.ensureNotNull(NotValidException.class,
-        describeFailure("Activity instance '%s' does not exist".formatted(activityInstanceId)),
+        describeFailure("Activity instance '" + activityInstanceId + "' does not exist"),
         "activityInstance",
         instanceToCancel);
     return getScopeExecutionForActivityInstance(processInstance, mapping, instanceToCancel);
@@ -64,7 +64,7 @@ public class ActivityInstanceCancellationCmd extends AbstractInstanceCancellatio
 
   @Override
   protected String describe() {
-    return "Cancel activity instance '%s'".formatted(activityInstanceId);
+    return "Cancel activity instance '" + activityInstanceId + "'";
   }
 
 

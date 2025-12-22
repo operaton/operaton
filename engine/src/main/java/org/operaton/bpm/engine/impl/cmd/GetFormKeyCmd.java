@@ -59,7 +59,7 @@ public class GetFormKeyCmd implements Command<String> {
 
   protected void setProcessDefinitionId(String processDefinitionId) {
     if (processDefinitionId == null || processDefinitionId.isEmpty()) {
-      throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
+      throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
     }
     this.processDefinitionId = processDefinitionId;
   }

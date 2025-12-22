@@ -142,7 +142,7 @@ public class StartProcessInstanceAtActivitiesCmd implements Command<ProcessInsta
       CoreModelElement targetElement = instantiationInstruction.getTargetElement(processDefinition);
 
       ensureNotNull(NotValidException.class,
-          "Element '%s' does not exist in process %s".formatted(instantiationInstruction.getTargetElementId(), processDefinition.getId()),
+          "Element '" + instantiationInstruction.getTargetElementId() + "' does not exist in process " + processDefinition.getId(),
           "targetElement",
           targetElement);
 

@@ -200,10 +200,10 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
         }
         else {
           if (sourceActivity == null) {
-            instructionReport.addFailure("Source activity '%s' does not exist".formatted(sourceActivityId));
+            instructionReport.addFailure("Source activity '" + sourceActivityId + "' does not exist");
           }
           if (targetActivity == null) {
-            instructionReport.addFailure("Target activity '%s' does not exist".formatted(targetActivityId));
+            instructionReport.addFailure("Target activity '" + targetActivityId + "' does not exist");
           }
         }
       }

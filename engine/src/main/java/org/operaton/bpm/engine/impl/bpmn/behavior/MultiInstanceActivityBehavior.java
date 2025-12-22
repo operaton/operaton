@@ -199,7 +199,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
 
   protected Integer getLoopVariable(ActivityExecution execution, String variableName) {
     IntegerValue value = execution.getVariableLocalTyped(variableName);
-    ensureNotNull("The variable '%s' could not be found in execution with id".formatted(variableName, execution.getId()), "value", value);
+    ensureNotNull("The variable '%s' could not be found in execution with id '%s'".formatted(variableName, execution.getId()), "value", value);
     return value.getValue();
   }
 

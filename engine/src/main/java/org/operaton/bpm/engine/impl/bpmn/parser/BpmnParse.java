@@ -2612,7 +2612,7 @@ public class BpmnParse extends Parse {
 
       if (("wait".equals(fieldName) || "redirectError".equals(fieldName) || "cleanEnv".equals(fieldName)) && !TRUE.equalsIgnoreCase(fieldValue)
           && !FALSE.equalsIgnoreCase(fieldValue)) {
-        addError("undefined value for shell %s parameter :%s or one of child elements string|expression".formatted(fieldName, fieldValue), serviceTaskElement);
+        addError("undefined value for shell %s parameter :%s".formatted(fieldName, fieldValue), serviceTaskElement);
       }
 
     }
@@ -2654,7 +2654,7 @@ public class BpmnParse extends Parse {
     }
 
     if (fieldDeclaration == null) {
-      addError("One of the following is mandatory on a field declaration: one of attributes stringValue|expression ",
+      addError("One of the following is mandatory on a field declaration: one of attributes stringValue|expression or one of child elements string|expression",
           serviceTaskElement);
     }
     return fieldDeclaration;
@@ -4329,8 +4329,8 @@ public class BpmnParse extends Parse {
         String linkName = eventLinkSources.get(destinationRef);
         destinationRef = eventLinkTargets.get(linkName);
         if (destinationRef == null) {
-          addError("sequence flow points to link event source with name '%s' but no event target with that name exists. ".formatted(linkName)
-              + "Most probably your link events are not configured correctly.", sequenceFlowElement);
+          addError("sequence flow points to link event source with name '%s' but no event target with that name exists. Most probably your link events are not configured correctly."
+              .formatted(linkName), sequenceFlowElement);
           // we cannot do anything useful now
           return;
         }
@@ -4347,15 +4347,15 @@ public class BpmnParse extends Parse {
 
       if ((sourceActivity == null && compensationHandlers.containsKey(sourceRef))
           || (sourceActivity != null && sourceActivity.isCompensationHandler())) {
-        addError("Invalid outgoing sequence flow of compensation activity '%s'. ".formatted(sourceRef)
-            + "A compensation activity should not have an incoming or outgoing sequence flow.",
+        addError("Invalid outgoing sequence flow of compensation activity '%s'. A compensation activity should not have an incoming or outgoing sequence flow."
+                .formatted(sourceRef),
             sequenceFlowElement,
             sourceRef,
             id);
       } else if ((destinationActivity == null && compensationHandlers.containsKey(destinationRef))
           || (destinationActivity != null && destinationActivity.isCompensationHandler())) {
-        addError("Invalid incoming sequence flow of compensation activity '%s'. ".formatted(destinationRef)
-            +"A compensation activity should not have an incoming or outgoing sequence flow.",
+        addError("Invalid incoming sequence flow of compensation activity '%s'. A compensation activity should not have an incoming or outgoing sequence flow."
+            .formatted(destinationRef),
             sequenceFlowElement,
             destinationRef,
             id);

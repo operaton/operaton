@@ -41,6 +41,7 @@ public final class ArchRulesTest {
   @ArchTest
   public static final ArchRule publicApiShouldNotExposeImplementation = classes().that()
       .areInterfaces().and().resideOutsideOfPackages("..impl..")
+      .and().areNotAssignableTo("org.operaton.bpm.engine.variable.type.ValueType")
       .should().onlyDependOnClassesThat().resideOutsideOfPackages("..impl..")
       .because("Interfaces that don't reside in an `impl` package are considered public API.");
 

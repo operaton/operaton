@@ -12,11 +12,22 @@ permissions:
   pull-requests: write
   issues: write
 
+env:
+  # Whitelist of GitHub usernames who have already contributed to the repository
+  # These users will not receive first-time contributor greetings
+  CONTRIBUTOR_WHITELIST: 'kthoms'
+
 jobs:
   greet-first-time-pr:
     name: Greet First-Time PR Contributors
     runs-on: ubuntu-slim
-    if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
+    # Only run for PRs from forks (different repository) and not from operaton/operaton
+    # Skip if the PR author is in the contributor whitelist
+    if: |
+      github.event_name == 'pull_request_target' && 
+      github.event.action == 'opened' && 
+      github.event.pull_request.head.repo.full_name != github.repository &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -64,14 +75,18 @@ jobs:
                 issue_number: context.issue.number,
                 body: prMessage
               });
-            }else if (alreadyConfirmed) {
+            } else if (alreadyConfirmed) {
               console.log("Contributor already confirmed license + CoC. Skipping greeting.");
             }
 
   greet-first-time-issue:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+    # Skip if the issue author is in the contributor whitelist
+    if: |
+      github.event_name == 'issues' && 
+      github.event.action == 'opened' &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -118,7 +133,11 @@ jobs:
   greet-first-time-comment:
     name: Greet First-Time Issue Commenters
     runs-on: ubuntu-slim
-    if: github.event_name == 'issue_comment' && github.event.action == 'created'
+    # Skip if the commenter is in the contributor whitelist
+    if: |
+      github.event_name == 'issue_comment' && 
+      github.event.action == 'created' &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
       - uses: actions/checkout@v6
       - uses: actions/github-script@v8

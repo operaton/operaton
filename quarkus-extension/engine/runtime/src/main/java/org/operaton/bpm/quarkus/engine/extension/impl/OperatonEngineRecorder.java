@@ -16,22 +16,20 @@
  */
 package org.operaton.bpm.quarkus.engine.extension.impl;
 
-import io.agroal.api.AgroalDataSource;
-import io.quarkus.agroal.DataSource;
-import io.quarkus.agroal.runtime.AgroalDataSourceUtil;
-import io.quarkus.agroal.runtime.DataSources;
-import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.inject.spi.BeanManager;
 
+import io.agroal.api.AgroalDataSource;
+import io.quarkus.agroal.runtime.AgroalDataSourceUtil;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.ShutdownContext;
 import io.quarkus.runtime.annotations.Recorder;
 import io.smallrye.context.SmallRyeManagedExecutor;
-import java.util.Optional;
 import org.eclipse.microprofile.context.ManagedExecutor;
 
 import org.operaton.bpm.container.RuntimeContainerDelegate;

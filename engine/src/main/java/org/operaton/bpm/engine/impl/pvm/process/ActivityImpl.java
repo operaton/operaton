@@ -74,7 +74,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
 
     if (transitionId!=null) {
       if (namedOutgoingTransitions.containsKey(transitionId)) {
-        throw new PvmException("activity '%s has duplicate transition '%s'".formatted(id, transitionId));
+        throw new PvmException("activity '%s' has duplicate transition '%s'".formatted(id, transitionId));
       }
       namedOutgoingTransitions.put(transitionId, transition);
     }

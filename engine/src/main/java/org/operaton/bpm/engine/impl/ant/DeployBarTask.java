@@ -134,7 +134,7 @@ public class DeployBarTask extends Task {
           .addZipInputStream(new ZipInputStream(inputStream))
           .deploy();
     } catch (Exception e) {
-      throw new BuildException("couldn't deploy bar %s: ".formatted(path) + e.getMessage(), e);
+      throw new BuildException("couldn't deploy bar %s: %s".formatted(path, e.getMessage()), e);
     }
   }
 

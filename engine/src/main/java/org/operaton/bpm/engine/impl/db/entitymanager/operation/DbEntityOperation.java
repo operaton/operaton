@@ -63,7 +63,7 @@ public class DbEntityOperation extends DbOperation {
 
   @Override
   public String toString() {
-    return operationType + "%s %s[%s]".formatted(operationType, ClassNameUtil.getClassNameWithoutPackage(entity), entity.getId());
+    return "%s %s[%s]".formatted(operationType, ClassNameUtil.getClassNameWithoutPackage(entity), entity.getId());
   }
 
   public void setDependency(DbOperation owner) {

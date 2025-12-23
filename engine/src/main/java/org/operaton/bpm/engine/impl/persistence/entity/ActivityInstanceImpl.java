@@ -159,7 +159,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
       writer.append("├── ");
     }
 
-    writer.append("transition to/from %s:".formatted(transition.getActivityId()) + transition.getId() + "\n");
+    writer.append("transition to/from %s:%s%n".formatted(transition.getActivityId(), transition.getId()));
   }
 
   @Override

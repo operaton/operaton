@@ -19,7 +19,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.delegate.VariableListener;
 import org.operaton.bpm.engine.impl.variable.listener.DelegateCaseVariableInstanceImpl;
 
@@ -95,10 +97,11 @@ class CmmnActivityTest {
 
     // custom listeners aggregation
     Map<String, List<VariableListener<?>>> customMap = child.getVariableListeners("evt", true);
-    assertThat(customMap).hasSize(3);
-    assertThat(customMap).containsKey("child");
-    assertThat(customMap).containsKey("parent");
-    assertThat(customMap).containsKey("root");
+    assertThat(customMap)
+            .hasSize(3)
+            .containsKey("child")
+            .containsKey("parent")
+            .containsKey("root");
     assertThat(customMap.get("child")).containsExactly(childCustomListener);
     assertThat(customMap.get("parent")).containsExactly(parentCustomListener);
     assertThat(customMap.get("root")).containsExactly(rootListener);

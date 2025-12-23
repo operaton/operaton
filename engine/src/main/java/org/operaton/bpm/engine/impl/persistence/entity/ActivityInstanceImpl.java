@@ -136,7 +136,7 @@ public class ActivityInstanceImpl extends ProcessElementInstanceImpl implements 
       writer.append("├── ");
     }
 
-    writer.append(getActivityId()+"=>%s\n".formatted(getId()));
+    writer.append(getActivityId()+"=>%s%n".formatted(getId()));
 
     for (int i = 0; i < childTransitionInstances.length; i++) {
       TransitionInstance transitionInstance = childTransitionInstances[i];

@@ -87,7 +87,7 @@ public abstract class ExecutableScript {
     if (activityId == null) {
       return "";
     } else {
-      return " while executing activity '%s' %s".formatted(activityId, definitionIdMessage);
+      return " while executing activity '%s'%s".formatted(activityId, definitionIdMessage);
     }
   }
 

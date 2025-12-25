@@ -60,7 +60,7 @@ public class CompiledExecutableScript extends ExecutableScript {
         throw bpmnError;
       }
       String activityIdMessage = getActivityIdExceptionMessage(variableScope);
-      throw new ScriptEvaluationException("Unable to evaluate script%s: %s".formatted(activityIdMessage, e.getMessage()), e);
+      throw new ScriptEvaluationException("Unable to evaluate script '%s': %s".formatted(activityIdMessage, e.getMessage()), e);
     }
   }
 

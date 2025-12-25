@@ -62,7 +62,7 @@ jobs:
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: ${{ github.event.inputs.java_version }}
+          java-version: ${{ fromJson(format('["{0}"]', github.event.inputs.java_version))[0] }}
 
       - name: Run Unit Tests
         id: maven-unit-tests

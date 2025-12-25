@@ -107,7 +107,7 @@ public class AuthorizationResourceImpl extends AbstractAuthorizedRestResource im
       .singleResult();
 
     if (dbAuthorization == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Authorization with id " + resourceId + " does not exist.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Authorization with id %s does not exist.".formatted(resourceId));
 
     } else {
       return dbAuthorization;

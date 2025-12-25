@@ -44,7 +44,7 @@ public class BatchResourceImpl implements BatchResource {
       .singleResult();
 
     if (batch == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Batch with id '" + batchId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Batch with id '%s' does not exist".formatted(batchId));
     }
 
     return BatchDto.fromBatch(batch);

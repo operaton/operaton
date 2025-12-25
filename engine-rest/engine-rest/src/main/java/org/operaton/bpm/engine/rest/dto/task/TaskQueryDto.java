@@ -1894,7 +1894,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
       return SORT_BY_CASE_EXECUTION_VARIABLE;
     }
     else {
-      throw new RestException("Unknown relation condition for task query  with query property " + property + " and comparison property " + comparisonProperty);
+      throw new RestException("Unknown relation condition for task query with query property %s and comparison property %s".formatted(property, comparisonProperty));
     }
   }
 

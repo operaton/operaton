@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:3b03554f-7693-4e74-b37f-8c2b459bb23e",
+  "serialNumber": "urn:uuid:3f409d32-59de-4544-a042-9c082718b6a2",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-25T08:31:32Z",
+    "timestamp": "2025-12-25T08:43:04Z",
     "tools": {
       "components": [
         {
@@ -33748,7 +33748,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e576acf3-5df7-462c-964d-8af8d27546f2",
+      "bom-ref": "d7b3170a-a8bc-4535-a94d-59f6fa0d3325",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37496,7 +37496,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7fd56658-2c86-4b44-8ec2-227741bdf6ba",
+      "bom-ref": "ec4db587-0c46-4a60-aab3-8feecc97ba03",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37557,61 +37557,7 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
-        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
-        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar"
       ]
     },
     {
@@ -37647,7 +37593,6 @@
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
@@ -37668,17 +37613,37 @@
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
+    },
+    {
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
     {
@@ -37686,8 +37651,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
     {
@@ -37705,7 +37669,6 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar"
       ]
     },
@@ -37718,14 +37681,12 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@1.1.0-SNAPSHOT?type=jar",
@@ -37737,7 +37698,6 @@
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -37748,7 +37708,6 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -37757,7 +37716,6 @@
       "dependsOn": [
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
@@ -37814,8 +37772,14 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
     {
@@ -37874,8 +37838,7 @@
         "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.3?type=jar",
         "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.3?type=jar",
         "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.3?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.3?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.3?type=jar"
       ]
     },
     {
@@ -37991,9 +37954,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar"
       ]
     },
@@ -38067,6 +38028,30 @@
     {
       "ref": "pkg:maven/com.google.errorprone/error_prone_annotations@2.41.0?type=jar",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+        "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
+      ]
     },
     {
       "ref": "pkg:maven/org.apache.ant/ant@1.10.15?type=jar",
@@ -39432,7 +39417,6 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-spring@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/jakarta.validation/jakarta.validation-api@3.0.2?type=jar",
         "pkg:maven/org.springframework/spring-context@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-jdbc@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-tx@6.2.15?type=jar",
@@ -39809,7 +39793,6 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.20.1?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.20.1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@1.1.0-SNAPSHOT?type=jar"
       ]
     },
@@ -41483,13 +41466,7 @@
       "dependsOn": []
     },
     {
-      "ref": "7fd56658-2c86-4b44-8ec2-227741bdf6ba",
-      "dependsOn": [
-        "e576acf3-5df7-462c-964d-8af8d27546f2"
-      ]
-    },
-    {
-      "ref": "e576acf3-5df7-462c-964d-8af8d27546f2",
+      "ref": "d7b3170a-a8bc-4535-a94d-59f6fa0d3325",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
@@ -41534,6 +41511,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.2.3"
+      ]
+    },
+    {
+      "ref": "ec4db587-0c46-4a60-aab3-8feecc97ba03",
+      "dependsOn": [
+        "d7b3170a-a8bc-4535-a94d-59f6fa0d3325"
       ]
     },
     {

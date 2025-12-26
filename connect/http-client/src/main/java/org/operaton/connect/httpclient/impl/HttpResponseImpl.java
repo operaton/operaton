@@ -70,7 +70,7 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
 
     if (httpResponse.getEntity() != null) {
       try {
-        String response = IoUtil.inputStreamAsString(httpResponse.getEntity().getContent());
+        String response = new String(httpResponse.getEntity().getContent().readAllBytes());
         responseParameters.put(PARAM_NAME_RESPONSE, response);
       } catch (IOException e) {
         throw LOG.unableToReadResponse(e);

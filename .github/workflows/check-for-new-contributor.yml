@@ -15,7 +15,7 @@ permissions:
 jobs:
   generate-whitelist:
     name: Generate Contributor Whitelist
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     outputs:
       whitelist: ${{ steps.generate-whitelist.outputs.whitelist }}
     steps:

@@ -13,10 +13,38 @@ permissions:
   issues: write
 
 jobs:
+  generate-whitelist:
+    name: Generate Contributor Whitelist
+    runs-on: ubuntu-latest
+    outputs:
+      whitelist: ${{ steps.generate-whitelist.outputs.whitelist }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Ensure full history for `git log`
+      - name: Generate contributor whitelist
+        id: generate-whitelist
+        run: |
+          CONTRIBUTORS=$(git log --since="2024-11-01" --format="%ae" \
+            | sort -u \
+            | tr '\n' ',' \
+            | sed 's/,$//')
+          echo "whitelist=$CONTRIBUTORS" >> "$GITHUB_OUTPUT"
   greet-first-time-pr:
     name: Greet First-Time PR Contributors
     runs-on: ubuntu-slim
-    if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
+    needs: generate-whitelist # Ensure whitelist is generated first
+    env:
+      CONTRIBUTOR_WHITELIST: ${{ needs.generate-whitelist.outputs.whitelist }}
+    if: | 
+      github.event_name == 'pull_request_target' &&
+      github.event.action == 'opened' &&
+      github.event.pull_request.head.repo.fork &&
+      !contains(
+        format(',{0},', env.CONTRIBUTOR_WHITELIST),
+        format(',{0},', github.actor)
+      )
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -72,7 +100,16 @@ jobs:
   greet-first-time-issue:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+    needs: generate-whitelist # Ensure whitelist is generated first
+    env:
+      CONTRIBUTOR_WHITELIST: ${{ needs.generate-whitelist.outputs.whitelist }}
+    if: |
+      github.event_name == 'issues' &&
+      github.event.action == 'opened' &&
+      !contains(
+        format(',{0},', env.CONTRIBUTOR_WHITELIST),
+        format(',{0},', github.actor)
+      )
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -119,7 +156,16 @@ jobs:
   greet-first-time-comment:
     name: Greet First-Time Issue Commenters
     runs-on: ubuntu-slim
-    if: github.event_name == 'issue_comment' && github.event.action == 'created'
+    needs: generate-whitelist # Ensure whitelist is generated first
+    env:
+      CONTRIBUTOR_WHITELIST: ${{ needs.generate-whitelist.outputs.whitelist }}
+    if: | 
+      github.event_name == 'issue_comment' && 
+      github.event.action == 'created' &&
+        !contains(
+          format(',{0},', env.CONTRIBUTOR_WHITELIST),
+          format(',{0},', github.actor)
+        )
     steps:
       - uses: actions/checkout@v6
       - uses: actions/github-script@v8

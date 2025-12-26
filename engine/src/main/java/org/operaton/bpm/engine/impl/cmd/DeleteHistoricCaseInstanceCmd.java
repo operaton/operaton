@@ -51,13 +51,13 @@ public class DeleteHistoricCaseInstanceCmd implements Command<Object>, Serializa
       .getHistoricCaseInstanceManager()
       .findHistoricCaseInstance(caseInstanceId);
 
-    ensureNotNull("No historic case instance found with id: " + caseInstanceId, "instance", instance);
+    ensureNotNull("No historic case instance found with id: %s".formatted(caseInstanceId), "instance", instance);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricCaseInstance(instance);
     }
 
-    ensureNotNull("Case instance is still running, cannot delete historic case instance: " + caseInstanceId, "instance.getCloseTime()", instance.getCloseTime());
+    ensureNotNull("Case instance is still running, cannot delete historic case instance: %s".formatted(caseInstanceId), "instance.getCloseTime()", instance.getCloseTime());
 
     commandContext.getOperationLogManager().logCaseInstanceOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE_HISTORY,
         caseInstanceId,

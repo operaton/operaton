@@ -108,7 +108,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
         return compiledScript;
 
       } catch (ScriptException e) {
-        throw new ScriptCompilationException("Unable to compile script: " + e.getMessage(), e);
+        throw new ScriptCompilationException("Unable to compile script: %s".formatted(e.getMessage()), e);
 
       }
 

@@ -49,7 +49,7 @@ public class DeleteHistoricDecisionInstanceByInstanceIdCmd implements Command<Ob
     HistoricDecisionInstance historicDecisionInstance = commandContext
         .getHistoricDecisionInstanceManager()
         .findHistoricDecisionInstance(historicDecisionInstanceId);
-    ensureNotNull("No historic decision instance found with id: " + historicDecisionInstanceId,
+    ensureNotNull("No historic decision instance found with id: %s".formatted(historicDecisionInstanceId),
         "historicDecisionInstance", historicDecisionInstance);
     writeUserOperationLog(commandContext, historicDecisionInstance);
 

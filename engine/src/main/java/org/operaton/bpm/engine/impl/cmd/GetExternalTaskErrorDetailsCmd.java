@@ -47,7 +47,7 @@ public class GetExternalTaskErrorDetailsCmd implements Command<String>, Serializ
         .getExternalTaskManager()
         .findExternalTaskById(externalTaskId);
 
-    ensureNotNull("No external task found with id " + externalTaskId, "externalTask", externalTask);
+    ensureNotNull("No external task found with id %s".formatted(externalTaskId), "externalTask", externalTask);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessInstance(externalTask.getProcessInstanceId());

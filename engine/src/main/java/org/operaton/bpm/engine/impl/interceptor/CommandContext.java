@@ -239,7 +239,7 @@ public class CommandContext {
     Session session = sessions.get(sessionClass);
     if (session == null) {
       SessionFactory sessionFactory = sessionFactories.get(sessionClass);
-      ensureNotNull("no session factory configured for " + sessionClass.getName(), "sessionFactory", sessionFactory);
+      ensureNotNull("no session factory configured for %s".formatted(sessionClass.getName()), "sessionFactory", sessionFactory);
       session = sessionFactory.openSession();
       sessions.put(sessionClass, session);
       sessionList.add(0, session);

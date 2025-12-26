@@ -51,7 +51,7 @@ public class UndeployProcessArchivesStep extends DeploymentOperationStep {
     final AbstractProcessApplication processApplication = operationContext.getAttachment(Attachments.PROCESS_APPLICATION);
     final JmxManagedProcessApplication deployedProcessApplication = serviceContainer.getService(ServiceTypes.PROCESS_APPLICATION, processApplication.getName());
 
-    ensureNotNull("Cannot find process application with name " + processApplication.getName(), "deployedProcessApplication", deployedProcessApplication);
+    ensureNotNull("Cannot find process application with name %s".formatted(processApplication.getName()), "deployedProcessApplication", deployedProcessApplication);
 
     Map<String, DeployedProcessArchive> deploymentMap = deployedProcessApplication.getProcessArchiveDeploymentMap();
     if (deploymentMap != null) {

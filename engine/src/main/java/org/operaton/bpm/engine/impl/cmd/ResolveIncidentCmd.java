@@ -51,7 +51,7 @@ public class ResolveIncidentCmd implements Command<Void> {
         "incident", incident);
 
     if ("failedJob".equals(incident.getIncidentType()) || "failedExternalTask".equals(incident.getIncidentType())) {
-      throw new BadUserRequestException("Cannot resolve an incident of type " + incident.getIncidentType());
+      throw new BadUserRequestException("Cannot resolve an incident of type %s".formatted(incident.getIncidentType()));
     }
 
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "", "executionId", incident.getExecutionId());

@@ -73,7 +73,7 @@ public class BooleanFormType extends SimpleFormFieldType {
             || boolean.class.isAssignableFrom(modelValue.getClass())) {
       return modelValue.toString();
     }
-    throw new ProcessEngineException("Model value is not of type boolean, but of type " + modelValue.getClass().getName());
+    throw new ProcessEngineException("Model value is not of type boolean, but of type %s".formatted(modelValue.getClass().getName()));
   }
 
 }

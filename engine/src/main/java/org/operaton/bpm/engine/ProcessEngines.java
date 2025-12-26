@@ -236,7 +236,7 @@ public final class ProcessEngines {
       return processEngineConfiguration.buildProcessEngine();
 
     } catch (IOException e) {
-      throw new ProcessEngineException("couldn't open resource stream: " + e.getMessage(), e);
+      throw new ProcessEngineException("couldn't open resource stream: %s".formatted(e.getMessage()), e);
     } finally {
       IoUtil.closeSilently(inputStream);
     }
@@ -291,7 +291,7 @@ public final class ProcessEngines {
     try {
       return initProcessEngineFromResource(new URL(resourceUrl));
     } catch (MalformedURLException e) {
-      throw new ProcessEngineException("invalid url: " + resourceUrl, e);
+      throw new ProcessEngineException("invalid url: %s".formatted(resourceUrl), e);
     }
   }
 

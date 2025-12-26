@@ -69,25 +69,25 @@ public abstract class ExecutableScript {
 
     if (variableScope instanceof DelegateExecution delegateExecution) {
       activityId = delegateExecution.getCurrentActivityId();
-      definitionIdMessage = " in the process definition with id '" + delegateExecution.getProcessDefinitionId() + "'";
+      definitionIdMessage = " in the process definition with id '%s'".formatted(delegateExecution.getProcessDefinitionId());
     } else if (variableScope instanceof TaskEntity task) {
       if (task.getExecution() != null) {
         activityId = task.getExecution().getActivityId();
-        definitionIdMessage = " in the process definition with id '" + task.getProcessDefinitionId() + "'";
+        definitionIdMessage = " in the process definition with id '%s'".formatted(task.getProcessDefinitionId());
       }
       if (task.getCaseExecution() != null) {
         activityId = task.getCaseExecution().getActivityId();
-        definitionIdMessage = " in the case definition with id '" + task.getCaseDefinitionId() + "'";
+        definitionIdMessage = " in the case definition with id '%s'".formatted(task.getCaseDefinitionId());
       }
     } else if (variableScope instanceof DelegateCaseExecution execution) {
       activityId = execution.getActivityId();
-      definitionIdMessage = " in the case definition with id '" + execution.getCaseDefinitionId() + "'";
+      definitionIdMessage = " in the case definition with id '%s'".formatted(execution.getCaseDefinitionId());
     }
 
     if (activityId == null) {
       return "";
     } else {
-      return " while executing activity '" + activityId + "'" + definitionIdMessage;
+      return " while executing activity '%s'%s".formatted(activityId, definitionIdMessage);
     }
   }
 

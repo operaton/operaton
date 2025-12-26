@@ -339,7 +339,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
           .build();
     }
 
-    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered start form for process definition with the id " + processDefinitionId + " found.");
+    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered start form for process definition with the id %s found.".formatted(processDefinitionId));
   }
 
   @Override

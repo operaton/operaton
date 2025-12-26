@@ -284,7 +284,7 @@ public class TaskResourceImpl implements TaskResource {
           .build();
     }
 
-    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered form for task with the id " + taskId + " found.");
+    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered form for task with the id %s found.".formatted(taskId));
   }
 
   @Override
@@ -466,7 +466,7 @@ public class TaskResourceImpl implements TaskResource {
 
   protected String getTaskFormMediaType(String taskId) {
     Task task = engine.getTaskService().createTaskQuery().initializeFormKeys().taskId(taskId).singleResult();
-    ensureNotNull("No task found for taskId '" + taskId + "'", "task", task);
+    ensureNotNull("No task found for taskId '%s'".formatted(taskId), "task", task);
     String formKey = task.getFormKey();
     if(formKey != null) {
       return ContentTypeUtil.getFormContentType(formKey);

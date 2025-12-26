@@ -158,8 +158,26 @@ public class LockedExternalTaskDto {
   @Override
   public String toString() {
     return
-        "LockedExternalTaskDto [activityId=%s, activityInstanceId=%s, errorMessage=%s, errorDetails=%s, executionId=%s, id=%s, lockExpirationTime=%s, createTime=%s, processDefinitionId=%s, processDefinitionKey=%s, processDefinitionVersionTag=%s, processInstanceId=%s, retries=%s, suspended=%s, workerId=%s, topicName=%s, tenantId=%s, variables=%s, priority=%d, businessKey=%s]"
-        .formatted(activityId, activityInstanceId, errorMessage, errorDetails, executionId, id, lockExpirationTime, createTime, processDefinitionId, processDefinitionKey, processDefinitionVersionTag, processInstanceId, retries, suspended, workerId, topicName, tenantId, variables, priority, businessKey);
+        "LockedExternalTaskDto [activityId=" + activityId
+        + ", activityInstanceId=" + activityInstanceId
+        + ", errorMessage=" + errorMessage
+        + ", errorDetails=" + errorDetails
+        + ", executionId=" + executionId
+        + ", id=" + id
+        + ", lockExpirationTime=" + lockExpirationTime
+        + ", createTime=" + createTime
+        + ", processDefinitionId=" + processDefinitionId
+        + ", processDefinitionKey=" + processDefinitionKey
+        + ", processDefinitionVersionTag=" + processDefinitionVersionTag
+        + ", processInstanceId=" + processInstanceId
+        + ", retries=" + retries
+        + ", suspended=" + suspended
+        + ", workerId=" + workerId
+        + ", topicName=" + topicName
+        + ", tenantId=" + tenantId
+        + ", variables=" + variables
+        + ", priority=" + priority
+        + ", businessKey=" + businessKey + "]";
   }
 
 }

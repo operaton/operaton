@@ -69,7 +69,7 @@ public class ConditionQueryParameterDto {
   public Object resolveValue(ObjectMapper objectMapper) {
     if (value instanceof String && objectMapper != null) {
       try {
-        return objectMapper.readValue("\"%s\"".formatted(value), Date.class);
+        return objectMapper.readValue("\"" + value + "\"", Date.class);
       } catch (Exception e) {
         // ignore the exception
       }

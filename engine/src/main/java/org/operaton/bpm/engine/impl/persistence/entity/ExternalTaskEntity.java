@@ -546,8 +546,17 @@ public class ExternalTaskEntity implements ExternalTask, DbEntity,
 
   @Override
   public String toString() {
-    return "ExternalTaskEntity [id=%s, revision=%d, topicName=%s, workerId=%s, lockExpirationTime=%s, priority=%d, errorMessage=%s, errorDetailsByteArray=%s, errorDetailsByteArrayId=%s, executionId=%s]"
-        .formatted(id, revision, topicName, workerId, lockExpirationTime, priority, errorMessage, errorDetailsByteArray, errorDetailsByteArrayId, executionId);
+    return "ExternalTaskEntity ["
+        + "id=" + id
+        + ", revision=" + revision
+        + ", topicName=" + topicName
+        + ", workerId=" + workerId
+        + ", lockExpirationTime=" + lockExpirationTime
+        + ", priority=" + priority
+        + ", errorMessage=" + errorMessage
+        + ", errorDetailsByteArray=" + errorDetailsByteArray
+        + ", errorDetailsByteArrayId=" + errorDetailsByteArrayId
+        + ", executionId=" + executionId + "]";
   }
 
   public void unlock() {

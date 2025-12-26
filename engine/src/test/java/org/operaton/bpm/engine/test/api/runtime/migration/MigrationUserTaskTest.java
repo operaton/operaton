@@ -440,11 +440,11 @@ class MigrationUserTaskTest {
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
-        .getId();
+      .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
+      .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER)
-        .getId();
+      .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER)
+      .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
       .mapEqualActivities().updateEventTriggers()
@@ -456,9 +456,9 @@ class MigrationUserTaskTest {
     // then
     Date newDueDate = new DateTime(ClockUtil.getCurrentTime()).plusHours(3).toDate();
     testHelper.assertJobMigrated(
-        testHelper.snapshotBeforeMigration.getJobs().get(0),
-        "userTask",
-        newDueDate);
+      testHelper.snapshotBeforeMigration.getJobs().get(0),
+      "userTask",
+      newDueDate);
 
     // and the task listener was able to access the bpmn model instance and set a variable
     testTimeoutListenerCanBeTriggered(processInstance, "userTask");
@@ -673,36 +673,6 @@ class MigrationUserTaskTest {
 
     // then
     assertThat(rule.getManagementService().createJobQuery().count()).isOne();
-  }
-
-  @Test
-  void testTimeoutTaskListenerMigratedAndUpdatedAfterMultipleListenerMigration() {
-    // given
-    ClockTestUtil.setClockToDateWithoutMilliseconds();
-
-    String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
-        .getId();
-    String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER)
-        .getId();
-
-    MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
-      .mapEqualActivities().updateEventTriggers()
-      .build();
-
-    // when
-    ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
-
-    // then
-    Date newDueDate = new DateTime(ClockUtil.getCurrentTime()).plusHours(3).toDate();
-    testHelper.assertJobMigrated(
-        testHelper.snapshotBeforeMigration.getJobs().get(0),
-        "userTask",
-        newDueDate);
-
-    // and the task listener was able to access the bpmn model instance and set a variable
-    testTimeoutListenerCanBeTriggered(processInstance, "userTask");
   }
 
   @Test

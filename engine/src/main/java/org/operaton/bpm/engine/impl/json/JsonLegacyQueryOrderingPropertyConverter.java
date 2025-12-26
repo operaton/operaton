@@ -61,7 +61,7 @@ public class JsonLegacyQueryOrderingPropertyConverter {
       if (clauseParts.length == 0) {
         continue;
       } else if (clauseParts.length > 2) {
-        throw new ProcessEngineException("Invalid order by clause: " + orderByClause);
+        throw new ProcessEngineException("Invalid order by clause: %s".formatted(orderByClause));
       }
 
       String function = null;
@@ -84,7 +84,7 @@ public class JsonLegacyQueryOrderingPropertyConverter {
       } else if (propertyParts.length == 2) {
         property = propertyParts[1];
       } else {
-        throw new ProcessEngineException("Invalid order by property part: " + clauseParts[0]);
+        throw new ProcessEngineException("Invalid order by property part: %s".formatted(clauseParts[0]));
       }
 
       QueryProperty queryProperty = new QueryPropertyImpl(property, function);

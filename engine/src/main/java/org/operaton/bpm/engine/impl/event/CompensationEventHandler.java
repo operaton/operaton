@@ -46,7 +46,7 @@ public class CompensationEventHandler implements EventHandler {
     eventSubscription.delete();
 
     String configuration = eventSubscription.getConfiguration();
-    ensureNotNull("Compensating execution not set for compensate event subscription with id " + eventSubscription.getId(), "configuration", configuration);
+    ensureNotNull("Compensating execution not set for compensate event subscription with id %s".formatted(eventSubscription.getId()), "configuration", configuration);
 
     ExecutionEntity compensatingExecution = commandContext.getExecutionManager().findExecutionById(configuration);
 

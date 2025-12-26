@@ -48,7 +48,7 @@ public class GetJobExceptionStacktraceCmd implements Command<String>, Serializab
       .getJobManager()
       .findJobById(jobId);
 
-    ensureNotNull("No job found with id " + jobId, "job", job);
+    ensureNotNull("No job found with id %s".formatted(jobId), "job", job);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadJob(job);

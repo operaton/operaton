@@ -39,7 +39,7 @@ public class CancelEndEventActivityBehavior extends AbstractBpmnActivityBehavior
   public void execute(ActivityExecution execution) throws Exception {
 
     EnsureUtil
-    .ensureNotNull("Could not find cancel boundary event for cancel end event " + execution.getActivity(), "cancelBoundaryEvent", cancelBoundaryEvent);
+    .ensureNotNull("Could not find cancel boundary event for cancel end event %s".formatted(execution.getActivity()), "cancelBoundaryEvent", cancelBoundaryEvent);
 
     List<EventSubscriptionEntity> compensateEventSubscriptions =
         CompensationUtil.collectCompensateEventSubscriptionsForScope(execution);

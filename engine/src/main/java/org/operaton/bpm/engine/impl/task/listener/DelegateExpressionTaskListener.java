@@ -65,8 +65,7 @@ public class DelegateExpressionTaskListener implements TaskListener {
         throw new ProcessEngineException("Exception while invoking TaskListener: "+e.getMessage(), e);
       }
     } else {
-      throw new ProcessEngineException("Delegate expression " + expression
-              + " did not resolve to an implementation of " + TaskListener.class );
+      throw new ProcessEngineException("Delegate expression %s did not resolve to an implementation of %s".formatted(expression, TaskListener.class));
     }
   }
 

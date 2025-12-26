@@ -172,7 +172,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getCurrentElement());
 
     if (flowScopeExecutions.size() > 1) {
-      throw new ProcessEngineException("Ancestor activity execution is ambiguous for activity " + targetFlowScope);
+      throw new ProcessEngineException("Ancestor activity execution is ambiguous for activity %s".formatted(targetFlowScope));
     }
 
     return flowScopeExecutions.iterator().next();
@@ -355,7 +355,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
           variablesLocal, skipCustomListeners, skipIoMappings);
 
     } else {
-      throw new ProcessEngineException("Cannot instantiate element " + targetElement);
+      throw new ProcessEngineException("Cannot instantiate element %s".formatted(targetElement));
     }
   }
 
@@ -369,7 +369,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
           variablesLocal, skipCustomListeners, skipIoMappings);
 
     } else {
-      throw new ProcessEngineException("Cannot instantiate element " + targetElement);
+      throw new ProcessEngineException("Cannot instantiate element %s".formatted(targetElement));
     }
   }
 

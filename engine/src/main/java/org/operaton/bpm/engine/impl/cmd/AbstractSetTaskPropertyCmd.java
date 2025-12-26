@@ -99,7 +99,7 @@ public abstract class AbstractSetTaskPropertyCmd<T> implements Command<Void>, Se
     TaskManager taskManager = context.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
 
-    ensureNotNull(NotFoundException.class, "Cannot find task with id " + taskId, "task", task);
+    ensureNotNull(NotFoundException.class, "Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkTaskAgainstContext(task, context);
 

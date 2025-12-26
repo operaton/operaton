@@ -396,7 +396,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   }
 
   public List<String> executeIdsList(CommandContext commandContext) {
-    throw new UnsupportedOperationException("executeIdsList not supported by " + getClass().getCanonicalName());
+    throw new UnsupportedOperationException("executeIdsList not supported by %s".formatted(getClass().getCanonicalName()));
   }
 
   public List<ImmutablePair<String, String>> evaluateExpressionsAndExecuteDeploymentIdMappingsList(CommandContext commandContext) {
@@ -406,7 +406,7 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
   }
 
   public List<ImmutablePair<String, String>> executeDeploymentIdMappingsList(CommandContext commandContext) {
-    throw new UnsupportedOperationException("executeDeploymentIdMappingsList not supported by " + getClass().getCanonicalName());
+    throw new UnsupportedOperationException("executeDeploymentIdMappingsList not supported by %s".formatted(getClass().getCanonicalName()));
   }
 
   protected void checkMaxResultsLimit() {

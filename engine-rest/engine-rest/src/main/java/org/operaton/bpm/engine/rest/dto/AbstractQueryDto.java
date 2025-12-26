@@ -71,7 +71,7 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
   @OperatonQueryParam("sortBy")
   public void setSortBy(String sortBy) {
     if (!isValidSortByValue(sortBy)) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, "sortBy parameter has invalid value: " + sortBy);
+      throw new InvalidRequestException(Status.BAD_REQUEST, "sortBy parameter has invalid value: %s".formatted(sortBy));
     }
     this.sortBy = sortBy;
   }
@@ -79,7 +79,7 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
   @OperatonQueryParam("sortOrder")
   public void setSortOrder(String sortOrder) {
     if (!VALID_SORT_ORDER_VALUES.contains(sortOrder)) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, "sortOrder parameter has invalid value: " + sortOrder);
+      throw new InvalidRequestException(Status.BAD_REQUEST, "sortOrder parameter has invalid value: %s".formatted(sortOrder));
     }
     this.sortOrder = sortOrder;
   }
@@ -158,7 +158,7 @@ public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractS
       return SORT_ORDER_DESC_VALUE;
     }
     else {
-      throw new RestException("Unknown query sorting direction " + direction);
+      throw new RestException("Unknown query sorting direction %s".formatted(direction));
     }
   }
 

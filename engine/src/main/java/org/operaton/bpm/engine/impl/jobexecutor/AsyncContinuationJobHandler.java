@@ -67,7 +67,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     LegacyBehavior.repairMultiInstanceAsyncJob(execution);
 
     PvmAtomicOperation atomicOperation = findMatchingAtomicOperation(configuration.getAtomicOperation());
-    ensureNotNull("Cannot process job with configuration " + configuration, "atomicOperation", atomicOperation);
+    ensureNotNull("Cannot process job with configuration %s".formatted(configuration), "atomicOperation", atomicOperation);
 
     // reset transition id.
     String transitionId = configuration.getTransitionId();

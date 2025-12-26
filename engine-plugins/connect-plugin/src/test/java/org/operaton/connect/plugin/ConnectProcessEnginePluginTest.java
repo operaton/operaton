@@ -23,6 +23,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
@@ -43,6 +45,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ConnectProcessEnginePluginTest {
+  private static final String CONNECTOR_ID_MISSING = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorIdMissing.bpmn";
+  private static final String CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_INPUT_OUTPUT_MAPPING = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn";
+  private static final String CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_RESOURCE_INPUT_OUTPUT_MAPPING = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn";
+  private static final String CONNECTOR_BPMN_ERROR_THROWN_IN_SCRIPT_RESOURCE_NO_ASYNC_AFTER_JOB_IS_CREATED = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorBpmnErrorThrownInScriptResourceNoAsyncAfterJobIsCreated.bpmn";
 
   @RegisterExtension
   static ProcessEngineExtension engineExtension = ProcessEngineExtension.builder().build();
@@ -77,7 +83,7 @@ class ConnectProcessEnginePluginTest {
   @Test
   void connectorIdMissing() {
     var deployment = repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorIdMissing.bpmn");
+        .addClasspathResource(CONNECTOR_ID_MISSING);
     assertThatThrownBy(deployment::deploy)
       .isInstanceOf(ProcessEngineException.class)
       .isNotInstanceOf(BpmnParseException.class);
@@ -146,7 +152,7 @@ class ConnectProcessEnginePluginTest {
     assertThat(out.getValue()).isEqualTo(1);
   }
 
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
+  @Deployment(resources = CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_INPUT_OUTPUT_MAPPING)
   @Test
   void connectorBpmnErrorThrownInScriptInputMappingIsHandledByBoundaryEvent() {
     Map<String, Object> variables = new HashMap<>();
@@ -158,12 +164,21 @@ class ConnectProcessEnginePluginTest {
     assertThat(task.getName()).isEqualTo("User Task");
   }
 
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
-  @Test
-  void connectorRuntimeExceptionThrownInScriptInputMappingIsNotHandledByBoundaryEvent() {
+  @ParameterizedTest
+  @CsvSource({
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_INPUT_OUTPUT_MAPPING + ", in",
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_INPUT_OUTPUT_MAPPING + ", out",
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_RESOURCE_INPUT_OUTPUT_MAPPING + ", in",
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_RESOURCE_INPUT_OUTPUT_MAPPING + ", out"
+  })
+  void connectorRuntimeExceptionThrownInInputOutputMappingIsNotHandledByBoundaryEvent (String bpmnResource, String throwInMapping) {
+    // given
+    var deployment = repositoryService.createDeployment().addClasspathResource(bpmnResource).deploy();
+    engineExtension.manageDeployment(deployment);
+
     String exceptionMessage = "myException";
     Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "in");
+    variables.put("throwInMapping", throwInMapping);
     variables.put("exception", new RuntimeException(exceptionMessage));
 
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
@@ -171,82 +186,32 @@ class ConnectProcessEnginePluginTest {
       .hasMessageContaining(exceptionMessage);
   }
 
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
-  @Test
-  void connectorBpmnErrorThrownInScriptOutputMappingIsHandledByBoundaryEvent() {
+  @ParameterizedTest
+  @CsvSource({
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_INPUT_OUTPUT_MAPPING + ", in",
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_INPUT_OUTPUT_MAPPING + ", out",
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_RESOURCE_INPUT_OUTPUT_MAPPING + ", in",
+    CONNECTOR_WITH_THROWN_EXCEPTION_IN_SCRIPT_RESOURCE_INPUT_OUTPUT_MAPPING + ", out"
+  })
+  void connectorBpmnErrorThrownInInputOutputMappingIsHandledByBoundaryEvent (String bpmnResource, String throwInMapping) {
+    // given
+    var deployment = repositoryService.createDeployment().addClasspathResource(bpmnResource).deploy();
+    engineExtension.manageDeployment(deployment);
+
     Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "out");
+    variables.put("throwInMapping", throwInMapping);
     variables.put("exception", new BpmnError("error"));
+
+    // when
     runtimeService.startProcessInstanceByKey("testProcess", variables);
-    //we will only reach the user task if the BPMNError from the script was handled by the boundary event
+
+    // then
+    // we will only reach the user task if the BPMNError from the script was handled by the boundary event
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("User Task");
   }
 
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptInputOutputMapping.bpmn")
-  @Test
-  void connectorRuntimeExceptionThrownInScriptOutputMappingIsNotHandledByBoundaryEvent() {
-    String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "out");
-    variables.put("exception", new RuntimeException(exceptionMessage));
-
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
-      .isInstanceOf(RuntimeException.class)
-      .hasMessageContaining(exceptionMessage);
-  }
-
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
-  @Test
-  void connectorBpmnErrorThrownInScriptResourceInputMappingIsHandledByBoundaryEvent() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "in");
-    variables.put("exception", new BpmnError("error"));
-    runtimeService.startProcessInstanceByKey("testProcess", variables);
-    //we will only reach the user task if the BPMNError from the script was handled by the boundary event
-    Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName()).isEqualTo("User Task");
-  }
-
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
-  @Test
-  void connectorRuntimeExceptionThrownInScriptResourceInputMappingIsNotHandledByBoundaryEvent() {
-    String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "in");
-    variables.put("exception", new RuntimeException(exceptionMessage));
-
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
-      .isInstanceOf(RuntimeException.class)
-      .hasMessageContaining(exceptionMessage);
-  }
-
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
-  @Test
-  void connectorBpmnErrorThrownInScriptResourceOutputMappingIsHandledByBoundaryEvent() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "out");
-    variables.put("exception", new BpmnError("error"));
-    runtimeService.startProcessInstanceByKey("testProcess", variables);
-    //we will only reach the user task if the BPMNError from the script was handled by the boundary event
-    Task task = taskService.createTaskQuery().singleResult();
-    assertThat(task.getName()).isEqualTo("User Task");
-  }
-
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorWithThrownExceptionInScriptResourceInputOutputMapping.bpmn")
-  @Test
-  void connectorRuntimeExceptionThrownInScriptResourceOutputMappingIsNotHandledByBoundaryEvent() {
-    String exceptionMessage = "myException";
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("throwInMapping", "out");
-    variables.put("exception", new RuntimeException(exceptionMessage));
-
-    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
-      .isInstanceOf(RuntimeException.class)
-      .hasMessageContaining(exceptionMessage);
-  }
-
-  @Deployment(resources = "org/operaton/connect/plugin/ConnectProcessEnginePluginTest.connectorBpmnErrorThrownInScriptResourceNoAsyncAfterJobIsCreated.bpmn")
+  @Deployment(resources = CONNECTOR_BPMN_ERROR_THROWN_IN_SCRIPT_RESOURCE_NO_ASYNC_AFTER_JOB_IS_CREATED)
   @Test
   void connectorBpmnErrorThrownInScriptResourceNoAsyncAfterJobIsCreated() {
     // given

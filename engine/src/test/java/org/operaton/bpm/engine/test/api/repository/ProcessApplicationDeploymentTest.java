@@ -25,6 +25,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.application.ProcessApplicationRegistration;
 import org.operaton.bpm.application.impl.EmbeddedProcessApplication;
 import org.operaton.bpm.engine.ManagementService;
@@ -1041,9 +1043,16 @@ class ProcessApplicationDeploymentTest {
     assertThat(deploymentQuery.count()).isOne();
   }
 
-  @Test
-  void testDifferentDeploymentSourceShouldDeployNewVersion() {
+  @ParameterizedTest
+  @CsvSource({
+      "my-source1, my-source2",
+      "null, my-source2",
+      "my-source1, null"
+  })
+  void shouldDeployNewVersion (String firstSource, String secondSource) {
     // given
+    firstSource = "null".equals(firstSource) ? null : firstSource;
+    secondSource = "null".equals(secondSource) ? null : secondSource;
 
     String key = "process";
     String name = "my-deployment";
@@ -1051,118 +1060,32 @@ class ProcessApplicationDeploymentTest {
     BpmnModelInstance model = createEmptyModel(key);
 
     ProcessDefinitionQuery processDefinitionQuery = repositoryService
-        .createProcessDefinitionQuery()
-        .processDefinitionKey(key);
+      .createProcessDefinitionQuery()
+      .processDefinitionKey(key);
 
     DeploymentQuery deploymentQuery = repositoryService
-        .createDeploymentQuery()
-        .deploymentName(name);
+      .createDeploymentQuery()
+      .deploymentName(name);
 
     // when
-
     testRule.deploy(repositoryService
-        .createDeployment(processApplication.getReference())
-        .name(name)
-        .source("my-source1")
-        .addModelInstance("process.bpmn", model)
-        .enableDuplicateFiltering(true));
+      .createDeployment(processApplication.getReference())
+      .name(name)
+      .source(firstSource)
+      .addModelInstance("process.bpmn", model)
+      .enableDuplicateFiltering(true));
 
     assertThat(processDefinitionQuery.count()).isOne();
     assertThat(deploymentQuery.count()).isOne();
 
     testRule.deploy(repositoryService
-        .createDeployment(processApplication.getReference())
-        .name(name)
-        .source("my-source2")
-        .addModelInstance("process.bpmn", model)
-        .enableDuplicateFiltering(true));
+      .createDeployment(processApplication.getReference())
+      .name(name)
+      .source(secondSource)
+      .addModelInstance("process.bpmn", model)
+      .enableDuplicateFiltering(true));
 
     // then
-
-    assertThat(processDefinitionQuery.count()).isEqualTo(2);
-    assertThat(deploymentQuery.count()).isEqualTo(2);
-  }
-
-  @Test
-  void testNullAndNotNullDeploymentSourceShouldDeployNewVersion() {
-    // given
-
-    String key = "process";
-    String name = "my-deployment";
-
-    BpmnModelInstance model = createEmptyModel(key);
-
-    ProcessDefinitionQuery processDefinitionQuery = repositoryService
-        .createProcessDefinitionQuery()
-        .processDefinitionKey(key);
-
-    DeploymentQuery deploymentQuery = repositoryService
-        .createDeploymentQuery()
-        .deploymentName(name);
-
-    // when
-
-    testRule.deploy(repositoryService
-        .createDeployment(processApplication.getReference())
-        .name(name)
-        .source(null)
-        .addModelInstance("process.bpmn", model)
-        .enableDuplicateFiltering(true));
-
-    assertThat(processDefinitionQuery.count()).isOne();
-    assertThat(deploymentQuery.count()).isOne();
-
-    testRule.deploy(repositoryService
-        .createDeployment(processApplication.getReference())
-        .name(name)
-        .source("my-source2")
-        .addModelInstance("process.bpmn", model)
-        .enableDuplicateFiltering(true));
-
-    // then
-
-    assertThat(processDefinitionQuery.count()).isEqualTo(2);
-    assertThat(deploymentQuery.count()).isEqualTo(2);
-  }
-
-  @Test
-  void testNotNullAndNullDeploymentSourceShouldDeployNewVersion() {
-    // given
-
-    String key = "process";
-    String name = "my-deployment";
-
-    BpmnModelInstance model = createEmptyModel(key);
-
-    ProcessDefinitionQuery processDefinitionQuery = repositoryService
-        .createProcessDefinitionQuery()
-        .processDefinitionKey(key);
-
-    DeploymentQuery deploymentQuery = repositoryService
-        .createDeploymentQuery()
-        .deploymentName(name);
-
-    // when
-
-    testRule.deploy(repositoryService
-        .createDeployment(processApplication.getReference())
-        .name(name)
-        .source("my-source1")
-        .addModelInstance("process.bpmn", model)
-        .enableDuplicateFiltering(true));
-
-    assertThat(processDefinitionQuery.count()).isOne();
-    assertThat(deploymentQuery.count()).isOne();
-
-    testRule.deploy(repositoryService
-        .createDeployment(processApplication.getReference())
-        .name(name)
-        .source(null)
-        .addModelInstance("process.bpmn", model)
-        .enableDuplicateFiltering(true));
-
-    // then
-
     assertThat(processDefinitionQuery.count()).isEqualTo(2);
     assertThat(deploymentQuery.count()).isEqualTo(2);
   }

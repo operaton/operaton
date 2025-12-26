@@ -34,33 +34,7 @@ public class OperatonBpmRunLdapProperties extends LdapIdentityProviderPlugin {
 
   @Override
   public String toString() {
-    return "OperatonBpmRunLdapProperty [enabled=" + enabled +
-        ", initialContextFactory=" + initialContextFactory +
-        ", securityAuthentication=" + securityAuthentication +
-        ", contextProperties=" + contextProperties +
-        ", serverUrl=******" + // sensitive for logging
-        ", managerDn=******" + // sensitive for logging
-        ", managerPassword=******" + // sensitive for logging
-        ", baseDn=" + baseDn +
-        ", userDnPattern=" + userDnPattern +
-        ", userSearchBase=" + userSearchBase +
-        ", userSearchFilter=" + userSearchFilter +
-        ", groupSearchBase=" + groupSearchBase +
-        ", groupSearchFilter=" + groupSearchFilter +
-        ", userIdAttribute=" + userIdAttribute +
-        ", userFirstnameAttribute=" + userFirstnameAttribute +
-        ", userLastnameAttribute=" + userLastnameAttribute +
-        ", userEmailAttribute=" + userEmailAttribute +
-        ", userPasswordAttribute=" + userPasswordAttribute +
-        ", groupIdAttribute=" + groupIdAttribute +
-        ", groupNameAttribute=" + groupNameAttribute +
-        ", groupTypeAttribute=" + groupTypeAttribute +
-        ", groupMemberAttribute=" + groupMemberAttribute +
-        ", sortControlSupported=" + sortControlSupported +
-        ", useSsl=" + useSsl +
-        ", usePosixGroups=" + usePosixGroups +
-        ", allowAnonymousLogin=" + allowAnonymousLogin +
-        ", authorizationCheckEnabled=" + authorizationCheckEnabled +
-        ", passwordCheckCatchAuthenticationException=" + passwordCheckCatchAuthenticationException + "]";
+    return "OperatonBpmRunLdapProperty [enabled=%s, initialContextFactory=%s, securityAuthentication=%s, contextProperties=%s, serverUrl=******, managerDn=******, managerPassword=******, baseDn=%s, userDnPattern=%s, userSearchBase=%s, userSearchFilter=%s, groupSearchBase=%s, groupSearchFilter=%s, userIdAttribute=%s, userFirstnameAttribute=%s, userLastnameAttribute=%s, userEmailAttribute=%s, userPasswordAttribute=%s, groupIdAttribute=%s, groupNameAttribute=%s, groupTypeAttribute=%s, groupMemberAttribute=%s, sortControlSupported=%s, useSsl=%s, usePosixGroups=%s, allowAnonymousLogin=%s, authorizationCheckEnabled=%s, passwordCheckCatchAuthenticationException=%s]"
+        .formatted(enabled, initialContextFactory, securityAuthentication, contextProperties, baseDn, userDnPattern, userSearchBase, userSearchFilter, groupSearchBase, groupSearchFilter, userIdAttribute, userFirstnameAttribute, userLastnameAttribute, userEmailAttribute, userPasswordAttribute, groupIdAttribute, groupNameAttribute, groupTypeAttribute, groupMemberAttribute, sortControlSupported, useSsl, usePosixGroups, allowAnonymousLogin, authorizationCheckEnabled, passwordCheckCatchAuthenticationException);
   }
 }

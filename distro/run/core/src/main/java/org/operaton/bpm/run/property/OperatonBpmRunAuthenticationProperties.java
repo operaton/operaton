@@ -49,6 +49,6 @@ public class OperatonBpmRunAuthenticationProperties {
 
   @Override
   public String toString() {
-    return "OperatonBpmRunAuthenticationProperties [enabled=" + enabled + ", authentication=" + authentication + "]";
+    return "OperatonBpmRunAuthenticationProperties [enabled=%s, authentication=%s]".formatted(enabled, authentication);
   }
 }

@@ -323,27 +323,8 @@ public class ExternalTaskImpl implements ExternalTask {
 
   @Override
   public String toString() {
-    return "ExternalTaskImpl ["
-        + "activityId=" + activityId + ", "
-        + "activityInstanceId=" + activityInstanceId + ", "
-        + "businessKey=" + businessKey + ", "
-        + "errorDetails=" + errorDetails + ", "
-        + "errorMessage=" + errorMessage + ", "
-        + "executionId=" + executionId + ", "
-        + "id=" + id + ", "
-        + formatTimeField("lockExpirationTime", lockExpirationTime) + ", "
-        + formatTimeField("createTime", createTime) + ", "
-        + "priority=" + priority + ", "
-        + "processDefinitionId=" + processDefinitionId + ", "
-        + "processDefinitionKey=" + processDefinitionKey + ", "
-        + "processDefinitionVersionTag=" + processDefinitionVersionTag + ", "
-        + "processInstanceId=" + processInstanceId + ", "
-        + "receivedVariableMap=" + receivedVariableMap + ", "
-        + "retries=" + retries + ", "
-        + "tenantId=" + tenantId + ", "
-        + "topicName=" + topicName + ", "
-        + "variables=" + variables + ", "
-        + "workerId=" + workerId + "]";
+    return "ExternalTaskImpl [activityId=%s, activityInstanceId=%s, businessKey=%s, errorDetails=%s, errorMessage=%s, executionId=%s, id=%s, %s, %s, priority=%d, processDefinitionId=%s, processDefinitionKey=%s, processDefinitionVersionTag=%s, processInstanceId=%s, receivedVariableMap=%s, retries=%s, tenantId=%s, topicName=%s, variables=%s, workerId=%s]"
+        .formatted(activityId, activityInstanceId, businessKey, errorDetails, errorMessage, executionId, id, formatTimeField("lockExpirationTime", lockExpirationTime), formatTimeField("createTime", createTime), priority, processDefinitionId, processDefinitionKey, processDefinitionVersionTag, processInstanceId, receivedVariableMap, retries, tenantId, topicName, variables, workerId);
   }
 
   protected String formatTimeField(String timeField, Date time) {

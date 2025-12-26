@@ -109,7 +109,7 @@ public class HtmlFormEngine implements FormEngine {
   protected static final String DATE_ERROR_TYPE = "date";
 
   /* form element selector */
-  protected static final String FORM_ELEMENT_SELECTOR = "this." + GENERATED_FORM_NAME + ".%s";
+  protected static final String FORM_ELEMENT_SELECTOR = "this.%s.%%s".formatted(GENERATED_FORM_NAME);
 
   /* expressions */
   protected static final String INVALID_EXPRESSION = FORM_ELEMENT_SELECTOR + ".$invalid";

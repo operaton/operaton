@@ -53,7 +53,7 @@ public class HalRelationCacheConfiguration {
       this.cacheImplementationClass = (Class<? extends Cache>) cacheImplementationClass;
     }
     else {
-      throw new HalRelationCacheConfigurationException("Cache implementation class " + cacheImplementationClass.getName() + " does not implement the interface " + Cache.class.getName());
+      throw new HalRelationCacheConfigurationException("Cache implementation class %s does not implement the interface %s".formatted(cacheImplementationClass.getName(), Cache.class.getName()));
     }
   }
 
@@ -91,7 +91,7 @@ public class HalRelationCacheConfiguration {
       setCacheImplementationClass(cacheImplClass);
     }
     else {
-      throw new HalRelationCacheConfigurationException("Unable to find the " + CONFIG_CACHE_IMPLEMENTATION + " parameter");
+      throw new HalRelationCacheConfigurationException("Unable to find the %s parameter".formatted(CONFIG_CACHE_IMPLEMENTATION));
     }
   }
 

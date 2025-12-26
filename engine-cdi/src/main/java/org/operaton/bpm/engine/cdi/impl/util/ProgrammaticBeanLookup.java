@@ -47,7 +47,7 @@ public final class ProgrammaticBeanLookup {
     Set<Bean<?>> beans = bm.getBeans(clazz);
     T instance = getContextualReference(bm, beans, clazz);
     if (!optional && instance == null) {
-      throw new IllegalStateException("CDI BeanManager cannot find an instance of requested type '" + clazz.getName() + "'");
+      throw new IllegalStateException("CDI BeanManager cannot find an instance of requested type '%s'".formatted(clazz.getName()));
     }
     return instance;
   }
@@ -66,7 +66,7 @@ public final class ProgrammaticBeanLookup {
     // - calculate the type such that it has the most types in the set of bean types which are assignable from this type.
     Object instance = getContextualReference(bm, beans, Object.class);
     if (!optional && instance == null) {
-      throw new IllegalStateException("CDI BeanManager cannot find an instance of requested type '" + name + "'");
+      throw new IllegalStateException("CDI BeanManager cannot find an instance of requested type '%s'".formatted(name));
     }
     return instance;
   }

@@ -33,8 +33,8 @@ public class FetchExternalTasksExtendedDto extends FetchExternalTasksDto {
 
   @Override
   public String toString() {
-    return "FetchExternalTasksExtendedDto [asyncResponseTimeout=" + asyncResponseTimeout + ", maxTasks=" + maxTasks + ", workerId=" + workerId
-        + ", usePriority=" + usePriority + ", topics=" + topics + "]";
+    return "FetchExternalTasksExtendedDto [asyncResponseTimeout=%s, maxTasks=%s, workerId=%s, usePriority=%s, topics=%s]"
+        .formatted(asyncResponseTimeout, maxTasks, workerId, usePriority, topics);
   }
 
 }

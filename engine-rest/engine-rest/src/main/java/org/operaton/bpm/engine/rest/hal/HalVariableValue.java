@@ -61,7 +61,7 @@ public class HalVariableValue extends HalResource<HalVariableValue> {
       return generateCaseExecutionVariableValue(variableInstance, variableScopeId);
     }
     else {
-      throw new RestException("Variable scope id '" + variableScopeId + "' does not match with variable instance '" + variableInstance + "'");
+      throw new RestException("Variable scope id '%s' does not match with variable instance '%s'".formatted(variableScopeId, variableInstance));
     }
   }
 

@@ -53,7 +53,7 @@ abstract class AbstractVariableMap implements VariableMap {
     } else if (type.isAssignableFrom(object.getClass())) {
       return (T) object;
     } else {
-      throw new ClassCastException("Cannot cast variable named '" + name + "' with value '" + object + "' to type '" + type + "'.");
+      throw new ClassCastException("Cannot cast variable named '%s' with value '%s' to type '%s'.".formatted(name, object, type));
     }
   }
 
@@ -119,7 +119,7 @@ abstract class AbstractVariableMap implements VariableMap {
 
   @Override
   public Object remove(Object key) {
-    throw new UnsupportedOperationException(getClass().getName()+".remove is unsupported. Use " + getClass().getName() + ".put(key, null)");
+    throw new UnsupportedOperationException("%s.remove is unsupported. Use %s.put(key, null)".formatted(getClass().getName(), getClass().getName()));
   }
 
   @Override

@@ -563,11 +563,6 @@ public abstract class JobEntity extends AcquirableJobEntity
         || (retries == 0 && (lockOwner != null || lockExpirationTime != null));
   }
 
-  public void resetLock() {
-    this.lockOwner = null;
-    this.lockExpirationTime = null;
-  }
-
   public String getActivityId() {
     ensureActivityIdInitialized();
     return activityId;
@@ -619,12 +614,15 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
+  public void resetLock() {
+    unlock();
+  }
+
   /**
    *
    * Unlock from current lock owner
    *
    */
-
   public void unlock() {
     this.lockOwner = null;
     this.lockExpirationTime = null;

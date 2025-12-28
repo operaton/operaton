@@ -94,7 +94,7 @@ public class AuthorizationRestServiceImpl extends AbstractAuthorizedRestResource
     boolean isUserAuthorized = false;
 
     String userIdToCheck;
-    List<String> groupIdsToCheck = new ArrayList<>();
+    List<String> groupIdsToCheck;
 
     if(userId != null && !userId.equals(currentUserId)) {
       boolean isCurrentUserAuthorized = authorizationService.isUserAuthorized(currentUserId, currentAuthentication.getGroupIds(), Permissions.READ, Resources.AUTHORIZATION);

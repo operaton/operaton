@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.core.variable.mapping.value;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
@@ -28,9 +29,9 @@ import org.operaton.bpm.engine.delegate.VariableScope;
  */
 public class MapValueProvider implements ParameterValueProvider {
 
-  protected TreeMap<ParameterValueProvider, ParameterValueProvider> providerMap;
+  protected SortedMap<ParameterValueProvider, ParameterValueProvider> providerMap;
 
-  public MapValueProvider(TreeMap<ParameterValueProvider, ParameterValueProvider> providerMap) {
+  public MapValueProvider(SortedMap<ParameterValueProvider, ParameterValueProvider> providerMap) {
     this.providerMap = providerMap;
   }
 
@@ -43,11 +44,11 @@ public class MapValueProvider implements ParameterValueProvider {
     return valueMap;
   }
 
-  public TreeMap<ParameterValueProvider, ParameterValueProvider> getProviderMap() {
+  public SortedMap<ParameterValueProvider, ParameterValueProvider> getProviderMap() {
     return providerMap;
   }
 
-  public void setProviderMap(TreeMap<ParameterValueProvider, ParameterValueProvider> providerMap) {
+  public void setProviderMap(SortedMap<ParameterValueProvider, ParameterValueProvider> providerMap) {
     this.providerMap = providerMap;
   }
 

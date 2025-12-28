@@ -71,6 +71,7 @@ import static org.assertj.core.api.Assertions.within;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings({"java:S4144"})
 class StartTimerEventTest {
 
   protected static final long TWO_HOURS = TimeUnit.HOURS.toMillis(2L);

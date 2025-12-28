@@ -157,9 +157,9 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
       return results.get(0);
     } else if (results.size() > 1) {
       if (processDefinitionVersion != null) {
-        throw LOG.toManyProcessDefinitionsException(results.size(), processDefinitionKey, "version", processDefinitionVersion.toString(), tenantId);
+        throw LOG.tooManyProcessDefinitionsException(results.size(), processDefinitionKey, "version", processDefinitionVersion.toString());
       } else if (processDefinitionVersionTag != null) {
-        throw LOG.toManyProcessDefinitionsException(results.size(), processDefinitionKey, "versionTag", processDefinitionVersionTag, tenantId);
+        throw LOG.tooManyProcessDefinitionsException(results.size(), processDefinitionKey, "versionTag", processDefinitionVersionTag);
       }
     }
     return null;

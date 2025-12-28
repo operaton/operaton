@@ -49,10 +49,6 @@ public class HistoryCleanupJobDeclaration extends JobDeclaration<HistoryCleanupC
   }
 
   @Override
-  protected void postInitialize(HistoryCleanupContext context, EverLivingJobEntity job) {
-  }
-
-  @Override
   public EverLivingJobEntity reconfigure(HistoryCleanupContext context, EverLivingJobEntity job) {
     HistoryCleanupJobHandlerConfiguration configuration = resolveJobHandlerConfiguration(context);
     job.setJobHandlerConfiguration(configuration);

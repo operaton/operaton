@@ -44,7 +44,7 @@ public class OperatonBpmRunLogger extends BaseLogger {
                          pluginClass, e.getMessage(), e));
   }
 
-  public ProcessEngineException pluginPropertyNotFound(String pluginName, String propertyName, Exception e) {
+  public ProcessEngineException pluginPropertyNotFound(String pluginName, Exception e) {
     return new ProcessEngineException(
         exceptionMessage("003",
                          "Please check the configuration options for plugin '{}'. " +

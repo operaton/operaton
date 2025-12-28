@@ -362,10 +362,6 @@ public class CsrfPreventionFilter implements Filter {
     this.randomClass = randomClass;
   }
 
-  @Override
-  public void destroy() {
-  }
-
   /**
    * Determine if the request a non-modifying request. A non-modifying
    * request is one that is either a 'HTTP GET/OPTIONS/HEAD' request, or

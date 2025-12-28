@@ -186,6 +186,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
 
   @Override
   public void updateModifiableFieldsFromEntity(DecisionRequirementsDefinitionEntity updatingDefinition) {
+    // nothing to do
   }
 
   /**

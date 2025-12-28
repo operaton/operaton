@@ -7,9 +7,6 @@ on:
         description: 'Update Slack Invitation URL'
         type: string
 
-permissions:
-  contents: write
-
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
@@ -18,6 +15,8 @@ jobs:
   update-slack-invitation-url:
     if: ${{ github.event.inputs.slack_url}}
     runs-on: ubuntu-slim
+    permissions:
+      contents: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6

@@ -29,10 +29,6 @@ on:
           - '21'
           - '25'
 
-permissions:
-  contents: read
-  checks: write
-
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.database }}"
   cancel-in-progress: true
@@ -41,6 +37,9 @@ jobs:
   unit-tests:
     name: Unit Tests (${{ matrix.database }})
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      checks: write
     strategy:
       fail-fast: false
       matrix:

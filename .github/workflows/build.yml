@@ -66,12 +66,6 @@ on:
         required: true
         default: false
 
-permissions:
-  contents: read
-  checks: write
-  id-token: write
-  actions: write
-
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
@@ -80,6 +74,8 @@ jobs:
   lint-adr:
     name: Lint ADRs
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v6
@@ -96,6 +92,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      checks: write
+      actions: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -195,6 +195,9 @@ jobs:
     name: Publish
     needs: build
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write
     env:
       GH_TOKEN: ${{ github.token }}
     steps:

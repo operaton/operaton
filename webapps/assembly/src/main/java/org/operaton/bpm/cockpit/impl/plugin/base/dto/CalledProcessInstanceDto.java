@@ -27,8 +27,6 @@ public class CalledProcessInstanceDto extends ProcessInstanceDto {
   protected String callActivityInstanceId;
   protected String callActivityId;
 
-  public CalledProcessInstanceDto() {}
-
   @Override
   public String getId() {
     return id;

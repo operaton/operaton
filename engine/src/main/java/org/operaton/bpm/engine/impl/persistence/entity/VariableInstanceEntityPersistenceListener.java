@@ -37,8 +37,4 @@ public class VariableInstanceEntityPersistenceListener implements VariableInstan
     variable.delete();
   }
 
-  @Override
-  public void onUpdate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
-  }
-
 }

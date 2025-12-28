@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 
 
 /**
+ * @deprecated since 1.0, this class is deprecated and will be removed in a future release.
+ * 
  * @author Tom Baeyens
  */
 @Deprecated(since = "1.0")

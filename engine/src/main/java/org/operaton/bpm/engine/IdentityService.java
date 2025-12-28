@@ -476,19 +476,39 @@ public interface IdentityService {
   /** Delete an entry of the generic extensibility key-value pairs associated with a user */
   void deleteUserInfo(String userId, String key);
 
-  /** Store account information for a remote system */
+  /**
+   * Store account information for a remote system
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #setUserInfo(String, String, String)} instead for storing user-related information.
+   */
   @Deprecated(since = "1.0")
   void setUserAccount(String userId, String userPassword, String accountName, String accountUsername, String accountPassword, Map<String, String> accountDetails);
 
-  /** Get account names associated with the given user */
+  /**
+   * Get account names associated with the given user
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #getUserInfoKeys(String)} instead for retrieving user-related information keys.
+   */
   @Deprecated(since = "1.0")
   List<String> getUserAccountNames(String userId);
 
-  /** Get account information associated with a user */
+  /**
+   * Get account information associated with a user
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #getUserInfo(String, String)} instead for retrieving user-related information.
+   */
   @Deprecated(since = "1.0")
   Account getUserAccount(String userId, String userPassword, String accountName);
 
-  /** Delete an entry of the generic extensibility key-value pairs associated with a user */
+  /**
+   * Delete an entry of the generic extensibility key-value pairs associated with a user
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #deleteUserInfo(String, String)} instead for deleting user-related information.
+   */
   @Deprecated(since = "1.0")
   void deleteUserAccount(String userId, String accountName);
 

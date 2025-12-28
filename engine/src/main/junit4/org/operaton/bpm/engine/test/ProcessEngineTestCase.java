@@ -65,6 +65,9 @@ public class ProcessEngineTestCase extends TestCase {
   protected RepositoryService repositoryService;
   protected RuntimeService runtimeService;
   protected TaskService taskService;
+  /**
+   * @deprecated since 1.0, use {@link #historyService} instead. The name has been corrected.
+   */
   @Deprecated(since = "1.0")
   protected HistoryService historicDataService;
   protected HistoryService historyService;

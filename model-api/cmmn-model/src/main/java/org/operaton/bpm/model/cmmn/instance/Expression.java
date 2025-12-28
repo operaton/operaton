@@ -26,9 +26,15 @@ public interface Expression extends CmmnElement {
 
   void setText(String text);
 
+  /**
+   * @deprecated since 1.0, use {@link #getText()} instead for consistency with expression content access.
+   */
   @Deprecated(since = "1.0")
   String getBody();
 
+  /**
+   * @deprecated since 1.0, use {@link #setText(String)} instead for consistency with expression content modification.
+   */
   @Deprecated(since = "1.0")
   void setBody(String body);
 

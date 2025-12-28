@@ -84,7 +84,12 @@ public interface HistoricDetailQuery extends Query<HistoricDetailQuery, Historic
    */
   HistoricDetailQuery variableNameLike(String variableNameLike);
 
-  /** Only select {@link HistoricFormProperty}s. */
+  /**
+   * Only select {@link HistoricFormProperty}s.
+   * 
+   * @deprecated since 1.0, form properties are deprecated. Use {@link #formFields()} instead to query
+   *             for historic form field details.
+   */
   @Deprecated(since = "1.0")
   HistoricDetailQuery formProperties();
 

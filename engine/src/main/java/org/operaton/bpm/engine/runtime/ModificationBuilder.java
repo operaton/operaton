@@ -91,6 +91,10 @@ public interface ModificationBuilder extends InstantiationBuilder<ModificationBu
   /**
    * Execute the modification synchronously.
    *
+   * @deprecated since 1.0, this method is deprecated and scheduled for removal.
+   *             Use {@link #executeAsync()} instead to execute the modification as a batch operation,
+   *             which is more suitable for operations affecting large numbers of instances.
+   *
    * @throws AuthorizationException
    *   if the user has not all of the following permissions
    *   <ul>

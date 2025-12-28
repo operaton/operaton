@@ -1297,7 +1297,7 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
       .statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("message", is(message))
     .when()
-      .post(EXECUTE_MIGRATION_URL);
+      .post(EXECUTE_MIGRATION_ASYNC_URL);
   }
 
   @Test

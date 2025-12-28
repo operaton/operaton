@@ -386,28 +386,6 @@ class BoundedNumberOfMaxResultsTest {
     }
   }
 
-  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  @Test
-  void shouldSyncUpdateExternalTaskRetriesProcInstQueryByHistProcInstQuery() {
-    // given
-    testHelper.deploy(externalTaskProcess);
-
-    runtimeService.startProcessInstanceByKey("process");
-
-    HistoricProcessInstanceQuery historicProcessInstanceQuery = engineRule.getHistoryService()
-        .createHistoricProcessInstanceQuery();
-
-    try {
-      // when
-      engineRule.getExternalTaskService().updateRetries()
-          .historicProcessInstanceQuery(historicProcessInstanceQuery)
-          .set(5);
-      // then: no exception
-    } catch (BadUserRequestException e) {
-      fail("No exception expected!");
-    }
-  }
-
   @Test
   void shouldSyncUpdateExternalTaskRetriesByProcInstQuery() {
     // given

@@ -97,7 +97,7 @@ public class SetJobRetriesCmd implements Command<Void>, Serializable {
       }
 
       if (job.isInInconsistentLockState()) {
-        job.resetLock();
+        job.unlock();
       }
 
       List<PropertyChange> propertyChanges = new ArrayList<>();

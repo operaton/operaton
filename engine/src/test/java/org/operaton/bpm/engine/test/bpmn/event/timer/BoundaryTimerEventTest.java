@@ -43,6 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings({"java:S4144", "java:S5976"})
 class BoundaryTimerEventTest {
 
   @RegisterExtension

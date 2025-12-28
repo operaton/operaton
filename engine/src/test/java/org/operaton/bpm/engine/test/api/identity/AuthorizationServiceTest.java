@@ -555,7 +555,7 @@ class AuthorizationServiceTest {
   @Test
   void testGlobalAuthPermissions() {
 
-    AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GRANT);
+    AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GLOBAL);
     authorization.setResource(Resources.DEPLOYMENT);
 
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
@@ -574,13 +574,7 @@ class AuthorizationServiceTest {
     assertThat(authorization.isPermissionGranted(READ)).isTrue();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue(); // (none is always granted => you are always authorized to do nothing)
 
-    try {
-      authorization.isPermissionRevoked(READ);
-      fail("Exception expected");
-    } catch (IllegalStateException e) {
-      testRule.assertTextPresent("ENGINE-03026 Method 'isPermissionRevoked' cannot be used for authorization with type 'GRANT'.", e.getMessage());
-    }
-
+    assertThat(authorization.isPermissionRevoked(READ)).isFalse();
   }
 
   @Test

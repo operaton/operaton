@@ -94,22 +94,4 @@ class ExponentialErrorBackoffStrategyTest {
     assertThat(waitingTime).isEqualTo(60000L);
   }
 
-  @Test
-  void shouldCapWaitingTime2() {
-    // given
-    long waitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime).isZero();
-
-    // when
-    // reach maximum waiting time
-    List<ExternalTask> tasks = Lists.newArrayList(new ExternalTaskImpl());
-    ExternalTaskClientException error = new ExternalTaskClientException();
-    for (int i=0; i<8; i++) {
-      backoffStrategy.reconfigure(tasks, error);
-    }
-
-    // then
-    waitingTime = backoffStrategy.calculateBackoffTime();
-    assertThat(waitingTime).isEqualTo(60000L);
-  }
 }

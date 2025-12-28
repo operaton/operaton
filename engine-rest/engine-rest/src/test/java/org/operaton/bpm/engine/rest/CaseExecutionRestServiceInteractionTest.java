@@ -2681,10 +2681,10 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
     .expect()
       .statusCode(Status.NO_CONTENT.getStatusCode())
     .when()
-      .post(SINGLE_CASE_EXECUTION_LOCAL_BINARY_VARIABLE_URL);
+      .post(SINGLE_CASE_EXECUTION_BINARY_VARIABLE_URL);
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
-    verify(caseExecutionCommandBuilderMock).setVariableLocal(eq(variableKey),
+    verify(caseExecutionCommandBuilderMock).setVariable(eq(variableKey),
         argThat(EqualsPrimitiveValue.bytesValue(bytes)));
     verify(caseExecutionCommandBuilderMock).execute();
   }

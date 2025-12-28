@@ -284,6 +284,7 @@ class ManagementServiceGetTelemetryDataTest {
     // given default telemetry data and empty telemetry registry
     // and default configuration
 
+    managementService.toggleTelemetry(true);
     TelemetryData initialTelemetryData = managementService.getTelemetryData();
 
     // when fetching telemetry data again

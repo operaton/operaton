@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.cmmn;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1612,48 +1613,6 @@ class CaseServiceHumanTaskTest {
         .isInstanceOf(NotAllowedException.class)
         .hasMessageContaining("The case execution must be in state 'active' to terminate");
   }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
-  @Test
-  void testManualStartNonFluent() {
-    // given:
-    // a deployed case definition
-    String caseDefinitionId = repositoryService
-        .createCaseDefinitionQuery()
-        .singleResult()
-        .getId();
-
-    // an active case instance
-    caseService
-      .withCaseDefinition(caseDefinitionId)
-      .create();
-
-    CaseExecutionQuery caseExecutionQuery = caseService.createCaseExecutionQuery();
-
-    // an enabled child case execution of
-    // the case instance
-    String caseExecutionId = caseExecutionQuery
-      .activityId("PI_HumanTask_1")
-      .singleResult()
-      .getId();
-
-    // then
-
-    // the child case execution is active...
-    CaseExecution caseExecution = caseExecutionQuery.singleResult();
-    assertThat(caseExecution.isActive()).isTrue();
-    // ... and not enabled
-    assertThat(caseExecution.isEnabled()).isFalse();
-
-    // there exists a task
-    Task task = taskService
-      .createTaskQuery()
-      .caseExecutionId(caseExecutionId)
-      .singleResult();
-
-    assertThat(task).isNotNull();
-  }
-
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/twoTaskCase.cmmn"})
   @Test

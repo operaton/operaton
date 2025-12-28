@@ -96,7 +96,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
     }
     else {
       throw new InvalidRequestException(Status.NOT_FOUND,
-        "Deployment resources for deployment id '" + deploymentId + "' do not exist.");
+        "Deployment resources for deployment id '%s' do not exist.".formatted(deploymentId));
     }
   }
 
@@ -110,7 +110,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
     }
 
     throw new InvalidRequestException(Status.NOT_FOUND,
-      "Deployment resource with resource id '" + resourceId + "' for deployment id '" + deploymentId + "' does not exist.");
+      "Deployment resource with resource id '%s' for deployment id '%s' does not exist.".formatted(resourceId, deploymentId));
   }
 
   @Override
@@ -160,7 +160,7 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
     }
     else {
       throw new InvalidRequestException(Status.NOT_FOUND,
-        "Deployment resource '" + resourceId + "' for deployment id '" + deploymentId + "' does not exist.");
+        "Deployment resource '%s' for deployment id '%s' does not exist.".formatted(resourceId, deploymentId));
     }
   }
 }

@@ -196,8 +196,7 @@ public final class JobExecutorWaitUtils {
       waitForCondition(waitForCondition, maxMillisToWait, checkInterval);
     } catch (Exception e) {
       throw new ProcessEngineException(
-        "Time limit of " + maxMillisToWait + " was exceeded (still " + numberOfJobsAvailable(managementService)
-          + " jobs available)", e);
+        "Time limit of %d was exceeded (still %d jobs available)".formatted(maxMillisToWait, numberOfJobsAvailable(managementService)), e);
     } finally {
       if (shutdown) {
         jobExecutor.shutdown();
@@ -241,7 +240,7 @@ public final class JobExecutorWaitUtils {
           .ignoreExceptions() // In case condition throws an exception during polling
           .until(condition);
     } catch (Exception e) {
-      throw new ProcessEngineException("Time limit of " + maxMillisToWait + " was exceeded.");
+      throw new ProcessEngineException("Time limit of %d was exceeded.".formatted(maxMillisToWait));
     }
   }
 

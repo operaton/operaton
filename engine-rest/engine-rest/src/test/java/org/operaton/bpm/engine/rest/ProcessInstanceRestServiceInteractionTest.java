@@ -1480,15 +1480,6 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
   }
 
   @Test
-  void testNoGivenDeleteReason1() {
-    given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID)
-      .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
-      .when().delete(SINGLE_PROCESS_INSTANCE_URL);
-
-    verify(runtimeServiceMock).deleteProcessInstance(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID, null, false, true, false, false);
-  }
-
-  @Test
   void testDeleteProcessInstanceSkipCustomListeners() {
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_INSTANCE_ID).queryParams("skipCustomListeners", true).then().expect()
         .statusCode(Status.NO_CONTENT.getStatusCode()).when().delete(SINGLE_PROCESS_INSTANCE_URL);
@@ -3339,48 +3330,6 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
       .post(PROCESS_INSTANCE_SUSPENDED_ASYNC_URL);
 
     verify(mockUpdateSuspensionStateSelectBuilder).byProcessInstanceQuery(query.toQuery(processEngine));
-    verify(mockUpdateProcessInstancesSuspensionStateBuilder).activateAsync();
-  }
-
-  @Test
-  void testSuspendAsyncWithHistoricProcessInstanceQuery() {
-    Map<String, Object> messageBodyJson = new HashMap<>();
-    List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
-    messageBodyJson.put("processInstanceIds", ids);
-    messageBodyJson.put("suspended", true);
-
-    when(mockUpdateProcessInstancesSuspensionStateBuilder.suspendAsync()).thenReturn(new BatchEntity());
-    given()
-      .contentType(ContentType.JSON)
-      .body(messageBodyJson)
-      .then()
-      .expect()
-      .statusCode(Status.OK.getStatusCode())
-      .when()
-      .post(PROCESS_INSTANCE_SUSPENDED_ASYNC_URL);
-
-    verify(mockUpdateSuspensionStateSelectBuilder).byProcessInstanceIds(ids);
-    verify(mockUpdateProcessInstancesSuspensionStateBuilder).suspendAsync();
-  }
-
-  @Test
-  void testActivateAsyncWithHistoricProcessInstanceQuery() {
-    Map<String, Object> messageBodyJson = new HashMap<>();
-    List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
-    messageBodyJson.put("processInstanceIds", ids);
-    messageBodyJson.put("suspended", false);
-
-    when(mockUpdateProcessInstancesSuspensionStateBuilder.activateAsync()).thenReturn(new BatchEntity());
-    given()
-      .contentType(ContentType.JSON)
-      .body(messageBodyJson)
-      .then()
-      .expect()
-      .statusCode(Status.OK.getStatusCode())
-      .when()
-      .post(PROCESS_INSTANCE_SUSPENDED_ASYNC_URL);
-
-    verify(mockUpdateSuspensionStateSelectBuilder).byProcessInstanceIds(ids);
     verify(mockUpdateProcessInstancesSuspensionStateBuilder).activateAsync();
   }
 

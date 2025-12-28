@@ -51,7 +51,7 @@ public class JobDefinitionResourceImpl implements JobDefinitionResource {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().jobDefinitionId(jobDefinitionId).singleResult();
 
     if (jobDefinition == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Job Definition with id " + jobDefinitionId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Job Definition with id %s does not exist".formatted(jobDefinitionId));
     }
 
     return JobDefinitionDto.fromJobDefinition(jobDefinition);
@@ -98,7 +98,7 @@ public class JobDefinitionResourceImpl implements JobDefinitionResource {
       else {
         if (dto.isIncludeJobs()) {
           throw new InvalidRequestException(Status.BAD_REQUEST,
-              "Cannot reset priority for job definition " + jobDefinitionId + " with includeJobs=true");
+              "Cannot reset priority for job definition %s with includeJobs=true".formatted(jobDefinitionId));
         }
 
         managementService.clearOverridingJobPriorityForJobDefinition(jobDefinitionId);

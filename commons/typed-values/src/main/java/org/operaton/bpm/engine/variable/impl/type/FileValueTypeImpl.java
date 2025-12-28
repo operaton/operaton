@@ -67,7 +67,7 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
       Object mimeType = valueInfo.get(VALUE_INFO_FILE_MIME_TYPE);
 
       if (mimeType == null) {
-        throw new IllegalArgumentException("The provided mime type is null. Set a non-null value info property with key '" + VALUE_INFO_FILE_NAME + "'");
+        throw new IllegalArgumentException("The provided mime type is null. Set a non-null value info property with key '%s'".formatted(VALUE_INFO_FILE_NAME));
       }
 
       builder.mimeType(mimeType.toString());
@@ -76,7 +76,7 @@ public class FileValueTypeImpl extends AbstractValueTypeImpl implements FileValu
       Object encoding = valueInfo.get(VALUE_INFO_FILE_ENCODING);
 
       if (encoding == null) {
-        throw new IllegalArgumentException("The provided encoding is null. Set a non-null value info property with key '" + VALUE_INFO_FILE_ENCODING + "'");
+        throw new IllegalArgumentException("The provided encoding is null. Set a non-null value info property with key '%s'".formatted(VALUE_INFO_FILE_ENCODING));
       }
 
       builder.encoding(encoding.toString());

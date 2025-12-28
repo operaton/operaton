@@ -57,7 +57,7 @@ public final class BeanManagerLookup {
       try {
         return (BeanManager) InitialContext.doLookup(jndiName);
       } catch (NamingException e) {
-        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '" + jndiName + "'.", e);
+        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '%s'.".formatted(jndiName), e);
       }
     }
 

@@ -52,7 +52,7 @@ public class AbstractTypedValue<T> implements TypedValue {
 
   @Override
   public String toString() {
-    return "Value '" + value + "' of type '" + type + "', isTransient=" + isTransient;
+    return "Value '%s' of type '%s', isTransient=%s".formatted(value, type, isTransient);
   }
 
   @Override

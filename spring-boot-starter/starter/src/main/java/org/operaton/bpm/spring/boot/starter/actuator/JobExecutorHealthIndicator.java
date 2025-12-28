@@ -175,10 +175,8 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
 
     @Override
     public String toString() {
-      return "Details [name=" + name + ", lockOwner=" + lockOwner + ", lockTimeInMillis="
-          + lockTimeInMillis + ", maxJobsPerAcquisition=" + maxJobsPerAcquisition
-          + ", waitTimeInMillis=" + waitTimeInMillis + ", processEngineNames=" + processEngineNames
-          + "]";
+      return "Details [name=%s, lockOwner=%s, lockTimeInMillis=%s, maxJobsPerAcquisition=%d, waitTimeInMillis=%s, processEngineNames=%s]"
+          .formatted(name, lockOwner, lockTimeInMillis, maxJobsPerAcquisition, waitTimeInMillis, processEngineNames);
     }
 
   }

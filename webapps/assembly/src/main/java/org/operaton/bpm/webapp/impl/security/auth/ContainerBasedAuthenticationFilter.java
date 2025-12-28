@@ -74,10 +74,6 @@ public class ContainerBasedAuthenticationFilter implements Filter {
   }
 
   @Override
-  public void destroy() {
-  }
-
-  @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
     final HttpServletRequest req = (HttpServletRequest) request;
     final HttpServletResponse resp = (HttpServletResponse) response;

@@ -92,11 +92,6 @@ public class SecurityFilter implements Filter {
     loadFilterRules(filterConfig, applicationPath);
   }
 
-  @Override
-  public void destroy() {
-
-  }
-
   /**
    * Iterate over a number of filter rules and match them against
    * the specified request.

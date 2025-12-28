@@ -94,11 +94,6 @@ public class AuthenticationFilter implements Filter {
 
   }
 
-  @Override
-  public void destroy() {
-
-  }
-
   public Long getCacheTimeToLive() {
     return cacheTimeToLive;
   }

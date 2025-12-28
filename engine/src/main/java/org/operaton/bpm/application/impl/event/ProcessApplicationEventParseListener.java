@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("java:S4144")
 public class ProcessApplicationEventParseListener implements BpmnParseListener {
 
   public static final ExecutionListener EXECUTION_LISTENER = new ProcessApplicationEventListenerDelegate();
@@ -150,7 +151,6 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
     addEndEventListener(activity);
   }
 
-
   @Override
   public void parseSubProcess(Element subProcessElement, ScopeImpl scope, ActivityImpl activity) {
     addStartEventListener(activity);
@@ -218,5 +218,4 @@ public class ProcessApplicationEventParseListener implements BpmnParseListener {
     addStartEventListener(activity);
     addEndEventListener(activity);
   }
-
 }

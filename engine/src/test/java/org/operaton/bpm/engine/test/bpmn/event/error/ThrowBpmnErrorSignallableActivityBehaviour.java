@@ -24,6 +24,7 @@ public class ThrowBpmnErrorSignallableActivityBehaviour extends AbstractBpmnActi
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
+    // do nothing
   }
 
   @Override

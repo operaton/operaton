@@ -86,10 +86,12 @@ public class DefaultHistoryEventHandlerTest {
 
     @Override
     public void handleEvent(HistoryEvent historyEvent) {
+      // noop
     }
 
     @Override
     public void handleEvents(List<HistoryEvent> historyEvents) {
+      // noop
     }
   }
 }

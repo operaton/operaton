@@ -8,14 +8,13 @@ on:
   issue_comment:
     types: [created]
 
-permissions:
-  pull-requests: write
-  issues: write
-
 jobs:
   greet-first-time-pr:
     name: Greet First-Time PR Contributors
     runs-on: ubuntu-slim
+    permissions:
+      pull-requests: write
+      issues: write
     if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
     steps:
       - name: Checkout repository
@@ -71,6 +70,9 @@ jobs:
   greet-first-time-issue:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
+    permissions:
+      pull-requests: write
+      issues: write
     if: github.event_name == 'issues' && github.event.action == 'opened'
     steps:
       - name: Checkout repository
@@ -118,6 +120,9 @@ jobs:
   greet-first-time-comment:
     name: Greet First-Time Issue Commenters
     runs-on: ubuntu-slim
+    permissions:
+      pull-requests: write
+      issues: write
     if: github.event_name == 'issue_comment' && github.event.action == 'created'
     steps:
       - uses: actions/checkout@v6

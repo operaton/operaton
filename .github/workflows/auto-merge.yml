@@ -1,4 +1,4 @@
-name: Auto-Merge Dependabot PRs
+name: Auto-Merge Eligible PRs
 
 on:
   schedule:

@@ -102,7 +102,6 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
 
     List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
 
-    List<TaskDto> tasks = new ArrayList<>();
 
     boolean withTaskVariables = Boolean.TRUE.equals(queryDto.getWithTaskVariablesInReturn());
     boolean withTaskLocalVariables = Boolean.TRUE.equals(queryDto.getWithTaskLocalVariablesInReturn());
@@ -112,12 +111,9 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
       return getVariablesForTasks(engine, matchingTasks, withTaskVariables, withCommentInfo);
     }
     if (withCommentInfo) {
-      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
+      return matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
     }
-    else {
-      tasks = matchingTasks.stream().map(TaskDto::fromEntity).toList();
-    }
-    return tasks;
+    return matchingTasks.stream().map(TaskDto::fromEntity).toList();
   }
 
   protected List<Task> executeTaskQuery(Integer firstResult, Integer maxResults, TaskQuery query) {

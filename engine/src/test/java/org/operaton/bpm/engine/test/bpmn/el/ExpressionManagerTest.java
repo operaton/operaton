@@ -354,11 +354,10 @@ class ExpressionManagerTest {
    */
   @ParameterizedTest(name = "{0}")
   @MethodSource("evaluateExpression_args")
-  void evaluateExpression(String name, String expression, Object expectedOutput) {
+  void shouldEvaluateMethodExpressionWithVariousArgumentTypes(String name, String expression, Object expectedOutput) {
     // given
-    if (expression.contains("intVal")) {
-      Mocks.register("intVal", 12345678);
-    }
+    Mocks.register("intVal", 12345678);
+
     // when & then
     assertMethodExpressionResult(expression, expectedOutput);
   }

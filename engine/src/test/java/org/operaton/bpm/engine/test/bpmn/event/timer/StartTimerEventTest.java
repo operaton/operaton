@@ -62,6 +62,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
+import org.python.modules.itertools.cycle;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
@@ -1770,17 +1771,17 @@ class StartTimerEventTest {
             .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
-  @ParameterizedTest
+  @ParameterizedTest(name = "{0}")
   @CsvSource({
-    "0 0 * ? * *, R2/PT2H, 120, 2, 120, 2",
-    "0 0 * ? * *, R2/2023-08-18T14:00/PT30M, 240, 4, 30, 1",
-    "R3/2023-08-18T8:00/PT1H, R2/PT2H, 120, 2, 120, 2",
-    "R3/PT1H, R2/2023-08-18T10:00/PT2H, 120, 2, 120, 2"
+    "Cron to repeating timer cycle, 0 0 * ? * *, R2/PT2H, 120, 2, 120, 2",
+    "Cron to repeating timer cycle with date, 0 0 * ? * *, R2/2023-08-18T14:00/PT30M, 240, 4, 30, 1",
+    "Repeating timer cycle with date, R3/2023-08-18T8:00/PT1H, R2/PT2H, 120, 2, 120, 2",
+    "Repeating timer cycle to timer cycle with date, R3/PT1H, R2/2023-08-18T10:00/PT2H, 120, 2, 120, 2"
   })
-  void shouldReevaluateCronToRepeatingTimerCycle2(String cycle, String changedCycle, long expectedDueDateMinutes1, int moveByHours1, long expectedDueDateMinutes2, int moveByHours2) {
+  void shouldReevaluateTimerCycleWithVariousConfigurations(String name, String cycle, String changedCycle, long expectedDueDateMinutes1, int moveByHours1, long expectedDueDateMinutes2, int moveByHours2) {
     // given
     ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean(cycle); // every hour
+    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean(cycle); // configured cycle
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
     processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
 
@@ -1792,14 +1793,14 @@ class StartTimerEventTest {
     moveByHours(1); // execute second job, "2023/8/18 10:00:00"
     JobQuery jobQuery = managementService.createJobQuery();
 
-    // then one more job is left due in <moveByHours1> hours
+    // then one more job is scheduled according to the new cycle
     Date duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
       .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes1)).toInstant(), within(59, ChronoUnit.MINUTES));
 
     moveByHours(moveByHours1); // execute first job from new cycle
 
-    // one more job is left due before <moveByHours2>
+    // then another job is scheduled from the new cycle
     duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
       .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes2)).toInstant(), within(59, ChronoUnit.MINUTES));
@@ -1809,8 +1810,6 @@ class StartTimerEventTest {
     // then no more jobs left
     assertThat(jobQuery.singleResult())
       .isNull();
-
-
   }
 
   // util methods ////////////////////////////////////////

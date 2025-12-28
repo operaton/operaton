@@ -85,7 +85,7 @@ public class FetchExternalTaskAuthorizationTest extends AuthorizationTest {
   @Test
   void testFetchWithUpdateOnProcessInstance() {
     // given
-    createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, READ);
+    createGrantAuthorization(PROCESS_INSTANCE, instance1Id, userId, UPDATE);
 
     // when
     List<LockedExternalTask> tasks = externalTaskService.fetchAndLock(5, WORKER_ID)

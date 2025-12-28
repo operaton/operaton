@@ -315,7 +315,7 @@ public class MigrationPlanCreationTest {
   void testMapEqualActivitiesWithParallelMultiInstance() {
     // given
     BpmnModelInstance testProcess = modify(ProcessModels.ONE_TASK_PROCESS)
-      .getBuilderForElementById("userTask", UserTaskBuilder.class)
+      .<UserTaskBuilder>getBuilderForElementById("userTask")
       .multiInstance().parallel().cardinality("3").multiInstanceDone().done();
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(testProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(testProcess);

@@ -99,9 +99,8 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
     }
     else {
       if (childrenOfType.size() > 1) {
-        throw new BpmnModelException("Element " + parent + " of type " +
-            parent.getElementType().getTypeName() + " has more than one child element of type " +
-            typeClass.getName());
+        throw new BpmnModelException("Element %s of type %s has more than one child element of type %s".formatted(
+            parent, parent.getElementType().getTypeName(), typeClass.getName()));
       }
       else {
         return childrenOfType.iterator().next();

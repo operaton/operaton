@@ -124,7 +124,7 @@ public final class TypeHelper {
       return (Class<? extends Collection>) value.getClass();
     } else {
       throw new IllegalArgumentException(
-          "Could not detect class for " + value + " of type " + value.getClass().getName());
+          "Could not detect class for %s of type %s".formatted(value, value.getClass().getName()));
     }
   }
 }

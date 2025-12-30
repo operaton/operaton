@@ -83,8 +83,7 @@ public class SpringBootManagedContainer {
   public static String getRunHome() {
     String runHomeDirectory = System.getProperty(RUN_HOME_VARIABLE);
     if (runHomeDirectory == null || runHomeDirectory.isEmpty()) {
-      throw new RuntimeException("System property " + RUN_HOME_VARIABLE + " not set. This property must point "
-          + "to the root directory of the run distribution to test.");
+      throw new RuntimeException("System property %s not set. This property must point to the root directory of the run distribution to test.".formatted(RUN_HOME_VARIABLE));
     }
 
     return Path.of(runHomeDirectory).toAbsolutePath().toString();

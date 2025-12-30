@@ -47,33 +47,20 @@ public abstract class EmailTestCase {
   protected Wiser wiser;
 
   @BeforeEach
-  public void setUp() throws Exception {
+  public void setUp() {
     int port = processEngineConfiguration.getMailServerPort();
 
-    boolean serverUpAndRunning = false;
-    while (!serverUpAndRunning) {
-      wiser = new Wiser();
-      wiser.setPort(port);
+    wiser = new Wiser();
+    wiser.setPort(port);
 
-      try {
-        LOG.info("Starting Wiser mail server on port: {}", port);
-        wiser.start();
-        serverUpAndRunning = true;
-        LOG.info("Wiser mail server listening on port: {}", port);
-      } catch (RuntimeException e) { // Fix for slow port-closing Jenkins
-        if (e.getMessage().toLowerCase().contains("BindException")) {
-          Thread.sleep(250L);
-        }
-      }
-    }
+    LOG.info("Starting Wiser mail server on port: {}", port);
+    wiser.start();
+    LOG.info("Wiser mail server listening on port: {}", port);
   }
 
   @AfterEach
-  public void tearDown() throws Exception {
+  public void tearDown() {
     wiser.stop();
-
-    // Fix for slow Jenkins
-    Thread.sleep(250L);
   }
 
 }

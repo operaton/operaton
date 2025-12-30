@@ -51,7 +51,7 @@ public abstract class AbstractAppRuntimeDelegate<T extends AppPlugin> implements
     try {
       return processEngineProvider.getProcessEngine(processEngineName);
     } catch (Exception e) {
-      throw new ProcessEngineException("No process engine with name " + processEngineName + " found.", e);
+      throw new ProcessEngineException("No process engine with name %s found.".formatted(processEngineName), e);
     }
   }
 

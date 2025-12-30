@@ -117,7 +117,7 @@ public class RequestFilter {
 
         String[] groupSplit = groupStr.split(":");
         if (groupSplit.length > 2) {
-          throw new IllegalArgumentException("cannot parse uri part " + regex + " in " + pattern + ": expected {asdf(:pattern)}");
+          throw new IllegalArgumentException("cannot parse uri part %s in %s: expected {asdf(:pattern)}".formatted(regex, pattern));
         }
 
         group = groupSplit[0];

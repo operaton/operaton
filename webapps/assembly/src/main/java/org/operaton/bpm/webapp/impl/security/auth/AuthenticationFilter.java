@@ -55,7 +55,7 @@ public class AuthenticationFilter implements Filter {
       cacheTimeToLive = Long.parseLong(authCacheTTLAsString.trim());
 
       if (cacheTimeToLive < 0) {
-        throw new IllegalWebAppConfigurationException("'" + AUTH_CACHE_TTL_INIT_PARAM_NAME + "' cannot be negative.");
+        throw new IllegalWebAppConfigurationException("'%s' cannot be negative.".formatted(AUTH_CACHE_TTL_INIT_PARAM_NAME));
       }
     }
   }

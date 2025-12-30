@@ -124,7 +124,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
   public Response getAsset(@PathParam("file") String file) {
 
     if (!allowedAssets.contains(file)) {
-      throw new RestException(Status.FORBIDDEN, "Not allowed to load the following file '" + file + "'.");
+      throw new RestException(Status.FORBIDDEN, "Not allowed to load the following file '%s'.".formatted(file));
     }
 
     AppPlugin plugin = runtimeDelegate.getAppPluginRegistry().getPlugin(pluginName);
@@ -154,7 +154,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
     }
 
     // no asset found
-    throw new RestException(Status.NOT_FOUND, "It was not able to load the following file '" + file + "'.");
+    throw new RestException(Status.NOT_FOUND, "It was not able to load the following file '%s'.".formatted(file));
   }
 
   /**

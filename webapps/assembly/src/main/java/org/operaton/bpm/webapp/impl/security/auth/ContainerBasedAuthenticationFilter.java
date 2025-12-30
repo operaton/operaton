@@ -55,7 +55,7 @@ public class ContainerBasedAuthenticationFilter implements Filter {
     String authenticationProviderClassName = filterConfig.getInitParameter(AUTHENTICATION_PROVIDER_PARAM);
 
     if (authenticationProviderClassName == null) {
-      throw new ServletException("Cannot instantiate authentication filter: no authentication provider set. init-param " + AUTHENTICATION_PROVIDER_PARAM + " missing");
+      throw new ServletException("Cannot instantiate authentication filter: no authentication provider set. init-param %s missing".formatted(AUTHENTICATION_PROVIDER_PARAM));
     }
 
     try {
@@ -88,7 +88,7 @@ public class ContainerBasedAuthenticationFilter implements Filter {
     ProcessEngine engine = getAddressedEngine(engineName);
 
     if (engine == null) {
-      resp.sendError(404, "Process engine " + engineName + " not available");
+      resp.sendError(404, "Process engine %s not available".formatted(engineName));
       return;
     }
 

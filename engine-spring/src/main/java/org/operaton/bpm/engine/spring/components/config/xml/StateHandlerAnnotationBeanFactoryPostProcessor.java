@@ -81,7 +81,7 @@ public class StateHandlerAnnotationBeanFactoryPostProcessor implements BeanFacto
             if (bDef.getBeanClassName().equals(clz.getName())) {
                 return true; // so the beans already registered, and of the right type. so we assume the user is overriding our configuration
             } else {
-                throw new IllegalStateException("The bean name '" + beanName + "' is reserved.");
+                throw new IllegalStateException("The bean name '%s' is reserved.".formatted(beanName));
             }
         }
         return false;

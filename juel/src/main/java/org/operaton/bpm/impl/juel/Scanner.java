@@ -294,7 +294,7 @@ public class Scanner {
 					if (c == '\\' || c == quote) {
 						builder.append(c);
 					} else {
-						throw new ScanException(position, "invalid escape sequence \\" + c, "\\" + quote + " or \\\\");
+						throw new ScanException(position, "invalid escape sequence \\%s".formatted(c), "\\%s or \\\\".formatted(quote));
 					}
 				}
 			} else if (c == quote) {
@@ -416,7 +416,7 @@ public class Scanner {
 			return keyword == null ? token(Symbol.IDENTIFIER, name, i - position) : keyword;
 		}
 
-		throw new ScanException(position, "invalid character '" + c1 + "'", "expression token");
+		throw new ScanException(position, "invalid character '%s'".formatted(c1), "expression token");
 	}
 
 	protected Token nextToken() throws ScanException {

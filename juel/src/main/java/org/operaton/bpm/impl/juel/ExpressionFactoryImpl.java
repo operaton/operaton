@@ -349,7 +349,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 		try {
 			return TypeConverter.class.cast(clazz.getDeclaredConstructor().newInstance());
 		} catch (Exception e) {
-			throw new ELException("TypeConverter " + clazz + " could not be instantiated", e);
+			throw new ELException("TypeConverter %s could not be instantiated".formatted(clazz), e);
 		}
 	}
 
@@ -374,7 +374,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 					if (features == null || features.length == 0) {
 						return TreeBuilder.class.cast(clazz.getDeclaredConstructor().newInstance());
 					} else {
-						throw new ELException("Builder " + clazz + " is missing constructor (can't pass features)");
+						throw new ELException("Builder %s is missing constructor (can't pass features)".formatted(clazz));
 					}
 				} else {
 					return TreeBuilder.class.cast(constructor.newInstance((Object) features));
@@ -383,7 +383,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 				return TreeBuilder.class.cast(clazz.getDeclaredConstructor().newInstance());
 			}
 		} catch (Exception e) {
-			throw new ELException("TreeBuilder " + clazz + " could not be instantiated", e);
+			throw new ELException("TreeBuilder %s could not be instantiated".formatted(clazz), e);
 		}
 	}
 
@@ -400,9 +400,9 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 				try {
 					return loader == null ? Class.forName(className) : loader.loadClass(className);
 				} catch (ClassNotFoundException e) {
-					throw new ELException("Class " + className + " not found", e);
+					throw new ELException("Class %s not found".formatted(className), e);
 				} catch (Exception e) {
-					throw new ELException("Class " + className + " could not be instantiated", e);
+					throw new ELException("Class %s could not be instantiated".formatted(className), e);
 				}
 			}
 		}

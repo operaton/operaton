@@ -12,7 +12,7 @@ informed: Operaton Community, Extension Authors
 
 Operaton evolves rapidly and follows a high-frequency release cadence with multiple releases per year. New functionality often benefits from early integration and real-world feedback, but committing prematurely to permanent compatibility guarantees increases long-term risk and integration effort.
 
-At the same time, Operaton implements standards such as BPMN 2.0 and DMN. Changes in those areas must be introduced carefully to avoid inconsistent semantics, unexpected persistence effects, or partial standard coverage becoming de-facto permanent. This creates a natural tension with fast releases: we want rapid delivery but must avoid locking in brittle or underspecified interpretations of BPMN/DMN constructs.
+At the same time, Operaton implements standards such as BPMN 2.0 and DMN. Changes in those areas must be introduced carefully to avoid inconsistent semantics, unexpected persistence effects, or partial standard coverage becoming de facto permanent. This creates a natural tension with fast releases: we want rapid delivery but must avoid locking in brittle or underspecified interpretations of BPMN/DMN constructs.
 
 The question to be answered is: **Should Operaton introduce a formal concept of Preview Features to allow early integration of new functionality without committing to permanent compatibility guarantees?**
 
@@ -26,7 +26,9 @@ A **Preview Feature** is functionality that is available to users for early eval
 * is **time-boxed** (must be promoted or removed), and
 * carries **no compatibility guarantees** (signatures, behavior, configuration, or persistence details may change without deprecation; database state may not be migrated automatically on a new release or when switching the feature on/off).
 
-The preview concept applies to public surfaces such as Java APIs, REST APIs, configuration properties, and end-user behavior. It must not be used as a substitute for incomplete bug fixes or as a way to ship breaking changes without communication.
+The preview concept applies to public surfaces such as Java APIs, REST APIs, configuration properties, and end-user behavior.
+
+Preview must not be used as a substitute for incomplete bug fixes or as a way to ship breaking changes without clear communication.
 
 ## Decision Drivers
 
@@ -61,7 +63,7 @@ Chosen option: "Introduce Preview Features", because it enables incremental inte
 Compliance with this ADR can be confirmed by the following fitness functions:
 
 * Every preview feature is clearly labeled as **Preview** in documentation and release notes.
-* Every preview feature has an **explicit opt-in** that is **off by default** (for example via configuration).
+* Every preview feature has an **explicit opt-in** that is **off by default**.
 * Each preview feature documents its **time box** and its **promotion/removal criteria**.
 * Reviews verify that preview surfaces do not introduce permanent compatibility guarantees (for example: no promise of stable API/package names, stable REST contract, or stable persistence/schema behavior while in preview).
 * A periodic review (at least once per release) decides whether each preview feature is promoted, extended explicitly, or removed.
@@ -115,14 +117,43 @@ All features are introduced as permanent once merged.
 * Preview features are reviewed at least once per release.
 * When this ADR is accepted, the metadata `status` should be updated to `accepted` and `date` to the acceptance date.
 
+### Opt-in requirements
+
+Each preview feature must define and document an explicit opt-in mechanism.
+
+Requirements:
+
+* Opt-in is **off by default**.
+* Opt-in is **explicit** and **intentional** (no implicit enablement through side effects).
+* Opt-in is **documented** including how to enable and disable it.
+
 ### Time box and lifecycle
 
-A preview feature should be time-boxed to a limited number of releases (for example: promotion or removal within two stable releases). Each preview feature must define:
+A preview feature must be time-boxed.
+
+Default expectation: a preview feature is either promoted to stable or removed within **two stable releases** after introduction. If a preview feature needs more time, the extension must be decided explicitly (for example as part of a release decision) and documented together with the reasons.
+
+Each preview feature must define:
 
 * how to opt in,
 * what “done” means for promotion to stable,
 * what would cause removal, and
-* which users/portable behaviors are expected to change while in preview.
+* which observable behaviors are expected to change while in preview.
+
+For promotion to stable, it should be clear that:
+
+* behavior/semantics are fully specified and documented,
+* API/REST/config surfaces are stabilized, and
+* persistence implications (if any) are understood and communicated.
+
+### Persistence and migration expectations
+
+Preview features may affect persistence (including database schema, stored data, and history).
+
+Requirements:
+
+* Each preview feature must document whether it changes persistence and what the impact is.
+* There is **no guarantee** that enabling/disabling a preview feature preserves data compatibility, or that upgrades automatically migrate preview data.
 
 This decision should be revisited if Operaton’s release cadence or compatibility guarantees change significantly.
 

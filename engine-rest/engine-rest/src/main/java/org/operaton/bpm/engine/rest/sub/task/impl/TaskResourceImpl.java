@@ -243,7 +243,7 @@ public class TaskResourceImpl implements TaskResource {
       && formData != null
       && formData.getFormFields() != null
       && !formData.getFormFields().isEmpty()) {
-      dto.setKey("embedded:engine://engine/:engine/task/" + taskId + "/rendered-form");
+      dto.setKey("embedded:engine://engine/:engine/task/%s/rendered-form".formatted(taskId));
     }
 
     // to get the application context path it is necessary to

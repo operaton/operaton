@@ -115,7 +115,7 @@ public class SecurityFilter implements Filter {
       try {
         filterRules = FilterRules.load(configFileResource, applicationPath);
       } catch (Exception e) {
-        throw new RuntimeException("Exception while parsing '" + configFileName + "'", e);
+        throw new RuntimeException("Exception while parsing '%s'".formatted(configFileName), e);
       } finally {
         IoUtil.closeSilently(configFileResource);
       }

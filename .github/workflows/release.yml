@@ -30,6 +30,8 @@ jobs:
   prepare:
     name: Prepare
     runs-on: ubuntu-slim
+    permissions:
+      contents: read
     outputs:
       next_version: ${{steps.compute-next-version.outputs.next_version}}
     steps:
@@ -97,6 +99,8 @@ jobs:
     needs:
       - prepare
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       version: ${{steps.version.outputs.version}}
       database_version: ${{steps.version.outputs.database_version}}
@@ -178,6 +182,8 @@ jobs:
     needs:
       - release_build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out the code
         uses: actions/checkout@v6
@@ -252,6 +258,8 @@ jobs:
       - release
       - release_build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out the code
         uses: actions/checkout@v6

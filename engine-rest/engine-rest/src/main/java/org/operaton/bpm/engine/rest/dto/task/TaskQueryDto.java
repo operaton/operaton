@@ -611,6 +611,9 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.createdOn = createdOn;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #setCreatedOn(Date)} instead for consistency with other date parameters.
+   */
   @Deprecated(since = "1.0")
   @OperatonQueryParam(value = "created", converter = DateConverter.class)
   public void setCreated(Date createdOn) {

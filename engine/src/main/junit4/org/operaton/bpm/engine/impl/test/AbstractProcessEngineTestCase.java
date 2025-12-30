@@ -308,6 +308,9 @@ public abstract class AbstractProcessEngineTestCase extends PvmTestCase {
     }
   }
 
+  /**
+   * @deprecated typo in method name. Use {@link #getInstancesForActivityId(ActivityInstance, String)} instead.
+   */
   @Deprecated
   protected List<ActivityInstance> getInstancesForActivitiyId(ActivityInstance activityInstance, String activityId) {
     return getInstancesForActivityId(activityInstance, activityId);

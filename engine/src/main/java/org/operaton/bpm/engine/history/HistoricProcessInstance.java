@@ -65,10 +65,15 @@ public interface HistoricProcessInstance {
   /** The difference between {@link #getEndTime()} and {@link #getStartTime()} . */
   Long getDurationInMillis();
 
-  /** Reference to the activity in which this process instance ended.
-   *  Note that a process instance can have multiple end events, in this case it might not be deterministic
-   *  which activity id will be referenced here. Use a {@link HistoricActivityInstanceQuery} instead to query
-   *  for end events of the process instance (use the activityTYpe attribute)
+  /**
+   * Reference to the activity in which this process instance ended.
+   * Note that a process instance can have multiple end events, in this case it might not be deterministic
+   * which activity id will be referenced here. Use a {@link HistoricActivityInstanceQuery} instead to query
+   * for end events of the process instance (use the activityTYpe attribute)
+   * 
+   * @deprecated since 1.0, this method may return non-deterministic results for process instances with
+   *             multiple end events. Use {@link HistoricActivityInstanceQuery} with activity type filter
+   *             to query for end events instead.
    */
   @Deprecated(since = "1.0")
   String getEndActivityId();

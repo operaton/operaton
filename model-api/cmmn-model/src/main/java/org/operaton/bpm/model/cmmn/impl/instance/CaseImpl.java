@@ -51,6 +51,9 @@ public class CaseImpl extends CmmnElementImpl implements Case {
   protected static ChildElementCollection<OutputCaseParameter> outputCollection;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use caseRolesChild instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<CaseRole> caseRolesCollection;
 

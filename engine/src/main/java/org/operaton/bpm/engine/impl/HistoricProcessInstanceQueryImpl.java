@@ -758,6 +758,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected Date finishDateOnBegin;
   protected Date finishDateOnEnd;
 
+  /**
+   * @deprecated since 1.0, use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateBy(Date date) {
@@ -765,6 +768,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateOn(Date date) {
@@ -774,6 +780,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #finishedAfter(Date)} and {@link #finishedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateBy(Date date) {
@@ -781,6 +790,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #finishedAfter(Date)} and {@link #finishedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateOn(Date date) {
@@ -790,6 +802,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, internal utility method.
+   */
   @Deprecated(since = "1.0")
   private Date calculateBeforeMidnight(Date date){
     Calendar cal = Calendar.getInstance();
@@ -799,6 +814,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return cal.getTime();
   }
 
+  /**
+   * @deprecated since 1.0, internal utility method.
+   */
   @Deprecated(since = "1.0")
   private Date calculateMidnight(Date date){
     Calendar cal = Calendar.getInstance();

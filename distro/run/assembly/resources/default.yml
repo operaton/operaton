@@ -8,6 +8,8 @@ operaton.bpm:
     password: demo
   filter:
     create: All tasks
+  # Enables experimental preview features on the process engine level (default: false)
+  # preview-features-enabled: true
   run:
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#cross-origin-resource-sharing
     cors:

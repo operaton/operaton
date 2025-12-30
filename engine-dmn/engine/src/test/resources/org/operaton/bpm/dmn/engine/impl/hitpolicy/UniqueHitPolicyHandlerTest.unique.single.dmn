@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ns0:definitions xmlns:ns0="http://www.omg.org/spec/DMN/20151101/dmn.xsd" id="definitions" expressionLanguage="juel" name="operaton" namespace="http://operaton.org/schema/1.0/dmn">
+  <ns0:decision id="decision" name="decision">
+    <ns0:decisionTable id="decisionTable" hitPolicy="UNIQUE">
+      <ns0:input id="input" label="Input">
+        <ns0:inputExpression />
+      </ns0:input>
+      <ns0:output id="output" label="Output" />
+      <ns0:rule id="rule1">
+        <ns0:inputEntry id="inputEntry1">
+          <ns0:text>${input1}</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="outputEntry1">
+          <ns0:text>${output1}</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule2">
+        <ns0:inputEntry id="inputEntry2">
+          <ns0:text>${input2}</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="outputEntry2">
+          <ns0:text>${output2}</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+      <ns0:rule id="rule3">
+        <ns0:inputEntry id="inputEntry3">
+          <ns0:text>${input3}</ns0:text>
+        </ns0:inputEntry>
+        <ns0:outputEntry id="outputEntry3">
+          <ns0:text>${output3}</ns0:text>
+        </ns0:outputEntry>
+      </ns0:rule>
+    </ns0:decisionTable>
+  </ns0:decision>
+</ns0:definitions>

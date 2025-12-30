@@ -16,52 +16,79 @@
  */
 package org.operaton.bpm.dmn.engine.impl.hitpolicy;
 
+import java.util.Objects;
+
 import org.operaton.bpm.model.dmn.BuiltinAggregator;
 import org.operaton.bpm.model.dmn.HitPolicy;
 
 /**
- * Represents the hit policy and the aggregator of a decision table.
+ * Represents a hit policy configuration consisting of a hit policy type and an optional aggregator.
+ *
+ * <p>This record serves as a composite key for identifying and registering hit policy handlers
+ * in the {@link org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistry}.
+ * The combination of hit policy and aggregator uniquely identifies a specific evaluation strategy
+ * for DMN decision tables.</p>
+ *
+ * <p><strong>Valid Combinations:</strong></p>
+ * <ul>
+ *   <li><strong>Single Hit Policies:</strong> UNIQUE, FIRST, PRIORITY, ANY (aggregator must be null)</li>
+ *   <li><strong>Multiple Hit Policies:</strong> RULE_ORDER, OUTPUT_ORDER (aggregator must be null)</li>
+ *   <li><strong>COLLECT without Aggregation:</strong> COLLECT with null aggregator</li>
+ *   <li><strong>COLLECT with Aggregation:</strong> COLLECT with COUNT, SUM, MIN, or MAX aggregator</li>
+ * </ul>
+ *
+ * <p><strong>Immutability:</strong> As a record, this class is immutable. Both the hit policy and aggregator
+ * cannot be changed after construction.</p>
+ *
+ * <p><strong>Equality and Hashing:</strong> Two {@code HitPolicyEntry} instances are considered
+ * equal if they have the same hit policy and aggregator. Records automatically implement proper
+ * {@link #equals(Object)} and {@link #hashCode()} to support use as map keys.</p>
+ *
+ * <p><strong>Usage Example:</strong></p>
+ * <pre>
+ * // Single hit policy without aggregator
+ * HitPolicyEntry unique = new HitPolicyEntry(HitPolicy.UNIQUE, null);
+ *
+ * // Multiple hit policy with aggregation
+ * HitPolicyEntry collectSum = new HitPolicyEntry(HitPolicy.COLLECT, BuiltinAggregator.SUM);
+ * </pre>
+ *
+ * @param hitPolicy the hit policy type (e.g., UNIQUE, COLLECT, PRIORITY), must not be null
+ * @param aggregator the optional aggregator (e.g., SUM, MIN, MAX), or null if not applicable
  *
  * @author Askar Akhmerov
+ * @see org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistry
+ * @see org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandler
  */
-public class HitPolicyEntry {
+public record HitPolicyEntry(HitPolicy hitPolicy, BuiltinAggregator aggregator) {
 
-  protected final HitPolicy hitPolicy;
-  protected final BuiltinAggregator aggregator;
-
-  public HitPolicyEntry(HitPolicy hitPolicy, BuiltinAggregator builtinAggregator) {
-    this.hitPolicy = hitPolicy;
-    this.aggregator = builtinAggregator;
+  /**
+   * Compact constructor that validates the hit policy is not null.
+   *
+   * <p><strong>Note:</strong> The aggregator should only be provided for the COLLECT hit policy.
+   * For all other hit policies (UNIQUE, FIRST, PRIORITY, ANY, RULE_ORDER, OUTPUT_ORDER),
+   * the aggregator must be null.</p>
+   *
+   * @throws NullPointerException if hitPolicy is null
+   */
+  public HitPolicyEntry {
+    Objects.requireNonNull(hitPolicy, "hitPolicy must not be null");
   }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    HitPolicyEntry that = (HitPolicyEntry) o;
-
-    if (hitPolicy != that.hitPolicy) {
-      return false;
-    }
-    return aggregator == that.aggregator;
-
-  }
-
-  @Override
-  public int hashCode() {
-    int result = hitPolicy != null ? hitPolicy.hashCode() : 0;
-    return 31 * result + (aggregator != null ? aggregator.hashCode() : 0);
-  }
-
+  /**
+   * Returns the hit policy type.
+   *
+   * @return the hit policy (e.g., UNIQUE, COLLECT, PRIORITY), never null
+   */
   public HitPolicy getHitPolicy() {
     return hitPolicy;
   }
 
+  /**
+   * Returns the optional aggregator.
+   *
+   * @return the aggregator (e.g., SUM, MIN, MAX), or null if no aggregation is used
+   */
   public BuiltinAggregator getAggregator() {
     return aggregator;
   }

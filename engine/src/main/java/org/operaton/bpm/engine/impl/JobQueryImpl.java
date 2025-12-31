@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,9 +40,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tom Baeyens
  * @author Falko Menge
  */
-public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQuery, Serializable {
+public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQuery {
 
-  @Serial private static final long serialVersionUID = 1L;
   protected String activityId;
   protected String id;
   protected Set<String> ids;

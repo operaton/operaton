@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -31,9 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author roman.smirnov
  */
-public class IncidentQueryImpl extends AbstractQuery<IncidentQuery, Incident> implements IncidentQuery, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class IncidentQueryImpl extends AbstractQuery<IncidentQuery, Incident> implements IncidentQuery {
 
   protected String id;
   protected String incidentType;

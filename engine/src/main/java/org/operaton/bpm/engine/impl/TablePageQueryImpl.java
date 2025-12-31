@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -31,11 +28,9 @@ import org.operaton.bpm.engine.management.TablePageQuery;
  *
  * @author Joram Barrez
  */
-public class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQuery, Command<TablePage>, Serializable {
+public class TablePageQueryImpl extends ListQueryParameterObject implements TablePageQuery, Command<TablePage> {
 
-  @Serial private static final long serialVersionUID = 1L;
-
-  transient CommandExecutor commandExecutor;
+  CommandExecutor commandExecutor;
 
   protected String tableName;
   protected String order;

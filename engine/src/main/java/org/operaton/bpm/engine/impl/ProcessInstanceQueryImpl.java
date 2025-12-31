@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -44,10 +42,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Falko Menge
  * @author Daniel Meyer
  */
-public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery, Serializable {
+public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
   protected String processInstanceId;
   protected String rootProcessInstanceId;
   protected String businessKey;

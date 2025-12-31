@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +33,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  * @author Ingo Richtsmeier
  */
-public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployment> implements DeploymentQuery, Serializable {
+public class DeploymentQueryImpl extends AbstractQuery<DeploymentQuery, Deployment> implements DeploymentQuery {
 
-  @Serial private static final long serialVersionUID = 1L;
   protected String deploymentId;
   protected String name;
   protected String nameLike;

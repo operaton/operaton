@@ -17,7 +17,7 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@bpmn-io/dmn-migrate": "0.5.0",
+    "@bpmn-io/dmn-migrate": "0.6.0",
     "@bpmn-io/form-js": "1.8.7",
     "@ibm/plex": "6.4.1",
     "angular": "1.8.3",

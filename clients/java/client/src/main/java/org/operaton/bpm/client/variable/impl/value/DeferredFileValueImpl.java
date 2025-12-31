@@ -40,7 +40,7 @@ public class DeferredFileValueImpl extends FileValueImpl implements DeferredFile
 
   protected String variableName;
   protected String executionId;
-  protected EngineClient engineClient;
+  protected transient EngineClient engineClient;
 
   public DeferredFileValueImpl(String filename, EngineClient engineClient) {
     super(FILE, filename);

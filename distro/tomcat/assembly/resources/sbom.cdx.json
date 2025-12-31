@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:a8eb7cdd-3b90-47b5-9b87-3358a9078bc0",
+  "serialNumber": "urn:uuid:cbf52ec2-77b5-45a5-b23b-66ce564fdd0b",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-25T08:43:03Z",
+    "timestamp": "2025-12-31T05:42:50Z",
     "tools": {
       "components": [
         {
@@ -21147,7 +21147,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d7b3170a-a8bc-4535-a94d-59f6fa0d3325",
+      "bom-ref": "2aef158c-fceb-422b-b0a6-90da7367ddd3",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21216,15 +21216,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
       "group": "@bpmn-io",
       "name": "dmn-migrate",
-      "version": "0.5.0",
-      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
+      "version": "0.6.0",
+      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/dmn-migrate@0.5.0"
+          "value": "@bpmn-io/dmn-migrate@0.6.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22345,14 +22345,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/camunda-dmn-js@3.2.0",
+      "bom-ref": "pkg:npm/camunda-dmn-js@3.6.0",
       "name": "camunda-dmn-js",
-      "version": "3.2.0",
-      "purl": "pkg:npm/camunda-dmn-js@3.2.0",
+      "version": "3.6.0",
+      "purl": "pkg:npm/camunda-dmn-js@3.6.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "camunda-dmn-js@3.2.0"
+          "value": "camunda-dmn-js@3.6.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22838,23 +22838,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@12.8.1",
-      "name": "diagram-js",
-      "version": "12.8.1",
-      "purl": "pkg:npm/diagram-js@12.8.1",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@12.8.1"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/diagram-js@15.4.0",
       "name": "diagram-js",
       "version": "15.4.0",
@@ -22914,23 +22897,6 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "didi@4.0.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/didi@9.0.2",
-      "name": "didi",
-      "version": "9.0.2",
-      "purl": "pkg:npm/didi@9.0.2",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "didi@9.0.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23025,14 +22991,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-properties-panel@3.2.1",
+      "bom-ref": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "name": "dmn-js-properties-panel",
-      "version": "3.2.1",
-      "purl": "pkg:npm/dmn-js-properties-panel@3.2.1",
+      "version": "3.9.0",
+      "purl": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-properties-panel@3.2.1"
+          "value": "dmn-js-properties-panel@3.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23067,23 +23033,6 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "dmn-js@17.5.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/dmn-moddle@10.0.0",
-      "name": "dmn-moddle",
-      "version": "10.0.0",
-      "purl": "pkg:npm/dmn-moddle@10.0.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-moddle@10.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24164,23 +24113,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/moddle-xml@9.0.6",
-      "name": "moddle-xml",
-      "version": "9.0.6",
-      "purl": "pkg:npm/moddle-xml@9.0.6",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "moddle-xml@9.0.6"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/moddle@4.1.0",
       "name": "moddle",
       "version": "4.1.0",
@@ -24189,23 +24121,6 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "moddle@4.1.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/moddle@5.0.4",
-      "name": "moddle",
-      "version": "5.0.4",
-      "purl": "pkg:npm/moddle@5.0.4",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "moddle@5.0.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24376,23 +24291,6 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "path-intersection@1.1.1"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/path-intersection@2.2.1",
-      "name": "path-intersection",
-      "version": "2.2.1",
-      "purl": "pkg:npm/path-intersection@2.2.1",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "path-intersection@2.2.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24895,7 +24793,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ec4db587-0c46-4a60-aab3-8feecc97ba03",
+      "bom-ref": "660f083e-738a-4d35-8458-565c3b074b2e",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27491,9 +27389,9 @@
       "dependsOn": []
     },
     {
-      "ref": "d7b3170a-a8bc-4535-a94d-59f6fa0d3325",
+      "ref": "2aef158c-fceb-422b-b0a6-90da7367ddd3",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
+        "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.8.7",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/angular-animate@1.8.3",
@@ -27511,7 +27409,7 @@
         "pkg:npm/bootstrap@3.4.1",
         "pkg:npm/bpmn-font@0.12.1",
         "pkg:npm/bpmn-js@18.9.1",
-        "pkg:npm/camunda-dmn-js@3.2.0",
+        "pkg:npm/camunda-dmn-js@3.6.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
@@ -27520,7 +27418,7 @@
         "pkg:npm/dmn-js-decision-table@17.5.0",
         "pkg:npm/dmn-js-drd@17.5.0",
         "pkg:npm/dmn-js-literal-expression@17.5.0",
-        "pkg:npm/dmn-js-properties-panel@3.2.1",
+        "pkg:npm/dmn-js-properties-panel@3.9.0",
         "pkg:npm/dmn-js-shared@17.5.0",
         "pkg:npm/dmn-js@17.5.0",
         "pkg:npm/dom4@2.1.6",
@@ -27539,9 +27437,9 @@
       ]
     },
     {
-      "ref": "ec4db587-0c46-4a60-aab3-8feecc97ba03",
+      "ref": "660f083e-738a-4d35-8458-565c3b074b2e",
       "dependsOn": [
-        "d7b3170a-a8bc-4535-a94d-59f6fa0d3325"
+        "2aef158c-fceb-422b-b0a6-90da7367ddd3"
       ]
     },
     {
@@ -27564,9 +27462,9 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.5.0",
+      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
       "dependsOn": [
-        "pkg:npm/dmn-moddle@10.0.0",
+        "pkg:npm/dmn-moddle@11.0.0",
         "pkg:npm/ids@1.0.5",
         "pkg:npm/min-dash@4.2.3"
       ]
@@ -28009,7 +27907,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/camunda-dmn-js@3.2.0",
+      "ref": "pkg:npm/camunda-dmn-js@3.6.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
         "pkg:npm/camunda-dmn-moddle@1.3.0",
@@ -28017,7 +27915,7 @@
         "pkg:npm/diagram-js-origin@1.4.0",
         "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js-drd@17.5.0",
-        "pkg:npm/dmn-js-properties-panel@3.2.1",
+        "pkg:npm/dmn-js-properties-panel@3.9.0",
         "pkg:npm/dmn-js@17.5.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@4.2.3",
@@ -28193,21 +28091,6 @@
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@12.8.1",
-      "dependsOn": [
-        "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
-        "pkg:npm/clsx@2.1.1",
-        "pkg:npm/didi@9.0.2",
-        "pkg:npm/hammerjs@2.0.8",
-        "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/min-dom@4.2.1",
-        "pkg:npm/object-refs@0.3.0",
-        "pkg:npm/path-intersection@2.2.1",
-        "pkg:npm/tiny-svg@3.1.3"
-      ]
-    },
-    {
       "ref": "pkg:npm/diagram-js@15.4.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
@@ -28241,10 +28124,6 @@
     },
     {
       "ref": "pkg:npm/didi@4.0.0",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:npm/didi@9.0.2",
       "dependsOn": []
     },
     {
@@ -28305,10 +28184,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-properties-panel@3.2.1",
+      "ref": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
-        "pkg:npm/diagram-js@12.8.1",
+        "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js@17.5.0",
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/min-dom@4.2.1"
@@ -28338,14 +28217,6 @@
         "pkg:npm/dmn-js-drd@17.5.0",
         "pkg:npm/dmn-js-literal-expression@17.5.0",
         "pkg:npm/dmn-js-shared@17.5.0"
-      ]
-    },
-    {
-      "ref": "pkg:npm/dmn-moddle@10.0.0",
-      "dependsOn": [
-        "pkg:npm/min-dash@3.8.1",
-        "pkg:npm/moddle-xml@9.0.6",
-        "pkg:npm/moddle@5.0.4"
       ]
     },
     {
@@ -28716,21 +28587,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/moddle-xml@9.0.6",
-      "dependsOn": [
-        "pkg:npm/min-dash@3.8.1",
-        "pkg:npm/moddle@5.0.4",
-        "pkg:npm/saxen@8.1.2"
-      ]
-    },
-    {
       "ref": "pkg:npm/moddle@4.1.0",
-      "dependsOn": [
-        "pkg:npm/min-dash@3.8.1"
-      ]
-    },
-    {
-      "ref": "pkg:npm/moddle@5.0.4",
       "dependsOn": [
         "pkg:npm/min-dash@3.8.1"
       ]
@@ -28777,10 +28634,6 @@
     },
     {
       "ref": "pkg:npm/path-intersection@1.1.1",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:npm/path-intersection@2.2.1",
       "dependsOn": []
     },
     {
@@ -29970,6 +29823,59 @@
           "versions": [
             {
               "version": "1.8.3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2025-15284",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "cwes": [
+        20
+      ],
+      "description": "Improper Input Validation vulnerability in qs (parse modules) allows HTTP DoS.This issue affects qs: \u003C 6.14.1.\n\n\nSummaryThe arrayLimit\u00A0option in qs does not enforce limits for bracket notation (a[]=1\u0026a[]=2), allowing attackers to cause denial-of-service via memory exhaustion. Applications using arrayLimit\u00A0for DoS protection are vulnerable.\n\nDetailsThe arrayLimit\u00A0option only checks limits for indexed notation (a[0]=1\u0026a[1]=2) but completely bypasses it for bracket notation (a[]=1\u0026a[]=2).\n\nVulnerable code\u00A0(lib/parse.js:159-162):\n\nif (root === \u0027[]\u0027 \u0026\u0026 options.parseArrays) {\n    obj = utils.combine([], leaf);  // No arrayLimit check\n}\n\n\n\n\n\nWorking code\u00A0(lib/parse.js:175):\n\nelse if (index \u003C= options.arrayLimit) {  // Limit checked here\n    obj = [];\n    obj[index] = leaf;\n}\n\n\n\n\n\nThe bracket notation handler at line 159 uses utils.combine([], leaf)\u00A0without validating against options.arrayLimit, while indexed notation at line 175 checks index \u003C= options.arrayLimit\u00A0before creating arrays.\n\nPoCTest 1 - Basic bypass:\n\nnpm install qs\n\n\n\n\n\nconst qs = require(\u0027qs\u0027);\nconst result = qs.parse(\u0027a[]=1\u0026a[]=2\u0026a[]=3\u0026a[]=4\u0026a[]=5\u0026a[]=6\u0027, { arrayLimit: 5 });\nconsole.log(result.a.length);  // Output: 6 (should be max 5)\n\n\n\n\n\nTest 2 - DoS demonstration:\n\nconst qs = require(\u0027qs\u0027);\nconst attack = \u0027a[]=\u0027 \u002B Array(10000).fill(\u0027x\u0027).join(\u0027\u0026a[]=\u0027);\nconst result = qs.parse(attack, { arrayLimit: 100 });\nconsole.log(result.a.length);  // Output: 10000 (should be max 100)\n\n\n\n\n\nConfiguration:\n\n  *  arrayLimit: 5\u00A0(test 1) or arrayLimit: 100\u00A0(test 2)\n  *  Use bracket notation: a[]=value\u00A0(not indexed a[0]=value)\n\n\nImpactDenial of Service via memory exhaustion. Affects applications using qs.parse()\u00A0with user-controlled input and arrayLimit\u00A0for protection.\n\nAttack scenario:\n\n  *  Attacker sends HTTP request: GET /api/search?filters[]=x\u0026filters[]=x\u0026...\u0026filters[]=x\u00A0(100,000\u002B times)\n  *  Application parses with qs.parse(query, { arrayLimit: 100 })\n  *  qs ignores limit, parses all 100,000 elements into array\n  *  Server memory exhausted \u2192 application crashes or becomes unresponsive\n  *  Service unavailable for all users\nReal-world impact:\n\n  *  Single malicious request can crash server\n  *  No authentication required\n  *  Easy to automate and scale\n  *  Affects any endpoint parsing query strings with bracket notation",
+      "recommendation": "Upgrade qs to version 6.14.1",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2025-15284"
+        },
+        {
+          "url": "https://github.com/ljharb/qs"
+        },
+        {
+          "url": "https://github.com/ljharb/qs/commit/3086902ecf7f088d0d1803887643ac6c03d415b9"
+        },
+        {
+          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-6rw7-vpxm-498p"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-15284"
+        }
+      ],
+      "published": "2025-12-29T23:15:42Z",
+      "updated": "2025-12-29T23:15:42Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/qs@6.13.0",
+          "versions": [
+            {
+              "version": "6.13.0",
               "status": "affected"
             }
           ]

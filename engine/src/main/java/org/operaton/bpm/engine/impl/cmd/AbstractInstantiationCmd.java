@@ -233,7 +233,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   private void throwIfNoConcurrentInstantiationPossible(ScopeImpl flowScope) {
     if (!supportsConcurrentChildInstantiation(flowScope)) {
       throw new ProcessEngineException(
-          "Concurrent instantiation not possible for activities in scope " + flowScope.getId());
+          "Concurrent instantiation not possible for activities in scope %s".formatted(flowScope.getId()));
     }
   }
 

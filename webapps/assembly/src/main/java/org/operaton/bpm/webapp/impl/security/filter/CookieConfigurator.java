@@ -101,8 +101,9 @@ public class CookieConfigurator {
       } else if (sameSiteCookieOptionInitParam.equalsIgnoreCase(SameSiteOption.STRICT.name())) {
         return SameSiteOption.STRICT.getValue();
       } else {
-        throw new ProcessEngineException("For " + SAME_SITE_OPTION_PARAM + " param, please configure one of the " +
-                "following options: " + Arrays.toString(Arrays.stream(SameSiteOption.values()).map(SameSiteOption::getValue).toArray(String[]::new)));
+        throw new ProcessEngineException("For %s param, please configure one of the following options: %s".formatted(
+                SAME_SITE_OPTION_PARAM,
+                Arrays.toString(Arrays.stream(SameSiteOption.values()).map(SameSiteOption::getValue).toArray(String[]::new))));
       }
     } else { // default
       return SameSiteOption.LAX.getValue();

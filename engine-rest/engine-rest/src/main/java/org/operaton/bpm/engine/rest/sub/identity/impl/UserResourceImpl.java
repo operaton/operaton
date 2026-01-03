@@ -56,7 +56,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
     User dbUser = findUserObject();
     if(dbUser == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "User with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
     }
 
     return UserProfileDto.fromUser(dbUser);
@@ -110,7 +110,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
     User dbUser = findUserObject();
     if(dbUser == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "User with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
     }
 
     dbUser.setPassword(account.getPassword());
@@ -124,7 +124,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
     User dbUser = findUserObject();
     if(dbUser == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "User with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
     }
 
     profile.update(dbUser);

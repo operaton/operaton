@@ -490,14 +490,22 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     List<FieldDeclaration> fieldDeclarations = new ArrayList<>();
 
     for (OperatonField field : fields) {
-      FieldDeclaration fieldDeclaration = initializeFieldDeclaration(element, activity, context, field);
+      FieldDeclaration fieldDeclaration = initializeFieldDeclaration(context, field);
       fieldDeclarations.add(fieldDeclaration);
     }
 
     return fieldDeclarations;
   }
 
+  /**
+   * @deprecated use {@link #initializeFieldDeclaration(CmmnHandlerContext, OperatonField)} instead
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
   protected FieldDeclaration initializeFieldDeclaration(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonField field) {
+    return initializeFieldDeclaration(context, field);
+  }
+
+  protected FieldDeclaration initializeFieldDeclaration(CmmnHandlerContext context, OperatonField field) {
     String name = field.getOperatonName();
     String type = Expression.class.getName();
 

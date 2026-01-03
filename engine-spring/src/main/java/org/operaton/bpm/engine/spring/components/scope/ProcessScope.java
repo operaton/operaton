@@ -84,7 +84,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
         ExecutionEntity executionEntity = null;
         try {
-            logger.fine(() -> "returning scoped object having beanName '" + name + "' for conversation ID '" + this.getConversationId() + "'. ");
+            logger.fine(() -> "returning scoped object having beanName '%s' for conversation ID '%s'. ".formatted(name, this.getConversationId()));
 
             ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
             executionEntity = (ExecutionEntity) processInstance;
@@ -94,7 +94,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
                 scopedObject = objectFactory.getObject();
                 if (scopedObject instanceof ScopedObject sc) {
                     scopedObject = sc.getTargetObject();
-                    logger.fine(() -> "de-referencing " + ScopedObject.class.getName() + "#targetObject before persisting variable");
+                    logger.fine(() -> "de-referencing %s#targetObject before persisting variable".formatted(ScopedObject.class.getName()));
                 }
                 persistVariable(name, scopedObject);
             }
@@ -104,7 +104,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         } finally {
             if (executionEntity != null) {
               String executionEntityId = executionEntity.getId();
-              logger.fine(() -> "set variable '" + name + "' on executionEntity# " + executionEntityId);
+              logger.fine(() -> "set variable '%s' on executionEntity# %s".formatted(name, executionEntityId));
             }
         }
         return null;
@@ -112,7 +112,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
 
   @Override
   public void registerDestructionCallback(String name, Runnable callback) {
-        logger.fine(() -> "no support for registering descruction callbacks implemented currently. registerDestructionCallback('" + name + "',callback) will do nothing.");
+        logger.fine(() -> "no support for registering descruction callbacks implemented currently. registerDestructionCallback('%s',callback) will do nothing.".formatted(name));
     }
 
     private String getExecutionId() {
@@ -122,7 +122,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
   @Override
   public Object remove(String name) {
 
-        logger.fine(() -> "remove '" + name + "'");
+        logger.fine(() -> "remove '%s'".formatted(name));
         return runtimeService.getVariable(getExecutionId(), name);
     }
 
@@ -153,7 +153,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
         ProxyFactory proxyFactoryBean = new ProxyFactory(ProcessInstance.class, (MethodInterceptor) methodInvocation -> {
           String methodName = methodInvocation.getMethod().getName();
 
-          logger.info(() -> "method invocation for " + methodName + ".");
+          logger.info(() -> "method invocation for %s.".formatted(methodName));
           if ("toString".equals(methodName)) {
             return "SharedProcessInstance";
           }
@@ -185,7 +185,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
             if (executionEntity.getVariableNames().contains(varName)) {
                 return executionEntity.getVariable(varName);
             }
-            throw new RuntimeException("no processVariable by the name of '" + varName + "' is available!");
+            throw new RuntimeException("no processVariable by the name of '%s' is available!".formatted(varName));
         }
     };
 
@@ -238,7 +238,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
     private void persistVariable(String variableName, Object scopedObject) {
         ProcessInstance processInstance = Context.getBpmnExecutionContext().getProcessInstance();
         ExecutionEntity executionEntity = (ExecutionEntity) processInstance;
-        Assert.isTrue(scopedObject instanceof Serializable, "the scopedObject is not " + Serializable.class.getName() + "!");
+        Assert.isTrue(scopedObject instanceof Serializable, "the scopedObject is not %s!".formatted(Serializable.class.getName()));
         executionEntity.setVariable(variableName, scopedObject);
     }
 }

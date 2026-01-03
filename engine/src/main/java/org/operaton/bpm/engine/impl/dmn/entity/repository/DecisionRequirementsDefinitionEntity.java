@@ -186,6 +186,7 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
 
   @Override
   public void updateModifiableFieldsFromEntity(DecisionRequirementsDefinitionEntity updatingDefinition) {
+    // nothing to do
   }
 
   /**
@@ -244,8 +245,8 @@ public class DecisionRequirementsDefinitionEntity extends DmnDecisionRequirement
 
   @Override
   public String toString() {
-    return "DecisionRequirementsDefinitionEntity [id=" + id + ", revision=" + revision + ", name=" + name + ", category=" + category + ", key=" + key
-        + ", version=" + version + ", deploymentId=" + deploymentId + ", tenantId=" + tenantId + "]";
+    return "DecisionRequirementsDefinitionEntity [id=%s, revision=%d, name=%s, category=%s, key=%s, version=%d, deploymentId=%s, tenantId=%s]"
+        .formatted(id, revision, name, category, key, version, deploymentId, tenantId);
   }
 
 }

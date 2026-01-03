@@ -196,7 +196,7 @@ public class VariableInstanceQueryDto extends AbstractQueryDto<VariableInstanceQ
         } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.variableValueLike(varName, String.valueOf(variableValue));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }

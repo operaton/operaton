@@ -81,7 +81,7 @@ public class Scenario {
         parentScenario.create(engine, scenarios, scenarioInstanceName);
       }
       else {
-        throw new ProcessEngineException("Extended scenario " + extendedScenario + " not registered");
+        throw new ProcessEngineException("Extended scenario %s not registered".formatted(extendedScenario));
       }
     }
 

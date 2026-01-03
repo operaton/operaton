@@ -64,7 +64,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
         .singleResult();
 
     if (task == null) {
-      throw new RestException(Status.NOT_FOUND, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, "External task with id %s does not exist".formatted(externalTaskId));
     }
 
     return ExternalTaskDto.fromExternalTask(task);
@@ -77,7 +77,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       return externalTaskService.getExternalTaskErrorDetails(externalTaskId);
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     }
   }
 
@@ -93,7 +93,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       externalTaskService.setRetries(externalTaskId, retries);
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     }
   }
 
@@ -104,7 +104,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       externalTaskService.setPriority(externalTaskId, dto.getPriority());
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     }
   }
 
@@ -118,7 +118,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       externalTaskService.complete(externalTaskId, dto.getWorkerId(), variables, localVariables);
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     } catch (BadUserRequestException e) {
       throw new RestException(Status.BAD_REQUEST, e, e.getMessage());
     }
@@ -139,7 +139,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
           VariableValueDto.toMap(dto.getVariables(), engine, objectMapper),
           VariableValueDto.toMap(dto.getLocalVariables(), engine, objectMapper));
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     } catch (BadUserRequestException e) {
       throw new RestException(Status.BAD_REQUEST, e, e.getMessage());
     }
@@ -152,7 +152,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       externalTaskService.handleBpmnError(externalTaskId, dto.getWorkerId(), dto.getErrorCode(), dto.getErrorMessage(), VariableValueDto.toMap(dto.getVariables(), engine, objectMapper));
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     } catch (BadUserRequestException e) {
       throw new RestException(Status.BAD_REQUEST, e, e.getMessage());
     }
@@ -166,7 +166,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
       externalTaskService
           .lock(externalTaskId, lockExternalTaskDto.getWorkerId(), lockExternalTaskDto.getLockDuration());
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     } catch (BadUserRequestException e) {
       throw new RestException(Status.BAD_REQUEST, e, e.getMessage());
     }
@@ -179,7 +179,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       externalTaskService.extendLock(externalTaskId, extendLockDto.getWorkerId(), extendLockDto.getNewDuration());
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     } catch (BadUserRequestException e) {
       throw new RestException(Status.BAD_REQUEST, e, e.getMessage());
     }
@@ -192,7 +192,7 @@ public class ExternalTaskResourceImpl implements ExternalTaskResource {
     try {
       externalTaskService.unlock(externalTaskId);
     } catch (NotFoundException e) {
-      throw new RestException(Status.NOT_FOUND, e, "External task with id " + externalTaskId + " does not exist");
+      throw new RestException(Status.NOT_FOUND, e, "External task with id %s does not exist".formatted(externalTaskId));
     }
   }
 }

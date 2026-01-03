@@ -1540,7 +1540,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected CommandInterceptor initInterceptorChain(List<CommandInterceptor> chain) {
     if (chain == null || chain.isEmpty()) {
-      throw new ProcessEngineException("invalid command interceptor chain configuration: " + chain);
+      throw new ProcessEngineException("invalid command interceptor chain configuration: %s".formatted(chain));
     }
     for (int i = 0; i < chain.size() - 1; i++) {
       chain.get(i).setNext(chain.get(i + 1));
@@ -1811,7 +1811,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
 
         } catch (Exception e) {
-          throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: " + e.getMessage(), e);
+          throw new ProcessEngineException("Error while building ibatis SqlSessionFactory: %s".formatted(e.getMessage()), e);
         }
       }
     }
@@ -2374,7 +2374,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     // do allow null for history level in case of "auto"
     if (historyLevel == null && !ProcessEngineConfiguration.HISTORY_AUTO.equalsIgnoreCase(history)) {
-      throw new ProcessEngineException("invalid history level: " + history);
+      throw new ProcessEngineException("invalid history level: %s".formatted(history));
     }
   }
 

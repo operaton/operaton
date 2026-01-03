@@ -53,7 +53,7 @@ public class ProcessesXmlStopProcessEnginesStep extends DeploymentOperationStep 
     final AbstractProcessApplication processApplication = operationContext.getAttachment(Attachments.PROCESS_APPLICATION);
     final JmxManagedProcessApplication deployedProcessApplication = serviceContainer.getService(ServiceTypes.PROCESS_APPLICATION, processApplication.getName());
 
-    ensureNotNull("Cannot find process application with name " + processApplication.getName(), "deployedProcessApplication", deployedProcessApplication);
+    ensureNotNull("Cannot find process application with name %s".formatted(processApplication.getName()), "deployedProcessApplication", deployedProcessApplication);
 
     List<ProcessesXml> processesXmls = deployedProcessApplication.getProcessesXmls();
     for (ProcessesXml processesXml : processesXmls) {

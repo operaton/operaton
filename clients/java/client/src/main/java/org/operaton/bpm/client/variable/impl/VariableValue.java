@@ -76,11 +76,8 @@ public class VariableValue<T extends TypedValue> {
 
   @Override
   public String toString() {
-    return "VariableValue ["
-        + "cachedValue=" + cachedValue + ", "
-        + "executionId=" + executionId + ", "
-        + "variableName=" + variableName + ", "
-        + "typedValueField=" + typedValueField + "]";
+    return "VariableValue [cachedValue=%s, executionId=%s, variableName=%s, typedValueField=%s]"
+        .formatted(cachedValue, executionId, variableName, typedValueField);
   }
 
 

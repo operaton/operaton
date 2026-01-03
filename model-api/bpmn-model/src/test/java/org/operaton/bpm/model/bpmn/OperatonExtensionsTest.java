@@ -1233,7 +1233,7 @@ public class OperatonExtensionsTest {
         return operatonInputParameter;
       }
     }
-    throw new BpmnModelException("Unable to find operaton:inputParameter with name '" + name + "' for element with id '" + baseElement.getId() + "'");
+    throw new BpmnModelException("Unable to find operaton:inputParameter with name '%s' for element with id '%s'".formatted(name, baseElement.getId()));
   }
 
   @AfterEach

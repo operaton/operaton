@@ -182,7 +182,7 @@ public class ProcessInstanceSnapshot {
       return collectedJobs.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job for job definition " + jobDefinitionId);
+      throw new RuntimeException("There is more than one job for job definition %s".formatted(jobDefinitionId));
     }
   }
 

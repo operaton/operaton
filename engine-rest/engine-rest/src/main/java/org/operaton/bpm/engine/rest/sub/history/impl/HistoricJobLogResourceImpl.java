@@ -50,7 +50,7 @@ public class HistoricJobLogResourceImpl implements HistoricJobLogResource {
         .singleResult();
 
     if (historicJobLog == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic job log with id " + id + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic job log with id %s does not exist".formatted(id));
     }
 
     return HistoricJobLogDto.fromHistoricJobLog(historicJobLog);

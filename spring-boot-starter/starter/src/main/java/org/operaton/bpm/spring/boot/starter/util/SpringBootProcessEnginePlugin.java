@@ -59,6 +59,6 @@ public class SpringBootProcessEnginePlugin extends SpringProcessEnginePlugin {
   }
 
   public void postProcessEngineBuild(ProcessEngineImpl processEngine) {
-
+    // noop
   }
 }

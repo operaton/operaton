@@ -162,7 +162,7 @@ public class Dmn {
       result = doReadModelFromInputStream(is);
 
     } catch (FileNotFoundException e) {
-      throw new DmnModelException("Cannot read model from file " + file + ": file does not exist.");
+      throw new DmnModelException("Cannot read model from file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new DmnModelException("Cannot read model from file " + file, e);
     }
@@ -177,7 +177,7 @@ public class Dmn {
     try (OutputStream os = new FileOutputStream(file)) {
       doWriteModelToOutputStream(os, modelInstance);
     } catch (FileNotFoundException e) {
-      throw new DmnModelException("Cannot write model to file " + file + ": file does not exist.");
+      throw new DmnModelException("Cannot write model to file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new DmnModelException("Cannot write model to file " + file, e);
     }

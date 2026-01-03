@@ -5343,6 +5343,7 @@ class TaskQueryTest {
         .operatonHistoryTimeToLive(180)
         .startEvent()
       .userTask()
+        .operatonCandidateUsers("anna")
         .operatonCandidateGroups("sales")
       .endEvent()
       .done();

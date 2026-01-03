@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
@@ -59,6 +61,15 @@ import static org.assertj.core.api.Assertions.fail;
  *
  */
 class MigrationUserTaskTest {
+  private static final String NO_TIMEOUT_TASK_LISTENER = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml";
+  private static final String ONE_TIMEOUT_TASK_LISTENER = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml";
+  private static final String NO_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml";
+  private static final String ONE_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml";
+  private static final String CHANGED_TIMEOUT_TASK_LISTENER = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml";
+  private static final String ONE_TIMEOUT_TASK_LISTENER_DIFFERENT_TASK = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml";
+  private static final String TWO_TIMEOUT_TASK_LISTENERS = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListeners.bpmn20.xml";
+  private static final String TWO_TIMEOUT_TASK_LISTENERS_PAST_DATE = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListenersPastDate.bpmn20.xml";
+  private static final String CHANGED_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT = "org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml";
 
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
@@ -322,14 +333,42 @@ class MigrationUserTaskTest {
 
   }
 
+  @ParameterizedTest
+  @CsvSource({
+    NO_TIMEOUT_TASK_LISTENER + "," + ONE_TIMEOUT_TASK_LISTENER,
+    NO_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT + "," + ONE_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT
+  })
+  void taskListenerTimerJobCreated(String sourceBpmnResource, String targetBpmnResource) {
+    // given
+    String sourceProcessDefinitionId = testHelper
+      .deployAndGetDefinition(sourceBpmnResource)
+      .getId();
+    String targetProcessDefinitionId = testHelper
+      .deployAndGetDefinition(targetBpmnResource)
+      .getId();
+
+    MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
+      .mapEqualActivities()
+      .build();
+
+    // when
+    ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
+
+    // then
+    testHelper.assertTaskListenerTimerJobCreated("userTask");
+
+    // and the task listener was able to access the bpmn model instance and set a variable
+    testTimeoutListenerCanBeTriggered(processInstance, "userTask");
+  }
+
   @Test
   void testAccessModelInNewTimeoutTaskListenerAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -350,10 +389,10 @@ class MigrationUserTaskTest {
   void testTimeoutTaskListenerRemovedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -367,15 +406,19 @@ class MigrationUserTaskTest {
     testHelper.assertTaskListenerTimerJobRemoved("userTask");
   }
 
-  @Test
-  void testTimeoutTaskListenerMigratedAfterMigration() {
+  @ParameterizedTest
+  @CsvSource({
+    ONE_TIMEOUT_TASK_LISTENER + "," + CHANGED_TIMEOUT_TASK_LISTENER,
+    ONE_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT + "," + CHANGED_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT
+  })
+  void timeoutTaskListenerMigrated(String sourceBpmnResource, String targetBpmnResource) {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
-        .getId();
+      .deployAndGetDefinition(sourceBpmnResource)
+      .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml")
-        .getId();
+      .deployAndGetDefinition(sourceBpmnResource)
+      .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
       .mapEqualActivities()
@@ -397,11 +440,11 @@ class MigrationUserTaskTest {
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
-        .getId();
+      .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
+      .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml")
-        .getId();
+      .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER)
+      .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
       .mapEqualActivities().updateEventTriggers()
@@ -413,9 +456,9 @@ class MigrationUserTaskTest {
     // then
     Date newDueDate = new DateTime(ClockUtil.getCurrentTime()).plusHours(3).toDate();
     testHelper.assertJobMigrated(
-        testHelper.snapshotBeforeMigration.getJobs().get(0),
-        "userTask",
-        newDueDate);
+      testHelper.snapshotBeforeMigration.getJobs().get(0),
+      "userTask",
+      newDueDate);
 
     // and the task listener was able to access the bpmn model instance and set a variable
     testTimeoutListenerCanBeTriggered(processInstance, "userTask");
@@ -425,10 +468,10 @@ class MigrationUserTaskTest {
   void testAccessModelInNewTimeoutTaskListenerAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_DIFFERENT_TASK)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -451,10 +494,10 @@ class MigrationUserTaskTest {
   void testTimeoutTaskListenerRemovedAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_DIFFERENT_TASK)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -474,10 +517,10 @@ class MigrationUserTaskTest {
   void testTimeoutTaskListenerMigratedAfterMigrationToDifferentUserTask() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_DIFFERENT_TASK)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -502,10 +545,10 @@ class MigrationUserTaskTest {
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerDifferentTask.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_DIFFERENT_TASK)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -529,10 +572,10 @@ class MigrationUserTaskTest {
   void testAccessModelInNewTimeoutTaskListenerAfterMultipleListenerMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListeners.bpmn20.xml")
+        .deployAndGetDefinition(TWO_TIMEOUT_TASK_LISTENERS)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -555,10 +598,10 @@ class MigrationUserTaskTest {
   void testOneTimeoutTaskListenerRemovedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListeners.bpmn20.xml")
+        .deployAndGetDefinition(TWO_TIMEOUT_TASK_LISTENERS)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -580,10 +623,10 @@ class MigrationUserTaskTest {
   void testOneTimeoutTaskListenerAddedAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListeners.bpmn20.xml")
+        .deployAndGetDefinition(TWO_TIMEOUT_TASK_LISTENERS)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -609,10 +652,10 @@ class MigrationUserTaskTest {
   void testTriggeredTimeoutTaskListenerNotStartedAgainAfterMigration() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListenersPastDate.bpmn20.xml")
+        .deployAndGetDefinition(TWO_TIMEOUT_TASK_LISTENERS_PAST_DATE)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.twoTimeoutTaskListenersPastDate.bpmn20.xml")
+        .deployAndGetDefinition(TWO_TIMEOUT_TASK_LISTENERS_PAST_DATE)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -633,92 +676,13 @@ class MigrationUserTaskTest {
   }
 
   @Test
-  void testTimeoutTaskListenerMigratedAfterMultipleListenerMigration() {
-    // given
-    String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
-        .getId();
-    String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml")
-        .getId();
-
-    MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
-      .mapEqualActivities()
-      .build();
-
-    // when
-    ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
-
-    // then
-    testHelper.assertTaskListenerTimerJobMigrated("userTask", "userTask");
-
-    // and the task listener was able to access the bpmn model instance and set a variable
-    testTimeoutListenerCanBeTriggered(processInstance, "userTask");
-  }
-
-  @Test
-  void testTimeoutTaskListenerMigratedAndUpdatedAfterMultipleListenerMigration() {
-    // given
-    ClockTestUtil.setClockToDateWithoutMilliseconds();
-
-    String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
-        .getId();
-    String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListener.bpmn20.xml")
-        .getId();
-
-    MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
-      .mapEqualActivities().updateEventTriggers()
-      .build();
-
-    // when
-    ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
-
-    // then
-    Date newDueDate = new DateTime(ClockUtil.getCurrentTime()).plusHours(3).toDate();
-    testHelper.assertJobMigrated(
-        testHelper.snapshotBeforeMigration.getJobs().get(0),
-        "userTask",
-        newDueDate);
-
-    // and the task listener was able to access the bpmn model instance and set a variable
-    testTimeoutListenerCanBeTriggered(processInstance, "userTask");
-  }
-
-  @Test
-  void testAccessModelInMigratedTimeoutTaskListenerAfterMigrationToDifferentUserTask() {
-    // given
-    String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListener.bpmn20.xml")
-        .getId();
-    String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListener.bpmn20.xml")
-        .getId();
-
-    MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
-      .mapEqualActivities()
-      .build();
-
-    // when
-    ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
-
-    // then
-    testHelper.assertTaskListenerTimerJobCreated("userTask");
-
-    // and the task listener was able to access the bpmn model instance and set a variable
-    testTimeoutListenerCanBeTriggered(processInstance, "userTask");
-  }
-
-
-  @Test
   void testAccessModelInNewTimeoutTaskListenerAfterMigrationWithBoundaryEvent() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -739,10 +703,10 @@ class MigrationUserTaskTest {
   void testTimeoutTaskListenerRemovedAfterMigrationWithBoundaryEvent() {
     // given
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.noTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
+        .deployAndGetDefinition(NO_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
@@ -757,39 +721,15 @@ class MigrationUserTaskTest {
   }
 
   @Test
-  void testTimeoutTaskListenerMigratedAfterMigrationWithBoundaryEvent() {
-    // given
-    String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
-        .getId();
-    String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
-        .getId();
-
-    MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)
-      .mapEqualActivities()
-      .build();
-
-    // when
-    ProcessInstance processInstance = testHelper.createProcessInstanceAndMigrate(migrationPlan);
-
-    // then
-    testHelper.assertTaskListenerTimerJobMigrated("userTask", "userTask");
-
-    // and the task listener was able to access the bpmn model instance and set a variable
-    testTimeoutListenerCanBeTriggered(processInstance, "userTask");
-  }
-
-  @Test
   void testTimeoutTaskListenerMigratedAndUpdatedAfterMigrationWithBoundaryEvent() {
     // given
     ClockTestUtil.setClockToDateWithoutMilliseconds();
 
     String sourceProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.oneTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
+        .deployAndGetDefinition(ONE_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT)
         .getId();
     String targetProcessDefinitionId = testHelper
-        .deployAndGetDefinition("org/operaton/bpm/engine/test/api/runtime/migration/MigrationUserTaskTest.changedTimeoutTaskListenerWithBoundaryEvent.bpmn20.xml")
+        .deployAndGetDefinition(CHANGED_TIMEOUT_TASK_LISTENER_WITH_BOUNDARY_EVENT)
         .getId();
 
     MigrationPlan migrationPlan = rule.getRuntimeService().createMigrationPlan(sourceProcessDefinitionId, targetProcessDefinitionId)

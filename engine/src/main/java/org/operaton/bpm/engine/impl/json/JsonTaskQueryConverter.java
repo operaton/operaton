@@ -124,6 +124,8 @@ public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
 
   /**
    * Exists for backwards compatibility with Camunda 7.2; deprecated since Camunda 7.3
+   * 
+   * @deprecated since 1.0, use {@link #ORDERING_PROPERTIES} instead for specifying task query ordering.
    */
   @Deprecated(forRemoval = true, since = "1.0")
   public static final String ORDER_BY = "orderBy";

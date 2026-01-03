@@ -229,12 +229,12 @@ class MigrationAddSubprocessTest {
   void testConcurrentThreeUserTaskMigration() {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.PARALLEL_GATEWAY_PROCESS)
-        .getBuilderForElementById("fork", ParallelGatewayBuilder.class)
+        .<ParallelGatewayBuilder>getBuilderForElementById("fork")
         .userTask("userTask3")
         .endEvent()
         .done());
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS)
-      .getBuilderForElementById("fork", ParallelGatewayBuilder.class)
+      .<ParallelGatewayBuilder>getBuilderForElementById("fork")
         .userTask("userTask3")
         .endEvent()
         .done());

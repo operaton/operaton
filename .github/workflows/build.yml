@@ -66,12 +66,6 @@ on:
         required: true
         default: false
 
-permissions:
-  contents: read
-  checks: write
-  id-token: write
-  actions: write
-
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
@@ -80,6 +74,8 @@ jobs:
   lint-adr:
     name: Lint ADRs
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v6
@@ -96,6 +92,10 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      checks: write
+      actions: write
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6
@@ -158,7 +158,7 @@ jobs:
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
+        uses: mikepenz/action-junit-report@a294a61c909bd8a4b563024a2faa28897fd53ebc #v6.1.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
@@ -195,6 +195,9 @@ jobs:
     name: Publish
     needs: build
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: write
     env:
       GH_TOKEN: ${{ github.token }}
     steps:

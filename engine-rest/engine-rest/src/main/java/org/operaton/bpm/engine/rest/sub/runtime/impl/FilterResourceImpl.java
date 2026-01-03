@@ -432,10 +432,10 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
       if (EntityTypes.TASK.equals(resourceType)) {
         return getObjectMapper().readValue(queryString, TaskQueryDto.class);
       } else {
-        throw new InvalidRequestException(Status.BAD_REQUEST, "Queries for resource type '" + resourceType + "' are currently not supported by filters.");
+        throw new InvalidRequestException(Status.BAD_REQUEST, "Queries for resource type '%s' are currently not supported by filters.".formatted(resourceType));
       }
     } catch (IOException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Invalid query for resource type '" + resourceType + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Invalid query for resource type '%s'".formatted(resourceType));
     }
   }
 
@@ -489,7 +489,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
         return collectVariableNames(variables);
       }
       catch (Exception e) {
-        throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, e, "Filter property '" + PROPERTIES_VARIABLES_KEY + "' has to be a list of variable definitions with a '" + PROPERTIES_VARIABLES_NAME_KEY + "' property");
+        throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, e, "Filter property '%s' has to be a list of variable definitions with a '%s' property".formatted(PROPERTIES_VARIABLES_KEY, PROPERTIES_VARIABLES_NAME_KEY));
       }
     }
     else {
@@ -568,7 +568,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected InvalidRequestException filterNotFound(Exception cause) {
-    return new InvalidRequestException(Status.NOT_FOUND, cause, "Filter with id '" + resourceId + "' does not exist.");
+    return new InvalidRequestException(Status.NOT_FOUND, cause, "Filter with id '%s' does not exist.".formatted(resourceId));
   }
 
   protected InvalidRequestException invalidQuery(Exception cause) {
@@ -576,7 +576,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected InvalidRequestException unsupportedEntityClass(Object entity) {
-    return new InvalidRequestException(Status.BAD_REQUEST, "Entities of class '" + entity.getClass().getCanonicalName() + "' are currently not supported by filters.");
+    return new InvalidRequestException(Status.BAD_REQUEST, "Entities of class '%s' are currently not supported by filters.".formatted(entity.getClass().getCanonicalName()));
   }
 
 }

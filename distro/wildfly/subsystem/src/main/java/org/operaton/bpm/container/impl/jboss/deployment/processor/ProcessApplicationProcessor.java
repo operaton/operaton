@@ -194,8 +194,8 @@ public class ProcessApplicationProcessor implements DeploymentUnitProcessor {
           paComponent = componentsByClassName.get(0);
 
         } else {
-          throw new DeploymentUnitProcessingException("Class " + paClassName + " is annotated with @" + ProcessApplication.class.getSimpleName()
-              + " but is neither a JakartaServletProcessApplication nor an EJB Session Bean Component.");
+          throw new DeploymentUnitProcessingException("Class %s is annotated with @%s but is neither a JakartaServletProcessApplication nor an EJB Session Bean Component.".formatted(
+              paClassName, ProcessApplication.class.getSimpleName()));
 
         }
 

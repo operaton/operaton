@@ -51,7 +51,6 @@ public abstract class AttributeReferenceCollection<T extends ModelElementInstanc
     String referencingIdentifier = getReferenceIdentifier(referenceSourceElement);
     List<String> references = StringUtil.splitListBySeparator(referencingIdentifier, separator);
     if(oldIdentifier != null && references.contains(oldIdentifier)) {
-      referencingIdentifier = referencingIdentifier.replace(oldIdentifier, newIdentifier);
       setReferenceIdentifier(referenceSourceElement, newIdentifier);
     }
   }

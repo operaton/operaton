@@ -92,7 +92,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
 
   @Override
   public DeploymentBuilder addInputStream(String resourceName, InputStream inputStream) {
-    ensureNotNull("inputStream for resource '" + resourceName + "' is null", "inputStream", inputStream);
+    ensureNotNull("inputStream for resource '%s' is null".formatted(resourceName), "inputStream", inputStream);
     byte[] bytes = IoUtil.readInputStream(inputStream, resourceName);
 
     return addBytes(resourceName, bytes);
@@ -101,7 +101,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   @Override
   public DeploymentBuilder addClasspathResource(String resource) {
     InputStream inputStream = ReflectUtil.getResourceAsStream(resource);
-    ensureNotNull("resource '" + resource + "' not found", "inputStream", inputStream);
+    ensureNotNull("resource '%s' not found".formatted(resource), "inputStream", inputStream);
     return addInputStream(resource, inputStream);
   }
 

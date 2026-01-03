@@ -54,7 +54,7 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
 
     Group dbGroup = findGroupObject();
     if(dbGroup == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Group with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Group with id %s does not exist".formatted(resourceId));
     }
 
     return GroupDto.fromGroup(dbGroup);
@@ -90,7 +90,7 @@ public class GroupResourceImpl extends AbstractIdentityResource implements Group
 
     Group dbGroup = findGroupObject();
     if(dbGroup == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Group with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Group with id %s does not exist".formatted(resourceId));
     }
 
     group.update(dbGroup);

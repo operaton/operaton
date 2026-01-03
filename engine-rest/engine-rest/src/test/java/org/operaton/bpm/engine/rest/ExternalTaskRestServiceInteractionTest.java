@@ -1652,9 +1652,9 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
      .body(parameters)
     .then()
      .expect()
-     .statusCode(Status.OK.getStatusCode())
+     .statusCode(Status.NO_CONTENT.getStatusCode())
     .when()
-     .post(RETRIES_EXTERNAL_TASKS_ASYNC_URL);
+     .put(RETRIES_EXTERNAL_TASK_SYNC_URL);
 
     verify(externalTaskService).updateRetries();
     verifyNoMoreInteractions(externalTaskService);
@@ -1664,7 +1664,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     verify(updateRetriesBuilder).externalTaskQuery(null);
     verify(updateRetriesBuilder).processInstanceQuery(null);
     verify(updateRetriesBuilder).historicProcessInstanceQuery(null);
-    verify(updateRetriesBuilder).setAsync(5);
+    verify(updateRetriesBuilder).set(5);
     verifyNoMoreInteractions(updateRetriesBuilder);
   }
 

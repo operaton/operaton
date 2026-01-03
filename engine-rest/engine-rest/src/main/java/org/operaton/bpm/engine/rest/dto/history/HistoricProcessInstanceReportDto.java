@@ -98,7 +98,7 @@ public class HistoricProcessInstanceReportDto extends AbstractReportDto<Historic
       reportQuery.startedBefore(startedBefore);
     }
     if (!REPORT_TYPE_DURATION.equals(reportType)) {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Unknown report type " + reportType);
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Unknown report type %s".formatted(reportType));
     }
   }
 

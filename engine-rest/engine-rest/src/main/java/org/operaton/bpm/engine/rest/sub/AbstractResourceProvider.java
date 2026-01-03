@@ -52,7 +52,7 @@ public abstract class AbstractResourceProvider<T extends Query<?, U>, U, DTO> {
     if (variableInstance != null) {
       return transformToDto(variableInstance);
     } else {
-      throw new InvalidRequestException(Status.NOT_FOUND, getResourceNameForErrorMessage() + " with Id '" + id + "' does not exist.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "%s with Id '%s' does not exist.".formatted(getResourceNameForErrorMessage(), id));
     }
   }
 
@@ -65,7 +65,7 @@ public abstract class AbstractResourceProvider<T extends Query<?, U>, U, DTO> {
       TypedValue variableInstance = transformQueryResultIntoTypedValue(queryResult);
       return new VariableResponseProvider().getResponseForTypedVariable(variableInstance, id);
     } else {
-      throw new InvalidRequestException(Status.NOT_FOUND, getResourceNameForErrorMessage() + " with Id '" + id + "' does not exist.");
+      throw new InvalidRequestException(Status.NOT_FOUND, "%s with Id '%s' does not exist.".formatted(getResourceNameForErrorMessage(), id));
     }
   }
 

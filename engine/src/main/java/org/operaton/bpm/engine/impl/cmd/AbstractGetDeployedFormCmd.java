@@ -90,7 +90,7 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
         new GetOperatonFormDefinitionCmd(operatonFormRef, deploymentId));
 
     if (definition == null) {
-      throw new NotFoundException("No Operaton Form Definition was found for Operaton Form Ref: " + operatonFormRef);
+      throw new NotFoundException("No Operaton Form Definition was found for Operaton Form Ref: %s".formatted(operatonFormRef));
     }
 
     return getDeploymentResource(definition.getDeploymentId(), definition.getResourceName());

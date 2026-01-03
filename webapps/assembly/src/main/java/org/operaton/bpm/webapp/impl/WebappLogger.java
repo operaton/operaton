@@ -33,7 +33,7 @@ public class WebappLogger extends BaseLogger {
 
   public InvalidRequestException invalidRequestEngineNotFoundForName(String engineName) {
     return new InvalidRequestException(Status.BAD_REQUEST,
-        "Process engine with name " + engineName + " does not exist");
+        "Process engine with name %s does not exist".formatted(engineName));
   }
 
   public InvalidRequestException setupActionNotAvailable() {
@@ -41,7 +41,7 @@ public class WebappLogger extends BaseLogger {
   }
 
   public RestException processEngineProviderNotFound() {
-    return new RestException(Status.BAD_REQUEST, "Could not find an implementation of the " + ProcessEngineProvider.class + "- SPI");
+    return new RestException(Status.BAD_REQUEST, "Could not find an implementation of the %s- SPI".formatted(ProcessEngineProvider.class));
   }
 
   public void infoWebappSuccessfulLogin(String username) {

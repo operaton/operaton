@@ -149,10 +149,10 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
       } catch (InstantiationException | NoSuchMethodException | IllegalAccessException e) {
         throw new RestException(Status.INTERNAL_SERVER_ERROR, e, "Server error.");
       } catch (InvocationTargetException e) {
-        throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot set query parameter '" + key + "' to value '" + value + "'");
+        throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot set query parameter '%s' to value '%s'".formatted(key, value));
       } catch (RestException e) {
         throw new InvalidRequestException(e.getStatus(), e,
-            "Cannot set query parameter '" + key + "' to value '" + value + "': " + e.getMessage());
+            "Cannot set query parameter '%s' to value '%s': %s".formatted(key, value, e.getMessage()));
       }
     }
   }

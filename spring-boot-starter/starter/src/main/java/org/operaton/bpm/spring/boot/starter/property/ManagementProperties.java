@@ -41,7 +41,7 @@ public class ManagementProperties {
 
   @Override
   public String toString() {
-    return "ManagementProperties [health=" + health + "]";
+    return "ManagementProperties [health=%s]".formatted(health);
   }
 
   public static class Health {

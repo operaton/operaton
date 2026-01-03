@@ -99,7 +99,7 @@ public class FilterRestServiceImpl extends AbstractAuthorizedRestResource implem
       filter = filterService.newTaskFilter();
     }
     else {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Unable to create filter with invalid resource type '" + resourceType + "'");
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Unable to create filter with invalid resource type '%s'".formatted(resourceType));
     }
 
     try {

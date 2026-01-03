@@ -40,7 +40,7 @@ public final class ObjectProperty {
     String[] tokens = setterMethodName.split("set");
 
     if (tokens.length < 2) {
-      throw new IllegalArgumentException("The given method name : " + setterMethodName + " is not a setter method");
+      throw new IllegalArgumentException("The given method name : %s is not a setter method".formatted(setterMethodName));
     }
 
     String propertyName = tokens[1];

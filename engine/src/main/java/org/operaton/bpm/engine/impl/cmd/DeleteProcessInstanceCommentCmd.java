@@ -58,7 +58,7 @@ public class DeleteProcessInstanceCommentCmd implements Command<Object>, Seriali
     ensureNotNull(BadUserRequestException.class, "processInstanceId", processInstanceId);
 
     ExecutionEntity processInstance = commandContext.getExecutionManager().findExecutionById(processInstanceId);
-    ensureNotNull("No processInstance exists with processInstanceId: " + processInstanceId, "processInstance",
+    ensureNotNull("No processInstance exists with processInstanceId: %s".formatted(processInstanceId), "processInstance",
         processInstance);
 
     checkUpdateProcessInstanceById(processInstanceId, commandContext);

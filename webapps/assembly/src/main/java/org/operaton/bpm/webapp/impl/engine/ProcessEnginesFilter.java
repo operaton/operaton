@@ -263,7 +263,7 @@ public class ProcessEnginesFilter extends AbstractTemplateFilter {
                                 HttpServletResponse response,
                                 ServletContext servletContext) throws IOException {
     setWebappInTelemetry(engineName, appName, servletContext);
-    String data = getWebResourceContents("/app/" + appName + "/index.html");
+    String data = getWebResourceContents("/app/%s/index.html".formatted(appName));
     final String cspNonce = (String) servletContext.getAttribute(ContentSecurityPolicyProvider.ATTR_CSP_FILTER_NONCE);
 
     data = replacePlaceholder(data, appName, engineName, applicationPath, contextPath, cspNonce);

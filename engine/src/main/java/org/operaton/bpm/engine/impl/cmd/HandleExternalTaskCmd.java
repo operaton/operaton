@@ -47,7 +47,7 @@ public abstract class HandleExternalTaskCmd extends ExternalTaskCmd {
 
     ExternalTaskEntity externalTask = commandContext.getExternalTaskManager().findExternalTaskById(externalTaskId);
     EnsureUtil.ensureNotNull(NotFoundException.class,
-        "Cannot find external task with id " + externalTaskId, "externalTask", externalTask);
+        "Cannot find external task with id %s".formatted(externalTaskId), "externalTask", externalTask);
 
     if (validateWorkerViolation(externalTask)) {
       throw new BadUserRequestException("%s. It is locked by worker '%s'.".formatted(getErrorMessageOnWrongWorkerAccess(), externalTask.getWorkerId()));

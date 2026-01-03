@@ -197,7 +197,7 @@ class SetProcessDefinitionVersionCmdTest {
       commandExecutor.execute(setProcessDefinitionVersionCmd);
       fail("ProcessEngineException expected");
     } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("The new process definition (key = 'receiveTask') does not contain the current activity (id = 'waitState1') of the process instance (id = '", ae.getMessage());
+       testRule.assertTextPresent("The new process definition (key = 'receiveTask') does not contain the current activity 'waitState1' of the process instance '", ae.getMessage());
     }
 
     // undeploy "manually" deployed process definition

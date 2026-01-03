@@ -17,9 +17,13 @@
 package org.operaton.bpm.engine.history;
 
 
-/** A single field that was submitted in either a start form or a task form.
+/**
+ * A single field that was submitted in either a start form or a task form.
  * This is the audit information that can be used to trace who supplied which
  * input for which tasks at what time.
+ *
+ * @deprecated since 1.0, historic form properties are deprecated. Use {@link HistoricVariableInstance}
+ *             instead to access historic variable data from forms.
  *
  * @author Tom Baeyens
  */

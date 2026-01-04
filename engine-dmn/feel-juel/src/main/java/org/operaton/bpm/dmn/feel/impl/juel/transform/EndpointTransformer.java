@@ -34,7 +34,7 @@ public class EndpointTransformer implements FeelToJuelTransformer {
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     Matcher matcher = DATE_AND_TIME_PATTERN.matcher(feelExpression);
     if (matcher.matches()) {
-      return "%s(%s)".formatted(JUEL_DATE_AND_TIME_METHOD, matcher.group(1));
+      return JUEL_DATE_AND_TIME_METHOD + "(" + matcher.group(1) + ")";
     }
     else {
       return feelExpression;

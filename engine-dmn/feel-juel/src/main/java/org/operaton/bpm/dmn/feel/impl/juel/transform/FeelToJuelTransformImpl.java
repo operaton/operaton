@@ -49,7 +49,7 @@ public class FeelToJuelTransformImpl implements FeelToJuelTransform {
       juelExpression = transformSimplePositiveUnaryTests(simpleUnaryTests, inputName);
     }
 
-    return "${%s}".formatted(juelExpression);
+    return "${" + juelExpression + "}";
   }
 
   @Override

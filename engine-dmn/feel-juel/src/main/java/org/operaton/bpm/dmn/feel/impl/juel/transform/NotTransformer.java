@@ -36,7 +36,7 @@ public class NotTransformer implements FeelToJuelTransformer {
   public String transform(FeelToJuelTransform transform, String feelExpression, String inputName) {
     String simplePositiveUnaryTests = extractInnerExpression(feelExpression);
     String juelExpression = transform.transformSimplePositiveUnaryTests(simplePositiveUnaryTests, inputName);
-    return "not(%s)".formatted(juelExpression);
+    return "not(" + juelExpression + ")";
   }
 
   public String extractInnerExpression(String feelExpression) {

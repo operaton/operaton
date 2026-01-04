@@ -39,7 +39,7 @@ public class UrlStreamSource implements StreamSource {
     try {
       return url.openStream();
     } catch (IOException e) {
-      throw new ProcessEngineException("couldn't open url '"+url+"'", e);
+      throw new ProcessEngineException("couldn't open url '%s'".formatted(url), e);
     }
   }
 }

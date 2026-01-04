@@ -94,7 +94,7 @@ public class HalLinker {
         return Collections.emptyList();
       }
     } else {
-      throw new RuntimeException("Cannot find HAL link resolver for resource type '"+relation.resourceType+"'.");
+      throw new RuntimeException("Cannot find HAL link resolver for resource type '%s'.".formatted(relation.resourceType));
     }
   }
 

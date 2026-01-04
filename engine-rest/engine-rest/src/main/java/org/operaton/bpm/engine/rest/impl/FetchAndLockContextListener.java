@@ -57,7 +57,7 @@ public class FetchAndLockContextListener implements ServletContextListener {
       return iterator.next();
     } else {
       throw new RestException(Response.Status.INTERNAL_SERVER_ERROR,
-        "Could not find an implementation of the " + FetchAndLockHandler.class.getSimpleName() + "- SPI");
+        "Could not find an implementation of the %s - SPI".formatted(FetchAndLockHandler.class.getSimpleName()));
     }
   }
 

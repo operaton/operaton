@@ -100,7 +100,7 @@ public class FreeMarkerScriptEngineFactory implements ScriptEngineFactory {
 
   @Override
   public String getMethodCallSyntax(String object, String method, String... args) {
-    return "${" + object + "." + method + "(" + joinStrings(", ", args) + ")}";
+    return "${%s.%s(%s)}".formatted(object, method, joinStrings(", ", args));
   }
 
   @Override

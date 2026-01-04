@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -46,21 +47,20 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  */
 public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessInstanceQuery, ProcessInstance> implements ProcessInstanceQuery, Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 1L;
   protected String processInstanceId;
   protected String rootProcessInstanceId;
   protected String businessKey;
   protected String businessKeyLike;
   protected String processDefinitionId;
-  protected Set<String> processInstanceIds;
+  private Set<String> processInstanceIds;
   protected String processDefinitionKey;
   protected String[] processDefinitionKeys;
   protected String[] processDefinitionKeyNotIn;
   protected String deploymentId;
   protected String superProcessInstanceId;
   protected String subProcessInstanceId;
-  protected SuspensionState suspensionState;
+  private SuspensionState suspensionState;
   protected boolean withIncident;
   protected String incidentType;
   protected String incidentId;
@@ -78,7 +78,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
   protected boolean isProcessDefinitionWithoutTenantId;
 
   // or query /////////////////////////////
-  protected List<ProcessInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
+  private List<ProcessInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive;
 
   public ProcessInstanceQueryImpl() {
@@ -105,7 +105,7 @@ public class ProcessInstanceQueryImpl extends AbstractVariableQueryImpl<ProcessI
   @Override
   public ProcessInstanceQuery processInstanceIds(Set<String> processInstanceIds) {
     ensureNotEmpty("Set of process instance ids", processInstanceIds);
-    this.processInstanceIds = processInstanceIds;
+    this.processInstanceIds = new HashSet<>(processInstanceIds);
     return this;
   }
 

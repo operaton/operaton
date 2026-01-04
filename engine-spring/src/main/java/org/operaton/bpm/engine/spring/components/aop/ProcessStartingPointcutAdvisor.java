@@ -15,7 +15,6 @@
  */
 package org.operaton.bpm.engine.spring.components.aop;
 
-import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -43,7 +42,7 @@ import org.operaton.bpm.engine.spring.components.aop.util.MetaAnnotationMatching
  * @author Josh Long
  * @since 5.3
  */
-public class ProcessStartingPointcutAdvisor implements PointcutAdvisor, Serializable {
+public class ProcessStartingPointcutAdvisor implements PointcutAdvisor {
 
 
     /**

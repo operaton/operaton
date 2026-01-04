@@ -43,11 +43,11 @@ public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig impleme
 	/**
 	 * the process engine as created by a {@link org.operaton.bpm.engine.spring.ProcessEngineFactoryBean}
 	 */
-	private ProcessEngine processEngine;
+	private transient ProcessEngine processEngine;
 
-	private ProcessStartingPointcutAdvisor advisor;
+	private transient ProcessStartingPointcutAdvisor advisor;
 
-	private volatile ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
+	private transient volatile ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;

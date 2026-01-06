@@ -51,7 +51,7 @@ public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Co
     ensureNotEmpty(BadUserRequestException.class,"processInstanceId", processInstanceId);
 
     HistoricProcessInstanceEntity instance = commandContext.getHistoricProcessInstanceManager().findHistoricProcessInstance(processInstanceId);
-    ensureNotNull(NotFoundException.class, "No historic process instance found with id: " + processInstanceId, "instance", instance);
+    ensureNotNull(NotFoundException.class, "No historic process instance found with id: %s".formatted(processInstanceId), "instance", instance);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricVariableInstancesByProcessInstance(instance);

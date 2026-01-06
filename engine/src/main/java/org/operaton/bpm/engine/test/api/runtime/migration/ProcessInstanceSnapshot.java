@@ -140,7 +140,7 @@ public class ProcessInstanceSnapshot {
       return collectedEventsubscriptions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one event subscription for activity " + activityId + " and event " + eventName);
+      throw new RuntimeException("There is more than one event subscription for activity %s and event %s".formatted(activityId, eventName));
     }
   }
 
@@ -182,7 +182,7 @@ public class ProcessInstanceSnapshot {
       return collectedJobs.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job for job definition " + jobDefinitionId);
+      throw new RuntimeException("There is more than one job for job definition %s".formatted(jobDefinitionId));
     }
   }
 
@@ -216,7 +216,7 @@ public class ProcessInstanceSnapshot {
       return collectedDefinitions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job definition for activity " + activityId + " and job handler type " + jobHandlerType);
+      throw new RuntimeException("There is more than one job definition for activity %s and job handler type %s".formatted(activityId, jobHandlerType));
     }
   }
 
@@ -284,7 +284,7 @@ public class ProcessInstanceSnapshot {
   }
 
   protected void ensurePropertySaved(String name, Object property) {
-    EnsureUtil.ensureNotNull(BadUserRequestException.class, "The snapshot has not saved the " + name + " of the process instance", name, property);
+    EnsureUtil.ensureNotNull(BadUserRequestException.class, "The snapshot has not saved the %s of the process instance".formatted(name), name, property);
   }
 
   protected interface Condition<T> {

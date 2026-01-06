@@ -53,7 +53,7 @@ public class StartJobAcquisitionStep extends DeploymentOperationStep {
 
   @Override
   public String getName() {
-    return "Start job acquisition '"+jobAcquisitionXml.getName()+"'";
+    return "Start job acquisition '%s'".formatted(jobAcquisitionXml.getName());
   }
 
   @Override

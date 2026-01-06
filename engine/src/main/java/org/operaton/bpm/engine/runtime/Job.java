@@ -77,8 +77,10 @@ public interface Job {
    * Returns the message of the exception that occurred, the last time the job was
    * executed. Returns null when no exception occurred.
    *
+   * <p>
    * To get the full exception stacktrace,
    * use {@link ManagementService#getJobExceptionStacktrace(String)}
+   * </p>
    */
   String getExceptionMessage();
 
@@ -106,7 +108,6 @@ public interface Job {
   /**
    * The job's priority that is a hint to job acquisition.
    *
-   * @since 7.4
    */
   long getPriority();
 

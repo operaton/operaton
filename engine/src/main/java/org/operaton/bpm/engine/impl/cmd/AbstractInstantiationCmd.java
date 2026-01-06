@@ -172,7 +172,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     Set<ExecutionEntity> flowScopeExecutions = mapping.getExecutions(walker.getCurrentElement());
 
     if (flowScopeExecutions.size() > 1) {
-      throw new ProcessEngineException("Ancestor activity execution is ambiguous for activity " + targetFlowScope);
+      throw new ProcessEngineException("Ancestor activity execution is ambiguous for activity %s".formatted(targetFlowScope));
     }
 
     return flowScopeExecutions.iterator().next();
@@ -233,7 +233,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
   private void throwIfNoConcurrentInstantiationPossible(ScopeImpl flowScope) {
     if (!supportsConcurrentChildInstantiation(flowScope)) {
       throw new ProcessEngineException(
-          "Concurrent instantiation not possible for activities in scope " + flowScope.getId());
+          "Concurrent instantiation not possible for activities in scope %s".formatted(flowScope.getId()));
     }
   }
 
@@ -272,7 +272,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
       ScopeImpl scopeToCancel = topMostActivity.getEventScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
       if (executionToCancel != null) {
-        executionToCancel.deleteCascade("Cancelling activity " + topMostActivity + " executed.", skipCustomListeners,
+        executionToCancel.deleteCascade("Cancelling activity %s executed.".formatted(topMostActivity), skipCustomListeners,
             skipIoMappings);
         instantiate(executionToCancel.getParent(), activitiesToInstantiate, elementToInstantiate);
       } else {
@@ -284,7 +284,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     case INTERRUPT_EVENT_SCOPE: {
       ScopeImpl scopeToCancel = topMostActivity.getEventScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity " + topMostActivity + " executed.", skipCustomListeners,
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();
@@ -294,7 +294,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
     case INTERRUPT_FLOW_SCOPE: {
       ScopeImpl scopeToCancel = topMostActivity.getFlowScope();
       ExecutionEntity executionToCancel = getSingleExecutionForScope(mapping, scopeToCancel);
-      executionToCancel.interrupt("Interrupting activity " + topMostActivity + " executed.", skipCustomListeners,
+      executionToCancel.interrupt("Interrupting activity %s executed.".formatted(topMostActivity), skipCustomListeners,
           skipIoMappings, false);
       executionToCancel.setActivity(null);
       executionToCancel.leaveActivityInstance();
@@ -355,7 +355,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
           variablesLocal, skipCustomListeners, skipIoMappings);
 
     } else {
-      throw new ProcessEngineException("Cannot instantiate element " + targetElement);
+      throw new ProcessEngineException("Cannot instantiate element %s".formatted(targetElement));
     }
   }
 
@@ -369,7 +369,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
           variablesLocal, skipCustomListeners, skipIoMappings);
 
     } else {
-      throw new ProcessEngineException("Cannot instantiate element " + targetElement);
+      throw new ProcessEngineException("Cannot instantiate element %s".formatted(targetElement));
     }
   }
 

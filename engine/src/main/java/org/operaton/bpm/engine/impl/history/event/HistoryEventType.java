@@ -21,10 +21,11 @@ import java.io.Serializable;
 /**
  * An history event type.
  *
+ * <p>
  * See {@link HistoryEventTypes} for a set of built-in events
+ * </p>
  *
  * @author Daniel Meyer
- * @since 7.2
  */
 public interface HistoryEventType extends Serializable {
 

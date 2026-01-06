@@ -62,6 +62,7 @@ import org.slf4j.LoggerFactory;
  * <li>{@link #getFilteredLog(String, String)} - Retrieves log entries containing a specified substring.</li>
  * </ul>
  *
+ * <p>
  * <h3>Logging Flow:</h3>
  * <p>
  * Before each test execution, the extension attaches an in-memory appender to each watched logger.

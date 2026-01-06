@@ -55,7 +55,9 @@ public interface TaskService {
   /**
    * Creates a new task that is not related to any process instance.
    *
+   * <p>
    * The returned task is transient and must be saved with {@link #saveTask(Task)} 'manually'.
+   * </p>
    *
    * @throws AuthorizationException
    *          if the user has no {@link Permissions#CREATE} permission on {@link Resources#TASK}.
@@ -195,9 +197,11 @@ public interface TaskService {
   /**
    * Marks a task as done and continues process execution.
    *
+   * <p>
    * This method is typically called by a task list user interface
    * after a task form has been submitted by the
    * {@link Task#getAssignee() assignee}.
+   * </p>
    *
    * @param taskId the id of the task to complete, cannot be null.
    *
@@ -213,6 +217,7 @@ public interface TaskService {
   /**
    * Delegates the task to another user.
    *
+   * <p>
    * This means that the {@link Task#getAssignee() assignee} is set
    * and the {@link Task#getDelegationState() delegation state} is set to
    * {@link DelegationState#PENDING}.
@@ -221,6 +226,7 @@ public interface TaskService {
    * The new assignee must use {@link TaskService#resolveTask(String)}
    * to report back to the owner.
    * Only the owner can {@link TaskService#complete(String) complete} the task.
+   * </p>
    *
    * @param taskId The id of the task that will be delegated.
    * @param userId The id of the user that will be set as assignee.
@@ -279,10 +285,12 @@ public interface TaskService {
   /**
    * Marks a task as done and continues process execution.
    *
+   * <p>
    * This method is typically called by a task list user interface
    * after a task form has been submitted by the
    * {@link Task#getAssignee() assignee}
    * and the required task parameters have been provided.
+   * </p>
    *
    * @param taskId the id of the task to complete, cannot be null.
    * @param variables task parameters. May be null or empty.
@@ -299,10 +307,12 @@ public interface TaskService {
   /**
    * Marks a task as done and continues process execution.
    *
+   * <p>
    * This method is typically called by a task list user interface
    * after a task form has been submitted by the
    * {@link Task#getAssignee() assignee}
    * and the required task parameters have been provided.
+   * </p>
    *
    * @param taskId the id of the task to complete, cannot be null.
    * @param variables task parameters. May be null or empty.
@@ -681,7 +691,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableTyped(String taskId, String variableName);
 
@@ -710,7 +719,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableTyped(String taskId, String variableName, boolean deserializeValue);
 
@@ -757,7 +765,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableLocalTyped(String taskId, String variableName);
 
@@ -786,7 +793,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   <T extends TypedValue> T getVariableLocalTyped(String taskId, String variableName, boolean deserializeValue);
 
@@ -831,7 +837,6 @@ public interface TaskService {
    *          <li>in case {@link ProcessEngineConfiguration#enforceSpecificVariablePermission this} configuration is enabled and
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
-   * @since 7.2
    */
   VariableMap getVariablesTyped(String taskId);
 
@@ -857,7 +862,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesTyped(String taskId, boolean deserializeValues);
 
@@ -904,7 +908,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String taskId);
 
@@ -930,7 +933,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String taskId, boolean deserializeValues);
 
@@ -975,7 +977,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    * */
   VariableMap getVariablesTyped(String taskId, Collection<String> variableNames, boolean deserializeValues);
 
@@ -1020,7 +1021,6 @@ public interface TaskService {
    *          the user has no {@link TaskPermissions#READ_VARIABLE} permission on {@link Resources#TASK} and
    *          no {@link ProcessDefinitionPermissions#READ_TASK_VARIABLE} permission on {@link Resources#PROCESS_DEFINITION}</li></p>
    *
-   * @since 7.2
    */
   VariableMap getVariablesLocalTyped(String taskId, Collection<String> variableNames, boolean deserializeValues);
 
@@ -1210,7 +1210,9 @@ public interface TaskService {
    * Add a new attachment to a task and/or a process instance and use an input stream to provide the content
    * please use method in runtime service to operate on process instance.
    *
+   * <p>
    * Either taskId or processInstanceId has to be provided
+   * </p>
    *
    * @param taskId - task that should have an attachment
    * @param processInstanceId - id of a process to use if task id is null
@@ -1226,7 +1228,9 @@ public interface TaskService {
    * Add a new attachment to a task and/or a process instance and use an url as the content
    * please use method in runtime service to operate on process instance
    *
+   * <p>
    * Either taskId or processInstanceId has to be provided
+   * </p>
    *
    * @param taskId - task that should have an attachment
    * @param processInstanceId - id of a process to use if task id is null

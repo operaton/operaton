@@ -21,6 +21,9 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RuntimeService;
@@ -136,28 +139,38 @@ class ProcessInstanceModificationBoundaryEventTest {
     testRule.assertProcessEnded(processInstanceId);
   }
 
-  @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT)
-  @Test
-  void testTask2AndStartBeforeTaskAfterBoundaryEvent() {
+  @ParameterizedTest(name = "Start Before: {0}")
+  @CsvSource({
+    "Task after boundary event, " + INTERRUPTING_BOUNDARY_EVENT + ", taskAfterBoundaryEvent",
+    "Boundary event, " + INTERRUPTING_BOUNDARY_EVENT + ", boundaryEvent",
+    "Task after non-interrupting boundary event, " + NON_INTERRUPTING_BOUNDARY_EVENT + ", taskAfterBoundaryEvent",
+    "Non-interrupting boundary event, " + NON_INTERRUPTING_BOUNDARY_EVENT + ", boundaryEvent"
+  })
+  void testTask2AndStartBeforeGivenEvent(String name, String bpmnResource, String startBeforeActivity) {
+    // given
+    testRule.deploy(bpmnResource);
+
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
 
+    // when
     runtimeService
       .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("taskAfterBoundaryEvent")
+      .startBeforeActivity(startBeforeActivity)
       .execute();
 
+    // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .activity("task2")
-          .activity("taskAfterBoundaryEvent")
+      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
+        .activity("task2")
+        .activity("taskAfterBoundaryEvent")
         .done());
 
 
@@ -168,44 +181,7 @@ class ProcessInstanceModificationBoundaryEventTest {
         describeExecutionTree(null).scope()
           .child("taskAfterBoundaryEvent").concurrent().noScope().up()
           .child("task2").concurrent().noScope()
-        .done());
-
-    completeTasksInOrder("task2", "taskAfterBoundaryEvent");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT)
-  @Test
-  void testTask2AndStartBeforeBoundaryEvent() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("boundaryEvent")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .activity("task2")
-          .activity("taskAfterBoundaryEvent")
-        .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child("taskAfterBoundaryEvent").concurrent().noScope().up()
-          .child("task2").concurrent().noScope()
-        .done());
+          .done());
 
     completeTasksInOrder("task2", "taskAfterBoundaryEvent");
     testRule.assertProcessEnded(processInstanceId);
@@ -281,100 +257,34 @@ class ProcessInstanceModificationBoundaryEventTest {
     testRule.assertProcessEnded(processInstanceId);
   }
 
-  @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT)
-  @Test
-  void testTask2AndStartBeforeTaskAfterNonInterruptingBoundaryEvent() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+    INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS,
+    NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS
+  })
+  void testTask1AndStartBeforeInnerTaskAfterBoundaryEventInsideSubProcess(String bpmnResource) {
+    // given
+    testRule.deploy(bpmnResource);
+
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("taskAfterBoundaryEvent")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .activity("task2")
-          .activity("taskAfterBoundaryEvent")
-        .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child("taskAfterBoundaryEvent").concurrent().noScope().up()
-          .child("task2").concurrent().noScope()
-        .done());
-
-    completeTasksInOrder("task2", "taskAfterBoundaryEvent");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT)
-  @Test
-  void testTask2AndStartBeforeNonInterruptingBoundaryEvent() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("boundaryEvent")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .activity("task2")
-          .activity("taskAfterBoundaryEvent")
-        .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child("taskAfterBoundaryEvent").concurrent().noScope().up()
-          .child("task2").concurrent().noScope()
-        .done());
-
-    completeTasksInOrder("task2", "taskAfterBoundaryEvent");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
-  @Test
-  void testTask1AndStartBeforeTaskAfterBoundaryEventInsideSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
+    // when
     runtimeService
       .createProcessInstanceModification(processInstanceId)
       .startBeforeActivity("innerTaskAfterBoundaryEvent")
       .execute();
 
+    // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            .activity("innerTask1")
-            .activity("innerTaskAfterBoundaryEvent")
+      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
+        .beginScope("subProcess")
+        .activity("innerTask1")
+        .activity("innerTaskAfterBoundaryEvent")
         .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
@@ -383,10 +293,10 @@ class ProcessInstanceModificationBoundaryEventTest {
       .matches(
         describeExecutionTree(null).scope()
           .child(null).scope()
-            .child("innerTaskAfterBoundaryEvent").concurrent().noScope().up()
-            .child(null).concurrent().noScope()
-              .child("innerTask1").scope()
-        .done());
+          .child("innerTaskAfterBoundaryEvent").concurrent().noScope().up()
+          .child(null).concurrent().noScope()
+          .child("innerTask1").scope()
+          .done());
 
     completeTasksInOrder("innerTask1", "innerTaskAfterBoundaryEvent", "innerTask2");
     testRule.assertProcessEnded(processInstanceId);
@@ -422,43 +332,6 @@ class ProcessInstanceModificationBoundaryEventTest {
         .done());
 
     completeTasksInOrder("innerTaskAfterBoundaryEvent");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
-  @Test
-  void testTask1AndStartBeforeTaskAfterNonInterruptingBoundaryEventInsideSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("innerTaskAfterBoundaryEvent")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            .activity("innerTask1")
-            .activity("innerTaskAfterBoundaryEvent")
-        .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child(null).scope()
-            .child("innerTaskAfterBoundaryEvent").concurrent().noScope().up()
-            .child(null).concurrent().noScope()
-              .child("innerTask1").scope()
-        .done());
-
-    completeTasksInOrder("innerTask1", "innerTaskAfterBoundaryEvent", "innerTask2");
     testRule.assertProcessEnded(processInstanceId);
   }
 
@@ -538,29 +411,37 @@ class ProcessInstanceModificationBoundaryEventTest {
     testRule.assertProcessEnded(processInstanceId);
   }
 
-  @Deployment(resources = INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
-  @Test
-  void testTask2AndStartBeforeBoundaryEventInsideSubProcess() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+    INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS,
+    NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS
+  })
+  void testTask2AndStartBeforeInnerBoundaryEventInsideSubProcess(String bpmnResource) {
+    // given
+    testRule.deploy(bpmnResource);
+
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
     String processInstanceId = processInstance.getId();
 
     String taskId = taskService.createTaskQuery().singleResult().getId();
     taskService.complete(taskId);
 
+    // when
     runtimeService
       .createProcessInstanceModification(processInstanceId)
       .startBeforeActivity("innerBoundaryEvent")
       .execute();
 
+    // then
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
     Assertions.assertThat(updatedTree).isNotNull();
     assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
 
     assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            .activity("innerTask2")
-            .activity("innerTaskAfterBoundaryEvent")
+      describeActivityInstanceTree(processInstance.getProcessDefinitionId())
+        .beginScope("subProcess")
+        .activity("innerTask2")
+        .activity("innerTaskAfterBoundaryEvent")
         .done());
 
     ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
@@ -569,9 +450,9 @@ class ProcessInstanceModificationBoundaryEventTest {
       .matches(
         describeExecutionTree(null).scope()
           .child(null).scope()
-            .child("innerTaskAfterBoundaryEvent").concurrent().noScope().up()
-            .child("innerTask2").concurrent().noScope()
-        .done());
+          .child("innerTaskAfterBoundaryEvent").concurrent().noScope().up()
+          .child("innerTask2").concurrent().noScope()
+          .done());
 
     completeTasksInOrder("innerTask2", "innerTaskAfterBoundaryEvent");
     testRule.assertProcessEnded(processInstanceId);
@@ -589,45 +470,6 @@ class ProcessInstanceModificationBoundaryEventTest {
     runtimeService
       .createProcessInstanceModification(processInstanceId)
       .startBeforeActivity("innerTaskAfterBoundaryEvent")
-      .execute();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);
-    Assertions.assertThat(updatedTree).isNotNull();
-    assertThat(updatedTree.getProcessInstanceId()).isEqualTo(processInstanceId);
-
-    assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(processInstance.getProcessDefinitionId())
-          .beginScope("subProcess")
-            .activity("innerTask2")
-            .activity("innerTaskAfterBoundaryEvent")
-        .done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(processInstanceId, processEngine);
-
-    assertThat(executionTree)
-      .matches(
-        describeExecutionTree(null).scope()
-          .child(null).scope()
-            .child("innerTaskAfterBoundaryEvent").concurrent().noScope().up()
-            .child("innerTask2").concurrent().noScope()
-        .done());
-
-    completeTasksInOrder("innerTask2", "innerTaskAfterBoundaryEvent");
-    testRule.assertProcessEnded(processInstanceId);
-  }
-
-  @Deployment(resources = NON_INTERRUPTING_BOUNDARY_EVENT_INSIDE_SUBPROCESS)
-  @Test
-  void testTask2AndStartBeforeNonInterruptingBoundaryEventInsideSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-    String processInstanceId = processInstance.getId();
-
-    String taskId = taskService.createTaskQuery().singleResult().getId();
-    taskService.complete(taskId);
-
-    runtimeService
-      .createProcessInstanceModification(processInstanceId)
-      .startBeforeActivity("innerBoundaryEvent")
       .execute();
 
     ActivityInstance updatedTree = runtimeService.getActivityInstance(processInstanceId);

@@ -248,7 +248,9 @@ public interface ActivityExecution extends DelegateExecution {
   /**
    * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
    *
+   * <p>
    * For a given target scope, this method returns the scope execution.
+   * </p>
    *
    * @param targetScope scope activity or process definition for which the scope execution should be found;
    *   must be an ancestor of the execution's current activity
@@ -260,7 +262,9 @@ public interface ActivityExecution extends DelegateExecution {
    * Returns a mapping from scope activities to scope executions for all scopes that
    * are ancestors of the activity currently executed by this execution.
    *
+   * <p>
    * Assumption: the current execution is active and executing an activity ({@link #getActivity()} is not null).
+   * </p>
    */
   Map<ScopeImpl, PvmExecutionImpl> createActivityExecutionMapping();
 

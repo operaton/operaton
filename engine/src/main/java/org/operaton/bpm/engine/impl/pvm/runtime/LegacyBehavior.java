@@ -38,16 +38,18 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
 
 /**
  * This class encapsulates legacy runtime behavior for the process engine.
- *<p>
+ * <p>
  * Since 7.3 the behavior of certain bpmn elements has changed slightly.
- *<p>
+ * <p>
  *
  * 1. Some elements which did not used to be scopes are now scopes:
  * <ul>
  *  <li>Sequential multi instance Embedded Subprocess: is now a scope, used to be non-scope.</li>
  *  <li>Event subprocess: is now a scope, used to be non-scope.</li>
  * </ul>
+ * </p>
  *
+ * <p>
  * 2. In certain situations, executions which were both scope and concurrent were created.
  * This used to be the case if a scope execution already had a single scope child execution
  * and then concurrency was introduced (by a on interrupting boundary event or
@@ -56,10 +58,9 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
  * The new behavior is that the existing scope execution will not be made concurrent, instead,
  * a new, concurrent execution will be created and be interleaved between the parent and the
  * existing scope execution.
- *<p>
+ * </p>
  *
  * @author Daniel Meyer
- * @since 7.3
  */
 public final class LegacyBehavior {
 
@@ -74,9 +75,13 @@ public final class LegacyBehavior {
    * Prunes a concurrent scope. This can only happen if
    * (a) the process instance has been migrated from a previous version to a new version of the process engine
    *
+   * <p>
    * This is an inverse operation to {@link #createConcurrentScope(PvmExecutionImpl)}.
+   * </p>
    *
+   * <p>
    * See: javadoc of this class for note about concurrent scopes.
+   * </p>
    *
    * @param execution
    */
@@ -90,7 +95,9 @@ public final class LegacyBehavior {
    * Cancels an execution which is both concurrent and scope. This can only happen if
    * (a) the process instance has been migrated from a previous version to a new version of the process engine
    *
+   * <p>
    * See: javadoc of this class for note about concurrent scopes.
+   * </p>
    *
    * @param execution the concurrent scope execution to destroy
    * @param cancelledScopeActivity the activity that cancels the execution; it must hold that
@@ -100,11 +107,11 @@ public final class LegacyBehavior {
     ensureConcurrentScope(execution);
     LOG.debugCancelConcurrentScopeExecution(execution);
 
-    execution.interrupt("Scope "+cancelledScopeActivity+" cancelled.");
+    execution.interrupt("Scope %s cancelled.".formatted(cancelledScopeActivity));
     // <!> HACK set to event scope activity and leave activity instance
     execution.setActivity(cancelledScopeActivity);
     execution.leaveActivityInstance();
-    execution.interrupt("Scope "+cancelledScopeActivity+" cancelled.");
+    execution.interrupt("Scope %s cancelled.".formatted(cancelledScopeActivity));
     execution.destroy();
   }
 
@@ -112,7 +119,9 @@ public final class LegacyBehavior {
    * Destroys a concurrent scope Execution. This can only happen if
    * (a) the process instance has been migrated from a previous version to a 7.3+ version of the process engine
    *
+   * <p>
    * See: javadoc of this class for note about concurrent scopes.
+   * </p>
    *
    * @param execution the execution to destroy
    */
@@ -354,13 +363,17 @@ public final class LegacyBehavior {
    * Tolerates the broken execution trees fixed with CAM-3727 where there may be more
    * ancestor scope executions than ancestor flow scopes;
    *
+   * <p>
    * In that case, the argument execution is removed, the parent execution of the argument
    * is returned such that one level of mismatch is corrected.
+   * </p>
    *
+   * <p>
    * Note that this does not necessarily skip the correct scope execution, since
    * the broken parent-child relationships may be anywhere in the tree (e.g. consider a non-interrupting
    * boundary event followed by a subprocess (i.e. scope), when the subprocess ends, we would
    * skip the subprocess's execution).
+   * </p>
    *
    */
   public static PvmExecutionImpl determinePropagatingExecutionOnEnd(PvmExecutionImpl propagatingExecution, Map<ScopeImpl, PvmExecutionImpl> activityExecutionMapping) {
@@ -503,8 +516,10 @@ public final class LegacyBehavior {
    * When deploying an async job definition for an activity wrapped in an miBody, set the activity id to the
    * miBody except the wrapped activity is marked as async.
    *
+   * <p>
    * Background: in <= 7.2 async job definitions were created for the inner activity, although the
    * semantics are that they are executed before the miBody is entered
+   * </p>
    */
   public static void migrateMultiInstanceJobDefinitions(ProcessDefinitionEntity processDefinition, List<JobDefinitionEntity> jobDefinitions) {
     for (JobDefinitionEntity jobDefinition : jobDefinitions) {
@@ -544,8 +559,10 @@ public final class LegacyBehavior {
    * When executing an async job for an activity wrapped in an miBody, set the execution to the
    * miBody except the wrapped activity is marked as async.
    *
+   * <p>
    * Background: in <= 7.2 async jobs were created for the inner activity, although the
    * semantics are that they are executed before the miBody is entered
+   * </p>
    */
   public static void repairMultiInstanceAsyncJob(ExecutionEntity execution) {
     ActivityImpl activity = execution.getActivity();

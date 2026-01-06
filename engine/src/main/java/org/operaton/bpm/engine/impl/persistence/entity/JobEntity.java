@@ -110,7 +110,7 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
-      ensureNotNull("Cannot find execution with id '" + executionId + "' referenced from job '" + this + "'", "execution", getExecution());
+      ensureNotNull("Cannot find execution with id '%s' referenced from job '%s'".formatted(executionId, this), "execution", getExecution());
     }
 
     // initialize activity id
@@ -122,7 +122,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     preExecute(commandContext);
     JobHandler jobHandler = getJobHandler();
     JobHandlerConfiguration configuration = getJobHandlerConfiguration();
-    ensureNotNull("Cannot find job handler '" + jobHandlerType + "' from job '" + this + "'", "jobHandler", jobHandler);
+    ensureNotNull("Cannot find job handler '%s' from job '%s'".formatted(jobHandlerType, this), "jobHandler", jobHandler);
     jobHandler.execute(configuration, execution, commandContext, tenantId);
     postExecute(commandContext);
   }
@@ -563,11 +563,6 @@ public abstract class JobEntity extends AcquirableJobEntity
         || (retries == 0 && (lockOwner != null || lockExpirationTime != null));
   }
 
-  public void resetLock() {
-    this.lockOwner = null;
-    this.lockExpirationTime = null;
-  }
-
   public String getActivityId() {
     ensureActivityIdInitialized();
     return activityId;
@@ -619,12 +614,15 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
+  public void resetLock() {
+    unlock();
+  }
+
   /**
    *
    * Unlock from current lock owner
    *
    */
-
   public void unlock() {
     this.lockOwner = null;
     this.lockExpirationTime = null;

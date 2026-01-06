@@ -71,7 +71,7 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
   @OperatonQueryParam("reportType")
   public void setReportType(String reportType) {
     if (!VALID_REPORT_TYPE_VALUES.contains(reportType)) {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "reportType parameter has invalid value: " + reportType);
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "reportType parameter has invalid value: %s".formatted(reportType));
     }
     this.reportType = reportType;
   }

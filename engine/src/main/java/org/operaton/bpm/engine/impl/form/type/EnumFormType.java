@@ -57,13 +57,13 @@ public class EnumFormType extends SimpleFormFieldType {
       return Variables.stringValue((String) value, propertyValue.isTransient());
     }
     else {
-      throw new ProcessEngineException("Value '"+value+"' is not of type String.");
+      throw new ProcessEngineException("Value '%s' is not of type String.".formatted(value));
     }
   }
 
   protected void validateValue(Object value) {
     if(value != null && values != null && !values.containsKey(value)) {
-      throw new ProcessEngineException("Invalid value for enum form property: " + value);
+      throw new ProcessEngineException("Invalid value for enum form property: %s".formatted(value));
     }
   }
 

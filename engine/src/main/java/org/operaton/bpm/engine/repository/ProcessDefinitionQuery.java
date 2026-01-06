@@ -255,9 +255,11 @@ public interface ProcessDefinitionQuery extends Query<ProcessDefinitionQuery, Pr
   /**
    * Order by version tag (needs to be followed by {@link #asc()} or {@link #desc()}).
    *
+   * <p>
    * <strong>Note:</strong> sorting by versionTag is a string based sort.
    * There is no interpretation of the version which can lead to a sorting like:
    * v0.1.0 v0.10.0 v0.2.0.
+   * </p>
    */
   ProcessDefinitionQuery orderByVersionTag();
 

@@ -29,10 +29,6 @@ on:
           - '21'
           - '25'
 
-permissions:
-  contents: read
-  checks: write
-
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.database }}"
   cancel-in-progress: true
@@ -41,6 +37,9 @@ jobs:
   unit-tests:
     name: Unit Tests (${{ matrix.database }})
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      checks: write
     strategy:
       fail-fast: false
       matrix:
@@ -60,9 +59,11 @@ jobs:
 
       - name: Set up Java
         uses: actions/setup-java@v5
+        env:
+          JAVA_VERSION: ${{ github.event.inputs.java_version }}
         with:
           distribution: 'temurin'
-          java-version: ${{ github.event.inputs.java_version }}
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Run Unit Tests
         id: maven-unit-tests
@@ -72,7 +73,7 @@ jobs:
 
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
+        uses: mikepenz/action-junit-report@a294a61c909bd8a4b563024a2faa28897fd53ebc #v6.1.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true

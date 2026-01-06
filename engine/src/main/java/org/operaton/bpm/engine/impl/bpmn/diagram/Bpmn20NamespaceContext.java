@@ -30,7 +30,9 @@ import javax.xml.xpath.XPath;
 /**
  * XML {@link NamespaceContext} containing the namespaces used by BPMN 2.0 XML documents.
  *
+ * <p>
  * Can be used in {@link XPath#setNamespaceContext(NamespaceContext)}.
+ * </p>
  *
  * @author Falko Menge
  */

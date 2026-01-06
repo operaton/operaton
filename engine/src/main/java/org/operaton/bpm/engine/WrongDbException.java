@@ -23,7 +23,9 @@ import java.io.Serial;
  * Exception that is thrown when the Activiti engine discovers a mismatch between the
  * database schema version and the engine version.
  *
+ * <p>
  * The check is done when the engine is created in {@link ProcessEngineBuilder#buildProcessEngine()}.
+ * </p>
  *
  * @author Tom Baeyens
  */

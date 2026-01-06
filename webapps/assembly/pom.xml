@@ -77,11 +77,6 @@
     </dependency>
     <!-- rest api -->
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-    </dependency>
-    <!-- rest api -->
-    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest-core</artifactId>
     </dependency>

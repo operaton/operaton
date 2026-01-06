@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.variable.value.builder.FileValueBuilder;
 
 /**
  * @author Ronny Bräunlich
- * @since 7.4
  */
 public class FileValueSerializer extends AbstractTypedValueSerializer<FileValue> {
 

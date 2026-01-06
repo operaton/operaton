@@ -126,15 +126,21 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
   /**
    * Problem
    *
+   * <p>
    * GIVEN
    * Within the Execution TX the job lock was removed
+   * </p>
    *
+   * <p>
    * WHEN
    * 1) the acquisition thread tries to lock the job
    * 2) the cleanup scheduler reschedules the job
+   * </p>
    *
+   * <p>
    * THEN
    * The acquisition fails due to an Optimistic Locking Exception
+   * </p>
    */
   @Test
   void testAcquiringEverLivingJobSucceeds() {
@@ -172,15 +178,21 @@ public class CompetingHistoryCleanupAcquisitionTest extends ConcurrencyTestHelpe
   /**
    * Problem
    *
+   * <p>
    * GIVEN
    * Within the Execution TX the job lock was removed
+   * </p>
    *
+   * <p>
    * WHEN
    * 1) the cleanup scheduler reschedules the job
    * 2) the acquisition thread tries to lock the job
+   * </p>
    *
+   * <p>
    * THEN
    * The cleanup scheduler fails to reschedule the job due to an Optimistic Locking Exception
+   * </p>
    */
   @Test
   void testReschedulingEverLivingJobSucceeds() {

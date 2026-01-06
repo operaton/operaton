@@ -52,10 +52,12 @@ public interface SynchronousOperationLogProducer<T> {
   /**
    * Calls the code that produces the operation log. Usually <code>commandContext.getOperationLogManager().log...</code>
    *
+   * <p>
    * The implementation must be capable of producing a single, summarizing operation log that contain information about an operation
    * spanning affecting multiple entities as well as producing a single, detailed operation log containing information about a single
    * affected entity. This method is called by the {@link SynchronousOperationLogProducer#produceOperationLog(CommandContext, List) produceOperationLog}
    * method.
+   * </p>
    *
    * @param commandContext the current command context
    * @param result An object resulting from the operation for which this method produces the operation log. In case the operation produced
@@ -93,8 +95,8 @@ public interface SynchronousOperationLogProducer<T> {
       }
       if (logEntriesPerSyncOperationLimit != UNLIMITED_LOG && logEntriesPerSyncOperationLimit < propChangesForOperation.size()) {
         throw new ProcessEngineException(
-            "Maximum number of operation log entries for operation type synchronous APIs reached. Configured limit is "
-                + logEntriesPerSyncOperationLimit + " but " + propChangesForOperation.size() + " entities were affected by API call.");
+            "Maximum number of operation log entries for operation type synchronous APIs reached. Configured limit is %s but %s entities were affected by API call."
+                .formatted(logEntriesPerSyncOperationLimit, propChangesForOperation.size()));
       } else {
         // produce one operation log per affected entity
         for (Entry<T, List<PropertyChange>> propChanges : propChangesForOperation.entrySet()) {

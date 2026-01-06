@@ -30,9 +30,11 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * A Script {@link Bindings} implementation wrapping a provided
  * {@link VariableContext} and {@link Bindings} instance.
  *
+ * <p>
  * Enhances the Bindings with the variables resolvable through the {@link VariableContext}.
  * The variables are treated as read only: all mutating operations write through to the
  * wrapped {@link Bindings}.
+ * </p>
  *
  * @author Daniel Meyer
  *

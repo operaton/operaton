@@ -62,7 +62,7 @@ public class HandleTaskEscalationCmd implements Command<Void>, Serializable {
     validateInput();
 
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
-    ensureNotNull(NotFoundException.class,"Cannot find task with id " + taskId, "task", task);
+    ensureNotNull(NotFoundException.class,"Cannot find task with id %s".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkTaskWork(task);

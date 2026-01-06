@@ -52,7 +52,7 @@ public class StateHandlerAnnotationBeanFactoryPostProcessor implements BeanFacto
 
         if (!beanAlreadyConfigured(registry, registryBeanName, ActivitiStateHandlerRegistry.class)) {
             String registryName = ActivitiStateHandlerRegistry.class.getName();
-            log.info(() -> "registering a " + registryName + " instance under bean name " + ActivitiContextUtils.ACTIVITI_REGISTRY_BEAN_NAME + ".");
+            log.info(() -> "registering a %s instance under bean name %s.".formatted(registryName, ActivitiContextUtils.ACTIVITI_REGISTRY_BEAN_NAME));
 
             RootBeanDefinition rootBeanDefinition = new RootBeanDefinition();
             rootBeanDefinition.setBeanClassName(registryName);
@@ -81,7 +81,7 @@ public class StateHandlerAnnotationBeanFactoryPostProcessor implements BeanFacto
             if (bDef.getBeanClassName().equals(clz.getName())) {
                 return true; // so the beans already registered, and of the right type. so we assume the user is overriding our configuration
             } else {
-                throw new IllegalStateException("The bean name '" + beanName + "' is reserved.");
+                throw new IllegalStateException("The bean name '%s' is reserved.".formatted(beanName));
             }
         }
         return false;

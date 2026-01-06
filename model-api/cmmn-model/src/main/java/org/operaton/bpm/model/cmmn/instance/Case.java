@@ -28,6 +28,9 @@ public interface Case extends CmmnElement {
 
   void setName(String name);
 
+  /**
+   * @deprecated since 1.0, use {@link #getRoles()} instead, which returns a CaseRoles wrapper object.
+   */
   @Deprecated(since = "1.0")
   Collection<CaseRole> getCaseRoles();
 

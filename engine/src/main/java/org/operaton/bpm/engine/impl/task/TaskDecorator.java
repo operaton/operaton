@@ -91,8 +91,8 @@ public class TaskDecorator {
           BusinessCalendar businessCalendar = getBusinessCalender();
           task.setDueDate(businessCalendar.resolveDuedate(string, task));
         } else {
-          throw new ProcessEngineException("Due date expression does not resolve to a Date or Date string: " +
-              dueDateExpression.getExpressionText());
+          throw new ProcessEngineException("Due date expression does not resolve to a Date or Date string: %s".formatted(
+              dueDateExpression.getExpressionText()));
         }
       }
     }
@@ -111,8 +111,8 @@ public class TaskDecorator {
           task.setFollowUpDate(businessCalendar.resolveDuedate(string, task));
 
         } else {
-          throw new ProcessEngineException("Follow up date expression does not resolve to a Date or Date string: " +
-              followUpDateExpression.getExpressionText());
+          throw new ProcessEngineException("Follow up date expression does not resolve to a Date or Date string: %s".formatted(
+              followUpDateExpression.getExpressionText()));
         }
       }
     }
@@ -129,14 +129,14 @@ public class TaskDecorator {
             task.setPriority(Integer.parseInt(string));
 
           } catch (NumberFormatException e) {
-            throw new ProcessEngineException("Priority does not resolve to a number: " + priority, e);
+            throw new ProcessEngineException("Priority does not resolve to a number: %s".formatted(priority), e);
           }
         } else if (priority instanceof Number number) {
           task.setPriority(number.intValue());
 
         } else {
-          throw new ProcessEngineException("Priority expression does not resolve to a number: " +
-                  priorityExpression.getExpressionText());
+          throw new ProcessEngineException("Priority expression does not resolve to a number: %s".formatted(
+                  priorityExpression.getExpressionText()));
         }
       }
     }

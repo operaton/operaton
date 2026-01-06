@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.externaltask.ExternalTask;
  * An instance of {@link HistoricExternalTaskLog} represents the latest historic
  * state in the lifecycle of a {@link ExternalTask task}.
  *
- * @since 7.7
  */
 public interface HistoricExternalTaskLog {
 
@@ -72,8 +71,10 @@ public interface HistoricExternalTaskLog {
   /**
    * Returns the message of the error that occurred by executing the associated external task.
    *
+   * <p>
    * To get the full error details,
    * use {@link HistoryService#getHistoricExternalTaskLogErrorDetails(String)}
+   * </p>
    */
   String getErrorMessage();
 

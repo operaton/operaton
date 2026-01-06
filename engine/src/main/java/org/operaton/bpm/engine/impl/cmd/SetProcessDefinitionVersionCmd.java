@@ -57,23 +57,33 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
  * {@link Command} that changes the process definition version of an existing
  * process instance.
  *
+ * <p>
  * Warning: This command will NOT perform any migration magic and simply set the
  * process definition version in the database, assuming that the user knows,
  * what he or she is doing.
+ * </p>
  *
+ * <p>
  * This is only useful for simple migrations. The new process definition MUST
  * have the exact same activity id to make it still run.
+ * </p>
  *
+ * <p>
  * Furthermore, activities referenced by sub-executions and jobs that belong to
  * the process instance MUST exist in the new process definition version.
+ * </p>
  *
+ * <p>
  * The command will fail, if there is already a {@link ProcessInstance} or
  * {@link HistoricProcessInstance} using the new process definition version and
  * the same business key as the {@link ProcessInstance} that is to be migrated.
+ * </p>
  *
+ * <p>
  * If the process instance is not currently waiting but actively running, then
  * this would be a case for optimistic locking, meaning either the version
  * update or the "real work" wins, i.e., this is a race condition.
+ * </p>
  *
  * @see http://forums.activiti.org/en/viewtopic.php?t=2918
  * @author Falko Menge
@@ -106,11 +116,8 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
       throw new ProcessEngineException("No process instance found for id = '%s'.".formatted(processInstanceId));
     } else if (!processInstance.isProcessInstanceExecution()) {
       throw new ProcessEngineException(
-        "A process instance id is required, but the provided id " +
-        "'"+processInstanceId+"' " +
-        "points to a child execution of process instance " +
-        "'"+processInstance.getProcessInstanceId()+"'. " +
-        "Please invoke the "+getClass().getSimpleName()+" with a root execution id.");
+        "A process instance id is required, but the provided id '%s' points to a child execution of process instance '%s'. Please invoke the %s with a root execution id."
+            .formatted(processInstanceId, processInstance.getProcessInstanceId(), getClass().getSimpleName()));
     }
     ProcessDefinitionImpl currentProcessDefinitionImpl = processInstance.getProcessDefinition();
 
@@ -220,12 +227,8 @@ public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializab
 
       if (newActivity == null) {
         throw new ProcessEngineException(
-          "The new process definition " +
-          "(key = '" + newProcessDefinition.getKey() + "') " +
-          "does not contain the current activity " +
-          "(id = '" + activityId + "') " +
-          "of the process instance " +
-          "(id = '" + processInstanceId + "').");
+          "The new process definition (key = '%s') does not contain the current activity '%s' of the process instance '%s'."
+              .formatted(newProcessDefinition.getKey(), activityId, processInstanceId));
         }
 
         // clear cached activity so that outgoing transitions are refreshed

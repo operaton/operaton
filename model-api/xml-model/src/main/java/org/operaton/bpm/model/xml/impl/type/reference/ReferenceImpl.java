@@ -64,8 +64,8 @@ public abstract class ReferenceImpl<T extends ModelElementInstance> implements R
         return (T) referenceTargetElement;
 
       } catch(ClassCastException e) {
-        throw new ModelReferenceException("Element " + referenceSourceElement + " references element " + referenceTargetElement + " of wrong type. "
-          + "Expecting " + referenceTargetAttribute.getOwningElementType() + " got " + referenceTargetElement.getElementType());
+        throw new ModelReferenceException("Element %s references element %s of wrong type. Expecting %s got %s".formatted(
+          referenceSourceElement, referenceTargetElement, referenceTargetAttribute.getOwningElementType(), referenceTargetElement.getElementType()));
       }
     }
     else {

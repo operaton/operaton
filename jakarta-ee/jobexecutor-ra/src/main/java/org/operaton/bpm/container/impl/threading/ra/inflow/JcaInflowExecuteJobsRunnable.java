@@ -69,9 +69,9 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
       try {
         endpoint.beforeDelivery(method);
       } catch (NoSuchMethodException e) {
-        log.log(Level.WARNING, e, () -> "NoSuchMethodException while invoking beforeDelivery() on MessageEndpoint '" + ep + "'");
+        log.log(Level.WARNING, e, () -> "NoSuchMethodException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(ep));
       } catch (ResourceException e) {
-        log.log(Level.WARNING, e, () -> "ResourceException while invoking beforeDelivery() on MessageEndpoint '" + ep + "'");
+        log.log(Level.WARNING, e, () -> "ResourceException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(ep));
       }
       try {
         jobFailureCollector = ((JobExecutionHandler)endpoint).executeJob(nextJobId, commandExecutor);
@@ -84,7 +84,7 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
       try {
         endpoint.afterDelivery();
       } catch (ResourceException e) {
-        log.log(Level.WARNING, e, () -> "ResourceException while invoking afterDelivery() on MessageEndpoint '" + ep + "'");
+        log.log(Level.WARNING, e, () -> "ResourceException while invoking afterDelivery() on MessageEndpoint '%s'".formatted(ep));
       }
 
     } catch (UnavailableException e) {

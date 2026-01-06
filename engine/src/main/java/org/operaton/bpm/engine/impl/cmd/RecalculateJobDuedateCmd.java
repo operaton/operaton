@@ -111,7 +111,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
         TimerStartEventSubprocessJobHandler.TYPE.equals(type) ||
         TimerTaskListenerJobHandler.TYPE.equals(type)) ||
         !(job instanceof TimerEntity)) {
-      throw new ProcessEngineException("Only timer jobs can be recalculated, but the job with id '" + jobId + "' is of type '" + type + "'.");
+      throw new ProcessEngineException("Only timer jobs can be recalculated, but the job with id '%s' is of type '%s'.".formatted(jobId, type));
     }
   }
 
@@ -126,7 +126,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
     }
 
     if (timerDeclaration == null) {
-      throw new ProcessEngineException("No timer declaration found for job id '" + jobId + "'.");
+      throw new ProcessEngineException("No timer declaration found for job id '%s'.".formatted(jobId));
     }
     return timerDeclaration;
   }
@@ -134,7 +134,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
   protected TimerDeclarationImpl findTimerDeclarationForActivity(CommandContext commandContext, JobEntity job) {
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(job.getExecutionId());
     if (execution == null) {
-      throw new ProcessEngineException("No execution found with id '" + job.getExecutionId() + "' for job id '" + jobId + "'.");
+      throw new ProcessEngineException("No execution found with id '%s' for job id '%s'".formatted(job.getExecutionId(), jobId));
     }
     ActivityImpl activity = execution.getProcessDefinition().findActivity(job.getActivityId());
     if (activity != null) {

@@ -24,11 +24,15 @@ import java.util.Objects;
 /**
  * Immutable representation of a 2-tuple of elements.
  *
+ * <p>
  * Although the implementation is immutable, there is no restriction on the
  * objects that may be stored. If mutable objects are stored in the pair, then
  * the pair itself effectively becomes mutable.
+ * </p>
  *
+ * <p>
  * ThreadSafe if both paired objects are thread-safe
+ * </p>
  *
  * @param <L>
  *          the type of the left element

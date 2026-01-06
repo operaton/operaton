@@ -304,11 +304,15 @@ public interface RepositoryService {
   /**
    * Suspends the process definition with the given id.
    *
+   * <p>
    * If a process definition is in state suspended, it will not be possible to start new process instances
    * based on the process definition.
+   * </p>
    *
+   * <p>
    * <strong>Note: all the process instances of the process definition will still be active
    * (ie. not suspended)!</strong>
+   * </p>
    *
    * <p>Note: for more complex suspend commands use {@link #updateProcessDefinitionSuspensionState()}.</p>
    *
@@ -324,8 +328,10 @@ public interface RepositoryService {
   /**
    * Suspends the process definition with the given id.
    *
+   * <p>
    * If a process definition is in state suspended, it will not be possible to start new process instances
    * based on the process definition.
+   * </p>
    *
    * <p>Note: for more complex suspend commands use {@link #updateProcessDefinitionSuspensionState()}.</p>
    *
@@ -354,11 +360,15 @@ public interface RepositoryService {
   /**
    * Suspends the <strong>all</strong> process definitions with the given key (= id in the bpmn20.xml file).
    *
+   * <p>
    * If a process definition is in state suspended, it will not be possible to start new process instances
    * based on the process definition.
+   * </p>
    *
+   * <p>
    * <strong>Note: all the process instances of the process definition will still be active
    * (ie. not suspended)!</strong>
+   * </p>
    *
    * <p>Note: for more complex suspend commands use {@link #updateProcessDefinitionSuspensionState()}.</p>
    *
@@ -374,8 +384,10 @@ public interface RepositoryService {
   /**
    * Suspends the <strong>all</strong> process definitions with the given key (= id in the bpmn20.xml file).
    *
+   * <p>
    * If a process definition is in state suspended, it will not be possible to start new process instances
    * based on the process definition.
+   * </p>
    *
    * <p>Note: for more complex suspend commands use {@link #updateProcessDefinitionSuspensionState()}.</p>
    *
@@ -565,7 +577,9 @@ public interface RepositoryService {
    * Provides positions and dimensions of elements in a process diagram as
    * provided by {@link RepositoryService#getProcessDiagram(String)}.
    *
+   * <p>
    * This method requires a process model and a diagram image to be deployed.
+   * </p>
    *
    * @param processDefinitionId id of a {@link ProcessDefinition}, cannot be null.
    * @return Map with process element ids as keys and positions and dimensions as values.

@@ -52,6 +52,8 @@ public interface FormField {
   String getTypeName();
 
   /**
+   * @deprecated since 1.0, use {@link #getValue()} instead, which provides type-safe access to the form field value.
+   *
    * @return the default value for this form field.
    */
   @Deprecated(since = "1.0")

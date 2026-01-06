@@ -301,7 +301,7 @@ public class MigratingInstanceParseContext {
 
   public void ensureNoEntitiesAreLeft(String entityName, Collection<? extends DbEntity> dbEntities, MigratingProcessInstanceValidationReportImpl processInstanceReport) {
     if (!dbEntities.isEmpty()) {
-      processInstanceReport.addFailure("Process instance contains not migrated " + entityName + ": [" + StringUtil.joinDbEntityIds(dbEntities) + "]");
+      processInstanceReport.addFailure("Process instance contains not migrated %s: [%s]".formatted(entityName, StringUtil.joinDbEntityIds(dbEntities)));
     }
   }
 

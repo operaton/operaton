@@ -32,12 +32,13 @@ import org.operaton.bpm.engine.runtime.Job;
  *   <li>job was deleted</li>
  * </ul>
  *
+ * <p>
  * An instance of {@link HistoricJobLog} represents a state in
  * the lifecycle of a {@link Job job}.
+ * </p>
  *
  * @author Roman Smirnov
  *
- * @since 7.3
  */
 public interface HistoricJobLog {
 
@@ -70,15 +71,16 @@ public interface HistoricJobLog {
   /**
    * Returns the priority of the associated job when <code>this</code> log entry was created.
    *
-   * @since 7.4
    */
   long getJobPriority();
 
   /**
    * Returns the message of the exception that occurred by executing the associated job.
    *
+   * <p>
    * To get the full exception stacktrace,
    * use {@link HistoryService#getHistoricJobLogExceptionStacktrace(String)}
+   * </p>
    */
   String getJobExceptionMessage();
 

@@ -19,12 +19,16 @@ package org.operaton.bpm.engine.repository;
 /** An object structure representing a Operaton Form used to present forms to users
  * either when starting a process instance or when assigned to a User Task.
  *
+ * <p>
  * Operaton Forms are usually composed with the help of tools like the Camunda Modeler
  * and deployed to the engine along with or separate from other resources, like process
  * definitions.
+ * </p>
  *
+ * <p>
  * On execution of the process instance a referenced Operaton Form (either through Start
  * Events or User Tasks) is represented by an instance of this class.
+ * </p>
  */
 public interface OperatonFormDefinition extends ResourceDefinition {
 

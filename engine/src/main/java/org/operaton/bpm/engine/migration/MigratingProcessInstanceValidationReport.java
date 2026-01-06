@@ -22,9 +22,11 @@ import java.util.List;
  * Collects general failures  and the migrating activity instance validation
  * reports for a migrating process instance.
  *
+ * <p>
  * A general failures is that the state of the process instance doesn't allow
  * the migration independent from an specific activity instance. For example
  * if non migrated jobs exist.
+ * </p>
  */
 public interface MigratingProcessInstanceValidationReport {
 

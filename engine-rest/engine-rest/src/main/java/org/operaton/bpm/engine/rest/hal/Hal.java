@@ -26,10 +26,10 @@ import org.operaton.bpm.engine.rest.IdentityRestService;
 import org.operaton.bpm.engine.rest.ProcessDefinitionRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
 import org.operaton.bpm.engine.rest.cache.Cache;
-import org.operaton.bpm.engine.rest.hal.caseDefinition.HalCaseDefinitionResolver;
+import org.operaton.bpm.engine.rest.hal.casedefinition.HalCaseDefinitionResolver;
 import org.operaton.bpm.engine.rest.hal.group.HalGroupResolver;
 import org.operaton.bpm.engine.rest.hal.identitylink.HalIdentityLinkResolver;
-import org.operaton.bpm.engine.rest.hal.processDefinition.HalProcessDefinitionResolver;
+import org.operaton.bpm.engine.rest.hal.processdefinition.HalProcessDefinitionResolver;
 import org.operaton.bpm.engine.rest.hal.user.HalUserResolver;
 
 /**

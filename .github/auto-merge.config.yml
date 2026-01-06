@@ -52,6 +52,7 @@ auto-merge-rules:
       - 'io.netty:*'
       - 'io.swagger*'
       - 'net.javacrumbs.json-unit:*'
+      # version properties
       - 'version.spring-boot'
       - 'version.quarkus'
       - 'version.mockito'
@@ -60,9 +61,11 @@ auto-merge-rules:
       - 'version.jna'
       - 'version.asm'
       - 'okhttp-version'
+      # Maven plugins
       - 'org.apache.maven.plugins'
       - 'org.codehaus.mojo:*'
       - 'org.codehaus.cargo:cargo-maven3-plugin'
+      - 'org.openapitools:openapi-generator-maven-plugin'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

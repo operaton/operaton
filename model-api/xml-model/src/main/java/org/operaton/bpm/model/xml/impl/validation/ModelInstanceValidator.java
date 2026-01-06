@@ -55,7 +55,7 @@ public class ModelInstanceValidator {
           validator.validate(element, resultsCollector);
         }
         catch(RuntimeException e) {
-          throw new RuntimeException("Validator " + validator + " threw an exception while validating "+element, e);
+          throw new RuntimeException("Validator %s threw an exception while validating %s".formatted(validator, element), e);
         }
       }
 

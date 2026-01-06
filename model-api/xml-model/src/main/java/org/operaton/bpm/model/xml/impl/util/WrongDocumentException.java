@@ -34,7 +34,7 @@ public class WrongDocumentException extends ModelException {
   @Serial private static final long serialVersionUID = 1L;
 
   public WrongDocumentException(Node nodeToAdd, DomDocument targetDocument) {
-    super("Cannot add attribute '"+ nodeToAdd +"' to document '" + targetDocument + "' not created by document.");
+    super("Cannot add attribute '%s' to document '%s' not created by document.".formatted(nodeToAdd, targetDocument));
   }
 
 }

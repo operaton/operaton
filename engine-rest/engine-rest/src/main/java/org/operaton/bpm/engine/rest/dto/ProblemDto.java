@@ -23,8 +23,10 @@ import org.operaton.bpm.engine.Problem;
 /**
  * Dto for {@link Problem}
  *
+ * <p>
  * The problem contains a list of element ids and other details for root
  * causing the issue.
+ * </p>
  */
 public class ProblemDto {
 

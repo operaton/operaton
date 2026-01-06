@@ -38,8 +38,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 /**
  * Evaluates the decision table with the given key or id.
  *
+ * <p>
  * If the decision definition key given then specify the version and tenant-id.
  * If no version is provided then the latest version is taken.
+ * </p>
  *
  * @author Kristin Polenz
  */
@@ -89,7 +91,7 @@ public class EvaluateDecisionTableCmd implements Command<DmnDecisionTableResult>
       return evaluateDecisionTable(decisionDefinition, variables);
     }
     catch (Exception e) {
-      throw new ProcessEngineException("Exception while evaluating decision with key '"+decisionDefinitionKey+"'", e);
+      throw new ProcessEngineException("Exception while evaluating decision with key '%s'".formatted(decisionDefinitionKey), e);
     }
   }
 

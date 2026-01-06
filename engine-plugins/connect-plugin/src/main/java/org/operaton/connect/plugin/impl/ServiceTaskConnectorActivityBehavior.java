@@ -91,7 +91,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
         if(connectorInstance == null) {
           connectorInstance = Connectors.getConnector(connectorId);
           if (connectorInstance == null) {
-            throw new ConnectorException("No connector found for connector id '" + connectorId + "'");
+            throw new ConnectorException("No connector found for connector id '%s'".formatted(connectorId));
           }
         }
       }

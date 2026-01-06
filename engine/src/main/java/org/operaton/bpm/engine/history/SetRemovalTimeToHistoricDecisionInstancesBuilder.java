@@ -51,9 +51,11 @@ public interface SetRemovalTimeToHistoricDecisionInstancesBuilder {
    * Takes additionally historic decision instances into account that are part of
    * the hierarchy of the given historic decision instances.
    *
+   * <p>
    * If the root decision instance id of the given historic decision instance is {@code null},
    * the hierarchy is ignored. This is the case for instances that were started with a version
    * prior 7.10.
+   * </p>
    *
    * @return the builder.
    */

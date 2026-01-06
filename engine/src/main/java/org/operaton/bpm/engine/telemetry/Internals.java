@@ -26,7 +26,9 @@ import org.operaton.bpm.engine.ManagementService;
  * This class represents the structure of data describing Operaton internal
  * metrics and the technical environment in which Operaton is set-up.
  *
+ * <p>
  * This information is sent to Operaton when telemetry is enabled.
+ * </p>
  *
  * @see <a href=
  *      "https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton
@@ -49,10 +51,13 @@ public interface Internals {
    * and metrics. If telemetry sending is enabled, dynamic data resets on sending the data
    * to Operaton.
    *
+   * <p>
    * This method returns a date that represents the date and time when the dynamic data collected
    * for telemetry is reset. Dynamic data and the date returned by this method are reset in three
    * cases:
+   * </p>
    *
+   * <p>
    * <ul>
    *   <li>At engine startup, the date is set to the current time, even if telemetry is disabled.
    *       It is then only used by the telemetry Query API that returns the currently collected
@@ -63,6 +68,7 @@ public interface Internals {
    *   <li>When sending telemetry to Operaton is enabled, after sending the data, all existing dynamic
    *       data is wiped and therefore the collection date is reset to the current time.</li>
    * </ul>
+   * </p>
    *
    * @return A date that represents the start of the time frame where the current telemetry
    * data set was collected.

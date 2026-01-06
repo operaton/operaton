@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -262,13 +261,12 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
 
     String resourceName = prepareResourceNameFromArchiveEntry(modelFileName, paResourceRootPath);
     addResource(zipFile.getInputStream(zipEntry), resourceMap, file.getName() + "!", resourceName);
-    findResourcesForArchiveEntry(file, paResourceRootPath, resourceMap, zipEntry, zipFile, modelFileName);
+    findResourcesForArchiveEntry(file, paResourceRootPath, resourceMap, zipFile, modelFileName);
   }
 
   void findResourcesForArchiveEntry(File file,
                                             String paResourceRootPath,
                                             Map<String, byte[]> resourceMap,
-                                            ZipEntry zipEntry,
                                             ZipFile zipFile,
                                             String modelFileName) throws IOException {
     Enumeration<? extends ZipEntry> entries2 = zipFile.entries();

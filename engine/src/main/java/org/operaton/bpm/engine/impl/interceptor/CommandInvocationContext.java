@@ -158,7 +158,7 @@ public class CommandInvocationContext {
       } else if (throwable instanceof RuntimeException runtimeException) {
         throw runtimeException;
       } else {
-        throw new ProcessEngineException("exception while executing command " + command, throwable);
+        throw new ProcessEngineException("exception while executing command %s".formatted(command), throwable);
       }
     }
   }

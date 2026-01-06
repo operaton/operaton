@@ -41,7 +41,7 @@ public class HistoricCaseInstanceResourceImpl implements HistoricCaseInstanceRes
     HistoricCaseInstance instance = historyService.createHistoricCaseInstanceQuery().caseInstanceId(caseInstanceId).singleResult();
 
     if (instance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic case instance with id '" + caseInstanceId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic case instance with id '%s' does not exist".formatted(caseInstanceId));
     }
 
     return HistoricCaseInstanceDto.fromHistoricCaseInstance(instance);

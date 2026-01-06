@@ -35,6 +35,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
@@ -69,6 +71,7 @@ import static org.assertj.core.api.Assertions.within;
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings({"java:S4144"})
 class StartTimerEventTest {
 
   protected static final long TWO_HOURS = TimeUnit.HOURS.toMillis(2L);
@@ -1767,46 +1770,17 @@ class StartTimerEventTest {
             .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
-  @Test
-  void shouldReevaluateCronToRepeatingTimerCycle() {
+  @ParameterizedTest
+  @CsvSource({
+    "0 0 * ? * *, R2/PT2H, 120, 2, 120, 2",
+    "0 0 * ? * *, R2/2023-08-18T14:00/PT30M, 240, 4, 30, 1",
+    "R3/2023-08-18T8:00/PT1H, R2/PT2H, 120, 2, 120, 2",
+    "R3/PT1H, R2/2023-08-18T10:00/PT2H, 120, 2, 120, 2"
+  })
+  void shouldReevaluateCronToRepeatingTimerCycle2(String cycle, String changedCycle, long expectedDueDateMinutes1, int moveByHours1, long expectedDueDateMinutes2, int moveByHours2) {
     // given
     ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * *"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/PT2H");
-    moveByHours(1); // execute second job
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-        .isNull();
-  }
-
-  @Test
-  void shouldReevaluateCronToRepeatingTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * *"); // every hour
+    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean(cycle); // every hour
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
     processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
 
@@ -1814,99 +1788,30 @@ class StartTimerEventTest {
     moveByHours(1); // execute first job, "2023/8/18 9:00:00"
 
     // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/2023-08-18T14:00/PT30M");
+    myCycleTimerBean.setCycle(changedCycle);
     moveByHours(1); // execute second job, "2023/8/18 10:00:00"
     JobQuery jobQuery = managementService.createJobQuery();
 
-    // then one more job is left due in 4 hours
+    // then one more job is left due in <moveByHours1> hours
     Date duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.HOURS.toMillis(4L)).toInstant(), within(59, ChronoUnit.MINUTES));
+      .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes1)).toInstant(), within(59, ChronoUnit.MINUTES));
 
-    moveByHours(4); // execute first job from new cycle, "2023/8/18 14:00:00"
+    moveByHours(moveByHours1); // execute first job from new cycle
 
-    // one more job is left due in 30 minutes
+    // one more job is left due before <moveByHours2>
     duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(30L)).toInstant(), within(59, ChronoUnit.MINUTES));
+      .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes2)).toInstant(), within(59, ChronoUnit.MINUTES));
 
-    moveByHours(1); // execute second job from new cycle
+    moveByHours(moveByHours2); // execute second job from new cycle
 
     // then no more jobs left
     assertThat(jobQuery.singleResult())
-        .isNull();
+      .isNull();
+
+
   }
-
-  @Test
-  void shouldReevaluateRepeatingTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/2023-08-18T8:00/PT1H"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job, "2023/8/18 9:00:00"
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/PT2H");
-    moveByHours(1); // execute second job, "2023/8/18 10:00:00"
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-        .isNull();
-  }
-
-  @Test
-  void shouldReevaluateRepeatingTimerCycleToTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/PT1H"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job, "2023/8/18 9:00:00"
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/2023-08-18T10:00/PT2H");
-    moveByHours(1); // execute second job, "2023/8/18 10:00:00"
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-    .isNull();
-  }
-
 
   // util methods ////////////////////////////////////////
 

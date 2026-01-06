@@ -44,12 +44,12 @@ class ResourceLoadingSecurityFilter extends SecurityFilter implements ResourceLo
     try {
       configFileResource = resource.getInputStream();
     } catch (IOException e1) {
-      throw new ServletException("Could not read security filter config file '" + configFileName + "': no such resource in servlet context.");
+      throw new ServletException("Could not read security filter config file '%s': no such resource in servlet context.".formatted(configFileName));
     }
     try {
       filterRules = FilterRules.load(configFileResource, applicationPath);
     } catch (Exception e) {
-      throw new RuntimeException("Exception while parsing '" + configFileName + "'", e);
+      throw new RuntimeException("Exception while parsing '%s'".formatted(configFileName), e);
     } finally {
       IoUtil.closeSilently(configFileResource);
     }

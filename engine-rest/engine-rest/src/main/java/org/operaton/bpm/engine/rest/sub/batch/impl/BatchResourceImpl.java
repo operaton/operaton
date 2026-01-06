@@ -44,7 +44,7 @@ public class BatchResourceImpl implements BatchResource {
       .singleResult();
 
     if (batch == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Batch with id '" + batchId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Batch with id '%s' does not exist".formatted(batchId));
     }
 
     return BatchDto.fromBatch(batch);
@@ -65,7 +65,7 @@ public class BatchResourceImpl implements BatchResource {
       processEngine.getManagementService().suspendBatchById(batchId);
     }
     catch (BadUserRequestException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to suspend batch with id '" + batchId + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to suspend batch with id '%s'".formatted(batchId));
     }
   }
 
@@ -74,7 +74,7 @@ public class BatchResourceImpl implements BatchResource {
       processEngine.getManagementService().activateBatchById(batchId);
     }
     catch (BadUserRequestException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to activate batch with id '" + batchId + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to activate batch with id '%s'".formatted(batchId));
     }
   }
 
@@ -85,7 +85,7 @@ public class BatchResourceImpl implements BatchResource {
         .deleteBatch(batchId, cascade);
     }
     catch (BadUserRequestException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to delete batch with id '" + batchId + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Unable to delete batch with id '%s'".formatted(batchId));
     }
   }
 

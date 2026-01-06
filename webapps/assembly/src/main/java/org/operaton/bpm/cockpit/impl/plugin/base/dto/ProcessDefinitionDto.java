@@ -28,8 +28,6 @@ public class ProcessDefinitionDto {
 
   protected int failedJobs;
 
-  public ProcessDefinitionDto() {}
-
   public String getId() {
     return id;
   }

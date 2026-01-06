@@ -29,12 +29,15 @@ import jakarta.el.ExpressionFactory;
 /**
  * Expression factory implementation.
  *
+ * <p>
  * This class is also used as an EL "service provider". The <em>JUEL</em> jar file specifies this
  * class as el expression factory implementation in
  * <code>META-INF/services/jakarta.el.ExpressionFactory</code>. Calling
  * {@link ExpressionFactory#newInstance()} will then return an instance of this class, configured as
  * described below.
+ * </p>
  *
+ * <p>
  * If no properties are specified at construction time, properties are read from
  * <ol>
  * <li>
@@ -49,7 +52,9 @@ import jakarta.el.ExpressionFactory;
  * <code>JAVA_HOME/lib/el.properties</code> or {@link System#getProperties()}.</li>
  * </ol>
  * There are also constructors to explicitly pass in an instance of {@link Properties}.
+ * </p>
  *
+ * <p>
  * Having this, the following properties are read:
  * <ul>
  * <li>
@@ -64,6 +69,7 @@ import jakarta.el.ExpressionFactory;
  * <code>jakarta.el.varArgs</code> - support function/method calls using varargs (boolean, default is
  * <code>false</code>).</li>
  * </ul>
+ * </p>
  *
  * @author Christoph Beck
  */
@@ -343,7 +349,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 		try {
 			return TypeConverter.class.cast(clazz.getDeclaredConstructor().newInstance());
 		} catch (Exception e) {
-			throw new ELException("TypeConverter " + clazz + " could not be instantiated", e);
+			throw new ELException("TypeConverter %s could not be instantiated".formatted(clazz), e);
 		}
 	}
 
@@ -368,7 +374,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 					if (features == null || features.length == 0) {
 						return TreeBuilder.class.cast(clazz.getDeclaredConstructor().newInstance());
 					} else {
-						throw new ELException("Builder " + clazz + " is missing constructor (can't pass features)");
+						throw new ELException("Builder %s is missing constructor (can't pass features)".formatted(clazz));
 					}
 				} else {
 					return TreeBuilder.class.cast(constructor.newInstance((Object) features));
@@ -377,7 +383,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 				return TreeBuilder.class.cast(clazz.getDeclaredConstructor().newInstance());
 			}
 		} catch (Exception e) {
-			throw new ELException("TreeBuilder " + clazz + " could not be instantiated", e);
+			throw new ELException("TreeBuilder %s could not be instantiated".formatted(clazz), e);
 		}
 	}
 
@@ -394,9 +400,9 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 				try {
 					return loader == null ? Class.forName(className) : loader.loadClass(className);
 				} catch (ClassNotFoundException e) {
-					throw new ELException("Class " + className + " not found", e);
+					throw new ELException("Class %s not found".formatted(className), e);
 				} catch (Exception e) {
-					throw new ELException("Class " + className + " could not be instantiated", e);
+					throw new ELException("Class %s could not be instantiated".formatted(className), e);
 				}
 			}
 		}

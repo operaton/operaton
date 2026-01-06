@@ -84,7 +84,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
         }
       }
 
-      throw new ProcessEngineException("Cannot find serializer for value '"+value+"'.");
+      throw new ProcessEngineException("Cannot find serializer for value '%s'.".formatted(value));
     }
     else if(matchedSerializers.size() == 1) {
       return matchedSerializers.get(0);

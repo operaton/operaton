@@ -40,7 +40,7 @@ public class DeferredFileValueImpl extends FileValueImpl implements DeferredFile
 
   protected String variableName;
   protected String executionId;
-  protected EngineClient engineClient;
+  protected transient EngineClient engineClient;
 
   public DeferredFileValueImpl(String filename, EngineClient engineClient) {
     super(FILE, filename);
@@ -88,8 +88,8 @@ public class DeferredFileValueImpl extends FileValueImpl implements DeferredFile
 
   @Override
   public String toString() {
-    return "DeferredFileValueImpl [mimeType=" + mimeType + ", filename=" + filename + ", type=" + type + ", "
-        + "isTransient=" + isTransient + ", isLoaded=" + isLoaded + "]";
+    return "DeferredFileValueImpl [mimeType=%s, filename=%s, type=%s, isTransient=%s, isLoaded=%s]"
+        .formatted(mimeType, filename, type, isTransient, isLoaded);
   }
 
 }

@@ -39,12 +39,11 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  * A resource class that provides a plugins restful API.
  *
  * <p>
- *
  * Subclasses of this class may provide subresources using annotated getters
  * in order to be multi-engine aware.
+ * </p>
  *
  * <p>
- *
  * Subresources must properly initialize the subresources via
  * {@link AbstractAppPluginRootResource#subResource(AbstractAppPluginResource) }.
  *
@@ -58,6 +57,7 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  *   }
  * }
  * </pre>
+ * </p>
  *
  * @author nico.rehwaldt
  * @author Daniel Meyer
@@ -124,7 +124,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
   public Response getAsset(@PathParam("file") String file) {
 
     if (!allowedAssets.contains(file)) {
-      throw new RestException(Status.FORBIDDEN, "Not allowed to load the following file '" + file + "'.");
+      throw new RestException(Status.FORBIDDEN, "Not allowed to load the following file '%s'.".formatted(file));
     }
 
     AppPlugin plugin = runtimeDelegate.getAppPluginRegistry().getPlugin(pluginName);
@@ -154,7 +154,7 @@ public class AbstractAppPluginRootResource<T extends AppPlugin> {
     }
 
     // no asset found
-    throw new RestException(Status.NOT_FOUND, "It was not able to load the following file '" + file + "'.");
+    throw new RestException(Status.NOT_FOUND, "It was not able to load the following file '%s'.".formatted(file));
   }
 
   /**

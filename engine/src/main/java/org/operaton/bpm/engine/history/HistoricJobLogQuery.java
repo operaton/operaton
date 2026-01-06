@@ -76,7 +76,6 @@ public interface HistoricJobLogQuery extends Query<HistoricJobLogQuery, Historic
    * Only select log entries where the job had a priority higher than or
    * equal to the given priority.
    *
-   * @since 7.4
    */
   HistoricJobLogQuery jobPriorityHigherThanOrEquals(long priority);
 
@@ -84,7 +83,6 @@ public interface HistoricJobLogQuery extends Query<HistoricJobLogQuery, Historic
    * Only select log entries where the job had a priority lower than or
    * equal to the given priority.
    *
-   * @since 7.4
    */
   HistoricJobLogQuery jobPriorityLowerThanOrEquals(long priority);
 
@@ -118,7 +116,6 @@ public interface HistoricJobLogQuery extends Query<HistoricJobLogQuery, Historic
   /**
    * Order by job priority (needs to be followed by {@link #asc()} or {@link #desc()}).
    *
-   * @since 7.4
    */
   HistoricJobLogQuery orderByJobPriority();
 
@@ -155,7 +152,6 @@ public interface HistoricJobLogQuery extends Query<HistoricJobLogQuery, Historic
    * be <strong>totally ordered</strong> by using {@link #jobId(String)} and {@link #orderPartiallyByOccurrence()}
    * which will return a result set ordered by its occurrence.</p>
    *
-   * @since 7.3
    */
   HistoricJobLogQuery orderPartiallyByOccurrence();
 

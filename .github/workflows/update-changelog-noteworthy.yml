@@ -6,14 +6,13 @@ on:
   pull_request:
     types: [closed]
 
-permissions:
-  issues: write
-  pull-requests: read
-
 jobs:
   create-changelog-task:
     name: Create Changelog Task
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: read
     # Only run if the issue/PR has the "noteworthy" label
     if: |
       (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'noteworthy')) ||

@@ -22,7 +22,9 @@ package org.operaton.bpm.engine.impl.cfg;
  * The transaction context is an abstraction for different transaction management strategies
  * existing the Java Ecosystem. Provides transaction lifecycle management and management of transaction listeners.
  *
+ * <p>
  * Note: not every Technology or environment may provide a full implementation of this interface.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Daniel Meyer

@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -31,6 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test covers the use-case where two competing transactions
  * attempt to lock (by ID) the same external task. The test steps are:
  *
+ * <p>
  * 0. External Task is created.
  * 1. TX1 validates that there is no lock on the task, and waits for sync;
  * 2. TX2 validates that there is no lock on the task, and waits for sync;
@@ -39,6 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 5. TX1 flushes the result and commits.
  * 6. TX2 attempts to flush the result and receives
  *    an OLE since the lock was already updated by TX1.
+ * </p>
  */
 class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
 
@@ -52,19 +56,20 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     String externalTaskId = externalTaskService.createExternalTaskQuery()
-        .notLocked()
-        .singleResult()
-        .getId();
+      .notLocked()
+      .singleResult()
+      .getId();
 
     // TX1: start, READ external task, and verify that there is no lock
     ThreadControl lockThread1 = executeControllableCommand(
-        new ControllableExternalTaskLockCmd(externalTaskId, WORKER_ID_1, LOCK_DURATION));
+      new ControllableExternalTaskLockCmd(externalTaskId, WORKER_ID_1, LOCK_DURATION));
     lockThread1.reportInterrupts();
     lockThread1.waitForSync();
 
     // TX2: start, READ external task, and verify that there is no lock
+    CountDownLatch tx2Proceed = new CountDownLatch(1);
     ThreadControl lockThread2 = executeControllableCommand(
-        new ControllableExternalTaskLockCmd(externalTaskId, WORKER_ID_2, LOCK_DURATION));
+      new ControllableExternalTaskLockCmd(externalTaskId, WORKER_ID_2, LOCK_DURATION, tx2Proceed));
     lockThread2.reportInterrupts();
     lockThread2.waitForSync();
 
@@ -75,15 +80,17 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
     // TX2: lock external task and wait to flush
     lockThread2.makeContinue();
 
-    // introduce a delay to avoid race conditions between the threads
-    Thread.sleep(2000);
+    // wait until TX2 reached the second sync point (and is now awaiting the latch)
+    lockThread2.waitForSync();
 
     // TX1: flush & commit
     lockThread1.waitUntilDone();
 
+    // release TX2 so it attempts to flush and should get an OLE
+    tx2Proceed.countDown();
+
     // when
     // TX2: attempt to flush
-    lockThread2.waitForSync();
     lockThread2.waitUntilDone();
 
     // then
@@ -97,8 +104,14 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
   private static class ControllableExternalTaskLockCmd extends ControllableCommand<Void> {
 
     protected LockExternalTaskCmd lockExternalTaskCmd;
+    protected final CountDownLatch awaitLatch;
 
     public ControllableExternalTaskLockCmd(String externalTaskId, String workerId, long lockDuration) {
+      this(externalTaskId, workerId, lockDuration, null);
+    }
+
+    public ControllableExternalTaskLockCmd(String externalTaskId, String workerId, long lockDuration, CountDownLatch awaitLatch) {
+      this.awaitLatch = awaitLatch;
       this.lockExternalTaskCmd = new ControllableLockExternalTaskCmd(externalTaskId, workerId, lockDuration, monitor);
     }
 
@@ -111,10 +124,18 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
       // block thread after task lock is set
       monitor.sync();
 
+      // if a latch is provided, wait until released (with timeout to avoid test hang)
+      if (awaitLatch != null) {
+        try {
+          awaitLatch.await(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
+        }
+      }
+
       return null;
     }
   }
-
   private static class ControllableLockExternalTaskCmd extends LockExternalTaskCmd {
 
     protected final ThreadControl monitor;

@@ -65,8 +65,10 @@ import org.operaton.bpm.engine.telemetry.TelemetryData;
 /**
  * Service for admin and maintenance operations on the process engine.
  *
+ * <p>
  * These operations will typically not be used in a workflow driven application,
  * but are used in for example the operational console.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez
@@ -283,11 +285,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobById(String)
    * @see #activateJobByJobDefinitionId(String)
@@ -309,11 +313,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionId(String)
    */
@@ -334,11 +340,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionKey(String)
    */
@@ -363,11 +371,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobById(String)
    * @see #activateJobByJobDefinitionId(String)
@@ -393,11 +403,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionId(String)
    */
@@ -422,11 +434,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>activateJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #activateJobByProcessDefinitionKey(String)
    */
@@ -505,11 +519,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobById(String)
    * @see #suspendJobByJobDefinitionId(String)
@@ -531,11 +547,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionId(String)
    */
@@ -556,11 +574,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionKey(String)
    */
@@ -585,11 +605,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobById(String)
    * @see #suspendJobByJobDefinitionId(String)
@@ -615,11 +637,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionId(String)
    */
@@ -644,11 +668,13 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If <code>suspendJobs</code> is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *     <li>{@link Permissions#UPDATE} on any {@link Resources#PROCESS_INSTANCE}</li>
    *   </ul>
+   * </p>
    *
    * @see #suspendJobByProcessDefinitionKey(String)
    */
@@ -808,9 +834,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that a job has left.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobId id of the job to modify, cannot be null.
    * @param retries number of retries.
@@ -826,9 +854,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobIds ids of the jobs to modify, cannot be null.
    * @param retries number of retries.
@@ -845,9 +875,11 @@ public interface ManagementService {
   /**
    * Creates a fluent builder to set the number of retries on one or multiple {@link Job jobs}.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @see SetJobRetriesBuilder
    *
@@ -860,9 +892,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobIds ids of the jobs to modify, cannot be null.
    * @param retries number of retries.
@@ -877,9 +911,11 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @param jobQuery query that identifies which jobs should be modified, cannot be null.
    * @param retries number of retries.
@@ -894,12 +930,16 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
+   * <p>
    * Either jobIds or jobQuery has to be provided. If both are provided resulting list
    * of affected jobs will contain jobs matching query as well as jobs defined in the list.
+   * </p>
    *
    * @param jobIds ids of the jobs to modify.
    * @param jobQuery query that identifies which jobs should be modified.
@@ -915,12 +955,16 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
+   * <p>
    * Either jobIds or jobQuery has to be provided. If both are provided resulting list
    * of affected jobs will contain jobs matching query as well as jobs defined in the list.
+   * </p>
    *
    * @param processInstanceIds ids of the process instances that for which jobs retries will be set
    * @param query query that identifies process instances with jobs that have to be modified
@@ -935,13 +979,17 @@ public interface ManagementService {
   /**
    * Sets the number of retries that jobs have left asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
+   * <p>
    * processInstanceIds, processInstanceQuery or historicProcessInstanceQuery has to be provided.
    * If all are provided, resulting list of affected jobs will contain jobs related to the
    * query as well as jobs related to instances in the list.
+   * </p>
    *
    * @param processInstanceIds ids of the process instances that for which jobs retries will be set
    * @param processInstanceQuery query that identifies process instances with jobs
@@ -962,9 +1010,11 @@ public interface ManagementService {
   /**
    * Creates a fluent builder to set the number of retries for one or multiple jobs asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @see SetJobRetriesByJobsAsyncBuilder
    *
@@ -977,9 +1027,11 @@ public interface ManagementService {
   /**
    * Creates a fluent builder to set the number of retries for one or multiple jobs referenced by process asynchronously.
    *
+   * <p>
    * Whenever the JobExecutor fails to execute a job, this value is decremented.
    * When it hits zero, the job is supposed to be dead and not retried again.
    * In that case, this method can be used to increase the number of retries.
+   * </p>
    *
    * @see SetJobRetriesByProcessAsyncBuilder
    *
@@ -1077,7 +1129,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void setJobPriority(String jobId, long priority);
 
@@ -1097,7 +1148,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void setOverridingJobPriorityForJobDefinition(String jobDefinitionId, long priority);
 
@@ -1121,13 +1171,14 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
+   * <p>
    *   If cascade is <code>true</code>, the user must further possess one of the following permissions:
    *   <ul>
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_INSTANCE}</li>
    *     <li>{@link Permissions#UPDATE_INSTANCE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
+   * </p>
    *
-   * @since 7.4
    */
   void setOverridingJobPriorityForJobDefinition(String jobDefinitionId, long priority, boolean cascade);
 
@@ -1145,7 +1196,6 @@ public interface ManagementService {
    *     <li>{@link Permissions#UPDATE} on {@link Resources#PROCESS_DEFINITION}</li>
    *   </ul>
    *
-   * @since 7.4
    */
   void clearOverridingJobPriorityForJobDefinition(String jobDefinitionId);
 
@@ -1262,7 +1312,6 @@ public interface ManagementService {
 
   /**
    * @return a new metrics Query.
-   * @since 7.3
    */
   MetricsQuery createMetricsQuery();
 
@@ -1274,7 +1323,6 @@ public interface ManagementService {
    *          If the user is not a member of the group {@link Groups#OPERATON_ADMIN}.
    *
    * @param timestamp or null
-   * @since 7.3
    */
   void deleteMetrics(Date timestamp);
 
@@ -1288,7 +1336,6 @@ public interface ManagementService {
    *
    * @param timestamp or null
    * @param reporter or null
-   * @since 7.4
    */
   void deleteMetrics(Date timestamp, String reporter);
 
@@ -1323,7 +1370,6 @@ public interface ManagementService {
   /**
    * Creates a query to search for {@link org.operaton.bpm.engine.batch.Batch} instances.
    *
-   * @since 7.5
    */
   BatchQuery createBatchQuery();
 
@@ -1342,7 +1388,6 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#BATCH}.
    *
-   * @since 7.5
    */
   void suspendBatchById(String batchId);
 
@@ -1361,34 +1406,32 @@ public interface ManagementService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#UPDATE} permission on {@link Resources#BATCH}.
    *
-   * @since 7.5
    */
   void activateBatchById(String batchId);
 
   /**
    * Deletes a batch instance and the corresponding job definitions.
    *
+   * <p>
    * If cascade is set to true the historic batch instances and the
    * historic jobs logs are also removed.
+   * </p>
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
    *
-   * @since 7.5
    */
   void deleteBatch(String batchId, boolean cascade);
 
   /**
    * Query for the statistics of the batch execution jobs of a batch.
    *
-   * @since 7.5
    */
   BatchStatisticsQuery createBatchStatisticsQuery();
 
   /**
    * Query for entries of the database schema log.
    *
-   * @since 7.11
    */
   SchemaLogQuery createSchemaLogQuery();
 
@@ -1413,7 +1456,9 @@ public interface ManagementService {
    * <a href="https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Telemetry</a>
    * page in the Operaton docs.
    *
+   * <p>
    * The engine collects information about multiple aspects of the installation.
+   * </p>
    *
    * @see <a href="https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton Documentation: Telemetry</a>
    */

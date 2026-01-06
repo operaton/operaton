@@ -267,7 +267,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
 
   @Override
   public String toString() {
-    return "CaseDefinitionEntity["+id+"]";
+    return "CaseDefinitionEntity[%s]".formatted(id);
   }
 
   /**

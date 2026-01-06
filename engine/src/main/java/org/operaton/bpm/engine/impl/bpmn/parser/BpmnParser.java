@@ -27,9 +27,11 @@ import org.operaton.bpm.engine.impl.util.xml.Parser;
 /**
  * Parser for BPMN 2.0 process models.
  *
+ * <p>
  * There is only one instance of this parser in the process engine.
  * This {@link Parser} creates {@link BpmnParse} instances that
  * can be used to actually parse the BPMN 2.0 XML process definitions.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez

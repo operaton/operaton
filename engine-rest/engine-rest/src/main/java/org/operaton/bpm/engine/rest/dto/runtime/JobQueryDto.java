@@ -261,7 +261,7 @@ public class JobQueryDto extends AbstractQueryDto<JobQuery> {
         try {
           date = dateConverter.convertQueryParameterToType((String) conditionQueryParam.getValue());
         } catch (RestException e) {
-          throw new InvalidRequestException(e.getStatus(), e, "Invalid " + fieldName() + " format: " + e.getMessage());
+          throw new InvalidRequestException(e.getStatus(), e, "Invalid %s format: %s".formatted(fieldName(), e.getMessage()));
         }
 
         if (ConditionQueryParameterDto.GREATER_THAN_OPERATOR_NAME.equals(op)) {
@@ -269,7 +269,7 @@ public class JobQueryDto extends AbstractQueryDto<JobQuery> {
         } else if (ConditionQueryParameterDto.LESS_THAN_OPERATOR_NAME.equals(op)) {
           setLowerThan(date);
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid " + fieldName() + " comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid %s comparator specified: %s".formatted(fieldName(), op));
         }
       }
     }

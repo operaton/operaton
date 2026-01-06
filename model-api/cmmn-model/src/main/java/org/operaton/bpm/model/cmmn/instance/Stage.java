@@ -28,6 +28,9 @@ public interface Stage extends PlanFragment {
 
   void setAutoComplete(boolean autoComplete);
 
+  /**
+   * @deprecated since 1.0, typo in method name. Use {@link #getExitCriteria()} or {@link #getExitCriterions()} instead.
+   */
   @Deprecated(since = "1.0")
   Collection<Sentry> getExitCriterias();
 

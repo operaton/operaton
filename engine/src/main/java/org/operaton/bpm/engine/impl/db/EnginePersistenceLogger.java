@@ -418,7 +418,15 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
         thatDeploymentId);
   }
 
+  /**
+   * @deprecated use {@link #tooManyProcessDefinitionsException(int, String, String, String)} instead
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
   public ProcessEngineException toManyProcessDefinitionsException(int count, String key, String versionAttribute, String versionValue, String tenantId) {
+    return tooManyProcessDefinitionsException(count, key, versionAttribute, versionValue);
+  }
+
+  public ProcessEngineException tooManyProcessDefinitionsException(int count, String key, String versionAttribute, String versionValue) {
     return new ProcessEngineException(exceptionMessage(
       "045",
       "There are '{}' results for a process definition with key '{}', {} '{}' and tenant-id '{}'.",
@@ -728,8 +736,7 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
   public ProcessEngineException disabledHistoricInstancePermissionsException() {
     return  new BadUserRequestException(exceptionMessage(
         "090",
-        "Historic instance permissions are disabled, " +
-            "please check your process engine configuration."
+        "Historic instance permissions are disabled, please check your process engine configuration."
     ));
   }
 

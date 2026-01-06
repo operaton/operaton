@@ -157,9 +157,9 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
       return results.get(0);
     } else if (results.size() > 1) {
       if (processDefinitionVersion != null) {
-        throw LOG.toManyProcessDefinitionsException(results.size(), processDefinitionKey, "version", processDefinitionVersion.toString(), tenantId);
+        throw LOG.tooManyProcessDefinitionsException(results.size(), processDefinitionKey, "version", processDefinitionVersion.toString());
       } else if (processDefinitionVersionTag != null) {
-        throw LOG.toManyProcessDefinitionsException(results.size(), processDefinitionKey, "versionTag", processDefinitionVersionTag, tenantId);
+        throw LOG.tooManyProcessDefinitionsException(results.size(), processDefinitionKey, "versionTag", processDefinitionVersionTag);
       }
     }
     return null;
@@ -316,17 +316,22 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   * If cascadeToHistory and cascadeToInstances is set to true it deletes
   * the history and the process instances.
   *
+  * <p>
   * *Note*: If more than one process definition, from one deployment, is deleted in
   * a single transaction and the cascadeToHistory and cascadeToInstances flag was set to true it
   * can cause a dirty deployment cache. The process instances of ALL process definitions must be deleted,
   * before every process definition can be deleted! In such cases the cascadeToInstances flag
   * have to set to false!
+  * </p>
   *
+  * <p>
   * On deletion of all process instances, the task listeners will be deleted as well.
   * Deletion of tasks and listeners needs the redeployment of deployments.
   * It can cause to problems if is done sequential with the deletion of process definition
   * in a single transaction.
+  * </p>
   *
+  * <p>
   * *For example*:
   * Deployment contains two process definition. First process definition
   * and instances will be removed, also cleared from the cache.
@@ -334,6 +339,7 @@ public class ProcessDefinitionManager extends AbstractManager implements Abstrac
   * Deletion of instances will cause redeployment this deploys again
   * first into the cache. Only the second will be removed from cache and
   * first remains in the cache after the deletion process.
+  * </p>
   *
   * @param processDefinition the process definition which should be deleted
   * @param processDefinitionId the id of the process definition

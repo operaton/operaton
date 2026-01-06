@@ -24,8 +24,6 @@ public class IncidentStatisticsDto {
   protected String incidentType;
   protected int incidentCount;
 
-  public IncidentStatisticsDto() {}
-
   public String getIncidentType() {
     return incidentType;
   }

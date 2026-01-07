@@ -51,7 +51,7 @@
     <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
     <version.selenium>4.36.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
-    <version.logback>1.5.23</version.logback>
+    <version.logback>1.5.24</version.logback>
     <version.freemarker>2.3.34</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.nodejs>22.13.0</version.nodejs>

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.dmn.entity.repository.DecisionRequirementsDefinitionEntity;
@@ -32,9 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * Gives access to a deployed decision requirements definition instance.
  */
-public class GetDeploymentDecisionRequirementsDefinitionCmd implements Command<DecisionRequirementsDefinition>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetDeploymentDecisionRequirementsDefinitionCmd implements Command<DecisionRequirementsDefinition> {
   protected String decisionRequirementsDefinitionId;
 
   public GetDeploymentDecisionRequirementsDefinitionCmd(String decisionRequirementsDefinitionId) {

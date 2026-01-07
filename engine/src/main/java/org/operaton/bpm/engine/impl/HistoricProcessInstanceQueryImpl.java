@@ -78,7 +78,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String subProcessInstanceId;
   protected String superCaseInstanceId;
   protected String subCaseInstanceId;
-  protected List<String> processKeyNotIn;
+  private List<String> processKeyNotIn;
   protected Date startedBefore;
   protected Date startedAfter;
   protected Date finishedBefore;
@@ -89,7 +89,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected Date executedJobBefore;
   protected String processDefinitionKey;
   protected String[] processDefinitionKeys;
-  protected Set<String> processInstanceIds;
+  private Set<String> processInstanceIds;
   protected String[] processInstanceIdNotIn;
   protected String[] tenantIds;
   protected boolean isTenantIdSet;
@@ -97,14 +97,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String[] activeActivityIds;
   protected String[] activityIds;
   protected String[] incidentIds;
-  protected Set<String> state = new HashSet<>();
+  private Set<String> state = new HashSet<>();
 
   protected String caseInstanceId;
 
-  protected List<HistoricProcessInstanceQueryImpl> queries = new ArrayList<>(Collections.singletonList(this));
+  private List<HistoricProcessInstanceQueryImpl> queries = new ArrayList<>(Collections.singletonList(this));
   protected boolean isOrQueryActive;
 
-  protected Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
+  private Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
 
   public HistoricProcessInstanceQueryImpl() {
   }

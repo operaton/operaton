@@ -42,7 +42,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Serial private static final long serialVersionUID = 1L;
   protected String caseInstanceId;
-  protected Set<String> caseInstanceIds;
+  private Set<String> caseInstanceIds;
   protected String caseDefinitionId;
   protected String caseDefinitionName;
   protected String caseDefinitionNameLike;
@@ -55,7 +55,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
   protected String subCaseInstanceId;
   protected String superProcessInstanceId;
   protected String subProcessInstanceId;
-  protected List<String> caseKeyNotIn;
+  private List<String> caseKeyNotIn;
   protected Date createdBefore;
   protected Date createdAfter;
   protected Date closedBefore;

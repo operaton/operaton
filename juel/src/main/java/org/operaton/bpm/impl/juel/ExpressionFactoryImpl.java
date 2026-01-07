@@ -246,7 +246,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 
 	private Properties loadDefaultProperties() {
 		String home = System.getProperty("java.home");
-		String path = home + File.separator + "lib" + File.separator + "el.properties";
+		String path = "%s%slib%sel.properties".formatted(home, File.separator, File.separator);
 		File file = new File(path);
 		if (file.exists()) {
 			Properties properties = new Properties();

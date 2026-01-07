@@ -35,8 +35,8 @@ public final class BpmPlatform {
   public static final String PROCESS_ENGINE_SERVICE_NAME = "ProcessEngineService!org.operaton.bpm.ProcessEngineService";
   public static final String PROCESS_APPLICATION_SERVICE_NAME = "ProcessApplicationService!org.operaton.bpm.ProcessApplicationService";
 
-  public static final String PROCESS_ENGINE_SERVICE_JNDI_NAME = "%s/%s/%s/%s".formatted(JNDI_NAME_PREFIX, APP_JNDI_NAME, MODULE_JNDI_NAME, PROCESS_ENGINE_SERVICE_NAME);
-  public static final String PROCESS_APPLICATION_SERVICE_JNDI_NAME = "%s/%s/%s/%s".formatted(JNDI_NAME_PREFIX, APP_JNDI_NAME, MODULE_JNDI_NAME, PROCESS_APPLICATION_SERVICE_NAME);
+  public static final String PROCESS_ENGINE_SERVICE_JNDI_NAME = JNDI_NAME_PREFIX + "/" + APP_JNDI_NAME + "/" + MODULE_JNDI_NAME + "/" + PROCESS_ENGINE_SERVICE_NAME;
+  public static final String PROCESS_APPLICATION_SERVICE_JNDI_NAME = JNDI_NAME_PREFIX + "/" + APP_JNDI_NAME + "/" + MODULE_JNDI_NAME + "/" + PROCESS_APPLICATION_SERVICE_NAME;
 
   private BpmPlatform() {
   }

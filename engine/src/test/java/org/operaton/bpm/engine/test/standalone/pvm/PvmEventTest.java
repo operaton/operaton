@@ -78,7 +78,7 @@ class PvmEventTest {
     expectedEvents.add("end on Activity(end)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
+    assertThat(eventCollector.events).as("expected %s, but was %n%s%n".formatted(expectedEvents, eventCollector)).isEqualTo(expectedEvents);
   }
 
   /**
@@ -144,7 +144,7 @@ class PvmEventTest {
     expectedEvents.add("end on Activity(end)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
+    assertThat(eventCollector.events).as("expected %s, but was %n%s%n".formatted(expectedEvents, eventCollector)).isEqualTo(expectedEvents);
   }
 
 
@@ -228,7 +228,7 @@ class PvmEventTest {
     expectedEvents.add("end on Activity(end)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
+    assertThat(eventCollector.events).as("expected %s, but was %n%s%n".formatted(expectedEvents, eventCollector)).isEqualTo(expectedEvents);
   }
 
   /**
@@ -300,6 +300,6 @@ class PvmEventTest {
     expectedEvents.add("end on Activity(embeddedsubprocess)");
     expectedEvents.add("end on ProcessDefinition(events)");
 
-    assertThat(eventCollector.events).as("expected " + expectedEvents + ", but was \n" + eventCollector + "\n").isEqualTo(expectedEvents);
+    assertThat(eventCollector.events).as("expected %s, but was %n%s%n".formatted(expectedEvents, eventCollector)).isEqualTo(expectedEvents);
   }
 }

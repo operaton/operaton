@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.history;
 
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @author Roman Smirnov
  *
  */
-public interface IncidentState {
+public interface IncidentState extends Serializable {
 
   IncidentState DEFAULT = new IncidentStateImpl(0, "open");
   IncidentState RESOLVED = new IncidentStateImpl(1, "resolved");
@@ -32,6 +34,7 @@ public interface IncidentState {
   // /////////////////////////////////////////////////// default implementation
 
   class IncidentStateImpl implements IncidentState {
+    @Serial private static final long serialVersionUID = 1L;
 
     public final int stateCode;
     protected final String name;

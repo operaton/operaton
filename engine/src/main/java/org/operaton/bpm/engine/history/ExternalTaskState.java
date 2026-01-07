@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.history;
 
+import java.io.Serial;
+import java.io.Serializable;
 
-public interface ExternalTaskState {
+public interface ExternalTaskState extends Serializable {
 
   ExternalTaskState CREATED = new ExternalTaskStateImpl(0, "created");
   ExternalTaskState FAILED = new ExternalTaskStateImpl(1, "failed");
@@ -29,6 +31,7 @@ public interface ExternalTaskState {
   // /////////////////////////////////////////////////// default implementation
 
   class ExternalTaskStateImpl implements ExternalTaskState {
+    @Serial private static final long serialVersionUID = 1L;
 
     public final int stateCode;
     protected final String name;

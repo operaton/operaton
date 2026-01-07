@@ -43,7 +43,7 @@ class VfsProcessApplicationScannerTest {
     // expect: finds only the BPMN process file and not treats the 'bpmn' folder
     assertThat(scanResult).hasSize(1);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
-    assertThat(contains(scanResult, processFileName)).as("'%s'not found".formatted(processFileName)).isTrue();
+    assertThat(contains(scanResult, processFileName)).as("'%s' not found".formatted(processFileName)).isTrue();
     assertThat(contains(scanResult, "processResource.txt")).as("'bpmn' folder in resource path found").isFalse();
   }
 

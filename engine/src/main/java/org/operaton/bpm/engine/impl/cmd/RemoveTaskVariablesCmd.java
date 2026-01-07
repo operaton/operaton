@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -32,9 +31,6 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  */
 public class RemoveTaskVariablesCmd extends AbstractRemoveVariableCmd {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   public RemoveTaskVariablesCmd(String taskId, Collection<String> variableNames, boolean isLocal) {
     super(taskId, variableNames, isLocal);
   }

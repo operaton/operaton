@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -33,15 +31,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * Command to handle a task BPMN error.
  */
-public class HandleTaskBpmnErrorCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class HandleTaskBpmnErrorCmd implements Command<Void> {
   protected String taskId;
   protected String errorCode;
   protected String errorMessage;
   protected Map<String, Object> variables;
-
 
   public HandleTaskBpmnErrorCmd(String taskId, String errorCode) {
     this.taskId = taskId;

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,10 +25,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tom Baeyens
  */
-public class CreateGroupCmd extends AbstractWritableIdentityServiceCmd<Group> implements Command<Group>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CreateGroupCmd extends AbstractWritableIdentityServiceCmd<Group> implements Command<Group> {
   protected String groupId;
 
   public CreateGroupCmd(String groupId) {

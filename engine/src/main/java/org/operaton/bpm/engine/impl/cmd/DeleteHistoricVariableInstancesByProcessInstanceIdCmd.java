@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Arrays;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -37,9 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tobias Metzke
  *
  */
-public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeleteHistoricVariableInstancesByProcessInstanceIdCmd implements Command<Void> {
   private final String processInstanceId;
 
   public DeleteHistoricVariableInstancesByProcessInstanceIdCmd(String processInstanceId) {

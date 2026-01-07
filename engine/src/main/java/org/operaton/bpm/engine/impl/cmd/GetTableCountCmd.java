@@ -16,22 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetTableCountCmd implements Command<Map<String,Long>>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetTableCountCmd implements Command<Map<String,Long>> {
   @Override
   public Map<String, Long> execute(CommandContext commandContext) {
     commandContext.getAuthorizationManager().checkOperatonAdminOrPermission(CommandChecker::checkReadTableCount);

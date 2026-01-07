@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
 import java.util.Collection;
 import java.util.Map;
 
@@ -31,9 +30,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  *
  */
 public class PatchTaskVariablesCmd extends AbstractPatchVariablesCmd {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   public PatchTaskVariablesCmd(String taskId, Map<String, ? extends Object> modifications, Collection<String> deletions, boolean isLocal) {
     super(taskId, modifications, deletions, isLocal);
   }

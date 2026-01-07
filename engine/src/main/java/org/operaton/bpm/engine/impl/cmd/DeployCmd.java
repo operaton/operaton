@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.ByteArrayInputStream;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -79,9 +77,7 @@ import org.operaton.bpm.model.cmmn.instance.Case;
  * @author Thorben Lindhauer
  * @author Daniel Meyer
  */
-public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeployCmd implements Command<DeploymentWithDefinitions> {
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 

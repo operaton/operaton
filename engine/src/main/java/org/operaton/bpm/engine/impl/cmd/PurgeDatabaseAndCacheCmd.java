@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +41,7 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport>, Serializable {
+public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport> {
 
   protected static final String DELETE_TABLE_DATA = "deleteTableData";
   protected static final String SELECT_TABLE_COUNT = "selectTableCount";

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,13 +31,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-
 /**
  * @author Askar Akhmerov
  */
-public class SetJobRetriesCmd implements Command<Void>, Serializable {
+public class SetJobRetriesCmd implements Command<Void> {
 
-  protected static final long serialVersionUID = 1L;
   protected static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected static final String PROPERTY_RETRIES = "retries";

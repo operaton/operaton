@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +30,11 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNumberOfElements;
 
-
 /**
  * @author Daniel Meyer
  * @author Joram Barrez
  */
-public class MessageEventReceivedCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class MessageEventReceivedCmd implements Command<Void> {
   protected final String executionId;
   protected final Map<String, Object> processVariables;
   protected final Map<String, Object> processVariablesLocal;
@@ -100,6 +94,5 @@ public class MessageEventReceivedCmd implements Command<Void>, Serializable {
 
     return null;
   }
-
 
 }

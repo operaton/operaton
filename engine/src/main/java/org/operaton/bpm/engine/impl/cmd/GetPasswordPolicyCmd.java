@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.PasswordPolicy;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,10 +24,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Miklas Boskamp
  */
-public class GetPasswordPolicyCmd implements Command<PasswordPolicy>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetPasswordPolicyCmd implements Command<PasswordPolicy> {
   @Override
   public PasswordPolicy execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();

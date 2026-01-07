@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.Serial;
-import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,13 +25,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ByteArrayEntity;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetAttachmentContentCmd implements Command<InputStream>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetAttachmentContentCmd implements Command<InputStream> {
   protected String attachmentId;
 
   public GetAttachmentContentCmd(String attachmentId) {

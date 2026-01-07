@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
@@ -28,10 +26,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Stefan Hentschel.
  */
-public abstract class AbstractPatchVariablesCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public abstract class AbstractPatchVariablesCmd implements Command<Void> {
   protected String entityId;
   protected Map<String, ? extends Object> variables;
   protected Collection<String> deletions;

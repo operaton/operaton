@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -37,9 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * of a given task Id
  */
 
-public class DeleteTaskCommentCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeleteTaskCommentCmd implements Command<Object> {
   protected String commentId;
   protected String taskId;
 

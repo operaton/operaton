@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -31,9 +28,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public class GetExecutionVariableTypedCmd<T extends TypedValue> implements Command<T>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetExecutionVariableTypedCmd<T extends TypedValue> implements Command<T> {
   protected String executionId;
   protected String variableName;
   protected boolean isLocal;

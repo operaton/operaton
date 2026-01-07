@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.AbstractQuery;
@@ -28,9 +27,6 @@ import org.operaton.bpm.engine.query.Query;
  * @author Sebastian Menski
  */
 public class ExecuteFilterListPageCmd extends AbstractExecuteFilterCmd implements Command<List<?>> {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   protected int firstResult;
   protected int maxResults;
 

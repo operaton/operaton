@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -27,14 +25,11 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author kristin.polenz@camunda.com
  */
 @SuppressWarnings("rawtypes")
-public class GetDeploymentResourcesCmd implements Command<List>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetDeploymentResourcesCmd implements Command<List> {
   protected String deploymentId;
 
   public GetDeploymentResourcesCmd(String deploymentId) {

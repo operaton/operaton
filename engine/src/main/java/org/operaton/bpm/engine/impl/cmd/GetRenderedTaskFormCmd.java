@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -31,13 +28,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetRenderedTaskFormCmd  implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetRenderedTaskFormCmd  implements Command<Object> {
   protected String taskId;
   protected String formEngineName;
 
@@ -45,7 +39,6 @@ public class GetRenderedTaskFormCmd  implements Command<Object>, Serializable {
     this.taskId = taskId;
     this.formEngineName = formEngineName;
   }
-
 
   @Override
   public Object execute(CommandContext commandContext) {

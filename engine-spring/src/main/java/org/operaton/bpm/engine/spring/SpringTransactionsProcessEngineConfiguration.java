@@ -136,7 +136,7 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
             deploymentBuilder.addInputStream(resourceName, resource.getInputStream());
           }
         } catch (IOException e) {
-          throw new ProcessEngineException("couldn't auto deploy resource '"+resource+"': "+e.getMessage(), e);
+          throw new ProcessEngineException("couldn't auto deploy resource '%s': %s".formatted(resource, e.getMessage()), e);
         }
       }
 

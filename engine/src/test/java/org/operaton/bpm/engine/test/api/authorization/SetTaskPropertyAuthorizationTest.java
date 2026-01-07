@@ -290,7 +290,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
 
       assertThat(value).isEqualTo(expectedValue);
     } catch (Exception e) {
-      fail("Failed to assert property for operationName=" + operationName + " due to : " + e.getMessage());
+      fail("Failed to assert property for operationName=%s due to : %s".formatted(operationName, e.getMessage()));
     }
   }
 }

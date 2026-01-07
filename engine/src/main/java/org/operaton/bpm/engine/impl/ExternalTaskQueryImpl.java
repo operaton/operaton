@@ -48,7 +48,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   @Serial private static final long serialVersionUID = 1L;
 
   protected String externalTaskId;
-  protected Set<String> externalTaskIds;
+  private Set<String> externalTaskIds;
   protected String workerId;
   protected Date lockExpirationBefore;
   protected Date lockExpirationAfter;
@@ -70,7 +70,7 @@ public class ExternalTaskQueryImpl extends AbstractQuery<ExternalTaskQuery, Exte
   protected Long priorityLowerThanOrEquals;
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
-  protected List<QueryVariableValue> variables = new ArrayList<>();
+  private List<QueryVariableValue> variables = new ArrayList<>();
   protected Boolean retriesLeft;
   protected String[] tenantIds;
 

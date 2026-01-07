@@ -78,7 +78,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   protected boolean unfinished;
   protected boolean processFinished;
   protected boolean processUnfinished;
-  protected List<TaskQueryVariableValue> variables = new ArrayList<>();
+  private List<TaskQueryVariableValue> variables = new ArrayList<>();
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
 
@@ -105,7 +105,7 @@ public class HistoricTaskInstanceQueryImpl extends AbstractQuery<HistoricTaskIns
   protected Date startedAfter;
   protected Date startedBefore;
 
-  protected List<HistoricTaskInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
+  private List<HistoricTaskInstanceQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive;
 
   public HistoricTaskInstanceQueryImpl() {

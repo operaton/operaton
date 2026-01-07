@@ -47,11 +47,11 @@ public class JobQueryImpl extends AbstractQuery<JobQuery, Job> implements JobQue
   @Serial private static final long serialVersionUID = 1L;
   protected String activityId;
   protected String id;
-  protected Set<String> ids;
+  private Set<String> ids;
   protected String jobDefinitionId;
   protected String rootProcessInstanceId;
   protected String processInstanceId;
-  protected Set<String> processInstanceIds;
+  private Set<String> processInstanceIds;
   protected String executionId;
   protected String processDefinitionId;
   protected String processDefinitionKey;

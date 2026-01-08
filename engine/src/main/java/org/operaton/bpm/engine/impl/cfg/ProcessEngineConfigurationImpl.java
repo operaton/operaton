@@ -1470,9 +1470,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // command executors ////////////////////////////////////////////////////////
 
-  protected abstract Collection<? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequired();
+  protected abstract Collection<CommandInterceptor> getDefaultCommandInterceptorsTxRequired();
 
-  protected abstract Collection<? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew();
+  protected abstract Collection<CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew();
 
   protected void initCommandExecutors() {
     initActualCommandExecutor();

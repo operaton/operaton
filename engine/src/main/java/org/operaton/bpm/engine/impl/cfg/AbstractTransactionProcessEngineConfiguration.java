@@ -56,7 +56,7 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
   }
 
   @Override
-  protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {
+   protected Collection<CommandInterceptor> getDefaultCommandInterceptorsTxRequired() {
     List<CommandInterceptor> defaultCommandInterceptorsTxRequired = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequired.add(getExceptionCodeInterceptor());
@@ -70,7 +70,7 @@ public abstract class AbstractTransactionProcessEngineConfiguration extends Proc
   }
 
   @Override
-  protected Collection< ? extends CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
+  protected Collection<CommandInterceptor> getDefaultCommandInterceptorsTxRequiresNew() {
     List<CommandInterceptor> defaultCommandInterceptorsTxRequiresNew = new ArrayList<>();
     if (!isDisableExceptionCode()) {
       defaultCommandInterceptorsTxRequiresNew.add(getExceptionCodeInterceptor());

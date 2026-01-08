@@ -712,7 +712,7 @@ class ConditionalStartEventTest {
     // when/then
     assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Process definition with id '" + processDefinitionId + "' does not declare conditional start event");
+      .hasMessageContaining("Process definition with id '%s' does not declare conditional start event".formatted(processDefinitionId));
   }
 
   @Test

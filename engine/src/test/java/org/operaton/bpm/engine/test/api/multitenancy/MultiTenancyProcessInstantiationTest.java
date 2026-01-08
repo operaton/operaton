@@ -502,7 +502,7 @@ class MultiTenancyProcessInstantiationTest {
         .executeAsync();
     }
     catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot restart process instances of process definition '" + processInstance.getProcessDefinitionId() + "' because it belongs to no authenticated tenant.");
+      assertThat(e.getMessage()).contains("Cannot restart process instances of process definition '%s' because it belongs to no authenticated tenant.".formatted(processInstance.getProcessDefinitionId()));
     }
 
   }

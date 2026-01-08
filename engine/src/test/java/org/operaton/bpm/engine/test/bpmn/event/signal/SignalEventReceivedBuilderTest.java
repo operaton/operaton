@@ -196,7 +196,7 @@ class SignalEventReceivedBuilderTest {
       runtimeService.createSignalEvent("signal").executionId(executionId).send();
 
     } catch (NotFoundException e) {
-      assertThat(e.getMessage()).contains("Execution '" + executionId + "' has not subscribed to a signal event with name 'signal'");
+      assertThat(e.getMessage()).contains("Execution '%s' has not subscribed to a signal event with name 'signal'".formatted(executionId));
     }
   }
 

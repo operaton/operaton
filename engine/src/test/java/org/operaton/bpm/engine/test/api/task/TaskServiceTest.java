@@ -471,7 +471,7 @@ class TaskServiceTest {
       taskService.updateTaskComment(taskId, nonExistingCommentId, "updatedMessage");
       fail("NullValueException expected");
     } catch (NullValueException ae) {
-      testRule.assertTextPresent("No comment exists with commentId: " + nonExistingCommentId + " and taskId: " + taskId,
+      testRule.assertTextPresent("No comment exists with commentId: %s and taskId: %s".formatted(nonExistingCommentId, taskId),
           ae.getMessage());
     } finally {
       taskService.deleteTask(task.getId(), true);
@@ -1100,7 +1100,7 @@ class TaskServiceTest {
       taskService.claim(taskId, secondUserId);
       fail("ProcessEngineException expected");
     } catch (TaskAlreadyClaimedException ae) {
-      testRule.assertTextPresent("Task '" + task.getId() + "' is already claimed by someone else.", ae.getMessage());
+      testRule.assertTextPresent("Task '%s' is already claimed by someone else.".formatted(task.getId()), ae.getMessage());
     }
 
     taskService.deleteTask(task.getId(), true);

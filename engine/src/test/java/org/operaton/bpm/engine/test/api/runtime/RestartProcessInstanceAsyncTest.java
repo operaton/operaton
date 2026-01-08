@@ -869,7 +869,7 @@ class RestartProcessInstanceAsyncTest {
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // then
-      assertThat(e.getMessage()).contains("Its process definition '" + processDefinition.getId() + "' does not match given process definition '" + processDefinition2.getId() +"'" );
+      assertThat(e.getMessage()).contains("Its process definition '%s' does not match given process definition '%s'".formatted(processDefinition.getId(), processDefinition2.getId()));
     }
   }
 

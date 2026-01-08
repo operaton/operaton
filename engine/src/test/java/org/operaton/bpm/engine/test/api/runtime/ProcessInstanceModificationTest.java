@@ -153,7 +153,7 @@ class ProcessInstanceModificationTest {
 
     } catch (ProcessEngineException e) {
       assertThat(e.getMessage()).startsWith("ENGINE-13036");
-      assertThat(e.getMessage()).contains("Process instance '" + "foo" + "' cannot be modified");
+      assertThat(e.getMessage()).contains("Process instance '%s' cannot be modified".formatted("foo"));
     }
   }
 
@@ -293,8 +293,7 @@ class ProcessInstanceModificationTest {
       fail("should not succeed because subProcessTask is a child of subProcess");
     } catch (NotValidException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start before activity 'subProcess' with ancestor activity instance '" + subProcessTaskId + "'; "
-          + "Scope execution for '" + subProcessTaskId + "' cannot be found in parent hierarchy of flow element 'subProcess'", e.getMessage());
+      testRule.assertTextPresent("Cannot perform instruction: Start before activity 'subProcess' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'subProcess'".formatted(subProcessTaskId, subProcessTaskId), e.getMessage());
     }
   }
 
@@ -481,8 +480,7 @@ class ProcessInstanceModificationTest {
       fail("should not succeed because subProcessTask is a child of subProcess");
     } catch (NotValidException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'flow5' with ancestor activity instance '" + subProcessTaskId + "'; "
-          + "Scope execution for '" + subProcessTaskId + "' cannot be found in parent hierarchy of flow element 'flow5'", e.getMessage());
+      testRule.assertTextPresent("Cannot perform instruction: Start transition 'flow5' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'flow5'".formatted(subProcessTaskId, subProcessTaskId), e.getMessage());
     }
   }
 
@@ -526,8 +524,7 @@ class ProcessInstanceModificationTest {
 
     } catch (ProcessEngineException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'invalidFlowId'; " + "Element 'invalidFlowId' does not exist in process '"
-          + processInstance.getProcessDefinitionId() + "'", e.getMessage());
+      testRule.assertTextPresent("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()), e.getMessage());
     }
   }
 
@@ -670,8 +667,7 @@ class ProcessInstanceModificationTest {
       fail("should not succeed because subProcessTask is a child of subProcess");
     } catch (NotValidException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start after activity 'innerSubProcessStart' with ancestor activity instance '" + subProcessTaskId
-          + "'; " + "Scope execution for '" + subProcessTaskId + "' cannot be found in parent hierarchy of flow element 'flow5'", e.getMessage());
+      testRule.assertTextPresent("Cannot perform instruction: Start after activity 'innerSubProcessStart' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'flow5'".formatted(subProcessTaskId, subProcessTaskId), e.getMessage());
     }
   }
 

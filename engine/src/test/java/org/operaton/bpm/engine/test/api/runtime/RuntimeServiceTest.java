@@ -788,7 +788,7 @@ public class RuntimeServiceTest {
       fail("Exception expected");
     } catch(ProcessEngineException e) {
       // happy path
-      testRule.assertTextPresent("cannot signal execution " + instance.getId() + ": it has no current activity", e.getMessage());
+      testRule.assertTextPresent("cannot signal execution %s: it has no current activity".formatted(instance.getId()), e.getMessage());
     } catch (Exception e) {
       fail("Signalling an inactive execution that has no activity should result in a ProcessEngineException");
     }

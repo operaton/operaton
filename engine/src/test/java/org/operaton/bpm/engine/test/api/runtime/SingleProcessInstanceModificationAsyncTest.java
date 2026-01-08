@@ -194,7 +194,7 @@ class SingleProcessInstanceModificationAsyncTest {
 
     } catch (ProcessEngineException e) {
       Assertions.assertThat(e.getMessage()).startsWith("ENGINE-13036");
-      Assertions.assertThat(e.getMessage()).contains("Process instance '" + "foo" + "' cannot be modified");
+      Assertions.assertThat(e.getMessage()).contains("Process instance '%s' cannot be modified".formatted("foo"));
     }
   }
 

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:41bea199-4dae-4301-8f5e-b4f3c77430fe",
+  "serialNumber": "urn:uuid:c5f8c4c5-d3b6-4ab6-8248-2f8f725998d5",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-08T05:19:56Z",
+    "timestamp": "2026-01-08T08:31:15Z",
     "tools": {
       "components": [
         {
@@ -33748,7 +33748,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "4110364a-2cbd-4e7d-b363-76d6db5baaa1",
+      "bom-ref": "4f59dc6b-ff66-45d1-bc9a-2ec9d3bba824",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36864,14 +36864,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/preact@10.27.1",
+      "bom-ref": "pkg:npm/preact@10.28.2",
       "name": "preact",
-      "version": "10.27.1",
-      "purl": "pkg:npm/preact@10.27.1",
+      "version": "10.28.2",
+      "purl": "pkg:npm/preact@10.28.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "preact@10.27.1"
+          "value": "preact@10.28.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37340,7 +37340,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "8b2485c3-38af-43c4-a880-cc90d60d24b3",
+      "bom-ref": "6937234a-2a00-4a29-b293-88d657ac2bf3",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -41310,7 +41310,7 @@
       "dependsOn": []
     },
     {
-      "ref": "4110364a-2cbd-4e7d-b363-76d6db5baaa1",
+      "ref": "4f59dc6b-ff66-45d1-bc9a-2ec9d3bba824",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -41358,9 +41358,9 @@
       ]
     },
     {
-      "ref": "8b2485c3-38af-43c4-a880-cc90d60d24b3",
+      "ref": "6937234a-2a00-4a29-b293-88d657ac2bf3",
       "dependsOn": [
-        "4110364a-2cbd-4e7d-b363-76d6db5baaa1"
+        "4f59dc6b-ff66-45d1-bc9a-2ec9d3bba824"
       ]
     },
     {
@@ -41379,7 +41379,7 @@
       "ref": "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
       "dependsOn": [
         "pkg:npm/htm@3.1.1",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
@@ -41445,7 +41445,7 @@
         "pkg:npm/ids@1.0.5",
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/min-dom@4.2.1",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
@@ -41465,7 +41465,7 @@
         "pkg:npm/downloadjs@1.4.7",
         "pkg:npm/file-drops@0.6.2",
         "pkg:npm/mitt@3.0.1",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
@@ -41484,7 +41484,7 @@
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/marked@16.4.2",
         "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
@@ -42529,7 +42529,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/preact@10.27.1",
+      "ref": "pkg:npm/preact@10.28.2",
       "dependsOn": []
     },
     {
@@ -43843,46 +43843,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2026-22028",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "severity": "high",
-          "method": "Null"
-        }
-      ],
-      "description": "## Impact\n\n**Vulnerability Type:** HTML Injection via JSON Type Confusion\n\n**Affected Versions:** Preact 10.26.5 through 10.28.1\n\n**Severity:** Low to Medium (see below)\n\n### Who is Impacted?\n\nApplications using affected Preact versions are vulnerable if they meet **all** of the following conditions:\n\n1. **Pass unmodified, unsanitized values** from user-modifiable data sources (APIs, databases, local storage, etc.) directly into the render tree\n2. **Assume these values are strings** but the data source could return actual JavaScript objects instead of JSON strings\n3. The data source either:\n   - Fails to perform type sanitization **AND** blindly stores/returns raw objects interchangeably with strings, OR\n   - Is compromised (e.g., poisoned local storage, filesystem, or database)\n\n### Technical Details\n\nPreact includes JSON serialization protection to prevent Virtual DOM elements from being constructed from arbitrary JSON. A regression introduced in Preact 10.26.5 caused this protection to be softened. In applications where values from JSON payloads are assumed to be strings and passed unmodified to Preact as children, a specially-crafted JSON payload could be constructed that would be incorrectly treated as a valid VNode. When this chain of failures occurs it can result in HTML injection, which can allow arbitrary script execution if not mitigated by CSP or other means.\n\n**Important Notes:**\n- This regression was never present in \u0060preact-render-to-string\u0060\n- This is primarily an \u0022expanded attack surface\u0022 issue rather than a standalone vulnerability\n- Exploitation requires either insecure API design (no type validation) or a compromised data source\n\n## Patches\n\n**Patched Versions:**\n- **10.26.10** (for 10.26.x users)\n- **10.27.3** (for 10.27.x users)\n- **10.28.2** (for 10.28.x users)\n\nUsers should upgrade to the latest patch version of whatever minor version they are on, which can be done via \u0060npm update preact\u0060 or by installing one of the above versions directly.\n\nThe patch versions simply restore the previous strict equality checks that prevent JSON-parsed objects from being treated as valid VNodes.\n\n## Mitigations\n\nIf you cannot upgrade immediately, implement the following mitigations:\n\n- **Validate input types:** Don\u0027t accept arbitrary objects as inputs in your API and blindly store them. Enforce strict type contracts at API boundaries.\n- **Cast or validate network data:** Don\u0027t assume strings are strings if your code got them from the network. Always cast to the expected type or validate before rendering.\n- **Sanitize external data:** Validate that data from external sources (APIs, storage, databases) matches expected types before passing it to preact.\n- **Use Content Security Policy (CSP):** Implement a strict CSP to prevent inline script execution as a defense-in-depth measure.\n\n## References\n\n- **Reporter:** [YoungGeun Choi](https://github.com/Xvezda)\n- **Affected Versions:** 10.26.5 - 10.28.1\n- **Patched Versions:** 10.26.10, 10.27.3, 10.28.2\n\n## Credits\n\nPreact thanks **YoungGeun Choi (Xvezda)** for the responsible disclosure of this vulnerability and for providing detailed reproduction steps and proof-of-concept demonstrations.\n\n## Timeline\n\n- **2026-01-04:** Initial vulnerability report received\n- **2026-01-05:** Clarification requested regarding network/serialization boundary\n- **2026-01-06:** Network PoC provided demonstrating real-world exploitatibility\n- **2026-01-06:** Hotfix patches released (10.26.10, 10.27.3, 10.28.2)\n\n---\n\n**Recommendation:** All users of Preact 10.26.5 through 10.28.1 should upgrade to the appropriate patched version (10.26.10, 10.27.3, or 10.28.2) as soon as possible, and review their applications for proper input validation and sanitization practices.",
-      "recommendation": "Upgrade preact to version 10.26.10, 10.27.3, 10.28.2",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2026-22028"
-        },
-        {
-          "url": "https://github.com/preactjs/preact"
-        },
-        {
-          "url": "https://github.com/preactjs/preact/security/advisories/GHSA-36hm-qxxp-pg3m"
-        }
-      ],
-      "affects": [
-        {
-          "ref": "pkg:npm/preact@10.27.1",
-          "versions": [
-            {
-              "version": "10.27.1",
               "status": "affected"
             }
           ]

@@ -43,7 +43,7 @@ class VfsProcessApplicationScannerTest {
     // expect: finds only the BPMN process file and not treats the 'bpmn' folder
     assertThat(scanResult).hasSize(1);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
-    assertThat(contains(scanResult, processFileName)).as("'" + processFileName + "'not found").isTrue();
+    assertThat(contains(scanResult, processFileName)).as("'%s' not found".formatted(processFileName)).isTrue();
     assertThat(contains(scanResult, "processResource.txt")).as("'bpmn' folder in resource path found").isFalse();
   }
 
@@ -58,7 +58,7 @@ class VfsProcessApplicationScannerTest {
     // expect: finds only the CMMN process file and not treats the 'cmmn' folder
     assertThat(scanResult).hasSize(1);
     String processFileName = "VfsProcessScannerTest.cmmn";
-    assertThat(contains(scanResult, processFileName)).as("'" + processFileName + "' not found").isTrue();
+    assertThat(contains(scanResult, processFileName)).as("'%s' not found".formatted(processFileName)).isTrue();
     assertThat(contains(scanResult, "caseResource.txt")).as("'cmmn' in resource path found").isFalse();
   }
 
@@ -71,7 +71,7 @@ class VfsProcessApplicationScannerTest {
 
     assertThat(scanResult).hasSize(4);
     String processFileName = "VfsProcessScannerTest.bpmn20.xml";
-    assertThat(contains(scanResult, processFileName)).as("'" + processFileName + "' not found").isTrue();
+    assertThat(contains(scanResult, processFileName)).as("'%s' not found".formatted(processFileName)).isTrue();
     assertThat(contains(scanResult, "hello.py")).as("'hello.py' in resource path found").isTrue();
     assertThat(contains(scanResult, "hello.rb")).as("'hello.rb' in resource path found").isTrue();
     assertThat(contains(scanResult, "hello.groovy")).as("'hello.groovy' in resource path found").isTrue();

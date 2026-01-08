@@ -1015,7 +1015,7 @@ public class RuntimeServiceTest {
     // when setting variables then exception is thrown
     assertThatThrownBy(() -> runtimeService.setVariables(id, variables))
         .isInstanceOf(NullValueException.class)
-        .hasMessage("execution " + id + " doesn't exist: execution is null");
+        .hasMessage("execution %s doesn't exist: execution is null".formatted(id));
   }
 
   private void checkHistoricVariableUpdateEntity(String variableName, String processInstanceId) {

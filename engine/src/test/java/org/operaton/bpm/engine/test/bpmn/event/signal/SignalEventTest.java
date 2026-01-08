@@ -232,7 +232,7 @@ class SignalEventTest {
 
     for (Task task : tasks) {
       if (!"My User Task".equals(task.getName()) && !"My Second User Task".equals(task.getName())) {
-        fail("Expected: <My User Task> or <My Second User Task> but was <" + task.getName() + ">.");
+        fail("Expected: <My User Task> or <My Second User Task> but was <%s>.".formatted(task.getName()));
       }
     }
 
@@ -265,7 +265,7 @@ class SignalEventTest {
 
     for (Task task : tasks) {
       if (!"Approve".equals(task.getName()) && !"Review".equals(task.getName())) {
-        fail("Expected: <Approve> or <Review> but was <" + task.getName() + ">.");
+        fail("Expected: <Approve> or <Review> but was <%s>.".formatted(task.getName()));
       }
     }
 

@@ -648,7 +648,7 @@ public class RuntimeServiceTest {
     Task parallelUserTask = null;
     for (Task task : tasks) {
       if (!"ParallelUserTask".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
-        fail("Expected: <ParallelUserTask> or <MainUserTask> but was <" + task.getName() + ">.");
+        fail("Expected: <ParallelUserTask> or <MainUserTask> but was <%s>.".formatted(task.getName()));
       }
       if ("ParallelUserTask".equals(task.getName())) {
         parallelUserTask = task;
@@ -670,7 +670,7 @@ public class RuntimeServiceTest {
     Task beforeErrorUserTask = null;
     for (Task task : tasks) {
       if (!"BeforeError".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
-        fail("Expected: <BeforeError> or <MainUserTask> but was <" + task.getName() + ">.");
+        fail("Expected: <BeforeError> or <MainUserTask> but was <%s>.".formatted(task.getName()));
       }
       if ("BeforeError".equals(task.getName())) {
         beforeErrorUserTask = task;
@@ -689,7 +689,7 @@ public class RuntimeServiceTest {
     Task afterErrorUserTask = null;
     for (Task task : tasks) {
       if (!"AfterError".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
-        fail("Expected: <AfterError> or <MainUserTask> but was <" + task.getName() + ">.");
+        fail("Expected: <AfterError> or <MainUserTask> but was <%s>.".formatted(task.getName()));
       }
       if ("AfterError".equals(task.getName())) {
         afterErrorUserTask = task;
@@ -1910,8 +1910,7 @@ public class RuntimeServiceTest {
     for (String incidentId : incidentIds) {
       if (!incidentId.equals(asyncTaskIncident.getId())
           && !incidentId.equals(anotherIncident.getId())) {
-        fail("Expected: " + asyncTaskIncident.getId() + " or " + anotherIncident.getId()
-            + " but it was " + incidentId);
+        fail("Expected: %s or %s but it was %s".formatted(asyncTaskIncident.getId(), anotherIncident.getId(), incidentId));
       }
     }
   }

@@ -159,7 +159,7 @@ public class PasswordPolicyUserDataTest {
             .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
 
       } catch (AssertionError e) {
-        fail("Rule not violated with " + methodName + ":" + e.getMessage());
+        fail("Rule not violated with %s:%s".formatted(methodName, e.getMessage()));
 
       }
     });
@@ -173,7 +173,7 @@ public class PasswordPolicyUserDataTest {
             .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
 
       } catch (AssertionError e) {
-        fail("Rule not fulfilled with " + methodName + ":" + e.getMessage());
+        fail("Rule not fulfilled with %s:%s".formatted(methodName, e.getMessage()));
 
       }
     });

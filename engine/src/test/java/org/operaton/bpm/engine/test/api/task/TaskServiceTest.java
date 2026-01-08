@@ -3378,8 +3378,7 @@ class TaskServiceTest {
     assertThat(list).hasSize(2);
     for (Task taskAfterThrow : list) {
       if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-301".equals(taskAfterThrow.getTaskDefinitionKey())) {
-        fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-            + "after-301");
+        fail("Two task should be active:%s & after-301".formatted(task.getTaskDefinitionKey()));
       }
     }
     assertThat(runtimeService.createVariableInstanceQuery().variableName("foo").singleResult().getValue()).isEqualTo("bar");
@@ -3429,8 +3428,7 @@ class TaskServiceTest {
     assertThat(list).hasSize(2);
     for (Task taskAfterThrow : list) {
       if (!taskAfterThrow.getTaskDefinitionKey().equals(task.getTaskDefinitionKey()) && !"after-305".equals(taskAfterThrow.getTaskDefinitionKey())) {
-        fail("Two task should be active:" + task.getTaskDefinitionKey() + " & "
-            + "after-305");
+        fail("Two task should be active:%s & after-305".formatted(task.getTaskDefinitionKey()));
       }
     }
   }

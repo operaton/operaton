@@ -256,7 +256,7 @@ class MessageStartEventSubscriptionTest {
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId11) && !eventSubscriptionEntity.getConfiguration().equals(processDefId22)) {
-        fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
+        fail("This process definition '%s' and the respective event subscription should not exist.".formatted(eventSubscriptionEntity.getConfiguration()));
       }
     }
   }

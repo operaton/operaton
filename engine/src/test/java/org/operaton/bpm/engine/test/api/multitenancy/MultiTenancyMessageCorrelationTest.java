@@ -371,7 +371,7 @@ class MultiTenancyMessageCorrelationTest {
       } else if (eventSubscriptionEntity.getConfiguration().equals(processDefId7)) {
         assertThat(eventSubscription.getTenantId()).isEqualTo(TENANT_ONE);
       } else {
-        fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
+        fail("This process definition '%s' and the respective event subscription should not exist.".formatted(eventSubscriptionEntity.getConfiguration()));
       }
     }
   }

@@ -178,7 +178,7 @@ class TimerRecalculationTest {
       fail("The recalculation with an unsupported type should not be possible");
     } catch (ProcessEngineException pe) {
       // then
-      testRule.assertTextPresent("Only timer jobs can be recalculated, but the job with id '" + jobId + "' is of type '" + type, pe.getMessage());
+      testRule.assertTextPresent("Only timer jobs can be recalculated, but the job with id '%s' is of type '%s".formatted(jobId, type), pe.getMessage());
     }
   }
 

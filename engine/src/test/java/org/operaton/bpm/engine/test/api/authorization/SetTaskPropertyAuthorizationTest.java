@@ -98,7 +98,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     assertThatThrownBy(() -> operation.accept(taskService, taskId, value), "It should not be possible to " + operationName)
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id '" + userId + "' does not have one of the following permissions: 'TASK_ASSIGN'");
+        .hasMessageContaining("The user with id '%s' does not have one of the following permissions: 'TASK_ASSIGN'".formatted(userId));
     deleteTask(taskId, true);
   }
 

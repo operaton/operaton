@@ -425,8 +425,7 @@ class FilterTaskQueryTest {
         }
       } else if ((expectedRelationConditions == null && actualRelationConditions != null) ||
           (expectedRelationConditions != null && actualRelationConditions == null)) {
-        fail("Expected filtering properties: " + expectedRelationConditions + ". "
-            + "Actual filtering properties: " + actualRelationConditions);
+        fail("Expected filtering properties: %s. Actual filtering properties: %s".formatted(expectedRelationConditions, actualRelationConditions));
       }
     }
   }

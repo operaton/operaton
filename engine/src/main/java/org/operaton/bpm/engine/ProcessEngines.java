@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
+import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * Helper for initializing and closing process engines in server environments.
@@ -102,7 +103,7 @@ public final class ProcessEngines {
 
     // Remove duplicated configuration URL's using set. Some classloaders may
     // return identical URL's twice, causing duplicate startups
-    for (URL resource : collectResourcesAsSet(configResources)) {
+    for (URL resource : CollectionUtil.toSet(configResources)) {
       initProcessEngineFromResource(resource);
     }
 
@@ -144,14 +145,6 @@ public final class ProcessEngines {
       throw new ProcessEngineException(message, e);
     }
     return null;
-  }
-
-  private static Set<URL> collectResourcesAsSet(Enumeration<URL> resources) {
-    Set<URL> configUrls = new HashSet<>();
-    while (resources.hasMoreElements()) {
-      configUrls.add(resources.nextElement());
-    }
-    return configUrls;
   }
 
   protected static void initProcessEngineFromSpringResource(URL resource) {

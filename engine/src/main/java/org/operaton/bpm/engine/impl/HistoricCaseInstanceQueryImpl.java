@@ -157,7 +157,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Override
   public HistoricCaseInstanceQuery closedAfter(Date date) {
-    throwExceptionIfStateNotClosed();
+    ensureStateClosedWhenSet();
     closedAfter = date;
     state = CaseExecutionState.CLOSED.getStateCode();
     return this;
@@ -165,13 +165,13 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Override
   public HistoricCaseInstanceQuery closedBefore(Date date) {
-    throwExceptionIfStateNotClosed();
+    ensureStateClosedWhenSet();
     closedBefore = date;
     state = CaseExecutionState.CLOSED.getStateCode();
     return this;
   }
 
-  private void throwExceptionIfStateNotClosed() {
+  private void ensureStateClosedWhenSet() {
     if (state != null && (!state.equals(CaseExecutionState.CLOSED.getStateCode()))) {
       throw new NotValidException("Already querying for case instance state '%s'".formatted(state));
     }

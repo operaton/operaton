@@ -62,7 +62,7 @@ public class ConditionRestServiceImpl extends AbstractRestProcessEngineAware imp
 
     ConditionEvaluationBuilder builder = runtimeService.createConditionEvaluation();
 
-    if (variables != null && !variables.isEmpty()) {
+    if (!variables.isEmpty()) {
       builder.setVariables(variables);
     }
 

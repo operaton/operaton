@@ -81,11 +81,11 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
     this.periodUnit = periodUnit;
   }
 
-  protected List<? extends ReportResult> executeReportQuery(T report) {
-    return report.duration(periodUnit);
+  protected List<ReportResult> executeReportQuery(T report) {
+    return new ArrayList<>(report.duration(periodUnit));
   }
 
-  public List<? extends ReportResult> executeReport(ProcessEngine engine) {
+  public List<ReportResult> executeReport(ProcessEngine engine) {
     T reportQuery = createNewReportQuery(engine);
     applyFilters(reportQuery);
 

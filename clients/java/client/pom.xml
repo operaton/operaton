@@ -12,12 +12,11 @@
   <properties>
     <engine.runtime>${project.build.directory}/operaton-tomcat</engine.runtime>
     <tomcat.runtime>${engine.runtime}/server/apache-tomcat-${version.tomcat}</tomcat.runtime>
-    <http.port>${tomcat.connector.http.port}</http.port>
-    <tomcat.connector.http.port>48080</tomcat.connector.http.port>
-    <tomcat.connector.http.redirectPort>48443</tomcat.connector.http.redirectPort>
-    <tomcat.connector.ajp.port>48009</tomcat.connector.ajp.port>
-    <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
-    <tomcat.server.port>48005</tomcat.server.port>
+
+    <!-- Do not declare any default values for
+      `tomcat.connector.http.port` and `tomcat.connector.ajp.port`
+      elsewhere these values will be used for Cargo regardless of the `reserve-network-port` run -->
+
     <cargo.timeout>240000</cargo.timeout>
     <cargo.deploy.timeout>60000</cargo.deploy.timeout>
     <cargo.start.jvmargs>-Dpolyglot.js.nashorn-compat=true</cargo.start.jvmargs>
@@ -175,6 +174,20 @@
         <artifactId>build-helper-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>reserve-ports</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>reserve-network-port</goal>
+            </goals>
+            <configuration>
+              <skip>${skipTests}</skip>
+              <portNames>
+                <portName>tomcat.connector.http.port</portName>
+                <portName>tomcat.connector.ajp.port</portName>
+              </portNames>
+            </configuration>
+          </execution>
+          <execution>
             <id>add-it-source</id>
             <phase>generate-test-sources</phase>
             <goals>
@@ -188,6 +201,35 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.2.0</version>
+        <executions>
+          <execution>
+            <id>filter-properties</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <skip>${skipTests}</skip>
+              <propertiesEncoding>ISO-8859-1</propertiesEncoding>
+              <outputDirectory>target/test-classes/</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/it/resources</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>integration-rules.properties</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -221,6 +263,7 @@
         </executions>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
           <redirectTestOutputToFile>true</redirectTestOutputToFile>

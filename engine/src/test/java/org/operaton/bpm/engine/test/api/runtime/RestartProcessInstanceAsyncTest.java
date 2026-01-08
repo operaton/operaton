@@ -804,9 +804,7 @@ class RestartProcessInstanceAsyncTest {
   @Test
   void testJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
     // given
-    ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
-    processEngineConfiguration.setAuthorizationEnabled(true);
+    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
     ProcessDefinition processDefinition = testRule.deployForTenantAndGetDefinition("tenantId", ProcessModels.TWO_TASKS_PROCESS);
 
     try {

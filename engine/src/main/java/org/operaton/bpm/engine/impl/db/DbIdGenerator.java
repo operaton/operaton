@@ -41,8 +41,7 @@ public class DbIdGenerator implements IdGenerator {
     if (lastId < nextId) {
       getNewBlock();
     }
-    long nextId = this.nextId++;
-    return Long.toString(nextId);
+    return Long.toString(this.nextId++);
   }
 
   protected synchronized void getNewBlock() {

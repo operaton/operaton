@@ -23,6 +23,7 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -96,38 +97,37 @@ public final class ProcessEngines {
     }
 
     ClassLoader classLoader = ReflectUtil.getClassLoader();
-    Enumeration<URL> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
-    if (configResources == null) {
+    Set<URL> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
+    if (configResources.isEmpty()) {
       return;
     }
 
-    // Remove duplicated configuration URL's using set. Some classloaders may
-    // return identical URL's twice, causing duplicate startups
-    for (URL resource : CollectionUtil.toSet(configResources)) {
+    for (URL resource : configResources) {
       initProcessEngineFromResource(resource);
     }
 
-    Enumeration<URL> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
-    if (springResources == null) {
+    Set<URL> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
+    if (springResources.isEmpty()) {
       return;
     }
 
-    while (springResources.hasMoreElements()) {
-      URL resource = springResources.nextElement();
+    for (URL resource : springResources) {
       initProcessEngineFromSpringResource(resource);
     }
 
     isInitialized = true;
   }
 
-  private static Enumeration<URL> getResources(ClassLoader classLoader, String resourceName,
+  // Remove duplicated configuration URL's using set. Some classloaders may
+  // return identical URL's twice, causing duplicate startups
+  private static Set<URL> getResources(ClassLoader classLoader, String resourceName,
       String fallbackResourceName, boolean forceCreate) {
     try {
-      return classLoader.getResources(resourceName);
+      return CollectionUtil.toSet(classLoader.getResources(resourceName));
     } catch (IOException e) {
       if (fallbackResourceName != null) {
         try {
-          return classLoader.getResources(fallbackResourceName);
+          return CollectionUtil.toSet(classLoader.getResources(fallbackResourceName));
         } catch (IOException ex) {
           return handleGetResourcesException(resourceName, fallbackResourceName, forceCreate, ex);
         }
@@ -136,7 +136,7 @@ public final class ProcessEngines {
     }
   }
 
-  private static Enumeration<URL> handleGetResourcesException(String resourceName, String fallbackResourceName,
+  private static Set<URL> handleGetResourcesException(String resourceName, String fallbackResourceName,
       boolean forceCreate, IOException e) {
     if (forceCreate) {
       String message = "problem retrieving " + resourceName
@@ -144,7 +144,7 @@ public final class ProcessEngines {
           + System.getProperty("java.class.path");
       throw new ProcessEngineException(message, e);
     }
-    return null;
+    return Collections.emptySet();
   }
 
   protected static void initProcessEngineFromSpringResource(URL resource) {

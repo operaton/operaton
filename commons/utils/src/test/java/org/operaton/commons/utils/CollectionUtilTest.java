@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -256,4 +257,18 @@ class CollectionUtilTest {
     assertThat(CollectionUtil.hasElements(Collections.emptyList())).isFalse();
     assertThat(CollectionUtil.hasElements(null)).isFalse();
   }
+
+  @Test
+  void toSetShouldConvertEnumerationToSetAndRemoveDuplicates() {
+    // given
+    List<String> list = Arrays.asList("a", "b", "a");
+    Enumeration<String> enumeration = Collections.enumeration(list);
+
+    // when
+    Set<String> set = CollectionUtil.toSet(enumeration);
+
+    // then
+    assertThat(set).hasSize(2).containsExactlyInAnyOrder("a", "b");
+  }
 }
+

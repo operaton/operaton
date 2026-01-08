@@ -139,7 +139,7 @@ public class MultiTenancySetTaskPropertyTest {
     assertThatThrownBy(
         () -> operation.accept(taskService, taskId, value))
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessageContaining("Cannot assign the task '" + task.getId() + "' because it belongs to no authenticated tenant.");
+        .hasMessageContaining("Cannot assign the task '%s' because it belongs to no authenticated tenant.".formatted(task.getId()));
 
   }
 

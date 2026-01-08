@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 
@@ -30,15 +28,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 
-
 /**
  * @author Kristin Polenz
  */
-public class SetJobDuedateCmd implements Command<Void>, Serializable {
-
-  @Serial
-  private static final long serialVersionUID = 1L;
-
+public class SetJobDuedateCmd implements Command<Void> {
   private final String jobId;
   private final Date newDuedate;
   private final boolean cascade;

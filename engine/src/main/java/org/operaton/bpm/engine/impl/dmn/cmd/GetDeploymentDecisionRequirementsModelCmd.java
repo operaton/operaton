@@ -17,21 +17,16 @@
 package org.operaton.bpm.engine.impl.dmn.cmd;
 
 import java.io.InputStream;
-import java.io.Serial;
-import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.repository.DecisionRequirementsDefinition;
 
-
 /**
  * Gives access to a deployed decision requirements model, e.g., a DMN 1.1 XML file, through a stream of bytes.
  */
-public class GetDeploymentDecisionRequirementsModelCmd implements Command<InputStream>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetDeploymentDecisionRequirementsModelCmd implements Command<InputStream> {
   protected String decisionRequirementsDefinitionId;
 
   public GetDeploymentDecisionRequirementsModelCmd(String decisionRequirementsDefinitionId) {

@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.InputStream;
-import java.io.Serial;
-import java.io.Serializable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -27,18 +25,13 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
-
 /**
  * Gives access to a deployed process diagram, e.g., a PNG image, through a
  * stream of bytes.
  *
  * @author Falko Menge
  */
-public class GetDeploymentProcessDiagramCmd implements Command<InputStream>, Serializable {
-
-  @Serial
-  private static final long serialVersionUID = 1L;
-
+public class GetDeploymentProcessDiagramCmd implements Command<InputStream> {
   protected String processDefinitionId;
 
   public GetDeploymentProcessDiagramCmd(String processDefinitionId) {

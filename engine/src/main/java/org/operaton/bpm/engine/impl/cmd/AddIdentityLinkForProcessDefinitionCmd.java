@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,14 +25,10 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tijs Rademakers
  */
-public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class AddIdentityLinkForProcessDefinitionCmd implements Command<Void> {
   protected String processDefinitionId;
 
   protected String userId;

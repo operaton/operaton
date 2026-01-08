@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -35,14 +33,10 @@ import org.operaton.bpm.engine.task.Event;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL_TIME_STRATEGY_START;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class AddCommentCmd implements Command<Comment>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class AddCommentCmd implements Command<Comment> {
   protected String taskId;
   protected String processInstanceId;
   protected String message;

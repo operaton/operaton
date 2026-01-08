@@ -1193,8 +1193,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
 
   protected void assertVariable(Execution execution, String variableName, Object expectedValue) {
     Object variableValue = runtimeService.getVariable(execution.getId(), variableName);
-    assertThat(variableValue).as("Value for variable '" + variableName + "' and " + execution + " "
-        + "does not match.").isEqualTo(expectedValue);
+    assertThat(variableValue).as("Value for variable '%s' and %s does not match.".formatted(variableName, execution)).isEqualTo(expectedValue);
   }
 
   protected void assertVariableSet(List<Execution> executions, String variableName, List<?> expectedValues) {
@@ -1205,8 +1204,7 @@ public class ProcessInstanceModificationMultiInstanceTest {
 
     for (Object expectedValue : expectedValues) {
       boolean valueFound = actualValues.remove(expectedValue);
-      assertThat(valueFound).as("Expected variable value '" + expectedValue + "' not contained in the list of actual values. "
-          + "Unmatched actual values: " + actualValues).isTrue();
+      assertThat(valueFound).as("Expected variable value '%s' not contained in the list of actual values. Unmatched actual values: %s".formatted(expectedValue, actualValues)).isTrue();
     }
     assertThat(actualValues).as("There are more actual than expected values.").isEmpty();
   }

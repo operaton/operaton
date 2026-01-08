@@ -98,7 +98,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     assertThatThrownBy(() -> operation.accept(taskService, taskId, value), "It should not be possible to " + operationName)
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id '" + userId + "' does not have one of the following permissions: 'TASK_ASSIGN'");
+        .hasMessageContaining("The user with id '%s' does not have one of the following permissions: 'TASK_ASSIGN'".formatted(userId));
     deleteTask(taskId, true);
   }
 
@@ -290,7 +290,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
 
       assertThat(value).isEqualTo(expectedValue);
     } catch (Exception e) {
-      fail("Failed to assert property for operationName=" + operationName + " due to : " + e.getMessage());
+      fail("Failed to assert property for operationName=%s due to : %s".formatted(operationName, e.getMessage()));
     }
   }
 }

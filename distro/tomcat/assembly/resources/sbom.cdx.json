@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:cbf52ec2-77b5-45a5-b23b-66ce564fdd0b",
+  "serialNumber": "urn:uuid:d51e30d0-e15d-442a-810b-541f7652ee90",
   "version": 1,
   "metadata": {
-    "timestamp": "2025-12-31T05:42:50Z",
+    "timestamp": "2026-01-08T08:31:14Z",
     "tools": {
       "components": [
         {
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.23",
+      "version": "1.5.24",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6135cd1d291942f0d4857dd082c39448"
+          "content": "c2f8e02ace80b19958ff0a255159529d"
         },
         {
           "alg": "SHA-1",
-          "content": "9a648155880266307d6fe67853b5e51c191f2a68"
+          "content": "74b644ea88390b7442de28ada99136e88caebe35"
         },
         {
           "alg": "SHA-256",
-          "content": "f80ed51f2621488cee4997982031a0614a9e1757ef58700c4e5d8081c0eb948f"
+          "content": "6a4ce01b2e1593cf244f4424c78360e521798ecd709fe168c69b40985afb986a"
         },
         {
           "alg": "SHA-512",
-          "content": "d9d3123161a0ac22e4d5fd2753ef1be79d813738b7d528420d77393ce5d422b95fa2f1da5138dae70c2115497462ea70044dd5282993a29d46437687cba79d7d"
+          "content": "42cbd20316fa086558e83b489bfcaf3dddc265cf899b91f2a145993da4bd555aa90c15e795ea40f1c5a1c3d57745c71e152763e94c4aaad12760151ee65b6d92"
         },
         {
           "alg": "SHA-384",
-          "content": "3387bbc46056d98c9226907f2cfdfda62cf936440fb5bb645af3159264f39fe8a1de45f036d53a5a2a50ff41a8fbfb17"
+          "content": "8c91e93fa18c4042d9103d2892f43f1f3bc21d6b7899972e36a777f7ac61836c870451b6f591f4e8f535f611ffb71e22"
         },
         {
           "alg": "SHA3-384",
-          "content": "37fb26605d8c6481bef7d85be4effab5b77e25a7f78ac4ca10b6e895313a7eb9ed897596916c20d37a41fdbcdac85b43"
+          "content": "89c8123fe4470342c705e34fb1fd5d1e2361f9285653a1c60f4f786431d8be1aa2002dbf9eb00ad319daa4b6b328be49"
         },
         {
           "alg": "SHA3-256",
-          "content": "66f23238d75aa926f835d603e2b4a8981431e094a63a43b8bd63969cdf9b89ac"
+          "content": "b728cec30bec49abd11362560a1f058249819eee1035bf7a972a19cc0aff555b"
         },
         {
           "alg": "SHA3-512",
-          "content": "199e5f3901a77d1f35d31fafa2a78461fe830ab0f184e809b38392dd7ef8328bc94d586f230bdf69351f6744d72cbe10f5ae21235e428dd55a94f7f45bdc273d"
+          "content": "648f27af51394d204c3024853c52e3d7fda647f616d94ce061042c25c1e32614a7f25144bf2106e30e24701794032250972dab646258e092528642bf5369d2df"
         }
       ],
       "licenses": [
@@ -309,7 +309,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -327,45 +327,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.23?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.23",
+      "version": "1.5.24",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "67296f218653284c1a531b190f7c1804"
+          "content": "8db8b5ac4a7e541ce38403f242f45538"
         },
         {
           "alg": "SHA-1",
-          "content": "d1345f45eae2f564549b14924f9a0bd970a5b9a2"
+          "content": "e7c59963aab18d1db0dcea89d951f954b7976f04"
         },
         {
           "alg": "SHA-256",
-          "content": "c07ee90df0c49d8890bfbe9844d34324f2751b81caf69cd84caddcc1f6107400"
+          "content": "9105af06119e6d41de8439a66c0f98918883e5d05e8064815ef83e5c33d746d3"
         },
         {
           "alg": "SHA-512",
-          "content": "d5f9108b62b44d940a80bf0181e8c1976bb72b9cc407dc27389b9c9ba710ad6d3d8d6699853e7d079534a362a66089d1a5da02c8a17f3c19ed8b289210baee46"
+          "content": "0b6e2f9fec80e173205bd0a4ed0678cf03573d95d7a8f223d82d9b2b81906965b8e5a30321bdeebe5406a7f5354c78c67d4d100cb30926838997231fbcad66cb"
         },
         {
           "alg": "SHA-384",
-          "content": "fa30beb29f8891857b4ec7ca1a2c9cdea5ad0413be10a4eba013240f33318b2819708bcdc2bf709602bbcfb326253fed"
+          "content": "47243ba35d891b763e90e8f9361e0d231204b74c754e9b41ae20ab80dfb2bd24f942c5c3a5565a5035899e9ffe54b7c3"
         },
         {
           "alg": "SHA3-384",
-          "content": "ed9be6ca998f796129431b7a6561a48ca3d25af9760ef63d746c9a0e5511e8edcb35186b1974decc8ed0d373412af082"
+          "content": "164b3b0bc744f5183cd6bebd6530ce68cbf31e11f49596c30294463b6e8fb17ae4a8d0cd310d9e82ffb977d3fca2c70a"
         },
         {
           "alg": "SHA3-256",
-          "content": "56c37c4b3e53dd79c643a4ead84feb83591d51b494b9a6ab8f17fcdceb89b06e"
+          "content": "7d1031155968eb3a54d75732e1b3d1f9be438c713a9599e184ef974918220f5c"
         },
         {
           "alg": "SHA3-512",
-          "content": "542f66cf97b21d7d703af4b377aaa53e442762008e56344c4bb8fec115f9c661dcc11fdd83896b042b3c36568d3d7d5096798caa0be25140c797db893e4369f0"
+          "content": "9e3031275a079239885f1724f7aee1966ce74b3c928ddd242c62ad4c29a6cd26909af68df8c003c832626bc9c71b5bbd651c7cdfa67bb10b1af049573730d71a"
         }
       ],
       "licenses": [
@@ -381,7 +381,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.23?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -522,44 +522,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter",
-      "version": "5.14.1",
+      "version": "5.14.2",
       "description": "Module \u0022junit-jupiter\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "94e4a8940f6a4d448991be180bf3b1b8"
+          "content": "b41fb8360b169cd21cf21b536e1a3ae1"
         },
         {
           "alg": "SHA-1",
-          "content": "73861dcfc09f81fa2c21ccea05af56d756d62173"
+          "content": "392a384d249ae881f6f19ea78f0f7f5ec45c08c9"
         },
         {
           "alg": "SHA-256",
-          "content": "4bb306b119bc6b87c874d5cebaa25a8c2956b2548cb0c6a41e8a756bd1dc6327"
+          "content": "ee04c9b0c532136a4bc4a8531fe54a22c637b93a690bc064718357584d1e71ae"
         },
         {
           "alg": "SHA-512",
-          "content": "92d64dcd78645799ab6ca29d36f4ff428a77b193920946da585e8f4e3be6806dd5d4cbdd72244a8af91a83f236987635b3277d9f0c6d2c894e78e54e40f075fc"
+          "content": "ac28060341686ced3fdcbab4dade5d3733390c2b2f60d48901f410c4c06fac4cbb57d4e33a2d68ee9491bf5b904f513e2a12e3b446908652d3fa5e85a5ca7f93"
         },
         {
           "alg": "SHA-384",
-          "content": "56fab948ca62c775f060d981408343b9fe5cdd6d800170f2c4cfb996207c838c39a31e1469c1aa9fbf3e794e401fd5a0"
+          "content": "12d4fcb247561a910099bd0fa3b0d7728f1ccdbf0142359e05d3912c5e9a899137defa949d73847ae20b524e33892e8b"
         },
         {
           "alg": "SHA3-384",
-          "content": "8e4d0a1d93e88af7c4e04754d8f5303349415d75a8a6d586cedb55681741c81157ef27549a5be4885ad99dde2b6bc2ac"
+          "content": "89311c62dbbbd65cc148fadd771bb0cf9d8dfd06ec5a7daec9250e6bbf5f8fafe5fd890d21ea9ada3bb86a1af7ba6e9f"
         },
         {
           "alg": "SHA3-256",
-          "content": "7532a2a7d182a53d917c621d99983dd6a998b1c782bee428cd1ca542bdcc1c2a"
+          "content": "c1b5e00f2608f9e2079b360fcca26833b7d8af8e5c5b04be7286425e163d13a9"
         },
         {
           "alg": "SHA3-512",
-          "content": "1969cc72fd7bde83fdb0bb8e476bb57e63bd3007018cabe87baf44872e83eff07f89af42b8f4d6c492fcbfbf7b4bbbc919dc97c99cb79c067d8f4a822978be04"
+          "content": "36fda6dd7ed63391ed0115b8de82696e40c27f947336668215563d59f737a43d58ed5c89e7c1d21f1042486ead55de2d6ccd03e8004079432a163e19d8219b45"
         }
       ],
       "licenses": [
@@ -569,7 +569,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -583,44 +583,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-api",
-      "version": "5.14.1",
+      "version": "5.14.2",
       "description": "Module \u0022junit-jupiter-api\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "bcb681e3666c53395f9fd917efd80d20"
+          "content": "6c5457923f3bbb0fec0bd1e1e58041ae"
         },
         {
           "alg": "SHA-1",
-          "content": "8943c1d7f3ad50a08fa654e92d9241dc632bbc4c"
+          "content": "325b3221dd5af0b410f7c9914cce93e3281b5a66"
         },
         {
           "alg": "SHA-256",
-          "content": "16f16f0c3c1ef97adb830484194669ed9683b434ce6f38fe3a01bd2906ae6c59"
+          "content": "704cda1857316bb791199b1a1bf8173b0778b938a8445c85be1154c5f8813a0a"
         },
         {
           "alg": "SHA-512",
-          "content": "1347a3d7015cf06a9a38c37b6f35d54face4968a3a50ef390a7d3407fd5a7f32b134d876b8674c27a7f45b087bff0c825ff47db21db69421a6cfc70531a4da19"
+          "content": "895a23621e410311e2142dc1e16f1877b27de15202e82db844508b198aa387cda7ab316a5c895402ff90a4dd730411620e1c5e1ece0de410cef0a50e0c5b1927"
         },
         {
           "alg": "SHA-384",
-          "content": "28ae6cc051e4211c3804150ad38caa35b80a2b35bef6dd147fb7386b80958a42e9c92fd545759a14c373ae8d4f761f0f"
+          "content": "52a3bb5408e7044f886f927c40c1a7c7059e5d91a1ddbe8fdd7b4ccbab6c9969784adab143480bcc7b8889f0e71ba9f4"
         },
         {
           "alg": "SHA3-384",
-          "content": "9e421116137d7b3078ae69bd64250530f9a3ab783e8609ec0d17485979785c993122443ceaeb753e46ccdca352a3ed8b"
+          "content": "98ab5c31bd6ec5058fc4cc979fe0c58cbb6b5c395b5b36443da48975ac0d750f12bb22e276133d5816c41eb8584fedce"
         },
         {
           "alg": "SHA3-256",
-          "content": "d3e8b6d35e4d3b453327d231d15c1ddc0303d54b5c1ac2fc8ca5800b949c5923"
+          "content": "bbe8738b8458fb61ab7728cbaa1bedd758cb0cfcaf11180b8c895b1cef4579bf"
         },
         {
           "alg": "SHA3-512",
-          "content": "0c651a9062f0a8192cd7db6cf0daf7a6badf6c2469d0db2580bb83d5a9d0e289718efb28e00a7ed043374180d622949b758d6e988a743d102dab31531bb13e2e"
+          "content": "f4035368c7759688b2fa3525a0a48ab6398c87f32c2796c6dd381b7bde44cc8313696a7ccf5bf4de4faaddd59d5353eb713c9f67f6a87425a16ceb0c6df29e44"
         }
       ],
       "licenses": [
@@ -630,7 +630,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -705,44 +705,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.2?type=jar",
       "group": "org.junit.platform",
       "name": "junit-platform-commons",
-      "version": "1.14.1",
+      "version": "1.14.2",
       "description": "Module \u0022junit-platform-commons\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "77af4cdf9410299f74fa244f06565d8b"
+          "content": "64155d16741a7404be32a858762a07e9"
         },
         {
           "alg": "SHA-1",
-          "content": "3d6d355ba36d7620bfef87b896708a975accc108"
+          "content": "1a9cee008f6a4377609dd45d31aed4ca2fa6ab15"
         },
         {
           "alg": "SHA-256",
-          "content": "39a1f247aba3346be0b4e46dbb3c09031c0cfcad111d7d9904795b917e8c1c7a"
+          "content": "9117f9aadc663ac550ae5e81d8d3ab9f1e09bb2e34c16e60a1eb1633a17bcc06"
         },
         {
           "alg": "SHA-512",
-          "content": "528fa274d3b023cc71af4b1f7885226507c31215967793ff1a7f31a968a49e7bd4186ecda956df9f27c26763e134a309bfad6f573574bf32a2b0bbba11c128ed"
+          "content": "83fc2c9ec514e13d28c707a90191ae42dc86ba7174373385d6847ae63a032bb0bcc5e564e63d7f72ecea350c6f770557d330f3327307cca1acc7e870a7b0955e"
         },
         {
           "alg": "SHA-384",
-          "content": "dba88317b03eed3ecb8841bfc16f2a41ab34a9cc552322971a9bae1ac8dce17d6e8455c58c746d560ea963b6b688b929"
+          "content": "f073ddf1b0eb45ccc1b898058c5dc6f4053354274ed428956596770d2097d6d8e8ed39cc1c645a4d3e766aa6189e160a"
         },
         {
           "alg": "SHA3-384",
-          "content": "38b0df32be99ea30fedaa9b4272dfcb7a26e94cc3d5854d7cd7e7d81879f31098e3f30c556c0b58f30983288980515f0"
+          "content": "1aed5095cca647bb85b47d14d36cff3e8e3832bef2e1e1757f381c9da59de6c08d83dcf200ee4fab4c3e189e6322863f"
         },
         {
           "alg": "SHA3-256",
-          "content": "b94a131e89fb79c69c105c8212c30cb39dd2c9207d8a8bf154cf70429e82185f"
+          "content": "b2fb673ff2eba3ce62212602581c8f927ab9d35775437089f1d815c714ec9ec4"
         },
         {
           "alg": "SHA3-512",
-          "content": "cfccacb897c4231f7dd880969e9c8b472003e0ee75f6ae775fc3fcba439bf72fa65b89058a14ecd4fb9b9ba161d5d86abca2e23860c12f99aa228feb90160917"
+          "content": "d581b793041d10bc27bf3aff9e762d71f11287952e4ed9c103e67e4a95ec7274dffe62d437fa69648e690e76ce8dd97114f450248546aecbb0bac21b7ff4a8d1"
         }
       ],
       "licenses": [
@@ -752,7 +752,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+      "purl": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.2?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -827,44 +827,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-params",
-      "version": "5.14.1",
+      "version": "5.14.2",
       "description": "Module \u0022junit-jupiter-params\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d1abbac56b7938dfa20928bce95af596"
+          "content": "494fd61742b36f74867fe6f1ffaf7271"
         },
         {
           "alg": "SHA-1",
-          "content": "8f2932b4a69f3831370fed1c09253108684fb606"
+          "content": "0668403dfa3c1d92103c687b1a790250fddc3073"
         },
         {
           "alg": "SHA-256",
-          "content": "c076e3208dbc231d1eb7e2d969578c314c1658fa1a29cc8f0447c804f29327fa"
+          "content": "06d8673ab16174117ebaea7cc9dc08809db7a394f5d93efd240362d883d01df0"
         },
         {
           "alg": "SHA-512",
-          "content": "07f39b06ee1d5ef026e0118e354a334352eaa3c6011a8c9d13cf90209663ced4c02c098b2981734ebc6c4c93d638d1b5e39f1076fb7722ae99451bf08811fe0f"
+          "content": "27ff877bccac0208f2479d678f349f50728e7dc2657f6579d2d4e029cdd0c2544140c503514c274c6efccd3fb50f7081082f073fb605a5cf2bb3065cfc517b9b"
         },
         {
           "alg": "SHA-384",
-          "content": "0d943c315199d3b8513da1482bdc41bdbbe789870e7759038521b9bce78900428abe945fb036b01c706b6ee2090761e2"
+          "content": "5021e63da2a6b51f96ec5ac898bb00f5eba2d9a1112d22b5f3b7e062f5fa1a359f9a38be851edb1e46ec286bf1de0559"
         },
         {
           "alg": "SHA3-384",
-          "content": "69a44dd073d174707e1635871fe0b574ef5177a86d27618f32ac8477c8644a05a327c1454bc7563dd3e208046fc50b76"
+          "content": "2ad681572b396f8e09144ffb31f9e4d4a846cb90905dbeded34da7c7c2f445e7ae208cde8a4bd5f5b05415cae8bafeff"
         },
         {
           "alg": "SHA3-256",
-          "content": "c815e6677f9b397d6636b8bea31e6f9408e0004524b936ff3088633e773abfe9"
+          "content": "12a3dea2353815c772f837c54e58a02bc182c2cf8d9db80f8fce100f01353766"
         },
         {
           "alg": "SHA3-512",
-          "content": "7befa034c4bee8ac6c0b2d2f93d9db4a6a78a52244babe56956cfe4790f8da3108535915761bb0b409d8b6e33ebc7f86a58ada842328b0a0fcc294c2cdf65321"
+          "content": "21cf4fae46adb03abf96a4ff0c7de75dc97acc409c57cb31297c8c5451dde3f106b8e26f4d87bbf016eaed4e71c5c326c5c81b8df7352ec7e27e743c4feac484"
         }
       ],
       "licenses": [
@@ -874,7 +874,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -888,44 +888,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
+      "bom-ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.2?type=jar",
       "group": "org.junit.jupiter",
       "name": "junit-jupiter-engine",
-      "version": "5.14.1",
+      "version": "5.14.2",
       "description": "Module \u0022junit-jupiter-engine\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "53790c2efbfec436878ce9fcee47a448"
+          "content": "bd3694abd424fc4638823f0f9df75f01"
         },
         {
           "alg": "SHA-1",
-          "content": "f230d30ae8ce4c4171eaabc086e00a645ad054ed"
+          "content": "872e87e7507af452a58c63ccfee17db14a93609c"
         },
         {
           "alg": "SHA-256",
-          "content": "df44aa18d05ced13fa6836ca214c224caf3fffde4df20e9ce7ddfafb5c9d02f8"
+          "content": "024d9b06d31b90fb9c5a7c0bc62cfa2d49c673a68a7a75be9b52548ba6283509"
         },
         {
           "alg": "SHA-512",
-          "content": "0e891c3fc3b9750a389048dc7c96759e28bd57ed5b0c10a92af90fac041387acc5d9bf6fdbcb09440a815a597d909ff108f0f7567c7b00379314213ba51013b4"
+          "content": "977900931449810c660bd3b6d95f5b8345db13ccef0012620f2b5d1afd550f5c9782fbacf7b5a3ae1a4b14895efd75bd8526624154638a64aa5375f889a7a075"
         },
         {
           "alg": "SHA-384",
-          "content": "ab2ebc939da5968042000efc2cf03cc13bb062b7abc70edb6ec0ac67b0188832d4aebb83b35feefabb632f4cc79a54a2"
+          "content": "4356dcc422e3dc0ff33a41a6248af093e3f8b43eef9b24aee3298f2841b3b75b7f5bf68f28025d87bc2088cdef4a30a1"
         },
         {
           "alg": "SHA3-384",
-          "content": "688c1caa93b67add62b223d67d9299717371901518f6c01837aad03ae8c8acf4b1f3062e3b24c4179fd854285ab2fb95"
+          "content": "86ca9203a64f56ed534135c2b2e8acb3890f2b9b4257d1338de2b502f8da91aec36b9cf0d3833e4649f781da0d1da6ad"
         },
         {
           "alg": "SHA3-256",
-          "content": "a11efc51e2500fc24c33ce9968a1af50fc8d4a1ad75a2e8c0c114777c25b1baf"
+          "content": "31cced89152718f95a91d5547cc91a3e7d4bdea9f92d73592ba846c57553fe51"
         },
         {
           "alg": "SHA3-512",
-          "content": "3f6d47cb2f378aaa3f51cf4a5300f2bb90b69447015adf45b74d5317a62b179ce09495e631387df74ea2403122753adb0705def74d8221032497606e1613c112"
+          "content": "dd8bfb02979c34d8baf8838abdfec765af2f3495ca6e0edf268bb736a6820d3e1e6cb700f0d3ae5169041af6ca2bd9492dd9149e7653b3b5969d7e354dec5b64"
         }
       ],
       "licenses": [
@@ -935,7 +935,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
+      "purl": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.2?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -949,44 +949,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
+      "bom-ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.2?type=jar",
       "group": "org.junit.platform",
       "name": "junit-platform-engine",
-      "version": "1.14.1",
+      "version": "1.14.2",
       "description": "Module \u0022junit-platform-engine\u0022 of JUnit 5.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "25445e256638a568aab73229a6a7f7a5"
+          "content": "0ce1dcee9a3520ace5ec2cc7608fee68"
         },
         {
           "alg": "SHA-1",
-          "content": "4fd44468a55879fd17ed015476717698f3cf5e85"
+          "content": "22d08dc0b6f30ca1d486ee1059fb188a6459ed71"
         },
         {
           "alg": "SHA-256",
-          "content": "a89310dd69dd9ac7031db9997dcab9a1481512fa546077e4219cefa2e287ebc7"
+          "content": "5a45c430763a26c6c55471e192d8afbb6443956bc116b7e6796b8d789a5a146d"
         },
         {
           "alg": "SHA-512",
-          "content": "8b0e627fb887a5f97b276689ddcbcc1ee7cae232a17a9b14ee9ede516b3488b4ef95168078808113ccf3737947709b295565d5de738491b181cbca717bd0af5f"
+          "content": "d2432db22915a4f9a326a547e8d9713e6467bd66de5b1321bc0543a3b9c6fb00c5c9ed94a8709e1c8676a7402f4d9b4f68b10b180430c599910f864b80e11209"
         },
         {
           "alg": "SHA-384",
-          "content": "81f38b791b58f58aa792e056dc580db2733d0fe7fb6ad5a14491a5ef8ccd9803854b8fa980db659aea3a886a2d8d54bd"
+          "content": "8797878f1675266227a7d720f5908ab39edf3bdfc8b774bf414abf43f92b51d792d77e111d0d55b0052decefe4ea87b5"
         },
         {
           "alg": "SHA3-384",
-          "content": "ef4db7406956258b12d829355acbcda90224d8da2b6a294d60f9e4de2250245c44ea67863f0c36d952fbdcded066ffd1"
+          "content": "e6810165347ee69cfba4c193bd82f6d7e08eb1f730d6976dc55afc35a1a3ad3eb5ecbfe1e07c758433d96c666ccab3c5"
         },
         {
           "alg": "SHA3-256",
-          "content": "ce9bd445040130c3d7816277f33c5a44d95f8d6e9b7c94e79e1a72b84a58dd28"
+          "content": "756c46fa05a82abae847bf333106cb2d01879824fe34176837fe7b8dd3c84d8e"
         },
         {
           "alg": "SHA3-512",
-          "content": "61ea81b60f8717380f82264686eaae9252505dde206807e34483c6d4af2a6398b33469a9e03bf9883c4af41f5854d49741a9dc88696d658000d1a087f798b0bb"
+          "content": "0e69520c2b84b5b217ff3d7827741d66856526746a532e100caa656a55761650a0e6c5ae76bac09c247bb1a0afa3d2be159d0b66e2efa8a7c1828775d0f0dff3"
         }
       ],
       "licenses": [
@@ -996,7 +996,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
+      "purl": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.2?type=jar",
       "externalReferences": [
         {
           "url": "https://junit.org/",
@@ -21147,7 +21147,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2aef158c-fceb-422b-b0a6-90da7367ddd3",
+      "bom-ref": "4f59dc6b-ff66-45d1-bc9a-2ec9d3bba824",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21270,24 +21270,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
-      "group": "@bpmn-io",
-      "name": "feel-editor",
-      "version": "1.12.0",
-      "purl": "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/feel-editor@1.12.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/%40bpmn-io/feel-editor@2.0.0",
       "group": "@bpmn-io",
       "name": "feel-editor",
@@ -21324,24 +21306,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/feel-lint@2.1.0",
-      "group": "@bpmn-io",
-      "name": "feel-lint",
-      "version": "2.1.0",
-      "purl": "pkg:npm/%40bpmn-io/feel-lint@2.1.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/feel-lint@2.1.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/%40bpmn-io/feel-lint@3.0.0",
       "group": "@bpmn-io",
       "name": "feel-lint",
@@ -21360,15 +21324,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.17.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.18.0",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.17.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.17.0",
+      "version": "1.18.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.18.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.17.0"
+          "value": "@bpmn-io/form-js-carbon-styles@1.18.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21378,15 +21342,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.17.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.18.0",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.17.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.17.0",
+      "version": "1.18.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.18.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.17.0"
+          "value": "@bpmn-io/form-js-editor@1.18.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21396,15 +21360,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.17.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.18.0",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.17.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.17.0",
+      "version": "1.18.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.18.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.17.0"
+          "value": "@bpmn-io/form-js-playground@1.18.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21414,15 +21378,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.17.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0",
+      "version": "1.18.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.17.0"
+          "value": "@bpmn-io/form-js-viewer@1.18.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21432,33 +21396,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.8.7",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.18.0",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.8.7",
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.8.7",
+      "version": "1.18.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.18.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.8.7"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/lang-feel@2.4.0",
-      "group": "@bpmn-io",
-      "name": "lang-feel",
-      "version": "2.4.0",
-      "purl": "pkg:npm/%40bpmn-io/lang-feel@2.4.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/lang-feel@2.4.0"
+          "value": "@bpmn-io/form-js@1.18.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21486,24 +21432,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/lezer-feel@1.9.0",
-      "group": "@bpmn-io",
-      "name": "lezer-feel",
-      "version": "1.9.0",
-      "purl": "pkg:npm/%40bpmn-io/lezer-feel@1.9.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/lezer-feel@1.9.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/%40bpmn-io/lezer-feel@2.0.0",
       "group": "@bpmn-io",
       "name": "lezer-feel",
@@ -21522,15 +21450,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
       "group": "@bpmn-io",
       "name": "properties-panel",
-      "version": "3.33.0",
-      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
+      "version": "3.35.1",
+      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/properties-panel@3.33.0"
+          "value": "@bpmn-io/properties-panel@3.35.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21558,15 +21486,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.42.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.46.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.42.0",
-      "purl": "pkg:npm/%40carbon/grid@11.42.0",
+      "version": "11.46.0",
+      "purl": "pkg:npm/%40carbon/grid@11.46.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.42.0"
+          "value": "@carbon/grid@11.46.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21576,15 +21504,33 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.40.0",
+      "bom-ref": "pkg:npm/%40carbon/icons@11.71.0",
       "group": "@carbon",
-      "name": "layout",
-      "version": "11.40.0",
-      "purl": "pkg:npm/%40carbon/layout@11.40.0",
+      "name": "icons",
+      "version": "11.71.0",
+      "purl": "pkg:npm/%40carbon/icons@11.71.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.40.0"
+          "value": "@carbon/icons@11.71.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.44.0",
+      "group": "@carbon",
+      "name": "layout",
+      "version": "11.44.0",
+      "purl": "pkg:npm/%40carbon/layout@11.44.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@carbon/layout@11.44.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23348,14 +23294,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/feelin@4.3.0",
+      "bom-ref": "pkg:npm/feelin@4.6.0",
       "name": "feelin",
-      "version": "4.3.0",
-      "purl": "pkg:npm/feelin@4.3.0",
+      "version": "4.6.0",
+      "purl": "pkg:npm/feelin@4.6.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "feelin@4.3.0"
+          "value": "feelin@4.6.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23365,14 +23311,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/file-drops@0.6.1",
+      "bom-ref": "pkg:npm/file-drops@0.6.2",
       "name": "file-drops",
-      "version": "0.6.1",
-      "purl": "pkg:npm/file-drops@0.6.1",
+      "version": "0.6.2",
+      "purl": "pkg:npm/file-drops@0.6.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "file-drops@0.6.1"
+          "value": "file-drops@0.6.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23416,14 +23362,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/form-data@4.0.4",
+      "bom-ref": "pkg:npm/form-data@4.0.5",
       "name": "form-data",
-      "version": "4.0.4",
-      "purl": "pkg:npm/form-data@4.0.4",
+      "version": "4.0.5",
+      "purl": "pkg:npm/form-data@4.0.5",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "form-data@4.0.4"
+          "value": "form-data@4.0.5"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23807,14 +23753,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/lezer-feel@1.8.1",
+      "bom-ref": "pkg:npm/lezer-feel@1.9.0",
       "name": "lezer-feel",
-      "version": "1.8.1",
-      "purl": "pkg:npm/lezer-feel@1.8.1",
+      "version": "1.9.0",
+      "purl": "pkg:npm/lezer-feel@1.9.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "lezer-feel@1.8.1"
+          "value": "lezer-feel@1.9.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23841,14 +23787,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/luxon@3.7.1",
+      "bom-ref": "pkg:npm/luxon@3.7.2",
       "name": "luxon",
-      "version": "3.7.1",
-      "purl": "pkg:npm/luxon@3.7.1",
+      "version": "3.7.2",
+      "purl": "pkg:npm/luxon@3.7.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "luxon@3.7.1"
+          "value": "luxon@3.7.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23858,14 +23804,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@16.2.1",
+      "bom-ref": "pkg:npm/marked@16.4.2",
       "name": "marked",
-      "version": "16.2.1",
-      "purl": "pkg:npm/marked@16.2.1",
+      "version": "16.4.2",
+      "purl": "pkg:npm/marked@16.4.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@16.2.1"
+          "value": "marked@16.4.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24317,14 +24263,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/preact@10.27.1",
+      "bom-ref": "pkg:npm/preact@10.28.2",
       "name": "preact",
-      "version": "10.27.1",
-      "purl": "pkg:npm/preact@10.27.1",
+      "version": "10.28.2",
+      "purl": "pkg:npm/preact@10.28.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "preact@10.27.1"
+          "value": "preact@10.28.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24351,14 +24297,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/qs@6.13.0",
+      "bom-ref": "pkg:npm/qs@6.14.1",
       "name": "qs",
-      "version": "6.13.0",
-      "purl": "pkg:npm/qs@6.13.0",
+      "version": "6.14.1",
+      "purl": "pkg:npm/qs@6.14.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "qs@6.13.0"
+          "value": "qs@6.14.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24623,14 +24569,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/superagent@10.2.3",
+      "bom-ref": "pkg:npm/superagent@10.3.0",
       "name": "superagent",
-      "version": "10.2.3",
-      "purl": "pkg:npm/superagent@10.2.3",
+      "version": "10.3.0",
+      "purl": "pkg:npm/superagent@10.3.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "superagent@10.2.3"
+          "value": "superagent@10.3.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24793,7 +24739,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "660f083e-738a-4d35-8458-565c3b074b2e",
+      "bom-ref": "6937234a-2a00-4a29-b293-88d657ac2bf3",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24908,15 +24854,15 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
       "dependsOn": [
         "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.2?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
@@ -24925,7 +24871,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+      "ref": "pkg:maven/org.junit.platform/junit-platform-commons@1.14.2?type=jar",
       "dependsOn": [
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
@@ -25064,17 +25010,17 @@
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
@@ -25092,19 +25038,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.23?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.23?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
       "dependsOn": []
     },
     {
@@ -25250,8 +25196,8 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar"
       ]
     },
     {
@@ -25273,9 +25219,9 @@
         "pkg:maven/org.springframework/spring-beans@6.2.15?type=jar",
         "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
         "pkg:maven/org.apache.ant/ant@1.10.15?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
@@ -25326,26 +25272,26 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
+      "ref": "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-engine@1.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.1?type=jar",
+      "ref": "pkg:maven/org.junit.platform/junit-platform-engine@1.14.2?type=jar",
       "dependsOn": [
         "pkg:maven/org.opentest4j/opentest4j@1.3.0?type=jar",
-        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.1?type=jar",
+        "pkg:maven/org.junit.platform/junit-platform-commons@1.14.2?type=jar",
         "pkg:maven/org.apiguardian/apiguardian-api@1.1.2?type=jar"
       ]
     },
@@ -25762,8 +25708,8 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@1.1.0-SNAPSHOT?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@3.1.11?type=jar",
         "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.20.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-engine@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
@@ -26802,7 +26748,7 @@
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.1?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
         "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar"
       ]
     },
     {
@@ -26892,13 +26838,13 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.1?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.23?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar"
       ]
     },
     {
@@ -26911,7 +26857,7 @@
       "ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?classifier=junit6\u0026type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.1?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar"
       ]
     },
     {
@@ -27005,7 +26951,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar"
       ]
     },
@@ -27124,7 +27070,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
         "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@1.1.0-SNAPSHOT?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-external-task-client@1.1.0-SNAPSHOT?type=jar"
       ]
@@ -27132,7 +27078,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar",
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
         "pkg:maven/org.operaton.bpm.qa/engine-variable-test@1.1.0-SNAPSHOT?type=war"
       ]
     },
@@ -27141,7 +27087,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar"
       ]
     },
     {
@@ -27352,7 +27298,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.24.0?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.1?type=jar"
+        "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar"
       ]
     },
     {
@@ -27389,10 +27335,10 @@
       "dependsOn": []
     },
     {
-      "ref": "2aef158c-fceb-422b-b0a6-90da7367ddd3",
+      "ref": "4f59dc6b-ff66-45d1-bc9a-2ec9d3bba824",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
-        "pkg:npm/%40bpmn-io/form-js@1.8.7",
+        "pkg:npm/%40bpmn-io/form-js@1.18.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/angular-animate@1.8.3",
         "pkg:npm/angular-cookies@1.8.3",
@@ -27433,13 +27379,13 @@
         "pkg:npm/q@1.5.1",
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
-        "pkg:npm/superagent@10.2.3"
+        "pkg:npm/superagent@10.3.0"
       ]
     },
     {
-      "ref": "660f083e-738a-4d35-8458-565c3b074b2e",
+      "ref": "6937234a-2a00-4a29-b293-88d657ac2bf3",
       "dependsOn": [
-        "2aef158c-fceb-422b-b0a6-90da7367ddd3"
+        "4f59dc6b-ff66-45d1-bc9a-2ec9d3bba824"
       ]
     },
     {
@@ -27458,7 +27404,7 @@
       "ref": "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
       "dependsOn": [
         "pkg:npm/htm@3.1.1",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
@@ -27477,22 +27423,6 @@
       "ref": "pkg:npm/%40bpmn-io/draggle@4.1.2",
       "dependsOn": [
         "pkg:npm/contra@1.9.4"
-      ]
-    },
-    {
-      "ref": "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
-      "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-lint@2.1.0",
-        "pkg:npm/%40bpmn-io/lang-feel@2.4.0",
-        "pkg:npm/%40camunda/feel-builtins@0.2.0",
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/commands@6.10.1",
-        "pkg:npm/%40codemirror/language@6.11.3",
-        "pkg:npm/%40codemirror/lint@6.9.2",
-        "pkg:npm/%40codemirror/state@6.5.2",
-        "pkg:npm/%40codemirror/view@6.39.6",
-        "pkg:npm/%40lezer/highlight@1.2.3",
-        "pkg:npm/min-dom@4.2.1"
       ]
     },
     {
@@ -27515,14 +27445,7 @@
       "ref": "pkg:npm/%40bpmn-io/feel-lint@1.4.0",
       "dependsOn": [
         "pkg:npm/%40codemirror/language@6.11.3",
-        "pkg:npm/lezer-feel@1.8.1"
-      ]
-    },
-    {
-      "ref": "pkg:npm/%40bpmn-io/feel-lint@2.1.0",
-      "dependsOn": [
-        "pkg:npm/%40bpmn-io/lezer-feel@1.9.0",
-        "pkg:npm/%40codemirror/language@6.11.3"
+        "pkg:npm/lezer-feel@1.9.0"
       ]
     },
     {
@@ -27533,28 +27456,28 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.17.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.18.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.17.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.18.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0",
-        "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/ids@1.0.5",
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/min-dom@4.2.1",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.17.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.18.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-editor@1.17.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.18.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/commands@6.10.1",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
@@ -27565,46 +27488,37 @@
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/codemirror@6.0.2",
         "pkg:npm/downloadjs@1.4.7",
-        "pkg:npm/file-drops@0.6.1",
+        "pkg:npm/file-drops@0.6.2",
         "pkg:npm/mitt@3.0.1",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/grid@11.42.0",
+        "pkg:npm/%40carbon/grid@11.46.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@10.2.2",
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/feelers@1.4.0",
-        "pkg:npm/feelin@4.3.0",
+        "pkg:npm/feelin@4.6.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@1.0.5",
         "pkg:npm/lodash@4.17.21",
-        "pkg:npm/luxon@3.7.1",
-        "pkg:npm/marked@16.2.1",
+        "pkg:npm/luxon@3.7.2",
+        "pkg:npm/marked@16.4.2",
         "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/preact@10.27.1"
+        "pkg:npm/preact@10.28.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.8.7",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.18.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.17.0",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.17.0",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.17.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.17.0"
-      ]
-    },
-    {
-      "ref": "pkg:npm/%40bpmn-io/lang-feel@2.4.0",
-      "dependsOn": [
-        "pkg:npm/%40bpmn-io/lezer-feel@1.9.0",
-        "pkg:npm/%40codemirror/autocomplete@6.20.0",
-        "pkg:npm/%40codemirror/language@6.11.3",
-        "pkg:npm/%40lezer/common@1.5.0"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.18.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.18.0",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.18.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0"
       ]
     },
     {
@@ -27617,14 +27531,6 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/lezer-feel@1.9.0",
-      "dependsOn": [
-        "pkg:npm/%40lezer/highlight@1.2.3",
-        "pkg:npm/%40lezer/lr@1.4.5",
-        "pkg:npm/min-dash@4.2.3"
-      ]
-    },
-    {
       "ref": "pkg:npm/%40bpmn-io/lezer-feel@2.0.0",
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
@@ -27633,9 +27539,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
+      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-editor@1.12.0",
+        "pkg:npm/%40bpmn-io/feel-editor@2.0.0",
+        "pkg:npm/%40carbon/icons@11.71.0",
         "pkg:npm/%40codemirror/view@6.39.6",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/feelers@1.4.0",
@@ -27649,14 +27556,20 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.42.0",
+      "ref": "pkg:npm/%40carbon/grid@11.46.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.40.0",
+        "pkg:npm/%40carbon/layout@11.44.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/layout@11.40.0",
+      "ref": "pkg:npm/%40carbon/icons@11.71.0",
+      "dependsOn": [
+        "pkg:npm/%40ibm/telemetry-js@1.10.1"
+      ]
+    },
+    {
+      "ref": "pkg:npm/%40carbon/layout@11.44.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
@@ -28186,7 +28099,7 @@
     {
       "ref": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/properties-panel@3.33.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
         "pkg:npm/diagram-js@15.4.0",
         "pkg:npm/dmn-js@17.5.0",
         "pkg:npm/min-dash@4.2.3",
@@ -28321,7 +28234,7 @@
         "pkg:npm/%40lezer/lr@1.4.5",
         "pkg:npm/%40lezer/markdown@1.4.3",
         "pkg:npm/feelin@3.2.0",
-        "pkg:npm/lezer-feel@1.8.1",
+        "pkg:npm/lezer-feel@1.9.0",
         "pkg:npm/min-dom@5.1.1"
       ]
     },
@@ -28329,20 +28242,20 @@
       "ref": "pkg:npm/feelin@3.2.0",
       "dependsOn": [
         "pkg:npm/%40lezer/lr@1.4.5",
-        "pkg:npm/lezer-feel@1.8.1",
-        "pkg:npm/luxon@3.7.1"
+        "pkg:npm/lezer-feel@1.9.0",
+        "pkg:npm/luxon@3.7.2"
       ]
     },
     {
-      "ref": "pkg:npm/feelin@4.3.0",
+      "ref": "pkg:npm/feelin@4.6.0",
       "dependsOn": [
         "pkg:npm/%40lezer/lr@1.4.5",
-        "pkg:npm/lezer-feel@1.8.1",
-        "pkg:npm/luxon@3.7.1"
+        "pkg:npm/lezer-feel@1.9.0",
+        "pkg:npm/luxon@3.7.2"
       ]
     },
     {
-      "ref": "pkg:npm/file-drops@0.6.1",
+      "ref": "pkg:npm/file-drops@0.6.2",
       "dependsOn": [
         "pkg:npm/min-dom@4.2.1"
       ]
@@ -28358,7 +28271,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/form-data@4.0.4",
+      "ref": "pkg:npm/form-data@4.0.5",
       "dependsOn": [
         "pkg:npm/asynckit@0.4.0",
         "pkg:npm/combined-stream@1.0.8",
@@ -28488,7 +28401,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/lezer-feel@1.8.1",
+      "ref": "pkg:npm/lezer-feel@1.9.0",
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
         "pkg:npm/%40lezer/lr@1.4.5",
@@ -28500,11 +28413,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/luxon@3.7.1",
+      "ref": "pkg:npm/luxon@3.7.2",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@16.2.1",
+      "ref": "pkg:npm/marked@16.4.2",
       "dependsOn": []
     },
     {
@@ -28641,7 +28554,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/preact@10.27.1",
+      "ref": "pkg:npm/preact@10.28.2",
       "dependsOn": []
     },
     {
@@ -28649,7 +28562,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/qs@6.13.0",
+      "ref": "pkg:npm/qs@6.14.1",
       "dependsOn": [
         "pkg:npm/side-channel@1.1.0"
       ]
@@ -28741,17 +28654,17 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/superagent@10.2.3",
+      "ref": "pkg:npm/superagent@10.3.0",
       "dependsOn": [
         "pkg:npm/component-emitter@1.3.1",
         "pkg:npm/cookiejar@2.1.4",
         "pkg:npm/debug@4.4.1",
         "pkg:npm/fast-safe-stringify@2.1.1",
-        "pkg:npm/form-data@4.0.4",
+        "pkg:npm/form-data@4.0.5",
         "pkg:npm/formidable@3.5.4",
         "pkg:npm/methods@1.1.2",
         "pkg:npm/mime@2.6.0",
-        "pkg:npm/qs@6.13.0"
+        "pkg:npm/qs@6.14.1"
       ]
     },
     {
@@ -29823,59 +29736,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2025-15284",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        }
-      ],
-      "cwes": [
-        20
-      ],
-      "description": "Improper Input Validation vulnerability in qs (parse modules) allows HTTP DoS.This issue affects qs: \u003C 6.14.1.\n\n\nSummaryThe arrayLimit\u00A0option in qs does not enforce limits for bracket notation (a[]=1\u0026a[]=2), allowing attackers to cause denial-of-service via memory exhaustion. Applications using arrayLimit\u00A0for DoS protection are vulnerable.\n\nDetailsThe arrayLimit\u00A0option only checks limits for indexed notation (a[0]=1\u0026a[1]=2) but completely bypasses it for bracket notation (a[]=1\u0026a[]=2).\n\nVulnerable code\u00A0(lib/parse.js:159-162):\n\nif (root === \u0027[]\u0027 \u0026\u0026 options.parseArrays) {\n    obj = utils.combine([], leaf);  // No arrayLimit check\n}\n\n\n\n\n\nWorking code\u00A0(lib/parse.js:175):\n\nelse if (index \u003C= options.arrayLimit) {  // Limit checked here\n    obj = [];\n    obj[index] = leaf;\n}\n\n\n\n\n\nThe bracket notation handler at line 159 uses utils.combine([], leaf)\u00A0without validating against options.arrayLimit, while indexed notation at line 175 checks index \u003C= options.arrayLimit\u00A0before creating arrays.\n\nPoCTest 1 - Basic bypass:\n\nnpm install qs\n\n\n\n\n\nconst qs = require(\u0027qs\u0027);\nconst result = qs.parse(\u0027a[]=1\u0026a[]=2\u0026a[]=3\u0026a[]=4\u0026a[]=5\u0026a[]=6\u0027, { arrayLimit: 5 });\nconsole.log(result.a.length);  // Output: 6 (should be max 5)\n\n\n\n\n\nTest 2 - DoS demonstration:\n\nconst qs = require(\u0027qs\u0027);\nconst attack = \u0027a[]=\u0027 \u002B Array(10000).fill(\u0027x\u0027).join(\u0027\u0026a[]=\u0027);\nconst result = qs.parse(attack, { arrayLimit: 100 });\nconsole.log(result.a.length);  // Output: 10000 (should be max 100)\n\n\n\n\n\nConfiguration:\n\n  *  arrayLimit: 5\u00A0(test 1) or arrayLimit: 100\u00A0(test 2)\n  *  Use bracket notation: a[]=value\u00A0(not indexed a[0]=value)\n\n\nImpactDenial of Service via memory exhaustion. Affects applications using qs.parse()\u00A0with user-controlled input and arrayLimit\u00A0for protection.\n\nAttack scenario:\n\n  *  Attacker sends HTTP request: GET /api/search?filters[]=x\u0026filters[]=x\u0026...\u0026filters[]=x\u00A0(100,000\u002B times)\n  *  Application parses with qs.parse(query, { arrayLimit: 100 })\n  *  qs ignores limit, parses all 100,000 elements into array\n  *  Server memory exhausted \u2192 application crashes or becomes unresponsive\n  *  Service unavailable for all users\nReal-world impact:\n\n  *  Single malicious request can crash server\n  *  No authentication required\n  *  Easy to automate and scale\n  *  Affects any endpoint parsing query strings with bracket notation",
-      "recommendation": "Upgrade qs to version 6.14.1",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2025-15284"
-        },
-        {
-          "url": "https://github.com/ljharb/qs"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/commit/3086902ecf7f088d0d1803887643ac6c03d415b9"
-        },
-        {
-          "url": "https://github.com/ljharb/qs/security/advisories/GHSA-6rw7-vpxm-498p"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-15284"
-        }
-      ],
-      "published": "2025-12-29T23:15:42Z",
-      "updated": "2025-12-29T23:15:42Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/qs@6.13.0",
-          "versions": [
-            {
-              "version": "6.13.0",
               "status": "affected"
             }
           ]

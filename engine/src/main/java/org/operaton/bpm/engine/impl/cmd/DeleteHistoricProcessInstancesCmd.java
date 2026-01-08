@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -38,7 +37,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Askar Akhmerov
  */
-public class DeleteHistoricProcessInstancesCmd implements Command<Void>, Serializable {
+public class DeleteHistoricProcessInstancesCmd implements Command<Void> {
 
   protected final List<String> processInstanceIds;
   protected final boolean failIfNotExists;

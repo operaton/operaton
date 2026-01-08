@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +49,6 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
-
 
 /**
  * {@link Command} that changes the process definition version of an existing
@@ -89,10 +86,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensurePositive;
  * @author Falko Menge
  * @author Ingo Richtsmeier
  */
-public class SetProcessDefinitionVersionCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class SetProcessDefinitionVersionCmd implements Command<Void> {
   private final String processInstanceId;
   private final Integer processDefinitionVersion;
 

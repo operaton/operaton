@@ -155,7 +155,7 @@ class DeploymentAwareJobExecutorTest {
       managementService.registerDeploymentForJobExecutor(nonExistingDeploymentId);
       fail("Registering a non-existing deployment should not succeed");
     } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Deployment " + nonExistingDeploymentId + " does not exist", e.getMessage());
+      testRule.assertTextPresent("Deployment %s does not exist".formatted(nonExistingDeploymentId), e.getMessage());
       // happy path
     }
   }

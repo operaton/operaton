@@ -2534,7 +2534,7 @@ class CaseExecutionListenerTest extends CmmnTest {
     } catch (Exception e) {
       // then
       String message = e.getMessage();
-      testRule.assertTextPresent("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '" + CaseExecutionListener.class.getName() + "'", message);
+      testRule.assertTextPresent("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '%s'".formatted(CaseExecutionListener.class.getName()), message);
     }
 
   }

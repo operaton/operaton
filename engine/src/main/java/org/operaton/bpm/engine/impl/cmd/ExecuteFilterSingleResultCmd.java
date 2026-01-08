@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.query.Query;
@@ -26,9 +24,6 @@ import org.operaton.bpm.engine.query.Query;
  * @author Sebastian Menski
  */
 public class ExecuteFilterSingleResultCmd extends AbstractExecuteFilterCmd implements Command<Object> {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   public ExecuteFilterSingleResultCmd(String filterId) {
     super(filterId);
   }

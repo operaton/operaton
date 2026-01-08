@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
@@ -29,13 +26,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetTaskFormCmd implements Command<TaskFormData>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetTaskFormCmd implements Command<TaskFormData> {
   protected String taskId;
 
   public GetTaskFormCmd(String taskId) {

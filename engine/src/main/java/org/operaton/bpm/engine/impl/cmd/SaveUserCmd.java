@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
@@ -32,9 +29,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureWhitelistedReso
 /**
  * @author Joram Barrez
  */
-public class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class SaveUserCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
   protected User user;
   protected boolean skipPasswordPolicy;
 

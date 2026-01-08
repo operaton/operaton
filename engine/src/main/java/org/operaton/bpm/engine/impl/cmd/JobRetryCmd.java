@@ -32,7 +32,6 @@ import org.operaton.bpm.engine.impl.util.ExceptionUtil;
  */
 public abstract class JobRetryCmd implements Command<Object> {
 
-  protected static final long serialVersionUID = 1L;
   protected String jobId;
   protected Throwable exception;
 

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -30,13 +28,10 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetTaskVariablesCmd implements Command<VariableMap>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetTaskVariablesCmd implements Command<VariableMap> {
   protected String taskId;
   protected Collection<String> variableNames;
   protected boolean isLocal;

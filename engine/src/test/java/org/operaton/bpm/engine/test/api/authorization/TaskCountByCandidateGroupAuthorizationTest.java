@@ -113,7 +113,7 @@ class TaskCountByCandidateGroupAuthorizationTest {
     processEngineConfiguration.setAuthorizationEnabled(false);
 
     if (testFailed) {
-      fail("There should be an authorization exception for '" + userId + "' because of a missing 'READ' permission on 'Task'.");
+      fail("There should be an authorization exception for '%s' because of a missing 'READ' permission on 'Task'.".formatted(userId));
     }
   }
 

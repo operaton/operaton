@@ -138,7 +138,7 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
     }
 
     private String addGroupEntry(LDAPConnection connection, String groupName) throws LDAPException {
-        String orgDN = "ou=" + groupName + "," + baseDn;
+        String orgDN = "ou=%s,%s".formatted(groupName, baseDn);
         Entry orgEntry = new Entry(orgDN);
         orgEntry.addAttribute("objectClass", "organizationalUnit", "top", "operatonGroup");
         orgEntry.addAttribute("ou", groupName);
@@ -151,7 +151,7 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
     }
 
     private String addPosixGroupEntry(LDAPConnection connection, String gid, String name, String... memberUids) throws LDAPException {
-        String groupDN = "cn=" + name + ",ou=groups," + baseDn;
+        String groupDN = "cn=%s,ou=groups,%s".formatted(name, baseDn);
         Entry orgEntry = new Entry(groupDN);
         orgEntry.addAttribute("objectClass", "top", "posixGroup");
         orgEntry.addAttribute("cn", name);
@@ -166,7 +166,7 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
     }
 
     private String addUserUidEntry(LDAPConnection connection, String uid, String groupName, String firstname, String lastname, String mail) throws LDAPException {
-        String userDN = "uid=" + uid +",ou=" + groupName + ",dc=operaton,dc=org";
+        String userDN = "uid=%s,ou=%s,dc=operaton,dc=org".formatted(uid, groupName);
         Entry userEntry = new Entry(userDN);
         userEntry.addAttribute("objectClass",  "top", "person", "inetOrgPerson", "operatonPerson");
         userEntry.addAttribute("uid", uid);
@@ -184,7 +184,7 @@ public class LdapTestPosixContextImpl implements LdapTestContext {
     }
 
     private String addRoleEntry(LDAPConnection connection, String roleName, String... userDns) throws LDAPException {
-        String orgDN = "ou=" + roleName + "," + baseDn;
+        String orgDN = "ou=%s,%s".formatted(roleName, baseDn);
         Entry roleEntry = new Entry(orgDN);
         roleEntry.addAttribute("objectClass", "top", "groupOfNames");
         roleEntry.addAttribute("cn", roleName);

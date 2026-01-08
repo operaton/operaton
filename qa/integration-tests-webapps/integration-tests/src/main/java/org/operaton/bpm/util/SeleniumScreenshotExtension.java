@@ -73,7 +73,7 @@ public class SeleniumScreenshotExtension implements AfterTestExecutionCallback, 
 
     File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
     String now = new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date());
-    String scrFilename = context.getRequiredTestClass().getSimpleName() + "-" + context.getRequiredTestMethod().getName() + "-" + now + ".png";
+    String scrFilename = "%s-%s-%s.png".formatted(context.getRequiredTestClass().getSimpleName(), context.getRequiredTestMethod().getName(), now);
     File outputFile = new File(screenshotDirectory, scrFilename);
 
     try {

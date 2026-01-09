@@ -262,7 +262,7 @@ public class ExpressionFactoryImpl extends jakarta.el.ExpressionFactory {
 		if (getClass().getName().equals(System.getProperty("jakarta.el.ExpressionFactory"))) {
 			return System.getProperties();
 		}
-		return null;
+		return new Properties();
 	}
 
 	private Properties loadProperties(String path) {

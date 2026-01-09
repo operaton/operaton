@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.spring.boot.starter.property;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.util.Assert;
@@ -29,7 +28,7 @@ import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.DB
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.joinOn;
 
 public class DatabaseProperty {
-  public static final List<String> SCHEMA_UPDATE_VALUES = Arrays.asList(
+  private static final List<String> SCHEMA_UPDATE_VALUES = List.of(
     DB_SCHEMA_UPDATE_TRUE,
     DB_SCHEMA_UPDATE_FALSE,
     DB_SCHEMA_UPDATE_CREATE,

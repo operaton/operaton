@@ -65,8 +65,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.FILTER;
-import static org.operaton.bpm.engine.rest.dto.AbstractQueryDto.SORT_ORDER_ASC_VALUE;
-import static org.operaton.bpm.engine.rest.dto.AbstractQueryDto.SORT_ORDER_DESC_VALUE;
 import static org.operaton.bpm.engine.rest.dto.task.TaskQueryDto.*;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_FILTER_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.mockFilter;
@@ -101,6 +99,9 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @RegisterExtension
   public static TestContainerExtension rule = new TestContainerExtension();
+
+  private static final String SORT_ORDER_ASC_VALUE = "asc";
+  private static final String SORT_ORDER_DESC_VALUE = "desc";
 
   public static final String FILTER_URL = TEST_RESOURCE_ROOT_PATH + FilterRestService.PATH;
   public static final String SINGLE_FILTER_URL = FILTER_URL + "/{id}";

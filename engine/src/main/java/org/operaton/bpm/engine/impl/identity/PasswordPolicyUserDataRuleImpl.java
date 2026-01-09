@@ -31,11 +31,6 @@ public class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRule {
   }
 
   @Override
-  public Map<String, String> getParameters() {
-    return null;
-  }
-
-  @Override
   public boolean execute(String password) {
     return false;
   }

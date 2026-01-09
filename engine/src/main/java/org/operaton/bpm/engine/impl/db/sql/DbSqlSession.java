@@ -72,8 +72,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-  public static final String[] JDBC_METADATA_TABLE_TYPES = { "TABLE" };
-  public static final String[] PG_JDBC_METADATA_TABLE_TYPES = { "TABLE", "PARTITIONED TABLE" };
+  private static final String[] JDBC_METADATA_TABLE_TYPES = { "TABLE" };
+  private static final String[] PG_JDBC_METADATA_TABLE_TYPES = { "TABLE", "PARTITIONED TABLE" };
 
   private static final String COMPONENT_CASE_ENGINE = "case.engine";
   private static final String COMPONENT_DECISION_ENGINE = "decision.engine";

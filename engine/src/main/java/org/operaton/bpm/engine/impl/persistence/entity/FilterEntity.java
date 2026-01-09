@@ -55,11 +55,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  public static final Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<>();
-
-  static {
-    queryConverter.put(EntityTypes.TASK, new JsonTaskQueryConverter());
-  }
+  public static final Map<String, JsonObjectConverter<?>> QUERY_CONVERTER = Map.of(EntityTypes.TASK, new JsonTaskQueryConverter());
 
   protected String id;
   protected String resourceType;
@@ -204,7 +200,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   @SuppressWarnings("unchecked")
   protected <T> JsonObjectConverter<T> getConverter() {
-    JsonObjectConverter<T> converter = (JsonObjectConverter<T>) queryConverter.get(resourceType);
+    JsonObjectConverter<T> converter = (JsonObjectConverter<T>) QUERY_CONVERTER.get(resourceType);
     if (converter != null) {
       return converter;
     }

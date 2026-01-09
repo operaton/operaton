@@ -8,6 +8,13 @@ on:
   issue_comment:
     types: [created]
 
+env:
+  # Whitelist of GitHub usernames who have already contributed to the repository
+  # These users will not receive first-time contributor greetings
+  # This list can be generated with:
+  # gh pr list --repo operaton/operaton --state closed --limit 1504 --json author --jq '[.[].author.login] | unique'
+  CONTRIBUTOR_WHITELIST: 'AlexanderSkrock AlexandraCiornei ArneDeutsch Brijeshthummar02 CBorowski-dev DzyhovskyiVladyslav ENate FlamieCyrex HamzaIddaoui HarshMehta112 HerrIves Jaehyeon-Han Kungi LimpBizgit MatthewIsayan Mojito060 Rapteon Satyam018 SevDan Tomnm1 Waize WoSchmo YUVI43 a-m-zill aashvgit abhayiscoding abmcmanu agoss94 ahmedfarhat alexh141048 alfh antoinecampbell aounhaider1 app/copilot-swe-agent app/dependabot app/github-actions asanderson-scottlogic ascheman atomfrede biswa1shaw cachescrubber cmoellerherm damien46061 datakurre dirk-olmes fml2 geduldia guido-marx hauptmedia herminagarg javahippie jmaster1985 joonseolee juliateles99 justfsl50 khawaja-abdullah kthoms lambdaschmied2 larsbaumeister lucabritten maxistar n1sp nevesrodrigo2 noahg9 poojary-nikesh1612 sanajitjana saumyapandey1998 sgorski00 sgort shiftyseaotter sogladev suraj9562 timtebeek tlb-lemrabott ungerts xProppi zeguilherme99'
+
 jobs:
   greet-first-time-pr:
     name: Greet First-Time PR Contributors
@@ -15,7 +22,13 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-    if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
+    # Only run for PRs from forks (different repository) and not from operaton/operaton
+    # Skip if the PR author is in the contributor whitelist
+    if: |
+      github.event_name == 'pull_request_target' && 
+      github.event.action == 'opened' && 
+      github.event.pull_request.head.repo.full_name != github.repository &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -63,7 +76,7 @@ jobs:
                 issue_number: context.issue.number,
                 body: prMessage
               });
-            }else if (alreadyConfirmed) {
+            } else if (alreadyConfirmed) {
               console.log("Contributor already confirmed license + CoC. Skipping greeting.");
             }
 
@@ -73,7 +86,11 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+    # Skip if the issue author is in the contributor whitelist
+    if: |
+      github.event_name == 'issues' && 
+      github.event.action == 'opened' &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -123,7 +140,11 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-    if: github.event_name == 'issue_comment' && github.event.action == 'created'
+    # Skip if the commenter is in the contributor whitelist
+    if: |
+      github.event_name == 'issue_comment' && 
+      github.event.action == 'created' &&
+      !contains(env.CONTRIBUTOR_WHITELIST, github.actor)
     steps:
       - uses: actions/checkout@v6
       - uses: actions/github-script@v8

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.model.xml.impl.util;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.operaton.bpm.model.xml.instance.DomDocument;
@@ -29,19 +28,16 @@ import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
  */
 public class XmlQName {
 
-  public static final Map<String, String> KNOWN_PREFIXES;
-  static
-  {
-    KNOWN_PREFIXES = new HashMap<>();
-    KNOWN_PREFIXES.put("http://www.operaton.com/fox", "fox");
-    KNOWN_PREFIXES.put("http://activiti.org/bpmn", "operaton");
-    KNOWN_PREFIXES.put("http://operaton.org/schema/1.0/bpmn", "operaton");
-    KNOWN_PREFIXES.put("http://www.omg.org/spec/BPMN/20100524/MODEL", "bpmn2");
-    KNOWN_PREFIXES.put("http://www.omg.org/spec/BPMN/20100524/DI", "bpmndi");
-    KNOWN_PREFIXES.put("http://www.omg.org/spec/DD/20100524/DI", "di");
-    KNOWN_PREFIXES.put("http://www.omg.org/spec/DD/20100524/DC", "dc");
-    KNOWN_PREFIXES.put(XMLNS_ATTRIBUTE_NS_URI, "");
-  }
+  public static final Map<String, String> KNOWN_PREFIXES = Map.of(
+    "http://www.operaton.com/fox", "fox",
+    "http://activiti.org/bpmn", "operaton",
+    "http://operaton.org/schema/1.0/bpmn", "operaton",
+    "http://www.omg.org/spec/BPMN/20100524/MODEL", "bpmn2",
+    "http://www.omg.org/spec/BPMN/20100524/DI", "bpmndi",
+    "http://www.omg.org/spec/DD/20100524/DI", "di",
+    "http://www.omg.org/spec/DD/20100524/DC", "dc",
+    XMLNS_ATTRIBUTE_NS_URI, ""
+  );
 
   protected DomElement rootElement;
   protected DomElement element;

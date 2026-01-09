@@ -28,8 +28,8 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author  Daniel Meyer
  */
 public abstract class AbstractGetFormVariablesCmd implements Command<VariableMap> {
-  public String resourceId;
-  public Collection<String> formVariableNames;
+  protected String resourceId;
+  protected Collection<String> formVariableNames;
   protected boolean deserializeObjectValues;
 
   protected AbstractGetFormVariablesCmd(String resourceId, Collection<String> formVariableNames, boolean deserializeObjectValues) {

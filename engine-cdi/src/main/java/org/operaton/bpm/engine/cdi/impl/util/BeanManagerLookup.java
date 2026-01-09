@@ -29,7 +29,7 @@ public final class BeanManagerLookup {
   public static BeanManager localInstance;
 
   /** provide a custom jndi lookup name */
-  public static String jndiName;
+  private static String jndiName;
 
   private BeanManagerLookup() {
   }

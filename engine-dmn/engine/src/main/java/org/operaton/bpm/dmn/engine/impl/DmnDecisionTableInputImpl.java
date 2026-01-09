@@ -18,13 +18,13 @@ package org.operaton.bpm.dmn.engine.impl;
 
 public class DmnDecisionTableInputImpl {
 
-  public static final String DEFAULT_INPUT_VARIABLE_NAME = "cellInput";
+  private static final String DEFAULT_INPUT_VARIABLE_NAME = "cellInput";
 
-  public String id;
-  public String name;
+  private String id;
+  private String name;
 
-  protected DmnExpressionImpl expression;
-  protected String inputVariable;
+  private DmnExpressionImpl expression;
+  private String inputVariable;
 
   public String getName() {
     return name;

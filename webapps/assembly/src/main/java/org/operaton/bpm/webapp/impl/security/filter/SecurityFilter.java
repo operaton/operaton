@@ -49,7 +49,7 @@ import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
  */
 public class SecurityFilter implements Filter {
 
-  public List<SecurityFilterRule> filterRules = new ArrayList<>();
+  protected List<SecurityFilterRule> filterRules = new ArrayList<>();
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

@@ -476,8 +476,8 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
     return result;
   }
 
-  protected List<? extends ProcessDefinition>   getDeployedProcesses(CommandContext commandContext, DeploymentWithDefinitions deployment) {
-    List<? extends ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
+  protected List<ProcessDefinition> getDeployedProcesses(CommandContext commandContext, DeploymentWithDefinitions deployment) {
+    List<ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
     if (deployedProcessDefinitions == null) {
       // existing deployment
       ProcessDefinitionManager manager = commandContext.getProcessDefinitionManager();
@@ -497,8 +497,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
     processDefinitionKeys.addAll(parseProcessDefinitionKeys(ignoredResources));
 
     // get process definition keys for updated process definitions
-    for (ProcessDefinition processDefinition :
-        getDeployedProcesses(commandContext, deploymentToRegister)) {
+    for (ProcessDefinition processDefinition : getDeployedProcesses(commandContext, deploymentToRegister)) {
       if (processDefinition.getVersion() > 1) {
         processDefinitionKeys.add(processDefinition.getKey());
       }

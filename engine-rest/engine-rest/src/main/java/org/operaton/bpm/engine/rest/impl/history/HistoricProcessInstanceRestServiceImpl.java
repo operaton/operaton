@@ -115,7 +115,7 @@ public class HistoricProcessInstanceRestServiceImpl implements HistoricProcessIn
   @SuppressWarnings("unchecked")
   protected List<ReportResult> queryHistoricProcessInstanceReport(UriInfo uriInfo) {
     HistoricProcessInstanceReportDto reportDto = new HistoricProcessInstanceReportDto(objectMapper, uriInfo.getQueryParameters());
-    return (List<ReportResult>) reportDto.executeReport(processEngine);
+    return reportDto.executeReport(processEngine);
   }
 
   @Override

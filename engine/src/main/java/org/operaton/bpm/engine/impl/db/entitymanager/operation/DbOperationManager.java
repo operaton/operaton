@@ -253,7 +253,7 @@ public class DbOperationManager {
       if (operation instanceof DbEntityOperation dbEntityOperation) {
         DbEntity entity = dbEntityOperation.getEntity();
         if (entity instanceof HasDbReferences hasDbReferences) {
-          Map<String, Class> dependentEntities = hasDbReferences.getDependentEntities();
+          Map<String, Class<?>> dependentEntities = hasDbReferences.getDependentEntities();
 
           if (dependentEntities != null) {
             dependentEntities.forEach((id, type) -> deletes.getOrDefault(type, defaultValue).forEach(o -> {

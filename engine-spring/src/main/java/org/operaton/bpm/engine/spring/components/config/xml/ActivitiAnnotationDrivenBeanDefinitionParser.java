@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.spring.components.config.xml;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.RuntimeBeanReference;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -61,7 +62,7 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 	}
 
 	private void registerStateHandlerAnnotationBeanFactoryPostProcessor(Element element, ParserContext context) {
-		Class clz = StateHandlerAnnotationBeanFactoryPostProcessor.class;
+		Class<?> clz = StateHandlerAnnotationBeanFactoryPostProcessor.class;
 		BeanDefinitionBuilder postProcessorBuilder = BeanDefinitionBuilder.genericBeanDefinition(clz.getName());
 
 		BeanDefinitionHolder postProcessorHolder = new BeanDefinitionHolder(
@@ -73,7 +74,7 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 	}
 
 	private void registerProcessScope(Element element, ParserContext parserContext) {
-		Class clz = ProcessScope.class;
+		Class<?> clz = ProcessScope.class;
 		BeanDefinitionBuilder processScopeBDBuilder = BeanDefinitionBuilder.genericBeanDefinition(clz);
 		AbstractBeanDefinition scopeBeanDefinition = processScopeBDBuilder.getBeanDefinition();
 		scopeBeanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
@@ -83,7 +84,7 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 	}
 
 	private void registerProcessStartAnnotationBeanPostProcessor(Element element, ParserContext parserContext) {
-		Class clz = ProcessStartAnnotationBeanPostProcessor.class;
+		Class<?> clz = ProcessStartAnnotationBeanPostProcessor.class;
 
 		BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(clz);
 		AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
@@ -94,7 +95,7 @@ public class ActivitiAnnotationDrivenBeanDefinitionParser implements BeanDefinit
 		parserContext.getRegistry().registerBeanDefinition(beanName, beanDefinition);
 	}
 
-	private String baseBeanName(Class cl) {
+	private String baseBeanName(Class<?> cl) {
 		return cl.getName().toLowerCase();
 	}
 }

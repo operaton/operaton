@@ -318,6 +318,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 /**
  * @author Tom Baeyens
  */
+@SuppressWarnings("java:S1452")
 public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
   protected static ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
@@ -421,8 +422,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // JOB EXECUTOR /////////////////////////////////////////////////////////////
 
-  protected volatile List<JobHandler> customJobHandlers;
-  protected volatile Map<String, JobHandler> jobHandlers;
+  protected volatile List<JobHandler<?>> customJobHandlers;
+  protected volatile Map<String, JobHandler<?>> jobHandlers;
   protected volatile JobExecutor jobExecutor;
 
   protected volatile PriorityProvider<JobDeclaration<?, ?>> jobPriorityProvider;
@@ -510,8 +511,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   /** don't throw parsing exceptions for Operaton Forms if set to true*/
   protected volatile boolean disableStrictOperatonFormParsing;
 
-  protected volatile List<TypedValueSerializer> customPreVariableSerializers;
-  protected volatile List<TypedValueSerializer> customPostVariableSerializers;
+  protected volatile List<TypedValueSerializer<?>> customPreVariableSerializers;
+  protected volatile List<TypedValueSerializer<?>> customPostVariableSerializers;
   protected volatile VariableSerializers variableSerializers;
   protected volatile VariableSerializerFactory fallbackSerializerFactory;
   protected volatile boolean implicitVariableUpdateDetectionEnabled = true;
@@ -3326,12 +3327,12 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return enableHistoricInstancePermissions;
   }
 
-  public Map<String, JobHandler> getJobHandlers() {
+  public Map<String, JobHandler<?>> getJobHandlers() {
     return jobHandlers;
   }
 
 
-  public ProcessEngineConfigurationImpl setJobHandlers(Map<String, JobHandler> jobHandlers) {
+  public ProcessEngineConfigurationImpl setJobHandlers(Map<String, JobHandler<?>> jobHandlers) {
     this.jobHandlers = jobHandlers;
     return this;
   }
@@ -3375,11 +3376,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public List<JobHandler> getCustomJobHandlers() {
+  public List<JobHandler<?>> getCustomJobHandlers() {
     return customJobHandlers != null ? customJobHandlers : Collections.emptyList();
   }
 
-  public ProcessEngineConfigurationImpl setCustomJobHandlers(List<JobHandler> customJobHandlers) {
+  public ProcessEngineConfigurationImpl setCustomJobHandlers(List<JobHandler<?>> customJobHandlers) {
     this.customJobHandlers = customJobHandlers;
     return this;
   }
@@ -3403,23 +3404,23 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
-  public List<TypedValueSerializer> getCustomPreVariableSerializers() {
+  public List<TypedValueSerializer<?>> getCustomPreVariableSerializers() {
     return customPreVariableSerializers;
   }
 
 
-  public ProcessEngineConfigurationImpl setCustomPreVariableSerializers(List<TypedValueSerializer> customPreVariableTypes) {
+  public ProcessEngineConfigurationImpl setCustomPreVariableSerializers(List<TypedValueSerializer<?>> customPreVariableTypes) {
     this.customPreVariableSerializers = customPreVariableTypes;
     return this;
   }
 
 
-  public List<TypedValueSerializer> getCustomPostVariableSerializers() {
+  public List<TypedValueSerializer<?>> getCustomPostVariableSerializers() {
     return customPostVariableSerializers;
   }
 
 
-  public ProcessEngineConfigurationImpl setCustomPostVariableSerializers(List<TypedValueSerializer> customPostVariableTypes) {
+  public ProcessEngineConfigurationImpl setCustomPostVariableSerializers(List<TypedValueSerializer<?>> customPostVariableTypes) {
     this.customPostVariableSerializers = customPostVariableTypes;
     return this;
   }

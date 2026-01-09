@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -95,7 +96,7 @@ public class CommentEntity implements Comment, Event, HasDbRevision, DbEntity, H
   @Override
   public List<String> getMessageParts() {
     if (message==null) {
-      return null;
+      return Collections.emptyList();
     }
     List<String> messageParts = new ArrayList<>();
     StringTokenizer tokenizer = new StringTokenizer(message, MESSAGE_PARTS_MARKER);

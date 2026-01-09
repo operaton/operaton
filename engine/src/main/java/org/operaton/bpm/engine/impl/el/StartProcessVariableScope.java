@@ -126,16 +126,6 @@ public class StartProcessVariableScope implements VariableScope {
   }
 
   @Override
-  public Set<String> getVariableNames() {
-    return Collections.emptySet();
-  }
-
-  @Override
-  public Set<String> getVariableNamesLocal() {
-    return null;
-  }
-
-  @Override
   public void setVariable(String variableName, Object value) {
     throw new UnsupportedOperationException("No execution active, no variables can be set");
   }

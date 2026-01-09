@@ -19,10 +19,6 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
@@ -115,15 +111,5 @@ public class MeterLogEntity implements DbEntity, HasDbReferences, Serializable {
   public Object getPersistentState() {
     // immutable
     return MeterLogEntity.class;
-  }
-
-  @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    return new HashMap<>();
   }
 }

@@ -368,13 +368,8 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (executionId != null) {
       referenceIdAndClass.put(executionId, ExecutionEntity.class);

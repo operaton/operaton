@@ -260,8 +260,8 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
   }
 
   @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (causeIncidentId != null) {
       referenceIdAndClass.put(causeIncidentId, IncidentEntity.class);

@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.google.gson.JsonObject;
 
@@ -238,15 +236,5 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
       query.addValidator(StoredQueryValidator.get());
     }
 
-  }
-
-  @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    return new HashMap<>();
   }
 }

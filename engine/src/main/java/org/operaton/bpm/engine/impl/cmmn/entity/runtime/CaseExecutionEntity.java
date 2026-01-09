@@ -823,8 +823,8 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (parentId != null) {
       referenceIdAndClass.put(parentId, CaseExecutionEntity.class);

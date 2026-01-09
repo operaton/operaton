@@ -1894,8 +1894,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (superExecutionId != null) {
       referenceIdAndClass.put(this.superExecutionId, ExecutionEntity.class);

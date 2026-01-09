@@ -65,7 +65,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class TaskResourceImpl implements TaskResource {
 
-  public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
+  private static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
 
   protected ProcessEngine engine;
   protected String taskId;

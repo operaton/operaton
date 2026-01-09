@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.delegate;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -54,9 +55,13 @@ public interface VariableScope {
 
   <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeValue);
 
-  Set<String> getVariableNames();
+  default Set<String> getVariableNames() {
+    return Collections.emptySet();
+  }
 
-  Set<String> getVariableNamesLocal();
+  default Set<String> getVariableNamesLocal() {
+    return Collections.emptySet();
+  }
 
   void setVariable(String variableName, Object value);
 

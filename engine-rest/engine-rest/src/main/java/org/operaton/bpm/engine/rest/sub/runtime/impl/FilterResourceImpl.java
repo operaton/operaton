@@ -77,6 +77,7 @@ import static java.util.Collections.emptyMap;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings("java:S1452")
 public class FilterResourceImpl extends AbstractAuthorizedRestResource implements FilterResource {
 
   private static final Pattern EMPTY_JSON_BODY = Pattern.compile("\\s*\\{\\s*\\}\\s*");
@@ -181,11 +182,11 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
-  public HalResource executeHalSingleResult() {
+  public HalResource<?> executeHalSingleResult() {
     return queryHalSingleResult(null);
   }
 
-  public HalResource queryHalSingleResult(String extendingQuery) {
+  public HalResource<?> queryHalSingleResult(String extendingQuery) {
     Object entity = executeFilterSingleResult(extendingQuery);
 
     if (entity != null) {
@@ -254,11 +255,11 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
-  public HalResource executeHalList(Integer firstResult, Integer maxResults) {
+  public HalResource<?> executeHalList(Integer firstResult, Integer maxResults) {
     return queryHalList(null, firstResult, maxResults);
   }
 
-  public HalResource queryHalList(String extendingQuery, Integer firstResult, Integer maxResults) {
+  public HalResource<?> queryHalList(String extendingQuery, Integer firstResult, Integer maxResults) {
     List<?> entities = executeFilterList(extendingQuery, firstResult, maxResults);
     long count = executeFilterCount(extendingQuery);
 
@@ -354,7 +355,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return dto;
   }
 
-  protected Query convertQuery(String queryString) {
+  protected Query<?,?> convertQuery(String queryString) {
     if (isEmptyJson(queryString)) {
       return null;
     }
@@ -402,7 +403,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   @SuppressWarnings("unchecked")
-  protected HalCollectionResource convertToHalCollection(List<?> entities, long count) {
+  protected HalCollectionResource<?> convertToHalCollection(List<?> entities, long count) {
     if (isEntityOfClass(entities.get(0), Task.class)) {
       return convertToHalTaskList((List<Task>) entities, count);
     } else {

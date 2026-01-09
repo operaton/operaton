@@ -19,6 +19,7 @@ package org.operaton.commons.utils;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -234,5 +235,21 @@ public final class CollectionUtil {
    */
   public static boolean hasElements(Collection<?> collection) {
     return !isEmpty(collection);
+  }
+
+  /**
+   * Converts an Enumeration to a Set.
+   *
+   * @param <T>          The type of elements in the enumeration.
+   * @param enumeration The enumeration to be converted.
+   * @return A set containing all elements from the enumeration.
+   * @since 1.1
+   */
+  public static <T> Set<T> toSet(Enumeration<T> enumeration) {
+    Set<T> set = new HashSet<>();
+    while (enumeration.hasMoreElements()) {
+      set.add(enumeration.nextElement());
+    }
+    return set;
   }
 }

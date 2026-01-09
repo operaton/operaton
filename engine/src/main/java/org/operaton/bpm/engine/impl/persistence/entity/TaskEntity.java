@@ -1075,7 +1075,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       }
     }
     else {
-      return null;
+      return Collections.emptyList();
     }
   }
 

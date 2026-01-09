@@ -85,12 +85,9 @@ public class DecisionDefinitionDeployer extends AbstractDefinitionDeployer<Decis
 
   protected DecisionRequirementsDefinitionEntity findDeployedDrdForResource(DeploymentEntity deployment, String resourceName) {
     List<DecisionRequirementsDefinitionEntity> deployedDrds = deployment.getDeployedArtifacts(DecisionRequirementsDefinitionEntity.class);
-    if (deployedDrds != null) {
-
-      for (DecisionRequirementsDefinitionEntity deployedDrd : deployedDrds) {
-        if (deployedDrd.getResourceName().equals(resourceName)) {
-          return deployedDrd;
-        }
+    for (DecisionRequirementsDefinitionEntity deployedDrd : deployedDrds) {
+      if (deployedDrd.getResourceName().equals(resourceName)) {
+        return deployedDrd;
       }
     }
     return null;

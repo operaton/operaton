@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.bpmn.behavior.*;
@@ -33,28 +32,26 @@ public class SupportedActivityValidator implements MigrationActivityValidator {
 
   public static final SupportedActivityValidator INSTANCE = new SupportedActivityValidator();
 
-  public static final List<Class<? extends ActivityBehavior>> SUPPORTED_ACTIVITY_BEHAVIORS = new ArrayList<>();
-
-  static {
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(SubProcessActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(UserTaskActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(BoundaryEventActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(ParallelMultiInstanceActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(SequentialMultiInstanceActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(ReceiveTaskActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(CallActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(CaseCallActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(IntermediateCatchEventActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(EventBasedGatewayActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(EventSubProcessActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(EventSubProcessStartEventActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(ExternalTaskActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(ParallelGatewayActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(InclusiveGatewayActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(IntermediateConditionalEventBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(BoundaryConditionalEventActivityBehavior.class);
-    SUPPORTED_ACTIVITY_BEHAVIORS.add(EventSubProcessStartConditionalEventActivityBehavior.class);
-  }
+  private static final List<Class<? extends ActivityBehavior>> SUPPORTED_ACTIVITY_BEHAVIORS = List.of(
+    SubProcessActivityBehavior.class,
+    UserTaskActivityBehavior.class,
+    BoundaryEventActivityBehavior.class,
+    ParallelMultiInstanceActivityBehavior.class,
+    SequentialMultiInstanceActivityBehavior.class,
+    ReceiveTaskActivityBehavior.class,
+    CallActivityBehavior.class,
+    CaseCallActivityBehavior.class,
+    IntermediateCatchEventActivityBehavior.class,
+    EventBasedGatewayActivityBehavior.class,
+    EventSubProcessActivityBehavior.class,
+    EventSubProcessStartEventActivityBehavior.class,
+    ExternalTaskActivityBehavior.class,
+    ParallelGatewayActivityBehavior.class,
+    InclusiveGatewayActivityBehavior.class,
+    IntermediateConditionalEventBehavior.class,
+    BoundaryConditionalEventActivityBehavior.class,
+    EventSubProcessStartConditionalEventActivityBehavior.class
+  );
 
   @Override
   public boolean valid(ActivityImpl activity) {

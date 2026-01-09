@@ -992,6 +992,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
    */
   protected volatile int removalTimeUpdateChunkSize = 500;
 
+  protected volatile boolean previewFeaturesEnabled = false;
+
   /**
    * This legacy behavior sets the retry counter to 3 in the context when running a job for the first time.
    * This has been patched up to fetch the correct counter value.
@@ -1049,19 +1051,31 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     this.builtinExceptionCodeProvider = builtinExceptionCodeProvider;
   }
 
-  // buildProcessEngine ///////////////////////////////////////////////////////
+    // buildProcessEngine ///////////////////////////////////////////////////////
 
-  @Override
-  public ProcessEngine buildProcessEngine() {
+    @Override
+    public ProcessEngine buildProcessEngine() {
     init();
     processEngine = new ProcessEngineImpl(this);
     invokePostProcessEngineBuild(processEngine);
     return processEngine;
-  }
+    }
+
+    public boolean isPreviewFeaturesEnabled() {
+    return previewFeaturesEnabled;
+    }
+
+    public void setPreviewFeaturesEnabled(boolean previewFeaturesEnabled) {
+    this.previewFeaturesEnabled = previewFeaturesEnabled;
+    }
+
+    protected void initPreviewFeatures() {
+    // Preview features are disabled by default and can only be enabled via explicit configuration
+    }
 
   // init /////////////////////////////////////////////////////////////////////
 
-  protected void init() {
+    protected void init() {
     invokePreInit();
     initDefaultCharset();
     initHistoryLevel();
@@ -1076,6 +1090,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     initFormTypes();
     initFormFieldValidators();
     initScripting();
+    initPreviewFeatures();
     initDmnEngine();
     initBusinessCalendarManager();
     initCommandContextFactory();
@@ -2586,19 +2601,21 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
   }
 
-  protected void initDmnEngine() {
+    protected void initDmnEngine() {
     if (dmnEngine == null) {
 
       if (dmnEngineConfiguration == null) {
         dmnEngineConfiguration = (DefaultDmnEngineConfiguration) DmnEngineConfiguration.createDefaultDmnEngineConfiguration();
       }
 
+      DefaultDmnEngineConfiguration dmnEngineConfiguration = (DefaultDmnEngineConfiguration) this.dmnEngineConfiguration;
       DmnEngineConfigurationBuilder dmnEngineConfigurationBuilder = new DmnEngineConfigurationBuilder(dmnEngineConfiguration)
           .dmnHistoryEventProducer(dmnHistoryEventProducer)
           .scriptEngineResolver(scriptingEngines)
           .feelCustomFunctionProviders(dmnFeelCustomFunctionProviders)
           .enableFeelLegacyBehavior(dmnFeelEnableLegacyBehavior)
-          .returnBlankTableOutputAsNull(dmnReturnBlankTableOutputAsNull);
+          .returnBlankTableOutputAsNull(dmnReturnBlankTableOutputAsNull)
+          .previewFeaturesEnabled(previewFeaturesEnabled);
 
       if (dmnElProvider != null) {
         dmnEngineConfigurationBuilder.elProvider(dmnElProvider);
@@ -2606,14 +2623,14 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         dmnEngineConfigurationBuilder.elProvider(elProviderCompatible.toElProvider());
       }
 
-      dmnEngineConfiguration = dmnEngineConfigurationBuilder.build();
+      this.dmnEngineConfiguration = dmnEngineConfigurationBuilder.build();
 
-      dmnEngine = dmnEngineConfiguration.buildEngine();
+      dmnEngine = this.dmnEngineConfiguration.buildEngine();
 
     } else if (dmnEngineConfiguration == null) {
       dmnEngineConfiguration = (DefaultDmnEngineConfiguration) dmnEngine.getConfiguration();
     }
-  }
+    }
 
   protected void initExpressionManager() {
     if (expressionManager == null) {

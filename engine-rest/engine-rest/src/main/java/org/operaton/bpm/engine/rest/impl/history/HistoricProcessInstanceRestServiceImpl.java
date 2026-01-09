@@ -55,10 +55,9 @@ import org.operaton.bpm.engine.rest.util.QueryUtil;
 import org.operaton.bpm.engine.rest.util.URLEncodingUtil;
 
 public class HistoricProcessInstanceRestServiceImpl implements HistoricProcessInstanceRestService {
-
-  public static final MediaType APPLICATION_CSV_TYPE = new MediaType("application", "csv");
-  public static final MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
-  public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, APPLICATION_CSV_TYPE, TEXT_CSV_TYPE).add().build();
+  private static final MediaType APPLICATION_CSV_TYPE = new MediaType("application", "csv");
+  private static final MediaType TEXT_CSV_TYPE = new MediaType("text", "csv");
+  private static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, APPLICATION_CSV_TYPE, TEXT_CSV_TYPE).add().build();
 
   protected ObjectMapper objectMapper;
   protected ProcessEngine processEngine;

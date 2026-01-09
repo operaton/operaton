@@ -23,7 +23,6 @@ import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,7 +36,6 @@ import org.operaton.bpm.engine.impl.ProcessEngineInfoImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
-import org.operaton.commons.utils.CollectionUtil;
 
 /**
  * Helper for initializing and closing process engines in server environments.
@@ -97,54 +95,53 @@ public final class ProcessEngines {
     }
 
     ClassLoader classLoader = ReflectUtil.getClassLoader();
-    Set<URL> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
-    if (configResources.isEmpty()) {
-      return;
+    Enumeration<URL> resources = null;
+    try {
+      resources = classLoader.getResources("operaton.cfg.xml");
+    } catch (IOException e) {
+      try {
+        resources = classLoader.getResources("activiti.cfg.xml");
+      } catch (IOException ex) {
+        if (forceCreate) {
+          throw new ProcessEngineException(
+              "problem retrieving operaton.cfg.xml and activiti.cfg.xml resources on the classpath: "
+                  + System.getProperty("java.class.path"),
+              ex);
+        } else {
+          return;
+        }
+      }
     }
 
-    for (URL resource : configResources) {
+    // Remove duplicated configuration URL's using set. Some classloaders may
+    // return identical URL's twice, causing duplicate startups
+    Set<URL> configUrls = new HashSet<>();
+    while (resources.hasMoreElements()) {
+      configUrls.add(resources.nextElement());
+    }
+    for (URL resource : configUrls) {
       initProcessEngineFromResource(resource);
     }
 
-    Set<URL> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
-    if (springResources.isEmpty()) {
-      return;
+    try {
+      resources = classLoader.getResources("activiti-context.xml");
+    } catch (IOException e) {
+      if (forceCreate) {
+        throw new ProcessEngineException(
+            "problem retrieving activiti-context.xml resources on the classpath: " + System.getProperty(
+                "java.class.path"),
+            e);
+      } else {
+        return;
+      }
     }
 
-    for (URL resource : springResources) {
+    while (resources.hasMoreElements()) {
+      URL resource = resources.nextElement();
       initProcessEngineFromSpringResource(resource);
     }
 
     isInitialized = true;
-  }
-
-  // Remove duplicated configuration URL's using set. Some classloaders may
-  // return identical URL's twice, causing duplicate startups
-  private static Set<URL> getResources(ClassLoader classLoader, String resourceName,
-      String fallbackResourceName, boolean forceCreate) {
-    try {
-      return CollectionUtil.toSet(classLoader.getResources(resourceName));
-    } catch (IOException e) {
-      if (fallbackResourceName != null) {
-        try {
-          return CollectionUtil.toSet(classLoader.getResources(fallbackResourceName));
-        } catch (IOException ex) {
-          return handleGetResourcesException(resourceName, fallbackResourceName, forceCreate, ex);
-        }
-      }
-      return handleGetResourcesException(resourceName, fallbackResourceName, forceCreate, e);
-    }
-  }
-
-  private static Set<URL> handleGetResourcesException(String resourceName, String fallbackResourceName,
-      boolean forceCreate, IOException e) {
-    if (forceCreate) {
-      String message = "problem retrieving " + resourceName
-          + (fallbackResourceName != null ? " and " + fallbackResourceName : "") + " resources on the classpath: "
-          + System.getProperty("java.class.path");
-      throw new ProcessEngineException(message, e);
-    }
-    return Collections.emptySet();
   }
 
   protected static void initProcessEngineFromSpringResource(URL resource) {
@@ -161,8 +158,8 @@ public final class ProcessEngines {
 
     } catch (Exception e) {
       throw new ProcessEngineException(
-          "couldn't initialize process engine from spring configuration resource %s: %s".formatted(resource.toString(),
-              e.getMessage()),
+        "couldn't initialize process engine from spring configuration resource %s: %s".formatted(resource.toString(),
+          e.getMessage()),
           e);
     }
   }
@@ -234,7 +231,8 @@ public final class ProcessEngines {
     try {
       inputStream = resource.openStream();
       ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration
-          .createProcessEngineConfigurationFromInputStream(inputStream);
+
+              .createProcessEngineConfigurationFromInputStream(inputStream);
       return processEngineConfiguration.buildProcessEngine();
 
     } catch (IOException e) {
@@ -317,10 +315,7 @@ public final class ProcessEngines {
           processEngine.close();
         } catch (Exception e) {
           LOG.exceptionWhileClosingProcessEngine(
-              processEngine.getName() == null
-                  ? "the default process engine"
-                  : "process engine " + processEngine.getName(),
-              e);
+            processEngine.getName() == null ? "the default process engine" : "process engine " + processEngine.getName(), e);
         }
       }
 

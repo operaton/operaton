@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
   "test-auth-enabled"
 })
 @TestPropertySource(properties = {
-  OperatonBpmRunAuthenticationProperties.PREFIX + "=basic"
+  "operaton.bpm.run.auth=basic"
 })
 class AuthenticationWithChangedContextPathTest extends AbstractRestTest {
 

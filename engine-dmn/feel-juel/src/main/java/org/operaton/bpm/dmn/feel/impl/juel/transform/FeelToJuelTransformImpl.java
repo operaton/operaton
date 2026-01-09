@@ -19,21 +19,15 @@ package org.operaton.bpm.dmn.feel.impl.juel.transform;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
-import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;
-
 public class FeelToJuelTransformImpl implements FeelToJuelTransform {
-
-  public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
-
-  public static final FeelToJuelTransformer NOT_TRANSFORMER = new NotTransformer();
-  public static final FeelToJuelTransformer HYPHEN_TRANSFORMER = new HyphenTransformer();
-  public static final FeelToJuelTransformer LIST_TRANSFORMER = new ListTransformer();
-  public static final FeelToJuelTransformer INTERVAL_TRANSFORMER = new IntervalTransformer();
-  public static final FeelToJuelTransformer COMPARISON_TRANSFORMER = new ComparisonTransformer();
-  public static final FeelToJuelTransformer EQUAL_TRANSFORMER = new EqualTransformer();
-  public static final FeelToJuelTransformer ENDPOINT_TRANSFORMER = new EndpointTransformer();
-  public static final List<FeelToJuelTransformer> CUSTOM_FUNCTION_TRANSFORMERS = new ArrayList<>();
+  private static final FeelToJuelTransformer NOT_TRANSFORMER = new NotTransformer();
+  private static final FeelToJuelTransformer HYPHEN_TRANSFORMER = new HyphenTransformer();
+  private static final FeelToJuelTransformer LIST_TRANSFORMER = new ListTransformer();
+  private static final FeelToJuelTransformer INTERVAL_TRANSFORMER = new IntervalTransformer();
+  private static final FeelToJuelTransformer COMPARISON_TRANSFORMER = new ComparisonTransformer();
+  private static final FeelToJuelTransformer EQUAL_TRANSFORMER = new EqualTransformer();
+  private static final FeelToJuelTransformer ENDPOINT_TRANSFORMER = new EndpointTransformer();
+  private static final List<FeelToJuelTransformer> CUSTOM_FUNCTION_TRANSFORMERS = new ArrayList<>();
 
   @Override
   public String transformSimpleUnaryTests(String simpleUnaryTests, String inputName) {

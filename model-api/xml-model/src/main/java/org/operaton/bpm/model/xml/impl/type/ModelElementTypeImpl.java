@@ -107,7 +107,7 @@ public class ModelElementTypeImpl implements ModelElementType {
 
   protected ModelElementInstance createModelElementInstance(ModelTypeInstanceContext instanceContext) {
     if (isAbstract) {
-      throw new ModelTypeException("Model element type " + getTypeName() + " is abstract and no instances can be created.");
+      throw new ModelTypeException("Model element type %s is abstract and no instances can be created.".formatted(getTypeName()));
     }
     else {
       return instanceProvider.newInstance(instanceContext);
@@ -143,8 +143,8 @@ public class ModelElementTypeImpl implements ModelElementType {
       this.baseType = baseType;
     }
     else if (!this.baseType.equals(baseType)) {
-      throw new ModelException("Type can not have multiple base types. " + this.getClass() + " already extends type " + this.baseType.getClass()
-          + " and can not also extend type " + baseType.getClass());
+      throw new ModelException("Type can not have multiple base types. %s already extends type %s and can not also extend type %s".formatted(
+          this.getClass(), this.baseType.getClass(), baseType.getClass()));
     }
   }
 

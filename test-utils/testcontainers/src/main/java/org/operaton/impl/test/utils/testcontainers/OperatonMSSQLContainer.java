@@ -51,13 +51,14 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
         // Instead, we create the database ourselves with the correct settings
         try {
             this.execInContainer("bash", "-c",
-                "echo \"IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '" + DATABASE_NAME + "') " +
+                ("echo \"IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '%s') " +
                 "BEGIN " +
-                "  CREATE DATABASE " + DATABASE_NAME + " COLLATE SQL_Latin1_General_CP1_CS_AS; " +
+                "  CREATE DATABASE %s COLLATE SQL_Latin1_General_CP1_CS_AS; " +
                 "END; " +
-                "ALTER DATABASE " + DATABASE_NAME + " SET READ_COMMITTED_SNAPSHOT ON; " +
-                "ALTER LOGIN sa WITH DEFAULT_DATABASE = " + DATABASE_NAME + "\" | " +
-                "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P " + getPassword() + " -i /dev/stdin");
+                "ALTER DATABASE %s SET READ_COMMITTED_SNAPSHOT ON; " +
+                "ALTER LOGIN sa WITH DEFAULT_DATABASE = %s\" | " +
+                "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P %s -i /dev/stdin").formatted(
+                    DATABASE_NAME, DATABASE_NAME, DATABASE_NAME, DATABASE_NAME, getPassword()));
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

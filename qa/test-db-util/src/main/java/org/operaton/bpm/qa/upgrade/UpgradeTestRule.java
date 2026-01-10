@@ -90,11 +90,11 @@ public class UpgradeTestRule extends ProcessEngineRule {
   }
 
   public TaskQuery taskQuery() {
-    return taskService.createTaskQuery().processInstanceBusinessKey(getBuisnessKey());
+    return taskService.createTaskQuery().processInstanceBusinessKey(getBusinessKey());
   }
 
   public ExecutionQuery executionQuery() {
-    return runtimeService.createExecutionQuery().processInstanceBusinessKey(getBuisnessKey());
+    return runtimeService.createExecutionQuery().processInstanceBusinessKey(getBusinessKey());
   }
 
   public JobQuery jobQuery() {
@@ -117,14 +117,14 @@ public class UpgradeTestRule extends ProcessEngineRule {
   public ProcessInstanceQuery processInstanceQuery() {
     return runtimeService
             .createProcessInstanceQuery()
-            .processInstanceBusinessKey(getBuisnessKey());
+            .processInstanceBusinessKey(getBusinessKey());
   }
 
   public ProcessInstance processInstance() {
     ProcessInstance instance = processInstanceQuery().singleResult();
 
     if (instance == null) {
-      throw new RuntimeException("There is no process instance for scenario " + getBuisnessKey());
+      throw new RuntimeException("There is no process instance for scenario " + getBusinessKey());
     }
 
     return instance;
@@ -133,11 +133,11 @@ public class UpgradeTestRule extends ProcessEngineRule {
   public HistoricProcessInstance historicProcessInstance() {
     HistoricProcessInstance historicProcessInstance = historyService
             .createHistoricProcessInstanceQuery()
-            .processInstanceBusinessKey(getBuisnessKey())
+            .processInstanceBusinessKey(getBusinessKey())
             .singleResult();
 
     if (historicProcessInstance == null) {
-      throw new RuntimeException("There is no historic process instance for scenario " + getBuisnessKey());
+      throw new RuntimeException("There is no historic process instance for scenario " + getBusinessKey());
     }
 
     return historicProcessInstance;
@@ -150,12 +150,12 @@ public class UpgradeTestRule extends ProcessEngineRule {
   }
 
   public MessageCorrelationBuilder messageCorrelation(String messageName) {
-    return runtimeService.createMessageCorrelation(messageName).processInstanceBusinessKey(getBuisnessKey());
+    return runtimeService.createMessageCorrelation(messageName).processInstanceBusinessKey(getBusinessKey());
   }
 
   public void assertScenarioEnded() {
     assertThat(processInstanceQuery().singleResult() == null)
-      .withFailMessage("Process instance for scenario " + getBuisnessKey() + " should have ended")
+      .withFailMessage("Process instance for scenario " + getBusinessKey() + " should have ended")
       .isTrue();
   }
 
@@ -163,20 +163,20 @@ public class UpgradeTestRule extends ProcessEngineRule {
   public CaseInstanceQuery caseInstanceQuery() {
     return caseService
             .createCaseInstanceQuery()
-            .caseInstanceBusinessKey(getBuisnessKey());
+            .caseInstanceBusinessKey(getBusinessKey());
   }
 
   public CaseExecutionQuery caseExecutionQuery() {
     return caseService
             .createCaseExecutionQuery()
-            .caseInstanceBusinessKey(getBuisnessKey());
+            .caseInstanceBusinessKey(getBusinessKey());
   }
 
   public CaseInstance caseInstance() {
     CaseInstance instance = caseInstanceQuery().singleResult();
 
     if (instance == null) {
-      throw new RuntimeException("There is no case instance for scenario " + getBuisnessKey());
+      throw new RuntimeException("There is no case instance for scenario " + getBusinessKey());
     }
 
     return instance;
@@ -186,7 +186,7 @@ public class UpgradeTestRule extends ProcessEngineRule {
     return scenarioName;
   }
 
-  public String getBuisnessKey() {
+  public String getBusinessKey() {
     if (tag != null) {
       return tag + '.' + scenarioName;
     }

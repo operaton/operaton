@@ -178,6 +178,10 @@ jobs:
         run: |
           ./mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=operaton_operaton \
+          -Dsonar.exclusions=webapps/assembly/**,\
+              qa/performance-tests-engine/**,\
+              qa/integration-tests-webapps/**,\
+              qa/integration-tests-engine/** \
           -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
               qa/integration-tests-webapps/**,\
               qa/integration-tests-engine/**,\

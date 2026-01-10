@@ -80,7 +80,8 @@ class ImmutablePairTest {
 
   @Test
   void shouldThrowWhenCompareToNull() {
-    assertThatThrownBy(() -> new ImmutablePair<>("foo", "bar").compareTo(null))
+    ImmutablePair<String, String> pair = new ImmutablePair<>("foo", "bar");
+    assertThatThrownBy(() -> pair.compareTo(null))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessageContaining("Pair to compare to must not be null");
   }
@@ -103,7 +104,8 @@ class ImmutablePairTest {
 
   @Test
   void shouldThrowWhenSetValue() {
-    assertThatThrownBy(() -> new ImmutablePair<>("foo", "bar").setValue("fubar"))
+    ImmutablePair<String, String> pair = new ImmutablePair<>("foo", "bar");
+    assertThatThrownBy(() -> pair.setValue("fubar"))
         .isInstanceOf(UnsupportedOperationException.class)
         .hasMessageContaining("setValue not allowed for an ImmutablePair");
   }

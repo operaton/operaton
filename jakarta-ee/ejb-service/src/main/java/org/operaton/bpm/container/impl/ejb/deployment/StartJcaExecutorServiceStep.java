@@ -70,7 +70,7 @@ public class StartJcaExecutorServiceStep extends DeploymentOperationStep {
   private void checkConfiguration(JobExecutorXml jobExecutorXml) {
     Map<String, String> properties = jobExecutorXml.getProperties();
     for (Entry<String, String> entry : properties.entrySet()) {
-      LOGGER.warning("Property %s with value %s from bpm-platform.xml will be ignored for JobExecutor.".formatted(
+      LOGGER.warning(() -> "Property %s with value %s from bpm-platform.xml will be ignored for JobExecutor.".formatted(
           entry.getKey(), entry.getValue()));
     }
   }

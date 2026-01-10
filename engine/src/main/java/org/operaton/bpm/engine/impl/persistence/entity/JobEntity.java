@@ -444,7 +444,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  protected JobHandler getJobHandler() {
+  protected JobHandler<?> getJobHandler() {
     Map<String, JobHandler<?>> jobHandlers = Context.getProcessEngineConfiguration().getJobHandlers();
     return jobHandlers.get(jobHandlerType);
   }

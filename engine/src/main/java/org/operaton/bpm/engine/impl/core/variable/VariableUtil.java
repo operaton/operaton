@@ -63,7 +63,7 @@ public final class VariableUtil {
             processEngineConfiguration.getFallbackSerializerFactory();
 
         // check if Java serializer will be used
-        TypedValueSerializer serializerForValue = TypedValueField.getSerializers()
+        TypedValueSerializer<?> serializerForValue = TypedValueField.getSerializers()
             .findSerializerForValue(serializableValue, fallbackSerializerFactory);
         if (serializerForValue != null) {
           requestedDataFormat = serializerForValue.getSerializationDataformat();

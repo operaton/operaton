@@ -39,7 +39,7 @@ public final class BooleanOperations {
 	private BooleanOperations() {
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "java:S3740"})
 	private static boolean lt0(TypeConverter converter, Object o1, Object o2) {
 		Class<?> t1 = o1.getClass();
 		Class<?> t2 = o2.getClass();
@@ -67,7 +67,7 @@ public final class BooleanOperations {
 		throw new ELException(LocalMessages.get("error.compare.types", o1.getClass(), o2.getClass()));
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({"unchecked", "java:S3740"})
 	private static boolean gt0(TypeConverter converter, Object o1, Object o2) {
 		Class<?> t1 = o1.getClass();
 		Class<?> t2 = o2.getClass();

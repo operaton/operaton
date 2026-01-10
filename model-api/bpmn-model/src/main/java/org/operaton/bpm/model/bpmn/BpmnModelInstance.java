@@ -43,7 +43,16 @@ public interface BpmnModelInstance extends ModelInstance {
    * Changes of the model are persistent between multiple model instances.
    *
    * @return the new BPMN model instance
+   * @deprecated Use {@link #copy()} instead
    */
+  @Deprecated(forRemoval = true, since = "1.1")
   BpmnModelInstance clone();
 
+  /**
+   * Copies the BPMN model instance but not the model. So only the wrapped DOM document is cloned.
+   * Changes of the model are persistent between multiple model instances.
+   *
+   * @return the new BPMN model instance
+   */
+  BpmnModelInstance copy();
 }

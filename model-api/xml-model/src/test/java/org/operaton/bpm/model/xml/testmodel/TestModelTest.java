@@ -65,7 +65,7 @@ public abstract class TestModelTest {
   }
 
   protected void init (TestModelArgs args) {
-    this.modelInstance = args.modelInstance.clone();
+    this.modelInstance = args.modelInstance.copy();
     this.modelParser = args.modelParser;
   }
 

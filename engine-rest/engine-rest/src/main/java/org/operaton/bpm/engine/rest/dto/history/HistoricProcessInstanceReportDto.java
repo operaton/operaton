@@ -44,8 +44,6 @@ public class HistoricProcessInstanceReportDto extends AbstractReportDto<Historic
 
   public static final String REPORT_TYPE_DURATION = "duration";
 
-  private static final List<String> VALID_REPORT_TYPE_VALUES = List.of(REPORT_TYPE_DURATION);
-
   public HistoricProcessInstanceReportDto() {
   }
 

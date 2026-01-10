@@ -208,8 +208,8 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     return jobHandlerType;
   }
 
-  protected JobHandler resolveJobHandler() {
-     JobHandler jobHandler = Context.getProcessEngineConfiguration().getJobHandlers().get(jobHandlerType);
+  protected JobHandler<?> resolveJobHandler() {
+     JobHandler<?> jobHandler = Context.getProcessEngineConfiguration().getJobHandlers().get(jobHandlerType);
      ensureNotNull("Cannot find job handler '%s' from job '%s'".formatted(jobHandlerType, this), "jobHandler", jobHandler);
 
      return jobHandler;

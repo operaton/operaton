@@ -56,7 +56,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
     User dbUser = findUserObject();
     if(dbUser == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
+      throw new UserNotFoundException(resourceId);
     }
 
     return UserProfileDto.fromUser(dbUser);
@@ -110,7 +110,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
     User dbUser = findUserObject();
     if(dbUser == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
+      throw new UserNotFoundException(resourceId);
     }
 
     dbUser.setPassword(account.getPassword());
@@ -124,7 +124,7 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
 
     User dbUser = findUserObject();
     if(dbUser == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
+      throw new UserNotFoundException(resourceId);
     }
 
     profile.update(dbUser);
@@ -139,6 +139,13 @@ public class UserResourceImpl extends AbstractIdentityResource implements UserRe
           .singleResult();
     } catch(ProcessEngineException e) {
       throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, "Exception while performing user query: "+e.getMessage());
+    }
+  }
+
+  @SuppressWarnings("java:S110")
+  private static class UserNotFoundException extends InvalidRequestException {
+    UserNotFoundException(String resourceId) {
+      super(Status.NOT_FOUND, "User with id %s does not exist".formatted(resourceId));
     }
   }
 

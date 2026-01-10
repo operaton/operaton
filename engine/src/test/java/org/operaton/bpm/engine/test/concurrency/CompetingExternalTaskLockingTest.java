@@ -52,7 +52,7 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  void shouldThrowOleOnConcurrentLockingAttempt() throws Exception {
+  void shouldThrowOleOnConcurrentLockingAttempt() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     String externalTaskId = externalTaskService.createExternalTaskQuery()

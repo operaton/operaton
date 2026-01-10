@@ -268,7 +268,7 @@ public class HumanTaskItemHandler extends TaskItemHandler {
 
   protected TaskListener initializeTaskListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonTaskListener listener) {
     Collection<OperatonField> fields = listener.getOperatonFields();
-    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(element, activity, context, fields);
+    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(context, fields);
 
     ExpressionManager expressionManager = context.getExpressionManager();
 

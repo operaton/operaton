@@ -382,7 +382,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
 
   protected CaseExecutionListener initializeCaseExecutionListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonCaseExecutionListener listener) {
     Collection<OperatonField> fields = listener.getOperatonFields();
-    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(element, activity, context, fields);
+    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(context, fields);
 
     ExpressionManager expressionManager = context.getExpressionManager();
 
@@ -436,7 +436,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
 
   protected CaseVariableListener initializeVariableListener(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, OperatonVariableListener listener) {
     Collection<OperatonField> fields = listener.getOperatonFields();
-    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(element, activity, context, fields);
+    List<FieldDeclaration> fieldDeclarations = initializeFieldDeclarations(context, fields);
 
     ExpressionManager expressionManager = context.getExpressionManager();
 
@@ -486,7 +486,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     }
   }
 
-  protected List<FieldDeclaration> initializeFieldDeclarations(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context, Collection<OperatonField> fields) {
+  protected List<FieldDeclaration> initializeFieldDeclarations(CmmnHandlerContext context, Collection<OperatonField> fields) {
     List<FieldDeclaration> fieldDeclarations = new ArrayList<>();
 
     for (OperatonField field : fields) {

@@ -144,7 +144,7 @@ public class ModelElementTypeImpl implements ModelElementType {
     }
     else if (!this.baseType.equals(baseType)) {
       throw new ModelException("Type can not have multiple base types. %s already extends type %s and can not also extend type %s".formatted(
-          this.getClass(), this.baseType.getClass(), baseType.getClass()));
+          this.getClass().getSimpleName(), this.baseType.getClass().getSimpleName(), baseType.getClass().getSimpleName()));
     }
   }
 

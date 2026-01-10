@@ -50,6 +50,8 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
         // Do NOT call super.containerIsStarted() because it creates the database without READ_COMMITTED_SNAPSHOT
         // Instead, we create the database ourselves with the correct settings
         try {
+            String dbName = DATABASE_NAME;
+            String password = getPassword();
             this.execInContainer("bash", "-c",
                 ("echo \"IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '%s') " +
                 "BEGIN " +
@@ -58,7 +60,7 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
                 "ALTER DATABASE %s SET READ_COMMITTED_SNAPSHOT ON; " +
                 "ALTER LOGIN sa WITH DEFAULT_DATABASE = %s\" | " +
                 "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P %s -i /dev/stdin").formatted(
-                    DATABASE_NAME, DATABASE_NAME, DATABASE_NAME, DATABASE_NAME, getPassword()));
+                    dbName, dbName, dbName, dbName, password));
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

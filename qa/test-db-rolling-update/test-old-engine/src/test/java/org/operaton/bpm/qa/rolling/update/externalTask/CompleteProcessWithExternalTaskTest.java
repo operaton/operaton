@@ -39,7 +39,7 @@ class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTestCase 
   @ScenarioUnderTest("init.1")
   void testCompleteProcessWithExternalTask() {
     //given process with external task
-    String buisnessKey = rule.getBuisnessKey();
+    String buisnessKey = rule.getBusinessKey();
     List<LockedExternalTask> externalTasks = rule.getExternalTaskService().fetchAndLock(1, buisnessKey)
       .topic(buisnessKey, LOCK_TIME)
       .execute();
@@ -56,7 +56,7 @@ class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTestCase 
   @ScenarioUnderTest("init.fetch.1")
   void testCompleteProcessWithFetchedExternalTask() {
     //given process with locked external task
-    String buisnessKey = rule.getBuisnessKey();
+    String buisnessKey = rule.getBusinessKey();
     ExternalTask task = rule.getExternalTaskService()
                             .createExternalTaskQuery()
                             .locked()

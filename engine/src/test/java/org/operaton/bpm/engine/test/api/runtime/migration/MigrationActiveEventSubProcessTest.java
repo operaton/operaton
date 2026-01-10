@@ -74,7 +74,7 @@ public class MigrationActiveEventSubProcessTest {
   @TestTemplate
   void testMigrateActiveCompensationEventSubProcess() {
     // given
-    BpmnModelInstance processModel = ProcessModels.ONE_TASK_PROCESS.clone();
+    BpmnModelInstance processModel = ProcessModels.ONE_TASK_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addEventSubProcess(
         rule.getProcessEngine(),
         processModel,

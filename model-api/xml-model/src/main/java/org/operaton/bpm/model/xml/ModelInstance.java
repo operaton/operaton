@@ -129,8 +129,19 @@ public interface ModelInstance {
    * Changes of the model are persistent between multiple model instances.
    *
    * @return the new model instance
+   * @deprecated Use {@link #copy()} instead
    */
+  @Deprecated(forRemoval = true, since = "1.1")
   ModelInstance clone();
+
+  /**
+   * Copies the model instance but not the model. So only the wrapped DOM document is cloned.
+   * Changes of the model are persistent between multiple model instances.
+   *
+   * @return the new model instance
+   * @since 1.1
+   */
+  ModelInstance copy();
 
   /**
    * Validate semantic properties of this model instance using a collection of validators.

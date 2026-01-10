@@ -199,7 +199,7 @@ public class TaskResourceImpl implements TaskResource {
   public TaskDto getJsonTask() {
     Task task = getTaskById(taskId, withCommentAttachmentInfo);
     if (task == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching task with id %s".formatted(taskId));
+      throw new TaskNotFoundException(taskId);
     }
     if ((withTaskVariablesInReturn || withTaskLocalVariablesInReturn) && withCommentAttachmentInfo) {
       Map<String, VariableValueDto> taskVariables = getTaskVariables(withTaskVariablesInReturn);
@@ -219,7 +219,7 @@ public class TaskResourceImpl implements TaskResource {
   public HalTask getHalTask() {
     Task task = getTaskById(taskId, withCommentAttachmentInfo);
     if (task == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching task with id %s".formatted(taskId));
+      throw new TaskNotFoundException(taskId);
     }
 
     return HalTask.generate(task, engine);
@@ -395,7 +395,7 @@ public class TaskResourceImpl implements TaskResource {
     Task task = getTaskById(taskId, withCommentAttachmentInfo);
 
     if (task == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching task with id %s".formatted(taskId));
+      throw new TaskNotFoundException(taskId);
     }
 
     taskDto.updateTask(task);
@@ -497,4 +497,10 @@ public class TaskResourceImpl implements TaskResource {
     return variableResource.getVariables(true);
   }
 
+  @SuppressWarnings("java:S110")
+  private static class TaskNotFoundException extends InvalidRequestException {
+    TaskNotFoundException(String taskId) {
+      super(Status.NOT_FOUND, "No matching task with id %s".formatted(taskId));
+    }
+  }
 }

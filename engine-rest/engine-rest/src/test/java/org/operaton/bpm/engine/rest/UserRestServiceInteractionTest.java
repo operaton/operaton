@@ -119,7 +119,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserRestServiceOptions() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + UserRestService.PATH;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + UserRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
 
@@ -148,7 +148,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserRestServiceOptionsWithAuthorizationDisabled() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + UserRestService.PATH;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + UserRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -176,7 +176,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserResourceOptionsUnauthenticated() {
-    String fullUserUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
+    String fullUserUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
 
     User sampleUser = MockProvider.createMockUser();
     UserQuery sampleUserQuery = mock(UserQuery.class);
@@ -213,7 +213,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserResourceOptionsUnauthorized() {
-    String fullUserUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
+    String fullUserUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
 
     User sampleUser = MockProvider.createMockUser();
     UserQuery sampleUserQuery = mock(UserQuery.class);
@@ -250,7 +250,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserResourceOptionsDeleteAuthorized() {
-    String fullUserUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
+    String fullUserUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
 
     User sampleUser = MockProvider.createMockUser();
     UserQuery sampleUserQuery = mock(UserQuery.class);
@@ -290,7 +290,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserResourceOptionsWithAuthorizationDisabled() {
-    String fullUserUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
+    String fullUserUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/user/" + MockProvider.EXAMPLE_USER_ID;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 

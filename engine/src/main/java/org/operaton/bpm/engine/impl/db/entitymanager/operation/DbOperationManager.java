@@ -57,19 +57,19 @@ public class DbOperationManager {
   // pre-sorted operation maps //////////////
 
   /** INSERTs */
-  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> inserts = new TreeMap<>(INSERT_TYPE_COMPARATOR);
+  private SortedMap<Class<?>, SortedSet<DbEntityOperation>> inserts = new TreeMap<>(INSERT_TYPE_COMPARATOR);
 
   /** UPDATEs of a single entity */
-  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> updates = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
+  private SortedMap<Class<?>, SortedSet<DbEntityOperation>> updates = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** DELETEs of a single entity */
-  public SortedMap<Class<?>, SortedSet<DbEntityOperation>> deletes = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
+  private SortedMap<Class<?>, SortedSet<DbEntityOperation>> deletes = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** bulk modifications (DELETE, UPDATE) on an entity collection */
-  public SortedMap<Class<?>, SortedSet<DbBulkOperation>> bulkOperations = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
+  private SortedMap<Class<?>, SortedSet<DbBulkOperation>> bulkOperations = new TreeMap<>(MODIFICATION_TYPE_COMPARATOR);
 
   /** bulk modifications (DELETE, UPDATE) for which order of execution is important */
-  public Set<DbBulkOperation> bulkOperationsInsertionOrder = new LinkedHashSet<>();
+  private Set<DbBulkOperation> bulkOperationsInsertionOrder = new LinkedHashSet<>();
 
   public boolean addOperation(DbEntityOperation newOperation) {
     if(newOperation.getOperationType() == INSERT) {

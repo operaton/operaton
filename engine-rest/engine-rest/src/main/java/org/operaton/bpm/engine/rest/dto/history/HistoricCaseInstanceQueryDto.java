@@ -35,12 +35,12 @@ import static java.lang.Boolean.TRUE;
 
 public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseInstanceQuery> {
 
-  public static final String SORT_BY_CASE_INSTANCE_ID_VALUE = "instanceId";
-  public static final String SORT_BY_CASE_DEFINITION_ID_VALUE = "definitionId";
-  public static final String SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE = "businessKey";
-  public static final String SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE = "createTime";
-  public static final String SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE = "closeTime";
-  public static final String SORT_BY_CASE_INSTANCE_DURATION_VALUE = "duration";
+  private static final String SORT_BY_CASE_INSTANCE_ID_VALUE = "instanceId";
+  private static final String SORT_BY_CASE_DEFINITION_ID_VALUE = "definitionId";
+  private static final String SORT_BY_CASE_INSTANCE_BUSINESS_KEY_VALUE = "businessKey";
+  private static final String SORT_BY_CASE_INSTANCE_CREATE_TIME_VALUE = "createTime";
+  private static final String SORT_BY_CASE_INSTANCE_CLOSE_TIME_VALUE = "closeTime";
+  private static final String SORT_BY_CASE_INSTANCE_DURATION_VALUE = "duration";
   private static final String SORT_BY_TENANT_ID = "tenantId";
 
   private static final List<String> VALID_SORT_BY_VALUES = List.of(SORT_BY_CASE_INSTANCE_ID_VALUE,

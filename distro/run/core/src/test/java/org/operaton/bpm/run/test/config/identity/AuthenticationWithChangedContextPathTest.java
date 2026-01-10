@@ -26,7 +26,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
-import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
 import org.operaton.bpm.run.test.AbstractRestTest;
 
 import static org.assertj.core.api.Assertions.assertThat;

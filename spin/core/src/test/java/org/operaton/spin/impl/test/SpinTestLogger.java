@@ -17,7 +17,6 @@
 package org.operaton.spin.impl.test;
 
 import org.operaton.commons.logging.BaseLogger;
-import org.operaton.spin.SpinRuntimeException;
 import org.operaton.spin.SpinScriptException;
 import org.operaton.spin.impl.logging.SpinLogger;
 

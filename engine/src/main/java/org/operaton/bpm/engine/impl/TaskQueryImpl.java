@@ -1907,16 +1907,16 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   private void extendTaskProperties(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getName, extendedQuery::taskName);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getNameLike, extendedQuery::taskNameLike);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getNameNotEqual, extendedQuery::taskNameNotEqual);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getNameNotLike, extendedQuery::taskNameNotLike);
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getTaskId, extendedQuery::taskId);
 
     if (extendingQuery.getTaskIdIn() != null) {
@@ -1925,21 +1925,21 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.taskIdIn(this.getTaskIdIn());
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getDescription, extendedQuery::taskDescription);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getDescriptionLike, extendedQuery::taskDescriptionLike);
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getPriority, extendedQuery::taskPriority);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getMinPriority, extendedQuery::taskMinPriority);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getMaxPriority, extendedQuery::taskMaxPriority);
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getKey, extendedQuery::taskDefinitionKey);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getKeyLike, extendedQuery::taskDefinitionKeyLike);
 
     if (extendingQuery.getKeys() != null) {
@@ -1954,14 +1954,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.taskDefinitionKeyNotIn(this.getKeyNotIn());
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getParentTaskId, extendedQuery::taskParentTaskId);
   }
 
   private void extendAssigneeProperties(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getAssignee, extendedQuery::taskAssignee);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getAssigneeLike, extendedQuery::taskAssigneeLike);
 
     if (extendingQuery.getAssigneeIn() != null) {
@@ -1980,9 +1980,9 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
           .toArray(new String[this.getAssigneeNotIn().size()]));
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getInvolvedUser, extendedQuery::taskInvolvedUser);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getOwner, extendedQuery::taskOwner);
 
     if (extendingQuery.isAssigned() || this.isAssigned()) {
@@ -1993,16 +1993,16 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.taskUnassigned();
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getDelegationState, extendedQuery::taskDelegationState);
   }
 
   private void extendCandidateProperties(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCandidateUser, extendedQuery::taskCandidateUser);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCandidateGroup, extendedQuery::taskCandidateGroup);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCandidateGroupLike, extendedQuery::taskCandidateGroupLike);
 
     if (extendingQuery.isWithCandidateGroups() || this.isWithCandidateGroups()) {
@@ -2029,7 +2029,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   private void extendProcessProperties(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessInstanceId, extendedQuery::processInstanceId);
 
     if (extendingQuery.getProcessInstanceIdIn() != null) {
@@ -2038,7 +2038,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.processInstanceIdIn(this.getProcessInstanceIdIn());
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getExecutionId, extendedQuery::executionId);
 
     if (extendingQuery.getActivityInstanceIdIn() != null) {
@@ -2047,7 +2047,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.activityInstanceIdIn(this.getActivityInstanceIdIn());
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessDefinitionKey, extendedQuery::processDefinitionKey);
 
     if (extendingQuery.getProcessDefinitionKeys() != null) {
@@ -2056,14 +2056,14 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.processDefinitionKeyIn(this.getProcessDefinitionKeys());
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessDefinitionId, extendedQuery::processDefinitionId);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessDefinitionName, extendedQuery::processDefinitionName);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessDefinitionNameLike, extendedQuery::processDefinitionNameLike);
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessInstanceBusinessKey, extendedQuery::processInstanceBusinessKey);
 
     if (extendingQuery.getProcessInstanceBusinessKeys() != null) {
@@ -2072,36 +2072,36 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.processInstanceBusinessKeyIn(this.getProcessInstanceBusinessKeys());
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getProcessInstanceBusinessKeyLike, extendedQuery::processInstanceBusinessKeyLike);
   }
 
   private void extendDateProperties(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCreateTime, extendedQuery::taskCreatedOn);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCreateTimeBefore, extendedQuery::taskCreatedBefore);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCreateTimeAfter, extendedQuery::taskCreatedAfter);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getUpdatedAfter, extendedQuery::taskUpdatedAfter);
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getDueDate, extendedQuery::dueDate);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getDueBefore, extendedQuery::dueBefore);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getDueAfter, extendedQuery::dueAfter);
 
     if (extendingQuery.isWithoutDueDate() || this.isWithoutDueDate()) {
       extendedQuery.withoutDueDate();
     }
 
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getFollowUpDate, extendedQuery::followUpDate);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getFollowUpBefore, extendedQuery::followUpBefore);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getFollowUpAfter, extendedQuery::followUpAfter);
 
     if (extendingQuery.isFollowUpNullAccepted() || this.isFollowUpNullAccepted()) {
@@ -2110,21 +2110,21 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   }
 
   private void extendCaseProperties(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery) {
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseInstanceId, extendedQuery::caseInstanceId);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseInstanceBusinessKey, extendedQuery::caseInstanceBusinessKey);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseInstanceBusinessKeyLike, extendedQuery::caseInstanceBusinessKeyLike);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseExecutionId, extendedQuery::caseExecutionId);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseDefinitionId, extendedQuery::caseDefinitionId);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseDefinitionKey, extendedQuery::caseDefinitionKey);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseDefinitionName, extendedQuery::caseDefinitionName);
-    copyProperty(extendedQuery, extendingQuery, this,
+    copyProperty(extendingQuery, this,
         TaskQueryImpl::getCaseDefinitionNameLike, extendedQuery::caseDefinitionNameLike);
   }
 
@@ -2158,7 +2158,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     }
   }
 
-  private <T> void copyProperty(TaskQueryImpl extendedQuery, TaskQueryImpl extendingQuery,
+  private <T> void copyProperty(TaskQueryImpl extendingQuery,
       TaskQueryImpl baseQuery,
       java.util.function.Function<TaskQueryImpl, T> getter,
       java.util.function.Consumer<T> setter) {

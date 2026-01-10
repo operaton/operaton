@@ -212,7 +212,7 @@ public class Parser {
 	 * throw exception
 	 */
 	protected void fail(String expected) throws ParseException {
-		throw new ParseException(position, "'" + token.getImage() + "'", expected);
+		throw new ParseException(position, "'%s'".formatted(token.getImage()), expected);
 	}
 
 	/**

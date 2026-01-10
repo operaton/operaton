@@ -124,7 +124,7 @@ public class Builder implements TreeBuilder {
 	 */
 	public static void main(String[] args) {
 		if (args.length != 1) {
-			System.err.println("usage: java " + Builder.class.getName() + " <expression string>");
+			System.err.println("usage: java %s <expression string>".formatted(Builder.class.getName()));
 			System.exit(1);
 		}
 		PrintWriter out = new PrintWriter(System.out);

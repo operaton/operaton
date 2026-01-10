@@ -65,7 +65,7 @@ public class ScenarioRunner {
           if (deploymentResource != null) {
             BpmnModelInstance instance = (BpmnModelInstance) deploymentResource;
             engine.getRepositoryService().createDeployment()
-            .addModelInstance(clazz.getSimpleName() + "." + method.getName() + ".bpmn20.xml", instance)
+            .addModelInstance("%s.%s.bpmn20.xml".formatted(clazz.getSimpleName(), method.getName()), instance)
             .deploy();
           }
         }

@@ -98,6 +98,6 @@ public class ExpectedActivityInstance {
       writer.append("├── ");
     }
 
-    writer.append("transition to/from " + transition.getActivityId() + "\n");
+    writer.append("transition to/from %s%n".formatted(transition.getActivityId()));
   }
 }

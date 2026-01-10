@@ -163,7 +163,7 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
       taskService.saveTask(newTask);
 
     } catch (NotValidException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not save task: " + e.getMessage());
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not save task: %s".formatted(e.getMessage()));
     }
 
   }

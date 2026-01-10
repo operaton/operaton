@@ -43,7 +43,7 @@ public final class ProvidersUtil {
     ContextResolver<T> contextResolver = providers.getContextResolver(clazz, mediaType);
 
     if (contextResolver == null) {
-      throw new RestException("No context resolver found for class " + clazz.getName());
+      throw new RestException("No context resolver found for class %s".formatted(clazz.getName()));
     }
 
     return contextResolver.getContext(type);

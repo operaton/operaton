@@ -206,7 +206,7 @@ public class HistoricDetailQueryDto extends AbstractQueryDto<HistoricDetailQuery
         String sortingBy = sorting.getSortBy();
 
         if (!VALID_SORT_BY_VALUES.contains(sortingBy)) {
-          throw new InvalidRequestException(Response.Status.BAD_REQUEST, "sortBy parameter has invalid value: " + sortingBy);
+          throw new InvalidRequestException(Response.Status.BAD_REQUEST, "sortBy parameter has invalid value: %s".formatted(sortingBy));
         }
 
         if (sortingBy == null || sortingOrder == null) {

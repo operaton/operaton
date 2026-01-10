@@ -182,10 +182,12 @@ jobs:
               qa/performance-tests-engine/**,\
               qa/integration-tests-webapps/**,\
               qa/integration-tests-engine/** \
-          -Dsonar.coverage.exclusions=qa/performance-tests-engine/**,\
+          -Dsonar.coverage.exclusions=webapps/assembly/**,\
+              qa/performance-tests-engine/**,\
               qa/integration-tests-webapps/**,\
               qa/integration-tests-engine/**,\
-              webapps/**
+              webapps/**,\
+              **/*Dto.java
         continue-on-error: true
       - name: Cache build artifacts
         uses: actions/cache/save@v5

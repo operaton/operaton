@@ -354,6 +354,10 @@
             </executions>
             <configuration>
               <propertyName>${jacoco.argLine}</propertyName>
+              <excludes>
+                <!-- Exclude DTO classes from coverage as they contain mostly boilerplate getter/setter methods -->
+                <exclude>**/*Dto.class</exclude>
+              </excludes>
             </configuration>
           </plugin>
         </plugins>

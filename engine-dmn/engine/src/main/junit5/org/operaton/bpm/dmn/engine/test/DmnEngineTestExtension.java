@@ -79,11 +79,10 @@ public class DmnEngineTestExtension extends DmnEngineExtension implements Before
       Class<?> testClass = context.getTestClass().orElseThrow();
       if (resourcePath.isEmpty()) {
         // use test class and method name as resource file name
-        return testClass.getName().replace(".", "/") + "." + context.getRequiredTestMethod().getName() + "."
-          + DMN_SUFFIX;
+        return "%s.%s.%s".formatted(testClass.getName().replace(".", "/"), context.getRequiredTestMethod().getName(), DMN_SUFFIX);
       } else {
         // use test class location as resource location
-        return testClass.getPackage().getName().replace(".", "/") + "/" + resourcePath;
+        return "%s/%s".formatted(testClass.getPackage().getName().replace(".", "/"), resourcePath);
       }
     }
   }

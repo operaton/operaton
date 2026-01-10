@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -253,7 +254,7 @@ public final class BpmnParseUtil {
       }
       return propertiesMap;
     }
-    return null;
+    return Collections.emptyMap();
   }
 
   protected static ExpressionManager getExpressionManager() {

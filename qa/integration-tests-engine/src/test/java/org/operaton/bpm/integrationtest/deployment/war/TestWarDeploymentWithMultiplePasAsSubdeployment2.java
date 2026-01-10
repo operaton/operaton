@@ -151,7 +151,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment2 extends AbstractFo
         .processDefinitionKey(processKey)
         .count();
 
-    assertThat(count).as("Process with key " + processKey + " should not be deployed").isZero();
+    assertThat(count).as("Process with key %s should not be deployed".formatted(processKey)).isZero();
   }
 
   protected void assertProcessDeployed(String processKey, String expectedDeploymentName) {

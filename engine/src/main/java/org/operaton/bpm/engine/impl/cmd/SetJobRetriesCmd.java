@@ -43,7 +43,7 @@ public class SetJobRetriesCmd implements Command<Void> {
 
   protected final String jobId;
   protected final String jobDefinitionId;
-  protected final transient List<String> jobIds;
+  protected final List<String> jobIds;
   protected final int retries;
   protected Date dueDate;
   protected final boolean isDueDateSet;

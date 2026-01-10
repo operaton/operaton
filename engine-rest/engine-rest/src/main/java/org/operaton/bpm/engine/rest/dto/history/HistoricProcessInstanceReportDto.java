@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.dto.history;
 
 import java.util.Date;
-import java.util.List;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 

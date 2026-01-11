@@ -23,12 +23,10 @@ jobs:
       pull-requests: write
       issues: write
     # Only run for PRs from forks (different repository) and not from operaton/operaton
-    # Skip if the PR author is in the contributor whitelist
     if: |
       github.event_name == 'pull_request_target' && 
       github.event.action == 'opened' && 
-      github.event.pull_request.head.repo.full_name != github.repository &&
-      !contains(env.CONTRIBUTOR_WHITELIST, github.event.pull_request.user.login)
+      github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -44,6 +42,13 @@ jobs:
             const { owner, repo } = context.repo;
             const prTitle = context.payload.pull_request.title;
             const prBody = context.payload.pull_request.body || "";
+
+            // Check if author is in the whitelist
+            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            if (whitelist.includes(author)) {
+              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
+              return;
+            }
 
             console.log(`Checking for past PRs from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -86,11 +91,9 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-    # Skip if the issue author is in the contributor whitelist
     if: |
       github.event_name == 'issues' && 
-      github.event.action == 'opened' &&
-      !contains(env.CONTRIBUTOR_WHITELIST, github.event.pull_request.user.login)
+      github.event.action == 'opened'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -105,6 +108,13 @@ jobs:
             const author = context.actor;
             const { owner, repo } = context.repo;
             const issueTitle = context.payload.issue.title;
+
+            // Check if author is in the whitelist
+            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            if (whitelist.includes(author)) {
+              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
+              return;
+            }
 
             console.log(`Checking for past Issues from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -140,11 +150,9 @@ jobs:
     permissions:
       pull-requests: write
       issues: write
-    # Skip if the commenter is in the contributor whitelist
     if: |
       github.event_name == 'issue_comment' && 
-      github.event.action == 'created' &&
-      !contains(env.CONTRIBUTOR_WHITELIST, github.event.pull_request.user.login)
+      github.event.action == 'created'
     steps:
       - uses: actions/checkout@v6
       - uses: actions/github-script@v8
@@ -155,6 +163,13 @@ jobs:
             const author = context.actor;
             const { owner, repo } = context.repo;
             const commentBody = context.payload.comment.body;
+            
+            // Check if author is in the whitelist
+            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            if (whitelist.includes(author)) {
+              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
+              return;
+            }
             
             const issueAuthor = context.payload.issue.user.login;
             const isPullRequest = !!context.payload.issue.pull_request;

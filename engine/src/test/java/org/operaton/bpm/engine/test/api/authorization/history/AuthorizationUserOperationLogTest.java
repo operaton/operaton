@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -50,8 +54,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class AuthorizationUserOperationLogTest extends AuthorizationTest {
 
-  @Test
-  void testLogCreatedOnAuthorizationCreation() {
+  @ParameterizedTest
+  @MethodSource("authorizationCreationParameters")
+  void testLogCreatedOnAuthorizationCreation(String queryProperty, String expectedNewValue) {
     // given
     createGrantAuthorizationWithoutAuthentication(OPERATION_LOG_CATEGORY, CATEGORY_ADMIN, userId, READ);
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
@@ -63,41 +68,22 @@ class AuthorizationUserOperationLogTest extends AuthorizationTest {
     // then
     assertThat(query.count()).isEqualTo(6);
 
-    UserOperationLogEntry entry = query.property("permissionBits").singleResult();
+    UserOperationLogEntry entry = query.property(queryProperty).singleResult();
     assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertThat(entry.getNewValue()).isEqualTo(String.valueOf(ProcessDefinitionPermissions.DELETE.getValue()));
+    assertThat(entry.getNewValue()).isEqualTo(expectedNewValue);
+  }
 
-    entry = query.property("permissions").singleResult();
-    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
-    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
-    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertThat(entry.getNewValue()).isEqualTo(ProcessDefinitionPermissions.DELETE.getName());
-
-    entry = query.property("type").singleResult();
-    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
-    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
-    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertThat(entry.getNewValue()).isEqualTo(String.valueOf(Authorization.AUTH_TYPE_GRANT));
-
-    entry = query.property("resource").singleResult();
-    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
-    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
-    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertThat(entry.getNewValue()).isEqualTo(Resources.PROCESS_DEFINITION.resourceName());
-
-    entry = query.property("resourceId").singleResult();
-    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
-    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
-    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertThat(entry.getNewValue()).isEqualTo(Authorization.ANY);
-
-    entry = query.property("groupId").singleResult();
-    assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CREATE);
-    assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
-    assertThat(entry.getEntityType()).isEqualTo(EntityTypes.AUTHORIZATION);
-    assertThat(entry.getNewValue()).isEqualTo("testGroupId");
+  static Stream<Arguments> authorizationCreationParameters() {
+    return Stream.of(
+      Arguments.of("permissionBits", String.valueOf(ProcessDefinitionPermissions.DELETE.getValue())),
+      Arguments.of("permissions", ProcessDefinitionPermissions.DELETE.getName()),
+      Arguments.of("type", String.valueOf(Authorization.AUTH_TYPE_GRANT)),
+      Arguments.of("resource", Resources.PROCESS_DEFINITION.resourceName()),
+      Arguments.of("resourceId", Authorization.ANY),
+      Arguments.of("groupId", "testGroupId")
+    );
   }
 
   @Test

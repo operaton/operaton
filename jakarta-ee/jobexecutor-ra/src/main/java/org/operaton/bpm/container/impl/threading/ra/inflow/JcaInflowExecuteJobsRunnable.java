@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.threading.ra.inflow;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.resource.ResourceException;
@@ -43,12 +44,12 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
 
   protected final JcaExecutorServiceConnector ra;
 
-  protected static Method method;
+  protected static AtomicReference<Method> method = new AtomicReference<>();
 
   public JcaInflowExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine, JcaExecutorServiceConnector connector) {
     super(jobIds, processEngine);
     this.ra = connector;
-    if (method == null) {
+    if (method.get() == null) {
       loadMethod();
     }
   }
@@ -81,7 +82,7 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
 
   private void beforeDelivery(MessageEndpoint endpoint) {
     try {
-      endpoint.beforeDelivery(method);
+      endpoint.beforeDelivery(method.get());
     } catch (NoSuchMethodException e) {
       log.log(Level.WARNING, e, () -> "NoSuchMethodException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(endpoint));
     } catch (ResourceException e) {
@@ -110,7 +111,7 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
 
   protected void loadMethod() {
     try {
-      method = JobExecutionHandler.class.getMethod("executeJob", String.class, CommandExecutor.class);
+      method.set(JobExecutionHandler.class.getMethod("executeJob", String.class, CommandExecutor.class));
     } catch (SecurityException e) {
       throw new IllegalStateException("SecurityException while invoking getMethod() on class "+JobExecutionHandler.class, e);
     } catch (NoSuchMethodException e) {

@@ -64,14 +64,11 @@ public final class JobMigrationScenario {
             statement = connection
               .createStatement();
             statement.executeUpdate("INSERT INTO ACT_RU_JOB(ID_, REV_, RETRIES_, TYPE_, EXCLUSIVE_, HANDLER_TYPE_) " +
-              "VALUES (" +
-              "'" + scenarioName + "'," +
-              "1," +
-              "3," +
-              "'timer'," +
-              DbSqlSessionFactory.databaseSpecificTrueConstant.get(engineConfiguration.getDatabaseType()) + "," +
-              "'" + TimerStartEventJobHandler.TYPE + "'" +
-              ")");
+              "VALUES ('%s',1,3,'timer',%s,'%s')".formatted(
+                scenarioName,
+                DbSqlSessionFactory.databaseSpecificTrueConstant.get(engineConfiguration.getDatabaseType()),
+                TimerStartEventJobHandler.TYPE
+              ));
             connection.commit();
             statement.close();
           } catch (SQLException e) {

@@ -74,7 +74,7 @@ public class PerfTestResultRecorderExtension implements TestWatcher {
   }
 
   protected String formatResultFileName(ExtensionContext context) {
-    return formatResultFileDirName() + File.separatorChar + context.getRequiredTestClass().getSimpleName() + "." + context.getRequiredTestMethod().getName() + ".json";
+    return "%s%c%s.%s.json".formatted(formatResultFileDirName(), File.separatorChar, context.getRequiredTestClass().getSimpleName(), context.getRequiredTestMethod().getName());
   }
 
   public void setResults(PerfTestResults results) {

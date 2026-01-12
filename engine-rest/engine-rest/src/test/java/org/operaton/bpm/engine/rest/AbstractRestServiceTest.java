@@ -53,7 +53,7 @@ public abstract class AbstractRestServiceTest {
 
   protected static ProcessEngine processEngine;
   protected static final String TEST_RESOURCE_ROOT_PATH = "/rest-test";
-  protected static int PORT;
+  protected static int port;
 
   protected static final Header ACCEPT_WILDCARD_HEADER = new Header("Accept", MediaType.WILDCARD);
   protected static final Header ACCEPT_JSON_HEADER = new Header("Accept", MediaType.APPLICATION_JSON);
@@ -202,8 +202,8 @@ public abstract class AbstractRestServiceTest {
       }
     }
 
-    PORT = Integer.parseInt(connectionProperties.getProperty(PORT_PROPERTY));
-    RestAssured.port = PORT;
+    port = Integer.parseInt(connectionProperties.getProperty(PORT_PROPERTY));
+    RestAssured.port = port;
   }
 
   protected File getFile(String path) throws URISyntaxException {

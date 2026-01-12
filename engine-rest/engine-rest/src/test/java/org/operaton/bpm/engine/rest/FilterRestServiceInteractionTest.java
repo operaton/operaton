@@ -1214,7 +1214,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testAnonymousFilterOptions() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL;
 
     // anonymity means the identityService returns a null authentication, so no need to mock here
 
@@ -1247,7 +1247,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testRestrictedFilterOptions() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -1279,7 +1279,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testFilterOptionsWithDisabledAuthorization() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -1309,7 +1309,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testAnonymousFilterResourceOptions() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
 
     // anonymity means the identityService returns a null authentication, so no need to mock here
 
@@ -1395,7 +1395,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testFilterResourceOptionsUpdateUnauthorized() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -1456,7 +1456,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testFilterResourceOptionsWithAuthorizationDisabled() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 

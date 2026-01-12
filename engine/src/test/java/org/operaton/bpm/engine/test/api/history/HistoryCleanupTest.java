@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.history;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -129,6 +130,11 @@ class HistoryCleanupTest {
   protected Removable removable;
 
   private final Random random = new Random();
+
+  private static Date parseDate(String dateString) {
+    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, dateFormatter);
+    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+  }
 
   private HistoryService historyService;
   private RuntimeService runtimeService;
@@ -1109,7 +1115,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're outside batch window, batch window passes midnight
-    ClockUtil.setCurrentTime(sdf.parse("2019-05-28T01:10:00"));  // 01:10
+    ClockUtil.setCurrentTime(parseDate("2019-05-28T01:10:00"));  // 01:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();
@@ -1142,7 +1148,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window, but batch window passes midnight
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T00:10:00"));  // 00:10
+    ClockUtil.setCurrentTime(parseDate("2018-05-14T00:10:00"));  // 00:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();
@@ -1226,12 +1232,14 @@ class HistoryCleanupTest {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-    Date date = dateFormat.parse("2017-09-06T22:15:00+0100");
+    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
+    ZonedDateTime parsedDateTime1 = ZonedDateTime.parse("2017-09-06T22:15:00+0100", dateFormat);
+    Date date = Date.from(parsedDateTime1.toInstant());
 
     assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isTrue();
 
-    date = dateFormat.parse("2017-09-06T22:15:00+0200");
+    ZonedDateTime parsedDateTime2 = ZonedDateTime.parse("2017-09-06T22:15:00+0200", dateFormat);
+    date = Date.from(parsedDateTime2.toInstant());
     assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isFalse();
   }
 

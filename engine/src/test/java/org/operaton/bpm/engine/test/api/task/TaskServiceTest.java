@@ -125,6 +125,11 @@ class TaskServiceTest {
 
   private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss.SSS");
 
+  private static Date parseDate(String dateString) {
+    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, DATE_FORMATTER);
+    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+  }
+
   @AfterEach
   void tearDown() {
     ClockUtil.setCurrentTime(new Date());
@@ -140,7 +145,7 @@ class TaskServiceTest {
     task.setPriority(0);
     task.setAssignee("taskassignee");
     task.setOwner("taskowner");
-    Date dueDate = sdf.parse("01/02/2003 04:05:06");
+    Date dueDate = parseDate("01/02/2003 04:05:06");
     task.setDueDate(dueDate);
     task.setCaseInstanceId("taskcaseinstanceid");
     taskService.saveTask(task);
@@ -175,7 +180,7 @@ class TaskServiceTest {
     task.setPriority(1);
     task.setAssignee("updatedassignee");
     task.setOwner("updatedowner");
-    dueDate = sdf.parse("01/02/2003 04:05:06");
+    dueDate = parseDate("01/02/2003 04:05:06");
     task.setDueDate(dueDate);
     task.setCaseInstanceId("updatetaskcaseinstanceid");
     taskService.saveTask(task);
@@ -2554,7 +2559,7 @@ class TaskServiceTest {
 
   @Test
   void testTaskAttachmentByTaskIdAndAttachmentId() throws Exception {
-    Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
+    Date fixedDate = parseDate("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
 
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
@@ -2645,7 +2650,7 @@ class TaskServiceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
   void testCreateTaskAttachmentWithNullTaskId() throws Exception {
-    Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
+    Date fixedDate = parseDate("01/01/2001 01:01:01.000");
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Attachment attachment = taskService.createAttachment("web page", null, processInstance.getId(), "weatherforcast", "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));

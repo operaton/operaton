@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.task;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -57,11 +56,8 @@ class DelegateTaskTest {
   private static final Date FOLLOW_UP_DATE;
 
   static {
-    try {
-      FOLLOW_UP_DATE = DATE_FORMAT.parse(FOLLOW_UP_DATE_STRING);
-    } catch (ParseException e) {
-      throw new RuntimeException(e.getMessage(), e);
-    }
+    LocalDateTime parsedDateTime = LocalDateTime.parse(FOLLOW_UP_DATE_STRING, DATE_FORMATTER);
+    FOLLOW_UP_DATE = Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 
   RuntimeService runtimeService;

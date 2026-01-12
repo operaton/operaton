@@ -80,6 +80,11 @@ class IdentityServiceTest {
   protected IdentityService identityService;
   protected ProcessEngine processEngine;
 
+  private static Date parseDate(String dateString) {
+    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, dateFormatter);
+    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+  }
+
   @AfterEach
   void cleanUp() {
     for (User user : identityService.createUserQuery().list()) {
@@ -716,7 +721,7 @@ class IdentityServiceTest {
     user.setPassword("xxx");
     identityService.saveUser(user);
 
-    Date now = sdf.parse("2000-01-24T13:00:00");
+    Date now = parseDate("2000-01-24T13:00:00");
     ClockUtil.setCurrentTime(now);
 
     // when

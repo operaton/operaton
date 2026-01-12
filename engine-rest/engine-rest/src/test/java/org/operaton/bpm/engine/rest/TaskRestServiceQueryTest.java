@@ -1171,188 +1171,58 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).taskVariableValueLike(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE.toLowerCase());
   }
 
-  @Test
-  void testProcessVariableParameters() {
-    // equals
-    String variableName = "varName";
-    String variableValue = "varValue";
-    String queryValue = variableName + "_eq_" + variableValue;
+  @ParameterizedTest
+  @MethodSource("variableParameterProvider")
+  void testProcessVariableParameters(String operator, boolean variableNamesIgnoreCase, boolean variableValuesIgnoreCase) {
+    // clear previous interactions but keep stubbing
+    clearInvocations(mockQuery);
 
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
+    String queryValue = SAMPLE_VAR_NAME + "_" + operator + "_" + SAMPLE_VAR_VALUE;
 
-    verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-    reset(mockQuery);
+    var request = given().queryParam("processVariables", queryValue);
+    if (variableValuesIgnoreCase) {
+      request = request.queryParam("variableValuesIgnoreCase", true);
+    }
+    if (variableNamesIgnoreCase) {
+      request = request.queryParam("variableNamesIgnoreCase", true);
+    }
 
-    //equals case-insensitive
-    queryValue = variableName + "_eq_" + variableValue;
+    request.header("accept", MediaType.APPLICATION_JSON)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .when().get(TASK_QUERY_URL);
 
-    given()
-    .queryParam("processVariables", queryValue)
-    .queryParam("variableValuesIgnoreCase", true)
-    .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-    .expect()
-    .statusCode(Status.OK.getStatusCode())
-    .when()
-    .get(TASK_QUERY_URL);
+    if (variableValuesIgnoreCase) {
+      verify(mockQuery).matchVariableValuesIgnoreCase();
+    }
+    if (variableNamesIgnoreCase) {
+      verify(mockQuery).matchVariableNamesIgnoreCase();
+    }
 
-    verify(mockQuery).matchVariableValuesIgnoreCase();
-    verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-    reset(mockQuery);
-
-    given()
-    .queryParam("processVariables", queryValue)
-    .queryParam("variableNamesIgnoreCase", true)
-    .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-    .expect()
-    .statusCode(Status.OK.getStatusCode())
-    .when()
-    .get(TASK_QUERY_URL);
-
-    verify(mockQuery).matchVariableNamesIgnoreCase();
-    verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-    reset(mockQuery);
-
-    given()
-    .queryParam("processVariables", queryValue)
-    .queryParam("variableNamesIgnoreCase", true)
-    .queryParam("variableValuesIgnoreCase", true)
-    .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-    .expect()
-    .statusCode(Status.OK.getStatusCode())
-    .when()
-    .get(TASK_QUERY_URL);
-
-    verify(mockQuery).matchVariableNamesIgnoreCase();
-    verify(mockQuery).matchVariableValuesIgnoreCase();
-    verify(mockQuery).processVariableValueEquals(variableName, variableValue);
-
-    // greater than
-    queryValue = variableName + "_gt_" + variableValue;
-
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
-
-    verify(mockQuery).processVariableValueGreaterThan(variableName, variableValue);
-
-    // greater than equals
-    queryValue = variableName + "_gteq_" + variableValue;
-
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
-
-    verify(mockQuery).processVariableValueGreaterThanOrEquals(variableName, variableValue);
-
-    // lower than
-    queryValue = variableName + "_lt_" + variableValue;
-
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
-
-    verify(mockQuery).processVariableValueLessThan(variableName, variableValue);
-
-    // lower than equals
-    queryValue = variableName + "_lteq_" + variableValue;
-
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
-
-    verify(mockQuery).processVariableValueLessThanOrEquals(variableName, variableValue);
-
-    // like
-    queryValue = variableName + "_like_" + variableValue;
-
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
-
-    verify(mockQuery).processVariableValueLike(variableName, variableValue);
-    reset(mockQuery);
-
-    // like case-insensitive
-    queryValue = variableName + "_like_" + variableValue;
-
-    given()
-    .queryParam("processVariables", queryValue)
-    .queryParam("variableValuesIgnoreCase", true)
-    .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-    .expect()
-    .statusCode(Status.OK.getStatusCode())
-    .when()
-    .get(TASK_QUERY_URL);
-
-    verify(mockQuery).matchVariableValuesIgnoreCase();
-    verify(mockQuery).processVariableValueLike(variableName, variableValue);
-
-    // not equals
-    queryValue = variableName + "_neq_" + variableValue;
-
-    given()
-      .queryParam("processVariables", queryValue)
-      .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-      .expect()
-        .statusCode(Status.OK.getStatusCode())
-      .when()
-        .get(TASK_QUERY_URL);
-
-    verify(mockQuery).processVariableValueNotEquals(variableName, variableValue);
-    reset(mockQuery);
-
-    // not equals case-insensitive
-    queryValue = variableName + "_neq_" + variableValue;
-
-    given()
-    .queryParam("processVariables", queryValue)
-    .queryParam("variableValuesIgnoreCase", true)
-    .header("accept", MediaType.APPLICATION_JSON)
-    .then()
-    .expect()
-    .statusCode(Status.OK.getStatusCode())
-    .when()
-    .get(TASK_QUERY_URL);
-
-    verify(mockQuery).matchVariableValuesIgnoreCase();
-    verify(mockQuery).processVariableValueNotEquals(variableName, variableValue);
+    switch (operator) {
+    case "eq":
+      verify(mockQuery).processVariableValueEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "gt":
+      verify(mockQuery).processVariableValueGreaterThan(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "gteq":
+      verify(mockQuery).processVariableValueGreaterThanOrEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "lt":
+      verify(mockQuery).processVariableValueLessThan(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "lteq":
+      verify(mockQuery).processVariableValueLessThanOrEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "like":
+      verify(mockQuery).processVariableValueLike(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    case "neq":
+      verify(mockQuery).processVariableValueNotEquals(SAMPLE_VAR_NAME, SAMPLE_VAR_VALUE);
+      break;
+    default:
+      throw new IllegalArgumentException("Unsupported operator: " + operator);
+    }
   }
 
   @Test

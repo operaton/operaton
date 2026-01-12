@@ -15,31 +15,32 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.behavior;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
+import java.util.stream.Stream;
 
 import org.apache.commons.mail2.core.EmailException;
 import org.apache.commons.mail2.jakarta.Email;
 import org.apache.commons.mail2.jakarta.HtmlEmail;
 import org.apache.commons.mail2.jakarta.SimpleEmail;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.api.Test;
-import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.context.Context;
-import org.operaton.bpm.engine.delegate.Expression;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
-import java.util.stream.Stream;
+import org.operaton.bpm.engine.delegate.Expression;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 class MailActivityBehaviorTest {
 

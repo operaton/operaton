@@ -40,7 +40,7 @@ public class Connectors {
   public static final String SOAP_HTTP_CONNECTOR_ID = "soap-http-connector";
 
   /** The global instance of the manager */
-  private static Connectors instance = new Connectors();
+  private static final Connectors instance = new Connectors();
 
   /**
    * Provides the global instance of the Connectors manager.

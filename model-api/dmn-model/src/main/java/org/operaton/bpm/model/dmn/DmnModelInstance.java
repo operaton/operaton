@@ -49,5 +49,6 @@ public interface DmnModelInstance extends ModelInstance {
    *
    * @return the new DMN model instance
    */
+  @Override
   DmnModelInstance copy();
 }

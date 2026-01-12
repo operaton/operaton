@@ -54,5 +54,6 @@ public interface BpmnModelInstance extends ModelInstance {
    *
    * @return the new BPMN model instance
    */
+  @Override
   BpmnModelInstance copy();
 }

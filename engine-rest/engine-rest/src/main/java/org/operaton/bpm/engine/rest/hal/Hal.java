@@ -41,10 +41,10 @@ public class Hal {
   public static final String APPLICATION_HAL_JSON = "application/hal+json";
   public static final MediaType APPLICATION_HAL_JSON_TYPE = new MediaType("application", "hal+json");
 
-  private static Hal instance = new Hal();
+  private static final Hal instance = new Hal();
 
-  private Map<Class<?>, HalLinkResolver> halLinkResolvers = new HashMap<>();
-  private Map<Class<?>, Cache> halRelationCaches = new HashMap<>();
+  private final Map<Class<?>, HalLinkResolver> halLinkResolvers = new HashMap<>();
+  private final Map<Class<?>, Cache> halRelationCaches = new HashMap<>();
 
   public Hal() {
     // register the built-in resolvers

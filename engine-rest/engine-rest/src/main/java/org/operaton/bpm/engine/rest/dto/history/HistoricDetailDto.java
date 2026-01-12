@@ -121,14 +121,14 @@ public abstract class HistoricDetailDto {
   }
 
   public static HistoricDetailDto fromHistoricDetail(HistoricDetail historicDetail) {
-
     HistoricDetailDto dto = null;
 
     if (historicDetail instanceof HistoricFormField historicFormField) {
       dto = HistoricFormFieldDto.fromHistoricFormField(historicFormField);
-
     } else if (historicDetail instanceof HistoricVariableUpdate historicVariableUpdate) {
       dto = HistoricVariableUpdateDto.fromHistoricVariableUpdate(historicVariableUpdate);
+    } else {
+      throw new IllegalArgumentException("Unsupported historic detail type: " + historicDetail.getClass().getName());
     }
 
     fromHistoricDetail(historicDetail, dto);

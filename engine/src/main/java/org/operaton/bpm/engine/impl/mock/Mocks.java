@@ -75,6 +75,6 @@ public final class Mocks {
    * This method resets the internal map of mock objects.
    */
   public static void reset() {
-    getMocks().clear();
+    mockContainer.remove();
   }
 }

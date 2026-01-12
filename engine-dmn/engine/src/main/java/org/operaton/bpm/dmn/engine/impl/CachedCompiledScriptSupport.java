@@ -28,4 +28,12 @@ public interface CachedCompiledScriptSupport {
 
   CompiledScript getCachedCompiledScript();
 
+  /**
+   * Returns the lock object used for thread-safe caching.
+   * This lock should be used when synchronizing access to the cached compiled script.
+   *
+   * @return the lock object for synchronization
+   */
+  Object getCacheLock();
+
 }

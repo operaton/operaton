@@ -73,7 +73,7 @@ public class ExpressionEvaluationHandler {
 
         CompiledScript compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
         if (compiledScript == null) {
-          synchronized (cachedCompiledScriptSupport) {
+          synchronized (cachedCompiledScriptSupport.getCacheLock()) {
             compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
 
             if (compiledScript == null) {
@@ -100,7 +100,7 @@ public class ExpressionEvaluationHandler {
       ElExpression elExpression = cachedExpressionSupport.getCachedExpression();
 
       if (elExpression == null) {
-        synchronized (cachedExpressionSupport) {
+        synchronized (cachedExpressionSupport.getCacheLock()) {
           elExpression = cachedExpressionSupport.getCachedExpression();
           if(elExpression == null) {
             elExpression = elProvider.createExpression(expressionText);

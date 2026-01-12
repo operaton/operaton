@@ -22,6 +22,7 @@ import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.ws.rs.core.Response;
 
+import java.util.concurrent.atomic.AtomicReference;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.spi.FetchAndLockHandler;
 
@@ -30,27 +31,28 @@ import org.operaton.bpm.engine.rest.spi.FetchAndLockHandler;
  */
 public class FetchAndLockContextListener implements ServletContextListener {
 
-  protected static FetchAndLockHandler fetchAndLockHandler;
+  private static AtomicReference<FetchAndLockHandler> fetchAndLockHandler = new AtomicReference<>();
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
-    if (fetchAndLockHandler == null) {
-      fetchAndLockHandler = lookupFetchAndLockHandler();
-      fetchAndLockHandler.contextInitialized(sce);
-      fetchAndLockHandler.start();
+    if (fetchAndLockHandler.get() == null) {
+      var handler = lookupFetchAndLockHandler();
+      handler.contextInitialized(sce);
+      handler.start();
+      fetchAndLockHandler.set(handler);
     }
   }
 
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
-    fetchAndLockHandler.shutdown();
+    fetchAndLockHandler.getAndSet(null).shutdown();
   }
 
   public static FetchAndLockHandler getFetchAndLockHandler() {
-    return fetchAndLockHandler;
+    return fetchAndLockHandler.get();
   }
 
-  protected FetchAndLockHandler lookupFetchAndLockHandler() {
+  private static FetchAndLockHandler lookupFetchAndLockHandler() {
     ServiceLoader<FetchAndLockHandler> serviceLoader = ServiceLoader.load(FetchAndLockHandler.class);
     Iterator<FetchAndLockHandler> iterator = serviceLoader.iterator();
     if(iterator.hasNext()) {

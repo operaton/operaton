@@ -52,5 +52,6 @@ public interface CmmnModelInstance extends ModelInstance {
    *
    * @return the new CMMN model instance
    */
+  @Override
   CmmnModelInstance copy();
 }

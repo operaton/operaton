@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.el;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
 import org.operaton.bpm.engine.variable.VariableMap;

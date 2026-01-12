@@ -55,8 +55,8 @@ import org.operaton.bpm.engine.impl.jobexecutor.FailedJobCommandFactory;
 import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
 
-import static java.util.Collections.emptyList;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Collections.emptyList;
 
 /**
  * @author Tom Baeyens

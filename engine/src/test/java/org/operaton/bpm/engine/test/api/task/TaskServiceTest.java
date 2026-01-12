@@ -123,7 +123,7 @@ class TaskServiceTest {
   IdentityService identityService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss.SSS");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss[.SSS]");
 
   private static Date parseDate(String dateString) {
     LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, DATE_FORMATTER);

@@ -98,7 +98,7 @@ public final class ProcessEngines {
 
     ClassLoader classLoader = ReflectUtil.getClassLoader();
     Set<URL> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
-    if (configResources.isEmpty()) {
+    if (configResources.isEmpty() && !forceCreate) {
       return;
     }
 
@@ -107,7 +107,7 @@ public final class ProcessEngines {
     }
 
     Set<URL> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
-    if (springResources.isEmpty()) {
+    if (springResources.isEmpty() && !forceCreate) {
       return;
     }
 

@@ -28,12 +28,4 @@ public interface CachedExpressionSupport {
 
   ElExpression getCachedExpression();
 
-  /**
-   * Returns the lock object used for thread-safe caching.
-   * This lock should be used when synchronizing access to the cached expression.
-   *
-   * @return the lock object for synchronization
-   */
-  Object getCacheLock();
-
 }

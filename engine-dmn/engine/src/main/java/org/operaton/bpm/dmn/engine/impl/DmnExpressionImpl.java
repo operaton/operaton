@@ -33,9 +33,6 @@ public class DmnExpressionImpl implements CachedCompiledScriptSupport, CachedExp
   protected CompiledScript cachedCompiledScript;
   protected ElExpression cachedExpression;
 
-  // Lock object for thread-safe caching
-  private final Object cacheLock = new Object();
-
   public String getId() {
     return id;
   }
@@ -105,10 +102,5 @@ public class DmnExpressionImpl implements CachedCompiledScriptSupport, CachedExp
   @Override
   public void setCachedExpression(ElExpression expression) {
     this.cachedExpression = expression;
-  }
-
-  @Override
-  public Object getCacheLock() {
-    return cacheLock;
   }
 }

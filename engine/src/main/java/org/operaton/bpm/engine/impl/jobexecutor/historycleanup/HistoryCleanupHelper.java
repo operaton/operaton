@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
@@ -84,8 +85,8 @@ public final class HistoryCleanupHelper {
         .toLocalDateTime();
     String today = currentTime.format(DATE_FORMAT_WITHOUT_TIME);
     try {
-      LocalDateTime parsedDateTime = LocalDateTime.parse(today + time, TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE);
-      return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+      ZonedDateTime parsedDateTime = ZonedDateTime.parse(today + time, TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE);
+      return Date.from(parsedDateTime.toInstant());
     } catch (DateTimeParseException ex) {
       try {
         LocalDateTime parsedDateTime = LocalDateTime.parse(today + time, TIME_FORMAT_WITHOUT_SECONDS);

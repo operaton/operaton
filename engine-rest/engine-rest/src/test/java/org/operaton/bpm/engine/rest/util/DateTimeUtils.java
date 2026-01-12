@@ -44,6 +44,11 @@ public abstract class DateTimeUtils {
     }
   }
 
+  /**
+   * Formats a date with timezone information using the system default timezone.
+   * @param date the date to format
+   * @return formatted date string with timezone
+   */
   public static String withTimezone(Date date) {
     return date.toInstant()
         .atZone(ZoneId.systemDefault())

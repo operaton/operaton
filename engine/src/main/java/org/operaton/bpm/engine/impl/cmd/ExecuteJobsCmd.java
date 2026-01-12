@@ -105,7 +105,7 @@ public class ExecuteJobsCmd implements Command<Void> {
 
       job.execute(commandContext);
 
-    } catch (Throwable t) {
+    } catch (Exception t) {
       String failedActivityId = Context.getCommandInvocationContext()
           .getProcessDataContext()
           .getLatestActivityId();

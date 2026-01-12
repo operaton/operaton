@@ -145,7 +145,7 @@ public class CommandContext {
             flushSessions();
           }
 
-        } catch (Throwable exception) {
+        } catch (Exception exception) {
           commandInvocationContext.trySetThrowable(exception);
         } finally {
 
@@ -153,7 +153,7 @@ public class CommandContext {
             if (commandInvocationContext.getThrowable() == null) {
               transactionContext.commit();
             }
-          } catch (Throwable exception) {
+          } catch (Exception exception) {
             commandInvocationContext.trySetThrowable(exception);
           }
 
@@ -175,12 +175,12 @@ public class CommandContext {
             transactionContext.rollback();
           }
         }
-      } catch (Throwable exception) {
+      } catch (Exception exception) {
         commandInvocationContext.trySetThrowable(exception);
       } finally {
         closeSessions(commandInvocationContext);
       }
-    } catch (Throwable exception) {
+    } catch (Exception exception) {
       commandInvocationContext.trySetThrowable(exception);
     }
 
@@ -213,7 +213,7 @@ public class CommandContext {
       try {
         listener.onCommandFailed(this, t);
       }
-      catch(Throwable ex) {
+      catch(Exception ex) {
         LOG.exceptionWhileInvokingOnCommandFailed(t);
       }
     }
@@ -229,7 +229,7 @@ public class CommandContext {
     for (Session session : sessionList) {
       try {
         session.close();
-      } catch (Throwable exception) {
+      } catch (Exception exception) {
         commandInvocationContext.trySetThrowable(exception);
       }
     }

@@ -171,6 +171,7 @@
             <exclusion>**/ConditionalEventTriggeredByExecutionListenerTest.java</exclusion>
             <exclusion>**/TriggerConditionalEventFromDelegationCodeTest.java</exclusion>
             <exclusion>**/ExecutionListenerTest.java</exclusion>
+            <exclusion>**/MigrationPlanCreationTest.java</exclusion>
             <exclusion>**/MigrationPlanGenerationTest.java</exclusion>
             <!-- org.openrewrite.java.UseStaticImport -->
             <exclusion>**/CaseInstanceAssertTest.java</exclusion>

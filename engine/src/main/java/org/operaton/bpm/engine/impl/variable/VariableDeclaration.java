@@ -71,7 +71,7 @@ public class VariableDeclaration implements Serializable {
     }
 
     if (linkExpression!=null) {
-      Object value = sourceExpression.getValue(outerScopeInstance);
+      Object value = linkExpression.getValue(outerScopeInstance);
       innerScopeInstance.setVariable(destinationVariableName, value);
     }
 
@@ -103,7 +103,7 @@ public class VariableDeclaration implements Serializable {
     }
 
     if (linkExpression!=null) {
-      Object value = sourceExpression.getValue(innerScopeInstance);
+      Object value = linkExpression.getValue(innerScopeInstance);
       outerScopeInstance.setVariable(destinationVariableName, value);
     }
   }

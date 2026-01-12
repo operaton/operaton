@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -104,7 +106,7 @@ class HistoryCleanupTest {
   private static final int NUMBER_OF_THREADS = 3;
   private static final String USER_ID = "demo";
 
-  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final Date targetDate = new Date(Instant.parse("2025-01-01T00:00:00Z").toEpochMilli());
 
   protected String defaultStartTime;

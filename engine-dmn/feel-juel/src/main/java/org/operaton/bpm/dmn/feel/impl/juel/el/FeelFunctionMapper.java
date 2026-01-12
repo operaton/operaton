@@ -17,8 +17,10 @@
 package org.operaton.bpm.dmn.feel.impl.juel.el;
 
 import java.lang.reflect.Method;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +33,7 @@ public class FeelFunctionMapper extends FunctionMapper {
 
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
 
-  protected static final SimpleDateFormat FEEL_DATE_AND_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter FEEL_DATE_AND_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   public static final String JUEL_DATE_AND_TIME_METHOD = "dateAndTime";
 
   protected static final Map<String, Method> methods = new HashMap<>();
@@ -55,9 +57,9 @@ public class FeelFunctionMapper extends FunctionMapper {
 
   public static Date parseDateAndTime(String dateAndTimeString) {
     try {
-      SimpleDateFormat clonedDateFormat = (SimpleDateFormat) FEEL_DATE_AND_TIME_FORMAT.clone();
-      return clonedDateFormat.parse(dateAndTimeString);
-    } catch (ParseException e) {
+      LocalDateTime parsedDateTime = LocalDateTime.parse(dateAndTimeString, FEEL_DATE_AND_TIME_FORMAT);
+      return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    } catch (DateTimeParseException e) {
       throw LOG.invalidDateAndTimeFormat(dateAndTimeString, e);
     }
   }

@@ -17,7 +17,9 @@
 package org.operaton.bpm.engine.test.api.task;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Set;
 
@@ -49,7 +51,7 @@ class DelegateTaskTest {
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
 
   private static final Date FOLLOW_UP_DATE;

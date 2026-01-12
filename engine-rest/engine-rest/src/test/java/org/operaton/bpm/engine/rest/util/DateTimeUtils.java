@@ -16,15 +16,18 @@
  */
 package org.operaton.bpm.engine.rest.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 
 public abstract class DateTimeUtils {
 
-  public static final SimpleDateFormat DATE_FORMAT_WITHOUT_TIMEZONE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  public static final SimpleDateFormat DATE_FORMAT_WITH_TIMEZONE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+  private static final DateTimeFormatter DATE_FORMAT_WITHOUT_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter DATE_FORMAT_WITH_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   /**
    * Converts date string without timezone to the one with timezone.
@@ -32,17 +35,19 @@ public abstract class DateTimeUtils {
    * @return
    */
   public static String withTimezone(String dateString) {
-    final Date parse;
     try {
-      parse = DATE_FORMAT_WITHOUT_TIMEZONE.parse(dateString);
-      return withTimezone(parse);
-    } catch (ParseException e) {
+      LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, DATE_FORMAT_WITHOUT_TIMEZONE);
+      Instant instant = parsedDateTime.atZone(ZoneId.systemDefault()).toInstant();
+      return withTimezone(Date.from(instant));
+    } catch (DateTimeParseException e) {
       throw new RuntimeException(e);
     }
   }
 
   public static String withTimezone(Date date) {
-      return DATE_FORMAT_WITH_TIMEZONE.format(date);
+    return date.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .format(DATE_FORMAT_WITH_TIMEZONE);
   }
 
   public static Date updateTime(Date now, Date newTime) {

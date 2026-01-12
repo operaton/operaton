@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.standalone.authentication;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import ch.qos.logback.classic.Level;
@@ -38,7 +40,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LoginAttemptsTest {
 
-  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final String INDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   @RegisterExtension
@@ -78,7 +80,8 @@ class LoginAttemptsTest {
     user.setPassword("xxx");
     identityService.saveUser(user);
 
-    Date now = sdf.parse("2000-01-24T13:00:00");
+    LocalDateTime parsedDateTime = LocalDateTime.parse("2000-01-24T13:00:00", dateFormatter);
+    Date now = Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
     ClockUtil.setCurrentTime(now);
     // when
     for (int i = 0; i <= 6; i++) {

@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +45,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MigrationTimerBoundryEventTest {
 
   private static final String DUE_DATE_IN_THE_PAST = "2018-02-11T12:13:14Z";
-  protected static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  protected static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();

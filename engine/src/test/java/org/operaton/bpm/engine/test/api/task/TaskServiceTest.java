@@ -18,7 +18,9 @@ package org.operaton.bpm.engine.test.api.task;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -121,7 +123,7 @@ class TaskServiceTest {
   IdentityService identityService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss.SSS");
 
   @AfterEach
   void tearDown() {

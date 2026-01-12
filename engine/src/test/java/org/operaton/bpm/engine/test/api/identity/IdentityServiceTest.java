@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -65,7 +67,7 @@ class IdentityServiceTest {
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
 
-  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();

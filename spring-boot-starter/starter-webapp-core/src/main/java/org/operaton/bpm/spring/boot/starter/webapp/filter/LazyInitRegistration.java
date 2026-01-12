@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 import jakarta.servlet.Filter;
 
+import java.util.concurrent.atomic.AtomicReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -37,7 +38,7 @@ public class LazyInitRegistration implements ApplicationContextAware {
 
   protected static final Set<LazyDelegateFilter<? extends Filter>> REGISTRATION = new HashSet<>();
 
-  protected static ApplicationContext applicationContext;
+  protected static AtomicReference<ApplicationContext> applicationContext = new AtomicReference<>();
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LazyInitRegistration.class);
 
@@ -47,8 +48,9 @@ public class LazyInitRegistration implements ApplicationContextAware {
 
   @SuppressWarnings("unchecked")
   protected static <T extends Filter> InitHook<T> getInitHook() {
-    if (applicationContext != null && applicationContext.containsBean(RESOURCE_LOADER_DEPENDING_INIT_HOOK)) {
-      return applicationContext.getBean(RESOURCE_LOADER_DEPENDING_INIT_HOOK, InitHook.class);
+    var appContext = applicationContext.get();
+    if (appContext != null && appContext.containsBean(RESOURCE_LOADER_DEPENDING_INIT_HOOK)) {
+      return appContext.getBean(RESOURCE_LOADER_DEPENDING_INIT_HOOK, InitHook.class);
     }
     return null;
   }
@@ -77,7 +79,7 @@ public class LazyInitRegistration implements ApplicationContextAware {
 
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-    LazyInitRegistration.applicationContext = applicationContext;
+    LazyInitRegistration.applicationContext.set(applicationContext);
     for (LazyDelegateFilter<? extends Filter> lazyDelegateFilter : getRegistrations()) {
       lazyInit(lazyDelegateFilter);
     }
@@ -85,7 +87,7 @@ public class LazyInitRegistration implements ApplicationContextAware {
 
   @EventListener
   protected void onContextClosed(ContextClosedEvent ev) {
-    applicationContext = null;
+    applicationContext.set(null);
   }
 
   static Set<LazyDelegateFilter<? extends Filter>> getRegistrations() {

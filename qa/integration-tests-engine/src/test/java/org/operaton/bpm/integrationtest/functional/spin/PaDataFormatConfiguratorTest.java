@@ -99,7 +99,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
     ObjectValue objectValue = runtimeService.getVariableTyped(pi.getId(), "jsonSerializable", false);
 
     String serializedValue = objectValue.getValueSerialized();
-    String expectedSerializedValue = jsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.DATE_FORMAT);
+    String expectedSerializedValue = jsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.getDateFormat());
 
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
@@ -173,7 +173,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
 
     ImplicitObjectValueUpdateHandler.addADay(jsonSerializable);
     String serializedValue = objectValue.getValueSerialized();
-    String expectedSerializedValue = jsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.DATE_FORMAT);
+    String expectedSerializedValue = jsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.getDateFormat());
 
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);
@@ -223,7 +223,7 @@ public class PaDataFormatConfiguratorTest extends AbstractFoxPlatformIntegration
 
     ImplicitObjectValueUpdateHandler.addADay(jsonSerializable);
     String serializedValue = objectValue.getValueSerialized();
-    String expectedSerializedValue = jsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.DATE_FORMAT);
+    String expectedSerializedValue = jsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.getDateFormat());
 
     ObjectMapper objectMapper = new ObjectMapper();
     JsonNode actualJsonTree = objectMapper.readTree(serializedValue);

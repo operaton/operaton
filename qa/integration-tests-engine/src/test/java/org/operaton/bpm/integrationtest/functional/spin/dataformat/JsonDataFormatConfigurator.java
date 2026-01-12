@@ -31,15 +31,12 @@ import org.operaton.spin.spi.DataFormatConfigurator;
 public class JsonDataFormatConfigurator implements DataFormatConfigurator<JacksonJsonDataFormat> {
 
   // For test code usage - note: SimpleDateFormat is required by Jackson's ObjectMapper.setDateFormat()
-  // Each usage should create a new instance via getDateFormat() for thread-safety
+  // Always use getDateFormat() to create new instances for thread-safety
   public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
   
   public static SimpleDateFormat getDateFormat() {
     return new SimpleDateFormat(DATE_FORMAT_PATTERN);
   }
-  
-  // For backward compatibility with existing test code
-  public static final SimpleDateFormat DATE_FORMAT = getDateFormat();
 
   @Override
   public Class<JacksonJsonDataFormat> getDataFormatClass() {

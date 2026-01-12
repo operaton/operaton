@@ -88,7 +88,7 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
     ProcessInstance pi = withProcessApplicationContext((Callable<ProcessInstance>) () -> runtimeService.startProcessInstanceByKey("process"), "pa2");
 
     JsonSerializable expectedJsonSerializable = RuntimeServiceDelegate.createJsonSerializable();
-    String expectedJsonString = expectedJsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.DATE_FORMAT);
+    String expectedJsonString = expectedJsonSerializable.toExpectedJsonString(JsonDataFormatConfigurator.getDateFormat());
 
     SerializableValue serializedValue = runtimeService.getVariableTyped(pi.getId(), RuntimeServiceDelegate.VARIABLE_NAME, false);
     String actualJsonString = serializedValue.getValueSerialized();

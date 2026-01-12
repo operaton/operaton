@@ -363,8 +363,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
         .endEvent()
         .done();
 
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-    Date startDate = simpleDateFormat.parse("2017-01-01T09:55:00");
+    Date startDate = parseDate("2017-01-01T09:55:00");
     ClockUtil.setCurrentTime(startDate);
 
     testRule.deploy(bpmnModelInstance);

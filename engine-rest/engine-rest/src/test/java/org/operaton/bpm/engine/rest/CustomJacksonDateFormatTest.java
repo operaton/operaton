@@ -95,7 +95,9 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
 
   @Test
   void testSetDateVariable() {
-    String variableValue = TEST_DATE_FORMAT.format(TEST_DATE);
+    String variableValue = Instant.ofEpochMilli(TEST_DATE.getTime())
+        .atZone(ZoneId.systemDefault())
+        .format(TEST_DATE_FORMATTER);
 
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, "Date");
 

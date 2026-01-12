@@ -138,7 +138,6 @@ class TaskServiceTest {
   @Test
   void testSaveTaskUpdate() throws Exception{
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     Task task = taskService.newTask();
     task.setDescription("description");
     task.setName("taskname");

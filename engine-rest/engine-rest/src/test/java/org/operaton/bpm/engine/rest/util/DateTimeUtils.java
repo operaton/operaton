@@ -26,8 +26,8 @@ import java.util.Date;
 
 public abstract class DateTimeUtils {
 
-  private static final DateTimeFormatter DATE_FORMAT_WITHOUT_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-  private static final DateTimeFormatter DATE_FORMAT_WITH_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+  public static final DateTimeFormatter DATE_FORMAT_WITHOUT_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+  public static final DateTimeFormatter DATE_FORMAT_WITH_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   /**
    * Converts date string without timezone to the one with timezone.

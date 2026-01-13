@@ -46,7 +46,6 @@ public class TimerEntity extends JobEntity {
 
   protected static final String CYCLE_EXPRESSION_START_TYPE_1 = TimerDeclarationType.CYCLE + ": #";
   protected static final String CYCLE_EXPRESSION_START_TYPE_2 = TimerDeclarationType.CYCLE + ": $";
-  private static final DateTimeFormatter SIMPLE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
   public static final String TYPE = "timer";
 
@@ -180,7 +179,7 @@ public class TimerEntity extends JobEntity {
     if (repeatExpression.split("/").length == 2) {
       String formattedDate = ClockUtil.getCurrentTime().toInstant()
           .atZone(ZoneId.systemDefault())
-          .format(SIMPLE_DATE_FORMATTER);
+          .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
       return repeatExpression.replace("/", "/%s/".formatted(formattedDate));
     }
     return repeatExpression; // expression include start date

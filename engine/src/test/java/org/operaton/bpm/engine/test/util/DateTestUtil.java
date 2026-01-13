@@ -20,16 +20,12 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+import static java.time.format.DateTimeFormatter.ISO_TIME;
+
 /**
  * Test utility class for date parsing operations.
  */
 public final class DateTestUtil {
-
-  /**
-   * ISO-like date-time format: yyyy-MM-dd'T'HH:mm:ss
-   * Example: 2023-12-31T23:59:59
-   */
-  public static final DateTimeFormatter ISO_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
   private DateTestUtil() {
     // Utility class - no instantiation
@@ -42,7 +38,7 @@ public final class DateTestUtil {
    * @return the parsed Date object
    */
   public static Date parseDate(String dateString) {
-    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, ISO_DATE_TIME_FORMATTER);
+    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 
@@ -57,4 +53,14 @@ public final class DateTestUtil {
     LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
     return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
+
+  public static String formatDate(Date date) {
+    return date.toInstant().atZone(ZoneId.systemDefault()).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+  }
+
+  public static String formatTime(Date date) {
+    return date.toInstant().atZone(ZoneId.systemDefault()).format(ISO_TIME);
+  }
+
+
 }

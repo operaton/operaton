@@ -50,13 +50,12 @@ class DelegateTaskTest {
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final String FOLLOW_UP_DATE_STRING = "2019-01-01T01:00:00";
 
   private static final Date FOLLOW_UP_DATE;
 
   static {
-    LocalDateTime parsedDateTime = LocalDateTime.parse(FOLLOW_UP_DATE_STRING, DATE_FORMATTER);
+    LocalDateTime parsedDateTime = LocalDateTime.parse(FOLLOW_UP_DATE_STRING, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
     FOLLOW_UP_DATE = Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
   }
 

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -81,12 +80,15 @@ import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+import static java.time.format.DateTimeFormatter.ISO_TIME;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.operaton.bpm.engine.test.util.DateTestUtil.formatTime;
 
 /**
  * @author Svetlana Dorokhova
@@ -107,7 +109,6 @@ class HistoryCleanupTest {
   private static final int NUMBER_OF_THREADS = 3;
   private static final String USER_ID = "demo";
 
-  private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
   private static final Date targetDate = new Date(Instant.parse("2025-01-01T00:00:00Z").toEpochMilli());
 
   protected String defaultStartTime;
@@ -130,10 +131,6 @@ class HistoryCleanupTest {
   protected Removable removable;
 
   private final Random random = new Random();
-
-  private static String formatTime(Date date) {
-    return date.toInstant().atZone(ZoneId.systemDefault()).format(timeFormatter);
-  }
 
   private HistoryService historyService;
   private RuntimeService runtimeService;
@@ -1231,13 +1228,12 @@ class HistoryCleanupTest {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 
-    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ");
-    ZonedDateTime parsedDateTime1 = ZonedDateTime.parse("2017-09-06T22:15:00+0100", dateFormat);
+    ZonedDateTime parsedDateTime1 = ZonedDateTime.parse("2017-09-06T22:15:00+01:00", ISO_OFFSET_DATE_TIME);
     Date date = Date.from(parsedDateTime1.toInstant());
 
     assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isTrue();
 
-    ZonedDateTime parsedDateTime2 = ZonedDateTime.parse("2017-09-06T22:15:00+0200", dateFormat);
+    ZonedDateTime parsedDateTime2 = ZonedDateTime.parse("2017-09-06T22:15:00+02:00", ISO_OFFSET_DATE_TIME);
     date = Date.from(parsedDateTime2.toInstant());
     assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isFalse();
   }

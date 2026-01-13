@@ -31,6 +31,8 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
+
 /**
  * @author Svetlana Dorokhova.
  */
@@ -39,8 +41,6 @@ public final class HistoryCleanupHelper {
   private static final DateTimeFormatter TIME_FORMAT_WITHOUT_SECONDS = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
 
   private static final DateTimeFormatter TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mmZ");
-
-  private static final DateTimeFormatter DATE_FORMAT_WITHOUT_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   private HistoryCleanupHelper () {
   }
@@ -83,7 +83,7 @@ public final class HistoryCleanupHelper {
     LocalDateTime currentTime = ClockUtil.getCurrentTime().toInstant()
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime();
-    String today = currentTime.format(DATE_FORMAT_WITHOUT_TIME);
+    String today = currentTime.format(ISO_LOCAL_DATE);
     try {
       ZonedDateTime parsedDateTime = ZonedDateTime.parse(today + time, TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE);
       return Date.from(parsedDateTime.toInstant());

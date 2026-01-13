@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.rest;
 
 import java.time.Instant;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
 import jakarta.ws.rs.core.Response.Status;
@@ -37,6 +36,7 @@ import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 import static org.operaton.bpm.engine.rest.mapper.JacksonConfigurator.DEFAULT_DATE_FORMAT;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
@@ -57,11 +57,10 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   protected static final String PROCESS_INSTANCE_VARIABLES_URL = SINGLE_PROCESS_INSTANCE_URL + "/variables";
   protected static final String SINGLE_PROCESS_INSTANCE_VARIABLE_URL = PROCESS_INSTANCE_VARIABLES_URL + "/{varId}";
 
-  private static final DateTimeFormatter TEST_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   protected static final Date TEST_DATE = new Date(1450282812000L);
   protected static final String TEST_DATE_FORMATTED = Instant.ofEpochMilli(TEST_DATE.getTime())
       .atZone(ZoneId.systemDefault())
-      .format(TEST_DATE_FORMATTER);
+      .format(ISO_LOCAL_DATE_TIME);
 
   protected RuntimeServiceImpl runtimeServiceMock;
 
@@ -97,7 +96,7 @@ public class CustomJacksonDateFormatTest extends AbstractRestServiceTest {
   void testSetDateVariable() {
     String variableValue = Instant.ofEpochMilli(TEST_DATE.getTime())
         .atZone(ZoneId.systemDefault())
-        .format(TEST_DATE_FORMATTER);
+        .format(ISO_LOCAL_DATE_TIME);
 
     Map<String, Object> variableJson = VariablesBuilder.getVariableValueMap(variableValue, "Date");
 

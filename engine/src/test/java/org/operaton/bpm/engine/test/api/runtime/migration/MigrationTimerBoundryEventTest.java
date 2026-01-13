@@ -40,15 +40,11 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.operaton.bpm.engine.test.util.DateTestUtil.formatDate;
 
 class MigrationTimerBoundryEventTest {
 
   private static final String DUE_DATE_IN_THE_PAST = "2018-02-11T12:13:14Z";
-  protected static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-  private static String formatDate(Date date) {
-    return date.toInstant().atZone(ZoneId.systemDefault()).format(dateFormatter);
-  }
 
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();

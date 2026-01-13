@@ -38,7 +38,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class JobTimestampsUpdateScenario extends AbstractTimestampUpdateScenario {
 
-  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
   protected static final Date LOCK_EXP_TIME = new Date(TIME + 300_000L);
   protected static final String PROCESS_DEFINITION_KEY = "jobTimestampsUpdateTestProcess";
 

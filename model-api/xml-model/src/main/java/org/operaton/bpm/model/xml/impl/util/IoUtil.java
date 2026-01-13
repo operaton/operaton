@@ -32,6 +32,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public final class IoUtil {
 
+  // Lock object for thread-safe XML transformation
+  private static final Object transformationLock = new Object();
+
   private IoUtil() {
   }
 
@@ -130,7 +133,7 @@ public final class IoUtil {
       transformer.setOutputProperty(OutputKeys.INDENT, "yes");
       transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
-      synchronized(document) {
+      synchronized(transformationLock) {
         transformer.transform(document.getDomSource(), result);
       }
     } catch (TransformerConfigurationException e) {

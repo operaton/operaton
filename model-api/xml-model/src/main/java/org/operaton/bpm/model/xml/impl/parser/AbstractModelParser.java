@@ -50,6 +50,9 @@ public abstract class AbstractModelParser {
   private final DocumentBuilderFactory documentBuilderFactory;
   protected SchemaFactory schemaFactory;
   protected Map<String, Schema> schemas = new HashMap<>();
+  
+  // Lock object for thread-safe validation
+  private final Object validationLock = new Object();
 
   protected AbstractModelParser() {
     DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -162,7 +165,7 @@ public abstract class AbstractModelParser {
 
     Validator validator = schema.newValidator();
     try {
-      synchronized(document) {
+      synchronized(validationLock) {
         validator.validate(document.getDomSource());
       }
     } catch (IOException e) {

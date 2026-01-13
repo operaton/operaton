@@ -50,7 +50,11 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
     super(jobIds, processEngine);
     this.ra = connector;
     if(method.get() == null) {
-      loadMethod();
+      synchronized(method) {
+        if(method.get() == null) {
+          loadMethod();
+        }
+      }
     }
   }
 

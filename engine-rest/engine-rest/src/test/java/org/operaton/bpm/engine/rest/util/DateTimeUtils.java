@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.util;
 
 import java.text.ParseException;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -27,6 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public abstract class DateTimeUtils {
+  public static final DateFormat DATE_FORMAT_WITHOUT_TIMEZONE = new DateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  public static final DateFormat DATE_FORMAT_WITH_TIMEZONE = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   /**
    * A thread-safe wrapper around DateTimeFormatter that provides a SimpleDateFormat-like API
@@ -68,9 +69,6 @@ public abstract class DateTimeUtils {
       }
     }
   }
-
-  public static final DateFormat DATE_FORMAT_WITHOUT_TIMEZONE = new DateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  public static final DateFormat DATE_FORMAT_WITH_TIMEZONE = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   /**
    * Converts date string without timezone to the one with timezone.

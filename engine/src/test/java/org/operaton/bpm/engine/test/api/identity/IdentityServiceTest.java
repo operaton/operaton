@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.identity;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;

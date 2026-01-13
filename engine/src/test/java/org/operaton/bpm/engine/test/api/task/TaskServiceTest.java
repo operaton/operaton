@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.test.api.task;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -132,7 +130,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testSaveTaskUpdate() throws Exception{
+  void testSaveTaskUpdate() {
 
     Task task = taskService.newTask();
     task.setDescription("description");
@@ -2553,7 +2551,7 @@ class TaskServiceTest {
   }
 
   @Test
-  void testTaskAttachmentByTaskIdAndAttachmentId() throws Exception {
+  void testTaskAttachmentByTaskIdAndAttachmentId() {
     Date fixedDate = DateTestUtil.parseDate("01/01/2001 01:01:01.000", DATE_FORMATTER);
     ClockUtil.setCurrentTime(fixedDate);
 
@@ -2644,7 +2642,7 @@ class TaskServiceTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  void testCreateTaskAttachmentWithNullTaskId() throws Exception {
+  void testCreateTaskAttachmentWithNullTaskId() {
     Date fixedDate = DateTestUtil.parseDate("01/01/2001 01:01:01.000", DATE_FORMATTER);
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -1110,7 +1109,7 @@ class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws Exception {
+  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() {
     //given
     prepareData(5);
 
@@ -1143,7 +1142,7 @@ class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws Exception {
+  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() {
     //given
     prepareData(5);
 
@@ -1228,7 +1227,7 @@ class HistoryCleanupTest {
   }
 
   @Test
-  void testHistoryCleanupHelper() throws Exception {
+  void testHistoryCleanupHelper() {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 

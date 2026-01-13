@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.parse;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +63,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryGlobalConfiguration() throws Exception {
+  void testRetryGlobalConfiguration() {
     // given global retry conf. ("PT5M,PT20M, PT3M")
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTask();
     testRule.deploy(bpmnModelInstance);
@@ -103,7 +100,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryGlobalConfigurationWithExecutionListener() throws Exception {
+  void testRetryGlobalConfigurationWithExecutionListener() {
     // given
     engineRule.getProcessEngineConfiguration().setFailedJobRetryTimeCycle("PT5M");
 
@@ -137,7 +134,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryMixConfiguration() throws Exception {
+  void testRetryMixConfiguration() {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("R3/PT1M");
 
@@ -165,7 +162,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testRetryIntervals() throws Exception {
+  void testRetryIntervals() {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
@@ -203,7 +200,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testSingleRetryInterval() throws Exception {
+  void testSingleRetryInterval() {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT8M ");
     testRule.deploy(bpmnModelInstance);
@@ -247,7 +244,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testIntervalsAfterUpdateRetries() throws Exception {
+  void testIntervalsAfterUpdateRetries() {
     // given
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
@@ -300,7 +297,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testMixConfigurationWithinOneProcess() throws Exception {
+  void testMixConfigurationWithinOneProcess() {
     // given
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess(PROCESS_ID)
         .startEvent()
@@ -348,7 +345,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   }
 
   @Test
-  void testlocalConfigurationWithNestedChangingExpression() throws Exception {
+  void testlocalConfigurationWithNestedChangingExpression() {
     BpmnModelInstance bpmnModelInstance = Bpmn.createExecutableProcess("process")
         .startEvent()
         .serviceTask()

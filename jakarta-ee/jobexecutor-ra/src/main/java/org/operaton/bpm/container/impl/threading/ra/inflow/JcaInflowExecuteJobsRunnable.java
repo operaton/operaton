@@ -45,12 +45,13 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
   protected final JcaExecutorServiceConnector ra;
 
   protected static AtomicReference<Method> method = new AtomicReference<>();
+  private static final Object methodLock = new Object();
 
   public JcaInflowExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine, JcaExecutorServiceConnector connector) {
     super(jobIds, processEngine);
     this.ra = connector;
     if(method.get() == null) {
-      synchronized(method) {
+      synchronized(methodLock) {
         if(method.get() == null) {
           loadMethod();
         }

@@ -19,7 +19,6 @@ package org.operaton.bpm.dmn.feel.impl.juel.el;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,12 +27,12 @@ import jakarta.el.FunctionMapper;
 
 import org.operaton.bpm.dmn.feel.impl.juel.FeelEngineLogger;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;
+import org.operaton.bpm.engine.impl.util.DateTimeFormatterUtil;
 
 public class FeelFunctionMapper extends FunctionMapper {
 
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
 
-  private static final DateTimeFormatter FEEL_DATE_AND_TIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   public static final String JUEL_DATE_AND_TIME_METHOD = "dateAndTime";
 
   protected static final Map<String, Method> methods = new HashMap<>();
@@ -57,7 +56,7 @@ public class FeelFunctionMapper extends FunctionMapper {
 
   public static Date parseDateAndTime(String dateAndTimeString) {
     try {
-      LocalDateTime parsedDateTime = LocalDateTime.parse(dateAndTimeString, FEEL_DATE_AND_TIME_FORMAT);
+      LocalDateTime parsedDateTime = LocalDateTime.parse(dateAndTimeString, DateTimeFormatterUtil.ISO_DATE_TIME);
       return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
     } catch (DateTimeParseException e) {
       throw LOG.invalidDateAndTimeFormat(dateAndTimeString, e);

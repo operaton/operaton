@@ -17,10 +17,12 @@
 package org.operaton.bpm.engine.test.cmmn.listener;
 
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
@@ -1829,7 +1831,7 @@ class CaseExecutionListenerTest extends CmmnTest {
   }
 
   @ParameterizedTest
-  @CsvSource({
+  @ValueSource(strings = {
     "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByClass.cmmn",
     "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByDelegateExpression.cmmn",
     "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByExpression.cmmn",
@@ -1895,7 +1897,7 @@ class CaseExecutionListenerTest extends CmmnTest {
   }
 
   @ParameterizedTest
-  @CsvSource({
+  @ValueSource(strings = {
     "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByClass.cmmn",
     "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByDelegateExpression.cmmn"
   })

@@ -39,7 +39,7 @@ public class SendSignalDelegate implements JavaDelegate {
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
-    businessProcess.setVariable("processName", "throwSignal-visited (was " + businessProcess.getVariable("processName")  + ")");
+    businessProcess.setVariable("processName", "throwSignal-visited (was %s)".formatted(businessProcess.getVariable("processName")));
 
     String signalProcessInstanceId = (String) execution.getVariable("signalProcessInstanceId");
     String executionId = runtimeService.createExecutionQuery().processInstanceId(signalProcessInstanceId).signalEventSubscriptionName("alert").singleResult().getId();

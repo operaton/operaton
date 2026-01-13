@@ -77,6 +77,7 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.DateTestUtil;
 import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
@@ -107,7 +108,6 @@ class HistoryCleanupTest {
   private static final int NUMBER_OF_THREADS = 3;
   private static final String USER_ID = "demo";
 
-  private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
   private static final Date targetDate = new Date(Instant.parse("2025-01-01T00:00:00Z").toEpochMilli());
 
@@ -131,11 +131,6 @@ class HistoryCleanupTest {
   protected Removable removable;
 
   private final Random random = new Random();
-
-  private static Date parseDate(String dateString) {
-    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, dateFormatter);
-    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
-  }
 
   private static String formatTime(Date date) {
     return date.toInstant().atZone(ZoneId.systemDefault()).format(timeFormatter);
@@ -1120,7 +1115,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're outside batch window, batch window passes midnight
-    ClockUtil.setCurrentTime(parseDate("2019-05-28T01:10:00"));  // 01:10
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2019-05-28T01:10:00"));  // 01:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();
@@ -1153,7 +1148,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window, but batch window passes midnight
-    ClockUtil.setCurrentTime(parseDate("2018-05-14T00:10:00"));  // 00:10
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2018-05-14T00:10:00"));  // 00:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();

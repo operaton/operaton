@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.test.api.AbstractAsyncOperationsTest;
 import org.operaton.bpm.engine.test.bpmn.executionlistener.RecorderExecutionListener;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.DateTestUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -44,7 +45,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
-  private static final DateTimeFormatter SIMPLE_DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final String PROCESS_ID = "process";
   private static final String FAILING_CLASS = "this.class.does.not.Exist";
 
@@ -59,11 +59,6 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  private static Date parseDate(String dateString) {
-    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, SIMPLE_DATE_FORMATTER);
-    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
-  }
-
   @BeforeEach
   void setUp() {
     initDefaults(engineRule);
@@ -76,11 +71,11 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTask();
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -122,11 +117,11 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     .done();
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -148,12 +143,12 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
 
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
     assertThat(pi).isNotNull();
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -175,12 +170,12 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
     assertThat(pi).isNotNull();
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -213,12 +208,12 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT8M ");
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
     assertThat(pi).isNotNull();
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -257,12 +252,12 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     BpmnModelInstance bpmnModelInstance = prepareProcessFailingServiceTaskWithRetryCycle("PT3M, PT10M,PT8M");
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
     assertThat(pi).isNotNull();
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -320,12 +315,12 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
         .done();
     testRule.deploy(bpmnModelInstance);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey(PROCESS_ID);
     assertThat(pi).isNotNull();
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();
@@ -363,7 +358,7 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
         .endEvent()
         .done();
 
-    Date startDate = parseDate("2017-01-01T09:55:00");
+    Date startDate = DateTestUtil.parseDate("2017-01-01T09:55:00");
     ClockUtil.setCurrentTime(startDate);
 
     testRule.deploy(bpmnModelInstance);
@@ -375,11 +370,11 @@ class RetryIntervalsConfigurationTest extends AbstractAsyncOperationsTest {
     params.putValue("nestedVar3", "PT25M");
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("process", params);
 
-    ClockUtil.setCurrentTime(parseDate("2017-01-01T09:55:00"));
+    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2017-01-01T09:55:00"));
 
     assertThat(pi).isNotNull();
 
-    Date currentTime = parseDate("2017-01-01T10:00:00");
+    Date currentTime = DateTestUtil.parseDate("2017-01-01T10:00:00");
     ClockUtil.setCurrentTime(currentTime);
 
     String processInstanceId = pi.getProcessInstanceId();

@@ -76,6 +76,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.DateTestUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -125,11 +126,6 @@ class TaskServiceTest {
 
   private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss[.SSS]");
 
-  private static Date parseDate(String dateString) {
-    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, DATE_FORMATTER);
-    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
-  }
-
   @AfterEach
   void tearDown() {
     ClockUtil.setCurrentTime(new Date());
@@ -144,7 +140,7 @@ class TaskServiceTest {
     task.setPriority(0);
     task.setAssignee("taskassignee");
     task.setOwner("taskowner");
-    Date dueDate = parseDate("01/02/2003 04:05:06");
+    Date dueDate = DateTestUtil.parseDate("01/02/2003 04:05:06", DATE_FORMATTER);
     task.setDueDate(dueDate);
     task.setCaseInstanceId("taskcaseinstanceid");
     taskService.saveTask(task);
@@ -179,7 +175,7 @@ class TaskServiceTest {
     task.setPriority(1);
     task.setAssignee("updatedassignee");
     task.setOwner("updatedowner");
-    dueDate = parseDate("01/02/2003 04:05:06");
+    dueDate = DateTestUtil.parseDate("01/02/2003 04:05:06", DATE_FORMATTER);
     task.setDueDate(dueDate);
     task.setCaseInstanceId("updatetaskcaseinstanceid");
     taskService.saveTask(task);
@@ -2558,7 +2554,7 @@ class TaskServiceTest {
 
   @Test
   void testTaskAttachmentByTaskIdAndAttachmentId() throws Exception {
-    Date fixedDate = parseDate("01/01/2001 01:01:01.000");
+    Date fixedDate = DateTestUtil.parseDate("01/01/2001 01:01:01.000", DATE_FORMATTER);
     ClockUtil.setCurrentTime(fixedDate);
 
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
@@ -2649,7 +2645,7 @@ class TaskServiceTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
   void testCreateTaskAttachmentWithNullTaskId() throws Exception {
-    Date fixedDate = parseDate("01/01/2001 01:01:01.000");
+    Date fixedDate = DateTestUtil.parseDate("01/01/2001 01:01:01.000", DATE_FORMATTER);
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Attachment attachment = taskService.createAttachment("web page", null, processInstance.getId(), "weatherforcast", "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));

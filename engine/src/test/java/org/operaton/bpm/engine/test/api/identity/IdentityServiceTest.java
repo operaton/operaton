@@ -53,6 +53,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineLoggingExtension;
 import org.operaton.bpm.engine.test.junit5.WatchLogger;
+import org.operaton.bpm.engine.test.util.DateTestUtil;
 
 import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,7 +68,6 @@ class IdentityServiceTest {
 
   private static final String INVALID_ID_MESSAGE = "%s has an invalid id: '%s' is not a valid resource identifier.";
 
-  private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final String IDENTITY_LOGGER = "org.operaton.bpm.engine.identity";
 
   private static final String PROCESS_ENGINE_NAME = newRandomProcessEngineName();
@@ -79,11 +79,6 @@ class IdentityServiceTest {
 
   protected IdentityService identityService;
   protected ProcessEngine processEngine;
-
-  private static Date parseDate(String dateString) {
-    LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, dateFormatter);
-    return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
-  }
 
   @AfterEach
   void cleanUp() {
@@ -721,7 +716,7 @@ class IdentityServiceTest {
     user.setPassword("xxx");
     identityService.saveUser(user);
 
-    Date now = parseDate("2000-01-24T13:00:00");
+    Date now = DateTestUtil.parseDate("2000-01-24T13:00:00");
     ClockUtil.setCurrentTime(now);
 
     // when

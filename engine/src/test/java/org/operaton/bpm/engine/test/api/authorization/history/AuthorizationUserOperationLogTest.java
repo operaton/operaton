@@ -17,11 +17,12 @@
 package org.operaton.bpm.engine.test.api.authorization.history;
 
 import java.util.stream.Stream;
-import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.bpm.engine.EntityTypes;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.authorization.Authorization;

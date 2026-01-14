@@ -101,6 +101,7 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.LongValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
+import static java.util.Collections.emptyMap;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_FULL_MESSAGE;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PROCESS_INSTANCE_COMMENT_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
@@ -4495,7 +4496,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         null,
         mockedProcessInstanceQuery,
         null,
-        null);
+      emptyMap());
 
     verifyBatchJson(response.asString());
   }
@@ -4536,7 +4537,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         null,
         null,
         mockedHistoricProcessInstanceQuery,
-        null);
+      emptyMap());
 
     verifyBatchJson(response.asString());
   }
@@ -4567,7 +4568,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         processInstanceIds,
         null,
         null,
-        null);
+        emptyMap());
 
     verifyBatchJson(response.asString());
   }

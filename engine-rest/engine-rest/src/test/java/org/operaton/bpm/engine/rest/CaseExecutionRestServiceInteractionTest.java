@@ -60,6 +60,8 @@ import org.operaton.bpm.engine.variable.value.BooleanValue;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.emptyMap;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 import static io.restassured.RestAssured.given;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -1778,7 +1780,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
     verify(caseExecutionCommandBuilderMock).removeVariablesLocal(null);
-    verify(caseExecutionCommandBuilderMock).setVariablesLocal(null);
+    verify(caseExecutionCommandBuilderMock).setVariablesLocal(emptyMap());
     verify(caseExecutionCommandBuilderMock).execute();
   }
 
@@ -1796,7 +1798,7 @@ public class CaseExecutionRestServiceInteractionTest extends AbstractRestService
 
     verify(caseServiceMock).withCaseExecution(MockProvider.EXAMPLE_CASE_EXECUTION_ID);
     verify(caseExecutionCommandBuilderMock).removeVariables(null);
-    verify(caseExecutionCommandBuilderMock).setVariables(null);
+    verify(caseExecutionCommandBuilderMock).setVariables(emptyMap());
     verify(caseExecutionCommandBuilderMock).execute();
   }
 

@@ -109,7 +109,7 @@ public class HalRelationCacheConfiguration {
       Map<String, Object> configuration = objectMapper.treeToValue(jsonConfiguration, Map.class);
       addCacheConfiguration(halResourceClass, configuration);
     } catch (IOException e) {
-      throw new HalRelationCacheConfigurationException("Unable to parse cache configuration for HAL resource " + halResourceClassName);
+      throw new HalRelationCacheConfigurationException("Unable to parse cache configuration for HAL resource %s".formatted(halResourceClassName));
     }
   }
 
@@ -119,7 +119,7 @@ public class HalRelationCacheConfiguration {
       return Class.forName(className, true, HalRelationCacheConfiguration.class.getClassLoader());
     }
     catch (ClassNotFoundException e) {
-      throw new HalRelationCacheConfigurationException("Unable to load class of cache configuration " + className, e);
+      throw new HalRelationCacheConfigurationException("Unable to load class of cache configuration %s".formatted(className), e);
     }
   }
 

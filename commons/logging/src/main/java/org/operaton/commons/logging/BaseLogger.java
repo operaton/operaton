@@ -99,7 +99,7 @@ public abstract class BaseLogger {
       return logger;
 
     } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-      throw new RuntimeException("Unable to instantiate logger '" + loggerClass.getName() + "'", e);
+      throw new RuntimeException("Unable to instantiate logger '%s'".formatted(loggerClass.getName()), e);
 
     }
   }

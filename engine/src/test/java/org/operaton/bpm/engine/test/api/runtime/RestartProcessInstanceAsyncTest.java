@@ -804,9 +804,7 @@ class RestartProcessInstanceAsyncTest {
   @Test
   void testJobsExecutionByJobExecutorWithAuthorizationEnabledAndTenant() {
     // given
-    ProcessEngineConfigurationImpl processEngineConfiguration = engineRule.getProcessEngineConfiguration();
-
-    processEngineConfiguration.setAuthorizationEnabled(true);
+    engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
     ProcessDefinition processDefinition = testRule.deployForTenantAndGetDefinition("tenantId", ProcessModels.TWO_TASKS_PROCESS);
 
     try {
@@ -869,7 +867,7 @@ class RestartProcessInstanceAsyncTest {
       fail("exception expected");
     } catch (ProcessEngineException e) {
       // then
-      assertThat(e.getMessage()).contains("Its process definition '" + processDefinition.getId() + "' does not match given process definition '" + processDefinition2.getId() +"'" );
+      assertThat(e.getMessage()).contains("Its process definition '%s' does not match given process definition '%s'".formatted(processDefinition.getId(), processDefinition2.getId()));
     }
   }
 

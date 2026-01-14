@@ -41,7 +41,7 @@ public class OperatonExtensionsTest {
    }
 
   public void initOperatonExtensionsTest(DmnModelInstance originalModelInstance) {
-    this.modelInstance = originalModelInstance.clone();
+    this.modelInstance = originalModelInstance.copy();
   }
 
   @MethodSource("parameters")

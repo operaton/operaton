@@ -52,7 +52,7 @@ public class NoViewProcessApplicationStartService implements Service<ProcessAppl
       return reference.getProcessApplication();
 
     } catch (ProcessApplicationUnavailableException e) {
-      throw new IllegalStateException("Process application '" + reference.getName() + "' is not available.", e);
+      throw new IllegalStateException("Process application '%s' is not available.".formatted(reference.getName()), e);
     }
   }
 
@@ -61,8 +61,8 @@ public class NoViewProcessApplicationStartService implements Service<ProcessAppl
     try {
       provider.accept(reference.getProcessApplication());
     } catch (ProcessApplicationUnavailableException e) {
-      throw new IllegalStateException("Process application '" + reference.getName() + "' is not available during "
-          + NoViewProcessApplicationStartService.class + " start.", e);
+      throw new IllegalStateException("Process application '%s' is not available during %s start.".formatted(
+          reference.getName(), NoViewProcessApplicationStartService.class), e);
     }
   }
 

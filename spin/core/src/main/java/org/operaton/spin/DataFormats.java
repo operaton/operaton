@@ -38,6 +38,7 @@ import org.operaton.spin.xml.SpinXmlElement;
  * @author Sebastian Menski
  * @author Daniel Meyer
  */
+@SuppressWarnings("java:S3740")
 public class DataFormats {
 
   private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
@@ -229,7 +230,7 @@ public class DataFormats {
     INSTANCE.registerDataFormats(classloader, configurators);
   }
 
-  public static void loadDataFormats(ClassLoader classloader, Map configurationProperties) {
+  public static void loadDataFormats(ClassLoader classloader, Map<String, Object> configurationProperties) {
     INSTANCE.registerDataFormats(classloader, Collections.emptyList(), configurationProperties);
   }
 

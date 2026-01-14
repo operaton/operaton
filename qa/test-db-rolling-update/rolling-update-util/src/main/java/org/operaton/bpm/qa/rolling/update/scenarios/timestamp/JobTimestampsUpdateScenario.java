@@ -16,7 +16,9 @@
  */
 package org.operaton.bpm.qa.rolling.update.scenarios.timestamp;
 
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngine;
@@ -36,7 +38,7 @@ import org.operaton.bpm.qa.upgrade.Times;
  */
 public class JobTimestampsUpdateScenario extends AbstractTimestampUpdateScenario {
 
-  protected static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
   protected static final Date LOCK_EXP_TIME = new Date(TIME + 300_000L);
   protected static final String PROCESS_DEFINITION_KEY = "jobTimestampsUpdateTestProcess";
 
@@ -44,7 +46,9 @@ public class JobTimestampsUpdateScenario extends AbstractTimestampUpdateScenario
       .operatonHistoryTimeToLive(180)
       .startEvent("start")
       .intermediateCatchEvent("catch")
-      .timerWithDate(SDF.format(TIMESTAMP))
+      .timerWithDate(Instant.ofEpochMilli(TIMESTAMP.getTime())
+          .atZone(ZoneId.systemDefault())
+          .format(DATE_FORMATTER))
       .endEvent("end")
       .done();
 

@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -745,13 +743,8 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (processInstanceId != null){
       referenceIdAndClass.put(processInstanceId, ExecutionEntity.class);

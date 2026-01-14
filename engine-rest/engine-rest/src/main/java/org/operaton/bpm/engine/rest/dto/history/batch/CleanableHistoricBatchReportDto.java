@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.history.batch;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -31,12 +30,7 @@ public class CleanableHistoricBatchReportDto extends AbstractQueryDto<CleanableH
 
   protected static final String SORT_BY_FINISHED_VALUE = "finished";
 
-  public static final List<String> VALID_SORT_BY_VALUES;
-
-  static {
-    VALID_SORT_BY_VALUES = new ArrayList<>();
-    VALID_SORT_BY_VALUES.add(SORT_BY_FINISHED_VALUE);
-  }
+  private static final List<String> VALID_SORT_BY_VALUES = List.of(SORT_BY_FINISHED_VALUE);
 
   public CleanableHistoricBatchReportDto(ObjectMapper objectMapper, MultivaluedMap<String, String> queryParameters) {
     super(objectMapper, queryParameters);

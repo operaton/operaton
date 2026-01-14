@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
@@ -52,7 +53,7 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
   @Test
-  void shouldThrowOleOnConcurrentLockingAttempt() throws Exception {
+  void shouldThrowOleOnConcurrentLockingAttempt() {
     // given
     runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     String externalTaskId = externalTaskService.createExternalTaskQuery()
@@ -136,6 +137,7 @@ class CompetingExternalTaskLockingTest extends ConcurrencyTestCase {
       return null;
     }
   }
+
   private static class ControllableLockExternalTaskCmd extends LockExternalTaskCmd {
 
     protected final ThreadControl monitor;

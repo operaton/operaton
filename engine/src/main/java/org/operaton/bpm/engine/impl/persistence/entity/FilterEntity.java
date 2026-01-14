@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import com.google.gson.JsonObject;
 
@@ -55,11 +53,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  public static final Map<String, JsonObjectConverter<?>> queryConverter = new HashMap<>();
-
-  static {
-    queryConverter.put(EntityTypes.TASK, new JsonTaskQueryConverter());
-  }
+  public static final Map<String, JsonObjectConverter<?>> QUERY_CONVERTER = Map.of(EntityTypes.TASK, new JsonTaskQueryConverter());
 
   protected String id;
   protected String resourceType;
@@ -204,7 +198,7 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
 
   @SuppressWarnings("unchecked")
   protected <T> JsonObjectConverter<T> getConverter() {
-    JsonObjectConverter<T> converter = (JsonObjectConverter<T>) queryConverter.get(resourceType);
+    JsonObjectConverter<T> converter = (JsonObjectConverter<T>) QUERY_CONVERTER.get(resourceType);
     if (converter != null) {
       return converter;
     }
@@ -238,15 +232,5 @@ public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevisi
       query.addValidator(StoredQueryValidator.get());
     }
 
-  }
-
-  @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    return new HashMap<>();
   }
 }

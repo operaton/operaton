@@ -624,7 +624,7 @@ public class BatchMigrationTest {
     Job failedJob = migrationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
     assertThat(failedJob.getExceptionMessage()).startsWith("ENGINE-23003");
-    assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + deletedProcessInstanceId + "' cannot be migrated");
+    assertThat(failedJob.getExceptionMessage()).contains("Process instance '%s' cannot be migrated".formatted(deletedProcessInstanceId));
   }
 
   @TestTemplate

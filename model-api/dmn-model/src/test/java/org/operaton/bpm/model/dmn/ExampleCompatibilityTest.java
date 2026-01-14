@@ -66,7 +66,7 @@ public class ExampleCompatibilityTest extends DmnModelTest {
    }
 
   public void initExampleCompatibilityTest(DmnModelInstance originalModelInstance) {
-    this.modelInstance = originalModelInstance.clone();
+    this.modelInstance = originalModelInstance.copy();
   }
 
   @MethodSource("parameters")

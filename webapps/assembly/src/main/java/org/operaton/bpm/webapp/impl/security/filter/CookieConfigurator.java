@@ -89,8 +89,8 @@ public class CookieConfigurator {
 
   static String getSameSiteCookieValueInitValue(String sameSiteCookieValueInitParam, String sameSiteCookieOptionInitParam) {
     if (hasText(sameSiteCookieValueInitParam) && hasText(sameSiteCookieOptionInitParam)) {
-      throw new ProcessEngineException("Please either configure " + SAME_SITE_OPTION_PARAM +
-              " or " + SAME_SITE_VALUE_PARAM + ".");
+      throw new ProcessEngineException("Please either configure %s or %s.".formatted(
+          SAME_SITE_OPTION_PARAM, SAME_SITE_VALUE_PARAM));
     }
 
     if (hasText(sameSiteCookieValueInitParam)) {

@@ -339,8 +339,8 @@ class JobAuthorizationTest extends AuthorizationTest {
             "It should not be possible to get the exception stacktrace")
         .isInstanceOf(AuthorizationException.class)
         .hasMessageContaining(userId)
-        .hasMessageContaining(READ.getName() + "' permission on resource '" + processInstanceId + "' of type '" + PROCESS_INSTANCE.resourceName() + "' or '")
-        .hasMessageContaining(READ_INSTANCE.getName() + "' permission on resource '" + ONE_INCIDENT_PROCESS_KEY + "' of type '" + PROCESS_DEFINITION.resourceName() + "'");
+        .hasMessageContaining("%s' permission on resource '%s' of type '%s' or '".formatted(READ.getName(), processInstanceId, PROCESS_INSTANCE.resourceName()))
+        .hasMessageContaining("%s' permission on resource '%s' of type '%s'".formatted(READ_INSTANCE.getName(), ONE_INCIDENT_PROCESS_KEY, PROCESS_DEFINITION.resourceName()));
   }
 
   @Test

@@ -884,7 +884,7 @@ class AuthorizationServiceTest {
     // when attempt to save, expect BadUserRequest
     assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessage("ENGINE-03087 The resource type with id:'" + Resources.TASK.resourceType() + "' is not valid for '" + TestPermissions.RANDOM.getName() + "' permission." );
+      .hasMessage("ENGINE-03087 The resource type with id:'%s' is not valid for '%s' permission.".formatted(Resources.TASK.resourceType(), TestPermissions.RANDOM.getName()));
   }
 
   protected void cleanupAfterTest() {

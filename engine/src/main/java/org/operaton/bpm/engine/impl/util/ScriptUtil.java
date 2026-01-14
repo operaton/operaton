@@ -193,7 +193,7 @@ public final class ScriptUtil {
    * @return true if the value is an expression for a dynamic script source/resource, otherwise false
    */
   public static boolean isDynamicScriptExpression(String language, String value) {
-    return StringUtil.isExpression(value) && (language != null && !JuelScriptEngineFactory.names.contains(language.toLowerCase()));
+    return StringUtil.isExpression(value) && (language != null && !new JuelScriptEngineFactory().getNames().contains(language.toLowerCase()));
   }
 
   /**

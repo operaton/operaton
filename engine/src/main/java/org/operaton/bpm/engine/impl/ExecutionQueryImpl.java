@@ -45,7 +45,7 @@ public class ExecutionQueryImpl extends AbstractVariableQueryImpl<ExecutionQuery
   protected String activityId;
   protected String executionId;
   protected String processInstanceId;
-  protected List<EventSubscriptionQueryValue> eventSubscriptions;
+  private List<EventSubscriptionQueryValue> eventSubscriptions;
   protected SuspensionState suspensionState;
   protected String incidentType;
   protected String incidentId;

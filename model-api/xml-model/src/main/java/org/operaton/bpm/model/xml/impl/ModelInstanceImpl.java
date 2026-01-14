@@ -157,6 +157,11 @@ public class ModelInstanceImpl implements ModelInstance {
 
   @Override
   public ModelInstance clone() {
+    return copy();
+  }
+
+  @Override
+  public ModelInstance copy() {
       return new ModelInstanceImpl(model, modelBuilder, document.clone());
   }
 

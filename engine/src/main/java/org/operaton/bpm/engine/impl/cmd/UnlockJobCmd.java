@@ -32,8 +32,6 @@ import org.operaton.bpm.engine.impl.util.EnsureUtil;
 
 public class UnlockJobCmd implements Command<Void> {
 
-  protected static final long serialVersionUID = 1L;
-
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   protected String jobId;

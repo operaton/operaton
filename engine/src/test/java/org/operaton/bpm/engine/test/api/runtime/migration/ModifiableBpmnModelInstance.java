@@ -64,7 +64,7 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
    * Copies the argument; following modifications are not applied to the original model instance
    */
   public static ModifiableBpmnModelInstance modify(BpmnModelInstance modelInstance) {
-    return new ModifiableBpmnModelInstance(modelInstance.clone());
+    return new ModifiableBpmnModelInstance(modelInstance.copy());
   }
 
   /**
@@ -86,7 +86,12 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
 
   @Override
   public BpmnModelInstance clone() {
-    return modelInstance.clone();
+    return copy();
+  }
+
+  @Override
+  public BpmnModelInstance copy() {
+    return modelInstance.copy();
   }
 
   @Override

@@ -674,7 +674,7 @@ public class HistoricTaskInstanceQueryDto extends AbstractQueryDto<HistoricTaskI
         if (EQUALS_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueEquals(variableName, variableValue);
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }

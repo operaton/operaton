@@ -16,17 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-public class GetUniqueTaskWorkerCountCmd implements Command<Long>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetUniqueTaskWorkerCountCmd implements Command<Long> {
   protected Date startTime;
   protected Date endTime;
 

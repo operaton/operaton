@@ -34,13 +34,13 @@ import org.operaton.bpm.model.cmmn.instance.Task;
  */
 public class MetricsCmmnTransformListener implements CmmnTransformListener {
 
-  public static MetricsCaseExecutionListener listener = new MetricsCaseExecutionListener();
+  private static final MetricsCaseExecutionListener LISTENER = new MetricsCaseExecutionListener();
 
   protected void addListeners(CmmnActivity activity) {
     if(activity != null) {
-      activity.addBuiltInListener(CaseExecutionListener.START, listener);
-      activity.addBuiltInListener(CaseExecutionListener.MANUAL_START, listener);
-      activity.addBuiltInListener(CaseExecutionListener.OCCUR, listener);
+      activity.addBuiltInListener(CaseExecutionListener.START, LISTENER);
+      activity.addBuiltInListener(CaseExecutionListener.MANUAL_START, LISTENER);
+      activity.addBuiltInListener(CaseExecutionListener.OCCUR, LISTENER);
     }
   }
 

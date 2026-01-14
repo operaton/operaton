@@ -203,7 +203,8 @@ public final class ModelUtil {
     for (ModelElementType childElementType : childElementTypes) {
       childElementTypeNames.add(childElementType.getTypeName());
     }
-    throw new ModelException("New child is not a valid child element type: " + modelElement.getElementType().getTypeName() + "; valid types are: " + childElementTypeNames);
+    throw new ModelException("New child is not a valid child element type: %s; valid types are: %s".formatted(
+        modelElement.getElementType().getTypeName(), childElementTypeNames));
   }
 
   /**

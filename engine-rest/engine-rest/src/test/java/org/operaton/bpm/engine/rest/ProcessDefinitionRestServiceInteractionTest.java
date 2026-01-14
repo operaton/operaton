@@ -234,7 +234,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   @Test
   void testInstanceResourceLinkResult() {
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -248,7 +248,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   void testInstanceResourceLinkWithEnginePrefix() {
     String startInstanceOnExplicitEngineUrl = TEST_RESOURCE_ROOT_PATH + "/engine/default/process-definition/{id}/start";
 
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -2723,7 +2723,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   @Test
   void testInstanceResourceLinkResult_ByKey() {
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -2737,7 +2737,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   void testInstanceResourceLinkWithEnginePrefix_ByKey() {
     String startInstanceOnExplicitEngineUrl = TEST_RESOURCE_ROOT_PATH + "/engine/default/process-definition/key/{key}/start";
 
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)

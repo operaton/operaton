@@ -39,8 +39,8 @@ public final class AuthenticationUtil {
 
   protected static final String CAM_AUTH_SESSION_KEY = "authenticatedUser";
 
-  public static final String[] APPS = new String[]{"cockpit", "tasklist", "admin"};
-  public static final String APP_WELCOME = "welcome";
+  private static final String[] APPS = new String[]{"cockpit", "tasklist", "admin"};
+  private static final String APP_WELCOME = "welcome";
 
   private AuthenticationUtil() {
   }

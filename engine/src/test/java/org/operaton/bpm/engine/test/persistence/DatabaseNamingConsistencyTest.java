@@ -77,7 +77,7 @@ public class DatabaseNamingConsistencyTest {
         }
       }
     } catch (IOException e) {
-      fail("Unable to find test resource for test " + getClass().getName() + "\n" + e.getMessage());
+      fail("Unable to find test resource for test %s%n%s".formatted(getClass().getName(), e.getMessage()));
     }
     // then don't expect any results
     String errorMessage = errorMessageBuilder.toString();

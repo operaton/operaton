@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.impl.cmmn.entity.runtime;
 
 import java.io.Serial;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnSentryPart;
@@ -31,11 +29,11 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 
 /**
  * @author Roman Smirnov
- *
  */
 public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, HasDbRevision, HasDbReferences {
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   // references
 
@@ -197,20 +195,12 @@ public class CaseSentryPartEntity extends CmmnSentryPart implements DbEntity, Ha
   // helper ////////////////////////////////////////////////////////////////////
 
   protected CaseExecutionEntity findCaseExecutionById(String caseExecutionId) {
-    return Context
-        .getCommandContext()
-        .getCaseExecutionManager()
-        .findCaseExecutionById(caseExecutionId);
+    return Context.getCommandContext().getCaseExecutionManager().findCaseExecutionById(caseExecutionId);
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (caseExecutionId != null) {
       referenceIdAndClass.put(caseExecutionId, CaseExecutionEntity.class);

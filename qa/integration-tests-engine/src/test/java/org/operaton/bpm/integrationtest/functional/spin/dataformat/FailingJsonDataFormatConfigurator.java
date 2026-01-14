@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin.dataformat;
 
-import java.text.SimpleDateFormat;
-
 import org.operaton.spin.impl.json.jackson.format.JacksonJsonDataFormat;
 import org.operaton.spin.spi.DataFormatConfigurator;
 
@@ -26,8 +24,6 @@ import org.operaton.spin.spi.DataFormatConfigurator;
  *
  */
 public class FailingJsonDataFormatConfigurator implements DataFormatConfigurator<JacksonJsonDataFormat> {
-
-  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
   @Override
   public Class<JacksonJsonDataFormat> getDataFormatClass() {

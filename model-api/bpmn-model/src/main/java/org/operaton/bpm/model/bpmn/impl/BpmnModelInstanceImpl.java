@@ -47,6 +47,11 @@ public class BpmnModelInstanceImpl extends ModelInstanceImpl implements BpmnMode
 
   @Override
   public BpmnModelInstance clone() {
+    return copy();
+  }
+
+  @Override
+  public BpmnModelInstance copy() {
     return new BpmnModelInstanceImpl(model, modelBuilder, document.clone());
   }
 

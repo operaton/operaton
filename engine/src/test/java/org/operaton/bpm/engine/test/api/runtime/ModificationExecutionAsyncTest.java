@@ -849,7 +849,7 @@ public class ModificationExecutionAsyncTest {
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
     assertThat(failedJob.getExceptionMessage()).startsWith("ENGINE-13036");
-    assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + deletedProcessInstanceId + "' cannot be modified");
+    assertThat(failedJob.getExceptionMessage()).contains("Process instance '%s' cannot be modified".formatted(deletedProcessInstanceId));
   }
 
   @TestTemplate
@@ -903,7 +903,7 @@ public class ModificationExecutionAsyncTest {
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
     assertThat(failedJob.getExceptionMessage()).startsWith("ENGINE-13036");
-    assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + deletedProcessInstanceId + "' cannot be modified");
+    assertThat(failedJob.getExceptionMessage()).contains("Process instance '%s' cannot be modified".formatted(deletedProcessInstanceId));
   }
 
   @TestTemplate
@@ -1053,7 +1053,7 @@ public class ModificationExecutionAsyncTest {
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
     assertThat(failedJob.getExceptionMessage()).startsWith("ENGINE-13036");
-    assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + completedProcessInstanceId + "' cannot be modified");
+    assertThat(failedJob.getExceptionMessage()).contains("Process instance '%s' cannot be modified".formatted(completedProcessInstanceId));
   }
 
 
@@ -1112,7 +1112,7 @@ public class ModificationExecutionAsyncTest {
     Job failedJob = modificationJobs.get(0);
     assertThat(failedJob.getRetries()).isEqualTo(2);
     assertThat(failedJob.getExceptionMessage()).startsWith("ENGINE-13036");
-    assertThat(failedJob.getExceptionMessage()).contains("Process instance '" + completedProcessInstanceId + "' cannot be modified");
+    assertThat(failedJob.getExceptionMessage()).contains("Process instance '%s' cannot be modified".formatted(completedProcessInstanceId));
   }
 
 

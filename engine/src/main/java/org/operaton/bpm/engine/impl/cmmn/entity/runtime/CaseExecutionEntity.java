@@ -209,11 +209,11 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
     }
 
     for (CaseExecutionEntity execution : executions) {
-      CaseExecutionEntity parent = executionMap.get(execution.getParentId());
+      CaseExecutionEntity parentExecutionEntity = executionMap.get(execution.getParentId());
       if(!execution.isCaseInstanceExecution()) {
         execution.caseInstance = caseExecutionInstance;
-        execution.parent = parent;
-        parent.caseExecutions.add(execution);
+        execution.parent = parentExecutionEntity;
+        parentExecutionEntity.caseExecutions.add(execution);
       } else {
         execution.caseInstance = execution;
       }
@@ -823,8 +823,8 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   }
 
   @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (parentId != null) {
       referenceIdAndClass.put(parentId, CaseExecutionEntity.class);

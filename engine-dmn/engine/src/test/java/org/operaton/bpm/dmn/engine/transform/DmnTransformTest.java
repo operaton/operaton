@@ -111,7 +111,7 @@ class DmnTransformTest extends DmnEngineTest {
     input = inputs.get(1);
     assertThat(input.getId()).isEqualTo("input2");
     assertThat(input.getName()).isNull();
-    assertThat(input.getInputVariable()).isEqualTo(DmnDecisionTableInputImpl.DEFAULT_INPUT_VARIABLE_NAME);
+    assertThat(input.getInputVariable()).isEqualTo("cellInput");
 
     inputExpression = input.getExpression();
     assertThat(inputExpression).isNotNull();

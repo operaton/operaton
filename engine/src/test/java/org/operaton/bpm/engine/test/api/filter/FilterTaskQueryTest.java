@@ -425,8 +425,7 @@ class FilterTaskQueryTest {
         }
       } else if ((expectedRelationConditions == null && actualRelationConditions != null) ||
           (expectedRelationConditions != null && actualRelationConditions == null)) {
-        fail("Expected filtering properties: " + expectedRelationConditions + ". "
-            + "Actual filtering properties: " + actualRelationConditions);
+        fail("Expected filtering properties: %s. Actual filtering properties: %s".formatted(expectedRelationConditions, actualRelationConditions));
       }
     }
   }
@@ -1356,7 +1355,7 @@ class FilterTaskQueryTest {
   void testDeprecatedOrderingFormatDeserializationSingleOrdering() {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
 
-    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
+    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.QUERY_CONVERTER.get(EntityTypes.TASK);
     JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply a specific ordering by one dimension
@@ -1386,7 +1385,7 @@ class FilterTaskQueryTest {
     String sortByNameAsc = "RES." + TaskQueryProperty.NAME.getName() + " " + Direction.ASCENDING.getName();
     String secondaryOrdering = sortByNameAsc + ", RES." + TaskQueryProperty.ASSIGNEE.getName() + " " + Direction.DESCENDING.getName();
 
-    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
+    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.QUERY_CONVERTER.get(EntityTypes.TASK);
     JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply a secondary ordering
@@ -1423,7 +1422,7 @@ class FilterTaskQueryTest {
   void testDeprecatedOrderingFormatDeserializationFunctionOrdering() {
     String orderingWithFunction = "LOWER(RES." + TaskQueryProperty.NAME.getName() + ") asc";
 
-    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.queryConverter.get(EntityTypes.TASK);
+    JsonTaskQueryConverter converter = (JsonTaskQueryConverter) FilterEntity.QUERY_CONVERTER.get(EntityTypes.TASK);
     JsonObject queryJson = converter.toJsonObject(testFilter.getQuery());
 
     // when I apply an ordering with a function

@@ -69,7 +69,7 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
       return executionIds[0];
     }
     else {
-      throw new RuntimeException("There is more than one execution assigned to activity instance " + singleInstance.getId());
+      throw new RuntimeException("There is more than one execution assigned to activity instance %s".formatted(singleInstance.getId()));
     }
   }
 
@@ -87,7 +87,7 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
       return activityInstances[0];
     }
     else {
-      throw new RuntimeException("There is not exactly one activity instance for activity " + activityId);
+      throw new RuntimeException("There is not exactly one activity instance for activity %s".formatted(activityId));
     }
   }
 

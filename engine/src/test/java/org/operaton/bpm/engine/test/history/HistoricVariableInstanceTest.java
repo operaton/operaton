@@ -373,7 +373,6 @@ class HistoricVariableInstanceTest {
       assertThat(update1.getExecutionId()).isEqualTo(historicActivityInstance1.getExecutionId());
       assertThat(historicActivityInstance1.getActivityId()).isEqualTo("usertask1");
 
-      // TODO http://jira.codehaus.org/browse/ACT-1083
       assertThat(update2.getActivityInstanceId()).isNotNull();
       HistoricActivityInstance historicActivityInstance2 = historyService.createHistoricActivityInstanceQuery().activityInstanceId(update2.getActivityInstanceId()).singleResult();
       assertThat(historicActivityInstance2.getActivityId()).isEqualTo("usertask2");

@@ -46,7 +46,6 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
     if (activity!=null) {
       return activity;
     } else {
-      // TODO: when can this happen?
       PvmExecutionImpl parent = execution.getParent();
       if (parent != null) {
         return getScope(execution.getParent());

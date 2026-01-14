@@ -349,7 +349,7 @@ class JobPrioritizationBpmnConstantValueTest {
     // given a process instance that executes an async mi inner activity
     runtimeService.startProcessInstanceByKey("miBodyAsyncPriorityProcess");
 
-    // then there are three jobs that have the priority as defined on the activity (TODO: or should it be MI characteristics?)
+    // then there are three jobs that have the priority as defined on the activity
     List<Job> jobs = managementService.createJobQuery().list();
 
     assertThat(jobs).hasSize(3);

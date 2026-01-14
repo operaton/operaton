@@ -66,11 +66,6 @@ public class EventSubscriptionJobDeclaration extends JobDeclaration<EventSubscri
       message.setProcessDefinitionKey(processDefinition.getKey());
     }
 
-    // TODO: support payload
-    // if(payload != null) {
-    //   message.setEventPayload(payload);
-    // }
-
     return message;
   }
 

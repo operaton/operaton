@@ -461,12 +461,6 @@ public abstract class ProcessEngineConfiguration {
     return new StandaloneInMemProcessEngineConfiguration();
   }
 
-// TODO add later when we have test coverage for this
-//  public static ProcessEngineConfiguration createJtaProcessEngineConfiguration() {
-//    return new JtaProcessEngineConfiguration();
-//  }
-
-
   // getters and setters //////////////////////////////////////////////////////
 
   public String getProcessEngineName() {

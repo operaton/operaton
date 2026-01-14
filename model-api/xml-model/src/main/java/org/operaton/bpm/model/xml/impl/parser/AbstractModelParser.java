@@ -86,16 +86,19 @@ public abstract class AbstractModelParser {
     try {
       dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
     } catch (ParserConfigurationException ignored) {
+      // ignored
     }
 
     try {
       dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
     } catch (ParserConfigurationException ignored) {
+      // ignored
     }
 
     try {
       dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
     } catch (ParserConfigurationException ignored) {
+      // ignored
     }
 
     dbf.setXIncludeAware(false);

@@ -1,21 +1,26 @@
+@import "mixins";
+
 .cam-table {
-  .table();
-  .table-condensed();
-  .table-striped();
-  .table-hover();
+  // Bootstrap 4 replacements for LESS mixins
+@extend .table;
+@extend .table-sm;      // BS4 replacement for .table-condensed()
+@extend .table-striped;
+@extend .table-hover;
 
   &.cam-fixed-layout {
     table-layout: fixed;
   }
 
   td.uuid {
-    max-width: 120px;
-    .text-overflow();
+    max-width: 300px;
+  @include text-truncate()
   }
 
   td,
   th {
     margin: 0;
+    display: table-cell;
+    white-space: nowrap;
 
     &.select {
       text-align: center;
@@ -35,11 +40,11 @@
   }
 
   thead {
-    border-bottom: 2px solid @table-border-color;
+    border-bottom: 2px solid $table-border-color;
   }
 
   tfoot {
-    border-top: 2px solid @table-border-color;
+    border-top: 2px solid $table-border-color;
   }
 
   thead,
@@ -56,6 +61,7 @@
     th,
     td {
       max-width: 10vw;
+      display: table-cell;
     }
 
     th {
@@ -72,7 +78,8 @@
         overflow: hidden;
         white-space: nowrap;
         min-width: 5em;
-        max-width: ~"calc(100% - 2.4em)";
+        // SCSS handles calc natively without escaping ~""
+        max-width: calc(100% - 2.4em);
       }
     }
 

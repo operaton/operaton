@@ -1,19 +1,18 @@
-@import "shared/_variables.less";
+@import "shared/variables"; // Assuming this is converted to _variables.scss
 
-@brand-logo:      'resources/img/operaton-logo.png';
-// @header-height:   41px;
+$brand-logo:      'resources/img/operaton-logo.png';
+$font-path:       "./vendor/fonts/";
+$bpmn-font-path:  $font-path;
+$icon-font-path:  $font-path;
+$dmn-font-path:   $font-path;
 
-@font-path:       "./vendor/fonts/";
-@bpmn-font-path:  @font-path;//"./node_modules/bpmn-font/dist/font/";
-@icon-font-path:  @font-path;//"./node_modules/bootstrap/fonts/";
-
-@import "shared/bootstrap.less";
-@import "shared/base.less";
+// 2. Library & Widget Imports
+@import "shared/bootstrap";
+@import "shared/base";
 @import "inline-field/cam-widget-inline-field";
 @import "bpmn-viewer/cam-widget-bpmn-viewer";
 @import "cmmn-viewer/cam-widget-cmmn-viewer";
 @import "dmn-viewer/cam-widget-dmn-viewer";
-@dmn-font-path:   @font-path;//"../../node_modules/dmn-js/fonts/";
 
 @import "footer/cam-widget-footer";
 @import "header/cam-widget-header";
@@ -26,17 +25,16 @@
 @import "clipboard/cam-widget-clipboard";
 @import "password/cam-widget-password";
 
-// custom styles for the testing suite -----------------------------------------
-
+// 3. Custom Styles for the testing suite
 .cam-brand-header {
-  .cam-corporate-header-base();
+  @include cam-corporate-header-base();
 
   a {
-    .cam-corporate-header-link();
+    @include cam-corporate-header-link();
   }
 
   .navbar-brand {
-    .cam-corporate-header-branding();
+    @include cam-corporate-header-branding();
   }
 
   .container .navbar-brand {
@@ -44,9 +42,8 @@
   }
 
   .brand-logo::before {
-    color: @brand-primary;
+    color: $primary; // Mapping @brand-primary to BS4 $primary
     display: inline-block;
-    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword -- Icon Font */
     font-family: "bpmn";
     font-style: normal;
     font-weight: normal;
@@ -55,46 +52,47 @@
 }
 
 .cam-brand-footer {
-  .cam-corporate-footer-base();
+  @include cam-corporate-footer-base();
 }
 
+// 4. Grid & Definition Lists
 dd {
-  padding-left: @grid-gutter-width;
+  padding-left: $grid-gutter-width;
   max-width: 550px;
 }
 
 dt + dd {
-  margin-bottom: (@grid-gutter-width / 2);
+  margin-bottom: calc($grid-gutter-width / 2);
 }
 
 dd li {
-  margin-top: (@grid-gutter-width / 2);
+  margin-top: calc($grid-gutter-width / 2);
 }
 
+// 5. Body & Layout
 body {
-  padding-top: @header-height;
+  // Use $header-height if defined, otherwise ensure it's set in variables
+  padding-top: $header-height;
 
   > .page-wrapper {
-    .container-fluid();
+    @extend .container-fluid; // Replaces .container-fluid() mixin
 
-    @media (min-width: @screen-sm-min) {
-      width: @container-sm;
+    // Mapping BS3 screen-min variables to BS4 breakpoints
+    @media (min-width: map-get($grid-breakpoints, "sm")) {
+      width: map-get($container-max-widths, "sm");
     }
 
-    @media (min-width: @screen-md-min) {
-      width: @container-md;
+    @media (min-width: map-get($grid-breakpoints, "md")) {
+      width: map-get($container-max-widths, "md");
     }
 
-    @media (min-width: @screen-lg-min) {
-      width: @container-lg;
+    @media (min-width: map-get($grid-breakpoints, "lg")) {
+      width: map-get($container-max-widths, "lg");
     }
   }
 
   &.gh-pages {
-    h1,
-    h2,
-    h3,
-    h4 {
+    h1, h2, h3, h4 {
       font-weight: 100;
     }
 
@@ -116,13 +114,13 @@ body {
       padding-left: 160px;
 
       > nav {
-        width: (160px - @grid-gutter-width);
+        width: calc(160px - $grid-gutter-width);
         position: fixed;
         margin: 0;
         overflow: auto;
-        left: (@grid-gutter-width / 2);
+        left: calc($grid-gutter-width / 2);
         top: 60px;
-        bottom: @grid-gutter-width * 1.5;
+        bottom: calc($grid-gutter-width * 1.5);
 
         li {
           display: block;
@@ -141,6 +139,7 @@ body {
   }
 }
 
+// 6. Widget References
 .widget-description,
 .widget-reference {
   font-size: 16px;
@@ -152,7 +151,7 @@ body {
     font-family: monospace;
 
     > .function-definition {
-      color: @gray-light;
+      color: $gray-600; // Mapping @gray-light to BS4 $gray-600
       font-weight: lighter;
 
       > .params {
@@ -167,30 +166,28 @@ body {
 }
 
 .widget-example {
-  margin: (@grid-gutter-width / 2) 0;
-  padding: (@grid-gutter-width / 2) 0;
+  margin: calc($grid-gutter-width / 2) 0;
+  padding: calc($grid-gutter-width / 2) 0;
 
   [ng-non-bindable] {
-    margin-bottom: @grid-gutter-width;
+    margin-bottom: $grid-gutter-width;
   }
 }
 
 .test-container {
-  .container;
+  @extend .container;
 
   max-width: 100% !important;
   position: relative;
-  padding: @grid-gutter-width;
-  border: 1px solid @gray-lighter;
+  padding: $grid-gutter-width;
+  border: 1px solid $gray-200;
   background: url(resources/img/check-pattern.png);
-  background-color: @gray-lighter;
+  background-color: $gray-200;
 }
 
-// overrides for tests
-
-// header
+// 7. Test Overrides
 .cam-widget-header-test-page .test-container {
-  padding-top: @header-height;
+  padding-top: $header-height;
 
   .test-container {
     overflow: hidden;

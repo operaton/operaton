@@ -1,7 +1,7 @@
 /* stylelint-disable no-descending-specificity -- contains non-trivial nesting */
 
-@import '~operaton-commons-ui/resources/less/shared/bootstrap.less';
-@import '~operaton-commons-ui/resources/less/shared/base.less';
+@import '~operaton-commons-ui/resources/sass/shared/bootstrap.scss';
+@import '~operaton-commons-ui/resources/sass/shared/base.scss';
 
 .align-left {
   text-align: left;
@@ -14,12 +14,12 @@
 .text-help {
   font-style: italic;
   font-size: 90%;
-  color: @gray;
-  margin-bottom: (@grid-gutter-width / 2);
+  color: $gray;
+  margin-bottom: ($grid-gutter-width / 2);
 }
 
 .list-inline > li {
-  padding: 1px 5px;
+  //padding: 1px 5px;
 }
 
 .dropdown-menu {
@@ -41,21 +41,21 @@
       margin-left: 2px;
       border-style: solid;
       color: $black;
-      border-color: @brand-primary;
+      border-color: $brand-primary;
     }
   }
 
   > li:hover {
     a {
       color: $black;
-      border-color: @link-color;
+      border-color: $link-color;
     }
   }
 }
 
 .tab-content {
   position: relative;
-  padding-top: (@grid-gutter-width * 0.5);
+  padding-top: ($grid-gutter-width * 0.5);
 }
 
 .tooltip .tooltip-inner {
@@ -63,11 +63,11 @@
 }
 
 .btn-link:hover {
-  color: @link-hover-color;
+  color: $link-hover-color;
 }
 
 .glyphicon-fire {
-  color: @brand-danger;
+  color: $brand-danger;
 }
 
 .form-actions {
@@ -97,16 +97,16 @@
       margin: 0 2px;
       display: block;
       position: relative;
-      padding-bottom: 4px;
+      padding: 10px 15px;
       border-bottom: 3px solid transparent;
       transition: border-bottom 0.218s ease;
-      color: @navbar-default-link-color;
+      color: $navbar-default-link-color;
 
       &:hover,
       &:focus {
         background: none;
-        border-bottom: 3px solid @link-hover-color;
-        color: @navbar-default-link-hover-color;
+        border-bottom: 3px solid $link-hover-color;
+        color: $navbar-default-link-hover-color;
       }
     }
 
@@ -127,7 +127,7 @@
           background: none;
           border: none;
           cursor: default;
-          border-bottom: 3px solid @brand-primary;
+          border-bottom: 3px solid $brand-primary;
         }
       }
     }
@@ -140,8 +140,9 @@
     border-left: none;
     border-right: none;
   }
-
-  @media (min-width: @screen-sm-min) {
+  // In Bootstrap 3, "Small" started at 768px (Tablets).
+  // In Bootstrap 4, "Small" was downsized to 576px (Landscape phones), and "Medium" took over the 768px slot.
+  @media (min-width: map-get($grid-breakpoints, md)) {
     > li > a {
       border-top: none;
       border-left: none;
@@ -202,14 +203,16 @@
 .fjs-powered-by {
   display: none;
 }
-
-@import '../../../operaton-commons-ui/resources/scss/shared/animation-spin';
-@import './modal.less';
-@import 'directives/notifications-panel.less';
-@import 'directives/pagination.less';
+$bootstrap-icons-font-dir: "~bootstrap-icons/font/fonts";
+@import '~operaton-commons-ui/resources/sass/shared/animation-spin';
+@import './modal.scss';
+@import 'directives/notifications-panel.scss';
+@import 'directives/pagination.scss';
 @import '~operaton-commons-ui/lib/auth/page/login';
 @import '~operaton-commons-ui/lib/widgets/clipboard/cam-widget-clipboard';
 @import '~operaton-commons-ui/lib/widgets/header/cam-widget-header';
 @import '~operaton-commons-ui/lib/widgets/footer/cam-widget-footer';
-@import './glyphicon-overrides.less';
-@import (less) '@bpmn-io/form-js/dist/assets/form-js.css';
+@import "~bootstrap-icons/font/bootstrap-icons.scss";
+@import "glyphicons-bootstap-map.scss";
+//@import './glyphicon-overrides.scss';
+@import  '@bpmn-io/form-js/dist/assets/form-js.css';

@@ -35,7 +35,9 @@ public final class LocalMessages {
 			try {
 				b.append(RESOURCE_BUNDLE.getString("message.unknown"));
 				b.append(": ");
-			} catch (MissingResourceException e2) {}
+			} catch (MissingResourceException e2) {
+				// ignore
+			}
 			b.append(key);
 			if (args != null && args.length > 0) {
 				b.append("(");

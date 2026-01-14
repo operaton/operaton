@@ -47,7 +47,7 @@ public class ProcessStartAnnotationBeanPostProcessor extends ProxyConfig impleme
 
 	private transient ProcessStartingPointcutAdvisor advisor;
 
-	private transient volatile ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
+	private transient ClassLoader beanClassLoader = ClassUtils.getDefaultClassLoader();
 
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;

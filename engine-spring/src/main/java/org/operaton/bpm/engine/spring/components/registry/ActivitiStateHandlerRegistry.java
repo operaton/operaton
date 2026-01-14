@@ -45,7 +45,7 @@ public class ActivitiStateHandlerRegistry extends ReceiveTaskActivityBehavior im
 
     private final Logger logger = Logger.getLogger(getClass().getName());
 
-    private volatile ConcurrentHashMap<String, ActivitiStateHandlerRegistration> registrations = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, ActivitiStateHandlerRegistration> registrations = new ConcurrentHashMap<>();
 
     private ProcessEngine processEngine;
 

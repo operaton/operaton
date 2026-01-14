@@ -5,8 +5,8 @@
     float: right;
     font-size: 20px;
     font-weight: bold;
-    color: @text-color;
-    text-shadow: 0 1px 0 @body-bg;
+    color: $text-color;
+    text-shadow: 0 1px 0 $body-bg;
     opacity: 0.2;
     padding: 0;
     cursor: pointer;
@@ -19,18 +19,18 @@
   }
 
   .alert-error {
-    .alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+    @include alert-variant($danger-bg, $danger-border, $danger-text);
   }
 
   .alert-information {
-    .alert-variant(@alert-info-bg; @alert-info-border; @alert-info-text);
+    @include alert-variant($info-bg, $info-border, $info-text);
   }
 }
 
 .page-notifications {
   position: absolute;
   // make sure the notifications are coming above the modal windows
-  z-index: @zindex-modal + 10;
+  z-index: $zindex-modal + 10;
   max-height: 70%;
   overflow: auto;
   bottom: 20px;

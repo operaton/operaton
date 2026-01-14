@@ -1,5 +1,5 @@
 .loader {
-  color: @gray-light;
+  color: $gray-light;
   text-align: center;
   margin: 20px auto;
 
@@ -9,4 +9,4 @@
   }
 }
 
-@import "~operaton-commons-ui/resources/less/shared/animation-spin";
+@import "~operaton-commons-ui/resources/sass/shared/animation-spin";

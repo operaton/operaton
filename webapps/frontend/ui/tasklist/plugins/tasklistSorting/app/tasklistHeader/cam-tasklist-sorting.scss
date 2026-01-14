@@ -6,6 +6,22 @@ section.tasks-list {
     }
   }
 
+  .dropdown-toggle {
+    &::after {
+      display: none;
+    }
+  }
+
+  .glyphicon-menu-down, .glyphicon-menu-up {
+    font-size: 16px;
+    color: #000000;
+
+    &:focus, &:active {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+  }
+
   .sorting-label {
     float: left;
     vertical-align: middle;
@@ -16,8 +32,8 @@ section.tasks-list {
     display: inline-block;
     max-width: 0;
     margin-right: 0;
-    .transition(max-width 0.218s ease);
-    .transition(margin-right 0.218s ease);
+    //transition: max-width 0.218s ease;
+    transition: margin-right 0.218s ease;
   }
 
   li.sorting-choice {
@@ -30,8 +46,6 @@ section.tasks-list {
     > .glyphicon-remove-sign,
     > .sort-direction {
       position: absolute;
-      top: 50%;
-      margin-top: -0.5em;
     }
 
     > .glyphicon-remove-sign {
@@ -74,7 +88,7 @@ section.tasks-list {
   }
 
   .dropdown-menu > li > .variable-inputs {
-    margin: (@grid-gutter-width / 2) 0;
+    margin: ($grid-gutter-width / 2) 0;
     padding: 0 9px;
 
     .actions {
@@ -87,11 +101,11 @@ section.tasks-list {
 section.column {
   > .cell {
     &.top {
-      .transition(height 0.218s ease);
+      transition: height 0.218s ease;
     }
 
     &.content {
-      .transition(top 0.218s ease);
+      transition: top 0.218s ease;
     }
   }
 }

@@ -1,6 +1,6 @@
 
 .diagram-loader {
-  background-color: fade(@body-bg, 40%);
+  background-color: fade($body-bg, 40%);
   position: absolute;
   z-index: 5;
   top: 0;
@@ -19,7 +19,7 @@
 }
 
 .diagram-pane {
-  height: ~"calc(100vh - 340px)";
+  height: calc(100vh - 340px);
 }
 
 .diagram-holder {
@@ -32,14 +32,14 @@
 
   .highlight {
     .djs-outline {
-      stroke: saturate(darken(@alert-success-border, 30%), 30%) !important;
+      stroke: saturate(darken($success-border, 30%), 30%) !important;
       stroke-width: 2px !important;
-      fill: @alert-success-bg !important;
+      fill: $success-bg !important;
     }
 
     .djs-visual {
       >:nth-child(1) {
-        fill: @alert-success-bg !important;
+        fill: $success-bg !important;
       }
     }
   }

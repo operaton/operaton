@@ -17,15 +17,94 @@
 package org.operaton.spin.impl.logging;
 
 import org.operaton.commons.logging.BaseLogger;
+import org.operaton.spin.SpinFileNotFoundException;
+import org.operaton.spin.SpinRuntimeException;
+import org.operaton.spin.SpinScriptException;
+import org.operaton.spin.spi.DataFormat;
+import org.operaton.spin.spi.DataFormatConfigurator;
+import org.operaton.spin.spi.DataFormatProvider;
+import org.operaton.spin.spi.SpinDataFormatException;
+
+import java.io.IOException;
+import java.util.Collection;
 
 /**
- * @author Daniel Meyer
+ * The Logger for the core api.
  *
+ * @author Daniel Meyer
  */
-public abstract class SpinLogger extends BaseLogger {
+public final class SpinLogger extends BaseLogger {
 
   public static final String PROJECT_CODE = "SPIN";
 
-  public static final SpinCoreLogger CORE_LOGGER = BaseLogger.createLogger(SpinCoreLogger.class, PROJECT_CODE, "org.operaton.spin", "01");
+  public static final SpinLogger CORE_LOGGER = BaseLogger.createLogger(SpinLogger.class, PROJECT_CODE, "org.operaton.spin", "01");
+
+  public IllegalArgumentException unsupportedInputParameter(Class<?> parameterClass) {
+    return new IllegalArgumentException(exceptionMessage("001", "Unsupported input of type '{}'", parameterClass.getName()));
+  }
+
+  public SpinFileNotFoundException fileNotFoundException(String filename, Throwable cause) {
+    return new SpinFileNotFoundException(exceptionMessage("002", "Unable to find file with path '{}'", filename), cause);
+  }
+
+  public SpinFileNotFoundException fileNotFoundException(String filename) {
+    return fileNotFoundException(filename, null);
+  }
+
+  public SpinRuntimeException unableToReadFromReader(Exception e) {
+    return new SpinRuntimeException(exceptionMessage("003", "Unable to read from reader"), e);
+  }
+
+  public SpinDataFormatException unrecognizableDataFormatException() {
+    return new SpinDataFormatException(exceptionMessage("004", "No matching data format detected"));
+  }
+
+  public SpinScriptException noScriptEnvFoundForLanguage(String scriptLanguage, String path) {
+    return new SpinScriptException(exceptionMessage("006", "No script env found for script language '{}' at path '{}'", scriptLanguage, path));
+  }
+
+  public IOException unableToRewindReader() {
+    return new IOException(exceptionMessage("007", "Unable to rewind input stream: rewind buffering limit exceeded"));
+  }
+
+  public SpinDataFormatException multipleProvidersForDataformat(String dataFormatName) {
+    return new SpinDataFormatException(exceptionMessage("008", "Multiple providers found for dataformat '{}'", dataFormatName));
+  }
+
+  public void logDataFormats(Collection<DataFormat<?>> formats) {
+    if (isInfoEnabled()) {
+      for (DataFormat<?> format : formats) {
+        logDataFormat(format);
+      }
+    }
+  }
+
+  protected void logDataFormat(DataFormat<?> dataFormat) {
+    logInfo("009", "Discovered Spin data format: {}[name = {}]", dataFormat.getClass().getName(), dataFormat.getName());
+  }
+
+  public void logDataFormatProvider(DataFormatProvider provider) {
+    if (isInfoEnabled()) {
+      logInfo("010", "Discovered Spin data format provider: {}[name = {}]",
+          provider.getClass().getName(), provider.getDataFormatName());
+    }
+  }
+
+  @SuppressWarnings("rawtypes")
+  public void logDataFormatConfigurator(DataFormatConfigurator configurator) {
+    if (isInfoEnabled()) {
+      logInfo("011", "Discovered Spin data format configurator: {}[dataformat = {}]",
+          configurator.getClass(), configurator.getDataFormatClass().getName());
+    }
+  }
+
+
+  public SpinDataFormatException classNotFound(String classname, ClassNotFoundException cause) {
+    return new SpinDataFormatException(exceptionMessage("012", "Class {} not found ", classname), cause);
+  }
+
+  public void tryLoadingClass(String classname, ClassLoader cl) {
+    logDebug("013", "Try loading class '{}' using classloader '{}'.", classname, cl);
+  }
 
 }

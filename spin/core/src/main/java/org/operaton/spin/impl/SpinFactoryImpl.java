@@ -22,7 +22,6 @@ import java.io.Reader;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.Spin;
 import org.operaton.spin.SpinFactory;
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.impl.util.RewindableReader;
 import org.operaton.spin.impl.util.SpinIoUtil;
@@ -40,7 +39,7 @@ import static org.operaton.commons.utils.EnsureUtil.ensureNotNull;
  */
 public class SpinFactoryImpl extends SpinFactory {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   private static final int READ_SIZE = 256;
 

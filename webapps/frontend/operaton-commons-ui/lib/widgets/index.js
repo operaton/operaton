@@ -44,7 +44,7 @@ var angular = require('operaton-bpm-sdk-js/vendor/angular'),
   password = require('./password/cam-widget-password'),
   selectionType = require('./selection-type/cam-widget-selection-type');
 
-require('angular-ui-bootstrap');
+require('ui-bootstrap4');
 
 var widgetModule = angular.module('operaton.common.widgets', [
   filtersModule.name,

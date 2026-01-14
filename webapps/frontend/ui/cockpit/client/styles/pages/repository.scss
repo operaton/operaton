@@ -1,25 +1,26 @@
-@import '~ui/common/styles/_three-cols-layout.less';
+/* stylelint-disable no-descending-specificity */
+@import '~ui/common/styles/three-cols-layout';
 
-.three-cols-layout-base();
-.three-cols-layout-handheld();
-.three-cols-layout-colors(@column-left-bg, @column-center-bg, @column-right-bg);
-.three-cols-layout-header();
+@include three-cols-layout-base();
+@include three-cols-layout-handheld();
+@include three-cols-layout-colors($column-left-bg, $column-center-bg, $column-right-bg);
+@include three-cols-layout-header();
 
 // S
-@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-  .three-cols-layout(200px, 200px * 1.618);
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  @include three-cols-layout(200px, 200px * 1.618);
 }
 
 // M
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
   // On medium proportion between first and second column is bit different
   // So that there is space for header buttons.
-  .three-cols-layout(240px, 240px * 1.418);
+  @include three-cols-layout(240px, 240px * 1.418);
 }
 
 // L
-@media (min-width: @screen-lg-min) {
-  .three-cols-layout(250px, 250px * 1.618);
+@media (min-width: $screen-lg-min) {
+  @include three-cols-layout(250px, 250px * 1.618);
 }
 
 [cam-resource-wrapper] {
@@ -32,7 +33,7 @@
 
   .table-row {
     display: table;
-    margin-bottom: @grid-gutter-width / 2;
+    margin-bottom: calc(#{$grid-gutter-width} / 2);
   }
 
   h2.name,
@@ -53,7 +54,7 @@
   }
 
   h2.name {
-    padding-right: @grid-gutter-width / 2;
+    padding-right: calc(#{$grid-gutter-width} / 2);
     overflow: hidden;
     word-break: break-all;
     display: block;
@@ -95,8 +96,8 @@
   }
 
   .nav-tabs {
-    margin-top: @grid-gutter-width;
-    margin-bottom: (@grid-gutter-width * 0.5);
+    margin-top: $grid-gutter-width;
+    margin-bottom: calc(#{$grid-gutter-width} * 0.5);
 
     .glyphicon {
       margin-left: 5px;
@@ -104,8 +105,8 @@
   }
 
   .ctn-tabbed-content h4 {
-    margin-top: @grid-gutter-width;
-    margin-bottom: (@grid-gutter-width * 0.5);
+    margin-top: $grid-gutter-width;
+    margin-bottom: calc(#{$grid-gutter-width} * 0.5);
   }
 }
 
@@ -113,7 +114,7 @@
   position: relative;
 
   .deployments {
-    .first-column-list();
+    @include first-column-list();
 
     .actions {
       float: right;
@@ -126,7 +127,7 @@
     }
 
     > li {
-      .first-column-list-item();
+      @include first-column-list-item();
 
       padding-top: 10px;
       padding-bottom: 10px;
@@ -154,13 +155,13 @@
       text-align: right;
 
       .undefined {
-        color: @gray-light;
+        color: $gray-500; // Map from gray-light
       }
     }
 
     dt,
     dd {
-      margin-bottom: @padding-base-vertical;
+      margin-bottom: $padding-base-vertical;
 
       &:last-of-type {
         margin-bottom: 0;
@@ -177,14 +178,14 @@
 
     .alert,
     .well {
-      margin: 0 (@grid-gutter-width * 0.5) (@grid-gutter-width * 0.5)
-        (@grid-gutter-width * 0.5);
+      $half-gutter: calc(#{$grid-gutter-width} * 0.5);
+      margin: 0 $half-gutter $half-gutter $half-gutter;
     }
   }
 
   .column-left .deployments > li,
   .column-center .list-unstyled > li {
-    .column-list-item();
+    @include column-list-item();
   }
 
   .column-left {
@@ -193,17 +194,17 @@
     }
 
     [cam-widget-search] {
-      margin: 0 (@grid-gutter-width * 0.5) (@grid-gutter-width * 0.5)
-        (@grid-gutter-width * 0.5);
+      margin: 0 calc(#{$grid-gutter-width} * 0.5) calc(#{$grid-gutter-width} * 0.5)
+      calc(#{$grid-gutter-width} * 0.5);
     }
   }
 
   .column-center {
     .list-unstyled {
-      .second-column-list();
+      @include second-column-list();
 
       > li {
-        .second-column-list-item();
+        @include second-column-list-item();
 
         > h4 {
           margin: 0;

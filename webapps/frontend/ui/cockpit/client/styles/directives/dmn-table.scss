@@ -1,31 +1,31 @@
-@import '~operaton-commons-ui/lib/widgets/dmn-viewer/cam-widget-dmn-viewer.less';
+@import '~operaton-commons-ui/lib/widgets/dmn-viewer/cam-widget-dmn-viewer.scss';
 
 .edit-dmn-modal,
 .confirm-dmn-modal {
   > .modal-dialog {
     width: auto;
-    margin-left: @grid-gutter-width * 0.5;
-    margin-right: @grid-gutter-width * 0.5;
+    margin-left: $grid-gutter-width * 0.5;
+    margin-right: $grid-gutter-width * 0.5;
   }
 }
 
 .confirm-dmn-modal {
   .glyphicon-fire {
-    color: @brand-danger;
+    color: $brand-danger;
   }
 
   .help-block {
-    padding: (@grid-gutter-width * 0.5);
-    color: @state-warning-text;
-    background-color: @state-warning-bg;
-    border: 1px solid @state-warning-border;
-    margin: 0 0 (@grid-gutter-width * 0.5) 0;
+    padding: ($grid-gutter-width * 0.5);
+    color: $warning-text;
+    background-color: $warning-bg;
+    border: 1px solid $warning-border;
+    margin: 0 0 ($grid-gutter-width * 0.5) 0;
   }
 
   .deployment-name {
     display: table;
     table-layout: fixed;
-    margin: (@grid-gutter-width * 0.5) 0;
+    margin: ($grid-gutter-width * 0.5) 0;
     width: 100%;
 
     > label,
@@ -34,7 +34,7 @@
     }
 
     > label {
-      padding-right: (@grid-gutter-width * 0.5);
+      padding-right: ($grid-gutter-width * 0.5);
       width: 210px;
     }
 
@@ -74,9 +74,9 @@
 .dmn-clauseexpression-setter,
 .dmn-clausevalues-setter,
 .dmn-hitpolicy-setter {
-  z-index: 99 + @zindex-modal;
+  z-index: 99 + $zindex-modal;
 }
 
 .dmn-combobox-suggestions {
-  z-index: 100 + @zindex-modal;
+  z-index: 100 + $zindex-modal;
 }

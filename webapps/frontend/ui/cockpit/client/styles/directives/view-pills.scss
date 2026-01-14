@@ -7,11 +7,11 @@ ul.view-pills {
 
     &.active {
       > a {
-        background-color: @link-color;
+        background-color: $link-color;
 
         &:focus,
         &:hover { /* stylelint-disable-line no-descending-specificity -- now this is just silly */
-          background-color: @link-color;
+          background-color: $link-color;
         }
       }
     }

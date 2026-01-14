@@ -1,6 +1,6 @@
-@import './_app-variables.less';
-@import '~ui/common/styles/cam-webapps-common.less';
-@import "~ui/common/styles/app-splash";
+@import './_app-variables.scss';
+@import '~ui/common/styles/cam-webapps-common.scss';
+@import "~ui/common/styles/app-splash.scss";
 
 /* ---------------------------------------------------------------- */
 
@@ -24,7 +24,7 @@
 @import '~operaton-commons-ui/lib/widgets/search/cam-widget-search';
 @import '~operaton-commons-ui/lib/widgets/cam-share-link/cam-share-link';
 @import '~operaton-commons-ui/lib/widgets/loader/cam-widget-loader';
-@import (less) '~operaton-commons-ui/resources/css/prism.css';
+@import '~operaton-commons-ui/resources/css/prism.css';
 @import './ctn';
 @import './process-information';
 @import './filters';

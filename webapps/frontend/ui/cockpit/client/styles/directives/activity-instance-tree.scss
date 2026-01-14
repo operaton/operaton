@@ -1,7 +1,7 @@
 .btn-control,
 .btn-control-link,
 .btn.btn-control {
-  color: @text-color;
+  color: $text-color;
 }
 
 .instance-tree {
@@ -20,8 +20,8 @@
     &::before {
       position: relative;
       z-index: 99;
-      background-color: @filters-bg;
-      .transition(transform 0.218s ease 0.218s);
+      background-color: $filters-bg;
+      @include transition(transform 0.218s ease 0.218s);
     }
   }
 
@@ -31,12 +31,12 @@
     left: 0;
     right: 0;
     bottom: 0;
-    border: 1px solid darken(@gray-lighter, 15%);
-    border-radius: @border-radius-base;
+    border: 1px solid darken($gray-lighter, 15%);
+    border-radius: $border-radius-base;
 
     a {
       font-size: 12px;
-      color: @text-color;
+      color: $text-color;
       text-decoration: none;
       position: absolute;
       z-index: 1;
@@ -75,15 +75,15 @@
     }
 
     &.selected {
-      background-color: @bpmn-highlight-bg;
-      border-color: @bpmn-highlight-border-color;
+      background-color: $bpmn-highlight-bg;
+      border-color: $bpmn-highlight-border-color;
       z-index: 11;
 
       [class^="icon-"],
       [class*=" icon-"] {
         &::before {
-          background-color: @bpmn-highlight-bg;
-          border-color: @bpmn-highlight-border-color;
+          background-color: $bpmn-highlight-bg;
+          border-color: $bpmn-highlight-border-color;
         }
       }
 
@@ -115,7 +115,7 @@
         > [class^="icon-"],
         > [class*=" icon-"] {
           &::before {
-            .scale(3);
+            transform: scale(3);
           }
         }
       }
@@ -152,8 +152,8 @@
   .tree-node-addon {
     display: block;
     padding: 4px;
-    border-radius: 0 @border-radius-base @border-radius-base 0;
-    background-color: @canceled-color;
+    border-radius: 0 $border-radius-base $border-radius-base 0;
+    background-color: $canceled-color;
     border-left: 0;
     position: absolute;
     top: 1px;
@@ -162,11 +162,11 @@
     z-index: 12;
 
     &.activity-instance-completed {
-      background-color: @completed-color;
+      background-color: $completed-color;
     }
 
     &.activity-instance-running {
-      background-color: @running-color;
+      background-color: $running-color;
     }
   }
 }
@@ -192,19 +192,19 @@
     background-image: none;
 
     &.running {
-      background-color: @running-color;
-      border-color: @running-darker;
+      background-color: $running-color;
+      border-color: $running-darker;
     }
 
     &.completed,
     &.finished {
-      background-color: @completed-color;
-      border-color: @completed-darker;
+      background-color: $completed-color;
+      border-color: $completed-darker;
     }
 
     &.canceled {
-      background-color: @canceled-color;
-      border-color: @canceled-darker;
+      background-color: $canceled-color;
+      border-color: $canceled-darker;
     }
   }
 

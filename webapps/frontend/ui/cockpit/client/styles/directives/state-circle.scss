@@ -1,0 +1,49 @@
+[state-circle] {
+  display: inline-block;
+  width: $state-circle-size;
+  height: $state-circle-size;
+  position: relative;
+  border: 2px solid;
+  border-radius: 50%;
+
+  &::before {
+    // 1. Updated Font Family for Bootstrap Icons
+    font-family: 'bootstrap-icons';
+    display: inline-block;
+    position: absolute;
+    top: -2px; // Adjusted for BI alignment
+    left: -2px;
+    width: $state-circle-size;
+    height: $state-circle-size;
+    text-align: center;
+    line-height: $state-circle-size;
+    // 2. Proportional font-size logic maintained
+    font-size: calc(#{$state-circle-size} * (14 / 20));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  &.circle-red {
+    color: $danger; // BS4/5 variable name
+
+    &::before {
+      @extend .bi-x-lg;
+    }
+  }
+
+  &.circle-green {
+    color: $success; // BS4/5 variable name
+
+    &::before {
+      @extend .bi-check-lg;
+    }
+  }
+
+  &.circle-blue {
+    color: darken(#428bca, 6.5%);
+
+    &::before {
+      @extend .bi-info-lg;
+    }
+  }
+}

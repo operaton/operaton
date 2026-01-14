@@ -53,9 +53,9 @@
           novalidate
           request-aware>
       <div  ng-hide="hideSkipCustomListeners"
-            class="form-group skip-custom-listener">
+            class="form-group skip-custom-listener row">
 
-        <label class="control-label col-xs-5"
+        <label class="control-label col-5"
                for="skipCustomListeners">
           {{ 'PLUGIN_CANCEL_PROCESS_SKIP_CUSTOM_LISTENERS' | translate }}
           <span class="glyphicon glyphicon-question-sign"
@@ -64,7 +64,7 @@
           </span>
         </label>
 
-        <div class="col-xs-7">
+        <div class="col-7">
           <label class="checkbox">
             <input name="skipCustomListeners"
                    type="checkbox"
@@ -74,10 +74,10 @@
 
       </div>
 
-      <div class="form-group skip-custom-listener"
+      <div class="form-group row skip-custom-listener"
            ng-hide="SKIP_IO_MAPPINGS.hidden">
 
-        <label class="control-label col-xs-5"
+        <label class="control-label col-5"
                for="skipIoMappings">
           {{ 'PLUGIN_CANCEL_PROCESS_SKIP_IO_MAPPINGS' | translate }}
           <span class="glyphicon glyphicon-question-sign"
@@ -86,7 +86,7 @@
           </span>
         </label>
 
-        <div class="col-xs-7">
+        <div class="col-7">
           <label class="checkbox">
             <input name="skipIoMappings"
                    type="checkbox"

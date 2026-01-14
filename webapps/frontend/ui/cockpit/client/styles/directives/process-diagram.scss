@@ -12,9 +12,10 @@
   user-select: none;
 
   .activity-highlight {
-    .box-shadow(~"0 0 @{border-radius-base} @{border-radius-base} @{highlihgt-shadow-color}");
+    // SCSS interpolation for complex mixin arguments
+    @include box-shadow(0 0 #{$border-radius-base} #{$border-radius-base} #{$highlihgt-shadow-color});
 
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
     cursor: pointer;
   }
 
@@ -45,7 +46,7 @@
 
     .badge-warning {
       font-weight: normal;
-      .transition(padding 0.218s ease);
+      @include transition(padding 0.218s ease);
 
       &.hovered {
         padding: 7px 11px;
@@ -80,6 +81,7 @@
   .bpmn-overlay {
     position: absolute;
     pointer-events: none;
+    // Legacy IE filter
     filter: alpha(opacity=0);
 
     > [view] {
@@ -91,40 +93,41 @@
     font-size: 12px;
     border-width: 1px;
     border-style: solid;
-    background-color: @running-color;
-    border-color: @running-darker;
-    color: @running-darker;
+    background-color: $running-color;
+    border-color: $running-darker;
+    color: $running-darker;
 
     &.badge-warning {
-      background-color: @warning-color;
-      border-color: @warning-darker;
-      color: @warning-darker;
+      background-color: $warning-color;
+      border-color: $warning-darker;
+      color: $warning-darker;
     }
 
     &.badge-important {
-      background-color: @important-color;
-      border-color: @important-darker;
+      background-color: $important-color;
+      border-color: $important-darker;
       font-weight: bolder;
-      color: contrast(@important-color);
+      // Sass/BS4 equivalent to LESS contrast():
+      color: color-yiq($important-color);
     }
 
     &.activity-instance-completed {
-      background-color: @completed-color;
-      border-color: @completed-darker;
-      color: @completed-darker;
+      background-color: $completed-color;
+      border-color: $completed-darker;
+      color: $completed-darker;
     }
 
     &.activity-instance-canceled {
-      background-color: @canceled-color;
-      border-color: @canceled-darker;
-      color: @canceled-darker;
+      background-color: $canceled-color;
+      border-color: $canceled-darker;
+      color: $canceled-darker;
     }
 
     &.drag {
       z-index: 100;
       opacity: 0.5;
       position: absolute;
-      .box-shadow(0 0 3px @gray);
+      @include box-shadow(0 0 3px $gray);
     }
   }
 }

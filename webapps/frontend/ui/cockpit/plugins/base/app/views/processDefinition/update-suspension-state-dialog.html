@@ -24,8 +24,8 @@
           request-aware
           ng-submit="updateSuspensionState()">
       <fieldset>
-        <div class="form-group">
-          <label class="control-label col-xs-4"
+        <div class="form-group row">
+          <label class="control-label col-sm-5 col-4"
                  for="includeInstancesValue">{{'PLUGIN_SUSPENSION_INCLUDE_INSTANCES' | translate}}
             <!-- activation -->
             <span uib-tooltip="{{'PLUGIN_SUSPENSION_INCLUDING_MESSAGE_1' | translate}}"
@@ -42,7 +42,7 @@
             </span>
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-sm-7 col-8">
             <label class="checkbox">
               <input id="includeInstancesValueId"
                      name="includeInstancesValue"
@@ -52,8 +52,9 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label class="control-label col-xs-4" for="executeImmediately">{{'PLUGIN_SUSPENSION_EXECUTE' | translate}}
+        <div class="form-group row">
+          <label class="control-label col-sm-5 col-4" for="executeImmediately">{{'PLUGIN_SUSPENSION_EXECUTE' |
+            translate}}
             <span uib-tooltip="{{'PLUGIN_SUSPENSION_DECIDE_ACTIVATION' | translate}}"
                   tooltip-placement="right"
                   ng-show="processDefinition.suspended">
@@ -66,7 +67,7 @@
             </span>
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-sm-7 col-8">
             <label class="radio">
               <input ng-model="data.executeImmediately"
                      ng-value="true"
@@ -86,12 +87,12 @@
         </div>
         <div class="form-group"
              ng-show="!data.executeImmediately">
-          <label class="control-label col-xs-4"
+          <label class="control-label col-sm-5 col-4"
                  for="executionDateValue">
             {{'PLUGIN_SUSPENSION_SCHEDULE_AT' | translate}}
           </label>
 
-          <div class="col-xs-8">
+          <div class="col-sm-7 col-8">
             <input date
                    name="executionDateValue"
                    ng-model="data.executionDate"

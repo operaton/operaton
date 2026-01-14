@@ -1,9 +1,10 @@
+@import "~ui/admin/client/styles/styles";
 .batch-wrapper {
-  .container-fluid;
+  @include container-fluid;
 
   position: absolute;
   width: 100%;
-  top: @breadcrumb-height;
+  top: $breadcrumb-height;
   bottom: 0;
   overflow: auto;
 
@@ -28,8 +29,8 @@
     border-left: 3px solid transparent;
 
     &.selected {
-      border-color: @brand-primary;
-      color: @gray-base;
+      border-color: $brand-primary;
+      color: $black;
     }
   }
 

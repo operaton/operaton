@@ -13,7 +13,7 @@
   }
 
   .footer {
-    border-top: solid 1px @filters-color;
+    border-top: solid 1px $filters-color;
     padding-top: 8px;
   }
 
@@ -40,7 +40,7 @@
   }
 
   .note-error {
-    color: @brand-danger;
+    color: $brand-danger;
   }
 
   .note code {
@@ -124,14 +124,14 @@
     position: relative;
 
     &.search-text {
-      .form-control-static;
+      @extend .form-control-plaintext;
 
       margin-bottom: 5px;
       padding-right: 25px;
-      margin-left: @padding-base-horizontal;
+      margin-left: $padding-base-horizontal;
 
       &:hover {
-        color: @gray-base;
+        color: $black;
       }
     }
 

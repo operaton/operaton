@@ -17,7 +17,7 @@
   <section ng-if="resource" class="resource">
 
     <header class="row">
-      <div class="col-xs-12"
+      <div class="col-12"
            cam-resource-meta
            resource-data="resourceData"
            control="control">
@@ -25,14 +25,14 @@
     </header>
 
     <div class="section-content row">
-      <div class="col-xs-12"
+      <div class="col-12"
            cam-resource-content
            resource-data="resourceData"
            control="control">
       </div>
 
       <div ng-show="resourceDetailTabs.length"
-           class="col-xs-12 ctn-tabbed-content">
+           class="col-12 ctn-tabbed-content">
 
         <view ng-repeat="resourceDetailTab in resourceDetailTabs"
               provider="resourceDetailTab"

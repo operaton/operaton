@@ -31,12 +31,12 @@
   }
 
   section.deployed:not(.no-metrics) .section-toggle {
-    right: @grid-gutter-width * 0.5;
+    right: $grid-gutter-width * 0.5;
   }
 
   .value,
   .no-value {
-    font-size: @font-size-base * 2;
+    font-size: $font-size-base * 2;
     font-weight: 100;
   }
 
@@ -99,12 +99,12 @@
         width: 100%;
         text-align: center;
         z-index: 5;
-        color: @gray-lighter;
+        color: $gray-lighter;
       }
     }
   }
 }
 
 .deprecate-dashboard-view {
-  margin: (@grid-gutter-width * 0.5) 0;
+  margin: ($grid-gutter-width * 0.5) 0;
 }

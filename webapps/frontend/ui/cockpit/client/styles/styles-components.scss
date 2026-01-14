@@ -1,17 +1,18 @@
 // use `reference` to avoid duplicate bootstrap styles
 // as they are already available in other compiled CSS
-@import (reference) '~operaton-commons-ui/resources/less/shared/bootstrap.less';
-@import './_app-variables.less';
-@import '~operaton-commons-ui/resources/less/shared/_mixins';
+
+@import './_app-variables.scss';
+@import '~operaton-commons-ui/resources/sass/shared/bootstrap.scss';
+@import '~operaton-commons-ui/resources/sass/shared/_mixins';
 
 /* ---------------------------------------------------------------- */
 
 .monospaced {
-  font-family: @font-family-monospace;
+  font-family: $font-family-monospace;
 }
 
 @import 'pages/repository';
-@import '~ui/common/styles/pages/dashboard.less';
+@import '~ui/common/styles/pages/dashboard.scss';
 @import './../scripts/pages/dashboard';
 @import './../scripts/components/callActivityOverlays/styles';
 @import '~ui/cockpit/client/scripts/pages/processes';

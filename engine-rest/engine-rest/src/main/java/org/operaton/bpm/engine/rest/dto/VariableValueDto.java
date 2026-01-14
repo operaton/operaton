@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.dto;
 
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -158,6 +159,9 @@ public class VariableValueDto {
 
   public static Map<String, VariableValueDto> fromMap(VariableMap variables, boolean preferSerializedValue)
   {
+    if (variables == null) {
+      return Collections.emptyMap();
+    }
     Map<String, VariableValueDto> result = new HashMap<>();
     for (String variableName : variables.keySet()) {
       VariableValueDto valueDto = VariableValueDto.fromTypedValue(variables.getValueTyped(variableName), preferSerializedValue);

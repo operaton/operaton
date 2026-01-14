@@ -1464,7 +1464,7 @@ class TaskServiceTest {
 
     taskService.setVariable(task1.getId(), taskVariableName, taskVariableValue);
     Map<String, Object> vars = taskService.completeWithVariablesInReturn(task1.getId(), null, true);
-    assertThat(vars).isNull();
+    assertThat(vars).isEmpty();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

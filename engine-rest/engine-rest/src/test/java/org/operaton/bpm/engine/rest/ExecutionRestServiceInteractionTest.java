@@ -65,6 +65,7 @@ import org.operaton.bpm.engine.variable.value.BooleanValue;
 import org.operaton.bpm.engine.variable.value.FileValue;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
+import static java.util.Collections.emptyMap;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_TASK_ID;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_TIMEZONE;
 import static io.restassured.RestAssured.given;
@@ -1583,7 +1584,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
       .when().post(TRIGGER_MESSAGE_SUBSCRIPTION_URL);
 
     verify(runtimeServiceMock).messageEventReceived(eq(messageName), eq(MockProvider.EXAMPLE_EXECUTION_ID),
-        argThat(new EqualsMap(null)));
+        argThat(new EqualsMap(emptyMap())));
   }
 
   @Test

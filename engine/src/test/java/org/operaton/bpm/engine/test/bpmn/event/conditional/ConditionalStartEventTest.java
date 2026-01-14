@@ -268,7 +268,7 @@ class ConditionalStartEventTest {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId1)
        && !eventSubscriptionEntity.getConfiguration().equals(processDefId5)) {
-        fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
+        fail("This process definition '%s' and the respective event subscription should not exist.".formatted(eventSubscriptionEntity.getConfiguration()));
       }
     }
   }
@@ -712,7 +712,7 @@ class ConditionalStartEventTest {
     // when/then
     assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Process definition with id '" + processDefinitionId + "' does not declare conditional start event");
+      .hasMessageContaining("Process definition with id '%s' does not declare conditional start event".formatted(processDefinitionId));
   }
 
   @Test

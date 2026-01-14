@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -31,22 +28,18 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * Gives access to a deployed BPMN model instance which can be accessed by
  * the BPMN model API.
  *
  * @author Sebastian Menski
  */
-public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInstance>, Serializable {
-
-  @Serial
-  private static final long serialVersionUID = 1L;
+public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInstance> {
   protected String processDefinitionId;
 
   public GetDeploymentBpmnModelInstanceCmd(String processDefinitionId) {
     if (processDefinitionId == null || processDefinitionId.isEmpty()) {
-      throw new ProcessEngineException("The process definition id is mandatory, but '" + processDefinitionId + "' has been provided.");
+      throw new ProcessEngineException("The process definition id is mandatory, but '%s' has been provided.".formatted(processDefinitionId));
     }
     this.processDefinitionId = processDefinitionId;
   }
@@ -64,7 +57,7 @@ public class GetDeploymentBpmnModelInstanceCmd implements Command<BpmnModelInsta
 
     BpmnModelInstance modelInstance = deploymentCache.findBpmnModelInstanceForProcessDefinition(processDefinitionId);
 
-    ensureNotNull("no BPMN model instance found for process definition id " + processDefinitionId, "modelInstance", modelInstance);
+    ensureNotNull("no BPMN model instance found for process definition id %s".formatted(processDefinitionId), "modelInstance", modelInstance);
     return modelInstance;
   }
 }

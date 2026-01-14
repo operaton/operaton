@@ -23,7 +23,9 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 /**
  * Parent class for all BPMN 2.0 task types such as ServiceTask, ScriptTask, UserTask, etc.
  *
+ * <p>
  * When used on its own, it behaves just as a pass-through activity.
+ * </p>
  *
  * @author Joram Barrez
  */

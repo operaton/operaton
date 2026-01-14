@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -33,14 +31,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * Command to handle a task escalation.
  */
-public class HandleTaskEscalationCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class HandleTaskEscalationCmd implements Command<Void> {
   protected String taskId;
   protected String escalationCode;
   protected Map<String, Object> variables;
-
 
   public HandleTaskEscalationCmd(String taskId, String escalationCode) {
     this.taskId = taskId;
@@ -62,7 +56,7 @@ public class HandleTaskEscalationCmd implements Command<Void>, Serializable {
     validateInput();
 
     TaskEntity task = commandContext.getTaskManager().findTaskById(taskId);
-    ensureNotNull(NotFoundException.class,"Cannot find task with id " + taskId, "task", task);
+    ensureNotNull(NotFoundException.class,"Cannot find task with id %s".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkTaskWork(task);

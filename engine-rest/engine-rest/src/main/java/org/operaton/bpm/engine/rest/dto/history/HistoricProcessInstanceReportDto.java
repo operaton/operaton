@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
 
@@ -44,12 +42,6 @@ public class HistoricProcessInstanceReportDto extends AbstractReportDto<Historic
   protected Date startedBefore;
 
   public static final String REPORT_TYPE_DURATION = "duration";
-
-  public static final List<String> VALID_REPORT_TYPE_VALUES;
-  static {
-    VALID_REPORT_TYPE_VALUES = new ArrayList<>();
-    VALID_REPORT_TYPE_VALUES.add(REPORT_TYPE_DURATION);
-  }
 
   public HistoricProcessInstanceReportDto() {
   }
@@ -98,7 +90,7 @@ public class HistoricProcessInstanceReportDto extends AbstractReportDto<Historic
       reportQuery.startedBefore(startedBefore);
     }
     if (!REPORT_TYPE_DURATION.equals(reportType)) {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Unknown report type " + reportType);
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "Unknown report type %s".formatted(reportType));
     }
   }
 

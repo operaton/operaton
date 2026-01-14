@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -34,7 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Tassilo Weidner
  */
-public abstract class AbstractDeleteProcessDefinitionCmd implements Command<Void>, Serializable {
+public abstract class AbstractDeleteProcessDefinitionCmd implements Command<Void> {
 
   protected boolean cascade;
   protected boolean skipCustomListeners;
@@ -45,7 +44,7 @@ public abstract class AbstractDeleteProcessDefinitionCmd implements Command<Void
 
     ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager()
       .findLatestProcessDefinitionById(processDefinitionId);
-    ensureNotNull(NotFoundException.class, "No process definition found with id '" + processDefinitionId + "'",
+    ensureNotNull(NotFoundException.class, "No process definition found with id '%s'".formatted(processDefinitionId),
       "processDefinition", processDefinition);
 
     List<CommandChecker> commandCheckers = commandContext.getProcessEngineConfiguration().getCommandCheckers();

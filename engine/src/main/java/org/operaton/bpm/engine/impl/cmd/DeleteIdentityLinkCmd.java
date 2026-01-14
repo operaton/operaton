@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -29,16 +26,12 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Falko Menge
  * @author Joram Barrez
  */
-public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public abstract class DeleteIdentityLinkCmd implements Command<Void> {
   protected String userId;
 
   protected String groupId;
@@ -64,8 +57,7 @@ public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializab
     // Special treatment for assignee and owner: group cannot be used and userId may be null
     if (IdentityLinkType.ASSIGNEE.equals(type) || IdentityLinkType.OWNER.equals(type)) {
       if (groupId != null) {
-        throw new ProcessEngineException("Incompatible usage: cannot use type '" + type
-          + "' together with a groupId");
+        throw new ProcessEngineException("Incompatible usage: cannot use type '%s' together with a groupId".formatted(type));
       }
     } else {
       if (userId == null && groupId == null) {
@@ -80,7 +72,7 @@ public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializab
 
     TaskManager taskManager = commandContext.getTaskManager();
     task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkDeleteIdentityLink(task, commandContext);
 

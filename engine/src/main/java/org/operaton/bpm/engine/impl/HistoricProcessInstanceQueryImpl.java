@@ -78,7 +78,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String subProcessInstanceId;
   protected String superCaseInstanceId;
   protected String subCaseInstanceId;
-  protected List<String> processKeyNotIn;
+  private List<String> processKeyNotIn;
   protected Date startedBefore;
   protected Date startedAfter;
   protected Date finishedBefore;
@@ -89,7 +89,7 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected Date executedJobBefore;
   protected String processDefinitionKey;
   protected String[] processDefinitionKeys;
-  protected Set<String> processInstanceIds;
+  private Set<String> processInstanceIds;
   protected String[] processInstanceIdNotIn;
   protected String[] tenantIds;
   protected boolean isTenantIdSet;
@@ -97,14 +97,14 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected String[] activeActivityIds;
   protected String[] activityIds;
   protected String[] incidentIds;
-  protected Set<String> state = new HashSet<>();
+  private Set<String> state = new HashSet<>();
 
   protected String caseInstanceId;
 
-  protected List<HistoricProcessInstanceQueryImpl> queries = new ArrayList<>(Collections.singletonList(this));
+  private List<HistoricProcessInstanceQueryImpl> queries = new ArrayList<>(Collections.singletonList(this));
   protected boolean isOrQueryActive;
 
-  protected Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
+  private Map<String, Set<QueryVariableValue>> queryVariableNameToValuesMap = new HashMap<>();
 
   public HistoricProcessInstanceQueryImpl() {
   }
@@ -758,6 +758,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
   protected Date finishDateOnBegin;
   protected Date finishDateOnEnd;
 
+  /**
+   * @deprecated since 1.0, use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateBy(Date date) {
@@ -765,6 +768,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #startedAfter(Date)} and {@link #startedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery startDateOn(Date date) {
@@ -774,6 +780,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #finishedAfter(Date)} and {@link #finishedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateBy(Date date) {
@@ -781,6 +790,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #finishedAfter(Date)} and {@link #finishedBefore(Date)} instead.
+   */
   @Deprecated(since = "1.0")
   @Override
   public HistoricProcessInstanceQuery finishDateOn(Date date) {
@@ -790,6 +802,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return this;
   }
 
+  /**
+   * @deprecated since 1.0, internal utility method.
+   */
   @Deprecated(since = "1.0")
   private Date calculateBeforeMidnight(Date date){
     Calendar cal = Calendar.getInstance();
@@ -799,6 +814,9 @@ public class HistoricProcessInstanceQueryImpl extends AbstractVariableQueryImpl<
     return cal.getTime();
   }
 
+  /**
+   * @deprecated since 1.0, internal utility method.
+   */
   @Deprecated(since = "1.0")
   private Date calculateMidnight(Date date){
     Calendar cal = Calendar.getInstance();

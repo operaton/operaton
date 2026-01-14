@@ -69,7 +69,7 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
       return executionIds[0];
     }
     else {
-      throw new RuntimeException("There is more than one execution assigned to activity instance " + singleInstance.getId());
+      throw new RuntimeException("There is more than one execution assigned to activity instance %s".formatted(singleInstance.getId()));
     }
   }
 
@@ -87,7 +87,7 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
       return activityInstances[0];
     }
     else {
-      throw new RuntimeException("There is not exactly one activity instance for activity " + activityId);
+      throw new RuntimeException("There is not exactly one activity instance for activity %s".formatted(activityId));
     }
   }
 
@@ -160,8 +160,9 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
 
   protected void assertEventSubscriptionMigrated(EventSubscription eventSubscriptionBefore, String activityIdAfter, String eventName) {
     EventSubscription eventSubscriptionAfter = snapshotAfterMigration.getEventSubscriptionById(eventSubscriptionBefore.getId());
-    assertThat(eventSubscriptionAfter).as("Expected that an event subscription with id '" + eventSubscriptionBefore.getId() + "' "
-        + "exists after migration").isNotNull();
+    assertThat(eventSubscriptionAfter)
+        .as("Expected that an event subscription with id '%s' exists after migration".formatted(eventSubscriptionBefore.getId()))
+        .isNotNull();
 
     assertThat(eventSubscriptionAfter.getEventType()).isEqualTo(eventSubscriptionBefore.getEventType());
     assertThat(eventSubscriptionAfter.getActivityId()).isEqualTo(activityIdAfter);
@@ -171,36 +172,44 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
 
   public void assertEventSubscriptionMigrated(String activityIdBefore, String activityIdAfter, String eventName) {
     EventSubscription eventSubscriptionBefore = snapshotBeforeMigration.getEventSubscriptionForActivityIdAndEventName(activityIdBefore, eventName);
-    assertThat(eventSubscriptionBefore).as("Expected that an event subscription for activity '" + activityIdBefore + "' exists before migration").isNotNull();
+    assertThat(eventSubscriptionBefore)
+        .as("Expected that an event subscription for activity '%s' exists before migration".formatted(activityIdBefore))
+        .isNotNull();
 
     assertEventSubscriptionMigrated(eventSubscriptionBefore, activityIdAfter, eventName);
   }
 
   public void assertEventSubscriptionMigrated(String activityIdBefore, String eventNameBefore, String activityIdAfter, String eventNameAfter) {
     EventSubscription eventSubscriptionBefore = snapshotBeforeMigration.getEventSubscriptionForActivityIdAndEventName(activityIdBefore, eventNameBefore);
-    assertThat(eventSubscriptionBefore).as("Expected that an event subscription for activity '" + activityIdBefore + "' exists before migration").isNotNull();
+    assertThat(eventSubscriptionBefore)
+        .as("Expected that an event subscription for activity '%s' exists before migration".formatted(activityIdBefore))
+        .isNotNull();
 
     assertEventSubscriptionMigrated(eventSubscriptionBefore, activityIdAfter, eventNameAfter);
   }
 
   public void assertEventSubscriptionRemoved(String activityId, String eventName) {
     EventSubscription eventSubscriptionBefore = snapshotBeforeMigration.getEventSubscriptionForActivityIdAndEventName(activityId, eventName);
-    assertThat(eventSubscriptionBefore).as("Expected an event subscription for activity '" + activityId + "' before the migration").isNotNull();
+    assertThat(eventSubscriptionBefore)
+        .as("Expected an event subscription for activity '%s' before the migration".formatted(activityId))
+        .isNotNull();
 
     for (EventSubscription eventSubscription : snapshotAfterMigration.getEventSubscriptions()) {
       if (eventSubscriptionBefore.getId().equals(eventSubscription.getId())) {
-        fail("Expected event subscription '" + eventSubscriptionBefore.getId() + "' to be removed after migration");
+        fail("Expected event subscription '%s' to be removed after migration".formatted(eventSubscriptionBefore.getId()));
       }
     }
   }
 
   public void assertEventSubscriptionCreated(String activityId, String eventName) {
     EventSubscription eventSubscriptionAfter = snapshotAfterMigration.getEventSubscriptionForActivityIdAndEventName(activityId, eventName);
-    assertThat(eventSubscriptionAfter).as("Expected an event subscription for activity '" + activityId + "' after the migration").isNotNull();
+    assertThat(eventSubscriptionAfter)
+        .as("Expected an event subscription for activity '%s' after the migration".formatted(activityId))
+        .isNotNull();
 
     for (EventSubscription eventSubscription : snapshotBeforeMigration.getEventSubscriptions()) {
       if (eventSubscriptionAfter.getId().equals(eventSubscription.getId())) {
-        fail("Expected event subscription '" + eventSubscriptionAfter.getId() + "' to be created after migration");
+        fail("Expected event subscription '%s' to be created after migration".formatted(eventSubscriptionAfter.getId()));
       }
     }
   }
@@ -219,35 +228,43 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
 
   public void assertJobCreated(String activityId, String handlerType) {
     JobDefinition jobDefinitionAfter = snapshotAfterMigration.getJobDefinitionForActivityIdAndType(activityId, handlerType);
-    assertThat(jobDefinitionAfter).as("Expected that a job definition for activity '" + activityId + "' exists after migration").isNotNull();
+    assertThat(jobDefinitionAfter)
+        .as("Expected that a job definition for activity '%s' exists after migration".formatted(activityId))
+        .isNotNull();
 
     Job jobAfter = snapshotAfterMigration.getJobForDefinitionId(jobDefinitionAfter.getId());
-    assertThat(jobAfter).as("Expected that a job for activity '" + activityId + "' exists after migration").isNotNull();
+    assertThat(jobAfter)
+        .as("Expected that a job for activity '%s' exists after migration".formatted(activityId))
+        .isNotNull();
     assertTimerJob(jobAfter);
     assertThat(jobAfter.getProcessDefinitionId()).isEqualTo(jobDefinitionAfter.getProcessDefinitionId());
     assertThat(jobAfter.getProcessDefinitionKey()).isEqualTo(jobDefinitionAfter.getProcessDefinitionKey());
 
     for (Job job : snapshotBeforeMigration.getJobs()) {
       if (jobAfter.getId().equals(job.getId())) {
-        fail("Expected job '" + jobAfter.getId() + "' to be created first after migration");
+        fail("Expected job '%s' to be created first after migration".formatted(jobAfter.getId()));
       }
     }
   }
 
   public void assertJobsCreated(String activityId, String handlerType, int countJobs) {
     List<JobDefinition> jobDefinitionsAfter = snapshotAfterMigration.getJobDefinitionsForActivityIdAndType(activityId, handlerType);
-    assertThat(jobDefinitionsAfter).as("Expected that " + countJobs + "job definitions for activity '" + activityId + "' exist after migration, but found " + jobDefinitionsAfter.size()).hasSize(countJobs);
+    assertThat(jobDefinitionsAfter)
+        .as("Expected that %s job definitions for activity '%s' exist after migration, but found ".formatted(countJobs, activityId, jobDefinitionsAfter.size()))
+        .hasSize(countJobs);
 
     for (JobDefinition jobDefinitionAfter : jobDefinitionsAfter) {
       Job jobAfter = snapshotAfterMigration.getJobForDefinitionId(jobDefinitionAfter.getId());
-      assertThat(jobAfter).as("Expected that a job for activity '" + activityId + "' exists after migration").isNotNull();
+      assertThat(jobAfter)
+          .as("Expected that a job for activity '%s' exists after migration".formatted(activityId))
+          .isNotNull();
       assertTimerJob(jobAfter);
       assertThat(jobAfter.getProcessDefinitionId()).isEqualTo(jobDefinitionAfter.getProcessDefinitionId());
       assertThat(jobAfter.getProcessDefinitionKey()).isEqualTo(jobDefinitionAfter.getProcessDefinitionKey());
 
       for (Job job : snapshotBeforeMigration.getJobs()) {
         if (jobAfter.getId().equals(job.getId())) {
-          fail("Expected job '" + jobAfter.getId() + "' to be created first after migration");
+          fail("Expected job '%s' to be created first after migration".formatted(jobAfter.getId()));
         }
       }
     }
@@ -255,15 +272,19 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
 
   public void assertJobRemoved(String activityId, String handlerType) {
     JobDefinition jobDefinitionBefore = snapshotBeforeMigration.getJobDefinitionForActivityIdAndType(activityId, handlerType);
-    assertThat(jobDefinitionBefore).as("Expected that a job definition for activity '" + activityId + "' exists before migration").isNotNull();
+    assertThat(jobDefinitionBefore)
+        .as("Expected that a job definition for activity '%s' exists before migration".formatted(activityId))
+        .isNotNull();
 
     Job jobBefore = snapshotBeforeMigration.getJobForDefinitionId(jobDefinitionBefore.getId());
-    assertThat(jobBefore).as("Expected that a job for activity '" + activityId + "' exists before migration").isNotNull();
+    assertThat(jobBefore)
+        .as("Expected that a job for activity '%s' exists before migration".formatted(activityId))
+        .isNotNull();
     assertTimerJob(jobBefore);
 
     for (Job job : snapshotAfterMigration.getJobs()) {
       if (jobBefore.getId().equals(job.getId())) {
-        fail("Expected job '" + jobBefore.getId() + "' to be removed after migration");
+        fail("Expected job '%s' to be removed after migration".formatted(jobBefore.getId()));
       }
     }
   }
@@ -274,10 +295,14 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
 
   public void assertJobMigrated(String activityIdBefore, String activityIdAfter, String handlerType, Date dueDateAfter) {
     JobDefinition jobDefinitionBefore = snapshotBeforeMigration.getJobDefinitionForActivityIdAndType(activityIdBefore, handlerType);
-    assertThat(jobDefinitionBefore).as("Expected that a job definition for activity '" + activityIdBefore + "' exists before migration").isNotNull();
+    assertThat(jobDefinitionBefore)
+        .as("Expected that a job definition for activity '%s' exists before migration".formatted(activityIdBefore))
+        .isNotNull();
 
     Job jobBefore = snapshotBeforeMigration.getJobForDefinitionId(jobDefinitionBefore.getId());
-    assertThat(jobBefore).as("Expected that a timer job for activity '" + activityIdBefore + "' exists before migration").isNotNull();
+    assertThat(jobBefore)
+        .as("Expected that a timer job for activity '%s' exists before migration".formatted(activityIdBefore))
+        .isNotNull();
 
     assertJobMigrated(jobBefore, activityIdAfter, dueDateAfter == null ? jobBefore.getDuedate() : dueDateAfter);
   }
@@ -289,14 +314,14 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
   public void assertJobMigrated(Job jobBefore, String activityIdAfter, Date dueDateAfter) {
 
     Job jobAfter = snapshotAfterMigration.getJobById(jobBefore.getId());
-    assertThat(jobAfter).as("Expected that a job with id '" + jobBefore.getId() + "' exists after migration").isNotNull();
+    assertThat(jobAfter).as("Expected that a job with id '%s' exists after migration".formatted(jobBefore.getId())).isNotNull();
 
     JobDefinition jobDefinitionAfter = snapshotAfterMigration.getJobDefinitionForActivityIdAndType(activityIdAfter, ((JobEntity) jobBefore).getJobHandlerType());
-    assertThat(jobDefinitionAfter).as("Expected that a job definition for activity '" + activityIdAfter + "' exists after migration").isNotNull();
+    assertThat(jobDefinitionAfter).as("Expected that a job definition for activity '%s' exists after migration".formatted(activityIdAfter)).isNotNull();
 
     assertThat(jobAfter.getId()).isEqualTo(jobBefore.getId());
-    assertThat(jobAfter.getJobDefinitionId()).as("Expected that job is assigned to job definition '" + jobDefinitionAfter.getId() + "' after migration").isEqualTo(jobDefinitionAfter.getId());
-    assertThat(jobAfter.getDeploymentId()).as("Expected that job is assigned to deployment '" + snapshotAfterMigration.getDeploymentId() + "' after migration").isEqualTo(snapshotAfterMigration.getDeploymentId());
+    assertThat(jobAfter.getJobDefinitionId()).as("Expected that job is assigned to job definition '%s' after migration".formatted(jobDefinitionAfter.getId())).isEqualTo(jobDefinitionAfter.getId());
+    assertThat(jobAfter.getDeploymentId()).as("Expected that job is assigned to deployment '%s' after migration".formatted(snapshotAfterMigration.getDeploymentId())).isEqualTo(snapshotAfterMigration.getDeploymentId());
     assertThat(jobAfter.getDuedate()).isEqualTo(dueDateAfter);
     assertThat(((JobEntity) jobAfter).getType()).isEqualTo(((JobEntity) jobBefore).getType());
     assertThat(jobAfter.getPriority()).isEqualTo(jobBefore.getPriority());
@@ -363,7 +388,9 @@ public class MigrationTestExtension extends ProcessEngineTestExtension {
   public void assertVariableMigratedToExecution(VariableInstance variableBefore, String executionId, String activityInstanceId) {
     VariableInstance variableAfter = snapshotAfterMigration.getVariable(variableBefore.getId());
 
-    assertThat(variableAfter).as("Variable with id " + variableBefore.getId() + " does not exist").isNotNull();
+    assertThat(variableAfter)
+        .as("Variable with id %s does not exist".formatted(variableBefore.getId()))
+        .isNotNull();
 
     assertThat(variableAfter.getActivityInstanceId()).isEqualTo(activityInstanceId);
     assertThat(variableAfter.getCaseExecutionId()).isEqualTo(variableBefore.getCaseExecutionId());

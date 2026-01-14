@@ -261,13 +261,12 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
 
     String resourceName = prepareResourceNameFromArchiveEntry(modelFileName, paResourceRootPath);
     addResource(zipFile.getInputStream(zipEntry), resourceMap, file.getName() + "!", resourceName);
-    findResourcesForArchiveEntry(file, paResourceRootPath, resourceMap, zipEntry, zipFile, modelFileName);
+    findResourcesForArchiveEntry(file, paResourceRootPath, resourceMap, zipFile, modelFileName);
   }
 
   void findResourcesForArchiveEntry(File file,
                                             String paResourceRootPath,
                                             Map<String, byte[]> resourceMap,
-                                            ZipEntry zipEntry,
                                             ZipFile zipFile,
                                             String modelFileName) throws IOException {
     Enumeration<? extends ZipEntry> entries2 = zipFile.entries();
@@ -295,21 +294,15 @@ public class ClassPathProcessApplicationScanner implements ProcessApplicationSca
                            String resourceName) {
     String resourcePath = (resourceRootPath == null ? "" : resourceRootPath).concat(resourceName);
     LOG.debugDiscoveredResource(resourcePath);
-    InputStream inputStream = null;
 
-    try {
-      if (source instanceof File file) {
-        inputStream = new FileInputStream(file);
-      } else {
-        inputStream = (InputStream) source;
-      }
+    try (InputStream inputStream = source instanceof File file ? new FileInputStream(file) : (InputStream) source) {
       byte[] bytes = IoUtil.readInputStream(inputStream, resourcePath);
       resourceMap.put(resourceName, bytes);
     } catch (IOException e) {
-      throw LOG.cannotOpenFileInputStream(((File) source).getAbsolutePath(), e);
-    } finally {
-      if (inputStream != null) {
-        IoUtil.closeSilently(inputStream);
+      if (source instanceof File file) {
+        throw LOG.cannotOpenFileInputStream(file.getAbsolutePath(), e);
+      } else {
+        throw LOG.cannotOpenFileInputStream(resourcePath, e);
       }
     }
   }

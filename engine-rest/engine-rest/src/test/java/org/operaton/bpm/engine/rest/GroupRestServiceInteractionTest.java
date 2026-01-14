@@ -100,7 +100,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserRestServiceOptions() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + GroupRestService.PATH;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + GroupRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
 
@@ -129,7 +129,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testUserRestServiceOptionsWithAuthorizationDisabled() {
-    String fullAuthorizationUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + GroupRestService.PATH;
+    String fullAuthorizationUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + GroupRestService.PATH;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -157,7 +157,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupResourceOptionsUnauthenticated() {
-    String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
+    String fullGroupUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     Group sampleGroup = MockProvider.createMockGroup();
     GroupQuery sampleGroupQuery = mock(GroupQuery.class);
@@ -191,7 +191,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupResourceOptionsUnauthorized() {
-    String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
+    String fullGroupUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -227,7 +227,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupResourceOptionsAuthorized() {
-    String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
+    String fullGroupUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -266,7 +266,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupResourceOptionsWithAuthorizationDisabled() {
-    String fullGroupUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
+    String fullGroupUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -295,7 +295,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupMembersResourceOptions() {
-    String fullMembersUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
+    String fullMembersUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(true);
 
@@ -320,7 +320,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupMembersResourceOptionsAuthorized() {
-    String fullMembersUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
+    String fullMembersUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -390,7 +390,7 @@ public class GroupRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testGroupMembersResourceOptionsWithAuthorizationDisabled() {
-    String fullMembersUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
+    String fullMembersUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/group/" + MockProvider.EXAMPLE_GROUP_ID + "/members";
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 

@@ -44,13 +44,7 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
 
   public static final String REPORT_TYPE_DURATION = "duration";
   public static final String REPORT_TYPE_COUNT = "count";
-
-  public static final List<String> VALID_REPORT_TYPE_VALUES;
-  static {
-    VALID_REPORT_TYPE_VALUES = new ArrayList<>();
-    VALID_REPORT_TYPE_VALUES.add(REPORT_TYPE_DURATION);
-    VALID_REPORT_TYPE_VALUES.add(REPORT_TYPE_COUNT);
-  }
+  private static final List<String> VALID_REPORT_TYPE_VALUES = List.of(REPORT_TYPE_DURATION, REPORT_TYPE_COUNT);
 
   // required for populating via jackson
   protected AbstractReportDto() {
@@ -71,7 +65,7 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
   @OperatonQueryParam("reportType")
   public void setReportType(String reportType) {
     if (!VALID_REPORT_TYPE_VALUES.contains(reportType)) {
-      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "reportType parameter has invalid value: " + reportType);
+      throw new InvalidRequestException(Response.Status.BAD_REQUEST, "reportType parameter has invalid value: %s".formatted(reportType));
     }
     this.reportType = reportType;
   }
@@ -81,11 +75,11 @@ public abstract class AbstractReportDto<T extends Report> extends AbstractSearch
     this.periodUnit = periodUnit;
   }
 
-  protected List<? extends ReportResult> executeReportQuery(T report) {
-    return report.duration(periodUnit);
+  protected List<ReportResult> executeReportQuery(T report) {
+    return new ArrayList<>(report.duration(periodUnit));
   }
 
-  public List<? extends ReportResult> executeReport(ProcessEngine engine) {
+  public List<ReportResult> executeReport(ProcessEngine engine) {
     T reportQuery = createNewReportQuery(engine);
     applyFilters(reportQuery);
 

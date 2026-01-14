@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +31,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureGreaterThanOrEqual;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void> {
   protected String caseDefinitionId;
   protected Integer historyTimeToLive;
 
@@ -71,7 +66,6 @@ public class UpdateCaseDefinitionHistoryTimeToLiveCmd implements Command<Void>, 
     List<PropertyChange> propertyChanges = new ArrayList<>();
     propertyChanges.add(new PropertyChange("historyTimeToLive", caseDefinitionEntity.getHistoryTimeToLive(), historyTimeToLive));
     propertyChanges.add(new PropertyChange("caseDefinitionKey", null, caseDefinitionEntity.getKey()));
-
 
     commandContext.getOperationLogManager()
       .logCaseDefinitionOperation(UserOperationLogEntry.OPERATION_TYPE_UPDATE_HISTORY_TIME_TO_LIVE,

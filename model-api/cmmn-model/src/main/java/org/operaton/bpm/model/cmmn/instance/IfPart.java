@@ -28,6 +28,9 @@ public interface IfPart extends CmmnElement {
 
   void setContext(CaseFileItem caseFileItem);
 
+  /**
+   * @deprecated since 1.0, use {@link #getCondition()} instead, which returns a single ConditionExpression.
+   */
   @Deprecated(since = "1.0")
   Collection<ConditionExpression> getConditions();
 

@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 
 public abstract class CmmnTest {
   @RegisterExtension
-  static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
+  protected static ProcessEngineExtension processEngineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
   protected ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(processEngineRule);
 

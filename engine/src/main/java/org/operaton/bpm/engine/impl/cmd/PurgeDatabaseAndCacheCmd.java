@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serializable;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,14 +40,14 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
-public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport>, Serializable {
+public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport> {
 
   protected static final String DELETE_TABLE_DATA = "deleteTableData";
   protected static final String SELECT_TABLE_COUNT = "selectTableCount";
   protected static final String TABLE_NAME = "tableName";
   protected static final String EMPTY_STRING = "";
 
-  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  private static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );
@@ -96,10 +94,8 @@ public class PurgeDatabaseAndCacheCmd implements Command<PurgeReport>, Serializa
           List<Class<? extends DbEntity>> entities = commandContext.getTableDataManager().getEntities(tableName);
 
           if (entities.isEmpty()) {
-            throw new ProcessEngineException("No mapped implementation of "
-                                            + DbEntity.class.getName()
-                                            + " was found for: "
-                                            + tableName);
+            throw new ProcessEngineException("No mapped implementation of %s was found for: %s"
+                .formatted(DbEntity.class.getName(), tableName));
           }
 
           // Delete the table data as bulk operation with the first entity

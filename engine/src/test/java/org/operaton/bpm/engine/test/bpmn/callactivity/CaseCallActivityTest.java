@@ -465,7 +465,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(variable.getValue()).isEqualTo(999);
 
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -515,7 +515,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("myAnotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -560,7 +560,7 @@ class CaseCallActivityTest extends CmmnTest {
       } else if ("anotherVariable".equals(name)) {
         assertThat(name).isEqualTo("anotherVariable");
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
 
       assertThat(variable.getValue()).isNull();
@@ -612,7 +612,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(variable.getValue()).isEqualTo((long) 1000);
 
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -662,7 +662,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(variable.getValue()).isEqualTo("Prefix" + (long) 1000);
 
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -710,7 +710,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -796,7 +796,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -850,7 +850,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("myAnotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -896,7 +896,7 @@ class CaseCallActivityTest extends CmmnTest {
       } else if ("anotherVariable".equals(name)) {
         assertThat(name).isEqualTo("anotherVariable");
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
 
       assertThat(variable.getValue()).isNull();
@@ -952,7 +952,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo((long) 1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1006,7 +1006,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo("Prefix" + (long) 1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1060,7 +1060,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(999);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 
@@ -1169,7 +1169,7 @@ class CaseCallActivityTest extends CmmnTest {
         assertThat(name).isEqualTo("anotherVariable");
         assertThat(variable.getValue()).isEqualTo(1000);
       } else {
-        fail("Found an unexpected variable: '" + name + "'");
+        fail("Found an unexpected variable: '%s'".formatted(name));
       }
     }
 

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -31,13 +28,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetStartFormCmd implements Command<StartFormData>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetStartFormCmd implements Command<StartFormData> {
   protected String processDefinitionId;
 
   public GetStartFormCmd(String processDefinitionId) {
@@ -49,14 +43,14 @@ public class GetStartFormCmd implements Command<StartFormData>, Serializable {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
-    ensureNotNull("No process definition found for id '" + processDefinitionId + "'", "processDefinition", processDefinition);
+    ensureNotNull("No process definition found for id '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);
     }
 
     StartFormHandler startFormHandler = processDefinition.getStartFormHandler();
-    ensureNotNull("No startFormHandler defined in process '" + processDefinitionId + "'", "startFormHandler", startFormHandler);
+    ensureNotNull("No startFormHandler defined in process '%s'".formatted(processDefinitionId), "startFormHandler", startFormHandler);
 
     return startFormHandler.createStartFormData(processDefinition);
   }

@@ -103,10 +103,12 @@ public interface CaseDefinitionQuery extends Query<CaseDefinitionQuery, CaseDefi
    * Only select the case definitions which are the latest deployed
    * (ie. which have the highest version number for the given key).
    *
+   * <p>
    * Can only be used in combination with {@link #caseDefinitionKey(String)}
    * or {@link #caseDefinitionKeyLike(String)}. Can also be used without any
    * other criteria (ie. query.latest().list()), which will then give all the
    * latest versions of all the deployed case definitions.
+   * </p>
    *
    */
   CaseDefinitionQuery latestVersion();

@@ -85,7 +85,7 @@ public class RestartProcessInstancesBatchCmd extends AbstractRestartProcessInsta
 
   protected void ensureTenantAuthorized(CommandContext commandContext, ProcessDefinitionEntity processDefinition) {
     if (!commandContext.getTenantManager().isAuthenticatedTenant(processDefinition.getTenantId())) {
-      throw LOG.exceptionCommandWithUnauthorizedTenant("restart process instances of process definition '" + processDefinition.getId() + "'");
+      throw LOG.exceptionCommandWithUnauthorizedTenant("restart process instances of process definition '%s'".formatted(processDefinition.getId()));
     }
   }
 

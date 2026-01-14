@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -43,14 +42,14 @@ import org.operaton.bpm.engine.impl.util.ParseUtil;
  * @author Roman Smirnov
  */
 public class DefaultJobRetryCmd extends JobRetryCmd {
-
-  public static final List<String> SUPPORTED_TYPES = Arrays.asList(
+  private static final List<String> SUPPORTED_TYPES = List.of(
       TimerExecuteNestedActivityJobHandler.TYPE,
       TimerCatchIntermediateEventJobHandler.TYPE,
       TimerStartEventJobHandler.TYPE,
       TimerStartEventSubprocessJobHandler.TYPE,
       AsyncContinuationJobHandler.TYPE
   );
+
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   public DefaultJobRetryCmd(String jobId, Throwable exception) {

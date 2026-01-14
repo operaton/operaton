@@ -44,10 +44,22 @@ public class AuthorizationException extends ProcessEngineException {
   // These properties have been replaced by the list of missingAuthorizations
   // and are only left because this is a public API package and users might
   // have subclasses relying on these fields.
+  /**
+   * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
+   * of the {@link MissingAuthorization}(s).
+   */
   @Deprecated(since = "1.0")
   protected String resourceType;
+  /**
+   * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
+   * of the {@link MissingAuthorization}(s).
+   */
   @Deprecated(since = "1.0")
   protected String permissionName;
+  /**
+   * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
+   * of the {@link MissingAuthorization}(s).
+   */
   @Deprecated(since = "1.0")
   protected String resourceId;
 
@@ -63,8 +75,7 @@ public class AuthorizationException extends ProcessEngineException {
 
   public AuthorizationException(String userId, MissingAuthorization exceptionInfo) {
     super(
-        "The user with id '"+userId+
-        "' does not have "+generateMissingAuthorizationMessage(exceptionInfo)+".");
+        "The user with id '%s' does not have %s.".formatted(userId, generateMissingAuthorizationMessage(exceptionInfo)));
     this.userId = userId;
     missingAuthorizations = new ArrayList<>();
     missingAuthorizations.add(exceptionInfo);

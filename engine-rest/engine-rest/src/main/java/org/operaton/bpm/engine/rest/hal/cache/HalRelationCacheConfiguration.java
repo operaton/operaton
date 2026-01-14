@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.rest.hal.cache;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,7 +53,7 @@ public class HalRelationCacheConfiguration {
       this.cacheImplementationClass = (Class<? extends Cache>) cacheImplementationClass;
     }
     else {
-      throw new HalRelationCacheConfigurationException("Cache implementation class " + cacheImplementationClass.getName() + " does not implement the interface " + Cache.class.getName());
+      throw new HalRelationCacheConfigurationException("Cache implementation class %s does not implement the interface %s".formatted(cacheImplementationClass.getName(), Cache.class.getName()));
     }
   }
 
@@ -93,18 +91,14 @@ public class HalRelationCacheConfiguration {
       setCacheImplementationClass(cacheImplClass);
     }
     else {
-      throw new HalRelationCacheConfigurationException("Unable to find the " + CONFIG_CACHE_IMPLEMENTATION + " parameter");
+      throw new HalRelationCacheConfigurationException("Unable to find the %s parameter".formatted(CONFIG_CACHE_IMPLEMENTATION));
     }
   }
 
   protected void parseCacheConfigurations(JsonNode jsonConfiguration) {
     JsonNode jsonNode = jsonConfiguration.get(CONFIG_CACHES);
     if (jsonNode != null) {
-      Iterator<Entry<String, JsonNode>> cacheConfigs = jsonNode.fields();
-      while (cacheConfigs.hasNext()) {
-        Entry<String, JsonNode> cacheConfiguration = cacheConfigs.next();
-        parseCacheConfiguration(cacheConfiguration.getKey(), cacheConfiguration.getValue());
-      }
+      jsonNode.properties().stream().forEach(entry -> parseCacheConfiguration(entry.getKey(), entry.getValue()));
     }
   }
 
@@ -115,7 +109,7 @@ public class HalRelationCacheConfiguration {
       Map<String, Object> configuration = objectMapper.treeToValue(jsonConfiguration, Map.class);
       addCacheConfiguration(halResourceClass, configuration);
     } catch (IOException e) {
-      throw new HalRelationCacheConfigurationException("Unable to parse cache configuration for HAL resource " + halResourceClassName);
+      throw new HalRelationCacheConfigurationException("Unable to parse cache configuration for HAL resource %s".formatted(halResourceClassName));
     }
   }
 
@@ -125,7 +119,7 @@ public class HalRelationCacheConfiguration {
       return Class.forName(className, true, HalRelationCacheConfiguration.class.getClassLoader());
     }
     catch (ClassNotFoundException e) {
-      throw new HalRelationCacheConfigurationException("Unable to load class of cache configuration " + className, e);
+      throw new HalRelationCacheConfigurationException("Unable to load class of cache configuration %s".formatted(className), e);
     }
   }
 

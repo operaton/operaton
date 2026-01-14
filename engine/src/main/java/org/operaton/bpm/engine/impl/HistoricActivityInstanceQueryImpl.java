@@ -142,7 +142,7 @@ public class HistoricActivityInstanceQueryImpl extends AbstractQuery<HistoricAct
   @Override
   public HistoricActivityInstanceQueryImpl completeScope() {
     if (activityInstanceState != null) {
-      throw new ProcessEngineException("Already querying for activity instance state <" + activityInstanceState + ">");
+      throw new ProcessEngineException("Already querying for activity instance state <%s>".formatted(activityInstanceState));
     }
 
     this.activityInstanceState = ActivityInstanceState.SCOPE_COMPLETE;
@@ -152,7 +152,7 @@ public class HistoricActivityInstanceQueryImpl extends AbstractQuery<HistoricAct
   @Override
   public HistoricActivityInstanceQueryImpl canceled() {
     if (activityInstanceState != null) {
-      throw new ProcessEngineException("Already querying for activity instance state <" + activityInstanceState + ">");
+      throw new ProcessEngineException("Already querying for activity instance state <%s>".formatted(activityInstanceState));
     }
     this.activityInstanceState = ActivityInstanceState.CANCELED;
     return this;

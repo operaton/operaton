@@ -39,10 +39,10 @@ public final class ActivityBehaviorUtil {
     String id = execution.getId();
 
     CmmnActivity activity = execution.getActivity();
-    ensureNotNull(PvmException.class, "Case execution '"+id+"' has no current activity.", "activity", activity);
+    ensureNotNull(PvmException.class, "Case execution '%s' has no current activity.".formatted(id), "activity", activity);
 
     CmmnActivityBehavior behavior = activity.getActivityBehavior();
-    ensureNotNull(PvmException.class, "There is no behavior specified in "+activity+" for case execution '"+id+"'.", "behavior", behavior);
+    ensureNotNull(PvmException.class, "There is no behavior specified in %s for case execution '%s'.".formatted(activity, id), "behavior", behavior);
 
     return behavior;
   }
@@ -51,10 +51,10 @@ public final class ActivityBehaviorUtil {
     String id = execution.getId();
 
     PvmActivity activity = execution.getActivity();
-    ensureNotNull(PvmException.class, "Execution '"+id+"' has no current activity.", "activity", activity);
+    ensureNotNull(PvmException.class, "Execution '%s' has no current activity.".formatted(id), "activity", activity);
 
     ActivityBehavior behavior = activity.getActivityBehavior();
-    ensureNotNull(PvmException.class, "There is no behavior specified in "+activity+" for execution '"+id+"'.", "behavior", behavior);
+    ensureNotNull(PvmException.class, "There is no behavior specified in %s for execution '%s'.".formatted(activity, id), "behavior", behavior);
 
     return behavior;
   }

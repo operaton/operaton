@@ -169,15 +169,7 @@ class TaskMetricsTest {
     assertThat(managementService.getUniqueTaskWorkerCount(getOneMinuteAgo(), null)).isOne();
   }
 
-  @Test
-  void shouldGetUniqueTaskWorkerCountWithoutDates() {
-    // given
-    testRule.deploy(USER_TASK_PROCESS);
-    // when
-    runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-    // then
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
-  }
+  // test without start and end date => shouldCreateTaskMetricWithAssignmentByOperatonAssigneeExtension
 
   @Test
   void shouldCreateTaskMetricWithAssignmentByTaskListener() {

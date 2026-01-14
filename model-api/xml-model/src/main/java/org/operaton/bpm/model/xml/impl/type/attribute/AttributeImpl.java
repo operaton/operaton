@@ -118,7 +118,9 @@ public abstract class AttributeImpl<T> implements Attribute<T> {
   /**
    * sets the value of the attribute.
    *
+   * <p>
    *  the value of the attribute.
+   * </p>
    */
   @Override
   public void setValue(ModelElementInstance modelElement, T value) {

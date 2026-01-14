@@ -247,7 +247,6 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   /**
    * Contains observers which are observe the execution.
    * 
-   * @since 7.6
    */
   protected transient List<ExecutionObserver> executionObservers = new ArrayList<>();
 
@@ -492,11 +491,12 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public void fireHistoricProcessStartEvent() {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
-    HistoryLevel historyLevel = configuration.getHistoryLevel();
-    // TODO: This smells bad, as the rest of the history is done via the
-    // ParseListener
-    if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_START, processInstance)) {
+    if(configuration == null) {
+      return;
+    }
 
+    HistoryLevel historyLevel = configuration.getHistoryLevel();
+    if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_START, processInstance)) {
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
         public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
@@ -1277,17 +1277,21 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
    * Fetch all the executions inside the same process instance as list and then
    * reconstruct the complete execution tree.
    *
+   * <p>
    * In many cases this is an optimization over fetching the execution tree
    * lazily. Usually we need all executions anyway and it is preferable to fetch
    * more data in a single query (maybe even too much data) then to run multiple
    * queries, each returning a fraction of the data.
+   * </p>
    *
+   * <p>
    * The most important consideration here is network roundtrip: If the process
    * engine and database run on separate hosts, network roundtrip has to be
    * added to each query. Economizing on the number of queries economizes on
    * network roundtrip. The tradeoff here is network roundtrip vs. throughput:
    * multiple roundtrips carrying small chucks of data vs. a single roundtrip
    * carrying more data.
+   * </p>
    *
    */
   protected void ensureExecutionTreeInitialized() {
@@ -1503,9 +1507,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public String toString() {
     if (isProcessInstanceExecution()) {
-      return "ProcessInstance[" + getToStringIdentity() + "]";
+      return "ProcessInstance[%s]".formatted(getToStringIdentity());
     } else {
-      return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[" + getToStringIdentity() + "]";
+      return (isConcurrent ? "Concurrent" : "") + (isScope ? "Scope" : "") + "Execution[%s]".formatted(getToStringIdentity());
     }
   }
 
@@ -1891,8 +1895,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   }
 
   @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (superExecutionId != null) {
       referenceIdAndClass.put(this.superExecutionId, ExecutionEntity.class);

@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.engine.rest.hal.caseDefinition;
+package org.operaton.bpm.engine.rest.hal.processdefinition;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.repository.CaseDefinition;
+import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.rest.hal.HalResource;
 import org.operaton.bpm.engine.rest.hal.cache.HalIdResourceCacheLinkResolver;
 
@@ -29,22 +29,22 @@ import org.operaton.bpm.engine.rest.hal.cache.HalIdResourceCacheLinkResolver;
  * @author Daniel Meyer
  *
  */
-public class HalCaseDefinitionResolver extends HalIdResourceCacheLinkResolver {
+public class HalProcessDefinitionResolver extends HalIdResourceCacheLinkResolver {
 
   protected Class<?> getHalResourceClass() {
-    return HalCaseDefinition.class;
+    return HalProcessDefinition.class;
   }
 
   protected List<HalResource<?>> resolveNotCachedLinks(String[] linkedIds, ProcessEngine processEngine) {
     RepositoryService repositoryService = processEngine.getRepositoryService();
 
-    List<CaseDefinition> caseDefinitions = repositoryService.createCaseDefinitionQuery()
-      .caseDefinitionIdIn(linkedIds)
+    List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
+      .processDefinitionIdIn(linkedIds)
       .listPage(0, linkedIds.length);
 
     List<HalResource<?>> resolved = new ArrayList<>();
-    for (CaseDefinition caseDefinition : caseDefinitions) {
-      resolved.add(HalCaseDefinition.fromCaseDefinition(caseDefinition, processEngine));
+    for (ProcessDefinition procDef : processDefinitions) {
+      resolved.add(HalProcessDefinition.fromProcessDefinition(procDef, processEngine));
     }
 
     return resolved;

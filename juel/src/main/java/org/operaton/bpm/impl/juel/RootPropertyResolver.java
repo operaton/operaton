@@ -101,7 +101,7 @@ public class RootPropertyResolver extends ELResolver {
 	@Override
 	public Object invoke(ELContext context, Object base, Object method, Class<?>[] paramTypes, Object[] params) {
 		if (resolve(context, base, method)) {
-			throw new NullPointerException("Cannot invoke method " + method + " on null");
+			throw new NullPointerException("Cannot invoke method %s on null".formatted(method));
 		}
 		return null;
 	}

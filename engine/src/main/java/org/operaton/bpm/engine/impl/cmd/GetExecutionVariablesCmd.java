@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,14 +27,11 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class GetExecutionVariablesCmd implements Command<VariableMap>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetExecutionVariablesCmd implements Command<VariableMap> {
   protected String executionId;
   protected Collection<String> variableNames;
   protected boolean isLocal;
@@ -57,7 +52,7 @@ public class GetExecutionVariablesCmd implements Command<VariableMap>, Serializa
       .getExecutionManager()
       .findExecutionById(executionId);
 
-    ensureNotNull("execution " + executionId + " doesn't exist", "execution", execution);
+    ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
 
     checkGetExecutionVariables(execution, commandContext);
 

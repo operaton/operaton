@@ -25,14 +25,18 @@ import org.operaton.bpm.engine.identity.UserQuery;
 /**
  * An historic identity link stores the association of a task with a certain identity.
  *
+ * <p>
  * For example, historic identity link is logged on the following conditions:
  * - a user can be an assignee/Candidate/Owner (= identity link type) for a task
  * - a group can be a candidate-group (= identity link type) for a task
  * - a user can be an candidate in the scope of process definition
  * - a group can be a candidate-group in the scope of process definition
+ * </p>
  *
+ * <p>
  * For every log, an operation type (add/delete) is added to the database
  * based on the identity link operation
+ * </p>
  */
 public interface HistoricIdentityLinkLog {
 

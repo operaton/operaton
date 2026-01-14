@@ -53,10 +53,7 @@ public class MigrationVariableValidationReportImpl implements MigrationVariableV
 
   @Override
   public String toString() {
-    return "MigrationVariableValidationReportImpl{" +
-      ", typedValue=" + typedValue +
-      ", failures=" + failures +
-      '}';
+    return "MigrationVariableValidationReportImpl{typedValue=%s, failures=%s}".formatted(typedValue, failures);
   }
 
 }

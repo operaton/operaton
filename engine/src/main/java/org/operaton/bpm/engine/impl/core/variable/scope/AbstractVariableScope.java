@@ -45,7 +45,6 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   @Serial
   private static final long serialVersionUID = 1L;
 
-  // TODO: move this?
   protected ELContext cachedElContext;
 
   protected abstract VariableStore<CoreVariableInstance> getVariableStore();

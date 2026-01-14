@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.form.handler.TaskFormHandler;
@@ -29,13 +26,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetTaskFormCmd implements Command<TaskFormData>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetTaskFormCmd implements Command<TaskFormData> {
   protected String taskId;
 
   public GetTaskFormCmd(String taskId) {
@@ -46,7 +40,7 @@ public class GetTaskFormCmd implements Command<TaskFormData>, Serializable {
   public TaskFormData execute(CommandContext commandContext) {
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("No task found for taskId '" + taskId + "'", "task", task);
+    ensureNotNull("No task found for taskId '%s'".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadTaskVariable(task);
@@ -54,7 +48,7 @@ public class GetTaskFormCmd implements Command<TaskFormData>, Serializable {
 
     if (task.getTaskDefinition() != null) {
       TaskFormHandler taskFormHandler = task.getTaskDefinition().getTaskFormHandler();
-      ensureNotNull("No taskFormHandler specified for task '" + taskId + "'", "taskFormHandler", taskFormHandler);
+      ensureNotNull("No taskFormHandler specified for task '%s'".formatted(taskId), "taskFormHandler", taskFormHandler);
 
       return taskFormHandler.createTaskForm(task);
     } else {

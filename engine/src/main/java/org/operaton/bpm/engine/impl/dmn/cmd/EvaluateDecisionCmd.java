@@ -38,8 +38,10 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureOnlyOneNotNull;
 /**
  * Evaluates the decision with the given key or id.
  *
+ * <p>
  * If the decision definition key given then specify the version and tenant-id.
  * If no version is provided then the latest version is taken.
+ * </p>
  */
 public class EvaluateDecisionCmd implements Command<DmnDecisionResult> {
 
@@ -87,7 +89,7 @@ public class EvaluateDecisionCmd implements Command<DmnDecisionResult> {
       return evaluateDecision(decisionDefinition, variables);
     }
     catch (Exception e) {
-      throw new ProcessEngineException("Exception while evaluating decision with key '"+decisionDefinitionKey+"'", e);
+      throw new ProcessEngineException("Exception while evaluating decision with key '%s'".formatted(decisionDefinitionKey), e);
     }
   }
 

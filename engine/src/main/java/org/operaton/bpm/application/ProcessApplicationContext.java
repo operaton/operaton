@@ -32,8 +32,11 @@ import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
  * This utility allows to declare a process application into which the process engine
  * then switches as soon as it begins executing a command.
  *
+ * <p>
  * Example using a variable that is serialized with a Operaton Spin data format:
+ * </p>
  *
+ * <p>
  * <pre>
  *  try {
  *    ProcessApplicationContext.setCurrentProcessApplication("someProcessApplication");
@@ -45,6 +48,7 @@ import org.operaton.bpm.application.impl.ProcessApplicationIdentifier;
  *    ProcessApplicationContext.clear();
  *  }
  * </pre>
+ * </p>
  *
  * <p>Declaring the process application context allows the engine to access the Spin JSON data format
  * as configured in that process application to serialize the object value. Without declaring the context,

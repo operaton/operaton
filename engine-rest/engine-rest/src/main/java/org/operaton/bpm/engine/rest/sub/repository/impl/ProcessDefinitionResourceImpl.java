@@ -103,7 +103,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     try {
       definition = repoService.getProcessDefinition(processDefinitionId);
     } catch (ProcessEngineException e) {
-      throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
+      throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id %s".formatted(processDefinitionId));
     }
 
     return ProcessDefinitionDto.fromProcessDefinition(definition);
@@ -256,7 +256,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
       byte[] processModel = IoUtil.readInputStream(processModelIn, "processModelBpmn20Xml");
       return ProcessDefinitionDiagramDto.create(processDefinitionId, new String(processModel, UTF_8));
     } catch (NotFoundException e) {
-      throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id " + processDefinitionId);
+      throw new InvalidRequestException(Status.NOT_FOUND, e, "No matching definition with id %s".formatted(processDefinitionId));
     } finally {
       IoUtil.closeSilently(processModelIn);
     }
@@ -312,7 +312,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot get start form data for process definition " + processDefinitionId);
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Cannot get start form data for process definition %s".formatted(processDefinitionId));
     }
     FormDto dto = FormDto.fromFormData(formData);
     if((dto.getKey() == null || dto.getKey().isEmpty()) && dto.getOperatonFormRef() == null
@@ -339,7 +339,7 @@ public class ProcessDefinitionResourceImpl implements ProcessDefinitionResource 
           .build();
     }
 
-    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered start form for process definition with the id " + processDefinitionId + " found.");
+    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered start form for process definition with the id %s found.".formatted(processDefinitionId));
   }
 
   @Override

@@ -40,7 +40,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  * @author Roman Smirnov
  *
- * @since 7.2
  *
  */
 public interface CaseService {

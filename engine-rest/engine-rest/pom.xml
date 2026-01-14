@@ -104,11 +104,6 @@
     </dependency>
     <!-- test -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
@@ -315,7 +310,7 @@
       </activation>
       <properties>
         <version.netty>4.2.4.Final</version.netty>
-        <version.undertow>2.3.20.Final</version.undertow>
+        <version.undertow>2.3.21.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>

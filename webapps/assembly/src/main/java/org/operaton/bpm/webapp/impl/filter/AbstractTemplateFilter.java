@@ -58,7 +58,9 @@ public abstract class AbstractTemplateFilter implements Filter {
   /**
    * Apply the filter to the given request/response.
    *
+   * <p>
    * This method must be provided by subclasses to perform actual work.
+   * </p>
    *
    * @param request
    * @param response
@@ -87,7 +89,9 @@ public abstract class AbstractTemplateFilter implements Filter {
   /**
    * Returns the string contents of a web resource with the given name.
    *
+   * <p>
    * The resource must be static and text based.
+   * </p>
    *
    * @param name the name of the resource
    *

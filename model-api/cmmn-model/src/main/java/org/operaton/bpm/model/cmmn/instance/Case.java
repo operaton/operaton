@@ -28,6 +28,9 @@ public interface Case extends CmmnElement {
 
   void setName(String name);
 
+  /**
+   * @deprecated since 1.0, use {@link #getRoles()} instead, which returns a CaseRoles wrapper object.
+   */
   @Deprecated(since = "1.0")
   Collection<CaseRole> getCaseRoles();
 
@@ -47,11 +50,26 @@ public interface Case extends CmmnElement {
 
   void setCaseFileModel(CaseFileModel caseFileModel);
 
-  @Deprecated(since = "1.0")
-  Integer getOperatonHistoryTimeToLive();
+  /**
+   * @deprecated use {@link #getOperatonHistoryTimeToLiveString()} instead
+   */
+  @Deprecated(since = "1.0", forRemoval = true)
+  default Integer getOperatonHistoryTimeToLive() {
+    String ttl = getOperatonHistoryTimeToLiveString();
+    if (ttl != null) {
+      return Integer.parseInt(ttl);
+    }
+    return null;
 
-  @Deprecated(since = "1.0")
-  void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
+  }
+
+  /**
+   * @deprecated use {@link #setOperatonHistoryTimeToLiveString(String)} instead
+   */
+  @Deprecated(since = "1.0", forRemoval = true)
+  default void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
+    setOperatonHistoryTimeToLiveString(historyTimeToLive != null ? String.valueOf(historyTimeToLive) : null);
+  }
 
   String getOperatonHistoryTimeToLiveString();
 

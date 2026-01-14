@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto.history;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -40,13 +39,7 @@ public class HistoricDecisionInstanceQueryDto extends AbstractQueryDto<HistoricD
   public static final String SORT_BY_EVALUATION_TIME_VALUE = "evaluationTime";
   public static final String SORT_BY_TENANT_ID = "tenantId";
 
-  public static final List<String> VALID_SORT_BY_VALUES;
-
-  static {
-    VALID_SORT_BY_VALUES = new ArrayList<>();
-    VALID_SORT_BY_VALUES.add(SORT_BY_EVALUATION_TIME_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_TENANT_ID);
-  }
+  private static final List<String> VALID_SORT_BY_VALUES = List.of(SORT_BY_EVALUATION_TIME_VALUE, SORT_BY_TENANT_ID);
 
   protected String decisionInstanceId;
   protected String[] decisionInstanceIdIn;

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -34,10 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  */
 
-public class DeleteJobCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class DeleteJobCmd implements Command<Object> {
   protected String jobId;
 
   public DeleteJobCmd(String jobId) {
@@ -49,7 +43,7 @@ public class DeleteJobCmd implements Command<Object>, Serializable {
     ensureNotNull("jobId", jobId);
 
     JobEntity job = commandContext.getJobManager().findJobById(jobId);
-    ensureNotNull("No job found with id '" + jobId + "'", "job", job);
+    ensureNotNull("No job found with id '%s'".formatted(jobId), "job", job);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateJob(job);

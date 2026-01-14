@@ -378,11 +378,11 @@ public class FetchAndLockHandlerImpl implements Runnable, FetchAndLockHandler {
       try {
         final int parsedCapacity = Integer.parseInt(queueSizeRequestParam);
         if (parsedCapacity <= 0) {
-          throw new IllegalArgumentException("Parameter " + BLOCKING_QUEUE_CAPACITY_PARAM_NAME + " has to be greater than zero");
+          throw new IllegalArgumentException("Parameter %s has to be greater than zero".formatted(BLOCKING_QUEUE_CAPACITY_PARAM_NAME));
         }
         capacity = parsedCapacity;
       } catch (IllegalArgumentException e) {
-        LOG.log(Level.WARNING, e, () -> "Invalid blocking queue capacity parameter: [" + queueSizeRequestParam + "], falling back to default value");
+        LOG.log(Level.WARNING, e, () -> "Invalid blocking queue capacity parameter: [%s], falling back to default value".formatted(queueSizeRequestParam));
       }
     }
     return capacity;

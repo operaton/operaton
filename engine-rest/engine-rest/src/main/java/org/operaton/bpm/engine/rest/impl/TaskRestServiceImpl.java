@@ -52,7 +52,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 
 public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implements TaskRestService {
 
-  public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
+  private static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
 
   public TaskRestServiceImpl(String engineName, final ObjectMapper objectMapper) {
     super(engineName, objectMapper);
@@ -102,7 +102,6 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
 
     List<Task> matchingTasks = executeTaskQuery(firstResult, maxResults, query);
 
-    List<TaskDto> tasks = new ArrayList<>();
 
     boolean withTaskVariables = Boolean.TRUE.equals(queryDto.getWithTaskVariablesInReturn());
     boolean withTaskLocalVariables = Boolean.TRUE.equals(queryDto.getWithTaskLocalVariablesInReturn());
@@ -112,12 +111,9 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
       return getVariablesForTasks(engine, matchingTasks, withTaskVariables, withCommentInfo);
     }
     if (withCommentInfo) {
-      tasks = matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
+      return matchingTasks.stream().map(TaskWithAttachmentAndCommentDto::fromEntity).toList();
     }
-    else {
-      tasks = matchingTasks.stream().map(TaskDto::fromEntity).toList();
-    }
-    return tasks;
+    return matchingTasks.stream().map(TaskDto::fromEntity).toList();
   }
 
   protected List<Task> executeTaskQuery(Integer firstResult, Integer maxResults, TaskQuery query) {
@@ -167,7 +163,7 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
       taskService.saveTask(newTask);
 
     } catch (NotValidException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not save task: " + e.getMessage());
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not save task: %s".formatted(e.getMessage()));
     }
 
   }

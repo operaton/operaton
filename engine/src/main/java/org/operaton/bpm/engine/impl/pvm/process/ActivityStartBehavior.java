@@ -31,7 +31,9 @@ public enum ActivityStartBehavior {
    * Default start behavior for an activity is to "do nothing special". Meaning:
    * the activity is executed by the execution which enters it.
    *
+   * <p>
    * NOTE: Only activities contained in normal flow can have DEFALUT start behavior.
+   * </p>
    */
   DEFAULT,
 
@@ -41,7 +43,9 @@ public enum ActivityStartBehavior {
    * - Terminate end event
    * - Cancel end event
    *
+   * <p>
    * NOTE: can only be used for activities contained in normal flow
+   * </p>
    */
   INTERRUPT_FLOW_SCOPE,
 
@@ -55,7 +59,9 @@ public enum ActivityStartBehavior {
    * Used for activities which {@link PvmExecutionImpl#interrupt(String) interrupt}
    * their {@link PvmActivity#getEventScope() event scope}
    *
+   * <p>
    * NOTE: cannot only be used for activities contained in normal flow
+   * </p>
    */
   INTERRUPT_EVENT_SCOPE,
 
@@ -63,7 +69,9 @@ public enum ActivityStartBehavior {
    * Used for activities which cancel their {@link PvmActivity#getEventScope() event scope}.
    * - Boundary events with cancelActivity=true
    *
+   * <p>
    * NOTE: cannot only be used for activities contained in normal flow
+   * </p>
    */
   CANCEL_EVENT_SCOPE
 

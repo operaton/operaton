@@ -8,30 +8,41 @@ on:
   issue_comment:
     types: [created]
 
-permissions:
-  pull-requests: write
-  issues: write
+env:
+  # Whitelist of GitHub usernames who have already contributed to the repository
+  # These users will not receive first-time contributor greetings
+  # This list can be generated with:
+  # gh pr list --repo operaton/operaton --state closed --limit 1504 --json author --jq '[.[].author.login] | unique'
+  CONTRIBUTOR_WHITELIST: 'AlexanderSkrock AlexandraCiornei ArneDeutsch Brijeshthummar02 CBorowski-dev DzyhovskyiVladyslav ENate FlamieCyrex HamzaIddaoui HarshMehta112 HerrIves Jaehyeon-Han Kungi LimpBizgit MatthewIsayan Mojito060 Rapteon Satyam018 SevDan Tomnm1 Waize WoSchmo YUVI43 a-m-zill aashvgit abhayiscoding abmcmanu agoss94 ahmedfarhat alexh141048 alfh antoinecampbell aounhaider1 app/copilot-swe-agent app/dependabot app/github-actions asanderson-scottlogic ascheman atomfrede biswa1shaw cachescrubber cmoellerherm damien46061 datakurre dirk-olmes fml2 geduldia guido-marx hauptmedia herminagarg javahippie jmaster1985 joonseolee juliateles99 justfsl50 khawaja-abdullah kthoms lambdaschmied2 larsbaumeister lucabritten maxistar n1sp nevesrodrigo2 noahg9 poojary-nikesh1612 sanajitjana saumyapandey1998 sgorski00 sgort shiftyseaotter sogladev suraj9562 timtebeek tlb-lemrabott ungerts xProppi zeguilherme99'
 
 jobs:
   greet-first-time-pr:
     name: Greet First-Time PR Contributors
     runs-on: ubuntu-slim
-    if: github.event_name == 'pull_request_target' && github.event.action == 'opened' && github.event.pull_request.head.repo.fork
+    permissions:
+      pull-requests: write
+      issues: write
+    # Only run for PRs from forks (different repository) and not from operaton/operaton
+    if: |
+      github.event_name == 'pull_request_target' && 
+      github.event.action == 'opened' && 
+      github.event.pull_request.head.repo.full_name != github.repository
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
       - name: Check for first-time PR contributor
         uses: actions/github-script@v8
         with:
           script: |
-            const fs = require('fs');
-            const path = require('path');
-            
             const author = context.actor;
             const { owner, repo } = context.repo;
             const prTitle = context.payload.pull_request.title;
             const prBody = context.payload.pull_request.body || "";
+
+            // Check if author is in the whitelist
+            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            if (whitelist.includes(author)) {
+              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
+              return;
+            }
 
             console.log(`Checking for past PRs from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -52,10 +63,13 @@ jobs:
               /Code\s+of\s+Conduct/i.test(prBody);
 
             if ((prCount === 1 || prTitle.includes('[FORCE GREETING]')) && !alreadyConfirmed) {
-              let prMessage = fs.readFileSync(
-                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/pr_welcome.md'),
-                'utf8'
-              );
+              const { data } = await github.rest.repos.getContent({
+                owner,
+                repo,
+                path: '.github/templates/pr_welcome.md'
+              });
+              
+              let prMessage = Buffer.from(data.content, 'base64').toString('utf8');
               prMessage = prMessage.replace(/\$\{author\}/g, author);
 
               await github.rest.issues.createComment({
@@ -64,28 +78,34 @@ jobs:
                 issue_number: context.issue.number,
                 body: prMessage
               });
-            }else if (alreadyConfirmed) {
+            } else if (alreadyConfirmed) {
               console.log("Contributor already confirmed license + CoC. Skipping greeting.");
             }
 
   greet-first-time-issue:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+    permissions:
+      pull-requests: write
+      issues: write
+    if: |
+      github.event_name == 'issues' && 
+      github.event.action == 'opened'
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
-
       - name: Check for first-time Issue creator
         uses: actions/github-script@v8
         with:
           script: |
-            const fs = require('fs');
-            const path = require('path');
-            
             const author = context.actor;
             const { owner, repo } = context.repo;
             const issueTitle = context.payload.issue.title;
+
+            // Check if author is in the whitelist
+            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            if (whitelist.includes(author)) {
+              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
+              return;
+            }
 
             console.log(`Checking for past Issues from ${author}...`);
             const allIssues = await github.paginate(github.rest.issues.listForRepo, {
@@ -101,10 +121,13 @@ jobs:
             console.log(`Found ${issueCount} Issue(s) from ${author}.`);
 
             if (issueCount === 1 || issueTitle.includes('[FORCE GREETING]')) {
-              let issueMessage = fs.readFileSync(
-                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/issue_welcome.md'),
-                'utf8'
-              );
+              const { data } = await github.rest.repos.getContent({
+                owner,
+                repo,
+                path: '.github/templates/issue_welcome.md'
+              });
+              
+              let issueMessage = Buffer.from(data.content, 'base64').toString('utf8');
               issueMessage = issueMessage.replace(/\$\{author\}/g, author);
 
               await github.rest.issues.createComment({
@@ -118,17 +141,26 @@ jobs:
   greet-first-time-comment:
     name: Greet First-Time Issue Commenters
     runs-on: ubuntu-slim
-    if: github.event_name == 'issue_comment' && github.event.action == 'created'
+    permissions:
+      pull-requests: write
+      issues: write
+    if: |
+      github.event_name == 'issue_comment' && 
+      github.event.action == 'created'
     steps:
-      - uses: actions/checkout@v6
       - uses: actions/github-script@v8
         with:
           script: |
-            const fs = require('fs');
-            const path = require('path');
             const author = context.actor;
             const { owner, repo } = context.repo;
             const commentBody = context.payload.comment.body;
+            
+            // Check if author is in the whitelist
+            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            if (whitelist.includes(author)) {
+              console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
+              return;
+            }
             
             const issueAuthor = context.payload.issue.user.login;
             const isPullRequest = !!context.payload.issue.pull_request;
@@ -169,10 +201,14 @@ jobs:
             console.log(`Found ${commentCount} comment(s) from ${author}.`);
             
             if (commentCount === 1 || commentBody.includes('[FORCE GREETING]')) {
-              let commentMessage = fs.readFileSync(
-                path.join(process.env.GITHUB_WORKSPACE, '.github/templates/first_comment_on_issue.md'),
-                'utf8'
-              ).replace(/\$\{author\}/g, author);
+              const { data } = await github.rest.repos.getContent({
+                owner,
+                repo,
+                path: '.github/templates/first_comment_on_issue.md'
+              });
+              
+              let commentMessage = Buffer.from(data.content, 'base64').toString('utf8');
+              commentMessage = commentMessage.replace(/\$\{author\}/g, author);
             
               await github.rest.issues.createComment({
                 owner,

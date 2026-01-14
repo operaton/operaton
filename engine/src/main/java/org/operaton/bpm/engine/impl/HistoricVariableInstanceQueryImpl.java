@@ -44,7 +44,7 @@ public class HistoricVariableInstanceQueryImpl extends AbstractQuery<HistoricVar
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected List<String> variableNameIn;
+  private List<String> variableNameIn;
   protected String variableId;
   protected String processInstanceId;
   protected String processDefinitionId;

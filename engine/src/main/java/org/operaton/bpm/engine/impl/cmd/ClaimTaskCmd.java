@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.TaskAlreadyClaimedException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,14 +26,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Joram Barrez
  */
-public class ClaimTaskCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class ClaimTaskCmd implements Command<Void> {
   protected String taskId;
   protected String userId;
 
@@ -51,7 +44,7 @@ public class ClaimTaskCmd implements Command<Void>, Serializable {
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkClaimTask(task, commandContext);
 

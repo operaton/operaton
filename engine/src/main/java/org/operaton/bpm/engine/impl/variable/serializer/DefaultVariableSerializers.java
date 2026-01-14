@@ -61,7 +61,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
 
     ValueType type = value.getType();
     if (type != null && type.isAbstract()) {
-      throw new ProcessEngineException("Cannot serialize value of abstract type " + type.getName());
+      throw new ProcessEngineException("Cannot serialize value of abstract type %s".formatted(type.getName()));
     }
 
     for (TypedValueSerializer<?> serializer : serializerList) {
@@ -84,7 +84,7 @@ public class DefaultVariableSerializers implements Serializable, VariableSeriali
         }
       }
 
-      throw new ProcessEngineException("Cannot find serializer for value '"+value+"'.");
+      throw new ProcessEngineException("Cannot find serializer for value '%s'.".formatted(value));
     }
     else if(matchedSerializers.size() == 1) {
       return matchedSerializers.get(0);

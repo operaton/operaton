@@ -28,7 +28,6 @@ import org.operaton.bpm.engine.rest.dto.history.HistoricExternalTaskLogQueryDto;
 import org.operaton.bpm.engine.rest.sub.history.HistoricExternalTaskLogResource;
 
 /**
- * @since 7.7
  */
 @Path(HistoricExternalTaskLogRestService.PATH)
 @Produces(MediaType.APPLICATION_JSON)

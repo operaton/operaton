@@ -47,7 +47,7 @@ public class TestProperties {
   }
 
   public String getApplicationPath(String contextPath) {
-    return "http://" + getHttpHost() + ":" + getHttpPort() + contextPath;
+    return "http://%s:%d%s".formatted(getHttpHost(), getHttpPort(), contextPath);
   }
 
   public int getHttpPort() {
@@ -62,7 +62,7 @@ public class TestProperties {
   public String getStringProperty(String propName, String defaultValue) {
     String propertyValue = properties.getProperty(propName, defaultValue);
     if (propertyValue.startsWith("${") && propertyValue.endsWith("}")) {
-      Objects.requireNonNull(defaultValue, () -> "Property " + propName + " is not set.");
+      Objects.requireNonNull(defaultValue, () -> "Property %s is not set.".formatted(propName));
       return defaultValue;
     }
     return propertyValue;

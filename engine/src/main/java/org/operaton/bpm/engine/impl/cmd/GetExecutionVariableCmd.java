@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,13 +23,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetExecutionVariableCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetExecutionVariableCmd implements Command<Object> {
   protected String executionId;
   protected String variableName;
   protected boolean isLocal;
@@ -52,7 +46,7 @@ public class GetExecutionVariableCmd implements Command<Object>, Serializable {
       .getExecutionManager()
       .findExecutionById(executionId);
 
-    ensureNotNull("execution " + executionId + " doesn't exist", "execution", execution);
+    ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
 
     checkGetExecutionVariable(execution, commandContext);
 

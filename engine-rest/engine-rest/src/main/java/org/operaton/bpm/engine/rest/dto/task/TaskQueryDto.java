@@ -66,25 +66,23 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
   public static final String SORT_BY_CASE_INSTANCE_VARIABLE = "caseInstanceVariable";
   public static final String SORT_BY_CASE_EXECUTION_VARIABLE = "caseExecutionVariable";
 
-  public static final List<String> VALID_SORT_BY_VALUES;
-  static {
-    VALID_SORT_BY_VALUES = new ArrayList<>();
-    VALID_SORT_BY_VALUES.add(SORT_BY_PROCESS_INSTANCE_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_INSTANCE_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_DUE_DATE_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_FOLLOW_UP_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_EXECUTION_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CASE_EXECUTION_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_ASSIGNEE_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_CREATE_TIME_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_LAST_UPDATED_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_DESCRIPTION_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_ID_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_NAME_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_NAME_CASE_INSENSITIVE_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_PRIORITY_VALUE);
-    VALID_SORT_BY_VALUES.add(SORT_BY_TENANT_ID_VALUE);
-  }
+  private static final List<String> VALID_SORT_BY_VALUES = List.of(
+    SORT_BY_PROCESS_INSTANCE_ID_VALUE,
+    SORT_BY_CASE_INSTANCE_ID_VALUE,
+    SORT_BY_DUE_DATE_VALUE,
+    SORT_BY_FOLLOW_UP_VALUE,
+    SORT_BY_EXECUTION_ID_VALUE,
+    SORT_BY_CASE_EXECUTION_ID_VALUE,
+    SORT_BY_ASSIGNEE_VALUE,
+    SORT_BY_CREATE_TIME_VALUE,
+    SORT_BY_LAST_UPDATED_VALUE,
+    SORT_BY_DESCRIPTION_VALUE,
+    SORT_BY_ID_VALUE,
+    SORT_BY_NAME_VALUE,
+    SORT_BY_NAME_CASE_INSENSITIVE_VALUE,
+    SORT_BY_PRIORITY_VALUE,
+    SORT_BY_TENANT_ID_VALUE
+  );
 
   public static final String SORT_PARAMETERS_VARIABLE_NAME = "variable";
   public static final String SORT_PARAMETERS_VALUE_TYPE = "type";
@@ -611,6 +609,9 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     this.createdOn = createdOn;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #setCreatedOn(Date)} instead for consistency with other date parameters.
+   */
   @Deprecated(since = "1.0")
   @OperatonQueryParam(value = "created", converter = DateConverter.class)
   public void setCreated(Date createdOn) {
@@ -1425,7 +1426,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.taskVariableValueLike(variableName, String.valueOf(variableValue));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid task variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid task variable comparator specified: %s".formatted(op));
         }
 
       }
@@ -1454,7 +1455,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         } else if (NOT_LIKE_OPERATOR_NAME.equals(op)) {
           query.processVariableValueNotLike(variableName, String.valueOf(variableValue));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid process variable comparator specified: %s".formatted(op));
         }
 
       }
@@ -1481,7 +1482,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
         } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.caseInstanceVariableValueLike(variableName, String.valueOf(variableValue));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid case variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid case variable comparator specified: %s".formatted(op));
         }
       }
     }
@@ -1860,7 +1861,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
       return SORT_BY_TENANT_ID_VALUE;
     }
     else {
-      throw new RestException("Unknown query property for task query " + queryProperty);
+      throw new RestException("Unknown query property for task query %s".formatted(queryProperty));
     }
   }
 
@@ -1872,7 +1873,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     }
 
     // if no property comparison was found throw an exception
-    throw new RestException("Unknown variable order property for task query " + variableOrderProperty);
+    throw new RestException("Unknown variable order property for task query %s".formatted(variableOrderProperty));
   }
 
   public static String sortByValueForQueryEntityRelationCondition(QueryEntityRelationCondition relationCondition) {
@@ -1894,7 +1895,7 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
       return SORT_BY_CASE_EXECUTION_VARIABLE;
     }
     else {
-      throw new RestException("Unknown relation condition for task query  with query property " + property + " and comparison property " + comparisonProperty);
+      throw new RestException("Unknown relation condition for task query with query property %s and comparison property %s".formatted(property, comparisonProperty));
     }
   }
 

@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.operaton.bpm.engine.authorization.Authorization;
@@ -311,16 +310,6 @@ public class AuthorizationEntity implements Authorization, DbEntity, HasDbRevisi
 
   public void setRootProcessInstanceId(String rootProcessInstanceId) {
     this.rootProcessInstanceId = rootProcessInstanceId;
-  }
-
-  @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    return new HashMap<>();
   }
 
   @Override

@@ -4463,7 +4463,7 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   void testSetVariablesWithUpdateVariablePermissionOnProcessInstance() {
     // given
     String processInstanceId = startProcessInstanceByKey(PROCESS_KEY).getId();
-    createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE);
+    createGrantAuthorization(PROCESS_INSTANCE, processInstanceId, userId, UPDATE_VARIABLE);
 
     verifySetVariables(processInstanceId);
   }

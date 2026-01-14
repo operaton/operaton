@@ -40,7 +40,9 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
  * {@link Deployer} responsible to parse resource files and create the proper entities.
  * This class is extended by specific resource deployers.
  *
+ * <p>
  * Note: Implementations must be thread-safe. In particular they should not keep deployment-specific state.
+ * </p>
  */
 public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends ResourceDefinitionEntity> implements Deployer {
 
@@ -124,21 +126,27 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
   /**
    * Returns the default name of the image resource for a certain definition.
    *
+   * <p>
    * It will first look for an image resource which matches the definition
    * specifically, before resorting to an image resource which matches the file
    * containing the definition.
+   * </p>
    *
+   * <p>
    * Example: if the deployment contains a BPMN 2.0 xml resource called
    * 'abc.bpmn20.xml' containing only one process with key 'myProcess', then
    * this method will look for an image resources called 'abc.myProcess.png'
    * (or .jpg, or .gif, etc.) or 'abc.png' if the previous one wasn't found.
+   * </p>
    *
+   * <p>
    * Example 2: if the deployment contains a BPMN 2.0 xml resource called
    * 'abc.bpmn20.xml' containing three processes (with keys a, b and c),
    * then this method will first look for an image resource called 'abc.a.png'
    * before looking for 'abc.png' (likewise for b and c).
    * Note that if abc.a.png, abc.b.png and abc.c.png don't exist, all
    * processes will have the same image: abc.png.
+   * </p>
    *
    * @return null if no matching image resource is found.
    */
@@ -192,7 +200,8 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
       String key = definition.getKey();
 
       if (keys.contains(key)) {
-        throw new ProcessEngineException("The deployment contains definitions with the same key '" + key + "' (id attribute), this is not allowed");
+        throw new ProcessEngineException("The deployment contains definitions with the same key '%s' (id attribute), this is not allowed"
+            .formatted(key));
       }
 
       keys.add(key);
@@ -344,9 +353,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
     String definitionKey = newDefinition.getKey();
     int definitionVersion = newDefinition.getVersion();
 
-    String definitionId = definitionKey
-      + ":" + definitionVersion
-      + ":" + nextId;
+    String definitionId = "%s:%s:%s".formatted(definitionKey, definitionVersion, nextId);
 
     // ACT-115: maximum id length is 64 characters
     if (definitionId.length() > 64) {

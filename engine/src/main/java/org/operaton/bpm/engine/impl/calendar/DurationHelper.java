@@ -98,10 +98,11 @@ public class DurationHelper {
     if (isRepeat) {
       return getDateAfterRepeat(date == null ? ClockUtil.getCurrentTime() : date);
     }
-    //TODO: is this correct?
+
     if (end != null) {
       return end;
     }
+
     return add(start, period);
   }
 

@@ -45,6 +45,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  */
 public class VariableValueDto {
+  private static final VariableMap EMPTY_VARIABLE_MAP = Variables.createVariables();
 
   protected String type;
   protected Object value;
@@ -129,9 +130,17 @@ public class VariableValueDto {
 
   }
 
+  /**
+   * Convert a map of VariableValueDto to a VariableMap
+   *
+   * @param variables the map of VariableValueDtos. May be null.
+   * @param processEngine the process engine
+   * @param objectMapper the object mapper
+   * @return the VariableMap. Never null.
+   */
   public static VariableMap toMap(Map<String, VariableValueDto> variables, ProcessEngine processEngine, ObjectMapper objectMapper) {
     if(variables == null) {
-      return null;
+      return EMPTY_VARIABLE_MAP;
     }
 
     VariableMap result = Variables.createVariables();

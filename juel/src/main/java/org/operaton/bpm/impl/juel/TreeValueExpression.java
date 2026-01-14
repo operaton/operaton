@@ -30,7 +30,9 @@ import jakarta.el.VariableMapper;
  * {@link #getType(ELContext)}, {@link #getValue(ELContext)}, {@link #isReadOnly(ELContext)}
  * or {@link #setValue(ELContext, Object)}.
  *
+ * <p>
  * Instances of this class are usually created using an {@link ExpressionFactoryImpl}.
+ * </p>
  *
  * @author Christoph Beck
  */

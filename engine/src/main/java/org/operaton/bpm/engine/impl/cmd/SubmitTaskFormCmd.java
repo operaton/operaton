@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -36,15 +34,11 @@ import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class SubmitTaskFormCmd implements Command<VariableMap>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class SubmitTaskFormCmd implements Command<VariableMap> {
   protected String taskId;
   protected VariableMap properties;
 
@@ -65,7 +59,7 @@ public class SubmitTaskFormCmd implements Command<VariableMap>, Serializable {
     ensureNotNull("taskId", taskId);
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkTaskWork(task);

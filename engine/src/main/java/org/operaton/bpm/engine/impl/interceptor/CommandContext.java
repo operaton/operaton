@@ -56,6 +56,7 @@ import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Collections.emptyList;
 
 /**
  * @author Tom Baeyens
@@ -144,7 +145,7 @@ public class CommandContext {
             flushSessions();
           }
 
-        } catch (Throwable exception) {
+        } catch (Exception exception) {
           commandInvocationContext.trySetThrowable(exception);
         } finally {
 
@@ -152,7 +153,7 @@ public class CommandContext {
             if (commandInvocationContext.getThrowable() == null) {
               transactionContext.commit();
             }
-          } catch (Throwable exception) {
+          } catch (Exception exception) {
             commandInvocationContext.trySetThrowable(exception);
           }
 
@@ -174,12 +175,12 @@ public class CommandContext {
             transactionContext.rollback();
           }
         }
-      } catch (Throwable exception) {
+      } catch (Exception exception) {
         commandInvocationContext.trySetThrowable(exception);
       } finally {
         closeSessions(commandInvocationContext);
       }
-    } catch (Throwable exception) {
+    } catch (Exception exception) {
       commandInvocationContext.trySetThrowable(exception);
     }
 
@@ -212,7 +213,7 @@ public class CommandContext {
       try {
         listener.onCommandFailed(this, t);
       }
-      catch(Throwable ex) {
+      catch(Exception ex) {
         LOG.exceptionWhileInvokingOnCommandFailed(t);
       }
     }
@@ -228,7 +229,7 @@ public class CommandContext {
     for (Session session : sessionList) {
       try {
         session.close();
-      } catch (Throwable exception) {
+      } catch (Exception exception) {
         commandInvocationContext.trySetThrowable(exception);
       }
     }
@@ -239,7 +240,7 @@ public class CommandContext {
     Session session = sessions.get(sessionClass);
     if (session == null) {
       SessionFactory sessionFactory = sessionFactories.get(sessionClass);
-      ensureNotNull("no session factory configured for " + sessionClass.getName(), "sessionFactory", sessionFactory);
+      ensureNotNull("no session factory configured for %s".formatted(sessionClass.getName()), "sessionFactory", sessionFactory);
       session = sessionFactory.openSession();
       sessions.put(sessionClass, session);
       sessionList.add(0, session);
@@ -533,7 +534,7 @@ public class CommandContext {
     IdentityService identityService = processEngineConfiguration.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
     if(currentAuthentication == null) {
-      return null;
+      return emptyList();
     } else {
       return currentAuthentication.getGroupIds();
     }

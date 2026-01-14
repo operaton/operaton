@@ -65,7 +65,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 public class TaskResourceImpl implements TaskResource {
 
-  public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
+  private static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
 
   protected ProcessEngine engine;
   protected String taskId;
@@ -199,7 +199,7 @@ public class TaskResourceImpl implements TaskResource {
   public TaskDto getJsonTask() {
     Task task = getTaskById(taskId, withCommentAttachmentInfo);
     if (task == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching task with id " + taskId);
+      throw new TaskNotFoundException(taskId);
     }
     if ((withTaskVariablesInReturn || withTaskLocalVariablesInReturn) && withCommentAttachmentInfo) {
       Map<String, VariableValueDto> taskVariables = getTaskVariables(withTaskVariablesInReturn);
@@ -219,7 +219,7 @@ public class TaskResourceImpl implements TaskResource {
   public HalTask getHalTask() {
     Task task = getTaskById(taskId, withCommentAttachmentInfo);
     if (task == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching task with id " + taskId);
+      throw new TaskNotFoundException(taskId);
     }
 
     return HalTask.generate(task, engine);
@@ -235,7 +235,7 @@ public class TaskResourceImpl implements TaskResource {
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      throw new RestException(Status.BAD_REQUEST, e, "Cannot get form for task " + taskId);
+      throw new RestException(Status.BAD_REQUEST, e, "Cannot get form for task %s".formatted(taskId));
     }
 
     FormDto dto = FormDto.fromFormData(formData);
@@ -243,7 +243,7 @@ public class TaskResourceImpl implements TaskResource {
       && formData != null
       && formData.getFormFields() != null
       && !formData.getFormFields().isEmpty()) {
-      dto.setKey("embedded:engine://engine/:engine/task/" + taskId + "/rendered-form");
+      dto.setKey("embedded:engine://engine/:engine/task/%s/rendered-form".formatted(taskId));
     }
 
     // to get the application context path it is necessary to
@@ -284,7 +284,7 @@ public class TaskResourceImpl implements TaskResource {
           .build();
     }
 
-    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered form for task with the id " + taskId + " found.");
+    throw new InvalidRequestException(Status.NOT_FOUND, "No matching rendered form for task with the id %s found.".formatted(taskId));
   }
 
   @Override
@@ -395,7 +395,7 @@ public class TaskResourceImpl implements TaskResource {
     Task task = getTaskById(taskId, withCommentAttachmentInfo);
 
     if (task == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching task with id " + taskId);
+      throw new TaskNotFoundException(taskId);
     }
 
     taskDto.updateTask(task);
@@ -410,7 +410,7 @@ public class TaskResourceImpl implements TaskResource {
       taskService.deleteTask(id);
     }
     catch (NotValidException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not delete task: " + e.getMessage());
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not delete task: %s".formatted(e.getMessage()));
     }
   }
 
@@ -466,7 +466,7 @@ public class TaskResourceImpl implements TaskResource {
 
   protected String getTaskFormMediaType(String taskId) {
     Task task = engine.getTaskService().createTaskQuery().initializeFormKeys().taskId(taskId).singleResult();
-    ensureNotNull("No task found for taskId '" + taskId + "'", "task", task);
+    ensureNotNull("No task found for taskId '%s'".formatted(taskId), "task", task);
     String formKey = task.getFormKey();
     if(formKey != null) {
       return ContentTypeUtil.getFormContentType(formKey);
@@ -497,4 +497,10 @@ public class TaskResourceImpl implements TaskResource {
     return variableResource.getVariables(true);
   }
 
+  @SuppressWarnings("java:S110")
+  private static class TaskNotFoundException extends InvalidRequestException {
+    TaskNotFoundException(String taskId) {
+      super(Status.NOT_FOUND, "No matching task with id %s".formatted(taskId));
+    }
+  }
 }

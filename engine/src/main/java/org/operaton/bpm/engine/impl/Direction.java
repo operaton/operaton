@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.impl;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +25,8 @@ import java.util.Map;
 /**
  * @author Tom Baeyens
  */
-public class Direction {
+public class Direction implements Serializable {
+  @Serial private static final long serialVersionUID = 1L;
 
   private static final Map<String, Direction> directions = new HashMap<>();
 
@@ -43,9 +46,7 @@ public class Direction {
 
   @Override
   public String toString() {
-    return "Direction["
-      + "name=" + name
-      + "]";
+    return "Direction[name=%s]".formatted(name);
   }
 
   public static Direction findByName(String directionName) {

@@ -77,6 +77,7 @@ import static java.util.Collections.emptyMap;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings("java:S1452")
 public class FilterResourceImpl extends AbstractAuthorizedRestResource implements FilterResource {
 
   private static final Pattern EMPTY_JSON_BODY = Pattern.compile("\\s*\\{\\s*\\}\\s*");
@@ -181,11 +182,11 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
-  public HalResource executeHalSingleResult() {
+  public HalResource<?> executeHalSingleResult() {
     return queryHalSingleResult(null);
   }
 
-  public HalResource queryHalSingleResult(String extendingQuery) {
+  public HalResource<?> queryHalSingleResult(String extendingQuery) {
     Object entity = executeFilterSingleResult(extendingQuery);
 
     if (entity != null) {
@@ -254,11 +255,11 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     }
   }
 
-  public HalResource executeHalList(Integer firstResult, Integer maxResults) {
+  public HalResource<?> executeHalList(Integer firstResult, Integer maxResults) {
     return queryHalList(null, firstResult, maxResults);
   }
 
-  public HalResource queryHalList(String extendingQuery, Integer firstResult, Integer maxResults) {
+  public HalResource<?> queryHalList(String extendingQuery, Integer firstResult, Integer maxResults) {
     List<?> entities = executeFilterList(extendingQuery, firstResult, maxResults);
     long count = executeFilterCount(extendingQuery);
 
@@ -354,7 +355,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
     return dto;
   }
 
-  protected Query convertQuery(String queryString) {
+  protected Query<?,?> convertQuery(String queryString) {
     if (isEmptyJson(queryString)) {
       return null;
     }
@@ -402,7 +403,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   @SuppressWarnings("unchecked")
-  protected HalCollectionResource convertToHalCollection(List<?> entities, long count) {
+  protected HalCollectionResource<?> convertToHalCollection(List<?> entities, long count) {
     if (isEntityOfClass(entities.get(0), Task.class)) {
       return convertToHalTaskList((List<Task>) entities, count);
     } else {
@@ -432,10 +433,10 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
       if (EntityTypes.TASK.equals(resourceType)) {
         return getObjectMapper().readValue(queryString, TaskQueryDto.class);
       } else {
-        throw new InvalidRequestException(Status.BAD_REQUEST, "Queries for resource type '" + resourceType + "' are currently not supported by filters.");
+        throw new InvalidRequestException(Status.BAD_REQUEST, "Queries for resource type '%s' are currently not supported by filters.".formatted(resourceType));
       }
     } catch (IOException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Invalid query for resource type '" + resourceType + "'");
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Invalid query for resource type '%s'".formatted(resourceType));
     }
   }
 
@@ -489,7 +490,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
         return collectVariableNames(variables);
       }
       catch (Exception e) {
-        throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, e, "Filter property '" + PROPERTIES_VARIABLES_KEY + "' has to be a list of variable definitions with a '" + PROPERTIES_VARIABLES_NAME_KEY + "' property");
+        throw new InvalidRequestException(Status.INTERNAL_SERVER_ERROR, e, "Filter property '%s' has to be a list of variable definitions with a '%s' property".formatted(PROPERTIES_VARIABLES_KEY, PROPERTIES_VARIABLES_NAME_KEY));
       }
     }
     else {
@@ -568,7 +569,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected InvalidRequestException filterNotFound(Exception cause) {
-    return new InvalidRequestException(Status.NOT_FOUND, cause, "Filter with id '" + resourceId + "' does not exist.");
+    return new InvalidRequestException(Status.NOT_FOUND, cause, "Filter with id '%s' does not exist.".formatted(resourceId));
   }
 
   protected InvalidRequestException invalidQuery(Exception cause) {
@@ -576,7 +577,7 @@ public class FilterResourceImpl extends AbstractAuthorizedRestResource implement
   }
 
   protected InvalidRequestException unsupportedEntityClass(Object entity) {
-    return new InvalidRequestException(Status.BAD_REQUEST, "Entities of class '" + entity.getClass().getCanonicalName() + "' are currently not supported by filters.");
+    return new InvalidRequestException(Status.BAD_REQUEST, "Entities of class '%s' are currently not supported by filters.".formatted(entity.getClass().getCanonicalName()));
   }
 
 }

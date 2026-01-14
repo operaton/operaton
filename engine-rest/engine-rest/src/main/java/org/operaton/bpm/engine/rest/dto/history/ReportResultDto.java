@@ -52,6 +52,8 @@ public abstract class ReportResultDto {
 
     if (reportResult instanceof DurationReportResult durationReport) {
       dto = DurationReportResultDto.fromDurationReportResult(durationReport);
+    } else {
+      throw new IllegalArgumentException("Unsupported report result type: " + reportResult.getClass().getName());
     }
 
     dto.period = reportResult.getPeriod();

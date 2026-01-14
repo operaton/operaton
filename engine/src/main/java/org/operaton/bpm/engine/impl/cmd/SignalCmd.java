@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
@@ -28,14 +26,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class SignalCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class SignalCmd implements Command<Object> {
   protected String executionId;
   protected String signalName;
   protected Object signalData;
@@ -55,7 +49,7 @@ public class SignalCmd implements Command<Object>, Serializable {
     ExecutionEntity execution = commandContext
           .getExecutionManager()
           .findExecutionById(executionId);
-    ensureNotNull(BadUserRequestException.class, "execution "+executionId+" doesn't exist", "execution", execution);
+    ensureNotNull(BadUserRequestException.class, "execution %s doesn't exist".formatted(executionId), "execution", execution);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);

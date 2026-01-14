@@ -555,7 +555,7 @@ class AuthorizationServiceTest {
   @Test
   void testGlobalAuthPermissions() {
 
-    AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GRANT);
+    AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GLOBAL);
     authorization.setResource(Resources.DEPLOYMENT);
 
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
@@ -574,13 +574,7 @@ class AuthorizationServiceTest {
     assertThat(authorization.isPermissionGranted(READ)).isTrue();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue(); // (none is always granted => you are always authorized to do nothing)
 
-    try {
-      authorization.isPermissionRevoked(READ);
-      fail("Exception expected");
-    } catch (IllegalStateException e) {
-      testRule.assertTextPresent("ENGINE-03026 Method 'isPermissionRevoked' cannot be used for authorization with type 'GRANT'.", e.getMessage());
-    }
-
+    assertThat(authorization.isPermissionRevoked(READ)).isFalse();
   }
 
   @Test
@@ -890,7 +884,7 @@ class AuthorizationServiceTest {
     // when attempt to save, expect BadUserRequest
     assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessage("ENGINE-03087 The resource type with id:'" + Resources.TASK.resourceType() + "' is not valid for '" + TestPermissions.RANDOM.getName() + "' permission." );
+      .hasMessage("ENGINE-03087 The resource type with id:'%s' is not valid for '%s' permission.".formatted(Resources.TASK.resourceType(), TestPermissions.RANDOM.getName()));
   }
 
   protected void cleanupAfterTest() {

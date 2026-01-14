@@ -24,11 +24,15 @@ import org.operaton.bpm.engine.ManagementService;
  * triggered by a user and performed by the engine. This class counts the number
  * of executions per command.
  *
+ * <p>
  * This information is sent to Operaton when telemetry is enabled.
+ * </p>
  *
+ * <p>
  * When used for telemetry data collection, all command execution counts reset
  * on sending the data. Retrieval through
  * {@link ManagementService#getTelemetryData()} will not reset the counter.
+ * </p>
  *
  * @see <a href=
  *      "https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton

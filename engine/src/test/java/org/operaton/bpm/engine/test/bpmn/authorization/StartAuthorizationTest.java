@@ -227,7 +227,7 @@ class StartAuthorizationTest {
 	      runtimeService.startProcessInstanceByKey("potentialStarter");
 
 	    }  catch (Exception e) {
-        fail("No StartAuthorizationException expected, " + e.getClass().getName() + " caught.");
+        fail("No StartAuthorizationException expected, %s caught.".formatted(e.getClass().getName()));
 	    }
 
 	    // check with an authorized user obviously it should be no problem starting the process

@@ -12,7 +12,6 @@
   <description>${project.name}</description>
   <properties>
     <skip-third-party-bom>true</skip-third-party-bom>
-    <npm.build.args>install</npm.build.args>
   </properties>
   <dependencies>
     <dependency>
@@ -61,13 +60,13 @@
             </goals>
           </execution>
           <execution>
-            <id>npm (clean) install</id>
+            <id>npm install</id>
             <goals>
               <goal>npm</goal>
             </goals>
             <phase>generate-resources</phase>
             <configuration>
-              <arguments>${npm.build.args}</arguments>
+              <arguments>ci</arguments>
             </configuration>
           </execution>
           <execution>
@@ -84,18 +83,4 @@
       </plugin>
     </plugins>
   </build>
-  <profiles>
-    <profile>
-      <id>github-ci</id>
-      <activation>
-        <property>
-          <name>env.GITHUB_ACTIONS</name>
-          <value>true</value>
-        </property>
-      </activation>
-      <properties>
-        <npm.build.args>ci</npm.build.args>
-      </properties>
-    </profile>
-  </profiles>
 </project>

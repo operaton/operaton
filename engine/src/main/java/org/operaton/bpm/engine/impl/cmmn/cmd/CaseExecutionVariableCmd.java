@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
@@ -34,10 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class CaseExecutionVariableCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CaseExecutionVariableCmd implements Command<Void> {
   protected String caseExecutionId;
   protected Map<String, Object> variables;
   protected Map<String, Object> variablesLocal;
@@ -70,7 +65,7 @@ public class CaseExecutionVariableCmd implements Command<Void>, Serializable {
       .getCaseExecutionManager()
       .findCaseExecutionById(caseExecutionId);
 
-    ensureNotNull(CaseExecutionNotFoundException.class, "There does not exist any case execution with id: '" + caseExecutionId + "'", "caseExecution", caseExecution);
+    ensureNotNull(CaseExecutionNotFoundException.class, "There does not exist any case execution with id: '%s'".formatted(caseExecutionId), "caseExecution", caseExecution);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateCaseInstance(caseExecution);

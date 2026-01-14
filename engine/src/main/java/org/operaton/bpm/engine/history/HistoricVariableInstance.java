@@ -107,9 +107,13 @@ public interface HistoricVariableInstance {
 
   /**
    * Returns the corresponding activity instance id.
+   * 
+   * @deprecated since 1.0, typo in method name. Use {@link #getActivityInstanceId()} instead.
    */
   @Deprecated(since = "1.0")
-  String getActivtyInstanceId();
+  default String getActivtyInstanceId() {
+    return getActivityInstanceId();
+  }
 
   /**
    * Returns the corresponding activity instance id.

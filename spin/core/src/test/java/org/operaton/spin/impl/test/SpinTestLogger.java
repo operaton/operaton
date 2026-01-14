@@ -17,7 +17,6 @@
 package org.operaton.spin.impl.test;
 
 import org.operaton.commons.logging.BaseLogger;
-import org.operaton.spin.SpinRuntimeException;
 import org.operaton.spin.SpinScriptException;
 import org.operaton.spin.impl.logging.SpinLogger;
 
@@ -64,18 +63,6 @@ public class SpinTestLogger extends SpinLogger {
 
   public SpinScriptException cannotCastVariableError(String name, Throwable e) {
     return new SpinScriptException(exceptionMessage("005", "Cannot cast variable '{}', wrong type", name), e);
-  }
-
-  public SpinScriptException unableToUnwrapRhinoJsVariable(String name, Throwable e) {
-    return new SpinScriptException(exceptionMessage("006", "Unable to unwrap rhinojs variable with name '{}'", name), e);
-  }
-
-  public SpinScriptException unableToFindUnwrapMethod(Throwable e) {
-    return new SpinScriptException(exceptionMessage("007", "Unable to find unwrap method of NativeJavaObject"));
-  }
-
-  public SpinRuntimeException unableToUnwrapRhinoJsWrappedException(String message) {
-    return new SpinScriptException(exceptionMessage("008", "Unable to unwrap rhinojs wrapped exception with message '{}'", message));
   }
 
 }

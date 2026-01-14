@@ -891,8 +891,7 @@ public class JobQueryTest {
   }
 
   private void createJobWithLockExpiration(Date lockDate) {
-    CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    commandExecutor.execute(commandContext -> {
+    processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
       JobManager jobManager = commandContext.getJobManager();
       timerEntity = new TimerEntity();
       timerEntity.setLockOwner(UUID.randomUUID().toString());

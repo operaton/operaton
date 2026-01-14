@@ -42,13 +42,17 @@ import org.operaton.bpm.engine.ProcessEngine;
  * {@literal @}ProcessApplication("My Process Application")
  * public class MyProcessApplication extends ServletProcessApplication {
  *
+ * <p>
  *  {@literal @}PreUndeploy
  *  public void cleanup(ProcessEngine processEngine) {
  *    ...
  *  }
+ * </p>
  *
+ * <p>
  * }
  * </pre>
+ * </p>
  *
  * <p>A method annotated with <code>{@literal @}PreUndeploy</code> may additionally take the following set of
  * parameters, in any oder:

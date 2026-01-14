@@ -29,10 +29,9 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * to add a custom hashing algorithm. The {@link PasswordManager} ensures that the right
  * algorithm is used for the encryption.
  *
- * Default algorithms:
- * Version:           |    Algorithm
- * <= Operaton 7.6     | SHA1
- * >= Operaton 7.7     | SHA512
+ * <p>
+ * Default algorithm: SHA512
+ * </p>
  */
 public class PasswordManager {
 

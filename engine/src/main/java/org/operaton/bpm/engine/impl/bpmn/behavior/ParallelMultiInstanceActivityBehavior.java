@@ -92,7 +92,6 @@ public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivity
 
     // join
     scopeExecution.forceUpdate();
-    // TODO: should the completion condition be evaluated on the scopeExecution or on the endedExecution?
     if(completionConditionSatisfied(endedExecution) ||
         allExecutionsEnded(scopeExecution, endedExecution)) {
 

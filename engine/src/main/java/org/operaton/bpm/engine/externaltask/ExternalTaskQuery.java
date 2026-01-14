@@ -129,7 +129,6 @@ public interface ExternalTaskQuery extends Query<ExternalTaskQuery, ExternalTask
   /**
    * Only select external tasks with a priority that is higher than or equal to the given priority.
    *
-   * @since 7.5
    * @param priority the priority which is used for the query
    * @return the builded external task query
    */
@@ -138,7 +137,6 @@ public interface ExternalTaskQuery extends Query<ExternalTaskQuery, ExternalTask
   /**
    * Only select external tasks with a priority that is lower than or equal to the given priority.
    *
-   * @since 7.5
    * @param priority the priority which is used for the query
    * @return the builded external task query
    */
@@ -263,7 +261,6 @@ public interface ExternalTaskQuery extends Query<ExternalTaskQuery, ExternalTask
 
   /**
    * Order by priority (needs to be followed by {@link #asc()} or {@link #desc()}).
-   * @since 7.5
    */
   ExternalTaskQuery orderByPriority();
 

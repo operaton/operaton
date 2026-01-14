@@ -29,7 +29,7 @@ public final class BeanManagerLookup {
   public static BeanManager localInstance;
 
   /** provide a custom jndi lookup name */
-  public static String jndiName;
+  private static String jndiName;
 
   private BeanManagerLookup() {
   }
@@ -57,7 +57,7 @@ public final class BeanManagerLookup {
       try {
         return (BeanManager) InitialContext.doLookup(jndiName);
       } catch (NamingException e) {
-        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '" + jndiName + "'.", e);
+        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '%s'.".formatted(jndiName), e);
       }
     }
 

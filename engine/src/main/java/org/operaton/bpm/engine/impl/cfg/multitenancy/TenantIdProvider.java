@@ -27,7 +27,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
  * An implementation of this SPI can be set on the {@link ProcessEngineConfigurationImpl}.
  *
  * @author Daniel Meyer
- * @since 7.5
  */
 public interface TenantIdProvider {
 

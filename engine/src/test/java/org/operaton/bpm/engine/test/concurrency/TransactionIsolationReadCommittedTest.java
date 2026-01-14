@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +32,8 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 /**
  * @author Daniel Meyer
  *
@@ -48,19 +48,27 @@ class TransactionIsolationReadCommittedTest extends ConcurrencyTestCase {
    * In this test, we run two transactions concurrently.
    * The transactions have the following behavior:
    *
+   * <p>
    * (1) INSERT row into a table
    * (2) SELECT ALL rows from that table
+   * </p>
    *
+   * <p>
    * We execute it with two threads in the following interleaving:
+   * </p>
    *
+   * <p>
    *      Thread 1             Thread 2
    *      ========             ========
    * ------INSERT---------------------------   |
    * ---------------------------INSERT------   |
    * ---------------------------SELECT------   v time
    * ------SELECT---------------------------
+   * </p>
    *
+   * <p>
    * Deadlocks may occur if readers are not properly isolated from writers.
+   * </p>
    *
    */
   @Test

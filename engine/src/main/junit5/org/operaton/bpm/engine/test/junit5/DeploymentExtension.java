@@ -63,7 +63,7 @@ public class DeploymentExtension implements AfterEachCallback, BeforeEachCallbac
     public  String deploy(DeploymentBuilder deploymentBuilder, BpmnModelInstance... bpmnModelInstances) {
         for (int i = 0; i < bpmnModelInstances.length; i++) {
             BpmnModelInstance bpmnModelInstance = bpmnModelInstances[i];
-            deploymentBuilder.addModelInstance("testProcess-"+i+".bpmn", bpmnModelInstance);
+            deploymentBuilder.addModelInstance("testProcess-%s.bpmn".formatted(i), bpmnModelInstance);
         }
 
         return deploymentWithBuilder(deploymentBuilder);

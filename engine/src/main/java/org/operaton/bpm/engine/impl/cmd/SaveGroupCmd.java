@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.impl.identity.IdentityOperationResult;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -27,13 +24,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureWhitelistedResourceId;
 
-
 /**
  * @author Joram Barrez
  */
-public class SaveGroupCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class SaveGroupCmd extends AbstractWritableIdentityServiceCmd<Void> implements Command<Void> {
   protected Group group;
 
   public SaveGroupCmd(Group group) {

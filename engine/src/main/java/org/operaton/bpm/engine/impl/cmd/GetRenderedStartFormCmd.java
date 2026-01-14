@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -34,14 +31,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class GetRenderedStartFormCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetRenderedStartFormCmd implements Command<Object> {
   protected String processDefinitionId;
   protected String formEngineName;
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
@@ -56,7 +50,7 @@ public class GetRenderedStartFormCmd implements Command<Object>, Serializable {
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
     DeploymentCache deploymentCache = processEngineConfiguration.getDeploymentCache();
     ProcessDefinitionEntity processDefinition = deploymentCache.findDeployedProcessDefinitionById(processDefinitionId);
-    ensureNotNull("Process Definition '" + processDefinitionId + "' not found", "processDefinition", processDefinition);
+    ensureNotNull("Process Definition '%s' not found".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessDefinition(processDefinition);
@@ -72,7 +66,7 @@ public class GetRenderedStartFormCmd implements Command<Object>, Serializable {
       .getFormEngines()
       .get(formEngineName);
 
-    ensureNotNull("No formEngine '" + formEngineName + "' defined process engine configuration", "formEngine", formEngine);
+    ensureNotNull("No formEngine '%s' defined process engine configuration".formatted(formEngineName), "formEngine", formEngine);
 
     StartFormData startForm = startFormHandler.createStartFormData(processDefinition);
 

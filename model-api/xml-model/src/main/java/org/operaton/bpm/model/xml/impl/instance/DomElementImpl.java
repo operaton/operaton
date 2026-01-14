@@ -156,7 +156,7 @@ public class DomElementImpl implements DomElement {
         element.replaceChild(newElement, existingElement);
       }
       catch (DOMException e) {
-        throw new ModelException("Unable to replace child <" + existingElement + "> of element <" + element + "> with element <" + newElement + ">", e);
+        throw new ModelException("Unable to replace child <%s> of element <%s> with element <%s>".formatted(existingElement, element, newElement), e);
       }
     }
   }

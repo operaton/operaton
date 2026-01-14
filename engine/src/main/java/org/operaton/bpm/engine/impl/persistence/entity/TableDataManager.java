@@ -183,7 +183,7 @@ public class TableDataManager extends AbstractManager {
 
     API_TYPE_TO_TABLE_NAME_MAP.put(HistoricDecisionInstance.class, "ACT_HI_DECINST");
 
-    // TODO: Identity skipped for the moment as no SQL injection is provided here
+    // Identity skipped for the moment as no SQL injection is provided here
   }
 
   public Map<String, Long> getTableCount() {

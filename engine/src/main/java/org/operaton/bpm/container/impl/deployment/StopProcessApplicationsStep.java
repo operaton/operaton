@@ -69,7 +69,7 @@ public class StopProcessApplicationsStep extends DeploymentOperationStep {
       ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
       processApplication.undeploy();
     }
-    catch(Throwable t) {
+    catch(Exception t) {
       LOG.exceptionWhileStopping("Process Application", processApplicationReference.getName(), t);
     }
 

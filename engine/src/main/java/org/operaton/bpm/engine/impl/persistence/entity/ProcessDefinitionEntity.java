@@ -188,7 +188,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   @Override
   public String toString() {
-    return "ProcessDefinitionEntity["+id+"]";
+    return "ProcessDefinitionEntity[%s]".formatted(id);
   }
 
   /**
@@ -198,7 +198,6 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   @Override
   public void updateModifiableFieldsFromEntity(ProcessDefinitionEntity updatingProcessDefinition) {
     if (this.key.equals(updatingProcessDefinition.key) && this.deploymentId.equals(updatingProcessDefinition.deploymentId)) {
-      // TODO: add a guard once the mismatch between revisions in deployment cache and database has been resolved
       this.revision = updatingProcessDefinition.revision;
       this.suspensionState = updatingProcessDefinition.suspensionState;
       this.historyTimeToLive = updatingProcessDefinition.historyTimeToLive;

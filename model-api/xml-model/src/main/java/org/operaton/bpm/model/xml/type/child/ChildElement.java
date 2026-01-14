@@ -23,8 +23,10 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 /**
  * A single child element (child Element collection where {@link ChildElementCollection#getMaxOccurs()} returns 1.
  *
+ * <p>
  * The {@link Collection#add(Object)} operation provided by this collection has special behavior: it will
  * replace an existing element if it exists.
+ * </p>
  *
  * @author Daniel Meyer
  *

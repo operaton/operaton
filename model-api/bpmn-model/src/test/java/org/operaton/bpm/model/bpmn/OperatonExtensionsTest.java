@@ -72,7 +72,7 @@ public class OperatonExtensionsTest {
   }
 
   private void initModelElements() {
-    modelInstance = originalModelInstance.clone();
+    modelInstance = originalModelInstance.copy();
     process = modelInstance.getModelElementById(PROCESS_ID);
     startEvent = modelInstance.getModelElementById(START_EVENT_ID);
     sequenceFlow = modelInstance.getModelElementById(SEQUENCE_FLOW_ID);
@@ -182,7 +182,7 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testHistoryTimeToLive(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(modelInstance);
-    assertThat(process.getOperatonHistoryTimeToLive()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE);
+    assertThat(process.getOperatonHistoryTimeToLiveString()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE.toString());
   }
 
   @MethodSource("parameters")
@@ -1233,7 +1233,7 @@ public class OperatonExtensionsTest {
         return operatonInputParameter;
       }
     }
-    throw new BpmnModelException("Unable to find operaton:inputParameter with name '" + name + "' for element with id '" + baseElement.getId() + "'");
+    throw new BpmnModelException("Unable to find operaton:inputParameter with name '%s' for element with id '%s'".formatted(name, baseElement.getId()));
   }
 
   @AfterEach

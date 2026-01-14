@@ -29,7 +29,7 @@ public class EndEventTestJavaDelegate implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     timesCalled++;
-    Thread.sleep(3000L);
+    Thread.sleep(1000L);
   }
 
 }

@@ -51,6 +51,9 @@ public class CaseImpl extends CmmnElementImpl implements Case {
   protected static ChildElementCollection<OutputCaseParameter> outputCollection;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use caseRolesChild instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<CaseRole> caseRolesCollection;
 
@@ -114,20 +117,6 @@ public class CaseImpl extends CmmnElementImpl implements Case {
   @Override
   public void setCaseFileModel(CaseFileModel caseFileModel) {
     caseFileModelChild.setChild(this, caseFileModel);
-  }
-
-  @Override
-  public Integer getOperatonHistoryTimeToLive() {
-    String ttl = getOperatonHistoryTimeToLiveString();
-    if (ttl != null) {
-      return Integer.parseInt(ttl);
-    }
-    return null;
-  }
-
-  @Override
-  public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
-    setOperatonHistoryTimeToLiveString(String.valueOf(historyTimeToLive));
   }
 
   public static void registerType(ModelBuilder modelBuilder) {

@@ -354,7 +354,7 @@ class JobDefinitionPriorityTest {
       return jobs.get(0);
     }
     else {
-      throw new ProcessEngineException("Job with id " + other.getId() + " does not exist anymore");
+      throw new ProcessEngineException("Job with id %s does not exist anymore".formatted(other.getId()));
     }
   }
 

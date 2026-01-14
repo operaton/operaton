@@ -95,7 +95,7 @@ import org.operaton.bpm.engine.runtime.Job;
 public interface HistoryService {
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricProcessInstance}s.
+   * Creates a new programmatic query to search for {@link HistoricProcessInstance}s.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -104,11 +104,13 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricProcessInstanceQuery createHistoricProcessInstanceQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricActivityInstance}s.
+   * Creates a new programmatic query to search for {@link HistoricActivityInstance}s.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -117,16 +119,19 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   *
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricActivityInstanceQuery createHistoricActivityInstanceQuery();
 
   /**
-   * <p>Query for the number of historic activity instances aggregated by activities of a single
+   * Query for the number of historic activity instances aggregated by activities of a single
    * process definition.
    *
-   * <p>The result of the query is empty when the user has no {@link Permissions#READ_HISTORY}
-   * permission on {@link Resources#PROCESS_DEFINITION}
+   * <p>
+   * The result of the query is empty when the user has no {@link Permissions#READ_HISTORY}
+   * permission on {@link Resources#PROCESS_DEFINITION}.
+   * </p>
    */
   HistoricActivityStatisticsQuery createHistoricActivityStatisticsQuery(String processDefinitionId);
 
@@ -136,7 +141,7 @@ public interface HistoryService {
   HistoricCaseActivityStatisticsQuery createHistoricCaseActivityStatisticsQuery(String caseDefinitionId);
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricTaskInstance}s.
+   * Creates a new programmatic query to search for {@link HistoricTaskInstance}s.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -148,11 +153,13 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricTaskInstanceQuery createHistoricTaskInstanceQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricDetail}s.
+   * Creates a new programmatic query to search for {@link HistoricDetail}s.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -172,11 +179,13 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enforceSpecificVariablePermission} and
    *       {@code enableHistoricInstancePermissions}
    *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricDetailQuery createHistoricDetailQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricVariableInstance}s.
+   * Creates a new programmatic query to search for {@link HistoricVariableInstance}s.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -196,10 +205,13 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_TASK} ({@code enforceSpecificVariablePermission} and
    *       {@code enableHistoricInstancePermissions}
    *       in {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricVariableInstanceQuery createHistoricVariableInstanceQuery();
 
-  /** <p>Creates a new programmatic query to search for {@link UserOperationLogEntry} instances.
+  /**
+   * Creates a new programmatic query to search for {@link UserOperationLogEntry} instances.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -211,12 +223,13 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   *
-   * */
+   * </ul>
+   * </p>
+   */
   UserOperationLogQuery createUserOperationLogQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for {@link HistoricIncident historic incidents}.
+   * Creates a new programmatic query to search for {@link HistoricIncident historic incidents}.
    *
    * <p>The result of the query is empty in the following cases:
    * <ul>
@@ -225,11 +238,13 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricIncidentQuery createHistoricIncidentQuery();
 
   /**
-   * <p>Creates a new programmatic query to search for
+   * Creates a new programmatic query to search for
    * {@link HistoricIdentityLinkLog historic identity links}.
    *
    * <p>The result of the query is empty in the following cases:
@@ -239,7 +254,9 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricTaskPermissions#READ} permission on
    *       {@link Resources#HISTORIC_TASK} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   * */
+   * </ul>
+   * </p>
+   */
   HistoricIdentityLinkLogQuery createHistoricIdentityLinkLogQuery();
 
   /** Creates a new programmatic query to search for {@link HistoricCaseInstance}s. */
@@ -251,13 +268,15 @@ public interface HistoryService {
   /**
    * Creates a new programmatic query to search for {@link HistoricDecisionInstance}s.
    *
+   * <p>
    * If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#DECISION_DEFINITION}
    * then the result of the query is empty.
+   * </p>
    */
   HistoricDecisionInstanceQuery createHistoricDecisionInstanceQuery();
 
   /**
-   * Deletes historic task instance.  This might be useful for tasks that are
+   * Deletes historic task instance. This might be useful for tasks that are
    * {@link TaskService#newTask() dynamically created} and then {@link TaskService#complete(String) completed}.
    * If the historic task instance doesn't exist, no exception is thrown and the
    * method returns normal.
@@ -585,7 +604,6 @@ public interface HistoryService {
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
    *
-   * @since 7.3
    */
   HistoricJobLogQuery createHistoricJobLogQuery();
 
@@ -600,66 +618,58 @@ public interface HistoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.3
    */
   String getHistoricJobLogExceptionStacktrace(String historicJobLogId);
 
   /**
    * Creates a new programmatic query to create a historic process instance report.
    *
-   * @since 7.5
    */
   HistoricProcessInstanceReport createHistoricProcessInstanceReport();
 
   /**
-   * <p>Creates a new programmatic query to create a historic task instance report.
+   * Creates a new programmatic query to create a historic task instance report.
    *
    * <p>Subsequent builder methods throw {@link AuthorizationException} when the user has no
    * {@link Permissions#READ_HISTORY} permission on any {@link Resources#PROCESS_DEFINITION}.
+   * </p>
    *
-   * @since 7.6
    */
   HistoricTaskInstanceReport createHistoricTaskInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic process instance report.
    *
-   * @since 7.8
    */
   CleanableHistoricProcessInstanceReport createCleanableHistoricProcessInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic decision instance report.
    *
-   * @since 7.8
    */
   CleanableHistoricDecisionInstanceReport createCleanableHistoricDecisionInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic case instance report.
    *
-   * @since 7.8
    */
   CleanableHistoricCaseInstanceReport createCleanableHistoricCaseInstanceReport();
 
   /**
    * Creates a new programmatic query to create a cleanable historic batch report.
    *
-   * @since 7.8
    */
   CleanableHistoricBatchReport createCleanableHistoricBatchReport();
 
   /**
    * Creates a query to search for {@link org.operaton.bpm.engine.batch.history.HistoricBatch} instances.
    *
-   * @since 7.5
    */
   HistoricBatchQuery createHistoricBatchQuery();
 
   /**
    * Deletes a historic batch instance. All corresponding historic job logs are deleted as well;
    *
-   * @since 7.5
    *
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#DELETE} permission on {@link Resources#BATCH}
@@ -671,12 +681,11 @@ public interface HistoryService {
    * Query for the statistics of DRD evaluation.
    *
    * @param decisionRequirementsDefinitionId - id of decision requirement definition
-   * @since 7.6
    */
   HistoricDecisionInstanceStatisticsQuery createHistoricDecisionInstanceStatisticsQuery(String decisionRequirementsDefinitionId);
 
   /**
-   * <p>Creates a new programmatic query to search for
+   * Creates a new programmatic query to search for
    * {@link HistoricExternalTaskLog historic external task logs}.
    *
    * <p>The result of the query is empty in the following cases:
@@ -686,8 +695,8 @@ public interface HistoryService {
    *   <li>The user has no {@link HistoricProcessInstancePermissions#READ} permission on
    *       {@link Resources#HISTORIC_PROCESS_INSTANCE} ({@code enableHistoricInstancePermissions} in
    *       {@link ProcessEngineConfigurationImpl} must be set to {@code true})
-   *
-   * @since 7.7
+   * </ul>
+   * </p>
    */
   HistoricExternalTaskLogQuery createHistoricExternalTaskLogQuery();
 
@@ -702,81 +711,78 @@ public interface HistoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ_HISTORY} permission on {@link Resources#PROCESS_DEFINITION}.
    *
-   * @since 7.7
    */
   String getHistoricExternalTaskLogErrorDetails(String historicExternalTaskLogId);
 
   /**
-   * <p>Set a removal time to historic process instances and
+   * Set a removal time to historic process instances and
    * all associated historic entities using a fluent builder.
    *
    * <p>Historic process instances can be specified by passing a query to
-   * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#byQuery(HistoricProcessInstanceQuery)}.
+   * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#byQuery(HistoricProcessInstanceQuery)}.</p>
    *
    * <p>An absolute time can be specified via
    * {@link SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#absoluteRemovalTime(Date)}.
-   * Pass {@code null} to clear the removal time.
+   * Pass {@code null} to clear the removal time.</p>
    *
    * <p>As an alternative, the removal time can also be calculated via
    * {@link SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder#calculatedRemovalTime()}
-   * based on the configured time to live values.
+   * based on the configured time to live values.</p>
    *
    * <p>To additionally take those historic process instances into account that are part of
    * a hierarchy, enable the flag
-   * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#hierarchical()}
+   * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#hierarchical()}</p>
    *
    * <p>To create the batch and complete the configuration chain, call
    * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#executeAsync()}.
+   * </p>
    *
-   * @since 7.11
    */
   SetRemovalTimeSelectModeForHistoricProcessInstancesBuilder setRemovalTimeToHistoricProcessInstances();
 
   /**
-   * <p>Set a removal time to historic decision instances and
+   * Set a removal time to historic decision instances and
    * all associated historic entities using a fluent builder.
    *
    * <p>Historic decision instances can be specified by passing a query to
-   * {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#byQuery(HistoricDecisionInstanceQuery)}.
+   * {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#byQuery(HistoricDecisionInstanceQuery)}.</p>
    *
    * <p>An absolute time can be specified via
    * {@link SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder#absoluteRemovalTime(Date)}.
-   * Pass {@code null} to clear the removal time.
+   * Pass {@code null} to clear the removal time.</p>
    *
    * <p>As an alternative, the removal time can also be calculated via
    * {@link SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder#calculatedRemovalTime()}
-   * based on the configured time to live values.
+   * based on the configured time to live values.</p>
    *
    * <p>To additionally take those historic decision instances into account that are part of
    * a hierarchy, enable the flag
-   * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#hierarchical()}
+   * {@link SetRemovalTimeToHistoricProcessInstancesBuilder#hierarchical()}</p>
    *
    * <p>To create the batch and complete the configuration chain, call
-   * {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#executeAsync()}.
+   * {@link SetRemovalTimeToHistoricDecisionInstancesBuilder#executeAsync()}.</p>
    *
-   * @since 7.11
    */
   SetRemovalTimeSelectModeForHistoricDecisionInstancesBuilder setRemovalTimeToHistoricDecisionInstances();
 
   /**
-   * <p>Set a removal time to historic batches and all
+   * Set a removal time to historic batches and all
    * associated historic entities using a fluent builder.
    *
    * <p>Historic batches can be specified by passing a query to
-   * {@link SetRemovalTimeToHistoricBatchesBuilder#byQuery(HistoricBatchQuery)}.
+   * {@link SetRemovalTimeToHistoricBatchesBuilder#byQuery(HistoricBatchQuery)}.</p>
    *
    * <p>An absolute time can be specified via
    * {@link SetRemovalTimeSelectModeForHistoricBatchesBuilder#absoluteRemovalTime(Date)}.
-   * Pass {@code null} to clear the removal time.
+   * Pass {@code null} to clear the removal time.</p>
    *
    * <p>As an alternative, the removal time can also be calculated via
    * {@link SetRemovalTimeSelectModeForHistoricBatchesBuilder#calculatedRemovalTime()}
-   * based on the configured time to live values.
+   * based on the configured time to live values.</p>
    *
    * <p>To create the batch and complete the configuration chain, call
-   * {@link SetRemovalTimeToHistoricBatchesBuilder#executeAsync()}.
+   * {@link SetRemovalTimeToHistoricBatchesBuilder#executeAsync()}.</p>
    *
-   * @since 7.11
    */
   SetRemovalTimeSelectModeForHistoricBatchesBuilder setRemovalTimeToHistoricBatches();
 
@@ -799,7 +805,6 @@ public interface HistoryService {
    * @param operationId of the user operation log entries that are updated
    * @param annotation that is set to the user operation log entries
    *
-   * @since 7.12
    */
   void setAnnotationForOperationLogById(String operationId, String annotation);
 
@@ -821,7 +826,6 @@ public interface HistoryService {
    *
    * @param operationId of the user operation log entries that are updated
    *
-   * @since 7.12
    */
   void clearAnnotationForOperationLogById(String operationId);
 

@@ -237,35 +237,30 @@ public interface HistoryEventProducer {
   /**
    * Creates the history event fired when a job has been <strong>created</strong>.
    *
-   * @since 7.3
    */
   HistoryEvent createHistoricJobLogCreateEvt(Job job);
 
   /**
    * Creates the history event fired when the execution of a job <strong>failed</strong>.
    *
-   * @since 7.3
    */
   HistoryEvent createHistoricJobLogFailedEvt(Job job, Throwable exception);
 
   /**
    * Creates the history event fired when the execution of a job was <strong>successful</strong>.
    *
-   * @since 7.3
    */
   HistoryEvent createHistoricJobLogSuccessfulEvt(Job job);
 
   /**
    * Creates the history event fired when the a job has been <strong>deleted</strong>.
    *
-   * @since 7.3
    */
   HistoryEvent createHistoricJobLogDeleteEvt(Job job);
 
   /**
    * Creates the history event fired when the a batch has been <strong>started</strong>.
    *
-   * @since 7.5
    */
   HistoryEvent createBatchStartEvent(Batch batch);
 
@@ -273,14 +268,12 @@ public interface HistoryEventProducer {
   /**
    * Creates the history event fired when the a batch has been <strong>completed</strong>.
    *
-   * @since 7.5
    */
   HistoryEvent createBatchEndEvent(Batch batch);
 
   /**
    * Creates the history event fired when a batch has been <strong>updated</strong>.
    *
-   * @since 7.18
    */
   HistoryEvent createBatchUpdateEvent(Batch batch);
 
@@ -301,28 +294,24 @@ public interface HistoryEventProducer {
   /**
    * Creates the history event when an external task has been <strong>created</strong>.
    *
-   * @since 7.7
    */
   HistoryEvent createHistoricExternalTaskLogCreatedEvt(ExternalTask task);
 
   /**
    * Creates the history event when the execution of an external task has <strong>failed</strong>.
    *
-   * @since 7.7
    */
   HistoryEvent createHistoricExternalTaskLogFailedEvt(ExternalTask task);
 
   /**
    * Creates the history event when the execution of an external task was <strong>successful</strong>.
    *
-   * @since 7.7
    */
   HistoryEvent createHistoricExternalTaskLogSuccessfulEvt(ExternalTask task);
 
   /**
    * Creates the history event when an external task has been <strong>deleted</strong>.
    *
-   * @since 7.7
    */
   HistoryEvent createHistoricExternalTaskLogDeletedEvt(ExternalTask task);
 

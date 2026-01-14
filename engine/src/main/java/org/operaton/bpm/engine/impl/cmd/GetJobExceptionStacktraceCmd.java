@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,19 +23,15 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Frederik Heremans
  */
-public class GetJobExceptionStacktraceCmd implements Command<String>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetJobExceptionStacktraceCmd implements Command<String> {
   private final String jobId;
 
   public GetJobExceptionStacktraceCmd(String jobId) {
     this.jobId = jobId;
   }
-
 
   @Override
   public String execute(CommandContext commandContext) {
@@ -48,7 +41,7 @@ public class GetJobExceptionStacktraceCmd implements Command<String>, Serializab
       .getJobManager()
       .findJobById(jobId);
 
-    ensureNotNull("No job found with id " + jobId, "job", job);
+    ensureNotNull("No job found with id %s".formatted(jobId), "job", job);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadJob(job);
@@ -56,6 +49,5 @@ public class GetJobExceptionStacktraceCmd implements Command<String>, Serializab
 
     return job.getExceptionStacktrace();
   }
-
 
 }

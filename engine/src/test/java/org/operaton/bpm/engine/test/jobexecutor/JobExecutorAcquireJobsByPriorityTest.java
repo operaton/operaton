@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.Deployment;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.engine.test.util.ClockTestUtil.incrementClock;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class JobExecutorAcquireJobsByPriorityTest extends AbstractJobExecutorAcquireJobsTest {
 

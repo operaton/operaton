@@ -79,8 +79,8 @@ public class SpringBeansResolverFactory implements ResolverFactory, Resolver {
         // Unfortunately, we cannot use ScopeNotActiveException directly as
         // it is only available starting with Spring 5.3, but we still support Spring 4.
         if (SCOPE_NOT_ACTIVE_EXCEPTION.equals(ex.getClass().getName())) {
-          LOG.info("Bean '" + key + "' cannot be accessed since scope is not active. Instead, null is returned. "
-              + "Full exception message: " + ex.getMessage());
+          LOG.info("Bean '%s' cannot be accessed since scope is not active. Instead, null is returned. Full exception message: %s"
+              .formatted(key, ex.getMessage()));
           return null;
 
         } else {

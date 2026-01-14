@@ -43,9 +43,13 @@ import static java.util.Collections.emptyMap;
  * PLUS helper methods. Usage is possible, if you only need BPMN Tests and
  * mandatory if you still use Operaton lower than 7.2 version.
  *
+ * <p>
  * Use it with a static import:
+ * </p>
  *
+ * <p>
  * import static org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+ * </p>
  *
  * @see org.operaton.bpm.engine.test.assertions.ProcessEngineTests
  *      for full Operaton Assertions functionality

@@ -56,9 +56,17 @@ public interface Decision extends DrgElement {
 
   // operaton extensions
 
+  /**
+   * @deprecated since 1.0, use {@link #getOperatonHistoryTimeToLiveString()} instead,
+   *             which returns the value as a String for more flexible configuration.
+   */
   @Deprecated(since = "1.0")
   Integer getOperatonHistoryTimeToLive();
 
+  /**
+   * @deprecated since 1.0, use {@link #setOperatonHistoryTimeToLiveString(String)} instead,
+   *             which accepts the value as a String for more flexible configuration.
+   */
   @Deprecated(since = "1.0")
   void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
 

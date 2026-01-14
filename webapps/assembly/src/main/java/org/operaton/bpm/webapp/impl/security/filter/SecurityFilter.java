@@ -49,7 +49,7 @@ import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
  */
 public class SecurityFilter implements Filter {
 
-  public List<SecurityFilterRule> filterRules = new ArrayList<>();
+  protected List<SecurityFilterRule> filterRules = new ArrayList<>();
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -92,11 +92,6 @@ public class SecurityFilter implements Filter {
     loadFilterRules(filterConfig, applicationPath);
   }
 
-  @Override
-  public void destroy() {
-
-  }
-
   /**
    * Iterate over a number of filter rules and match them against
    * the specified request.
@@ -120,7 +115,7 @@ public class SecurityFilter implements Filter {
       try {
         filterRules = FilterRules.load(configFileResource, applicationPath);
       } catch (Exception e) {
-        throw new RuntimeException("Exception while parsing '" + configFileName + "'", e);
+        throw new RuntimeException("Exception while parsing '%s'".formatted(configFileName), e);
       } finally {
         IoUtil.closeSilently(configFileResource);
       }

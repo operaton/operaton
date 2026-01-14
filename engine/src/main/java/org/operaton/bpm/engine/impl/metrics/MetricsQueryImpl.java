@@ -89,7 +89,9 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
    * Contains the command implementation which should be executed either
    * metric sum or select metric grouped by time interval.
    *
+   * <p>
    * Note: this enables to quit with the enum distinction
+   * </p>
    */
   protected Command<Object> callback;
 
@@ -142,7 +144,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
   @Override
   public void setMaxResults(int maxResults) {
     if (maxResults > DEFAULT_LIMIT_SELECT_INTERVAL) {
-      throw new ProcessEngineException("Metrics interval query row limit can't be set larger than " + DEFAULT_LIMIT_SELECT_INTERVAL + '.');
+      throw new ProcessEngineException("Metrics interval query row limit can't be set larger than %s.".formatted(DEFAULT_LIMIT_SELECT_INTERVAL));
     }
     this.maxResults = maxResults;
   }

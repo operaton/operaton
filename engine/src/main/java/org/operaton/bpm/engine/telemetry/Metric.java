@@ -24,12 +24,16 @@ import org.operaton.bpm.engine.ManagementService;
  * a certain action performed by the engine (e.g., start a root
  * process-instance).
  *
+ * <p>
  * This information is sent to Operaton when telemetry is enabled.
+ * </p>
  *
+ * <p>
  * When used for telemetry data collection, all metric counts reset on sending
  * the data. Retrieval through {@link ManagementService#getTelemetryData()} will
  * not reset the counter. Some metrics are used for billing purposes in
  * enterprise setups.
+ * </p>
  *
  * @see <a href=
  *      "https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton

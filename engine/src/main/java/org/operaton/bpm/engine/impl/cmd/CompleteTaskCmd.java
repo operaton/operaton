@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -35,10 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Joram Barrez
  */
-public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CompleteTaskCmd implements Command<VariableMap> {
   protected String taskId;
   protected Map<String, Object> variables;
 
@@ -65,7 +60,7 @@ public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkCompleteTask(task, commandContext);
 

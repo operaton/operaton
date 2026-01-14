@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 
 
 /**
+ * @deprecated since 1.0, this class is deprecated and will be removed in a future release.
+ * 
  * @author Tom Baeyens
  */
 @Deprecated(since = "1.0")
@@ -48,9 +50,8 @@ public class VariableDeclaration implements Serializable {
         Object value = outerScopeInstance.getVariable(sourceVariableName);
         innerScopeInstance.setVariable(destinationVariableName, value);
       } else {
-        throw new ProcessEngineException("Couldn't create variable '"
-                + destinationVariableName + "', since the source variable '"
-                + sourceVariableName + "does not exist");
+        throw new ProcessEngineException("Couldn't create variable '%s', since the source variable '%s' does not exist"
+            .formatted(destinationVariableName, sourceVariableName));
       }
     }
 
@@ -64,12 +65,13 @@ public class VariableDeclaration implements Serializable {
         Object value = outerScopeInstance.getVariable(sourceVariableName);
         innerScopeInstance.setVariable(destinationVariableName, value);
       } else {
-        throw new ProcessEngineException("Couldn't create variable '%s', since the source variable '%s' does not exist".formatted(destinationVariableName, sourceVariableName));
+        throw new ProcessEngineException("Couldn't create variable '%s', since the source variable '%s' does not exist"
+            .formatted(destinationVariableName, sourceVariableName));
       }
     }
 
     if (linkExpression!=null) {
-      Object value = sourceExpression.getValue(outerScopeInstance);
+      Object value = linkExpression.getValue(outerScopeInstance);
       innerScopeInstance.setVariable(destinationVariableName, value);
     }
 
@@ -82,7 +84,7 @@ public class VariableDeclaration implements Serializable {
         Object value = innerScopeInstance.getVariable(sourceVariableName);
         outerScopeInstance.setVariable(destinationVariableName, value);
       } else {
-        throw new ProcessEngineException("Couldn't destroy variable " + sourceVariableName + ", since it does not exist");
+        throw new ProcessEngineException("Couldn't destroy variable %s, since it does not exist".formatted(sourceVariableName));
       }
     }
 
@@ -96,12 +98,12 @@ public class VariableDeclaration implements Serializable {
         Object value = innerScopeInstance.getVariable(sourceVariableName);
         outerScopeInstance.setVariable(destinationVariableName, value);
       } else {
-        throw new ProcessEngineException("Couldn't destroy variable " + sourceVariableName + ", since it does not exist");
+        throw new ProcessEngineException("Couldn't destroy variable %s, since it does not exist".formatted(sourceVariableName));
       }
     }
 
     if (linkExpression!=null) {
-      Object value = sourceExpression.getValue(innerScopeInstance);
+      Object value = linkExpression.getValue(innerScopeInstance);
       outerScopeInstance.setVariable(destinationVariableName, value);
     }
   }
@@ -113,7 +115,7 @@ public class VariableDeclaration implements Serializable {
 
   @Override
   public String toString() {
-    return "VariableDeclaration[" + name + ":" + type + "]";
+    return "VariableDeclaration[%s:%s]".formatted(name, type);
   }
 
   public String getName() {

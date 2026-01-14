@@ -16,7 +16,12 @@
  */
 package org.operaton.bpm.engine.test.cmmn.listener;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.runtime.VariableInstance;
@@ -32,42 +37,59 @@ import static org.assertj.core.api.Assertions.assertThat;
  */
 class CaseExecutionListenerTest extends CmmnTest {
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByClass.cmmn"})
-  @Test
-  void testCreateListenerByClass() {
-    // given
+  @ParameterizedTest
+  @CsvSource({
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByClass.cmmn,create",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByScript.cmmn,create",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByClass.cmmn,enable",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByScript.cmmn,enable",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByClass.cmmn,start"
+  })
+  void testListenerByResourceAndEvent(String resource, String eventName) {
+    // deploy the resource under test
+    processEngineRule.manageDeployment(
+      repositoryService.createDeployment()
+      .addClasspathResource(resource)
+      .deploy());
 
     // when
     String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
+      .withCaseDefinitionByKey("case")
+      .create()
+      .getId();
 
     // then
     String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()
+      .getId();
 
     VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
+      .createVariableInstanceQuery()
+      .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.count()).isEqualTo(4);
 
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
+    assertThat((Boolean) query.variableName(eventName).singleResult().getValue()).isTrue();
+    assertThat(query.variableName(eventName + "EventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName(eventName + "OnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
     assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByDelegateExpression.cmmn"})
-  @Test
-  void testCreateListenerByDelegateExpression() {
-    // given
+  @ParameterizedTest
+  @CsvSource({
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByDelegateExpression.cmmn,create",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByDelegateExpression.cmmn,enable",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByDelegateExpression.cmmn,start"
+  })
+  void testListenerByDelegateExpression(String resource, String eventName) {
+    // deploy the resource under test
+    processEngineRule.manageDeployment(
+      repositoryService.createDeployment()
+        .addClasspathResource(resource)
+        .deploy());
 
     // when
     String caseInstanceId = caseService
@@ -78,29 +100,36 @@ class CaseExecutionListenerTest extends CmmnTest {
 
     // then
     String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()
+      .getId();
 
     VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
+      .createVariableInstanceQuery()
+      .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.count()).isEqualTo(5);
 
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
+    assertThat((Boolean) query.variableName(eventName).singleResult().getValue()).isTrue();
+    assertThat(query.variableName(eventName + "EventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName(eventName + "OnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
     assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByExpression.cmmn"})
-  @Test
-  void testCreateListenerByExpression() {
-    // given
+  @ParameterizedTest
+  @CsvSource({
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByExpression.cmmn,create",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByExpression.cmmn,enable",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByExpression.cmmn,start"
+  })
+  void testListenerByExpression(String resource, String eventName) {
+    // deploy the resource under test
+    processEngineRule.manageDeployment(
+      repositoryService.createDeployment()
+        .addClasspathResource(resource)
+        .deploy());
 
     // when
     String caseInstanceId = caseService
@@ -111,185 +140,22 @@ class CaseExecutionListenerTest extends CmmnTest {
 
     // then
     String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()
+      .getId();
 
     VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
+      .createVariableInstanceQuery()
+      .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.count()).isEqualTo(5);
 
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
+    assertThat((Boolean) query.variableName(eventName).singleResult().getValue()).isTrue();
+    assertThat(query.variableName(eventName + "EventCounter").singleResult().getValue()).isEqualTo(1);
+    assertThat(query.variableName(eventName + "OnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
     assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testCreateListenerByScript.cmmn"})
-  @Test
-  void testCreateListenerByScript() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(4);
-
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByClass.cmmn"})
-  @Test
-  void testEnableListenerByClass() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(4);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByDelegateExpression.cmmn"})
-  @Test
-  void testEnableListenerByDelegateExpression() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .setVariable("myListener", new MySpecialCaseExecutionListener())
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(5);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByExpression.cmmn"})
-  @Test
-  void testEnableListenerByExpression() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .setVariable("myListener", new MyCaseExecutionListener())
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(5);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testEnableListenerByScript.cmmn"})
-  @Test
-  void testEnableListenerByScript() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(4);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDisableListenerByClass.cmmn"})
@@ -587,136 +453,6 @@ class CaseExecutionListenerTest extends CmmnTest {
     assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
     assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
     assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByClass.cmmn"})
-  @Test
-  void testStartListenerByClass() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(4);
-
-    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByDelegateExpression.cmmn"})
-  @Test
-  void testStartListenerByDelegateExpression() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .setVariable("myListener", new MySpecialCaseExecutionListener())
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(5);
-
-    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByExpression.cmmn"})
-  @Test
-  void testStartListenerByExpression() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .setVariable("myListener", new MyCaseExecutionListener())
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(5);
-
-    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testStartListenerByScript.cmmn"})
-  @Test
-  void testStartListenerByScript() {
-    // given
-
-    // when
-    String caseInstanceId = caseService
-      .withCaseDefinitionByKey("case")
-      .create()
-      .getId();
-
-    // then
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(4);
-
-    assertThat((Boolean) query.variableName("start").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("startEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("startOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
 
     assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(1);
 
@@ -2094,357 +1830,84 @@ class CaseExecutionListenerTest extends CmmnTest {
 
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByClass.cmmn"})
-  @Test
-  void testAllListenerByClass() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByClass.cmmn",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByDelegateExpression.cmmn",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByExpression.cmmn",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByScript.cmmn"
+  })
+  void testAllListener(String resource) {
+    processEngineRule.manageDeployment(
+      repositoryService.createDeployment()
+        .addClasspathResource(resource)
+        .deploy()
+    );
+
     // given
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    // when
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .disable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .reenable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .manualStart();
-
-    suspend(humanTaskId);
-
-    resume(humanTaskId);
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .complete();
-
-    // then
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(25);
-
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByDelegateExpression.cmmn"})
-  @Test
-  void testAllListenerByDelegateExpression() {
-    // given
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .setVariable("myListener", new MySpecialCaseExecutionListener())
-        .create()
-        .getId();
-
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    // when
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .disable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .reenable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .manualStart();
-
-    suspend(humanTaskId);
-
-    resume(humanTaskId);
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .complete();
-
-    // then
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(26);
-
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByExpression.cmmn"})
-  @Test
-  void testAllListenerByExpression() {
-    // given
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .setVariable("myListener", new MyCaseExecutionListener())
-        .create()
-        .getId();
-
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    // when
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .disable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .reenable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .manualStart();
-
-    suspend(humanTaskId);
-
-    resume(humanTaskId);
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .complete();
-
-    // then
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(26);
-
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testAllListenerByScript.cmmn"})
-  @Test
-  void testAllListenerByScript() {
-    // given
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    String humanTaskId = caseService
-        .createCaseExecutionQuery()
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    // when
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .disable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .reenable();
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .manualStart();
-
-    suspend(humanTaskId);
-
-    resume(humanTaskId);
-
-    caseService
-      .withCaseExecution(humanTaskId)
-      .complete();
-
-    // then
-    VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
-
-    assertThat(query.count()).isEqualTo(25);
-
-    assertThat((Boolean) query.variableName("create").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("createEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("createOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("enable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("enableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("enableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("disable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("disableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("disableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("reenable").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("reenableEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("reenableOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("manualStart").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("manualStartEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("manualStartOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("suspend").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("suspendEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("suspendOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("resume").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("resumeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("resumeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat((Boolean) query.variableName("complete").singleResult().getValue()).isTrue();
-    assertThat(query.variableName("completeEventCounter").singleResult().getValue()).isEqualTo(1);
-    assertThat(query.variableName("completeOnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
-
-    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByClass.cmmn"})
-  @Test
-  void testFieldInjectionByClass() {
-    // given
-
-    // when
     String caseInstanceId = caseService
       .withCaseDefinitionByKey("case")
+      .setVariable("myListener", new MySpecialCaseExecutionListener())
       .create()
       .getId();
 
+    String humanTaskId = caseService
+      .createCaseExecutionQuery()
+      .activityId("PI_HumanTask_1")
+      .singleResult()
+      .getId();
+
+    // when
+
+    caseService
+      .withCaseExecution(humanTaskId)
+      .disable();
+
+    caseService
+      .withCaseExecution(humanTaskId)
+      .reenable();
+
+    caseService
+      .withCaseExecution(humanTaskId)
+      .manualStart();
+
+    suspend(humanTaskId);
+
+    resume(humanTaskId);
+
+    caseService
+      .withCaseExecution(humanTaskId)
+      .complete();
+
     // then
     VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
+      .createVariableInstanceQuery()
+      .caseInstanceIdIn(caseInstanceId);
 
-    assertThat(query.count()).isEqualTo(4);
+    assertThat(query.count()).isEqualTo(26);
 
-    assertThat(query.variableName("greeting").singleResult().getValue()).isEqualTo("Hello from The Case");
-    assertThat(query.variableName("helloWorld").singleResult().getValue()).isEqualTo("Hello World");
-    assertThat(query.variableName("prefix").singleResult().getValue()).isEqualTo("ope");
-    assertThat(query.variableName("suffix").singleResult().getValue()).isEqualTo("rato");
+    Stream.of("create", "enable", "disable", "reenable", "manualStart", "suspend", "resume", "complete")
+      .forEach(event -> {
+        assertThat((Boolean) query.variableName(event).singleResult().getValue()).isTrue();
+        assertThat(query.variableName(event + "EventCounter").singleResult().getValue()).isEqualTo(1);
+        assertThat(query.variableName(event + "OnCaseExecutionId").singleResult().getValue()).isEqualTo(humanTaskId);
+      });
 
+    assertThat(query.variableName("eventCounter").singleResult().getValue()).isEqualTo(8);
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByDelegateExpression.cmmn"})
-  @Test
-  void testFieldInjectionByDelegateExpression() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByClass.cmmn",
+    "org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testFieldInjectionByDelegateExpression.cmmn"
+  })
+  void testFieldInjection(String resource) {
     // given
+    processEngineRule.manageDeployment(
+      repositoryService.createDeployment()
+        .addClasspathResource(resource)
+        .deploy()
+    );
 
     // when
     String caseInstanceId = caseService
@@ -2455,8 +1918,8 @@ class CaseExecutionListenerTest extends CmmnTest {
 
     // then
     VariableInstanceQuery query = runtimeService
-        .createVariableInstanceQuery()
-        .caseInstanceIdIn(caseInstanceId);
+      .createVariableInstanceQuery()
+      .caseInstanceIdIn(caseInstanceId);
 
     assertThat(query.count()).isEqualTo(5);
 
@@ -2534,7 +1997,7 @@ class CaseExecutionListenerTest extends CmmnTest {
     } catch (Exception e) {
       // then
       String message = e.getMessage();
-      testRule.assertTextPresent("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '" + CaseExecutionListener.class.getName() + "'", message);
+      testRule.assertTextPresent("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '%s'".formatted(CaseExecutionListener.class.getName()), message);
     }
 
   }

@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -30,9 +27,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Askar Akhmerov
  */
-public class GetExternalTaskErrorDetailsCmd implements Command<String>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetExternalTaskErrorDetailsCmd implements Command<String> {
   private final String externalTaskId;
 
   public GetExternalTaskErrorDetailsCmd(String externalTaskId) {
@@ -47,7 +42,7 @@ public class GetExternalTaskErrorDetailsCmd implements Command<String>, Serializ
         .getExternalTaskManager()
         .findExternalTaskById(externalTaskId);
 
-    ensureNotNull("No external task found with id " + externalTaskId, "externalTask", externalTask);
+    ensureNotNull("No external task found with id %s".formatted(externalTaskId), "externalTask", externalTask);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadProcessInstance(externalTask.getProcessInstanceId());

@@ -56,26 +56,26 @@ public class CaseDefinitionCache extends ResourceDefinitionCache<CaseDefinitionE
 
   @Override
   protected void checkDefinitionFound(String definitionId, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no deployed case definition found with id '" + definitionId + "'",
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no deployed case definition found with id '%s'".formatted(definitionId),
       VAR_CASE_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKey(String definitionKey, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key '" + definitionKey + "'",
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key '%s'".formatted(definitionKey),
       VAR_CASE_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyAndTenantId(String definitionKey, String tenantId, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key '" + definitionKey + "' and tenant-id '" + tenantId + "'",
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key '%s' and tenant-id '%s'".formatted(definitionKey, tenantId),
       VAR_CASE_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionByKeyVersionAndTenantId(String definitionKey, Integer definitionVersion, String tenantId, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '" + definitionKey + "', version = '" + definitionVersion + "'"
-        + " and tenant-id = '" + tenantId + "'", VAR_CASE_DEFINITION, definition);
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s', version = '%s'".formatted(definitionKey, definitionVersion)
+        + " and tenant-id = '%s'".formatted(tenantId), VAR_CASE_DEFINITION, definition);
   }
 
   @Override
@@ -84,13 +84,13 @@ public class CaseDefinitionCache extends ResourceDefinitionCache<CaseDefinitionE
 
   @Override
   protected void checkInvalidDefinitionByDeploymentAndKey(String deploymentId, String definitionKey, CaseDefinitionEntity definition) {
-    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '" + definitionKey + "' in deployment = '" + deploymentId + "'",
+    ensureNotNull(CaseDefinitionNotFoundException.class, "no case definition deployed with key = '%s' in deployment = '%s'".formatted(definitionKey, deploymentId),
       VAR_CASE_DEFINITION, definition);
   }
 
   @Override
   protected void checkInvalidDefinitionWasCached(String deploymentId, String definitionId, CaseDefinitionEntity definition) {
-    ensureNotNull("deployment '" + deploymentId + "' didn't put case definition '" + definitionId + "' in the cache",
+    ensureNotNull("deployment '%s' didn't put case definition '%s' in the cache".formatted(deploymentId, definitionId),
       VAR_CACHED_CASE_DEFINITION, definition);
   }
 }

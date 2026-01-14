@@ -86,9 +86,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
     ProcessEngineConfigurationImpl configuration = ReflectUtil.createInstance(configurationClass);
 
     // set UUid generator
-    // TODO: move this to configuration and use as default?
-    ProcessEngineConfigurationImpl configurationImpl = configuration;
-    configurationImpl.setIdGenerator(new StrongUuidGenerator());
+    configuration.setIdGenerator(new StrongUuidGenerator());
 
     // set configuration values
     String name = processEngineXml.getName();
@@ -111,7 +109,7 @@ public class StartProcessEngineStep extends DeploymentOperationStep {
       ensureNotNull("Cannot find referenced job executor with name '%s'".formatted(processEngineXml.getJobAcquisitionName()), "jobExecutor", jobExecutor);
 
       // set JobExecutor on process engine
-      configurationImpl.setJobExecutor(jobExecutor);
+      configuration.setJobExecutor(jobExecutor);
     }
 
     additionalConfiguration(configuration);

@@ -21,8 +21,10 @@ import org.operaton.bpm.engine.variable.value.FileValue;
 /**
  * File value is not available unless it is loaded actively
  *
+ * <p>
  * Initially {@link #getValue()} returns {@code null}. Once {@link #load()} has been called
  * {@link #getValue()} holds the respective file value.
+ * </p>
  *
  * @author Tassilo Weidner
  */

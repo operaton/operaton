@@ -30,6 +30,8 @@ jobs:
   prepare:
     name: Prepare
     runs-on: ubuntu-slim
+    permissions:
+      contents: read
     outputs:
       next_version: ${{steps.compute-next-version.outputs.next_version}}
     steps:
@@ -97,6 +99,8 @@ jobs:
     needs:
       - prepare
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     outputs:
       version: ${{steps.version.outputs.version}}
       database_version: ${{steps.version.outputs.database_version}}
@@ -178,6 +182,8 @@ jobs:
     needs:
       - release_build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Check out the code
         uses: actions/checkout@v6
@@ -225,7 +231,7 @@ jobs:
 
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@e08919a3b1fb83a78393dfb775a9c37f17d8eea6 #v6.0.1
+        uses: mikepenz/action-junit-report@a294a61c909bd8a4b563024a2faa28897fd53ebc #v6.1.0
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
@@ -252,11 +258,30 @@ jobs:
       - release
       - release_build
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
+      - name: Notify Docker Repository
+        if: ${{github.event.inputs.dry_run == 'false' }}
+        env:
+          DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -d '{"ref":"main","inputs":{"version": "${{ needs.release_build.outputs.version}}","snapshot": "false"}}' \
+            https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
+          if [ "$response" -ne 204 ]; then
+            echo "Failed to notify Docker repository. HTTP response code: $response"
+            exit 1
+          fi
+
       - name: Check out the code
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          clean: true
 
       - name: Delete snapshot release
         if: ${{github.event.inputs.dry_run == 'false' }}
@@ -288,19 +313,4 @@ jobs:
         with:
           message: "[releng] Bump version to ${{steps.set-next-version.outputs.next_version}}"
           pull: '--rebase --autostash'
-
-      - name: Notify Docker Repository
-        if: ${{github.event.inputs.dry_run == 'false' }}
-        env:
-          DOCKER_ACTION_DISPATCH_TOKEN: ${{ secrets.DOCKER_ACTION_DISPATCH_TOKEN }}
-        run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
-            -H "Authorization: Bearer $DOCKER_ACTION_DISPATCH_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"ref":"main","inputs":{"version": "${{ needs.release_build.outputs.version}}","snapshot": "false"}}' \
-            https://api.github.com/repos/operaton/operaton-docker/actions/workflows/build-test-and-publish.yml/dispatches)
-          if [ "$response" -ne 204 ]; then
-            echo "Failed to notify Docker repository. HTTP response code: $response"
-            exit 1
-          fi
+        continue-on-error: true

@@ -53,22 +53,30 @@ public interface IdentityService {
    * <li> {@link #saveUser(User)} </li>
    * <li> {@link #deleteUser(String)} </li>
    *
+   * <p>
    * <li> {@link #newGroup(String)} </li>
    * <li> {@link #saveGroup(Group)} </li>
    * <li> {@link #deleteGroup(String)} </li>
+   * </p>
    *
+   * <p>
    * <li> {@link #newTenant(String)} </li>
    * <li> {@link #saveTenant(Tenant)} </li>
    * <li> {@link #deleteTenant(String)} </li>
+   * </p>
    *
+   * <p>
    * <li> {@link #createMembership(String, String)} </li>
    * <li> {@link #deleteMembership(String, String)} </li>
+   * </p>
    *
+   * <p>
    * <li> {@link #createTenantUserMembership(String, String)} </li>
    * <li> {@link #createTenantGroupMembership(String, String)} </li>
    * <li> {@link #deleteTenantUserMembership(String, String)} </li>
    * <li> {@link #deleteTenantGroupMembership(String, String)} </li>
    * </ul>
+   * </p>
    *
    * <p>If these methods are invoked on a read-only identity service implementation,
    * the invocation will throw an {@link UnsupportedOperationException}.</p>
@@ -408,8 +416,10 @@ public interface IdentityService {
    * thread will have access to this authentication. Should be followed by
    * a call to {@link #clearAuthentication()} once the interaction is terminated.
    *
-   *  @param authenticatedUserId the id of the current user.
+   * <p>
+   *  @param userId the id of the current user.
    *  @param groups the groups of the current user.
+   * </p>
    */
   void setAuthentication(String userId, List<String> groups);
 
@@ -466,19 +476,39 @@ public interface IdentityService {
   /** Delete an entry of the generic extensibility key-value pairs associated with a user */
   void deleteUserInfo(String userId, String key);
 
-  /** Store account information for a remote system */
+  /**
+   * Store account information for a remote system
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #setUserInfo(String, String, String)} instead for storing user-related information.
+   */
   @Deprecated(since = "1.0")
   void setUserAccount(String userId, String userPassword, String accountName, String accountUsername, String accountPassword, Map<String, String> accountDetails);
 
-  /** Get account names associated with the given user */
+  /**
+   * Get account names associated with the given user
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #getUserInfoKeys(String)} instead for retrieving user-related information keys.
+   */
   @Deprecated(since = "1.0")
   List<String> getUserAccountNames(String userId);
 
-  /** Get account information associated with a user */
+  /**
+   * Get account information associated with a user
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #getUserInfo(String, String)} instead for retrieving user-related information.
+   */
   @Deprecated(since = "1.0")
   Account getUserAccount(String userId, String userPassword, String accountName);
 
-  /** Delete an entry of the generic extensibility key-value pairs associated with a user */
+  /**
+   * Delete an entry of the generic extensibility key-value pairs associated with a user
+   * 
+   * @deprecated since 1.0, the user account functionality is deprecated and will be removed in a future release.
+   *             Use {@link #deleteUserInfo(String, String)} instead for deleting user-related information.
+   */
   @Deprecated(since = "1.0")
   void deleteUserAccount(String userId, String accountName);
 

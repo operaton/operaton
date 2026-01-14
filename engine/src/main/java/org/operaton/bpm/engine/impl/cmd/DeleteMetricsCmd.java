@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,10 +30,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
  * @author Daniel Meyer
  *
  */
-public class DeleteMetricsCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class DeleteMetricsCmd implements Command<Void> {
   protected Date timestamp;
   protected String reporter;
 

@@ -124,7 +124,7 @@ public class BatchBuilder {
   protected BatchEntity configure(BatchEntity batch) {
     ProcessEngineConfigurationImpl engineConfig = commandContext.getProcessEngineConfiguration();
 
-    Map<String, JobHandler> jobHandlers = engineConfig.getJobHandlers();
+    Map<String, JobHandler<?>> jobHandlers = engineConfig.getJobHandlers();
     BatchJobHandler jobHandler = (BatchJobHandler) jobHandlers.get(type);
 
     String typeName = jobHandler.getType();

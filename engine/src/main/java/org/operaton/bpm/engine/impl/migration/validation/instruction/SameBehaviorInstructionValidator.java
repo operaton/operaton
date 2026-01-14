@@ -23,24 +23,15 @@ import org.operaton.bpm.engine.impl.bpmn.behavior.CaseCallActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.EventSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.behavior.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
-import org.operaton.commons.utils.CollectionUtil;
 
 public class SameBehaviorInstructionValidator implements MigrationInstructionValidator {
 
-  public static final List<Set<Class<?>>> EQUIVALENT_BEHAVIORS =
-      new ArrayList<>();
+  private static final List<Set<Class<?>>> EQUIVALENT_BEHAVIORS = List.of(
+    Set.of(CallActivityBehavior.class, CaseCallActivityBehavior.class),
+    Set.of(SubProcessActivityBehavior.class, EventSubProcessActivityBehavior.class)
+  );
 
-  static {
-    EQUIVALENT_BEHAVIORS.add(CollectionUtil.<Class<?>>asHashSet(
-      CallActivityBehavior.class, CaseCallActivityBehavior.class
-    ));
-
-    EQUIVALENT_BEHAVIORS.add(CollectionUtil.<Class<?>>asHashSet(
-      SubProcessActivityBehavior.class, EventSubProcessActivityBehavior.class
-    ));
-  }
-
-  protected Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
+  private Map<Class<?>, Set<Class<?>>> equivalentBehaviors = new HashMap<>();
 
   public SameBehaviorInstructionValidator() {
     this(EQUIVALENT_BEHAVIORS);
@@ -63,8 +54,7 @@ public class SameBehaviorInstructionValidator implements MigrationInstructionVal
     Class<?> targetBehaviorClass = targetActivity.getActivityBehavior().getClass();
 
     if (!sameBehavior(sourceBehaviorClass, targetBehaviorClass)) {
-      report.addFailure("Activities have incompatible types "
-          + "(" + sourceBehaviorClass.getSimpleName() + " is not compatible with " + targetBehaviorClass.getSimpleName() + ")");
+      report.addFailure("Activities have incompatible types (%s is not compatible with %s)".formatted(sourceBehaviorClass.getSimpleName(), targetBehaviorClass.getSimpleName()));
     }
   }
 

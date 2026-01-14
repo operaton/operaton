@@ -38,7 +38,9 @@ public interface PvmActivity extends PvmScope {
    * The inner behavior of an activity. The inner behavior is the logic which is executed after
    * the {@link ExecutionListener#EVENTNAME_START start} listeners have been executed.
    *
+   * <p>
    * In case the activity {@link #isScope() is scope}, a new execution will be created
+   * </p>
    *
    * @return the inner behavior of the activity
    */

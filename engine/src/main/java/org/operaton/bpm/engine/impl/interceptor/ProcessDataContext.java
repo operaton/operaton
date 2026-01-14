@@ -33,11 +33,14 @@ import org.operaton.commons.logging.MdcAccess;
 /**
  * Holds the contextual process data.<br>
  *
+ * <p>
  * New context properties are always part of a section that can be started by
  * {@link #pushSection(ExecutionEntity)}. The section keeps track of all pushed
  * properties. Those can easily be cleared by popping the section with
  * {@link #popSection()} afterwards, e.g. after the successful execution.<br>
+ * </p>
  *
+ * <p>
  * A property can be pushed to the logging context (MDC) if there is a configured
  * non-empty context name for it in the {@link ProcessEngineConfigurationImpl
  * process engine configuration}. The following configuration options are
@@ -50,6 +53,7 @@ import org.operaton.commons.logging.MdcAccess;
  * <li>loggingContextProcessInstanceId - the context property for the instance id</li>
  * <li>loggingContextTenantId - the context property for the tenant id</li>
  * </ul>
+ * </p>
  */
 public class ProcessDataContext {
 
@@ -164,6 +168,7 @@ public class ProcessDataContext {
   /**
    * Start a new section that keeps track of the pushed properties.
    *
+   * <p>
    * If logging context properties are defined, the MDC is updated as well. This
    * also includes clearing the MDC for the first section that is pushed for the
    * logging context so that only the current properties will be present in the
@@ -171,6 +176,7 @@ public class ProcessDataContext {
    * logging context needs to be reset in the MDC when this one is closed. This
    * can be achieved by using {@link #updateMdc(String)} with the previous
    * logging context.
+   * </p>
    *
    * @param execution
    *          the execution to retrieve the context data from

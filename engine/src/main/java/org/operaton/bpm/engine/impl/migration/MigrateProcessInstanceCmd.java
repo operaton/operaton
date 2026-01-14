@@ -167,7 +167,7 @@ public class MigrateProcessInstanceCmd extends AbstractMigrationCmd implements C
     return null;
   }
 
-  protected <T> void executeInContext(final Runnable runnable,
+  protected void executeInContext(final Runnable runnable,
                                       ProcessDefinitionEntity contextDefinition) {
     ProcessApplicationContextUtil.doContextSwitch(runnable, contextDefinition);
   }

@@ -64,7 +64,7 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
    * Copies the argument; following modifications are not applied to the original model instance
    */
   public static ModifiableBpmnModelInstance modify(BpmnModelInstance modelInstance) {
-    return new ModifiableBpmnModelInstance(modelInstance.clone());
+    return new ModifiableBpmnModelInstance(modelInstance.copy());
   }
 
   /**
@@ -86,7 +86,12 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
 
   @Override
   public BpmnModelInstance clone() {
-    return modelInstance.clone();
+    return copy();
+  }
+
+  @Override
+  public BpmnModelInstance copy() {
+    return modelInstance.copy();
   }
 
   @Override
@@ -144,42 +149,52 @@ public class ModifiableBpmnModelInstance implements BpmnModelInstance {
     return modelInstance.getModelElementsByType(referencingClass);
   }
 
+  /**
+   * @deprecated use {@link #getBuilderForElementById(String)} instead
+   */
   @SuppressWarnings("unchecked")
+  @Deprecated(since = "1.1", forRemoval = true)
   public <T extends AbstractBaseElementBuilder> T getBuilderForElementById(String id, Class<T> builderClass) {
     BaseElement modelElementById = modelInstance.getModelElementById(id);
     return (T) modelElementById.builder();
   }
 
+  @SuppressWarnings("unchecked")
+  public <T extends AbstractBaseElementBuilder> T getBuilderForElementById(String id) {
+    BaseElement modelElementById = modelInstance.getModelElementById(id);
+    return (T) modelElementById.builder();
+  }
+
   public AbstractActivityBuilder activityBuilder(String activityId) {
-    return getBuilderForElementById(activityId, AbstractActivityBuilder.class);
+    return getBuilderForElementById(activityId);
   }
 
   public AbstractFlowNodeBuilder flowNodeBuilder(String flowNodeId) {
-    return getBuilderForElementById(flowNodeId, AbstractFlowNodeBuilder.class);
+    return getBuilderForElementById(flowNodeId);
   }
 
   public UserTaskBuilder userTaskBuilder(String userTaskId) {
-    return getBuilderForElementById(userTaskId, UserTaskBuilder.class);
+    return getBuilderForElementById(userTaskId);
   }
 
   public ServiceTaskBuilder serviceTaskBuilder(String serviceTaskId) {
-    return getBuilderForElementById(serviceTaskId, ServiceTaskBuilder.class);
+    return getBuilderForElementById(serviceTaskId);
   }
 
   public CallActivityBuilder callActivityBuilder(String callActivityId) {
-    return getBuilderForElementById(callActivityId, CallActivityBuilder.class);
+    return getBuilderForElementById(callActivityId);
   }
 
   public IntermediateCatchEventBuilder intermediateCatchEventBuilder(String eventId) {
-    return getBuilderForElementById(eventId, IntermediateCatchEventBuilder.class);
+    return getBuilderForElementById(eventId);
   }
 
   public StartEventBuilder startEventBuilder(String eventId) {
-    return getBuilderForElementById(eventId, StartEventBuilder.class);
+    return getBuilderForElementById(eventId);
   }
 
   public EndEventBuilder endEventBuilder(String eventId) {
-    return getBuilderForElementById(eventId, EndEventBuilder.class);
+    return getBuilderForElementById(eventId);
   }
 
   public ModifiableBpmnModelInstance changeElementId(String oldId, String newId) {

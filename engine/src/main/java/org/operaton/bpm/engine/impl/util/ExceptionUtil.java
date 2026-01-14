@@ -74,7 +74,9 @@ public final class ExceptionUtil {
    * create ByteArrayEntity with specified name and payload and make sure it's
    * persisted
    *
+   * <p>
    * used in Jobs and ExternalTasks
+   * </p>
    *
    * @param name - type\source of the exception
    * @param byteArray - payload of the exception

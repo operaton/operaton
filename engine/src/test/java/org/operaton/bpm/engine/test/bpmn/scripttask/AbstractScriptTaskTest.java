@@ -83,7 +83,7 @@ public abstract class AbstractScriptTaskTest {
     try {
       return Path.of(getClass().getResource(classPathResource).toURI()).toString().replace('\\', '/');
     } catch (Exception e) {
-      fail("Cannot read path of '" + classPathResource + "': " + e.getMessage());
+      fail("Cannot read path of '%s': %s".formatted(classPathResource, e.getMessage()));
       return null;
     }
   }

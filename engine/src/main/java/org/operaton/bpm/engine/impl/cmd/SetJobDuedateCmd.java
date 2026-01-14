@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Date;
 
@@ -30,22 +28,17 @@ import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TimerEntity;
 
-
 /**
  * @author Kristin Polenz
  */
-public class SetJobDuedateCmd implements Command<Void>, Serializable {
-
-  @Serial
-  private static final long serialVersionUID = 1L;
-
+public class SetJobDuedateCmd implements Command<Void> {
   private final String jobId;
   private final Date newDuedate;
   private final boolean cascade;
 
   public SetJobDuedateCmd(String jobId, Date newDuedate, boolean cascade) {
     if (jobId == null || jobId.isEmpty()) {
-      throw new ProcessEngineException("The job id is mandatory, but '" + jobId + "' has been provided.");
+      throw new ProcessEngineException("The job id is mandatory, but '%s' has been provided.".formatted(jobId));
     }
     this.jobId = jobId;
     this.newDuedate = newDuedate;
@@ -75,7 +68,7 @@ public class SetJobDuedateCmd implements Command<Void>, Serializable {
 
       job.setDuedate(newDuedate);
     } else {
-      throw new ProcessEngineException("No job found with id '" + jobId + "'.");
+      throw new ProcessEngineException("No job found with id '%s'.".formatted(jobId));
     }
     return null;
   }

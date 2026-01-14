@@ -20,10 +20,14 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.IdentityService;
@@ -47,6 +51,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 /**
  * @author Frederik Heremans
@@ -347,49 +352,76 @@ class ExpressionManagerTest {
    * The following method expression tests are inspired by the OverloadedMethodTest from Eclipse Expressly:
    * https://github.com/eclipse-ee4j/expressly.
    */
-  @Test
-  void shouldInvokeMethodWithStringArg() {
+  @ParameterizedTest(name = "{0}")
+  @MethodSource("evaluateExpression_args")
+  void evaluateExpression(String name, String expression, Object expectedOutput) {
     // given
-    String expression = "myBean.myStringMethod('foo')";
-    String expectedOutput = "foo";
+    if (expression.contains("intVal")) {
+      Mocks.register("intVal", 12345678);
+    }
     // when & then
     assertMethodExpressionResult(expression, expectedOutput);
   }
 
-  @Test
-  void shouldInvokeMethodWithNullStringArg() {
-    // given
-    String expression = "myBean.myStringMethod(execution.getVariable('foo'))";
-    String expectedOutput = "";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldInvokeMethodWithNullPrimitiveArg() {
-    // given
-    String expression = "myBean.myIntMethod(execution.getVariable('foo'))";
-    int expectedOutput = 0;
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldInvokeMethodWithNullObjectArg() {
-    // given
-    String expression = "myBean.myObjectMethod(execution.getVariable('foo'))";
-    Object expectedOutput = null;
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithNoArg() {
-    // given
-    String expression = "myBean.methodWithNoArg()";
-    String expectedOutput = "methodWithNoArg";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
+  static Stream<Arguments> evaluateExpression_args () {
+    return Stream.of(
+      arguments("invoke method with String arg",
+        "myBean.myStringMethod('foo')", "foo"),
+      arguments("invoke method with null String arg",
+        "myBean.myStringMethod(execution.getVariable('foo'))", ""),
+      arguments("invoke method with null primitive arg",
+        "myBean.myIntMethod(execution.getVariable('foo'))", 0),
+      arguments("invoke method with null Object arg",
+        "myBean.myObjectMethod(execution.getVariable('foo'))", null),
+      arguments("resolve method expression with no arg",
+        "myBean.methodWithNoArg()", "methodWithNoArg"),
+      arguments("resolve method expression with overloaded single arg - 1",
+        "myBean.methodWithSingleArg(i1)", "I1"),
+      arguments("resolve method expression with overloaded single arg - 2",
+        "myBean.methodWithSingleArg(i2)", "I2Impl"),
+      arguments("resolve method expression with overloaded single arg - 3",
+        "myBean.methodWithSingleArg(i12)", "I1AndI2Impl"),
+      arguments("resolve method expression with overloaded double args - 1",
+        "myBean.methodWithDoubleArgs(i1, i2)", "I1Impl, I2"),
+      arguments("resolve method expression with overloaded double args - 2",
+        "myBean.methodWithDoubleArgs(i12, i2)", "I1, I2"),
+      arguments("resolve method expression with overloaded double args - 3",
+        "myBean.methodWithDoubleArgs(i12, i12)", "I1AndI2Impl, I1AndI2Impl"),
+      arguments("resolve method expression with overloaded double args - 4",
+        "myBean.methodWithDoubleArgs(i12s, i12)", "I1AndI2Impl, I1AndI2Impl"),
+      arguments("resolve method expression with overloaded double args - 5",
+        "myBean.methodWithDoubleArgs(i12s, i12s)", "I1AndI2Impl, I1AndI2Impl"),
+      arguments("resolve method expression with ambiguous args - 1",
+        "myBean.methodWithAmbiguousArgs(i12, i2)", "I1AndI2Impl, I2"),
+      arguments("resolve method expression with ambiguous args - 2",
+        "myBean.methodWithAmbiguousArgs(i1, i12)", "I1, I1AndI2Impl"),
+      arguments("resolve method expression with coercible args - 1",
+        "myBean.methodWithCoercibleArgs('foo', 'bar')", "String, String"),
+      arguments("resolve method expression with coercible args - 2",
+        "myBean.methodWithCoercibleArgs(i1, i12)", "String, String"),
+      arguments("resolve method expression with coercible args - 3",
+        "myBean.methodWithCoercibleArgs2(i1, 12345678)", "String, String"),
+      arguments("resolve method expression with coercible args - 4",
+        "myBean.methodWithCoercibleArgs2(i1, intVal)", "String, String"),
+      arguments("resolve method expression with coercible args - 5",
+        "myBean.methodWithCoercibleArgs2(12345678, 12345678)", "Integer, Integer"),
+      arguments("resolve method expression with coercible args - 6",
+        "myBean.methodWithCoercibleArgs2(intVal, intVal)", "Integer, Integer"),
+      arguments("resolve method expression with var args - 1",
+        "myBean.methodWithVarArgs(i1)", "I1, I1..."),
+      arguments("resolve method expression with var args - 2",
+        "myBean.methodWithVarArgs(i1, i1)", "I1, I1..."),
+      arguments("resolve method expression with var args - 3",
+        "myBean.methodWithVarArgs(i12, i1, i12)", "I1, I1..."),
+      arguments("resolve method expression with var args - 4",
+        "myBean.methodWithVarArgs2(i1)", "I1, I1AndI2Impl..."),
+      arguments("resolve method expression with var args - 5",
+        "myBean.methodWithVarArgs2(i12)", "I1, I1AndI2Impl..."),
+      arguments("resolve method expression with var args - 6",
+        "myBean.methodWithVarArgs2(i1, i1)", "I1, I1..."),
+      arguments("resolve method expression with var args - 7",
+        "myBean.methodWithVarArgs2(i1, i12)", "I1, I1AndI2Impl...")
+    );
   }
 
   @Test
@@ -401,225 +433,6 @@ class ExpressionManagerTest {
     // then
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Unknown method");
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedSingleArg_1() {
-    // given
-    String expression = "myBean.methodWithSingleArg(i1)";
-    String expectedOutput = "I1";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedSingleArg_2() {
-    // given
-    String expression = "myBean.methodWithSingleArg(i2)";
-    String expectedOutput = "I2Impl";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedSingleArg_3() {
-    // given
-    String expression = "myBean.methodWithSingleArg(i12)";
-    String expectedOutput = "I1AndI2Impl";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_1() {
-    // given
-    String expression = "myBean.methodWithDoubleArgs(i1, i2)";
-    String expectedOutput = "I1Impl, I2";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_2() {
-    // given
-    String expression = "myBean.methodWithDoubleArgs(i12, i2)";
-    String expectedOutput = "I1, I2";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_3() {
-    // given
-    String expression = "myBean.methodWithDoubleArgs(i12, i12)";
-    String expectedOutput = "I1AndI2Impl, I1AndI2Impl";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_4() {
-    // given
-    String expression = "myBean.methodWithDoubleArgs(i12s, i12)";
-    String expectedOutput = "I1AndI2Impl, I1AndI2Impl";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithOverloadedDoubleArgs_5() {
-    // given
-    String expression = "myBean.methodWithDoubleArgs(i12s, i12s)";
-    String expectedOutput = "I1AndI2Impl, I1AndI2Impl";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithAmbiguousArgs_1() {
-    // given
-    String expression = "myBean.methodWithAmbiguousArgs(i12, i2)";
-    String expectedOutput = "I1AndI2Impl, I2";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithAmbiguousArgs_2() {
-    // given
-    String expression = "myBean.methodWithAmbiguousArgs(i1, i12)";
-    String expectedOutput = "I1, I1AndI2Impl";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldFailResolveMethodExpressionWithAmbiguousArgs() {
-    // given
-    String expression = "myBean.methodWithAmbiguousArgs(i12, i12)";
-    assertThatThrownBy(() -> assertMethodExpressionResult(expression, null))
-    // then
-      .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Unknown method");
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithCoercibleArgs_1() {
-    // given
-    String expression = "myBean.methodWithCoercibleArgs('foo', 'bar')";
-    String expectedOutput = "String, String";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithCoercibleArgs_2() {
-    // given
-    String expression = "myBean.methodWithCoercibleArgs(i1, i12)";
-    String expectedOutput = "String, String";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithCoercibleArgs_3() {
-    // given
-    String expression = "myBean.methodWithCoercibleArgs2(i1, 12345678)";
-    String expectedOutput = "String, String";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithCoercibleArgs_4() {
-    // given
-    String expression = "myBean.methodWithCoercibleArgs2(i1, intVal)";
-    String expectedOutput = "String, String";
-    Mocks.register("intVal", 12345678);
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithCoercibleArgs_5() {
-    // given
-    String expression = "myBean.methodWithCoercibleArgs2(12345678, 12345678)";
-    String expectedOutput = "Integer, Integer";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithCoercibleArgs_6() {
-    // given
-    String expression = "myBean.methodWithCoercibleArgs2(intVal, intVal)";
-    String expectedOutput = "Integer, Integer";
-    Mocks.register("intVal", 12345678);
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_1() {
-    // given
-    String expression = "myBean.methodWithVarArgs(i1)";
-    String expectedOutput = "I1, I1...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_2() {
-    // given
-    String expression = "myBean.methodWithVarArgs(i1, i1)";
-    String expectedOutput = "I1, I1...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_3() {
-    // given
-    String expression = "myBean.methodWithVarArgs(i12, i1, i12)";
-    String expectedOutput = "I1, I1...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_4() {
-    // given
-    String expression = "myBean.methodWithVarArgs2(i1)";
-    String expectedOutput = "I1, I1AndI2Impl...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_5() {
-    // given
-    String expression = "myBean.methodWithVarArgs2(i12)";
-    String expectedOutput = "I1, I1AndI2Impl...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_6() {
-    // given
-    String expression = "myBean.methodWithVarArgs2(i1, i1)";
-    String expectedOutput = "I1, I1...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
-  }
-
-  @Test
-  void shouldResolveMethodExpressionWithVarArgs_7() {
-    // given
-    String expression = "myBean.methodWithVarArgs2(i1, i12)";
-    String expectedOutput = "I1, I1AndI2Impl...";
-    // when & then
-    assertMethodExpressionResult(expression, expectedOutput);
   }
 
   protected void assertMethodExpressionResult(String expression, Object result) {
@@ -651,6 +464,7 @@ class ExpressionManagerTest {
     assertThat(output.getValue()).isEqualTo(result);
   }
 
+  @SuppressWarnings("unused")
   public static class MyBean {
 
     public String methodWithNoArg() {

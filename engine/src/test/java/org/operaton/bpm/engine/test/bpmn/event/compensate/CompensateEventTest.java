@@ -58,12 +58,12 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer
@@ -1219,7 +1219,7 @@ class CompensateEventTest {
     List<Task> tasks = taskService.createTaskQuery().taskName(taskName).list();
 
     assertThat(times)
-      .as("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times)
+      .as("Actual there are %d open tasks with name '%s'. Expected at least %d".formatted(tasks.size(), taskName, times))
       .isLessThanOrEqualTo(tasks.size());
 
     Iterator<Task> taskIterator = tasks.iterator();
@@ -1231,7 +1231,7 @@ class CompensateEventTest {
 
   private void completeTaskWithVariable(String taskName, String variable, Object value) {
     Task task = taskService.createTaskQuery().taskName(taskName).singleResult();
-    assertThat(task).as("No open task with name '" + taskName + "'").isNotNull();
+    assertThat(task).as("No open task with name '%s'".formatted(taskName)).isNotNull();
 
     Map<String, Object> variables = new HashMap<>();
     if (variable != null) {

@@ -56,7 +56,7 @@ class ScriptTaskNashornTest extends AbstractScriptTaskTest {
         // AND
         // it should override the visibility of the execution variable
       + "if(foo != 'b') {"
-      + "  throw 'Script variable must override the visibiltity of the execution variable.';"
+      + "  throw 'Script variable must override the visibility of the execution variable.';"
       + "}"
 
     );
@@ -85,7 +85,7 @@ class ScriptTaskNashornTest extends AbstractScriptTaskTest {
       + "};"
 
         // THEN
-        // i can call the function
+        // I can call the function
       + "var result = sum(1,2);"
 
       + "execution.setVariable('foo', result);"

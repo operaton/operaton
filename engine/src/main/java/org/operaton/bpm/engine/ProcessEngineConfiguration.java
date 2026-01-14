@@ -420,8 +420,6 @@ public abstract class ProcessEngineConfiguration {
    */
   protected boolean skipOutputMappingOnCanceledActivities;
 
-  /** @deprecated Use one of the static createXxxx methods instead */
-  @Deprecated(forRemoval = true, since = "1.0")
   protected ProcessEngineConfiguration() {
   }
 
@@ -462,12 +460,6 @@ public abstract class ProcessEngineConfiguration {
   public static ProcessEngineConfiguration createStandaloneInMemProcessEngineConfiguration() {
     return new StandaloneInMemProcessEngineConfiguration();
   }
-
-// TODO add later when we have test coverage for this
-//  public static ProcessEngineConfiguration createJtaProcessEngineConfiguration() {
-//    return new JtaProcessEngineConfiguration();
-//  }
-
 
   // getters and setters //////////////////////////////////////////////////////
 

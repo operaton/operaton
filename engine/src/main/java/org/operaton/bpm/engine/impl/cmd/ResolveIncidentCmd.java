@@ -47,18 +47,18 @@ public class ResolveIncidentCmd implements Command<Void> {
   public Void execute(CommandContext commandContext) {
     final Incident incident = commandContext.getIncidentManager().findIncidentById(incidentId);
 
-    EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '" + incidentId + "'",
+    EnsureUtil.ensureNotNull(NotFoundException.class, "Cannot find an incident with id '%s'".formatted(incidentId),
         "incident", incident);
 
     if ("failedJob".equals(incident.getIncidentType()) || "failedExternalTask".equals(incident.getIncidentType())) {
-      throw new BadUserRequestException("Cannot resolve an incident of type " + incident.getIncidentType());
+      throw new BadUserRequestException("Cannot resolve an incident of type %s".formatted(incident.getIncidentType()));
     }
 
     EnsureUtil.ensureNotNull(BadUserRequestException.class, "", "executionId", incident.getExecutionId());
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(incident.getExecutionId());
 
     EnsureUtil.ensureNotNull(BadUserRequestException.class,
-        "Cannot find an execution for an incident with id '" + incidentId + "'", "execution", execution);
+        "Cannot find an execution for an incident with id '%s'".formatted(incidentId), "execution", execution);
 
     for (CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateProcessInstance(execution);

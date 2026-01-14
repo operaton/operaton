@@ -67,7 +67,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     LegacyBehavior.repairMultiInstanceAsyncJob(execution);
 
     PvmAtomicOperation atomicOperation = findMatchingAtomicOperation(configuration.getAtomicOperation());
-    ensureNotNull("Cannot process job with configuration " + configuration, "atomicOperation", atomicOperation);
+    ensureNotNull("Cannot process job with configuration %s".formatted(configuration), "atomicOperation", atomicOperation);
 
     // reset transition id.
     String transitionId = configuration.getTransitionId();
@@ -118,7 +118,7 @@ public class AsyncContinuationJobHandler implements JobHandler<AsyncContinuation
     if (jobConfiguration != null ) {
       String[] configParts = jobConfiguration.split("\\$");
       if (configParts.length > 2) {
-        throw new ProcessEngineException("Illegal async continuation job handler configuration: '" + jobConfiguration + "': expecting one part or two parts separated by '$'.");
+        throw new ProcessEngineException("Illegal async continuation job handler configuration: '%s': expecting one part or two parts separated by '$'.".formatted(jobConfiguration));
       }
       configuration[0] = configParts[0];
       if (configParts.length == 2) {

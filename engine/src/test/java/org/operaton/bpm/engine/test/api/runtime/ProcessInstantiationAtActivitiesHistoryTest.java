@@ -180,7 +180,6 @@ class ProcessInstantiationAtActivitiesHistoryTest {
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isNotNull();
-    // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isNull();
     assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
@@ -214,7 +213,6 @@ class ProcessInstantiationAtActivitiesHistoryTest {
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isNotNull();
-    // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isNull();
     assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");
@@ -249,7 +247,6 @@ class ProcessInstantiationAtActivitiesHistoryTest {
         .variableInstanceId(historicVariable.getId()).singleResult();
     assertThat(historicDetail.getProcessInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isNotNull();
-    // TODO: fix if this is not ok due to CAM-3886
     assertThat(historicDetail.getActivityInstanceId()).isEqualTo(instance.getId());
     assertThat(historicDetail).isInstanceOf(HistoricVariableUpdate.class);
     assertThat(((HistoricVariableUpdate) historicDetail).getVariableName()).isEqualTo("aVar");

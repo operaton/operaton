@@ -1491,8 +1491,6 @@ public class BpmnParse extends Parse {
 
   public void validateExclusiveGateway(ActivityImpl activity) {
     if (activity.getOutgoingTransitions().isEmpty()) {
-      // TODO: double check if this is valid (I think in Activiti yes, since we
-      // need start events we will need an end event as well)
       addError("Exclusive Gateway '%s' has no outgoing sequence flows.".formatted(activity.getId()), null, activity.getId());
     } else if (activity.getOutgoingTransitions().size() == 1) {
       PvmTransition flow = activity.getOutgoingTransitions().get(0);

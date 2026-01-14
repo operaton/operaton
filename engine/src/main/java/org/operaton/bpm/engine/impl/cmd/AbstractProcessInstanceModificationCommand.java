@@ -163,8 +163,6 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
     Set<String> activityInstanceExecutions = new HashSet<>(Arrays.asList(activityInstance.getExecutionIds()));
 
-    // TODO: this is a hack around the activity instance tree
-    // remove with fix of CAM-3574
     for (String activityInstanceExecutionId : activityInstance.getExecutionIds()) {
       ExecutionEntity execution = Context.getCommandContext()
           .getExecutionManager()

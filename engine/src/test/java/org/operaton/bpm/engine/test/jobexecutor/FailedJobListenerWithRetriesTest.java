@@ -28,6 +28,7 @@ import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.engine.OptimisticLockingException;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.DefaultJobRetryCmd;
@@ -94,7 +95,8 @@ public class FailedJobListenerWithRetriesTest {
       try {
         lockTheJob(job.getId());
         engineRule.getManagementService().executeJob(job.getId());
-      } catch (Exception ex) {
+      } catch (ProcessEngineException ignored) {
+        // expected exception
       }
       job = getJob();
     }

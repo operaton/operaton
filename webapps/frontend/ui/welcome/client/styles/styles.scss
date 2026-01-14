@@ -1,11 +1,12 @@
+$primary:                      #e66e2e;
 @import "./_app-variables";
-@import "~ui/common/styles/cam-webapps-common.less";
+@import "~ui/common/styles/cam-webapps-common.scss";
 @import "~ui/common/styles/app-splash";
 
 /* ---------------------------------------------------------------- */
 
 .page-header {
-  margin: 0 (@grid-gutter-width * 0.5);
+  margin: 0 ($grid-gutter-width * 0.5);
   border: none;
 }
 
@@ -22,21 +23,21 @@ form .btn {
 /* ---------------------------------------------------------------- */
 
 .welcome-page {
-  background-color: @custom-gray-light;
+  background-color: $custom-gray-light;
   position: absolute;
-  min-height: ~"calc(100% - (@{header-height} + @{ce-banner-height} + @{footer-height}))";
+  min-height: calc(100% - ($header-height + $ce-banner-height + $footer-height));
   width: 100%;
   // padding-top: @grid-gutter-width;
   // padding-bottom: @grid-gutter-width;
   // padding: (@grid-gutter-width * 0.5) @grid-gutter-width;
 
   section {
-    padding-top: @grid-gutter-width * 0.5;
-    padding-bottom: @grid-gutter-width * 0.5;
+    padding-top: $grid-gutter-width * 0.5;
+    padding-bottom: $grid-gutter-width * 0.5;
 
     > .inner {
-      background-color: @body-bg;
-      padding: @grid-gutter-width * 0.5;
+      background-color: $body-bg;
+      padding: $grid-gutter-width * 0.5;
     }
   }
 
@@ -45,8 +46,8 @@ form .btn {
     margin-top: 5px;
     padding-bottom: 10px;
     font-weight: 100;
-    margin-bottom: @grid-gutter-width * 0.5;
-    border-bottom: 1px solid @custom-gray-light;
+    margin-bottom: $grid-gutter-width * 0.5;
+    border-bottom: 1px solid $custom-gray-light;
   }
 }
 

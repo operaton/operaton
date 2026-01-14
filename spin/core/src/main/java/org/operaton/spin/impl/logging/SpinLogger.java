@@ -60,7 +60,7 @@ public final class SpinLogger extends BaseLogger {
   }
 
   public SpinScriptException noScriptEnvFoundForLanguage(String scriptLanguage, String path) {
-    return new SpinScriptException(exceptionMessage("006", "No script script env found for script language '{}' at path '{}'", scriptLanguage, path));
+    return new SpinScriptException(exceptionMessage("006", "No script env found for script language '{}' at path '{}'", scriptLanguage, path));
   }
 
   public IOException unableToRewindReader() {

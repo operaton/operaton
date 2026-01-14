@@ -47,7 +47,7 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   protected FunctionMapper functionMapper;
   // Default implementation (does nothing)
   protected ELContext parsingElContext;
-  protected volatile ElProvider elProvider;
+  protected ElProvider elProvider;
 
   public JuelExpressionManager() {
     this(null);

@@ -1,10 +1,10 @@
 .form-signin {
   width: 50vw;
-  max-width: @grid-gutter-width * 15;
-  padding: @grid-gutter-width;
-  margin: @grid-gutter-width auto;
+  max-width: $grid-gutter-width * 15;
+  padding: $grid-gutter-width;
+  margin: $grid-gutter-width auto;
   overflow: hidden;
-  background-color: @body-bg;
+  background-color: $white;
 
   .login-header {
     text-align: center;
@@ -34,13 +34,13 @@
   }
 
   h2 {
-    margin: 0 0 (@grid-gutter-width * 0.5) 0;
+    margin: 0 0 ($grid-gutter-width * 0.5) 0;
   }
 
   input[type='text'],
   input[type='password'] {
     font-size: 18px;
-    margin-bottom: (@grid-gutter-width * 0.5);
+    margin-bottom: ($grid-gutter-width * 0.5);
   }
 
   .btn-primary {
@@ -58,10 +58,10 @@
 }
 
 .form-signin-container {
-  padding: @grid-gutter-width;
+  padding: $grid-gutter-width;
 }
 
-@media screen and (max-width: (@grid-float-breakpoint - 1)) {
+@media screen and (max-width: ($grid-float-breakpoint - 1)) {
   .form-signin {
     width: 100%;
     padding: 0;

@@ -22,13 +22,13 @@
       color 0.218s linear;
 
     &.copy-ok::before {
-      content: "\e013";
-      color: @brand-success;
+      @extend .bi-check-lg;
+      color: $success;
     }
 
     &.copy-error::before {
       content: "\e107";
-      color: @brand-warning;
+      color: $warning;
     }
   }
 
@@ -49,29 +49,29 @@
     }
   }
 
-  .cam-table & {
-    white-space: nowrap;
-    max-width: 100%;
-
-    > [ng-transclude] {
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      transition: max-width 0.218s linear;
-    }
-
-    &:hover > [ng-transclude].resize {
-      max-width: ~"calc(100% - 2em)";
-    }
-  }
-
-  .cam-table td& {
-    display: table-cell;
-    max-width: none;
-    width: auto;
-
-    > [ng-transclude] {
+  .cam-table {
+    // 1. Reset the table cell layout
+    td {
+      display: table-cell;
+      max-width: none;
+      width: auto;
       white-space: nowrap;
+
+      // 2. Handle the content wrapper (transclude)
+      > [ng-transclude] {
+        display: inline-block; // Force inline to prevent stacking
+        vertical-align: middle;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition: max-width 0.218s linear;
+      }
+
+      // 3. Hover logic for resizing
+      &:hover > [ng-transclude].resize {
+        max-width: calc(100% - 2em);
+      }
     }
   }
 }

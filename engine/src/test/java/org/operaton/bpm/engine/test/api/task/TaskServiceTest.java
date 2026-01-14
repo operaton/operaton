@@ -18,7 +18,7 @@ package org.operaton.bpm.engine.test.api.task;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -74,6 +74,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import org.operaton.bpm.engine.test.util.DateTestUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -121,7 +122,7 @@ class TaskServiceTest {
   IdentityService identityService;
   ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+  private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss[.SSS]");
 
   @AfterEach
   void tearDown() {
@@ -129,16 +130,15 @@ class TaskServiceTest {
   }
 
   @Test
-  void testSaveTaskUpdate() throws Exception{
+  void testSaveTaskUpdate() {
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
     Task task = taskService.newTask();
     task.setDescription("description");
     task.setName("taskname");
     task.setPriority(0);
     task.setAssignee("taskassignee");
     task.setOwner("taskowner");
-    Date dueDate = sdf.parse("01/02/2003 04:05:06");
+    Date dueDate = DateTestUtil.parseDate("01/02/2003 04:05:06", DATE_FORMATTER);
     task.setDueDate(dueDate);
     task.setCaseInstanceId("taskcaseinstanceid");
     taskService.saveTask(task);
@@ -173,7 +173,7 @@ class TaskServiceTest {
     task.setPriority(1);
     task.setAssignee("updatedassignee");
     task.setOwner("updatedowner");
-    dueDate = sdf.parse("01/02/2003 04:05:06");
+    dueDate = DateTestUtil.parseDate("01/02/2003 04:05:06", DATE_FORMATTER);
     task.setDueDate(dueDate);
     task.setCaseInstanceId("updatetaskcaseinstanceid");
     taskService.saveTask(task);
@@ -2551,8 +2551,8 @@ class TaskServiceTest {
   }
 
   @Test
-  void testTaskAttachmentByTaskIdAndAttachmentId() throws Exception {
-    Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
+  void testTaskAttachmentByTaskIdAndAttachmentId() {
+    Date fixedDate = DateTestUtil.parseDate("01/01/2001 01:01:01.000", DATE_FORMATTER);
     ClockUtil.setCurrentTime(fixedDate);
 
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
@@ -2642,8 +2642,8 @@ class TaskServiceTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
   @Test
-  void testCreateTaskAttachmentWithNullTaskId() throws Exception {
-    Date fixedDate = SDF.parse("01/01/2001 01:01:01.000");
+  void testCreateTaskAttachmentWithNullTaskId() {
+    Date fixedDate = DateTestUtil.parseDate("01/01/2001 01:01:01.000", DATE_FORMATTER);
     ClockUtil.setCurrentTime(fixedDate);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     Attachment attachment = taskService.createAttachment("web page", null, processInstance.getId(), "weatherforcast", "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));

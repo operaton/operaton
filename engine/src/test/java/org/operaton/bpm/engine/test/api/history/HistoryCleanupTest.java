@@ -16,8 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,20 +74,16 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.dmn.businessruletask.TestPojo;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-import org.operaton.bpm.engine.test.util.DateTestUtil;
 import org.operaton.bpm.engine.test.util.Removable;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
-import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
-import static java.time.format.DateTimeFormatter.ISO_TIME;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_REMOVAL_TIME_BASED;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.CATEGORY_OPERATOR;
 import static org.operaton.bpm.engine.history.UserOperationLogEntry.OPERATION_TYPE_CREATE_HISTORY_CLEANUP_JOB;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.operaton.bpm.engine.test.util.DateTestUtil.formatTime;
 
 /**
  * @author Svetlana Dorokhova
@@ -109,6 +104,7 @@ class HistoryCleanupTest {
   private static final int NUMBER_OF_THREADS = 3;
   private static final String USER_ID = "demo";
 
+  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   private static final Date targetDate = new Date(Instant.parse("2025-01-01T00:00:00Z").toEpochMilli());
 
   protected String defaultStartTime;
@@ -546,8 +542,8 @@ class HistoryCleanupTest {
     //we're within batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(now));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
     processEngineConfiguration.initHistoryCleanup();
 
     //when
@@ -712,8 +708,8 @@ class HistoryCleanupTest {
     //we call history cleanup within batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(now));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
     processEngineConfiguration.initHistoryCleanup();
     //job is executed once within batch window
     //we run the job in 3 threads, so not more than 60 instances can be removed in one run
@@ -742,8 +738,8 @@ class HistoryCleanupTest {
     //we call history cleanup outside batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(DateUtils.addHours(now, 1))); //now + 1 hour
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));   //now + 5 hours
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, 1))); //now + 1 hour
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));   //now + 5 hours
     processEngineConfiguration.initHistoryCleanup();
 
     //when
@@ -769,8 +765,8 @@ class HistoryCleanupTest {
     //we're within batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(now));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, HISTORY_TIME_TO_LIVE)));
     processEngineConfiguration.initHistoryCleanup();
 
     //when
@@ -814,8 +810,8 @@ class HistoryCleanupTest {
     //we're within batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(now));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(now, 1)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, 1)));
     processEngineConfiguration.initHistoryCleanup();
 
     //when
@@ -855,8 +851,8 @@ class HistoryCleanupTest {
     //we're within batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(now));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(now, 2)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(now, 2)));
     processEngineConfiguration.initHistoryCleanup();
 
     //when
@@ -895,8 +891,8 @@ class HistoryCleanupTest {
     //we're within batch window
     Date now = targetDate;
     ClockUtil.setCurrentTime(now);
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(now));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addMinutes(now, 30)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(now));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addMinutes(now, 30)));
     processEngineConfiguration.initHistoryCleanup();
 
     //when
@@ -933,8 +929,8 @@ class HistoryCleanupTest {
 
     //we're outside batch window
     Date twoHoursAgo = targetDate;
-    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(formatTime(twoHoursAgo));
-    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(formatTime(DateUtils.addHours(twoHoursAgo, 1)));
+    processEngineConfiguration.setHistoryCleanupBatchWindowStartTime(new SimpleDateFormat("HH:mm").format(twoHoursAgo));
+    processEngineConfiguration.setHistoryCleanupBatchWindowEndTime(new SimpleDateFormat("HH:mm").format(DateUtils.addHours(twoHoursAgo, 1)));
     processEngineConfiguration.initHistoryCleanup();
     ClockUtil.setCurrentTime(DateUtils.addHours(twoHoursAgo, 2));
 
@@ -1106,12 +1102,12 @@ class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() {
+  void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() throws Exception {
     //given
     prepareData(5);
 
     //we're outside batch window, batch window passes midnight
-    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2019-05-28T01:10:00"));  // 01:10
+    ClockUtil.setCurrentTime(sdf.parse("2019-05-28T01:10:00"));  // 01:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();
@@ -1139,12 +1135,12 @@ class HistoryCleanupTest {
 
   @Test
   @Disabled("CAM-10055")
-  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() {
+  void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() throws Exception {
     //given
     prepareData(5);
 
     //we're within batch window, but batch window passes midnight
-    ClockUtil.setCurrentTime(DateTestUtil.parseDate("2018-05-14T00:10:00"));  // 00:10
+    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T00:10:00"));  // 00:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();
@@ -1224,17 +1220,16 @@ class HistoryCleanupTest {
   }
 
   @Test
-  void testHistoryCleanupHelper() {
+  void testHistoryCleanupHelper() throws Exception {
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("22:00+0100");
     processEngineConfiguration.initHistoryCleanup();
 
-    ZonedDateTime parsedDateTime1 = ZonedDateTime.parse("2017-09-06T22:15:00+01:00", ISO_OFFSET_DATE_TIME);
-    Date date = Date.from(parsedDateTime1.toInstant());
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    Date date = dateFormat.parse("2017-09-06T22:15:00+0100");
 
     assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isTrue();
 
-    ZonedDateTime parsedDateTime2 = ZonedDateTime.parse("2017-09-06T22:15:00+02:00", ISO_OFFSET_DATE_TIME);
-    date = Date.from(parsedDateTime2.toInstant());
+    date = dateFormat.parse("2017-09-06T22:15:00+0200");
     assertThat(HistoryCleanupHelper.isWithinBatchWindow(date, processEngineConfiguration)).isFalse();
   }
 

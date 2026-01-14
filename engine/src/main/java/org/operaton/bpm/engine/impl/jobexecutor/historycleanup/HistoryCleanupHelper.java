@@ -17,11 +17,7 @@
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
 import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -31,16 +27,16 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
-
 /**
  * @author Svetlana Dorokhova.
  */
 public final class HistoryCleanupHelper {
 
-  private static final DateTimeFormatter TIME_FORMAT_WITHOUT_SECONDS = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
+  private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS = new SimpleDateFormat("yyyy-MM-ddHH:mm");
 
-  private static final DateTimeFormatter TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mmZ");
+  private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE = new SimpleDateFormat("yyyy-MM-ddHH:mmZ");
+
+  private static final SimpleDateFormat DATE_FORMAT_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
 
   private HistoryCleanupHelper () {
   }
@@ -79,21 +75,12 @@ public final class HistoryCleanupHelper {
     }
   }
 
-  public static Date parseTimeConfiguration(String time) throws ParseException {
-    LocalDateTime currentTime = ClockUtil.getCurrentTime().toInstant()
-        .atZone(ZoneId.systemDefault())
-        .toLocalDateTime();
-    String today = currentTime.format(ISO_LOCAL_DATE);
+  public static synchronized Date parseTimeConfiguration(String time) throws ParseException {
+    String today = DATE_FORMAT_WITHOUT_TIME.format(ClockUtil.getCurrentTime());
     try {
-      ZonedDateTime parsedDateTime = ZonedDateTime.parse(today + time, TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE);
-      return Date.from(parsedDateTime.toInstant());
-    } catch (DateTimeParseException ex) {
-      try {
-        LocalDateTime parsedDateTime = LocalDateTime.parse(today + time, TIME_FORMAT_WITHOUT_SECONDS);
-        return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
-      } catch (DateTimeParseException e) {
-        throw new ParseException("Unable to parse time configuration: " + time, 0);
-      }
+      return TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE.parse(today+time);
+    } catch (ParseException ex) {
+      return TIME_FORMAT_WITHOUT_SECONDS.parse(today+time);
     }
   }
 

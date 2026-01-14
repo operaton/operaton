@@ -140,6 +140,7 @@ class DeadlockTest {
           try {
             latch.await();
           } catch (InterruptedException e) {
+            fail(e);
           }
 
           statement.executeUpdate("UPDATE deadlock_test2 SET FOO=1");
@@ -150,9 +151,11 @@ class DeadlockTest {
           try {
             conn.rollback();
           } catch (SQLException ex) {
+            fail(ex);
           }
         }
       } catch (SQLException e) {
+        fail(e);
       }
     });
 
@@ -168,6 +171,7 @@ class DeadlockTest {
           try {
             latch.await();
           } catch (InterruptedException e) {
+            fail(e);
           }
 
           statement.executeUpdate("UPDATE deadlock_test1 SET FOO=1");
@@ -178,9 +182,11 @@ class DeadlockTest {
           try {
             conn.rollback();
           } catch (SQLException ex) {
+            fail(ex);
           }
         }
       } catch (SQLException e) {
+        fail(e);
       }
     });
     t1.start();

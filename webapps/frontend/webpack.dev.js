@@ -50,7 +50,8 @@ module.exports = (_env, argv = {}) => {
       }
     ]);
   };
-
+  const examplesPath = path.resolve(__dirname, '../../examples/invoice/src/main/webapp');
+  console.log('Mapping static forms from:', examplesPath);
   const developmentConfig = {
     output: {
       publicPath: '/',
@@ -58,10 +59,16 @@ module.exports = (_env, argv = {}) => {
     devtool: 'source-map',
     devServer: {
       port: 8081,
-      static: {
+      static: [{
         directory: path.resolve(__dirname, './public'),
         publicPath: '/app',
       },
+        {
+          directory: examplesPath,
+          publicPath: '/',
+          watch: true,
+        }
+      ],
       server: "http",
       client: {
         webSocketURL: 'ws://localhost:8081/ws',
@@ -83,7 +90,7 @@ module.exports = (_env, argv = {}) => {
 
           ...addEngines(['default', 'engine2', 'engine3']),
         {
-          context: (path) => path.startsWith('/operaton/'),
+          context: (path) => path.startsWith('/operaton/') && !path.includes('/forms/'),
           target: 'http://localhost:8081/',
           logLevel: 'debug',
           pathRewrite: (path) => {

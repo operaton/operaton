@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.io.Reader;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
@@ -32,7 +31,7 @@ import org.operaton.spin.impl.logging.SpinLogger;
  */
 public class RewindableReader extends Reader {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   protected PushbackReader wrappedReader;
 

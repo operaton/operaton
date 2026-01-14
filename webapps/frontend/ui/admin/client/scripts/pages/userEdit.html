@@ -20,20 +20,20 @@
     </ul>
   </aside>
 
-  <div class="section-content">
+  <div class="section-content container-fluid">
     <header class="row">
-      <div class="col-xs-8">
+      <div class="col-sm-8">
         <h3>{{ 'USERS_EDIT_USER' | translate }} {{user.firstName}} {{user.lastName}}</h3>
       </div>
-      <div class="col-xs-4 text-right">
-        <a class="btn btn-default"
+      <div class="col-sm-4 text-right">
+        <a class="btn btn-light"
            ng-if="show('groups')"
            ng-click="openCreateGroupMembershipDialog()">
           {{ 'USERS_ADD_TO_A_GROUP' | translate }}
           <span class="glyphicon glyphicon-plus-sign"></span>
         </a>
 
-        <a class="btn btn-default"
+        <a class="btn btn-light"
            ng-if="show('tenants')"
            ng-click="openCreateTenantMembershipDialog()">
           {{ 'USERS_ADD_TO_A_TENANT' | translate }}

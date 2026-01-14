@@ -1,9 +1,9 @@
 // get the admin app variables (based on bootstrap)
-@import "~ui/admin/client/styles/_app-variables.less";
+@import "~ui/admin/client/styles/_app-variables.scss";
 
 // use `reference` to avoid duplicate bootstrap styles
 // as they are already available in other compiled CSS
-@import (reference) "~operaton-commons-ui/resources/less/shared/bootstrap.less";
+@import "~operaton-commons-ui/resources/sass/shared/bootstrap.scss";
 
 /* add plugin styles here */
 @import "~operaton-commons-ui/lib/widgets/inline-field/cam-widget-inline-field";

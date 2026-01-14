@@ -1,20 +1,20 @@
 @import "./_app-variables";
-@import "~ui/common/styles/cam-webapps-common.less";
-@import "~ui/common/styles/app-splash";
+@import "ui/common/styles/cam-webapps-common.scss";
+@import "ui/common/styles/app-splash.scss";
 
 /* ---------------------------------------------------------------- */
 
 .page-header {
-  margin: 0 (@grid-gutter-width * 0.5);
+  margin: 0 ($grid-gutter-width * 0.5);
   border: none;
 }
 
 aside {
-  border-right: 1px solid @gray-lighter;
-  background-color: @custom-gray-lighter;
+  border-right: 1px solid $gray-lighter;
+  background-color: $custom-gray-lighter;
 
   ul {
-    .menu-ul(16px, 24px);
+  @include menu-ul(16px, 24px);
 
     margin-top: 8px;
   }
@@ -23,20 +23,20 @@ aside {
     > a {
       margin-left: 2px;
       border-left: 3px solid transparent;
-      color: @text-color;
+      color: $text-color;
     }
 
     &:hover > a {
-      border-left-color: @link-color;
-      color: @gray-base;
+      border-left-color: $link-color;
+      color: $black;
     }
 
     &.active-trail > a {
-      color: @gray-dark;
+      color: $gray-dark;
     }
 
     &.active > a {
-      border-left-color: @brand-primary;
+      border-left-color: $brand-primary;
     }
   }
 }
@@ -46,16 +46,16 @@ aside {
   > aside,
   > .section-content {
     position: absolute;
-    top: 0;
+    top: 10px;
     bottom: 0;
     overflow: auto;
   }
 
-  padding: 0 (@grid-gutter-width * 0.5);
+  padding: 0px ($grid-gutter-width * 0.5);
   width: 100%;
 
   > .section-content {
-    padding: (@grid-gutter-width * 0.5);
+    padding: ($grid-gutter-width * 0.5);
     right: 0;
     width: 100%;
 
@@ -67,7 +67,7 @@ aside {
   > aside {
     left: 0;
     width: 20%;
-    padding: (@grid-gutter-width * 0.5) 0;
+    padding: ($grid-gutter-width * 0.5) 0;
   }
 
   > aside + .section-content {
@@ -93,20 +93,20 @@ table.cam-table > tbody > tr > td.action {
 
 /* ---------------------------------------------------------------- */
 
-@import "../scripts/pages/authorizations.less";
-@import "../scripts/pages/execution-metrics.less";
-@import "~ui/common/styles/pages/dashboard.less";
-@import "~ui/common/styles/directives/cam-breadcrumbs-panel.less";
+@import "../scripts/pages/authorizations.scss";
+@import "../scripts/pages/execution-metrics.scss";
+@import "ui/common/styles/pages/dashboard.scss";
+@import "ui/common/styles/directives/cam-breadcrumbs-panel.scss";
 
 .dashboard section .stats {
-  padding-bottom: @grid-gutter-width * 0.5;
+  padding-bottom: $grid-gutter-width * 0.5;
 }
 
 .ctn-main {
   position: absolute;
   width: 100%;
-  top: @header-height;
-  bottom: @footer-height;
+  top: $header-height;
+  bottom: $footer-height;
 }
 
 .ctn-wrapper {
@@ -116,7 +116,7 @@ table.cam-table > tbody > tr > td.action {
   > [ng-view] {
     position: absolute;
     width: 100%;
-    top: @breadcrumb-height;
+    top: $breadcrumb-height;
     bottom: 0;
     overflow: auto;
   }
@@ -128,9 +128,9 @@ table.cam-table > tbody > tr > td.action {
   }
 }
 
-.container-fluid {
-  padding-top: @grid-gutter-width * 0.5;
-  padding-bottom: @grid-gutter-width * 0.5;
+@mixin container-fluid {
+  padding-top: $grid-gutter-width * 0.5;
+  padding-bottom: $grid-gutter-width * 0.5;
 
   footer & {
     padding-top: 0;

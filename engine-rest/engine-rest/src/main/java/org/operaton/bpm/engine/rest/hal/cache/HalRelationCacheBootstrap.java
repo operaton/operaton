@@ -78,7 +78,7 @@ public class HalRelationCacheBootstrap implements ServletContextListener {
       return ReflectUtil.instantiate(cacheClass);
     }
     catch (ProcessEngineException e) {
-      throw new HalRelationCacheConfigurationException("Unable to instantiate cache class " + cacheClass.getName(), e);
+      throw new HalRelationCacheConfigurationException("Unable to instantiate cache class %s".formatted(cacheClass.getName()), e);
     }
   }
 
@@ -88,19 +88,19 @@ public class HalRelationCacheBootstrap implements ServletContextListener {
       setter = ReflectUtil.getSingleSetter(property, cache.getClass());
     }
     catch (ProcessEngineException e) {
-      throw new HalRelationCacheConfigurationException("Unable to find setter for property "  + property, e);
+      throw new HalRelationCacheConfigurationException("Unable to find setter for property %s".formatted(property), e);
     }
 
     if (setter == null) {
-      throw new HalRelationCacheConfigurationException("Unable to find setter for property "  + property);
+      throw new HalRelationCacheConfigurationException("Unable to find setter for property %s".formatted(property));
     }
 
     try {
       setter.invoke(cache, value);
     } catch (IllegalAccessException e) {
-      throw new HalRelationCacheConfigurationException("Unable to access setter for property " + property);
+      throw new HalRelationCacheConfigurationException("Unable to access setter for property %s".formatted(property));
     } catch (InvocationTargetException e) {
-      throw new HalRelationCacheConfigurationException("Unable to invoke setter for property " + property);
+      throw new HalRelationCacheConfigurationException("Unable to invoke setter for property %s".formatted(property));
     }
   }
 

@@ -69,7 +69,8 @@ public class AttributeReferenceCollectionBuilderImpl<T extends ModelElementInsta
       idAttribute.registerIncoming(attributeReferenceCollection);
       attributeReferenceCollection.setReferenceTargetAttribute(idAttribute);
     } else {
-      throw new ModelException("Element type " + referenceTargetType.getTypeNamespace() + ":" + referenceTargetType.getTypeName() + " has no id attribute");
+      throw new ModelException("Element type %s:%s has no id attribute".formatted(
+          referenceTargetType.getTypeNamespace(), referenceTargetType.getTypeName()));
     }
   }
 

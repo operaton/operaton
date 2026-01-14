@@ -1192,7 +1192,7 @@ class ProcessInstanceModificationAsyncTest {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
+      assertThat(!tasks.isEmpty()).as("task for activity %s does not exist".formatted(taskName)).isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

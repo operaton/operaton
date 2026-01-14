@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.cmmn;
-import java.util.Collections;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

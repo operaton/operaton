@@ -218,14 +218,12 @@ public class MigratingInstanceParseContext {
     return mapping;
   }
 
-  // TODO: conditions would go here
   public MigrationInstruction getInstructionFor(String scopeId) {
     List<MigrationInstruction> instructions = instructionsBySourceScope.get(scopeId);
 
     if (instructions == null || instructions.isEmpty()) {
       return null;
-    }
-    else {
+    } else {
       return instructions.get(0);
     }
   }

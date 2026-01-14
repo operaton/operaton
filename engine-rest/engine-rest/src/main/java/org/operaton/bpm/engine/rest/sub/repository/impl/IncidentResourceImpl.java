@@ -46,7 +46,7 @@ public class IncidentResourceImpl implements IncidentResource {
   public IncidentDto getIncident() {
     Incident incident = engine.getRuntimeService().createIncidentQuery().incidentId(incidentId).singleResult();
     if (incident == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "No matching incident with id " + incidentId);
+      throw new InvalidRequestException(Status.NOT_FOUND, "No matching incident with id %s".formatted(incidentId));
     }
     return IncidentDto.fromIncident(incident);
   }

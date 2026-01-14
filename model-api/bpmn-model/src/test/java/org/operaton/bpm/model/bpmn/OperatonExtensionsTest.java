@@ -72,7 +72,7 @@ public class OperatonExtensionsTest {
   }
 
   private void initModelElements() {
-    modelInstance = originalModelInstance.clone();
+    modelInstance = originalModelInstance.copy();
     process = modelInstance.getModelElementById(PROCESS_ID);
     startEvent = modelInstance.getModelElementById(START_EVENT_ID);
     sequenceFlow = modelInstance.getModelElementById(SEQUENCE_FLOW_ID);

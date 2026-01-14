@@ -202,7 +202,7 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
               int index = parameterContext.getIndex();
               if (index >= parameters.length) {
                 throw new ParameterResolutionException(
-                    "Not enough parameters provided; index " + index + " out of " + parameters.length);
+                    "Not enough parameters provided; index %d out of %d".formatted(index, parameters.length));
               }
               return parameters[index];
             }
@@ -240,7 +240,7 @@ public class ParameterizedTestExtension implements TestTemplateInvocationContext
                   int index = parameterAnnotation.value();
                   if (index < 0 || index >= parameters.length) {
                     throw new ExtensionConfigurationException(
-                        "Index " + index + " is out of bounds for the provided parameters array.");
+                        "Index %d is out of bounds for the provided parameters array.".formatted(index));
                   }
                   field.setAccessible(true);
                   field.set(testInstance, parameters[index]);

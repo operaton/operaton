@@ -155,7 +155,7 @@ public class ActivityInstanceVerification implements ExecutionListener {
         }
       }
       if(!found) {
-        fail("every instance of '" + actId + "' must have a parent which is an instance of '" + parentId);
+        fail("every instance of '%s' must have a parent which is an instance of '%s".formatted(actId, parentId));
       }
     }
   }

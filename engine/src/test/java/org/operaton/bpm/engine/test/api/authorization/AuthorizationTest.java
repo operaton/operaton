@@ -590,15 +590,6 @@ public abstract class AuthorizationTest {
         .singleResult());
   }
 
-  public Permission getDefaultTaskPermissionForUser() {
-    // get the default task assignee permission
-    ProcessEngineConfigurationImpl processEngineConfiguration =
-        (ProcessEngineConfigurationImpl) processEngine
-            .getProcessEngineConfiguration();
-
-    return processEngineConfiguration.getDefaultUserPermissionForTask();
-  }
-
   // helper ////////////////////////////////////////////////////////////////////
 
   protected VariableMap getVariables() {

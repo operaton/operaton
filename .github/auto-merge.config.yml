@@ -60,6 +60,7 @@ auto-merge-rules:
       - 'version.logback'
       - 'version.jna'
       - 'version.asm'
+      - 'version.undertow'
       - 'okhttp-version'
       # Maven plugins
       - 'org.apache.maven.plugins'

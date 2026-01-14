@@ -194,7 +194,7 @@ class SingleProcessInstanceModificationAsyncTest {
 
     } catch (ProcessEngineException e) {
       Assertions.assertThat(e.getMessage()).startsWith("ENGINE-13036");
-      Assertions.assertThat(e.getMessage()).contains("Process instance '" + "foo" + "' cannot be modified");
+      Assertions.assertThat(e.getMessage()).contains("Process instance '%s' cannot be modified".formatted("foo"));
     }
   }
 
@@ -1066,7 +1066,7 @@ class SingleProcessInstanceModificationAsyncTest {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      Assertions.assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
+      Assertions.assertThat(!tasks.isEmpty()).as("task for activity %s does not exist".formatted(taskName)).isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

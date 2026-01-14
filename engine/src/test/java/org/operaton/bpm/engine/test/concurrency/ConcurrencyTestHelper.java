@@ -189,7 +189,7 @@ public abstract class ConcurrencyTestHelper {
     public void makeContinue() {
       synchronized (this) {
         if (exception != null) {
-          fail("Controlled thread has run into an exception already: " + exception.getClass().getName() + ". Stack trace:\n" + ExceptionUtil.getExceptionStacktrace(exception));
+          fail("Controlled thread has run into an exception already: %s. Stack trace:%n%s".formatted(exception.getClass().getName(), ExceptionUtil.getExceptionStacktrace(exception)));
         }
         notifyAll();
       }

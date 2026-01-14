@@ -21,11 +21,11 @@ import java.util.List;
 
 public class DmnDecisionTableRuleImpl {
 
-  public String id;
-  public String name;
+  private String id;
+  private String name;
 
-  protected List<DmnExpressionImpl> conditions = new ArrayList<>();
-  protected List<DmnExpressionImpl> conclusions = new ArrayList<>();
+  private List<DmnExpressionImpl> conditions = new ArrayList<>();
+  private List<DmnExpressionImpl> conclusions = new ArrayList<>();
 
   public String getId() {
     return id;

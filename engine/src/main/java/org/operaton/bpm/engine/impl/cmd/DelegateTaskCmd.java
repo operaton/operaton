@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -28,14 +25,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class DelegateTaskCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class DelegateTaskCmd implements Command<Object> {
   protected String taskId;
   protected String userId;
 

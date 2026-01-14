@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.scripting.env;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +121,7 @@ public class ScriptingEnvironment {
       if (rawObject instanceof AbstractProcessApplication abstractProcessApplication) {
         return abstractProcessApplication.getEnvironmentScripts();
       }
-      return null;
+      return Collections.emptyMap();
     }
     catch (ProcessApplicationUnavailableException e) {
       throw new ProcessEngineException("Process Application is unavailable.", e);

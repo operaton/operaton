@@ -76,7 +76,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
       String responseEntity = response.getBody();
       assertThat(responseEntity)
               .contains("\"type\":\"RestException\"")
-              .contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
+              .contains("\"message\":\"Not allowed to load the following file '%s'.\"".formatted(asset));
     }
   }
 

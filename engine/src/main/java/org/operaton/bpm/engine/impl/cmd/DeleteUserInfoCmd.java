@@ -16,19 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-
 
 /**
  * @author Tom Baeyens
  */
-public class DeleteUserInfoCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeleteUserInfoCmd implements Command<Object> {
   protected String userId;
   protected String key;
 

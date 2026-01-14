@@ -660,7 +660,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     try {
       runtimeService.startProcessInstanceByKey("Process_1");
     } catch (ScriptEvaluationException e) {
-      testRule.assertTextPresent("Unable to evaluate script while executing activity 'Failing' in the process definition with id '" + processDefinition.getId() + "'", e.getMessage());
+      testRule.assertTextPresent("Unable to evaluate script while executing activity 'Failing' in the process definition with id '%s'".formatted(processDefinition.getId()), e.getMessage());
     }
   }
 

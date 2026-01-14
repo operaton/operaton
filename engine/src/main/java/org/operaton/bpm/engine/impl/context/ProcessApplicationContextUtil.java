@@ -87,11 +87,11 @@ public final class ProcessApplicationContextUtil {
     }
   }
 
-  public static ProcessApplicationReference getTargetProcessApplication(ResourceDefinitionEntity definition) {
+  public static ProcessApplicationReference getTargetProcessApplication(ResourceDefinitionEntity<?> definition) {
     ProcessApplicationReference reference = getTargetProcessApplication(definition.getDeploymentId());
 
     if (reference == null && areProcessApplicationsRegistered()) {
-      ResourceDefinitionEntity previous = definition.getPreviousDefinition();
+      ResourceDefinitionEntity<?> previous = definition.getPreviousDefinition();
 
       // do it in an iterative way instead of recursive to avoid
       // a possible StackOverflowException in cases with a lot
@@ -105,7 +105,6 @@ public final class ProcessApplicationContextUtil {
         else {
           return reference;
         }
-
       }
     }
 

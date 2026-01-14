@@ -538,7 +538,7 @@ class HistoricActivityStatisticsAuthorizationTest extends AuthorizationTest {
         return result;
       }
     }
-    fail("No statistics found for key '" + key + "'.");
+    fail("No statistics found for key '%s'.".formatted(key));
     return null;
   }
 

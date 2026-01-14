@@ -650,7 +650,7 @@ class RestartProcessInstanceSyncTest {
     assertThatThrownBy(restartProcessInstanceBuilder::execute)
       // then
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Its process definition '" + processDefinition2.getId() + "' does not match given process definition '" + processDefinition.getId() + "'");
+      .hasMessageContaining("Its process definition '%s' does not match given process definition '%s'".formatted(processDefinition2.getId(), processDefinition.getId()));
   }
 
   @Test

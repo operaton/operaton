@@ -16,21 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.IdentityInfoEntity;
 
-
 /**
  * @author Tom Baeyens
  */
-public class SetUserInfoCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class SetUserInfoCmd implements Command<Object> {
   protected String userId;
   protected String userPassword;
   protected String type;

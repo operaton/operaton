@@ -69,7 +69,7 @@ public class ExecuteJobsRunnable implements Runnable {
           JobFailureCollector jobFailureCollector = new JobFailureCollector(nextJobId);
           try {
             executeJob(nextJobId, commandExecutor, jobFailureCollector);
-          } catch(Throwable t) {
+          } catch(Exception t) {
             if (ProcessEngineLogger.shouldLogJobException(engineConfiguration, jobFailureCollector.getJob())) {
               ExecuteJobHelper.loggingHandler.exceptionWhileExecutingJob(nextJobId, t);
             }
@@ -85,7 +85,7 @@ public class ExecuteJobsRunnable implements Runnable {
             try {
               unlockJob(nextJobId, commandExecutor);
             }
-            catch(Throwable t) {
+            catch(Exception t) {
               LOG.exceptionWhileUnlockingJob(nextJobId, t);
             }
         }

@@ -90,7 +90,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
         }
       }
     }
-    return null;
+    return Collections.emptyMap();
   }
 
   protected Date getOrCalculateRemovalTime(SetRemovalTimeBatchConfiguration configuration,

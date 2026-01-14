@@ -74,8 +74,7 @@ class MultiTenancyMigrationTenantProviderTest {
       runtimeService.execute();
       fail("exception expected");
     } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot migrate process instance '" + processInstance.getId() + "' "
-              + "to a process definition of a different tenant ('tenant1' != 'tenant2')");
+      assertThat(e.getMessage()).contains("Cannot migrate process instance '%s' to a process definition of a different tenant ('tenant1' != 'tenant2')".formatted(processInstance.getId()));
     }
 
     // then

@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -116,7 +117,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
   @SuppressWarnings("unchecked")
   public <T> List<T> getDeployedArtifacts(Class<T> clazz) {
     if(deployedArtifacts == null) {
-      return null;
+      return Collections.emptyList();
     } else {
       return deployedArtifacts.get(clazz);
     }

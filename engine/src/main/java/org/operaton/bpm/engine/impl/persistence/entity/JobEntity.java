@@ -104,7 +104,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   // last failing activity id ///////////////////////
   protected String failedActivityId;
 
-  protected Map<String, Class> persistedDependentEntities;
+  protected Map<String, Class<?>> persistedDependentEntities;
 
   protected String batchId;
 
@@ -444,8 +444,8 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  protected JobHandler getJobHandler() {
-    Map<String, JobHandler> jobHandlers = Context.getProcessEngineConfiguration().getJobHandlers();
+  protected JobHandler<?> getJobHandler() {
+    Map<String, JobHandler<?>> jobHandlers = Context.getProcessEngineConfiguration().getJobHandlers();
     return jobHandlers.get(jobHandlerType);
   }
 
@@ -655,13 +655,8 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (exceptionByteArrayId != null) {
       referenceIdAndClass.put(exceptionByteArrayId, ByteArrayEntity.class);
@@ -671,7 +666,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public Map<String, Class> getDependentEntities() {
+  public Map<String, Class<?>> getDependentEntities() {
     return persistedDependentEntities;
   }
 

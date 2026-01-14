@@ -52,7 +52,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 
 public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implements TaskRestService {
 
-  public static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
+  private static final List<Variant> VARIANTS = Variant.mediaTypes(MediaType.APPLICATION_JSON_TYPE, Hal.APPLICATION_HAL_JSON_TYPE).add().build();
 
   public TaskRestServiceImpl(String engineName, final ObjectMapper objectMapper) {
     super(engineName, objectMapper);
@@ -163,7 +163,7 @@ public class TaskRestServiceImpl extends AbstractRestProcessEngineAware implemen
       taskService.saveTask(newTask);
 
     } catch (NotValidException e) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not save task: " + e.getMessage());
+      throw new InvalidRequestException(Status.BAD_REQUEST, e, "Could not save task: %s".formatted(e.getMessage()));
     }
 
   }

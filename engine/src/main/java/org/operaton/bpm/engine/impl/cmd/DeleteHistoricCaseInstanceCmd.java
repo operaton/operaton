@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -33,10 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Sebastian Menski
  */
-public class DeleteHistoricCaseInstanceCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class DeleteHistoricCaseInstanceCmd implements Command<Object> {
   protected String caseInstanceId;
 
   public DeleteHistoricCaseInstanceCmd(String caseInstanceId) {

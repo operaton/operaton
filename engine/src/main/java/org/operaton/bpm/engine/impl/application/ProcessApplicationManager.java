@@ -99,7 +99,7 @@ public class ProcessApplicationManager {
             .removeDeployment(deploymentId);
         }
       }
-      catch (Throwable t) {
+      catch (Exception t) {
         LOG.couldNotRemoveDefinitionsFromCache(t);
       }
       finally {
@@ -188,7 +188,7 @@ public class ProcessApplicationManager {
       LOG.registrationSummary(builder.toString());
 
     }
-    catch(Throwable e) {
+    catch(Exception e) {
       LOG.exceptionWhileLoggingRegistrationSummary(e);
     }
   }

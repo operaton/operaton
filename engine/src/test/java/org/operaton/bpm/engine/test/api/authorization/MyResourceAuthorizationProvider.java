@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.task.Task;
  *
  */
 public class MyResourceAuthorizationProvider implements ResourceAuthorizationProvider {
+  private static final AuthorizationEntity[] NO_AUTHORIZATIONS = new AuthorizationEntity[0];
 
   // assignee
   public static String oldAssignee;
@@ -61,57 +62,57 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
 
   @Override
   public AuthorizationEntity[] newUser(User user) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newGroup(Group group) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newTenant(Tenant tenant) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] groupMembershipCreated(String groupId, String userId) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, User user) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, Group group) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newFilter(Filter filter) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newDeployment(Deployment deployment) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newProcessDefinition(ProcessDefinition processDefinition) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newProcessInstance(ProcessInstance processInstance) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newTask(Task task) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
@@ -173,12 +174,12 @@ public class MyResourceAuthorizationProvider implements ResourceAuthorizationPro
 
   @Override
   public AuthorizationEntity[] newDecisionDefinition(DecisionDefinition decisionDefinition) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newDecisionRequirementsDefinition(DecisionRequirementsDefinition decisionRequirementsDefinition) {
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
 }

@@ -98,7 +98,7 @@ public class HistoricTaskInstanceRestServiceImpl implements HistoricTaskInstance
     Response response;
 
     if (AbstractReportDto.REPORT_TYPE_DURATION.equals(queryDto.getReportType())) {
-      List<? extends ReportResult> reportResults = queryDto.executeReport(processEngine);
+      List<ReportResult> reportResults = queryDto.executeReport(processEngine);
       response = Response.ok(generateDurationDto(reportResults)).build();
     } else if (AbstractReportDto.REPORT_TYPE_COUNT.equals(queryDto.getReportType())) {
       List<HistoricTaskInstanceReportResult> reportResults = queryDto.executeCompletedReport(processEngine);

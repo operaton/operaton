@@ -107,7 +107,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
 
     }
@@ -1512,7 +1512,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
   }
@@ -1547,7 +1547,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
   }
@@ -1600,7 +1600,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
   }
@@ -1638,7 +1638,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
   }
@@ -1728,7 +1728,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("anotherTaskVariable");
         assertThat(variableInstance.getValue()).isEqualTo("aCustomValue");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
   }
@@ -1900,7 +1900,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("stringVar");
         assertThat(variableInstance.getValue()).isEqualTo("test");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
 
@@ -1921,7 +1921,7 @@ class VariableInstanceQueryTest {
         assertThat(variableInstance.getName()).isEqualTo("anotherTaskVariable");
         assertThat(variableInstance.getValue()).isEqualTo("aCustomValue");
       } else {
-        fail("An unexpected variable '" + variableInstance.getName() + "' was found with value " + variableInstance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(variableInstance.getName(), variableInstance.getValue()));
       }
     }
   }
@@ -2071,7 +2071,7 @@ class VariableInstanceQueryTest {
       assertThat(second.getName()).isEqualTo("intVar");
       assertThat(second.getTypeName()).isEqualTo("integer");
     } else {
-      fail("Something went wrong: both activity instances have the same id " + activityId1 + " and " + activityId2);
+      fail("Something went wrong: both activity instances have the same id %s and %s".formatted(activityId1, activityId2));
     }
   }
 
@@ -2114,7 +2114,7 @@ class VariableInstanceQueryTest {
       assertThat(second.getName()).isEqualTo("stringVar");
       assertThat(second.getTypeName()).isEqualTo("string");
     } else {
-      fail("Something went wrong: both activity instances have the same id " + activityId1 + " and " + activityId2);
+      fail("Something went wrong: both activity instances have the same id %s and %s".formatted(activityId1, activityId2));
     }
   }
 
@@ -2228,7 +2228,7 @@ class VariableInstanceQueryTest {
           // the serialized value has not been initially loaded
         }
       } else {
-        fail("An unexpected variable '" + instance.getName() + "' was found with value " + instance.getValue());
+        fail("An unexpected variable '%s' was found with value %s".formatted(instance.getName(), instance.getValue()));
       }
     }
   }

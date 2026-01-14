@@ -183,7 +183,7 @@ public class TaskAttachmentResourceImpl implements TaskAttachmentResource {
   private void ensureTaskExists(Status status) {
     HistoricTaskInstance historicTaskInstance = engine.getHistoryService().createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
     if (historicTaskInstance == null) {
-      throw new InvalidRequestException(status, "No task found for task id " + taskId);
+      throw new InvalidRequestException(status, "No task found for task id %s".formatted(taskId));
     }
   }
 

@@ -97,7 +97,7 @@ public class StandaloneTransactionContext implements TransactionContext {
         fireTransactionEvent(TransactionState.ROLLINGBACK);
 
       }
-      catch (Throwable exception) {
+      catch (Exception exception) {
         LOG.exceptionWhileFiringEvent(TransactionState.ROLLINGBACK, exception);
         Context.getCommandInvocationContext().trySetThrowable(exception);
       }
@@ -107,7 +107,7 @@ public class StandaloneTransactionContext implements TransactionContext {
       }
 
     }
-    catch (Throwable exception) {
+    catch (Exception exception) {
       LOG.exceptionWhileFiringEvent(TransactionState.ROLLINGBACK, exception);
       Context.getCommandInvocationContext().trySetThrowable(exception);
     }

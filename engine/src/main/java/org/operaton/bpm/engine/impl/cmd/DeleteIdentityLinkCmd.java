@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -29,16 +26,12 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Falko Menge
  * @author Joram Barrez
  */
-public abstract class DeleteIdentityLinkCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public abstract class DeleteIdentityLinkCmd implements Command<Void> {
   protected String userId;
 
   protected String groupId;

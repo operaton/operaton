@@ -29,7 +29,7 @@ public final class TestcontainersHelper {
     if (image == null) {
       throw new IllegalStateException("To use the Testcontainers integration correctly, please provide a " +
           "Docker image. To do this, place a file on the classpath named `testcontainers.properties`, " +
-          "containing `" + imageProperty + "=IMAGE`, where IMAGE is a suitable image name and tag.");
+          "containing `%s=IMAGE`, where IMAGE is a suitable image name and tag.".formatted(imageProperty));
     } else {
       return image;
     }

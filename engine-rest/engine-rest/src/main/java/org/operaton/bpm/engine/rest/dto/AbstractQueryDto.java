@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.dto;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +39,10 @@ import org.operaton.bpm.engine.rest.exception.RestException;
  *
  */
 public abstract class AbstractQueryDto<T extends Query<?, ?>>  extends AbstractSearchQueryDto {
+  private static final String SORT_ORDER_ASC_VALUE = "asc";
+  private static final String SORT_ORDER_DESC_VALUE = "desc";
 
-  public static final String SORT_ORDER_ASC_VALUE = "asc";
-  public static final String SORT_ORDER_DESC_VALUE = "desc";
-
-  public static final List<String> VALID_SORT_ORDER_VALUES;
-  static {
-    VALID_SORT_ORDER_VALUES = new ArrayList<>();
-    VALID_SORT_ORDER_VALUES.add(SORT_ORDER_ASC_VALUE);
-    VALID_SORT_ORDER_VALUES.add(SORT_ORDER_DESC_VALUE);
-  }
+  private static final List<String> VALID_SORT_ORDER_VALUES = List.of(SORT_ORDER_ASC_VALUE, SORT_ORDER_DESC_VALUE);
 
   protected String sortBy;
   protected String sortOrder;

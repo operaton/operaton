@@ -189,7 +189,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
         List<String> invalidTypes = new ArrayList<>();
         validateType(type, validator, invalidTypes);
         if (!invalidTypes.isEmpty()) {
-          throw new IllegalArgumentException("The following classes are not whitelisted for deserialization: " + invalidTypes);
+          throw new IllegalArgumentException("The following classes are not whitelisted for deserialization: %s".formatted(invalidTypes));
         }
       }
     }

@@ -1539,7 +1539,7 @@ class ExternalTaskServiceTest {
       // then
       .withFailMessage("it is not possible to complete the task with a different worker id")
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessageContaining("cannot be completed by worker 'someCrazyWorkerId'. It is locked by worker '" + WORKER_ID + "'.");
+      .hasMessageContaining("cannot be completed by worker 'someCrazyWorkerId'. It is locked by worker '%s'.".formatted(WORKER_ID));
   }
 
   @Test
@@ -1593,7 +1593,7 @@ class ExternalTaskServiceTest {
       .withFailMessage("the external task cannot be completed")
       // then
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("ExternalTask with id '" + externalTaskId + "' is suspended");
+      .hasMessageContaining("ExternalTask with id '%s' is suspended".formatted(externalTaskId));
 
     testRule.assertProcessNotEnded(processInstance.getId());
 
@@ -2341,7 +2341,7 @@ class ExternalTaskServiceTest {
       // then
       .withFailMessage("the first worker cannot complete the task")
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("cannot be completed by worker '" + WORKER_ID + "'. It is locked by worker 'anotherWorkerId'.");
+      .hasMessageContaining("cannot be completed by worker '%s'. It is locked by worker 'anotherWorkerId'.".formatted(WORKER_ID));
 
     // and the second worker can
     externalTaskService.complete(reclaimedTasks.get(0).getId(), "anotherWorkerId");
@@ -2842,7 +2842,7 @@ class ExternalTaskServiceTest {
     assertThatThrownBy(() -> externalTaskService.handleFailure(externalTaskId, WORKER_ID, ERROR_MESSAGE, 5, LOCK_TIME))
       // then
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("ExternalTask with id '" + task.getId() + "' is suspended");
+      .hasMessageContaining("ExternalTask with id '%s' is suspended".formatted(task.getId()));
 
     testRule.assertProcessNotEnded(processInstance.getId());
 
@@ -3251,7 +3251,7 @@ class ExternalTaskServiceTest {
       // then
       .withFailMessage("the first worker cannot complete the task")
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Bpmn error of External Task " + externalTaskId + " cannot be reported by worker '" + WORKER_ID + "'. It is locked by worker 'anotherWorkerId'.")
+      .hasMessageContaining("Bpmn error of External Task %s cannot be reported by worker '%s'. It is locked by worker 'anotherWorkerId'.".formatted(externalTaskId, WORKER_ID))
       .satisfies(e -> {
         if (includeVariables) {
           assertThat(runtimeService.createIncidentQuery().count()).isZero();
@@ -3337,7 +3337,7 @@ class ExternalTaskServiceTest {
     assertThatThrownBy(() -> externalTaskService.handleBpmnError(externalTaskId, WORKER_ID, "ERROR-OCCURED"))
       // then the external task cannot be completed
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("ExternalTask with id '" + externalTaskId + "' is suspended");
+      .hasMessageContaining("ExternalTask with id '%s' is suspended".formatted(externalTaskId));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/twoExternalTaskProcess.bpmn20.xml")
@@ -3732,7 +3732,7 @@ class ExternalTaskServiceTest {
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, WORKER_ID, 100))
       // then
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessageContaining("The lock of the External Task " + externalTaskId + " cannot be extended by worker '" + WORKER_ID + "'");
+      .hasMessageContaining("The lock of the External Task %s cannot be extended by worker '%s'".formatted(externalTaskId, WORKER_ID));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3820,7 +3820,7 @@ class ExternalTaskServiceTest {
     assertThatThrownBy(() -> externalTaskService.extendLock(externalTaskId, "anAnotherWorkerId", 100))
       // then
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessageContaining("The lock of the External Task " + externalTaskId + " cannot be extended by worker 'anAnotherWorkerId'");
+      .hasMessageContaining("The lock of the External Task %s cannot be extended by worker 'anAnotherWorkerId'".formatted(externalTaskId));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")

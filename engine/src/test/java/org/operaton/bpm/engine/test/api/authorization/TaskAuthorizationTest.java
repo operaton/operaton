@@ -26,10 +26,12 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.AuthorizationException;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.Resources;
 import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.impl.TaskServiceImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.auth.DefaultAuthorizationProvider;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceEntity;
@@ -91,6 +93,16 @@ class TaskAuthorizationTest extends AuthorizationTest {
       return null;
     });
   }
+
+  public Permission getDefaultTaskPermissionForUser() {
+    // get the default task assignee permission
+    ProcessEngineConfigurationImpl processEngineConfiguration =
+      (ProcessEngineConfigurationImpl) processEngine
+        .getProcessEngineConfiguration();
+
+    return processEngineConfiguration.getDefaultUserPermissionForTask();
+  }
+
 
   // task query ///////////////////////////////////////////////////////
 

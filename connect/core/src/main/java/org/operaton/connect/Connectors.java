@@ -40,14 +40,14 @@ public class Connectors {
   public static final String SOAP_HTTP_CONNECTOR_ID = "soap-http-connector";
 
   /** The global instance of the manager */
-  static Connectors INSTANCE = new Connectors();
+  private static final Connectors instance = new Connectors();
 
   /**
    * Provides the global instance of the Connectors manager.
    * @return the global instance
    */
   public static Connectors getInstance() {
-    return INSTANCE;
+    return instance;
   }
 
   /**
@@ -56,7 +56,7 @@ public class Connectors {
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C http() {
-    return (C) INSTANCE.getConnectorById(HTTP_CONNECTOR_ID);
+    return (C) instance.getConnectorById(HTTP_CONNECTOR_ID);
   }
 
   /**
@@ -65,7 +65,7 @@ public class Connectors {
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C soap() {
-    return (C) INSTANCE.getConnectorById(SOAP_HTTP_CONNECTOR_ID);
+    return (C) instance.getConnectorById(SOAP_HTTP_CONNECTOR_ID);
   }
 
   /**
@@ -74,14 +74,14 @@ public class Connectors {
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C getConnector(String connectorId) {
-    return (C) INSTANCE.getConnectorById(connectorId);
+    return (C) instance.getConnectorById(connectorId);
   }
 
   /**
    * @return all register connectors
    */
   public static Set<Connector<? extends ConnectorRequest<?>>> getAvailableConnectors() {
-    return INSTANCE.getAllAvailableConnectors();
+    return instance.getAllAvailableConnectors();
   }
 
   /**
@@ -95,7 +95,7 @@ public class Connectors {
    * Load all available connectors with the given classloader.
    */
   public static void loadConnectors(ClassLoader classloader) {
-    INSTANCE.initializeConnectors(classloader);
+    instance.initializeConnectors(classloader);
   }
 
   /**
@@ -109,11 +109,11 @@ public class Connectors {
    * Register a new connector under the given connector id.
    */
   protected static void registerConnector(String connectorId, Connector<?> connector) {
-    INSTANCE.registerConnectorInstance(connectorId, connector);
+    instance.registerConnectorInstance(connectorId, connector);
   }
 
   protected static void unregisterConnector(String connectorId) {
-    INSTANCE.unregisterConnectorInstance(connectorId);
+    instance.unregisterConnectorInstance(connectorId);
   }
 
 

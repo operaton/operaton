@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.exception.NotFoundException;
@@ -32,9 +31,6 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tassilo Weidner
  */
 public class DeleteProcessDefinitionsByKeyCmd extends AbstractDeleteProcessDefinitionCmd {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   private final String processDefinitionKey;
   private final String tenantId;
   private final boolean isTenantIdSet;

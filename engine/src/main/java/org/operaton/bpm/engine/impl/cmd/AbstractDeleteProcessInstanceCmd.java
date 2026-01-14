@@ -114,13 +114,13 @@ public abstract class AbstractDeleteProcessInstanceCmd {
 
   public void triggerHistoryEvent(List<ProcessInstance> subProcesslist) {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
+    if(configuration == null) {
+      return;
+    }
+
     HistoryLevel historyLevel = configuration.getHistoryLevel();
-
     for (final ProcessInstance processInstance : subProcesslist) {
-      // TODO: This smells bad, as the rest of the history is done via the
-      // ParseListener
       if (historyLevel.isHistoryEventProduced(HistoryEventTypes.PROCESS_INSTANCE_UPDATE, processInstance)) {
-
         HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
           @Override
           public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
@@ -130,5 +130,4 @@ public abstract class AbstractDeleteProcessInstanceCmd {
       }
     }
   }
-
 }

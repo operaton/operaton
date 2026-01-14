@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,10 +47,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Tassilo Weidner
  */
-public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   protected final Set<String> processDefinitionIds;
   protected boolean cascadeToHistory;
   protected boolean cascadeToInstances;

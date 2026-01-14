@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -26,10 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * @author Sebastian Menski
  */
-public class GetFilterCmd implements Command<Filter>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetFilterCmd implements Command<Filter> {
   protected String filterId;
 
   public GetFilterCmd(String filterId) {

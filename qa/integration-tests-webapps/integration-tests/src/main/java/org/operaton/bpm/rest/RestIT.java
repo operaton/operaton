@@ -177,13 +177,13 @@ class RestIT extends AbstractWebIntegrationTest {
     String filterId = response.getBody().getObject().getString("id");
 
     // Check the filter resource (list)
-    String resourcePathList = appBasePath + FILTER_PATH + "/" + filterId + "/list";
+    String resourcePathList = "%s%s/%s/list".formatted(appBasePath, FILTER_PATH, filterId);
     log.info("Checking {}", resourcePathList);
     assertMediaTypesOfResource(resourcePathList, true);
 
 
     // Check the filter resource (singleResult)
-    String resourcePathSingleResult = appBasePath + FILTER_PATH + "/" + filterId + "/singleResult";
+    String resourcePathSingleResult = "%s%s/%s/singleResult".formatted(appBasePath, FILTER_PATH, filterId);
     log.info("Checking {}", resourcePathSingleResult);
     assertMediaTypesOfResource(resourcePathSingleResult, true);
 
@@ -364,7 +364,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(200);
     // use startsWith cause sometimes server also returns quality parameters
     assertThat(actual)
-            .as("Expected: " + expected + " Actual: " + actual)
+            .as("Expected: %s Actual: %s".formatted(expected, actual))
             .startsWith(expected);
   }
 }

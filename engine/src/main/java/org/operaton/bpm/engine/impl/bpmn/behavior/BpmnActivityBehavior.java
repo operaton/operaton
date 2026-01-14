@@ -83,15 +83,26 @@ public class BpmnActivityBehavior {
    *          Whether or not to check conditions before determining whether or
    *          not to take a transition.
    */
-  protected void performOutgoingBehavior(ActivityExecution execution,
-          boolean checkConditions) {
-
+  protected void performOutgoingBehavior(ActivityExecution execution, boolean checkConditions) {
     LOG.leavingActivity(execution.getActivity().getId());
 
     String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
-    List<PvmTransition> transitionsToTake = new ArrayList<>();
-
     List<PvmTransition> outgoingTransitions = execution.getActivity().getOutgoingTransitions();
+    List<PvmTransition> transitionsToTake = findTransitionsToTake(execution, checkConditions, defaultSequenceFlow,
+        outgoingTransitions);
+
+    if (transitionsToTake.size() == 1) {
+      execution.leaveActivityViaTransition(transitionsToTake.get(0));
+    } else if (!transitionsToTake.isEmpty()) {
+      execution.leaveActivityViaTransitions(transitionsToTake, Arrays.asList(execution));
+    } else {
+      handleNoTransitions(execution, defaultSequenceFlow, outgoingTransitions);
+    }
+  }
+
+  protected List<PvmTransition> findTransitionsToTake(ActivityExecution execution, boolean checkConditions,
+      String defaultSequenceFlow, List<PvmTransition> outgoingTransitions) {
+    List<PvmTransition> transitionsToTake = new ArrayList<>();
     for (PvmTransition outgoingTransition : outgoingTransitions) {
       if (defaultSequenceFlow == null || !outgoingTransition.getId().equals(defaultSequenceFlow)) {
         Condition condition = (Condition) outgoingTransition.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
@@ -100,36 +111,29 @@ public class BpmnActivityBehavior {
         }
       }
     }
+    return transitionsToTake;
+  }
 
-    if (transitionsToTake.size() == 1) {
-
-      execution.leaveActivityViaTransition(transitionsToTake.get(0));
-
-    } else if (!transitionsToTake.isEmpty()) {
-      execution.leaveActivityViaTransitions(transitionsToTake, Arrays.asList(execution));
-    } else {
-
-      if (defaultSequenceFlow != null) {
-        PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
-        if (defaultTransition != null) {
-          execution.leaveActivityViaTransition(defaultTransition);
-        } else {
-          throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
-        }
-
-      } else if (!outgoingTransitions.isEmpty()) {
-        throw LOG.missingConditionalFlowException(execution.getActivity().getId());
-
+  protected void handleNoTransitions(ActivityExecution execution, String defaultSequenceFlow,
+      List<PvmTransition> outgoingTransitions) {
+    if (defaultSequenceFlow != null) {
+      PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
+      if (defaultTransition != null) {
+        execution.leaveActivityViaTransition(defaultTransition);
       } else {
+        throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
+      }
 
-        if (((ActivityImpl) execution.getActivity()).isCompensationHandler() && isAncestorCompensationThrowing(execution)) {
+    } else if (!outgoingTransitions.isEmpty()) {
+      throw LOG.missingConditionalFlowException(execution.getActivity().getId());
 
-         execution.endCompensation();
-
-        } else {
-          LOG.missingOutgoingSequenceFlow(execution.getActivity().getId());
-          execution.end(true);
-        }
+    } else {
+      if (((ActivityImpl) execution.getActivity()).isCompensationHandler()
+          && isAncestorCompensationThrowing(execution)) {
+        execution.endCompensation();
+      } else {
+        LOG.missingOutgoingSequenceFlow(execution.getActivity().getId());
+        execution.end(true);
       }
     }
   }

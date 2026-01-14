@@ -49,8 +49,8 @@ public final class TypeHelper {
     }
     if (typeParameters.length != expectedTypeParametersCount) {
       throw new IllegalArgumentException(
-          "Cannot create TypeBindings for class " + erasedType.getName() + " with " + expectedTypeParametersCount
-              + " type parameter: class expects " + typeParameters.length + " type parameters.");
+          "Cannot create TypeBindings for class %s with %d type parameter: class expects %d type parameters.".formatted(
+              erasedType.getName(), expectedTypeParametersCount, typeParameters.length));
     }
     return true;
   }

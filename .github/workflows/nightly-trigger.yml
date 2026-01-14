@@ -127,7 +127,6 @@ jobs:
               "inputs": {
                 "profile": "max",
                 "reports": "true",
-                "runner": "mvnd",
                 "skip_tests": "false"
               }
             }' \

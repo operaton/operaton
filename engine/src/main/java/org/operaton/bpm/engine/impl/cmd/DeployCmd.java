@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.ByteArrayInputStream;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -79,9 +77,7 @@ import org.operaton.bpm.model.cmmn.instance.Case;
  * @author Thorben Lindhauer
  * @author Daniel Meyer
  */
-public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeployCmd implements Command<DeploymentWithDefinitions> {
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
@@ -480,8 +476,8 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
     return result;
   }
 
-  protected List<? extends ProcessDefinition>   getDeployedProcesses(CommandContext commandContext, DeploymentWithDefinitions deployment) {
-    List<? extends ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
+  protected List<ProcessDefinition> getDeployedProcesses(CommandContext commandContext, DeploymentWithDefinitions deployment) {
+    List<ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
     if (deployedProcessDefinitions == null) {
       // existing deployment
       ProcessDefinitionManager manager = commandContext.getProcessDefinitionManager();
@@ -501,8 +497,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
     processDefinitionKeys.addAll(parseProcessDefinitionKeys(ignoredResources));
 
     // get process definition keys for updated process definitions
-    for (ProcessDefinition processDefinition :
-        getDeployedProcesses(commandContext, deploymentToRegister)) {
+    for (ProcessDefinition processDefinition : getDeployedProcesses(commandContext, deploymentToRegister)) {
       if (processDefinition.getVersion() > 1) {
         processDefinitionKeys.add(processDefinition.getKey());
       }

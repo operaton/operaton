@@ -97,10 +97,8 @@ public abstract class BaseLogger {
       logger.delegateLogger = LoggerFactory.getLogger(name);
 
       return logger;
-
     } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-      throw new RuntimeException("Unable to instantiate logger '%s'".formatted(loggerClass.getName()), e);
-
+      throw new IllegalStateException("Unable to instantiate logger '%s'".formatted(loggerClass.getName()), e);
     }
   }
 

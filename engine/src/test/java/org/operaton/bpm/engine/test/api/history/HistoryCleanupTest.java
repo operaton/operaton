@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -104,8 +106,17 @@ class HistoryCleanupTest {
   private static final int NUMBER_OF_THREADS = 3;
   private static final String USER_ID = "demo";
 
-  private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
   private static final Date targetDate = new Date(Instant.parse("2025-01-01T00:00:00Z").toEpochMilli());
+
+  private static Date parseDate(String dateString) {
+    try {
+      LocalDateTime localDateTime = LocalDateTime.parse(dateString, sdf);
+      return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    } catch (Exception e) {
+      throw new RuntimeException("Failed to parse date: " + dateString, e);
+    }
+  }
 
   protected String defaultStartTime;
   protected String defaultEndTime;
@@ -1107,7 +1118,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're outside batch window, batch window passes midnight
-    ClockUtil.setCurrentTime(sdf.parse("2019-05-28T01:10:00"));  // 01:10
+    ClockUtil.setCurrentTime(parseDate("2019-05-28T01:10:00"));  // 01:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();
@@ -1140,7 +1151,7 @@ class HistoryCleanupTest {
     prepareData(5);
 
     //we're within batch window, but batch window passes midnight
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T00:10:00"));  // 00:10
+    ClockUtil.setCurrentTime(parseDate("2018-05-14T00:10:00"));  // 00:10
     processEngineConfiguration.setHistoryCleanupBatchWindowStartTime("23:00CET");
     processEngineConfiguration.setHistoryCleanupBatchWindowEndTime("01:00CET");
     processEngineConfiguration.initHistoryCleanup();

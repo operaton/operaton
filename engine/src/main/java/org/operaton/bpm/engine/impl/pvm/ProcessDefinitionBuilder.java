@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.ExecutionListener;
 import org.operaton.bpm.engine.impl.core.model.CoreModelElement;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityBehavior;
@@ -134,7 +135,7 @@ public class ProcessDefinitionBuilder {
       String destinationActivityName = (String) unresolvedTransition[1];
       ActivityImpl destination = processDefinition.findActivity(destinationActivityName);
       if (destination == null) {
-        throw new RuntimeException("destination '%s' not found.  (referenced from transition in '%s')".formatted(destinationActivityName, trans.getSource().getId()));
+        throw new ProcessEngineException("destination '%s' not found. (referenced from transition in '%s')".formatted(destinationActivityName, trans.getSource().getId()));
       }
       trans.setDestination(destination);
     }

@@ -28,8 +28,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<UpdateProcessInstancesSuspendStateBatchConfiguration> {
 
-  public static final UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter INSTANCE = new UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter();
-
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";
   public static final String SUSPENDING = "suspended";

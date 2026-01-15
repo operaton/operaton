@@ -33,6 +33,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 public class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJobHandler<UpdateProcessInstancesSuspendStateBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_UPDATE_SUSPENSION_STATE);
+  private static final UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter JSON_CONVERTER =
+      new UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -40,7 +42,7 @@ public class UpdateProcessInstancesSuspendStateJobHandler extends AbstractBatchJ
   }
 
   protected UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return UpdateProcessInstancesSuspendStateBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

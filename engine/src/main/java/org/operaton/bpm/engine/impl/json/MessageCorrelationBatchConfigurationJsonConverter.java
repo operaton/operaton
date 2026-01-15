@@ -29,8 +29,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class MessageCorrelationBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<MessageCorrelationBatchConfiguration> {
 
-  public static final MessageCorrelationBatchConfigurationJsonConverter INSTANCE = new MessageCorrelationBatchConfigurationJsonConverter();
-
   public static final String MESSAGE_NAME = "messageName";
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";

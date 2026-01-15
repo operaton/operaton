@@ -49,6 +49,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_SET_REMOVAL_TIME);
   public static final int MAX_CHUNK_SIZE = 500;
+  private static final SetRemovalTimeJsonConverter JSON_CONVERTER = new SetRemovalTimeJsonConverter();
 
   @Override
   public void executeHandler(SetRemovalTimeBatchConfiguration configuration,
@@ -230,7 +231,7 @@ public class ProcessSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Set
 
   @Override
   protected SetRemovalTimeJsonConverter getJsonConverterInstance() {
-    return SetRemovalTimeJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

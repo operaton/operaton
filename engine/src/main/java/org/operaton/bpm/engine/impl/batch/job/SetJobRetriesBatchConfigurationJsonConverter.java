@@ -33,8 +33,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class SetJobRetriesBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<SetJobRetriesBatchConfiguration> {
 
-  public static final SetJobRetriesBatchConfigurationJsonConverter INSTANCE = new SetJobRetriesBatchConfigurationJsonConverter();
-
   public static final String JOB_IDS = "jobIds";
   public static final String JOB_ID_MAPPINGS = "jobIdMappings";
   public static final String RETRIES = "retries";

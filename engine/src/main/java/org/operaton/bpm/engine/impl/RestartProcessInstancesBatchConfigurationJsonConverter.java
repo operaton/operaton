@@ -30,8 +30,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class RestartProcessInstancesBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<RestartProcessInstancesBatchConfiguration> {
 
-  public static final RestartProcessInstancesBatchConfigurationJsonConverter INSTANCE = new RestartProcessInstancesBatchConfigurationJsonConverter();
-
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";
   public static final String INSTRUCTIONS = "instructions";

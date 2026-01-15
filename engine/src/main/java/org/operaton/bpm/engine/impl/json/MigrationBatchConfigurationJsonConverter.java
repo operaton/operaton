@@ -29,8 +29,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class MigrationBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<MigrationBatchConfiguration> {
 
-  public static final MigrationBatchConfigurationJsonConverter INSTANCE = new MigrationBatchConfigurationJsonConverter();
-
   public static final String MIGRATION_PLAN = "migrationPlan";
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";

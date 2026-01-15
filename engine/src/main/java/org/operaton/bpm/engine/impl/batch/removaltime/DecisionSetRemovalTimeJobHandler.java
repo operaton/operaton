@@ -41,6 +41,7 @@ public class DecisionSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Se
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(
       Batch.TYPE_DECISION_SET_REMOVAL_TIME);
+  private static final SetRemovalTimeJsonConverter JSON_CONVERTER = new SetRemovalTimeJsonConverter();
 
   public void executeHandler(SetRemovalTimeBatchConfiguration batchConfiguration,
       ExecutionEntity execution,
@@ -180,7 +181,7 @@ public class DecisionSetRemovalTimeJobHandler extends AbstractBatchJobHandler<Se
   }
 
   protected SetRemovalTimeJsonConverter getJsonConverterInstance() {
-    return SetRemovalTimeJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

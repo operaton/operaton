@@ -145,7 +145,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void testSingleTaskContentType() throws Exception {
+  void testSingleTaskContentType() {
     // get id of first task
     String taskId = getFirstTask().getString("id");
 
@@ -155,7 +155,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void testTaskFilterResultContentType() throws Exception {
+  void testTaskFilterResultContentType() {
     // create filter for first task, so single result will not throw an exception
     JSONObject firstTask = getFirstTask();
     Map<String, Object> query = new HashMap<>();
@@ -194,7 +194,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void shouldSerializeDateWithDefinedFormat() throws Exception {
+  void shouldSerializeDateWithDefinedFormat() {
     // when
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + SCHEMA_LOG_PATH)
             .header(ACCEPT, APPLICATION_JSON)
@@ -217,7 +217,7 @@ class RestIT extends AbstractWebIntegrationTest {
    * polymorphic serialization of historic details
    */
   @Test
-  void testPolymorphicSerialization() throws Exception {
+  void testPolymorphicSerialization() {
     JSONObject historicVariableUpdate = getFirstHistoricVariableUpdates();
 
     // variable update specific property
@@ -245,7 +245,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void testComplexObjectJacksonSerialization() throws Exception {
+  void testComplexObjectJacksonSerialization() {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH + "/statistics")
             .queryString("incidents", "true")
             .header(ACCEPT, APPLICATION_JSON)
@@ -307,7 +307,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(400);
   }
 
-  protected JSONObject getFirstTask() throws Exception {
+  protected JSONObject getFirstTask() {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -316,7 +316,7 @@ class RestIT extends AbstractWebIntegrationTest {
     return tasks.getJSONObject(0);
   }
 
-  protected JSONObject getFirstHistoricVariableUpdates() throws Exception {
+  protected JSONObject getFirstHistoricVariableUpdates() {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + HISTORIC_DETAIL_PATH)
             .queryString("variableUpdates", "true")
             .header(ACCEPT, APPLICATION_JSON)

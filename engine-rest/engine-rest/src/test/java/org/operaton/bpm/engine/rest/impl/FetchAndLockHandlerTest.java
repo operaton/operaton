@@ -519,4 +519,29 @@ class FetchAndLockHandlerTest {
     ClockUtil.setCurrentTime(newDate);
   }
 
+  @Test
+  void shouldLogExceptionDuringAcquireAndContinueRunning() {
+    // given
+    // Make acquire() throw an exception the first time, then work normally
+    doThrow(new RuntimeException("Test exception"))
+      .doNothing()
+      .when(handler).acquire();
+    
+    handler.start();
+    
+    // when - give it time to execute the loop at least twice
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    
+    // then
+    // Verify acquire was called multiple times (proving it continued after exception)
+    verify(handler, atLeast(2)).acquire();
+    
+    // Clean up
+    handler.shutdown();
+  }
+
 }

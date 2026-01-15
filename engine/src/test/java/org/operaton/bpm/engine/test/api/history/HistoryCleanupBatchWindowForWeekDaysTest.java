@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -115,7 +114,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   public Date endDateForCheckWithDefaultValues;
 
   @Parameters
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         {  parseDate("2018-05-14T10:00:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //monday
         {  parseDate("2018-05-14T23:00:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //monday

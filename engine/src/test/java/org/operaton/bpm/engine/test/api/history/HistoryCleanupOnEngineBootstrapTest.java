@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

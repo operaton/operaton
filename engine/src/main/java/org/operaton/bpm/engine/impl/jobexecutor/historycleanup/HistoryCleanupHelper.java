@@ -91,7 +91,9 @@ public final class HistoryCleanupHelper {
         LocalDateTime parsedDateTime = LocalDateTime.parse(todayString + time, TIME_FORMAT_WITHOUT_SECONDS);
         return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
       } catch (DateTimeParseException e) {
-        throw new ParseException(e.getMessage(), e.getErrorIndex());
+        // getErrorIndex() may return -1 if the error position is unknown, use 0 as fallback
+        int errorIndex = e.getErrorIndex() >= 0 ? e.getErrorIndex() : 0;
+        throw new ParseException(e.getMessage(), errorIndex);
       }
     }
   }

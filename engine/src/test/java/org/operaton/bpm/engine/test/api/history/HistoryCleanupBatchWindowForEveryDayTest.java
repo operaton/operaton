@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -102,7 +101,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   public Date currentDate;
 
   @Parameters
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         // inside the batch window on the same day
         { "22:00", "23:00", parseDate("2017-09-06T22:00:00"), parseDate("2017-09-06T23:00:00"), parseDate("2017-09-06T22:15:00")},

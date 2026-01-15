@@ -39,6 +39,7 @@ public class ControllableThread extends Thread {
       wait();
     } catch (InterruptedException e) {
       e.printStackTrace();
+      Thread.currentThread().interrupt();
     }
   }
 
@@ -49,6 +50,7 @@ public class ControllableThread extends Thread {
       this.wait();
     } catch (InterruptedException e) {
       e.printStackTrace();
+      Thread.currentThread().interrupt();
     }
   }
 

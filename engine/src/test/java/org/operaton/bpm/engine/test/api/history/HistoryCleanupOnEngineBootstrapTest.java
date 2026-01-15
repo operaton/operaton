@@ -20,6 +20,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -64,7 +65,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     try {
       LocalDateTime localDateTime = LocalDateTime.parse(dateString, sdf);
       return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    } catch (Exception e) {
+    } catch (DateTimeParseException e) {
       throw new RuntimeException("Failed to parse date: " + dateString, e);
     }
   }

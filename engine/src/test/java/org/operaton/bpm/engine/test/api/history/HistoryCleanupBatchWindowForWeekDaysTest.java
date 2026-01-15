@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.api.history;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -93,7 +94,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
     try {
       LocalDateTime localDateTime = LocalDateTime.parse(dateString, sdf);
       return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
-    } catch (Exception e) {
+    } catch (DateTimeParseException e) {
       throw new RuntimeException("Failed to parse date: " + dateString, e);
     }
   }

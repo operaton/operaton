@@ -168,13 +168,9 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   }
 
   @Override
-  public ElProvider toElProvider() {
+  public synchronized ElProvider toElProvider() {
     if (elProvider == null) {
-      synchronized (this) {
-        if (elProvider == null) {
-          elProvider = createElProvider();
-        }
-      }
+        elProvider = createElProvider();
     }
     return elProvider;
   }

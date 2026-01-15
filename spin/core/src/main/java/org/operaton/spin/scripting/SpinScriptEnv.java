@@ -23,7 +23,6 @@ import javax.script.ScriptEngine;
 
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.spin.SpinScriptException;
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
@@ -36,7 +35,7 @@ import org.operaton.spin.impl.logging.SpinLogger;
  */
 public final class SpinScriptEnv {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   private static final String ENV_PATH_TEMPLATE = "script/env/%s/spin.%s";
 

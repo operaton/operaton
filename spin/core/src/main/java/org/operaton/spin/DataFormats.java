@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.Set;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.spi.DataFormat;
@@ -41,7 +40,7 @@ import org.operaton.spin.xml.SpinXmlElement;
 @SuppressWarnings("java:S3740")
 public class DataFormats {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   public static final String JSON_DATAFORMAT_NAME = "application/json";
 

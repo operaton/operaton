@@ -72,6 +72,7 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_PRIMITIVE
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockBatch;
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
@@ -881,7 +882,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     .when()
       .post(COMPLETE_EXTERNAL_TASK_URL);
 
-    verify(externalTaskService).complete("anExternalTaskId", "aWorkerId", null, null);
+    verify(externalTaskService).complete("anExternalTaskId", "aWorkerId", emptyMap(), emptyMap());
     verifyNoMoreInteractions(externalTaskService);
   }
 
@@ -920,7 +921,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
                 .serializedValue("val3")
                 .serializationFormat("aFormat")
                 .objectTypeName("aRootType"))),
-        eq((Map<String, Object>) null));
+        eq(emptyMap()));
 
     verifyNoMoreInteractions(externalTaskService);
   }
@@ -951,7 +952,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     verify(externalTaskService).complete(
         eq("anExternalTaskId"),
         eq("aWorkerId"),
-        eq((Map<String, Object>) null),
+        eq(emptyMap()),
         argThat(EqualsVariableMap.matches()
           .matcher("var1", EqualsUntypedValue.matcher().value("val1"))
           .matcher("var2", EqualsPrimitiveValue.stringValue("val2"))
@@ -1149,7 +1150,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     .when()
       .post(HANDLE_EXTERNAL_TASK_FAILURE_URL);
 
-    verify(externalTaskService).handleFailure("anExternalTaskId", "aWorkerId", "anErrorMessage", null, 5, 12345, null, null);
+    verify(externalTaskService).handleFailure("anExternalTaskId", "aWorkerId", "anErrorMessage", null, 5, 12345, emptyMap(), emptyMap());
     verifyNoMoreInteractions(externalTaskService);
   }
 
@@ -1172,7 +1173,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
         .when()
         .post(HANDLE_EXTERNAL_TASK_FAILURE_URL);
 
-    verify(externalTaskService).handleFailure("anExternalTaskId", "aWorkerId", "anErrorMessage","aStackTrace", 5, 12345, null, null);
+    verify(externalTaskService).handleFailure("anExternalTaskId", "aWorkerId", "anErrorMessage","aStackTrace", 5, 12345, emptyMap(), emptyMap());
     verifyNoMoreInteractions(externalTaskService);
   }
 
@@ -1279,7 +1280,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
         eq(5),
         eq(12345L),
         argThat(EqualsVariableMap.matches().matcher("var1", EqualsUntypedValue.matcher().value("val1"))),
-        eq((Map<String, Object>) null));
+        eq(emptyMap()));
 
     verifyNoMoreInteractions(externalTaskService);
   }
@@ -1311,7 +1312,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
         eq(null),
         eq(5),
         eq(12345L),
-        eq((Map<String, Object>) null),
+        eq(emptyMap()),
         argThat(EqualsVariableMap.matches().matcher("var1", EqualsUntypedValue.matcher().value("val1"))));
 
     verifyNoMoreInteractions(externalTaskService);
@@ -1333,7 +1334,7 @@ public class ExternalTaskRestServiceInteractionTest extends AbstractRestServiceT
     .when()
       .post(HANDLE_EXTERNAL_TASK_BPMN_ERROR_URL);
 
-    verify(externalTaskService).handleBpmnError("anExternalTaskId", "aWorkerId", "anErrorCode", null, null);
+    verify(externalTaskService).handleBpmnError("anExternalTaskId", "aWorkerId", "anErrorCode", null, emptyMap());
     verifyNoMoreInteractions(externalTaskService);
   }
 

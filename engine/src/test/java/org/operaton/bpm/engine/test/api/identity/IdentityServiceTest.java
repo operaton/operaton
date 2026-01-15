@@ -204,15 +204,9 @@ class IdentityServiceTest {
 
     User secondUser = identityService.newUser("testuser");
 
-    try {
-      identityService.saveUser(secondUser);
-      fail("BadUserRequestException is expected");
-    } catch (Exception ex) {
-      if (!(ex instanceof BadUserRequestException)) {
-        fail("BadUserRequestException is expected, but another exception was received:  " + ex);
-      }
-      assertThat(ex.getMessage()).isEqualTo("The user already exists");
-    }
+    assertThatThrownBy(() -> identityService.saveUser(secondUser))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("The user already exists");
   }
 
   @Test
@@ -281,15 +275,9 @@ class IdentityServiceTest {
 
     Group secondGroup = identityService.newGroup("greatGroup");
 
-    try {
-      identityService.saveGroup(secondGroup);
-      fail("BadUserRequestException is expected");
-    } catch (Exception ex) {
-      if (!(ex instanceof BadUserRequestException)) {
-        fail("BadUserRequestException is expected, but another exception was received:  " + ex);
-      }
-      assertThat(ex.getMessage()).isEqualTo("The group already exists");
-    }
+    assertThatThrownBy(() -> identityService.saveGroup(secondGroup))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("The group already exists");
   }
 
   @Test
@@ -707,7 +695,7 @@ class IdentityServiceTest {
 
   @Test
   @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
-  void testUnsuccessfulAttemptsResultInBlockedUser() throws Exception {
+  void testUnsuccessfulAttemptsResultInBlockedUser() {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");

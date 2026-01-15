@@ -1309,12 +1309,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     }
 
     parsedBatchOperationsForHistoryCleanup = new HashMap<>();
-    if (batchOperationsForHistoryCleanup != null) {
-      for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
-        String operation = batchOperationEntry.getKey();
-        Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
-        parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
-      }
+    for (var batchOperationEntry: batchOperationsForHistoryCleanup.entrySet()) {
+      String operation = batchOperationEntry.getKey();
+      Integer historyTTL = ParseUtil.parseHistoryTimeToLive(batchOperationEntry.getValue());
+      parsedBatchOperationsForHistoryCleanup.put(operation, historyTTL);
     }
   }
 

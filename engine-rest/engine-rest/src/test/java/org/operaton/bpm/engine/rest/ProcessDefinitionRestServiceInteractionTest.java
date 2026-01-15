@@ -89,6 +89,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockSerializedVariables;
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
@@ -556,7 +557,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
     .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, emptyMap());
   }
 
   @Test
@@ -666,7 +667,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", emptyMap());
   }
 
   @Test
@@ -2878,7 +2879,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
     .when().post(SUBMIT_FORM_BY_KEY_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, emptyMap());
   }
 
   @Test
@@ -2926,7 +2927,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .when().post(SUBMIT_FORM_BY_KEY_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", emptyMap());
   }
 
   @Test

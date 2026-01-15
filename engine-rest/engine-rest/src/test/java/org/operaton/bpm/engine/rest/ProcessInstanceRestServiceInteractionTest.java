@@ -111,6 +111,7 @@ import static org.operaton.bpm.engine.rest.util.DateTimeUtils.DATE_FORMAT_WITH_T
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static io.restassured.RestAssured.given;
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -4495,7 +4496,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         null,
         mockedProcessInstanceQuery,
         null,
-        null);
+      emptyMap());
 
     verifyBatchJson(response.asString());
   }
@@ -4536,7 +4537,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         null,
         null,
         mockedHistoricProcessInstanceQuery,
-        null);
+      emptyMap());
 
     verifyBatchJson(response.asString());
   }
@@ -4567,7 +4568,7 @@ public class ProcessInstanceRestServiceInteractionTest extends AbstractRestServi
         processInstanceIds,
         null,
         null,
-        null);
+        emptyMap());
 
     verifyBatchJson(response.asString());
   }

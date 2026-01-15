@@ -104,6 +104,7 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -916,13 +917,13 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitTaskForm(EXAMPLE_TASK_ID, null);
+    verify(formServiceMock).submitTaskForm(EXAMPLE_TASK_ID, emptyMap());
   }
 
   @Test
   void testSubmitFormWithVariablesInReturn() {
     VariableMap variables = MockProvider.createMockSerializedVariables();
-    when(formServiceMock.submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, null, false)).thenReturn(variables);
+    when(formServiceMock.submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false)).thenReturn(variables);
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withVariablesInReturn", true);
@@ -954,7 +955,7 @@ public class TaskRestServiceInteractionTest extends
               equalTo(MockProvider.FORMAT_APPLICATION_JSON))
     .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, null, false);
+    verify(formServiceMock).submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false);
   }
 
   @Test
@@ -1788,7 +1789,7 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(COMPLETE_TASK_URL);
 
-    verify(taskServiceMock).complete(EXAMPLE_TASK_ID, null);
+    verify(taskServiceMock).complete(EXAMPLE_TASK_ID, emptyMap());
   }
 
   @Test
@@ -1819,7 +1820,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testCompleteTaskWithVariablesInReturn() {
     VariableMap variables = MockProvider.createMockSerializedVariables();
-    when(taskServiceMock.completeWithVariablesInReturn(EXAMPLE_TASK_ID, null, false)).thenReturn(variables);
+    when(taskServiceMock.completeWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false)).thenReturn(variables);
 
     Map<String, Object> json = new HashMap<>();
     json.put("withVariablesInReturn", Boolean.TRUE);
@@ -2228,7 +2229,7 @@ public class TaskRestServiceInteractionTest extends
     given().pathParam("id", NON_EXISTING_ID)
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
-      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("type", equalTo("TaskNotFoundException"))
       .body("message", equalTo("No matching task with id " + NON_EXISTING_ID))
       .when().get(SINGLE_TASK_URL);
   }
@@ -3402,7 +3403,7 @@ public class TaskRestServiceInteractionTest extends
     .expect()
       .statusCode(Status.NOT_FOUND.getStatusCode())
       .contentType(ContentType.JSON)
-      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("type", equalTo("TaskNotFoundException"))
       .body("message", containsString("No matching task with id "+EXAMPLE_TASK_ID))
     .when()
         .put(SINGLE_TASK_URL);
@@ -3647,7 +3648,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(HANDLE_BPMN_ERROR_URL);
 
-    verify(taskServiceMock).handleBpmnError("aTaskId", "anErrorCode", "anErrorMessage", null);
+    verify(taskServiceMock).handleBpmnError("aTaskId", "anErrorCode", "anErrorMessage", emptyMap());
     verifyNoMoreInteractions(taskServiceMock);
   }
 
@@ -3789,7 +3790,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(HANDLE_BPMN_ESCALATION_URL);
 
-    verify(taskServiceMock).handleEscalation("aTaskId", "anEscalationCode", null);
+    verify(taskServiceMock).handleEscalation("aTaskId", "anEscalationCode", emptyMap());
     verifyNoMoreInteractions(taskServiceMock);
   }
 

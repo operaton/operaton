@@ -37,18 +37,15 @@ public class OperatonApplicationServerConfigurator implements InitializingBean {
   }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
-    ServletContext servletContext = null;
+  public void afterPropertiesSet() {
     try {
-      servletContext = (ServletContext) applicationContext.getBean("servletContext");
-    } catch (Exception e) {
-    }
-
-    if (servletContext != null) {
+      ServletContext servletContext = (ServletContext) applicationContext.getBean("servletContext");
       String serverInfo = servletContext.getServerInfo();
       if (serverInfo != null) {
         ((ManagementServiceImpl) processEngine.getManagementService()).addApplicationServerInfoToTelemetry(serverInfo);
       }
+    } catch (Exception ignored) {
+      // ignore
     }
   }
 }

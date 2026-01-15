@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -39,8 +37,8 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.operaton.bpm.engine.test.util.DateTestUtil.formatDate;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MigrationTimerBoundryEventTest {
 

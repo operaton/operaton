@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -73,7 +75,16 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   private ManagementService managementService;
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+  private static Date parseDate(String dateString) {
+    try {
+      LocalDateTime localDateTime = LocalDateTime.parse(dateString, sdf);
+      return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    } catch (DateTimeParseException e) {
+      throw new RuntimeException("Failed to parse date: " + dateString, e);
+    }
+  }
 
   @Parameter(0)
   public String startTime;
@@ -91,22 +102,22 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
   public Date currentDate;
 
   @Parameters
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
         // inside the batch window on the same day
-        { "22:00", "23:00", sdf.parse("2017-09-06T22:00:00"), sdf.parse("2017-09-06T23:00:00"), sdf.parse("2017-09-06T22:15:00")},
+        { "22:00", "23:00", parseDate("2017-09-06T22:00:00"), parseDate("2017-09-06T23:00:00"), parseDate("2017-09-06T22:15:00")},
         // inside the batch window on the next day
-        { "23:00", "01:00", sdf.parse("2017-09-06T23:00:00"), sdf.parse("2017-09-07T01:00:00"), sdf.parse("2017-09-07T00:15:00")},
+        { "23:00", "01:00", parseDate("2017-09-06T23:00:00"), parseDate("2017-09-07T01:00:00"), parseDate("2017-09-07T00:15:00")},
         // batch window 24h
-        { "00:00", "00:00", sdf.parse("2017-09-06T00:00:00"), sdf.parse("2017-09-07T00:00:00"), sdf.parse("2017-09-06T15:00:00")},
+        { "00:00", "00:00", parseDate("2017-09-06T00:00:00"), parseDate("2017-09-07T00:00:00"), parseDate("2017-09-06T15:00:00")},
         // batch window 24h
-        { "00:00", "00:00", sdf.parse("2017-09-06T00:00:00"), sdf.parse("2017-09-07T00:00:00"), sdf.parse("2017-09-06T00:00:00")},
+        { "00:00", "00:00", parseDate("2017-09-06T00:00:00"), parseDate("2017-09-07T00:00:00"), parseDate("2017-09-06T00:00:00")},
         // before the batch window on the same day
-        { "22:00", "23:00", sdf.parse("2017-09-06T22:00:00"), sdf.parse("2017-09-06T23:00:00"), sdf.parse("2017-09-06T21:15:00")},
+        { "22:00", "23:00", parseDate("2017-09-06T22:00:00"), parseDate("2017-09-06T23:00:00"), parseDate("2017-09-06T21:15:00")},
         // after the batch window on the same day
-        { "22:00", "23:00", sdf.parse("2017-09-07T22:00:00"), sdf.parse("2017-09-07T23:00:00"), sdf.parse("2017-09-06T23:15:00")},
+        { "22:00", "23:00", parseDate("2017-09-07T22:00:00"), parseDate("2017-09-07T23:00:00"), parseDate("2017-09-06T23:15:00")},
         // after the batch window on the next day
-        { "22:00", "23:00", sdf.parse("2017-09-07T22:00:00"), sdf.parse("2017-09-07T23:00:00"), sdf.parse("2017-09-07T00:15:00")} });
+        { "22:00", "23:00", parseDate("2017-09-07T22:00:00"), parseDate("2017-09-07T23:00:00"), parseDate("2017-09-07T00:15:00")} });
   }
 
   @BeforeEach

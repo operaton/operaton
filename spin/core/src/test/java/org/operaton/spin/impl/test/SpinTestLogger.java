@@ -18,14 +18,15 @@ package org.operaton.spin.impl.test;
 
 import org.operaton.commons.logging.BaseLogger;
 import org.operaton.spin.SpinScriptException;
-import org.operaton.spin.impl.logging.SpinLogger;
+
+import static org.operaton.spin.impl.logging.SpinLogger.PROJECT_CODE;
 
 /**
  * Logger for test cases.
  *
  * @author Sebastian Menski
  */
-public class SpinTestLogger extends SpinLogger {
+public class SpinTestLogger extends BaseLogger {
 
   public static final SpinTestLogger TEST_LOGGER = BaseLogger.createLogger(SpinTestLogger.class, PROJECT_CODE, "org.operaton.spin.test", "02");
 

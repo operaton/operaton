@@ -140,6 +140,7 @@ class DeadlockTest {
           try {
             latch.await();
           } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             fail(e);
           }
 
@@ -171,6 +172,7 @@ class DeadlockTest {
           try {
             latch.await();
           } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             fail(e);
           }
 

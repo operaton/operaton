@@ -128,6 +128,7 @@ public abstract class ConcurrencyTestHelper {
             try {
               wait(timeout);
             } catch (InterruptedException e) {
+              Thread.currentThread().interrupt();
               if (!reportFailure || exception == null) {
                 fail("unexpected interruption");
               }
@@ -153,6 +154,7 @@ public abstract class ConcurrencyTestHelper {
       try {
         executingThread.join();
       } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
         if (!reportFailure || exception == null) {
           fail("Unexpected interruption");
         }
@@ -179,6 +181,7 @@ public abstract class ConcurrencyTestHelper {
           notifyAll();
           wait();
         } catch (InterruptedException e) {
+          Thread.currentThread().interrupt();
           if (!reportFailure || exception == null) {
             fail("Unexpected interruption");
           }

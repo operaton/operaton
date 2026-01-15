@@ -62,6 +62,9 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
                 "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P %s -i /dev/stdin").formatted(
                     dbName, dbName, dbName, dbName, password));
         } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             throw new RuntimeException(e);
         }
     }

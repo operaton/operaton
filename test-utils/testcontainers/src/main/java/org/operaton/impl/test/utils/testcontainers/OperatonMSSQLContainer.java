@@ -61,7 +61,10 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
                 "ALTER LOGIN sa WITH DEFAULT_DATABASE = %s\" | " +
                 "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P %s -i /dev/stdin").formatted(
                     dbName, dbName, dbName, dbName, password));
-        } catch (IOException | InterruptedException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

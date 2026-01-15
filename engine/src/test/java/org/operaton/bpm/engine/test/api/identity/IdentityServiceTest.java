@@ -30,6 +30,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -202,8 +203,10 @@ class IdentityServiceTest {
     identityService.saveUser(user);
 
     User secondUser = identityService.newUser("testuser");
-    identityService.saveUser(secondUser);
-    fail("BadUserRequestException is expected");
+
+    assertThatThrownBy(() -> identityService.saveUser(secondUser))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("The user already exists");
   }
 
   @Test
@@ -271,8 +274,10 @@ class IdentityServiceTest {
     identityService.saveGroup(group);
 
     Group secondGroup = identityService.newGroup("greatGroup");
-    identityService.saveGroup(secondGroup);
-    fail("BadUserRequestException is expected");
+
+    assertThatThrownBy(() -> identityService.saveGroup(secondGroup))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("The group already exists");
   }
 
   @Test

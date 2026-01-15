@@ -56,6 +56,7 @@ public abstract class AcquireJobsRunnable implements Runnable {
     }
     catch (InterruptedException e) {
       LOG.jobExecutionWaitInterrupted();
+      Thread.currentThread().interrupt();
     }
     finally {
       isWaiting.set(false);

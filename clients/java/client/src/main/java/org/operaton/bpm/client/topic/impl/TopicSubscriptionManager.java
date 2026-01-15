@@ -252,6 +252,7 @@ public class TopicSubscriptionManager implements Runnable {
       } catch (InterruptedException e) {
         // we ignore and just continue to execute tasks
         LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
+        Thread.currentThread().interrupt();
       } finally {
         ACQUISITION_MONITOR.unlock();
       }

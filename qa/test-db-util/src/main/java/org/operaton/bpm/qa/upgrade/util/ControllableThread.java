@@ -59,6 +59,7 @@ public class ControllableThread extends Thread {
       join();
     } catch (InterruptedException e) {
       e.printStackTrace();
+      Thread.currentThread().interrupt();
     }
   }
 }

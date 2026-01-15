@@ -16,6 +16,9 @@
  */
 package org.operaton.spin.impl.logging;
 
+import java.io.IOException;
+import java.util.Collection;
+
 import org.operaton.commons.logging.BaseLogger;
 import org.operaton.spin.SpinFileNotFoundException;
 import org.operaton.spin.SpinRuntimeException;
@@ -24,9 +27,6 @@ import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.spi.DataFormatConfigurator;
 import org.operaton.spin.spi.DataFormatProvider;
 import org.operaton.spin.spi.SpinDataFormatException;
-
-import java.io.IOException;
-import java.util.Collection;
 
 /**
  * The Logger for the core api.

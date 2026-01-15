@@ -87,9 +87,9 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
-import static java.util.Collections.emptyMap;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockSerializedVariables;
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;

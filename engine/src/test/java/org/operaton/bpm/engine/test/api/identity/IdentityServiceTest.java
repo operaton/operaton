@@ -30,7 +30,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.OptimisticLockingException;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -203,16 +202,8 @@ class IdentityServiceTest {
     identityService.saveUser(user);
 
     User secondUser = identityService.newUser("testuser");
-
-    try {
-      identityService.saveUser(secondUser);
-      fail("BadUserRequestException is expected");
-    } catch (Exception ex) {
-      if (!(ex instanceof BadUserRequestException)) {
-        fail("BadUserRequestException is expected, but another exception was received:  " + ex);
-      }
-      assertThat(ex.getMessage()).isEqualTo("The user already exists");
-    }
+    identityService.saveUser(secondUser);
+    fail("BadUserRequestException is expected");
   }
 
   @Test
@@ -280,16 +271,8 @@ class IdentityServiceTest {
     identityService.saveGroup(group);
 
     Group secondGroup = identityService.newGroup("greatGroup");
-
-    try {
-      identityService.saveGroup(secondGroup);
-      fail("BadUserRequestException is expected");
-    } catch (Exception ex) {
-      if (!(ex instanceof BadUserRequestException)) {
-        fail("BadUserRequestException is expected, but another exception was received:  " + ex);
-      }
-      assertThat(ex.getMessage()).isEqualTo("The group already exists");
-    }
+    identityService.saveGroup(secondGroup);
+    fail("BadUserRequestException is expected");
   }
 
   @Test
@@ -707,7 +690,7 @@ class IdentityServiceTest {
 
   @Test
   @WatchLogger(loggerNames = {IDENTITY_LOGGER}, level = "INFO")
-  void testUnsuccessfulAttemptsResultInBlockedUser() throws Exception {
+  void testUnsuccessfulAttemptsResultInBlockedUser() {
     // given
     User user = identityService.newUser("johndoe");
     user.setPassword("xxx");

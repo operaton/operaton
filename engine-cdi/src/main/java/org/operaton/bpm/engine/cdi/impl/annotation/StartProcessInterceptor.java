@@ -21,6 +21,8 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Optional;
+
 import jakarta.inject.Inject;
 import jakarta.interceptor.AroundInvoke;
 import jakarta.interceptor.Interceptor;
@@ -31,6 +33,7 @@ import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.annotation.ProcessVariable;
 import org.operaton.bpm.engine.cdi.annotation.ProcessVariableTyped;
 import org.operaton.bpm.engine.cdi.annotation.StartProcess;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
@@ -40,7 +43,7 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
  * @author Daniel Meyer
  */
 @Interceptor
-@StartProcess("")
+@StartProcess
 public class StartProcessInterceptor implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;
@@ -73,15 +76,14 @@ public class StartProcessInterceptor implements Serializable {
     }
   }
 
-  private Map<String, Object> extractVariables(InvocationContext ctx) throws Exception {
+  Map<String, Object> extractVariables(InvocationContext ctx) {
     VariableMap variables = new VariableMapImpl();
     for (Field field : ctx.getMethod().getDeclaringClass().getDeclaredFields()) {
       if (!field.isAnnotationPresent(ProcessVariable.class) && !field.isAnnotationPresent(ProcessVariableTyped.class)) {
         continue;
       }
-      field.setAccessible(true);
 
-      String fieldName = null;
+      String fieldName;
 
       ProcessVariable processStartVariable = field.getAnnotation(ProcessVariable.class);
       if (processStartVariable != null) {
@@ -95,8 +97,9 @@ public class StartProcessInterceptor implements Serializable {
       if (fieldName == null || fieldName.isEmpty()) {
         fieldName = field.getName();
       }
-      Object value = field.get(ctx.getTarget());
-      variables.put(fieldName, value);
+
+      Optional<Object> fieldValue = ReflectUtil.getFieldValue(field, ctx.getTarget());
+      variables.put(fieldName, fieldValue.orElse(null));
     }
 
     return variables;

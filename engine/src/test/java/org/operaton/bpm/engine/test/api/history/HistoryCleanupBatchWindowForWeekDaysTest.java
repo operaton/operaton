@@ -16,8 +16,10 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -86,7 +88,16 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   private ManagementService managementService;
   private ProcessEngineConfigurationImpl processEngineConfiguration;
 
-  private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+  private static Date parseDate(String dateString) {
+    try {
+      LocalDateTime localDateTime = LocalDateTime.parse(dateString, sdf);
+      return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    } catch (DateTimeParseException e) {
+      throw new RuntimeException("Failed to parse date: " + dateString, e);
+    }
+  }
 
   @Parameter(0)
   public Date currentDate;
@@ -104,16 +115,16 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
   public Date endDateForCheckWithDefaultValues;
 
   @Parameters
-  public static Collection<Object[]> scenarios() throws ParseException {
+  public static Collection<Object[]> scenarios() {
     return Arrays.asList(new Object[][] {
-        {  sdf.parse("2018-05-14T10:00:00"), sdf.parse("2018-05-14T22:00:00"), sdf.parse("2018-05-15T01:00:00"), null, null},  //monday
-        {  sdf.parse("2018-05-14T23:00:00"), sdf.parse("2018-05-14T22:00:00"), sdf.parse("2018-05-15T01:00:00"), null, null},  //monday
-        {  sdf.parse("2018-05-15T00:30:00"), sdf.parse("2018-05-14T22:00:00"), sdf.parse("2018-05-15T01:00:00"), null, null},  //tuesday
-        {  sdf.parse("2018-05-15T02:00:00"), sdf.parse("2018-05-15T22:00:00"), sdf.parse("2018-05-15T23:00:00"), null, null},  //tuesday
-        {  sdf.parse("2018-05-15T23:30:00"), sdf.parse("2018-05-16T15:00:00"), sdf.parse("2018-05-16T20:00:00"), null, null},  //tuesday
-        {  sdf.parse("2018-05-16T21:00:00"), sdf.parse("2018-05-18T22:00:00"), sdf.parse("2018-05-19T01:00:00"),
-              sdf.parse("2018-05-17T23:00:00"), sdf.parse("2018-05-18T00:00:00") },                                 //wednesday
-        {  sdf.parse("2018-05-20T09:00:00"), sdf.parse("2018-05-20T10:00:00"), sdf.parse("2018-05-20T20:00:00"), null, null }} ); //sunday
+        {  parseDate("2018-05-14T10:00:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //monday
+        {  parseDate("2018-05-14T23:00:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //monday
+        {  parseDate("2018-05-15T00:30:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //tuesday
+        {  parseDate("2018-05-15T02:00:00"), parseDate("2018-05-15T22:00:00"), parseDate("2018-05-15T23:00:00"), null, null},  //tuesday
+        {  parseDate("2018-05-15T23:30:00"), parseDate("2018-05-16T15:00:00"), parseDate("2018-05-16T20:00:00"), null, null},  //tuesday
+        {  parseDate("2018-05-16T21:00:00"), parseDate("2018-05-18T22:00:00"), parseDate("2018-05-19T01:00:00"),
+              parseDate("2018-05-17T23:00:00"), parseDate("2018-05-18T00:00:00") },                                 //wednesday
+        {  parseDate("2018-05-20T09:00:00"), parseDate("2018-05-20T10:00:00"), parseDate("2018-05-20T20:00:00"), null, null }} ); //sunday
   }
 
   @BeforeEach

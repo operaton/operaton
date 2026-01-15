@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.util.Assert;
@@ -119,7 +120,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
             }
 
         } catch (Throwable th) {
-            throw new RuntimeException(th);
+            throw new ProcessEngineException(th);
         }
         return result;
     }
@@ -161,9 +162,8 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
      *
      * @param invocation the invocation of the method as passed to the {@link org.aopalliance.intercept.MethodInterceptor#invoke(org.aopalliance.intercept.MethodInvocation)} method
      * @return returns the map of process variables extracted from the parameters
-     * @throws Throwable thrown anything goes wrong
      */
-    protected Map<String, Object> processVariablesFromAnnotations(MethodInvocation invocation) throws Throwable {
+    protected Map<String, Object> processVariablesFromAnnotations(MethodInvocation invocation) {
 
         Map<ProcessVariable, Object> vars = this.mapOfAnnotationValues(ProcessVariable.class, invocation);
 

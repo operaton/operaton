@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.scope.ScopedObject;
 import org.springframework.beans.BeansException;
@@ -185,7 +186,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
             if (executionEntity.getVariableNames().contains(varName)) {
                 return executionEntity.getVariable(varName);
             }
-            throw new RuntimeException("no processVariable by the name of '%s' is available!".formatted(varName));
+            throw new ProcessEngineException("no processVariable by the name of '%s' is available!".formatted(varName));
         }
     };
 

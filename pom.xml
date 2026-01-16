@@ -19,7 +19,7 @@
     <version.feel-scala>1.19.3</version.feel-scala>
     <version.quarkus>3.30.6</version.quarkus>
     <version.java>17</version.java>
-    <version.spring>7.0.2</version.spring>
+    <version.spring>7.0.3</version.spring>
     <version.spring-boot>4.0.1</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.release>17</maven.compiler.release>

@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
 public class ParallelMultiInstanceActivityBehavior extends MultiInstanceActivityBehavior implements MigrationObserverBehavior {
 
   @Override
-  protected void createInstances(ActivityExecution execution, int nrOfInstances) throws Exception {
+  protected void createInstances(ActivityExecution execution, int nrOfInstances) {
     PvmActivity innerActivity = getInnerActivity(execution.getActivity());
 
     // evaluate the collection to ensure the input of collectionExpression same as before

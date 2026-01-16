@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.operaton.connect.ConnectorException;
 import org.operaton.connect.spi.Connector;
 import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorResponse;
@@ -42,7 +43,7 @@ public abstract class AbstractConnectorRequest<R extends ConnectorResponse> impl
   @SuppressWarnings("unchecked")
   public R execute() {
     if(!isRequestValid()) {
-      throw new RuntimeException("The request is invalid");
+      throw new ConnectorException("The request is invalid");
     }
     return (R) connector.execute(this);
   }

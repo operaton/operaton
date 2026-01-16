@@ -43,6 +43,8 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 public class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<MessageCorrelationBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_CORRELATE_MESSAGE);
+  private static final MessageCorrelationBatchConfigurationJsonConverter JSON_CONVERTER =
+      new MessageCorrelationBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -55,7 +57,7 @@ public class MessageCorrelationBatchJobHandler extends AbstractBatchJobHandler<M
   }
 
   protected MessageCorrelationBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return MessageCorrelationBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

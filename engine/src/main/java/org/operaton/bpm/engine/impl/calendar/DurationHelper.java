@@ -23,9 +23,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
@@ -53,16 +55,20 @@ public class DurationHelper {
 
   DatatypeFactory datatypeFactory;
 
-  public DurationHelper(String expressions) throws Exception {
+  public DurationHelper(String expressions) {
     this(expressions, null);
   }
 
-  public DurationHelper(String expressions, Date startDate) throws Exception {
+  public DurationHelper(String expressions, Date startDate) {
     List<String> expression = new ArrayList<>();
     if(expressions != null) {
       expression = Arrays.asList(expressions.split("/"));
     }
-    datatypeFactory = DatatypeFactory.newInstance();
+    try {
+      datatypeFactory = DatatypeFactory.newInstance();
+    } catch (DatatypeConfigurationException e) {
+      throw new ProcessEngineException(e);
+    }
 
     if (expression.size() > 3 || expression.isEmpty()) {
       throw LOG.cannotParseDuration(expressions);

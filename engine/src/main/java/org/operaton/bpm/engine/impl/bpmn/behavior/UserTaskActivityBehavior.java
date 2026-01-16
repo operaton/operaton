@@ -55,7 +55,7 @@ public class UserTaskActivityBehavior extends TaskActivityBehavior implements Mi
   }
 
   @Override
-  public void performExecution(ActivityExecution execution) throws Exception {
+  public void performExecution(ActivityExecution execution) {
     TaskEntity task = new TaskEntity((ExecutionEntity) execution);
     task.insert();
 

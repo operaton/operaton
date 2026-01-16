@@ -54,7 +54,7 @@ public class TemplateParser {
   public static void main(String[] args) throws IOException, TemplateException {
 
     if (args.length != 4) {
-      throw new RuntimeException(
+      throw new IllegalArgumentException(
           "Must provide four arguments: "
           + "<source template directory> "
           + "<main template> "

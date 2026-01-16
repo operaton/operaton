@@ -41,7 +41,7 @@ public class OperatonBpmRunAuthenticationProperties {
 
   public void setAuthentication(String authentication) {
     if (authentication != null && !AUTH_METHODS.contains(authentication)) {
-      throw new RuntimeException("Please provide a valid authentication method. The available ones are: " + AUTH_METHODS.toString());
+      throw new IllegalArgumentException("Please provide a valid authentication method. The available ones are: " + AUTH_METHODS.toString());
     }
     this.authentication = authentication;
   }

@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public abstract class AbstractBatchConfigurationObjectConverter<T extends BatchConfiguration> extends JsonObjectConverter<T> {
+public abstract class AbstractBatchConfigurationObjectConverter<T extends BatchConfiguration> implements JsonObjectConverter<T> {
 
   protected static final String BATCH_ID = "batchId";
 

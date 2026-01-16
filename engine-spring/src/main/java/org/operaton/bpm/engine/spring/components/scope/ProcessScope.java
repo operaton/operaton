@@ -36,6 +36,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
@@ -185,7 +186,7 @@ public class ProcessScope implements Scope, InitializingBean, BeanFactoryPostPro
             if (executionEntity.getVariableNames().contains(varName)) {
                 return executionEntity.getVariable(varName);
             }
-            throw new RuntimeException("no processVariable by the name of '%s' is available!".formatted(varName));
+            throw new ProcessEngineException("no processVariable by the name of '%s' is available!".formatted(varName));
         }
     };
 

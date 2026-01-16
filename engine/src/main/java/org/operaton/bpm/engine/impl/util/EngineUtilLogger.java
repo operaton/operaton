@@ -208,7 +208,7 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "Exception while resolving duedate '{}': {}", duedate, e.getMessage()), e);
   }
 
-  public Exception cannotParseDuration(String expressions) {
+  public ProcessEngineException cannotParseDuration(String expressions) {
     return new ProcessEngineException(exceptionMessage(
         "028",
         "Cannot parse duration '{}'.", expressions));
@@ -260,4 +260,10 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "Exception while configuring XXE processing: {}", cause.getMessage()), cause);
   }
 
+  public ProcessEngineException unableToAccessFieldValue(Field field, Object object, IllegalAccessException e) {
+    return new ProcessEngineException(exceptionMessage(
+        "048",
+        "Exception while getting value from field '{}' on object of type '{}': {}",
+        field, object.getClass().getName(), e.getMessage()), e);
+  }
 }

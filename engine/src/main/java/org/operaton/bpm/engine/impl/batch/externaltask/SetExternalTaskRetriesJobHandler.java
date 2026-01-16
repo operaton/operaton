@@ -33,6 +33,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 public class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler<SetRetriesBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_SET_EXTERNAL_TASK_RETRIES);
+  private static final SetExternalTaskRetriesBatchConfigurationJsonConverter JSON_CONVERTER =
+      new SetExternalTaskRetriesBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -65,7 +67,7 @@ public class SetExternalTaskRetriesJobHandler extends AbstractBatchJobHandler<Se
 
   @Override
   protected SetExternalTaskRetriesBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return SetExternalTaskRetriesBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
 }

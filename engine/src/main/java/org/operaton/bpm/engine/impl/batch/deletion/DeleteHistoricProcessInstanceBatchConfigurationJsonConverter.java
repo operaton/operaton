@@ -32,8 +32,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class DeleteHistoricProcessInstanceBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
 
-  public static final DeleteHistoricProcessInstanceBatchConfigurationJsonConverter INSTANCE = new DeleteHistoricProcessInstanceBatchConfigurationJsonConverter();
-
   public static final String HISTORIC_PROCESS_INSTANCE_IDS = "historicProcessInstanceIds";
   public static final String HISTORIC_PROCESS_INSTANCE_ID_MAPPINGS = "historicProcessInstanceIdMappings";
   public static final String FAIL_IF_NOT_EXISTS = "failIfNotExists";

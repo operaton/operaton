@@ -40,6 +40,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 public class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler<RestartProcessInstancesBatchConfiguration>{
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_RESTART);
+  private static final RestartProcessInstancesBatchConfigurationJsonConverter JSON_CONVERTER =
+      new RestartProcessInstancesBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -107,7 +109,7 @@ public class RestartProcessInstancesJobHandler extends AbstractBatchJobHandler<R
 
   @Override
   protected RestartProcessInstancesBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return RestartProcessInstancesBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
 }

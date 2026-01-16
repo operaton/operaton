@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Thorben Lindhauer
  *
  */
-public class JsonQueryOrderingPropertyConverter extends JsonObjectConverter<QueryOrderingProperty> {
+public class JsonQueryOrderingPropertyConverter implements JsonObjectConverter<QueryOrderingProperty> {
 
 
   protected static final JsonQueryOrderingPropertyConverter INSTANCE =

@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.migration.MigrationPlanImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.migration.MigrationPlan;
 
-public class MigrationPlanJsonConverter extends JsonObjectConverter<MigrationPlan> {
+public class MigrationPlanJsonConverter implements JsonObjectConverter<MigrationPlan> {
 
   public static final MigrationPlanJsonConverter INSTANCE = new MigrationPlanJsonConverter();
 

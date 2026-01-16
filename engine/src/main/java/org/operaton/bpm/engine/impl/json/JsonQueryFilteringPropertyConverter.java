@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.query.QueryProperty;
  * @author Thorben Lindhauer
  *
  */
-public class JsonQueryFilteringPropertyConverter extends JsonObjectConverter<QueryEntityRelationCondition> {
+public class JsonQueryFilteringPropertyConverter implements JsonObjectConverter<QueryEntityRelationCondition> {
 
   protected static final JsonQueryFilteringPropertyConverter INSTANCE =
       new JsonQueryFilteringPropertyConverter();

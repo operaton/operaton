@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.cmd.TransitionInstanceCancellationCmd;
 import org.operaton.bpm.engine.impl.cmd.TransitionInstantiationCmd;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class ModificationCmdJsonConverter extends JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
+public class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
 
   public static final ModificationCmdJsonConverter INSTANCE = new ModificationCmdJsonConverter();
 

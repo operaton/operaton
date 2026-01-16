@@ -28,8 +28,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 public class DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter extends AbstractBatchConfigurationObjectConverter<BatchConfiguration> {
 
-  public static final DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter INSTANCE = new DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter();
-
   public static final String HISTORIC_DECISION_INSTANCE_IDS = "historicDecisionInstanceIds";
   public static final String HISTORIC_DECISION_INSTANCE_ID_MAPPINGS = "historicDecisionInstanceIdMappingss";
 

@@ -29,8 +29,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class SetExternalTaskRetriesBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<SetRetriesBatchConfiguration> {
 
-  public static final SetExternalTaskRetriesBatchConfigurationJsonConverter INSTANCE = new SetExternalTaskRetriesBatchConfigurationJsonConverter();
-
   public static final String EXTERNAL_TASK_IDS = "externalTaskIds";
   public static final String EXTERNAL_TASK_ID_MAPPINGS = "externalTaskIdMappingss";
   public static final String RETRIES = "retries";

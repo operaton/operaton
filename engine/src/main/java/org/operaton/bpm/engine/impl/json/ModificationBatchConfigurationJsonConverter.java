@@ -30,7 +30,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class ModificationBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<ModificationBatchConfiguration> {
 
-  public static final ModificationBatchConfigurationJsonConverter INSTANCE = new ModificationBatchConfigurationJsonConverter();
   public static final String INSTRUCTIONS = "instructions";
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";

@@ -84,7 +84,7 @@ jobs:
               "ref": "${{ matrix.branch }}",
               "inputs": {
                 "java_version": "[\"17\", \"21\", \"25\"]",
-                "skip_build": "true",
+                "skip_build": "false",
                 "skip_tests": "false",
                 "integration_tests": "true",
                 "testsuite": "[\"engine\", \"webapps\"]",

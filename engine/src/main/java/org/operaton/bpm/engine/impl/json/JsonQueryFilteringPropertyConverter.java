@@ -31,11 +31,8 @@ import org.operaton.bpm.engine.query.QueryProperty;
  */
 public class JsonQueryFilteringPropertyConverter implements JsonObjectConverter<QueryEntityRelationCondition> {
 
-  protected static final JsonQueryFilteringPropertyConverter INSTANCE =
-      new JsonQueryFilteringPropertyConverter();
-
   protected static final JsonArrayConverter<List<QueryEntityRelationCondition>> ARRAY_CONVERTER =
-    new JsonArrayOfObjectsConverter<>(INSTANCE);
+    new JsonArrayOfObjectsConverter<>(new JsonQueryFilteringPropertyConverter());
 
   public static final String BASE_PROPERTY = "baseField";
   public static final String COMPARISON_PROPERTY = "comparisonField";

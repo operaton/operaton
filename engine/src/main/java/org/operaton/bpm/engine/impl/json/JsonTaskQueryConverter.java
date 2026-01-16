@@ -38,6 +38,8 @@ import org.operaton.bpm.engine.task.TaskQuery;
  * @author Sebastian Menski
  */
 public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
+  private static final JsonLegacyQueryOrderingPropertyConverter LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER =
+      new JsonLegacyQueryOrderingPropertyConverter();
 
   public static final String ID = "id";
   public static final String TASK_ID = "taskId";
@@ -529,7 +531,7 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
     }
     if (json.has(ORDER_BY)) {
       List<QueryOrderingProperty> orderingProperties =
-          JsonLegacyQueryOrderingPropertyConverter.INSTANCE.fromOrderByString(JsonUtil.getString(json, ORDER_BY));
+          LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER.fromOrderByString(JsonUtil.getString(json, ORDER_BY));
 
       query.setOrderingProperties(orderingProperties);
     }

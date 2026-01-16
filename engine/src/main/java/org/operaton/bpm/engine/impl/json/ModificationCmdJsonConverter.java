@@ -29,8 +29,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 public class ModificationCmdJsonConverter implements JsonObjectConverter<AbstractProcessInstanceModificationCommand> {
 
-  public static final ModificationCmdJsonConverter INSTANCE = new ModificationCmdJsonConverter();
-
   public static final String START_BEFORE = "startBeforeActivity";
   public static final String START_AFTER = "startAfterActivity";
   public static final String START_TRANSITION = "startTransition";

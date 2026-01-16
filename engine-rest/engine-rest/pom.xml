@@ -315,7 +315,7 @@
       </activation>
       <properties>
         <version.netty>4.2.4.Final</version.netty>
-        <version.undertow>2.3.21.Final</version.undertow>
+        <version.undertow>2.3.22.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>

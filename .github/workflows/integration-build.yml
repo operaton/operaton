@@ -436,8 +436,6 @@ jobs:
   release:
     name: Release
     needs:
-      - detect-recent-changes
-      - determine-pr-config
       - build
       - integration-tests
       - documentation

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:cb0132aa-1bc1-4635-a268-078e620a4088",
+  "serialNumber": "urn:uuid:7b9355c5-1891-4ee4-a3d7-00c070e424ce",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-16T10:16:55Z",
+    "timestamp": "2026-01-16T10:38:33Z",
     "tools": {
       "components": [
         {
@@ -23669,7 +23669,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c070ec16-fb76-4d4d-ab8a-4b93165f885f",
+      "bom-ref": "62596028-2e37-49ad-8f37-d7b10c4025f2",
       "name": "package-lock.json",
       "properties": [
         {
@@ -26241,14 +26241,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/jquery-ui@1.13.2",
+      "bom-ref": "pkg:npm/jquery-ui@1.14.1",
       "name": "jquery-ui",
-      "version": "1.13.2",
-      "purl": "pkg:npm/jquery-ui@1.13.2",
+      "version": "1.14.1",
+      "purl": "pkg:npm/jquery-ui@1.14.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "jquery-ui@1.13.2"
+          "value": "jquery-ui@1.14.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -27261,7 +27261,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "fce589a6-8677-4767-bffa-ce0bae9a4a75",
+      "bom-ref": "519f81d7-3fc9-47ef-a0fa-f78e8a88a91b",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -30191,7 +30191,13 @@
       ]
     },
     {
-      "ref": "c070ec16-fb76-4d4d-ab8a-4b93165f885f",
+      "ref": "519f81d7-3fc9-47ef-a0fa-f78e8a88a91b",
+      "dependsOn": [
+        "62596028-2e37-49ad-8f37-d7b10c4025f2"
+      ]
+    },
+    {
+      "ref": "62596028-2e37-49ad-8f37-d7b10c4025f2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -30227,7 +30233,7 @@
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.3.3",
-        "pkg:npm/jquery-ui@1.13.2",
+        "pkg:npm/jquery-ui@1.14.1",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.21",
         "pkg:npm/moment@2.30.1",
@@ -30236,12 +30242,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "fce589a6-8677-4767-bffa-ce0bae9a4a75",
-      "dependsOn": [
-        "c070ec16-fb76-4d4d-ab8a-4b93165f885f"
       ]
     },
     {
@@ -31247,7 +31247,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/jquery-ui@1.13.2",
+      "ref": "pkg:npm/jquery-ui@1.14.1",
       "dependsOn": [
         "pkg:npm/jquery@3.7.1"
       ]

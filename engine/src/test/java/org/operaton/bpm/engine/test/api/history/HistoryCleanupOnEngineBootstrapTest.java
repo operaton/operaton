@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -208,7 +207,7 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindowMapInXmlConfig() throws Exception {
+  void testBatchWindowMapInXmlConfig() {
     // given
     //we're on Monday
     ClockUtil.setCurrentTime(parseDate("2018-05-14T22:00:00"));
@@ -301,7 +300,7 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindowOneDayOfWeek() throws Exception {
+  void testBatchWindowOneDayOfWeek() {
     ClockUtil.setCurrentTime(parseDate("2018-05-14T22:00:00"));       //monday
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
@@ -343,7 +342,7 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindow24Hours() throws Exception {
+  void testBatchWindow24Hours() {
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     //we have batch window for 24 hours

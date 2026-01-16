@@ -18,6 +18,8 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -127,7 +129,13 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     Pattern urlPattern = Pattern.compile("^(https?://).*/bpm-platform\\.xml$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
     Matcher urlMatcher = urlPattern.matcher(url);
     if (urlMatcher.matches()) {
-      return new URL(url);
+      try {
+        return new URI(url).toURL();
+      } catch (URISyntaxException e) {
+        MalformedURLException malformedURLException = new MalformedURLException("Invalid URI syntax: " + url);
+        malformedURLException.initCause(e);
+        throw malformedURLException;
+      }
     }
 
     return null;

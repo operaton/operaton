@@ -19,6 +19,8 @@ package org.operaton.bpm.webapp.impl.security.filter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.HashSet;
@@ -105,7 +107,7 @@ public class CsrfPreventionFilter implements Filter {
 
   private Random randomSource;
 
-  private URL targetOrigin;
+  private URI targetOrigin;
 
   private int denyStatus = HttpServletResponse.SC_FORBIDDEN;
 
@@ -148,8 +150,8 @@ public class CsrfPreventionFilter implements Filter {
       throw new ServletException("Cannot instantiate CSRF Prevention filter: cannot instantiate provided Random class", e);
     } catch (IllegalAccessException e) {
       throw new ServletException("Cannot instantiate CSRF Prevention filter: Random class constructor not accessible", e);
-    } catch (MalformedURLException e) {
-      throw new ServletException("CSRFPreventionFilter: Could not read target origin URL: " + e.getMessage());
+    } catch (URISyntaxException e) {
+      throw new ServletException("CSRFPreventionFilter: Could not read target origin URI: " + e.getMessage());
     }
   }
 
@@ -229,14 +231,19 @@ public class CsrfPreventionFilter implements Filter {
       }
     }
 
-    //Compare the source against the expected target origin
-    URL sourceURL = new URL(source);
-    if (!getTargetOrigin().getProtocol().equals(sourceURL.getProtocol())
-      || !getTargetOrigin().getHost().equals(sourceURL.getHost())
-      || getTargetOrigin().getPort() != sourceURL.getPort()) {
+    try {
+      //Compare the source against the expected target origin
+      URI sourceURI = new URI(source);
+      if (!getTargetOrigin().getScheme().equals(sourceURI.getScheme())
+        || !getTargetOrigin().getHost().equals(sourceURI.getHost())
+        || getTargetOrigin().getPort() != sourceURI.getPort()) {
 
-      //If any part of the URL doesn't match, an error is reported
-      response.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRFPreventionFilter: Protocol/Host/Port does not fully match: (%s != %s) ".formatted(getTargetOrigin(), sourceURL));
+        //If any part of the URI doesn't match, an error is reported
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRFPreventionFilter: Protocol/Host/Port does not fully match: (%s != %s) ".formatted(getTargetOrigin(), sourceURI));
+        return false;
+      }
+    } catch (URISyntaxException e) {
+      response.sendError(HttpServletResponse.SC_FORBIDDEN, "CSRFPreventionFilter: Invalid URI syntax in Origin/Referer header: " + source);
       return false;
     }
 
@@ -296,7 +303,7 @@ public class CsrfPreventionFilter implements Filter {
     }
   }
 
-  public URL getTargetOrigin() {
+  public URI getTargetOrigin() {
     return targetOrigin;
   }
 
@@ -307,10 +314,10 @@ public class CsrfPreventionFilter implements Filter {
    *
    * @param targetOrigin The application's domain name together with the protocol
    *                     and port (ex. http://example.com:8080)
-   * @throws MalformedURLException
+   * @throws URISyntaxException
    */
-  public void setTargetOrigin(String targetOrigin) throws MalformedURLException {
-    this.targetOrigin = new URL(targetOrigin);
+  public void setTargetOrigin(String targetOrigin) throws URISyntaxException {
+    this.targetOrigin = new URI(targetOrigin);
   }
 
   /**

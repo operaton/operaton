@@ -44,12 +44,6 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "The URL '{}' is malformed", url), cause);
   }
 
-  public ProcessEngineException malformedUriException(String uri, Throwable cause) {
-    return new ProcessEngineException(exceptionMessage(
-        "049",
-        "The URI '{}' is malformed", uri), cause);
-  }
-
   public ProcessEngineException multipleSourcesException(StreamSource source1, StreamSource source2) {
     return new ProcessEngineException(exceptionMessage(
         "002",
@@ -271,5 +265,11 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "048",
         "Exception while getting value from field '{}' on object of type '{}': {}",
         field, object.getClass().getName(), e.getMessage()), e);
+  }
+
+  public ProcessEngineException malformedUriException(String uri, Throwable cause) {
+    return new ProcessEngineException(exceptionMessage(
+      "049",
+      "The URI '{}' is malformed", uri), cause);
   }
 }

@@ -41,111 +41,115 @@
 
 // 3. Modal - Bootstrap 5 changed modal implementation significantly
 // Restore Bootstrap 3.x modal behavior for angular-ui-bootstrap compatibility
+// Using !important to override Bootstrap 5's inline styles
+
 .modal-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: @zindex-modal-background;
-  background-color: #000;
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: @zindex-modal-background !important;
+  background-color: #000 !important;
   
   &.fade {
-    opacity: 0;
+    opacity: 0 !important;
   }
   
-  &.in {
-    opacity: 0.5;
+  &.in,
+  &.show {
+    opacity: 0.5 !important;
   }
 }
 
 .modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: @zindex-modal;
-  display: none;
-  overflow: hidden;
-  outline: 0;
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: @zindex-modal !important;
+  display: none !important;
+  overflow: hidden !important;
+  outline: 0 !important;
   
-  &.in {
-    display: block;
+  &.in,
+  &.show {
+    display: block !important;
   }
   
   &.fade .modal-dialog {
-    transform: translate(0, -25%);
-    transition: transform 0.3s ease-out;
+    transform: translate(0, -25%) !important;
+    transition: transform 0.3s ease-out !important;
   }
   
-  &.in .modal-dialog {
-    transform: translate(0, 0);
+  &.in .modal-dialog,
+  &.show .modal-dialog {
+    transform: translate(0, 0) !important;
   }
 }
 
 .modal-dialog {
-  position: relative;
-  width: auto;
-  margin: 10px;
+  position: relative !important;
+  width: auto !important;
+  margin: 10px !important;
+  pointer-events: auto !important;
 }
 
 @media (min-width: @screen-sm-min) {
   .modal-dialog {
-    width: 600px;
-    margin: 30px auto;
+    width: 600px !important;
+    margin: 30px auto !important;
   }
   
   .modal-sm {
-    width: 300px;
+    width: 300px !important;
   }
 }
 
 @media (min-width: @screen-md-min) {
   .modal-lg {
-    width: 900px;
+    width: 900px !important;
   }
 }
 
 .modal-content {
-  position: relative;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
-  background-clip: padding-box;
-  outline: 0;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  background-color: #fff !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5) !important;
+  background-clip: padding-box !important;
+  outline: 0 !important;
 }
 
 .modal-header {
-  padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
+  padding: 15px !important;
+  border-bottom: 1px solid #e5e5e5 !important;
 }
 
 .modal-title {
-  margin: 0;
-  line-height: 1.42857143;
+  margin: 0 !important;
+  line-height: 1.42857143 !important;
 }
 
 .modal-body {
-  position: relative;
-  padding: 15px;
+  position: relative !important;
+  padding: 15px !important;
+  flex: 1 1 auto !important;
 }
 
 .modal-footer {
-  padding: 15px;
-  text-align: right;
-  border-top: 1px solid #e5e5e5;
-  
-  &:before,
-  &:after {
-    display: table;
-    content: " ";
-  }
-  
-  &:after {
-    clear: both;
-  }
+  padding: 15px !important;
+  text-align: right !important;
+  border-top: 1px solid #e5e5e5 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
   
   .btn + .btn {
     margin-left: 5px;
@@ -170,10 +174,10 @@
 }
 
 .modal-open {
-  overflow: hidden;
+  overflow: hidden !important;
   
   .modal {
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
 }

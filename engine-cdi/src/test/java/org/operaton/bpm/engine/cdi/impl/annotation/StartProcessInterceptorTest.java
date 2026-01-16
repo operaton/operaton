@@ -15,16 +15,9 @@
  */
 package org.operaton.bpm.engine.cdi.impl.annotation;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import java.lang.reflect.Method;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Map;
-
 import jakarta.interceptor.InvocationContext;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +30,11 @@ import org.operaton.bpm.engine.cdi.annotation.ProcessVariable;
 import org.operaton.bpm.engine.cdi.annotation.StartProcess;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
 class StartProcessInterceptorTest {
@@ -174,7 +172,7 @@ class StartProcessInterceptorTest {
     String notAnnotated = "skip";
 
     @ProcessVariable("nullVar")
-    String nullVar = null;
+    String nullVar;
 
     @StartProcess("myProcess")
     public void startProcessMethod() {

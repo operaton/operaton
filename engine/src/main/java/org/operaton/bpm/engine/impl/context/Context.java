@@ -35,19 +35,21 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 
 /**
+ * Holds the context of the current command being executed.
+ *
  * @author Tom Baeyens
  * @author Daniel Meyer
  * @author Thorben Lindhauer
  */
 public final class Context {
-  protected static ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<Deque<CommandContext>> commandContextThreadLocal = new ThreadLocal<>();
 
-  protected static ThreadLocal<Deque<CommandInvocationContext>> commandInvocationContextThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<Deque<CommandInvocationContext>> commandInvocationContextThreadLocal = new ThreadLocal<>();
 
-  protected static ThreadLocal<Deque<ProcessEngineConfigurationImpl>> processEngineConfigurationStackThreadLocal = new ThreadLocal<>();
-  protected static ThreadLocal<Deque<CoreExecutionContext<? extends CoreExecution>>> executionContextStackThreadLocal = new ThreadLocal<>();
-  protected static ThreadLocal<JobExecutorContext> jobExecutorContextThreadLocal = new ThreadLocal<>();
-  protected static ThreadLocal<Deque<ProcessApplicationReference>> processApplicationContext = new ThreadLocal<>();
+  private static final ThreadLocal<Deque<ProcessEngineConfigurationImpl>> processEngineConfigurationStackThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<Deque<CoreExecutionContext<? extends CoreExecution>>> executionContextStackThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<JobExecutorContext> jobExecutorContextThreadLocal = new ThreadLocal<>();
+  private static final ThreadLocal<Deque<ProcessApplicationReference>> processApplicationContext = new ThreadLocal<>();
 
   private Context() {
   }
@@ -150,7 +152,7 @@ public final class Context {
     getStack(executionContextStackThreadLocal).pop();
   }
 
-  protected static <T> Deque<T> getStack(ThreadLocal<Deque<T>> threadLocal) {
+  private static <T> Deque<T> getStack(ThreadLocal<Deque<T>> threadLocal) {
     Deque<T> stack = threadLocal.get();
     if (stack==null) {
       stack = new ArrayDeque<>();
@@ -205,28 +207,28 @@ public final class Context {
       ProcessApplicationInterface processApplication = processApplicationReference.getProcessApplication();
       setCurrentProcessApplication(processApplicationReference);
 
-      try {
-        // wrap callback
-        ProcessApplicationClassloaderInterceptor<T> wrappedCallback = new ProcessApplicationClassloaderInterceptor<>(callback);
-        // execute wrapped callback
-        return processApplication.execute(wrappedCallback, invocationContext);
-
-      } catch (Exception e) {
-
-        // unwrap exception
-        if(e.getCause() instanceof RuntimeException runtimeException) {
-          throw runtimeException;
-        }else {
-          throw new ProcessEngineException("Unexpected exeption while executing within process application ", e);
-        }
-
-      } finally {
-        removeCurrentProcessApplication();
-      }
-
-
+      return executeWrappedCallback(callback, invocationContext, processApplication);
     } catch (ProcessApplicationUnavailableException e) {
       throw new ProcessEngineException("Cannot switch to process application '%s' for execution: %s".formatted(paName, e.getMessage()), e);
+    }
+  }
+
+  private static <T> T executeWrappedCallback(Callable<T> callback, InvocationContext invocationContext,
+      ProcessApplicationInterface processApplication) {
+    try {
+      // wrap callback
+      ProcessApplicationClassloaderInterceptor<T> wrappedCallback = new ProcessApplicationClassloaderInterceptor<>(callback);
+      // execute wrapped callback
+      return processApplication.execute(wrappedCallback, invocationContext);
+    } catch (Exception e) {
+      // unwrap exception
+      if (e.getCause() instanceof RuntimeException runtimeException) {
+        throw runtimeException;
+      } else {
+        throw new ProcessEngineException("Unexpected exception while executing within process application ", e);
+      }
+    } finally {
+      removeCurrentProcessApplication();
     }
   }
 }

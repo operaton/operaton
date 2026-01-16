@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.PersistenceSession;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.impl.interceptor.CommandInvocationContext;
 
 /**
  * @author Sebastian Menski
@@ -92,28 +93,37 @@ public class StandaloneTransactionContext implements TransactionContext {
   @Override
   public void rollback() {
     try {
-      try {
-        LOG.debugTransactionOperation("firing event rollback...");
-        fireTransactionEvent(TransactionState.ROLLINGBACK);
-
-      }
-      catch (Exception exception) {
-        LOG.exceptionWhileFiringEvent(TransactionState.ROLLINGBACK, exception);
-        Context.getCommandInvocationContext().trySetThrowable(exception);
-      }
-      finally {
-        LOG.debugTransactionOperation("rolling back the persistence session...");
-        getPersistenceProvider().rollback();
-      }
-
+      tryFireRollbackEvent();
     }
     catch (Exception exception) {
       LOG.exceptionWhileFiringEvent(TransactionState.ROLLINGBACK, exception);
-      Context.getCommandInvocationContext().trySetThrowable(exception);
+      trySetExceptionIntoCommandInvocationContext(exception);
     }
     finally {
       LOG.debugFiringEventRolledBack();
       fireTransactionEvent(TransactionState.ROLLED_BACK);
+    }
+  }
+
+  private void tryFireRollbackEvent() {
+    try {
+      LOG.debugTransactionOperation("firing event rollback...");
+      fireTransactionEvent(TransactionState.ROLLINGBACK);
+    }
+    catch (Exception exception) {
+      LOG.exceptionWhileFiringEvent(TransactionState.ROLLINGBACK, exception);
+      trySetExceptionIntoCommandInvocationContext(exception);
+    }
+    finally {
+      LOG.debugTransactionOperation("rolling back the persistence session...");
+      getPersistenceProvider().rollback();
+    }
+  }
+
+  private static void trySetExceptionIntoCommandInvocationContext(Exception exception) {
+    CommandInvocationContext invocationContext = Context.getCommandInvocationContext();
+    if (invocationContext != null) {
+      invocationContext.trySetThrowable(exception);
     }
   }
 

@@ -136,9 +136,9 @@ public class MigrationPlanAssert {
         if (instructionAssert.sourceActivityId.equals(instruction.getSourceActivityId())) {
           notFound.remove(instructionAssert);
           notExpected.remove(instruction);
-          Assertions.assertThat(instruction.getTargetActivityId()).as("Target activity ids do not match for instruction " + instruction).isEqualTo(instructionAssert.targetActivityId);
+          Assertions.assertThat(instruction.getTargetActivityId()).as("Target activity ids do not match for instruction %s".formatted(instruction)).isEqualTo(instructionAssert.targetActivityId);
           if (instructionAssert.updateEventTrigger != null) {
-            Assertions.assertThat(instruction.isUpdateEventTrigger()).as("Expected instruction to update event trigger: " + instructionAssert.updateEventTrigger + " but is: " + instruction.isUpdateEventTrigger()).isEqualTo(instructionAssert.updateEventTrigger);
+            Assertions.assertThat(instruction.isUpdateEventTrigger()).as("Expected instruction to update event trigger: %s but is: %s".formatted(instructionAssert.updateEventTrigger, instruction.isUpdateEventTrigger())).isEqualTo(instructionAssert.updateEventTrigger);
           }
         }
       }

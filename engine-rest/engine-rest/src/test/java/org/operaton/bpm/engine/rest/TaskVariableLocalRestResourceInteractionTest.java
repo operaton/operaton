@@ -246,7 +246,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(RestException.class.getSimpleName()))
-      .body("message", equalTo("Cannot modify variables for task " + NON_EXISTING_ID + ": Cannot find task with id " + NON_EXISTING_ID))
+      .body("message", equalTo("Cannot modify variables for task %s: Cannot find task with id %s".formatted(NON_EXISTING_ID, NON_EXISTING_ID)))
       .when().post(SINGLE_TASK_MODIFY_VARIABLES_URL);
   }
 
@@ -440,7 +440,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
       .body("type", is(RestException.class.getSimpleName()))
-      .body("message", is("Cannot get task variable " + variableKey + ": task " + NON_EXISTING_ID + " doesn't exist"))
+      .body("message", is("Cannot get task variable %s: task %s doesn't exist".formatted(variableKey, NON_EXISTING_ID)))
       .when().get(SINGLE_TASK_SINGLE_VARIABLE_URL);
   }
 
@@ -846,7 +846,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
       .body("type", is(RestException.class.getSimpleName()))
-      .body("message", is("Cannot put task variable " + variableKey + ": Cannot find task with id " + NON_EXISTING_ID))
+      .body("message", is("Cannot put task variable %s: Cannot find task with id %s".formatted(variableKey, NON_EXISTING_ID)))
       .when().put(SINGLE_TASK_PUT_SINGLE_VARIABLE_URL);
   }
 
@@ -1195,7 +1195,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode())
       .contentType(ContentType.JSON)
       .body("type", is(RestException.class.getSimpleName()))
-      .body("message", is("Cannot delete task variable " + variableKey + ": Cannot find task with id " + NON_EXISTING_ID))
+      .body("message", is("Cannot delete task variable %s: Cannot find task with id %s".formatted(variableKey, NON_EXISTING_ID)))
       .when().delete(SINGLE_TASK_DELETE_SINGLE_VARIABLE_URL);
   }
 

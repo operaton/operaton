@@ -327,7 +327,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
     params.put("executionDate", "a");
 
     String expectedMessage = "Invalid format: \"a\"";
-    String exceptionMessage = "The suspension state of Job Definition with id " + MockProvider.NON_EXISTING_JOB_DEFINITION_ID + " could not be updated due to: " + expectedMessage;
+    String exceptionMessage = "The suspension state of Job Definition with id %s could not be updated due to: %s".formatted(MockProvider.NON_EXISTING_JOB_DEFINITION_ID, expectedMessage);
 
     given()
       .pathParam("id", MockProvider.NON_EXISTING_JOB_DEFINITION_ID)
@@ -492,7 +492,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
     params.put("executionDate", "a");
 
     String expectedMessage = "Invalid format: \"a\"";
-    String exceptionMessage = "The suspension state of Job Definition with id " + MockProvider.NON_EXISTING_JOB_DEFINITION_ID + " could not be updated due to: " + expectedMessage;
+    String exceptionMessage = "The suspension state of Job Definition with id %s could not be updated due to: %s".formatted(MockProvider.NON_EXISTING_JOB_DEFINITION_ID, expectedMessage);
 
     given()
       .pathParam("id", MockProvider.NON_EXISTING_JOB_DEFINITION_ID)

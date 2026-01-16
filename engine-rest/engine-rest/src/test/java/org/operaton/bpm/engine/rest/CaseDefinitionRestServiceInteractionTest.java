@@ -274,7 +274,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     .then().expect()
       .statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
       .body("type", is(RestException.class.getSimpleName()))
-      .body("message", containsString("No matching case definition with key: " + nonExistingKey + " and tenant-id: " + nonExistingTenantId))
+      .body("message", containsString("No matching case definition with key: %s and tenant-id: %s".formatted(nonExistingKey, nonExistingTenantId)))
     .when().get(SINGLE_CASE_DEFINITION_BY_KEY_AND_TENANT_ID_URL);
   }
 

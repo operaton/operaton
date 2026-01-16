@@ -94,11 +94,11 @@ public class DmnEngineTestRule extends DmnEngineRule {
       Class<?> testClass = description.getTestClass();
       if (resourcePath.isEmpty()) {
         // use test class and method name as resource file name
-        return testClass.getName().replace(".", "/") + "." + description.getMethodName() + "." + DMN_SUFFIX;
+        return "%s.%s.%s".formatted(testClass.getName().replace(".", "/"), description.getMethodName(), DMN_SUFFIX);
       }
       else {
         // use test class location as resource location
-        return testClass.getPackage().getName().replace(".", "/") + "/" + resourcePath;
+        return "%s/%s".formatted(testClass.getPackage().getName().replace(".", "/"), resourcePath);
       }
     }
   }

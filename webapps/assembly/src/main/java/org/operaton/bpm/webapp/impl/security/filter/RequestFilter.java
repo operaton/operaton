@@ -122,7 +122,7 @@ public class RequestFilter {
 
         group = groupSplit[0];
         if (groupSplit.length > 1) {
-          regex = "(" + groupSplit[1] + ")";
+          regex = "(%s)".formatted(groupSplit[1]);
         } else {
           regex = "([^/]+)";
         }

@@ -24,8 +24,6 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 
 public class MigrationPlanJsonConverter implements JsonObjectConverter<MigrationPlan> {
 
-  public static final MigrationPlanJsonConverter INSTANCE = new MigrationPlanJsonConverter();
-
   public static final String SOURCE_PROCESS_DEFINITION_ID = "sourceProcessDefinitionId";
   public static final String TARGET_PROCESS_DEFINITION_ID = "targetProcessDefinitionId";
   public static final String INSTRUCTIONS = "instructions";

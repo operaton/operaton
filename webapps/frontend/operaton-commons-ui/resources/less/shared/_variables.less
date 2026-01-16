@@ -1,4 +1,142 @@
-@import "bootstrap/less/variables.less"; // from bootstrap
+// Bootstrap 5.x no longer provides LESS variables
+// Define Bootstrap 3.x compatible variables for legacy code
+
+// Grayscale
+@gray-base:              #000;
+@gray-darker:            lighten(@gray-base, 13.5%); // #222
+@gray-dark:              lighten(@gray-base, 20%);   // #333
+@gray:                   lighten(@gray-base, 33.5%); // #555
+@gray-light:             lighten(@gray-base, 46.7%); // #777
+@gray-lighter:           lighten(@gray-base, 93.5%); // #eee
+
+// Brand colors
+@body-bg:               #fff;
+@text-color:            @gray;
+@brand-primary:         #337ab7;
+@brand-success:         #5cb85c;
+@brand-info:            #5bc0de;
+@brand-warning:         #f0ad4e;
+@brand-danger:          #d9534f;
+
+// Typography
+@font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-family-serif:       Georgia, "Times New Roman", Times, serif;
+@font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+@font-family-base:        @font-family-sans-serif;
+
+@font-size-base:          14px;
+@font-size-large:         ceil((@font-size-base * 1.25)); // ~18px
+@font-size-small:         ceil((@font-size-base * 0.85)); // ~12px
+
+@line-height-base:        1.428571429; // 20/14
+@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~20px
+@line-height-large:       1.33;
+@line-height-small:       1.5;
+
+// Grid breakpoints (Bootstrap 3.x values)
+@screen-xs:                  480px;
+@screen-xs-min:              @screen-xs;
+@screen-xs-max:              (@screen-sm-min - 1);
+@screen-sm:                  768px;
+@screen-sm-min:              @screen-sm;
+@screen-sm-max:              (@screen-md-min - 1);
+@screen-md:                  992px;
+@screen-md-min:              @screen-md;
+@screen-md-max:              (@screen-lg-min - 1);
+@screen-lg:                  1200px;
+@screen-lg-min:              @screen-lg;
+
+// Grid system
+@grid-columns:              12;
+@grid-gutter-width:         30px;
+@grid-float-breakpoint:     @screen-sm-min;
+@grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
+
+// Container sizes
+@container-tablet:             (720px + @grid-gutter-width);
+@container-sm:                 @container-tablet;
+@container-desktop:            (940px + @grid-gutter-width);
+@container-md:                 @container-desktop;
+@container-large-desktop:      (1140px + @grid-gutter-width);
+@container-lg:                 @container-large-desktop;
+
+// Padding
+@padding-base-vertical:     6px;
+@padding-base-horizontal:   12px;
+@padding-large-vertical:    10px;
+@padding-large-horizontal:  16px;
+@padding-small-vertical:    5px;
+@padding-small-horizontal:  10px;
+
+// Border radius
+@border-radius-base:        4px;
+@border-radius-large:       6px;
+@border-radius-small:       3px;
+
+// Table
+@table-bg:                      transparent;
+@table-bg-accent:               #f9f9f9;
+@table-bg-hover:                #f5f5f5;
+@table-bg-active:               @table-bg-hover;
+@table-border-color:            #ddd;
+
+// Breadcrumbs
+@breadcrumb-bg:                  #f5f5f5;
+@breadcrumb-color:               #ccc;
+@breadcrumb-active-color:        @gray-light;
+@breadcrumb-separator:           "/";
+
+// Button colors
+@btn-default-color:              #333;
+@btn-default-bg:                 #fff;
+@btn-default-border:             #ccc;
+
+// State colors
+@state-success-text:             #3c763d;
+@state-success-bg:               #dff0d8;
+@state-success-border:           darken(@state-success-bg, 5%);
+
+@state-info-text:                #31708f;
+@state-info-bg:                  #d9edf7;
+@state-info-border:              darken(@state-info-bg, 7%);
+
+@state-warning-text:             #8a6d3b;
+@state-warning-bg:               #fcf8e3;
+@state-warning-border:           darken(@state-warning-bg, 5%);
+
+@state-danger-text:              #a94442;
+@state-danger-bg:                #f2dede;
+@state-danger-border:            darken(@state-danger-bg, 5%);
+
+// Alerts
+@alert-padding:                  15px;
+@alert-border-radius:            @border-radius-base;
+@alert-link-font-weight:         bold;
+
+@alert-success-bg:               @state-success-bg;
+@alert-success-text:             @state-success-text;
+@alert-success-border:           @state-success-border;
+
+@alert-info-bg:                  @state-info-bg;
+@alert-info-text:                @state-info-text;
+@alert-info-border:              @state-info-border;
+
+@alert-warning-bg:               @state-warning-bg;
+@alert-warning-text:             @state-warning-text;
+@alert-warning-border:           @state-warning-border;
+
+@alert-danger-bg:                @state-danger-bg;
+@alert-danger-text:              @state-danger-text;
+@alert-danger-border:            @state-danger-border;
+
+// Z-index master list
+@zindex-navbar:            1000;
+@zindex-dropdown:          1000;
+@zindex-popover:           1060;
+@zindex-tooltip:           1070;
+@zindex-navbar-fixed:      1030;
+@zindex-modal-background:  1040;
+@zindex-modal:             1050;
 
 // Colors ------------------------------------------------------------
 

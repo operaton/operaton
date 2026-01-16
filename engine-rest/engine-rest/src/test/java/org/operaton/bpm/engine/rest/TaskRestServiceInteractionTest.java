@@ -1853,7 +1853,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(COMPLETE_TASK_URL);
 
-    verify(taskServiceMock).completeWithVariablesInReturn(EXAMPLE_TASK_ID, null, false);
+    verify(taskServiceMock).completeWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false);
   }
 
   @Test

@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.util.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -28,18 +29,26 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class UrlStreamSource implements StreamSource {
 
-  URL url;
+  URI uri;
 
   public UrlStreamSource(URL url) {
-    this.url = url;
+    try {
+      this.uri = url.toURI();
+    } catch (Exception e) {
+      throw new ProcessEngineException("couldn't convert URL to URI: '%s'".formatted(url), e);
+    }
+  }
+
+  public UrlStreamSource(URI uri) {
+    this.uri = uri;
   }
 
   @Override
   public InputStream getInputStream() {
     try {
-      return url.openStream();
+      return uri.toURL().openStream();
     } catch (IOException e) {
-      throw new ProcessEngineException("couldn't open url '%s'".formatted(url), e);
+      throw new ProcessEngineException("couldn't open uri '%s'".formatted(uri), e);
     }
   }
 }

@@ -44,6 +44,12 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "The URL '{}' is malformed", url), cause);
   }
 
+  public ProcessEngineException malformedUriException(String uri, Throwable cause) {
+    return new ProcessEngineException(exceptionMessage(
+        "001",
+        "The URI '{}' is malformed", uri), cause);
+  }
+
   public ProcessEngineException multipleSourcesException(StreamSource source1, StreamSource source2) {
     return new ProcessEngineException(exceptionMessage(
         "002",

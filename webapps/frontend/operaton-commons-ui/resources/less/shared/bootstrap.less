@@ -1,51 +1,183 @@
-// To load all the mixins and
+// Bootstrap 5.x no longer uses LESS, so we import the precompiled CSS
+// This is a compatibility shim for the Bootstrap 3.x to 5.x migration
 
-// local ./bootstrap.less import (which import "bootstrap" from the node_modules/bootstrap/less).
-@import (reference) "bootstrap/less/mixins.less";
+// Import Bootstrap 3.x compatible variables first
+@import "./_variables.less";
 
-// Reset
-@import "bootstrap/less/normalize.less";
-@import "bootstrap/less/print.less";
+// Import Bootstrap 5.x precompiled CSS
+@import (inline) "bootstrap/dist/css/bootstrap.min.css";
 
-// Core CSS
-@import "bootstrap/less/scaffolding.less";
-@import "bootstrap/less/type.less";
-@import "bootstrap/less/code.less";
-@import "bootstrap/less/grid.less";
-@import "bootstrap/less/tables.less";
-@import "bootstrap/less/glyphicons.less";
-@import "bootstrap/less/forms.less";
-@import "bootstrap/less/buttons.less";
+// Bootstrap 5.x compatibility overrides
+// These styles restore Bootstrap 3.x behavior that changed in Bootstrap 5
 
-// Components
-@import "bootstrap/less/component-animations.less";
-// @import "bootstrap/less/glyphicons.less"; // moved before "forms" because it otherwise cause issues with form feedback
-@import "bootstrap/less/dropdowns.less";
-@import "bootstrap/less/button-groups.less";
-@import "bootstrap/less/input-groups.less";
-@import "bootstrap/less/navs.less";
-@import "bootstrap/less/navbar.less";
-@import "bootstrap/less/breadcrumbs.less";
-@import "bootstrap/less/pagination.less";
-@import "bootstrap/less/pager.less";
-@import "bootstrap/less/labels.less";
-@import "bootstrap/less/badges.less";
-@import "bootstrap/less/jumbotron.less";
-@import "bootstrap/less/thumbnails.less";
-@import "bootstrap/less/alerts.less";
-@import "bootstrap/less/progress-bars.less";
-@import "bootstrap/less/media.less";
-@import "bootstrap/less/list-group.less";
-@import "bootstrap/less/panels.less";
-@import "bootstrap/less/wells.less";
-@import "bootstrap/less/close.less";
+// 1. Primary button color - restore Operaton brand color
+.btn-primary {
+  color: #fff;
+  background-color: @brand-primary;
+  border-color: darken(@brand-primary, 5%);
+  
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    background-color: darken(@brand-primary, 10%);
+    border-color: darken(@brand-primary, 12%);
+  }
+}
 
-// Components w/ JavaScript
-@import "bootstrap/less/modals.less";
-@import "bootstrap/less/tooltip.less";
-@import "bootstrap/less/popovers.less";
-@import "bootstrap/less/carousel.less";
+// 2. Visually hidden - Bootstrap 5 renamed .sr-only to .visually-hidden
+// Add back .sr-only for compatibility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
-// Utility classes
-@import "bootstrap/less/utilities.less";
-@import "bootstrap/less/responsive-utilities.less";
+// 3. Modal - Bootstrap 5 changed modal implementation significantly
+// Restore Bootstrap 3.x modal behavior for angular-ui-bootstrap compatibility
+// Using !important to override Bootstrap 5's inline styles
+
+.modal-backdrop {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: @zindex-modal-background !important;
+  background-color: #000 !important;
+  
+  &.fade {
+    opacity: 0 !important;
+  }
+  
+  &.in,
+  &.show {
+    opacity: 0.5 !important;
+  }
+}
+
+.modal {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: @zindex-modal !important;
+  display: none !important;
+  overflow: hidden !important;
+  outline: 0 !important;
+  
+  &.in,
+  &.show {
+    display: block !important;
+  }
+  
+  &.fade .modal-dialog {
+    transform: translate(0, -25%) !important;
+    transition: transform 0.3s ease-out !important;
+  }
+  
+  &.in .modal-dialog,
+  &.show .modal-dialog {
+    transform: translate(0, 0) !important;
+  }
+}
+
+.modal-dialog {
+  position: relative !important;
+  width: auto !important;
+  margin: 10px !important;
+  pointer-events: auto !important;
+}
+
+@media (min-width: @screen-sm-min) {
+  .modal-dialog {
+    width: 600px !important;
+    margin: 30px auto !important;
+  }
+  
+  .modal-sm {
+    width: 300px !important;
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .modal-lg {
+    width: 900px !important;
+  }
+}
+
+.modal-content {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  background-color: #fff !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5) !important;
+  background-clip: padding-box !important;
+  outline: 0 !important;
+}
+
+.modal-header {
+  padding: 15px !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+
+.modal-title {
+  margin: 0 !important;
+  line-height: 1.42857143 !important;
+}
+
+.modal-body {
+  position: relative !important;
+  padding: 15px !important;
+  flex: 1 1 auto !important;
+}
+
+.modal-footer {
+  padding: 15px !important;
+  text-align: right !important;
+  border-top: 1px solid #e5e5e5 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  
+  .btn + .btn {
+    margin-left: 5px;
+    margin-bottom: 0;
+  }
+  
+  .btn-group .btn + .btn {
+    margin-left: -1px;
+  }
+  
+  .btn-block + .btn-block {
+    margin-left: 0;
+  }
+}
+
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+.modal-open {
+  overflow: hidden !important;
+  
+  .modal {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+}

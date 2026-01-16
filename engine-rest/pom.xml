@@ -15,7 +15,7 @@
   <description>${project.name}</description>
 
   <properties>
-    <version.rest-assured>5.5.6</version.rest-assured>
+    <version.rest-assured>5.5.7</version.rest-assured>
     <!-- override groovy version with the one used by rest-assured -->
     <version.groovy>3.0.25</version.groovy>
     <version.apache.httpcore>4.4.16</version.apache.httpcore>

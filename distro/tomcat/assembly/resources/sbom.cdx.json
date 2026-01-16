@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:a0796cdd-ac04-450c-81d0-f59dcf6160f0",
+  "serialNumber": "urn:uuid:b2b9fa3f-f6e0-4b19-ab00-49ae7b7c1218",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-14T07:06:47Z",
+    "timestamp": "2026-01-16T14:04:54Z",
     "tools": {
       "components": [
         {
@@ -21147,7 +21147,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0fc06476-7a47-4500-b845-2d5cf3fdf02a",
+      "bom-ref": "164589af-4958-4c0e-8a75-27cec6741ed0",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24739,7 +24739,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "14c846e3-8a9e-4bfb-b794-c856ac3e2624",
+      "bom-ref": "d759080e-23fe-429c-a19b-6f64bd91a864",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27335,7 +27335,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0fc06476-7a47-4500-b845-2d5cf3fdf02a",
+      "ref": "164589af-4958-4c0e-8a75-27cec6741ed0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -27383,9 +27383,9 @@
       ]
     },
     {
-      "ref": "14c846e3-8a9e-4bfb-b794-c856ac3e2624",
+      "ref": "d759080e-23fe-429c-a19b-6f64bd91a864",
       "dependsOn": [
-        "0fc06476-7a47-4500-b845-2d5cf3fdf02a"
+        "164589af-4958-4c0e-8a75-27cec6741ed0"
       ]
     },
     {
@@ -28824,6 +28824,9 @@
           "url": "https://stackblitz.com/edit/angularjs-material-blank-zvtdvb"
         },
         {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
+        },
+        {
           "url": "https://www.cve.org/CVERecord?id=CVE-2022-25844"
         }
       ],
@@ -29037,6 +29040,9 @@
           "url": "https://stackblitz.com/edit/angularjs-vulnerability-angular-copy-redos"
         },
         {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
+        },
+        {
           "url": "https://www.cve.org/CVERecord?id=CVE-2023-26116"
         }
       ],
@@ -29142,6 +29148,9 @@
         },
         {
           "url": "https://stackblitz.com/edit/angularjs-vulnerability-resource-trailing-slashes-redos"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
         },
         {
           "url": "https://www.cve.org/CVERecord?id=CVE-2023-26117"
@@ -29251,6 +29260,9 @@
           "url": "https://stackblitz.com/edit/angularjs-vulnerability-inpur-url-validation-redos"
         },
         {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
+        },
+        {
           "url": "https://www.cve.org/CVERecord?id=CVE-2023-26118"
         }
       ],
@@ -29344,6 +29356,9 @@
         },
         {
           "url": "https://support.herodevs.com/hc/en-us/articles/25715686953485-CVE-2024-21490-AngularJS-Regular-Expression-Denial-of-Service-ReDoS"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
         },
         {
           "url": "https://www.cve.org/CVERecord?id=CVE-2024-21490"
@@ -29542,6 +29557,13 @@
           "severity": "low",
           "method": "CVSSv31",
           "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
         }
       ],
       "cwes": [
@@ -29572,6 +29594,9 @@
         },
         {
           "url": "https://security.netapp.com/advisory/ntap-20241122-0002/"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
         },
         {
           "url": "https://www.cve.org/CVERecord?id=CVE-2024-8372"
@@ -29627,6 +29652,13 @@
           "severity": "low",
           "method": "CVSSv31",
           "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
         }
       ],
       "cwes": [
@@ -29657,6 +29689,9 @@
         },
         {
           "url": "https://security.netapp.com/advisory/ntap-20241122-0003/"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
         },
         {
           "url": "https://www.cve.org/CVERecord?id=CVE-2024-8373"
@@ -29703,6 +29738,13 @@
           "severity": "medium",
           "method": "CVSSv31",
           "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
         }
       ],
       "cwes": [
@@ -29727,6 +29769,9 @@
         },
         {
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-0716"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
         },
         {
           "url": "https://www.cve.org/CVERecord?id=CVE-2025-0716"
@@ -29838,6 +29883,13 @@
           "severity": "medium",
           "method": "CVSSv31",
           "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
         }
       ],
       "cwes": [
@@ -29859,6 +29911,12 @@
         },
         {
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-2336"
+        },
+        {
+          "url": "https://ubuntu.com/security/notices/USN-7958-1"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2025-2336"
         },
         {
           "url": "https://www.herodevs.com/vulnerability-directory/cve-2025-2336"

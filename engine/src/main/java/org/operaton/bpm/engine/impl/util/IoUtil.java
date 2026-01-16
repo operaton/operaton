@@ -26,6 +26,7 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -86,7 +87,7 @@ public final class IoUtil {
 
   public static File getFile(String filePath) {
     try {
-      java.net.URL resource = IoUtil.class.getClassLoader().getResource(filePath);
+      URL resource = IoUtil.class.getClassLoader().getResource(filePath);
       if (resource == null) {
         throw new ProcessEngineException("resource '%s' not found".formatted(filePath));
       }

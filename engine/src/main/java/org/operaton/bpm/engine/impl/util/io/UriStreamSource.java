@@ -29,11 +29,11 @@ import org.operaton.bpm.engine.ProcessEngineException;
 /**
  * @author Tom Baeyens
  */
-public class UrlStreamSource implements StreamSource {
+public class UriStreamSource implements StreamSource {
 
   URI uri;
 
-  public UrlStreamSource(URL url) {
+  public UriStreamSource(URL url) {
     try {
       this.uri = url.toURI();
     } catch (URISyntaxException e) {
@@ -41,7 +41,7 @@ public class UrlStreamSource implements StreamSource {
     }
   }
 
-  public UrlStreamSource(URI uri) {
+  public UriStreamSource(URI uri) {
     this.uri = uri;
   }
 

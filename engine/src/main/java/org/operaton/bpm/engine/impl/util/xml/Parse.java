@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.util.xml;
 
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -36,7 +35,7 @@ import org.operaton.bpm.engine.impl.util.io.InputStreamSource;
 import org.operaton.bpm.engine.impl.util.io.ResourceStreamSource;
 import org.operaton.bpm.engine.impl.util.io.StreamSource;
 import org.operaton.bpm.engine.impl.util.io.StringStreamSource;
-import org.operaton.bpm.engine.impl.util.io.UrlStreamSource;
+import org.operaton.bpm.engine.impl.util.io.UriStreamSource;
 import org.operaton.bpm.engine.impl.xml.ProblemImpl;
 
 
@@ -89,7 +88,7 @@ public abstract class Parse extends DefaultHandler {
     if (name==null) {
       name(url.toString());
     }
-    setStreamSource(new UrlStreamSource(url));
+    setStreamSource(new UriStreamSource(url));
     return this;
   }
 
@@ -97,7 +96,7 @@ public abstract class Parse extends DefaultHandler {
     if (name==null) {
       name(uri.toString());
     }
-    setStreamSource(new UrlStreamSource(uri));
+    setStreamSource(new UriStreamSource(uri));
     return this;
   }
 

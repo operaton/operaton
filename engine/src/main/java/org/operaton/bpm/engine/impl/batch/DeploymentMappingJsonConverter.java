@@ -21,7 +21,7 @@ import com.google.gson.JsonObject;
 import org.operaton.bpm.engine.impl.json.JsonObjectConverter;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
-public class DeploymentMappingJsonConverter extends JsonObjectConverter<DeploymentMapping> {
+public class DeploymentMappingJsonConverter implements JsonObjectConverter<DeploymentMapping> {
 
   public static final DeploymentMappingJsonConverter INSTANCE = new DeploymentMappingJsonConverter();
 

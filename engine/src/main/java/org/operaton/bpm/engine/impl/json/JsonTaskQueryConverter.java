@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
 /**
  * @author Sebastian Menski
  */
-public class JsonTaskQueryConverter extends JsonObjectConverter<TaskQuery> {
+public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
 
   public static final String ID = "id";
   public static final String TASK_ID = "taskId";

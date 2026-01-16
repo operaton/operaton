@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.impl.migration.MigrationInstructionImpl;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 import org.operaton.bpm.engine.migration.MigrationInstruction;
 
-public class MigrationInstructionJsonConverter extends JsonObjectConverter<MigrationInstruction> {
+public class MigrationInstructionJsonConverter implements JsonObjectConverter<MigrationInstruction> {
 
   public static final MigrationInstructionJsonConverter INSTANCE = new MigrationInstructionJsonConverter();
 

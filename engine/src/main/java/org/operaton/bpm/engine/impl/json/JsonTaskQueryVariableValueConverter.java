@@ -25,7 +25,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 /**
  * @author Sebastian Menski
  */
-public class JsonTaskQueryVariableValueConverter extends JsonObjectConverter<TaskQueryVariableValue> {
+public class JsonTaskQueryVariableValueConverter implements JsonObjectConverter<TaskQueryVariableValue> {
 
   @Override
   public JsonObject toJsonObject(TaskQueryVariableValue variable) {

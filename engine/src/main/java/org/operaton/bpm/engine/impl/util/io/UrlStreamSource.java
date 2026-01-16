@@ -18,7 +18,9 @@ package org.operaton.bpm.engine.impl.util.io;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -34,7 +36,7 @@ public class UrlStreamSource implements StreamSource {
   public UrlStreamSource(URL url) {
     try {
       this.uri = url.toURI();
-    } catch (Exception e) {
+    } catch (URISyntaxException e) {
       throw new ProcessEngineException("couldn't convert URL to URI: '%s'".formatted(url), e);
     }
   }
@@ -47,6 +49,8 @@ public class UrlStreamSource implements StreamSource {
   public InputStream getInputStream() {
     try {
       return uri.toURL().openStream();
+    } catch (MalformedURLException e) {
+      throw new ProcessEngineException("couldn't convert URI to URL: '%s'".formatted(uri), e);
     } catch (IOException e) {
       throw new ProcessEngineException("couldn't open uri '%s'".formatted(uri), e);
     }

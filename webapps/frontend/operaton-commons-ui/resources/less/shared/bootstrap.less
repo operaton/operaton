@@ -6,3 +6,98 @@
 
 // Import Bootstrap 5.x precompiled CSS
 @import (inline) "bootstrap/dist/css/bootstrap.min.css";
+
+// Bootstrap 5.x compatibility overrides
+// These styles restore Bootstrap 3.x behavior that changed in Bootstrap 5
+
+// 1. Primary button color - restore Operaton brand color
+.btn-primary {
+  color: #fff;
+  background-color: @brand-primary;
+  border-color: darken(@brand-primary, 5%);
+  
+  &:hover,
+  &:focus,
+  &:active {
+    color: #fff;
+    background-color: darken(@brand-primary, 10%);
+    border-color: darken(@brand-primary, 12%);
+  }
+}
+
+// 2. Visually hidden - Bootstrap 5 renamed .sr-only to .visually-hidden
+// Add back .sr-only for compatibility
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// 3. Modal backdrop - Bootstrap 5 changed modal implementation
+// Ensure modals work correctly
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @zindex-modal-background;
+  background-color: #000;
+  
+  &.fade {
+    opacity: 0;
+  }
+  
+  &.show {
+    opacity: 0.5;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: @zindex-modal;
+  display: none;
+  overflow: hidden;
+  outline: 0;
+  
+  &.fade .modal-dialog {
+    transform: translate(0, -25%);
+    transition: transform 0.3s ease-out;
+  }
+  
+  &.show .modal-dialog {
+    transform: translate(0, 0);
+  }
+}
+
+.modal-open {
+  overflow: hidden;
+  
+  .modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+// 4. Navbar toggle - hide "Toggle navigation" text
+.navbar-toggle .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

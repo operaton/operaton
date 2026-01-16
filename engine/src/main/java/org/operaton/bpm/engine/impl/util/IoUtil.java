@@ -86,7 +86,11 @@ public final class IoUtil {
 
   public static File getFile(String filePath) {
     try {
-      URI uri = IoUtil.class.getClassLoader().getResource(filePath).toURI();
+      java.net.URL resource = IoUtil.class.getClassLoader().getResource(filePath);
+      if (resource == null) {
+        throw new ProcessEngineException("resource '%s' not found".formatted(filePath));
+      }
+      URI uri = resource.toURI();
       return new File(uri);
     }
     catch (Exception e) {

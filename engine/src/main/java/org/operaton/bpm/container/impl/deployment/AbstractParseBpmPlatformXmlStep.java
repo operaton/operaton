@@ -132,7 +132,9 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
       try {
         return new URI(url).toURL();
       } catch (URISyntaxException e) {
-        throw new MalformedURLException("Invalid URI syntax: " + url);
+        MalformedURLException malformedURLException = new MalformedURLException("Invalid URI syntax: " + url);
+        malformedURLException.initCause(e);
+        throw malformedURLException;
       }
     }
 

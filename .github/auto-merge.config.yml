@@ -50,6 +50,7 @@ auto-merge-rules:
       - 'org.seleniumhq.selenium:selenium-java'
       - 'com.h2database:h2'
       - 'io.netty:*'
+      - 'io.rest-assured:rest-assured'
       - 'io.swagger*'
       - 'io.undertow:undertow-servlet'
       - 'net.javacrumbs.json-unit:*'

@@ -19,7 +19,7 @@ In your project, you should use a `_vars.scss` file which imports the [`shared/_
 
 ```scss
 // note: you may need to adapt this path depending on where your `_vars.scss` is
-@import "node_modules/operaton-commons-ui/resources/sass/shared/_variables.scss";
+@import "node_modules/operaton-commons-ui/resources/scss/shared/_variables.scss";
 
 // override the default `@main-color` color defined in `shared/_variables.scss`
 $main-color: #7fa;
@@ -34,5 +34,5 @@ Then, you will have a `styles.scss` (which will probably be compiled as `styles.
 @import "./_vars.scss";
 
 // adapt the path if / as needed
-@import "node_modules/operaton-commons-ui/resources/sass/shared/base.scss";
+@import "node_modules/operaton-commons-ui/resources/scss/shared/base.scss";
 ```

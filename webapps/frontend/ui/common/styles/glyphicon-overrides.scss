@@ -32,7 +32,7 @@
   &.glyphicon-remove,
   &.glyphicon-remove-sign {
     &::before {
-      content: '\002A2F';
+      @extend .bi-x;
       font-weight: 900;
     }
   }

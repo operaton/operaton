@@ -3,7 +3,7 @@
 
 // use `reference` to avoid duplicate bootstrap styles
 // as they are already available in other compiled CSS
-@import "~operaton-commons-ui/resources/sass/shared/bootstrap";
+@import "~operaton-commons-ui/resources/scss/shared/bootstrap";
 
 /* add plugin styles here */
 @import "./tasklistSorting/app/tasklistHeader/cam-tasklist-sorting";

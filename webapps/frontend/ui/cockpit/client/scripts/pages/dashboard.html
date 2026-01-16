@@ -23,7 +23,7 @@
 
           <div class="row stats"
                ng-if="actualActive">
-            <div class="stats-section process-instances col-xs-6 col-md-4">
+            <div class="stats-section process-instances col-6 col-md-4">
               <div cam-pie-chart
                    values="values.procInst"
                    placeholder="{{ 'DASHBOARD_RUNNING_PROCESS_INSTANCE' | translate }}"></div>
@@ -41,7 +41,7 @@
               </a>
             </div>
 
-            <div class="stats-section open-incidents col-xs-6 col-md-4">
+            <div class="stats-section open-incidents col-6 col-md-4">
               <div cam-pie-chart
                    values="values.procIncid"
                    placeholder="{{ 'DASHBOARD_OPEN_INCIDENTS' | translate }}"></div>
@@ -59,7 +59,7 @@
               </a>
             </div>
 
-            <div class="stats-section open-human-tasks col-xs-6 col-md-4">
+            <div class="stats-section open-human-tasks col-6 col-md-4">
               <div cam-pie-chart
                    values="values.tasks"
                    placeholder="{{ 'DASHBOARD_OPEN_HUMAN_TASKS' | translate}}"></div>

@@ -6,6 +6,14 @@
     }
   }
 
+  .custom-select {
+    height: 2.25rem;
+  }
+
+  .btn-xs {
+    font-size: 12px;
+  }
+
   .undefined-variable,
   .global-access {
     margin: 0 0 ($grid-gutter-width * 0.5) ($grid-gutter-width * 0.5);

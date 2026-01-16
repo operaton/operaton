@@ -1,7 +1,7 @@
 /* stylelint-disable no-descending-specificity -- contains non-trivial nesting */
 
-@import '~operaton-commons-ui/resources/sass/shared/bootstrap.scss';
-@import '~operaton-commons-ui/resources/sass/shared/base.scss';
+@import '~operaton-commons-ui/resources/scss/shared/bootstrap.scss';
+@import '~operaton-commons-ui/resources/scss/shared/base.scss';
 
 .align-left {
   text-align: left;
@@ -204,7 +204,7 @@
   display: none;
 }
 $bootstrap-icons-font-dir: "~bootstrap-icons/font/fonts";
-@import '~operaton-commons-ui/resources/sass/shared/animation-spin';
+@import '~operaton-commons-ui/resources/scss/shared/animation-spin';
 @import './modal.scss';
 @import 'directives/notifications-panel.scss';
 @import 'directives/pagination.scss';

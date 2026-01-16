@@ -6,55 +6,56 @@
 }
 
 //* Core icons */
-.glyphicon-ok            { @extend .bi-check; }
-.glyphicon-remove        { @extend .bi-x; }
-.glyphicon-plus          { @extend .bi-plus; }
-.glyphicon-minus         { @extend .bi-dash; }
-.glyphicon-search        { @extend .bi-search; }
-.glyphicon-user          { @extend .bi-person-fill; }
-.glyphicon-envelope      { @extend .bi-envelope; }
-.glyphicon-lock          { @extend .bi-lock; }
-.glyphicon-cog           { @extend .bi-gear; }
-.glyphicon-trash         { @extend .bi-trash; }
-.glyphicon-edit          { @extend .bi-pencil; }
-.glyphicon-eye-open      { @extend .bi-eye; }
-.glyphicon-eye-close     { @extend .bi-eye-slash; }
-.glyphicon-warning-sign  { @extend .bi-exclamation-triangle; }
-.glyphicon-info-sign     { @extend .bi-info-circle; }
+.glyphicon-ok               { @extend .bi-check; }
+.glyphicon-remove           { @extend .bi-x; }
+.glyphicon-plus             { @extend .bi-plus; }
+.glyphicon-minus            { @extend .bi-dash; }
+.glyphicon-search           { @extend .bi-search; }
+.glyphicon-user             { @extend .bi-person-fill; }
+.glyphicon-envelope         { @extend .bi-envelope; }
+.glyphicon-lock             { @extend .bi-lock; }
+.glyphicon-cog              { @extend .bi-gear; }
+.glyphicon-trash            { @extend .bi-trash; }
+.glyphicon-edit             { @extend .bi-pencil; }
+.glyphicon-eye-open         { @extend .bi-eye; }
+.glyphicon-eye-close        { @extend .bi-eye-slash; }
+.glyphicon-warning-sign     { @extend .bi-exclamation-triangle; }
+.glyphicon-info-sign        { @extend .bi-info-circle; }
 
 /* Navigation / UI */
-.glyphicon-chevron-left  { @extend .bi-chevron-left; }
-.glyphicon-chevron-right { @extend .bi-chevron-right; }
-.glyphicon-chevron-up    { @extend .bi-chevron-up; }
-.glyphicon-chevron-down  { @extend .bi-chevron-down; }
+.glyphicon-chevron-left     { @extend .bi-chevron-left; }
+.glyphicon-chevron-right    { @extend .bi-chevron-right; }
+.glyphicon-chevron-up       { @extend .bi-chevron-up; }
+.glyphicon-chevron-down     { @extend .bi-chevron-down; }
 
-.glyphicon-menu-hamburger { @extend .bi-list; }
-.glyphicon-refresh       { @extend .bi-arrow-clockwise; }
-.glyphicon-download      { @extend .bi-download; }
-.glyphicon-upload        { @extend .bi-upload; }
-.glyphicon-home          { @extend .bi-house-door-fill}
-.glyphicon-plus-sign     { @extend .bi-plus; }
-.glyphicon-link          { @extend .bi-link-45deg; }
-.glyphicon-floppy-disk   { @extend .bi-floppy2; }
-.glyphicon-copy   { @extend .bi-clipboard-fill; }
-.glyphicon-calendar   { @extend .bi-calendar3; }
-.glyphicon-bell  { @extend .bi-bell-fill; }
-.glyphicon-th  { @extend .bi-grid-3x3-gap-fill; }
-.glyphicon-menu-down  { @extend .bi-chevron-down; }
-.glyphicon-menu-up  { @extend .bi-chevron-up; }
-.glyphicon-pencil  { @extend .bi-pencil-fill; }
-.glyphicon-sort-down  { @extend .bi-sort-down; }
-.glyphicon-sort-up  { @extend .bi-sort-up; }
-.glyphicon-list-alt  { @extend .bi-card-list; }
-.glyphicon-question-sign {@extend .bi-question-circle-fill;}
-.glyphicon-ban-circle {@extend .bi-ban;}
-.glyphicon-repeat {@extend .bi-arrow-repeat;}
-.glyphicon-play {@extend .bi-play-fill;}
-.glyphicon-pause {@extend .bi-pause-fill;}
-.glyphicon-screenshot {@extend .bi-crosshair;}
-.glyphicon-adjust {@extend .bi-circle-half;}
-.glyphicon-filter {@extend .bi-funnel;}
-.glyphicon-paperclip  { @extend .bi-paperclip;
+.glyphicon-menu-hamburger   { @extend .bi-list; }
+.glyphicon-refresh          { @extend .bi-arrow-clockwise; }
+.glyphicon-download         { @extend .bi-download; }
+.glyphicon-upload           { @extend .bi-upload; }
+.glyphicon-home             { @extend .bi-house-door-fill}
+.glyphicon-plus-sign        { @extend .bi-plus; }
+.glyphicon-link             { @extend .bi-link-45deg; }
+.glyphicon-floppy-disk      { @extend .bi-floppy2; }
+.glyphicon-copy             { @extend .bi-clipboard-fill; }
+.glyphicon-calendar         { @extend .bi-calendar3; }
+.glyphicon-bell             { @extend .bi-bell-fill; }
+.glyphicon-th               { @extend .bi-grid-3x3-gap-fill; }
+.glyphicon-menu-down        { @extend .bi-chevron-down; }
+.glyphicon-menu-up          { @extend .bi-chevron-up; }
+.glyphicon-pencil           { @extend .bi-pencil-fill; }
+.glyphicon-sort-down        { @extend .bi-sort-down; }
+.glyphicon-sort-up          { @extend .bi-sort-up; }
+.glyphicon-list-alt         { @extend .bi-card-list; }
+.glyphicon-question-sign    { @extend .bi-question-circle-fill;}
+.glyphicon-ban-circle       { @extend .bi-ban;}
+.glyphicon-repeat           { @extend .bi-arrow-repeat;}
+.glyphicon-play             { @extend .bi-play-fill;}
+.glyphicon-pause            { @extend .bi-pause-fill;}
+.glyphicon-screenshot       { @extend .bi-crosshair;}
+.glyphicon-adjust           { @extend .bi-circle-half;}
+.glyphicon-filter           { @extend .bi-funnel;}
+.glyphicon-exclamation-sign { @extend .bi-exclamation-circle-fill;}
+.glyphicon-paperclip        { @extend .bi-paperclip;
   &:before {
     rotate: 45deg;
   }

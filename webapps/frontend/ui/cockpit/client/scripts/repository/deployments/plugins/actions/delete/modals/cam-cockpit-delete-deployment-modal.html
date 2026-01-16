@@ -31,9 +31,9 @@
           novalidate
           request-aware>
 
-      <div class="form-group cascade">
+      <div class="row form-group cascade">
 
-        <label class="control-label col-xs-5"
+        <label class="control-label col-7"
                for="cascade">
           {{ 'REPOSITORY_DEPLOYMENTS_DELETE_CASCADE' | translate }}
           <span class="glyphicon glyphicon-question-sign"
@@ -42,7 +42,7 @@
           </span>
         </label>
 
-        <div class="col-xs-7">
+        <div class="col-5">
           <label class="checkbox">
             <input name="cascade"
                    type="checkbox"
@@ -53,9 +53,9 @@
       </div>
 
       <div  ng-hide="hideSkipCustomListeners"
-            class="form-group skip-custom-listener">
+            class="row form-group skip-custom-listener">
 
-        <label class="control-label col-xs-5"
+        <label class="control-label col-7"
                for="skipCustomListeners">
           {{ 'REPOSITORY_DEPLOYMENTS_DELETE_SKIP' | translate }}
           <span class="glyphicon glyphicon-question-sign"
@@ -64,7 +64,7 @@
           </span>
         </label>
 
-        <div class="col-xs-7">
+        <div class="col-5">
           <label class="checkbox">
             <input name="skipCustomListeners"
                    type="checkbox"
@@ -74,10 +74,10 @@
 
       </div>
 
-      <div class="form-group skip-custom-listener"
+      <div class="row form-group skip-custom-listener"
            ng-hide="SKIP_IO_MAPPINGS.hidden">
 
-        <label class="control-label col-xs-5"
+        <label class="control-label col-7"
                for="skipIoMappings">
           {{ 'REPOSITORY_DEPLOYMENTS_DELETE_MAPPING' | translate }}
           <span class="glyphicon glyphicon-question-sign"
@@ -86,7 +86,7 @@
           </span>
         </label>
 
-        <div class="col-xs-7">
+        <div class="col-5">
           <label class="checkbox">
             <input name="skipIoMappings"
                    type="checkbox"

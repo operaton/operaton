@@ -89,12 +89,12 @@
     </div>
 
     <div class="form-group actions row">
-      <div class="col-xs-6">
+      <div class="col-6">
         <button type="button"
                 class="btn btn-link"
                 ng-click="showForm()">{{'CANCEL' | translate}}</button>
       </div>
-      <div class="col-xs-6 text-right">
+      <div class="col-6 text-right">
         <button type="submit"
                 ng-disabled="userProfile.$invalid || userProfile.$pristine || processing"
                 class="btn btn-primary">{{'UPDATE' | translate}}</button>
@@ -141,12 +141,12 @@
     </div>
 
     <div class="form-group actions row">
-      <div class="col-xs-6">
+      <div class="col-6">
         <button type="button"
                 class="btn btn-link"
                 ng-click="showForm()">{{'CANCEL' | translate}}</button>
       </div>
-      <div class="col-xs-6 text-right">
+      <div class="col-6 text-right">
         <button type="submit"
                 ng-disabled="changePassword.$invalid || changePassword.$pristine || processing || passwordsMismatch || !password.valid"
                 class="btn btn-primary">{{'CHANGE_PASSWORD' | translate}}</button>

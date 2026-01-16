@@ -17,7 +17,8 @@ $info-text:                       #31708f;
 $success-text:                    #3c763d;
 $success-bg:                      #dff0d8;
 $success-border:                  darken(adjust-hue($success-bg, -10), 5%);
-$state-circle-size: 20px;
+$state-circle-size:               20px;
+$body-color:                         #495057;
 @import "~bootstrap/scss/variables";
 
 // Legacy Bootstrap 3 Padding Mappings

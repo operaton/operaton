@@ -1,11 +1,11 @@
 <div class="modal-header">
   <div class="row">
-    <div class="col-xs-6"
+    <div class="col-6"
          ng-if="!PROCESS_TO_START_SELECTED">
       <h3 class="modal-title">{{ 'START_PROCESS' | translate }}</h3>
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-6">
       <form>
         <div class="form-group has-feedback"
              ng-if="!PROCESS_TO_START_SELECTED">
@@ -105,7 +105,7 @@
   <div ng-if="!PROCESS_TO_START_SELECTED"
        class="row row-action">
 
-    <div class="col-xs-12">
+    <div class="col-12">
       <button class="btn btn-link"
               type="button"
               ng-click="$dismiss()">
@@ -117,7 +117,7 @@
   <div ng-if="PROCESS_TO_START_SELECTED"
        class="row">
 
-    <div class="col-xs-4 align-left">
+    <div class="col-4 align-left">
       <button class="btn btn-link"
               type="button"
               ng-click="back()">
@@ -125,7 +125,7 @@
       </button>
     </div>
 
-    <div class="col-xs-8">
+    <div class="col-8">
       <button class="btn btn-link"
               type="button"
               ng-click="$dismiss()">

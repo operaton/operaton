@@ -1,7 +1,7 @@
 <div ng-form class="form-horizontal" name="filterCriteriaForm" role="form">
 
   <div class="row labels-left">
-    <div class="col-xs-2 row-action" ng-show="!filter.id || (filter.id && accesses.update)">
+    <div class="col-2 text-nowrap" ng-show="!filter.id || (filter.id && accesses.update)">
       <a ng-click="addCriterion()"
          href>
         <span class="hidden-sm hidden-xs">{{ 'FILTER_ADD_CRITERION' | translate }}</span>
@@ -9,22 +9,22 @@
       </a>
     </div>
 
-    <div ng-class="{ 'col-xs-10': !filter.id || (filter.id && accesses.update) , 'col-xs-12': !(!filter.id || (filter.id && accesses.update)) }">
-      <div class="form-group" ng-show="query.length">
-        <label class="col-xs-6 control-label"
+    <div ng-class="{ 'col-10': !filter.id || (filter.id && accesses.update) , 'col-12': !(!filter.id || (filter.id && accesses.update)) }">
+      <div class="form-group row" ng-show="query.length">
+        <label class="col-6 control-label"
                translate="FILTER_CRITERIA_KEY">Key</label>
-        <label class="col-xs-6 control-label"
+        <label class="col-6 control-label"
                translate="FILTER_CRITERIA_VALUE">Value</label>
       </div>
     </div>
   </div>
 
-  <div ng-repeat="(delta, queryParam) in query" class="row" ng-if="isQueryParameter(queryParam)" ng-init="clearKey(queryParam)">
+  <div ng-repeat="(delta, queryParam) in query" ng-if="isQueryParameter(queryParam)" ng-init="clearKey(queryParam)">
 
-    <div ng-form name="criteriaFieldForm">
+    <div ng-form name="criteriaFieldForm" class="row">
       <div ng-init="addForm(this.criteriaFieldForm)"></div>
 
-      <div class="col-xs-2 row-action" ng-show="!filter.id || (filter.id && accesses.update)">
+      <div class="col-2 text-nowrap" ng-show="!filter.id || (filter.id && accesses.update)">
         <a ng-click="removeCriterion(delta)"
            href>
           <span class="hidden-sm hidden-xs">{{ 'FILTER_REMOVE_CRITERION' | translate }}</span>
@@ -32,12 +32,12 @@
         </a>
       </div>
 
-      <div ng-class="{ 'col-xs-10': !filter.id || (filter.id && accesses.update) , 'col-xs-12': !(!filter.id || (filter.id && accesses.update)) }">
-        <div class="form-group">
+      <div ng-class="{ 'col-10': !filter.id || (filter.id && accesses.update) , 'col-12': !(!filter.id || (filter.id && accesses.update)) }">
+        <div class="form-group row">
 
-          <div class="col-xs-6">
+          <div class="col-6">
 
-            <select class="form-control"
+            <select class="custom-select"
                     ng-model="queryParam.key"
                     name="queryParamKey"
                     ng-change="valueChanged(queryParam, this.criteriaFieldForm.queryParamValue)"
@@ -69,7 +69,7 @@
             </div>
           </div>
 
-          <div class="col-xs-6">
+          <div class="col-6">
 
             <div ng-if="!booleanCriterion[getCriterionName(queryParam.key)]">
               <input class="form-control"
@@ -123,25 +123,29 @@
 
   </div>
 
-  <div ng-if="canIncludeAssignedTasks()"
-       class="row">
-    <div class="col-xs-10 col-xs-offset-2 checkbox">
-      <label>
+  <div ng-if="canIncludeAssignedTasks()" class="row">
+    <div class="col-10 offset-2">
+      <div class="form-check">
         <input type="checkbox"
-               class="form-control"
+               class="form-check-input"
+               id="includeAssigned"
                ng-model="filter.includeAssignedTasks" />
-        {{ 'FILTER_CRITERIA_INCLUDE_ASSIGNED_TASKS' | translate }}
-      </label>
-      <div class="help-block"
-           translate="FILTER_CRITERIA_INCLUDE_ASSIGNED_TASKS_HINT"></div>
+
+        <label class="form-check-label" for="includeAssigned">
+          {{ 'FILTER_CRITERIA_INCLUDE_ASSIGNED_TASKS' | translate }}
+        </label>
+      </div>
+
+      <small class="form-text text-muted"
+             translate="FILTER_CRITERIA_INCLUDE_ASSIGNED_TASKS_HINT"></small>
     </div>
   </div>
 
   <div ng-if="query.length > 0"
        class="row match-type">
-    <div class="col-xs-10 col-xs-offset-2">
+    <div class="col-10 offset-2">
       <button ng-click="switchMatchType()"
-              class="btn btn-default btn-xs"
+              class="btn btn-outline-secondary d-inline-flex align-items-center justify-content-center pl-2 pr-2 btn-xs"
               ng-disabled="query.length < 2"
               type="button">
         {{ (filter.matchType === 'all' ? 'MATCH_TYPE_ALL' : 'MATCH_TYPE_ANY') | translate }}

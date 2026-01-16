@@ -32,7 +32,7 @@
     "angular-touch": "1.8.3",
     "angular-translate": "2.19.1",
     "angular-ui-bootstrap": "2.5.6",
-    "bootstrap": "3.4.1",
+    "bootstrap": "5.3.8",
     "bpmn-font": "0.12.1",
     "bpmn-js": "18.10.1",
     "camunda-dmn-js": "3.6.0",

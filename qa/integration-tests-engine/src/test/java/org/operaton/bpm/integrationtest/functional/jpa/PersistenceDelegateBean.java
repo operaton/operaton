@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.functional.jpa;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -27,13 +27,16 @@ import org.operaton.bpm.engine.delegate.JavaDelegate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Named
-@ApplicationScoped
+@RequestScoped
 public class PersistenceDelegateBean implements JavaDelegate {
 
   @PersistenceContext
   private EntityManager em;
 
   private SomeEntity entity;
+
+  private boolean invoked = false;
+  private boolean entityManaged = false;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
@@ -43,11 +46,19 @@ public class PersistenceDelegateBean implements JavaDelegate {
     // persist the entity before starting the process
 
     assertThat(em.contains(entity)).isTrue();
-
+    invoked = true;
+    entityManaged = em.contains(entity);
   }
 
   public void setEntity(SomeEntity entity) {
     this.entity = entity;
   }
 
+  public boolean isInvoked() {
+    return invoked;
+  }
+
+  public boolean isEntityManaged() {
+    return entityManaged;
+  }
 }

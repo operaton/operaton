@@ -35,6 +35,9 @@ public class AsyncPersistenceDelegateBean implements JavaDelegate {
 
   private SomeEntity entity;
 
+  private boolean invoked = false;
+  private boolean entityManaged = false;
+
   @Override
   public void execute(DelegateExecution execution) throws Exception {
 
@@ -43,11 +46,19 @@ public class AsyncPersistenceDelegateBean implements JavaDelegate {
     // we are invoked in a new transaction
 
     assertThat(em.contains(entity)).isFalse();
-
+    invoked = true;
+    entityManaged = em.contains(entity);
   }
 
   public void setEntity(SomeEntity entity) {
     this.entity = entity;
   }
 
+  public boolean isInvoked() {
+    return invoked;
+  }
+
+  public boolean isEntityManaged() {
+    return entityManaged;
+  }
 }

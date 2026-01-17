@@ -233,13 +233,11 @@ class HistoricVariableInstanceTest {
     HistoricVariableInstanceEntity historicVariable = (HistoricVariableInstanceEntity) variables.get(0);
     assertThat(historicVariable.getName()).isEqualTo("myVar");
     assertThat(historicVariable.getTextValue()).isEqualTo("test101112");
-    assertThat(historicVariable.getVariableTypeName()).isEqualTo("string");
     assertThat(historicVariable.getTypeName()).isEqualTo("string");
 
     HistoricVariableInstanceEntity historicVariable1 = (HistoricVariableInstanceEntity) variables.get(1);
     assertThat(historicVariable1.getName()).isEqualTo("myVar1");
     assertThat(historicVariable1.getTextValue()).isEqualTo("test789");
-    assertThat(historicVariable1.getVariableTypeName()).isEqualTo("string");
     assertThat(historicVariable1.getTypeName()).isEqualTo("string");
 
     assertThat(historyService.createHistoricActivityInstanceQuery().count()).isEqualTo(18);

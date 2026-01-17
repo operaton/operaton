@@ -64,6 +64,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  */
 public class GetActivityInstanceCmd implements Command<ActivityInstance> {
+  private static final ExecutionIdComparator EXECUTION_ID_COMPARATOR = new ExecutionIdComparator();
 
   protected String processInstanceId;
 
@@ -196,7 +197,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected void orderById(List<ExecutionEntity> leaves) {
-    Collections.sort(leaves, ExecutionIdComparator.INSTANCE);
+    Collections.sort(leaves, EXECUTION_ID_COMPARATOR);
   }
 
   protected ActivityInstanceImpl createActivityInstance(PvmExecutionImpl scopeExecution, ScopeImpl scope,
@@ -471,8 +472,6 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   public static class ExecutionIdComparator implements Comparator<ExecutionEntity> {
-
-    public static final ExecutionIdComparator INSTANCE = new ExecutionIdComparator();
 
     @Override
     public int compare(ExecutionEntity o1, ExecutionEntity o2) {

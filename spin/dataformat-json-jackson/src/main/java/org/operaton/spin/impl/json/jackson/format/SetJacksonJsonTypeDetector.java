@@ -29,11 +29,6 @@ import static org.operaton.spin.impl.json.jackson.format.TypeHelper.constructTyp
  */
 public class SetJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector {
 
-    /**
-     * Object instance to use.
-     */
-    public static final SetJacksonJsonTypeDetector INSTANCE = new SetJacksonJsonTypeDetector();
-
     @Override
     public boolean canHandle(Object value) {
         return value instanceof Set<?>;

@@ -17,6 +17,7 @@ package org.operaton.bpm.engine.spring.components.aop.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Objects;
 
 import org.springframework.aop.support.AopUtils;
 import org.springframework.aop.support.annotation.AnnotationMethodMatcher;
@@ -56,5 +57,19 @@ public class MetaAnnotationMethodMatcher extends AnnotationMethodMatcher {
 		Method specificMethod = AopUtils.getMostSpecificMethod(method, targetClass);
 		return specificMethod != method &&
 				(AnnotationUtils.getAnnotation(specificMethod, this.annotationType) != null);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {return true;}
+		if (o == null || getClass() != o.getClass()) {return false;}
+		if (!super.equals(o)) {return false;}
+		MetaAnnotationMethodMatcher that = (MetaAnnotationMethodMatcher) o;
+		return Objects.equals(annotationType, that.annotationType);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), annotationType);
 	}
 }

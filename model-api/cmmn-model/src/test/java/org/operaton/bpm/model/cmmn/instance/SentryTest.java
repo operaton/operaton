@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -32,7 +32,7 @@ public class SentryTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(OnPart.class),
           new ChildElementAssumption(IfPart.class, 0, 1)
         );
@@ -40,7 +40,7 @@ public class SentryTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("name")
         );
   }

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.optimize;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -95,7 +94,7 @@ public class OptimizeServiceAuthorizationTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
       {(Function<OptimizeService, List<?>>) optimizeService ->
         optimizeService.getCompletedHistoricActivityInstances(new Date(0L), null, 10)},
       {(Function<OptimizeService, List<?>>) optimizeService ->

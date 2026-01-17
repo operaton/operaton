@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -334,7 +333,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     // given
     String variableKey = "aVariableId";
 
-    List<String> payload = Arrays.asList("a", "b");
+    List<String> payload = List.of("a", "b");
     ObjectValue variableValue =
         MockObjectValue
             .fromObjectValue(Variables
@@ -554,7 +553,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     // given
     String variableKey = "aVariableId";
 
-    List<String> payload = Arrays.asList("a", "b");
+    List<String> payload = List.of("a", "b");
     ObjectValue variableValue =
         MockObjectValue
             .fromObjectValue(Variables

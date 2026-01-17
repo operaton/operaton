@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -110,7 +109,7 @@ public abstract class AuthorizationTest {
     testUser = createUser(userId);
     testGroup = createGroup(groupId);
     identityService.createMembership(userId, groupId);
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 

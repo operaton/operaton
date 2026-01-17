@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1292,7 +1291,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   void testWithoutTenantIdParameter() {
-    mockedQuery = setUpMockHistoricCaseInstanceQuery(Arrays.asList(MockProvider.createMockHistoricCaseInstance(null)));
+    mockedQuery = setUpMockHistoricCaseInstanceQuery(List.of(MockProvider.createMockHistoricCaseInstance(null)));
 
     Response response = given()
       .queryParam("withoutTenantId", true)
@@ -1314,7 +1313,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
 
   @Test
   void testWithoutTenantIdPostParameter() {
-    mockedQuery = setUpMockHistoricCaseInstanceQuery(Arrays.asList(MockProvider.createMockHistoricCaseInstance(null)));
+    mockedQuery = setUpMockHistoricCaseInstanceQuery(List.of(MockProvider.createMockHistoricCaseInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
@@ -1339,7 +1338,7 @@ public class HistoricCaseInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   private List<HistoricCaseInstance> createMockHistoricCaseInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricCaseInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricCaseInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

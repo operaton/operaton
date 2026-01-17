@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.standalone.history;
+import java.util.List;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +72,7 @@ public class CustomHistoryLevelWithoutUserOperationLogTest {
     .randomEngineName().closeEngineAfterAllTests()
     .configurator(configuration -> {
       configuration.setJdbcUrl("jdbc:h2:mem:CustomHistoryLevelWithoutUserOperationLogTest");
-      configuration.setCustomHistoryLevels(Arrays.asList(customHistoryLevelFullWUOL));
+      configuration.setCustomHistoryLevels(List.of(customHistoryLevelFullWUOL));
       configuration.setHistory("aCustomHistoryLevelWUOL");
       configuration.setDatabaseSchemaUpdate(DB_SCHEMA_UPDATE_CREATE_DROP);
     })

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.service;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -62,7 +62,7 @@ public class ProcessApplicationServiceTest extends AbstractFoxPlatformIntegratio
     Set<String> processApplicationNames = processApplicationService.getProcessApplicationNames();
 
     // check if the new applications are deployed with allowed names
-    processApplicationNames.retainAll(Arrays.asList("test1", "test2", "/test1", "/test2"));
+    processApplicationNames.retainAll(List.of("test1", "test2", "/test1", "/test2"));
 
     assertThat(processApplicationNames).hasSize(2);
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
@@ -33,14 +33,14 @@ public class ScriptTaskTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Script.class, 0, 1)
     );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("scriptFormat"),
       /** operaton extensions */
       new AttributeAssumption(OPERATON_NS, "resultVariable"),

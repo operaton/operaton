@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
@@ -153,7 +153,7 @@ public class LegacyUserOperationLogTest {
     ProcessDefinition definition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(definition.getId());
     batch = runtimeService.deleteProcessInstancesAsync(
-        Arrays.asList(processInstance.getId()), null, "test reason");
+        List.of(processInstance.getId()), null, "test reason");
 
     Job seedJob = managementService
         .createJobQuery()
@@ -180,7 +180,7 @@ public class LegacyUserOperationLogTest {
       .build();
 
     batch = runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
     Job seedJob = managementService
         .createJobQuery()

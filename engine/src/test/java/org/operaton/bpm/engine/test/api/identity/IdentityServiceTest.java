@@ -654,7 +654,7 @@ class IdentityServiceTest {
 
   @Test
   void testSetAuthenticatedUserAndGroups() {
-    List<String> groups = Arrays.asList("sales", "development");
+    List<String> groups = List.of("sales", "development");
 
     identityService.setAuthentication("john", groups);
 
@@ -668,8 +668,8 @@ class IdentityServiceTest {
 
   @Test
   void testSetAuthenticatedUserGroupsAndTenants() {
-    List<String> groups = Arrays.asList("sales", "development");
-    List<String> tenants = Arrays.asList("tenant1", "tenant2");
+    List<String> groups = List.of("sales", "development");
+    List<String> tenants = List.of("tenant1", "tenant2");
 
     identityService.setAuthentication("john", groups, tenants);
 

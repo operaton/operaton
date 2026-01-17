@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.bpmn.mail;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,7 +53,7 @@ class EmailSendTaskTest extends EmailTestCase {
 
     WiserMessage message = messages.get(0);
     assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), null);
+            List.of("kermit@operaton.org"), null);
   }
 
   @Deployment
@@ -100,7 +99,7 @@ class EmailSendTaskTest extends EmailTestCase {
 
     WiserMessage message = messages.get(0);
     assertEmailSend(message, false, subject, "Hello " + recipientName + ", this is an e-mail",
-            sender, Arrays.asList(recipient), null);
+            sender, List.of(recipient), null);
   }
 
   @Deployment
@@ -110,7 +109,7 @@ class EmailSendTaskTest extends EmailTestCase {
 
     List<WiserMessage> messages = wiser.getMessages();
     assertEmailSend(messages.get(0), false, "Hello world", "This is the content", "operaton@localhost",
-            Arrays.asList("kermit@operaton.org"), Arrays.asList("fozzie@operaton.org"));
+            List.of("kermit@operaton.org"), List.of("fozzie@operaton.org"));
 
     // Bcc is not stored in the header (obviously)
     // so the only way to verify the bcc, is that there are three messages send.
@@ -124,7 +123,7 @@ class EmailSendTaskTest extends EmailTestCase {
 
     List<WiserMessage> messages = wiser.getMessages();
     assertThat(messages).hasSize(1);
-    assertEmailSend(messages.get(0), true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", Arrays.asList("kermit@operaton.org"), null);
+    assertEmailSend(messages.get(0), true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", List.of("kermit@operaton.org"), null);
   }
 
   @Deployment

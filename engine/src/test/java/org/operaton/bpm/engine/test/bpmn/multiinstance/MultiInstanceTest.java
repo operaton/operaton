@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.multiinstance;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -394,7 +393,7 @@ class MultiInstanceTest {
   @Deployment
   @Test
   void testParallelUserTasksBasedOnCollection() {
-    List<String> assigneeList = Arrays.asList("kermit", "gonzo", "mispiggy", "fozzie", "bubba");
+    List<String> assigneeList = List.of("kermit", "gonzo", "mispiggy", "fozzie", "bubba");
     String procId = runtimeService.startProcessInstanceByKey("miParallelUserTasksBasedOnCollection",
           CollectionUtil.singletonMap("assigneeList", assigneeList)).getId();
 
@@ -488,7 +487,7 @@ class MultiInstanceTest {
   @Test
   void testParallelUserTasksCustomExtensions() {
     Map<String, Object> vars = new HashMap<>();
-    List<String> assigneeList = Arrays.asList("kermit", "gonzo", "fozzie");
+    List<String> assigneeList = List.of("kermit", "gonzo", "fozzie");
     vars.put("assigneeList", assigneeList);
     runtimeService.startProcessInstanceByKey("miSequentialUserTasks", vars);
 
@@ -1224,7 +1223,7 @@ class MultiInstanceTest {
   @Deployment
   @Test
   void testSequentialServiceTaskWithClassAndCollection() {
-    Collection<Integer> items = Arrays.asList(1,2,3,4,5,6);
+    Collection<Integer> items = List.of(1,2,3,4,5,6);
     Map<String, Object> vars = new HashMap<>();
     vars.put("result", 1);
     vars.put("items", items);
@@ -1267,7 +1266,7 @@ class MultiInstanceTest {
   @Test
   void testMultiInstanceCallActivityWithErrorBoundaryEvent() {
     Map<String, Object> variableMap = new HashMap<>();
-    variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
+    variableMap.put("assignees", List.of("kermit", "gonzo"));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variableMap);
 
@@ -1294,7 +1293,7 @@ class MultiInstanceTest {
   @Test
   void testSequentialMultiInstanceCallActivityWithErrorBoundaryEvent() {
     Map<String, Object> variableMap = new HashMap<>();
-    variableMap.put("assignees", Arrays.asList("kermit", "gonzo"));
+    variableMap.put("assignees", List.of("kermit", "gonzo"));
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variableMap);
 
@@ -1317,8 +1316,8 @@ class MultiInstanceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
   @Test
   void testNestedMultiInstanceTasks() {
-    List<String> processes = Arrays.asList("process A", "process B");
-    List<String> assignees = Arrays.asList("kermit", "gonzo");
+    List<String> processes = List.of("process A", "process B");
+    List<String> assignees = List.of("kermit", "gonzo");
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("subProcesses", processes);
     variableMap.put("assignees", assignees);
@@ -1340,8 +1339,8 @@ class MultiInstanceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/multiinstance/MultiInstanceTest.testNestedMultiInstanceTasks.bpmn20.xml"})
   @Test
   void testNestedMultiInstanceTasksActivityInstance() {
-    List<String> processes = Arrays.asList("process A", "process B");
-    List<String> assignees = Arrays.asList("kermit", "gonzo");
+    List<String> processes = List.of("process A", "process B");
+    List<String> assignees = List.of("kermit", "gonzo");
     Map<String, Object> variableMap = new HashMap<>();
     variableMap.put("subProcesses", processes);
     variableMap.put("assignees", assignees);

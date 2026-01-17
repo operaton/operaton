@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
+import java.util.List;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -239,7 +240,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     parameters.put("notLocked", "true");
     parameters.put("executionId", "someExecutionId");
     parameters.put("processInstanceId", "someProcessInstanceId");
-    parameters.put("processInstanceIdIn", Arrays.asList("aProcessInstanceId", "anotherProcessInstanceId"));
+    parameters.put("processInstanceIdIn", List.of("aProcessInstanceId", "anotherProcessInstanceId"));
     parameters.put("processDefinitionId", "someProcessDefinitionId");
     parameters.put("active", "true");
     parameters.put("suspended", "true");
@@ -488,7 +489,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<ExternalTask> createMockExternalTasksTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().buildExternalTask(),
         MockProvider.mockExternalTask().tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).buildExternalTask());
   }
@@ -548,7 +549,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<ExternalTask> createMockExternalTasksTwoActivityIds() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().buildExternalTask(),
         MockProvider.mockExternalTask().activityId(MockProvider.ANOTHER_EXAMPLE_ACTIVITY_ID).buildExternalTask());
   }
@@ -615,7 +616,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<ExternalTask> createMockedExternalTasksWithPriorities() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().priority(EXTERNAL_TASK_LOW_BOUND_PRIORITY).buildExternalTask(),
         MockProvider.mockExternalTask().priority(EXTERNAL_TASK_HIGH_BOUND_PRIORITY).buildExternalTask());
   }
@@ -905,7 +906,7 @@ public class ExternalTaskRestServiceQueryTest extends AbstractRestServiceTest {
     }
 
   private List<ExternalTask> createMockExternalTasksTwoIds() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockExternalTask().buildExternalTask(),
         MockProvider.mockExternalTask().id(MockProvider.EXTERNAL_TASK_ANOTHER_ID).buildExternalTask());
   }

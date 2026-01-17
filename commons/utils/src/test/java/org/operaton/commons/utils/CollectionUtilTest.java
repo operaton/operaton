@@ -17,7 +17,6 @@
 package org.operaton.commons.utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -162,7 +161,7 @@ class CollectionUtilTest {
   void addCollectionToMapOfSetsShouldEliminateDuplicates() {
     Map<String, Set<String>> map = new HashMap<>();
 
-    Collection<String> values = Arrays.asList("a", "b", "c", "a");
+    Collection<String> values = List.of("a", "b", "c", "a");
     CollectionUtil.addCollectionToMapOfSets(map, "key", values);
 
     assertThat(map).hasSize(1).containsKey("key");
@@ -173,9 +172,9 @@ class CollectionUtilTest {
   void addCollectionToMapOfSetsShouldMergeNewValuesWithExistingSet() {
     Map<String, Set<String>> map = new HashMap<>();
 
-    Collection<String> buildValues = Arrays.asList("a", "b", "c");
+    Collection<String> buildValues = List.of("a", "b", "c");
     CollectionUtil.addCollectionToMapOfSets(map, "key", buildValues);
-    Collection<String> appendValues = Arrays.asList("a", "d", "e");
+    Collection<String> appendValues = List.of("a", "d", "e");
     CollectionUtil.addCollectionToMapOfSets(map, "key", appendValues);
 
     assertThat(map).hasSize(1).containsKey("key");
@@ -185,7 +184,7 @@ class CollectionUtilTest {
   @Test
   void addCollectionToMapOfSetsShouldGenerateExceptions() {
     Map<String, Set<String>> map = Collections.unmodifiableMap(new HashMap<>());
-    Collection<String> values = Arrays.asList("a", "b", "c");
+    Collection<String> values = List.of("a", "b", "c");
 
     assertThatThrownBy(() -> CollectionUtil.addCollectionToMapOfSets(map, "key", values))
         .isInstanceOf(UnsupportedOperationException.class);
@@ -195,7 +194,7 @@ class CollectionUtilTest {
 
   @Test
   void partitionShouldSplitListIntoSmallerChunksWithLastPartialChunk() {
-    List<String> original = Arrays.asList("a", "b", "c", "d", "e");
+    List<String> original = List.of("a", "b", "c", "d", "e");
 
     List<List<String>> partitioned = CollectionUtil.partition(original, 2);
 
@@ -208,7 +207,7 @@ class CollectionUtilTest {
 
   @Test
   void partitionShouldKeepOriginalListWhenSizeMatchesPartitionSize() {
-    List<String> original = Arrays.asList("a", "b", "c", "d", "e");
+    List<String> original = List.of("a", "b", "c", "d", "e");
 
     List<List<String>> partitioned = CollectionUtil.partition(original, 5);
 
@@ -223,7 +222,7 @@ class CollectionUtilTest {
 
   @Test
   void collectInListShouldConvertIteratorToArrayList() {
-    List<String> original = Arrays.asList("a", "b", "c");
+    List<String> original = List.of("a", "b", "c");
 
     List<String> result = CollectionUtil.collectInList(original.iterator());
 
@@ -232,8 +231,8 @@ class CollectionUtilTest {
 
   @Test
   void getLastElementShouldReturnLastElementFromListOrSetMember() {
-    Set<String> set = new HashSet<>(Arrays.asList("a", "b", "c"));
-    List<String> list = Arrays.asList("a", "b", "c");
+    Set<String> set = new HashSet<>(List.of("a", "b", "c"));
+    List<String> list = List.of("a", "b", "c");
 
     String lastFromSet = CollectionUtil.getLastElement(set);
     String lastFromList = CollectionUtil.getLastElement(list);
@@ -251,7 +250,7 @@ class CollectionUtilTest {
 
   @Test
   void hasElementsShouldReturnTrueOnlyForNonEmptyCollections() {
-    List<String> list = Arrays.asList("a", "b");
+    List<String> list = List.of("a", "b");
 
     assertThat(CollectionUtil.hasElements(list)).isTrue();
     assertThat(CollectionUtil.hasElements(Collections.emptyList())).isFalse();
@@ -261,7 +260,7 @@ class CollectionUtilTest {
   @Test
   void toSetShouldConvertEnumerationToSetAndRemoveDuplicates() {
     // given
-    List<String> list = Arrays.asList("a", "b", "a");
+    List<String> list = List.of("a", "b", "a");
     Enumeration<String> enumeration = Collections.enumeration(list);
 
     // when

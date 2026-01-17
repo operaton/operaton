@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -122,7 +121,7 @@ class RestartProcessInstanceAsyncTest {
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
 
-    List<String> processInstanceIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance1.getId(), processInstance2.getId());
 
     // when
     Batch batch = runtimeService.restartProcessInstances(processDefinition.getId())
@@ -811,7 +810,7 @@ class RestartProcessInstanceAsyncTest {
       ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("Process");
       ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("Process");
 
-      List<String> list = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+      List<String> list = List.of(processInstance1.getId(), processInstance2.getId());
 
       runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
       runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -1133,7 +1132,7 @@ class RestartProcessInstanceAsyncTest {
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
 
-    List<String> processInstanceIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance1.getId(), processInstance2.getId());
 
     // when
     Batch batch = runtimeService.restartProcessInstances(processDefinition.getId())

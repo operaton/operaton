@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest.history;
+import java.util.List;
 
 import java.util.*;
 import jakarta.ws.rs.core.MediaType;
@@ -2532,7 +2533,7 @@ public class HistoricTaskInstanceRestServiceQueryTest extends AbstractRestServic
   }
 
   private List<HistoricTaskInstance> createMockHistoricTaskInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricTaskInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricTaskInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

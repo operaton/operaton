@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -184,7 +183,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
 
   private void setupAndExecuteProcessListBasedTest() {
     //given
-    List<String> processInstances = Arrays.asList(processInstance.getId(), processInstance2.getId());
+    List<String> processInstances = List.of(processInstance.getId(), processInstance2.getId());
     authRule
         .init(scenario)
         .withUser("userId")

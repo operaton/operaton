@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.dc;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
@@ -40,7 +40,7 @@ public class PointTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("x", false, true),
       new AttributeAssumption("y", false, true)
     );

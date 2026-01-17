@@ -902,7 +902,7 @@ public class MessageRestServiceTest extends AbstractRestServiceTest {
   }
 
   protected void checkVariablesInResult(String content, int idx) {
-    List<String> variableNames = java.util.Arrays.asList(MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME, MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME);
+    List<String> variableNames = java.util.List.of(MockProvider.EXAMPLE_VARIABLE_INSTANCE_NAME, MockProvider.EXAMPLE_DESERIALIZED_VARIABLE_INSTANCE_NAME);
 
     for (String variableName : variableNames) {
       String variablePath = "[" + idx + "].variables." + variableName;

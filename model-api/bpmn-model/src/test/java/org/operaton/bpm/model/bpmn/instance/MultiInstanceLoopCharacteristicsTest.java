@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.MultiInstanceFlowCondition;
@@ -37,7 +37,7 @@ public class MultiInstanceLoopCharacteristicsTest extends BpmnModelElementInstan
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(LoopCardinality.class, 0, 1),
       new ChildElementAssumption(LoopDataInputRef.class, 0, 1),
       new ChildElementAssumption(LoopDataOutputRef.class, 0, 1),
@@ -50,7 +50,7 @@ public class MultiInstanceLoopCharacteristicsTest extends BpmnModelElementInstan
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("isSequential", false, false, false),
       new AttributeAssumption("behavior", false, false, MultiInstanceFlowCondition.All),
       new AttributeAssumption("oneBehaviorEventRef"),

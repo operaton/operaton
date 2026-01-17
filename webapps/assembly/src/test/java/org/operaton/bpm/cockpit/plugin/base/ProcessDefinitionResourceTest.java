@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -489,7 +488,7 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varboolean", EQUALS_OPERATOR_NAME, false);
 
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
@@ -526,7 +525,7 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("aVariableName", LIKE_OPERATOR_NAME, "test\\_1%");
 
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     // then
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
@@ -555,7 +554,7 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varstring", LIKE_OPERATOR_NAME, "B%");
 
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
@@ -577,7 +576,7 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varfloat", EQUALS_OPERATOR_NAME, 0.0);
 
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
@@ -599,7 +598,7 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
     VariableQueryParameterDto variable = createVariableParameter("varinteger", NOT_EQUALS_OPERATOR_NAME, 12);
 
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
-    queryParameter.setVariables(Arrays.asList(variable));
+    queryParameter.setVariables(List.of(variable));
 
     List<ProcessDefinitionDto> results = resource.queryCalledProcessDefinitions(queryParameter);
 
@@ -620,7 +619,7 @@ class ProcessDefinitionResourceTest extends AbstractCockpitPluginTest {
 
     // when
     ProcessDefinitionQueryDto queryParameter = new ProcessDefinitionQueryDto();
-    queryParameter.setVariables(Arrays.asList(
+    queryParameter.setVariables(List.of(
         createVariableParameter("varinteger", VariableQueryParameterDto.GREATER_THAN_OPERATOR_NAME, 11),
         createVariableParameter("varinteger", VariableQueryParameterDto.LESS_THAN_OR_EQUALS_OPERATOR_NAME, 12),
         createVariableParameter("varinteger", VariableQueryParameterDto.EQUALS_OPERATOR_NAME, 12),

@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.impl.runtime;
+import java.util.List;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -180,7 +180,7 @@ class DefaultDeserializationTypeValidatorTest {
     // then
     assertThat(validator.validate(ArrayList.class.getName())).isTrue();
     assertThat(validator.validate(HashMap.class.getName())).isTrue();
-    assertThat(validator.validate(Arrays.asList("a", "n").getClass().getName())).isTrue();
+    assertThat(validator.validate(List.of("a", "n").getClass().getName())).isTrue();
   }
 
   // ALLOWED CLASS(ES)

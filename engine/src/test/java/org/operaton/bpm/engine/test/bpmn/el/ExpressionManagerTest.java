@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.el;
+import java.util.List;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -171,7 +171,7 @@ class ExpressionManagerTest {
         .getId();
 
     runtimeService.startProcessInstanceByKey("testProcess",
-        Variables.createVariables().putValue("list", Arrays.asList("foo", "bar")));
+        Variables.createVariables().putValue("list", List.of("foo", "bar")));
 
     HistoricActivityInstance userTask = historyService.createHistoricActivityInstanceQuery()
         .activityId("userTask")

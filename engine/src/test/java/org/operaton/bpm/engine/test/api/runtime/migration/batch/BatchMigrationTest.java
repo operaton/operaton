@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.migration.batch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -99,7 +98,7 @@ public class BatchMigrationTest {
 
   @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { false, null },
       { true, TEST_DATE }
     });
@@ -165,7 +164,7 @@ public class BatchMigrationTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
-    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar"));
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(List.of("foo", null, "bar"));
 
     try {
       migrationPlanExecutionBuilder.executeAsync();
@@ -707,7 +706,7 @@ public class BatchMigrationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Batch batch = engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
     helper.completeSeedJobs(batch);
 
@@ -745,7 +744,7 @@ public class BatchMigrationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Batch batch = engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipCustomListeners()
       .executeAsync();
     helper.completeSeedJobs(batch);
@@ -775,7 +774,7 @@ public class BatchMigrationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Batch batch = engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
     helper.completeSeedJobs(batch);
 
@@ -810,7 +809,7 @@ public class BatchMigrationTest {
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceProcessDefinition.getId());
 
     Batch batch = engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipIoMappings()
       .executeAsync();
     helper.completeSeedJobs(batch);

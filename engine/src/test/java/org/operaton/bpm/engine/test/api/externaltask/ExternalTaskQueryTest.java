@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.externaltask;
+import java.util.List;
 
 import java.util.*;
 
@@ -212,7 +213,7 @@ class ExternalTaskQueryTest {
     // given
     startInstancesByKey("parallelExternalTaskProcess", 3);
 
-    List<String> activityIds = Arrays.asList("externalTask1", "externalTask2");
+    List<String> activityIds = List.of("externalTask1", "externalTask2");
 
     // when
     List<ExternalTask> tasks = externalTaskService
@@ -305,7 +306,7 @@ class ExternalTaskQueryTest {
     // given
     List<ProcessInstance> processInstances = startInstancesByKey("oneExternalTaskProcess", 3);
 
-    List<String> processInstanceIds = Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId());
+    List<String> processInstanceIds = List.of(processInstances.get(0).getId(), processInstances.get(1).getId());
 
     // when
     List<ExternalTask> tasks = externalTaskService

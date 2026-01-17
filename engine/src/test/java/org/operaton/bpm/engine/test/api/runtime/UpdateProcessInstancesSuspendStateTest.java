@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -101,7 +101,7 @@ class UpdateProcessInstancesSuspendStateTest {
 
     // when the process instances are suspended
     runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspend();
+      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspend();
 
     // Update the process instances and they are suspended
     ProcessInstance p1c = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance1.getId()).singleResult();
@@ -121,11 +121,11 @@ class UpdateProcessInstancesSuspendStateTest {
 
     // when the process instances are suspended
     runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspend();
+      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspend();
 
     // when they are activated again
     runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).activate();
+      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).activate();
 
 
     // Update the process instances and they are active again
@@ -271,7 +271,7 @@ class UpdateProcessInstancesSuspendStateTest {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
+      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
     assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::activate)
@@ -288,7 +288,7 @@ class UpdateProcessInstancesSuspendStateTest {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
+      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
     assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::suspend)

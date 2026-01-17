@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.externaltask;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -197,7 +196,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   @Test
   void shouldFailForNegativeRetriesSync() {
 
-    List<String> externalTaskIds = Arrays.asList("externalTaskId");
+    List<String> externalTaskIds = List.of("externalTaskId");
 
     assertThatThrownBy(() -> externalTaskService.setRetries(externalTaskIds, -10))
         .isInstanceOf(BadUserRequestException.class)
@@ -208,7 +207,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   @Test
   void shouldFailForNegativeRetriesAsync() {
 
-    List<String> externalTaskIds = Arrays.asList("externalTaskId");
+    List<String> externalTaskIds = List.of("externalTaskId");
 
     Batch batch = externalTaskService.setRetriesAsync(externalTaskIds, null, -10);
 
@@ -373,7 +372,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   void shouldUpdateRetriesByExternalTaskIds() {
     // given
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = Arrays.asList(
+    List<String> externalTaskIds = List.of(
         tasks.get(0).getId(),
         tasks.get(1).getId(),
         tasks.get(2).getId(),
@@ -398,7 +397,7 @@ class SetExternalTasksRetriesTest extends AbstractAsyncOperationsTest {
   void shouldUpdateRetriesByExternalTaskIdArray() {
     // given
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = Arrays.asList(
+    List<String> externalTaskIds = List.of(
         tasks.get(0).getId(),
         tasks.get(1).getId(),
         tasks.get(2).getId(),

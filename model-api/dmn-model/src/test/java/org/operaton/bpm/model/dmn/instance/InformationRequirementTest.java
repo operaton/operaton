@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 public class InformationRequirementTest extends DmnModelElementInstanceTest {
@@ -28,7 +28,7 @@ public class InformationRequirementTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(RequiredDecisionReference.class, 0, 1),
       new ChildElementAssumption(RequiredInputReference.class, 0, 1)
     );

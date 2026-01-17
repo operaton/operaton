@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -36,7 +36,7 @@ public class DataOutputTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("name"),
       new AttributeAssumption("isCollection", false, false, false)
     );

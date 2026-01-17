@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
+import java.util.List;
 
 import java.io.InputStream;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +75,7 @@ class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDecisionModelWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionModel(decisionDefinitionId);
 
@@ -105,7 +105,7 @@ class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDecisionDiagramWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionDiagram(decisionDefinitionId);
 
@@ -138,7 +138,7 @@ class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDecisionDefinitionWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DecisionDefinition definition = repositoryService.getDecisionDefinition(decisionDefinitionId);
 
@@ -167,7 +167,7 @@ class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
 
   @Test
   void updateHistoryTimeToLiveWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, 6);
 
@@ -202,7 +202,7 @@ class MultiTenancyDecisionDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDmnModelInstanceWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DmnModelInstance modelInstance = repositoryService.getDmnModelInstance(decisionDefinitionId);
 

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -342,7 +341,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testProcessDefinitionTenantIdList() {
-    List<ProcessDefinition> processDefinitions = Arrays.asList(
+    List<ProcessDefinition> processDefinitions = List.of(
         MockProvider.mockDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockDefinition().id(MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID).tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
@@ -370,7 +369,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testProcessDefinitionKeysList() {
-    List<ProcessDefinition> processDefinitions = Arrays.asList(
+    List<ProcessDefinition> processDefinitions = List.of(
             MockProvider.mockDefinition().key(MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY).build(),
             MockProvider.mockDefinition().key(MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_KEY).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
@@ -419,7 +418,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testProcessDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
-    List<ProcessDefinition> processDefinitions = Arrays.asList(
+    List<ProcessDefinition> processDefinitions = List.of(
         MockProvider.mockDefinition().tenantId(null).build(),
         MockProvider.mockDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
@@ -449,7 +448,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testProcessDefinitionVersionTag() {
-    List<ProcessDefinition> processDefinitions = Arrays.asList(
+    List<ProcessDefinition> processDefinitions = List.of(
       MockProvider.mockDefinition().versionTag(MockProvider.EXAMPLE_VERSION_TAG).build(),
       MockProvider.mockDefinition().id(MockProvider.ANOTHER_EXAMPLE_PROCESS_DEFINITION_ID).versionTag(MockProvider.ANOTHER_EXAMPLE_VERSION_TAG).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
@@ -480,7 +479,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testNotStartableInTasklist() {
-    List<ProcessDefinition> processDefinitions = Arrays.asList(
+    List<ProcessDefinition> processDefinitions = List.of(
       MockProvider.mockDefinition().isStartableInTasklist(false).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
 
@@ -497,7 +496,7 @@ public class ProcessDefinitionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testStartableInTasklistPermissionCheck() {
-    List<ProcessDefinition> processDefinitions = Arrays.asList(
+    List<ProcessDefinition> processDefinitions = List.of(
       MockProvider.mockDefinition().isStartableInTasklist(false).build());
     mockedQuery = setUpMockDefinitionQuery(processDefinitions);
 

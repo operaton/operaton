@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +75,7 @@ public class FailedJobListenerWithRetriesTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { 4, 0, false },
         //all retries are depleted without success -> the job is still locked
         { 5, 1, true }

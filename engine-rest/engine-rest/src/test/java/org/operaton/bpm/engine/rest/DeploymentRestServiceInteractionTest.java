@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
+import java.util.List;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -1079,7 +1080,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateCompleteDeployment() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     Response response = given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1108,7 +1109,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1138,7 +1139,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1168,7 +1169,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1197,7 +1198,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1229,7 +1230,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1252,7 +1253,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateCompleteDeploymentDeployChangedOnly() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1269,7 +1270,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateCompleteDeploymentConflictingDuplicateSetting() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     // deploy-changed-only should override enable-duplicate-filtering
     given()
@@ -1288,7 +1289,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentWithDeploymentSource() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     // deploy-changed-only should override enable-duplicate-filtering
     given()
@@ -1307,7 +1308,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentWithActivationTime() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1324,7 +1325,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentWithTenantId() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1340,7 +1341,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentOnlyWithBytes() {
 
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1383,7 +1384,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     String message = "expected exception";
     when(mockDeploymentBuilder.deployWithResult()).thenThrow(new AuthorizationException(message));
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1402,7 +1403,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   @SuppressWarnings("unchecked")
   void testCreateDeploymentThrowsParseException() {
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
     String message = "expected exception";
     List<Problem> mockErrors = mockProblems(EXAMPLE_PROBLEM_COLUMN, EXAMPLE_PROBLEM_LINE, message, EXAMPLE_PROBLEM_ELEMENT_ID);
     List<Problem> mockWarnings = mockProblems(EXAMPLE_PROBLEM_COLUMN_2, EXAMPLE_PROBLEM_LINE_2, EXAMPLE_EXCEPTION_MESSAGE, EXAMPLE_PROBLEM_ELEMENT_ID_2);

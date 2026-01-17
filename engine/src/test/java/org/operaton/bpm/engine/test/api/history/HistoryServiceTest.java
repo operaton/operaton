@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -586,8 +585,8 @@ public class HistoryServiceTest {
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -1312,7 +1311,7 @@ public class HistoryServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(processInstance.getId(), processInstance2.getId()));
+    List<String> processInstanceIds = new ArrayList<>(List.of(processInstance.getId(), processInstance2.getId()));
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
 
     return processInstanceIds;

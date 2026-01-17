@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -32,14 +32,14 @@ public class ParameterMappingTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(TransformationExpression.class, 0, 1)
         );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("sourceRef"),
           new AttributeAssumption("targetRef")
         );

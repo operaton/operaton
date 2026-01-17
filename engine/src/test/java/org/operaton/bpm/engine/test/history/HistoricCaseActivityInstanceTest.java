@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -997,7 +996,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
 
   protected class CaseExecutionStateCountMap extends HashMap<CaseExecutionState, Long> {
     private static final Collection<CaseExecutionState> ALL_STATES = CaseExecutionState.CASE_EXECUTION_STATES.values();
-    private static final Collection<CaseExecutionState> ENDED_STATES = Arrays.asList(COMPLETED, TERMINATED);
+    private static final Collection<CaseExecutionState> ENDED_STATES = List.of(COMPLETED, TERMINATED);
     private static final Collection<CaseExecutionState> NOT_ENDED_STATES = new ArrayList<>(ALL_STATES);
 
     {
@@ -1037,7 +1036,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
     // save order properties to later reverse ordering
     List<QueryOrderingProperty> orderProperties = queryImpl.getOrderingProperties();
 
-    List<? extends Comparable> sortedList = Arrays.asList(items);
+    List<? extends Comparable> sortedList = List.of(items);
     Collections.sort(sortedList);
 
     // assert that the sorted list matches the query result

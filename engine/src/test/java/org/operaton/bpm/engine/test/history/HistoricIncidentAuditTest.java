@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -58,7 +58,7 @@ class HistoricIncidentAuditTest {
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder()
     .randomEngineName().closeEngineAfterAllTests()
-    .configurator(configuration -> configuration.setCustomSessionFactories(Arrays.asList(sessionFactory)))
+    .configurator(configuration -> configuration.setCustomSessionFactories(List.of(sessionFactory)))
     .build();
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);

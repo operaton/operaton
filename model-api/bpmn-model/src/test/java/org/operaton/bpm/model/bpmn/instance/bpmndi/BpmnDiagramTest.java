@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.bpmndi;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
@@ -36,7 +36,7 @@ public class BpmnDiagramTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(BPMNDI_NS, BpmnPlane.class, 1, 1),
       new ChildElementAssumption(BPMNDI_NS, BpmnLabelStyle.class)
     );

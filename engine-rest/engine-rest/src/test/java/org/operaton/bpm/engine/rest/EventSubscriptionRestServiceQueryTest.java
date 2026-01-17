@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -198,7 +197,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
 
   @Test
   void testWithoutTenantIdParameter() {
-    mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(Arrays.asList(MockProvider.createMockEventSubscription(null)));
+    mockedEventSubscriptionQuery = setUpMockEventSubscriptionQuery(List.of(MockProvider.createMockEventSubscription(null)));
 
     Response response =
         given()
@@ -321,7 +320,7 @@ public class EventSubscriptionRestServiceQueryTest extends AbstractRestServiceTe
   }
 
   private List<EventSubscription> createMockEventSubscriptionTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockEventSubscription(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockEventSubscription(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)
       );

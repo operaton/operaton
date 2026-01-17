@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -69,7 +69,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
 
   @Parameters
   public static Collection<Object[]> setups() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       {false, false, false},
       {true, false, false},
       {false, true, false},

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1505,7 +1504,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testSetRetriesByJobsAsync() {
-    List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    List<String> ids = List.of(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put("jobIds", ids);
@@ -1531,7 +1530,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testSetRetriesAsyncWithDueDate() {
-    List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    List<String> ids = List.of(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put("jobIds", ids);
@@ -1560,7 +1559,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testSetRetriesAsyncWithNullDueDate() {
-    List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    List<String> ids = List.of(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
 
     Map<String, Object> messageBodyJson = new HashMap<>();
     messageBodyJson.put("jobIds", ids);
@@ -1620,7 +1619,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
     condition.put("operator", "lt");
     condition.put("value", "2022-12-15T10:45:00.000+0100");
     Map<String, Object> jobQueryDto = new HashMap<>();
-    jobQueryDto.put("createTimes", Arrays.asList(condition));
+    jobQueryDto.put("createTimes", List.of(condition));
     messageBodyJson.put("jobQuery", jobQueryDto);
 
     Response response = given()
@@ -1647,7 +1646,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
       condition.put("operator", "lt");
       condition.put("value", "2022-12-15T10:45:00.000+0100");
       Map<String, Object> jobQueryDto = new HashMap<>();
-      jobQueryDto.put("dueDates", Arrays.asList(condition));
+      jobQueryDto.put("dueDates", List.of(condition));
       messageBodyJson.put("jobQuery", jobQueryDto);
 
       Response response = given()

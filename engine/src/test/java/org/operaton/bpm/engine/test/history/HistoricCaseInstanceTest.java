@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -384,7 +383,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
     // sort by case instance ids
     @SuppressWarnings("rawtypes")
-    List<? extends Comparable> sortedList = Arrays.asList(oneCaseInstance.getId(), twoCaseInstance.getId());
+    List<? extends Comparable> sortedList = List.of(oneCaseInstance.getId(), twoCaseInstance.getId());
     Collections.sort(sortedList);
 
     List<HistoricCaseInstance> instances = historicQuery().orderByCaseInstanceId().asc().list();
@@ -396,7 +395,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(instances).extracting("id").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by case definition ids
-    sortedList = Arrays.asList(oneCaseInstance.getCaseDefinitionId(), twoCaseInstance.getCaseDefinitionId());
+    sortedList = List.of(oneCaseInstance.getCaseDefinitionId(), twoCaseInstance.getCaseDefinitionId());
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseDefinitionId().asc().list();
@@ -408,7 +407,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(instances).extracting("caseDefinitionId").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by business keys
-    sortedList = Arrays.asList(oneCaseInstance.getBusinessKey(), twoCaseInstance.getBusinessKey());
+    sortedList = List.of(oneCaseInstance.getBusinessKey(), twoCaseInstance.getBusinessKey());
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceBusinessKey().asc().list();
@@ -420,7 +419,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(instances).extracting("businessKey").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by create time
-    sortedList = Arrays.asList(oneCaseInstance.getCreateTime(), twoCaseInstance.getCreateTime());
+    sortedList = List.of(oneCaseInstance.getCreateTime(), twoCaseInstance.getCreateTime());
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceCreateTime().asc().list();
@@ -432,7 +431,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(instances).extracting("createTime").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by close time
-    sortedList = Arrays.asList(oneCaseInstance.getCloseTime(), twoCaseInstance.getCloseTime());
+    sortedList = List.of(oneCaseInstance.getCloseTime(), twoCaseInstance.getCloseTime());
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceCloseTime().asc().list();
@@ -444,7 +443,7 @@ class HistoricCaseInstanceTest extends CmmnTest {
     assertThat(instances).extracting("closeTime").containsExactly(sortedList.get(1), sortedList.get(0));
 
     // sort by duration
-    sortedList = Arrays.asList(oneCaseInstance.getDurationInMillis(), twoCaseInstance.getDurationInMillis());
+    sortedList = List.of(oneCaseInstance.getDurationInMillis(), twoCaseInstance.getDurationInMillis());
     Collections.sort(sortedList);
 
     instances = historicQuery().orderByCaseInstanceDuration().asc().list();

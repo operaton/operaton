@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.functional.migration;
+import java.util.List;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
@@ -113,7 +113,7 @@ public class MigrationContextSwitchBeansTest extends AbstractFoxPlatformIntegrat
 
     // when
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(pi))
+      .processInstanceIds(List.of(pi))
       .execute();
 
     // then

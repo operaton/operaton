@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -64,7 +63,7 @@ class MultiTenancyUserOperationLogQueryTest {
   void shouldReturnNoResultsWithoutTenant() {
     // given logs with assigned tenant
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
 
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -92,7 +91,7 @@ class MultiTenancyUserOperationLogQueryTest {
     taskService.complete(taskId);
 
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
     runtimeService.createProcessInstanceByKey(PROCESS_NAME)
         .processDefinitionTenantId(TENANT_ONE)
         .execute();
@@ -100,7 +99,7 @@ class MultiTenancyUserOperationLogQueryTest {
     taskService.complete(taskId);
 
     testRule.deployForTenant(TENANT_TWO, MODEL);
-    identityService.setAuthentication(USER_TWO, null, Arrays.asList(TENANT_TWO));
+    identityService.setAuthentication(USER_TWO, null, List.of(TENANT_TWO));
     runtimeService.createProcessInstanceByKey(PROCESS_NAME)
         .processDefinitionTenantId(TENANT_TWO)
         .execute();
@@ -124,7 +123,7 @@ class MultiTenancyUserOperationLogQueryTest {
     // given logs with assigned tenant
     // and user belonging to two tenants
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE, TENANT_TWO));
 
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -151,7 +150,7 @@ class MultiTenancyUserOperationLogQueryTest {
     taskService.complete(taskId);
 
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
     runtimeService.createProcessInstanceByKey(PROCESS_NAME)
         .processDefinitionTenantId(TENANT_ONE)
         .execute();
@@ -159,7 +158,7 @@ class MultiTenancyUserOperationLogQueryTest {
     taskService.complete(taskId);
 
     testRule.deployForTenant(TENANT_TWO, MODEL);
-    identityService.setAuthentication(USER_TWO, null, Arrays.asList(TENANT_TWO));
+    identityService.setAuthentication(USER_TWO, null, List.of(TENANT_TWO));
     runtimeService.createProcessInstanceByKey(PROCESS_NAME)
         .processDefinitionTenantId(TENANT_TWO)
         .execute();
@@ -188,7 +187,7 @@ class MultiTenancyUserOperationLogQueryTest {
     taskService.complete(taskId);
 
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ONE, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ONE, null, List.of(TENANT_ONE));
     runtimeService.createProcessInstanceByKey(PROCESS_NAME)
         .processDefinitionTenantId(TENANT_ONE)
         .execute();
@@ -196,7 +195,7 @@ class MultiTenancyUserOperationLogQueryTest {
     taskService.complete(taskId);
 
     testRule.deployForTenant(TENANT_TWO, MODEL);
-    identityService.setAuthentication(USER_TWO, null, Arrays.asList(TENANT_TWO));
+    identityService.setAuthentication(USER_TWO, null, List.of(TENANT_TWO));
     runtimeService.createProcessInstanceByKey(PROCESS_NAME)
         .processDefinitionTenantId(TENANT_TWO)
         .execute();

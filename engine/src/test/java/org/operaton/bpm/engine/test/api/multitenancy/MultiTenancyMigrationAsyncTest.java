@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +71,7 @@ class MultiTenancyMigrationAsyncTest {
 
     Batch batch = defaultEngineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     batchHelper.completeSeedJobs(batch);
@@ -96,7 +96,7 @@ class MultiTenancyMigrationAsyncTest {
 
     Batch batch = defaultEngineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
+        .processInstanceIds(List.of(processInstance.getId()))
         .executeAsync();
 
     batchHelper.completeSeedJobs(batch);

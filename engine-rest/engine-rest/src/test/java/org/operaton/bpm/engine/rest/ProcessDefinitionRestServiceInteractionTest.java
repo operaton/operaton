@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -898,7 +897,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
     .when().get(START_FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, Arrays.asList("a", "b", "c"), true);
+    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, List.of("a", "b", "c"), true);
   }
 
   @Test
@@ -930,7 +929,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
     .when().get(START_FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, Arrays.asList("a", "b", "c"), false);
+    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, List.of("a", "b", "c"), false);
   }
 
   @Test
@@ -4041,7 +4040,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testGetStaticCalledProcessDefinitions() {
     CalledProcessDefinition mock = mock(CalledProcessDefinitionImpl.class);
-    when(mock.getCalledFromActivityIds()).thenReturn(Arrays.asList("anActivity", "anotherActivity"));
+    when(mock.getCalledFromActivityIds()).thenReturn(List.of("anActivity", "anotherActivity"));
     when(mock.getId()).thenReturn("aKey:1:123");
     when(mock.getCallingProcessDefinitionId()).thenReturn("aCallingId");
     when(mock.getName()).thenReturn("a Name");

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -804,14 +803,14 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
 
     MigrationInstructionValidationReport instructionReport1 = mock(MigrationInstructionValidationReport.class);
     when(instructionReport1.getMigrationInstruction()).thenReturn(migrationInstruction);
-    when(instructionReport1.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instructionReport1.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationInstructionValidationReport instructionReport2 = mock(MigrationInstructionValidationReport.class);
     when(instructionReport2.getMigrationInstruction()).thenReturn(migrationInstruction);
-    when(instructionReport2.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instructionReport2.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationPlanValidationReport validationReport = mock(MigrationPlanValidationReport.class);
-    when(validationReport.getInstructionReports()).thenReturn(Arrays.asList(instructionReport1, instructionReport2));
+    when(validationReport.getInstructionReports()).thenReturn(List.of(instructionReport1, instructionReport2));
 
     when(migrationPlanBuilderMock.build()).thenThrow(new MigrationPlanValidationException("fooo", validationReport));
 
@@ -852,19 +851,19 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
     when(instanceReport1.getActivityInstanceId()).thenReturn(EXAMPLE_ACTIVITY_INSTANCE_ID);
     when(instanceReport1.getMigrationInstruction()).thenReturn(migrationInstruction);
     when(instanceReport1.getSourceScopeId()).thenReturn(EXAMPLE_ACTIVITY_ID);
-    when(instanceReport1.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instanceReport1.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigratingTransitionInstanceValidationReport instanceReport2 = mock(MigratingTransitionInstanceValidationReport.class);
     when(instanceReport2.getTransitionInstanceId()).thenReturn("transitionInstanceId");
     when(instanceReport2.getMigrationInstruction()).thenReturn(migrationInstruction);
     when(instanceReport2.getSourceScopeId()).thenReturn(EXAMPLE_ACTIVITY_ID);
-    when(instanceReport2.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instanceReport2.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigratingProcessInstanceValidationReport processInstanceReport = mock(MigratingProcessInstanceValidationReport.class);
     when(processInstanceReport.getProcessInstanceId()).thenReturn(EXAMPLE_PROCESS_INSTANCE_ID);
-    when(processInstanceReport.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
-    when(processInstanceReport.getActivityInstanceReports()).thenReturn(Arrays.asList(instanceReport1));
-    when(processInstanceReport.getTransitionInstanceReports()).thenReturn(Arrays.asList(instanceReport2));
+    when(processInstanceReport.getFailures()).thenReturn(List.of("failure1", "failure2"));
+    when(processInstanceReport.getActivityInstanceReports()).thenReturn(List.of(instanceReport1));
+    when(processInstanceReport.getTransitionInstanceReports()).thenReturn(List.of(instanceReport2));
 
     doThrow(new MigratingProcessInstanceValidationException("fooo", processInstanceReport))
       .when(migrationPlanExecutionBuilderMock).execute();
@@ -1309,14 +1308,14 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
 
     MigrationInstructionValidationReport instructionReport1 = mock(MigrationInstructionValidationReport.class);
     when(instructionReport1.getMigrationInstruction()).thenReturn(migrationInstruction);
-    when(instructionReport1.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instructionReport1.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationInstructionValidationReport instructionReport2 = mock(MigrationInstructionValidationReport.class);
     when(instructionReport2.getMigrationInstruction()).thenReturn(migrationInstruction);
-    when(instructionReport2.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instructionReport2.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationPlanValidationReport validationReport = mock(MigrationPlanValidationReport.class);
-    when(validationReport.getInstructionReports()).thenReturn(Arrays.asList(instructionReport1, instructionReport2));
+    when(validationReport.getInstructionReports()).thenReturn(List.of(instructionReport1, instructionReport2));
 
     when(migrationPlanBuilderMock.build()).thenThrow(new MigrationPlanValidationException("fooo", validationReport));
 
@@ -1396,14 +1395,14 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
 
     MigrationInstructionValidationReport instructionReport1 = mock(MigrationInstructionValidationReport.class);
     when(instructionReport1.getMigrationInstruction()).thenReturn(migrationInstruction);
-    when(instructionReport1.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instructionReport1.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationInstructionValidationReport instructionReport2 = mock(MigrationInstructionValidationReport.class);
     when(instructionReport2.getMigrationInstruction()).thenReturn(migrationInstruction);
-    when(instructionReport2.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(instructionReport2.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationPlanValidationReport validationReport = mock(MigrationPlanValidationReport.class);
-    when(validationReport.getInstructionReports()).thenReturn(Arrays.asList(instructionReport1, instructionReport2));
+    when(validationReport.getInstructionReports()).thenReturn(List.of(instructionReport1, instructionReport2));
 
     when(migrationPlanBuilderMock.build()).thenThrow(new MigrationPlanValidationException("fooo", validationReport));
 
@@ -1436,11 +1435,11 @@ public class MigrationRestServiceInteractionTest extends AbstractRestServiceTest
 
     MigrationVariableValidationReport variableReport1 = mock(MigrationVariableValidationReport.class);
     when(variableReport1.getTypedValue()).thenReturn(new StringValueImpl("bar"));
-    when(variableReport1.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(variableReport1.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationVariableValidationReport variableReport2 = mock(MigrationVariableValidationReport.class);
     when(variableReport2.getTypedValue()).thenReturn(new LongValueImpl(8L));
-    when(variableReport2.getFailures()).thenReturn(Arrays.asList("failure1", "failure2"));
+    when(variableReport2.getFailures()).thenReturn(List.of("failure1", "failure2"));
 
     MigrationPlanValidationReport validationReport = mock(MigrationPlanValidationReport.class);
     Map<String, MigrationVariableValidationReport> reports = new HashMap<>();

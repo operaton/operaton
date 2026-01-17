@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -32,7 +32,7 @@ public class PlanItemControlTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(RepetitionRule.class, 0, 1),
           new ChildElementAssumption(RequiredRule.class, 0, 1),
           new ChildElementAssumption(ManualActivationRule.class, 0, 1)

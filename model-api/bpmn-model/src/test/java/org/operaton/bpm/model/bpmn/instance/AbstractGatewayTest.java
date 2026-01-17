@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -49,7 +49,7 @@ public abstract class AbstractGatewayTest<G extends Gateway> extends BpmnModelEl
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(OPERATON_NS, "asyncBefore", false, false, false),
       new AttributeAssumption(OPERATON_NS, "asyncAfter", false, false, false)
     );

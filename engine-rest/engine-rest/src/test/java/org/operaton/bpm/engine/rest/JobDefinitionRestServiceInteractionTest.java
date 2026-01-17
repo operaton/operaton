@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -1733,7 +1732,7 @@ public class JobDefinitionRestServiceInteractionTest extends AbstractRestService
   }
 
   private List<JobDefinition> createMockJobDefinitionsTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockJobDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockJobDefinition().tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
   }

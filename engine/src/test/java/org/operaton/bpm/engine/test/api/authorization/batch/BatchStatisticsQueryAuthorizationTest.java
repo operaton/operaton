@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -69,7 +68,7 @@ class BatchStatisticsQueryAuthorizationTest {
 
     batch1 = engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(pi.getId()))
+      .processInstanceIds(List.of(pi.getId()))
       .executeAsync();
 
     Job seedJob = engineRule.getManagementService().createJobQuery().singleResult();
@@ -77,7 +76,7 @@ class BatchStatisticsQueryAuthorizationTest {
 
     batch2 = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(pi.getId()))
+        .processInstanceIds(List.of(pi.getId()))
         .executeAsync();
   }
 
@@ -181,7 +180,7 @@ class BatchStatisticsQueryAuthorizationTest {
     authRule.enableAuthorization("userId");
     batch3 = engineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(pi.getId()))
+      .processInstanceIds(List.of(pi.getId()))
       .executeAsync();
     authRule.disableAuthorization();
 

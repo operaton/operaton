@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization.dmn;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class DecisionRequirementsDefinitionQueryAuthorizationTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { scenario()
           .withoutAuthorizations()
           .succeeds(), expectedDefinitions() },

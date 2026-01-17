@@ -91,7 +91,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
     }
   }
 
-  protected void executeCustomStrategy(CommandContext commandContext, JobEntity job, ActivityImpl activity) throws Exception {
+  protected void executeCustomStrategy(CommandContext commandContext, JobEntity job, ActivityImpl activity) {
     FailedJobRetryConfiguration retryConfiguration = getFailedJobRetryConfiguration(job, activity);
 
     if (retryConfiguration == null) {
@@ -192,7 +192,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
 
   }
 
-  protected DurationHelper getDurationHelper(String failedJobRetryTimeCycle) throws Exception {
+  protected DurationHelper getDurationHelper(String failedJobRetryTimeCycle) {
     return new DurationHelper(failedJobRetryTimeCycle);
   }
 

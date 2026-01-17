@@ -53,6 +53,9 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
   protected static ChildElementCollection<PlanItemDefinition> planItemDefinitionCollection;
 
   // cmmn 1.0
+  /**
+   * @deprecated cmmn 1.0 is deprecated
+   */
   @Deprecated(since = "1.0")
   protected static AttributeReferenceCollection<Sentry> exitCriteriaRefCollection;
 

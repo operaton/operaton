@@ -18,11 +18,11 @@ package org.operaton.bpm.engine.rest.impl;
 
 import java.util.Iterator;
 import java.util.ServiceLoader;
+import java.util.concurrent.atomic.AtomicReference;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.ws.rs.core.Response;
 
-import java.util.concurrent.atomic.AtomicReference;
 import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.spi.FetchAndLockHandler;
 
@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.rest.spi.FetchAndLockHandler;
  */
 public class FetchAndLockContextListener implements ServletContextListener {
 
-  private static AtomicReference<FetchAndLockHandler> fetchAndLockHandler = new AtomicReference<>();
+  private static final AtomicReference<FetchAndLockHandler> fetchAndLockHandler = new AtomicReference<>();
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {

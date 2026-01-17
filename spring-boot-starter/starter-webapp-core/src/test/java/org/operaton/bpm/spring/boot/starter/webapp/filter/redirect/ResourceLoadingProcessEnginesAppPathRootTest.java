@@ -23,10 +23,10 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.util.StreamUtils;
 
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
-import org.springframework.util.StreamUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;

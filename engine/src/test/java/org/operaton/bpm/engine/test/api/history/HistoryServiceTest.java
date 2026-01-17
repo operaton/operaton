@@ -75,7 +75,7 @@ import static org.assertj.core.api.Assertions.fail;
 public class HistoryServiceTest {
 
   public static final String ONE_TASK_PROCESS = "oneTaskProcess";
-  protected static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

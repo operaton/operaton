@@ -41,6 +41,7 @@ import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
 import org.operaton.bpm.engine.runtime.Job;
 
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.mockito.Mockito.anyBoolean;
@@ -67,8 +68,6 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
     List<Job> mockJobs = MockProvider.createMockJobs();
     when(historyServiceMock.cleanUpHistoryAsync(anyBoolean()))
         .thenReturn(mockJob);
-    when(historyServiceMock.findHistoryCleanupJob())
-        .thenReturn(mockJob);
     when(historyServiceMock.findHistoryCleanupJobs())
     .thenReturn(mockJobs);
 
@@ -83,20 +82,20 @@ public class HistoryCleanupRestServiceInteractionTest extends AbstractRestServic
         .expect().statusCode(Status.OK.getStatusCode())
         .when().get(FIND_HISTORY_CLEANUP_JOB_URL);
 
-   verify(historyServiceMock).findHistoryCleanupJob();
+   verify(historyServiceMock).findHistoryCleanupJobs();
   }
 
   @Test
   void testFindNoHistoryCleanupJob() {
-    when(historyServiceMock.findHistoryCleanupJob())
-        .thenReturn(null);
+    when(historyServiceMock.findHistoryCleanupJobs())
+        .thenReturn(emptyList());
 
     given().contentType(ContentType.JSON)
         .then()
         .expect().statusCode(Status.NOT_FOUND.getStatusCode())
         .when().get(FIND_HISTORY_CLEANUP_JOB_URL);
 
-   verify(historyServiceMock).findHistoryCleanupJob();
+   verify(historyServiceMock).findHistoryCleanupJobs();
   }
 
   @Test

@@ -18,11 +18,9 @@ package org.operaton.bpm.engine.test.jobexecutor;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.AcquireJobsCmd;
 import org.operaton.bpm.engine.impl.jobexecutor.AcquiredJobs;
@@ -41,8 +39,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 class JobDefinitionFunctionalTest {
-
-  static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();

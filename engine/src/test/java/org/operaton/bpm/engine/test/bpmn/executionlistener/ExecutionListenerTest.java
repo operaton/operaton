@@ -1179,15 +1179,12 @@ public class ExecutionListenerTest {
     assertThat(taskService.createTaskQuery().list()).hasSize(1);
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("taskWithListener");
 
-    try {
-      // when the listeners are invoked
-      runtimeService.correlateMessage("foo");
-      fail("Expected exception");
-    } catch (Exception e) {
-      // then
-      assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
-    }
+    // when/then
+    // the listeners are invoked
+    assertThatThrownBy(() -> runtimeService.correlateMessage("foo"))
+      .hasMessageContaining("business error");
+    
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   @Test
@@ -1247,15 +1244,12 @@ public class ExecutionListenerTest {
 
     testRule.deploy(model);
 
-    try {
-      // when listeners are invoked
-      runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // then
-      assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
-    }
+    // when/then
+    // listeners are invoked
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_KEY))
+      .hasMessageContaining("business error");
+    
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   @Test
@@ -1279,14 +1273,12 @@ public class ExecutionListenerTest {
 
     testRule.deploy(model);
 
-    try {
-      // when listeners are invoked
-      runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-      fail("Exception expected");
-    } catch (Exception e) {
-      assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
-    }
+    // when/then
+    // listeners are invoked
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_KEY))
+      .hasMessageContaining("business error");
+    
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   protected BpmnModelInstance createModelWithCatchInServiceTaskAndListener(String eventName) {

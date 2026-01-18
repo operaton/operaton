@@ -852,7 +852,7 @@ class InputOutputTest {
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInterruptingEventSubprocessIoSupport.bpmn");
-    
+
     // when/then
     assertThatThrownBy(() -> deploymentBuilder.deploy())
       .isInstanceOf(ParseException.class)
@@ -1034,7 +1034,7 @@ class InputOutputTest {
     // given
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testMIOutputMappingDisallowed.bpmn20.xml");
-    
+
     // when/then
     assertThatThrownBy(() -> deploymentBuilder.deploy())
       .isInstanceOf(ParseException.class)

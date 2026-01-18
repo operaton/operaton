@@ -114,7 +114,7 @@ class CommandContextInterceptorTest {
    testRule.deploy(modelInstance);
 
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    
+
     // when/then
     assertThatThrownBy(() -> commandExecutor.execute(commandContext -> {
       runtimeService.startProcessInstanceByKey("processThrowingThrowable");

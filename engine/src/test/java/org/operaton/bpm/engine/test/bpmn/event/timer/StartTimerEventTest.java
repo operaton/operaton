@@ -171,9 +171,6 @@ class StartTimerEventTest {
     assertThat(piq.count()).isOne();
 
     assertThat(jobQuery.count()).isOne();
-    // have to manually delete pending timer
-//    cleanDB();
-
   }
 
   private void moveByMinutes(int minutes) {
@@ -356,7 +353,6 @@ class StartTimerEventTest {
 
     assertThat(jobQuery.count()).isOne();
 
-//    cleanDB();
     repositoryService.deleteDeployment(id, true);
   }
 

@@ -100,7 +100,6 @@ class HistoricCaseInstanceTest extends CmmnTest {
     historicCaseInstance = queryHistoricCaseInstance(caseInstanceId);
     // not public API
     assertThat(((HistoricCaseInstanceEntity) historicCaseInstance).isSuspended()).isTrue();
-//    assertCount(1, historicQuery().suspended());
     assertCount(1, historicQuery().notClosed());
 
     // close case instance

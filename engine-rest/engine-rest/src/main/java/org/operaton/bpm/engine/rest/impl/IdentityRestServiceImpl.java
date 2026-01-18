@@ -84,7 +84,7 @@ public class IdentityRestServiceImpl extends AbstractRestProcessEngineAware impl
   @Override
   public AuthenticationResult verifyUser(BasicUserCredentialsDto credentialsDto) {
     if (credentialsDto.getUsername() == null || credentialsDto.getPassword() == null) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, "Username and password are required");
+      throw new InvalidRequestException(Status.BAD_REQUEST, "User ID and password are required");
     }
     IdentityService identityService = getProcessEngine().getIdentityService();
     boolean valid = identityService.checkPassword(credentialsDto.getUsername(), credentialsDto.getPassword());

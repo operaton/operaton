@@ -36,6 +36,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Process;
 
 import static java.util.Collections.emptySet;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 
 public class VersionedDeploymentHandler implements DeploymentHandler {
 
@@ -153,6 +154,6 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
   }
 
   protected boolean isBpmnResource(Resource resource) {
-    return StringUtil.hasAnySuffix(resource.getName(), BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    return StringUtil.hasAnySuffix(resource.getName(), BPMN_RESOURCE_SUFFIXES);
   }
 }

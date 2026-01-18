@@ -34,11 +34,9 @@ import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.TransactionLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
-import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.DeploymentFailListener;
@@ -70,6 +68,9 @@ import org.operaton.bpm.model.bpmn.instance.Process;
 import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.Case;
+
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
 
 /**
  * @author Tom Baeyens
@@ -580,11 +581,11 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
   }
 
   protected boolean isBpmnResource(Resource resourceEntity) {
-    return StringUtil.hasAnySuffix(resourceEntity.getName(), BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    return StringUtil.hasAnySuffix(resourceEntity.getName(), BPMN_RESOURCE_SUFFIXES);
   }
 
   protected boolean isCmmnResource(Resource resourceEntity) {
-    return StringUtil.hasAnySuffix(resourceEntity.getName(), CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
+    return StringUtil.hasAnySuffix(resourceEntity.getName(), CMMN_RESOURCE_SUFFIXES);
   }
 
   // ensures

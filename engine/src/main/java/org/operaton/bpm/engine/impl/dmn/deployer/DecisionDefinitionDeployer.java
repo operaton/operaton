@@ -34,6 +34,8 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
+
 /**
  * {@link Deployer} responsible to parse DMN 1.1 XML files and create the proper
  * {@link DecisionDefinitionEntity}s. Since it uses the result of the
@@ -43,8 +45,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 public class DecisionDefinitionDeployer extends AbstractDefinitionDeployer<DecisionDefinitionEntity> {
 
   protected static final DecisionLogger LOG = ProcessEngineLogger.DECISION_LOGGER;
-
-  public static final String[] DMN_RESOURCE_SUFFIXES = new String[] { "dmn11.xml", "dmn" };
 
   protected DmnTransformer transformer;
 

@@ -35,8 +35,8 @@ public class AsyncPersistenceDelegateBean implements JavaDelegate {
 
   private SomeEntity entity;
 
-  private boolean invoked = false;
-  private boolean entityManaged = false;
+  private boolean invoked;
+  private boolean entityManaged;
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {

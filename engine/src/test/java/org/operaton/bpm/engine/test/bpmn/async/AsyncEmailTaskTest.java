@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.async;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -50,7 +51,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
 
     WiserMessage message = messages.get(0);
     EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            List.of("kermit@operaton.org"), null);
+            Arrays.asList("kermit@operaton.org"), null);
     testRule.assertProcessEnded(procId);
   }
 
@@ -70,7 +71,7 @@ class AsyncEmailTaskTest extends EmailTestCase {
 
     WiserMessage message = messages.get(0);
     EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
-            List.of("kermit@operaton.org"), null);
+            Arrays.asList("kermit@operaton.org"), null);
   }
 
 }

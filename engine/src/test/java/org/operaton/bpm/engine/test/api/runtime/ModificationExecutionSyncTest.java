@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -176,7 +177,7 @@ class ModificationExecutionSyncTest {
 
   @Test
   void createModificationUsingProcessInstanceIdsListWithNullValue() {
-    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(List.of("foo", null, "bar"));
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
       modificationBuilder.execute();

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -102,7 +103,7 @@ class MigrationProcessInstanceTest {
     MigrationPlan migrationPlan = runtimeService.createMigrationPlan(testProcessDefinition.getId(), testProcessDefinition.getId())
       .mapEqualActivities()
       .build();
-    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(List.of("foo", null, "bar"));
+    var migrationPlanExecutionBuilder = runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
       migrationPlanExecutionBuilder.execute();
@@ -375,7 +376,7 @@ class MigrationProcessInstanceTest {
     assertThat(targetProcessInstanceQuery.count()).isZero();
 
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(List.of(processInstance1.getId(), processInstance2.getId()))
+      .processInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId()))
       .processInstanceQuery(sourceProcessInstanceQuery)
       .execute();
 

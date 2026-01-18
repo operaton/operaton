@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1108,7 +1109,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testWithoutTenantIdParameter() {
-    mockedQuery = setUpMockCaseInstanceQuery(List.of(MockProvider.createMockCaseInstance(null)));
+    mockedQuery = setUpMockCaseInstanceQuery(Arrays.asList(MockProvider.createMockCaseInstance(null)));
 
     Response response = given()
       .queryParam("withoutTenantId", true)
@@ -1159,7 +1160,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testWithoutTenantIdPostParameter() {
-    mockedQuery = setUpMockCaseInstanceQuery(List.of(MockProvider.createMockCaseInstance(null)));
+    mockedQuery = setUpMockCaseInstanceQuery(Arrays.asList(MockProvider.createMockCaseInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
@@ -1184,7 +1185,7 @@ public class CaseInstanceRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<CaseInstance> createMockCaseInstancesTwoTenants() {
-    return List.of(
+    return Arrays.asList(
         MockProvider.createMockCaseInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockCaseInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -978,7 +979,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   void testWithoutTenantIdParameter() {
-    mockedQuery = setUpMockInstanceQuery(List.of(MockProvider.createMockInstance(null)));
+    mockedQuery = setUpMockInstanceQuery(Arrays.asList(MockProvider.createMockInstance(null)));
 
     Response response = given()
       .queryParam("withoutTenantId", true)
@@ -1029,7 +1030,7 @@ public class ProcessInstanceRestServiceQueryTest extends
 
   @Test
   void testWithoutTenantIdPostParameter() {
-    mockedQuery = setUpMockInstanceQuery(List.of(MockProvider.createMockInstance(null)));
+    mockedQuery = setUpMockInstanceQuery(Arrays.asList(MockProvider.createMockInstance(null)));
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withoutTenantId", true);
@@ -1054,7 +1055,7 @@ public class ProcessInstanceRestServiceQueryTest extends
   }
 
   private List<ProcessInstance> createMockProcessInstancesTwoTenants() {
-    return List.of(
+    return Arrays.asList(
         MockProvider.createMockInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

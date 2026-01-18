@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history.useroperationlog;
-import java.util.List;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +61,7 @@ public class CustomUserOperationLogTest {
           userOperationLogContext.setUserId("kermit");
 
           final UserOperationLogContextEntry entry = new UserOperationLogContextEntry("foo", "bar");
-          entry.setPropertyChanges(List.of(new PropertyChange(null, null, null)));
+          entry.setPropertyChanges(Arrays.asList(new PropertyChange(null, null, null)));
           entry.setTaskId(TASK_ID);
           userOperationLogContext.addEntry(entry);
 

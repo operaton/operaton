@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -1274,7 +1275,7 @@ class RepositoryServiceTest {
     assertThat(repositoryService.createProcessDefinitionQuery().orderByProcessDefinitionName().asc().count()).isEqualTo(4);
     assertThat(repositoryService.createProcessDefinitionQuery().latestVersion().orderByProcessDefinitionName().asc().count()).isEqualTo(2);
 
-    deleteDeployments(List.of(deployment1Id, deployment2Id));
+    deleteDeployments(Arrays.asList(deployment1Id, deployment2Id));
   }
 
   @Test

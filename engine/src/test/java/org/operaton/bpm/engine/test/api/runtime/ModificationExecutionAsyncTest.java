@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -98,7 +99,7 @@ public class ModificationExecutionAsyncTest {
 
   @Parameters(name = "Job DueDate is set: {0}")
   public static Collection<Object[]> scenarios() {
-    return List.of(new Object[][] {
+    return Arrays.asList(new Object[][] {
       { false, null },
       { true, START_DATE }
     });
@@ -185,7 +186,7 @@ public class ModificationExecutionAsyncTest {
 
   @TestTemplate
   void createModificationUsingProcessInstanceIdsListWithNullValueAsync() {
-    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(List.of("foo", null, "bar"));
+    var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar"));
 
     try {
       modificationBuilder.executeAsync();
@@ -1199,7 +1200,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .startBeforeActivity("user2")
-      .processInstanceIds(List.of(processInstance.getId()))
+      .processInstanceIds(Arrays.asList(processInstance.getId()))
       .executeAsync();
 
     helper.completeSeedJobs(batch);
@@ -1232,7 +1233,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .cancelAllForActivity("user2")
-      .processInstanceIds(List.of(processInstance.getId()))
+      .processInstanceIds(Arrays.asList(processInstance.getId()))
       .skipCustomListeners()
       .executeAsync();
 
@@ -1259,7 +1260,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .startAfterActivity("user2")
-      .processInstanceIds(List.of(processInstance.getId()))
+      .processInstanceIds(Arrays.asList(processInstance.getId()))
       .executeAsync();
 
     helper.completeSeedJobs(batch);
@@ -1292,7 +1293,7 @@ public class ModificationExecutionAsyncTest {
     Batch batch = runtimeService
       .createModification(processDefinition.getId())
       .startBeforeActivity("user2")
-      .processInstanceIds(List.of(processInstance.getId()))
+      .processInstanceIds(Arrays.asList(processInstance.getId()))
       .skipIoMappings()
       .executeAsync();
 

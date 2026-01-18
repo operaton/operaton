@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +71,7 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspendAsync();
     helper.completeSeedJobs(suspendprocess);
     helper.executeJobs(suspendprocess);
 
@@ -92,7 +93,7 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspendAsync();
 
     // then
     Job seedJob = helper.getSeedJob(suspendprocess);
@@ -133,7 +134,7 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // when
     Batch batch = runtimeService.updateProcessInstanceSuspensionState()
-        .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId()))
+        .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId()))
         .suspendAsync();
 
     // then
@@ -158,7 +159,7 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
 
     // when
     Batch batch = runtimeService.updateProcessInstanceSuspensionState()
-        .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId()))
+        .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId()))
         .activateAsync();
 
     // then
@@ -178,10 +179,10 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspendAsync();
     helper.completeSeedJobs(suspendprocess);
     helper.executeJobs(suspendprocess);
-    Batch activateprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).activateAsync();
+    Batch activateprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).activateAsync();
     helper.completeSeedJobs(activateprocess);
     helper.executeJobs(activateprocess);
 
@@ -321,7 +322,7 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId(), null));
+      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
     assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::activateAsync)
@@ -337,7 +338,7 @@ class UpdateProcessInstancesSuspendStateAsyncTest {
     ProcessInstance processInstance1 = runtimeService.startProcessInstanceByKey("oneExternalTaskProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("twoExternalTaskProcess");
     var updateProcessInstancesSuspensionStateBuilder = runtimeService.updateProcessInstanceSuspensionState()
-      .byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId(), null));
+      .byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId(), null));
 
     // when/then
     assertThatThrownBy(updateProcessInstancesSuspensionStateBuilder::suspendAsync)

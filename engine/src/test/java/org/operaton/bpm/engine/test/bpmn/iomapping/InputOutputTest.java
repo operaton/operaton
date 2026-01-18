@@ -50,6 +50,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 /**
  * Testcase for operaton input / output in BPMN
@@ -854,10 +855,11 @@ class InputOutputTest {
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInterruptingEventSubprocessIoSupport.bpmn");
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ParseException.class)
       .hasMessageContaining("operaton:inputOutput mapping unsupported for element type 'subProcess' with attribute 'triggeredByEvent = true'")
-      .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getMainElementId())
       .isEqualTo("SubProcess_1");
   }
 
@@ -1036,10 +1038,11 @@ class InputOutputTest {
       .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testMIOutputMappingDisallowed.bpmn20.xml");
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ParseException.class)
       .hasMessageContaining("operaton:outputParameter not allowed for multi-instance constructs")
-      .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getMainElementId())
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getMainElementId())
       .isEqualTo("miTask");
 
   }

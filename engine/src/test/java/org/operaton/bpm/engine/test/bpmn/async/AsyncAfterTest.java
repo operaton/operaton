@@ -44,6 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -73,10 +74,11 @@ class AsyncAfterTest {
 
     // when/then
     // if an outgoing sequence flow has no id, we cannot use it in asyncAfter
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
       .isInstanceOf(ParseException.class)
       .hasMessageContaining("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.")
-      .extracting(e -> ((ParseException) e).getResourceReports().get(0).getErrors().get(0).getElementIds())
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getElementIds())
       .isEqualTo(List.of("service"));
 
   }

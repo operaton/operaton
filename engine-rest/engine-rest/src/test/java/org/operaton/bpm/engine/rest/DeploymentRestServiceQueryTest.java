@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -228,7 +227,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testDeploymentTenantIdList() {
-    List<Deployment> deployments = Arrays.asList(
+    List<Deployment> deployments = List.of(
         MockProvider.createMockDeployment(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockDeployment(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
     mockedQuery = setUpMockDeploymentQuery(deployments);
@@ -279,7 +278,7 @@ public class DeploymentRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testDeploymentTenantIdIncludeDefinitionsWithoutTenantid() {
-    List<Deployment> mockDeployments = Arrays.asList(
+    List<Deployment> mockDeployments = List.of(
         MockProvider.createMockDeployment(null),
         MockProvider.createMockDeployment(MockProvider.EXAMPLE_TENANT_ID));
     mockedQuery = setUpMockDeploymentQuery(mockDeployments);

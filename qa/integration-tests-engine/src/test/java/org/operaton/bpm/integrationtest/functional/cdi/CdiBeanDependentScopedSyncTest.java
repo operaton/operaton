@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
@@ -74,7 +74,7 @@ public class CdiBeanDependentScopedSyncTest extends AbstractFoxPlatformIntegrati
 
   @Test
   void testResolveBean() {
-    assertThat(DependentScopedBean.lifecycle).isEqualTo(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"));
+    assertThat(DependentScopedBean.lifecycle).isEqualTo(List.of("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"));
   }
 
 }

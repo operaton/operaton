@@ -56,7 +56,7 @@ public class OperatonFormDefinitionDeployerTest {
 
   @Parameters
   public static Collection<Object> params() {
-    return Arrays.asList(new String[] {
+    return List.of(new String[] {
         BPMN_USER_TASK_FORM_REF_DEPLOYMENT,
         BPMN_USER_TASK_FORM_REF_LATEST,
         BPMN_USER_TASK_FORM_REF_VERSION });

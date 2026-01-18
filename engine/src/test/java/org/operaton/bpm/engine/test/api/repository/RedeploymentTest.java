@@ -503,7 +503,7 @@ public class RedeploymentTest {
     testRule.deploy(repositoryService
         .createDeployment()
         .name(DEPLOYMENT_NAME)
-        .addDeploymentResourcesByName(deployment2.getId(), Arrays.asList(RESOURCE_1_NAME, RESOURCE_3_NAME)));
+        .addDeploymentResourcesByName(deployment2.getId(), List.of(RESOURCE_1_NAME, RESOURCE_3_NAME)));
 
     // then (2)
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 4);
@@ -553,7 +553,7 @@ public class RedeploymentTest {
         .createDeployment()
         .name(DEPLOYMENT_NAME)
         .addDeploymentResourceByName(deployment1.getId(), RESOURCE_1_NAME)
-        .addDeploymentResourcesByName(deployment1.getId(), Arrays.asList(RESOURCE_2_NAME, RESOURCE_3_NAME)));
+        .addDeploymentResourcesByName(deployment1.getId(), List.of(RESOURCE_2_NAME, RESOURCE_3_NAME)));
 
     // then
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 3);
@@ -707,7 +707,7 @@ public class RedeploymentTest {
     testRule.deploy(repositoryService
         .createDeployment()
         .name(DEPLOYMENT_NAME)
-        .addDeploymentResourcesById(deployment2.getId(), Arrays.asList(resource21.getId(), resource23.getId())));
+        .addDeploymentResourcesById(deployment2.getId(), List.of(resource21.getId(), resource23.getId())));
 
     // then (2)
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 4);
@@ -761,7 +761,7 @@ public class RedeploymentTest {
         .createDeployment()
         .name(DEPLOYMENT_NAME)
         .addDeploymentResourceById(deployment1.getId(), resource1.getId())
-        .addDeploymentResourcesById(deployment1.getId(), Arrays.asList(resource2.getId(), resource3.getId())));
+        .addDeploymentResourcesById(deployment1.getId(), List.of(resource2.getId(), resource3.getId())));
 
     // then
     verifyQueryResults(query.processDefinitionKey(PROCESS_1_KEY), 3);

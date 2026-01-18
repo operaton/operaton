@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -617,9 +616,9 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
     String anotherExecutionId = "anotherExecutionId";
 
     Map<String, List<String>> json = new HashMap<>();
-    json.put("activityIdIn", Arrays.asList(anActId, anotherActId));
-    json.put("executionIdIn", Arrays.asList(anExecutionId, anotherExecutionId));
-    json.put("failedActivityIdIn", Arrays.asList(anActId, anotherActId));
+    json.put("activityIdIn", List.of(anActId, anotherActId));
+    json.put("executionIdIn", List.of(anExecutionId, anotherExecutionId));
+    json.put("failedActivityIdIn", List.of(anActId, anotherActId));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -844,7 +843,7 @@ public class HistoricJobLogRestServiceQueryTest extends AbstractRestServiceTest 
   }
 
   private List<HistoricJobLog> createMockHistoricJobLogsTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricJobLog(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricJobLog(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

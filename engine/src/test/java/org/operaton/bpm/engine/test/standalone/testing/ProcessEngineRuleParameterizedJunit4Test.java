@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.standalone.testing;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Rule;
@@ -43,7 +43,7 @@ public class ProcessEngineRuleParameterizedJunit4Test {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { 1 }, { 2 }
     });
   }

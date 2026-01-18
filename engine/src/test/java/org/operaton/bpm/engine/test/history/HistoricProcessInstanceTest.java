@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -2230,7 +2229,7 @@ class HistoricProcessInstanceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey("failingProcess");
     runtimeService.startProcessInstanceByKey("failingProcess");
-    List<String> queriedProcessInstances = Arrays.asList(processInstance.getId(), processInstance2.getId());
+    List<String> queriedProcessInstances = List.of(processInstance.getId(), processInstance2.getId());
 
     testHelper.executeAvailableJobs();
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(queriedProcessInstances.get(0)).singleResult();
@@ -2264,7 +2263,7 @@ class HistoricProcessInstanceTest {
 
     runtimeService.startProcessInstanceByKey("failingProcess");
 
-    List<String> queriedProcessInstances = Arrays.asList(processWithIncident1.getId(), processWithIncident2.getId());
+    List<String> queriedProcessInstances = List.of(processWithIncident1.getId(), processWithIncident2.getId());
 
     testHelper.executeAvailableJobs();
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(queriedProcessInstances.get(0)).singleResult();
@@ -2697,7 +2696,7 @@ class HistoricProcessInstanceTest {
 
         // when
         long count = historyService.createHistoricProcessInstanceQuery()
-                .processInstanceIds(new HashSet<>(Arrays.asList(processInstanceIdOne, processInstanceIdTwo)))
+                .processInstanceIds(new HashSet<>(List.of(processInstanceIdOne, processInstanceIdTwo)))
                 .processInstanceIdNotIn(processInstanceIdOne, processInstanceIdTwo).count();
 
         // then

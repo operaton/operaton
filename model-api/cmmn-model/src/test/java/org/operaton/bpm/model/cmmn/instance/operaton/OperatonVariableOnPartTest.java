@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance.operaton;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
@@ -37,14 +37,14 @@ public class OperatonVariableOnPartTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new ChildElementAssumption(OPERATON_NS, OperatonVariableTransitionEvent.class, 0, 1)
     );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(OPERATON_NS, "variableName")
     );
   }

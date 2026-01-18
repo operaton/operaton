@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.externaltask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -3482,7 +3481,7 @@ class ExternalTaskServiceTest {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = Arrays.asList(
+    List<String> externalTaskIds = List.of(
         tasks.get(0).getId(),
         tasks.get(1).getId(),
         tasks.get(2).getId(),
@@ -3507,7 +3506,7 @@ class ExternalTaskServiceTest {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = Arrays.asList(
+    List<String> externalTaskIds = List.of(
         tasks.get(0).getId(),
         tasks.get(1).getId(),
         tasks.get(2).getId(),

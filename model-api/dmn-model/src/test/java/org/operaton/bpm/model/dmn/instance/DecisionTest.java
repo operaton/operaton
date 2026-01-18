@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import static org.operaton.bpm.model.dmn.impl.DmnModelConstants.OPERATON_NS;
@@ -30,7 +30,7 @@ public class DecisionTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Question.class, 0, 1),
       new ChildElementAssumption(AllowedAnswers.class, 0, 1),
       new ChildElementAssumption(Variable.class, 0, 1),
@@ -49,7 +49,7 @@ public class DecisionTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(OPERATON_NS, "versionTag"),
       new AttributeAssumption(OPERATON_NS, "historyTimeToLive")
     );

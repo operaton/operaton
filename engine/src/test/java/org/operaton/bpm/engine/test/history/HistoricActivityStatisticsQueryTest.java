@@ -1381,7 +1381,7 @@ class HistoricActivityStatisticsQueryTest {
     String cancelledInstance2 = processInstances.get(2).getId();
     String processDefinitionId = processInstances.get(0).getProcessDefinitionId();
 
-    runtimeService.deleteProcessInstances(java.util.Arrays.asList(cancelledInstance1, cancelledInstance2), "test", false, false);
+    runtimeService.deleteProcessInstances(java.util.List.of(cancelledInstance1, cancelledInstance2), "test", false, false);
 
     // when
     HistoricActivityStatisticsQuery query = historyService
@@ -1416,7 +1416,7 @@ class HistoricActivityStatisticsQueryTest {
     String cancelledInstance2 = processInstances.get(2).getId();
     String processDefinitionId = processInstances.get(0).getProcessDefinitionId();
 
-    runtimeService.deleteProcessInstances(java.util.Arrays.asList(cancelledInstance1, cancelledInstance2), "test", false, false);
+    runtimeService.deleteProcessInstances(java.util.List.of(cancelledInstance1, cancelledInstance2), "test", false, false);
 
     // when
     HistoricActivityStatisticsQuery query = historyService

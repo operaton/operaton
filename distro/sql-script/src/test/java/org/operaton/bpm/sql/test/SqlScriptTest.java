@@ -24,7 +24,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
@@ -69,7 +68,7 @@ class SqlScriptTest {
    * by Liquibase#diff. They have been manually confirmed and can be ignored in
    * the comparison in case they are missing in either database.
    */
-  static final List<String> IGNORED_CONSTRAINTS = Arrays.asList(
+  static final List<String> IGNORED_CONSTRAINTS = List.of(
       "ACT_UNIQ_VARIABLE",
       "CONSTRAINT_8D1",// used on all but PostgreSQL
       "ACT_HI_PROCINST_PROC_INST_ID__KEY",// used on PostgreSQL

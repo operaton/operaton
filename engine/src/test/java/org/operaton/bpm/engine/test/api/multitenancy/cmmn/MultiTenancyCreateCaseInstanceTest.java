@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -220,7 +220,7 @@ class MultiTenancyCreateCaseInstanceTest {
 
   @Test
   void testCreateCaseInstanceByKeyWithTenantIdAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
@@ -242,7 +242,7 @@ class MultiTenancyCreateCaseInstanceTest {
         .createCaseDefinitionQuery()
         .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     caseService.withCaseDefinition(caseDefinition.getId()).create();
 
@@ -253,7 +253,7 @@ class MultiTenancyCreateCaseInstanceTest {
 
   @Test
   void testCreateCaseInstanceByKeyWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);

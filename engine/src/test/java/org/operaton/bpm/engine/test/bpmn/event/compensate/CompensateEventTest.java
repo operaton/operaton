@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -395,7 +394,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessVariableSnapshots() {
     // see referenced java delegates in the process definition.
 
-    List<String> hotels = Arrays.asList("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
+    List<String> hotels = List.of("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
 
     SetVariablesDelegate.setValues(hotels);
 
@@ -416,7 +415,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessWithCompensationEventSubprocessVariableSnapshots() {
     // see referenced java delegates in the process definition.
 
-    List<String> hotels = Arrays.asList("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
+    List<String> hotels = List.of("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
 
     SetVariablesDelegate.setValues(hotels);
 
@@ -438,7 +437,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessVariableSnapshotOfElementVariable() {
     Map<String, Object> variables = new HashMap<>();
     // multi instance collection
-    List<String> flights = Arrays.asList("STS-14", "STS-28");
+    List<String> flights = List.of("STS-14", "STS-28");
     variables.put("flights", flights);
 
     // see referenced java delegates in the process definition
@@ -855,7 +854,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessWithCompensationEventSubProcess() {
     Map<String, Object> variables = new HashMap<>();
     // multi instance collection
-    variables.put("flights", Arrays.asList("STS-14", "STS-28"));
+    variables.put("flights", List.of("STS-14", "STS-28"));
 
     String processInstanceId = runtimeService.startProcessInstanceByKey("bookingProcess", variables).getId();
 
@@ -881,7 +880,7 @@ class CompensateEventTest {
   void testCompensateParallelMiSubprocessWithCompensationEventSubProcess() {
     Map<String, Object> variables = new HashMap<>();
     // multi instance collection
-    variables.put("flights", Arrays.asList("STS-14", "STS-28"));
+    variables.put("flights", List.of("STS-14", "STS-28"));
 
     String processInstanceId = runtimeService.startProcessInstanceByKey("bookingProcess", variables).getId();
 

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 public class GroupTest extends BpmnModelElementInstanceTest {
@@ -33,6 +33,6 @@ public class GroupTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(new AttributeAssumption("categoryValueRef", false, false));
+    return List.of(new AttributeAssumption("categoryValueRef", false, false));
   }
 }

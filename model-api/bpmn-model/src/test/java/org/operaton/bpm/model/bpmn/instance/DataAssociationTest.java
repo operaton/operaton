@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.impl.instance.SourceRef;
@@ -35,7 +35,7 @@ public class DataAssociationTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(SourceRef.class),
       new ChildElementAssumption(TargetRef.class, 1, 1),
       new ChildElementAssumption(Transformation.class, 0, 1),

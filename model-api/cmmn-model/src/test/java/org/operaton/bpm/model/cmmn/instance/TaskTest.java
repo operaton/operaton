@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
@@ -34,7 +34,7 @@ public class TaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(CmmnModelConstants.CMMN10_NS, InputsCaseParameter.class),
           new ChildElementAssumption(CmmnModelConstants.CMMN10_NS, OutputsCaseParameter.class),
           new ChildElementAssumption(InputCaseParameter.class),
@@ -44,7 +44,7 @@ public class TaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("isBlocking", false, false, Boolean.TRUE)
         );
   }

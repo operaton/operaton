@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class HostnameProviderTest {
 
   @Parameters(name = "Expected hostname: {3}, reporter: {4}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
         {null, null, null, ENGINE_NAME, ENGINE_NAME},
         {STATIC_HOSTNAME, null, null, STATIC_HOSTNAME, STATIC_HOSTNAME},
         {STATIC_HOSTNAME, new CustomHostnameProvider(), null, STATIC_HOSTNAME, STATIC_HOSTNAME},

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,7 @@ class ErrorEventDefinitionTest extends AbstractEventDefinitionTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("errorRef"),
       new AttributeAssumption(OPERATON_NS, "errorCodeVariable"),
       new AttributeAssumption(OPERATON_NS, "errorMessageVariable")

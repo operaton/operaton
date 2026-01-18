@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -103,7 +102,7 @@ public class HistoryCleanupBatchWindowForEveryDayTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         // inside the batch window on the same day
         { "22:00", "23:00", parseDate("2017-09-06T22:00:00"), parseDate("2017-09-06T23:00:00"), parseDate("2017-09-06T22:15:00")},
         // inside the batch window on the next day

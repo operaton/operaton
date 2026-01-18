@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import junit.framework.AssertionFailedError;
@@ -46,7 +46,7 @@ public class SignalEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "InvalidProcessWithDuplicateSignalNames.bpmn20.xml", "duplicate signal name", "alertSignal2" },
         { "InvalidProcessWithNoSignalName.bpmn20.xml", "signal with id 'alertSignal' has no name", "alertSignal" },
         { "InvalidProcessWithSignalNoId.bpmn20.xml", "signal must have an id", null },

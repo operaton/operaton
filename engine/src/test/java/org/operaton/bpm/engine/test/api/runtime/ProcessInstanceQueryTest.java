@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -532,8 +531,8 @@ public class ProcessInstanceQueryTest {
     // Test LESS_THAN, should return 2 results
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThan("stringVar", "abcdeg").list();
     assertThat(processInstances).hasSize(2);
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -543,8 +542,8 @@ public class ProcessInstanceQueryTest {
     // Test LESS_THAN_OR_EQUAL
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThanOrEqual("stringVar", "abcdef").list();
     assertThat(processInstances).hasSize(2);
-    expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -633,8 +632,8 @@ public class ProcessInstanceQueryTest {
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThan("longVar", 55555L).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -713,8 +712,8 @@ public class ProcessInstanceQueryTest {
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThan("doubleVar", 55555.5555).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -793,8 +792,8 @@ public class ProcessInstanceQueryTest {
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThan("integerVar", 55555).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -876,8 +875,8 @@ public class ProcessInstanceQueryTest {
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThan("shortVar", (short)5555).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -971,8 +970,8 @@ public class ProcessInstanceQueryTest {
     processInstances = runtimeService.createProcessInstanceQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -2255,7 +2254,7 @@ public class ProcessInstanceQueryTest {
 
   @SuppressWarnings("unchecked")
   protected <T> Set<T> asSet(T... elements) {
-    return new HashSet<>(Arrays.asList(elements));
+    return new HashSet<>(List.of(elements));
   }
 
   protected void assertNoProcessInstancesReturned(ProcessInstanceQuery query) {
@@ -2268,7 +2267,7 @@ public class ProcessInstanceQueryTest {
     assertThat(query.count()).isEqualTo(expectedSize);
     assertThat(query.list()).hasSize(expectedSize);
 
-    verifyResultContainsExactly(query.list(), collectProcessInstanceIds(Arrays.asList(processInstances)));
+    verifyResultContainsExactly(query.list(), collectProcessInstanceIds(List.of(processInstances)));
   }
 
   protected void verifyResultContainsExactly(List<ProcessInstance> instances, Set<String> processInstanceIds) {

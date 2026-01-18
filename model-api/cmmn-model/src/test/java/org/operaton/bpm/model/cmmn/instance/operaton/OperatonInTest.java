@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance.operaton;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
@@ -41,7 +41,7 @@ public class OperatonInTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(OPERATON_NS, "source"),
       new AttributeAssumption(OPERATON_NS, "sourceExpression"),
       new AttributeAssumption(OPERATON_NS, "variables"),

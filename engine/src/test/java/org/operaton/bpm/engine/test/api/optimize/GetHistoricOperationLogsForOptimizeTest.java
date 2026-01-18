@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.optimize;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -442,7 +441,7 @@ class GetHistoricOperationLogsForOptimizeTest {
       optimizeService.getHistoricUserOperationLogs(now, null, 10);
 
     // then
-    Set<String> allowedOperationsTypes = new HashSet<>(Arrays.asList(OPERATION_TYPE_SUSPEND, OPERATION_TYPE_ACTIVATE));
+    Set<String> allowedOperationsTypes = new HashSet<>(List.of(OPERATION_TYPE_SUSPEND, OPERATION_TYPE_ACTIVATE));
     assertThat(userOperationsLog).hasSize(2);
     assertThat(allowedOperationsTypes)
       .contains(userOperationsLog.get(0).getOperationType())

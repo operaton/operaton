@@ -17,7 +17,6 @@
 package org.operaton.bpm.application.impl.deployment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -97,7 +96,7 @@ public class RedeploymentProcessApplicationTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { BPMN_RESOURCE_1, BPMN_RESOURCE_2, "processOne", "processTwo", processDefinitionTestProvider() },
       { CMMN_RESOURCE_1, CMMN_RESOURCE_2, "oneTaskCase", "twoTaskCase", caseDefinitionTestProvider() },
       { DMN_RESOURCE_1, DMN_RESOURCE_2, "decision", "score-decision", decisionDefinitionTestProvider() },
@@ -147,7 +146,7 @@ public class RedeploymentProcessApplicationTest {
     // then
     assertThat(application.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2));
   }
 
   @TestTemplate
@@ -231,7 +230,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isFalse();
     assertThat(application2.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -268,7 +267,7 @@ public class RedeploymentProcessApplicationTest {
     // then
     assertThat(application1.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -308,7 +307,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isTrue();
     assertThat(application2.isCalled()).isFalse();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment3));
   }
 
   @TestTemplate
@@ -348,7 +347,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isTrue();
     assertThat(application2.isCalled()).isFalse();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -399,7 +398,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isFalse();
     assertThat(application2.isCalled()).isTrue();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   @TestTemplate
@@ -450,7 +449,7 @@ public class RedeploymentProcessApplicationTest {
     assertThat(application1.isCalled()).isTrue();
     assertThat(application2.isCalled()).isFalse();
 
-    deploymentsToCleanup.addAll(Arrays.asList(deployment1, deployment2, deployment3));
+    deploymentsToCleanup.addAll(List.of(deployment1, deployment2, deployment3));
   }
 
   protected void deleteDeployments(List<Deployment> deployments) {

@@ -15,7 +15,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.model;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +37,11 @@ class CmmnActivityTest {
     }
 
     void addCustomLocal(String event, VariableListener<?>... listeners) {
-      customLocal.put(event, Arrays.asList(listeners));
+      customLocal.put(event, List.of(listeners));
     }
 
     void addBuiltInLocal(String event, VariableListener<?>... listeners) {
-      builtInLocal.put(event, Arrays.asList(listeners));
+      builtInLocal.put(event, List.of(listeners));
     }
 
     @Override

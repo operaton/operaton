@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.jupiter.api.AfterEach;
@@ -356,7 +356,7 @@ class MultiTenancyProcessInstantiationTest {
 
   @Test
   void testStartProcessInstanceByKeyWithTenantIdAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
@@ -378,7 +378,7 @@ class MultiTenancyProcessInstantiationTest {
         .createProcessDefinitionQuery()
         .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     runtimeService.createProcessInstanceById(processDefinition.getId())
       .execute();
@@ -390,7 +390,7 @@ class MultiTenancyProcessInstantiationTest {
 
   @Test
   void testStartProcessInstanceByKeyWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -36,7 +36,7 @@ public class IoBindingTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("operationRef", false, true),
       new AttributeAssumption("inputDataRef", false, true),
       new AttributeAssumption("outputDataRef", false, true)

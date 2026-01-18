@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.webapp.impl.security.auth;
+import java.util.List;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
@@ -91,7 +91,7 @@ class ContainerAuthenticationFilterTest {
 
   @Parameters
   static Collection<Object[]> getRequestUrls() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
         {"/app/cockpit/default/", "default", false, true},
         {"/app/cockpit/engine2/", "engine2", false, true},
         {"/api/cockpit/plugin/some-plugin/default/process-instance", "default", false, true},

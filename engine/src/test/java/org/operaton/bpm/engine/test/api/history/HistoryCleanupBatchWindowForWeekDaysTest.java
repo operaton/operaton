@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -116,7 +115,7 @@ public class HistoryCleanupBatchWindowForWeekDaysTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         {  parseDate("2018-05-14T10:00:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //monday
         {  parseDate("2018-05-14T23:00:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //monday
         {  parseDate("2018-05-15T00:30:00"), parseDate("2018-05-14T22:00:00"), parseDate("2018-05-15T01:00:00"), null, null},  //tuesday

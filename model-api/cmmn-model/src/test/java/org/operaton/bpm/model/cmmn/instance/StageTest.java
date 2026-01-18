@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
@@ -34,7 +34,7 @@ public class StageTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(PlanningTable.class, 0 , 1),
           new ChildElementAssumption(PlanItemDefinition.class),
           new ChildElementAssumption(ExitCriterion.class)
@@ -43,7 +43,7 @@ public class StageTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("autoComplete", false, false, Boolean.FALSE),
           new AttributeAssumption(CmmnModelConstants.CMMN10_NS, "exitCriteriaRefs")
         );

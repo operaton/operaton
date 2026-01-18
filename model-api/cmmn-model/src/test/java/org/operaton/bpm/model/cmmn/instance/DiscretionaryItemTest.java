@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
@@ -32,7 +32,7 @@ public class DiscretionaryItemTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(ItemControl.class, 0, 1),
           new ChildElementAssumption(EntryCriterion.class),
           new ChildElementAssumption(ExitCriterion.class)
@@ -41,7 +41,7 @@ public class DiscretionaryItemTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("name"),
           new AttributeAssumption("definitionRef")
         );

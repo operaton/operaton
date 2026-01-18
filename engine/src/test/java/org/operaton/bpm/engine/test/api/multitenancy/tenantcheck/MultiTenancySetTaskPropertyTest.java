@@ -16,8 +16,8 @@
  */
 
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -99,7 +99,7 @@ public class MultiTenancySetTaskPropertyTest {
     TriConsumer<TaskService, String, Object> setDueDate = (taskService, taskId, value) -> taskService.setDueDate(taskId, (Date) value);
     TriConsumer<TaskService, String, Object> setFollowUpDate = (taskService, taskId, value) -> taskService.setFollowUpDate(taskId, (Date) value);
 
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "setPriority", setPriority, 1, "taskPriority"},
         { "setName", setName, "name", "taskName" },
         { "setDescription", setDescription, "description", "taskDescription" },

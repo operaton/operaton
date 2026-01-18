@@ -15,11 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
+import java.util.List;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
 import java.util.Iterator;
 
 import org.junit.jupiter.api.AfterEach;
@@ -46,7 +46,7 @@ class AbstractProcessAssertTest {
   void setUp() {
     processEngine = Mockito.mock(ProcessEngine.class);
     AbstractAssertions.init(processEngine);
-    allAsserts = Arrays.asList((Class<AbstractProcessAssert<?, ?>>[]) new Class[] {
+    allAsserts = List.of((Class<AbstractProcessAssert<?, ?>>[]) new Class[] {
       JobAssert.class,
       ProcessDefinitionAssert.class,
       ProcessInstanceAssert.class,

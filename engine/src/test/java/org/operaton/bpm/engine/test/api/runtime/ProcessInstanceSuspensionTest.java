@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -598,14 +597,14 @@ class ProcessInstanceSuspensionTest {
     }
 
     try {
-      runtimeService.removeVariables(processInstance.getId(), Arrays.asList("one", "two", "three"));
+      runtimeService.removeVariables(processInstance.getId(), List.of("one", "two", "three"));
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
 
 
     try {
-      runtimeService.removeVariablesLocal(processInstance.getId(), Arrays.asList("one", "two", "three"));
+      runtimeService.removeVariablesLocal(processInstance.getId(), List.of("one", "two", "three"));
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
@@ -655,14 +654,14 @@ class ProcessInstanceSuspensionTest {
     }
 
     try {
-      runtimeService.removeVariables(processInstance.getId(), Arrays.asList("one", "two", "three"));
+      runtimeService.removeVariables(processInstance.getId(), List.of("one", "two", "three"));
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
 
 
     try {
-      runtimeService.removeVariablesLocal(processInstance.getId(), Arrays.asList("one", "two", "three"));
+      runtimeService.removeVariablesLocal(processInstance.getId(), List.of("one", "two", "three"));
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
@@ -712,13 +711,13 @@ class ProcessInstanceSuspensionTest {
     }
 
     try {
-      runtimeService.removeVariables(processInstance.getId(), Arrays.asList("one", "two", "three"));
+      runtimeService.removeVariables(processInstance.getId(), List.of("one", "two", "three"));
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
 
     try {
-      runtimeService.removeVariablesLocal(processInstance.getId(), Arrays.asList("one", "two", "three"));
+      runtimeService.removeVariablesLocal(processInstance.getId(), List.of("one", "two", "three"));
     } catch (ProcessEngineException e) {
       fail("This should be possible");
     }
@@ -1337,13 +1336,13 @@ class ProcessInstanceSuspensionTest {
     }
 
     try {
-      taskService.removeVariables(task.getId(), Arrays.asList("one", "two"));
+      taskService.removeVariables(task.getId(), List.of("one", "two"));
     } catch (SuspendedEntityInteractionException e) {
       fail("should be allowed");
     }
 
     try {
-      taskService.removeVariablesLocal(task.getId(), Arrays.asList("one", "two"));
+      taskService.removeVariablesLocal(task.getId(), List.of("one", "two"));
     } catch (SuspendedEntityInteractionException e) {
       fail("should be allowed");
     }
@@ -1426,13 +1425,13 @@ class ProcessInstanceSuspensionTest {
     }
 
     try {
-      taskService.removeVariables(task.getId(), Arrays.asList("one", "two"));
+      taskService.removeVariables(task.getId(), List.of("one", "two"));
     } catch (SuspendedEntityInteractionException e) {
       fail("should be allowed");
     }
 
     try {
-      taskService.removeVariablesLocal(task.getId(), Arrays.asList("one", "two"));
+      taskService.removeVariablesLocal(task.getId(), List.of("one", "two"));
     } catch (SuspendedEntityInteractionException e) {
       fail("should be allowed");
     }
@@ -1515,13 +1514,13 @@ class ProcessInstanceSuspensionTest {
     }
 
     try {
-      taskService.removeVariables(task.getId(), Arrays.asList("one", "two"));
+      taskService.removeVariables(task.getId(), List.of("one", "two"));
     } catch (SuspendedEntityInteractionException e) {
       fail("should be allowed");
     }
 
     try {
-      taskService.removeVariablesLocal(task.getId(), Arrays.asList("one", "two"));
+      taskService.removeVariablesLocal(task.getId(), List.of("one", "two"));
     } catch (SuspendedEntityInteractionException e) {
       fail("should be allowed");
     }

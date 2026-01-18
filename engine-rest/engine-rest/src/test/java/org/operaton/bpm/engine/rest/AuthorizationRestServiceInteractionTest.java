@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -613,7 +612,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
     Map<String, Object> jsonBody = new HashMap<>();
 
     jsonBody.put("type", Authorization.AUTH_TYPE_GRANT);
-    jsonBody.put("permissions", Arrays.asList(Permissions.READ_INSTANCE.name()));
+    jsonBody.put("permissions", List.of(Permissions.READ_INSTANCE.name()));
     jsonBody.put("userId", MockProvider.EXAMPLE_USER_ID + ","+MockProvider.EXAMPLE_USER_ID2);
     jsonBody.put("groupId", MockProvider.EXAMPLE_GROUP_ID+","+MockProvider.EXAMPLE_GROUP_ID2);
     jsonBody.put("resourceType", Resources.TASK.resourceType());
@@ -813,7 +812,7 @@ public class AuthorizationRestServiceInteractionTest extends AbstractRestService
 
     Map<String, Object> jsonBody = new HashMap<>();
 
-    jsonBody.put("permissions", Arrays.asList(Permissions.TASK_WORK.name()));
+    jsonBody.put("permissions", List.of(Permissions.TASK_WORK.name()));
     jsonBody.put("userId", MockProvider.EXAMPLE_USER_ID + ","+MockProvider.EXAMPLE_USER_ID2);
     jsonBody.put("groupId", MockProvider.EXAMPLE_GROUP_ID+","+MockProvider.EXAMPLE_GROUP_ID2);
     jsonBody.put("resourceType", Resources.PROCESS_INSTANCE.resourceType());

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
@@ -558,7 +557,7 @@ class MigrationAddSubprocessTest {
         .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipCustomListeners()
       .execute();
 
@@ -589,7 +588,7 @@ class MigrationAddSubprocessTest {
       .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
 
@@ -623,7 +622,7 @@ class MigrationAddSubprocessTest {
       .startProcessInstanceById(migrationPlan.getSourceProcessDefinitionId());
     rule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .skipIoMappings()
       .execute();
 

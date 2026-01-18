@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
@@ -50,7 +50,7 @@ public class MigrationActiveEventSubProcessTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-      return Arrays.asList(new Object[][] {
+      return List.of(new Object[][] {
                new Object[]{ new TimerEventFactory() },
                new Object[]{ new MessageEventFactory() },
                new Object[]{ new SignalEventFactory() },

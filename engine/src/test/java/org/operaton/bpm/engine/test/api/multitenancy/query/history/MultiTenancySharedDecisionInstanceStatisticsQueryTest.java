@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -98,7 +98,7 @@ class MultiTenancySharedDecisionInstanceStatisticsQueryTest {
         repositoryService.createDecisionRequirementsDefinitionQuery()
             .singleResult();
 
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     HistoricDecisionInstanceStatisticsQuery query = historyService.
         createHistoricDecisionInstanceStatisticsQuery(decisionRequirementsDefinition.getId());

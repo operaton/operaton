@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.dmn.engine.feel.function;
+import java.util.List;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -258,7 +259,7 @@ class CustomFunctionTest {
   @Test
   void shouldPassList() {
     // given
-    List<String> list = Arrays.asList("foo", "bar", "bazz");
+    List<String> list = List.of("foo", "bar", "bazz");
 
     CustomFunction myFunction = CustomFunction.create()
       .setParams("x")
@@ -388,7 +389,7 @@ class CustomFunctionTest {
   @Test
   void shouldReturnList() {
     // given
-    List<String> list = Arrays.asList("foo", "bar", "bazz");
+    List<String> list = List.of("foo", "bar", "bazz");
 
     CustomFunction myFunction = CustomFunction.create()
       .setReturnValue(list)
@@ -406,7 +407,7 @@ class CustomFunctionTest {
   @Test
   void shouldReturnList_Nested() {
     // given
-    List<Object> list = Arrays.asList("foo", Arrays.asList("bar", "bazz"));
+    List<Object> list = List.of("foo", List.of("bar", "bazz"));
 
     CustomFunction myFunction = CustomFunction.create()
       .setReturnValue(list)
@@ -418,7 +419,7 @@ class CustomFunctionTest {
     List<Object> result = feelExtension.evaluateExpression("myFunction()");
 
     // then
-    assertThat(result).containsExactly("foo", Arrays.asList("bar", "bazz"));
+    assertThat(result).containsExactly("foo", List.of("bar", "bazz"));
   }
 
   @Test
@@ -506,7 +507,7 @@ class CustomFunctionTest {
     List<Object> result = feelExtension.evaluateExpression("myFunction(\"foo\", \"bar\", \"baz\")");
 
     // then
-    assertThat(result).containsExactly("foo", Arrays.asList("bar", "baz"));
+    assertThat(result).containsExactly("foo", List.of("bar", "baz"));
   }
 
   @Test

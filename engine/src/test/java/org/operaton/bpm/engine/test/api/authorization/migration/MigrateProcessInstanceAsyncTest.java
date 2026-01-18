@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization.migration;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.AfterEach;
@@ -161,7 +161,7 @@ public class MigrateProcessInstanceAsyncTest {
       .start();
 
     batch = engineRule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     // then

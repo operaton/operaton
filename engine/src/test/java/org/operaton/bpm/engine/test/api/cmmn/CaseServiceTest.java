@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.cmmn;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1876,7 +1875,7 @@ class CaseServiceTest {
         .withCaseDefinition(caseDefinitionId)
         .setVariable("aVariableName", "abc")
         .setVariable("anotherVariableName", 999)
-        .setVariable("aSerializedObject", Variables.objectValue(Arrays.asList("1", "2")).create())
+        .setVariable("aSerializedObject", Variables.objectValue(List.of("1", "2")).create())
         .create()
         .getId();
 
@@ -1895,7 +1894,7 @@ class CaseServiceTest {
     assertThat(stringValue.getValue()).isNotNull();
     assertThat(objectValue.getValue()).isNotNull();
     assertThat(objectValue.isDeserialized()).isTrue();
-    assertThat(objectValue.getValue()).isEqualTo(Arrays.asList("1", "2"));
+    assertThat(objectValue.getValue()).isEqualTo(List.of("1", "2"));
     assertThat(serializedObjectValue.isDeserialized()).isFalse();
     assertThat(serializedObjectValue.getValueSerialized()).isNotNull();
   }
@@ -2151,7 +2150,7 @@ class CaseServiceTest {
      caseService.withCaseExecution(caseExecutionId)
         .setVariableLocal("aVariableName", "abc")
         .setVariableLocal("anotherVariableName", 999)
-        .setVariableLocal("aSerializedObject", Variables.objectValue(Arrays.asList("1", "2")).create())
+        .setVariableLocal("aSerializedObject", Variables.objectValue(List.of("1", "2")).create())
         .execute();
 
      // when
@@ -2163,7 +2162,7 @@ class CaseServiceTest {
     assertThat(stringValue.getValue()).isNotNull();
     assertThat(objectValue.getValue()).isNotNull();
     assertThat(objectValue.isDeserialized()).isTrue();
-    assertThat(objectValue.getValue()).isEqualTo(Arrays.asList("1", "2"));
+    assertThat(objectValue.getValue()).isEqualTo(List.of("1", "2"));
     assertThat(serializedObjectValue.isDeserialized()).isFalse();
     assertThat(serializedObjectValue.getValueSerialized()).isNotNull();
   }

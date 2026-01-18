@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -232,7 +231,7 @@ class TransientVariableTest {
           .intermediateCatchEvent()
           .conditionalEventDefinition()
           .condition(VAR_CONDITION)
-          .operatonVariableEvents(Arrays.asList("create", "update"))
+          .operatonVariableEvents(List.of("create", "update"))
           .conditionalEventDefinitionDone()
           .userTask()
           .name("taskAfter")

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.operaton.bpm.model.bpmn.ItemKind;
@@ -38,7 +38,7 @@ public class ItemDefinitionTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("structureRef"),
       new AttributeAssumption("isCollection", false, false, false),
       new AttributeAssumption("itemKind", false, false, ItemKind.Information)

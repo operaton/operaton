@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -263,7 +263,7 @@ class MultiTenancyDecisionEvaluationTest {
 
   @Test
   void testEvaluateDecisionByKeyWithTenantIdAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
@@ -284,7 +284,7 @@ class MultiTenancyDecisionEvaluationTest {
         .createDecisionDefinitionQuery()
         .singleResult();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DmnDecisionResult decisionResult = decisionService.evaluateDecisionById(decisionDefinition.getId())
         .variables(createVariables())
@@ -295,7 +295,7 @@ class MultiTenancyDecisionEvaluationTest {
 
   @Test
   void testEvaluateDecisionByKeyWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE_SECOND_VERSION);

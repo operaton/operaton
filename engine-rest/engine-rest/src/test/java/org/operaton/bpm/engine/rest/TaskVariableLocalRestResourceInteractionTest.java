@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
+import java.util.List;
 
 import java.util.*;
 import jakarta.ws.rs.core.MediaType;
@@ -119,7 +120,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     // given
     String variableKey = "aVariableId";
 
-    List<String> payload = Arrays.asList("a", "b");
+    List<String> payload = List.of("a", "b");
     ObjectValue variableValue =
         MockObjectValue
             .fromObjectValue(Variables
@@ -360,7 +361,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     // given
     String variableKey = "aVariableId";
 
-    List<String> payload = Arrays.asList("a", "b");
+    List<String> payload = List.of("a", "b");
     ObjectValue variableValue =
         MockObjectValue
             .fromObjectValue(Variables

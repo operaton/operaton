@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,7 +70,7 @@ public class MessageCorrelationByLocalVariablesTest {
     testHelper.deploy(model);
 
     Map<String, Object> variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 3));
+    variables.put("vars", List.of(1, 2, 3));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
@@ -111,7 +110,7 @@ public class MessageCorrelationByLocalVariablesTest {
     testHelper.deploy(model);
 
     Map<String, Object> variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 3));
+    variables.put("vars", List.of(1, 2, 3));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
@@ -150,7 +149,7 @@ public class MessageCorrelationByLocalVariablesTest {
     testHelper.deploy(model);
 
     Map<String, Object> variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 3));
+    variables.put("vars", List.of(1, 2, 3));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
@@ -196,13 +195,13 @@ public class MessageCorrelationByLocalVariablesTest {
     testHelper.deploy(model);
 
     Map<String, Object> variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 3));
+    variables.put("vars", List.of(1, 2, 3));
     variables.put("processInstanceVar", "processInstanceVarValue");
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //second process instance with another process instance variable value
     variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 3));
+    variables.put("vars", List.of(1, 2, 3));
     variables.put("processInstanceVar", "anotherProcessInstanceVarValue");
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
@@ -249,7 +248,7 @@ public class MessageCorrelationByLocalVariablesTest {
     testHelper.deploy(model);
 
     Map<String, Object> variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 1));
+    variables.put("vars", List.of(1, 2, 1));
     engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated by local variables
@@ -290,7 +289,7 @@ public class MessageCorrelationByLocalVariablesTest {
     testHelper.deploy(model);
 
     Map<String, Object> variables = new HashMap<>();
-    variables.put("vars", Arrays.asList(1, 2, 1));
+    variables.put("vars", List.of(1, 2, 1));
     ProcessInstance processInstance = engineRule.getRuntimeService().startProcessInstanceByKey("Process_1", variables);
 
     //when correlated ALL by local variables

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.spin.plugin.impl.feel.integration;
+import java.util.List;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ class SpinValueMapperTest {
   static void setUp() {
     DefaultValueMapper defaultValueMapper = DefaultValueMapper.instance();
     SpinValueMapper spinValueMapper = new SpinValueMapper();
-    List<CustomValueMapper> mapperList = Arrays.asList(defaultValueMapper, spinValueMapper);
+    List<CustomValueMapper> mapperList = List.of(defaultValueMapper, spinValueMapper);
     valueMapper = new ValueMapper
         .CompositeValueMapper(ListHasAsScala(mapperList).asScala().toList());
   }
@@ -75,7 +76,7 @@ class SpinValueMapperTest {
   @Test
   void shouldMapOperatonSpinJSONarrayAsList() {
     // given
-    List<Val> list = Arrays.asList(new ValString("Kermit"), new ValString("Waldo"));
+    List<Val> list = List.of(new ValString("Kermit"), new ValString("Waldo"));
     ValList feelList = (ValList) valueMapper.toVal(list);
     ValContext context = (ValContext) valueMapper.toVal(Collections.singletonMap("customer", feelList));
     SpinJsonNode json = Spin.JSON("{\"customer\": [\"Kermit\", \"Waldo\"]}");
@@ -178,7 +179,7 @@ class SpinValueMapperTest {
     Map<String, Val> xmlInnerMap = new HashMap<>();
     xmlInnerMap.put("provider", valueMapper.toVal(xmlProviderAttrMap));
     xmlInnerMap.put("customer",
-                    valueMapper.toVal(Arrays.asList(xmlCustomerAttrMap1, xmlCustomerAttrMap2)));
+                    valueMapper.toVal(List.of(xmlCustomerAttrMap1, xmlCustomerAttrMap2)));
 
     Map<String, Val> xmlContextMap = new HashMap<>();
     xmlContextMap.put("data", valueMapper.toVal(xmlInnerMap));

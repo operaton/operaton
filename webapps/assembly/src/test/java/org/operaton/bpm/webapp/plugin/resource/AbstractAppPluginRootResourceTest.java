@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.webapp.plugin.resource;
+import java.util.List;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
 import java.util.Collection;
 import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -70,7 +70,7 @@ public class AbstractAppPluginRootResourceTest {
 
   @Parameters
   public static Collection<Object[]> getAssets() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
         {"app/plugin.js", MIME_TYPE_TEXT_JAVASCRIPT, true},
         {"app/plugin.css", MIME_TYPE_TEXT_CSS, true},
         {"app/asset.js", MIME_TYPE_TEXT_JAVASCRIPT, true},

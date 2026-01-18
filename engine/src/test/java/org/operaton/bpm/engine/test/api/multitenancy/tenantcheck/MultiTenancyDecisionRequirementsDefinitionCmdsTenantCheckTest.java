@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
+import java.util.List;
 
 import java.io.InputStream;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,7 +76,7 @@ class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDecisionRequirementsDefinitionWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DecisionRequirementsDefinition definition = repositoryService.getDecisionRequirementsDefinition(decisionRequirementsDefinitionId);
 
@@ -105,7 +105,7 @@ class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDecisionRequirementsModelWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionRequirementsModel(decisionRequirementsDefinitionId);
 
@@ -134,7 +134,7 @@ class MultiTenancyDecisionRequirementsDefinitionCmdsTenantCheckTest {
 
   @Test
   void getDecisionDiagramWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getDecisionRequirementsDiagram(decisionRequirementsDefinitionId);
 

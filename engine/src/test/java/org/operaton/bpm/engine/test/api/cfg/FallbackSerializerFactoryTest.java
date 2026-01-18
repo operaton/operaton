@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.cfg;
+import java.util.List;
 
-import java.util.Arrays;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -91,7 +91,7 @@ class FallbackSerializerFactoryTest {
        .setJdbcUrl("jdbc:h2:mem:operaton-forceclose")
        .setProcessEngineName("engine-forceclose");
 
-     engineConfiguration.setCustomPreVariableSerializers(Arrays.asList(new ExampleConstantSerializer()));
+     engineConfiguration.setCustomPreVariableSerializers(List.of(new ExampleConstantSerializer()));
      engineConfiguration.setFallbackSerializerFactory(new ExampleSerializerFactory());
 
      processEngine = engineConfiguration.buildProcessEngine();

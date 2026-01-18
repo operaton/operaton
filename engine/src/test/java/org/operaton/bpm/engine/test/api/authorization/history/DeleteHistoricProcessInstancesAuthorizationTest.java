@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.history;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -110,7 +109,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
     processInstance = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
     processInstance2 = engineRule.getRuntimeService().startProcessInstanceById(sourceDefinition.getId());
 
-    List<String> processInstanceIds = Arrays.asList(processInstance.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance.getId(), processInstance2.getId());
     runtimeService.deleteProcessInstances(processInstanceIds, null, false, false);
 
     historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
@@ -128,7 +127,7 @@ public class DeleteHistoricProcessInstancesAuthorizationTest {
   @TestTemplate
   void testProcessInstancesList() {
     //given
-    List<String> processInstanceIds = Arrays.asList(historicProcessInstance.getId(), historicProcessInstance2.getId());
+    List<String> processInstanceIds = List.of(historicProcessInstance.getId(), historicProcessInstance2.getId());
     authRule
         .init(scenario)
         .withUser("userId")

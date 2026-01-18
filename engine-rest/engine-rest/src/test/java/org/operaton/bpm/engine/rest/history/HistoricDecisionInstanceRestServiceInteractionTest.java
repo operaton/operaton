@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -292,7 +291,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
 
   @Test
   void testDeleteAsync() {
-    List<String> ids = Arrays.asList(EXAMPLE_DECISION_INSTANCE_ID);
+    List<String> ids = List.of(EXAMPLE_DECISION_INSTANCE_ID);
 
     Batch batchEntity = MockProvider.createMockBatch();
 
@@ -351,7 +350,7 @@ public class HistoricDecisionInstanceRestServiceInteractionTest extends Abstract
     query.setDecisionDefinitionKey("decision");
     messageBodyJson.put("historicDecisionInstanceQuery", query);
 
-    List<String> ids = Arrays.asList(EXAMPLE_DECISION_INSTANCE_ID);
+    List<String> ids = List.of(EXAMPLE_DECISION_INSTANCE_ID);
     messageBodyJson.put("historicDecisionInstanceIds", ids);
     messageBodyJson.put("deleteReason", "a-delete-reason");
 

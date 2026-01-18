@@ -1179,11 +1179,12 @@ public class ExecutionListenerTest {
     assertThat(taskService.createTaskQuery().list()).hasSize(1);
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("taskWithListener");
 
-    // when/then
+    // when
     // the listeners are invoked
     assertThatThrownBy(() -> runtimeService.correlateMessage("foo"))
       .hasMessageContaining("business error");
-    
+
+    // then
     assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
@@ -1244,11 +1245,12 @@ public class ExecutionListenerTest {
 
     testRule.deploy(model);
 
-    // when/then
+    // when
     // listeners are invoked
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_KEY))
       .hasMessageContaining("business error");
-    
+
+    // then
     assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
@@ -1273,11 +1275,12 @@ public class ExecutionListenerTest {
 
     testRule.deploy(model);
 
-    // when/then
+    // when
     // listeners are invoked
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_KEY))
       .hasMessageContaining("business error");
-    
+
+    // then
     assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 

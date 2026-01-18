@@ -156,8 +156,6 @@ public class ProcessDiagramRetrievalTest {
       ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
       InputStream expectedStream = new FileInputStream("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName);
       InputStream actualStream = repositoryService.getProcessDiagram(processDefinition.getId());
-//      writeToFile(repositoryService.getProcessDiagram(processDefinition.getId()),
-//              new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".actual.png"));
       assertThat(isEqual(expectedStream, actualStream)).isTrue();
     } else {
       // some test diagrams do not contain executable processes

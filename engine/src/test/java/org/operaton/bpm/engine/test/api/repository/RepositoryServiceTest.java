@@ -54,7 +54,6 @@ import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
 import org.operaton.bpm.engine.impl.bpmn.behavior.CallActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.StandaloneProcessEngineConfiguration;
@@ -311,7 +310,6 @@ class RepositoryServiceTest {
       fail("Exception expected");
     } catch (Exception e) {
       // Exception expected when deleting deployment with running process
-      // assert (e.getMessage().contains("Exception when output mapping is executed"));
       testRule.assertTextPresent("Exception when output mapping is executed", e.getMessage());
     }
 

@@ -148,7 +148,7 @@ class ParallelGatewayTest {
    */
   @Deployment
   @Test
-  void testReceyclingExecutionWithCallActivity() {
+  void testRecyclingExecutionWithCallActivity() {
     runtimeService.startProcessInstanceByKey("parent-process").getId();
 
     // After process start we have two tasks, one from the parent and one from

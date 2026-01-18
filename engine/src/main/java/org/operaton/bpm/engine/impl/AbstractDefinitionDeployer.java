@@ -36,6 +36,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUFFIXES;
+
 /**
  * {@link Deployer} responsible to parse resource files and create the proper entities.
  * This class is extended by specific resource deployers.
@@ -45,8 +47,6 @@ import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
  * </p>
  */
 public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends ResourceDefinitionEntity> implements Deployer {
-
-  public static final String[] DIAGRAM_SUFFIXES = new String[] { "png", "jpg", "gif", "svg" };
 
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
@@ -189,7 +189,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
   }
 
   protected String[] getDiagramSuffixes() {
-    return DIAGRAM_SUFFIXES;
+    return DIAGRAM_RESOURCE_SUFFIXES;
   }
 
   protected void ensureNoDuplicateDefinitionKeys(List<DEFINITION_ENTITY> definitions) {
@@ -272,7 +272,7 @@ public abstract class AbstractDefinitionDeployer<DEFINITION_ENTITY extends Resou
    * @param persistedDefinition the loaded definition entity
    */
   protected void persistedDefinitionLoaded(DeploymentEntity deployment, DEFINITION_ENTITY definition, DEFINITION_ENTITY persistedDefinition) {
-    // do nothing;
+    // do nothing
   }
 
   /**

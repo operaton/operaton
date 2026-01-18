@@ -96,6 +96,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 
 /**
  * @author Frederik Heremans
@@ -1522,7 +1523,7 @@ class RepositoryServiceTest {
   }
 
   private String deployProcessString(String processString) {
-    String resourceName = "xmlString." + BpmnDeployer.BPMN_RESOURCE_SUFFIXES[0];
+    String resourceName = "xmlString." + BPMN_RESOURCE_SUFFIXES[0];
     return repositoryService.createDeployment().addString(resourceName, processString).deploy().getId();
   }
 

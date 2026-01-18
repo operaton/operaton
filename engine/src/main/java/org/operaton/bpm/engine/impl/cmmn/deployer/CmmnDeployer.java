@@ -29,6 +29,8 @@ import org.operaton.bpm.engine.impl.persistence.deploy.cache.DeploymentCache;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
+
 /**
  * {@link Deployer} responsible to parse CMMN 1.0 XML files and create the
  * proper {@link CaseDefinitionEntity}s.
@@ -39,7 +41,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
  */
 public class CmmnDeployer extends AbstractDefinitionDeployer<CaseDefinitionEntity> {
 
-  public static final String[] CMMN_RESOURCE_SUFFIXES = new String[] { "cmmn11.xml", "cmmn10.xml", "cmmn" };
 
   protected ExpressionManager expressionManager;
   protected CmmnTransformer transformer;

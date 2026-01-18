@@ -109,7 +109,6 @@ public class ProcessDiagramLayoutFactory {
         
     Map<String, DiagramNode> listOfBounds = new HashMap<>();
     listOfBounds.put(diagramBoundsXml.getId(), diagramBoundsXml);
-//    listOfBounds.putAll(getElementBoundsFromBpmnDi(bpmnModel));
     listOfBounds.putAll(fixFlowNodePositionsIfModelFromAdonis(bpmnModel, getElementBoundsFromBpmnDi(bpmnModel)));
 
     Map<String, DiagramElement> listOfBoundsForImage = transformBoundsForImage(diagramBoundsImage, diagramBoundsXml, listOfBounds);

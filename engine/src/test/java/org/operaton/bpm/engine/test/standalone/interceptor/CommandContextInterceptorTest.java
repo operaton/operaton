@@ -61,22 +61,21 @@ class CommandContextInterceptorTest {
 
   @Test
   void testCommandContextNestedFailingCommands() {
+    // given
     final ExceptionThrowingCmd innerCommand1 = new ExceptionThrowingCmd(new IdentifiableRuntimeException(1));
     final ExceptionThrowingCmd innerCommand2 = new ExceptionThrowingCmd(new IdentifiableRuntimeException(2));
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
-    try {
-      commandExecutor.execute(commandContext -> {
-        commandExecutor.execute(innerCommand1);
-        commandExecutor.execute(innerCommand2);
+    // when/then
+    assertThatThrownBy(() -> commandExecutor.execute(commandContext -> {
+      commandExecutor.execute(innerCommand1);
+      commandExecutor.execute(innerCommand2);
 
-        return null;
-      });
-
-      fail("Exception expected");
-    } catch (IdentifiableRuntimeException e) {
-      assertThat(e.id).isEqualTo(1);
-    }
+      return null;
+    }))
+      .isInstanceOf(IdentifiableRuntimeException.class)
+      .extracting(e -> ((IdentifiableRuntimeException) e).id)
+      .isEqualTo(1);
 
     assertThat(innerCommand1.executed).isTrue();
     assertThat(innerCommand2.executed).isFalse();
@@ -104,6 +103,7 @@ class CommandContextInterceptorTest {
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
   @Test
   void testCommandContextNestedFailingCommandsNotExceptions() {
+    // given
     final BpmnModelInstance modelInstance =
       Bpmn.createExecutableProcess("processThrowingThrowable")
         .startEvent()
@@ -113,22 +113,16 @@ class CommandContextInterceptorTest {
 
    testRule.deploy(modelInstance);
 
-    boolean errorThrown = false;
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
-    try {
-      commandExecutor.execute(commandContext -> {
-
-        runtimeService.startProcessInstanceByKey("processThrowingThrowable");
-        return null;
-      });
-      fail("Exception expected");
-    } catch (StackOverflowError t) {
-      //OK
-      errorThrown = true;
-    }
+    
+    // when/then
+    assertThatThrownBy(() -> commandExecutor.execute(commandContext -> {
+      runtimeService.startProcessInstanceByKey("processThrowingThrowable");
+      return null;
+    }))
+      .isInstanceOf(StackOverflowError.class);
 
     assertThat(ThrowErrorJavaDelegate.executed).isTrue();
-    assertThat(errorThrown).isTrue();
 
     // Check data base consistency
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();

@@ -30,10 +30,10 @@ var singleTaskSetup = combine(
         files: [
           {
             name: 'parallel-user-tasks.bpmn',
-            content: readResource('parallel-user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('parallel-user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
@@ -43,22 +43,22 @@ var singleTaskSetup = combine(
         variables: {
           test: {
             value: 1.5,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: '123 dfg',
-            type: 'String'
+            type: 'String',
           },
           extraLong: {
             value: '1234567890987654321',
-            type: 'Long'
-          }
-        }
-      }
-    ])
-  )
+            type: 'Long',
+          },
+        },
+      },
+    ]),
+  ),
 );
 
 module.exports = {
-  setup1: singleTaskSetup
+  setup1: singleTaskSetup,
 };

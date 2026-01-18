@@ -34,14 +34,14 @@ var fragment2 = combine(
   operation(
     'group',
     'create',
-    createEntities(function(idx) {
+    createEntities(function (idx) {
       return {
         id: 'group' + idx,
         name: 'group' + idx,
-        type: 'GROUP' + idx
+        type: 'GROUP' + idx,
       };
-    })
-  )
+    }),
+  ),
 );
 
 var fragment3 = combine(
@@ -49,33 +49,33 @@ var fragment3 = combine(
     {
       id: 'accounting',
       name: 'Accounting',
-      type: 'WORKFLOW'
-    }
+      type: 'WORKFLOW',
+    },
   ]),
 
   operation(
     'user',
     'create',
-    createEntities(function(idx) {
+    createEntities(function (idx) {
       return {
         id: 'user' + idx,
         password: 'cam123',
         firstName: 'abc',
-        lastName: 'def'
+        lastName: 'def',
       };
-    })
+    }),
   ),
 
   operation(
     'group',
     'createMember',
-    createEntities(function(idx) {
+    createEntities(function (idx) {
       return {
         id: 'accounting',
-        userId: 'user' + idx
+        userId: 'user' + idx,
       };
-    })
-  )
+    }),
+  ),
 );
 
 module.exports = {
@@ -86,63 +86,63 @@ module.exports = {
         password: 'MobyDick',
         firstName: 'John',
         lastName: 'Bonham',
-        email: 'john.bonham@led-zeppelin.com'
+        email: 'john.bonham@led-zeppelin.com',
       },
       {
         id: 'ringo',
         password: 'cam123',
         firstName: 'Ringo',
         lastName: 'Starr',
-        email: 'ringo.starr@the-beatles.com'
-      }
+        email: 'ringo.starr@the-beatles.com',
+      },
     ]),
 
     operation('group', 'create', [
       {
         id: 'accounting',
         name: 'Accounting',
-        type: 'WORKFLOW'
+        type: 'WORKFLOW',
       },
       {
         id: 'sales',
         name: 'Sales',
-        type: 'WORKFLOW'
+        type: 'WORKFLOW',
       },
       {
         id: 'marketing',
         name: 'Marketing',
-        type: 'WORKFLOW'
-      }
+        type: 'WORKFLOW',
+      },
     ]),
 
     operation('tenant', 'create', [
       {
         id: 'tenantOne',
-        name: 'Tenant One'
+        name: 'Tenant One',
       },
       {
         id: 'tenantTwo',
-        name: 'Tenant Two'
-      }
+        name: 'Tenant Two',
+      },
     ]),
 
     operation('group', 'createMember', [
       {
         id: 'marketing',
-        userId: 'john'
+        userId: 'john',
       },
       {
         id: 'accounting',
-        userId: 'john'
+        userId: 'john',
       },
       {
         id: 'sales',
-        userId: 'john'
-      }
-    ])
+        userId: 'john',
+      },
+    ]),
   ),
 
   setup2: fragment2,
 
-  setup3: fragment3
+  setup3: fragment3,
 };

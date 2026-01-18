@@ -30,15 +30,15 @@ module.exports = {
         password: 'MobyDick',
         firstName: 'John',
         lastName: 'Bonham',
-        email: 'john.bonham@led-zeppelin.com'
+        email: 'john.bonham@led-zeppelin.com',
       },
       {
         id: 'mm',
         password: 'SweetDreams',
         firstName: 'uʎlᴉɹɐW',
         lastName: 'uosuɐW',
-        email: 'm.m@rock.com'
-      }
+        email: 'm.m@rock.com',
+      },
     ]),
 
     operation('authorization', 'create', [
@@ -48,8 +48,8 @@ module.exports = {
         userId: 'mm',
         groupId: null,
         resourceType: 0,
-        resourceId: 'admin'
-      }
-    ])
-  )
+        resourceId: 'admin',
+      },
+    ]),
+  ),
 };

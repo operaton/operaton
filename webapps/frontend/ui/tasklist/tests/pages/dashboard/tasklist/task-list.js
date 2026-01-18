@@ -20,36 +20,33 @@
 var Page = require('./../dashboard-view');
 
 module.exports = Page.extend({
-  formElement: function() {
+  formElement: function () {
     return element(by.css('[cam-tasks]'));
   },
 
-  taskList: function() {
+  taskList: function () {
     return this.formElement().all(by.repeater('(delta, task) in tasks'));
   },
 
-  taskListInfoText: function() {
+  taskListInfoText: function () {
     return this.formElement().getText();
   },
 
-  getTaskIndex: function(taskName) {
+  getTaskIndex: function (taskName) {
     return this.findElementIndexInRepeater(
       '(delta, task) in tasks',
       by.css('.names .task'),
-      taskName
-    ).then(function(idx) {
+      taskName,
+    ).then(function (idx) {
       return idx;
     });
   },
 
-  selectTask: function(idxOrName) {
+  selectTask: function (idxOrName) {
     function callPageObject(idx) {
-      this.taskList()
-        .get(idx)
-        .element(by.binding('task.name'))
-        .click();
+      this.taskList().get(idx).element(by.binding('task.name')).click();
       this.waitForElementToBeVisible(
-        element(by.css('.task-details .names .task'))
+        element(by.css('.task-details .names .task')),
       );
     }
 
@@ -60,14 +57,11 @@ module.exports = Page.extend({
     }
   },
 
-  taskName: function(idx) {
-    return this.taskList()
-      .get(idx)
-      .element(by.binding('task.name'))
-      .getText();
+  taskName: function (idx) {
+    return this.taskList().get(idx).element(by.binding('task.name')).getText();
   },
 
-  taskProcessDefinitionName: function(idxOrName) {
+  taskProcessDefinitionName: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskList()
         .get(idx)
@@ -82,7 +76,7 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskPriority: function(idxOrName) {
+  taskPriority: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskList()
         .get(idx)
@@ -97,7 +91,7 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskCreated: function(idxOrName) {
+  taskCreated: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskList()
         .get(idx)
@@ -112,15 +106,13 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskFollowUpDateElement: function(idx) {
-    var theElement = this.taskList()
-      .get(idx)
-      .element(by.css('.followup-date'));
+  taskFollowUpDateElement: function (idx) {
+    var theElement = this.taskList().get(idx).element(by.css('.followup-date'));
     this.waitForElementToBeVisible(theElement);
     return theElement;
   },
 
-  taskFollowUpDate: function(idxOrName) {
+  taskFollowUpDate: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskFollowUpDateElement(idx).getText();
     }
@@ -132,15 +124,12 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskFollowUpDateTooltip: function(idxOrName) {
+  taskFollowUpDateTooltip: function (idxOrName) {
     function callPageObject(idx) {
       var tooltipTriggerer = this.taskFollowUpDateElement(idx).element(
-        by.css('[am-time-ago="task.followUp"]')
+        by.css('[am-time-ago="task.followUp"]'),
       );
-      browser
-        .actions()
-        .mouseMove(tooltipTriggerer)
-        .perform();
+      browser.actions().mouseMove(tooltipTriggerer).perform();
 
       var tooltipWidget = element(by.css('body > [tooltip-popup]'));
       this.waitForElementToBeVisible(tooltipWidget);
@@ -154,15 +143,13 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskDueDateElement: function(idx) {
-    var theElement = this.taskList()
-      .get(idx)
-      .element(by.css('.due-date'));
+  taskDueDateElement: function (idx) {
+    var theElement = this.taskList().get(idx).element(by.css('.due-date'));
     this.waitForElementToBeVisible(theElement);
     return theElement;
   },
 
-  taskDueDate: function(idxOrName) {
+  taskDueDate: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskDueDateElement(idx).getText();
     }
@@ -174,15 +161,12 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskDueDateTooltip: function(idxOrName) {
+  taskDueDateTooltip: function (idxOrName) {
     function callPageObject(idx) {
       var tooltipTriggerer = this.taskDueDateElement(idx).element(
-        by.css('[am-time-ago="task.due"]')
+        by.css('[am-time-ago="task.due"]'),
       );
-      browser
-        .actions()
-        .mouseMove(tooltipTriggerer)
-        .perform();
+      browser.actions().mouseMove(tooltipTriggerer).perform();
 
       var tooltipWidget = element(by.css('body > [tooltip-popup]'));
       this.waitForElementToBeVisible(tooltipWidget);
@@ -196,11 +180,9 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskAssigneeField: function(idxOrName) {
+  taskAssigneeField: function (idxOrName) {
     function callPageObject(idx) {
-      return this.taskList()
-        .get(idx)
-        .element(by.css('.assignee'));
+      return this.taskList().get(idx).element(by.css('.assignee'));
     }
 
     if (typeof idxOrName === 'number') {
@@ -210,7 +192,7 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskAssignee: function(idxOrName) {
+  taskAssignee: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskAssigneeField(idx).getText();
     }
@@ -222,7 +204,7 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskVariables: function(idxOrName) {
+  taskVariables: function (idxOrName) {
     function callPageObject(idx) {
       return this.taskList()
         .get(idx)
@@ -236,7 +218,7 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  showMoreVariables: function(idxOrName) {
+  showMoreVariables: function (idxOrName) {
     function callPageObject(idx) {
       this.taskList()
         .get(idx)
@@ -251,13 +233,13 @@ module.exports = Page.extend({
     return this.getTaskIndex(idxOrName).then(callPageObject.bind(this));
   },
 
-  taskVariableNameElement: function(idx, variableIdx) {
+  taskVariableNameElement: function (idx, variableIdx) {
     browser
       .actions()
       .mouseMove(
         this.taskVariables(idx)
           .get(variableIdx)
-          .element(by.css('.variable-label'))
+          .element(by.css('.variable-label')),
       )
       .perform();
 
@@ -266,7 +248,7 @@ module.exports = Page.extend({
     return element(by.css('.tooltip'));
   },
 
-  taskVariableName: function(idxOrName, variableIdx) {
+  taskVariableName: function (idxOrName, variableIdx) {
     function callPageObject(idx, varIdx) {
       return this.taskVariableNameElement(idx, varIdx);
     }
@@ -276,11 +258,11 @@ module.exports = Page.extend({
     }
 
     return this.getTaskIndex(idxOrName, variableIdx).then(
-      callPageObject.bind(this)
+      callPageObject.bind(this),
     );
   },
 
-  taskVariableLabel: function(idxOrName, variableIdx) {
+  taskVariableLabel: function (idxOrName, variableIdx) {
     function callPageObject(idx, varIdx) {
       return this.taskVariables(idx)
         .get(varIdx)
@@ -292,11 +274,11 @@ module.exports = Page.extend({
     }
 
     return this.getTaskIndex(idxOrName, variableIdx).then(
-      callPageObject.bind(this)
+      callPageObject.bind(this),
     );
   },
 
-  taskVariableValue: function(idxOrName, variableIdx) {
+  taskVariableValue: function (idxOrName, variableIdx) {
     function callPageObject(idx, varIdx) {
       return this.taskVariables(idx)
         .get(varIdx)
@@ -308,7 +290,7 @@ module.exports = Page.extend({
     }
 
     return this.getTaskIndex(idxOrName, variableIdx).then(
-      callPageObject.bind(this)
+      callPageObject.bind(this),
     );
-  }
+  },
 });

@@ -22,38 +22,35 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/admin/default/#/users',
 
-  newUserButton: function() {
+  newUserButton: function () {
     return element(by.css('[ng-show="availableOperations.create"]'));
   },
 
-  userList: function() {
+  userList: function () {
     return element.all(by.repeater('user in userList'));
   },
 
-  userFirstNameAndLastName: function(idx) {
+  userFirstNameAndLastName: function (idx) {
     return element(
       by
         .repeater('user in userList')
         .row(idx)
-        .column('{{user.firstName}} {{user.lastName}}')
+        .column('{{user.firstName}} {{user.lastName}}'),
     ).getText();
   },
 
-  selectUser: function(idx) {
+  selectUser: function (idx) {
     this.selectUserByEditLink(idx);
   },
 
-  selectUserByEditLink: function(idx) {
-    this.userList()
-      .get(idx)
-      .element(by.linkText('Edit'))
-      .click();
+  selectUserByEditLink: function (idx) {
+    this.userList().get(idx).element(by.linkText('Edit')).click();
   },
 
-  selectUserByNameLink: function(idx) {
+  selectUserByNameLink: function (idx) {
     this.userList()
       .get(idx)
       .element(by.binding('{{user.firstName}} {{user.lastName}}'))
       .click();
-  }
+  },
 });

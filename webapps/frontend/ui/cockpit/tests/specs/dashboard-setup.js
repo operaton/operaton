@@ -29,11 +29,11 @@ var fragment1 = combine(
       files: [
         {
           name: 'failing-process.bpmn',
-          content: readResource('failing-process.bpmn')
-        }
-      ]
-    }
-  ])
+          content: readResource('failing-process.bpmn'),
+        },
+      ],
+    },
+  ]),
 );
 
 var fragment2 = combine(
@@ -44,11 +44,11 @@ var fragment2 = combine(
       variables: {
         test: {
           value: 1,
-          type: 'Integer'
-        }
-      }
-    }
-  ])
+          type: 'Integer',
+        },
+      },
+    },
+  ]),
 );
 
 var fragment3 = combine(
@@ -58,10 +58,10 @@ var fragment3 = combine(
       files: [
         {
           name: 'process-with-sub-process.bpmn',
-          content: readResource('process-with-sub-process.bpmn')
-        }
-      ]
-    }
+          content: readResource('process-with-sub-process.bpmn'),
+        },
+      ],
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -71,11 +71,11 @@ var fragment3 = combine(
       variables: {
         test: {
           value: 1,
-          type: 'Integer'
-        }
-      }
-    }
-  ])
+          type: 'Integer',
+        },
+      },
+    },
+  ]),
 );
 
 var dmnFragment1 = operation('deployment', 'create', [
@@ -84,19 +84,19 @@ var dmnFragment1 = operation('deployment', 'create', [
     files: [
       {
         name: 'assign-approver-groups.dmn',
-        content: readResource('assign-approver-groups.dmn')
-      }
-    ]
+        content: readResource('assign-approver-groups.dmn'),
+      },
+    ],
   },
   {
     deploymentName: 'assign-approver',
     files: [
       {
         name: 'assign-approver-groups-changed.dmn',
-        content: readResource('assign-approver-groups-changed.dmn')
-      }
-    ]
-  }
+        content: readResource('assign-approver-groups-changed.dmn'),
+      },
+    ],
+  },
 ]);
 
 var dmnFragment2 = operation('deployment', 'create', [
@@ -105,10 +105,10 @@ var dmnFragment2 = operation('deployment', 'create', [
     files: [
       {
         name: 'dmn-without-name.dmn',
-        content: readResource('dmn-without-name.dmn')
-      }
-    ]
-  }
+        content: readResource('dmn-without-name.dmn'),
+      },
+    ],
+  },
 ]);
 
 var multiTenancyDeployment = combine(
@@ -120,14 +120,14 @@ var multiTenancyDeployment = combine(
         {
           name: 'invoice.bpmn',
           filename: 'invoice-deployment-binding.bpmn',
-          content: readResource('invoice-deployment-binding.bpmn')
+          content: readResource('invoice-deployment-binding.bpmn'),
         },
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
-        }
-      ]
-    }
+          content: readResource('assign-approver-groups.dmn'),
+        },
+      ],
+    },
   ]),
 
   operation('deployment', 'create', [
@@ -137,14 +137,14 @@ var multiTenancyDeployment = combine(
         {
           name: 'invoice.bpmn',
           filename: 'invoice-deployment-binding.bpmn',
-          content: readResource('invoice-deployment-binding.bpmn')
+          content: readResource('invoice-deployment-binding.bpmn'),
         },
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
-        }
-      ]
-    }
+          content: readResource('assign-approver-groups.dmn'),
+        },
+      ],
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -154,18 +154,18 @@ var multiTenancyDeployment = combine(
       variables: {
         creditor: {
           value: 'test',
-          type: 'String'
+          type: 'String',
         },
         amount: {
           value: 20.5,
-          type: 'Double'
+          type: 'Double',
         },
         invoiceCategory: {
           value: 'Travel Expenses',
-          type: 'String'
-        }
-      }
-    }
+          type: 'String',
+        },
+      },
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -174,19 +174,19 @@ var multiTenancyDeployment = combine(
       variables: {
         creditor: {
           value: 'test',
-          type: 'String'
+          type: 'String',
         },
         amount: {
           value: 15.0,
-          type: 'Double'
+          type: 'Double',
         },
         invoiceCategory: {
           value: 'Travel Expenses',
-          type: 'String'
-        }
-      }
-    }
-  ])
+          type: 'String',
+        },
+      },
+    },
+  ]),
 );
 
 module.exports = {
@@ -195,5 +195,5 @@ module.exports = {
   setup3: fragment3,
   setup4: dmnFragment1,
   setup5: dmnFragment2,
-  multiTenancySetup: multiTenancyDeployment
+  multiTenancySetup: multiTenancyDeployment,
 };

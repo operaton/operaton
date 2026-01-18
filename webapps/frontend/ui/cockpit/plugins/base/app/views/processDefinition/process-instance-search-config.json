@@ -89,7 +89,7 @@
     }
   ],
   "operators": {
-    "undefined":  [
+    "undefined": [
       {
         "key": "eq",
         "value": "="
@@ -119,7 +119,7 @@
         "value": "PROCESS_INSTANCE_OPERATOR_LIKE"
       }
     ],
-    "string":     [
+    "string": [
       {
         "key": "eq",
         "value": "="
@@ -149,7 +149,7 @@
         "value": "PROCESS_INSTANCE_OPERATOR_LIKE"
       }
     ],
-    "number":     [
+    "number": [
       {
         "key": "eq",
         "value": "="
@@ -175,7 +175,7 @@
         "value": "SEARCH_LESS_THAN_EQUALS"
       }
     ],
-    "boolean":    [
+    "boolean": [
       {
         "key": "eq",
         "value": "="
@@ -185,22 +185,26 @@
         "value": "!="
       }
     ],
-    "object":     [{
-      "key": "eq",
-      "value": "="
-    },
+    "object": [
+      {
+        "key": "eq",
+        "value": "="
+      },
       {
         "key": "neq",
         "value": "!="
-      }],
-    "date":     [{
-      "key": "lteq",
-      "value": "PROCESS_INSTANCE_OPERATOR_BEFORE"
-    },
+      }
+    ],
+    "date": [
+      {
+        "key": "lteq",
+        "value": "PROCESS_INSTANCE_OPERATOR_BEFORE"
+      },
       {
         "key": "gteq",
         "value": "PROCESS_INSTANCE_OPERATOR_AFTER"
-      }]
+      }
+    ]
   },
   "tooltips": {
     "inputPlaceholder": "PROCESS_INSTANCE_ADD_CRITERIA",

@@ -28,28 +28,28 @@ module.exports = {
       {
         name: 'My Tasks',
         query: {
-          assigneeExpression: '${ currentUser() }'
+          assigneeExpression: '${ currentUser() }',
         },
         properties: {
-          priority: 10
+          priority: 10,
         },
-        resourceType: 'Task'
-      }
+        resourceType: 'Task',
+      },
     ]),
 
     operation('tenant', 'create', [
       {
         id: 'tenantOne',
-        name: 'Tenant One'
-      }
+        name: 'Tenant One',
+      },
     ]),
 
     operation('tenant', 'createUserMember', [
       {
         id: 'tenantOne',
-        userId: 'admin'
-      }
-    ])
+        userId: 'admin',
+      },
+    ]),
   ),
 
   setup2: combine(
@@ -57,35 +57,35 @@ module.exports = {
       {
         name: 'My Tasks',
         query: {
-          assigneeExpression: '${ currentUser() }'
+          assigneeExpression: '${ currentUser() }',
         },
         properties: {
-          priority: 10
+          priority: 10,
         },
-        resourceType: 'Task'
-      }
+        resourceType: 'Task',
+      },
     ]),
 
     operation('tenant', 'create', [
       {
         id: 'tenantOne',
-        name: 'Tenant One'
+        name: 'Tenant One',
       },
       {
         id: 'tenantTwo',
-        name: 'Tenant Two'
-      }
+        name: 'Tenant Two',
+      },
     ]),
 
     operation('tenant', 'createUserMember', [
       {
         id: 'tenantOne',
-        userId: 'admin'
+        userId: 'admin',
       },
       {
         id: 'tenantTwo',
-        userId: 'admin'
-      }
-    ])
-  )
+        userId: 'admin',
+      },
+    ]),
+  ),
 };

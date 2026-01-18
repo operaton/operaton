@@ -16,15 +16,14 @@
  */
 
 'use strict';
-var chai     = require('chai');
+var chai = require('chai');
 var promised = require('chai-as-promised');
 chai.use(promised);
-global.expect   = chai.expect;
+global.expect = chai.expect;
 
 var tested = process.env.TESTED || '*';
 
 exports.config = {
-
   // directConnect: true,
   // The timeout for each script run on the browser. This should be longer
   // than the maximum time your application needs to stabilize between tasks.
@@ -32,13 +31,13 @@ exports.config = {
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    'browserName': 'chrome',
-    'chromeOptions': {
-      'args': ['start-maximized', 'enable-crash-reporter-for-testing']
+    browserName: 'chrome',
+    chromeOptions: {
+      args: ['start-maximized', 'enable-crash-reporter-for-testing'],
     },
-    'loggingPrefs': {
-      'browser': 'ALL'
-    }
+    loggingPrefs: {
+      browser: 'ALL',
+    },
   },
 
   /*    multiCapabilities: [{
@@ -53,7 +52,7 @@ exports.config = {
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
   specs: [
-    '../lib/widgets/' + tested + '/test/cam-widget-' + tested + '.spec.js'
+    '../lib/widgets/' + tested + '/test/cam-widget-' + tested + '.spec.js',
   ],
 
   // A base URL for your application under test. Calls to protractor.get()
@@ -83,6 +82,6 @@ exports.config = {
     timeout: 60000,
     colors: true,
     reporter: 'spec',
-    slow: 3000
-  }
+    slow: 3000,
+  },
 };

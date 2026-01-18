@@ -3,7 +3,9 @@
   <section class="col-xs-12 col-md-6">
     <div class="inner">
       <header>
-        <h1 class="section-title">{{ 'PLUGIN_TASK_ASSIGNMENT_BY_TYPE' | translate }}</h1>
+        <h1 class="section-title">
+          {{ 'PLUGIN_TASK_ASSIGNMENT_BY_TYPE' | translate }}
+        </h1>
       </header>
       <table class="cam-table values-left" id="open-task-statistics">
         <thead>
@@ -16,10 +18,19 @@
         <tfoot>
           <tr>
             <th>
-              <span ng-if="!openTasksState.$loaded" class="glyphicon glyphicon-refresh animate-spin"></span>
-              <span ng-if="openTasksState.$loaded && !hasSearchPlugin">{{ openTasksCount }}</span>
+              <span
+                ng-if="!openTasksState.$loaded"
+                class="glyphicon glyphicon-refresh animate-spin"
+              ></span>
+              <span ng-if="openTasksState.$loaded && !hasSearchPlugin"
+                >{{ openTasksCount }}</span
+              >
               <span ng-if="openTasksState.$loaded && hasSearchPlugin">
-                <a class="search-link" ng-click="createSearch('allOpenTasks', 'statistics')">{{ openTasksCount }}</a>
+                <a
+                  class="search-link"
+                  ng-click="createSearch('allOpenTasks', 'statistics')"
+                  >{{ openTasksCount }}</a
+                >
               </span>
             </th>
             <th>{{ 'PLUGIN_TASK_TOTAL' | translate }}</th>
@@ -29,10 +40,20 @@
         <tbody>
           <tr ng-repeat="taskStatistic in taskStatistics">
             <th>
-              <span ng-if="!taskStatistic.state.$loaded" class="glyphicon glyphicon-refresh animate-spin"></span>
-              <span ng-if="taskStatistic.state.$loaded && !hasSearchPlugin">{{ taskStatistic.count }}</span>
+              <span
+                ng-if="!taskStatistic.state.$loaded"
+                class="glyphicon glyphicon-refresh animate-spin"
+              ></span>
+              <span ng-if="taskStatistic.state.$loaded && !hasSearchPlugin"
+                >{{ taskStatistic.count }}</span
+              >
               <span ng-if="taskStatistic.state.$loaded && hasSearchPlugin">
-                <a class="search-link" ng-click="createSearch(taskStatistic.search, 'statistics')"> {{ taskStatistic.count }}</a>
+                <a
+                  class="search-link"
+                  ng-click="createSearch(taskStatistic.search, 'statistics')"
+                >
+                  {{ taskStatistic.count }}</a
+                >
               </span>
             </th>
             <td>{{ taskStatistic.label }}</td>
@@ -45,7 +66,9 @@
   <section class="col-xs-12 col-md-6">
     <div class="inner">
       <header>
-        <h1 class="section-title">{{ 'PLUGIN_TASK_ASSIGNMENT_BY_GROUP' | translate }}</h1>
+        <h1 class="section-title">
+          {{ 'PLUGIN_TASK_ASSIGNMENT_BY_GROUP' | translate }}
+        </h1>
       </header>
       <table class="cam-table values-left" id="task-group-counts">
         <thead>
@@ -57,12 +80,21 @@
 
         <tbody>
           <tr ng-if="!taskGroupState.$loaded && !taskGroupState.$error">
-            <td colspan="2"><span class="glyphicon glyphicon-refresh animate-spin"></span></td>
+            <td colspan="2">
+              <span class="glyphicon glyphicon-refresh animate-spin"></span>
+            </td>
           </tr>
-          <tr ng-if="taskGroupState.$loaded" ng-repeat="taskGroup in taskGroups">
+          <tr
+            ng-if="taskGroupState.$loaded"
+            ng-repeat="taskGroup in taskGroups"
+          >
             <td ng-if="!hasSearchPlugin">{{ taskGroup.taskCount }}</td>
             <td ng-if="hasSearchPlugin">
-              <a class="search-link" ng-click="createSearch(taskGroup.id, 'group')">{{ taskGroup.taskCount }}</a>
+              <a
+                class="search-link"
+                ng-click="createSearch(taskGroup.id, 'group')"
+                >{{ taskGroup.taskCount }}</a
+              >
             </td>
             <td>{{ formatGroupName(taskGroup.groupName) }}</td>
           </tr>

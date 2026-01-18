@@ -6,8 +6,7 @@
 <div class="identity-links modal-body">
   <div notifications-panel></div>
 
-  <form name="editForm"
-        ng-submit="!invalid() && addItem()">
+  <form name="editForm" ng-submit="!invalid() && addItem()">
     <fieldset ng-show="identityLinks.length">
       <legend>{{ decorator.table.label }}</legend>
 
@@ -15,18 +14,24 @@
         <thead>
           <tr>
             <th class="id">{{ decorator.table.id }}</th>
-            <th class="action text-right">{{ 'PLUGIN_IDENTITY_LINKS_ACTION' | translate }}</th>
+            <th class="action text-right">
+              {{ 'PLUGIN_IDENTITY_LINKS_ACTION' | translate }}
+            </th>
           </tr>
         </thead>
 
         <tbody>
           <tr ng-repeat="(delta, identityLink) in identityLinks">
             <td class="id">
-              <span cam-widget-clipboard="identityLink[key]">{{ identityLink[key] }}</span>
+              <span cam-widget-clipboard="identityLink[key]"
+                >{{ identityLink[key] }}</span
+              >
             </td>
             <td class="action text-right">
-              <span class="btn btn-default action-button"
-                    ng-click="removeItem()">
+              <span
+                class="btn btn-default action-button"
+                ng-click="removeItem()"
+              >
                 <span class="glyphicon glyphicon-ban-circle"></span>
               </span>
             </td>
@@ -39,14 +44,18 @@
       <legend>{{ decorator.add.label }}</legend>
 
       <div class="input-group">
-        <input class="form-control"
-               type="text"
-               ng-model="newItem"
-               name="newItem"
-               required />
-        <span class="btn btn-primary input-group-addon"
-              ng-click="addItem()"
-              ng-disabled="invalid()">
+        <input
+          class="form-control"
+          type="text"
+          ng-model="newItem"
+          name="newItem"
+          required
+        />
+        <span
+          class="btn btn-primary input-group-addon"
+          ng-click="addItem()"
+          ng-disabled="invalid()"
+        >
           <span class="glyphicon glyphicon-plus"></span>
         </span>
       </div>
@@ -55,8 +64,7 @@
 </div>
 
 <div class="modal-footer">
-  <button ng-click="$dismiss()"
-          class="btn btn-default">
+  <button ng-click="$dismiss()" class="btn btn-default">
     {{ 'PLUGIN_IDENTITY_LINKS_CLOSE' | translate }}
   </button>
 </div>

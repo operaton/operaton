@@ -25,23 +25,23 @@ module.exports = Table.extend({
   tabLabel: 'Process Instances',
   tableRepeater: 'processInstance in processInstances',
 
-  isInstanceSuspended: function(idx) {
+  isInstanceSuspended: function (idx) {
     return this.tableItem(idx, '.state .badge-suspended').isDisplayed();
   },
 
-  selectInstanceId: function(idx) {
+  selectInstanceId: function (idx) {
     this.tableItem(idx, by.binding('processInstance.id')).click();
   },
 
-  instanceId: function(idx) {
+  instanceId: function (idx) {
     return this.tableItem(idx, '[title]').getAttribute('title');
   },
 
-  startTime: function(idx) {
+  startTime: function (idx) {
     return this.tableItem(idx, '.start-time');
   },
 
-  businessKey: function(idx) {
+  businessKey: function (idx) {
     return this.tableItem(idx, '.business-key');
-  }
+  },
 });

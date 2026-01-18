@@ -21,35 +21,32 @@ var testHelper = require('../../../common/tests/test-helper');
 var setupFile = require('./task-removed-notification-setup');
 var dashboardPage = require('../pages/dashboard');
 
-describe.skip('Task Removal Notification Spec', function() {
-  describe('a task that has been removed or completed', function() {
+describe.skip('Task Removal Notification Spec', function () {
+  describe('a task that has been removed or completed', function () {
     var tasklistItems;
 
-    before(function() {
-      return testHelper(setupFile.setup1, function() {
+    before(function () {
+      return testHelper(setupFile.setup1, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('test', 'test');
 
         tasklistItems = element.all(by.css('.tasks-list > li'));
-        tasklistItems
-          .first()
-          .element(by.css('.clickable'))
-          .click();
+        tasklistItems.first().element(by.css('.clickable')).click();
       });
     });
 
-    it('disapears from list and shows a notification', function() {
+    it('disapears from list and shows a notification', function () {
       expect(tasklistItems.count()).to.eventually.eql(1);
       expect(
-        element(by.css('.task-details .names > h2')).getText()
+        element(by.css('.task-details .names > h2')).getText(),
       ).to.eventually.eql('Task 1');
 
       // simulates a background resolution
       browser
-        .executeAsyncScript(function() {
+        .executeAsyncScript(function () {
           var callback = arguments[arguments.length - 1];
           var xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = function() {
+          xhr.onreadystatechange = function () {
             if (xhr.readyState == 4) {
               callback();
             }
@@ -57,12 +54,12 @@ describe.skip('Task Removal Notification Spec', function() {
           xhr.open(
             'POST',
             '/operaton/api/engine/engine/default/task/1/submit-form',
-            true
+            true,
           );
           xhr.setRequestHeader('Content-Type', 'application/json');
           xhr.send('{"variables":{}}');
         })
-        .then(function() {
+        .then(function () {
           browser.sleep(10500);
 
           // refresh!
@@ -71,13 +68,13 @@ describe.skip('Task Removal Notification Spec', function() {
 
           var completeButton = element(
             by.css(
-              '.task-details .tabbed-content .form-actions button[ng-click="complete()"]'
-            )
+              '.task-details .tabbed-content .form-actions button[ng-click="complete()"]',
+            ),
           );
           expect(completeButton.isEnabled()).to.eventually.eql(false);
 
           expect(
-            element(by.css('.task-details .names > h2')).isPresent()
+            element(by.css('.task-details .names > h2')).isPresent(),
           ).to.eventually.eql(true);
 
           var alertMessage = element(by.css('.task-removed-alert .alert'));
@@ -86,7 +83,7 @@ describe.skip('Task Removal Notification Spec', function() {
           dismissButton.click();
 
           expect(
-            element(by.css('.task-details .names > h2')).isPresent()
+            element(by.css('.task-details .names > h2')).isPresent(),
           ).to.eventually.eql(false);
         });
     });

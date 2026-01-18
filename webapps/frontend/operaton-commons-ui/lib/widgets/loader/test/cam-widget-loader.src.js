@@ -18,7 +18,7 @@
 'use strict';
 
 var angular = require('operaton-bpm-sdk-js/vendor/angular'),
-    loaderDefinition = require('../cam-widget-loader');
+  loaderDefinition = require('../cam-widget-loader');
 
 require('angular-ui-bootstrap');
 
@@ -29,23 +29,20 @@ var testModule = angular.module('testModule', [loaderModule.name]);
 testModule.controller('testInteractiveController', [
   '$scope',
   '$timeout',
-  function(
-    $scope,
-    $timeout
-  ) {
+  function ($scope, $timeout) {
     $scope.ctrlState = 'INITIAL';
     $scope.timeoutPromise = null;
 
-    $scope.reload = function(simulateEmpty) {
+    $scope.reload = function (simulateEmpty) {
       $scope.ctrlState = 'LOADING';
 
-      $scope.timeoutPromise = $timeout(function() {
+      $scope.timeoutPromise = $timeout(function () {
         $scope.ctrlVar1 = 'Control variable';
         $scope.ctrlState = simulateEmpty ? 'EMPTY' : 'LOADED';
       }, 1000);
     };
 
-    $scope.fail = function() {
+    $scope.fail = function () {
       $scope.ctrlState = 'ERROR';
       $scope.ctrlError = 'Something wen really wrong';
 
@@ -53,8 +50,9 @@ testModule.controller('testInteractiveController', [
         $timeout.cancel($scope.timeoutPromise);
       }
     };
-  }]);
+  },
+]);
 
-angular.element(document).ready(function() {
+angular.element(document).ready(function () {
   angular.bootstrap(document.body, [testModule.name]);
 });

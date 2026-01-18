@@ -30,10 +30,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
@@ -43,17 +43,17 @@ module.exports = {
         variables: {
           test: {
             value: 1.5,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: '123 dfg',
-            type: 'String'
+            type: 'String',
           },
           extraLong: {
             value: '1234567890987654321',
-            type: 'Long'
-          }
-        }
+            type: 'Long',
+          },
+        },
       },
       {
         key: 'user-tasks',
@@ -61,13 +61,13 @@ module.exports = {
         variables: {
           test: {
             value: 1.5,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: 'abc dfg',
-            type: 'String'
-          }
-        }
+            type: 'String',
+          },
+        },
       },
       {
         key: 'user-tasks',
@@ -75,19 +75,19 @@ module.exports = {
         variables: {
           test: {
             value: 1.49,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: 'abc dfg',
-            type: 'String'
+            type: 'String',
           },
           myDate: {
             value: '2011-11-11T11:11:11.000+0200',
-            type: 'Date'
-          }
-        }
-      }
-    ])
+            type: 'Date',
+          },
+        },
+      },
+    ]),
   ),
 
   setup2: combine(
@@ -97,18 +97,18 @@ module.exports = {
         files: [
           {
             name: 'mi-incident.bpmn',
-            content: readResource('mi-incident.bpmn')
-          }
-        ]
-      }
+            content: readResource('mi-incident.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
       {
         key: 'mi-incident',
-        businessKey: 'MultiInstance'
-      }
-    ])
+        businessKey: 'MultiInstance',
+      },
+    ]),
   ),
 
   setup3: combine(
@@ -118,10 +118,10 @@ module.exports = {
         files: [
           {
             name: 'mi-incident.bpmn',
-            content: readResource('mi-incident.bpmn')
-          }
-        ]
-      }
+            content: readResource('mi-incident.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('deployment', 'create', [
@@ -130,10 +130,10 @@ module.exports = {
         files: [
           {
             name: '4-failed-service-tasks.bpmn',
-            content: readResource('4-failed-service-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('4-failed-service-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('deployment', 'create', [
@@ -142,23 +142,23 @@ module.exports = {
         files: [
           {
             name: '7-failed-service-tasks.bpmn',
-            content: readResource('7-failed-service-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('7-failed-service-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
       {
-        key: 'mi-incident'
+        key: 'mi-incident',
       },
       {
-        key: 'fourFailingServiceTasks'
+        key: 'fourFailingServiceTasks',
       },
       {
-        key: 'sevenFailingServiceTasks'
-      }
-    ])
+        key: 'sevenFailingServiceTasks',
+      },
+    ]),
   ),
 
   setup4: combine(
@@ -168,17 +168,17 @@ module.exports = {
         files: [
           {
             name: 'failed-external-task.bpmn',
-            content: readResource('failed-external-task.bpmn')
-          }
-        ]
-      }
+            content: readResource('failed-external-task.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
       {
-        key: 'failed-external-task'
-      }
-    ])
+        key: 'failed-external-task',
+      },
+    ]),
   ),
 
   multiTenancySetup: combine(
@@ -189,10 +189,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('deployment', 'create', [
@@ -201,10 +201,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
@@ -214,18 +214,18 @@ module.exports = {
         variables: {
           test: {
             value: 1.5,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: '123 dfg',
-            type: 'String'
+            type: 'String',
           },
           extraLong: {
             value: '1234567890987654321',
-            type: 'Long'
-          }
-        }
-      }
+            type: 'Long',
+          },
+        },
+      },
     ]),
 
     operation('process-definition', 'start', [
@@ -234,19 +234,19 @@ module.exports = {
         variables: {
           test: {
             value: 3.0,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: '50 dfg',
-            type: 'String'
+            type: 'String',
           },
           extraLong: {
             value: '42',
-            type: 'Long'
-          }
-        }
-      }
-    ])
+            type: 'Long',
+          },
+        },
+      },
+    ]),
   ),
 
   versionTagSetup: combine(
@@ -256,10 +256,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('deployment', 'create', [
@@ -268,10 +268,10 @@ module.exports = {
         files: [
           {
             name: 'invoice-deployment-binding.bpmn',
-            content: readResource('invoice-deployment-binding.bpmn')
-          }
-        ]
-      }
-    ])
-  )
+            content: readResource('invoice-deployment-binding.bpmn'),
+          },
+        ],
+      },
+    ]),
+  ),
 };

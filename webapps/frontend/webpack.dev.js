@@ -29,14 +29,14 @@ module.exports = (_env, argv = {}) => {
     {...argv, eeBuild, devMode: true},
   );
 
-  const addEngines = engines => {
-    return engines.flatMap(engine => [
+  const addEngines = (engines) => {
+    return engines.flatMap((engine) => [
       {
         context: [`/operaton/app/*/${engine}/`],
         target: 'http://localhost:8081/',
         pathRewrite: (path) => {
           return path.replace(`/${engine}`, '').replace('/operaton', '');
-        }
+        },
       },
       {
         context: `/operaton/app/*/${engine}/setup/`,
@@ -46,8 +46,8 @@ module.exports = (_env, argv = {}) => {
             .replace(`/${engine}`, '')
             .replace('/operaton', '')
             .replace('/setup', '');
-        }
-      }
+        },
+      },
     ]);
   };
 
@@ -62,7 +62,7 @@ module.exports = (_env, argv = {}) => {
         directory: path.resolve(__dirname, './public'),
         publicPath: '/app',
       },
-      server: "http",
+      server: 'http',
       client: {
         webSocketURL: 'ws://localhost:8081/ws',
       },
@@ -81,18 +81,18 @@ module.exports = (_env, argv = {}) => {
           logLevel: 'debug',
         },
 
-          ...addEngines(['default', 'engine2', 'engine3']),
+        ...addEngines(['default', 'engine2', 'engine3']),
         {
           context: (path) => path.startsWith('/operaton/'),
           target: 'http://localhost:8081/',
           logLevel: 'debug',
           pathRewrite: (path) => {
             return path.replace('/operaton', '');
-          }
-        }
+          },
+        },
       ],
-      open: ['/operaton/app/cockpit/default/']
-    }
+      open: ['/operaton/app/cockpit/default/'],
+    },
   };
 
   const merged = merge(commonConfig, developmentConfig);

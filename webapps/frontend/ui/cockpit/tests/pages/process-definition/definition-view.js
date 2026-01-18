@@ -22,25 +22,25 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/cockpit/default/#/process-definition/:process/runtime',
 
-  pageHeader: function() {
+  pageHeader: function () {
     return element(by.binding('processDefinition.key'));
   },
 
-  fullPageHeaderProcessDefinitionName: function() {
+  fullPageHeaderProcessDefinitionName: function () {
     return this.pageHeader().getText();
   },
 
-  pageHeaderProcessDefinitionName: function() {
+  pageHeaderProcessDefinitionName: function () {
     return this.breadcrumb.activeCrumb().getText();
   },
 
-  isDefinitionSuspended: function() {
+  isDefinitionSuspended: function () {
     return element(
-      by.css('.cam-breadcrumb .active .badge-suspended')
+      by.css('.cam-breadcrumb .active .badge-suspended'),
     ).isPresent();
   },
 
-  getReportLink: function() {
+  getReportLink: function () {
     return element(by.css('a.report-link'));
-  }
+  },
 });

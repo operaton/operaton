@@ -20,53 +20,53 @@
 var Page = require('./dashboard-view');
 
 module.exports = Page.extend({
-  createTaskDialog: function() {
+  createTaskDialog: function () {
     return element(by.css('.modal .modal-content'));
   },
 
-  openCreateDialog: function() {
+  openCreateDialog: function () {
     this.selectNavbarItem('Task');
     var taskNameFieldElement = element(by.css('.modal-content'));
     return this.waitForElementToBeVisible(taskNameFieldElement, 5000);
   },
 
-  closeButton: function() {
+  closeButton: function () {
     return this.createTaskDialog().element(by.css('[ng-click="$dismiss()"]'));
   },
 
-  closeCreateDialog: function() {
+  closeCreateDialog: function () {
     var closeButtonElement = this.closeButton();
     closeButtonElement.click();
     this.waitForElementToBeNotPresent(closeButtonElement, 5000);
   },
 
-  saveButton: function() {
+  saveButton: function () {
     return this.createTaskDialog().element(by.css('[ng-click="save()"]'));
   },
 
-  saveTask: function() {
+  saveTask: function () {
     var saveButtonElement = this.saveButton();
     saveButtonElement.click();
     this.waitForElementToBeNotPresent(saveButtonElement, 5000);
   },
 
-  taskNameField: function() {
+  taskNameField: function () {
     return this.createTaskDialog().element(by.css('input[name="taskName"]'));
   },
 
-  taskAssigneeField: function() {
+  taskAssigneeField: function () {
     return this.createTaskDialog().element(
-      by.css('input[name="taskAssignee"]')
+      by.css('input[name="taskAssignee"]'),
     );
   },
 
-  taskTenantIdField: function() {
+  taskTenantIdField: function () {
     return this.createTaskDialog().element(
-      by.css('select[name="taskTenantId"]')
+      by.css('select[name="taskTenantId"]'),
     );
   },
 
-  taskNameInput: function(inputValue) {
+  taskNameInput: function (inputValue) {
     var inputField = this.taskNameField();
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -74,11 +74,11 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  taskAssigneeInput: function(inputValue) {
+  taskAssigneeInput: function (inputValue) {
     var inputField = this.taskAssigneeField();
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
 
     return inputField;
-  }
+  },
 });

@@ -24,35 +24,35 @@ var formElement = element(by.css('form[name="updateGroupMemberships"]'));
 module.exports = Page.extend({
   url: '/operaton/app/admin/default/#/users/:user?tab=groups',
 
-  subHeader: function() {
+  subHeader: function () {
     return formElement.element(by.css('.h4')).getText();
   },
 
-  groupList: function() {
+  groupList: function () {
     return formElement.all(by.repeater('group in groupList'));
   },
 
-  groupId: function(idx) {
+  groupId: function (idx) {
     return this.groupList()
       .get(idx)
       .element(by.binding('{{group.id}}'))
       .getText();
   },
 
-  openAddGroupModal: function() {
+  openAddGroupModal: function () {
     var theElement = element(by.css('.modal-header'));
     this.addGroupButton().click();
     this.waitForElementToBeVisible(theElement, 5000);
   },
 
-  addGroupButton: function() {
+  addGroupButton: function () {
     return element(by.css('[ng-click="openCreateGroupMembershipDialog()"]'));
   },
 
-  removeGroup: function(idx) {
+  removeGroup: function (idx) {
     this.groupList()
       .get(idx)
       .element(by.css('[ng-click="removeGroup(group.id)"]'))
       .click();
-  }
+  },
 });

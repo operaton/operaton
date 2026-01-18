@@ -28,7 +28,7 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cam-common CamTabsController', function() {
+describe('cam-common CamTabsController', function () {
   var $controller;
   var $rootScope;
   var $scope;
@@ -40,7 +40,7 @@ describe('cam-common CamTabsController', function() {
 
   beforeEach(module(drdCommon.name));
 
-  beforeEach(inject(function(_$controller_, _$rootScope_) {
+  beforeEach(inject(function (_$controller_, _$rootScope_) {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
@@ -50,16 +50,16 @@ describe('cam-common CamTabsController', function() {
     providers = [
       {
         id: 'a',
-        priority: 1
+        priority: 1,
       },
       {
         id: 'b',
-        priority: 2
-      }
+        priority: 2,
+      },
     ];
 
     Views = {
-      getProviders: sinon.stub().returns(providers)
+      getProviders: sinon.stub().returns(providers),
     };
 
     params = {};
@@ -70,74 +70,74 @@ describe('cam-common CamTabsController', function() {
     instance = $controller('CamTabsController', {
       $scope: $scope,
       Views: Views,
-      search: search
+      search: search,
     });
   }));
 
-  it('should fetch providers for cockpit.drd.definition.tab', function() {
+  it('should fetch providers for cockpit.drd.definition.tab', function () {
     expect(instance.providers).to.eql(providers);
     expect(Views.getProviders.calledWith($scope.providerParams)).to.eql(true);
   });
 
-  it('should sort providers', function() {
-    var priorities = instance.providers.map(function(provider) {
+  it('should sort providers', function () {
+    var priorities = instance.providers.map(function (provider) {
       return provider.priority;
     });
 
     expect(priorities).to.eql([2, 1]);
   });
 
-  it('should select first provider', function() {
+  it('should select first provider', function () {
     expect(instance.selected).to.eql(providers[0]);
   });
 
-  it('should create varsAPI', function() {
+  it('should create varsAPI', function () {
     expect($scope.tabsApi).to.eql('tabsApi');
     expect(instance.vars).to.eql({
-      read: ['tabsApi']
+      read: ['tabsApi'],
     });
   });
 
-  describe('alternative vars initialization', function() {
-    beforeEach(function() {
+  describe('alternative vars initialization', function () {
+    beforeEach(function () {
       $scope = $rootScope.$new();
 
       $scope.providerParams = 'providerParams';
       $scope.vars = ['a'];
       $scope.varsValues = {
-        a: 1
+        a: 1,
       };
 
       instance = $controller('CamTabsController', {
         $scope: $scope,
         Views: Views,
-        search: search
+        search: search,
       });
     });
 
-    it('should be possible to override vars from scope', function() {
+    it('should be possible to override vars from scope', function () {
       expect(instance.vars).to.eql($scope.vars);
     });
 
-    it('should copy varsValues to scope', function() {
+    it('should copy varsValues to scope', function () {
       expect($scope.a).to.eql($scope.varsValues.a);
     });
   });
 
-  describe('onLocationChange', function() {
-    beforeEach(function() {
+  describe('onLocationChange', function () {
+    beforeEach(function () {
       search.reset();
     });
 
-    it('should get params from search service', function() {
+    it('should get params from search service', function () {
       instance.onLocationChange();
 
       expect(search.calledOnce).to.eql(true);
     });
 
-    it('should update selected tab when changed', function() {
+    it('should update selected tab when changed', function () {
       var params = {
-        tab: 'a'
+        tab: 'a',
       };
 
       search.returns(params);
@@ -147,13 +147,13 @@ describe('cam-common CamTabsController', function() {
       expect(instance.selected).to.eql(providers[1]);
     });
 
-    it('should not update selected tab when not changed', function() {
+    it('should not update selected tab when not changed', function () {
       var selected = {
         id: 'b',
-        extra: 's'
+        extra: 's',
       };
       var params = {
-        tab: 'b'
+        tab: 'b',
       };
 
       instance.selected = selected;
@@ -165,10 +165,10 @@ describe('cam-common CamTabsController', function() {
       expect(instance.selected).to.eql(selected);
     });
 
-    it('should select default when params do not have tab', function() {
+    it('should select default when params do not have tab', function () {
       var selected = {
         id: 'c',
-        extra: 's'
+        extra: 's',
       };
       instance.selected = selected;
 
@@ -178,17 +178,17 @@ describe('cam-common CamTabsController', function() {
     });
   });
 
-  describe('selectTab', function() {
+  describe('selectTab', function () {
     var provider;
     var params;
 
-    beforeEach(function() {
+    beforeEach(function () {
       provider = {
-        id: 'c'
+        id: 'c',
       };
 
       params = {
-        a: 1
+        a: 1,
       };
 
       search.returns(params);
@@ -196,22 +196,22 @@ describe('cam-common CamTabsController', function() {
       instance.selectTab(provider);
     });
 
-    it('should set given provider as selected', function() {
+    it('should set given provider as selected', function () {
       expect(instance.selected).to.eql(provider);
     });
 
-    it('should update search with new tab and not change other params', function() {
+    it('should update search with new tab and not change other params', function () {
       expect(
         search.updateSilently.calledWith({
           a: 1,
-          tab: provider.id
-        })
+          tab: provider.id,
+        }),
       );
     });
   });
 
-  describe('isSelected', function() {
-    it('should return true for selected provider', function() {
+  describe('isSelected', function () {
+    it('should return true for selected provider', function () {
       var provider = 'd';
 
       instance.selected = provider;
@@ -219,7 +219,7 @@ describe('cam-common CamTabsController', function() {
       expect(instance.isSelected(provider)).to.eql(true);
     });
 
-    it('should return false for not selected provider', function() {
+    it('should return false for not selected provider', function () {
       instance.selected = Math.random();
 
       expect(instance.isSelected('dd')).to.eql(false);

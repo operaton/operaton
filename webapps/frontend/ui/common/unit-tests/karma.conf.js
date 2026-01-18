@@ -17,7 +17,7 @@
 
 'use strict';
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../../',
@@ -36,7 +36,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'common/unit-tests/expose.js': ['browserify'],
-      '**/unit-tests/*.spec.js': ['browserify']
+      '**/unit-tests/*.spec.js': ['browserify'],
     },
 
     browserify: {
@@ -54,11 +54,11 @@ module.exports = function(config) {
               'angular-data-depend': 'angular-data-depend',
               moment: 'moment',
               events: 'events',
-              'cam-common': 'cam-common'
-            }
-          }
-        ]
-      ]
+              'cam-common': 'cam-common',
+            },
+          },
+        ],
+      ],
     },
 
     // test results reporter to use
@@ -67,7 +67,7 @@ module.exports = function(config) {
     reporters: ['mocha', 'junit'],
 
     junitReporter: {
-      outputDir: '../test-results/js/results'
+      outputDir: '../test-results/js/results',
     },
 
     // web server port
@@ -86,7 +86,7 @@ module.exports = function(config) {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: [
-      'Chrome_without_security'
+      'Chrome_without_security',
       // 'Firefox',
       // 'IE'
     ],
@@ -94,8 +94,8 @@ module.exports = function(config) {
     customLaunchers: {
       Chrome_without_security: {
         base: 'Chrome',
-        flags: ['--disable-web-security']
-      }
-    }
+        flags: ['--disable-web-security'],
+      },
+    },
   });
 };

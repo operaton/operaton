@@ -24,35 +24,35 @@ var formElement = element(by.css('form[name="updateTenantMemberships"]'));
 module.exports = Page.extend({
   url: '/operaton/app/admin/default/#/groups/:group?tab=tenants',
 
-  subHeader: function() {
+  subHeader: function () {
     return formElement.element(by.css('.h4')).getText();
   },
 
-  tenantList: function() {
+  tenantList: function () {
     return formElement.all(by.repeater('tenant in tenantList'));
   },
 
-  tenantId: function(idx) {
+  tenantId: function (idx) {
     return this.tenantList()
       .get(idx)
       .element(by.binding('{{ tenant.id }}'))
       .getText();
   },
 
-  openAddTenantModal: function() {
+  openAddTenantModal: function () {
     var theElement = element(by.css('.modal-header'));
     this.addTenantButton().click();
     this.waitForElementToBeVisible(theElement, 5000);
   },
 
-  addTenantButton: function() {
+  addTenantButton: function () {
     return element(by.css('[ng-click="openCreateTenantMembershipDialog()"]'));
   },
 
-  removeTenant: function(idx) {
+  removeTenant: function (idx) {
     this.tenantList()
       .get(idx)
       .element(by.css('[ng-click="removeTenant(tenant.id)"]'))
       .click();
-  }
+  },
 });

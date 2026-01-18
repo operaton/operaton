@@ -25,15 +25,15 @@ var setupFile = require('./system-setup');
 
 testHelper.expectStringEqual = require('../../../common/tests/string-equal');
 
-describe('Admin system Spec with normal user', function() {
-  before(function() {
-    return testHelper(setupFile.setup1, function() {
+describe('Admin system Spec with normal user', function () {
+  before(function () {
+    return testHelper(setupFile.setup1, function () {
       // given
       systemPage.navigateToWebapp('Admin');
     });
   });
 
-  it('should not show system navbar item for normal user', function() {
+  it('should not show system navbar item for normal user', function () {
     // when
     systemPage.authentication.userLogin('ringo', 'cam123');
 
@@ -43,16 +43,16 @@ describe('Admin system Spec with normal user', function() {
   });
 });
 
-describe('Admin system Spec', function() {
-  before(function() {
-    return testHelper(setupFile.setup1, function() {
+describe('Admin system Spec', function () {
+  before(function () {
+    return testHelper(setupFile.setup1, function () {
       systemPage.navigateToWebapp('Admin');
       systemPage.authentication.userLogin('admin', 'admin');
     });
   });
 
-  describe('navigate to system pages', function() {
-    it('should navigate to system menu', function() {
+  describe('navigate to system pages', function () {
+    it('should navigate to system menu', function () {
       // when
       systemPage.selectNavbarItem('System');
 
@@ -62,35 +62,35 @@ describe('Admin system Spec', function() {
       testHelper.expectStringEqual(systemPage.pageHeader(), 'System Settings');
     });
 
-    it('should validate general page', function() {
+    it('should validate general page', function () {
       // when
       systemPage.selectSystemNavbarItem('General');
 
       // then
       systemPage.general.isActive();
       expect(systemPage.general.boxHeader()).to.eventually.eql(
-        'General Settings'
+        'General Settings',
       );
     });
 
-    it.skip('should validate metrics page', function() {
+    it.skip('should validate metrics page', function () {
       // when
       systemPage.selectSystemNavbarItem('Execution Metrics');
 
       // then
       systemPage.executionMetrics.isActive();
       expect(systemPage.executionMetrics.boxHeader()).to.eventually.eql(
-        'Execution Metrics'
+        'Execution Metrics',
       );
       expect(systemPage.executionMetrics.flowNodesResult()).to.eventually.eql(
-        '6'
+        '6',
       );
       expect(
-        systemPage.executionMetrics.decisionElementsResult()
+        systemPage.executionMetrics.decisionElementsResult(),
       ).to.eventually.eql('9');
     });
 
-    it.skip('should support time range', function() {
+    it.skip('should support time range', function () {
       // given
       // we are on the flow node count page
 
@@ -99,7 +99,7 @@ describe('Admin system Spec', function() {
       systemPage.executionMetrics.endDateField().clear();
 
       systemPage.executionMetrics.startDateField(
-        '2014-01-01T00:00:00.000+0200'
+        '2014-01-01T00:00:00.000+0200',
       );
       systemPage.executionMetrics.endDateField('2014-12-31T23:59:59.000+0200');
       systemPage.executionMetrics.refreshButton().click();
@@ -107,10 +107,10 @@ describe('Admin system Spec', function() {
       // then
       // expect(systemPage.executionMetrics.resultField()).to.eventually.eql('0');
       expect(systemPage.executionMetrics.flowNodesResult()).to.eventually.eql(
-        '0'
+        '0',
       );
       expect(
-        systemPage.executionMetrics.decisionElementsResult()
+        systemPage.executionMetrics.decisionElementsResult(),
       ).to.eventually.eql('0');
     });
   });

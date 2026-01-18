@@ -28,7 +28,7 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cockpit.plugin.decisionList.views.dashboard decisionList service', function() {
+describe('cockpit.plugin.decisionList.views.dashboard decisionList service', function () {
   var decisionList;
   var camAPI;
   var $rootScope;
@@ -37,48 +37,48 @@ describe('cockpit.plugin.decisionList.views.dashboard decisionList service', fun
   beforeEach(module(testModule.name));
 
   beforeEach(
-    module(function($provide) {
+    module(function ($provide) {
       camAPI = {
         list: sinon.stub(),
-        resource: sinon.stub().returnsThis()
+        resource: sinon.stub().returnsThis(),
       };
 
       $provide.value('camAPI', camAPI);
-    })
+    }),
   );
 
-  beforeEach(inject(function(_decisionList_, _$rootScope_, _$q_) {
+  beforeEach(inject(function (_decisionList_, _$rootScope_, _$q_) {
     decisionList = _decisionList_;
     $rootScope = _$rootScope_;
     $q = _$q_;
   }));
 
-  it('should use decision-definition and drd resources of camAPI', function() {
+  it('should use decision-definition and drd resources of camAPI', function () {
     expect(camAPI.resource.calledWith('drd')).to.eql(true);
     expect(camAPI.resource.calledWith('decision-definition')).to.eql(true);
   });
 
-  describe('getDecisionsLists', function() {
+  describe('getDecisionsLists', function () {
     var mockDecisions;
     var mockDrds;
     var responsePromise;
 
-    beforeEach(function() {
+    beforeEach(function () {
       mockDecisions = [
         {
           name: '1',
-          decisionRequirementsDefinitionId: '1'
+          decisionRequirementsDefinitionId: '1',
         },
         {
-          name: '2'
-        }
+          name: '2',
+        },
       ];
 
       mockDrds = [
         {
           id: '1',
-          name: 'drd1'
-        }
+          name: 'drd1',
+        },
       ];
 
       camAPI.list.onCall(0).returns($q.when(mockDecisions));
@@ -87,8 +87,8 @@ describe('cockpit.plugin.decisionList.views.dashboard decisionList service', fun
       responsePromise = decisionList.getDecisionsLists();
     });
 
-    it('should return object with drds and decisions lists', function(done) {
-      responsePromise.then(function(response) {
+    it('should return object with drds and decisions lists', function (done) {
+      responsePromise.then(function (response) {
         expect(angular.isArray(response.decisions)).to.eql(true);
         expect(angular.isArray(response.drds)).to.eql(true);
 
@@ -98,8 +98,8 @@ describe('cockpit.plugin.decisionList.views.dashboard decisionList service', fun
       $rootScope.$digest();
     });
 
-    it('should connect drds to decisions', function(done) {
-      responsePromise.then(function(response) {
+    it('should connect drds to decisions', function (done) {
+      responsePromise.then(function (response) {
         expect(response.decisions[0].drd.name).to.eql(mockDrds[0].name);
 
         done();

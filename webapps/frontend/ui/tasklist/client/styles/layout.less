@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@import "~ui/common/styles/_three-cols-layout";
+@import '~ui/common/styles/_three-cols-layout';
 
 .three-cols-layout-base();
 
@@ -97,7 +97,8 @@ button {
   .column-center {
     .alert,
     .well {
-      margin: 0 (@grid-gutter-width * 0.5) (@grid-gutter-width * 0.5) (@grid-gutter-width * 0.5);
+      margin: 0 (@grid-gutter-width * 0.5) (@grid-gutter-width * 0.5)
+        (@grid-gutter-width * 0.5);
     }
 
     .cells-wrapper {
@@ -261,7 +262,9 @@ button {
   }
 }
 
-body.task-column-close [cam-widget-search].multiline-pills [cam-widget-search-pill] {
+body.task-column-close
+  [cam-widget-search].multiline-pills
+  [cam-widget-search-pill] {
   width: auto;
   vertical-align: top;
 
@@ -348,7 +351,7 @@ body.task-column-close [cam-widget-search].multiline-pills [cam-widget-search-pi
     > .three-cols-layout-cell.top {
       > div,
       > view {
-        width: ~"calc(100% - 35px)";
+        width: ~'calc(100% - 35px)';
         margin-left: 0;
         margin-right: 0;
         padding: 0;

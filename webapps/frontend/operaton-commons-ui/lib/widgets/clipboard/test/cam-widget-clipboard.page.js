@@ -24,9 +24,9 @@ function Variable(node) {
   this.node = node;
 }
 
-function Page() { }
+function Page() {}
 
-Page.prototype.variable = function() {
+Page.prototype.variable = function () {
   var varSelector = '[cam-widget-clipboard]';
   return new Variable(element.all(by.css(varSelector)));
 };

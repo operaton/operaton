@@ -32,15 +32,15 @@ var fragment1 = combine(
         variables: [
           {
             name: 'testVar',
-            label: 'Test Variable'
+            label: 'Test Variable',
           },
           {
             name: 'testString',
-            label: 'String Variable'
-          }
-        ]
-      }
-    }
+            label: 'String Variable',
+          },
+        ],
+      },
+    },
   ]),
 
   operation('user', 'create', [
@@ -48,8 +48,8 @@ var fragment1 = combine(
       id: 'test',
       firstName: 'Montgomery',
       lastName: 'QA',
-      password: 'test'
-    }
+      password: 'test',
+    },
   ]),
 
   operation('authorization', 'create', [
@@ -59,7 +59,7 @@ var fragment1 = combine(
       userId: 'test',
       groupId: null,
       resourceType: 0,
-      resourceId: 'tasklist'
+      resourceId: 'tasklist',
     },
     {
       type: 1,
@@ -67,7 +67,7 @@ var fragment1 = combine(
       userId: 'test',
       groupId: null,
       resourceType: 5,
-      resourceId: '*'
+      resourceId: '*',
     },
     {
       type: 1,
@@ -75,28 +75,28 @@ var fragment1 = combine(
       userId: 'test',
       groupId: null,
       resourceType: 7,
-      resourceId: '*'
-    }
+      resourceId: '*',
+    },
   ]),
 
   operation('task', 'create', [
     {
       id: '1',
-      name: 'Task 1'
-    }
-  ])
+      name: 'Task 1',
+    },
+  ]),
 );
 
 var fragment2 = combine(
   operation('task', 'assignee', [
     {
       taskId: '1',
-      userId: 'test'
-    }
-  ])
+      userId: 'test',
+    },
+  ]),
 );
 
 module.exports = {
   setup1: fragment1,
-  setup2: combine(fragment1, fragment2)
+  setup2: combine(fragment1, fragment2),
 };

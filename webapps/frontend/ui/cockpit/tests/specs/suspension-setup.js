@@ -30,25 +30,25 @@ module.exports = {
         files: [
           {
             name: 'suspension-process.bpmn',
-            content: readResource('suspension-process.bpmn')
-          }
-        ]
-      }
+            content: readResource('suspension-process.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
       {
         key: 'suspension-process',
-        businessKey: 'Instance1'
+        businessKey: 'Instance1',
       },
       {
         key: 'suspension-process',
-        businessKey: 'Instance2'
+        businessKey: 'Instance2',
       },
       {
         key: 'suspension-process',
-        businessKey: 'myBusinessKey'
-      }
-    ])
-  )
+        businessKey: 'myBusinessKey',
+      },
+    ]),
+  ),
 };

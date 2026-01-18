@@ -22,7 +22,7 @@ var Page = require('../../../common/tests/pages/page');
 var navigationSection = element(by.css('[cam-widget-header]'));
 
 module.exports = Page.extend({
-  selectNavbarItem: function(navbarItem) {
+  selectNavbarItem: function (navbarItem) {
     var index = ['Task', 'Process', 'Engine', 'Account', 'Webapps'];
     var cssElement;
     var item;
@@ -53,12 +53,12 @@ module.exports = Page.extend({
     return item;
   },
 
-  logout: function() {
+  logout: function () {
     this.selectNavbarItem('Account');
     element(by.css('[ng-click="logout()"]')).click();
   },
 
-  navigateLogout: function() {
+  navigateLogout: function () {
     browser.get(this.url + 'logout');
-  }
+  },
 });

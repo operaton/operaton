@@ -1,10 +1,15 @@
-@import (reference) "./_mixins";
+@import (reference) './_mixins';
 
 .form-control {
-
-  &::-moz-placeholder { font-style: italic; } // Firefox
-  &::-webkit-input-placeholder { font-style: italic; } // Safari and Chrome
-  &:-ms-input-placeholder { font-style: italic; } // Internet Explorer 10+
+  &::-moz-placeholder {
+    font-style: italic;
+  } // Firefox
+  &::-webkit-input-placeholder {
+    font-style: italic;
+  } // Safari and Chrome
+  &:-ms-input-placeholder {
+    font-style: italic;
+  } // Internet Explorer 10+
 
   border: 1px solid @input-border;
   color: @input-color;
@@ -56,13 +61,13 @@
     }
   }
 
-  &[type="checkbox"],
-  &[type="radio"] {
+  &[type='checkbox'],
+  &[type='radio'] {
     width: auto;
     height: auto;
   }
 
-  &[type=file] {
+  &[type='file'] {
     border: none !important;
 
     &:focus {

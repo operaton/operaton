@@ -24,45 +24,44 @@ function Header(node) {
   this.node = node;
 }
 
-Header.prototype.transcludedElement = function() {
+Header.prototype.transcludedElement = function () {
   return this.node.element(by.css('[ng-transclude]'));
 };
-Header.prototype.transcludedText = function() {
+Header.prototype.transcludedText = function () {
   return this.transcludedElement().getText();
 };
-Header.prototype.account = function() {
+Header.prototype.account = function () {
   return this.node.element(by.css('.app-menu .account'));
 };
-Header.prototype.accountText = function() {
+Header.prototype.accountText = function () {
   return this.node.element(by.css('.app-menu .account > a')).getText();
 };
-Header.prototype.appSwitch = function() {
+Header.prototype.appSwitch = function () {
   return this.node.element(by.css('.app-menu .app-switch'));
 };
-Header.prototype.welcomeLink = function() {
+Header.prototype.welcomeLink = function () {
   return this.appSwitch().element(by.css('.welcome'));
 };
-Header.prototype.adminLink = function() {
+Header.prototype.adminLink = function () {
   return this.appSwitch().element(by.css('.admin'));
 };
-Header.prototype.cockpitLink = function() {
+Header.prototype.cockpitLink = function () {
   return this.appSwitch().element(by.css('.cockpit'));
 };
-Header.prototype.tasklistLink = function() {
+Header.prototype.tasklistLink = function () {
   return this.appSwitch().element(by.css('.tasklist'));
 };
-Header.prototype.hamburgerButton = function() {
+Header.prototype.hamburgerButton = function () {
   return this.node.element(by.css('.navbar-toggle'));
 };
-Header.prototype.smallScreenWarning = function() {
+Header.prototype.smallScreenWarning = function () {
   return this.node.element(by.css('.small-screen-warning'));
 };
 
-function Page() { }
+function Page() {}
 
-Page.prototype.header = function(identifier) {
+Page.prototype.header = function (identifier) {
   return new Header(element(by.css(identifier)));
 };
-
 
 module.exports = new Page();

@@ -24,14 +24,16 @@ import commonj.work.WorkException;
 import commonj.work.WorkManager;
 import commonj.work.WorkRejectedException;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.operaton.bpm.container.ExecutorService;
+import org.operaton.bpm.container.impl.threading.ra.JcaConfigException;
 import org.operaton.bpm.container.impl.threading.ra.JcaExecutorServiceConnector;
 import org.operaton.bpm.container.impl.threading.ra.inflow.JcaInflowExecuteJobsRunnable;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 
 /**
- * {@link AbstractPlatformJobExecutor} implementation delegating to a CommonJ {@link WorkManager}.
+ * {@link ExecutorService} implementation delegating to a CommonJ {@link WorkManager}.
  *
  * @author Christian Lipphardt
  *
@@ -50,8 +52,8 @@ public class CommonJWorkManagerExecutorService implements ExecutorService {
     try {
       InitialContext initialContext = new InitialContext();
       return (WorkManager) initialContext.lookup(commonJWorkManagerName);
-    } catch (Exception e) {
-      throw new RuntimeException("Error while starting JobExecutor: could not look up CommonJ WorkManager in Jndi: "+e.getMessage(), e);
+    } catch (NamingException e) {
+      throw new JcaConfigException("Error while starting JobExecutor: could not look up CommonJ WorkManager in Jndi: "+e.getMessage(), e);
     }
   }
 

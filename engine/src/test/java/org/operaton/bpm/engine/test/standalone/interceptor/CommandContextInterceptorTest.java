@@ -115,13 +115,14 @@ class CommandContextInterceptorTest {
 
     var commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
 
-    // when/then
+    // when
     assertThatThrownBy(() -> commandExecutor.execute(commandContext -> {
       runtimeService.startProcessInstanceByKey("processThrowingThrowable");
       return null;
     }))
       .isInstanceOf(StackOverflowError.class);
 
+    // then
     assertThat(ThrowErrorJavaDelegate.executed).isTrue();
 
     // Check data base consistency

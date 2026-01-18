@@ -48,52 +48,42 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static java.lang.Boolean.TRUE;
 
 /**
+ * Implementation of the {@link TaskQuery} interface.
+ *
+ * <h3>Development Notes</h3>
+ * When adding a property filter that supports Tasklist filters,
+ * the following classes need to be modified:
+ *
+ * <ol>
+ * <li>Update the {@code TaskQuery} interface</li>
+ * <li>Implement the new property filter and getters/setters in {@code TaskQueryImpl}</li>
+ * <li>Add the new property filter in the engine-rest {@code TaskQueryDto} class</li>
+ * <li>Use the new filter in the engine-rest {@code TaskQueryDto#applyFilters} method.
+ * The method is used to provide Task filtering through the Rest API endpoint;
+ * </li>
+ * <li>
+ * Initialize the new property filter in the engine-rest
+ * {@code TaskQueryDto#fromQuery} method. The method is used to create a {@code TaskQueryDto}
+ * from a serialized ("saved") Task query. This is used in Tasklist filters;
+ * </li>
+ * <li>
+ * Add the property to the {@code JsonTaskQueryConverter} class, and make sure
+ * it is included in the {@code JsonTaskQueryConverter#toJsonObject} and
+ * {@code JsonTaskQueryConverter#toObject} methods. This is used to
+ * serialize/deserialize Task queries for Tasklist filter usage.
+ * </li>
+ * <li>
+ * Tests need to be added in: {@code TaskQueryTest} for Java API coverage,
+ * {@code TaskRestServiceQueryTest} for Rest API coverage and
+ * {@code FilterTaskQueryTest} for Tasklist filter coverage.
+ * </li>
+ * </ol>
+ *
  * @author Joram Barrez
  * @author Tom Baeyens
  * @author Falko Menge
  */
 public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements TaskQuery {
-
-  /*
-   * When adding a property filter that supports Tasklist filters,
-   * the following classes need to be modified:
-   *
-   * <ol>
-   * <li>
-   * Update the {@code TaskQuery} interface;
-   * </li>
-   * <li>
-   * Implement the new property filter and getters/setters in {@code
-   * TaskQueryImpl};
-   * </li>
-   * <li>
-   * Add the new property filter in the engine-rest {@code TaskQueryDto} class;
-   * </li>
-   * <li>
-   * Use the new filter in the engine-rest {@code TaskQueryDto#applyFilters}
-   * method.
-   * The method is used to provide Task filtering through the Rest API endpoint;
-   * </li>
-   * <li>
-   * Initialize the new property filter in the engine-rest
-   * {@code TaskQueryDto#fromQuery} method; The method is used to create a {@code
-   * TaskQueryDto}
-   * from a serialized ("saved") Task query. This is used in Tasklist filters;
-   * </li>
-   * <li>
-   * Add the property to the {@code JsonTaskQueryConverter} class, and make sure
-   * it is included in the {@code JsonTaskQueryConverter#toJsonObject} and
-   * {@code JsonTaskQueryConverter#toObject} methods. This is used to
-   * serialize/deserialize
-   * Task queries for Tasklist filter usage.
-   * </li>
-   * <li>
-   * Tests need to be added in: {@code TaskQueryTest} for Java API coverage,
-   * {@code TaskRestServiceQueryTest} for Rest API coverage and
-   * {@code FilterTaskQueryTest} for Tasklist filter coverage.
-   * </li>
-   * </ol>
-   */
 
   @Serial
   private static final long serialVersionUID = 1L;

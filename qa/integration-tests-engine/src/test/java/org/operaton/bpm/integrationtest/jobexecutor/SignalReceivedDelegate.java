@@ -33,6 +33,5 @@ public class SignalReceivedDelegate implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) {
     businessProcess.setVariable("processName", "catchSignal-visited (was " + businessProcess.getVariable("processName")  + ")");
-//    log.log(Level.INFO, "");
   }
 }

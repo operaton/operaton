@@ -318,30 +318,6 @@ public class HttpRequestConfigTest {
     assertThat(config.getResponseTimeout()).isEqualTo(Timeout.ofSeconds(10));
   }
 
-  // FIXME: Class org.mockito.internal.util.reflection.Whitebox no longer exists
-  /*
-  @Test
-  void shouldNotChangeDefaultConfig() {
-    // given
-    HttpClient client = (HttpClient) Whitebox.getInternalState(connector, "httpClient");
-    connector.createRequest().url(EXAMPLE_URL).get()
-        .configOption(CONNECTION_TIMEOUT.getName(), -2)
-        .configOption(SOCKET_TIMEOUT.getName(), -2)
-        .configOption(CONNECTION_REQUEST_TIMEOUT.getName(), -2)
-        .configOption(MAX_REDIRECTS.getName(), 0)
-        .execute();
-
-    // when
-    RequestConfig config = (RequestConfig) Whitebox.getInternalState(client, "defaultConfig");
-
-    // then
-    assertThat(config.getMaxRedirects()).isEqualTo(50);
-    assertThat(config.getConnectTimeout()).isEqualTo(-1);
-    assertThat(config.getConnectionRequestTimeout()).isEqualTo(-1);
-    assertThat(config.getSocketTimeout()).isEqualTo(-1);
-  }
-  */
-
   @Test
   void shouldThrowTimeoutException() {
     try {

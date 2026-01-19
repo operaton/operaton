@@ -307,7 +307,7 @@ public class MigrationPlanCreationTest {
       fail("Should not succeed");
     } catch (MigrationPlanValidationException e) {
       assertThat(e.getValidationReport())
-        .hasInstructionFailures("subProcess", "Target activity '" + targetDefinition.getId() + "' does not exist");
+        .hasInstructionFailures("subProcess", "Target activity '%s' does not exist".formatted(targetDefinition.getId()));
     }
   }
 

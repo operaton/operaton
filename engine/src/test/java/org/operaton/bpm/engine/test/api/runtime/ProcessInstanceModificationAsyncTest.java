@@ -833,8 +833,7 @@ class ProcessInstanceModificationAsyncTest {
       processInstanceModificationBuilder.execute();
       fail("should not be possible to cancel the first instance twice");
     } catch (NotValidException e) {
-      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '" + transitionInstanceId
-          + "'; Transition instance '" + transitionInstanceId + "' does not exist: transitionInstance is null",
+      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '%s'; Transition instance '%s' does not exist: transitionInstance is null".formatted(transitionInstanceId, transitionInstanceId),
           e.getMessage());
     }
   }
@@ -873,8 +872,7 @@ class ProcessInstanceModificationAsyncTest {
       fail("should not be possible to cancel the first instance twice");
     } catch (NotValidException e) {
       String transitionInstanceId = transitionInstances[1].getId();
-      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '" + transitionInstanceId
-          + "'; Transition instance '" + transitionInstanceId + "' does not exist: transitionInstance is null",
+      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '%s'; Transition instance '%s' does not exist: transitionInstance is null".formatted(transitionInstanceId, transitionInstanceId),
           e.getMessage());
     }
   }

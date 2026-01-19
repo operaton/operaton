@@ -99,7 +99,7 @@ public class EscalationEventParseInvalidProcessTest {
   public void assertExceptionMessageContainsText(Exception e, String expectedMessage) {
     String actualMessage = e.getMessage();
     if (actualMessage == null || !actualMessage.contains(expectedMessage)) {
-      throw new AssertionFailedError("expected presence of [" + expectedMessage + "], but was [" + actualMessage + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expectedMessage, actualMessage));
     }
   }
 }

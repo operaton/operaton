@@ -71,6 +71,6 @@ class MetricsDisabledTest {
     // I cannot invoke
     assertThatThrownBy(() -> managementService.reportDbMetricsNow())
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Metrics reporting is disabled");
+      .hasMessage("Metrics reporting is disabled");
   }
 }

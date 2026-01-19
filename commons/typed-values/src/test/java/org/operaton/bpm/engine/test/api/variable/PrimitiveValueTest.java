@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.variable;
-import java.util.List;
-
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

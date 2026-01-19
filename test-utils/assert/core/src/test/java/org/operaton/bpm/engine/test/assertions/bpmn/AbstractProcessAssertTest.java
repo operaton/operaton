@@ -15,12 +15,11 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
-import java.util.List;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

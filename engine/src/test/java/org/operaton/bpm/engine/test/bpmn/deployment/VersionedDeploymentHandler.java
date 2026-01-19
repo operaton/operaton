@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.repository.CandidateDeployment;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -35,8 +34,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Process;
 
-import static java.util.Collections.emptySet;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static java.util.Collections.emptySet;
 
 public class VersionedDeploymentHandler implements DeploymentHandler {
 

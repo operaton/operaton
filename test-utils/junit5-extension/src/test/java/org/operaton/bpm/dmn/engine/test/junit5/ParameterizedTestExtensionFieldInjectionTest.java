@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.dmn.engine.test.junit5;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

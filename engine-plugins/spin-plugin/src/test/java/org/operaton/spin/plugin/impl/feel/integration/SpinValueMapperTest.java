@@ -15,9 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.spin.plugin.impl.feel.integration;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-
-import java.util.*;
+import java.util.Map;
 
 import org.camunda.feel.impl.DefaultValueMapper;
 import org.camunda.feel.syntaxtree.Val;

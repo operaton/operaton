@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
-import java.util.List;
-
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

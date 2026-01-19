@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;

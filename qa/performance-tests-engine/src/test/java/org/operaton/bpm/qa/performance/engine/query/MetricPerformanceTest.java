@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.performance.engine.query;
-import java.util.List;
-
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;

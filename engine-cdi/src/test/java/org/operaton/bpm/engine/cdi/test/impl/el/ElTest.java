@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.cdi.test.impl.el;
 import java.util.List;
 
-
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;

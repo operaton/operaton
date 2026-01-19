@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.impl.cfg;
 import java.util.List;
 
-
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;

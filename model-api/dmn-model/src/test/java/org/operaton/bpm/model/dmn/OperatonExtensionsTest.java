@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;

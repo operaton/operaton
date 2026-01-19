@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;

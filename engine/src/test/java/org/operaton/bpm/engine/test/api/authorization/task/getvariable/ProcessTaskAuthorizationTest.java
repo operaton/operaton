@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
 import java.util.List;
-
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;

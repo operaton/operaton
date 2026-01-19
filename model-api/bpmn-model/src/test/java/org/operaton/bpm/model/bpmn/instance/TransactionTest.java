@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-import java.util.List;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

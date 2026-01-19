@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest.history;
-import java.util.List;
-
 import java.util.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;

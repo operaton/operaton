@@ -16,8 +16,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.externaltask;
-import java.util.List;
-
 import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;

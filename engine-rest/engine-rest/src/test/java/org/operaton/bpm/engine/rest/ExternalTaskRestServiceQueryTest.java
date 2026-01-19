@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
-import java.util.List;
-
 import java.util.*;
 import java.util.stream.Stream;
 import jakarta.ws.rs.core.MediaType;

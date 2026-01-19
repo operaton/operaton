@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
-import java.util.List;
-
 import java.io.InputStream;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

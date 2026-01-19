@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.cfg;
 import java.util.List;
 
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

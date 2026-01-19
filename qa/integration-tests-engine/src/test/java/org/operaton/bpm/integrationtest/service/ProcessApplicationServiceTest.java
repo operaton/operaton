@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.service;
 import java.util.List;
-
 import java.util.Set;
 
 import org.jboss.arquillian.container.test.api.Deployment;

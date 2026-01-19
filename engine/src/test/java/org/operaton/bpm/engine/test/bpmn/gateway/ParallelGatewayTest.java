@@ -171,7 +171,7 @@ class ParallelGatewayTest {
     taskService.complete(tasks.get(0).getId());
     assertThat(taskService.createTaskQuery().count()).isZero();
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).finished().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).finished().count()).isOne();
   }
 
   @Deployment

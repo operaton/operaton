@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 import java.util.List;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;

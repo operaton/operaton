@@ -137,7 +137,7 @@ public class AbstractAppPluginRootResourceTest {
       } else {
         assertThat(e)
                 .isInstanceOf(RestException.class)
-                .hasMessage("Not allowed to load the following file '" + assetName + "'.");
+                .hasMessage("Not allowed to load the following file '%s'.".formatted(assetName));
 
         Mockito.verify(runtimeDelegate, Mockito.never()).getAppPluginRegistry();
         Mockito.verify(pluginRegistry, Mockito.never()).getPlugin(PLUGIN_NAME);

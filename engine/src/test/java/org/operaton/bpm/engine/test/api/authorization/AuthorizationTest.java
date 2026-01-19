@@ -147,8 +147,7 @@ public abstract class AuthorizationTest {
   }
 
   protected String permissionException(Resource resource, Permission permission) {
-    return "ENGINE-03110 Required admin authenticated group or user or any of the following permissions: '"
-        + permission.getName() + "' permission on resource '" + resource.resourceName() + "'";
+    return "ENGINE-03110 Required admin authenticated group or user or any of the following permissions: '%s' permission on resource '%s'".formatted(permission.getName(), resource.resourceName());
   }
 
   // user ////////////////////////////////////////////////////////////////
@@ -596,6 +595,6 @@ public abstract class AuthorizationTest {
   }
 
   protected String getMissingPermissionMessageRegex(Permission permission, Resource resource) {
-    return ".*'"+ permission.getName() + "' permission .* type '" + resource.resourceName() + "'.*";
+    return ".*'%s' permission .* type '%s'.*".formatted(permission.getName(), resource.resourceName());
   }
 }

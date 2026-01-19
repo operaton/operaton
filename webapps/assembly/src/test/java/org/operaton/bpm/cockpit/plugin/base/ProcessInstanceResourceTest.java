@@ -146,7 +146,7 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
       } else if ("secondCallActivity".equals(child.getActivityId())) {
         secondActivityInstanceId = child.getId();
       } else {
-        fail("Unexpected activity instance with activity id: " + child.getActivityId() + " and instance id: " + child.getId());
+        fail("Unexpected activity instance with activity id: %s and instance id: %s".formatted(child.getActivityId(), child.getId()));
       }
     }
 

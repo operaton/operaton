@@ -177,13 +177,13 @@ public class TaskVariableLocalRestResourceInteractionTest extends
 
   @Test
   void testGetLocalVariablesForNonExistingTaskId() {
-    when(taskServiceMock.getVariablesLocalTyped(NON_EXISTING_ID, true)).thenThrow(new ProcessEngineException("task " + NON_EXISTING_ID + " doesn't exist"));
+    when(taskServiceMock.getVariablesLocalTyped(NON_EXISTING_ID, true)).thenThrow(new ProcessEngineException("task %s doesn't exist".formatted(NON_EXISTING_ID)));
 
     given().pathParam("id", NON_EXISTING_ID)
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.INTERNAL_SERVER_ERROR.getStatusCode()).contentType(ContentType.JSON)
       .body("type", equalTo(ProcessEngineException.class.getSimpleName()))
-      .body("message", equalTo("task " + NON_EXISTING_ID + " doesn't exist"))
+      .body("message", equalTo("task %s doesn't exist".formatted(NON_EXISTING_ID)))
       .when().get(SINGLE_TASK_VARIABLES_URL);
   }
 
@@ -425,7 +425,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
       .body("type", is(InvalidRequestException.class.getSimpleName()))
-      .body("message", is("task variable with name " + variableKey + " does not exist"))
+      .body("message", is("task variable with name %s does not exist".formatted(variableKey)))
       .when().get(SINGLE_TASK_SINGLE_VARIABLE_URL);
   }
 
@@ -434,7 +434,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
     String variableKey = "aVariableKey";
 
     when(taskServiceMock.getVariableLocalTyped(eq(NON_EXISTING_ID), eq(variableKey), anyBoolean()))
-      .thenThrow(new ProcessEngineException("task " + NON_EXISTING_ID + " doesn't exist"));
+      .thenThrow(new ProcessEngineException("task %s doesn't exist".formatted(NON_EXISTING_ID)));
 
     given().pathParam("id", NON_EXISTING_ID).pathParam("varId", variableKey)
       .header("accept", MediaType.APPLICATION_JSON)
@@ -630,8 +630,8 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Cannot put task variable " + variableKey + ": "
-          + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Integer.class)))
+      .body("message", equalTo("Cannot put task variable %s: %s".formatted(variableKey,
+          ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Integer.class))))
       .when().put(SINGLE_TASK_PUT_SINGLE_VARIABLE_URL);
   }
 
@@ -702,8 +702,8 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Cannot put task variable " + variableKey + ": "
-          + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Long.class)))
+      .body("message", equalTo("Cannot put task variable %s: %s".formatted(variableKey,
+          ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Long.class))))
       .when().put(SINGLE_TASK_PUT_SINGLE_VARIABLE_URL);
   }
 
@@ -738,8 +738,8 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Cannot put task variable " + variableKey + ": "
-            + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Double.class)))
+      .body("message", equalTo("Cannot put task variable %s: %s".formatted(variableKey,
+            ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Double.class))))
       .when().put(SINGLE_TASK_PUT_SINGLE_VARIABLE_URL);
   }
 
@@ -795,8 +795,8 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Cannot put task variable " + variableKey + ": "
-          + ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Date.class)))
+      .body("message", equalTo("Cannot put task variable %s: %s".formatted(variableKey,
+          ErrorMessageHelper.getExpectedFailingConversionMessage(variableValue, type, Date.class))))
       .when().put(SINGLE_TASK_PUT_SINGLE_VARIABLE_URL);
   }
 
@@ -813,7 +813,7 @@ public class TaskVariableLocalRestResourceInteractionTest extends
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Cannot put task variable " + variableKey + ": Unsupported value type 'X'"))
+      .body("message", equalTo("Cannot put task variable %s: Unsupported value type 'X'".formatted(variableKey)))
       .when().put(SINGLE_TASK_PUT_SINGLE_VARIABLE_URL);
   }
 

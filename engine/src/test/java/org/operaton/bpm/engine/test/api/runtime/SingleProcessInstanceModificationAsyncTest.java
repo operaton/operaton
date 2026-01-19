@@ -458,8 +458,7 @@ class SingleProcessInstanceModificationAsyncTest {
 
     } catch (ProcessEngineException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'invalidFlowId'; "
-              + "Element 'invalidFlowId' does not exist in process '" + processInstance.getProcessDefinitionId() + "'",
+      testRule.assertTextPresent("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()),
           e.getMessage());
     }
   }

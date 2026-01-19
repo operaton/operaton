@@ -103,7 +103,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .then().expect()
       .statusCode(Status.NOT_FOUND.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Batch with id '" + nonExistingId + "' does not exist"))
+      .body("message", equalTo("Batch with id '%s' does not exist".formatted(nonExistingId)))
     .when()
       .get(SINGLE_BATCH_RESOURCE_URL);
   }
@@ -153,7 +153,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   void deleteNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
-    doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
+    doThrow(new BadUserRequestException("Batch for id '%s' cannot be found".formatted(nonExistingId)))
       .when(managementServiceMock).deleteBatch(nonExistingId, false);
 
     given()
@@ -161,7 +161,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Unable to delete batch with id '" + nonExistingId + "'"))
+      .body("message", equalTo("Unable to delete batch with id '%s'".formatted(nonExistingId)))
     .when()
       .delete(SINGLE_BATCH_RESOURCE_URL);
   }
@@ -170,7 +170,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   void deleteNonExistingBatchNotCascade() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
-    doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
+    doThrow(new BadUserRequestException("Batch for id '%s' cannot be found".formatted(nonExistingId)))
       .when(managementServiceMock).deleteBatch(nonExistingId, false);
 
     given()
@@ -179,7 +179,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Unable to delete batch with id '" + nonExistingId + "'"))
+      .body("message", equalTo("Unable to delete batch with id '%s'".formatted(nonExistingId)))
     .when()
       .delete(SINGLE_BATCH_RESOURCE_URL);
   }
@@ -188,7 +188,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   void deleteNonExistingBatchCascade() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
-    doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
+    doThrow(new BadUserRequestException("Batch for id '%s' cannot be found".formatted(nonExistingId)))
       .when(managementServiceMock).deleteBatch(nonExistingId, true);
 
     given()
@@ -197,7 +197,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Unable to delete batch with id '" + nonExistingId + "'"))
+      .body("message", equalTo("Unable to delete batch with id '%s'".formatted(nonExistingId)))
     .when()
       .delete(SINGLE_BATCH_RESOURCE_URL);
   }
@@ -221,7 +221,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   void suspendNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
-    doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
+    doThrow(new BadUserRequestException("Batch for id '%s' cannot be found".formatted(nonExistingId)))
       .when(managementServiceMock).suspendBatchById(nonExistingId);
 
     given()
@@ -231,7 +231,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Unable to suspend batch with id '" + nonExistingId + "'"))
+      .body("message", equalTo("Unable to suspend batch with id '%s'".formatted(nonExistingId)))
     .when()
       .put(SUSPENDED_BATCH_RESOURCE_URL);
   }
@@ -276,7 +276,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
   void activateNonExistingBatch() {
     String nonExistingId = MockProvider.NON_EXISTING_ID;
 
-    doThrow(new BadUserRequestException("Batch for id '" + nonExistingId + "' cannot be found"))
+    doThrow(new BadUserRequestException("Batch for id '%s' cannot be found".formatted(nonExistingId)))
       .when(managementServiceMock).activateBatchById(nonExistingId);
 
     given()
@@ -286,7 +286,7 @@ public class BatchRestServiceInteractionTest extends AbstractRestServiceTest {
     .then().expect()
       .statusCode(Status.BAD_REQUEST.getStatusCode())
       .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-      .body("message", equalTo("Unable to activate batch with id '" + nonExistingId + "'"))
+      .body("message", equalTo("Unable to activate batch with id '%s'".formatted(nonExistingId)))
     .when()
       .put(SUSPENDED_BATCH_RESOURCE_URL);
   }

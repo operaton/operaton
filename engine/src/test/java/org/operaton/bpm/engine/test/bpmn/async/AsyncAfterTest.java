@@ -44,9 +44,10 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -67,17 +68,18 @@ class AsyncAfterTest {
 
   @Test
   void testTransitionIdRequired() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/async/AsyncAfterTest.testTransitionIdRequired.bpmn20.xml");
 
+    // when/then
     // if an outgoing sequence flow has no id, we cannot use it in asyncAfter
-    try {
-      deploymentBuilder.deploy();
-      fail("Exception expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getElementIds()).containsExactly("service");
-    }
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.")
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getElementIds())
+      .isEqualTo(List.of("service"));
 
   }
 

@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.scripttask;
-import java.util.List;
-
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
 import javax.script.ScriptEngine;

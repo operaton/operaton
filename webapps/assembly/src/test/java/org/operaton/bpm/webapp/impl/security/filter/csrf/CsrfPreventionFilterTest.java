@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.webapp.impl.security.filter.csrf;
-import java.util.List;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

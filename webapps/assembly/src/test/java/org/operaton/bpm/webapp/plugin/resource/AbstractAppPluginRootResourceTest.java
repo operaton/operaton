@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.webapp.plugin.resource;
-import java.util.List;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Collection;
+import java.util.List;
 import jakarta.servlet.ServletContext;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Response;

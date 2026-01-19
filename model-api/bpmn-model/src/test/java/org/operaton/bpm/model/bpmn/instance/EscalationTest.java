@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 public class EscalationTest extends BpmnModelElementInstanceTest {
 

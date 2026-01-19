@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.spin.spi;
-import java.util.List;
-
 import java.util.Collections;
+import java.util.List;
 import java.util.ServiceLoader;
 
 import org.junit.jupiter.api.AfterEach;

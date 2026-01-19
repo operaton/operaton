@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.templateengines.engine;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 import javax.script.*;
 import org.junit.jupiter.api.BeforeAll;

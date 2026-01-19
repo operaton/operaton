@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.TestTemplate;

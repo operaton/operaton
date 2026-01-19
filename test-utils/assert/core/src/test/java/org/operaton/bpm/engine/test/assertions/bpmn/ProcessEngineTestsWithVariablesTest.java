@@ -15,8 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
-import java.util.List;
-
 import java.util.*;
 
 import org.junit.jupiter.params.ParameterizedTest;

@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history;
 import java.util.List;
 
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.mockito.Mockito;

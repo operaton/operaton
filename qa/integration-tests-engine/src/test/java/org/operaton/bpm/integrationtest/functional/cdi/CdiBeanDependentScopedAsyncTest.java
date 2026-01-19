@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.functional.cdi;
 import java.util.List;
 
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;

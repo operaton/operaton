@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.event.timer;
-import java.util.List;
-
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;

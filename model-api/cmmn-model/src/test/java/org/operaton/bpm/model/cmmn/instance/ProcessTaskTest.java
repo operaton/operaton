@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-import java.util.List;
-
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 

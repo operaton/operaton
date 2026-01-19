@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:025dc3a5-a922-413d-80f9-4684af7c8fce",
+  "serialNumber": "urn:uuid:18912239-c632-4b46-a5d3-e558e39636ae",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-16T10:38:35Z",
+    "timestamp": "2026-01-19T08:38:44Z",
     "tools": {
       "components": [
         {
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.24",
+      "version": "1.5.25",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "c2f8e02ace80b19958ff0a255159529d"
+          "content": "ecd0a349fd799f57f28e52c3f713d479"
         },
         {
           "alg": "SHA-1",
-          "content": "74b644ea88390b7442de28ada99136e88caebe35"
+          "content": "20c4bbe98fb58f50ee1ca6befd7e7731f13a19d3"
         },
         {
           "alg": "SHA-256",
-          "content": "6a4ce01b2e1593cf244f4424c78360e521798ecd709fe168c69b40985afb986a"
+          "content": "93163d85a0972e3d4813385af2d037bc94eed0542c4d74abc131830c84af070e"
         },
         {
           "alg": "SHA-512",
-          "content": "42cbd20316fa086558e83b489bfcaf3dddc265cf899b91f2a145993da4bd555aa90c15e795ea40f1c5a1c3d57745c71e152763e94c4aaad12760151ee65b6d92"
+          "content": "54d871eb375c98be429bdc05a960e54b382404012993a7d7da78f6ac713fa72c087e4ba625fcc3fcf8503c64b0ae277f448117f8c4589e7c0e4525f7e34e4b69"
         },
         {
           "alg": "SHA-384",
-          "content": "8c91e93fa18c4042d9103d2892f43f1f3bc21d6b7899972e36a777f7ac61836c870451b6f591f4e8f535f611ffb71e22"
+          "content": "4aee9fcdbe168543119523bb3ef88bc05680acf9eacfc7506c2bc2fa14e893b41efb187b8afc255dea530827fda720ad"
         },
         {
           "alg": "SHA3-384",
-          "content": "89c8123fe4470342c705e34fb1fd5d1e2361f9285653a1c60f4f786431d8be1aa2002dbf9eb00ad319daa4b6b328be49"
+          "content": "e03c4bc02790f4d3c46baf8cc91738e6d3b1244aa9c3a529360c89ba064246d8ef4f3e88a8dbace7b6a065939bfb7c88"
         },
         {
           "alg": "SHA3-256",
-          "content": "b728cec30bec49abd11362560a1f058249819eee1035bf7a972a19cc0aff555b"
+          "content": "aa3579b643449ceaf889b788f9fc0d9ba383c8ced654decf7a08f01aedf4cadd"
         },
         {
           "alg": "SHA3-512",
-          "content": "648f27af51394d204c3024853c52e3d7fda647f616d94ce061042c25c1e32614a7f25144bf2106e30e24701794032250972dab646258e092528642bf5369d2df"
+          "content": "4e0c0cf616d700d0c0c60b894eb7245312f6389e61de74a02e8f09a38a38b6a5b1a7f72e24e1a2bd5ec946cd472407c1ac426bd7fff247ad30aea744bf382733"
         }
       ],
       "licenses": [
@@ -309,7 +309,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -327,45 +327,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.24",
+      "version": "1.5.25",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8db8b5ac4a7e541ce38403f242f45538"
+          "content": "6a1c2feb8e1ecb20417a4d0e74c9ad51"
         },
         {
           "alg": "SHA-1",
-          "content": "e7c59963aab18d1db0dcea89d951f954b7976f04"
+          "content": "137f4ae0af7acaa0f9600a2ca18ddc9f3a0b899b"
         },
         {
           "alg": "SHA-256",
-          "content": "9105af06119e6d41de8439a66c0f98918883e5d05e8064815ef83e5c33d746d3"
+          "content": "aeb86d749936a960a1ec897aa821fe611ab6b105f1170ad334ae5eadc4bd689c"
         },
         {
           "alg": "SHA-512",
-          "content": "0b6e2f9fec80e173205bd0a4ed0678cf03573d95d7a8f223d82d9b2b81906965b8e5a30321bdeebe5406a7f5354c78c67d4d100cb30926838997231fbcad66cb"
+          "content": "c9556c9ae438e8eb396f6be6ae5eb66c7403b291e7901bac37cb85eca8ed959e4b3ed98917351bbea32181e8a47c8ee66aa8c8114644d082f45e53cf2b92ed1f"
         },
         {
           "alg": "SHA-384",
-          "content": "47243ba35d891b763e90e8f9361e0d231204b74c754e9b41ae20ab80dfb2bd24f942c5c3a5565a5035899e9ffe54b7c3"
+          "content": "08c1981f61be52a85a1dbb25d9581537564546187339fec33a8f6fec1ead6a5bf56a721aeff98c67bc6fc038a3434f6f"
         },
         {
           "alg": "SHA3-384",
-          "content": "164b3b0bc744f5183cd6bebd6530ce68cbf31e11f49596c30294463b6e8fb17ae4a8d0cd310d9e82ffb977d3fca2c70a"
+          "content": "7f8bb7c37385d10125455a2c442ea902a62185d31cb7ea4adeb8d0f8f643df6dd66ecafc110db86e003a45fa2a942629"
         },
         {
           "alg": "SHA3-256",
-          "content": "7d1031155968eb3a54d75732e1b3d1f9be438c713a9599e184ef974918220f5c"
+          "content": "02a5e8558337d704a3fe8a5e5c9ed27cd7c9a887cf58959bd153c60033b06332"
         },
         {
           "alg": "SHA3-512",
-          "content": "9e3031275a079239885f1724f7aee1966ce74b3c928ddd242c62ad4c29a6cd26909af68df8c003c832626bc9c71b5bbd651c7cdfa67bb10b1af049573730d71a"
+          "content": "4d05a893be8379221fe6b721511d86568ee12211ceabe19371dad114baf44a97ff2a773a55c68388618b353b1416821968dcabbe15b19ea25f772d8812bd388f"
         }
       ],
       "licenses": [
@@ -381,7 +381,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -15339,10 +15339,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.40.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-java",
-      "version": "4.39.0",
+      "version": "4.40.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
@@ -15386,7 +15386,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.40.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -15775,105 +15775,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.37.0?type=jar",
-      "group": "org.seleniumhq.selenium",
-      "name": "selenium-devtools-v141",
-      "version": "4.37.0",
-      "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "55d0200cf0ed1535d4492baab5bd3619"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "04d71b5bb50420d4c39867953336d9eea2000d4d"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "52f57330b1ecb9afca37170747ca921661de1fbe3634cdc4ea77d899d24bf0c6"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "91b9432130e3a22fb5a54d6186aedb7105cc0e254388f18716bdc600498efe599e4f68874ec48ea2c4e253f8a7e58f5025ec5b94e794a5d5576552d618634133"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "ee9a901066bdcd50b4bd7afe25db18f50ea2b021a67999d1b41dc0d69dfe548263f8a8df18d8979be4383eceabc5eece"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "0f1845c87794e607c733f0c2ac5d30bf0277f2753ab81f1b2b3925256ddeff67b080dd2fb6e48eae05466a9cf07b8b93"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "9699f59011af4d0fd44b0a906b7157b2015207600eb1cb2ed67542972092d99c"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "c4e44605dd6a263035817ced6f750cea731471d1ccefdedc6db8d378455b641f885df8a11a22b041b7c4a7908ca6992454f55329219bb4e0fd69fde219722129"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.37.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://selenium.dev/",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/SeleniumHQ/selenium/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.40.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-devtools-v142",
-      "version": "4.39.0",
+      "version": "4.40.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2238260d339643e64c343f513d5f0cbf"
+          "content": "8d77b097a2242141e14ce2bdb1312f31"
         },
         {
           "alg": "SHA-1",
-          "content": "54ace5244e0179350f36e321d98c041e64734683"
+          "content": "b1bf4b9d2c83bf2606bf3df2c09088ec04f22fb1"
         },
         {
           "alg": "SHA-256",
-          "content": "21ff6e84a2b890710652aaab313e7b20577bdeffb1b9d65b12c74147a8febb63"
+          "content": "28e67897676965aef202dacc58b72d1dec0ea6fe409923294d72360c95c90427"
         },
         {
           "alg": "SHA-512",
-          "content": "ee26fdeb0613dd31d63fcdeaf8a2c14849513b0eb9b8d18a930047ee1c29eaf61ca96d8a4771295bc1aaee2377e3429b722547236341001674eab3e38dfec53f"
+          "content": "416ca94d9692d5e655ad9f0f52a6219c465c05aa5601b926d2223147546a57cb3cf096996424ddc02ceae2dd297e6877778fdef8ceef43589df40b9564969540"
         },
         {
           "alg": "SHA-384",
-          "content": "92de06f1c8eeace925c2dd2b99a363b6826061909e339e7c0f5bb13da0120b9a7aa7a4b2947ba601f874a9a21758fd30"
+          "content": "b07a0e231bb10e0698a3d2aea1621f1ce817d85a93e583272fe2c28bfe2fd9b6aa7669592704d48919d434fea56bcb64"
         },
         {
           "alg": "SHA3-384",
-          "content": "13c6ca0f8565dd4741fdd73ef9371f250a7a82058cc19b99aaa30275c3ba0b9e22593b1126368de5859f5941ef54cd04"
+          "content": "d995ff2753a99e4a155f9f728171eda065464adb6ce0680e6c1302aa2c60c59da923f0528acbbe3dd7f73e54fa77a266"
         },
         {
           "alg": "SHA3-256",
-          "content": "6e2b1e6890382d8b38417187983e4b9751ea6471d312d6281be5f244a363a443"
+          "content": "9e36f08cb375c720a8476ba26c6c5c16d969e020b03e59a0296a56be6af08f55"
         },
         {
           "alg": "SHA3-512",
-          "content": "1ceab54af8ab6ce28bb0e9e5fa55846e7b9338c5a6b0c267508df068de28cd90f12fade94a68ff0a5becbfb7d1a045e07b4bb512219012d664240c62e50edcfe"
+          "content": "9e058a2f42c1a9cfbcdaa53863e7a556c7baf24a4b731a6dd9205b1534caa4851bd7690f817b0febf4ac0c04e8d4c0278faefc3b6646bf248c8432889cb5bea1"
         }
       ],
       "licenses": [
@@ -15883,7 +15822,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.40.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -15897,44 +15836,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.40.0?type=jar",
       "group": "org.seleniumhq.selenium",
       "name": "selenium-devtools-v143",
-      "version": "4.39.0",
+      "version": "4.40.0",
       "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "744dc3702deee89ea11e23bdfa6166be"
+          "content": "c7fa664a451170e193fc2c95b4a79a75"
         },
         {
           "alg": "SHA-1",
-          "content": "cb006881fa1ce023591482a37d9a9bcbcc58fe4b"
+          "content": "848259e553bd9e239d06e23c9a9e92d03c021ff0"
         },
         {
           "alg": "SHA-256",
-          "content": "c205947b928f88ce1296f98c8015dbe40afc800ba3e42be1e3c4e2e32002ff4a"
+          "content": "560bab9088d558d905eb0551fd27d5e1311a2f6f2dab2879c7b80292bfb00094"
         },
         {
           "alg": "SHA-512",
-          "content": "84c1d71ca7559afbc6a0d329c002fc39f68fb4baad276eb3f341f3882334ebb7f696f47711bd4aed5e6deed5cef69e1ea8060f58260c2c494134bdc1edf14df0"
+          "content": "617e6cced1312b185cdff47279187d07e849a410faa1ef9cd607a6024bb0d9b90a62ea63a69e4c8ec2fee3b108cdf7f1ddd33431d7dc6c4432136179e77851ba"
         },
         {
           "alg": "SHA-384",
-          "content": "5457d71d6f4462e0f9f6a49964f5957270cd7f46e7193a0d2cad4eae2b63cf5c1ff586cc0b73b722c0e45e253a471db0"
+          "content": "5755a84a2b8e6de22dee1a45e61c2ed20941c2c34f75c4449fb80bbabbe7f3a34446ea330b3ee50705ef7031e8b862b5"
         },
         {
           "alg": "SHA3-384",
-          "content": "055e2da56823ceaaee0668e952c15c407049519f3fcf7da0c53f364a561d853fe5e6df7b06f003f329945eebe26d8662"
+          "content": "2e91631df332c87b4ed2334b159e6913006e6e77c9add47d2eaa7c1d73721644d5acf60eed5d2a2ef506dbe2a9ed20e6"
         },
         {
           "alg": "SHA3-256",
-          "content": "750fa354d80abeba81c4ba070eb7c008ceec3a786aaf297536aaa50ff3b754f5"
+          "content": "8cd54d3fc0f97fcd8ecc4b86d41ae3fe434c81b49f86404f9f2d0876d74768bc"
         },
         {
           "alg": "SHA3-512",
-          "content": "9927366dc1292746af2e862500a0bb1797bbe63ada2fbf189db6c8780482fe17ea1d3ed62a45aa7cb2401c87fcba3e5b599c228a7604fc37330c0d74610065cf"
+          "content": "df2904ce43405ef5746ddd3c21fe2a7c3fcacee06bd65f96b111bcfe6a879fd284306759f517d477a44c2e101897d929c68cebceed349f52123300a66d392577"
         }
       ],
       "licenses": [
@@ -15944,7 +15883,68 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.40.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://selenium.dev/",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/SeleniumHQ/selenium/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v144@4.40.0?type=jar",
+      "group": "org.seleniumhq.selenium",
+      "name": "selenium-devtools-v144",
+      "version": "4.40.0",
+      "description": "Selenium automates browsers. That\u0027s it! What you do with that power is entirely up to you.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "a340337d1870b09b50aa28a2bee21498"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "7a50eb6ba721a76dac19497dbd3b39fa58598c2d"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "bcd7d674fef321af09c01139fdaa2b904e59d8f1b38374336dd205602114712e"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "3011ccfa753a805a7c1c32dae6acbf587ced4a4d506304b29f482ab7d8de16ac402d277e3812b1a78301e405ce9a2aaa1648bd16dc07c1eb628b48bb516df2c3"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "d55de70c2989631a178705ce06c71ac0b3ac2e5abec303288eaa1d8f3847a77804f1d76b89394fadb0c386569f5f4695"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "db638b39bb5fcb3595b298298ffe01a8bcf720354e127d9707ba4427cca7fc25b04a0bc96195983532691fc2434c533b"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "c0eaee8dda70d126e031f90c59ce4978c670a2304130364c3eef7cb03aa95334"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "32cc1cbe019123ea765d84f041466fd438a1700978fb7905ce1c1832c065e0270a3b6d9241bacb5643fd356101a3dc1f74d77fe0eaf56bfca2dc251dea1373d0"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v144@4.40.0?type=jar",
       "externalReferences": [
         {
           "url": "https://selenium.dev/",
@@ -19443,45 +19443,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/net.minidev/accessors-smart@2.5.2?type=jar",
+      "bom-ref": "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
       "publisher": "Chemouni Uriel",
       "group": "net.minidev",
       "name": "accessors-smart",
-      "version": "2.5.2",
+      "version": "2.6.0",
       "description": "Java reflect give poor performance on getter setter an constructor calls, accessors-smart use ASM to speed up those calls.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "24191e0bb215c72902e89f46dde839e1"
+          "content": "0ad72639eea293193f68898da9b0b902"
         },
         {
           "alg": "SHA-1",
-          "content": "ce16fd235cfee48e67eda33e684423bba09f7d07"
+          "content": "2d96f1d9b6ab7f13261aa81b15703574185747a0"
         },
         {
           "alg": "SHA-256",
-          "content": "9b8a7bc43861d6156c021166d941fb7dddbe4463e2fa5ee88077e4b01452a836"
+          "content": "222c9f547bb20a99fc486403a398352d1306fb671b38abd7ecab6401df170e61"
         },
         {
           "alg": "SHA-512",
-          "content": "3bbd29761622714ac61dbe02b8351188573f819bdabfb4025196a3f1561bfe52cc308af9208184f7339c66988e7f8ad323c5cd7b0fa8463321b6bb03e4a9181e"
+          "content": "220eb28c94fdd15e7ac9b7e80d238a9871fc78db3127db9ca6207251e0e5563c62cfd5ab7625d69eb9e2563fc726e71a25562a4081f089f564dc206e0569665f"
         },
         {
           "alg": "SHA-384",
-          "content": "9640df1f3b1bc02ca025e990776727ca3265de08db88e9d08072567e08cb4c1083e8a1644f053caeb4f21fdd2e48ec4b"
+          "content": "c861d37b7a3a5d3d42a699239e3437cf094a8359b2371bacce5f7a17da02f9a0eb65ca2456d0168c4870be36bddc135f"
         },
         {
           "alg": "SHA3-384",
-          "content": "90e220e6dfb5c39a208c3395aa525de2a59ff4525de57a5a496d683be3fc0c58f8ce38411e875434aa3042394dc46e24"
+          "content": "4fa8ea0794e22ccc34ecc9b73cb9cad062cd82561227b15f1261541180d584ba745611ff31e98653e4f5d481846de361"
         },
         {
           "alg": "SHA3-256",
-          "content": "fa935f2190565214b4fce84be12d4f9b052e9bbf5b1116fa82bcc7f9d7f4c301"
+          "content": "1b170bf2e79abd9a77bb330c51b73d695c17e5db41817efab22294f4ee65a2c1"
         },
         {
           "alg": "SHA3-512",
-          "content": "da0fe2eb9ce26fd44decb2d735fb04597b31225e9c6b76b4678db29ec48292fccc9fcbcc72c5f3b7854aeef9d797da2016b61dd86802c07e1c6f6e4afea872ad"
+          "content": "224c001707e5b478f6503b88ab8c07b94f82bfb02bc81094a3ffdcf05d29f1377a8e518b223f9282d0147f386f13faf319692002d59f4c6f452b282aa6b000c0"
         }
       ],
       "licenses": [
@@ -19491,15 +19491,11 @@
           }
         }
       ],
-      "purl": "pkg:maven/net.minidev/accessors-smart@2.5.2?type=jar",
+      "purl": "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
       "externalReferences": [
         {
           "url": "https://urielch.github.io/",
           "type": "website"
-        },
-        {
-          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
         },
         {
           "url": "https://github.com/netplex/json-smart-v2",
@@ -33220,7 +33216,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "62596028-2e37-49ad-8f37-d7b10c4025f2",
+      "bom-ref": "af97dee0-28ca-4d2f-b3a1-27749976a73c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33955,6 +33951,24 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/%40popperjs/core@2.11.8",
+      "group": "@popperjs",
+      "name": "core",
+      "version": "2.11.8",
+      "purl": "pkg:npm/%40popperjs/core@2.11.8",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@popperjs/core@2.11.8"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/%40types/trusted-types@2.0.7",
       "group": "@types",
       "name": "trusted-types",
@@ -34262,14 +34276,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bootstrap@3.4.1",
+      "bom-ref": "pkg:npm/bootstrap@5.3.8",
       "name": "bootstrap",
-      "version": "3.4.1",
-      "purl": "pkg:npm/bootstrap@3.4.1",
+      "version": "5.3.8",
+      "purl": "pkg:npm/bootstrap@5.3.8",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bootstrap@3.4.1"
+          "value": "bootstrap@5.3.8"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36812,7 +36826,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "519f81d7-3fc9-47ef-a0fa-f78e8a88a91b",
+      "bom-ref": "14662663-8085-4c72-a427-0bbdac7d1497",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37119,19 +37133,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.24?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
       "dependsOn": []
     },
     {
@@ -37278,7 +37292,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar"
       ]
     },
     {
@@ -37799,7 +37813,7 @@
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-java@4.40.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar"
       ]
@@ -38445,13 +38459,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.39.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-java@4.40.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.37.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-chrome-driver@4.37.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.37.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
-        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.40.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.40.0?type=jar",
+        "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v144@4.40.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-edge-driver@4.37.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-firefox-driver@4.37.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-ie-driver@4.37.0?type=jar",
@@ -38624,7 +38638,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v141@4.37.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.40.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.37.0?type=jar",
@@ -38633,7 +38647,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v142@4.39.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.40.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.37.0?type=jar",
@@ -38642,7 +38656,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v143@4.39.0?type=jar",
+      "ref": "pkg:maven/org.seleniumhq.selenium/selenium-devtools-v144@4.40.0?type=jar",
       "dependsOn": [
         "pkg:maven/com.google.auto.service/auto-service-annotations@1.1.1?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-api@4.37.0?type=jar",
@@ -38879,11 +38893,11 @@
     {
       "ref": "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
       "dependsOn": [
-        "pkg:maven/net.minidev/accessors-smart@2.5.2?type=jar"
+        "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/net.minidev/accessors-smart@2.5.2?type=jar",
+      "ref": "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
       "dependsOn": [
         "pkg:maven/org.ow2.asm/asm@7.3.1?type=jar"
       ]
@@ -38958,7 +38972,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.24?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar"
       ]
     },
     {
@@ -40516,7 +40530,7 @@
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
         "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1-SNAPSHOT?type=jar",
         "pkg:maven/com.h2database/h2@2.4.240?type=jar",
-        "pkg:maven/net.minidev/accessors-smart@2.5.2?type=jar",
+        "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar",
         "pkg:maven/net.minidev/json-smart@2.5.2?type=jar"
       ]
     },
@@ -40717,7 +40731,7 @@
     {
       "ref": "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
       "dependsOn": [
-        "pkg:maven/net.minidev/accessors-smart@2.5.2?type=jar"
+        "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar"
       ]
     },
     {
@@ -40772,13 +40786,13 @@
       "dependsOn": []
     },
     {
-      "ref": "519f81d7-3fc9-47ef-a0fa-f78e8a88a91b",
+      "ref": "14662663-8085-4c72-a427-0bbdac7d1497",
       "dependsOn": [
-        "62596028-2e37-49ad-8f37-d7b10c4025f2"
+        "af97dee0-28ca-4d2f-b3a1-27749976a73c"
       ]
     },
     {
-      "ref": "62596028-2e37-49ad-8f37-d7b10c4025f2",
+      "ref": "af97dee0-28ca-4d2f-b3a1-27749976a73c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -40795,7 +40809,7 @@
         "pkg:npm/angular-translate@2.19.1",
         "pkg:npm/angular-ui-bootstrap@2.5.6",
         "pkg:npm/angular@1.8.3",
-        "pkg:npm/bootstrap@3.4.1",
+        "pkg:npm/bootstrap@5.3.8",
         "pkg:npm/bpmn-font@0.12.1",
         "pkg:npm/bpmn-js@18.10.1",
         "pkg:npm/camunda-dmn-js@3.6.0",
@@ -41138,6 +41152,10 @@
       ]
     },
     {
+      "ref": "pkg:npm/%40popperjs/core@2.11.8",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/%40types/trusted-types@2.0.7",
       "dependsOn": []
     },
@@ -41214,8 +41232,10 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bootstrap@3.4.1",
-      "dependsOn": []
+      "ref": "pkg:npm/bootstrap@5.3.8",
+      "dependsOn": [
+        "pkg:npm/%40popperjs/core@2.11.8"
+      ]
     },
     {
       "ref": "pkg:npm/bpmn-font@0.12.1",
@@ -42878,90 +42898,6 @@
       ]
     },
     {
-      "id": "CVE-2024-6485",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "cbl-mariner"
-          },
-          "severity": "medium",
-          "method": "Null"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 6.4,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 6.4,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium",
-          "method": "Null"
-        }
-      ],
-      "cwes": [
-        79
-      ],
-      "description": "A security vulnerability has been discovered in bootstrap that could enable Cross-Site Scripting (XSS) attacks. The vulnerability is associated with the data-loading-text attribute within the button plugin. This vulnerability can be exploited by injecting malicious JavaScript code into the attribute, which would then be executed when the button\u0027s loading state is triggered.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2024-6485"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2024-6485"
-        },
-        {
-          "url": "https://github.com/twbs/bootstrap"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/04/msg00020.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6485"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7556-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2024-6485"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2024-6485"
-        }
-      ],
-      "published": "2024-07-11T17:15:17Z",
-      "updated": "2025-11-03T20:17:03Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/bootstrap@3.4.1",
-          "versions": [
-            {
-              "version": "3.4.1",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "CVE-2024-8372",
       "source": {
         "name": "ghsa",
@@ -43225,80 +43161,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2025-1647",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "amazon"
-          },
-          "severity": "medium",
-          "method": "Null"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.6,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 5.6,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
-        }
-      ],
-      "cwes": [
-        79
-      ],
-      "description": "Improper Neutralization of Input During Web Page Generation (XSS or \u0027Cross-site Scripting\u0027) vulnerability in Bootstrap allows Cross-Site Scripting (XSS).This issue affects Bootstrap: from 3.4.1 before 4.0.0.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2025-1647"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2025-1647"
-        },
-        {
-          "url": "https://github.com/twbs/bootstrap"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/06/msg00001.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1647"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2025-1647"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2025-1647"
-        }
-      ],
-      "published": "2025-05-15T17:15:47Z",
-      "updated": "2025-06-01T11:15:20Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/bootstrap@3.4.1",
-          "versions": [
-            {
-              "version": "3.4.1",
               "status": "affected"
             }
           ]

@@ -148,7 +148,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     given().pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment with id '" + NON_EXISTING_DEPLOYMENT_ID + "' does not exist"))
+        .body(containsString("Deployment with id '%s' does not exist".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(DEPLOYMENT_URL);
 
   }
@@ -170,7 +170,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     given().pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resources for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist."))
+        .body(containsString("Deployment resources for deployment id '%s' do not exist.".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(RESOURCES_URL);
 
   }
@@ -221,7 +221,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
         .pathParam("resourceId", EXAMPLE_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resources for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist."))
+        .body(containsString("Deployment resources for deployment id '%s' do not exist.".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_URL);
 
   }
@@ -233,7 +233,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
         .pathParam("resourceId", NON_EXISTING_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resources for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist."))
+        .body(containsString("Deployment resources for deployment id '%s' do not exist.".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_URL);
 
   }

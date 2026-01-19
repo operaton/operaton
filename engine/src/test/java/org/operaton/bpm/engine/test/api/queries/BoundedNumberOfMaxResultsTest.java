@@ -176,7 +176,7 @@ class BoundedNumberOfMaxResultsTest {
         .get(0)
         .getId();
 
-    var processInstanceId = runtimeService.startProcessInstanceByKey("process")
+    String processInstanceId = runtimeService.startProcessInstanceByKey("process")
         .getProcessInstanceId();
 
     // when
@@ -238,7 +238,7 @@ class BoundedNumberOfMaxResultsTest {
     foo.setQuery(taskService.createTaskQuery());
     filterService.saveFilter(foo);
 
-    var filterId = filterService
+    String filterId = filterService
         .createFilterQuery()
         .singleResult()
         .getId();
@@ -259,7 +259,7 @@ class BoundedNumberOfMaxResultsTest {
     foo.setQuery(taskService.createTaskQuery());
     filterService.saveFilter(foo);
 
-    var filterId = filterService
+    String filterId = filterService
         .createFilterQuery()
         .singleResult()
         .getId();
@@ -281,12 +281,12 @@ class BoundedNumberOfMaxResultsTest {
 
     filterService.saveFilter(foo);
 
-    var filterId = filterService
+    String filterId = filterService
         .createFilterQuery()
         .singleResult()
         .getId();
 
-    var extendingQuery = taskService.createTaskQuery()
+    TaskQuery extendingQuery = taskService.createTaskQuery()
         .taskCandidateGroup("aCandidateGroup");
 
     // when/then
@@ -396,7 +396,7 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    var historicProcessInstanceQuery = engineRule.getHistoryService()
+    HistoricProcessInstanceQuery historicProcessInstanceQuery = engineRule.getHistoryService()
         .createHistoricProcessInstanceQuery();
 
     // when

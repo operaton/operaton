@@ -699,7 +699,7 @@ class TaskServiceTest {
       fail("NullValueException expected");
     } catch (NullValueException ae) {
       testRule.assertTextPresent(
-          "No comment exists with commentId: " + nonExistingCommentId + " and processInstanceId: " + processInstanceId,
+          "No comment exists with commentId: %s and processInstanceId: %s".formatted(nonExistingCommentId, processInstanceId),
           ae.getMessage());
     }
   }

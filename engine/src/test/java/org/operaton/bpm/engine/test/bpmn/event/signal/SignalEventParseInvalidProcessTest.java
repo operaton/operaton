@@ -82,7 +82,7 @@ public class SignalEventParseInvalidProcessTest {
 
   public void assertTextPresent(String expected, String actual) {
     if (actual == null || !actual.contains(expected)) {
-      throw new AssertionFailedError("expected presence of [" + expected + "], but was [" + actual + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
 }

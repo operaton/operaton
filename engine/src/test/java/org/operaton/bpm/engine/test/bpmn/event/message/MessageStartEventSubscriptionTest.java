@@ -154,7 +154,7 @@ class MessageStartEventSubscriptionTest {
         .singleResult();
 
     if (completedInstance != null) {
-      throw new AssertionFailedError("Expected finished process instance '" + completedInstance + "' but it was still in the db");
+      throw new AssertionFailedError("Expected finished process instance '%s' but it was still in the db".formatted(completedInstance));
     }
   }
 
@@ -185,7 +185,7 @@ class MessageStartEventSubscriptionTest {
         .singleResult();
 
     if (completedInstance != null) {
-      throw new AssertionFailedError("Expected finished process instance '" + completedInstance + "' but it was still in the db");
+      throw new AssertionFailedError("Expected finished process instance '%s' but it was still in the db".formatted(completedInstance));
     }
   }
 

@@ -1114,25 +1114,15 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
           sourceExecution.getActivity().getVariableListeners(delegateVariable.getEventName(), includeCustomerListeners);
 
       CmmnExecution currentExecution = sourceExecution;
+
       while (currentExecution != null) {
+        String activityId = currentExecution.getActivityId();
+        List<VariableListener<?>> listeners = (activityId != null) ? listenersByActivity.get(activityId) : null;
 
-        if (currentExecution.getActivityId() != null) {
-          List<VariableListener<?>> listeners = listenersByActivity.get(currentExecution.getActivityId());
-
-          if (listeners != null) {
-            delegateVariable.setScopeExecution(currentExecution);
-
-            for (VariableListener<?> listener : listeners) {
-              try {
-                CaseVariableListener caseVariableListener = (CaseVariableListener) listener;
-                CaseVariableListenerInvocation invocation = new CaseVariableListenerInvocation(caseVariableListener, delegateVariable, currentExecution);
-                Context.getProcessEngineConfiguration()
-                  .getDelegateInterceptor()
-                  .handleInvocation(invocation);
-              } catch (Exception e) {
-                throw LOG.invokeVariableListenerException(e);
-              }
-            }
+        if (listeners != null) {
+          delegateVariable.setScopeExecution(currentExecution);
+          for (VariableListener<?> listener : listeners) {
+            tryHandleInvocation((CaseVariableListener) listener, delegateVariable, currentExecution);
           }
         }
 
@@ -1141,6 +1131,21 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
       // finally remove the event from the queue
       eventQueue.remove();
+    }
+  }
+
+  private static void tryHandleInvocation(CaseVariableListener listener,
+                                DelegateCaseVariableInstanceImpl delegateVariable,
+                                CmmnExecution currentExecution) {
+    try {
+      CaseVariableListener caseVariableListener = listener;
+      CaseVariableListenerInvocation invocation = new CaseVariableListenerInvocation(caseVariableListener,
+          delegateVariable, currentExecution);
+      Context.getProcessEngineConfiguration()
+        .getDelegateInterceptor()
+        .handleInvocation(invocation);
+    } catch (Exception e) {
+      throw LOG.invokeVariableListenerException(e);
     }
   }
 

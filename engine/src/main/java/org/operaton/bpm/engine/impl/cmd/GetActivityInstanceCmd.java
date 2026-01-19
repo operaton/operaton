@@ -302,16 +302,37 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
     Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances
       = new HashMap<>();
 
-    for (ActivityInstanceImpl instance : activityInstances.values()) {
-      if (instance.getParentActivityInstanceId() != null) {
-        ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
-        if (parentInstance == null) {
-          throw new ProcessEngineException("No parent activity instance with id %s generated".formatted(instance.getParentActivityInstanceId()));
-        }
-        putListElement(childActivityInstances, parentInstance, instance);
+    populateActivityInstances(activityInstances, childActivityInstances);
+    populateTransitionInstances(activityInstances, transitionInstances, childTransitionInstances);
+    populateChildActivityInstances(childActivityInstances);
+    populateChildTransitionInstances(childTransitionInstances);
+  }
+
+  private static void populateChildTransitionInstances(Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances) {
+    for (Map.Entry<ActivityInstanceImpl, List<TransitionInstanceImpl>> entry :
+      childTransitionInstances.entrySet()) {
+      ActivityInstanceImpl instance = entry.getKey();
+      List<TransitionInstanceImpl> childInstances = entry.getValue();
+      if (childTransitionInstances != null) {
+        instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
       }
     }
+  }
 
+  private static void populateChildActivityInstances(Map<ActivityInstanceImpl, List<ActivityInstanceImpl>> childActivityInstances) {
+    for (Map.Entry<ActivityInstanceImpl, List<ActivityInstanceImpl>> entry :
+        childActivityInstances.entrySet()) {
+      ActivityInstanceImpl instance = entry.getKey();
+      List<ActivityInstanceImpl> childInstances = entry.getValue();
+      if (childInstances != null) {
+        instance.setChildActivityInstances(childInstances.toArray(new ActivityInstanceImpl[childInstances.size()]));
+      }
+    }
+  }
+
+  private void populateTransitionInstances(Map<String, ActivityInstanceImpl> activityInstances,
+                         Map<String, TransitionInstanceImpl> transitionInstances,
+                         Map<ActivityInstanceImpl, List<TransitionInstanceImpl>> childTransitionInstances) {
     for (TransitionInstanceImpl instance : transitionInstances.values()) {
       if (instance.getParentActivityInstanceId() != null) {
         ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
@@ -321,25 +342,19 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
         putListElement(childTransitionInstances, parentInstance, instance);
       }
     }
-
-    for (Map.Entry<ActivityInstanceImpl, List<ActivityInstanceImpl>> entry :
-        childActivityInstances.entrySet()) {
-      ActivityInstanceImpl instance = entry.getKey();
-      List<ActivityInstanceImpl> childInstances = entry.getValue();
-      if (childInstances != null) {
-        instance.setChildActivityInstances(childInstances.toArray(new ActivityInstanceImpl[childInstances.size()]));
-      }
-    }
-
-    for (Map.Entry<ActivityInstanceImpl, List<TransitionInstanceImpl>> entry :
-      childTransitionInstances.entrySet()) {
-    ActivityInstanceImpl instance = entry.getKey();
-    List<TransitionInstanceImpl> childInstances = entry.getValue();
-    if (childTransitionInstances != null) {
-      instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
-    }
   }
 
+  private void populateActivityInstances(Map<String, ActivityInstanceImpl> activityInstances,
+                         Map<ActivityInstanceImpl, List<ActivityInstanceImpl>> childActivityInstances) {
+    for (ActivityInstanceImpl instance : activityInstances.values()) {
+      if (instance.getParentActivityInstanceId() != null) {
+        ActivityInstanceImpl parentInstance = activityInstances.get(instance.getParentActivityInstanceId());
+        if (parentInstance == null) {
+          throw new ProcessEngineException("No parent activity instance with id %s generated".formatted(instance.getParentActivityInstanceId()));
+        }
+        putListElement(childActivityInstances, parentInstance, instance);
+      }
+    }
   }
 
   protected <S, T> void putListElement(Map<S, List<T>> mapOfLists, S key, T listElement) {

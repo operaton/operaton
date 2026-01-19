@@ -146,10 +146,7 @@ public class ProcessDiagramLayoutFactory {
       Double width = Double.valueOf(element.getAttribute("width"));
       Double height = Double.valueOf(element.getAttribute("height"));
   
-      if (x == 0.0 && y == 0.0 && width == 0.0 && height == 0.0) {
-        // Ignore empty labels like the ones produced by Yaoqiang:
-        // <bpmndi:BPMNLabel><dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/></bpmndi:BPMNLabel>
-      } else {
+      if (!(x == 0.0 && y == 0.0 && width == 0.0 && height == 0.0)) {
         if (minX == null || x < minX) {
           minX = x;
         }

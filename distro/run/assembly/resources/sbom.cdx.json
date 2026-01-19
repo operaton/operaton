@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:500effc6-b10d-416d-8b3f-6eac607997c9",
+  "serialNumber": "urn:uuid:1b5b301e-b561-4d08-92df-8932cfb67c71",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-19T08:38:42Z",
+    "timestamp": "2026-01-19T09:39:58Z",
     "tools": {
       "components": [
         {
@@ -19117,45 +19117,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
+      "bom-ref": "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
       "publisher": "Chemouni Uriel",
       "group": "net.minidev",
       "name": "json-smart",
-      "version": "2.5.2",
+      "version": "2.6.0",
       "description": "JSON (JavaScript Object Notation) is a lightweight data-interchange format. It is easy for humans to read and write. It is easy for machines to parse and generate. It is based on a subset of the JavaScript Programming Language, Standard ECMA-262 3rd Edition - December 1999. JSON is a text format that is completely language independent but uses conventions that are familiar to programmers of the C-family of languages, including C, C\u002B\u002B, C#, Java, JavaScript, Perl, Python, and many others. These properties make JSON an ideal data-interchange language.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e3ad34c55c0d2627255f79f4411c6bdd"
+          "content": "fde8981f31c3b972355a5adf26a9ec65"
         },
         {
           "alg": "SHA-1",
-          "content": "95d166b18f95907be0f46cdb9e1c0695eed03387"
+          "content": "5f858a43a325a8673da6869ab2bc787a1bcb2244"
         },
         {
           "alg": "SHA-256",
-          "content": "4fbdedb0105cedc7f766b95c297d2e88fb6a560da48f3bbaa0cc538ea8b7bf71"
+          "content": "1ae4b561458afb540be8ec5c6dbb4f2e715a319a7ae64854998aaf924770d61b"
         },
         {
           "alg": "SHA-512",
-          "content": "087931c6f254c7e54ff75b6e94983d062b62b68356a988a5ed276819bcb4fafbad2f0bbc363e16c8daa09ed8189241f08eff6e8e5f5f3ddc770b541d96fc8e2d"
+          "content": "fc8269826394dbca52fa9366f28226e5e37bc64c1268d7a49e2dea7fb2c62da2be8c8bcf362da5561a3cf413816019d8c4f95199a585eb8b13e8a8b634259a00"
         },
         {
           "alg": "SHA-384",
-          "content": "25562d80d717cde53ae3c8049f14fb74a85c86ef14ece2e8136b604edbd3a67df8a46628dc36e6a07dcf5949d9ce1451"
+          "content": "13db694eb1f73778d628452b6840bff4c044101f2dcf7c3782f4bb48798fbae8b752cb8f7536b5173e896de4c225c3a6"
         },
         {
           "alg": "SHA3-384",
-          "content": "3aaa1b156a994fa858f7e46c1ebedebe9063e9afbd72c9ca886dd41f3c4ca8dcdd6dd457daa5ed167929d3741aed075c"
+          "content": "86c0dc99d98a7c70015b6158f76253cd16a4b2bfb754ea6526991860e2536880b95130044cbe953865b284eebadad781"
         },
         {
           "alg": "SHA3-256",
-          "content": "e387c386e5f81247ea4add698626d06e8a2c2fe5768b7440a0fd6fb56ad99d75"
+          "content": "edee009cc2977ff4c2aae9098d14e7e651168dca1735726772d6bda5b66e2e98"
         },
         {
           "alg": "SHA3-512",
-          "content": "aa2a4c9daa3bff63615ed483e9faa978b0131758c541a9591e6da8186af73d32f73a38e954272f2f0aa1606b38555f6471ea232eebc146a4fb83151bbae60484"
+          "content": "23f8d5a59cd7111680f65d9fc2ed80b9876ab3094a2048526b376ae16ad855680b1c90264c23c52468efe0646a30db8a22f6b279ec67e047f3951b55a6d0d104"
         }
       ],
       "licenses": [
@@ -19165,15 +19165,11 @@
           }
         }
       ],
-      "purl": "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
+      "purl": "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
       "externalReferences": [
         {
           "url": "https://urielch.github.io/",
           "type": "website"
-        },
-        {
-          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
         },
         {
           "url": "https://github.com/netplex/json-smart-v2",
@@ -23665,7 +23661,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "af97dee0-28ca-4d2f-b3a1-27749976a73c",
+      "bom-ref": "2c08519f-7c36-4b35-a84a-8d9aeaa05f97",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27275,7 +27271,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "14662663-8085-4c72-a427-0bbdac7d1497",
+      "bom-ref": "713c8243-78f8-4bdc-8d76-68ba39e2065b",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29325,12 +29321,12 @@
     {
       "ref": "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
       "dependsOn": [
-        "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
+        "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
+      "ref": "pkg:maven/net.minidev/json-smart@2.6.0?type=jar",
       "dependsOn": [
         "pkg:maven/net.minidev/accessors-smart@2.6.0?type=jar"
       ]
@@ -30205,13 +30201,7 @@
       ]
     },
     {
-      "ref": "14662663-8085-4c72-a427-0bbdac7d1497",
-      "dependsOn": [
-        "af97dee0-28ca-4d2f-b3a1-27749976a73c"
-      ]
-    },
-    {
-      "ref": "af97dee0-28ca-4d2f-b3a1-27749976a73c",
+      "ref": "2c08519f-7c36-4b35-a84a-8d9aeaa05f97",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -30256,6 +30246,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "713c8243-78f8-4bdc-8d76-68ba39e2065b",
+      "dependsOn": [
+        "2c08519f-7c36-4b35-a84a-8d9aeaa05f97"
       ]
     },
     {

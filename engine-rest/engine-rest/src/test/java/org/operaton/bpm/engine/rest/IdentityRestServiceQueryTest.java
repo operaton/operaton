@@ -114,7 +114,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
         .body(new BasicUserCredentialsDto()).contentType(ContentType.JSON).
     expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
         .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Username and password are required"))
+        .body("message", equalTo("User ID and password are required"))
         .when().post(VERIFY_USER_URL);
   }
 
@@ -131,7 +131,7 @@ public class IdentityRestServiceQueryTest extends AbstractRestServiceTest {
         .body(userCredentialsDto).contentType(ContentType.JSON).
     expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
         .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
-        .body("message", equalTo("Username and password are required"))
+        .body("message", equalTo("User ID and password are required"))
         .when().post(VERIFY_USER_URL);
   }
 }

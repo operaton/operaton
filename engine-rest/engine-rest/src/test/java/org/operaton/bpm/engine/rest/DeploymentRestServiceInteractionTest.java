@@ -1592,7 +1592,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
     .expect()
       .statusCode(Status.NOT_FOUND.getStatusCode())
-      .body(containsString("Deployment with id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist"))
+      .body(containsString("Deployment with id '%s' do not exist".formatted(NON_EXISTING_DEPLOYMENT_ID)))
     .when()
        .delete(DEPLOYMENT_URL);
   }

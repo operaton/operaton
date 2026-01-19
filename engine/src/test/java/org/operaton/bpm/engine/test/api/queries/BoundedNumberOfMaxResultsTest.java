@@ -48,6 +48,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoundedNumberOfMaxResultsTest {
@@ -179,14 +180,12 @@ class BoundedNumberOfMaxResultsTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process")
         .getProcessInstanceId();
 
-    // when
-    runtimeService.restartProcessInstances(processDefinitionId)
+    // when/then
+    assertThatCode(() -> runtimeService.restartProcessInstances(processDefinitionId)
         .processInstanceIds(processInstanceId)
         .startAfterActivity("startEvent")
-        .execute();
-
-    // then
-    // do not fail
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -324,11 +323,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    // when
-    engineRule.getExternalTaskService().updateRetries()
+    // when/then
+    assertThatCode(() -> engineRule.getExternalTaskService().updateRetries()
         .externalTaskQuery(engineRule.getExternalTaskService().createExternalTaskQuery())
-        .set(5);
-    // then: no exception
+        .set(5))
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -361,11 +360,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    // when
-    engineRule.getExternalTaskService().updateRetries()
+    // when/then
+    assertThatCode(() -> engineRule.getExternalTaskService().updateRetries()
         .processInstanceQuery(engineRule.getRuntimeService().createProcessInstanceQuery())
-        .set(5);
-    // then: no exception
+        .set(5))
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -399,11 +398,11 @@ class BoundedNumberOfMaxResultsTest {
     HistoricProcessInstanceQuery historicProcessInstanceQuery = engineRule.getHistoryService()
         .createHistoricProcessInstanceQuery();
 
-    // when
-    engineRule.getExternalTaskService().updateRetries()
+    // when/then
+    assertThatCode(() -> engineRule.getExternalTaskService().updateRetries()
         .historicProcessInstanceQuery(historicProcessInstanceQuery)
-        .set(5);
-    // then: no exception
+        .set(5))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -460,12 +459,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceById(source);
 
-    // when
-    runtimeService.newMigration(plan)
+    // when/then
+    assertThatCode(() -> runtimeService.newMigration(plan)
         .processInstanceQuery(runtimeService.createProcessInstanceQuery())
-        .execute();
-
-    // then: no exception thrown
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -515,13 +513,12 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    // when
-    runtimeService.createModification(processDefinitionId)
+    // when/then
+    assertThatCode(() -> runtimeService.createModification(processDefinitionId)
         .startAfterActivity("userTask")
         .processInstanceQuery(runtimeService.createProcessInstanceQuery())
-        .execute();
-
-    // then: no exception is thrown
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -571,13 +568,12 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    // when
-    runtimeService.restartProcessInstances(processDefinitionId)
+    // when/then
+    assertThatCode(() -> runtimeService.restartProcessInstances(processDefinitionId)
         .historicProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
         .startAfterActivity("startEvent")
-        .execute();
-
-    // then: No Exception is thrown
+        .execute())
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -626,12 +622,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    // when
-    runtimeService.updateProcessInstanceSuspensionState()
+    // when/then
+    assertThatCode(() -> runtimeService.updateProcessInstanceSuspensionState()
         .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery())
-        .suspend();
-
-    // then: no exception expected
+        .suspend())
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -662,12 +657,11 @@ class BoundedNumberOfMaxResultsTest {
 
     runtimeService.startProcessInstanceByKey("process");
 
-    // when
-    runtimeService.updateProcessInstanceSuspensionState()
+    // when/then
+    assertThatCode(() -> runtimeService.updateProcessInstanceSuspensionState()
         .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery())
-        .suspend();
-
-    // then: no exception expected
+        .suspend())
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
@@ -730,10 +724,9 @@ class BoundedNumberOfMaxResultsTest {
 
     testHelper.deploy(process);
 
-    // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then: should not fail
+    // when/then
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("process"))
+      .doesNotThrowAnyException();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)

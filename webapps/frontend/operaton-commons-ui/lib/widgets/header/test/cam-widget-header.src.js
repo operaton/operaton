@@ -18,7 +18,7 @@
 'use strict';
 
 var angular = require('operaton-bpm-sdk-js/vendor/angular'),
-  headerDefinition = require('../cam-widget-header');
+    headerDefinition = require('../cam-widget-header');
 
 require('angular-ui-bootstrap');
 require('angular-translate');
@@ -28,77 +28,61 @@ function Authentication(username, accesses) {
   this.name = username || '';
   this.authorizedApps = accesses || [];
 }
-Authentication.prototype.canAccess = function (appName) {
-  return (
-    !this.authorizedApps.length || this.authorizedApps.indexOf(appName) > -1
-  );
+Authentication.prototype.canAccess = function(appName) {
+  return !this.authorizedApps.length || this.authorizedApps.indexOf(appName) > -1;
 };
+
 
 var mockedDependenciesModule = angular.module('mockedDependencies', []);
 
-mockedDependenciesModule.service('AuthenticationService', [
-  function () {
-    this.logout = function () {
-      // logging out
-    };
-  },
-]);
+mockedDependenciesModule.service('AuthenticationService', [function() {
+  this.logout = function() {
+    // logging out
+  };
+}]);
 
-mockedDependenciesModule.provider('uriFilter', [
-  function () {
-    return {$get: function () {}};
-  },
-]);
-mockedDependenciesModule.filter('uri', [
-  function () {
-    return function () {
-      return '#uri-filter-replaced';
-    };
-  },
-]);
+mockedDependenciesModule.provider('uriFilter', [function() {
+  return { $get: function() {} };
+}]);
+mockedDependenciesModule.filter('uri', [function() {
+  return function() { return '#uri-filter-replaced'; };
+}]);
+
+
 
 var headerModule = angular.module('headerModule', [
   'ui.bootstrap',
-  mockedDependenciesModule.name,
+  mockedDependenciesModule.name
 ]);
 headerModule.directive('camWidgetHeader', headerDefinition);
 
+
+
 var testModule = angular.module('testModule', [headerModule.name]);
 
-testModule.controller('testAnonymousController', [
-  '$scope',
-  function ($scope) {
-    $scope.ctrlCurrentApp = 'admin';
-    $scope.auth = new Authentication();
-  },
-]);
+testModule.controller('testAnonymousController', ['$scope', function($scope) {
+  $scope.ctrlCurrentApp = 'admin';
+  $scope.auth = new Authentication();
+}]);
 
-testModule.controller('testAuthenticatedController', [
-  '$scope',
-  '$timeout',
-  function ($scope, $timeout) {
-    $scope.ctrlCurrentApp = 'tasklist';
+testModule.controller('testAuthenticatedController', ['$scope', '$timeout', function($scope, $timeout) {
+  $scope.ctrlCurrentApp = 'tasklist';
 
-    $scope.auth = new Authentication('mustermann', ['tasklist', 'admin']);
+  $scope.auth = new Authentication('mustermann', ['tasklist', 'admin']);
 
-    $timeout(function () {
-      $scope.fullName = 'Max Mustermann';
-    }, 400);
-  },
-]);
+  $timeout(function() {
+    $scope.fullName = 'Max Mustermann';
+  }, 400);
+}]);
 
-testModule.controller('testAuthenticatedSingleController', [
-  '$scope',
-  '$timeout',
-  function ($scope, $timeout) {
-    $scope.auth = new Authentication('mustermann', ['tasklist']);
+testModule.controller('testAuthenticatedSingleController', ['$scope', '$timeout', function($scope, $timeout) {
+  $scope.auth = new Authentication('mustermann', ['tasklist']);
 
-    $timeout(function () {
-      $scope.fullName = 'Max Mustermann';
-    }, 400);
-  },
-]);
+  $timeout(function() {
+    $scope.fullName = 'Max Mustermann';
+  }, 400);
+}]);
 
-angular.element(document).ready(function () {
+angular.element(document).ready(function() {
   angular.bootstrap(document.body, [testModule.name, 'pascalprecht.translate']);
 });

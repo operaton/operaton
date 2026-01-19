@@ -68,7 +68,7 @@
     }
   ],
   "operators": {
-    "undefined": [
+    "undefined":  [
       {
         "key": "eq",
         "value": "="
@@ -98,7 +98,7 @@
         "value": "PLUGIN_VIEW_VARIABLE_OPERATOR_LIKE"
       }
     ],
-    "string": [
+    "string":     [
       {
         "key": "eq",
         "value": "="
@@ -128,7 +128,7 @@
         "value": "PLUGIN_VIEW_VARIABLE_OPERATOR_LIKE"
       }
     ],
-    "number": [
+    "number":     [
       {
         "key": "eq",
         "value": "="
@@ -154,7 +154,7 @@
         "value": "SEARCH_LESS_THAN_EQUALS"
       }
     ],
-    "boolean": [
+    "boolean":    [
       {
         "key": "eq",
         "value": "="
@@ -164,26 +164,22 @@
         "value": "!="
       }
     ],
-    "object": [
-      {
-        "key": "eq",
-        "value": "="
-      },
+    "object":     [{
+      "key": "eq",
+      "value": "="
+    },
       {
         "key": "neq",
         "value": "!="
-      }
-    ],
-    "date": [
-      {
-        "key": "lteq",
-        "value": "PLUGIN_VIEW_VARIABLE_OPERATOR_BEFORE"
-      },
+      }],
+    "date":     [{
+      "key": "lteq",
+      "value": "PLUGIN_VIEW_VARIABLE_OPERATOR_BEFORE"
+    },
       {
         "key": "gteq",
         "value": "PLUGIN_VIEW_VARIABLE_OPERATOR_AFTER"
-      }
-    ]
+      }]
   },
   "tooltips": {
     "inputPlaceholder": "PLUGIN_VIEW_VARIABLE_ADD_CRITERIA",

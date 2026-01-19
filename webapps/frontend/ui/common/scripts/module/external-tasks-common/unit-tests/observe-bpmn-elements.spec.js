@@ -27,14 +27,14 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cam-common.external-tasks-common observeBpmnElements', function () {
+describe('cam-common.external-tasks-common observeBpmnElements', function() {
   var $scope;
   var bpmnElements;
   var instance;
 
   beforeEach(module(testModule.name));
 
-  beforeEach(inject(function ($injector) {
+  beforeEach(inject(function($injector) {
     var observeBpmnElements = $injector.get('observeBpmnElements');
 
     $scope = '$scope';
@@ -42,24 +42,24 @@ describe('cam-common.external-tasks-common observeBpmnElements', function () {
     instance = {
       processData: {
         newChild: sinon.stub().returnsThis(),
-        observe: sinon.stub().callsArgWith(1, bpmnElements),
-      },
+        observe: sinon.stub().callsArgWith(1, bpmnElements)
+      }
     };
 
     observeBpmnElements($scope, instance);
   }));
 
-  it('should create new instance of processData on given scope', function () {
+  it('should create new instance of processData on given scope', function() {
     expect(instance.processData.newChild.calledWith($scope)).to.eql(true);
   });
 
-  it('should observe bpmnElements', function () {
+  it('should observe bpmnElements', function() {
     expect(instance.processData.observe.calledWith('bpmnElements')).to.eql(
-      true,
+      true
     );
   });
 
-  it('should set bpmnElements on instance', function () {
+  it('should set bpmnElements on instance', function() {
     expect(instance.bpmnElements).to.eql(bpmnElements);
   });
 });

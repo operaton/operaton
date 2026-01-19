@@ -34,8 +34,7 @@ module.exports.editUserAccount = new EditUserAccountPage();
 module.exports.editUserGroups = new EditUserGroupsPage();
 module.exports.editUserGroups.selectGroupModal = new EditUserGroupsModalPage();
 module.exports.editUserTenants = new EditUserTenantsPage();
-module.exports.editUserTenants.selectTenantModal =
-  new EditUserTenantsModalPage();
+module.exports.editUserTenants.selectTenantModal = new EditUserTenantsModalPage();
 module.exports.newUser = new NewUserPage();
 module.exports.adminUserSetup = new AdminUserSetupPage();
 module.exports.authentication = new AuthenticationPage();

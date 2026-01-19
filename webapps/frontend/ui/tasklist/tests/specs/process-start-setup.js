@@ -30,19 +30,19 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
       },
       {
         deploymentName: 'suspension-process',
         files: [
           {
             name: 'suspension-process.bpmn',
-            content: readResource('suspension-process.bpmn'),
-          },
-        ],
-      },
+            content: readResource('suspension-process.bpmn')
+          }
+        ]
+      }
     ]),
 
     operation('filter', 'create', [
@@ -53,39 +53,39 @@ module.exports = {
           variables: [
             {
               name: 'var_1',
-              label: 'var_1',
+              label: 'var_1'
             },
             {
               name: 'var_2',
-              label: 'var_2',
+              label: 'var_2'
             },
             {
               name: 'var_3',
-              label: 'var_3',
+              label: 'var_3'
             },
             {
               name: 'var_4',
-              label: 'var_4',
+              label: 'var_4'
             },
             {
               name: 'var_5',
-              label: 'var_5',
+              label: 'var_5'
             },
             {
               name: 'var_6',
-              label: 'var_6',
+              label: 'var_6'
             },
             {
               name: 'var_7',
-              label: 'var_7',
-            },
+              label: 'var_7'
+            }
           ],
           priority: 10,
-          description: 'Show all Tasks',
+          description: 'Show all Tasks'
         },
-        resourceType: 'Task',
-      },
-    ]),
+        resourceType: 'Task'
+      }
+    ])
   ),
 
   multiTenancySetup: combine(
@@ -96,10 +96,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
-      },
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
+      }
     ]),
 
     operation('deployment', 'create', [
@@ -108,10 +108,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
-      },
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
+      }
     ]),
 
     operation('filter', 'create', [
@@ -120,10 +120,10 @@ module.exports = {
         query: {},
         properties: {
           priority: 10,
-          description: 'Show all Tasks',
+          description: 'Show all Tasks'
         },
-        resourceType: 'Task',
-      },
-    ]),
-  ),
+        resourceType: 'Task'
+      }
+    ])
+  )
 };

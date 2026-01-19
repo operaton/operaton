@@ -22,7 +22,7 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/cockpit/default/#/decision-definition/:decision',
 
-  pageHeader: function () {
+  pageHeader: function() {
     return element(by.css('.ctn-header h1'));
-  },
+  }
 });

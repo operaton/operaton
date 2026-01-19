@@ -26,17 +26,17 @@ var setups = require('./create-task-setup');
 var dashboardPage = require('../pages/dashboard');
 var createTaskDialogPage = dashboardPage.createTask;
 
-describe.skip('Tasklist Create Task Spec', function () {
-  describe('create task without tenant', function () {
-    before(function () {
-      return testHelper(function () {
+describe.skip('Tasklist Create Task Spec', function() {
+  describe('create task without tenant', function() {
+    before(function() {
+      return testHelper(function() {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.navigateTo();
       });
     });
 
-    it('should open', function () {
+    it('should open', function() {
       // when
       dashboardPage.createTask.openCreateDialog();
 
@@ -49,7 +49,7 @@ describe.skip('Tasklist Create Task Spec', function () {
         .be.false;
     });
 
-    it('should close the dialog', function () {
+    it('should close the dialog', function() {
       // when
       createTaskDialogPage.closeCreateDialog();
       browser.sleep(300);
@@ -60,16 +60,16 @@ describe.skip('Tasklist Create Task Spec', function () {
     });
   });
 
-  describe('create task with two tenants', function () {
-    before(function () {
-      return testHelper(setups.setup2, function () {
+  describe('create task with two tenants', function() {
+    before(function() {
+      return testHelper(setups.setup2, function() {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.navigateTo();
       });
     });
 
-    it('should open', function () {
+    it('should open', function() {
       // when
       dashboardPage.createTask.openCreateDialog();
 
@@ -82,7 +82,7 @@ describe.skip('Tasklist Create Task Spec', function () {
         .eventually.be.true;
     });
 
-    it('should save new task', function () {
+    it('should save new task', function() {
       // when
       createTaskDialogPage.taskNameInput('foo');
       createTaskDialogPage.taskAssigneeInput('admin');
@@ -96,7 +96,7 @@ describe.skip('Tasklist Create Task Spec', function () {
       expect(dashboardPage.taskList.taskList().count()).to.eventually.eql(1);
     });
 
-    it('should select created task', function () {
+    it('should select created task', function() {
       // when
       dashboardPage.taskList.selectTask('foo');
 
@@ -104,21 +104,21 @@ describe.skip('Tasklist Create Task Spec', function () {
       expect(dashboardPage.currentTask.taskTenantIdField().isDisplayed()).to
         .eventually.be.true;
       expect(
-        dashboardPage.currentTask.taskTenantIdField().getText(),
+        dashboardPage.currentTask.taskTenantIdField().getText()
       ).to.eventually.eql('tenantOne');
     });
   });
 
-  describe('create task with one tenant', function () {
-    before(function () {
-      return testHelper(setups.setup1, function () {
+  describe('create task with one tenant', function() {
+    before(function() {
+      return testHelper(setups.setup1, function() {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.navigateTo();
       });
     });
 
-    it('should open', function () {
+    it('should open', function() {
       // when
       dashboardPage.createTask.openCreateDialog();
 
@@ -131,7 +131,7 @@ describe.skip('Tasklist Create Task Spec', function () {
         .be.false;
     });
 
-    it('should save new task', function () {
+    it('should save new task', function() {
       // when
       createTaskDialogPage.taskNameInput('foo');
       createTaskDialogPage.taskAssigneeInput('admin');
@@ -145,7 +145,7 @@ describe.skip('Tasklist Create Task Spec', function () {
       expect(dashboardPage.taskList.taskList().count()).to.eventually.eql(1);
     });
 
-    it('should select created task', function () {
+    it('should select created task', function() {
       // when
       dashboardPage.taskList.selectTask('foo');
 
@@ -153,7 +153,7 @@ describe.skip('Tasklist Create Task Spec', function () {
       expect(dashboardPage.currentTask.taskTenantIdField().isDisplayed()).to
         .eventually.be.true;
       expect(
-        dashboardPage.currentTask.taskTenantIdField().getText(),
+        dashboardPage.currentTask.taskTenantIdField().getText()
       ).to.eventually.eql('tenantOne');
     });
   });

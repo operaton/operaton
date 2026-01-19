@@ -22,19 +22,24 @@ var clipboardDefinition = require('../cam-widget-clipboard');
 
 require('angular-ui-bootstrap');
 
-var clipboardModule = angular.module('clipboardModule', ['ui.bootstrap']);
+var clipboardModule = angular.module('clipboardModule', [
+  'ui.bootstrap'
+]);
 clipboardModule.directive('camWidgetClipboard', clipboardDefinition);
+
 
 var testModule = angular.module('testModule', [clipboardModule.name]);
 testModule.controller('testController', [
   '$scope',
-  function ($scope) {
+  function(
+    $scope
+  ) {
     $scope.obj = {
-      varToCopy: 'W00p! W00p!',
+      varToCopy: 'W00p! W00p!'
     };
-  },
-]);
+  }]);
 
-angular.element(document).ready(function () {
+
+angular.element(document).ready(function() {
   angular.bootstrap(document.body, [testModule.name]);
 });

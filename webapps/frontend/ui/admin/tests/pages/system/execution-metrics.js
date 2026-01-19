@@ -22,15 +22,15 @@ var Page = require('./system-base');
 module.exports = Page.extend({
   url: '/operaton/app/admin/default/#/system?section=system-settings-metrics',
 
-  flowNodesResult: function () {
+  flowNodesResult: function() {
     return element(by.binding('metrics.flowNodes')).getText();
   },
 
-  decisionElementsResult: function () {
+  decisionElementsResult: function() {
     return element(by.binding('metrics.decisionElements')).getText();
   },
 
-  startDateField: function (inputValue) {
+  startDateField: function(inputValue) {
     var inputField = element(by.model('startDate'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -38,7 +38,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  endDateField: function (inputValue) {
+  endDateField: function(inputValue) {
     var inputField = element(by.model('endDate'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -46,7 +46,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  refreshButton: function () {
+  refreshButton: function() {
     return element(by.css('[ng-click="load()"]'));
-  },
+  }
 });

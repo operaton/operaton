@@ -32,15 +32,15 @@ var setup1 = combine(
         variables: [
           {
             name: 'testVar',
-            label: 'Test Variable',
+            label: 'Test Variable'
           },
           {
             name: 'testString',
-            label: 'String Variable',
-          },
-        ],
-      },
-    },
+            label: 'String Variable'
+          }
+        ]
+      }
+    }
   ]),
 
   operation('user', 'create', [
@@ -48,14 +48,14 @@ var setup1 = combine(
       id: 'test',
       firstName: 'Montgomery',
       lastName: 'QA',
-      password: 'test',
+      password: 'test'
     },
     {
       id: 'otheruser',
       firstName: 'Other',
       lastName: 'User',
-      password: 'otheruser',
-    },
+      password: 'otheruser'
+    }
   ]),
 
   operation('authorization', 'create', [
@@ -65,7 +65,7 @@ var setup1 = combine(
       userId: 'test',
       groupId: null,
       resourceType: 0,
-      resourceId: 'tasklist',
+      resourceId: 'tasklist'
     },
     {
       type: 1,
@@ -73,7 +73,7 @@ var setup1 = combine(
       userId: 'test',
       groupId: null,
       resourceType: 5,
-      resourceId: '*',
+      resourceId: '*'
     },
     {
       type: 1,
@@ -81,7 +81,7 @@ var setup1 = combine(
       userId: 'test',
       groupId: null,
       resourceType: 7,
-      resourceId: '*',
+      resourceId: '*'
     },
 
     {
@@ -90,7 +90,7 @@ var setup1 = combine(
       userId: 'otheruser',
       groupId: null,
       resourceType: 0,
-      resourceId: 'tasklist',
+      resourceId: 'tasklist'
     },
     {
       type: 1,
@@ -98,7 +98,7 @@ var setup1 = combine(
       userId: 'otheruser',
       groupId: null,
       resourceType: 5,
-      resourceId: '*',
+      resourceId: '*'
     },
     {
       type: 1,
@@ -106,25 +106,25 @@ var setup1 = combine(
       userId: 'otheruser',
       groupId: null,
       resourceType: 7,
-      resourceId: '*',
-    },
+      resourceId: '*'
+    }
   ]),
 
   operation('task', 'create', [
     {
       id: '1',
-      name: 'Task 1',
-    },
+      name: 'Task 1'
+    }
   ]),
 
   operation('task', 'assignee', [
     {
       taskId: '1',
-      userId: 'test',
-    },
-  ]),
+      userId: 'test'
+    }
+  ])
 );
 
 module.exports = {
-  setup1: setup1,
+  setup1: setup1
 };

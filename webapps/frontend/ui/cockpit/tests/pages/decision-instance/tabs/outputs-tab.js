@@ -24,7 +24,7 @@ module.exports = Table.extend({
   tabIndex: 1,
   tabLabel: 'Outputs',
 
-  variableName: function (idx) {
+  variableName: function(idx) {
     return element
       .all(by.repeater('(v, info) in variables'))
       .get(idx)
@@ -32,11 +32,11 @@ module.exports = Table.extend({
       .getText();
   },
 
-  variableValue: function (idx) {
+  variableValue: function(idx) {
     return element
       .all(by.repeater('(v, info) in variables'))
       .get(idx)
       .element(by.css('[ng-switch-when="value"]'))
       .getText();
-  },
+  }
 });

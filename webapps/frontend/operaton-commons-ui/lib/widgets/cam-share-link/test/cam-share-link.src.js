@@ -24,14 +24,14 @@ var clipboardDefinition = require('../../clipboard/cam-widget-clipboard');
 require('angular-ui-bootstrap');
 require('angular-translate');
 
-var shareModule = angular.module('shareModule', ['ui.bootstrap']);
+
+var shareModule = angular.module('shareModule', [
+  'ui.bootstrap'
+]);
 
 shareModule.directive('camShareLink', camShareLink);
 shareModule.directive('camWidgetClipboard', clipboardDefinition);
 
-angular.element(document).ready(function () {
-  angular.bootstrap(document.body, [
-    shareModule.name,
-    'pascalprecht.translate',
-  ]);
+angular.element(document).ready(function() {
+  angular.bootstrap(document.body, [shareModule.name, 'pascalprecht.translate']);
 });

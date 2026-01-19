@@ -33,15 +33,15 @@ module.exports = {
           variables: [
             {
               name: 'testVar',
-              label: 'Test Variable',
+              label: 'Test Variable'
             },
             {
               name: 'testString',
-              label: 'String Variable',
-            },
-          ],
-        },
-      },
+              label: 'String Variable'
+            }
+          ]
+        }
+      }
     ]),
 
     operation('user', 'create', [
@@ -49,8 +49,8 @@ module.exports = {
         id: 'test',
         firstName: 'test',
         lastName: 'test',
-        password: 'test',
-      },
+        password: 'test'
+      }
     ]),
 
     operation('authorization', 'create', [
@@ -60,7 +60,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 0,
-        resourceId: 'tasklist',
+        resourceId: 'tasklist'
       },
       {
         type: 1,
@@ -68,7 +68,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 5,
-        resourceId: '*',
+        resourceId: '*'
       },
       {
         type: 1,
@@ -76,24 +76,24 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 7,
-        resourceId: '*',
-      },
+        resourceId: '*'
+      }
     ]),
 
     operation('task', 'create', [
       {
         id: '1',
-        name: 'Task 1',
+        name: 'Task 1'
       },
       {
         id: '2',
-        name: 'Task 2',
+        name: 'Task 2'
       },
       {
         id: '3',
         name: 'Task 3',
-        assignee: 'test',
-      },
+        assignee: 'test'
+      }
     ]),
 
     operation('task', 'localVariable', [
@@ -101,45 +101,45 @@ module.exports = {
         id: '1',
         varId: 'testVar',
         value: 42,
-        type: 'Integer',
+        type: 'Integer'
       },
       {
         id: '2',
         varId: 'testVar',
         value: 48,
-        type: 'Integer',
+        type: 'Integer'
       },
       {
         id: '3',
         varId: 'testVar',
         value: 1000,
-        type: 'Integer',
+        type: 'Integer'
       },
       {
         id: '1',
         varId: 'testDate',
         value: '2013-11-30T10:03:01.000+0200',
-        type: 'Date',
+        type: 'Date'
       },
       {
         id: '2',
         varId: 'testDate',
         value: '2013-11-30T10:03:00.000+0200',
-        type: 'Date',
+        type: 'Date'
       },
       {
         id: '1',
         varId: 'testString',
         value: '4711',
-        type: 'String',
+        type: 'String'
       },
       {
         id: '2',
         varId: 'testString',
         value: 'asdfhans dampf',
-        type: 'String',
-      },
-    ]),
+        type: 'String'
+      }
+    ])
   ),
 
   multiTenancySetup: combine(
@@ -149,10 +149,10 @@ module.exports = {
         query: {},
         properties: {
           priority: 5,
-          description: 'Filter',
+          description: 'Filter'
         },
-        resourceType: 'Task',
-      },
+        resourceType: 'Task'
+      }
     ]),
 
     operation('task', 'create', [
@@ -160,19 +160,19 @@ module.exports = {
         id: '1',
         name: 'Task 1',
         tenantId: 'tenant1',
-        owner: 'test',
+        owner: 'test'
       },
       {
         id: '2',
         name: 'Task 2',
         tenantId: 'tenant2',
-        owner: 'test',
+        owner: 'test'
       },
       {
         id: '3',
         name: 'Task 3',
-        owner: 'test',
-      },
-    ]),
-  ),
+        owner: 'test'
+      }
+    ])
+  )
 };

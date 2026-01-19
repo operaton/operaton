@@ -27,45 +27,45 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cam-common.external-task ExternalTaskErrorMessageLink', function () {
+describe('cam-common.external-task ExternalTaskErrorMessageLink', function() {
   var $scope;
   var Uri;
   var instance;
 
   beforeEach(module(testModule.name));
 
-  beforeEach(inject(function ($controller) {
+  beforeEach(inject(function($controller) {
     $scope = {
       taskId: 'task-cool-id',
-      historic: false,
+      historic: false
     };
     Uri = {
-      appUri: sinon.stub().returnsArg(0),
+      appUri: sinon.stub().returnsArg(0)
     };
 
     instance = $controller('ExternalTaskErrorMessageLinkController', {
       $scope: $scope,
-      Uri: Uri,
+      Uri: Uri
     });
   }));
 
-  it('should expose taskId and historic $scope properties', function () {
+  it('should expose taskId and historic $scope properties', function() {
     expect(instance.taskId).to.eql($scope.taskId);
     expect(instance.historic).to.eql($scope.historic);
   });
 
-  describe('getStacktraceUrl', function () {
-    it('should create link to runtime error details for given task id', function () {
+  describe('getStacktraceUrl', function() {
+    it('should create link to runtime error details for given task id', function() {
       expect(instance.getStacktraceUrl()).to.contain(
-        '/external-task/' + instance.taskId + '/errorDetails',
+        '/external-task/' + instance.taskId + '/errorDetails'
       );
     });
 
-    it('should create link to history error details for given task id', function () {
+    it('should create link to history error details for given task id', function() {
       instance.historic = true;
 
       expect(instance.getStacktraceUrl()).to.contain(
-        '/history/external-task-log/' + instance.taskId + '/error-details',
+        '/history/external-task-log/' + instance.taskId + '/error-details'
       );
     });
   });

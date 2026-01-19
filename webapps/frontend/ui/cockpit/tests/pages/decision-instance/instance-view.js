@@ -22,20 +22,20 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/cockpit/default/#/decision-instance/:decision',
 
-  pageHeader: function () {
+  pageHeader: function() {
     this.waitForElementToBeVisible(element(by.css('.ctn-header h1')));
     return element(by.css('.ctn-header h1'));
   },
 
-  processInstanceLink: function () {
+  processInstanceLink: function() {
     return element(by.css('.super-process-instance-id'));
   },
 
-  gotoProcessInstanceButton: function () {
+  gotoProcessInstanceButton: function() {
     return this.processInstanceLink().element(by.css('a'));
   },
 
-  gotoProcessInstance: function () {
+  gotoProcessInstance: function() {
     return this.gotoProcessInstanceButton().click();
-  },
+  }
 });

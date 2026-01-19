@@ -20,63 +20,63 @@
 var Base = require('./base');
 
 module.exports = Base.extend({
-  diagramElement: function () {
+  diagramElement: function() {
     return element(by.css('[cam-widget-bpmn-viewer]'));
   },
 
-  instancesBadgeFor: function (activityName) {
+  instancesBadgeFor: function(activityName) {
     return element(
       by.css(
         '[data-container-id="' +
           activityName +
-          '"] .badge[uib-tooltip="Running Activity Instances"]',
-      ),
+          '"] .badge[uib-tooltip="Running Activity Instances"]'
+      )
     );
   },
 
-  incidentsBadgeFor: function (activityName) {
+  incidentsBadgeFor: function(activityName) {
     return element(
       by.css(
         '[data-container-id="' +
           activityName +
-          '"] .badge[uib-tooltip="Open Incidents"]',
-      ),
+          '"] .badge[uib-tooltip="Open Incidents"]'
+      )
     );
   },
 
-  diagramActivity: function (activityName) {
+  diagramActivity: function(activityName) {
     return element(
-      by.css('*[data-element-id=' + '"' + activityName + '"' + ']'),
+      by.css('*[data-element-id=' + '"' + activityName + '"' + ']')
     );
   },
 
-  selectActivity: function (activityName) {
+  selectActivity: function(activityName) {
     this.diagramActivity(activityName).click();
   },
 
-  deselectAll: function () {
+  deselectAll: function() {
     this.diagramElement().click();
   },
 
-  isActivitySelected: function (activityName) {
+  isActivitySelected: function(activityName) {
     return this.diagramActivity(activityName)
       .getAttribute('class')
-      .then(function (classes) {
+      .then(function(classes) {
         return classes.indexOf('highlight') !== -1;
       });
   },
 
-  isActivitySuspended: function (activityName) {
+  isActivitySuspended: function(activityName) {
     return element(
       by.css(
         '[data-container-id="' +
           activityName +
-          '"] .badge[uib-tooltip="Suspended Job Definition"]',
-      ),
+          '"] .badge[uib-tooltip="Suspended Job Definition"]'
+      )
     )
       .getAttribute('class')
-      .then(function (classes) {
+      .then(function(classes) {
         return classes.indexOf('ng-hide') === -1;
       });
-  },
+  }
 });

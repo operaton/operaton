@@ -22,11 +22,11 @@ var Base = require('./new-base');
 module.exports = Base.extend({
   url: '/operaton/app/admin/default/setup/#/setup',
 
-  createNewAdminButton: function () {
+  createNewAdminButton: function() {
     return element(by.css('.btn.btn-primary'));
   },
 
-  statusMessage: function () {
+  statusMessage: function() {
     return element(by.css('.alert')).getText();
-  },
+  }
 });

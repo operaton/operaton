@@ -25,13 +25,13 @@ var defaultTenantSetup = combine(
   operation('tenant', 'create', [
     {
       id: 'tenantOne',
-      name: 'Tenant One',
+      name: 'Tenant One'
     },
     {
       id: 'tenantTwo',
-      name: 'Tenant Two',
-    },
-  ]),
+      name: 'Tenant Two'
+    }
+  ])
 );
 
 function createEntities(factory) {
@@ -46,98 +46,98 @@ var tenantPagerSetup = combine(
   operation(
     'tenant',
     'create',
-    createEntities(function (idx) {
+    createEntities(function(idx) {
       return {
         id: 'tenant' + idx,
-        name: 'Tenant ' + idx,
+        name: 'Tenant ' + idx
       };
-    }),
-  ),
+    })
+  )
 );
 
 var userPagerSetup = combine(
   operation('tenant', 'create', [
     {
       id: 'tenantOne',
-      name: 'Tenant One',
-    },
+      name: 'Tenant One'
+    }
   ]),
 
   operation(
     'user',
     'create',
-    createEntities(function (idx) {
+    createEntities(function(idx) {
       return {
         id: 'user' + idx,
         password: 'cam123',
         firstName: 'abc',
-        lastName: 'def',
+        lastName: 'def'
       };
-    }),
+    })
   ),
 
   operation(
     'tenant',
     'createUserMember',
-    createEntities(function (idx) {
+    createEntities(function(idx) {
       return {
         id: 'tenantOne',
-        userId: 'user' + idx,
+        userId: 'user' + idx
       };
-    }),
-  ),
+    })
+  )
 );
 
 var groupPagerSetup = combine(
   operation('tenant', 'create', [
     {
       id: 'tenantOne',
-      name: 'Tenant One',
-    },
+      name: 'Tenant One'
+    }
   ]),
 
   operation(
     'group',
     'create',
-    createEntities(function (idx) {
+    createEntities(function(idx) {
       return {
         id: 'group' + idx,
         name: 'group' + idx,
-        type: 'GROUP' + idx,
+        type: 'GROUP' + idx
       };
-    }),
+    })
   ),
 
   operation(
     'tenant',
     'createGroupMember',
-    createEntities(function (idx) {
+    createEntities(function(idx) {
       return {
         id: 'tenantOne',
-        groupId: 'group' + idx,
+        groupId: 'group' + idx
       };
-    }),
-  ),
+    })
+  )
 );
 
 var pagingSetup = combine(
   operation(
     'tenant',
     'create',
-    createEntities(function (idx) {
+    createEntities(function(idx) {
       return {
         id: 'tenant' + idx,
-        name: 'Tenant ' + idx,
+        name: 'Tenant ' + idx
       };
-    }),
+    })
   ),
 
   operation('group', 'create', [
     {
       id: 'group',
       name: 'group',
-      type: 'GROUP',
-    },
+      type: 'GROUP'
+    }
   ]),
 
   operation('user', 'create', [
@@ -145,9 +145,9 @@ var pagingSetup = combine(
       id: 'user',
       password: 'cam123',
       firstName: 'abc',
-      lastName: 'def',
-    },
-  ]),
+      lastName: 'def'
+    }
+  ])
 );
 
 module.exports = {
@@ -159,5 +159,5 @@ module.exports = {
 
   setup4: userPagerSetup,
 
-  setup5: pagingSetup,
+  setup5: pagingSetup
 };

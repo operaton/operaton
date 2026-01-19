@@ -75,7 +75,7 @@ const addMissingLicenseHeaders = (filePath, source) => {
       if (licenseInfo) {
         return `/*!\n@license ${pkg}@${version}\n${licenseInfo}*/\n${source}`;
       } else if (license) {
-        console.log(`${pkg} has a "license" property. 🤷‍`); // eslint-disable-line
+        console.log(`${pkg} has a "license" property. 🤷‍`);// eslint-disable-line
         return `/*! @license ${pkg}@${version} (${license}) */\n${source}`;
       }
     }

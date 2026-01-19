@@ -25,7 +25,7 @@ var defaultResourceMethods = [
   'count',
   'update',
   'delete',
-  'get',
+  'get'
 ];
 
 /**
@@ -37,10 +37,10 @@ var defaultResourceMethods = [
 function createCamApiMock(resourceMethods) {
   resourceMethods = resourceMethods || defaultResourceMethods;
 
-  var fakeResource = resourceMethods.reduce(function (fakeResource, method) {
+  var fakeResource = resourceMethods.reduce(function(fakeResource, method) {
     fakeResource[method] = noop;
 
-    sinon.stub(fakeResource, method).callsFake(function () {
+    sinon.stub(fakeResource, method).callsFake(function() {
       var args = Array.prototype.slice.call(arguments);
       var callback = args[args.length - 1];
 
@@ -54,7 +54,7 @@ function createCamApiMock(resourceMethods) {
 
   var camAPI = {
     resource: sinon.stub(),
-    fakeResource: fakeResource,
+    fakeResource: fakeResource
   };
 
   camAPI.resource.returns(fakeResource);

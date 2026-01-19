@@ -22,87 +22,91 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/welcome/default/#/welcome',
 
-  webappLinks: function () {
+  webappLinks: function() {
     return element(by.css('.webapps'));
   },
 
-  adminWebappLink: function () {
+  adminWebappLink: function() {
     return this.webappLinks().element(by.css('.admin-app'));
   },
 
-  cockpitWebappLink: function () {
+  cockpitWebappLink: function() {
     return this.webappLinks().element(by.css('.cockpit-app'));
   },
 
-  tasklistWebappLink: function () {
+  tasklistWebappLink: function() {
     return this.webappLinks().element(by.css('.tasklist-app'));
   },
 
-  userProfile: function () {
+  userProfile: function() {
     return element(by.css('#user-profile'));
   },
 
-  userProfileFullName: function () {
+  userProfileFullName: function() {
     return this.userProfile().element(by.css('.user-profile-name'));
   },
 
-  userProfileEmail: function () {
+  userProfileEmail: function() {
     return this.userProfile().element(by.css('.user-profile-email'));
   },
 
-  userProfileGroups: function () {
+  userProfileGroups: function() {
     return this.userProfile().element(by.css('.user-profile-groups'));
   },
 
-  userProfileLink: function () {
+  userProfileLink: function() {
     return this.userProfile().element(
-      by.cssContainingText('.action-links li a', 'Edit profile'),
+      by.cssContainingText('.action-links li a', 'Edit profile')
     );
   },
 
-  changePasswordLink: function () {
+  changePasswordLink: function() {
     return this.userProfile().element(
-      by.cssContainingText('.action-links li a', 'Change password'),
+      by.cssContainingText('.action-links li a', 'Change password')
     );
   },
 
-  userProfileForm: function () {
+  userProfileForm: function() {
     return this.userProfile().element(by.css('form[name=userProfile]'));
   },
 
-  userProfileFirstNameField: function () {
+  userProfileFirstNameField: function() {
     return this.userProfileForm().element(by.css('[name=firstName]'));
   },
 
-  userProfileLastNameField: function () {
+  userProfileLastNameField: function() {
     return this.userProfileForm().element(by.css('[name=lastName]'));
   },
 
-  userProfileEmailField: function () {
+  userProfileEmailField: function() {
     return this.userProfileForm().element(by.css('[name=email]'));
   },
 
-  userProfileFormSubmit: function () {
-    return this.userProfileForm().element(by.css('[type=submit]')).click();
+  userProfileFormSubmit: function() {
+    return this.userProfileForm()
+      .element(by.css('[type=submit]'))
+      .click();
   },
 
-  changePasswordForm: function () {
+  changePasswordForm: function() {
     return this.userProfile().element(by.css('form[name=changePassword]'));
   },
 
-  changePasswordCurrentField: function () {
+  changePasswordCurrentField: function() {
     return this.changePasswordForm().element(by.css('[name=current]'));
   },
 
-  changePasswordNewField: function () {
+  changePasswordNewField: function() {
     return this.changePasswordForm().element(by.css('[name=new]'));
   },
 
-  changePasswordConfirmationField: function () {
+  changePasswordConfirmationField: function() {
     return this.changePasswordForm().element(by.css('[name=confirmation]'));
   },
 
-  changePasswordFormSubmit: function () {
-    return this.changePasswordForm().element(by.css('[type=submit]')).click();
-  },
+  changePasswordFormSubmit: function() {
+    return this.changePasswordForm()
+      .element(by.css('[type=submit]'))
+      .click();
+  }
 });

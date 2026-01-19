@@ -30,8 +30,7 @@ var SearchWidget = require('../../../../common/tests/pages/search-widget');
 module.exports = new ProcessDefinitionPage();
 module.exports.diagram = new DiagramPage();
 module.exports.processInstancesTab = new TableProcessInstancesPage();
-module.exports.calledProcessDefinitionsTab =
-  new TableCalledProcessDefinitionsPage();
+module.exports.calledProcessDefinitionsTab = new TableCalledProcessDefinitionsPage();
 module.exports.jobDefinitionsTab = new TableJobDefinitionsPage();
 module.exports.jobDefinitionsTab.modal = new SuspensionModalPage();
 module.exports.suspension = new SuspensionPage();

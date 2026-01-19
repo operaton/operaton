@@ -25,10 +25,10 @@ var processesPage = require('../pages/processes');
 var definitionPage = require('../pages/process-definition');
 var instancePage = require('../pages/process-instance');
 
-describe('Cockpit Suspsension Spec', function () {
-  describe('process definition suspension', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+describe('Cockpit Suspsension Spec', function() {
+  describe('process definition suspension', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -36,7 +36,7 @@ describe('Cockpit Suspsension Spec', function () {
       });
     });
 
-    it('should suspend definition immediately', function () {
+    it('should suspend definition immediately', function() {
       // when
       definitionPage.suspension.suspendDefinition();
 
@@ -44,7 +44,7 @@ describe('Cockpit Suspsension Spec', function () {
       expect(definitionPage.isDefinitionSuspended()).to.eventually.be.true;
     });
 
-    it('should active definition immediately', function () {
+    it('should active definition immediately', function() {
       // when
       definitionPage.suspension.activateDefinition();
 
@@ -53,9 +53,9 @@ describe('Cockpit Suspsension Spec', function () {
     });
   });
 
-  describe('process instance suspension', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+  describe('process instance suspension', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -64,7 +64,7 @@ describe('Cockpit Suspsension Spec', function () {
       });
     });
 
-    it('should suspend instance', function () {
+    it('should suspend instance', function() {
       // when
       instancePage.suspension.suspendInstance();
 
@@ -72,7 +72,7 @@ describe('Cockpit Suspsension Spec', function () {
       expect(instancePage.isInstanceSuspended()).to.eventually.be.true;
     });
 
-    it('should validate suspended instance', function () {
+    it('should validate suspended instance', function() {
       // when
       instancePage.navbarBrand().click();
       dashboardPage.goToSection('Processes');
@@ -86,7 +86,7 @@ describe('Cockpit Suspsension Spec', function () {
       definitionPage.processInstancesTab.selectInstanceId(0);
     });
 
-    it('should active instance', function () {
+    it('should active instance', function() {
       // when
       instancePage.suspension.activateInstance();
 
@@ -95,9 +95,9 @@ describe('Cockpit Suspsension Spec', function () {
     });
   });
 
-  describe('job suspension', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+  describe('job suspension', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -106,7 +106,7 @@ describe('Cockpit Suspsension Spec', function () {
       });
     });
 
-    it('should suspend job definition immediately', function () {
+    it('should suspend job definition immediately', function() {
       // when
       definitionPage.jobDefinitionsTab.suspendJobDefinition(0);
 
@@ -115,7 +115,7 @@ describe('Cockpit Suspsension Spec', function () {
         .eventually.be.true;
     });
 
-    it('should active job definition immediately', function () {
+    it('should active job definition immediately', function() {
       // when
       definitionPage.jobDefinitionsTab.activateJobDefinition(0);
 
@@ -124,7 +124,7 @@ describe('Cockpit Suspsension Spec', function () {
         .eventually.be.false;
     });
 
-    it('should display suspension badge on suspension for second job for activity', function () {
+    it('should display suspension badge on suspension for second job for activity', function() {
       // when
       definitionPage.jobDefinitionsTab.suspendJobDefinition(1);
 

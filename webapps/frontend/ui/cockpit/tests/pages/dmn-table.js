@@ -19,35 +19,43 @@
 
 var Base = require('./base');
 
-var LabelRow = function (node) {
+var LabelRow = function(node) {
   this.node = node;
 };
 
-LabelRow.prototype.getInputText = function (idx) {
-  return this.node.all(by.css('td.input')).get(idx).getText();
+LabelRow.prototype.getInputText = function(idx) {
+  return this.node
+    .all(by.css('td.input'))
+    .get(idx)
+    .getText();
 };
 
-var RuleRow = function (node) {
+var RuleRow = function(node) {
   this.node = node;
 };
-RuleRow.prototype.getCellText = function (idx) {
-  return this.node.all(by.css('td')).get(idx).getText();
+RuleRow.prototype.getCellText = function(idx) {
+  return this.node
+    .all(by.css('td'))
+    .get(idx)
+    .getText();
 };
 
 module.exports = Base.extend({
-  tableElement: function () {
+  tableElement: function() {
     return element(by.css('[cam-widget-dmn-viewer]'));
   },
 
-  row: function (idx) {
-    return this.tableElement().all(by.css('tbody > tr')).get(idx);
+  row: function(idx) {
+    return this.tableElement()
+      .all(by.css('tbody > tr'))
+      .get(idx);
   },
 
-  labelRow: function () {
+  labelRow: function() {
     return new LabelRow(this.tableElement().element(by.css('tr.labels')));
   },
 
-  ruleRow: function (idx) {
+  ruleRow: function(idx) {
     return new RuleRow(this.row(idx));
-  },
+  }
 });

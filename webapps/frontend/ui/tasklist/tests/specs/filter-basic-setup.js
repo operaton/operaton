@@ -30,28 +30,28 @@ module.exports = {
         query: {},
         properties: {
           priority: 100,
-          description: 'Show all Tasks',
+          description: 'Show all Tasks'
         },
-        resourceType: 'Task',
+        resourceType: 'Task'
       },
       {
         name: 'My Tasks',
         query: {
-          assigneeExpression: '${ currentUser() }',
+          assigneeExpression: '${ currentUser() }'
         },
         properties: {
-          priority: 10,
+          priority: 10
         },
-        resourceType: 'Task',
+        resourceType: 'Task'
       },
       {
         name: 'Test Filter',
         query: {},
         properties: {
-          priority: 110,
+          priority: 110
         },
-        resourceType: 'Task',
-      },
+        resourceType: 'Task'
+      }
     ]),
 
     operation('user', 'create', [
@@ -59,8 +59,8 @@ module.exports = {
         id: 'test',
         firstName: 'Montgomery',
         lastName: 'QA',
-        password: 'test',
-      },
+        password: 'test'
+      }
     ]),
 
     operation('authorization', 'create', [
@@ -70,7 +70,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 0,
-        resourceId: 'tasklist',
+        resourceId: 'tasklist'
       },
       {
         type: 1,
@@ -78,7 +78,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 5,
-        resourceId: '*',
+        resourceId: '*'
       },
       {
         type: 1,
@@ -86,34 +86,34 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 7,
-        resourceId: '*',
-      },
+        resourceId: '*'
+      }
     ]),
 
     operation('task', 'create', [
       {
         id: '1',
-        name: 'Task 1',
+        name: 'Task 1'
       },
       {
         id: '2',
-        name: 'Task 2',
+        name: 'Task 2'
       },
       {
         id: '3',
-        name: 'Task 3',
-      },
+        name: 'Task 3'
+      }
     ]),
 
     operation('task', 'assignee', [
       {
         taskId: '1',
-        userId: 'test',
+        userId: 'test'
       },
       {
         taskId: '2',
-        userId: 'test',
-      },
-    ]),
-  ),
+        userId: 'test'
+      }
+    ])
+  )
 };

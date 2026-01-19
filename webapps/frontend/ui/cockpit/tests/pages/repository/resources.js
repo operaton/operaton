@@ -20,32 +20,36 @@
 var Page = require('./repository-view');
 
 module.exports = Page.extend({
-  formElement: function () {
+  formElement: function() {
     return element(by.css('[cam-resources]'));
   },
 
-  resourceList: function () {
+  resourceList: function() {
     return this.formElement().all(
-      by.repeater('(delta, resource) in resources'),
+      by.repeater('(delta, resource) in resources')
     );
   },
 
-  getResourceIndex: function (resourceName) {
+  getResourceIndex: function(resourceName) {
     return this.findElementIndexInRepeater(
       '(delta, resource) in resources',
       by.css('.name .resource'),
-      resourceName,
-    ).then(function (idx) {
+      resourceName
+    ).then(function(idx) {
       return idx;
     });
   },
 
-  selectResource: function (idxOrName) {
+  selectResource: function(idxOrName) {
     var self = this;
     function callPageObject(idx) {
-      self.resourceList().get(idx).element(by.css('a')).click();
+      self
+        .resourceList()
+        .get(idx)
+        .element(by.css('a'))
+        .click();
       self.waitForElementToBeVisible(
-        element(by.css('[cam-resource-meta] .name')),
+        element(by.css('[cam-resource-meta] .name'))
       );
     }
 
@@ -56,7 +60,10 @@ module.exports = Page.extend({
     }
   },
 
-  resourceName: function (idx) {
-    return this.resourceList().get(idx).element(by.css('a')).getText();
-  },
+  resourceName: function(idx) {
+    return this.resourceList()
+      .get(idx)
+      .element(by.css('a'))
+      .getText();
+  }
 });

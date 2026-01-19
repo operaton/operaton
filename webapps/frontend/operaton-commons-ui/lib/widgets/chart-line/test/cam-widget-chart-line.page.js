@@ -20,19 +20,19 @@
           element: false, expect: false, by: false, protractor: false */
 'use strict';
 
-var ChartLine = function (node) {
+var ChartLine = function(node) {
   this.node = node;
 };
-ChartLine.prototype.isPresent = function () {
+ChartLine.prototype.isPresent = function() {
   return this.node.isPresent();
 };
-ChartLine.prototype.hasCanvas = function () {
+ChartLine.prototype.hasCanvas = function() {
   return this.node.element(by.css('canvas')).isPresent();
 };
 
-function Page() {}
+function Page() { }
 
-Page.prototype.chartLine = function (selector) {
+Page.prototype.chartLine = function(selector) {
   return new ChartLine(element(by.css(selector)));
 };
 

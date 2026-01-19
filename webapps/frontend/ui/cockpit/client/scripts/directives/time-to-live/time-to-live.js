@@ -55,8 +55,7 @@ module.exports = [
               (updated) => updated && $scope.customOnChange?.(),
               // handle modal canceled via backdrop click or esc
               () => $scope.customOnChange?.(),
-            )
-            .catch(console.error); // eslint-disable-line
+            ).catch(console.error); // eslint-disable-line
         };
       },
     };

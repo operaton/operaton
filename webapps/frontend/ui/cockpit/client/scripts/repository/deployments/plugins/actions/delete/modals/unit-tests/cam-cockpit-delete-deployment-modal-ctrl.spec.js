@@ -28,7 +28,7 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cockpit.repository.deployment.action deleteDeployment modal controller', function () {
+describe('cockpit.repository.deployment.action deleteDeployment modal controller', function() {
   var $controller;
   var $rootScope;
   var $q;
@@ -40,7 +40,7 @@ describe('cockpit.repository.deployment.action deleteDeployment modal controller
 
   beforeEach(module(testModule.name));
 
-  beforeEach(inject(function ($injector) {
+  beforeEach(inject(function($injector) {
     $controller = $injector.get('$controller');
     $rootScope = $injector.get('$rootScope');
     $q = $injector.get('$q');
@@ -50,21 +50,21 @@ describe('cockpit.repository.deployment.action deleteDeployment modal controller
     camAPI = {
       resource: sinon.stub().returnsThis(),
       count: sinon.spy(),
-      delete: sinon.stub(),
+      delete: sinon.stub()
     };
 
     Notifications = {
-      addError: sinon.spy(),
+      addError: sinon.spy()
     };
 
     deploymentData = {
       newChild: sinon.stub().returnsThis(),
       provide: sinon.stub().callsArg(1),
-      observe: sinon.stub().callsArg(1),
+      observe: sinon.stub().callsArg(1)
     };
 
     deployment = {
-      id: 'deployment-id',
+      id: 'deployment-id'
     };
 
     $controller(deleteDeploymentController, {
@@ -73,7 +73,7 @@ describe('cockpit.repository.deployment.action deleteDeployment modal controller
       camAPI: camAPI,
       Notifications: Notifications,
       deploymentData: deploymentData,
-      deployment: deployment,
+      deployment: deployment
     });
   }));
 
@@ -97,8 +97,8 @@ describe('cockpit.repository.deployment.action deleteDeployment modal controller
         camAPI.delete.calledWith(deployment.id, {
           cascade: false,
           skipCustomListeners: true,
-          skipIoMappings: true,
-        }),
+          skipIoMappings: true
+        })
       ).to.eql(true);
     });
 
@@ -111,8 +111,8 @@ describe('cockpit.repository.deployment.action deleteDeployment modal controller
         camAPI.delete.calledWith(deployment.id, {
           cascade: false,
           skipCustomListeners: true,
-          skipIoMappings: false,
-        }),
+          skipIoMappings: false
+        })
       ).to.eql(true);
     });
   });

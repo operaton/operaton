@@ -25,28 +25,28 @@ module.exports = Table.extend({
   tabLabel: 'Decision Instances',
   tableRepeater: 'decisionInstance in decisionInstances',
 
-  selectInstanceId: function (idx) {
+  selectInstanceId: function(idx) {
     this.waitForElementToBeVisible(element(by.repeater(this.tableRepeater)));
     return this.tableItem(idx, by.binding('decisionInstance.id')).click();
   },
 
-  selectProcessDefinitionKey: function (idx) {
+  selectProcessDefinitionKey: function(idx) {
     this.waitForElementToBeVisible(element(by.repeater(this.tableRepeater)));
     return this.tableItem(
       idx,
-      by.binding('decisionInstance.processDefinitionKey'),
+      by.binding('decisionInstance.processDefinitionKey')
     ).click();
   },
 
-  selectProcessInstanceId: function (idx) {
+  selectProcessInstanceId: function(idx) {
     this.waitForElementToBeVisible(element(by.repeater(this.tableRepeater)));
     return this.tableItem(
       idx,
-      by.binding('decisionInstance.processInstanceId'),
+      by.binding('decisionInstance.processInstanceId')
     ).click();
   },
 
-  instanceId: function (idx) {
+  instanceId: function(idx) {
     return this.tableItem(idx, '[title]').getAttribute('title');
-  },
+  }
 });

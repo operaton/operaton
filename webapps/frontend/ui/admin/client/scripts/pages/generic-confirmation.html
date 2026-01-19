@@ -1,7 +1,5 @@
 <!-- # CE - operaton-bpm-webapp/ui/admin/client/scripts/pages/generic-confirmation.html -->
-<div class="modal-header">
-  <h3>{{ 'GENERIC_CONFIRMATION_TITLE' | translate }}</h3>
-</div>
+<div class="modal-header"><h3>{{ 'GENERIC_CONFIRMATION_TITLE' | translate }}</h3></div>
 <div class="modal-body">
   <div notifications-panel></div>
   {{ question }}
@@ -9,14 +7,12 @@
 <div class="modal-footer">
   <div class="row">
     <div class="col-xs-6 text-left">
-      <button class="btn btn-link" ng-click="$dismiss()">
-        {{ 'GENERIC_CONFIRMATION_CANCEL' | translate }}
-      </button>
+      <button class="btn btn-link"
+              ng-click="$dismiss()">{{ 'GENERIC_CONFIRMATION_CANCEL' | translate }}</button>
     </div>
     <div class="col-xs-6 text-right">
-      <button class="btn btn-primary" ng-click="delete()">
-        {{ 'GENERIC_CONFIRMATION_PROCEED' | translate }}
-      </button>
+      <button class="btn btn-primary"
+              ng-click="delete()">{{ 'GENERIC_CONFIRMATION_PROCEED' | translate }}</button>
     </div>
   </div>
 </div>

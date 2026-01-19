@@ -20,21 +20,21 @@
           element: false, expect: false, by: false, protractor: false, $: false */
 'use strict';
 
-var Viewer = function (node) {
+var Viewer = function(node) {
   this.node = node;
 };
 
-Viewer.prototype.isPresent = function () {
+Viewer.prototype.isPresent = function() {
   return this.node.isPresent();
 };
 
-function Page() {}
+function Page() { }
 
-Page.prototype.table = function (id) {
+Page.prototype.table = function(id) {
   return new Viewer(element(by.css('.tjs-container table')));
 };
 
-Page.prototype.drdDiagram = function (id) {
+Page.prototype.drdDiagram = function(id) {
   return new Viewer(element(by.css('svg')));
 };
 

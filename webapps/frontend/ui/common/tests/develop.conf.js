@@ -43,11 +43,11 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
-      args: ['start-maximized', 'enable-crash-reporter-for-testing'],
+      args: ['start-maximized', 'enable-crash-reporter-for-testing']
     },
     loggingPrefs: {
-      browser: 'ALL',
-    },
+      browser: 'ALL'
+    }
   },
 
   /*    multiCapabilities: [{
@@ -91,6 +91,6 @@ exports.config = {
     timeout: 15000,
     colors: true,
     reporter: 'spec',
-    slow: 3000,
-  },
+    slow: 3000
+  }
 };

@@ -1,13 +1,14 @@
 <form cam-form role="form">
-  <input
-    cam-variable-name="stringVar"
-    cam-variable-type="String"
-    type="text"
-    class="form-control"
-    id="stringVar"
-  />
 
-  <input type="text" class="form-control" id="customField" />
+  <input cam-variable-name="stringVar"
+         cam-variable-type="String"
+         type="text"
+         class="form-control"
+         id="stringVar">
+
+  <input type="text"
+         class="form-control"
+         id="customField">
 
   <script cam-script type="text/form-script">
 
@@ -40,5 +41,7 @@
       }
 
     });
+
   </script>
+
 </form>

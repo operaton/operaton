@@ -23,13 +23,13 @@ var AuthenticationPage = require('../../../common/tests/pages/authentication');
 var DashboardPage = Page.extend({
   url: '/operaton/app/admin/default/#/',
 
-  section: function (name) {
+  section: function(name) {
     return element(by.css('[data-plugin-id="' + name + '"]'));
   },
 
-  sectionLink: function (name, linkText) {
+  sectionLink: function(name, linkText) {
     return this.section(name).element(by.cssContainingText('li > a', linkText));
-  },
+  }
 });
 
 module.exports = new DashboardPage();

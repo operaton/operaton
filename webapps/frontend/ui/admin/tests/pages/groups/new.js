@@ -22,7 +22,7 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/admin/default/#/group-create',
 
-  newGroupIdInput: function (inputValue) {
+  newGroupIdInput: function(inputValue) {
     var inputField = element(by.model('group.id'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -30,7 +30,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  newGroupNameInput: function (inputValue) {
+  newGroupNameInput: function(inputValue) {
     var inputField = element(by.model('group.name'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -38,7 +38,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  newGroupTypeInput: function (inputValue) {
+  newGroupTypeInput: function(inputValue) {
     var inputField = element(by.model('group.type'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -46,14 +46,14 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  createNewGroupButton: function () {
+  createNewGroupButton: function() {
     return element(by.css('[ng-click="createGroup()"]'));
   },
 
-  createNewGroup: function (groupID, groupName, groupType) {
+  createNewGroup: function(groupID, groupName, groupType) {
     this.newGroupIdInput(groupID);
     this.newGroupNameInput(groupName);
     this.newGroupTypeInput(groupType);
     this.createNewGroupButton().click();
-  },
+  }
 });

@@ -23,29 +23,29 @@ var setupFile = require('./filter-variables-setup');
 var dashboardPage = require('../pages/dashboard');
 var editModalPage = dashboardPage.taskFilters.editFilterPage;
 
-describe('Tasklist Filter Variables Spec', function () {
-  before(function () {
-    return testHelper(setupFile.setup1, function () {
+describe('Tasklist Filter Variables Spec', function() {
+  before(function() {
+    return testHelper(setupFile.setup1, function() {
       dashboardPage.navigateToWebapp('Tasklist');
       dashboardPage.authentication.userLogin('admin', 'admin');
     });
   });
 
-  describe('the filter variable page', function () {
-    beforeEach(function () {
+  describe('the filter variable page', function() {
+    beforeEach(function() {
       dashboardPage.taskFilters.selectFilter(0);
       dashboardPage.taskFilters.editFilter(0);
       editModalPage.selectPanelByKey('variable');
     });
 
-    afterEach(function () {
+    afterEach(function() {
       editModalPage.closeFilter();
     });
 
-    it('should contain element', function () {
+    it('should contain element', function() {
       // given
       expect(editModalPage.variableHelpText()).to.eventually.eql(
-        'You can define variables shown in the tasks list.',
+        'You can define variables shown in the tasks list.'
       );
       expect(editModalPage.showUndefinedVariablesCheckBox().isSelected()).to
         .eventually.be.false;
@@ -60,7 +60,7 @@ describe('Tasklist Filter Variables Spec', function () {
         .eventually.be.true;
     });
 
-    it('should allow to add a variable', function () {
+    it('should allow to add a variable', function() {
       // when
       editModalPage.addVariableButton().click();
 
@@ -72,7 +72,7 @@ describe('Tasklist Filter Variables Spec', function () {
         .true;
     });
 
-    it('should allow to remove a variable', function () {
+    it('should allow to remove a variable', function() {
       // given
       editModalPage.addVariableButton().click();
       expect(editModalPage.variableList().count()).to.eventually.eql(1);
@@ -84,7 +84,7 @@ describe('Tasklist Filter Variables Spec', function () {
       expect(editModalPage.variableList().count()).to.eventually.eql(0);
     });
 
-    it('should clean input fields after removing', function () {
+    it('should clean input fields after removing', function() {
       // given
       editModalPage.addVariable('myName', 'myLabel');
       expect(editModalPage.variableList().count()).to.eventually.eql(1);
@@ -93,20 +93,20 @@ describe('Tasklist Filter Variables Spec', function () {
       editModalPage
         .removeVariableButton(0)
         .click()
-        .then(function () {
+        .then(function() {
           editModalPage.addVariableButton().click();
         });
 
       // then
       expect(
-        editModalPage.variableNameInput(0).getAttribute('value'),
+        editModalPage.variableNameInput(0).getAttribute('value')
       ).to.eventually.eql('');
       expect(
-        editModalPage.variableLabelInput(0).getAttribute('value'),
+        editModalPage.variableLabelInput(0).getAttribute('value')
       ).to.eventually.eql('');
     });
 
-    it('should keep my data when playing accordion', function () {
+    it('should keep my data when playing accordion', function() {
       // given
       editModalPage.addVariable('myName', 'myLabel');
       expect(editModalPage.variableList().count()).to.eventually.eql(1);
@@ -118,43 +118,46 @@ describe('Tasklist Filter Variables Spec', function () {
 
       // then
       expect(
-        editModalPage.variableNameInput(0).getAttribute('value'),
+        editModalPage.variableNameInput(0).getAttribute('value')
       ).to.eventually.eql('myName');
       expect(
-        editModalPage.variableLabelInput(0).getAttribute('value'),
+        editModalPage.variableLabelInput(0).getAttribute('value')
       ).to.eventually.eql('myLabel');
     });
   });
 
-  describe('operate with variables', function () {
-    before(function () {
+  describe('operate with variables', function() {
+    before(function() {
       dashboardPage.navigateTo();
     });
 
-    it('should display variables in the list of task', function () {
+    it('should display variables in the list of task', function() {
       // when
       dashboardPage.taskFilters.selectFilter(1);
-      dashboardPage.taskList.taskList().get(0).click();
+      dashboardPage.taskList
+        .taskList()
+        .get(0)
+        .click();
 
       // then
       expect(
-        dashboardPage.taskList.taskVariableLabel(0, 0).getText(),
+        dashboardPage.taskList.taskVariableLabel(0, 0).getText()
       ).to.eventually.eql('my test variable:');
       expect(
-        dashboardPage.taskList.taskVariableValue(0, 0).getText(),
+        dashboardPage.taskList.taskVariableValue(0, 0).getText()
       ).to.eventually.eql('1.5');
       expect(
-        dashboardPage.taskList.taskVariableName(0, 0).getText(),
+        dashboardPage.taskList.taskVariableName(0, 0).getText()
       ).to.eventually.eql('myTestVar');
     });
 
-    describe('add additional variable', function () {
-      before(function () {
+    describe('add additional variable', function() {
+      before(function() {
         dashboardPage.taskFilters.selectFilter(1);
         dashboardPage.taskFilters.editFilter(1);
       });
 
-      it('should enter variable data', function () {
+      it('should enter variable data', function() {
         // given
         editModalPage.selectPanelByKey('variable');
         expect(editModalPage.variableList().count()).to.eventually.eql(1);
@@ -166,30 +169,30 @@ describe('Tasklist Filter Variables Spec', function () {
         expect(editModalPage.variableList().count()).to.eventually.eql(2);
       });
 
-      it('should save filter and validate results in the list of tasks', function () {
+      it('should save filter and validate results in the list of tasks', function() {
         // when
         editModalPage.saveFilter();
 
         // then
         expect(
-          dashboardPage.taskList.taskVariableLabel(0, 1).getText(),
+          dashboardPage.taskList.taskVariableLabel(0, 1).getText()
         ).to.eventually.eql('String Variable:');
         expect(
-          dashboardPage.taskList.taskVariableValue(0, 1).getText(),
+          dashboardPage.taskList.taskVariableValue(0, 1).getText()
         ).to.eventually.eql('123 dfg');
         expect(
-          dashboardPage.taskList.taskVariableName(0, 1).getText(),
+          dashboardPage.taskList.taskVariableName(0, 1).getText()
         ).to.eventually.eql('myString');
       });
     });
 
-    describe('display undefined variables', function () {
-      before(function () {
+    describe('display undefined variables', function() {
+      before(function() {
         // dashboardPage.taskFilters.selectFilter(0);
         dashboardPage.taskFilters.editFilter(0);
       });
 
-      it('should select show-undefined option', function () {
+      it('should select show-undefined option', function() {
         // given
         editModalPage.selectPanelByKey('variable');
         expect(editModalPage.variableList().count()).to.eventually.eql(0);
@@ -202,19 +205,19 @@ describe('Tasklist Filter Variables Spec', function () {
         expect(editModalPage.variableList().count()).to.eventually.eql(1);
       });
 
-      it('should save filter and see the undefined variable in the list of tasks', function () {
+      it('should save filter and see the undefined variable in the list of tasks', function() {
         // when
         editModalPage.saveFilter();
 
         // then
         expect(
-          dashboardPage.taskList.taskVariableLabel(0, 0).getText(),
+          dashboardPage.taskList.taskVariableLabel(0, 0).getText()
         ).to.eventually.eql('undefined Variable:');
         expect(
-          dashboardPage.taskList.taskVariableValue(0, 0).getText(),
+          dashboardPage.taskList.taskVariableValue(0, 0).getText()
         ).to.eventually.eql('<Undefined>');
         expect(
-          dashboardPage.taskList.taskVariableName(0, 0).getText(),
+          dashboardPage.taskList.taskVariableName(0, 0).getText()
         ).to.eventually.eql('MyUndefined');
       });
     });

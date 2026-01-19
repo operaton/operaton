@@ -20,15 +20,15 @@
 var Base = require('./../../base');
 
 module.exports = Base.extend({
-  cancelButton: function () {
+  cancelButton: function() {
     return element(
-      by.css('.modal-footer [ng-click="cancelProcessInstance()"]'),
+      by.css('.modal-footer [ng-click="cancelProcessInstance()"]')
     );
   },
 
-  okButton: function () {
+  okButton: function() {
     return element(
-      by.css('.modal-footer [ng-click="close(status)"]:not(.ng-hide)'),
+      by.css('.modal-footer [ng-click="close(status)"]:not(.ng-hide)')
     );
-  },
+  }
 });

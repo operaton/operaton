@@ -154,8 +154,7 @@
       right: 0;
 
       &.content {
-        transition: opacity @layout-transition-duration
-          @layout-transition-timing;
+        transition: opacity @layout-transition-duration @layout-transition-timing;
         overflow-x: hidden;
         overflow-y: auto;
       }
@@ -216,7 +215,7 @@
 
 .three-cols-layout(@left-width: 200px, @center-width: 300px) {
   .three-cols-layout {
-    height: ~'calc(100vh - (@{header-height} + @{footer-height}))';
+    height: ~"calc(100vh - (@{header-height} + @{footer-height}))";
     width: 100vw;
     overflow: hidden;
   }
@@ -378,13 +377,13 @@
 
 .three-cols-layout-header() {
   .three-cols-layout-cell.top {
-    min-height: (
-      @column-top-height + (@padding-base-vertical * 2) + @border-thin-width
-    );
-    padding: calc(@padding-base-vertical + 2px) (@grid-gutter-width * 0.5)
-      calc(@padding-base-vertical - 2px) (@grid-gutter-width * 0.5);
-    margin: (0 - (@grid-gutter-width * 0.5)) (0 - (@grid-gutter-width * 0.5))
-      (@grid-gutter-width * 0.5) (0 - (@grid-gutter-width * 0.5));
+    min-height: (@column-top-height + (@padding-base-vertical * 2) + @border-thin-width);
+    padding: calc(@padding-base-vertical + 2px) (@grid-gutter-width * 0.5) calc(@padding-base-vertical - 2px) (@grid-gutter-width * 0.5);
+    margin:
+      (0 - (@grid-gutter-width * 0.5))
+      (0 - (@grid-gutter-width * 0.5))
+      (@grid-gutter-width * 0.5)
+      (0 - (@grid-gutter-width * 0.5));
 
     > button,
     > div {

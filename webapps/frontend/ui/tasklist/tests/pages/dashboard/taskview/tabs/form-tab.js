@@ -22,25 +22,25 @@ var Tab = require('./tab');
 module.exports = Tab.extend({
   tabIndex: 0,
 
-  formFormElement: function () {
+  formFormElement: function() {
     return element(by.css('.form-pane'));
   },
 
-  genericAddVariableButton: function () {
+  genericAddVariableButton: function() {
     return this.formFormElement().element(by.css('[ng-click="addVariable()"]'));
   },
 
-  genericLoadVariablesButton: function () {
+  genericLoadVariablesButton: function() {
     return this.formFormElement().element(
-      by.css('[ng-click="loadVariables()"]'),
+      by.css('[ng-click="loadVariables()"]')
     );
   },
 
-  genericLoadVariables: function () {
+  genericLoadVariables: function() {
     this.genericLoadVariablesButton().click();
   },
 
-  completeButton: function () {
+  completeButton: function() {
     return this.formFormElement().element(by.css('[ng-click="complete()"]'));
-  },
+  }
 });

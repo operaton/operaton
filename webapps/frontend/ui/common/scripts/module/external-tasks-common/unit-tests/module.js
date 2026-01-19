@@ -25,5 +25,5 @@ var camCommon = require('../../index');
 module.exports = angular.module('cam-common.external-tasks-common.tests', [
   testModule.name,
   externalTasksModule.name,
-  camCommon.name,
+  camCommon.name
 ]);

@@ -22,11 +22,11 @@ var Page = require('./../base');
 module.exports = Page.extend({
   url: '/operaton/app/admin/default/#/groups/:group?tab=group',
 
-  updateGroupButton: function () {
+  updateGroupButton: function() {
     return element(by.css('[ng-click="updateGroup()"]'));
   },
 
-  groupNameInput: function (inputValue) {
+  groupNameInput: function(inputValue) {
     var inputField = element(by.model('group.name'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -34,7 +34,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  groupTypeInput: function (inputValue) {
+  groupTypeInput: function(inputValue) {
     var inputField = element(by.model('group.type'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -42,20 +42,20 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  deleteGroupButton: function () {
+  deleteGroupButton: function() {
     return element(by.css('[ng-click="deleteGroup()"]'));
   },
 
-  deleteGroupAlert: function () {
+  deleteGroupAlert: function() {
     return browser.switchTo().alert();
   },
 
-  deleteGroup: function () {
+  deleteGroup: function() {
     this.deleteGroupButton().click();
     element(by.css('.modal-footer [ng-click="$close()"]')).click();
   },
 
-  selectUserNavbarItem: function (navbarItem) {
+  selectUserNavbarItem: function(navbarItem) {
     var index = ['Group', 'Tenants', 'Users'];
     var item;
     var itemIndex = index.indexOf(navbarItem) + 1;
@@ -68,5 +68,5 @@ module.exports = Page.extend({
 
     item.click();
     return item;
-  },
+  }
 });

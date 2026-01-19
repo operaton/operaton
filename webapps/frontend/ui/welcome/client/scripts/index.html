@@ -1,27 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge" />
 
     <title>Operaton Welcome</title>
 
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
-    <meta name="description" content="Operaton Welcome" />
-    <meta name="author" content="Operaton" />
+    <meta name="description"
+          content="Operaton Welcome" />
+    <meta name="author"
+          content="Operaton" />
 
     <!-- settings the base path for relative links -->
-    <base
-      href="<%= htmlWebpackPlugin.options.appBase %>"
-      admin-api="<%= htmlWebpackPlugin.options.appRoot %>/api/admin/"
-      cockpit-api="<%= htmlWebpackPlugin.options.appRoot %>/api/cockpit/"
-      tasklist-api="<%= htmlWebpackPlugin.options.appRoot %>/api/tasklist/"
-      welcome-api="<%= htmlWebpackPlugin.options.appRoot %>/api/welcome/"
-      engine-api="<%= htmlWebpackPlugin.options.appRoot %>/api/engine/"
-      app-root="<%= htmlWebpackPlugin.options.appRoot %>"
-      app-name="welcome"
-    />
+    <base href="<%= htmlWebpackPlugin.options.appBase %>"
+          admin-api="<%= htmlWebpackPlugin.options.appRoot %>/api/admin/"
+          cockpit-api="<%= htmlWebpackPlugin.options.appRoot %>/api/cockpit/"
+          tasklist-api="<%= htmlWebpackPlugin.options.appRoot %>/api/tasklist/"
+          welcome-api="<%= htmlWebpackPlugin.options.appRoot %>/api/welcome/"
+          engine-api="<%= htmlWebpackPlugin.options.appRoot %>/api/engine/"
+          app-root="<%= htmlWebpackPlugin.options.appRoot %>"
+          app-name="welcome" />
 
     <!-- an example of plugin/feature exclusion -->
     <!--
@@ -36,44 +38,38 @@
     -->
     <%= htmlWebpackPlugin.tags.headTags %>
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="<%= htmlWebpackPlugin.options.appRoot %>/app/welcome/styles/user-styles.css?bust=<%= htmlWebpackPlugin.options.version %>"
-    />
+    <link rel="stylesheet"
+          type="text/css"
+          href="<%= htmlWebpackPlugin.options.appRoot %>/app/welcome/styles/user-styles.css?bust=<%= htmlWebpackPlugin.options.version %>">
   </head>
   <body ng-controller="WelcomePage as welcomePage">
     <!-- navigation -->
-    <div
-      cam-widget-header
-      authentication="authentication"
-      user-name="userFullName"
-      current-app="welcome"
-      no-app-switch="true"
-      no-account-menu="true"
-      toggle-navigation="{{ 'TOGGLE_NAVIGATION' | translate }}"
-      sign-out="{{ 'SIGN_OUT_ACTION' | translate }}"
-      my-profile="{{ 'MY_PROFILE' | translate }}"
-      ng-cloak
-    ></div>
+    <div cam-widget-header
+         authentication="authentication"
+         user-name="userFullName"
+         current-app="welcome"
+         no-app-switch="true"
+         no-account-menu="true"
+         toggle-navigation="{{ 'TOGGLE_NAVIGATION' | translate }}"
+         sign-out="{{ 'SIGN_OUT_ACTION' | translate }}"
+         my-profile="{{ 'MY_PROFILE' | translate }}"
+         ng-cloak>
+    </div>
 
-    <div notifications-panel class="page-notifications"></div>
+    <div notifications-panel
+         class="page-notifications"></div>
 
     <!-- content -->
-    <div class="container-fluid" ng-view>
-      <div class="app-splash">
-        <div>
-          <div class="spinner spinner-big"></div>
-        </div>
-      </div>
-      <!-- / .app-splash -->
+    <div class="container-fluid"
+         ng-view>
+          <div class="app-splash"><div>
+            <div class="spinner spinner-big"></div>
+          </div></div><!-- / .app-splash -->
     </div>
 
     <!-- footer -->
-    <footer
-      cam-widget-footer
-      version="v<%= htmlWebpackPlugin.options.version %>"
-    ></footer>
+    <footer cam-widget-footer
+            version="v<%= htmlWebpackPlugin.options.version %>"></footer>
 
     <script type="text/javascript" $CSP_NONCE>
       window.PLUGIN_DEPENDENCIES = <%= htmlWebpackPlugin.options.pluginDeps %> || [];

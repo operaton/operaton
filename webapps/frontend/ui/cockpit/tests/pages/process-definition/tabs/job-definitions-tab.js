@@ -25,47 +25,47 @@ module.exports = Table.extend({
   tabLabel: 'Job Definitions',
   tableRepeater: 'jobDefinition in jobDefinitions',
 
-  state: function (idx) {
+  state: function(idx) {
     return this.tableItem(idx, '.state:not(.ng-hide)');
   },
 
-  activity: function (idx) {
+  activity: function(idx) {
     return this.tableItem(idx, '.activity');
   },
 
-  configuration: function (idx) {
+  configuration: function(idx) {
     return this.tableItem(idx, '.configuration');
   },
 
-  suspendJobDefinitionButton: function (idx) {
+  suspendJobDefinitionButton: function(idx) {
     return this.tableItem(
       idx,
-      '[ng-click="openSuspensionStateDialog(jobDefinition)"]:not(.ng-hide)',
+      '[ng-click="openSuspensionStateDialog(jobDefinition)"]:not(.ng-hide)'
     );
   },
 
-  activateJobDefinitionButton: function (idx) {
+  activateJobDefinitionButton: function(idx) {
     return this.suspendJobDefinitionButton(idx);
   },
 
-  suspendJobDefinition: function (idx) {
+  suspendJobDefinition: function(idx) {
     var modal = this.modal;
 
     this.suspendJobDefinitionButton(idx)
       .click()
-      .then(function () {
+      .then(function() {
         browser.sleep(500);
         modal
           .suspendButton()
           .click()
-          .then(function () {
+          .then(function() {
             browser.sleep(500);
             modal.okButton().click();
           });
       });
   },
 
-  activateJobDefinition: function (idx) {
+  activateJobDefinition: function(idx) {
     this.suspendJobDefinition(idx);
-  },
+  }
 });

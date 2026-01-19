@@ -25,11 +25,11 @@ module.exports = Table.extend({
   tabLabel: 'Called Process Definitions',
   tableRepeater: 'calledProcessDefinition in calledProcessDefinitions',
 
-  calledProcessDefintion: function (item) {
+  calledProcessDefintion: function(item) {
     return this.tableItem(item, '.process-definition');
   },
 
-  activity: function (item) {
+  activity: function(item) {
     return this.tableItem(item, '.activity');
-  },
+  }
 });

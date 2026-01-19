@@ -19,84 +19,88 @@
 'use strict';
 var expect = require('chai').expect;
 
-describe('The type-util', function () {
+describe('The type-util', function() {
+
   var convertToType = require('./../../lib/forms/type-util').convertToType;
   var isType = require('./../../lib/forms/type-util').isType;
   var dateToString = require('./../../lib/forms/type-util').dateToString;
 
-  it('does convert Integer', function () {
+  it('does convert Integer', function() {
+
     expect(convertToType('100', 'Integer')).to.eql(100);
     expect(convertToType('-100', 'Integer')).to.eql(-100);
 
-    expect(function () {
+    expect(function() {
       return convertToType('100.10', 'Integer');
-    }).to.throw("Value '100.10' is not of type Integer");
+    }).to.throw('Value \'100.10\' is not of type Integer');
+
   });
 
-  it('does convert Long', function () {
+  it('does convert Long', function() {
     expect(convertToType('100', 'Long')).to.eql(100);
     expect(convertToType('-100', 'Long')).to.eql(-100);
     expect(convertToType(' 0 ', 'Long')).to.eql(0);
 
-    expect(function () {
+    expect(function() {
       return convertToType('100.10', 'Long');
-    }).to.throw("Value '100.10' is not of type Long");
+    }).to.throw('Value \'100.10\' is not of type Long');
   });
 
-  it('does convert Short', function () {
+  it('does convert Short', function() {
     expect(convertToType('100', 'Short')).to.eql(100);
     expect(convertToType('-100', 'Short')).to.eql(-100);
     expect(convertToType(' 0 ', 'Short')).to.eql(0);
 
-    expect(function () {
+    expect(function() {
       return convertToType('100.10', 'Short');
-    }).to.throw("Value '100.10' is not of type Short");
+    }).to.throw('Value \'100.10\' is not of type Short');
   });
 
-  it('does convert Float', function () {
+  it('does convert Float', function() {
+
     expect(convertToType('100', 'Float')).to.eql(100);
     expect(convertToType('-100', 'Float')).to.eql(-100);
-    expect(convertToType('100.10', 'Float')).to.eql(100.1);
-    expect(convertToType('-100.10', 'Float')).to.eql(-100.1);
+    expect(convertToType('100.10', 'Float')).to.eql(100.10);
+    expect(convertToType('-100.10', 'Float')).to.eql(-100.10);
 
-    expect(function () {
+    expect(function() {
       return convertToType('100.10a', 'Float');
-    }).to.throw("Value '100.10a' is not of type Float");
+    }).to.throw('Value \'100.10a\' is not of type Float');
+
   });
 
-  it('does convert Double', function () {
+  it('does convert Double', function() {
+
     expect(convertToType('100', 'Double')).to.eql(100);
     expect(convertToType('-100', 'Double')).to.eql(-100);
-    expect(convertToType('100.10', 'Double')).to.eql(100.1);
-    expect(convertToType('-100.10', 'Double')).to.eql(-100.1);
+    expect(convertToType('100.10', 'Double')).to.eql(100.10);
+    expect(convertToType('-100.10', 'Double')).to.eql(-100.10);
 
-    expect(function () {
+    expect(function() {
       return convertToType('100.10a', 'Double');
-    }).to.throw("Value '100.10a' is not of type Double");
+    }).to.throw('Value \'100.10a\' is not of type Double');
   });
 
-  it('does convert Date', function () {
+  it('does convert Date', function() {
+
     // https://app.camunda.com/jira/browse/CAM-4746
     var date = new Date('2016-05-09T08:56:00');
     expect(typeof convertToType(date, 'Date')).to.eql('string');
 
-    expect(convertToType('2013-01-23T13:42:42', 'Date')).to.eql(
-      '2013-01-23T13:42:42',
-    );
-    expect(convertToType(' 2013-01-23T13:42:42 ', 'Date')).to.eql(
-      '2013-01-23T13:42:42',
-    );
+    expect(convertToType('2013-01-23T13:42:42', 'Date')).to.eql('2013-01-23T13:42:42');
+    expect(convertToType(' 2013-01-23T13:42:42 ', 'Date')).to.eql('2013-01-23T13:42:42');
 
-    expect(function () {
+    expect(function() {
       return convertToType('2013-01-23T13:42', 'Date');
-    }).to.throw("Value '2013-01-23T13:42' is not of type Date");
+    }).to.throw('Value \'2013-01-23T13:42\' is not of type Date');
 
-    expect(function () {
+    expect(function() {
       return convertToType('2013-01-23T60:42:40', 'Date');
-    }).to.throw("Value '2013-01-23T60:42:40' is not of type Date");
+    }).to.throw('Value \'2013-01-23T60:42:40\' is not of type Date');
+
   });
 
-  it('does convert Boolean', function () {
+  it('does convert Boolean', function() {
     expect(convertToType('true', 'Boolean')).to.eql(true);
     expect(convertToType(' true', 'Boolean')).to.eql(true);
     expect(convertToType(' true ', 'Boolean')).to.eql(true);
@@ -106,18 +110,18 @@ describe('The type-util', function () {
     expect(convertToType(' false ', 'Boolean')).to.eql(false);
     expect(convertToType('false ', 'Boolean')).to.eql(false);
 
-    expect(function () {
+    expect(function() {
       return convertToType('strue', 'Boolean');
-    }).to.throw("Value 'strue' is not of type Boolean");
+    }).to.throw('Value \'strue\' is not of type Boolean');
   });
 
-  it('detects Integers', function () {
+  it('detects Integers', function() {
     expect(isType('100', 'Integer')).to.eql(true);
     expect(isType('-100', 'Integer')).to.eql(true);
     expect(isType('100-', 'Integer')).to.eql(false);
   });
 
-  it('detects Floats', function () {
+  it('detects Floats', function() {
     expect(isType('100', 'Float')).to.eql(true);
     expect(isType('-100', 'Float')).to.eql(true);
     expect(isType('-100e10', 'Float')).to.eql(true);
@@ -125,7 +129,7 @@ describe('The type-util', function () {
     expect(isType('100-', 'Float')).to.eql(false);
   });
 
-  it('detects Booleans', function () {
+  it('detects Booleans', function() {
     expect(isType('true', 'Boolean')).to.eql(true);
     expect(isType('false', 'Boolean')).to.eql(true);
     expect(isType('wahr', 'Boolean')).to.eql(false);
@@ -134,7 +138,7 @@ describe('The type-util', function () {
     expect(isType('', 'Boolean')).to.eql(false);
   });
 
-  it('detects Dates', function () {
+  it('detects Dates', function() {
     var date = new Date('2016-05-09T08:56:00');
     expect(isType(date, 'Date')).to.eql(true);
 
@@ -144,4 +148,5 @@ describe('The type-util', function () {
     expect(isType('tomorrow', 'Date')).to.eql(false);
     expect(isType('2013-01-23D27:42:42', 'Date')).to.eql(false);
   });
+
 });

@@ -24,11 +24,11 @@ var formElement = element(by.css('form[name="editProfileForm"]'));
 module.exports = Page.extend({
   url: '/operaton/app/admin/default/#/users/:user?tab=profile',
 
-  subHeader: function () {
+  subHeader: function() {
     return formElement.element(by.css('.h4')).getText();
   },
 
-  firstNameInput: function (inputValue) {
+  firstNameInput: function(inputValue) {
     var inputField = element(by.model('profile.firstName'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -36,7 +36,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  lastNameInput: function (inputValue) {
+  lastNameInput: function(inputValue) {
     var inputField = element(by.model('profile.lastName'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -44,7 +44,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  emailInput: function (inputValue) {
+  emailInput: function(inputValue) {
     var inputField = element(by.model('profile.email'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -52,15 +52,15 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  updateProfileButton: function () {
+  updateProfileButton: function() {
     return formElement.element(by.css('[ng-click="updateProfile()"]'));
   },
 
-  changeUserProfile: function (firstName, lastName) {
+  changeUserProfile: function(firstName, lastName) {
     this.firstNameInput().clear();
     this.lastNameInput().clear();
     this.firstNameInput(firstName);
     this.lastNameInput(lastName);
     this.updateProfileButton().click();
-  },
+  }
 });

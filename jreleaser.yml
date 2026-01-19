@@ -181,6 +181,7 @@ deploy:
       snapshot-deploy:
         active: SNAPSHOT
         snapshotUrl: https://central.sonatype.com/repository/maven-snapshots/
+        snapshotSupported: true
         applyMavenCentralRules: true
         snapshotSupported: true
         closeRepository: true

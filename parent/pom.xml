@@ -49,7 +49,7 @@
     <version.tomcat>11.0.14</version.tomcat>
     <version.arquillian>1.10.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
-    <version.selenium>4.39.0</version.selenium>
+    <version.selenium>4.40.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
     <version.logback>1.5.25</version.logback>
     <version.freemarker>2.3.34</version.freemarker>

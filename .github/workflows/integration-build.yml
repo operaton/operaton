@@ -280,6 +280,9 @@ jobs:
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy
           find target -name maven-metadata.* -delete
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
+          
+          # temporary avoid deploying the JUnit 6 artifact
+          rm ./*/staging-deploy/**/operaton-bpm-junit6*.jar
       - name: Cache build artifacts
         uses: actions/cache/save@v4
         with:

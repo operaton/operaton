@@ -487,6 +487,8 @@ jobs:
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_NEXUS2_SNAPSHOT_DEPLOY_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_NEXUS2_SNAPSHOT_DEPLOY_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
+          JRELEASER_NEXUS2_USERNAME: ${{secrets.OSSRH_USERNAME}}
+          JRELEASER_NEXUS2_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
           JRELEASER_PRERELEASE_ENABLED: true
           JRELEASER_PROJECT_SNAPSHOT_LABEL: ${{needs.build.outputs.project_version}}

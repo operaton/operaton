@@ -410,7 +410,6 @@ jobs:
     needs:
       - detect-recent-changes
       - determine-pr-config
-      - build
     if: |
       always() && !cancelled() && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||

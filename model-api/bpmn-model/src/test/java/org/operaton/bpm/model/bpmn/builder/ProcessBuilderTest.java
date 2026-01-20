@@ -494,6 +494,16 @@ public class ProcessBuilderTest {
       .condition("yes", "${clarified}")
       .connectTo("approveInvoice")
       .done();
+
+    assertThat(modelInstance.getModelElementsByType(processType))
+      .hasSize(1);
+    assertThat(modelInstance.getModelElementsByType(taskType))
+      .hasSize(5);
+    assertThat(modelInstance.getModelElementsByType(gatewayType))
+      .hasSize(2);
+    assertThat(modelInstance.getModelElementsByType(eventType))
+      .hasSize(3);
+
   }
 
   @Test

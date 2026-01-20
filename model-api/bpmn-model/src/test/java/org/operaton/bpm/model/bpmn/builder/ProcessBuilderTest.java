@@ -47,7 +47,6 @@ public class ProcessBuilderTest {
   public static final String TIMER_DATE = "2011-03-11T12:13:14Z";
   public static final String TIMER_DURATION = "P10D";
   public static final String TIMER_CYCLE = "R3/PT10H";
-
   public static final String FAILED_JOB_RETRY_TIME_CYCLE = "R5/PT1M";
 
   private BpmnModelInstance modelInstance;
@@ -92,18 +91,6 @@ public class ProcessBuilderTest {
 
   @Test
   void emptyProcessShouldHaveDefaultHTTL() {
-    modelInstance = Bpmn.createProcess().done();
-
-    var process = (Process) modelInstance.getModelElementsByType(processType)
-        .iterator()
-        .next();
-
-    assertThat(process.getOperatonHistoryTimeToLiveString())
-        .isEqualTo("P180D");
-  }
-
-  @Test
-  void shouldHaveDefaultHTTLValueOnSkipDefaultHistoryTimeToLiveFalse() {
     modelInstance = Bpmn.createProcess().done();
 
     var process = (Process) modelInstance.getModelElementsByType(processType)

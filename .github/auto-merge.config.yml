@@ -22,6 +22,8 @@ auto-merge-rules:
     labels: ['dependencies:npm']
     includes:
       - '*'
+    excludes:
+      - '*bootstrap*'
 
   # Additional Maven dependencies that are safe to auto-merge
   # Note: DB drivers are NOT included as they require integration tests

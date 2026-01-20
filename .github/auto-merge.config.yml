@@ -61,6 +61,7 @@ auto-merge-rules:
       - 'version.mockito'
       - 'version.groovy'
       - 'version.logback'
+      - 'version.jackson'
       - 'version.jna'
       - 'version.asm'
       - 'version.undertow'

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +40,7 @@ class FlowNodeTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Incoming.class),
       new ChildElementAssumption(Outgoing.class)
     );
@@ -49,7 +48,7 @@ class FlowNodeTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(OPERATON_NS, "asyncAfter", false, false, false),
       new AttributeAssumption(OPERATON_NS, "asyncBefore", false, false, false),
       new AttributeAssumption(OPERATON_NS, "exclusive", false, false, true),

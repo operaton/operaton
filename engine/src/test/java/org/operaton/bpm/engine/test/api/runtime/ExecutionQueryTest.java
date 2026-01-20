@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -286,8 +285,8 @@ class ExecutionQueryTest {
     // Test LESS_THAN, should return 2 results
     executions = runtimeService.createExecutionQuery().variableValueLessThan("stringVar", "abcdeg").list();
     assertThat(executions).hasSize(2);
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -297,8 +296,8 @@ class ExecutionQueryTest {
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "abcdef").list();
     assertThat(executions).hasSize(2);
-    expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -388,8 +387,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("longVar", 55555L).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -469,8 +468,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("doubleVar", 55555.5555).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -550,8 +549,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("integerVar", 55555).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -634,8 +633,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("shortVar", (short)5555).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -730,8 +729,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 

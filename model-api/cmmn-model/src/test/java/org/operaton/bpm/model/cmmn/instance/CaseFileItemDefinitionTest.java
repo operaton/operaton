@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Roman Smirnov
@@ -32,14 +31,14 @@ public class CaseFileItemDefinitionTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(Property.class)
         );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("name"),
           new AttributeAssumption("definitionType", false, false, "http://www.omg.org/spec/CMMN/DefinitionType/Unspecified"),
           new AttributeAssumption("structureRef")

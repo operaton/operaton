@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -124,7 +123,7 @@ public abstract class AbstractConditionalEventTestCase {
 
 
   public static void assertTaskNames(List<Task> actualTasks, String ... expectedTaskNames ) {
-    List<String> expectedNames = new ArrayList<>(Arrays.asList(expectedTaskNames));
+    List<String> expectedNames = new ArrayList<>(List.of(expectedTaskNames));
     for (Task task : actualTasks) {
       String actualTaskName = task.getName();
       if (expectedNames.contains(actualTaskName)) {

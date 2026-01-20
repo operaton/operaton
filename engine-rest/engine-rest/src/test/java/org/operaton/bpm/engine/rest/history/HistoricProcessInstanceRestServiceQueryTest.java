@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -1975,7 +1974,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   private List<HistoricProcessInstance> createMockHistoricProcessInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricProcessInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricProcessInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }
@@ -2127,7 +2126,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testExecutedActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_EXECUTED_ACTIVITY_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_EXECUTED_ACTIVITY_IDS, List.of("1", "2"));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -2156,7 +2155,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testActiveActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_ACTIVE_ACTIVITY_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_ACTIVE_ACTIVITY_IDS, List.of("1", "2"));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -2473,7 +2472,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testQueryByIncidentIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_INCIDENT_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_INCIDENT_IDS, List.of("1", "2"));
 
     given()
         .contentType(POST_JSON_CONTENT_TYPE)
@@ -2501,7 +2500,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testQueryByActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_ACTIVE_OR_FAILING_ACTIVITY_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_ACTIVE_OR_FAILING_ACTIVITY_IDS, List.of("1", "2"));
 
     given()
         .contentType(POST_JSON_CONTENT_TYPE)

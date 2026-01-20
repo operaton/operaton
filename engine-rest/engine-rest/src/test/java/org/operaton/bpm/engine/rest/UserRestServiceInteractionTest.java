@@ -329,7 +329,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
         .pathParam("id", "aNonExistingUser")
     .then()
         .statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+        .body("type", equalTo("UserNotFoundException"))
         .body("message", equalTo(exceptionMessage))
     .when()
         .get(USER_PROFILE_URL);
@@ -627,7 +627,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
         .body(dto).contentType(ContentType.JSON)
     .then()
         .then().expect().statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+        .body("type", equalTo("UserNotFoundException"))
         .body("message", equalTo(exceptionMessage))
     .when()
         .put(USER_CREDENTIALS_URL);
@@ -683,7 +683,7 @@ public class UserRestServiceInteractionTest extends AbstractRestServiceTest {
         .body(updateDto).contentType(ContentType.JSON)
     .then()
         .then().expect().statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
-        .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+        .body("type", equalTo("UserNotFoundException"))
         .body("message", equalTo(exceptionMessage))
     .when()
         .put(USER_PROFILE_URL);

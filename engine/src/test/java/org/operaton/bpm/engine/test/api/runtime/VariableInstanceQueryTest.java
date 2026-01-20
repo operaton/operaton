@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -474,7 +473,7 @@ class VariableInstanceQueryTest {
     List<VariableInstance> result = query.list();
     assertThat(result).hasSize(varValues.length);
 
-    List<String> expected = Arrays.asList(varValues);
+    List<String> expected = List.of(varValues);
 
     for (VariableInstance variableInstance : result) {
       assertThat(variableInstance.getName()).isEqualTo("stringVar");

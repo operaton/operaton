@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.threading.ra.inflow;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.resource.ResourceException;
@@ -33,7 +34,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.JobFailureCollector;
 
 
 /**
- *
+ * JCA inflow implementation of the {@link ExecuteJobsRunnable}
  * @author Daniel Meyer
  *
  */
@@ -43,12 +44,12 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
 
   protected final JcaExecutorServiceConnector ra;
 
-  protected static Method method;
+  protected static AtomicReference<Method> method = new AtomicReference<>();
 
   public JcaInflowExecuteJobsRunnable(List<String> jobIds, ProcessEngineImpl processEngine, JcaExecutorServiceConnector connector) {
     super(jobIds, processEngine);
     this.ra = connector;
-    if(method == null) {
+    if (method.get() == null) {
       loadMethod();
     }
   }
@@ -56,7 +57,7 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
   @Override
   protected void executeJob(String nextJobId, CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector) {
     JobExecutionHandlerActivation jobHandlerActivation = ra.getJobHandlerActivation();
-    if(jobHandlerActivation == null) {
+    if (jobHandlerActivation == null) {
       // TODO: stop acquisition / only activate acquisition if MDB active?
       log.warning("Cannot execute acquired job, no JobExecutionHandler MDB deployed.");
       return;
@@ -64,45 +65,57 @@ public class JcaInflowExecuteJobsRunnable extends ExecuteJobsRunnable {
     MessageEndpoint endpoint = null;
     try {
       endpoint = jobHandlerActivation.getMessageEndpointFactory().createEndpoint(null);
-      var ep = endpoint;
 
-      try {
-        endpoint.beforeDelivery(method);
-      } catch (NoSuchMethodException e) {
-        log.log(Level.WARNING, e, () -> "NoSuchMethodException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(ep));
-      } catch (ResourceException e) {
-        log.log(Level.WARNING, e, () -> "ResourceException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(ep));
-      }
-      try {
-        jobFailureCollector = ((JobExecutionHandler)endpoint).executeJob(nextJobId, commandExecutor);
-      } catch (Exception e) {
-        if(ProcessEngineLogger.shouldLogJobException(processEngine.getProcessEngineConfiguration(), jobFailureCollector.getJob())) {
-          log.log(Level.WARNING, e, () -> "Exception while executing job with id '"+nextJobId+"'.");
-        }
-      }
+      beforeDelivery(endpoint);
 
-      try {
-        endpoint.afterDelivery();
-      } catch (ResourceException e) {
-        log.log(Level.WARNING, e, () -> "ResourceException while invoking afterDelivery() on MessageEndpoint '%s'".formatted(ep));
-      }
+      performExecute(nextJobId, commandExecutor, jobFailureCollector, (JobExecutionHandler) endpoint);
 
+      afterDelivery(endpoint);
     } catch (UnavailableException e) {
       log.log(Level.SEVERE, e, () -> "UnavailableException while attempting to create messaging endpoint for executing job");
     } finally {
-      if(endpoint != null) {
+      if (endpoint != null) {
         endpoint.release();
+      }
+    }
+  }
+
+  private void beforeDelivery(MessageEndpoint endpoint) {
+    try {
+      endpoint.beforeDelivery(method.get());
+    } catch (NoSuchMethodException e) {
+      log.log(Level.WARNING, e, () -> "NoSuchMethodException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(endpoint));
+    } catch (ResourceException e) {
+      log.log(Level.WARNING, e, () -> "ResourceException while invoking beforeDelivery() on MessageEndpoint '%s'".formatted(endpoint));
+    }
+  }
+
+  private void afterDelivery(MessageEndpoint endpoint) {
+    try {
+      endpoint.afterDelivery();
+    } catch (ResourceException e) {
+      log.log(Level.WARNING, e, () -> "ResourceException while invoking afterDelivery() on MessageEndpoint '%s'".formatted(endpoint));
+    }
+  }
+
+  private void performExecute(String nextJobId, CommandExecutor commandExecutor, JobFailureCollector jobFailureCollector,
+      JobExecutionHandler endpoint) {
+    try {
+      endpoint.executeJob(nextJobId, commandExecutor);
+    } catch (Exception e) {
+      if (ProcessEngineLogger.shouldLogJobException(processEngine.getProcessEngineConfiguration(), jobFailureCollector.getJob())) {
+        log.log(Level.WARNING, e, () -> "Exception while executing job with id '%s'".formatted(nextJobId));
       }
     }
   }
 
   protected void loadMethod() {
     try {
-      method = JobExecutionHandler.class.getMethod("executeJob", String.class, CommandExecutor.class);
+      method.set(JobExecutionHandler.class.getMethod("executeJob", String.class, CommandExecutor.class));
     } catch (SecurityException e) {
-      throw new RuntimeException("SecurityException while invoking getMethod() on class "+JobExecutionHandler.class, e);
+      throw new IllegalStateException("SecurityException while invoking getMethod() on class "+JobExecutionHandler.class, e);
     } catch (NoSuchMethodException e) {
-      throw new RuntimeException("NoSuchMethodException while invoking getMethod() on class "+JobExecutionHandler.class, e);
+      throw new IllegalStateException("NoSuchMethodException while invoking getMethod() on class "+JobExecutionHandler.class, e);
     }
   }
 

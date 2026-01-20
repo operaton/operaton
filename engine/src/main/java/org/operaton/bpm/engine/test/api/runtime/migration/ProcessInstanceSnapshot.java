@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -140,7 +141,7 @@ public class ProcessInstanceSnapshot {
       return collectedEventsubscriptions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one event subscription for activity %s and event %s".formatted(activityId, eventName));
+      throw new ProcessEngineException("There is more than one event subscription for activity %s and event %s".formatted(activityId, eventName));
     }
   }
 
@@ -182,7 +183,7 @@ public class ProcessInstanceSnapshot {
       return collectedJobs.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job for job definition %s".formatted(jobDefinitionId));
+      throw new ProcessEngineException("There is more than one job for job definition %s".formatted(jobDefinitionId));
     }
   }
 
@@ -216,7 +217,7 @@ public class ProcessInstanceSnapshot {
       return collectedDefinitions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job definition for activity %s and job handler type %s".formatted(activityId, jobHandlerType));
+      throw new ProcessEngineException("There is more than one job definition for activity %s and job handler type %s".formatted(activityId, jobHandlerType));
     }
   }
 
@@ -275,7 +276,7 @@ public class ProcessInstanceSnapshot {
       return null;
     }
     else {
-      throw new RuntimeException("There is more than one variable that matches the given condition");
+      throw new ProcessEngineException("There is more than one variable that matches the given condition");
     }
   }
 

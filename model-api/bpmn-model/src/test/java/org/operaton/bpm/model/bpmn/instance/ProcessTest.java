@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +39,7 @@ class ProcessTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Auditing.class, 0, 1),
       new ChildElementAssumption(Monitoring.class, 0, 1),
       new ChildElementAssumption(Property.class),
@@ -55,7 +54,7 @@ class ProcessTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("processType", false, false, ProcessType.None),
       new AttributeAssumption("isClosed", false, false, false),
       new AttributeAssumption("isExecutable"),

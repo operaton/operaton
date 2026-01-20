@@ -26,12 +26,20 @@ import org.operaton.bpm.engine.ProcessEngineException;
 public final class BeanManagerLookup {
 
   /** holds a local beanManager if no jndi is available */
-  public static BeanManager localInstance;
+  private static BeanManager localInstance;
 
   /** provide a custom jndi lookup name */
   private static String jndiName;
 
   private BeanManagerLookup() {
+  }
+
+  public static void setLocalInstance(BeanManager beanManager) {
+    localInstance = beanManager;
+  }
+
+  public static BeanManager getLocalInstance() {
+    return localInstance;
   }
 
   public static BeanManager getBeanManager() {

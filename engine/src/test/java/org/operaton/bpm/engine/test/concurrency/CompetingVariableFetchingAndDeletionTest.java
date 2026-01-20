@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -90,7 +89,7 @@ class CompetingVariableFetchingAndDeletionTest extends ConcurrencyTestCase {
         .endEvent()
         .done());
 
-    final List<String> listVar = Arrays.asList("a", "b");
+    final List<String> listVar = List.of("a", "b");
     String pid = runtimeService.startProcessInstanceByKey("test", createVariables().putValue("listVar", listVar)).getId();
 
     // start a controlled Fetch variable command

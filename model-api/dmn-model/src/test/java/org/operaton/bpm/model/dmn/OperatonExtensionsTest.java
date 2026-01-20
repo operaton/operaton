@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,7 +32,7 @@ public class OperatonExtensionsTest {
   private DmnModelInstance modelInstance;
 
    public static Collection<Object[]> parameters(){
-     return Arrays.asList(new Object[][]{
+     return List.of(new Object[][]{
          {Dmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsTest.dmn"))},
          // for compatibility reasons we gotta check the old namespace, too
          {Dmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsCompatibilityTest.dmn"))}

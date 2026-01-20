@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest.optimize;
-
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -64,7 +63,7 @@ class OptimizeVariableUpdateRestServiceTest extends AbstractRestServiceTest {
     mockedOptimizeService = mock(OptimizeService.class);
     ProcessEngineConfigurationImpl mockedConfig = mock(ProcessEngineConfigurationImpl.class);
 
-    when(mockedOptimizeService.getHistoricVariableUpdates(any(Date.class), any(Date.class), anyBoolean(), anyInt())).thenReturn(Arrays.asList(historicUpdateMock));
+    when(mockedOptimizeService.getHistoricVariableUpdates(any(Date.class), any(Date.class), anyBoolean(), anyInt())).thenReturn(List.of(historicUpdateMock));
 
     namedProcessEngine = getProcessEngine(MockProvider.EXAMPLE_PROCESS_ENGINE_NAME);
     when(namedProcessEngine.getProcessEngineConfiguration()).thenReturn(mockedConfig);

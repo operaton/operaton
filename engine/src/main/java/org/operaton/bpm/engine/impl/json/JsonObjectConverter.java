@@ -22,13 +22,13 @@ import com.google.gson.JsonObject;
 /**
  * @author Tom Baeyens
  */
-public abstract class JsonObjectConverter <T> {
+public interface JsonObjectConverter <T> {
 
-  public String toJson(T object) {
+  default String toJson(T object) {
     return toJsonObject(object).toString();
   }
 
-  public abstract JsonObject toJsonObject(T object);
+  JsonObject toJsonObject(T object);
 
-  public abstract T toObject(JsonObject jsonString);
+  T toObject(JsonObject jsonString);
 }

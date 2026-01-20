@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -252,6 +253,39 @@ public final class ReflectUtil {
       }
     }
     return field;
+  }
+
+  /**
+   * Returns the value of the given field on the given object.
+   * If the field is not accessible, it will be made accessible
+   * for the duration of the call.
+   * @param field the field to get the value from
+   * @param object the object to get the field value from
+   * @return the field value wrapped in an Optional, or an empty Optional if the field value is {@code null}
+   * @since 1.1
+   */
+  public static Optional<Object> getFieldValue(Field field, Object object) {
+    // Store original accessibility and restore to that state afterwards.
+    boolean originalAccessible = field.canAccess(object);
+    try {
+      if (!originalAccessible) {
+        // trySetAccessible returns true if it actually made the field accessible
+        field.trySetAccessible();
+      }
+      return Optional.ofNullable(field.get(object));
+    }
+    catch (IllegalAccessException e) {
+      throw LOG.unableToAccessFieldValue(field, object, e);
+    }
+    finally {
+      if (!originalAccessible) {
+        try {
+          field.setAccessible(false);
+        } catch (SecurityException ignore) {
+          // ignore: best-effort restore, but do not hide original exception
+        }
+      }
+    }
   }
 
   public static void setField(Field field, Object object, Object value) {

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.test.form.deployment;
 import java.util.Collection;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -56,7 +55,7 @@ public class OperatonFormDefinitionDeployerTest {
 
   @Parameters
   public static Collection<Object> params() {
-    return Arrays.asList(new String[] {
+    return List.of(new String[] {
         BPMN_USER_TASK_FORM_REF_DEPLOYMENT,
         BPMN_USER_TASK_FORM_REF_LATEST,
         BPMN_USER_TASK_FORM_REF_VERSION });

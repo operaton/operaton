@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
+import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
@@ -39,6 +40,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  */
 public class SubmitTaskFormCmd implements Command<VariableMap> {
+  private static final VariableMapImpl EMPTY_VARIABLE_MAP = new VariableMapImpl();
   protected String taskId;
   protected VariableMap properties;
 
@@ -95,12 +97,12 @@ public class SubmitTaskFormCmd implements Command<VariableMap> {
       if (variablesListener != null) {
         return variablesListener.getVariables();
       } else {
-        return task.getCaseDefinitionId() == null ? null : task.getVariablesTyped(false);
+        return task.getCaseDefinitionId() == null ? EMPTY_VARIABLE_MAP : task.getVariablesTyped(false);
       }
     }
     else
     {
-      return null;
+      return EMPTY_VARIABLE_MAP;
     }
   }
 }

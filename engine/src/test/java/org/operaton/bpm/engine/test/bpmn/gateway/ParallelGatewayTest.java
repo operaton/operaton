@@ -148,8 +148,8 @@ class ParallelGatewayTest {
    */
   @Deployment
   @Test
-  void testReceyclingExecutionWithCallActivity() {
-    runtimeService.startProcessInstanceByKey("parent-process").getId();
+  void testRecyclingExecutionWithCallActivity() {
+    String processInstanceId = runtimeService.startProcessInstanceByKey("parent-process").getId();
 
     // After process start we have two tasks, one from the parent and one from
     // the sub process
@@ -171,9 +171,7 @@ class ParallelGatewayTest {
     taskService.complete(tasks.get(0).getId());
     assertThat(taskService.createTaskQuery().count()).isZero();
 
-    // There is a QA config without history, so we cannot work with this:
-    // assertEquals(1,
-    // historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).finished().count());
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).finished().count()).isOne();
   }
 
   @Deployment

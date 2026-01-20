@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.impl.cfg;
-
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -52,7 +51,7 @@ class CompositeProcessEnginePluginTest {
   @Test
   void addPlugins() {
     CompositeProcessEnginePlugin composite = new CompositeProcessEnginePlugin(PLUGIN_A);
-    composite.addProcessEnginePlugins(Arrays.asList(PLUGIN_B));
+    composite.addProcessEnginePlugins(List.of(PLUGIN_B));
 
     assertThat(composite.getPlugins()).hasSize(2);
     assertThat(composite.getPlugins().get(0)).isEqualTo(PLUGIN_A);

@@ -20,7 +20,8 @@ package org.operaton.bpm.engine.cdi.impl.event;
  * Backwards compatibility for old CdiExecutionListener usage.
  *
  * @author Sebastian Menski
+ * @deprecated Use {@link CdiEventListener} instead.
  */
-@Deprecated(since = "1.0")
+@Deprecated(since = "1.0", forRemoval = true)
 public class CdiExecutionListener extends CdiEventListener {
 }

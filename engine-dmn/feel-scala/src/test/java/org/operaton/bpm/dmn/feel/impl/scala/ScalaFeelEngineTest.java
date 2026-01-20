@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.dmn.feel.impl.scala;
-
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -276,7 +276,7 @@ class ScalaFeelEngineTest {
 
   @Test
   void shouldEvaluateListsAndCollections() {
-    VariableContext variableCtx = Variables.putValue("items", java.util.Arrays.asList("a", "b", "c"))
+    VariableContext variableCtx = Variables.putValue("items", java.util.List.of("a", "b", "c"))
       .asVariableContext();
 
     Object result = engine.evaluateSimpleExpression("count(items)", variableCtx);
@@ -440,7 +440,7 @@ class ScalaFeelEngineTest {
   void shouldEvaluateComplexDataStructures() {
     Map<String, Object> person = Map.of("name", "John", "address",
       Map.of("city", "Berlin", "country", "Germany"),
-      "skills", java.util.Arrays.asList("Java", "FEEL", "DMN"));
+      "skills", java.util.List.of("Java", "FEEL", "DMN"));
     VariableContext variableCtx = Variables.putValue("person", person).asVariableContext();
 
     // Tests access to nested properties

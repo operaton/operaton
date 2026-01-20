@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class CompensationEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "CompensationEventParseInvalidProcessTest.illegalCompensateActivityRefParentScope.bpmn20.xml", "Invalid attribute value for 'activityRef': no activity with id 'someServiceInMainProcess' in scope 'subProcess'", new String[] { "throwCompensate" } },
         { "CompensationEventParseInvalidProcessTest.illegalCompensateActivityRefNestedScope.bpmn20.xml", "Invalid attribute value for 'activityRef': no activity with id 'someServiceInNestedScope' in scope 'subProcess'", new String[] { "throwCompensate" } },
         { "CompensationEventParseInvalidProcessTest.invalidActivityRefFails.bpmn20.xml", "Invalid attribute value for 'activityRef':", new String[]{"throwCompensate"} },
@@ -100,7 +99,7 @@ public class CompensationEventParseInvalidProcessTest {
   public void assertExceptionMessageContainsText(Exception e, String expectedMessage) {
     String actualMessage = e.getMessage();
     if (actualMessage == null || !actualMessage.contains(expectedMessage)) {
-      throw new AssertionFailedError("expected presence of [" + expectedMessage + "], but was [" + actualMessage + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expectedMessage, actualMessage));
     }
   }
 }

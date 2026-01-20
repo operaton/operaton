@@ -193,12 +193,11 @@ public class DbEntityManager implements Session, EntityLoadListener {
 
   @SuppressWarnings("unchecked")
   public boolean selectBoolean(String statement, Object parameter) {
-    List<String> result = (List<String>) persistenceSession.selectList(statement, parameter);
+    List<Object> result = (List<Object>) persistenceSession.selectList(statement, parameter);
     if(result != null) {
       return result.contains(1);
     }
     return false;
-
   }
 
   public <T extends DbEntity> T selectById(Class<T> entityClass, String id) {

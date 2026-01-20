@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine.api;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -264,7 +263,7 @@ class DmnDecisionResultTest extends DmnEngineTest {
   // helper methods
 
   private DmnDecisionResult evaluateWithMatchingRules(String... matchingRules) {
-    List<String> matchingRulesList = Arrays.asList(matchingRules);
+    List<String> matchingRulesList = List.of(matchingRules);
     variables.putValue(NO_OUTPUT_VALUE, matchingRulesList.contains(NO_OUTPUT_VALUE));
     variables.putValue(SINGLE_OUTPUT_VALUE, matchingRulesList.contains(SINGLE_OUTPUT_VALUE));
     variables.putValue(MULTIPLE_OUTPUT_VALUES, matchingRulesList.contains(MULTIPLE_OUTPUT_VALUES));

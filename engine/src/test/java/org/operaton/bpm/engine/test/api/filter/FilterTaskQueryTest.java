@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.filter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1027,7 +1026,7 @@ class FilterTaskQueryTest {
   @Test
   void testExtendTaskQueryWithCandidateGroupInAndCandidateGroup() {
     // create a query with candidate group in and save it as a filter
-    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2"));
+    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(List.of("testGroup", "testGroup2"));
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
     assertThat(candidateGroupInQuery.getCandidateGroups().get(0)).isEqualTo("testGroup");
     assertThat(candidateGroupInQuery.getCandidateGroups().get(1)).isEqualTo("testGroup2");
@@ -1056,7 +1055,7 @@ class FilterTaskQueryTest {
   @Test
   void testTaskQueryWithCandidateGroupInAndCandidateGroupExpression() {
     // create a query with candidate group in and candidate group expression
-    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList("testGroup", "testGroup2")).taskCandidateGroupExpression("${'test'}");
+    TaskQueryImpl candidateGroupInQuery = (TaskQueryImpl)taskService.createTaskQuery().taskCandidateGroupIn(List.of("testGroup", "testGroup2")).taskCandidateGroupExpression("${'test'}");
     assertThat(candidateGroupInQuery.getExpressions()).containsEntry("taskCandidateGroup", "${'test'}");
     assertThat(candidateGroupInQuery.getCandidateGroups()).hasSize(2);
     assertThat(candidateGroupInQuery.getCandidateGroups().get(0)).isEqualTo("testGroup");

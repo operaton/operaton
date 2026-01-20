@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.rest;
-
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.*;
+import java.util.List;
 import jakarta.ws.rs.HttpMethod;
 import jakarta.ws.rs.core.Response.Status;
 
@@ -148,7 +148,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     given().pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment with id '" + NON_EXISTING_DEPLOYMENT_ID + "' does not exist"))
+        .body(containsString("Deployment with id '%s' does not exist".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(DEPLOYMENT_URL);
 
   }
@@ -170,7 +170,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
 
     given().pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resources for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist."))
+        .body(containsString("Deployment resources for deployment id '%s' do not exist.".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(RESOURCES_URL);
 
   }
@@ -209,7 +209,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
         .pathParam("resourceId", NON_EXISTING_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resource with resource id '" + NON_EXISTING_DEPLOYMENT_RESOURCE_ID + "' for deployment id '" + EXAMPLE_DEPLOYMENT_ID + "' does not exist."))
+        .body(containsString("Deployment resource with resource id '%s' for deployment id '%s' does not exist.".formatted(NON_EXISTING_DEPLOYMENT_RESOURCE_ID, EXAMPLE_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_URL);
 
   }
@@ -221,7 +221,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
         .pathParam("resourceId", EXAMPLE_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resources for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist."))
+        .body(containsString("Deployment resources for deployment id '%s' do not exist.".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_URL);
 
   }
@@ -233,7 +233,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
         .pathParam("resourceId", NON_EXISTING_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resources for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist."))
+        .body(containsString("Deployment resources for deployment id '%s' do not exist.".formatted(NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_URL);
 
   }
@@ -1031,7 +1031,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
         .pathParam("resourceId", EXAMPLE_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resource '" + EXAMPLE_DEPLOYMENT_RESOURCE_ID + "' for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' does not exist."))
+        .body(containsString("Deployment resource '%s' for deployment id '%s' does not exist.".formatted(EXAMPLE_DEPLOYMENT_RESOURCE_ID, NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
   }
@@ -1043,7 +1043,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
         .pathParam("id", EXAMPLE_DEPLOYMENT_ID)
         .pathParam("resourceId", NON_EXISTING_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-        .body(containsString("Deployment resource '" + NON_EXISTING_DEPLOYMENT_RESOURCE_ID + "' for deployment id '" + EXAMPLE_DEPLOYMENT_ID + "' does not exist."))
+        .body(containsString("Deployment resource '%s' for deployment id '%s' does not exist.".formatted(NON_EXISTING_DEPLOYMENT_RESOURCE_ID, EXAMPLE_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
   }
@@ -1055,7 +1055,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
       .pathParam("resourceId", NON_EXISTING_DEPLOYMENT_RESOURCE_ID)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode())
-      .body(containsString("Deployment resource '" + NON_EXISTING_DEPLOYMENT_RESOURCE_ID + "' for deployment id '" + NON_EXISTING_DEPLOYMENT_ID + "' does not exist."))
+      .body(containsString("Deployment resource '%s' for deployment id '%s' does not exist.".formatted(NON_EXISTING_DEPLOYMENT_RESOURCE_ID, NON_EXISTING_DEPLOYMENT_ID)))
       .when().get(SINGLE_RESOURCE_DATA_URL);
 
   }
@@ -1079,7 +1079,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateCompleteDeployment() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     Response response = given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1108,7 +1108,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1138,7 +1138,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1168,7 +1168,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1197,7 +1197,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1229,7 +1229,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     when(mockDeploymentBuilder.deployWithResult()).thenReturn(deployment);
 
     // when
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1252,7 +1252,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateCompleteDeploymentDeployChangedOnly() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1269,7 +1269,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateCompleteDeploymentConflictingDuplicateSetting() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     // deploy-changed-only should override enable-duplicate-filtering
     given()
@@ -1288,7 +1288,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentWithDeploymentSource() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     // deploy-changed-only should override enable-duplicate-filtering
     given()
@@ -1307,7 +1307,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentWithActivationTime() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
         .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1324,7 +1324,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentWithTenantId() {
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1340,7 +1340,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   void testCreateDeploymentOnlyWithBytes() {
 
-    resourceNames.addAll(Arrays.asList("data", "more-data"));
+    resourceNames.addAll(List.of("data", "more-data"));
 
     Response response = given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1383,7 +1383,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     String message = "expected exception";
     when(mockDeploymentBuilder.deployWithResult()).thenThrow(new AuthorizationException(message));
 
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
 
     given()
       .multiPart("data", "unspecified", createMockDeploymentResourceByteData())
@@ -1402,7 +1402,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
   @Test
   @SuppressWarnings("unchecked")
   void testCreateDeploymentThrowsParseException() {
-    resourceNames.addAll( Arrays.asList("data", "more-data") );
+    resourceNames.addAll( List.of("data", "more-data") );
     String message = "expected exception";
     List<Problem> mockErrors = mockProblems(EXAMPLE_PROBLEM_COLUMN, EXAMPLE_PROBLEM_LINE, message, EXAMPLE_PROBLEM_ELEMENT_ID);
     List<Problem> mockWarnings = mockProblems(EXAMPLE_PROBLEM_COLUMN_2, EXAMPLE_PROBLEM_LINE_2, EXAMPLE_EXCEPTION_MESSAGE, EXAMPLE_PROBLEM_ELEMENT_ID_2);
@@ -1592,7 +1592,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
       .pathParam("id", NON_EXISTING_DEPLOYMENT_ID)
     .expect()
       .statusCode(Status.NOT_FOUND.getStatusCode())
-      .body(containsString("Deployment with id '" + NON_EXISTING_DEPLOYMENT_ID + "' do not exist"))
+      .body(containsString("Deployment with id '%s' do not exist".formatted(NON_EXISTING_DEPLOYMENT_ID)))
     .when()
        .delete(DEPLOYMENT_URL);
   }
@@ -1831,7 +1831,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     String message = "deployment not found";
     doThrow(new NotFoundException(message)).when(mockDeploymentBuilder).deployWithResult();
 
-    String expected = "Cannot redeploy deployment '" + MockProvider.EXAMPLE_DEPLOYMENT_ID + "': " + message;
+    String expected = "Cannot redeploy deployment '%s': %s".formatted(MockProvider.EXAMPLE_DEPLOYMENT_ID, message);
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)
@@ -1849,7 +1849,7 @@ public class DeploymentRestServiceInteractionTest extends AbstractRestServiceTes
     String message = "not valid";
     doThrow(new NotValidException(message)).when(mockDeploymentBuilder).deployWithResult();
 
-    String expected = "Cannot redeploy deployment '" + MockProvider.EXAMPLE_DEPLOYMENT_ID + "': " + message;
+    String expected = "Cannot redeploy deployment '%s': %s".formatted(MockProvider.EXAMPLE_DEPLOYMENT_ID, message);
 
     given()
       .pathParam("id", MockProvider.EXAMPLE_DEPLOYMENT_ID)

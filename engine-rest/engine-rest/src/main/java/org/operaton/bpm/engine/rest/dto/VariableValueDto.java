@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.rest.dto;
 
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -86,48 +87,58 @@ public class VariableValueDto {
     }
 
     ValueType valueType = valueTypeResolver.typeForName(fromRestApiTypeName(type));
-    if(valueType == null) {
+    if (valueType == null) {
       throw new RestException(Status.BAD_REQUEST, "Unsupported value type '%s'".formatted(type));
     }
+    if (valueType instanceof PrimitiveValueType primitiveValueType) {
+      return createFromPrimitiveValueType(objectMapper, primitiveValueType, valueType);
+    }
+    else if (valueType instanceof SerializableValueType serializableValueType) {
+      return createFromSerializableValueType(serializableValueType);
+    }
+    else if (valueType instanceof FileValueType) {
+      return createFromFileValueType(valueType);
+    }
     else {
-      if(valueType instanceof PrimitiveValueType primitiveValueType) {
-        Class<?> javaType = primitiveValueType.getJavaType();
-        Object mappedValue = null;
-        try {
-          if(value != null) {
-            if(javaType.isAssignableFrom(value.getClass())) {
-              mappedValue = value;
-            }
-            else {
-              // use jackson to map the value to the requested java type
-              mappedValue = objectMapper.readValue("\""+value+"\"", javaType);
-            }
-          }
-          return valueType.createValue(mappedValue, valueInfo);
-        }
-        catch (Exception e) {
-          throw new InvalidRequestException(Status.BAD_REQUEST, e,
-            "Cannot convert value '%s' of type '%s' to java type %s".formatted(value, type, javaType.getName()));
-        }
-      }
-      else if(valueType instanceof SerializableValueType serializableValueType) {
-        if(value != null && !(value instanceof String)) {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Must provide 'null' or String value for value of SerializableValue type '"+type+"'.");
-        }
-        return serializableValueType.createValueFromSerialized((String) value, valueInfo);
-      }
-      else if(valueType instanceof FileValueType) {
-
-        if (value instanceof String stringValue) {
-          value = Base64.getDecoder().decode(stringValue);
-        }
-
-        return valueType.createValue(value, valueInfo);
-      } else {
-        return valueType.createValue(value, valueInfo);
-      }
+      return valueType.createValue(value, valueInfo);
     }
 
+  }
+
+  private TypedValue createFromFileValueType(ValueType valueType) {
+    if (value instanceof String stringValue) {
+      value = Base64.getDecoder().decode(stringValue);
+    }
+
+    return valueType.createValue(value, valueInfo);
+  }
+
+  private TypedValue createFromPrimitiveValueType(ObjectMapper objectMapper, PrimitiveValueType primitiveValueType, ValueType valueType) {
+    Class<?> javaType = primitiveValueType.getJavaType();
+    try {
+      Object mappedValue = null;
+      if(value != null) {
+        if(javaType.isAssignableFrom(value.getClass())) {
+          mappedValue = value;
+        }
+        else {
+          // use jackson to map the value to the requested java type
+          mappedValue = objectMapper.readValue("\""+value+"\"", javaType);
+        }
+      }
+      return valueType.createValue(mappedValue, valueInfo);
+    }
+    catch (Exception e) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, e,
+        "Cannot convert value '%s' of type '%s' to java type %s".formatted(value, type, javaType.getName()));
+    }
+  }
+
+  private SerializableValue createFromSerializableValueType(SerializableValueType serializableValueType) {
+    if(value != null && !(value instanceof String)) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, "Must provide 'null' or String value for value of SerializableValue type '"+type+"'.");
+    }
+    return serializableValueType.createValueFromSerialized((String) value, valueInfo);
   }
 
   /**
@@ -158,6 +169,9 @@ public class VariableValueDto {
 
   public static Map<String, VariableValueDto> fromMap(VariableMap variables, boolean preferSerializedValue)
   {
+    if (variables == null) {
+      return Collections.emptyMap();
+    }
     Map<String, VariableValueDto> result = new HashMap<>();
     for (String variableName : variables.keySet()) {
       VariableValueDto valueDto = VariableValueDto.fromTypedValue(variables.getValueTyped(variableName), preferSerializedValue);

@@ -17,7 +17,6 @@
 
 package org.operaton.bpm.engine.test.api.authorization;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -76,7 +75,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     TriConsumer<TaskService, String, Object> setDueDate = (taskService, taskId, value) -> taskService.setDueDate(taskId, (Date) value);
     TriConsumer<TaskService, String, Object> setFollowUpDate = (taskService, taskId, value) -> taskService.setFollowUpDate(taskId, (Date) value);
 
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         {"setPriority", setPriority, "taskId", 80 },
         {"setName", setName, "taskId", "name" },
         {"setDescription", setDescription, "taskId", "description" },

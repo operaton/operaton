@@ -82,7 +82,8 @@ public class FetchAndLockHandlerImpl implements Runnable, FetchAndLockHandler {
         acquire();
       }
       catch (Exception e) {
-        // what ever happens, don't leave the loop
+        // Log the exception but don't leave the loop to ensure continuous processing
+        LOG.log(Level.WARNING, "Exception occurred during fetch and lock acquisition", e);
       }
     }
 
@@ -204,6 +205,7 @@ public class FetchAndLockHandlerImpl implements Runnable, FetchAndLockHandler {
       handlerThread.join();
     } catch (InterruptedException e) {
       LOG.log(Level.WARNING, "Shutting down the handler thread failed", e);
+      Thread.currentThread().interrupt();
     }
   }
 

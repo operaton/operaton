@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.dmn;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +49,7 @@ public class ExampleCompatibilityTest extends DmnModelTest {
   public static final String EXAMPLE_DMN = "org/operaton/bpm/model/dmn/Example.dmn";
 
   public static Collection<Object[]> parameters(){
-     return Arrays.asList(new Object[][]{
+     return List.of(new Object[][]{
          {Dmn.readModelFromStream(ExampleCompatibilityTest.class.getResourceAsStream("Example.dmn"))},
          // for compatibility reasons we gotta check the old namespace, too
          {Dmn.readModelFromStream(ExampleCompatibilityTest.class.getResourceAsStream("ExampleCompatibility.dmn"))},

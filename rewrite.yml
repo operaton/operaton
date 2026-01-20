@@ -74,6 +74,8 @@ displayName: Tests cleanup
 description: Automatically cleanup test code, use best practices for JUnit 5, AssertJ, and Mockito.
 recipeList:
   - org.openrewrite.java.RemoveUnusedImports
+  # Java 9+ improvements
+  - org.openrewrite.java.migrate.util.UseListOf
   # Testing
   - org.openrewrite.java.testing.assertj.AssertJShortRulesRecipes$AbstractShortAssertIsZeroRecipe
   - org.openrewrite.java.testing.assertj.CollapseConsecutiveAssertThatStatements

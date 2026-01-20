@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class DmnElementTest extends DmnModelElementInstanceTest {
 
@@ -28,7 +27,7 @@ public class DmnElementTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Description.class, 0, 1),
       new ChildElementAssumption(ExtensionElements.class, 0, 1)
     );
@@ -36,7 +35,7 @@ public class DmnElementTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("id", true),
       new AttributeAssumption("label")
     );

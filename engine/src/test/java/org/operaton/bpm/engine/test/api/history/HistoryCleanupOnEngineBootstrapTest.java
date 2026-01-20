@@ -16,8 +16,12 @@
  */
 package org.operaton.bpm.engine.test.api.history;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -54,7 +58,16 @@ class HistoryCleanupOnEngineBootstrapTest {
   private static final String ENGINE_NAME = "engineWithHistoryCleanupBatchWindow";
   private static final String TEMP_ENGINE_NAME = "tempEngine";
 
-  private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter sdf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+  private static Date parseDate(String dateString) {
+    try {
+      LocalDateTime localDateTime = LocalDateTime.parse(dateString, sdf);
+      return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    } catch (DateTimeParseException e) {
+      throw new RuntimeException("Failed to parse date: " + dateString, e);
+    }
+  }
 
   @Test
   void testConsecutiveEngineBootstrapHistoryCleanupJobReconfiguration() {
@@ -194,10 +207,10 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindowMapInXmlConfig() throws Exception {
+  void testBatchWindowMapInXmlConfig() {
     // given
     //we're on Monday
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T22:00:00"));
+    ClockUtil.setCurrentTime(parseDate("2018-05-14T22:00:00"));
 
     //when
     //we configure batch window only for Wednesday and start the server
@@ -212,7 +225,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-16T23:00:00"));
+    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(parseDate("2018-05-16T23:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     engine.close();
@@ -230,7 +243,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-14T23:00:00"));
+    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(parseDate("2018-05-14T23:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     closeProcessEngine(engine);
@@ -287,8 +300,8 @@ class HistoryCleanupOnEngineBootstrapTest {
   }
 
   @Test
-  void testBatchWindowOneDayOfWeek() throws Exception {
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T22:00:00"));       //monday
+  void testBatchWindowOneDayOfWeek() {
+    ClockUtil.setCurrentTime(parseDate("2018-05-14T22:00:00"));       //monday
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     //we have batch window only once per week - Monday afternoon
@@ -307,12 +320,12 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-21T18:00:00"));     //monday next week
+    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(parseDate("2018-05-21T18:00:00"));     //monday next week
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Monday evening next week, right aftre the end of batch window
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-21T20:00:01"));       //monday
+    ClockUtil.setCurrentTime(parseDate("2018-05-21T20:00:01"));       //monday
     //we force history job to be rescheduled
     engine.getManagementService().executeJob(historyCleanupJobs.get(0).getId());
 
@@ -322,14 +335,14 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-28T18:00:00"));     //monday next week
+    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(parseDate("2018-05-28T18:00:00"));     //monday next week
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     closeProcessEngine(engine);
   }
 
   @Test
-  void testBatchWindow24Hours() throws Exception {
+  void testBatchWindow24Hours() {
     //given
     final ProcessEngineConfigurationImpl configuration = (ProcessEngineConfigurationImpl)ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
     //we have batch window for 24 hours
@@ -339,7 +352,7 @@ class HistoryCleanupOnEngineBootstrapTest {
 
     //when
     //we're on Monday early morning
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T05:00:00"));       //monday
+    ClockUtil.setCurrentTime(parseDate("2018-05-14T05:00:00"));       //monday
     //and we bootstrap the engine
     ProcessEngine engine = configuration.buildProcessEngine();
 
@@ -349,12 +362,12 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-14T06:00:00"));
+    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(parseDate("2018-05-14T06:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Monday afternoon
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-14T15:00:00"));
+    ClockUtil.setCurrentTime(parseDate("2018-05-14T15:00:00"));
     //we force history job to be rescheduled
     engine.getManagementService().executeJob(historyCleanupJobs.get(0).getId());
 
@@ -364,12 +377,12 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(sdf.parse("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate())).isTrue();
+    assertThat(parseDate("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate())).isTrue();
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Tuesday early morning close to the end of batch window
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-15T05:59:00"));
+    ClockUtil.setCurrentTime(parseDate("2018-05-15T05:59:00"));
     //we force history job to be rescheduled
     engine.getManagementService().executeJob(historyCleanupJobs.get(0).getId());
 
@@ -379,12 +392,12 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(sdf.parse("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate())).isTrue();
+    assertThat(parseDate("2018-05-15T06:00:00").after(historyCleanupJobs.get(0).getDuedate())).isTrue();
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     //when
     //we're on Tuesday early morning shortly after the end of batch window
-    ClockUtil.setCurrentTime(sdf.parse("2018-05-15T06:01:00"));
+    ClockUtil.setCurrentTime(parseDate("2018-05-15T06:01:00"));
     //we force history job to be rescheduled
     engine.getManagementService().executeJob(historyCleanupJobs.get(0).getId());
 
@@ -394,7 +407,7 @@ class HistoryCleanupOnEngineBootstrapTest {
     assertThat(historyCleanupJobs)
             .isNotEmpty()
             .hasSize(1);
-    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(sdf.parse("2018-05-21T06:00:00"));
+    assertThat(historyCleanupJobs.get(0).getDuedate()).isEqualTo(parseDate("2018-05-21T06:00:00"));
     assertThat(historyCleanupJobs.get(0).isSuspended()).isFalse();
 
     closeProcessEngine(engine);

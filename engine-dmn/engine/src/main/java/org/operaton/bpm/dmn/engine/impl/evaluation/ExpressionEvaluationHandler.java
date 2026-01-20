@@ -131,7 +131,7 @@ public class ExpressionEvaluationHandler {
     String expressionText = expression.getExpression();
     if (expressionText != null) {
       if (isJuelExpression(expressionLanguage) && !StringUtil.isExpression(expressionText)) {
-        return "${" + expressionText + "}";
+        return "${%s}".formatted(expressionText);
       } else {
         return expressionText;
       }

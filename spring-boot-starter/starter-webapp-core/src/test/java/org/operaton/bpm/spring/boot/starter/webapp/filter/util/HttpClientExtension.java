@@ -18,7 +18,7 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.util;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.StringWriter;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -27,12 +27,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.StreamUtils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -182,9 +182,7 @@ public class HttpClientExtension implements AfterEachCallback {
 
   public String getContent() {
     try {
-      StringWriter writer = new StringWriter();
-      IOUtils.copy(connection.getInputStream(), writer, UTF_8);
-      return writer.toString();
+      return StreamUtils.copyToString(connection.getInputStream(), UTF_8);
     } catch (IOException e) {
       LOG.warn("Error reading content: {}: {}", e.getClass(), e.getMessage());
       return null;
@@ -192,11 +190,16 @@ public class HttpClientExtension implements AfterEachCallback {
   }
 
   public String getErrorResponseContent() {
+    // ensure input stream consumed like before
     getContent();
-    try {
-      StringWriter writer = new StringWriter();
-      IOUtils.copy(connection.getErrorStream(), writer, UTF_8);
-      return writer.toString();
+
+    InputStream errorStream = connection.getErrorStream();
+    if (errorStream == null) {
+      return null;
+    }
+
+    try (InputStream is = errorStream) {
+      return StreamUtils.copyToString(is, UTF_8);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }

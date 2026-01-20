@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 public class ReceiveTaskActivityBehavior extends TaskActivityBehavior {
 
   @Override
-  public void performExecution(ActivityExecution execution) throws Exception {
+  public void performExecution(ActivityExecution execution) {
     // Do nothing: waitstate behavior
   }
 

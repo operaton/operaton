@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -1565,7 +1564,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID), any())).thenReturn(task);
 
     // mock variable instances
-    List<VariableInstance> variableInstances = Arrays.asList(
+    List<VariableInstance> variableInstances = List.of(
       createExecutionVariableInstanceMock("foo", stringValue("execution"), EXECUTION_B_ID),
       createExecutionVariableInstanceMock("execution", stringValue("bar"), EXECUTION_B_ID),
       createTaskVariableInstanceMock("foo", stringValue("task"), TASK_B_ID),
@@ -1601,7 +1600,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID), any())).thenReturn(task);
 
     // mock variable instances
-    List<VariableInstance> variableInstances = Arrays.asList(
+    List<VariableInstance> variableInstances = List.of(
       createProcessInstanceVariableInstanceMock("foo", stringValue("processInstance"), PROCESS_INSTANCE_A_ID),
       createProcessInstanceVariableInstanceMock("processInstance", stringValue("bar"), PROCESS_INSTANCE_A_ID),
       createExecutionVariableInstanceMock("foo", stringValue("execution"), EXECUTION_A_ID),
@@ -1657,7 +1656,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     mockFilterWithVariableNames();
 
     // mock resulting task
-    List<Task> tasks = Arrays.asList(
+    List<Task> tasks = List.of(
       createTaskMock(TASK_A_ID, PROCESS_INSTANCE_A_ID, EXECUTION_A_ID, null, null),
       createTaskMock(TASK_B_ID, PROCESS_INSTANCE_A_ID, EXECUTION_B_ID, null, null),
       createTaskMock(TASK_C_ID, null, null, CASE_INSTANCE_A_ID, CASE_EXECUTION_A_ID)
@@ -1665,7 +1664,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.list(eq(EXAMPLE_FILTER_ID), Mockito.<Query<?, Task>>any())).thenReturn(tasks);
 
     // mock variable instances
-    List<VariableInstance> variableInstances = Arrays.asList(
+    List<VariableInstance> variableInstances = List.of(
       createProcessInstanceVariableInstanceMock("foo", stringValue(PROCESS_INSTANCE_A_ID), PROCESS_INSTANCE_A_ID),
       createProcessInstanceVariableInstanceMock(PROCESS_INSTANCE_A_ID, stringValue("bar"), PROCESS_INSTANCE_A_ID),
       createExecutionVariableInstanceMock("foo", stringValue(EXECUTION_A_ID), EXECUTION_A_ID),
@@ -1749,7 +1748,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
   @Test
   void testHalTaskListCount() {
     // mock resulting task
-    List<Task> tasks = Arrays.asList(
+    List<Task> tasks = List.of(
       createTaskMock(TASK_A_ID, PROCESS_INSTANCE_A_ID, EXECUTION_A_ID, null, null),
       createTaskMock(TASK_B_ID, PROCESS_INSTANCE_A_ID, EXECUTION_A_ID, null, null),
       createTaskMock(TASK_C_ID, PROCESS_INSTANCE_A_ID, EXECUTION_B_ID, null, null)

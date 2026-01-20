@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +48,7 @@ public class ConditionalEventWithSpecificVariableEventTest extends AbstractCondi
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       {
         //conditional boundary event
         new ConditionalProcessVarSpecification() {

@@ -20,7 +20,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -700,7 +699,7 @@ class TaskServiceTest {
       fail("NullValueException expected");
     } catch (NullValueException ae) {
       testRule.assertTextPresent(
-          "No comment exists with commentId: " + nonExistingCommentId + " and processInstanceId: " + processInstanceId,
+          "No comment exists with commentId: %s and processInstanceId: %s".formatted(nonExistingCommentId, processInstanceId),
           ae.getMessage());
     }
   }
@@ -1050,7 +1049,7 @@ class TaskServiceTest {
 
     // The unexisting taskId's should be silently ignored. Existing task should
     // have been deleted.
-    taskService.deleteTasks(Arrays.asList("unexistingtaskid1", existingTask.getId()), true);
+    taskService.deleteTasks(List.of("unexistingtaskid1", existingTask.getId()), true);
 
     existingTask = taskService.createTaskQuery().taskId(existingTask.getId()).singleResult();
     assertThat(existingTask).isNull();
@@ -1464,7 +1463,7 @@ class TaskServiceTest {
 
     taskService.setVariable(task1.getId(), taskVariableName, taskVariableValue);
     Map<String, Object> vars = taskService.completeWithVariablesInReturn(task1.getId(), null, true);
-    assertThat(vars).isNull();
+    assertThat(vars).isEmpty();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

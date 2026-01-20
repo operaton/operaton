@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.qa.rolling.update.authorization;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.FormService;
@@ -68,7 +67,7 @@ class AuthorizationTest extends AbstractRollingUpdateTestCase {
 
   private void authenticateUser() {
     identityService.clearAuthentication();
-    identityService.setAuthentication(USER_ID + rule.getBusinessKey(), Arrays.asList(GROUP_ID + rule.getBusinessKey()));
+    identityService.setAuthentication(USER_ID + rule.getBusinessKey(), List.of(GROUP_ID + rule.getBusinessKey()));
   }
 
   private void clearAuthentication() {

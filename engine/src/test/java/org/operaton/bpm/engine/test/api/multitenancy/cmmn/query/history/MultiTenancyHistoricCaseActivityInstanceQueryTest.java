@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.cmmn.query.history;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -181,7 +180,7 @@ class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   @Test
   void shouldQueryAuthenticatedTenant() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     HistoricCaseActivityInstanceQuery query = historyService.createHistoricCaseActivityInstanceQuery();
@@ -197,7 +196,7 @@ class MultiTenancyHistoricCaseActivityInstanceQueryTest {
   @Test
   void shouldQueryAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // when
     HistoricCaseActivityInstanceQuery query = historyService.createHistoricCaseActivityInstanceQuery();

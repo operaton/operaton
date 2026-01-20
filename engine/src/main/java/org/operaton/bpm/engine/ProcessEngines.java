@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
@@ -65,8 +67,8 @@ public final class ProcessEngines {
 
   public static final String NAME_DEFAULT = "default";
 
-  private static volatile boolean isInitialized;
-  private static volatile Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
+  private static boolean isInitialized;
+  private static Map<String, ProcessEngine> processEngines = new ConcurrentHashMap<>();
   private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_NAME = new ConcurrentHashMap<>();
   private static final Map<String, ProcessEngineInfo> PROCESS_ENGINE_INFOS_BY_RESOURCE_URL = new ConcurrentHashMap<>();
   private static final List<ProcessEngineInfo> PROCESS_ENGINE_INFOS = new CopyOnWriteArrayList<>();
@@ -289,7 +291,9 @@ public final class ProcessEngines {
    */
   public static ProcessEngineInfo retry(String resourceUrl) {
     try {
-      return initProcessEngineFromResource(new URL(resourceUrl));
+      return initProcessEngineFromResource(new URI(resourceUrl).toURL());
+    } catch (URISyntaxException e) {
+      throw new ProcessEngineException("invalid uri: %s".formatted(resourceUrl), e);
     } catch (MalformedURLException e) {
       throw new ProcessEngineException("invalid url: %s".formatted(resourceUrl), e);
     }

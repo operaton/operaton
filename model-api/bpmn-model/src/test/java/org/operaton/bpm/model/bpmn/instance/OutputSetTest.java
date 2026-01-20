@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.impl.instance.DataOutputRefs;
 import org.operaton.bpm.model.bpmn.impl.instance.InputSetRefs;
@@ -36,7 +35,7 @@ public class OutputSetTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(DataOutputRefs.class),
       new ChildElementAssumption(OptionalOutputRefs.class),
       new ChildElementAssumption(WhileExecutingOutputRefs.class),
@@ -46,7 +45,7 @@ public class OutputSetTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("name")
     );
   }

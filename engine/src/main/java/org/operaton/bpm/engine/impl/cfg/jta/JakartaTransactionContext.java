@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.impl.cfg.jta;
 
 import jakarta.transaction.Status;
 import jakarta.transaction.Synchronization;
+import jakarta.transaction.SystemException;
 import jakarta.transaction.Transaction;
 import jakarta.transaction.TransactionManager;
 
@@ -39,7 +40,7 @@ public class JakartaTransactionContext extends AbstractTransactionContext {
   }
 
   @Override
-  protected void doRollback() throws Exception {
+  protected void doRollback() throws SystemException {
     // managed transaction, mark rollback-only if not done so already
     Transaction transaction = getTransaction();
     int status = transaction.getStatus();
@@ -62,7 +63,7 @@ public class JakartaTransactionContext extends AbstractTransactionContext {
   }
 
   @Override
-  protected boolean isTransactionActiveInternal() throws Exception {
+  protected boolean isTransactionActiveInternal() throws SystemException {
     return transactionManager.getStatus() != Status.STATUS_MARKED_ROLLBACK && transactionManager.getStatus() != Status.STATUS_NO_TRANSACTION;
   }
 

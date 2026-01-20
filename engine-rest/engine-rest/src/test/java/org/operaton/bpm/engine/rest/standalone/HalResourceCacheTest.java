@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.standalone;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -243,7 +242,7 @@ class HalResourceCacheTest extends AbstractRestServiceTest {
     when(link1.getTaskId()).thenReturn(taskIds[0]);
     IdentityLink link2 = mock(IdentityLink.class);
     when(link2.getTaskId()).thenReturn(taskIds[0]);
-    when(processEngine.getTaskService().getIdentityLinksForTask(anyString())).thenReturn(Arrays.asList(link1, link2));
+    when(processEngine.getTaskService().getIdentityLinksForTask(anyString())).thenReturn(List.of(link1, link2));
 
     // configure cache
     HalRelationCacheConfiguration configuration = new HalRelationCacheConfiguration();

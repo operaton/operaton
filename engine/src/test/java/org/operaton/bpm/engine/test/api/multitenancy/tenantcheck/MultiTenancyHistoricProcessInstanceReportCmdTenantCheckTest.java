@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -91,7 +90,7 @@ class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
 
     startAndCompleteProcessInstance(null);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<DurationReportResult> result = historyService
         .createHistoricProcessInstanceReport()
@@ -148,7 +147,7 @@ class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
     String processDefinitionIdOne = repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_ONE).singleResult().getId();
     String processDefinitionIdTwo = repositoryService.createProcessDefinitionQuery().tenantIdIn(TENANT_TWO).singleResult().getId();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<DurationReportResult> result = historyService
         .createHistoricProcessInstanceReport()
@@ -206,7 +205,7 @@ class MultiTenancyHistoricProcessInstanceReportCmdTenantCheckTest {
     startAndCompleteProcessInstance(TENANT_ONE);
     startAndCompleteProcessInstance(TENANT_TWO);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<DurationReportResult> result = historyService
         .createHistoricProcessInstanceReport()

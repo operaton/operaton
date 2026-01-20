@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -104,6 +103,7 @@ import static org.operaton.bpm.engine.rest.helper.MockProvider.*;
 import static org.operaton.bpm.engine.rest.util.DateTimeUtils.withTimezone;
 import static io.restassured.RestAssured.given;
 import static io.restassured.path.json.JsonPath.from;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -164,7 +164,7 @@ public class TaskRestServiceInteractionTest extends
   protected static final String HANDLE_BPMN_ESCALATION_URL = SINGLE_TASK_URL + "/bpmnEscalation";
 
   private static final String LOCAL_VARIABLE_KEY = "aLocalVariableId";
-  private static final List<String> LOCAL_VARIABLE_PAYLOAD = Arrays.asList("aLocalValue", "bLocalValue");
+  private static final List<String> LOCAL_VARIABLE_PAYLOAD = List.of("aLocalValue", "bLocalValue");
 
   private Task mockTask;
   private TaskService taskServiceMock;
@@ -502,7 +502,7 @@ public class TaskRestServiceInteractionTest extends
   void testGetSingleTaskHal() {
 
     // setup user query mock
-    List<User> mockUsers = Arrays.asList(
+    List<User> mockUsers = List.of(
       MockProvider.mockUser().id(EXAMPLE_TASK_ASSIGNEE_NAME).build(),
       MockProvider.mockUser().id(EXAMPLE_TASK_OWNER).build()
     );
@@ -514,7 +514,7 @@ public class TaskRestServiceInteractionTest extends
     when(processEngine.getIdentityService().createUserQuery()).thenReturn(sampleUserQuery);
 
     // setup group query mock
-    List<Group> mockGroups = Arrays.asList(
+    List<Group> mockGroups = List.of(
       MockProvider.mockGroup().id(mockCandidateGroupIdentityLink.getGroupId()).build(),
       MockProvider.mockGroup().id(mockCandidateGroup2IdentityLink.getGroupId()).build()
     );
@@ -916,13 +916,13 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitTaskForm(EXAMPLE_TASK_ID, null);
+    verify(formServiceMock).submitTaskForm(EXAMPLE_TASK_ID, emptyMap());
   }
 
   @Test
   void testSubmitFormWithVariablesInReturn() {
     VariableMap variables = MockProvider.createMockSerializedVariables();
-    when(formServiceMock.submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, null, false)).thenReturn(variables);
+    when(formServiceMock.submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false)).thenReturn(variables);
 
     Map<String, Object> queryParameters = new HashMap<>();
     queryParameters.put("withVariablesInReturn", true);
@@ -954,7 +954,7 @@ public class TaskRestServiceInteractionTest extends
               equalTo(MockProvider.FORMAT_APPLICATION_JSON))
     .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, null, false);
+    verify(formServiceMock).submitTaskFormWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false);
   }
 
   @Test
@@ -1258,7 +1258,7 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
       .when().get(FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, Arrays.asList("a", "b", "c"), true);
+    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, List.of("a", "b", "c"), true);
   }
 
   @Test
@@ -1291,7 +1291,7 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
       .when().get(FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, Arrays.asList("a", "b", "c"), false);
+    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, List.of("a", "b", "c"), false);
   }
 
   @Test
@@ -1788,7 +1788,7 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.NO_CONTENT.getStatusCode())
       .when().post(COMPLETE_TASK_URL);
 
-    verify(taskServiceMock).complete(EXAMPLE_TASK_ID, null);
+    verify(taskServiceMock).complete(EXAMPLE_TASK_ID, emptyMap());
   }
 
   @Test
@@ -1819,7 +1819,7 @@ public class TaskRestServiceInteractionTest extends
   @Test
   void testCompleteTaskWithVariablesInReturn() {
     VariableMap variables = MockProvider.createMockSerializedVariables();
-    when(taskServiceMock.completeWithVariablesInReturn(EXAMPLE_TASK_ID, null, false)).thenReturn(variables);
+    when(taskServiceMock.completeWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false)).thenReturn(variables);
 
     Map<String, Object> json = new HashMap<>();
     json.put("withVariablesInReturn", Boolean.TRUE);
@@ -1852,7 +1852,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(COMPLETE_TASK_URL);
 
-    verify(taskServiceMock).completeWithVariablesInReturn(EXAMPLE_TASK_ID, null, false);
+    verify(taskServiceMock).completeWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false);
   }
 
   @Test
@@ -2228,7 +2228,7 @@ public class TaskRestServiceInteractionTest extends
     given().pathParam("id", NON_EXISTING_ID)
       .header("accept", MediaType.APPLICATION_JSON)
       .then().expect().statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
-      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("type", equalTo("TaskNotFoundException"))
       .body("message", equalTo("No matching task with id " + NON_EXISTING_ID))
       .when().get(SINGLE_TASK_URL);
   }
@@ -3402,7 +3402,7 @@ public class TaskRestServiceInteractionTest extends
     .expect()
       .statusCode(Status.NOT_FOUND.getStatusCode())
       .contentType(ContentType.JSON)
-      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("type", equalTo("TaskNotFoundException"))
       .body("message", containsString("No matching task with id "+EXAMPLE_TASK_ID))
     .when()
         .put(SINGLE_TASK_URL);
@@ -3647,7 +3647,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(HANDLE_BPMN_ERROR_URL);
 
-    verify(taskServiceMock).handleBpmnError("aTaskId", "anErrorCode", "anErrorMessage", null);
+    verify(taskServiceMock).handleBpmnError("aTaskId", "anErrorCode", "anErrorMessage", emptyMap());
     verifyNoMoreInteractions(taskServiceMock);
   }
 
@@ -3789,7 +3789,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(HANDLE_BPMN_ESCALATION_URL);
 
-    verify(taskServiceMock).handleEscalation("aTaskId", "anEscalationCode", null);
+    verify(taskServiceMock).handleEscalation("aTaskId", "anEscalationCode", emptyMap());
     verifyNoMoreInteractions(taskServiceMock);
   }
 

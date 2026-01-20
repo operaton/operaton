@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
-
 import java.io.InputStream;
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,7 +74,7 @@ class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   @Test
   void getCaseModelWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getCaseModel(caseDefinitionId);
 
@@ -104,7 +103,7 @@ class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   @Test
   void getCaseDiagramWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     InputStream inputStream = repositoryService.getCaseDiagram(caseDefinitionId);
 
@@ -134,7 +133,7 @@ class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   @Test
   void getCaseDefinitionWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     CaseDefinition definition = repositoryService.getCaseDefinition(caseDefinitionId);
 
@@ -163,7 +162,7 @@ class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   @Test
   void getCmmnModelInstanceWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     CmmnModelInstance modelInstance = repositoryService.getCmmnModelInstance(caseDefinitionId);
 
@@ -182,7 +181,7 @@ class MultiTenancyCaseDefinitionCmdsTenantCheckTest {
 
   @Test
   void updateHistoryTimeToLiveWithAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitionId, 6);
 

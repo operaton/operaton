@@ -47,7 +47,7 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   protected FunctionMapper functionMapper;
   // Default implementation (does nothing)
   protected ELContext parsingElContext;
-  protected volatile ElProvider elProvider;
+  protected ElProvider elProvider;
 
   public JuelExpressionManager() {
     this(null);
@@ -168,13 +168,9 @@ public class JuelExpressionManager implements ExpressionManager, ElProviderCompa
   }
 
   @Override
-  public ElProvider toElProvider() {
+  public synchronized ElProvider toElProvider() {
     if (elProvider == null) {
-      synchronized (this) {
-        if (elProvider == null) {
-          elProvider = createElProvider();
-        }
-      }
+        elProvider = createElProvider();
     }
     return elProvider;
   }

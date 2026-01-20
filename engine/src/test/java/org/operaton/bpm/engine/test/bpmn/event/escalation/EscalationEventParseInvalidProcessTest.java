@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.escalation;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class EscalationEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "EscalationEventParseInvalidProcessTest.missingIdOnEscalation.bpmn20.xml", "escalation must have an id", new String[] {} },
         { "EscalationEventParseInvalidProcessTest.invalidAttachement.bpmn20.xml", "An escalation boundary event should only be attached to a subprocess, a call activity or an user task", new String[] { "escalationBoundaryEvent" } },
         { "EscalationEventParseInvalidProcessTest.invalidEscalationRefOnBoundaryEvent.bpmn20.xml", "could not find escalation with id 'invalid-escalation'", new String[] { "escalationBoundaryEvent" } },
@@ -100,7 +99,7 @@ public class EscalationEventParseInvalidProcessTest {
   public void assertExceptionMessageContainsText(Exception e, String expectedMessage) {
     String actualMessage = e.getMessage();
     if (actualMessage == null || !actualMessage.contains(expectedMessage)) {
-      throw new AssertionFailedError("expected presence of [" + expectedMessage + "], but was [" + actualMessage + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expectedMessage, actualMessage));
     }
   }
 }

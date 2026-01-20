@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -744,7 +743,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   void testHistoricVariableQueryByCaseExecutionIdsAsPost() {
     Map<String, Object> json = new HashMap<>();
-    json.put("caseExecutionIdIn", Arrays.asList(MockProvider.EXAMPLE_CASE_EXECUTION_ID, MockProvider.ANOTHER_EXAMPLE_CASE_EXECUTION_ID));
+    json.put("caseExecutionIdIn", List.of(MockProvider.EXAMPLE_CASE_EXECUTION_ID, MockProvider.ANOTHER_EXAMPLE_CASE_EXECUTION_ID));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -887,7 +886,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   @Test
   void testHistoricVariableQueryByCaseActivityIdsAsPost() {
     Map<String, Object> json = new HashMap<>();
-    json.put("caseActivityIdIn", Arrays.asList(MockProvider.EXAMPLE_CASE_ACTIVITY_ID, MockProvider.ANOTHER_EXAMPLE_CASE_ACTIVITY_ID));
+    json.put("caseActivityIdIn", List.of(MockProvider.EXAMPLE_CASE_ACTIVITY_ID, MockProvider.ANOTHER_EXAMPLE_CASE_ACTIVITY_ID));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -978,7 +977,7 @@ public class HistoricVariableInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private List<HistoricVariableInstance> createMockHistoricVariableInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockHistoricVariableInstance(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockHistoricVariableInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
   }

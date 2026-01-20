@@ -21,11 +21,11 @@ import java.util.Map;
 
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
-import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
-import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 
-import static org.operaton.bpm.engine.impl.AbstractDefinitionDeployer.DIAGRAM_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
 
 public final class ProcessApplicationScanningUtil {
 
@@ -75,9 +75,9 @@ public final class ProcessApplicationScanningUtil {
   }
 
   public static boolean isDeployable(String filename) {
-    return hasSuffix(filename, BpmnDeployer.BPMN_RESOURCE_SUFFIXES)
-      || hasSuffix(filename, CmmnDeployer.CMMN_RESOURCE_SUFFIXES)
-      || hasSuffix(filename, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
+    return hasSuffix(filename, BPMN_RESOURCE_SUFFIXES)
+      || hasSuffix(filename, CMMN_RESOURCE_SUFFIXES)
+      || hasSuffix(filename, DMN_RESOURCE_SUFFIXES);
   }
 
   public static boolean isDeployable(String filename, String[] additionalResourceSuffixes) {
@@ -99,11 +99,11 @@ public final class ProcessApplicationScanningUtil {
 
   public static boolean isDiagram(String fileName, String modelFileName) {
     // process resources
-    boolean isBpmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_SUFFIXES, BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    boolean isBpmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_RESOURCE_SUFFIXES, BPMN_RESOURCE_SUFFIXES);
     // case resources
-    boolean isCmmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_SUFFIXES, CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
+    boolean isCmmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_RESOURCE_SUFFIXES, CMMN_RESOURCE_SUFFIXES);
     // decision resources
-    boolean isDmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_SUFFIXES, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
+    boolean isDmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_RESOURCE_SUFFIXES, DMN_RESOURCE_SUFFIXES);
 
     return isBpmnDiagram || isCmmnDiagram || isDmnDiagram;
   }

@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -47,18 +47,17 @@ class ExpressionBeanAccessTest {
   @Deployment
   @Test
   void testConfigurationBeanAccess() {
+    // given
     // Exposed bean returns 'I'm exposed' when to-string is called in first service-task
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("expressionBeanAccess");
     assertThat(runtimeService.getVariable(pi.getId(), "exposedBeanResult")).isEqualTo("I'm exposed");
     var processInstanceId = pi.getId();
 
+    // when/then
     // After signaling, an expression tries to use a bean that is present in the configuration but
     // is not added to the beans-list
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getCause()).isInstanceOf(PropertyNotFoundException.class);
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasCauseInstanceOf(PropertyNotFoundException.class);
   }
 }

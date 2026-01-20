@@ -34,6 +34,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 public class ModificationBatchJobHandler extends AbstractBatchJobHandler<ModificationBatchConfiguration>{
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_MODIFICATION);
+  private static final ModificationBatchConfigurationJsonConverter JSON_CONVERTER =
+      new ModificationBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -93,7 +95,7 @@ public class ModificationBatchJobHandler extends AbstractBatchJobHandler<Modific
 
   @Override
   protected ModificationBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return ModificationBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   protected ProcessDefinitionEntity getProcessDefinition(CommandContext commandContext, String processDefinitionId) {

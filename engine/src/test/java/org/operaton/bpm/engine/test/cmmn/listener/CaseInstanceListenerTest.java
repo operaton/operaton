@@ -18,12 +18,15 @@ package org.operaton.bpm.engine.test.cmmn.listener;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.ScriptEvaluationException;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -677,18 +680,16 @@ class CaseInstanceListenerTest extends CmmnTest {
         .create()
         .getId();
 
-    caseService
-      .withCaseExecution(caseInstanceId)
-      .complete();
+    var caseExecutionCommandBuilder = caseService
+        .withCaseExecution(caseInstanceId);
 
-    // when
-    caseService
-      .withCaseExecution(caseInstanceId)
-      .close();
+    caseExecutionCommandBuilder.complete();
 
-    // then
-    // TODO: if history is provided, the historic variables have to be checked!
-
+    // when & then
+    assertThatThrownBy(caseExecutionCommandBuilder::close)
+        .isInstanceOf(ScriptEvaluationException.class)
+        .hasRootCauseInstanceOf(ProcessEngineException.class)
+        .hasRootCauseMessage("Intentional exception by close listener");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseInstanceListenerTest.testAllListenerByClass.cmmn"})

@@ -100,7 +100,7 @@ public abstract class MultiInstanceActivityBehavior extends AbstractBpmnActivity
     return collection;
   }
 
-  protected abstract void createInstances(ActivityExecution execution, int nrOfInstances) throws Exception;
+  protected abstract void createInstances(ActivityExecution execution, int nrOfInstances);
 
   // Helpers //////////////////////////////////////////////////////////////////////
 

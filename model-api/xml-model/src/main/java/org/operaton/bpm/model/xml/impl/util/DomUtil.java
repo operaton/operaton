@@ -193,8 +193,7 @@ public final class DomUtil {
     private static final Logger LOGGER = Logger.getLogger(DomErrorHandler.class.getName());
 
     private String getParseExceptionInfo(SAXParseException spe) {
-      return "URI=" + spe.getSystemId() + " Line="
-        + spe.getLineNumber() + ": " + spe.getMessage();
+      return "URI=%s Line=%d: %s".formatted(spe.getSystemId(), spe.getLineNumber(), spe.getMessage());
     }
 
     @Override

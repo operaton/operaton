@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
@@ -85,9 +86,13 @@ public final class IoUtil {
   }
 
   public static File getFile(String filePath) {
-    URL url = IoUtil.class.getClassLoader().getResource(filePath);
     try {
-      return new File(url.toURI());
+      URL resource = IoUtil.class.getClassLoader().getResource(filePath);
+      if (resource == null) {
+        throw new ProcessEngineException("resource '%s' not found".formatted(filePath));
+      }
+      URI uri = resource.toURI();
+      return new File(uri);
     }
     catch (Exception e) {
       throw LOG.exceptionWhileGettingFile(filePath, e);

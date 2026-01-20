@@ -35,6 +35,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 public class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHandler<BatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_HISTORIC_PROCESS_INSTANCE_DELETION);
+  private static final DeleteHistoricProcessInstanceBatchConfigurationJsonConverter JSON_CONVERTER =
+      new DeleteHistoricProcessInstanceBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -42,7 +44,7 @@ public class DeleteHistoricProcessInstancesJobHandler extends AbstractBatchJobHa
   }
 
   protected DeleteHistoricProcessInstanceBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return DeleteHistoricProcessInstanceBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

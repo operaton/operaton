@@ -54,6 +54,7 @@ import org.operaton.bpm.engine.runtime.CaseInstanceBuilder;
 import org.operaton.bpm.engine.variable.type.ValueType;
 
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -273,7 +274,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
     .then().expect()
       .statusCode(Status.NOT_FOUND.getStatusCode()).contentType(ContentType.JSON)
       .body("type", is(RestException.class.getSimpleName()))
-      .body("message", containsString("No matching case definition with key: " + nonExistingKey + " and tenant-id: " + nonExistingTenantId))
+      .body("message", containsString("No matching case definition with key: %s and tenant-id: %s".formatted(nonExistingKey, nonExistingTenantId)))
     .when().get(SINGLE_CASE_DEFINITION_BY_KEY_AND_TENANT_ID_URL);
   }
 
@@ -314,7 +315,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     verify(caseServiceMock).withCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     verify(caseInstanceBuilder).businessKey(null);
-    verify(caseInstanceBuilder).setVariables(null);
+    verify(caseInstanceBuilder).setVariables(emptyMap());
     verify(caseInstanceBuilder).create();
 
   }
@@ -334,7 +335,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     verify(caseServiceMock).withCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     verify(caseInstanceBuilder).businessKey(null);
-    verify(caseInstanceBuilder).setVariables(null);
+    verify(caseInstanceBuilder).setVariables(emptyMap());
     verify(caseInstanceBuilder).create();
   }
 
@@ -356,7 +357,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     verify(caseServiceMock).withCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     verify(caseInstanceBuilder).businessKey(MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
-    verify(caseInstanceBuilder).setVariables(null);
+    verify(caseInstanceBuilder).setVariables(emptyMap());
     verify(caseInstanceBuilder).create();
 
   }
@@ -379,7 +380,7 @@ public class CaseDefinitionRestServiceInteractionTest extends AbstractRestServic
 
     verify(caseServiceMock).withCaseDefinition(MockProvider.EXAMPLE_CASE_DEFINITION_ID);
     verify(caseInstanceBuilder).businessKey(MockProvider.EXAMPLE_CASE_INSTANCE_BUSINESS_KEY);
-    verify(caseInstanceBuilder).setVariables(null);
+    verify(caseInstanceBuilder).setVariables(emptyMap());
     verify(caseInstanceBuilder).create();
   }
 

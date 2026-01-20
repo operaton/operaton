@@ -52,8 +52,8 @@ public class OperatonEngineRecorder {
 
   public void configureProcessEngineCdiBeans(BeanContainer beanContainer) {
 
-    if (BeanManagerLookup.localInstance == null) {
-      BeanManagerLookup.localInstance = getBeanFromContainer(BeanManager.class, beanContainer);
+    if (BeanManagerLookup.getLocalInstance() == null) {
+      BeanManagerLookup.setLocalInstance(getBeanFromContainer(BeanManager.class, beanContainer));
     }
   }
 

@@ -29,8 +29,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 public class RestartProcessInstancesBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<RestartProcessInstancesBatchConfiguration> {
-
-  public static final RestartProcessInstancesBatchConfigurationJsonConverter INSTANCE = new RestartProcessInstancesBatchConfigurationJsonConverter();
+  private static final ModificationCmdJsonConverter MODIFICATION_CMD_CONVERTER = new ModificationCmdJsonConverter();
 
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";
@@ -48,7 +47,7 @@ public class RestartProcessInstancesBatchConfigurationJsonConverter
     JsonUtil.addListField(json, PROCESS_INSTANCE_IDS, configuration.getIds());
     JsonUtil.addListField(json, PROCESS_INSTANCE_ID_MAPPINGS, DeploymentMappingJsonConverter.INSTANCE, configuration.getIdMappings());
     JsonUtil.addField(json, PROCESS_DEFINITION_ID, configuration.getProcessDefinitionId());
-    JsonUtil.addListField(json, INSTRUCTIONS, ModificationCmdJsonConverter.INSTANCE, configuration.getInstructions());
+    JsonUtil.addListField(json, INSTRUCTIONS, MODIFICATION_CMD_CONVERTER, configuration.getInstructions());
     JsonUtil.addField(json, INITIAL_VARIABLES, configuration.isInitialVariables());
     JsonUtil.addField(json, SKIP_CUSTOM_LISTENERS, configuration.isSkipCustomListeners());
     JsonUtil.addField(json, SKIP_IO_MAPPINGS, configuration.isSkipIoMappings());
@@ -61,7 +60,7 @@ public class RestartProcessInstancesBatchConfigurationJsonConverter
   public RestartProcessInstancesBatchConfiguration readConfiguration(JsonObject json) {
     List<String> processInstanceIds = readProcessInstanceIds(json);
     DeploymentMappings idMappings = readIdMappings(json);
-    List<AbstractProcessInstanceModificationCommand> instructions = JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS), ModificationCmdJsonConverter.INSTANCE);
+    List<AbstractProcessInstanceModificationCommand> instructions = JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS), MODIFICATION_CMD_CONVERTER);
 
     return new RestartProcessInstancesBatchConfiguration(processInstanceIds, idMappings, instructions,
         JsonUtil.getString(json, PROCESS_DEFINITION_ID), JsonUtil.getBoolean(json, INITIAL_VARIABLES),

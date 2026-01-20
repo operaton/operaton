@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -285,7 +284,7 @@ class SingleProcessInstanceModificationAsyncTest {
   void testStartBeforeWithAncestorInstanceIdWithAncestorCancelled() {
     // given
     Map<String, Object> vars = new HashMap<>();
-    vars.put("ids", new ArrayList<>(Arrays.asList("1")));
+    vars.put("ids", new ArrayList<>(List.of("1")));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("loopProcess", vars);
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     String ancestorActivityId = getChildInstanceForActivity(tree, "loop").getId();
@@ -459,8 +458,7 @@ class SingleProcessInstanceModificationAsyncTest {
 
     } catch (ProcessEngineException e) {
       // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'invalidFlowId'; "
-              + "Element 'invalidFlowId' does not exist in process '" + processInstance.getProcessDefinitionId() + "'",
+      testRule.assertTextPresent("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()),
           e.getMessage());
     }
   }
@@ -552,7 +550,7 @@ class SingleProcessInstanceModificationAsyncTest {
   void testStartAfterWithAncestorInstanceIdWithAncestorCancelled() {
     // given
     Map<String, Object> vars = new HashMap<>();
-    vars.put("ids", new ArrayList<>(Arrays.asList("1")));
+    vars.put("ids", new ArrayList<>(List.of("1")));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("loopProcess", vars);
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     String ancestorActivityId = getChildInstanceForActivity(tree, "loop").getId();

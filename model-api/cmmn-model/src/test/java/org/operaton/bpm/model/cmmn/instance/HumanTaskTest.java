@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
@@ -34,14 +33,14 @@ public class HumanTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(PlanningTable.class)
         );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("performerRef"),
           /** operaton extensions */
           new AttributeAssumption(OPERATON_NS, "assignee"),

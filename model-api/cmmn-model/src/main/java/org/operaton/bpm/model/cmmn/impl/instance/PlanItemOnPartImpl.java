@@ -47,6 +47,9 @@ public class PlanItemOnPartImpl extends OnPartImpl implements PlanItemOnPart {
   protected static ChildElement<PlanItemTransitionStandardEvent> standardEventChild;
 
   // cmmn 1.0
+  /**
+   * @deprecated cmmn 1.0 is deprecated
+   */
   @Deprecated(since = "1.0")
   protected static AttributeReference<Sentry> sentryRefAttribute;
 

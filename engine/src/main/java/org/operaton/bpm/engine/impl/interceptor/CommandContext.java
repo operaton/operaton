@@ -132,60 +132,63 @@ public class CommandContext {
 
   public void close(CommandInvocationContext commandInvocationContext) {
     // the intention of this method is that all resources are closed properly,
-    // even
-    // if exceptions occur in close or flush methods of the sessions or the
+    // even if exceptions occur in close or flush methods of the sessions or the
     // transaction context.
-
     try {
-      try {
-        try {
-
-          if (commandInvocationContext.getThrowable() == null) {
-            fireCommandContextClose();
-            flushSessions();
-          }
-
-        } catch (Exception exception) {
-          commandInvocationContext.trySetThrowable(exception);
-        } finally {
-
-          try {
-            if (commandInvocationContext.getThrowable() == null) {
-              transactionContext.commit();
-            }
-          } catch (Exception exception) {
-            commandInvocationContext.trySetThrowable(exception);
-          }
-
-          if (commandInvocationContext.getThrowable() != null) {
-            // fire command failed (must not fail itself)
-            fireCommandFailed(commandInvocationContext.getThrowable());
-
-            if(shouldLogCmdException()) {
-              if (shouldLogInfo(commandInvocationContext.getThrowable())) {
-                LOG.infoException(commandInvocationContext.getThrowable());
-              }
-              else if (shouldLogFine(commandInvocationContext.getThrowable())) {
-                LOG.debugException(commandInvocationContext.getThrowable());
-              }
-              else {
-                  LOG.errorException(commandInvocationContext.getThrowable());
-              }
-            }
-            transactionContext.rollback();
-          }
-        }
-      } catch (Exception exception) {
-        commandInvocationContext.trySetThrowable(exception);
-      } finally {
-        closeSessions(commandInvocationContext);
-      }
+      tryCloseInternal(commandInvocationContext);
     } catch (Exception exception) {
       commandInvocationContext.trySetThrowable(exception);
     }
 
     // rethrow the original exception if there was one
     commandInvocationContext.rethrow();
+  }
+
+  private void tryCloseInternal(CommandInvocationContext commandInvocationContext) {
+    try {
+      try {
+        if (commandInvocationContext.getThrowable() == null) {
+          fireCommandContextClose();
+          flushSessions();
+        }
+      } catch (Exception exception) {
+        commandInvocationContext.trySetThrowable(exception);
+      } finally {
+        tryCommit(commandInvocationContext);
+
+        if (commandInvocationContext.getThrowable() != null) {
+          // fire command failed (must not fail itself)
+          fireCommandFailed(commandInvocationContext.getThrowable());
+
+          if (shouldLogCmdException()) {
+            if (shouldLogInfo(commandInvocationContext.getThrowable())) {
+              LOG.infoException(commandInvocationContext.getThrowable());
+            }
+            else if (shouldLogFine(commandInvocationContext.getThrowable())) {
+              LOG.debugException(commandInvocationContext.getThrowable());
+            }
+            else {
+                LOG.errorException(commandInvocationContext.getThrowable());
+            }
+          }
+          transactionContext.rollback();
+        }
+      }
+    } catch (Exception exception) {
+      commandInvocationContext.trySetThrowable(exception);
+    } finally {
+      closeSessions(commandInvocationContext);
+    }
+  }
+
+  private void tryCommit(CommandInvocationContext commandInvocationContext) {
+    try {
+      if (commandInvocationContext.getThrowable() == null) {
+        transactionContext.commit();
+      }
+    } catch (Exception exception) {
+      commandInvocationContext.trySetThrowable(exception);
+    }
   }
 
   protected boolean shouldLogInfo(Throwable exception) {

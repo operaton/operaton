@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Sebastian Menski
@@ -31,7 +30,7 @@ public class ActivityTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(IoSpecification.class, 0, 1),
       new ChildElementAssumption(Property.class),
       new ChildElementAssumption(DataInputAssociation.class),
@@ -43,7 +42,7 @@ public class ActivityTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("isForCompensation", false, false, false),
       new AttributeAssumption("startQuantity", false, false, 1),
       new AttributeAssumption("completionQuantity", false, false, 1),

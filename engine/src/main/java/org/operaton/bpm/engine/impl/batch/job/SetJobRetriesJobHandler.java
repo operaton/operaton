@@ -35,6 +35,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
  */
 public class SetJobRetriesJobHandler extends AbstractBatchJobHandler<SetJobRetriesBatchConfiguration> {
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_SET_JOB_RETRIES);
+  private static final SetJobRetriesBatchConfigurationJsonConverter JSON_CONVERTER =
+      new SetJobRetriesBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -42,7 +44,7 @@ public class SetJobRetriesJobHandler extends AbstractBatchJobHandler<SetJobRetri
   }
 
   protected SetJobRetriesBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return SetJobRetriesBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

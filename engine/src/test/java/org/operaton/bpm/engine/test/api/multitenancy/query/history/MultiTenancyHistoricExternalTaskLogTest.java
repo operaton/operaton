@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -229,7 +228,7 @@ class MultiTenancyHistoricExternalTaskLogTest {
   @Test
   void shouldQueryAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // when
     HistoricExternalTaskLogQuery query = historyService.createHistoricExternalTaskLogQuery();
@@ -304,7 +303,7 @@ class MultiTenancyHistoricExternalTaskLogTest {
   @Test
   void shouldGetErrorDetailsAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     String logIdTenant1 = historyService
       .createHistoricExternalTaskLogQuery()

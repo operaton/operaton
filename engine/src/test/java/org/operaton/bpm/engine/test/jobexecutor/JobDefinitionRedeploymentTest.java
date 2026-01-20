@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -51,7 +50,7 @@ public class JobDefinitionRedeploymentTest {
 
   @Parameters(name = "process definition = {0}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testTimerStartEvent.bpmn20.xml" },
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testTimerBoundaryEvent.bpmn20.xml" },
         { "org/operaton/bpm/engine/test/jobexecutor/JobDefinitionDeploymentTest.testMultipleTimerBoundaryEvents.bpmn20.xml" },

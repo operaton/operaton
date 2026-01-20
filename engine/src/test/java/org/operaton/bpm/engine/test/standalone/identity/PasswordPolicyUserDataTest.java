@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.standalone.identity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,7 +125,7 @@ public class PasswordPolicyUserDataTest {
   public Map<String, PasswordPolicyResult> getResultsForAttributes(String attrValue) {
     Map<String, PasswordPolicyResult> results = new HashMap<>();
 
-    List<Method> methods = Arrays.asList(User.class.getMethods());
+    List<Method> methods = List.of(User.class.getMethods());
 
     methods.forEach(method -> {
       String methodName = method.getName();

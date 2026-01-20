@@ -64,20 +64,18 @@ public class DbHistoryEventHandler implements HistoryEventHandler {
 
     final DbEntityManager dbEntityManager = getDbEntityManager();
 
-    if(isInitialEvent(historyEvent)) {
+    if (isInitialEvent(historyEvent)) {
       dbEntityManager.insert(historyEvent);
     } else {
-      if(dbEntityManager.getCachedEntity(historyEvent.getClass(), historyEvent.getId()) == null) {
+      if (dbEntityManager.getCachedEntity(historyEvent.getClass(), historyEvent.getId()) == null) {
         if (historyEvent instanceof HistoricScopeInstanceEvent historicScopeInstanceEvent) {
           // if this is a scope, get start time from existing event in DB
           HistoricScopeInstanceEvent existingEvent = (HistoricScopeInstanceEvent) dbEntityManager.selectById(historyEvent.getClass(), historyEvent.getId());
-          if(existingEvent != null) {
+          if (existingEvent != null) {
             historicScopeInstanceEvent.setStartTime(existingEvent.getStartTime());
           }
         }
-        if(historyEvent.getId() == null) {
-//          dbSqlSession.insert(historyEvent);
-        } else {
+        if (historyEvent.getId() != null) {
           dbEntityManager.merge(historyEvent);
         }
       }

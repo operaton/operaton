@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -150,7 +149,7 @@ class MultiTenancyFilterServiceTest {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     assertThat(filterService.count(filterId)).isEqualTo(2L);
   }
@@ -160,7 +159,7 @@ class MultiTenancyFilterServiceTest {
     TaskQuery query = taskService.createTaskQuery();
     filterId = createFilter(query);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     assertThat(filterService.count(filterId)).isEqualTo(3L);
   }
@@ -180,7 +179,7 @@ class MultiTenancyFilterServiceTest {
     TaskQuery query = taskService.createTaskQuery().tenantIdIn(TENANT_ONE);
     filterId = createFilter(query);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     assertThat(filterService.count(filterId)).isOne();
   }
@@ -201,7 +200,7 @@ class MultiTenancyFilterServiceTest {
     TaskQuery query = taskService.createTaskQuery().taskName("testTask");
     filterId = createFilter(query);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     TaskQuery extendingQuery = taskService.createTaskQuery().tenantIdIn(TENANT_ONE);
     assertThat(filterService.count(filterId, extendingQuery)).isOne();

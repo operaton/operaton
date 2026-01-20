@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -130,7 +129,7 @@ public class DeleteBatchAuthorizationTest {
     batch = engineRule
         .getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
+        .processInstanceIds(List.of(processInstance.getId()))
         .executeAsync();
 
     // when
@@ -171,7 +170,7 @@ public class DeleteBatchAuthorizationTest {
     batch = engineRule
         .getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
+        .processInstanceIds(List.of(processInstance.getId()))
         .executeAsync();
 
     // when

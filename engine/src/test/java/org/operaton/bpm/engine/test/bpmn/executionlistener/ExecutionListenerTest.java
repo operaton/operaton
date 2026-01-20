@@ -58,7 +58,6 @@ import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.HI
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -99,7 +98,7 @@ public class ExecutionListenerTest {
             .singleResult();
 
     if (processInstance != null) {
-      throw new AssertionFailedError("Expected finished process instance '" + processInstanceId + "' but it was still in the db");
+      throw new AssertionFailedError("Expected finished process instance '%s' but it was still in the db".formatted(processInstanceId));
     }
   }
 
@@ -1179,15 +1178,13 @@ public class ExecutionListenerTest {
     assertThat(taskService.createTaskQuery().list()).hasSize(1);
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("taskWithListener");
 
-    try {
-      // when the listeners are invoked
-      runtimeService.correlateMessage("foo");
-      fail("Expected exception");
-    } catch (Exception e) {
-      // then
-      assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
-    }
+    // when
+    // the listeners are invoked
+    assertThatThrownBy(() -> runtimeService.correlateMessage("foo"))
+      .hasMessageContaining("business error");
+
+    // then
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   @Test
@@ -1247,15 +1244,13 @@ public class ExecutionListenerTest {
 
     testRule.deploy(model);
 
-    try {
-      // when listeners are invoked
-      runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // then
-      assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
-    }
+    // when
+    // listeners are invoked
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_KEY))
+      .hasMessageContaining("business error");
+
+    // then
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   @Test
@@ -1279,14 +1274,13 @@ public class ExecutionListenerTest {
 
     testRule.deploy(model);
 
-    try {
-      // when listeners are invoked
-      runtimeService.startProcessInstanceByKey(PROCESS_KEY);
-      fail("Exception expected");
-    } catch (Exception e) {
-      assertThat(e.getMessage()).contains("business error");
-      assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
-    }
+    // when
+    // listeners are invoked
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey(PROCESS_KEY))
+      .hasMessageContaining("business error");
+
+    // then
+    assertThat(ThrowBPMNErrorDelegate.invocations).isEqualTo(1);
   }
 
   protected BpmnModelInstance createModelWithCatchInServiceTaskAndListener(String eventName) {

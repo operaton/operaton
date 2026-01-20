@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -89,6 +88,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockSerializedVariables;
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
@@ -556,7 +556,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
     .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, emptyMap());
   }
 
   @Test
@@ -666,7 +666,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", emptyMap());
   }
 
   @Test
@@ -897,7 +897,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
     .when().get(START_FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, Arrays.asList("a", "b", "c"), true);
+    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, List.of("a", "b", "c"), true);
   }
 
   @Test
@@ -929,7 +929,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
     .when().get(START_FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, Arrays.asList("a", "b", "c"), false);
+    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, List.of("a", "b", "c"), false);
   }
 
   @Test
@@ -2878,7 +2878,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
     .when().post(SUBMIT_FORM_BY_KEY_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, emptyMap());
   }
 
   @Test
@@ -2926,7 +2926,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .when().post(SUBMIT_FORM_BY_KEY_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", emptyMap());
   }
 
   @Test
@@ -4040,7 +4040,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testGetStaticCalledProcessDefinitions() {
     CalledProcessDefinition mock = mock(CalledProcessDefinitionImpl.class);
-    when(mock.getCalledFromActivityIds()).thenReturn(Arrays.asList("anActivity", "anotherActivity"));
+    when(mock.getCalledFromActivityIds()).thenReturn(List.of("anActivity", "anotherActivity"));
     when(mock.getId()).thenReturn("aKey:1:123");
     when(mock.getCallingProcessDefinitionId()).thenReturn("aCallingId");
     when(mock.getName()).thenReturn("a Name");

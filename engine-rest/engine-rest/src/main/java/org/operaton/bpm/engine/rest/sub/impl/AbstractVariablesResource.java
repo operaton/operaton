@@ -76,7 +76,7 @@ public abstract class AbstractVariablesResource implements VariableResource {
   }
 
   protected TypedValue getTypedValueForVariable(String variableName, boolean deserializeValue) {
-    TypedValue value = null;
+    TypedValue value;
     try {
        value = getVariableEntity(variableName, deserializeValue);
     } catch (AuthorizationException e) {
@@ -101,7 +101,6 @@ public abstract class AbstractVariablesResource implements VariableResource {
 
   @Override
   public void putVariable(String variableName, VariableValueDto variable) {
-
     try {
       TypedValue typedValue = variable.toTypedValue(engine, objectMapper);
       setVariableEntity(variableName, typedValue);
@@ -122,48 +121,52 @@ public abstract class AbstractVariablesResource implements VariableResource {
 
   @Override
   public void setBinaryVariable(String variableKey, MultipartFormData payload) {
+    if(payload.getNamedPart("type") != null) {
+      setBinaryVariableFromTypePart(variableKey, payload);
+    } else {
+      setBinaryVariableFromDataPart(variableKey, payload);
+    }
+  }
+
+  private void setBinaryVariableFromTypePart(String variableKey, MultipartFormData payload) {
     FormPart dataPart = payload.getNamedPart("data");
     FormPart objectTypePart = payload.getNamedPart("type");
-    FormPart valueTypePart = payload.getNamedPart("valueType");
 
-    if(objectTypePart != null) {
-      Object object = null;
+    if (dataPart.getContentType() != null && dataPart.getContentType().toLowerCase().contains(MediaType.APPLICATION_JSON)) {
+      Object object = deserializeJsonObject(objectTypePart.getTextContent(), dataPart.getBinaryContent());
 
-      if(dataPart.getContentType()!=null
-          && dataPart.getContentType().toLowerCase().contains(MediaType.APPLICATION_JSON)) {
-
-        object = deserializeJsonObject(objectTypePart.getTextContent(), dataPart.getBinaryContent());
-
-      } else {
-        throw new InvalidRequestException(Status.BAD_REQUEST, "Unrecognized content type for serialized java type: "+dataPart.getContentType());
-      }
-
-      if(object != null) {
+      if (object != null) {
         setVariableEntity(variableKey, Variables.objectValue(object).create());
       }
     } else {
+      throw new InvalidRequestException(Status.BAD_REQUEST, "Unrecognized content type for serialized java type: "+ dataPart.getContentType());
+    }
 
-      String valueTypeName = DEFAULT_BINARY_VALUE_TYPE;
-      if (valueTypePart != null) {
-        if (valueTypePart.getTextContent() == null) {
-          throw new InvalidRequestException(Status.BAD_REQUEST,
-              "Form part with name 'valueType' must have a text/plain value");
-        }
+  }
 
-        valueTypeName = valueTypePart.getTextContent();
+  private void setBinaryVariableFromDataPart(String variableKey, MultipartFormData payload) {
+    FormPart dataPart = payload.getNamedPart("data");
+    FormPart valueTypePart = payload.getNamedPart("valueType");
+    String valueTypeName = DEFAULT_BINARY_VALUE_TYPE;
+    if (valueTypePart != null) {
+      if (valueTypePart.getTextContent() == null) {
+        throw new InvalidRequestException(Status.BAD_REQUEST,
+            "Form part with name 'valueType' must have a text/plain value");
       }
 
-      VariableValueDto valueDto = VariableValueDto.fromFormPart(valueTypeName, dataPart);
-      try {
+      valueTypeName = valueTypePart.getTextContent();
+    }
 
-        TypedValue typedValue = valueDto.toTypedValue(engine, objectMapper);
-        setVariableEntity(variableKey, typedValue);
-      } catch (AuthorizationException e) {
-        throw e;
-      } catch (ProcessEngineException e) {
-        String errorMessage = "Cannot put %s variable %s: %s".formatted(getResourceTypeName(), variableKey, e.getMessage());
-        throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
-      }
+    VariableValueDto valueDto = VariableValueDto.fromFormPart(valueTypeName, dataPart);
+    try {
+
+      TypedValue typedValue = valueDto.toTypedValue(engine, objectMapper);
+      setVariableEntity(variableKey, typedValue);
+    } catch (AuthorizationException e) {
+      throw e;
+    } catch (ProcessEngineException e) {
+      String errorMessage = "Cannot put %s variable %s: %s".formatted(getResourceTypeName(), variableKey, e.getMessage());
+      throw new RestException(Status.INTERNAL_SERVER_ERROR, e, errorMessage);
     }
   }
 

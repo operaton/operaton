@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.XSI_NS;
@@ -39,7 +38,7 @@ public class ConditionExpressionTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(XSI_NS, "type", false, false, "tFormalExpression"),
       new AttributeAssumption(OPERATON_NS, "resource")
     );

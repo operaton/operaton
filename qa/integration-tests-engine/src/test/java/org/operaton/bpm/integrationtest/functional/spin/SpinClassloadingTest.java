@@ -24,10 +24,12 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 
@@ -65,14 +67,13 @@ public class SpinClassloadingTest extends AbstractFoxPlatformIntegrationTest {
 
     String serializedValue = "<?xml version=\"1.0\" encoding=\"utf-8\"?><xmlserializable><property>value</property></xmlserializable>";
 
-    runtimeService.startProcessInstanceByKey("testProcess",
-      createVariables()
-        .putValueTyped("xmlSerializable",
-            serializedObjectValue(serializedValue)
-              .serializationDataFormat(SerializationDataFormats.XML)
-              .objectTypeName("org.operaton.bpm.integrationtest.functional.spin.XmlSerializable")
-            .create()));
+    VariableMap variables = createVariables().putValueTyped("xmlSerializable",
+      serializedObjectValue(serializedValue).serializationDataFormat(SerializationDataFormats.XML)
+        .objectTypeName("org.operaton.bpm.integrationtest.functional.spin.XmlSerializable")
+        .create());
 
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("testProcess", variables))
+      .doesNotThrowAnyException();
   }
 
 }

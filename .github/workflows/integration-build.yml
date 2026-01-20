@@ -17,11 +17,11 @@ on:
           - '["21", "25"]'
           - '["17", "21", "25"]'
       skip_build:
-        description: 'Build: By default skipped. Deactivate to perform the regular project build'
+        description: 'Skip build: Deactivate to perform the regular project build. Required for release.'
         type: boolean
         default: true
       skip_tests:
-        description: 'Build: Skip test execution for faster build'
+        description: 'Skip tests: Skip test execution for faster build'
         type: boolean
         default: true
       integration_tests:
@@ -64,7 +64,7 @@ on:
           - '["h2", "postgresql"]'
           - '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
       dry_run:
-        description: 'Release: Skips remote operations when true'
+        description: 'Dry Run: Skips remote operations when true'
         type: boolean
         required: true
         default: false

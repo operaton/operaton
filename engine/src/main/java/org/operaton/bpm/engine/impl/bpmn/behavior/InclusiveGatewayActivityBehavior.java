@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import java.util.stream.Collectors;
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
@@ -45,50 +46,53 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
 
   @Override
   public void execute(ActivityExecution execution) throws Exception {
-
     execution.inactivate();
     lockConcurrentRoot(execution);
 
     PvmActivity activity = execution.getActivity();
-    if (activatesGateway(execution, activity)) {
-
-      LOG.activityActivation(activity.getId());
-
-      List<ActivityExecution> joinedExecutions = execution.findInactiveConcurrentExecutions(activity);
-      String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
-      List<PvmTransition> transitionsToTake = new ArrayList<>();
-
-      // find matching non-default sequence flows
-      for (PvmTransition outgoingTransition : execution.getActivity().getOutgoingTransitions()) {
-        if (defaultSequenceFlow == null || !outgoingTransition.getId().equals(defaultSequenceFlow)) {
-          Condition condition = (Condition) outgoingTransition.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
-          if (condition == null || condition.evaluate(execution)) {
-            transitionsToTake.add(outgoingTransition);
-          }
-        }
-      }
-
-      // if none found, add default flow
-      if (transitionsToTake.isEmpty()) {
-        if (defaultSequenceFlow != null) {
-          PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
-          if (defaultTransition == null) {
-            throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
-          }
-
-          transitionsToTake.add(defaultTransition);
-
-        } else {
-          // No sequence flow could be found, not even a default one
-          throw LOG.stuckExecutionException(execution.getActivity().getId());
-        }
-      }
-
-      // take the flows found
-      execution.leaveActivityViaTransitions(transitionsToTake, joinedExecutions);
-    } else {
+    if (!activatesGateway(execution, activity)) {
       LOG.noActivityActivation(activity.getId());
+      return;
     }
+
+    LOG.activityActivation(activity.getId());
+
+    List<ActivityExecution> joinedExecutions = execution.findInactiveConcurrentExecutions(activity);
+    String defaultSequenceFlow = (String) execution.getActivity().getProperty("default");
+
+    // find matching non-default sequence flows
+    List<PvmTransition> transitionsToTake = execution.getActivity().getOutgoingTransitions()
+        .stream()
+        .filter(transition -> isNotDefaultFlow(transition, defaultSequenceFlow))
+        .filter(transition -> hasNoConditionOrEvaluates(transition, execution))
+        .collect(Collectors.toList());
+
+    // if none found, add default flow
+    if (transitionsToTake.isEmpty()) {
+      if (defaultSequenceFlow == null) {
+        // No sequence flow could be found, not even a default one
+        throw LOG.stuckExecutionException(execution.getActivity().getId());
+      }
+
+      PvmTransition defaultTransition = execution.getActivity().findOutgoingTransition(defaultSequenceFlow);
+      if (defaultTransition == null) {
+        throw LOG.missingDefaultFlowException(execution.getActivity().getId(), defaultSequenceFlow);
+      }
+
+      transitionsToTake.add(defaultTransition);
+    }
+
+    // take the flows found
+    execution.leaveActivityViaTransitions(transitionsToTake, joinedExecutions);
+  }
+
+  private boolean isNotDefaultFlow(PvmTransition transition, String defaultSequenceFlow) {
+    return defaultSequenceFlow == null || !transition.getId().equals(defaultSequenceFlow);
+  }
+
+  private boolean hasNoConditionOrEvaluates(PvmTransition transition, ActivityExecution execution) {
+    Condition condition = (Condition) transition.getProperty(BpmnParse.PROPERTYNAME_CONDITION);
+    return condition == null || condition.evaluate(execution);
   }
 
   protected Collection<ActivityExecution> getLeafExecutions(ActivityExecution parent) {

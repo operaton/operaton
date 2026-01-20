@@ -63,31 +63,39 @@ public abstract class AbstractSetJobDefinitionStateCmd extends AbstractSetStateC
   protected void checkAuthorization(CommandContext commandContext) {
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       if (jobDefinitionId != null) {
-
-        JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
-        JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
-
-        if (jobDefinition != null && jobDefinition.getProcessDefinitionKey() != null) {
-          String procDefKey = jobDefinition.getProcessDefinitionKey();
-          checker.checkUpdateProcessDefinitionByKey(procDefKey);
-
-          if (includeSubResources) {
-            checker.checkUpdateProcessInstanceByProcessDefinitionKey(procDefKey);
-          }
-        }
+        checkAuthorizationByJobDefinitionId(commandContext, checker);
       } else if (processDefinitionId != null) {
-        checker.checkUpdateProcessDefinitionById(processDefinitionId);
-
-        if (includeSubResources) {
-          checker.checkUpdateProcessInstanceByProcessDefinitionId(processDefinitionId);
-        }
-
+        checkAuthorizationByProcessDefinitionId(checker);
       } else if (processDefinitionKey != null) {
-        checker.checkUpdateProcessDefinitionByKey(processDefinitionKey);
+        checkAuthorizationByProcessDefinitionKey(checker);
+      }
+    }
+  }
 
-        if (includeSubResources) {
-          checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
-        }
+  private void checkAuthorizationByProcessDefinitionKey(CommandChecker checker) {
+    checker.checkUpdateProcessDefinitionByKey(processDefinitionKey);
+    if (includeSubResources) {
+      checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
+    }
+  }
+
+  private void checkAuthorizationByProcessDefinitionId(CommandChecker checker) {
+    checker.checkUpdateProcessDefinitionById(processDefinitionId);
+    if (includeSubResources) {
+      checker.checkUpdateProcessInstanceByProcessDefinitionId(processDefinitionId);
+    }
+  }
+
+  private void checkAuthorizationByJobDefinitionId(CommandContext commandContext, CommandChecker checker) {
+    JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
+    JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
+
+    if (jobDefinition != null && jobDefinition.getProcessDefinitionKey() != null) {
+      String procDefKey = jobDefinition.getProcessDefinitionKey();
+      checker.checkUpdateProcessDefinitionByKey(procDefKey);
+
+      if (includeSubResources) {
+        checker.checkUpdateProcessInstanceByProcessDefinitionKey(procDefKey);
       }
     }
   }

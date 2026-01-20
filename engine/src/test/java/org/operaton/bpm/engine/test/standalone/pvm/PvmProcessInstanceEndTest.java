@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
@@ -58,5 +60,7 @@ class PvmProcessInstanceEndTest {
 
     System.err.println();
     System.err.println(eventCollector);
+
+    assertThat(eventCollector.toString()).isEqualTo("start on ProcessDefinition(null)\nstart on Activity(wait)\nend on Activity(wait)\nend on ProcessDefinition(null)\n");
   }
 }

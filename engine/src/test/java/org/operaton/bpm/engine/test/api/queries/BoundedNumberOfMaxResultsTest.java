@@ -433,7 +433,7 @@ class BoundedNumberOfMaxResultsTest {
           .processInstanceQuery(runtimeService.createProcessInstanceQuery());
 
     // when/then
-    assertThatThrownBy(() -> migrationPlanExecutionBuilder.execute())
+    assertThatThrownBy(migrationPlanExecutionBuilder::execute)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessage("Max results limit of 2 exceeded!");
   }
@@ -491,7 +491,7 @@ class BoundedNumberOfMaxResultsTest {
           .processInstanceQuery(runtimeService.createProcessInstanceQuery());
 
     // when/then
-    assertThatThrownBy(() -> modificationBuilder.execute())
+    assertThatThrownBy(modificationBuilder::execute)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessage("Max results limit of 2 exceeded!");
   }
@@ -546,7 +546,7 @@ class BoundedNumberOfMaxResultsTest {
           .startAfterActivity("startEvent");
 
     // when/then
-    assertThatThrownBy(() -> restartProcessInstanceBuilder.execute())
+    assertThatThrownBy(restartProcessInstanceBuilder::execute)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessage("Max results limit of 2 exceeded!");
   }
@@ -590,7 +590,7 @@ class BoundedNumberOfMaxResultsTest {
           .byProcessInstanceQuery(runtimeService.createProcessInstanceQuery());
 
     // when/then
-    assertThatThrownBy(() -> updateProcessInstanceSuspensionStateSelectBuilder.suspend())
+    assertThatThrownBy(updateProcessInstanceSuspensionStateSelectBuilder::suspend)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessage("Max results limit of 2 exceeded!");
   }
@@ -610,7 +610,7 @@ class BoundedNumberOfMaxResultsTest {
           .byProcessInstanceIds(instanceIds);
 
     // when/then
-    assertThatThrownBy(() -> updateProcessInstanceSuspensionStateSelectBuilder.suspend())
+    assertThatThrownBy(updateProcessInstanceSuspensionStateSelectBuilder::suspend)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessage("Max results limit of 2 exceeded!");
   }
@@ -644,7 +644,7 @@ class BoundedNumberOfMaxResultsTest {
           .byHistoricProcessInstanceQuery(historyService.createHistoricProcessInstanceQuery());
 
     // when/then
-    assertThatThrownBy(() -> updateProcessInstanceSuspensionStateSelectBuilder.suspend())
+    assertThatThrownBy(updateProcessInstanceSuspensionStateSelectBuilder::suspend)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessage("Max results limit of 2 exceeded!");
   }

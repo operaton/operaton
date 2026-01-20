@@ -170,13 +170,14 @@ deploy:
   maven:
     mavenCentral:
       MavenCentral:
-        active: RELEASE
+        active: ALWAYS
         applyMavenCentralRules: true
         url: https://central.sonatype.com/api/v1/publisher
         stagingRepositories:
           - target/staging-deploy
         retryDelay: 30
         maxRetries: 99
+        snapshotSupported: true
     nexus2:
       snapshot-deploy:
         active: SNAPSHOT

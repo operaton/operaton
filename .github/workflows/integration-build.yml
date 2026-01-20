@@ -520,9 +520,6 @@ jobs:
     name: Post-Release
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
-      - determine-pr-config
-      - build
       - release
     if: |
       always() && !cancelled() && (

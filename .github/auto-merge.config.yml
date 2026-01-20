@@ -38,6 +38,7 @@ auto-merge-rules:
       - 'ch.qos.logback*'
       - 'org.apache.httpcomponents*'
       - 'com.networknt:json-schema-validator'
+      - 'com.fasterxml.jackson*'
       - 'com.fasterxml.uuid:java-uuid-generator'
       - 'com.unboundid:unboundid-ldapsdk'
       - 'com.nimbusds:nimbus-jose-jwt'

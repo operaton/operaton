@@ -1134,11 +1134,10 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     }
   }
 
-  private static void tryHandleInvocation(CaseVariableListener listener,
+  private static void tryHandleInvocation(CaseVariableListener caseVariableListener,
                                 DelegateCaseVariableInstanceImpl delegateVariable,
                                 CmmnExecution currentExecution) {
     try {
-      CaseVariableListener caseVariableListener = listener;
       CaseVariableListenerInvocation invocation = new CaseVariableListenerInvocation(caseVariableListener,
           delegateVariable, currentExecution);
       Context.getProcessEngineConfiguration()

@@ -52,6 +52,7 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     PvmActivity activity = execution.getActivity();
     if (!activatesGateway(execution, activity)) {
       LOG.noActivityActivation(activity.getId());
+      return;
     }
 
     LOG.activityActivation(activity.getId());

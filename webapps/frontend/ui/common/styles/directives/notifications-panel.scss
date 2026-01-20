@@ -23,11 +23,11 @@
   }
 
   .alert-error {
-    @include  alert-variant($danger-bg, $danger-border, $danger-text);
+  @include  alert-variant($danger-bg, $danger-border, $danger-text);
   }
 
   .alert-information {
-    @include alert-variant($info-bg, $info-border, $info-text);
+  @include alert-variant($info-bg, $info-border, $info-text);
   }
 }
 

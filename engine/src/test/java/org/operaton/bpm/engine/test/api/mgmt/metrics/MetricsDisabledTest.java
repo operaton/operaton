@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Asserts engine functionality is metrics are disabled
@@ -67,13 +67,10 @@ class MetricsDisabledTest {
     // that the metrics reporter is disabled
     assertThat(processEngineConfiguration.isDbMetricsReporterActivate()).isFalse();
 
-    try {
-      // then
-      // I cannot invoke
-      managementService.reportDbMetricsNow();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Metrics reporting is disabled", e.getMessage());
-    }
+    // when/then
+    // I cannot invoke
+    assertThatThrownBy(() -> managementService.reportDbMetricsNow())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Metrics reporting is disabled");
   }
 }

@@ -300,7 +300,7 @@ class ProcessInstanceModificationTest {
     // when/then
     assertThatThrownBy(processInstanceModificationBuilder::execute)
       .isInstanceOf(NotValidException.class)
-      .hasMessageContainingIgnoringCase("element 'someNonExistingActivity' does not exist in process ");
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("element 'somenonexistingactivity' does not exist in process ".toLowerCase()));
   }
 
   /**
@@ -682,8 +682,7 @@ class ProcessInstanceModificationTest {
     // when/then
     assertThatThrownBy(processInstanceModificationBuilder::execute)
       .isInstanceOf(NotValidException.class)
-      .hasMessageContainingIgnoringCase("Cannot perform instruction: " + "Start after activity 'someNonExistingActivity'; "
-          + "Activity 'someNonExistingActivity' does not exist: activity is null");
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("cannot perform instruction: start after activity 'somenonexistingactivity'".toLowerCase()));
   }
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)

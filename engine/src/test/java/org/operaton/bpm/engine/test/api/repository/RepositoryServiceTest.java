@@ -401,7 +401,7 @@ class RepositoryServiceTest {
     // Shouldn't be able to start a process instance
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("oneTaskProcess"))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContainingIgnoringCase("suspended");
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
 
     List<Job> jobs = managementService.createJobQuery().list();
     managementService.executeJob(jobs.get(0).getId());
@@ -446,7 +446,7 @@ class RepositoryServiceTest {
     // Shouldn't be able to start a process instance
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("oneTaskProcess"))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContainingIgnoringCase("suspended");
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
 
     Job job = managementService.createJobQuery().singleResult();
     managementService.executeJob(job.getId());

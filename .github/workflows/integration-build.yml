@@ -347,7 +347,7 @@ jobs:
     if: |
       always() && !cancelled() && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.integration_tests == 'true' || github.event.inputs.integration_tests == true)) ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
     steps:

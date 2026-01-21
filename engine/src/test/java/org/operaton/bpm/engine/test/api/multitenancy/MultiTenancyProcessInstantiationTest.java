@@ -45,7 +45,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 class MultiTenancyProcessInstantiationTest {
@@ -118,65 +118,55 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testFailToStartProcessInstanceByKeyForOtherTenant() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("testProcess")
-        .processDefinitionTenantId(TENANT_TWO);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceByKey("testProcess")
+        .processDefinitionTenantId(TENANT_TWO)
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed");
   }
 
   @Test
   void testFailToStartProcessInstanceByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("testProcess");
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("multiple tenants");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceByKey("testProcess")
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("multiple tenants");
   }
 
   @Test
   void testFailToStartProcessInstanceByIdAndTenantId() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
+    // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    var processInstantiationBuilder = runtimeService.createProcessInstanceById(processDefinition.getId())
-        .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceById(processDefinition.getId())
+        .processDefinitionTenantId(TENANT_ONE)
+        .execute())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToStartProcessInstanceByIdWithoutTenantId() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
+    // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    var processInstantiationBuilder = runtimeService.createProcessInstanceById(processDefinition.getId())
-        .processDefinitionWithoutTenantId();
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceById(processDefinition.getId())
+        .processDefinitionWithoutTenantId()
+        .execute())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
@@ -221,69 +211,59 @@ class MultiTenancyProcessInstantiationTest {
   @Test
   void testFailToStartProcessInstanceAtActivityByKeyForOtherTenant() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("testProcess")
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceByKey("testProcess")
         .processDefinitionTenantId(TENANT_TWO)
-        .startBeforeActivity("userTask");
-
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed");
-    }
+        .startBeforeActivity("userTask")
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed");
   }
 
   @Test
   void testFailToStartProcessInstanceAtActivityByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("testProcess")
-        .startBeforeActivity("userTask");
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("multiple tenants");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceByKey("testProcess")
+        .startBeforeActivity("userTask")
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("multiple tenants");
   }
 
   @Test
   void testFailToStartProcessInstanceAtActivityByIdAndTenantId() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
+    // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    var processInstantiationBuilder = runtimeService.createProcessInstanceById(processDefinition.getId())
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceById(processDefinition.getId())
         .processDefinitionTenantId(TENANT_ONE)
-        .startBeforeActivity("userTask");
-
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+        .startBeforeActivity("userTask")
+        .execute())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToStartProcessInstanceAtActivityByIdWithoutTenantId() {
    testRule.deploy(PROCESS);
 
+    // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
-    var processInstantiationBuilder = runtimeService.createProcessInstanceById(processDefinition.getId())
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceById(processDefinition.getId())
         .processDefinitionWithoutTenantId()
-        .startBeforeActivity("userTask");
-
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+        .startBeforeActivity("userTask")
+        .execute())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
@@ -305,15 +285,12 @@ class MultiTenancyProcessInstantiationTest {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("testProcess");
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key 'testProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceByKey("testProcess")
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key 'testProcess'");
   }
 
   @Test
@@ -321,36 +298,31 @@ class MultiTenancyProcessInstantiationTest {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, PROCESS);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("testProcess")
-        .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot create an instance of the process definition");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceByKey("testProcess")
+        .processDefinitionTenantId(TENANT_ONE)
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create an instance of the process definition");
   }
 
   @Test
   void testFailToStartProcessInstanceByIdNoAuthenticatedTenants() {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
+    // given
     ProcessDefinition processDefinition = repositoryService
       .createProcessDefinitionQuery()
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
-    var processInstantiationBuilder = runtimeService.createProcessInstanceById(processDefinition.getId());
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot create an instance of the process definition");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceById(processDefinition.getId())
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create an instance of the process definition");
   }
 
   @Test
@@ -468,21 +440,18 @@ class MultiTenancyProcessInstantiationTest {
   void testFailToRestartProcessInstanceSyncWithOtherTenantId() {
     // given
     ProcessInstance processInstance = startAndDeleteProcessInstance();
+    String processDefinitionId = processInstance.getProcessDefinitionId();
+    String processInstanceId = processInstance.getId();
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
-    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processInstance.getProcessDefinitionId())
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.restartProcessInstances(processDefinitionId)
         .startBeforeActivity("userTask")
-        .processInstanceIds(processInstance.getId());
-
-    try {
-      // when
-      restartProcessInstanceBuilder.execute();
-
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("Historic process instance cannot be found: historicProcessInstanceId is null");
-    }
+        .processInstanceIds(processInstanceId)
+        .execute())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Historic process instance cannot be found: historicProcessInstanceId is null");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -490,20 +459,18 @@ class MultiTenancyProcessInstantiationTest {
   void testFailToRestartProcessInstanceAsyncWithOtherTenantId() {
     // given
     ProcessInstance processInstance = startAndDeleteProcessInstance();
+    String processDefinitionId = processInstance.getProcessDefinitionId();
+    String processInstanceId = processInstance.getId();
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
 
-    try {
-      // when
-      runtimeService.restartProcessInstances(processInstance.getProcessDefinitionId())
+    // when/then
+    assertThatThrownBy(() -> runtimeService.restartProcessInstances(processDefinitionId)
         .startBeforeActivity("userTask")
-        .processInstanceIds(processInstance.getId())
-        .executeAsync();
-    }
-    catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot restart process instances of process definition '%s' because it belongs to no authenticated tenant.".formatted(processInstance.getProcessDefinitionId()));
-    }
-
+        .processInstanceIds(processInstanceId)
+        .executeAsync())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot restart process instances of process definition '%s' because it belongs to no authenticated tenant.".formatted(processDefinitionId));
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -559,22 +526,18 @@ class MultiTenancyProcessInstantiationTest {
   void testFailToRestartProcessInstanceSyncWithOtherTenantIdByHistoricProcessInstanceQuery() {
     // given
     ProcessInstance processInstance = startAndDeleteProcessInstance();
-    HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId());
+    String processDefinitionId = processInstance.getProcessDefinitionId();
+    HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processDefinitionId);
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
-    var restartProcessInstanceBuilder = runtimeService.restartProcessInstances(processInstance.getProcessDefinitionId())
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.restartProcessInstances(processDefinitionId)
         .startBeforeActivity("userTask")
-        .historicProcessInstanceQuery(query);
-
-    try {
-      // when
-      restartProcessInstanceBuilder.execute();
-
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("processInstanceIds is empty");
-    }
+        .historicProcessInstanceQuery(query)
+        .execute())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processInstanceIds is empty");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -582,21 +545,18 @@ class MultiTenancyProcessInstantiationTest {
   void testFailToRestartProcessInstanceAsyncWithOtherTenantIdByHistoricProcessInstanceQuery() {
     // given
     ProcessInstance processInstance = startAndDeleteProcessInstance();
-    HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processInstance.getProcessDefinitionId());
+    String processDefinitionId = processInstance.getProcessDefinitionId();
+    HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery().processDefinitionId(processDefinitionId);
 
     identityService.setAuthentication("user", null, Collections.singletonList(TENANT_TWO));
 
-    try {
-      // when
-      runtimeService.restartProcessInstances(processInstance.getProcessDefinitionId())
+    // when/then
+    assertThatThrownBy(() -> runtimeService.restartProcessInstances(processDefinitionId)
         .startBeforeActivity("userTask")
         .historicProcessInstanceQuery(query)
-        .executeAsync();
-    }
-    catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("processInstanceIds is empty");
-    }
-
+        .executeAsync())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processInstanceIds is empty");
   }
 
 

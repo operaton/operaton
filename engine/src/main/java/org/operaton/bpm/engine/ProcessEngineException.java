@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.errorcode.BuiltinExceptionCode;
 import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
@@ -28,8 +26,6 @@ import org.operaton.bpm.engine.impl.errorcode.ExceptionCodeProvider;
  * @author Tom Baeyens
  */
 public class ProcessEngineException extends RuntimeException {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected int code = BuiltinExceptionCode.FALLBACK.getCode();
 

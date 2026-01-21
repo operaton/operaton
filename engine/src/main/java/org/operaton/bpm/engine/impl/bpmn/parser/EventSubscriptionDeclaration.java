@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,9 +39,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  * @author Falko Menge
  * @author Danny Gräf
  */
-public class EventSubscriptionDeclaration implements Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class EventSubscriptionDeclaration {
 
   protected final EventType eventType;
   protected final Expression eventName;

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.cockpit.plugin.base;
 
-import java.util.Arrays;
 import java.util.List;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -353,24 +352,24 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     deployProcesses(1, "p2", "Process 2", 0, 0, "tenant1");
 
     // verify order by key
-    verifyOrderedResult("key", "asc", Arrays.asList("A", "B", "p1", "p2"));
-    verifyOrderedResult("key", "desc", Arrays.asList("p2", "p1", "B", "A"));
+    verifyOrderedResult("key", "asc", List.of("A", "B", "p1", "p2"));
+    verifyOrderedResult("key", "desc", List.of("p2", "p1", "B", "A"));
 
     // verify order by name
-    verifyOrderedResult("name", "asc", Arrays.asList("p1", "p2", "A", "B"));
-    verifyOrderedResult("name", "desc", Arrays.asList("B", "A", "p2", "p1"));
+    verifyOrderedResult("name", "asc", List.of("p1", "p2", "A", "B"));
+    verifyOrderedResult("name", "desc", List.of("B", "A", "p2", "p1"));
 
     // verify order by tenantId
-    verifyOrderedResult("tenantId", "asc", Arrays.asList("B", "p2", "A", "p1"));
-    verifyOrderedResult("tenantId", "desc", Arrays.asList("p1", "A", "p2", "B"));
+    verifyOrderedResult("tenantId", "asc", List.of("B", "p2", "A", "p1"));
+    verifyOrderedResult("tenantId", "desc", List.of("p1", "A", "p2", "B"));
 
     // verify order by instances
-    verifyOrderedResult("instances", "asc", Arrays.asList("p2", "A", "p1", "B"));
-    verifyOrderedResult("instances", "desc", Arrays.asList("B", "p1", "A", "p2"));
+    verifyOrderedResult("instances", "asc", List.of("p2", "A", "p1", "B"));
+    verifyOrderedResult("instances", "desc", List.of("B", "p1", "A", "p2"));
 
     // verify order by incidents
-    verifyOrderedResult("incidents", "asc", Arrays.asList("p2", "B", "p1", "A"));
-    verifyOrderedResult("incidents", "desc", Arrays.asList("A", "p1", "B", "p2"));
+    verifyOrderedResult("incidents", "asc", List.of("p2", "B", "p1", "A"));
+    verifyOrderedResult("incidents", "desc", List.of("A", "p1", "B", "p2"));
   }
 
   @Test

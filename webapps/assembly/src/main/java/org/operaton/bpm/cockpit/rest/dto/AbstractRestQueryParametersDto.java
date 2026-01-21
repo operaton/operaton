@@ -119,7 +119,7 @@ public abstract class AbstractRestQueryParametersDto<T> extends QueryParameters 
       return Variables.numberValue((Number) value);
     } else if (value != null && objectMapper != null) {
       try {
-        return objectMapper.readValue("\"" + value + "\"", Date.class);
+        return objectMapper.readValue("\"%s\"".formatted(value), Date.class);
       } catch (Exception e) {
         // ignore the exception
       }

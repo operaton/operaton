@@ -321,7 +321,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 @SuppressWarnings("java:S1452")
 public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfiguration {
 
-  protected static ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
+  static ConfigurationLogger LOG = ProcessEngineLogger.CONFIG_LOGGER;
 
   public static final String DB_SCHEMA_UPDATE_CREATE = "create";
   public static final String DB_SCHEMA_UPDATE_DROP_CREATE = "drop-create";

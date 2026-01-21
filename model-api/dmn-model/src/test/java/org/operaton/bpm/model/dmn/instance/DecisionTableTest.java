@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.dmn.DecisionTableOrientation;
 import org.operaton.bpm.model.dmn.HitPolicy;
@@ -31,7 +30,7 @@ public class DecisionTableTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Input.class),
       new ChildElementAssumption(Output.class, 1),
       new ChildElementAssumption(Rule.class)
@@ -40,7 +39,7 @@ public class DecisionTableTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("hitPolicy", false, false, HitPolicy.UNIQUE),
       new AttributeAssumption("aggregation"),
       new AttributeAssumption("preferredOrientation", false, false, DecisionTableOrientation.Rule_as_Row),

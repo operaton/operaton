@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.tenantcheck;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -107,7 +106,7 @@ class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
     // given
     testRule.deployForTenant(TENANT_ONE, CMMN_MODEL);
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10, TENANT_ONE);
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     List<CleanableHistoricCaseInstanceReportResult> reportResults = historyService.createCleanableHistoricCaseInstanceReport().list();
@@ -165,7 +164,7 @@ class MultiTenancyCleanableHistoricCaseInstanceReportCmdTenantCheckTest {
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10, TENANT_ONE);
     prepareCaseInstances(CASE_DEFINITION_KEY, -6, 5, 10, TENANT_TWO);
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     List<CleanableHistoricCaseInstanceReportResult> reportResultsOne = historyService.createCleanableHistoricCaseInstanceReport().tenantIdIn(TENANT_ONE).list();

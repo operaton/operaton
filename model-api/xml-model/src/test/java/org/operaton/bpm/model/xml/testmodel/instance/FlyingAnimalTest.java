@@ -80,7 +80,7 @@ public class FlyingAnimalTest extends TestModelTest {
   @Override
   protected void init(TestModelArgs args) {
     super.init(args);
-    modelInstance = modelInstance.clone();
+    modelInstance = modelInstance.copy();
     tweety = modelInstance.getModelElementById("tweety");
     hedwig = modelInstance.getModelElementById("hedwig");
     birdo = modelInstance.getModelElementById("birdo");

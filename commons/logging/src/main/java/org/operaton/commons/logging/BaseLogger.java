@@ -257,7 +257,7 @@ public abstract class BaseLogger {
    * @return the formatted template
    */
   protected String formatMessageTemplate(String id, String messageTemplate) {
-    return projectCode + "-" + componentId + id + " " + messageTemplate;
+    return "%s-%s%s %s".formatted(projectCode, componentId, id, messageTemplate);
   }
 
   /**

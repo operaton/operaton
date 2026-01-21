@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -818,7 +817,7 @@ class TaskQueryTest {
 
   @Test
   void testQueryByCandidateGroupIn() {
-    List<String> groups = Arrays.asList("management", "accountancy");
+    List<String> groups = List.of("management", "accountancy");
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
@@ -830,7 +829,7 @@ class TaskQueryTest {
     assertThat(query.list()).hasSize(5);
 
     // Unexisting groups or groups that don't have candidate tasks shouldn't influence other results
-    groups = Arrays.asList("management", "accountancy", "sales", "unexisting");
+    groups = List.of("management", "accountancy", "sales", "unexisting");
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups);
     assertThat(query.count()).isEqualTo(4);
     assertThat(query.list()).hasSize(4);
@@ -843,7 +842,7 @@ class TaskQueryTest {
 
   @Test
   void testQueryByCandidateGroupInAndCandidateGroup() {
-    List<String> groups = Arrays.asList("management", "accountancy");
+    List<String> groups = List.of("management", "accountancy");
     String candidateGroup = "management";
     TaskQuery query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
@@ -856,7 +855,7 @@ class TaskQueryTest {
     assertThat(query.list()).hasSize(3);
 
     // Unexisting groups or groups that don't have candidate tasks shouldn't influence other results
-    groups = Arrays.asList("management", "accountancy", "sales", "unexisting");
+    groups = List.of("management", "accountancy", "sales", "unexisting");
     query = taskService.createTaskQuery().taskCandidateGroupIn(groups).taskCandidateGroup(candidateGroup);
     assertThat(query.count()).isEqualTo(2);
     assertThat(query.list()).hasSize(2);
@@ -4970,15 +4969,15 @@ class TaskQueryTest {
     assertThat(tasks).hasSize(6);
 
     // var = a
-    verifyTasksSortedByProcessInstanceId(Arrays.asList(aInstance1, aInstance2),
+    verifyTasksSortedByProcessInstanceId(List.of(aInstance1, aInstance2),
         tasks.subList(0, 2));
 
     // var = b
-    verifyTasksSortedByProcessInstanceId(Arrays.asList(bInstance1, bInstance2),
+    verifyTasksSortedByProcessInstanceId(List.of(bInstance1, bInstance2),
         tasks.subList(2, 4));
 
     // var = c
-    verifyTasksSortedByProcessInstanceId(Arrays.asList(cInstance1, cInstance2),
+    verifyTasksSortedByProcessInstanceId(List.of(cInstance1, cInstance2),
         tasks.subList(4, 6));
   }
 

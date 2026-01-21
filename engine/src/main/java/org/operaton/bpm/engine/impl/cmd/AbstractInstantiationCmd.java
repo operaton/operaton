@@ -246,7 +246,7 @@ public abstract class AbstractInstantiationCmd extends AbstractProcessInstanceMo
       if (!activitiesToInstantiate.isEmpty()) {
         // this is in BPMN relevant if there is an interrupting event sub process.
         // we have to distinguish between instantiation of the start event and any other activity.
-        // instantiation of the start event means interrupting behavior;
+        // instantiation of the start event means interrupting behavior.
         // instantiation of any other task means no interruption.
         PvmActivity initialActivity = topMostActivity.getProperties().get(BpmnProperties.INITIAL_ACTIVITY);
         PvmActivity secondTopMostActivity = null;

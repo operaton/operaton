@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class UnaryTestsTest extends DmnModelElementInstanceTest {
 
@@ -28,14 +27,14 @@ public class UnaryTestsTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Text.class, 0, 1)
     );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("expressionLanguage")
     );
   }

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Roman Smirnov
@@ -32,7 +31,7 @@ public class CaseRolesTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new ChildElementAssumption(Role.class)
       );
   }

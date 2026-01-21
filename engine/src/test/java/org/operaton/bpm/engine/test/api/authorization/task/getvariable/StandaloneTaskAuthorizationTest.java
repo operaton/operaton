@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization.task.getvariable;
-
-import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
@@ -268,7 +267,7 @@ public abstract class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    Map<String, Object> variables = taskService.getVariables(taskId, Arrays.asList(VARIABLE_NAME));
+    Map<String, Object> variables = taskService.getVariables(taskId, List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -290,7 +289,7 @@ public abstract class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    Map<String, Object> variables = taskService.getVariablesLocal(taskId, Arrays.asList(VARIABLE_NAME));
+    Map<String, Object> variables = taskService.getVariablesLocal(taskId, List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -311,7 +310,7 @@ public abstract class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    VariableMap variables = taskService.getVariablesTyped(taskId, Arrays.asList(VARIABLE_NAME), false);
+    VariableMap variables = taskService.getVariablesTyped(taskId, List.of(VARIABLE_NAME), false);
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -332,7 +331,7 @@ public abstract class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    VariableMap variables = taskService.getVariablesLocalTyped(taskId, Arrays.asList(VARIABLE_NAME), false);
+    VariableMap variables = taskService.getVariablesLocalTyped(taskId, List.of(VARIABLE_NAME), false);
 
     // then
     if (authRule.assertScenario(scenario)) {

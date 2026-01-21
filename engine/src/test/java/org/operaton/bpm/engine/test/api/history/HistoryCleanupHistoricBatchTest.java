@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -407,7 +406,7 @@ class HistoryCleanupHistoricBatchTest {
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(sourceProcessDefinition.getId());
 
-    return runtimeService.newMigration(migrationPlan).processInstanceIds(Arrays.asList(processInstance.getId(), "unknownId")).executeAsync();
+    return runtimeService.newMigration(migrationPlan).processInstanceIds(List.of(processInstance.getId(), "unknownId")).executeAsync();
   }
 
   private List<String> createMigrationBatchList(int migrationCountBatch) {
@@ -430,7 +429,7 @@ class HistoryCleanupHistoricBatchTest {
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);
     String pId = runtimeService.startProcessInstanceById(processDefinition.getId()).getId();
     for (int i = 0; i < cancelationCountBatch; i++) {
-      batchIds.add(runtimeService.deleteProcessInstancesAsync(Arrays.asList(pId), "create-deletion-batch").getId());
+      batchIds.add(runtimeService.deleteProcessInstancesAsync(List.of(pId), "create-deletion-batch").getId());
     }
     return batchIds;
   }

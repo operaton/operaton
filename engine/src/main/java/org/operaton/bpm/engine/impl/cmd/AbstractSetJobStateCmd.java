@@ -81,33 +81,22 @@ public abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd {
               checker.checkUpdateProcessInstanceByProcessDefinitionKey(definitionKey);
             }
           }
-          // if (processInstanceId == null && processDefinitionKey == null):
-          // job is not assigned to any process instance nor process definition
+          // when the job is not assigned to any process instance nor process definition
           // then it is always possible to activate/suspend the corresponding job
           // -> no authorization check necessary
         }
-      } else
-
-      if (jobDefinitionId != null) {
-
+      } else if (jobDefinitionId != null) {
         JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
         JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
 
         if (jobDefinition != null) {
           checker.checkUpdateProcessInstanceByProcessDefinitionKey(jobDefinition.getProcessDefinitionKey());
         }
-
-      } else
-
-      if (processInstanceId != null) {
+      } else if (processInstanceId != null) {
         checker.checkUpdateProcessInstanceById(processInstanceId);
-      } else
-
-      if (processDefinitionId != null) {
+      } else if (processDefinitionId != null) {
         checker.checkUpdateProcessInstanceByProcessDefinitionId(processDefinitionId);
-      } else
-
-      if (processDefinitionKey != null) {
+      } else if (processDefinitionKey != null) {
         checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
       }
     }

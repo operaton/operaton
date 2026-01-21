@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization.batch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -129,7 +128,7 @@ public class DeleteHistoricProcessInstancesBatchAuthorizationTest extends Abstra
 
   protected void setupAndExecuteHistoricProcessInstancesListTest() {
     //given
-    List<String> processInstanceIds = Arrays.asList(processInstance.getId(), processInstance2.getId());
+    List<String> processInstanceIds = List.of(processInstance.getId(), processInstance2.getId());
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, false);
 
     List<String> historicProcessInstances = new ArrayList<>();

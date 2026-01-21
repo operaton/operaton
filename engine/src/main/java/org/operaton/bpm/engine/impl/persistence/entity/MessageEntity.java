@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.persistence.entity;
 
 import java.io.Serial;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
@@ -66,6 +67,20 @@ public class MessageEntity extends JobEntity {
   public void init(CommandContext commandContext, boolean shouldResetLock, boolean shouldCallDeleteHandler) {
     super.init(commandContext, shouldResetLock, shouldCallDeleteHandler);
     repeat = null;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {return true;}
+    if (o == null || getClass() != o.getClass()) {return false;}
+    if (!super.equals(o)) {return false;}
+    MessageEntity that = (MessageEntity) o;
+    return Objects.equals(repeat, that.repeat);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), repeat);
   }
 
   @Override

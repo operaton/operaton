@@ -54,7 +54,7 @@ public class ListJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector
       return false;
     }
     if (varLen != 1) {
-      throw new IllegalArgumentException("Cannot create TypeBindings for class " + erasedType.getName() + " with 1 type parameter: class expects " + varLen);
+      throw new IllegalArgumentException("Cannot create TypeBindings for class %s with 1 type parameter: class expects %d".formatted(erasedType.getName(), varLen));
     }
     return true;
   }

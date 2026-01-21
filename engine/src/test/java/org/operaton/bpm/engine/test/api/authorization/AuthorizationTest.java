@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.authorization;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -110,7 +109,7 @@ public abstract class AuthorizationTest {
     testUser = createUser(userId);
     testGroup = createGroup(groupId);
     identityService.createMembership(userId, groupId);
-    identityService.setAuthentication(userId, Arrays.asList(groupId));
+    identityService.setAuthentication(userId, List.of(groupId));
     processEngineConfiguration.setAuthorizationEnabled(true);
   }
 
@@ -148,8 +147,7 @@ public abstract class AuthorizationTest {
   }
 
   protected String permissionException(Resource resource, Permission permission) {
-    return "ENGINE-03110 Required admin authenticated group or user or any of the following permissions: '"
-        + permission.getName() + "' permission on resource '" + resource.resourceName() + "'";
+    return "ENGINE-03110 Required admin authenticated group or user or any of the following permissions: '%s' permission on resource '%s'".formatted(permission.getName(), resource.resourceName());
   }
 
   // user ////////////////////////////////////////////////////////////////
@@ -597,6 +595,6 @@ public abstract class AuthorizationTest {
   }
 
   protected String getMissingPermissionMessageRegex(Permission permission, Resource resource) {
-    return ".*'"+ permission.getName() + "' permission .* type '" + resource.resourceName() + "'.*";
+    return ".*'%s' permission .* type '%s'.*".formatted(permission.getName(), resource.resourceName());
   }
 }

@@ -56,7 +56,7 @@ public class ActivityCountAggregator extends TabularResultAggregator {
   }
 
   protected String getPassTitle(String testName, PerfTestConfiguration configuration, PerfTestResult passResult) {
-    return testName + " (Runs: " + configuration.getNumberOfRuns() + ", Threads: " + passResult.getNumberOfThreads() + ", Duration: " + passResult.getDuration() + " ms)";
+    return "%s (Runs: %d, Threads: %d, Duration: %d ms)".formatted(testName, configuration.getNumberOfRuns(), passResult.getNumberOfThreads(), passResult.getDuration());
   }
 
   protected TabularResultSet processPassResult(List<String> watchActivities, PerfTestResult passResult) {

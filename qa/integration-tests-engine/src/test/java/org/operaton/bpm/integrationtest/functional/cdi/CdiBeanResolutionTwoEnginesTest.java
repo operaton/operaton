@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.cdi;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -61,7 +60,7 @@ public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrat
     createAuthorizations(processEngine1);
 
     //when we operate the process under authenticated user
-    processEngine1.getIdentityService().setAuthentication("user1", Arrays.asList("group1"));
+    processEngine1.getIdentityService().setAuthentication("user1", List.of("group1"));
 
     processEngine1.getRuntimeService().startProcessInstanceByKey("testProcess");
     final List<Task> tasks = processEngine1.getTaskService().createTaskQuery().list();

@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.dmn.engine.test.junit5;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +43,7 @@ public class ParameterizedTestExtensionTest {
 
 	@Parameters
 	public static Collection<Object[]> getRequestUrls() {
-		return Arrays.asList(new Object[][] { { "/app/cockpit/default/", true }, { "/app/cockpit/engine2/", false }, });
+		return List.of(new Object[][] { { "/app/cockpit/default/", true }, { "/app/cockpit/engine2/", false }, });
 	}
 
 	@BeforeEach

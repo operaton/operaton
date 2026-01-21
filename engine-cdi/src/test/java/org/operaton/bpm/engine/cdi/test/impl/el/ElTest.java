@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.cdi.test.impl.el;
-
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -50,7 +49,7 @@ class ElTest extends CdiProcessEngineTestCase {
 
     // make sure the complete bean lifecycle (including invocation of @PreDestroy) was executed.
     // This ensures that the @Dependent scoped bean was properly destroyed.
-    assertThat(DependentScopedBean.lifecycle).isEqualTo(Arrays.asList("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"));
+    assertThat(DependentScopedBean.lifecycle).isEqualTo(List.of("post-construct-invoked", "bean-invoked", "pre-destroy-invoked"));
   }
 
 }

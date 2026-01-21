@@ -252,7 +252,6 @@ class BoundaryConditionalEventTest extends AbstractConditionalEventTestCase {
     assertThat(tasks).hasSize(2);
 
     //when variable is set on execution
-    //taskService.setVariable(task.getId(), VARIABLE_NAME, 1);
     runtimeService.setVariable(procInst.getId(), VARIABLE_NAME, 1);
 
     //then both boundary events are triggered and process instance ends

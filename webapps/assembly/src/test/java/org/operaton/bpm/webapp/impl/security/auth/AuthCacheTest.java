@@ -18,7 +18,6 @@ package org.operaton.bpm.webapp.impl.security.auth;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -473,7 +472,7 @@ class AuthCacheTest {
     mockedAuthenticationUtil = mockStatic(AuthenticationUtil.class);
     mockedProcessEngineUtil = mockStatic(ProcessEngineUtil.class);
     List<ProcessEngine> processEngines = new ArrayList<>();
-    Arrays.asList(engines).forEach(engine -> {
+    List.of(engines).forEach(engine -> {
       ProcessEngine processEngineMock = mock(ProcessEngine.class, RETURNS_DEEP_STUBS);
       processEngines.add(processEngineMock);
 
@@ -494,7 +493,7 @@ class AuthCacheTest {
     }
 
     Authentications authentications = new Authentications();
-    List<String> enginesAsList = Arrays.asList(engines);
+    List<String> enginesAsList = List.of(engines);
     for (int i = 0; i < enginesAsList.size(); i++) {
       String engine = enginesAsList.get(i);
       UserAuthentication userAuthentication = AuthenticationUtil.createAuthentication(engine, "userId" + (i + 1));

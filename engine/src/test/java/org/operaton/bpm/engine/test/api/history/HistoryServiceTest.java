@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -75,7 +74,7 @@ import static org.assertj.core.api.Assertions.fail;
 public class HistoryServiceTest {
 
   public static final String ONE_TASK_PROCESS = "oneTaskProcess";
-  protected static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -586,8 +585,8 @@ public class HistoryServiceTest {
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -670,7 +669,7 @@ public class HistoryServiceTest {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isOne();
     assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
-//  assertEquals(1, historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1).size());
+    assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1)).hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1312,7 +1311,7 @@ public class HistoryServiceTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(processInstance.getId(), processInstance2.getId()));
+    List<String> processInstanceIds = new ArrayList<>(List.of(processInstance.getId(), processInstance2.getId()));
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
 
     return processInstanceIds;

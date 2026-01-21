@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.link;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -89,7 +88,7 @@ class LinkEventTest {
     List<String> activeActivities = runtimeService.getActiveActivityIds(pi.getId());
 
     // assert that the link event was triggered and that we are
-    assertThat(activeActivities).isEqualTo(Arrays.asList("WaitAfterLink", "WaitAfterLink"));
+    assertThat(activeActivities).isEqualTo(List.of("WaitAfterLink", "WaitAfterLink"));
 
     runtimeService.deleteProcessInstance(pi.getId(), "test done");
 

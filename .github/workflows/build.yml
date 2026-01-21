@@ -204,6 +204,7 @@ jobs:
       actions: write
     env:
       GH_TOKEN: ${{ github.token }}
+    continue-on-error: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6

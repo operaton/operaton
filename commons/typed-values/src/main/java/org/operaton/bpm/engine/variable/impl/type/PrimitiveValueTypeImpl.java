@@ -20,6 +20,7 @@ import java.io.Serial;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.lang.model.type.NullType;
 
@@ -70,6 +71,20 @@ public abstract class PrimitiveValueTypeImpl extends AbstractValueTypeImpl imple
   @Override
   public boolean isPrimitiveValueType() {
     return true;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {return true;}
+    if (o == null || getClass() != o.getClass()) {return false;}
+    if (!super.equals(o)) {return false;}
+    PrimitiveValueTypeImpl that = (PrimitiveValueTypeImpl) o;
+    return Objects.equals(javaType, that.javaType);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), javaType);
   }
 
   @Override

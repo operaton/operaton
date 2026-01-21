@@ -68,7 +68,7 @@ import static org.operaton.bpm.engine.impl.cmmn.handler.ItemHandler.PROPERTY_ACT
  *
  */
 public class CaseExecutionEntity extends CmmnExecution implements CaseExecution, CaseInstance, DbEntity, HasDbRevision, HasDbReferences, VariablesProvider<VariableInstanceEntity> {
-
+  private static final CmmnVariableInvocationListener CMMN_VARIABLE_INVOCATION_LISTENER = new CmmnVariableInvocationListener();
   @Serial private static final long serialVersionUID = 1L;
 
   // current position /////////////////////////////////////////////////////////
@@ -717,10 +717,10 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   @Override
   @SuppressWarnings({ "unchecked", "rawtypes" })
   protected List<VariableInstanceLifecycleListener<CoreVariableInstance>> getVariableInstanceLifecycleListeners() {
-    return Arrays.<VariableInstanceLifecycleListener<CoreVariableInstance>>asList((VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE,
+    return Arrays.asList((VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE,
         (VariableInstanceLifecycleListener) VariableInstanceSequenceCounterListener.INSTANCE,
         (VariableInstanceLifecycleListener) VariableInstanceHistoryListener.INSTANCE,
-        (VariableInstanceLifecycleListener) CmmnVariableInvocationListener.INSTANCE,
+        (VariableInstanceLifecycleListener) CMMN_VARIABLE_INVOCATION_LISTENER,
         (VariableInstanceLifecycleListener) new VariableOnPartListener(this)
       );
 

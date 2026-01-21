@@ -98,9 +98,17 @@ jobs:
               }
 
               // Check if title matches any include pattern
-              const matches = rule.includes.some(pattern => titleMatchesPattern(pr.title, pattern));
+              let matches = rule.includes.some(pattern => titleMatchesPattern(pr.title, pattern));
 
               if (matches) {
+                // Check excludes - if title matches any exclude pattern, override the include
+                if (rule.excludes && rule.excludes.length > 0) {
+                  const excludeMatches = rule.excludes.some(pattern => titleMatchesPattern(pr.title, pattern));
+                  if (excludeMatches) {
+                    console.log(`  ❌ Title "${pr.title}" matches exclude pattern in rule`);
+                    return false;
+                  }
+                }
                 console.log(`  ✅ Title "${pr.title}" matches pattern in rule`);
               }
 
@@ -188,6 +196,48 @@ jobs:
               }
             }
 
+            // Function to check if there are unresolved review threads
+            async function hasUnresolvedThreads(pr) {
+              try {
+                // Use the Pull Request Review Threads API which has resolution info
+                const query = `
+                  query($owner: String!, $repo: String!, $number: Int!) {
+                    repository(owner: $owner, name: $repo) {
+                      pullRequest(number: $number) {
+                        reviewThreads(first: 100) {
+                          nodes {
+                            isResolved
+                            isOutdated
+                          }
+                        }
+                      }
+                    }
+                  }
+                `;
+
+                const result = await github.graphql(query, {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  number: pr.number
+                });
+
+                const threads = result.repository.pullRequest.reviewThreads.nodes;
+                const unresolvedThreads = threads.filter(thread => !thread.isResolved && !thread.isOutdated);
+
+                if (unresolvedThreads.length > 0) {
+                  console.log(`  💬 Found ${unresolvedThreads.length} unresolved review thread(s)`);
+                  return true;
+                }
+
+                console.log(`  ✅ No unresolved review threads`);
+                return false;
+              } catch (error) {
+                console.log(`  ⚠️  Error checking review threads: ${error.message}`);
+                // On error, assume there might be unresolved threads for safety
+                return true;
+              }
+            }
+
             // Collect eligible PRs
             const eligiblePRs = [];
 
@@ -249,6 +299,13 @@ jobs:
               // Skip PRs where GitHub is still calculating merge status
               if (pr.mergeable_state === 'unknown') {
                 console.log(`  ⏳ Merge status unknown - will check on next run`);
+                continue;
+              }
+
+              // Check for unresolved review threads
+              const hasUnresolved = await hasUnresolvedThreads(pr);
+              if (hasUnresolved) {
+                console.log(`  ⏭️  Skipping due to unresolved review threads`);
                 continue;
               }
 

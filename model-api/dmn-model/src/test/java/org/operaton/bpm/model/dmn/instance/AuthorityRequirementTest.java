@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class AuthorityRequirementTest extends DmnModelElementInstanceTest {
 
@@ -28,7 +27,7 @@ public class AuthorityRequirementTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(RequiredDecisionReference.class, 0, 1),
       new ChildElementAssumption(RequiredInputReference.class, 0, 1),
       new ChildElementAssumption(RequiredAuthorityReference.class, 0, 1)

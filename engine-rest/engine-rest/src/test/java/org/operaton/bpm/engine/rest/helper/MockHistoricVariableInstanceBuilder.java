@@ -224,9 +224,7 @@ public class MockHistoricVariableInstanceBuilder {
     HistoricVariableInstance mockVariable = mock(HistoricVariableInstance.class);
     when(mockVariable.getId()).thenReturn(id);
     when(mockVariable.getName()).thenReturn(name);
-    when(mockVariable.getVariableName()).thenReturn(name);
     when(mockVariable.getTypeName()).thenReturn(value.getType().getName());
-    when(mockVariable.getVariableTypeName()).thenReturn(value.getType().getName());
 
     if (ObjectValue.class.isAssignableFrom(value.getClass())) {
       ObjectValue objectValue = (ObjectValue) value;

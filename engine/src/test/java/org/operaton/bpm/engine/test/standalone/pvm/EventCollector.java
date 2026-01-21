@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.standalone.pvm;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -41,6 +42,10 @@ public class EventCollector implements ExecutionListener {
     PvmExecutionImpl executionImpl = (PvmExecutionImpl) execution;
     LOG.debug("collecting event: {} on {}", execution.getEventName(), executionImpl.getEventSource());
     events.add(execution.getEventName()+" on "+executionImpl.getEventSource());
+  }
+
+  public List<String> getEvents() {
+    return Collections.unmodifiableList(events);
   }
 
   @Override

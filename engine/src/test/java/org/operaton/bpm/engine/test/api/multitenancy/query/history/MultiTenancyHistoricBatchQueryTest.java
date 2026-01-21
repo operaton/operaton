@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -123,7 +122,7 @@ class MultiTenancyHistoricBatchQueryTest {
   @Test
   void testHistoricBatchQueryAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // when
     List<HistoricBatch> batches = historyService.createHistoricBatchQuery().list();

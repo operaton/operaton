@@ -10,6 +10,9 @@
   <artifactId>operaton-bpm-junit6</artifactId>
   <name>Operaton - JUnit 6 Extension</name>
   <description>${project.name}</description>
+  <properties>
+    <deploy.skip>true</deploy.skip>
+  </properties>
   <dependencies>
     <!-- Include the junit5-extension as a dependency -->
     <dependency>

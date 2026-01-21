@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -437,7 +436,7 @@ public class DecisionDefinitionRestServiceQueryTest extends AbstractRestServiceT
 
   @Test
   void testDecisionDefinitionTenantIdList() {
-    List<DecisionDefinition> decisionDefinitions = Arrays.asList(
+    List<DecisionDefinition> decisionDefinitions = List.of(
         MockProvider.mockDecisionDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockDecisionDefinition().id(MockProvider.ANOTHER_EXAMPLE_CASE_DEFINITION_ID).tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
     mockedQuery = createMockDecisionDefinitionQuery(decisionDefinitions);
@@ -485,7 +484,7 @@ public class DecisionDefinitionRestServiceQueryTest extends AbstractRestServiceT
 
   @Test
   void testDecisionDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
-    List<DecisionDefinition> decisionDefinitions = Arrays.asList(
+    List<DecisionDefinition> decisionDefinitions = List.of(
         MockProvider.mockDecisionDefinition().tenantId(null).build(),
         MockProvider.mockDecisionDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockedQuery = createMockDecisionDefinitionQuery(decisionDefinitions);
@@ -524,7 +523,7 @@ public class DecisionDefinitionRestServiceQueryTest extends AbstractRestServiceT
 
   @Test
   void testDecisionDefinitionVersionTag() {
-    List<DecisionDefinition> decisionDefinitions = Arrays.asList(
+    List<DecisionDefinition> decisionDefinitions = List.of(
       MockProvider.mockDecisionDefinition().versionTag(MockProvider.EXAMPLE_VERSION_TAG).build(),
       MockProvider.mockDecisionDefinition().id(MockProvider.ANOTHER_EXAMPLE_DECISION_DEFINITION_ID).versionTag(MockProvider.ANOTHER_EXAMPLE_VERSION_TAG).build());
     mockedQuery = createMockDecisionDefinitionQuery(decisionDefinitions);

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,7 +57,7 @@ public class ConditionalEventTriggeredByExecutionListenerTest extends AbstractCo
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
       {new ConditionalEventProcessSpecifier() {
         @Override
         public BpmnModelInstance specifyConditionalProcess(BpmnModelInstance modelInstance, boolean isInterrupting) {

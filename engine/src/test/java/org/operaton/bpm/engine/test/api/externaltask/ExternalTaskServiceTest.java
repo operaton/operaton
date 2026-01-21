@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.externaltask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1402,9 +1401,7 @@ class ExternalTaskServiceTest {
     // when/then
     assertThatThrownBy(() -> externalTaskService.lock(externalTaskId, aSecondWorkerId, LOCK_TIME))
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessageContaining("External Task " + externalTaskId
-      + " cannot be locked by worker '" + aSecondWorkerId
-      + "'. It is locked by worker '" + WORKER_ID + "'.");
+      .hasMessageContaining("External Task %s cannot be locked by worker '%s'. It is locked by worker '%s'.".formatted(externalTaskId, aSecondWorkerId, WORKER_ID));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml"})
@@ -2723,8 +2720,7 @@ class ExternalTaskServiceTest {
       // then
       .withFailMessage("it is not possible to complete the task with a different worker id")
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessageContaining("Failure of External Task " + externalTaskId
-        + " cannot be reported by worker 'someCrazyWorkerId'. It is locked by worker '" + WORKER_ID + "'.");
+      .hasMessageContaining("Failure of External Task %s cannot be reported by worker 'someCrazyWorkerId'. It is locked by worker '%s'.".formatted(externalTaskId, WORKER_ID));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
@@ -3482,7 +3478,7 @@ class ExternalTaskServiceTest {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = Arrays.asList(
+    List<String> externalTaskIds = List.of(
         tasks.get(0).getId(),
         tasks.get(1).getId(),
         tasks.get(2).getId(),
@@ -3507,7 +3503,7 @@ class ExternalTaskServiceTest {
     // given
     startProcessInstance("oneExternalTaskProcess", 5);
     List<ExternalTask> tasks = externalTaskService.createExternalTaskQuery().list();
-    List<String> externalTaskIds = Arrays.asList(
+    List<String> externalTaskIds = List.of(
         tasks.get(0).getId(),
         tasks.get(1).getId(),
         tasks.get(2).getId(),

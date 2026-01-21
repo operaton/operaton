@@ -124,9 +124,6 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
     ExecutionEntity processInstance = (ExecutionEntity) createProcessInstanceForInitial(initial);
 
-    // do not reset executions (CAM-2557)!
-    // processInstance.setExecutions(new ArrayList<ExecutionEntity>());
-
     processInstance.setProcessDefinition(processDefinition);
 
     // Do not initialize variable map (let it happen lazily)

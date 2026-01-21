@@ -96,9 +96,15 @@ public interface Process extends CallableElement {
 
   void setOperatonTaskPriority(String taskPriority);
 
+  /**
+   * @deprecated since 1.0, use {@link #getOperatonHistoryTimeToLiveString()} instead
+   */
   @Deprecated(since = "1.0")
   Integer getOperatonHistoryTimeToLive();
 
+  /**
+   * @deprecated since 1.0, use {@link #setOperatonHistoryTimeToLiveString(String)} instead
+   */
   @Deprecated(since = "1.0")
   void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
 

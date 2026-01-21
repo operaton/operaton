@@ -29,6 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <p>Checks that activiti / application transaction sharing works as expected</p>
@@ -65,7 +66,7 @@ public class JPAIntegrationTest extends AbstractFoxPlatformIntegrationTest {
   private AsyncPersistenceDelegateBean asyncPersistenceDelegateBean;
 
   @Test
-  void testDelegateParticipateInApplicationTx() throws Exception {
+  void testDelegateParticipateInApplicationTx2() throws Exception {
 
     /* if we start a transaction here, persist an entity and then
      * start a process instance which synchronously invokes a java delegate,
@@ -84,10 +85,13 @@ public class JPAIntegrationTest extends AbstractFoxPlatformIntegrationTest {
       runtimeService.startProcessInstanceByKey("testDelegateParticipateInApplicationTx");
 
       utx.commit();
-    }catch (Exception e) {
+    } catch (Exception e) {
       utx.rollback();
       throw e;
     }
+
+    assertThat(persistenceDelegateBean.isInvoked()).isTrue();
+    assertThat(persistenceDelegateBean.isEntityManaged()).isTrue();
   }
 
 
@@ -118,6 +122,9 @@ public class JPAIntegrationTest extends AbstractFoxPlatformIntegrationTest {
     }
 
     waitForJobExecutorToProcessAllJobs();
+
+    assertThat(asyncPersistenceDelegateBean.isInvoked()).isTrue();
+    assertThat(asyncPersistenceDelegateBean.isEntityManaged()).isFalse();
 
   }
 }

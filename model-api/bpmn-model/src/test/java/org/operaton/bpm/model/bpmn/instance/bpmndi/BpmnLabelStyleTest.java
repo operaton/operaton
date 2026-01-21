@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.bpmndi;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 import org.operaton.bpm.model.bpmn.instance.dc.Font;
@@ -38,7 +37,7 @@ public class BpmnLabelStyleTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(DC_NS, Font.class, 1, 1)
     );
   }

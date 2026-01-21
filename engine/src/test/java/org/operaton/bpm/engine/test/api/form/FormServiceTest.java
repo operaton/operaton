@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.form;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -867,7 +866,7 @@ class FormServiceTest {
     processVars.put("someString", "initialValue");
     processVars.put("initialBooleanVariable", true);
     processVars.put("initialLongVariable", 1L);
-    processVars.put("serializable", Arrays.asList("a", "b", "c"));
+    processVars.put("serializable", List.of("a", "b", "c"));
 
     runtimeService.startProcessInstanceByKey("testProcess", processVars);
 
@@ -944,7 +943,7 @@ class FormServiceTest {
     processVars.put("someString", "initialValue");
     processVars.put("initialBooleanVariable", true);
     processVars.put("initialLongVariable", 1L);
-    processVars.put("serializable", Arrays.asList("a", "b", "c"));
+    processVars.put("serializable", List.of("a", "b", "c"));
 
     // create new standalone task
     Task standaloneTask = taskService.newTask();

@@ -67,7 +67,7 @@ public abstract class AbstractValueTypeImpl implements ValueType {
   }
 
   protected IllegalArgumentException unsupportedConversion(ValueType typeToConvertTo) {
-    return new IllegalArgumentException("The type " + getName() + " supports no conversion from type: " + typeToConvertTo.getName());
+    return new IllegalArgumentException("The type %s supports no conversion from type: %s".formatted(getName(), typeToConvertTo.getName()));
   }
 
   @Override

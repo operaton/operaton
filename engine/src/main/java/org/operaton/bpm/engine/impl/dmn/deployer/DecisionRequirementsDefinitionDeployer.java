@@ -37,6 +37,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.model.dmn.instance.Decision;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
+
 /**
  * {@link Deployer} responsible to parse DMN 1.1 XML files and create the proper
  * {@link DecisionRequirementsDefinitionEntity}s.
@@ -51,7 +53,7 @@ public class DecisionRequirementsDefinitionDeployer extends AbstractDefinitionDe
   protected String[] getResourcesSuffixes() {
     // since the DecisionDefinitionDeployer uses the result of this cacheDeployer, make sure that
     // it process the same DMN resources
-    return DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES;
+    return DMN_RESOURCE_SUFFIXES;
   }
 
   @Override

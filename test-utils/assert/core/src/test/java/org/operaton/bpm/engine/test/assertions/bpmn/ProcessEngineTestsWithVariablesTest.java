@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.assertions.bpmn;
-
 import java.util.*;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -75,7 +74,7 @@ public class ProcessEngineTestsWithVariablesTest {
       {null, null, "key2", 2, null, null},
       {"key1", 1, "key2", 2, "key3", 3}
     };
-    return Arrays.asList(data);
+    return List.of(data);
   }
 
   @MethodSource("data")

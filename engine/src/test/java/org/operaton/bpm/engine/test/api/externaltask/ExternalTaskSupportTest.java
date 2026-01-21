@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.externaltask;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +53,7 @@ public class ExternalTaskSupportTest {
 
   @Parameters
   public static Collection<Object[]> processResources() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskSupportTest.businessRuleTask.bpmn20.xml"},
       {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskSupportTest.messageEndEvent.bpmn20.xml"},
       {"org/operaton/bpm/engine/test/api/externaltask/ExternalTaskSupportTest.messageIntermediateEvent.bpmn20.xml"},

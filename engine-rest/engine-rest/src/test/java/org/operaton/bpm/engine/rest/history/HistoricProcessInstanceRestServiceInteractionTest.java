@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -206,7 +205,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
 
   @Test
   void testDeleteAsync() {
-    List<String> ids = Arrays.asList(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
+    List<String> ids = List.of(MockProvider.EXAMPLE_PROCESS_INSTANCE_ID);
     Batch batchEntity = MockProvider.createMockBatch();
     when(historyServiceMock.deleteHistoricProcessInstancesAsync(anyList(), any(), anyString())).thenReturn(batchEntity);
 
@@ -583,7 +582,7 @@ public class HistoricProcessInstanceRestServiceInteractionTest extends AbstractR
     // then
     assertThat(argument.getValue().getProcessDefinitionKey()).isEqualTo("aKey");
     assertThat(argument.getValue().getBusinessKey()).isEqualTo("aBusinessKey");
-    assertThat(argument.getValue().getState()).isEqualTo(new HashSet<>(Arrays.asList("COMPLETED", "ACTIVE")));
+    assertThat(argument.getValue().getState()).isEqualTo(new HashSet<>(List.of("COMPLETED", "ACTIVE")));
   }
 
   protected void verifyBatchJson(String batchJson) {

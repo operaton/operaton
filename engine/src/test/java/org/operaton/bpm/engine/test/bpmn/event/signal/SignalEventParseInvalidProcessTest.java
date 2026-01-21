@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import junit.framework.AssertionFailedError;
 import org.junit.jupiter.api.TestTemplate;
@@ -46,7 +45,7 @@ public class SignalEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "InvalidProcessWithDuplicateSignalNames.bpmn20.xml", "duplicate signal name", "alertSignal2" },
         { "InvalidProcessWithNoSignalName.bpmn20.xml", "signal with id 'alertSignal' has no name", "alertSignal" },
         { "InvalidProcessWithSignalNoId.bpmn20.xml", "signal must have an id", null },
@@ -83,7 +82,7 @@ public class SignalEventParseInvalidProcessTest {
 
   public void assertTextPresent(String expected, String actual) {
     if (actual == null || !actual.contains(expected)) {
-      throw new AssertionFailedError("expected presence of [" + expected + "], but was [" + actual + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expected, actual));
     }
   }
 }

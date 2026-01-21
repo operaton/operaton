@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -459,7 +458,7 @@ public class BulkHistoryDeleteTest {
       "org/operaton/bpm/engine/test/api/history/testDmnWithPojo.dmn11.xml"})
   void testCleanupFakeHistoryDecisionData() {
     //given
-    List<String> ids = Arrays.asList("aFake");
+    List<String> ids = List.of("aFake");
 
     //when
     historyService.deleteHistoricDecisionInstancesBulk(ids);
@@ -656,7 +655,7 @@ public class BulkHistoryDeleteTest {
     assertThat(activityInstances).hasSize(1);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstanceId));
 
     // then
     activityInstances = historyService.createHistoricCaseActivityInstanceQuery().list();
@@ -676,7 +675,7 @@ public class BulkHistoryDeleteTest {
     assertThat(taskInstances).hasSize(1);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstanceId));
 
     // then
     taskInstances = historyService.createHistoricTaskInstanceQuery().list();
@@ -699,7 +698,7 @@ public class BulkHistoryDeleteTest {
     terminateAndCloseCaseInstance(caseInstanceId, null);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstanceId));
 
     // then
     comments = taskService.getTaskComments(task.getId());
@@ -726,7 +725,7 @@ public class BulkHistoryDeleteTest {
     terminateAndCloseCaseInstance(caseInstance.getId(), taskService.getVariables(task.getId()));
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstance.getId()));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstance.getId()));
 
     // then
     detailsList = historyService.createHistoricDetailQuery().list();
@@ -749,7 +748,7 @@ public class BulkHistoryDeleteTest {
     terminateAndCloseCaseInstance(caseInstanceId, null);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstanceId));
 
     // then
     List<HistoricIdentityLinkLog> historicIdentityLinkLog = historyService.createHistoricIdentityLinkLogQuery().list();
@@ -774,7 +773,7 @@ public class BulkHistoryDeleteTest {
     terminateAndCloseCaseInstance(caseInstance.getId(), null);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstance.getId()));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstance.getId()));
 
     // then
     attachments = taskService.getTaskAttachments(taskId);
@@ -798,7 +797,7 @@ public class BulkHistoryDeleteTest {
     terminateAndCloseCaseInstance(caseInstanceId, null);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstanceId));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstanceId));
 
     // then
     attachments = taskService.getTaskAttachments(task.getId());
@@ -848,7 +847,7 @@ public class BulkHistoryDeleteTest {
     terminateAndCloseCaseInstance(caseInstance.getId(), variables);
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstance.getId()));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstance.getId()));
 
     // then
     variablesInstances = historyService.createHistoricVariableInstanceQuery().list();
@@ -877,7 +876,7 @@ public class BulkHistoryDeleteTest {
     caseService.closeCaseInstance(caseInstance2.getId());
 
     // when
-    historyService.deleteHistoricCaseInstancesBulk(Arrays.asList(caseInstance1.getId(), caseInstance2.getId()));
+    historyService.deleteHistoricCaseInstancesBulk(List.of(caseInstance1.getId(), caseInstance2.getId()));
 
     // then
     detailsList = historyService.createHistoricDetailQuery().list();

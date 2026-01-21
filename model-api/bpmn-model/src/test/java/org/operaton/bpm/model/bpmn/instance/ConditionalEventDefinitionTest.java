@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +27,7 @@ class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Condition.class, 1, 1)
     );
   }
@@ -36,7 +35,7 @@ class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       /** operaton extensions */
       new AttributeAssumption(OPERATON_NS, "variableName"),
       new AttributeAssumption(OPERATON_NS, "variableEvents")

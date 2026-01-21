@@ -34,6 +34,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class JsonJacksonTreeTypeDetectionTest {
+  private static final SetJacksonJsonTypeDetector SET_JACKSON_JSON_TYPE_DETECTOR = new SetJacksonJsonTypeDetector();
+  private static final MapJacksonJsonTypeDetector MAP_JACKSON_JSON_TYPE_DETECTOR = new MapJacksonJsonTypeDetector();
 
   public JacksonJsonDataFormat dataFormatWithSetTypeDetector =
       new JacksonJsonDataFormat(DataFormats.JSON_DATAFORMAT_NAME);
@@ -43,8 +45,8 @@ class JsonJacksonTreeTypeDetectionTest {
 
   @BeforeEach
   void configure() {
-    dataFormatWithSetTypeDetector.addTypeDetector(SetJacksonJsonTypeDetector.INSTANCE);
-    dataFormatWithMapTypeDetector.addTypeDetector(MapJacksonJsonTypeDetector.INSTANCE);
+    dataFormatWithSetTypeDetector.addTypeDetector(SET_JACKSON_JSON_TYPE_DETECTOR);
+    dataFormatWithMapTypeDetector.addTypeDetector(MAP_JACKSON_JSON_TYPE_DETECTOR);
   }
 
   @Test

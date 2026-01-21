@@ -177,7 +177,7 @@ public class UpgradeTestExtension extends ProcessEngineExtension {
 
   public void assertScenarioEnded() {
     assertThat(processInstanceQuery().singleResult() == null)
-        .withFailMessage("Process instance for scenario " + getBusinessKey() + " should have ended")
+        .withFailMessage("Process instance for scenario %s should have ended".formatted(getBusinessKey()))
         .isTrue();
   }
 

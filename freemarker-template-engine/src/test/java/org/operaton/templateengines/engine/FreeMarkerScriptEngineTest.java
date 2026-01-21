@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.templateengines.engine;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import javax.script.*;
 import org.junit.jupiter.api.BeforeAll;
@@ -110,7 +109,7 @@ class FreeMarkerScriptEngineTest {
 
   @Test
   void javaCollection() throws Exception {
-    Collection<String> names = Arrays.asList("tweety", "duffy", "tom");
+    Collection<String> names = List.of("tweety", "duffy", "tom");
     bindings.put("names", names);
     expected = "tweety, duffy, tom";
     template = "<#list names as name>${name}<#if name_has_next>, </#if></#list>";

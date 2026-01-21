@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -165,7 +164,7 @@ public class TaskRestServiceInteractionTest extends
   protected static final String HANDLE_BPMN_ESCALATION_URL = SINGLE_TASK_URL + "/bpmnEscalation";
 
   private static final String LOCAL_VARIABLE_KEY = "aLocalVariableId";
-  private static final List<String> LOCAL_VARIABLE_PAYLOAD = Arrays.asList("aLocalValue", "bLocalValue");
+  private static final List<String> LOCAL_VARIABLE_PAYLOAD = List.of("aLocalValue", "bLocalValue");
 
   private Task mockTask;
   private TaskService taskServiceMock;
@@ -503,7 +502,7 @@ public class TaskRestServiceInteractionTest extends
   void testGetSingleTaskHal() {
 
     // setup user query mock
-    List<User> mockUsers = Arrays.asList(
+    List<User> mockUsers = List.of(
       MockProvider.mockUser().id(EXAMPLE_TASK_ASSIGNEE_NAME).build(),
       MockProvider.mockUser().id(EXAMPLE_TASK_OWNER).build()
     );
@@ -515,7 +514,7 @@ public class TaskRestServiceInteractionTest extends
     when(processEngine.getIdentityService().createUserQuery()).thenReturn(sampleUserQuery);
 
     // setup group query mock
-    List<Group> mockGroups = Arrays.asList(
+    List<Group> mockGroups = List.of(
       MockProvider.mockGroup().id(mockCandidateGroupIdentityLink.getGroupId()).build(),
       MockProvider.mockGroup().id(mockCandidateGroup2IdentityLink.getGroupId()).build()
     );
@@ -1259,7 +1258,7 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
       .when().get(FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, Arrays.asList("a", "b", "c"), true);
+    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, List.of("a", "b", "c"), true);
   }
 
   @Test
@@ -1292,7 +1291,7 @@ public class TaskRestServiceInteractionTest extends
         .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
       .when().get(FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, Arrays.asList("a", "b", "c"), false);
+    verify(formServiceMock, times(1)).getTaskFormVariables(EXAMPLE_TASK_ID, List.of("a", "b", "c"), false);
   }
 
   @Test
@@ -1853,7 +1852,7 @@ public class TaskRestServiceInteractionTest extends
     .when()
       .post(COMPLETE_TASK_URL);
 
-    verify(taskServiceMock).completeWithVariablesInReturn(EXAMPLE_TASK_ID, null, false);
+    verify(taskServiceMock).completeWithVariablesInReturn(EXAMPLE_TASK_ID, emptyMap(), false);
   }
 
   @Test

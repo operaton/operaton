@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -179,7 +178,7 @@ class MultiTenancyHistoricProcessInstanceQueryTest {
 
   @Test
   void shouldQueryAuthenticatedTenants() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     HistoricProcessInstanceQuery query = historyService.createHistoricProcessInstanceQuery();
 

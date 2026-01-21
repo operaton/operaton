@@ -177,6 +177,17 @@ deploy:
           - target/staging-deploy
         retryDelay: 30
         maxRetries: 99
+    nexus2:
+      snapshot-deploy:
+        active: SNAPSHOT
+        snapshotUrl: https://s01.oss.sonatype.org/content/repositories/snapshots
+        snapshotSupported: true
+        applyMavenCentralRules: true
+        snapshotSupported: true
+        closeRepository: true
+        releaseRepository: true
+        stagingRepositories:
+          - target/staging-deploy
     pomchecker:
       # Could be enabled when all POMs have <description> tag, see https://github.com/operaton/operaton/issues/293
       strict: false

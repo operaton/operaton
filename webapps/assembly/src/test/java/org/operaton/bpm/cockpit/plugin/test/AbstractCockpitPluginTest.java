@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.cockpit.plugin.test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -123,11 +122,11 @@ public abstract class AbstractCockpitPluginTest {
   }
 
   public Deployment deploy(String... resources) {
-    return deploy(createDeploymentBuilder(), Collections.<BpmnModelInstance> emptyList(), Arrays.asList(resources));
+    return deploy(createDeploymentBuilder(), Collections.<BpmnModelInstance> emptyList(), List.of(resources));
   }
 
   public Deployment deployForTenant(String tenantId, String... resources) {
-    return deploy(createDeploymentBuilder().tenantId(tenantId), Collections.<BpmnModelInstance> emptyList(), Arrays.asList(resources));
+    return deploy(createDeploymentBuilder().tenantId(tenantId), Collections.<BpmnModelInstance> emptyList(), List.of(resources));
   }
 
   protected Deployment deploy(DeploymentBuilder deploymentBuilder, List<BpmnModelInstance> bpmnModelInstances, List<String> resources) {

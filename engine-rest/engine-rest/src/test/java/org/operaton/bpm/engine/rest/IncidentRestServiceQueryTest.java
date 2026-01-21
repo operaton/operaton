@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -547,7 +546,7 @@ public class IncidentRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testQueryByTenantIds() {
-    mockedQuery = setupMockIncidentQuery(Arrays.asList(
+    mockedQuery = setupMockIncidentQuery(List.of(
         MockProvider.createMockIncident(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockIncident(MockProvider.ANOTHER_EXAMPLE_TENANT_ID)));
 

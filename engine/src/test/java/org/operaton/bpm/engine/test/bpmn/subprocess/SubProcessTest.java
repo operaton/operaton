@@ -449,9 +449,6 @@ class SubProcessTest {
   @Deployment
   @Test
   void testTwoNestedSubProcessesInParallelWithTimer() {
-
-//    Date startTime = new Date();
-
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("nestedParallelSubProcessesWithTimer");
     TaskQuery taskQuery = taskService
       .createTaskQuery()
@@ -466,9 +463,6 @@ class SubProcessTest {
     assertThat(taskA.getName()).isEqualTo("Task in subprocess A");
     assertThat(taskB.getName()).isEqualTo("Task in subprocess B");
 
-    // Firing the timer should destroy all three subprocesses and activate the task after the timer
-//    ClockUtil.setCurrentTime(new Date(startTime.getTime() + (2 * 60 * 60 * 1000 ) + 1000));
-//    testRule.waitForJobExecutorToProcessAllJobs(5000L, 50L);
     Job job = managementService.createJobQuery().singleResult();
     managementService.executeJob(job.getId());
 

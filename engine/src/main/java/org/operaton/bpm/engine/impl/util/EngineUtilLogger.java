@@ -266,4 +266,10 @@ public class EngineUtilLogger extends ProcessEngineLogger {
         "Exception while getting value from field '{}' on object of type '{}': {}",
         field, object.getClass().getName(), e.getMessage()), e);
   }
+
+  public ProcessEngineException malformedUriException(String uri, Throwable cause) {
+    return new ProcessEngineException(exceptionMessage(
+      "049",
+      "The URI '{}' is malformed", uri), cause);
+  }
 }

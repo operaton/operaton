@@ -59,6 +59,8 @@ import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+
 /**
  * {@link Deployer} responsible to parse BPMN 2.0 XML files and create the proper
  * {@link ProcessDefinitionEntity}s. Overwrite this class if you want to gain some control over
@@ -71,8 +73,6 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEntity> {
 
   public static final BpmnParseLogger LOG = ProcessEngineLogger.BPMN_PARSE_LOGGER;
-
-  public static final String[] BPMN_RESOURCE_SUFFIXES = new String[] { "bpmn20.xml", "bpmn" };
 
   protected static final PropertyMapKey<String, List<JobDeclaration<?, ?>>> JOB_DECLARATIONS_PROPERTY =
       new PropertyMapKey<>("JOB_DECLARATIONS_PROPERTY");
@@ -164,52 +164,46 @@ public class BpmnDeployer extends AbstractDefinitionDeployer<ProcessDefinitionEn
   }
 
   protected void updateJobDeclarations(List<JobDeclaration<?, ?>> jobDeclarations, ProcessDefinitionEntity processDefinition, boolean isNewDeployment) {
-
     if(jobDeclarations == null || jobDeclarations.isEmpty()) {
       return;
     }
 
-    final JobDefinitionManager jobDefinitionManager = getJobDefinitionManager();
-
     if(isNewDeployment) {
-      // create new job definitions:
       for (JobDeclaration<?, ?> jobDeclaration : jobDeclarations) {
         createJobDefinition(processDefinition, jobDeclaration);
       }
-
-    } else {
-      // query all job definitions and update the declarations with their Ids
-      List<JobDefinitionEntity> existingDefinitions = jobDefinitionManager.findByProcessDefinitionId(processDefinition.getId());
-
-      LegacyBehavior.migrateMultiInstanceJobDefinitions(processDefinition, existingDefinitions);
-
-      for (JobDeclaration<?, ?> jobDeclaration : jobDeclarations) {
-        boolean jobDefinitionExists = false;
-        // find matching job definition entity
-        for (JobDefinition jobDefinitionEntity : existingDefinitions) {
-
-          // activity id needs to match
-          boolean activityIdMatches = jobDeclaration.getActivityId().equals(jobDefinitionEntity.getActivityId());
-          // handler type (e.g. 'async-continuation' needs to match
-          boolean handlerTypeMatches = jobDeclaration.getJobHandlerType().equals(jobDefinitionEntity.getJobType());
-          // configuration (e.g. 'async-before', 'async-after' needs to match
-          boolean configurationMatches = jobDeclaration.getJobConfiguration().equals(jobDefinitionEntity.getJobConfiguration());
-
-          if(activityIdMatches && handlerTypeMatches && configurationMatches) {
-            jobDeclaration.setJobDefinitionId(jobDefinitionEntity.getId());
-            jobDefinitionExists = true;
-            break;
-          }
-        }
-
-        if(!jobDefinitionExists) {
-          // not found: create new definition
-          createJobDefinition(processDefinition, jobDeclaration);
-        }
-
-      }
+      return;
     }
 
+    final JobDefinitionManager jobDefinitionManager = getJobDefinitionManager();
+    // query all job definitions and update the declarations with their Ids
+    List<JobDefinitionEntity> existingDefinitions = jobDefinitionManager.findByProcessDefinitionId(processDefinition.getId());
+    LegacyBehavior.migrateMultiInstanceJobDefinitions(processDefinition, existingDefinitions);
+
+    for (JobDeclaration<?, ?> jobDeclaration : jobDeclarations) {
+      boolean jobDefinitionExists = false;
+      // find matching job definition entity
+      for (JobDefinition jobDefinitionEntity : existingDefinitions) {
+
+        // activity id needs to match
+        boolean activityIdMatches = jobDeclaration.getActivityId().equals(jobDefinitionEntity.getActivityId());
+        // handler type (e.g. 'async-continuation' needs to match
+        boolean handlerTypeMatches = jobDeclaration.getJobHandlerType().equals(jobDefinitionEntity.getJobType());
+        // configuration (e.g. 'async-before', 'async-after' needs to match
+        boolean configurationMatches = jobDeclaration.getJobConfiguration().equals(jobDefinitionEntity.getJobConfiguration());
+
+        if(activityIdMatches && handlerTypeMatches && configurationMatches) {
+          jobDeclaration.setJobDefinitionId(jobDefinitionEntity.getId());
+          jobDefinitionExists = true;
+          break;
+        }
+      }
+
+      if(!jobDefinitionExists) {
+        // not found: create new definition
+        createJobDefinition(processDefinition, jobDeclaration);
+      }
+    }
   }
 
   protected void createJobDefinition(ProcessDefinition processDefinition, JobDeclaration<?, ?> jobDeclaration) {

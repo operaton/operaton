@@ -19,7 +19,6 @@ package org.operaton.bpm.container.impl.jmx.deployment.util;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +45,7 @@ public class ClassPathScannerTest {
 
   @Parameters
   public static List<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
             { "file:src/test/resources/org/operaton/bpm/container/impl/jmx/deployment/util/ClassPathScannerTest.testScanClassPathWithFiles/" },
             { "file:src/test/resources/org/operaton/bpm/container/impl/jmx/deployment/util/ClassPathScannerTest.testScanClassPathWithFilesRecursive/" },
             { "file:src/test/resources/org/operaton/bpm/container/impl/jmx/deployment/util/ClassPathScannerTest.testScanClassPathWithFilesRecursiveTwoDirectories/" },

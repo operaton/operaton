@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type.reference;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -171,7 +171,7 @@ public class ReferenceTest extends TestModelTest {
   void testTargetElementsCollection(TestModelArgs args) {
     init(args);
     Collection<FlyingAnimal> referenceTargetElements = flightPartnerRefsColl.getReferenceTargetElements(tweety);
-    Collection<FlyingAnimal> flightPartners = Arrays.asList(birdo, daffy, daisy, plucky);
+    Collection<FlyingAnimal> flightPartners = List.of(birdo, daffy, daisy, plucky);
 
     // directly test collection methods and not use the	appropriate assertion methods
     assertThat(referenceTargetElements)

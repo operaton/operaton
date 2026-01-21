@@ -35,10 +35,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.RepositoryServiceImpl;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.cmd.CommandLogger;
-import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
-import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.util.IoUtil;
@@ -55,6 +52,9 @@ import org.operaton.bpm.model.dmn.Dmn;
 import org.operaton.bpm.model.dmn.DmnModelInstance;
 import org.operaton.commons.utils.CollectionUtil;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotContainsNull;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
@@ -120,7 +120,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addModelInstance(String resourceName, CmmnModelInstance modelInstance) {
     ensureNotNull(MODEL_INSTANCE, modelInstance);
 
-    validateResouceName(resourceName, CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
+    validateResouceName(resourceName, CMMN_RESOURCE_SUFFIXES);
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Cmmn.writeModelToStream(outputStream, modelInstance);
@@ -132,7 +132,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addModelInstance(String resourceName, BpmnModelInstance modelInstance) {
     ensureNotNull(MODEL_INSTANCE, modelInstance);
 
-    validateResouceName(resourceName, BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    validateResouceName(resourceName, BPMN_RESOURCE_SUFFIXES);
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Bpmn.writeModelToStream(outputStream, modelInstance);
@@ -144,7 +144,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   public DeploymentBuilder addModelInstance(String resourceName, DmnModelInstance modelInstance) {
     ensureNotNull(MODEL_INSTANCE, modelInstance);
 
-    validateResouceName(resourceName, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
+    validateResouceName(resourceName, DMN_RESOURCE_SUFFIXES);
 
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     Dmn.writeModelToStream(outputStream, modelInstance);

@@ -34,15 +34,12 @@ import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmmn.behavior.CaseControlRuleImpl;
-import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.db.DbIdGenerator;
 import org.operaton.bpm.engine.impl.db.PersistenceSession;
 import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
-import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
 import org.operaton.bpm.engine.impl.el.FixedValue;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.management.DatabasePurgeReport;
@@ -56,6 +53,9 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
 
 /**
  * @author Tom Baeyens
@@ -74,9 +74,9 @@ public abstract class TestHelper {
   public static final List<String> RESOURCE_SUFFIXES = new ArrayList<>();
 
   static {
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(BpmnDeployer.BPMN_RESOURCE_SUFFIXES));
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(CmmnDeployer.CMMN_RESOURCE_SUFFIXES));
-    RESOURCE_SUFFIXES.addAll(Arrays.asList(DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(Arrays.asList(BPMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(Arrays.asList(CMMN_RESOURCE_SUFFIXES));
+    RESOURCE_SUFFIXES.addAll(Arrays.asList(DMN_RESOURCE_SUFFIXES));
   }
 
   /**
@@ -186,7 +186,7 @@ public abstract class TestHelper {
         return resource;
       }
     }
-    return createResourceName(type, name, BpmnDeployer.BPMN_RESOURCE_SUFFIXES[0]);
+    return createResourceName(type, name, BPMN_RESOURCE_SUFFIXES[0]);
   }
 
   private static String createResourceName(Class< ? > type, String name, String suffix) {

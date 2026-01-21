@@ -94,7 +94,6 @@ import static org.operaton.bpm.engine.variable.Variables.objectValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -127,12 +126,10 @@ public class RuntimeServiceTest {
 
   @Test
   void testStartProcessInstanceByKeyUnexistingKey() {
-    try {
-      runtimeService.startProcessInstanceByKey("unexistingkey");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("no processes deployed with key", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("unexistingkey"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no processes deployed with key");
   }
 
   @Test
@@ -142,12 +139,10 @@ public class RuntimeServiceTest {
 
   @Test
   void testStartProcessInstanceByIdUnexistingId() {
-    try {
-      runtimeService.startProcessInstanceById("unexistingId");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("no deployed process definition found with id", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceById("unexistingId"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no deployed process definition found with id");
   }
 
   @Deployment(resources = {
@@ -511,13 +506,10 @@ public class RuntimeServiceTest {
 
   @Test
   void testDeleteProcessInstanceNullId() {
-    try {
-      runtimeService.deleteProcessInstance(null, "test null id delete");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-      assertThat(ae).isInstanceOf(BadUserRequestException.class);
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.deleteProcessInstance(null, "test null id delete"))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("processInstanceId is null");
   }
 
   @Deployment
@@ -613,22 +605,18 @@ public class RuntimeServiceTest {
 
   @Test
   void testFindActiveActivityIdsUnexistingExecutionId() {
-    try {
-      runtimeService.getActiveActivityIds("unexistingExecutionId");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingExecutionId doesn't exist", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getActiveActivityIds("unexistingExecutionId"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
   void testFindActiveActivityIdsNullExecutionId() {
-    try {
-      runtimeService.getActiveActivityIds(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getActiveActivityIds(null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("executionId is null");
   }
 
   /**
@@ -647,9 +635,9 @@ public class RuntimeServiceTest {
 
     Task parallelUserTask = null;
     for (Task task : tasks) {
-      if (!"ParallelUserTask".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
-        fail("Expected: <ParallelUserTask> or <MainUserTask> but was <%s>.".formatted(task.getName()));
-      }
+      assertThat(task.getName())
+          .withFailMessage("Expected: <ParallelUserTask> or <MainUserTask> but was <%s>.".formatted(task.getName()))
+          .isIn("ParallelUserTask", "MainUserTask");
       if ("ParallelUserTask".equals(task.getName())) {
         parallelUserTask = task;
       }
@@ -669,9 +657,9 @@ public class RuntimeServiceTest {
 
     Task beforeErrorUserTask = null;
     for (Task task : tasks) {
-      if (!"BeforeError".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
-        fail("Expected: <BeforeError> or <MainUserTask> but was <%s>.".formatted(task.getName()));
-      }
+      assertThat(task.getName())
+          .withFailMessage("Expected: <BeforeError> or <MainUserTask> but was <%s>.".formatted(task.getName()))
+          .isIn("BeforeError", "MainUserTask");
       if ("BeforeError".equals(task.getName())) {
         beforeErrorUserTask = task;
       }
@@ -688,9 +676,9 @@ public class RuntimeServiceTest {
 
     Task afterErrorUserTask = null;
     for (Task task : tasks) {
-      if (!"AfterError".equals(task.getName()) && !"MainUserTask".equals(task.getName())) {
-        fail("Expected: <AfterError> or <MainUserTask> but was <%s>.".formatted(task.getName()));
-      }
+      assertThat(task.getName())
+          .withFailMessage("Expected: <AfterError> or <MainUserTask> but was <%s>.".formatted(task.getName()))
+          .isIn("AfterError", "MainUserTask");
       if ("AfterError".equals(task.getName())) {
         afterErrorUserTask = task;
       }
@@ -779,60 +767,47 @@ public class RuntimeServiceTest {
   @Deployment
   @Test
   void testSignalInactiveExecution() {
+    // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("testSignalInactiveExecution");
     var instanceId = instance.getId();
 
+    // when/then
     // there exist two executions: the inactive parent (the process instance) and the child that actually waits in the receive task
-    try {
-      runtimeService.signal(instanceId);
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("cannot signal execution %s: it has no current activity".formatted(instance.getId()), e.getMessage());
-    } catch (Exception e) {
-      fail("Signalling an inactive execution that has no activity should result in a ProcessEngineException");
-    }
-
+    assertThatThrownBy(() -> runtimeService.signal(instanceId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("cannot signal execution %s: it has no current activity".formatted(instance.getId()));
   }
 
   @Test
   void testGetVariablesUnexistingExecutionId() {
-    try {
-      runtimeService.getVariables("unexistingExecutionId");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingExecutionId doesn't exist", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getVariables("unexistingExecutionId"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
   void testGetVariablesNullExecutionId() {
-    try {
-      runtimeService.getVariables(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getVariables(null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("executionId is null");
   }
 
   @Test
   void testGetVariableUnexistingExecutionId() {
-    try {
-      runtimeService.getVariables("unexistingExecutionId");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingExecutionId doesn't exist", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getVariables("unexistingExecutionId"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
   void testGetVariableNullExecutionId() {
-    try {
-      runtimeService.getVariables(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getVariables(null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("executionId is null");
   }
 
   @Deployment(resources = {
@@ -846,36 +821,32 @@ public class RuntimeServiceTest {
 
   @Test
   void testSetVariableUnexistingExecutionId() {
-    try {
-      runtimeService.setVariable("unexistingExecutionId", "variableName", "value");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("execution unexistingExecutionId doesn't exist", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.setVariable("unexistingExecutionId", "variableName", "value"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("execution unexistingExecutionId doesn't exist");
   }
 
   @Test
   void testSetVariableNullExecutionId() {
-    try {
-      runtimeService.setVariable(null, "variableName", "variableValue");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.setVariable(null, "variableName", "variableValue"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("executionId is null");
   }
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testSetVariableNullVariableName() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceId = processInstance.getId();
-    try {
-      runtimeService.setVariable(processInstanceId, null, "variableValue");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("variableName is null", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, null, "variableValue"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("variableName is null");
   }
 
   @Deployment(resources = {
@@ -1028,11 +999,10 @@ public class RuntimeServiceTest {
         HistoricDetailVariableInstanceUpdateEntity historicVariableUpdate = (HistoricDetailVariableInstanceUpdateEntity) currentHistoricDetail;
 
         if (historicVariableUpdate.getName().equals(variableName) && historicVariableUpdate.getValue() == null) {
-          if (deletedVariableUpdateFound) {
-            fail("Mismatch: A HistoricVariableUpdateEntity with a null value already found");
-          } else {
-            deletedVariableUpdateFound = true;
-          }
+          assertThat(deletedVariableUpdateFound)
+              .withFailMessage("Mismatch: A HistoricVariableUpdateEntity with a null value already found")
+              .isFalse();
+          deletedVariableUpdateFound = true;
         }
       }
 
@@ -1082,12 +1052,10 @@ public class RuntimeServiceTest {
 
   @Test
   void testRemoveVariableNullExecutionId() {
-    try {
-      runtimeService.removeVariable(null, "variable");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.removeVariable(null, "variable"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("executionId is null");
   }
 
   @Deployment(resources = {
@@ -1139,12 +1107,10 @@ public class RuntimeServiceTest {
 
   @Test
   void testRemoveLocalVariableNullExecutionId() {
-    try {
-      runtimeService.removeVariableLocal(null, "variable");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("executionId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.removeVariableLocal(null, "variable"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("executionId is null");
   }
 
   @Deployment(resources = {
@@ -1396,24 +1362,18 @@ public class RuntimeServiceTest {
 
   @Test
   void testSignalEventReceivedNonExistingExecution() {
-   try {
-     runtimeService.signalEventReceived("alert", "nonexistingExecution");
-     fail("exception expected");
-   }catch (ProcessEngineException e) {
-     // this is good
-     assertThat(e.getMessage()).contains("Cannot find execution with id 'nonexistingExecution'");
-   }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived("alert", "nonexistingExecution"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot find execution with id 'nonexistingExecution'");
   }
 
   @Test
   void testMessageEventReceivedNonExistingExecution() {
-   try {
-     runtimeService.messageEventReceived("alert", "nonexistingExecution");
-     fail("exception expected");
-   }catch (ProcessEngineException e) {
-     // this is good
-     assertThat(e.getMessage()).contains("Execution with id 'nonexistingExecution' does not have a subscription to a message event with name 'alert'");
-   }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("alert", "nonexistingExecution"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Execution with id 'nonexistingExecution' does not have a subscription to a message event with name 'alert'");
   }
 
   @Deployment(resources = {
@@ -1421,18 +1381,17 @@ public class RuntimeServiceTest {
   })
   @Test
   void testExecutionWaitingForDifferentSignal() {
-   runtimeService.startProcessInstanceByKey("catchAlertSignal");
-   Execution execution = runtimeService.createExecutionQuery()
-     .signalEventSubscriptionName("alert")
-     .singleResult();
-   var executionId = execution.getId();
-   try {
-     runtimeService.signalEventReceived("bogusSignal", executionId);
-     fail("exception expected");
-   }catch (ProcessEngineException e) {
-     // this is good
-     assertThat(e.getMessage()).contains("has not subscribed to a signal event with name 'bogusSignal'");
-   }
+    // given
+    runtimeService.startProcessInstanceByKey("catchAlertSignal");
+    Execution execution = runtimeService.createExecutionQuery()
+        .signalEventSubscriptionName("alert")
+        .singleResult();
+    var executionId = execution.getId();
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived("bogusSignal", executionId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("has not subscribed to a signal event with name 'bogusSignal'");
   }
 
   private void startSignalCatchProcesses() {
@@ -1458,12 +1417,10 @@ public class RuntimeServiceTest {
 
   @Test
   void testActivityInstanceForNullProcessInstanceId() {
-    try {
-      runtimeService.getActivityInstance(null);
-      fail("PEE expected!");
-    } catch (ProcessEngineException engineException) {
-      assertThat(engineException.getMessage()).contains("processInstanceId is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getActivityInstance(null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("processInstanceId is null");
   }
 
   @Deployment(resources = {
@@ -1908,10 +1865,9 @@ public class RuntimeServiceTest {
     incidentIds = tree.getActivityInstances("asyncTask")[0].getIncidentIds();
     assertThat(incidentIds).hasSize(2);
     for (String incidentId : incidentIds) {
-      if (!incidentId.equals(asyncTaskIncident.getId())
-          && !incidentId.equals(anotherIncident.getId())) {
-        fail("Expected: %s or %s but it was %s".formatted(asyncTaskIncident.getId(), anotherIncident.getId(), incidentId));
-      }
+      assertThat(incidentId)
+          .withFailMessage("Expected: %s or %s but it was %s".formatted(asyncTaskIncident.getId(), anotherIncident.getId(), incidentId))
+          .isIn(asyncTaskIncident.getId(), anotherIncident.getId());
     }
   }
 
@@ -2414,26 +2370,23 @@ public class RuntimeServiceTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")
   @Test
   void testSetAbstractNumberValueFails() {
+    // given
     var variables = Variables.createVariables().putValueTyped("var", Variables.numberValue(42));
     var variableMap = Variables.numberValue(42);
-    try {
-      runtimeService.startProcessInstanceByKey("oneTaskProcess", variables);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("cannot serialize value of abstract type number", e.getMessage());
-    }
 
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("oneTaskProcess", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("cannot serialize value of abstract type number"));
+
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceId = processInstance.getId();
 
-    try {
-      runtimeService.setVariable(processInstanceId, "var", variableMap);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresentIgnoreCase("cannot serialize value of abstract type number", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "var", variableMap))
+        .isInstanceOf(ProcessEngineException.class)
+        .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("cannot serialize value of abstract type number"));
   }
 
 
@@ -2470,24 +2423,20 @@ public class RuntimeServiceTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/messageStartEvent.bpmn20.xml")
   @Test
   void testStartProcessInstanceByMessageWithNonExistingMessageStartEvent() {
-	  String deploymentId = null;
-	  deploymentId = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/runtime/messageStartEvent_version2.bpmn20.xml").deploy().getId();
-	  ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).singleResult();
-	  var processDefinitionId = processDefinition.getId();
+    // given
+    String deploymentId = repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/api/runtime/messageStartEvent_version2.bpmn20.xml").deploy().getId();
+    ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionVersion(1).singleResult();
+    var processDefinitionId = processDefinition.getId();
 
     try {
-		 runtimeService.startProcessInstanceByMessageAndProcessDefinitionId("newStartMessage", processDefinitionId);
-
-      fail("exception expected");
-	 } catch(ProcessEngineException e) {
-		 assertThat(e.getMessage()).contains("Cannot correlate message 'newStartMessage'");
-	 }
-	 finally {
-		 // clean up
-		 if(deploymentId != null){
-			 repositoryService.deleteDeployment(deploymentId, true);
-		 }
-	 }
+      // when/then
+      assertThatThrownBy(() -> runtimeService.startProcessInstanceByMessageAndProcessDefinitionId("newStartMessage", processDefinitionId))
+          .isInstanceOf(ProcessEngineException.class)
+          .hasMessageContaining("Cannot correlate message 'newStartMessage'");
+    } finally {
+      // clean up
+      repositoryService.deleteDeployment(deploymentId, true);
+    }
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -3061,14 +3010,9 @@ public class RuntimeServiceTest {
   @Deployment
   @Test
   void testRollback() {
-    try {
-      runtimeService.startProcessInstanceByKey("RollbackProcess");
-
-      fail("Starting the process instance should throw an exception");
-
-    } catch (Exception e) {
-      assertThat(e.getMessage()).isEqualTo("Buzzz");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("RollbackProcess"))
+        .hasMessage("Buzzz");
 
     assertThat(runtimeService.createExecutionQuery().count()).isZero();
   }
@@ -3078,17 +3022,11 @@ public class RuntimeServiceTest {
       "org/operaton/bpm/engine/test/api/runtime/rollbackAfterSubProcess.bpmn20.xml"})
   @Test
   void testRollbackAfterSubProcess() {
-    try {
-      runtimeService.startProcessInstanceByKey("RollbackAfterSubProcess");
-
-      fail("Starting the process instance should throw an exception");
-
-    } catch (Exception e) {
-      assertThat(e.getMessage()).isEqualTo("Buzzz");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("RollbackAfterSubProcess"))
+        .hasMessage("Buzzz");
 
     assertThat(runtimeService.createExecutionQuery().count()).isZero();
-
   }
 
   @Test

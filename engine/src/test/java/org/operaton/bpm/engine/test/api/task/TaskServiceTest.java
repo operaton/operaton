@@ -262,22 +262,18 @@ class TaskServiceTest {
 
   @Test
   void testDeleteTaskCommentNullTaskId() {
-    try {
-      taskService.deleteTaskComment(null, "test");
-      fail("BadUserRequestException expected");
-    } catch (BadUserRequestException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteTaskComment(null, "test"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testDeleteTaskCommentNotExistingTaskId() {
-    try {
-      taskService.deleteTaskComment("notExistingId", "notExistingCommentId");
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("No task exists with taskId: notExistingId", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteTaskComment("notExistingId", "notExistingCommentId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("No task exists with taskId: notExistingId");
   }
 
   @Test
@@ -336,22 +332,18 @@ class TaskServiceTest {
 
   @Test
   void testDeleteTaskCommentsNullTaskId() {
-    try {
-      taskService.deleteTaskComments(null);
-      fail("BadUserRequestException expected");
-    } catch (BadUserRequestException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteTaskComments(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testDeleteTaskCommentsNonExistingTaskId() {
-    try {
-      taskService.deleteTaskComments("nonExistingTaskId");
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("No task exists with taskId:", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteTaskComments("nonExistingTaskId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("No task exists with taskId:");
   }
 
   @Test
@@ -408,15 +400,16 @@ class TaskServiceTest {
 
   @Test
   void testUpdateTaskCommentNullCommentId() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
-    try {
-      taskService.updateTaskComment(taskId, null, "aMessage");
 
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("commentId is null", ae.getMessage());
+    try {
+      // when/then
+      assertThatThrownBy(() -> taskService.updateTaskComment(taskId, null, "aMessage"))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("commentId is null");
     } finally {
       taskService.deleteTask(task.getId(), true);
     }
@@ -424,6 +417,7 @@ class TaskServiceTest {
 
   @Test
   void testUpdateTaskCommentNullTaskId() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -431,10 +425,10 @@ class TaskServiceTest {
     var commentId = comment.getId();
 
     try {
-      taskService.updateTaskComment(null, commentId, "updatedMessage");
-      fail("BadUserRequestException expected");
-    } catch (BadUserRequestException ae) {
-      testRule.assertTextPresent("Both process instance and task ids are null", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.updateTaskComment(null, commentId, "updatedMessage"))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Both process instance and task ids are null");
     } finally {
       taskService.deleteTask(taskId, true);
     }
@@ -442,6 +436,7 @@ class TaskServiceTest {
 
   @Test
   void testUpdateTaskCommentNullMessage() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -449,10 +444,10 @@ class TaskServiceTest {
     var commentId = comment.getId();
 
     try {
-      taskService.updateTaskComment(taskId, commentId, null);
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("message is null", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.updateTaskComment(taskId, commentId, null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("message is null");
     } finally {
       taskService.deleteTask(task.getId(), true);
     }
@@ -460,6 +455,7 @@ class TaskServiceTest {
 
   @Test
   void testUpdateTaskCommentNotExistingCommentId() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     String taskId = task.getId();
@@ -467,11 +463,10 @@ class TaskServiceTest {
     String nonExistingCommentId = "notExistingCommentId";
 
     try {
-      taskService.updateTaskComment(taskId, nonExistingCommentId, "updatedMessage");
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("No comment exists with commentId: %s and taskId: %s".formatted(nonExistingCommentId, taskId),
-          ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.updateTaskComment(taskId, nonExistingCommentId, "updatedMessage"))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("No comment exists with commentId: %s and taskId: %s".formatted(nonExistingCommentId, taskId));
     } finally {
       taskService.deleteTask(task.getId(), true);
     }
@@ -515,12 +510,10 @@ class TaskServiceTest {
 
   @Test
   void testDeleteProcessInstanceCommentNullId() {
-    try {
-      taskService.deleteProcessInstanceComment(null, null);
-      fail("BadUserRequestException expected");
-    } catch (BadUserRequestException ae) {
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComment(null, null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -572,22 +565,18 @@ class TaskServiceTest {
 
   @Test
   void testDeleteProcessInstanceCommentsNullId() {
-    try {
-      taskService.deleteProcessInstanceComments(null);
-      fail("BadUserRequestException expected");
-    } catch (BadUserRequestException ae) {
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComments(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   @Test
   void testDeleteProcessInstanceCommentsNonExistingId() {
-    try {
-      taskService.deleteProcessInstanceComments("nonExistingId");
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("No processInstance exists with processInstanceId:", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteProcessInstanceComments("nonExistingId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("No processInstance exists with processInstanceId:");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -642,66 +631,58 @@ class TaskServiceTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testUpdateProcessInstanceCommentNullCommentId() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     var processInstanceId = processInstance.getId();
-    try {
-      taskService.updateProcessInstanceComment(processInstanceId, null, "aMessage");
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("commentId is null", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.updateProcessInstanceComment(processInstanceId, null, "aMessage"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("commentId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testUpdateProcessInstanceCommentNullProcessInstanceId() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-
     Comment comment = taskService.createComment(null, processInstance.getId(), "originalMessage");
     var commentId = comment.getId();
 
-    try {
-      taskService.updateProcessInstanceComment(null, commentId, "updatedMessage");
-      fail("BadUserRequestException expected");
-    } catch (BadUserRequestException ae) {
-      testRule.assertTextPresent("Both process instance and task ids are null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.updateProcessInstanceComment(null, commentId, "updatedMessage"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Both process instance and task ids are null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testUpdateProcessInstanceCommentNullMessage() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
-
     Comment comment = taskService.createComment(null, processInstanceId, "originalMessage");
     var commentId = comment.getId();
 
-    try {
-      taskService.updateProcessInstanceComment(processInstanceId, commentId, null);
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("message is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.updateProcessInstanceComment(processInstanceId, commentId, null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("message is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testUpdateProcessInstanceCommentNotExistingCommentId() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
     String processInstanceId = processInstance.getId();
-
     taskService.createComment(null, processInstanceId, "originalMessage");
-
     String nonExistingCommentId = "notExistingCommentId";
-    try {
-      taskService.updateProcessInstanceComment(processInstanceId, nonExistingCommentId, "updatedMessage");
-      fail("NullValueException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent(
-          "No comment exists with commentId: %s and processInstanceId: %s".formatted(nonExistingCommentId, processInstanceId),
-          ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.updateProcessInstanceComment(processInstanceId, nonExistingCommentId, "updatedMessage"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("No comment exists with commentId: %s and processInstanceId: %s".formatted(nonExistingCommentId, processInstanceId));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -786,17 +767,17 @@ class TaskServiceTest {
 
   @Test
   void testAddTaskCommentNull() {
+    // given
     int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
     if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
       Task task = taskService.newTask("testId");
       taskService.saveTask(task);
       var taskId = task.getId();
+
       try {
-        taskService.createComment(taskId, null, null);
-        fail("Expected process engine exception");
-      }
-      catch (ProcessEngineException e) {
-        // expected
+        // when/then
+        assertThatThrownBy(() -> taskService.createComment(taskId, null, null))
+          .isInstanceOf(ProcessEngineException.class);
       }
       finally {
         taskService.deleteTask(task.getId(), true);
@@ -1016,12 +997,10 @@ class TaskServiceTest {
 
   @Test
   void testSaveTaskNullTask() {
-    try {
-      taskService.saveTask(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("task is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.saveTask(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("task is null");
   }
 
   @Test
@@ -1057,32 +1036,32 @@ class TaskServiceTest {
 
   @Test
   void testClaimNullArguments() {
-    try {
-      taskService.claim(null, "userid");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.claim(null, "userid"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testClaimUnexistingTaskId() {
+    // given
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
 
     try {
-      taskService.claim("unexistingtaskid", userId);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtaskid", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.claim("unexistingtaskid", userId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot find task with id unexistingtaskid");
+    } finally {
+      identityService.deleteUser(user.getId());
     }
-
-    identityService.deleteUser(user.getId());
   }
 
   @Test
   void testClaimAlreadyClaimedTaskByOtherUser() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     User user = identityService.newUser("user");
@@ -1096,15 +1075,15 @@ class TaskServiceTest {
     var taskId = task.getId();
 
     try {
-      taskService.claim(taskId, secondUserId);
-      fail("ProcessEngineException expected");
-    } catch (TaskAlreadyClaimedException ae) {
-      testRule.assertTextPresent("Task '%s' is already claimed by someone else.".formatted(task.getId()), ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.claim(taskId, secondUserId))
+        .isInstanceOf(TaskAlreadyClaimedException.class)
+        .hasMessageContaining("Task '%s' is already claimed by someone else.".formatted(task.getId()));
+    } finally {
+      taskService.deleteTask(task.getId(), true);
+      identityService.deleteUser(user.getId());
+      identityService.deleteUser(secondUser.getId());
     }
-
-    taskService.deleteTask(task.getId(), true);
-    identityService.deleteUser(user.getId());
-    identityService.deleteUser(secondUser.getId());
   }
 
   @Test
@@ -1153,48 +1132,42 @@ class TaskServiceTest {
 
   @Test
   void testCompleteTaskNullTaskId() {
-    try {
-      taskService.complete(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.complete(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testCompleteTaskUnexistingTaskId() {
-    try {
-      taskService.complete("unexistingtask");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.complete("unexistingtask"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
   void testCompleteTaskWithParametersNullTaskId() {
+    // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("myKey", "myValue");
 
-    try {
-      taskService.complete(null, variables);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.complete(null, variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testCompleteTaskWithParametersUnexistingTaskId() {
+    // given
     Map<String, Object> variables = new HashMap<>();
     variables.put("myKey", "myValue");
 
-    try {
-      taskService.complete("unexistingtask", variables);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.complete("unexistingtask", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
@@ -1516,22 +1489,18 @@ class TaskServiceTest {
 
   @Test
   void testResolveTaskNullTaskId() {
-    try {
-      taskService.resolveTask(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.resolveTask(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testResolveTaskUnexistingTaskId() {
-    try {
-      taskService.resolveTask("unexistingtask");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.resolveTask("unexistingtask"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
@@ -1624,70 +1593,69 @@ class TaskServiceTest {
 
   @Test
   void testSetAssigneeNullTaskId() {
-    try {
-      taskService.setAssignee(null, "userId");
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setAssignee(null, "userId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testSetAssigneeUnexistingTask() {
+    // given
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
 
     try {
-      taskService.setAssignee("unexistingTaskId", userId);
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingTaskId", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.setAssignee("unexistingTaskId", userId))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Cannot find task with id unexistingTaskId");
+    } finally {
+      identityService.deleteUser(user.getId());
     }
-
-    identityService.deleteUser(user.getId());
   }
 
   @Test
   void testSetOwnerNullTaskId() {
-    try {
-      taskService.setOwner(null, "userId");
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setOwner(null, "userId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testSetOwnerUnexistingTask() {
+    // given
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
 
     try {
-      taskService.setOwner("unexistingTaskId", userId);
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingTaskId", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.setOwner("unexistingTaskId", userId))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Cannot find task with id unexistingTaskId");
+    } finally {
+      identityService.deleteUser(user.getId());
     }
-
-    identityService.deleteUser(user.getId());
   }
 
   @Test
   void testSetOwnerNullUser() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     var taskId = task.getId();
 
     try {
-      taskService.setOwner(taskId, null);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("userId and groupId cannot both be null", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.setOwner(taskId, null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("userId and groupId cannot both be null");
+    } finally {
+      taskService.deleteTask(task.getId(), true);
     }
-
-    taskService.deleteTask(task.getId(), true);
   }
 
   @Test
@@ -1712,144 +1680,134 @@ class TaskServiceTest {
 
   @Test
   void testAddCandidateUserNullTaskId() {
-    try {
-      taskService.addCandidateUser(null, "userId");
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addCandidateUser(null, "userId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testAddCandidateUserNullUserId() {
-    try {
-      taskService.addCandidateUser("taskId", null);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("userId and groupId cannot both be null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addCandidateUser("taskId", null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("userId and groupId cannot both be null");
   }
 
   @Test
   void testAddCandidateUserUnexistingTask() {
+    // given
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
 
     try {
-      taskService.addCandidateUser("unexistingTaskId", userId);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingTaskId", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.addCandidateUser("unexistingTaskId", userId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot find task with id unexistingTaskId");
+    } finally {
+      identityService.deleteUser(user.getId());
     }
-
-    identityService.deleteUser(user.getId());
   }
 
   @Test
   void testAddCandidateGroupNullTaskId() {
-    try {
-      taskService.addCandidateGroup(null, "groupId");
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addCandidateGroup(null, "groupId"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testAddCandidateGroupNullGroupId() {
-    try {
-      taskService.addCandidateGroup("taskId", null);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("userId and groupId cannot both be null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addCandidateGroup("taskId", null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("userId and groupId cannot both be null");
   }
 
   @Test
   void testAddCandidateGroupUnexistingTask() {
+    // given
     Group group = identityService.newGroup("group");
     identityService.saveGroup(group);
     var groupId = group.getId();
+
     try {
-      taskService.addCandidateGroup("unexistingTaskId", groupId);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingTaskId", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.addCandidateGroup("unexistingTaskId", groupId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot find task with id unexistingTaskId");
+    } finally {
+      identityService.deleteGroup(group.getId());
     }
-    identityService.deleteGroup(group.getId());
   }
 
   @Test
   void testAddGroupIdentityLinkNullTaskId() {
-    try {
-      taskService.addGroupIdentityLink(null, "groupId", IdentityLinkType.CANDIDATE);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink(null, "groupId", IdentityLinkType.CANDIDATE))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testAddGroupIdentityLinkNullUserId() {
-    try {
-      taskService.addGroupIdentityLink("taskId", null, IdentityLinkType.CANDIDATE);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("userId and groupId cannot both be null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addGroupIdentityLink("taskId", null, IdentityLinkType.CANDIDATE))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("userId and groupId cannot both be null");
   }
 
   @Test
   void testAddGroupIdentityLinkUnexistingTask() {
+    // given
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
 
     try {
-      taskService.addGroupIdentityLink("unexistingTaskId", userId, IdentityLinkType.CANDIDATE);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingTaskId", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.addGroupIdentityLink("unexistingTaskId", userId, IdentityLinkType.CANDIDATE))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot find task with id unexistingTaskId");
+    } finally {
+      identityService.deleteUser(user.getId());
     }
-
-    identityService.deleteUser(user.getId());
   }
 
   @Test
   void testAddUserIdentityLinkNullTaskId() {
-    try {
-      taskService.addUserIdentityLink(null, "userId", IdentityLinkType.CANDIDATE);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addUserIdentityLink(null, "userId", IdentityLinkType.CANDIDATE))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testAddUserIdentityLinkNullUserId() {
-    try {
-      taskService.addUserIdentityLink("taskId", null, IdentityLinkType.CANDIDATE);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("userId and groupId cannot both be null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.addUserIdentityLink("taskId", null, IdentityLinkType.CANDIDATE))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("userId and groupId cannot both be null");
   }
 
   @Test
   void testAddUserIdentityLinkUnexistingTask() {
+    // given
     User user = identityService.newUser("user");
     identityService.saveUser(user);
     var userId = user.getId();
 
     try {
-      taskService.addUserIdentityLink("unexistingTaskId", userId, IdentityLinkType.CANDIDATE);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingTaskId", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.addUserIdentityLink("unexistingTaskId", userId, IdentityLinkType.CANDIDATE))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot find task with id unexistingTaskId");
+    } finally {
+      identityService.deleteUser(user.getId());
     }
-
-    identityService.deleteUser(user.getId());
   }
 
   @Test
@@ -2001,78 +1959,67 @@ class TaskServiceTest {
 
   @Test
   void testSetPriorityUnexistingTaskId() {
-    try {
-      taskService.setPriority("unexistingtask", 12345);
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setPriority("unexistingtask", 12345))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
   void testSetPriorityNullTaskId() {
-    try {
-      taskService.setPriority(null, 12345);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setPriority(null, 12345))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testSetNameUnexistingTaskId() {
-    try {
-      taskService.setName("unexistingtask", "foo");
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setName("unexistingtask", "foo"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
   void testSetNameNullTaskId() {
-    try {
-      taskService.setName(null, "foo");
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setName(null, "foo"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
   void testSetNameNullTaskName() {
+    // given
     Task task = taskService.newTask();
     taskService.saveTask(task);
     var taskId = task.getId();
 
     try {
-      taskService.setName(taskId, null);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("value is null", ae.getMessage());
+      // when/then
+      assertThatThrownBy(() -> taskService.setName(taskId, null))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("value is null");
+    } finally {
+      taskService.deleteTask(task.getId(), true);
     }
-
-    taskService.deleteTask(task.getId(), true);
   }
 
   @Test
   void testSetDescriptionUnexistingTaskId() {
-    try {
-      taskService.setDescription("unexistingtask", "foo");
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setDescription("unexistingtask", "foo"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
   void testSetDescriptionNullTaskId() {
-    try {
-      taskService.setDescription(null, "foo");
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.setDescription(null, "foo"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
@@ -2094,24 +2041,24 @@ class TaskServiceTest {
 
   @Test
   void testSetDueDateUnexistingTaskId() {
+    // given
     Date dueDate = new Date();
-    try {
-      taskService.setDueDate("unexistingtask", dueDate);
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.setDueDate("unexistingtask", dueDate))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
   void testSetDueDateNullTaskId() {
+    // given
     Date dueDate = new Date();
-    try {
-      taskService.setDueDate(null, dueDate);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.setDueDate(null, dueDate))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
@@ -2133,24 +2080,24 @@ class TaskServiceTest {
 
   @Test
   void testSetFollowUpDateUnexistingTaskId() {
+    // given
     Date followUpDate = new Date();
-    try {
-      taskService.setFollowUpDate("unexistingtask", followUpDate);
-      fail("ProcessEngineException expected");
-    } catch (NotFoundException ae) {
-      testRule.assertTextPresent("Cannot find task with id unexistingtask", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.setFollowUpDate("unexistingtask", followUpDate))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find task with id unexistingtask");
   }
 
   @Test
   void testSetFollowUpDateNullTaskId() {
+    // given
     Date followUpDate = new Date();
-    try {
-      taskService.setFollowUpDate(null, followUpDate);
-      fail("ProcessEngineException expected");
-    } catch (NullValueException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.setFollowUpDate(null, followUpDate))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Test
@@ -2240,12 +2187,10 @@ class TaskServiceTest {
 
   @Test
   void testRemoveVariableNullTaskId() {
-    try {
-      taskService.removeVariable(null, "variable");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.removeVariable(null, "variable"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Deployment(resources = {
@@ -2314,12 +2259,10 @@ class TaskServiceTest {
 
   @Test
   void testRemoveVariableLocalNullTaskId() {
-    try {
-      taskService.removeVariableLocal(null, "variable");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("taskId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.removeVariableLocal(null, "variable"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("taskId is null");
   }
 
   @Deployment(resources = {
@@ -2477,47 +2420,30 @@ class TaskServiceTest {
     String taskId = task.getId();
     var taskIds = Collections.singletonList(task.getId());
 
-    try {
-      taskService.deleteTask(taskId);
-      fail("Should not be possible to delete task");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getMessage()).isEqualTo("The task cannot be deleted because is part of a running case instance");
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.deleteTask(taskId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The task cannot be deleted because is part of a running case instance");
 
-    try {
-      taskService.deleteTask(taskId, true);
-      fail("Should not be possible to delete task");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getMessage()).isEqualTo("The task cannot be deleted because is part of a running case instance");
-    }
+    assertThatThrownBy(() -> taskService.deleteTask(taskId, true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The task cannot be deleted because is part of a running case instance");
 
-    try {
-      taskService.deleteTask(taskId, "test");
-      fail("Should not be possible to delete task");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getMessage()).isEqualTo("The task cannot be deleted because is part of a running case instance");
-    }
+    assertThatThrownBy(() -> taskService.deleteTask(taskId, "test"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The task cannot be deleted because is part of a running case instance");
 
-    try {
-      taskService.deleteTasks(taskIds);
-      fail("Should not be possible to delete task");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getMessage()).isEqualTo("The task cannot be deleted because is part of a running case instance");
-    }
+    assertThatThrownBy(() -> taskService.deleteTasks(taskIds))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The task cannot be deleted because is part of a running case instance");
 
-    try {
-      taskService.deleteTasks(taskIds, true);
-      fail("Should not be possible to delete task");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getMessage()).isEqualTo("The task cannot be deleted because is part of a running case instance");
-    }
+    assertThatThrownBy(() -> taskService.deleteTasks(taskIds, true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The task cannot be deleted because is part of a running case instance");
 
-    try {
-      taskService.deleteTasks(taskIds, "test");
-      fail("Should not be possible to delete task");
-    } catch(ProcessEngineException ae) {
-      assertThat(ae.getMessage()).isEqualTo("The task cannot be deleted because is part of a running case instance");
-    }
+    assertThatThrownBy(() -> taskService.deleteTasks(taskIds, "test"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("The task cannot be deleted because is part of a running case instance");
 
   }
 

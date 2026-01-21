@@ -98,7 +98,7 @@ public class XmlQName {
 
     // lookup for prefix
     String lookupPrefix = lookupPrefix();
-    if (!(lookupPrefix == null && rootElement != null)) {
+    if (lookupPrefix != null || rootElement == null) {
       return lookupPrefix;
     }
 

@@ -19,7 +19,6 @@ package org.operaton.bpm.model.xml.impl.type.reference;
 import org.operaton.bpm.model.xml.Model;
 import org.operaton.bpm.model.xml.ModelException;
 import org.operaton.bpm.model.xml.impl.ModelBuildOperation;
-import org.operaton.bpm.model.xml.impl.exception.AttributeInstantiationException;
 import org.operaton.bpm.model.xml.impl.type.ModelElementTypeImpl;
 import org.operaton.bpm.model.xml.impl.type.attribute.AttributeImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
@@ -45,7 +44,7 @@ public class AttributeReferenceCollectionBuilderImpl<T extends ModelElementInsta
       this.attributeReferenceCollection = attributeReferenceCollection.getConstructor(AttributeImpl.class)
         .newInstance(referenceSourceAttribute);
     } catch (Exception e) {
-      throw new AttributeInstantiationException(e);
+      throw new ModelException(e);
     }
   }
 

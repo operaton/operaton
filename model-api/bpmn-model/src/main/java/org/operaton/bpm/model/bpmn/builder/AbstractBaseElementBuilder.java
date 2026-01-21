@@ -21,7 +21,6 @@ import java.util.Iterator;
 
 import org.operaton.bpm.model.bpmn.BpmnModelException;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
-import org.operaton.bpm.model.bpmn.exception.BpmnElementTypeNotSupportedException;
 import org.operaton.bpm.model.bpmn.instance.*;
 import org.operaton.bpm.model.bpmn.instance.Error;
 import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
@@ -394,7 +393,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
       edgeSource = (FlowNode) association.getSource();
       edgeTarget = (FlowNode) association.getTarget();
     } else {
-      throw new BpmnElementTypeNotSupportedException();
+      throw new BpmnModelException("BPMN element type not supported");
     }
 
     setWaypointsWithSourceAndTarget(edge, edgeSource, edgeTarget);

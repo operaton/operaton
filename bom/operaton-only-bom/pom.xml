@@ -167,11 +167,6 @@
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm</groupId>
-        <artifactId>operaton-bpm-junit6</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm</groupId>
         <artifactId>operaton-bpm-assert</artifactId>
         <version>${project.version}</version>
       </dependency>

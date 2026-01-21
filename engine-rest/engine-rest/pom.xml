@@ -119,11 +119,6 @@
       <classifier>junit6</classifier>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit6</artifactId>
-      <scope>test</scope>
-    </dependency>
     <!-- only included to prevent java.lang.ClassNotFoundException: org.apache.jasper.servlet.JspServlet -->
     <!-- removing this dep. will not break the tests, but makes them "ugly"-->
     <dependency>

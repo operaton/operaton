@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.el.Expression;
 
 /**
@@ -26,9 +23,7 @@ import org.operaton.bpm.engine.impl.el.Expression;
  *
  * @author Daniel Meyer
  */
-public class SignalDefinition implements Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class SignalDefinition {
 
   protected String id;
   protected Expression name;

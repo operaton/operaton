@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,9 +44,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
 /**
  * @author Sebastian Menski
  */
-public class FilterEntity implements Filter, Serializable, DbEntity, HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
+public class FilterEntity implements Filter, DbEntity, HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
 
-  @Serial private static final long serialVersionUID = 1L;
   private static final String QUERY = "query";
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;

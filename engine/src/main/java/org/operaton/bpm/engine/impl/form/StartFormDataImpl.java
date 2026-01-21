@@ -27,8 +27,6 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
  */
 public class StartFormDataImpl extends FormDataImpl implements StartFormData {
 
-  @Serial private static final long serialVersionUID = 1L;
-
   protected ProcessDefinition processDefinition;
 
   // getters and setters //////////////////////////////////////////////////////

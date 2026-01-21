@@ -520,6 +520,7 @@ jobs:
     name: Post-Release
     runs-on: ubuntu-latest
     needs:
+      - build
       - release
     if: |
       always() && !cancelled() && (

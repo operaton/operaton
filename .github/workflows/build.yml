@@ -13,12 +13,14 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
+      - '.github/workflows/auto-merge.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+      - 'jreleaser.yml'
   pull_request:
     branches:
       - main

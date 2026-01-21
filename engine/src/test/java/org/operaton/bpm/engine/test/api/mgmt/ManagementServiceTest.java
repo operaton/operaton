@@ -64,7 +64,6 @@ import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingEx
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -107,12 +106,10 @@ class ManagementServiceTest {
 
   @Test
   void testGetMetaDataNullTableName() {
-    try {
-      managementService.getTableMetaData(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("tableName is null", re.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.getTableMetaData(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("tableName is null");
   }
 
   @Test
@@ -159,22 +156,21 @@ class ManagementServiceTest {
 
   @Test
   void testgetJobExceptionStacktraceUnexistingJobId() {
-    try {
-      managementService.getJobExceptionStacktrace("unexistingjob");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("No job found with id unexistingjob", re.getMessage());
-    }
+    // given
+    String jobId = "unexistingjob";
+
+    // when/then
+    assertThatThrownBy(() -> managementService.getJobExceptionStacktrace(jobId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No job found with id unexistingjob");
   }
 
   @Test
   void testgetJobExceptionStacktraceNullJobId() {
-    try {
-      managementService.getJobExceptionStacktrace(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("jobId is null", re.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.getJobExceptionStacktrace(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("jobId is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/ManagementServiceTest.testGetJobExceptionStacktrace.bpmn20.xml"})
@@ -623,22 +619,21 @@ class ManagementServiceTest {
 
   @Test
   void testDeleteJobNullJobId() {
-    try {
-      managementService.deleteJob(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("jobId is null", re.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.deleteJob(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("jobId is null");
   }
 
   @Test
   void testDeleteJobUnexistingJob() {
-    try {
-      managementService.deleteJob("unexistingjob");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("No job found with id", ae.getMessage());
-    }
+    // given
+    String jobId = "unexistingjob";
+
+    // when/then
+    assertThatThrownBy(() -> managementService.deleteJob(jobId))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No job found with id");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/timerOnTask.bpmn20.xml"})
@@ -733,35 +728,37 @@ class ManagementServiceTest {
 
   @Test
   void testSetJobDuedateJobIdNull() {
+    // given
     Date duedate = new Date();
-    try {
-      managementService.setJobDuedate(null, duedate);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("The job id is mandatory, but 'null' has been provided.", re.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> managementService.setJobDuedate(null, duedate))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The job id is mandatory, but 'null' has been provided.");
   }
 
   @Test
   void testSetJobDuedateEmptyJobId() {
+    // given
     Date duedate = new Date();
-    try {
-      managementService.setJobDuedate("", duedate);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("The job id is mandatory, but '' has been provided.", re.getMessage());
-    }
+    String jobId = "";
+
+    // when/then
+    assertThatThrownBy(() -> managementService.setJobDuedate(jobId, duedate))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The job id is mandatory, but '' has been provided.");
   }
 
   @Test
   void testSetJobDuedateUnexistingJobId() {
+    // given
     Date duedate = new Date();
-    try {
-      managementService.setJobDuedate("unexistingjob", duedate);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("No job found with id 'unexistingjob'.", re.getMessage());
-    }
+    String jobId = "unexistingjob";
+
+    // when/then
+    assertThatThrownBy(() -> managementService.setJobDuedate(jobId, duedate))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No job found with id 'unexistingjob'.");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/oneTaskProcess.bpmn20.xml")
@@ -848,22 +845,25 @@ class ManagementServiceTest {
 
   @Test
   void testSetJobPriorityForNonExistingJob() {
-    try {
-      managementService.setJobPriority("nonExistingJob", 42);
-      fail("should not succeed");
-    } catch (NotFoundException e) {
-      testRule.assertTextPresentIgnoreCase("No job found with id 'nonExistingJob'", e.getMessage());
-    }
+    // given
+    String jobId = "nonExistingJob";
+    int priority = 42;
+
+    // when/then
+    assertThatThrownBy(() -> managementService.setJobPriority(jobId, priority))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("No job found with id 'nonExistingJob'");
   }
 
   @Test
   void testSetJobPriorityForNullJob() {
-    try {
-      managementService.setJobPriority(null, 42);
-      fail("should not succeed");
-    } catch (NullValueException e) {
-      testRule.assertTextPresentIgnoreCase("Job id must not be null", e.getMessage());
-    }
+    // given
+    int priority = 42;
+
+    // when/then
+    assertThatThrownBy(() -> managementService.setJobPriority(null, priority))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("Job id must not be null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")

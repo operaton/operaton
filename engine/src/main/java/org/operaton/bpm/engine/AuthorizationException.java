@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -34,12 +33,11 @@ import org.operaton.bpm.engine.authorization.MissingAuthorization;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("java:S5738")
 public class AuthorizationException extends ProcessEngineException {
 
-  @Serial private static final long serialVersionUID = 1L;
-
-  protected final String userId;
-  protected final List<MissingAuthorization> missingAuthorizations;
+  private final String userId;
+  private final transient List<MissingAuthorization> missingAuthorizations;
 
   // These properties have been replaced by the list of missingAuthorizations
   // and are only left because this is a public API package and users might
@@ -48,19 +46,19 @@ public class AuthorizationException extends ProcessEngineException {
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
-  @Deprecated(since = "1.0")
+  @Deprecated(since = "1.0", forRemoval = true)
   protected String resourceType;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
-  @Deprecated(since = "1.0")
+  @Deprecated(since = "1.0", forRemoval = true)
   protected String permissionName;
   /**
    * @deprecated Use {@link #getMissingAuthorizations()} instead to get the type of the resource
    * of the {@link MissingAuthorization}(s).
    */
-  @Deprecated(since = "1.0")
+  @Deprecated(since = "1.0", forRemoval = true)
   protected String resourceId;
 
   public AuthorizationException(String message) {
@@ -159,13 +157,8 @@ public class AuthorizationException extends ProcessEngineException {
    * @return The prepared exception message
    */
   private static String generateExceptionMessage(String userId, List<MissingAuthorization> missingAuthorizations) {
-    StringBuilder sBuilder = new StringBuilder();
-    sBuilder.append("The user with id '");
-    sBuilder.append(userId);
-    sBuilder.append("' does not have one of the following permissions: ");
-    sBuilder.append(generateMissingAuthorizationsList(missingAuthorizations));
-
-    return sBuilder.toString();
+    return "The user with id '%s' does not have one of the following permissions: %s"
+        .formatted(userId, generateMissingAuthorizationsList(missingAuthorizations));
   }
 
   /**

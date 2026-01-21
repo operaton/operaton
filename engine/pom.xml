@@ -243,6 +243,22 @@
       <version>${version.cronutils}</version>
     </dependency>
 
+    <!-- dependencies of test extensions -->
+    <!-- Used by ProcessEngineLoggingExtension -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-core</artifactId>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+
+
     <!-- test dependencies  -->
 
     <dependency>
@@ -304,12 +320,6 @@
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-test-utils-testcontainers</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
 

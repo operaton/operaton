@@ -33,7 +33,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyCallActivityTest {
 
@@ -173,7 +173,7 @@ class MultiTenancyCallActivityTest {
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
       .callActivity()
@@ -187,18 +187,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
       .callActivity()
@@ -212,18 +209,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key 'subProcess'");
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
       .callActivity()
@@ -240,13 +234,10 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
 
   @Test
@@ -258,14 +249,10 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      // when
-      processInstantiationBuilder.execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
 
   @Test
@@ -364,7 +351,7 @@ class MultiTenancyCallActivityTest {
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
         .callActivity()
@@ -378,18 +365,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key = 'Case_1'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key = 'Case_1'");
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
         .callActivity()
@@ -403,18 +387,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key 'Case_1'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key 'Case_1'");
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
         .callActivity()
@@ -431,13 +412,10 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key = 'Case_1'");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key = 'Case_1'");
   }
 
   @Test

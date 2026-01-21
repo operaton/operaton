@@ -95,7 +95,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -223,13 +222,9 @@ class RepositoryServiceTest {
     runtimeService.startProcessInstanceById(processDefinition.getId());
 
     // Try to delete the deployment
-    try {
-      repositoryService.deleteDeployment(deploymentId);
-      fail("Exception expected");
-    } catch (ProcessEngineException pex) {
-      // Exception expected when deleting deployment with running process
-      assert(pex.getMessage().contains("Deletion of process definition without cascading failed."));
-    }
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(deploymentId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Deletion of process definition without cascading failed.");
   }
 
   @Test
@@ -305,35 +300,25 @@ class RepositoryServiceTest {
     runtimeService.startProcessInstanceByKey("ioMappingProcess");
 
     // Try to delete the deployment
-    try {
-      repositoryService.deleteDeployment(deploymentId, true, false, false);
-      fail("Exception expected");
-    } catch (Exception e) {
-      // Exception expected when deleting deployment with running process
-      testRule.assertTextPresent("Exception when output mapping is executed", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(deploymentId, true, false, false))
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("Exception when output mapping is executed");
 
     repositoryService.deleteDeployment(deploymentId, true, false, true);
   }
 
   @Test
   void testDeleteDeploymentNullDeploymentId() {
-    try {
-      repositoryService.deleteDeployment(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("deploymentId is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("deploymentId is null");
   }
 
   @Test
   void testDeleteDeploymentCascadeNullDeploymentId() {
-    try {
-      repositoryService.deleteDeployment(null, true);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("deploymentId is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(null, true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("deploymentId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
@@ -382,23 +367,16 @@ class RepositoryServiceTest {
 
   @Test
   void testFindDeploymentResourceNamesNullDeploymentId() {
-    try {
-      repositoryService.getDeploymentResourceNames(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("deploymentId is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDeploymentResourceNames(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("deploymentId is null");
   }
 
   @Test
   void testFindDeploymentResourcesNullDeploymentId() {
-    try {
-      repositoryService.getDeploymentResources(null);
-      fail("ProcessEngineException expected");
-    }
-    catch (ProcessEngineException e) {
-      testRule.assertTextPresent("deploymentId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDeploymentResources(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("deploymentId is null");
   }
 
   @Test
@@ -421,12 +399,9 @@ class RepositoryServiceTest {
     assertThat(repositoryService.createProcessDefinitionQuery().active().count()).isZero();
 
     // Shouldn't be able to start a process instance
-    try {
-      runtimeService.startProcessInstanceByKey("oneTaskProcess");
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("oneTaskProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
 
     List<Job> jobs = managementService.createJobQuery().list();
     managementService.executeJob(jobs.get(0).getId());
@@ -469,12 +444,9 @@ class RepositoryServiceTest {
     assertThat(managementService.createJobDefinitionQuery().active().count()).isZero();
 
     // Shouldn't be able to start a process instance
-    try {
-      runtimeService.startProcessInstanceByKey("oneTaskProcess");
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("oneTaskProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("suspended"));
 
     Job job = managementService.createJobQuery().singleResult();
     managementService.executeJob(job.getId());
@@ -504,42 +476,29 @@ class RepositoryServiceTest {
     var deployment = repositoryService.createDeploymentQuery().singleResult();
     var deploymentId = deployment.getId();
 
-    try {
-      repositoryService.getResourceAsStream(deploymentId, "org/operaton/bpm/engine/test/api/unexistingProcess.bpmn.xml");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("no resource found with name", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getResourceAsStream(deploymentId, "org/operaton/bpm/engine/test/api/unexistingProcess.bpmn.xml"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no resource found with name");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml" })
   @Test
   void testGetResourceAsStreamUnexistingDeployment() {
-
-    try {
-      repositoryService.getResourceAsStream("unexistingdeployment", "org/operaton/bpm/engine/test/api/unexistingProcess.bpmn.xml");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("no resource found with name", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getResourceAsStream("unexistingdeployment", "org/operaton/bpm/engine/test/api/unexistingProcess.bpmn.xml"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no resource found with name");
   }
 
 
   @Test
   void testGetResourceAsStreamNullArguments() {
-    try {
-      repositoryService.getResourceAsStream(null, "resource");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("deploymentId is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getResourceAsStream(null, "resource"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("deploymentId is null");
 
-    try {
-      repositoryService.getResourceAsStream("deployment", null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("resourceName is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getResourceAsStream("deployment", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("resourceName is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.cmmn" })
@@ -558,18 +517,13 @@ class RepositoryServiceTest {
 
   @Test
   void testGetCaseDefinitionByInvalidId() {
-    try {
-      repositoryService.getCaseDefinition("invalid");
-    } catch (NotFoundException e) {
-      testRule.assertTextPresent("no deployed case definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getCaseDefinition("invalid"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("no deployed case definition found with id 'invalid'");
 
-    try {
-      repositoryService.getCaseDefinition(null);
-      fail("");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("caseDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getCaseDefinition(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("caseDefinitionId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.cmmn" })
@@ -594,18 +548,13 @@ class RepositoryServiceTest {
 
   @Test
   void testGetCaseModelByInvalidId() {
-    try {
-      repositoryService.getCaseModel("invalid");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no deployed case definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getCaseModel("invalid"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no deployed case definition found with id 'invalid'");
 
-    try {
-      repositoryService.getCaseModel(null);
-      fail("");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("caseDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getCaseModel(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("caseDefinitionId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.dmn" })
@@ -624,19 +573,13 @@ class RepositoryServiceTest {
 
   @Test
   void testGetDecisionDefinitionByInvalidId() {
-    try {
-      repositoryService.getDecisionDefinition("invalid");
-      fail("");
-    } catch (NotFoundException e) {
-      testRule.assertTextPresent("no deployed decision definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionDefinition("invalid"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("no deployed decision definition found with id 'invalid'");
 
-    try {
-      repositoryService.getDecisionDefinition(null);
-      fail("");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("decisionDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionDefinition(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("decisionDefinitionId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn" })
@@ -655,19 +598,13 @@ class RepositoryServiceTest {
 
   @Test
   void testGetDecisionRequirementsDefinitionByInvalidId() {
-    try {
-      repositoryService.getDecisionRequirementsDefinition("invalid");
-      fail("");
-    } catch (Exception e) {
-      testRule.assertTextPresent("no deployed decision requirements definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionRequirementsDefinition("invalid"))
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("no deployed decision requirements definition found with id 'invalid'");
 
-    try {
-      repositoryService.getDecisionRequirementsDefinition(null);
-      fail("");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("decisionRequirementsDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionRequirementsDefinition(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("decisionRequirementsDefinitionId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/one.dmn" })
@@ -692,18 +629,13 @@ class RepositoryServiceTest {
 
   @Test
   void testGetDecisionModelByInvalidId() {
-    try {
-      repositoryService.getDecisionModel("invalid");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no deployed decision definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionModel("invalid"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no deployed decision definition found with id 'invalid'");
 
-    try {
-      repositoryService.getDecisionModel(null);
-      fail("");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("decisionDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionModel(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("decisionDefinitionId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn" })
@@ -727,18 +659,13 @@ class RepositoryServiceTest {
 
   @Test
   void testGetDecisionRequirementsModelByInvalidId() {
-    try {
-      repositoryService.getDecisionRequirementsModel("invalid");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no deployed decision requirements definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionRequirementsModel("invalid"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no deployed decision requirements definition found with id 'invalid'");
 
-    try {
-      repositoryService.getDecisionRequirementsModel(null);
-      fail("");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("decisionRequirementsDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionRequirementsModel(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("decisionRequirementsDefinitionId is null");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/repository/drg.dmn",
@@ -946,14 +873,10 @@ class RepositoryServiceTest {
     DecisionDefinition decisionDefinition = findOnlyDecisionDefinition();
     var decisionDefinitionId = decisionDefinition.getId();
 
-    //when
-    try {
-      repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, -1);
-      fail("Exception is expected, that negative value is not allowed.");
-    } catch (BadUserRequestException ex) {
-      assertThat(ex.getMessage()).contains("greater than");
-    }
-
+    //when/then
+    assertThatThrownBy(() -> repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinitionId, -1))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("greater than");
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -993,14 +916,10 @@ class RepositoryServiceTest {
     ProcessDefinition processDefinition = findOnlyProcessDefinition();
     var processDefinitionId = processDefinition.getId();
 
-    //when
-    try {
-      repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitionId, -1);
-      fail("Exception is expected, that negative value is not allowed.");
-    } catch (BadUserRequestException ex) {
-      assertThat(ex.getMessage()).contains("greater than");
-    }
-
+    //when/then
+    assertThatThrownBy(() -> repositoryService.updateProcessDefinitionHistoryTimeToLive(processDefinitionId, -1))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("greater than");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1032,22 +951,16 @@ class RepositoryServiceTest {
 
   @Test
   void testGetProcessModelByInvalidId() {
-    try {
-      repositoryService.getProcessModel("invalid");
-      fail("");
-    } catch (NotFoundException e) {
-      testRule.assertTextPresent("no deployed process definition found with id 'invalid'", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getProcessModel("invalid"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("no deployed process definition found with id 'invalid'");
   }
 
   @Test
   void testGetProcessModelByNullId() {
-    try {
-      repositoryService.getProcessModel(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("The process definition id is mandatory", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getProcessModel(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The process definition id is mandatory");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1158,13 +1071,10 @@ class RepositoryServiceTest {
     CaseDefinition caseDefinition = findOnlyCaseDefinition();
     var caseDefinitionId = caseDefinition.getId();
 
-    // when
-    try {
-      repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitionId, -1);
-      fail("Exception is expected, that negative value is not allowed.");
-    } catch (BadUserRequestException ex) {
-      assertThat(ex.getMessage()).contains("greater than");
-    }
+    // when/then
+    assertThatThrownBy(() -> repositoryService.updateCaseDefinitionHistoryTimeToLive(caseDefinitionId, -1))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("greater than");
   }
 
   @Deployment(resources={"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

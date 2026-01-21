@@ -1385,17 +1385,14 @@ class CaseServiceTest {
         .singleResult()
         .getId();
 
-    try {
-      // when
-      caseService
+    // when/then
+    assertThatThrownBy(() -> caseService
         .withCaseExecution(caseExecutionId)
         .removeVariable("aVariableName")
         .setVariable("aVariableName", "xyz")
-        .execute();
-    } catch (NotValidException e) {
-      // then
-      testRule.assertTextPresent("Cannot set and remove a variable with the same variable name: 'aVariableName' within a command.", e.getMessage());
-    }
+        .execute())
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot set and remove a variable with the same variable name: 'aVariableName' within a command.");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -1421,17 +1418,14 @@ class CaseServiceTest {
         .singleResult()
         .getId();
 
-    try {
-      // when
-      caseService
+    // when/then
+    assertThatThrownBy(() -> caseService
         .withCaseExecution(caseExecutionId)
         .setVariableLocal("aVariableName", "xyz")
         .removeVariableLocal("aVariableName")
-        .execute();
-    } catch (NotValidException e) {
-      // then
-      testRule.assertTextPresent("Cannot set and remove a variable with the same variable name: 'aVariableName' within a command.", e.getMessage());
-    }
+        .execute())
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot set and remove a variable with the same variable name: 'aVariableName' within a command.");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

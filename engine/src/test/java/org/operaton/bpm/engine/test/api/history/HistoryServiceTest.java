@@ -64,7 +64,6 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -312,25 +311,25 @@ public class HistoryServiceTest {
 
   @Test
   void testHistoricProcessInstanceQueryByProcessInstanceIdsEmpty() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     var processInstanceIds = new HashSet<String>();
-    try {
-      historicProcessInstanceQuery.processInstanceIds(processInstanceIds);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("Set of process instance ids is empty", re.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processInstanceIds(processInstanceIds))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Set of process instance ids is empty");
   }
 
   @Test
   void testHistoricProcessInstanceQueryByProcessInstanceIdsNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.processInstanceIds(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("Set of process instance ids is null", re.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processInstanceIds(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Set of process instance ids is null");
   }
 
   @Test
@@ -367,30 +366,23 @@ public class HistoryServiceTest {
 
   @Test
   void testQueryByRootProcessInstancesAndSuperProcess() {
+    // given
     var historicProcessInstanceQuery1 = historyService.createHistoricProcessInstanceQuery()
       .rootProcessInstances();
 
-    // when
-    try {
-      historicProcessInstanceQuery1.superProcessInstanceId("processInstanceId");
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery1.superProcessInstanceId("processInstanceId"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
-    }
-
+    // given
     var historicProcessInstanceQuery2 = historyService.createHistoricProcessInstanceQuery()
       .superProcessInstanceId("processInstanceId");
-    // when
-    try {
-      historicProcessInstanceQuery2.rootProcessInstances();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
-    }
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery2.rootProcessInstances())
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
@@ -772,25 +764,23 @@ public class HistoryServiceTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testDeleteRunningProcessInstance() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
     var processInstanceId = processInstance.getId();
-    try {
-      historyService.deleteHistoricProcessInstance(processInstanceId);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Process instance is still running, cannot delete historic process instance", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance is still running, cannot delete historic process instance");
   }
 
   @Test
   void testDeleteProcessInstanceWithFake() {
-    try {
-      historyService.deleteHistoricProcessInstance("aFake");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("No historic process instance found with id", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance("aFake"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic process instance found with id");
   }
 
   @Test
@@ -800,12 +790,10 @@ public class HistoryServiceTest {
 
   @Test
   void testDeleteProcessInstanceNullId() {
-    try {
-      historyService.deleteHistoricProcessInstance(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   @Deployment(resources = {
@@ -1093,26 +1081,18 @@ public class HistoryServiceTest {
 
   @Test
   void testDeleteUnknownHistoricVariable() {
-    try {
-      // when
-      historyService.deleteHistoricVariableInstance("fakeID");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("No historic variable instance found with id: fakeID", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance("fakeID"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic variable instance found with id: fakeID");
   }
 
   @Test
   void testDeleteHistoricVariableWithNull() {
-    try{
-      // when
-      historyService.deleteHistoricVariableInstance(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("variableInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("variableInstanceId is null");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1285,26 +1265,18 @@ public class HistoryServiceTest {
 
   @Test
   void testDeleteAllHistoricVariablesOnUnkownProcessInstance() {
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId("fakeID");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("No historic process instance found with id: fakeID", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId("fakeID"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic process instance found with id: fakeID");
   }
 
   @Test
   void testDeleteAllHistoricVariablesWithNull() {
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   protected List<String> prepareHistoricProcesses() {

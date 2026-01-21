@@ -34,7 +34,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -79,24 +79,19 @@ class MultiTenancyTaskServiceTest {
     // given a persistent task without tenant id
     Task task = taskService.newTask();
     taskService.saveTask(task);
-    task = taskService.createTaskQuery().singleResult();
+    Task savedTask = taskService.createTaskQuery().singleResult();
 
-    // if
-    // change the tenant id
-    task.setTenantId(TENANT_1);
+    // given
+    savedTask.setTenantId(TENANT_1);
 
     // then
     // an exception is thrown on 'save'
-    try {
-      taskService.saveTask(task);
-      fail("Expected an exception");
-    }
-    catch(ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-03072 Cannot change tenantId of Task", e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.saveTask(savedTask))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-03072 Cannot change tenantId of Task");
 
     // Finally, delete task
-    deleteTasks(task);
+    deleteTasks(savedTask);
   }
 
   @Test
@@ -106,24 +101,19 @@ class MultiTenancyTaskServiceTest {
     Task task = taskService.newTask();
     task.setTenantId(TENANT_1);
     taskService.saveTask(task);
-    task = taskService.createTaskQuery().singleResult();
+    Task savedTask = taskService.createTaskQuery().singleResult();
 
-    // if
-    // change the tenant id
-    task.setTenantId(TENANT_2);
+    // given
+    savedTask.setTenantId(TENANT_2);
 
     // then
     // an exception is thrown on 'save'
-    try {
-      taskService.saveTask(task);
-      fail("Expected an exception");
-    }
-    catch(ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-03072 Cannot change tenantId of Task", e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.saveTask(savedTask))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-03072 Cannot change tenantId of Task");
 
     // Finally, delete task
-    deleteTasks(task);
+    deleteTasks(savedTask);
   }
 
   @Test
@@ -134,20 +124,17 @@ class MultiTenancyTaskServiceTest {
     task.setTenantId(TENANT_1);
     taskService.saveTask(task);
 
-    // if
+    // given
     // I create a subtask with a different tenant id
     Task subTask = taskService.newTask();
     subTask.setParentTaskId(task.getId());
     subTask.setTenantId(TENANT_2);
 
     // then an exception is thrown on save
-    try {
-      taskService.saveTask(subTask);
-      fail("Exception expected.");
-    }
-    catch(ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-03073 Cannot set different tenantId on subtask than on parent Task", e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-03073 Cannot set different tenantId on subtask than on parent Task");
+
     // Finally, delete task
     deleteTasks(task);
   }
@@ -159,20 +146,17 @@ class MultiTenancyTaskServiceTest {
     Task task = taskService.newTask();
     taskService.saveTask(task);
 
-    // if
+    // given
     // I create a subtask with a different tenant id
     Task subTask = taskService.newTask();
     subTask.setParentTaskId(task.getId());
     subTask.setTenantId(TENANT_1);
 
     // then an exception is thrown on save
-    try {
-      taskService.saveTask(subTask);
-      fail("Exception expected.");
-    }
-    catch(ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-03073 Cannot set different tenantId on subtask than on parent Task", e.getMessage());
-    }
+    assertThatThrownBy(() -> taskService.saveTask(subTask))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-03073 Cannot set different tenantId on subtask than on parent Task");
+
     // Finally, delete task
     deleteTasks(task);
   }

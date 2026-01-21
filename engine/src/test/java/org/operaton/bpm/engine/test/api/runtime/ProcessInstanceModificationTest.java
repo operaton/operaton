@@ -140,21 +140,20 @@ class ProcessInstanceModificationTest {
   @Deployment(resources = PARALLEL_GATEWAY_PROCESS)
   @Test
   void testCancellationWithWrongProcessInstanceId() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("parallelGateway");
-
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
+    String task1InstanceId = getInstanceIdForActivity(tree, "task1");
+    String task2InstanceId = getInstanceIdForActivity(tree, "task2");
 
-    try {
-      runtimeService.createProcessInstanceModification("foo")
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task1"))
-        .cancelActivityInstance(getInstanceIdForActivity(tree, "task2"))
-        .execute();
-      testRule.assertProcessEnded(processInstance.getId());
-
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).startsWith("ENGINE-13036");
-      assertThat(e.getMessage()).contains("Process instance '%s' cannot be modified".formatted("foo"));
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceModification("foo")
+        .cancelActivityInstance(task1InstanceId)
+        .cancelActivityInstance(task2InstanceId)
+        .execute())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageStartingWith("ENGINE-13036")
+      .hasMessageContaining("Process instance '%s' cannot be modified".formatted("foo"));
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -260,41 +259,35 @@ class ProcessInstanceModificationTest {
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
   void testStartBeforeWithInvalidAncestorInstanceId() {
-    // given two instances of the outer subprocess
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationInstantiationBuilder = runtimeService.createProcessInstanceModification(
       processInstance.getId()).startBeforeActivity("subProcess", "noValidActivityInstanceId");
 
-    try {
-      processInstanceModificationInstantiationBuilder.execute();
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start before activity 'subProcess' with ancestor activity instance 'noValidActivityInstanceId'; "
-          + "Ancestor activity instance 'noValidActivityInstanceId' does not exist", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: " + "Start before activity 'subProcess' with ancestor activity instance 'noValidActivityInstanceId'; "
+          + "Ancestor activity instance 'noValidActivityInstanceId' does not exist");
 
+    // given
     var processInstanceModificationBuilder1 = runtimeService.createProcessInstanceModification(processInstance.getId());
-    try {
-      processInstanceModificationBuilder1.startBeforeActivity("subProcess", null);
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("ancestorActivityInstanceId is null", e.getMessage());
-    }
 
+    // when/then
+    assertThatThrownBy(() -> processInstanceModificationBuilder1.startBeforeActivity("subProcess", null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("ancestorActivityInstanceId is null");
+
+    // given
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
     String subProcessTaskId = getInstanceIdForActivity(tree, "subProcessTask");
-
     var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("subProcess", subProcessTaskId);
-    try {
-      processInstanceModificationInstantiationBuilder2.execute();
-      fail("should not succeed because subProcessTask is a child of subProcess");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot perform instruction: Start before activity 'subProcess' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'subProcess'".formatted(subProcessTaskId, subProcessTaskId), e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder2::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: Start before activity 'subProcess' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'subProcess'".formatted(subProcessTaskId, subProcessTaskId));
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -304,14 +297,10 @@ class ProcessInstanceModificationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).startBeforeActivity("someNonExistingActivity");
 
-    try {
-      // when
-      processInstanceModificationBuilder.execute();
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      // then
-      testRule.assertTextPresentIgnoreCase("element 'someNonExistingActivity' does not exist in process ", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(NotValidException.class)
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("element 'somenonexistingactivity' does not exist in process ".toLowerCase()));
   }
 
   /**
@@ -446,42 +435,36 @@ class ProcessInstanceModificationTest {
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
   void testStartTransitionWithInvalidAncestorInstanceId() {
-    // given two instances of the outer subprocess
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationInstantiationBuilder1 = runtimeService.createProcessInstanceModification(processInstanceId)
       .startTransition("flow5", "noValidActivityInstanceId");
 
-    try {
-      processInstanceModificationInstantiationBuilder1.execute();
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot perform instruction: " + "Start transition 'flow5' with ancestor activity instance 'noValidActivityInstanceId'; "
-          + "Ancestor activity instance 'noValidActivityInstanceId' does not exist", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder1::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: " + "Start transition 'flow5' with ancestor activity instance 'noValidActivityInstanceId'; "
+          + "Ancestor activity instance 'noValidActivityInstanceId' does not exist");
 
+    // given
     var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId);
-    try {
-      processInstanceModificationInstantiationBuilder2.startTransition("flow5", null);
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("ancestorActivityInstanceId is null", e.getMessage());
-    }
 
+    // when/then
+    assertThatThrownBy(() -> processInstanceModificationInstantiationBuilder2.startTransition("flow5", null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("ancestorActivityInstanceId is null");
+
+    // given
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
     String subProcessTaskId = getInstanceIdForActivity(tree, "subProcessTask");
     var processInstanceModificationInstantiationBuilder3 = runtimeService.createProcessInstanceModification(processInstanceId)
       .startTransition("flow5", subProcessTaskId);
 
-    try {
-      processInstanceModificationInstantiationBuilder3.execute();
-      fail("should not succeed because subProcessTask is a child of subProcess");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot perform instruction: Start transition 'flow5' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'flow5'".formatted(subProcessTaskId, subProcessTaskId), e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder3::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: Start transition 'flow5' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'flow5'".formatted(subProcessTaskId, subProcessTaskId));
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -513,19 +496,16 @@ class ProcessInstanceModificationTest {
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
   void testStartTransitionInvalidTransitionId() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
+    String processDefinitionId = processInstance.getProcessDefinitionId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstanceId).startTransition("invalidFlowId");
 
-    try {
-      processInstanceModificationBuilder.execute();
-
-      fail("should not succeed");
-
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()), e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processDefinitionId));
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -631,80 +611,65 @@ class ProcessInstanceModificationTest {
   @Deployment(resources = DOUBLE_NESTED_SUB_PROCESS)
   @Test
   void testStartAfterWithInvalidAncestorInstanceId() {
-    // given two instances of the outer subprocess
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("doubleNestedSubprocess");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationInstantiationBuilder1 = runtimeService.createProcessInstanceModification(processInstanceId)
       .startAfterActivity("innerSubProcessStart", "noValidActivityInstanceId");
 
-    try {
-      processInstanceModificationInstantiationBuilder1.execute();
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent(
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder1::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining(
           "Cannot perform instruction: " + "Start after activity 'innerSubProcessStart' with ancestor activity instance 'noValidActivityInstanceId'; "
-              + "Ancestor activity instance 'noValidActivityInstanceId' does not exist",
-          e.getMessage());
-    }
+              + "Ancestor activity instance 'noValidActivityInstanceId' does not exist");
 
+    // given
     var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId);
-    try {
-      processInstanceModificationInstantiationBuilder2.startAfterActivity("innerSubProcessStart", null);
-      fail("Exception expected");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("ancestorActivityInstanceId is null", e.getMessage());
-    }
 
+    // when/then
+    assertThatThrownBy(() -> processInstanceModificationInstantiationBuilder2.startAfterActivity("innerSubProcessStart", null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("ancestorActivityInstanceId is null");
+
+    // given
     ActivityInstance tree = runtimeService.getActivityInstance(processInstanceId);
     String subProcessTaskId = getInstanceIdForActivity(tree, "subProcessTask");
-
     var processInstanceModificationInstantiationBuilder3 = runtimeService.createProcessInstanceModification(processInstanceId)
       .startAfterActivity("innerSubProcessStart", subProcessTaskId);
-    try {
-      processInstanceModificationInstantiationBuilder3.execute();
-      fail("should not succeed because subProcessTask is a child of subProcess");
-    } catch (NotValidException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot perform instruction: Start after activity 'innerSubProcessStart' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'flow5'".formatted(subProcessTaskId, subProcessTaskId), e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder3::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: Start after activity 'innerSubProcessStart' with ancestor activity instance '%s'; Scope execution for '%s' cannot be found in parent hierarchy of flow element 'flow5'".formatted(subProcessTaskId, subProcessTaskId));
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
   void testStartAfterActivityAmbiguousTransitions() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstanceId).startAfterActivity("fork");
 
-    try {
-      processInstanceModificationBuilder.execute();
-
-      fail("should not succeed since 'fork' has more than one outgoing sequence flow");
-
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("activity has more than one outgoing sequence flow", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("activity has more than one outgoing sequence flow");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
   void testStartAfterActivityNoOutgoingTransitions() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     String processInstanceId = processInstance.getId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstanceId).startAfterActivity("theEnd");
 
-    try {
-      processInstanceModificationBuilder.execute();
-
-      fail("should not succeed since 'theEnd' has no outgoing sequence flow");
-
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("activity has no outgoing sequence flow to take", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("activity has no outgoing sequence flow to take");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -714,15 +679,10 @@ class ProcessInstanceModificationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).startAfterActivity("someNonExistingActivity");
 
-    try {
-      // when
-      processInstanceModificationBuilder.execute();
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      // then
-      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: " + "Start after activity 'someNonExistingActivity'; "
-          + "Activity 'someNonExistingActivity' does not exist: activity is null", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(NotValidException.class)
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("cannot perform instruction: start after activity 'somenonexistingactivity'".toLowerCase()));
   }
 
   @Deployment(resources = ONE_SCOPE_TASK_PROCESS)
@@ -1477,28 +1437,25 @@ class ProcessInstanceModificationTest {
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
   @Test
   void testStartCompensationBoundary() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
     String processInstanceId = processInstance.getId();
-
     var processInstanceModificationInstantiationBuilder1 = runtimeService.createProcessInstanceModification(processInstanceId)
       .startBeforeActivity("compensateBoundaryEvent");
-    try {
-      processInstanceModificationInstantiationBuilder1.execute();
 
-      fail("should not succeed");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("compensation boundary event", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder1::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("compensation boundary event");
 
+    // given
     var processInstanceModificationInstantiationBuilder2 = runtimeService.createProcessInstanceModification(processInstanceId)
       .startAfterActivity("compensateBoundaryEvent");
-    try {
-      processInstanceModificationInstantiationBuilder2.execute();
 
-      fail("should not succeed");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no outgoing sequence flow", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationInstantiationBuilder2::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no outgoing sequence flow");
   }
 
   @Deployment(resources = TRANSACTION_WITH_COMPENSATION_PROCESS)
@@ -1557,15 +1514,11 @@ class ProcessInstanceModificationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).cancelActivityInstance("nonExistingActivityInstance");
 
-    // when - then throw exception
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("Cannot perform instruction: Cancel activity instance 'nonExistingActivityInstance'; "
-          + "Activity instance 'nonExistingActivityInstance' does not exist", e.getMessage());
-    }
-
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: Cancel activity instance 'nonExistingActivityInstance'; "
+          + "Activity instance 'nonExistingActivityInstance' does not exist");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -1575,15 +1528,11 @@ class ProcessInstanceModificationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("exclusiveGateway");
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId()).cancelTransitionInstance("nonExistingActivityInstance");
 
-    // when - then throw exception
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("Cannot perform instruction: Cancel transition instance 'nonExistingActivityInstance'; "
-          + "Transition instance 'nonExistingActivityInstance' does not exist", e.getMessage());
-    }
-
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("Cannot perform instruction: Cancel transition instance 'nonExistingActivityInstance'; "
+          + "Transition instance 'nonExistingActivityInstance' does not exist");
   }
 
   @Deployment(resources = { CALL_ACTIVITY_PARENT_PROCESS, CALL_ACTIVITY_CHILD_PROCESS })
@@ -1604,12 +1553,10 @@ class ProcessInstanceModificationTest {
 
   @Test
   void testModifyNullProcessInstance() {
-    try {
-      runtimeService.createProcessInstanceModification(null);
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      testRule.assertTextPresent("processInstanceId is null", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceModification(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   @Test

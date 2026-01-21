@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -238,53 +238,39 @@ class AuthorizationQueryTest {
 
   @Test
   void testInvalidOrderByQueries() {
+    // given
     var authorizationQuery = authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId();
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
 
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationQuery.list())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    assertThatThrownBy(() -> authorizationQuery.list())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    assertThatThrownBy(() -> authorizationQuery.list())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
+
+    assertThatThrownBy(() -> authorizationQuery.list())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
 
   @Test
   void testInvalidQueries() {
-
     // cannot query for user id and group id at the same time
 
-    try {
-      authorizationService.createAuthorizationQuery().groupIdIn("a").userIdIn("b").count();
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot query for user and group authorizations at the same time.", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.createAuthorizationQuery().groupIdIn("a").userIdIn("b").count())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
 
-    try {
-      authorizationService.createAuthorizationQuery().userIdIn("b").groupIdIn("a").count();
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot query for user and group authorizations at the same time.", e.getMessage());
-    }
-
+    assertThatThrownBy(() -> authorizationService.createAuthorizationQuery().userIdIn("b").groupIdIn("a").count())
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
   }
 
   class NonExistingResource implements Resource {

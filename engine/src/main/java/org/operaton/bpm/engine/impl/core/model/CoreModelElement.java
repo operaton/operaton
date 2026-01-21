@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.delegate.VariableListener;
  * @author Sebastian Menski
  *
  */
+@SuppressWarnings("java:S1948")
 public abstract class CoreModelElement implements Serializable {
 
   @Serial private static final long serialVersionUID = 1L;

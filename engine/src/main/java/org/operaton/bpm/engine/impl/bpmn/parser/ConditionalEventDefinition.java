@@ -32,14 +32,12 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class ConditionalEventDefinition extends EventSubscriptionDeclaration {
 
-  @Serial private static final long serialVersionUID = 1L;
-
-  protected String conditionAsString;
-  protected final Condition condition;
-  protected boolean interrupting;
-  protected String variableName;
-  protected Set<String> variableEvents;
-  protected ActivityImpl conditionalActivity;
+  private String conditionAsString;
+  private final transient Condition condition;
+  private boolean interrupting;
+  private String variableName;
+  private Set<String> variableEvents;
+  private ActivityImpl conditionalActivity;
 
   public ConditionalEventDefinition(Condition condition, ActivityImpl conditionalActivity) {
     super(null, EventType.CONDITONAL);

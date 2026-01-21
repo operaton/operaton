@@ -36,8 +36,8 @@ import org.operaton.bpm.engine.authorization.MissingAuthorization;
 @SuppressWarnings("java:S5738")
 public class AuthorizationException extends ProcessEngineException {
 
-  private final String userId;
-  private final transient List<MissingAuthorization> missingAuthorizations;
+  protected final String userId;
+  protected final transient List<MissingAuthorization> missingAuthorizations;
 
   // These properties have been replaced by the list of missingAuthorizations
   // and are only left because this is a public API package and users might

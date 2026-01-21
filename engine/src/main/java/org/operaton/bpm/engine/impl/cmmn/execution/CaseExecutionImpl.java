@@ -52,9 +52,9 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // current position /////////////////////////////////////////////////////////
 
-  protected List<CaseExecutionImpl> caseExecutions;
+  private List<CaseExecutionImpl> caseExecutions;
 
-  protected List<CaseSentryPartImpl> caseSentryParts;
+  private List<CaseSentryPartImpl> caseSentryParts;
 
   protected CaseExecutionImpl caseInstance;
 

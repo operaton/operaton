@@ -632,7 +632,7 @@ class ManagementServiceTest {
 
     // when/then
     assertThatThrownBy(() -> managementService.deleteJob(jobId))
-      .isInstanceOf(NotFoundException.class)
+      .isInstanceOf(NullValueException.class)
       .hasMessageContaining("No job found with id");
   }
 
@@ -863,7 +863,7 @@ class ManagementServiceTest {
     // when/then
     assertThatThrownBy(() -> managementService.setJobPriority(null, priority))
       .isInstanceOf(NullValueException.class)
-      .hasMessageContaining("Job id must not be null");
+      .hasMessageContaining("job id must not be null");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/asyncTaskProcess.bpmn20.xml")

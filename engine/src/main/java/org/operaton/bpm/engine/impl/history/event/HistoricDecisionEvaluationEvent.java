@@ -30,7 +30,7 @@ public class HistoricDecisionEvaluationEvent extends HistoryEvent {
 
   protected HistoricDecisionInstanceEntity rootHistoricDecisionInstance;
 
-  protected Collection<HistoricDecisionInstanceEntity> requiredHistoricDecisionInstances = new ArrayList<>();
+  private Collection<HistoricDecisionInstanceEntity> requiredHistoricDecisionInstances = new ArrayList<>();
 
   public HistoricDecisionInstanceEntity getRootHistoricDecisionInstance() {
     return rootHistoricDecisionInstance;

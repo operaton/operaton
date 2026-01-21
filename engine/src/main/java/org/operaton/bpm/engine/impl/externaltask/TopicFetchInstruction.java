@@ -45,9 +45,9 @@ public class TopicFetchInstruction implements Serializable {
   protected String processDefinitionVersionTag;
   protected boolean isTenantIdSet;
   protected String[] tenantIds;
-  protected List<String> variablesToFetch;
+  private List<String> variablesToFetch;
 
-  protected List<QueryVariableValue> filterVariables;
+  private List<QueryVariableValue> filterVariables;
   protected long lockDuration;
   protected boolean deserializeVariables;
   protected boolean localVariables;

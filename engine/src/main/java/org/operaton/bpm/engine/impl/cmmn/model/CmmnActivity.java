@@ -31,30 +31,31 @@ import org.operaton.bpm.model.cmmn.instance.CmmnElement;
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("java:S1948")
 public class CmmnActivity extends CoreActivity {
 
   @Serial private static final long serialVersionUID = 1L;
 
   protected List<CmmnActivity> activities = new ArrayList<>();
-  protected Map<String, CmmnActivity> namedActivities = new HashMap<>();
+  private Map<String, CmmnActivity> namedActivities = new HashMap<>();
 
-  protected CmmnElement cmmnElement;
+  private CmmnElement cmmnElement;
 
-  protected CmmnActivityBehavior activityBehavior;
+  private CmmnActivityBehavior activityBehavior;
 
   protected CmmnCaseDefinition caseDefinition;
 
-  protected CmmnActivity parent;
+  private CmmnActivity parent;
 
-  protected List<CmmnSentryDeclaration> sentries = new ArrayList<>();
-  protected Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
+  private List<CmmnSentryDeclaration> sentries = new ArrayList<>();
+  private Map<String, CmmnSentryDeclaration> sentryMap = new HashMap<>();
 
-  protected List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
-  protected List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
+  private List<CmmnSentryDeclaration> entryCriteria = new ArrayList<>();
+  private List<CmmnSentryDeclaration> exitCriteria = new ArrayList<>();
 
   // eventName => activity id => variable listeners
-  protected Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
-  protected Map<String, Map<String, List<VariableListener<?>>>> resolvedBuiltInVariableListeners;
+  private Map<String, Map<String, List<VariableListener<?>>>> resolvedVariableListeners;
+  private Map<String, Map<String, List<VariableListener<?>>>> resolvedBuiltInVariableListeners;
 
   public CmmnActivity(String id, CmmnCaseDefinition caseDefinition) {
     super(id);

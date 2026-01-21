@@ -41,16 +41,16 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  */
 public class EventSubscriptionDeclaration {
 
-  protected final EventType eventType;
-  protected final Expression eventName;
-  protected final CallableElement eventPayload;
+  private final EventType eventType;
+  private final Expression eventName;
+  private final CallableElement eventPayload;
 
-  protected boolean async;
+  private boolean async;
   protected String activityId;
-  protected String eventScopeActivityId;
-  protected boolean isStartEvent;
+  private String eventScopeActivityId;
+  private boolean isStartEvent;
 
-  protected EventSubscriptionJobDeclaration jobDeclaration;
+  private EventSubscriptionJobDeclaration jobDeclaration;
 
   public EventSubscriptionDeclaration(Expression eventExpression, EventType eventType) {
     this.eventName = eventExpression;

@@ -180,10 +180,9 @@ deploy:
     nexus2:
       snapshot-deploy:
         active: SNAPSHOT
-        snapshotUrl: https://s01.oss.sonatype.org/content/repositories/snapshots
+        snapshotUrl: https://central.sonatype.com/repository/maven-snapshots/
         snapshotSupported: true
         applyMavenCentralRules: true
-        snapshotSupported: true
         closeRepository: true
         releaseRepository: true
         stagingRepositories:

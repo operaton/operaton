@@ -1117,7 +1117,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
       while (currentExecution != null) {
         String activityId = currentExecution.getActivityId();
-        List<VariableListener<?>> listeners = (activityId != null) ? listenersByActivity.get(activityId) : null;
+        List<VariableListener<?>> listeners = activityId != null ? listenersByActivity.get(activityId) : null;
 
         if (listeners != null) {
           delegateVariable.setScopeExecution(currentExecution);

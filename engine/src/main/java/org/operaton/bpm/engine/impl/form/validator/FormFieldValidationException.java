@@ -31,7 +31,7 @@ public class FormFieldValidationException extends FormException {
   @Serial private static final long serialVersionUID = 1L;
 
   /** optional object for detailing the nature of the validation error */
-  protected final Object detail;
+  protected final transient Object detail;
 
   public FormFieldValidationException() {
     super();

@@ -74,7 +74,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected int currentState = NEW.getStateCode();
 
-  protected Queue<VariableEvent> variableEventsQueue;
+  protected transient Queue<VariableEvent> variableEventsQueue;
 
   protected transient TaskEntity task;
 

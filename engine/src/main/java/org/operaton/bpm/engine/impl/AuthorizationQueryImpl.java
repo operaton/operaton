@@ -49,7 +49,7 @@ public class AuthorizationQueryImpl extends AbstractQuery<AuthorizationQuery, Au
   protected boolean queryByPermission;
   protected boolean queryByResourceType;
 
-  private Set<Resource> resourcesIntersection = new HashSet<>();
+  private transient Set<Resource> resourcesIntersection = new HashSet<>();
 
   public AuthorizationQueryImpl() {
   }

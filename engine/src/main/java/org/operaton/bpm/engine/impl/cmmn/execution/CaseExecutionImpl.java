@@ -70,7 +70,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // variables ////////////////////////////////////////////////////////////////
 
-  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
+  protected transient VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
   // case definition id ///////////////////////////////////////////////////////
 

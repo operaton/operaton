@@ -54,7 +54,7 @@ public class CaseDefinitionEntity extends CmmnCaseDefinition implements CaseDefi
   protected String tenantId;
   protected Integer historyTimeToLive;
 
-  protected Map<String, TaskDefinition> taskDefinitions;
+  protected transient Map<String, TaskDefinition> taskDefinitions;
 
   // firstVersion is true, when version == 1 or when
   // this definition does not have any previous definitions

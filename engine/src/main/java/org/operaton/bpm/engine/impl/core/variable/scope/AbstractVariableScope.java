@@ -45,7 +45,7 @@ public abstract class AbstractVariableScope implements Serializable, VariableSco
   @Serial
   private static final long serialVersionUID = 1L;
 
-  protected ELContext cachedElContext;
+  protected transient ELContext cachedElContext;
 
   protected abstract VariableStore<CoreVariableInstance> getVariableStore();
   protected abstract VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory();

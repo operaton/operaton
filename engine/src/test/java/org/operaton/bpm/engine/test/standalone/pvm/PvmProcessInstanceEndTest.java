@@ -54,17 +54,15 @@ class PvmProcessInstanceEndTest {
     processInstance.start();
 
     assertThat(eventCollector.getEvents()).hasSize(2)
-      .allSatisfy(event -> {
-        assertThat(event).startsWith("start on");
-      });
+      .allSatisfy(event ->
+        assertThat(event).startsWith("start on"));
 
     // when
     processInstance.deleteCascade("test");
 
     assertThat(eventCollector.getEvents()).hasSize(4);
     assertThat(eventCollector.getEvents().subList(2,3))
-      .allSatisfy(event -> {
-        assertThat(event).startsWith("end on");
-      });
+      .allSatisfy(event ->
+        assertThat(event).startsWith("end on"));
   }
 }

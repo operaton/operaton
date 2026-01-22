@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cmmn.entity.repository.CaseDefinitionEntity;
@@ -266,14 +267,8 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
         context.setParent(parent);
 
       } else if (definition instanceof HumanTask humanTask) {
-
-        // According to the specification: A HumanTask can only contain
-        // one planningTable, the XSD allows multiple planningTables!
-        Collection<PlanningTable> planningTables = humanTask.getPlanningTables();
-        for (PlanningTable planningTable : planningTables) {
-          transformPlanningTable(planningTable, parent);
-        }
-
+        Optional.ofNullable(humanTask.getPlanningTable())
+            .ifPresent(planningTable -> transformPlanningTable(planningTable, parent));
       }
 
       for (CmmnTransformListener transformListener : transformListeners) {

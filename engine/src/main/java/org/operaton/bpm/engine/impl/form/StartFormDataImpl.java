@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.form;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 

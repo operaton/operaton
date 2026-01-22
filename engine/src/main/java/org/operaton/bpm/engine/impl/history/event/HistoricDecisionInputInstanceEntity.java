@@ -46,8 +46,8 @@ public class HistoricDecisionInputInstanceEntity extends HistoryEvent implements
 
   protected String tenantId;
 
-  protected ByteArrayField byteArrayField;
-  protected TypedValueField typedValueField = new TypedValueField(this, false);
+  protected transient ByteArrayField byteArrayField;
+  protected transient TypedValueField typedValueField = new TypedValueField(this, false);
 
   protected Date createTime;
 

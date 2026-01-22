@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;
 
@@ -41,20 +39,18 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  * @author Falko Menge
  * @author Danny Gräf
  */
-public class EventSubscriptionDeclaration implements Serializable {
+public class EventSubscriptionDeclaration {
 
-  @Serial private static final long serialVersionUID = 1L;
+  private final EventType eventType;
+  private final Expression eventName;
+  private final CallableElement eventPayload;
 
-  protected final EventType eventType;
-  protected final Expression eventName;
-  protected final CallableElement eventPayload;
-
-  protected boolean async;
+  private boolean async;
   protected String activityId;
-  protected String eventScopeActivityId;
-  protected boolean isStartEvent;
+  private String eventScopeActivityId;
+  private boolean isStartEvent;
 
-  protected EventSubscriptionJobDeclaration jobDeclaration;
+  private EventSubscriptionJobDeclaration jobDeclaration;
 
   public EventSubscriptionDeclaration(Expression eventExpression, EventType eventType) {
     this.eventName = eventExpression;

@@ -13,12 +13,14 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
+      - '.github/workflows/auto-merge.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
       - '.gitingore'
       - 'LICENSE'
       - 'NOTICE'
+      - 'jreleaser.yml'
   pull_request:
     branches:
       - main
@@ -204,6 +206,7 @@ jobs:
       actions: write
     env:
       GH_TOKEN: ${{ github.token }}
+    continue-on-error: true
     steps:
       - name: Checkout Code
         uses: actions/checkout@v6

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -49,9 +47,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public abstract class JobDeclaration<S, T extends JobEntity> implements Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public abstract class JobDeclaration<S, T extends JobEntity> {
 
   /** the id of the associated persistent jobDefinitionId */
   protected String jobDefinitionId;

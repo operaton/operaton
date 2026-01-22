@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
@@ -68,7 +69,7 @@ public class SetJobDuedateCmd implements Command<Void> {
 
       job.setDuedate(newDuedate);
     } else {
-      throw new ProcessEngineException("No job found with id '%s'.".formatted(jobId));
+      throw new NotFoundException("No job found with id '%s'.".formatted(jobId));
     }
     return null;
   }

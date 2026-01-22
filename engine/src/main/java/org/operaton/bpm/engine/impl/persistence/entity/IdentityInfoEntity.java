@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,9 +27,7 @@ import org.operaton.bpm.engine.impl.identity.Account;
 /**
  * @author Tom Baeyens
  */
-public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class IdentityInfoEntity implements DbEntity, HasDbRevision, Account {
 
   public static final String TYPE_USERACCOUNT = "account";
   public static final String TYPE_USERINFO = "userinfo";

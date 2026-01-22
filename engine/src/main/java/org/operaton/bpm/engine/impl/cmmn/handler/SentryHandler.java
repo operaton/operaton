@@ -60,7 +60,7 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     IfPart ifPart = element.getIfPart();
     List<OperatonVariableOnPart> variableOnParts = queryExtensionElementsByClass(element, OperatonVariableOnPart.class);
 
-    if ((ifPart == null || ifPart.getConditions().isEmpty()) && variableOnParts.isEmpty()) {
+    if ((ifPart == null || ifPart.getCondition() == null) && variableOnParts.isEmpty()) {
 
       if (onParts == null || onParts.isEmpty()) {
         LOG.ignoredSentryWithMissingCondition(id);
@@ -162,19 +162,16 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
   }
 
   protected void initializeIfPart(IfPart ifPart, CmmnSentryDeclaration sentryDeclaration, CmmnHandlerContext context) {
-    if (ifPart == null) {
+    if (ifPart == null || ifPart.getCondition() == null) {
       return;
     }
 
-    Collection<ConditionExpression> conditions = ifPart.getConditions();
+    ConditionExpression condition = ifPart.getCondition();
 
-    if (conditions.size() > 1) {
-      String id = sentryDeclaration.getId();
-      LOG.multipleIgnoredConditions(id);
-    }
+    String id = sentryDeclaration.getId();
+    LOG.multipleIgnoredConditions(id);
 
     ExpressionManager expressionManager = context.getExpressionManager();
-    ConditionExpression condition = conditions.iterator().next();
     Expression conditionExpression = expressionManager.createExpression(condition.getText());
 
     CmmnIfPartDeclaration ifPartDeclaration = new CmmnIfPartDeclaration();

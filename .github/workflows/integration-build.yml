@@ -17,11 +17,11 @@ on:
           - '["21", "25"]'
           - '["17", "21", "25"]'
       skip_build:
-        description: 'Build: By default skipped. Deactivate to perform the regular project build'
+        description: 'Skip build: Deactivate to perform the regular project build. Required for release.'
         type: boolean
         default: true
       skip_tests:
-        description: 'Build: Skip test execution for faster build'
+        description: 'Skip tests: Skip test execution for faster build'
         type: boolean
         default: true
       integration_tests:
@@ -64,7 +64,7 @@ on:
           - '["h2", "postgresql"]'
           - '["h2", "postgresql", "mariadb", "mysql", "oracle", "db2"]'
       dry_run:
-        description: 'Release: Skips remote operations when true'
+        description: 'Dry Run: Skips remote operations when true'
         type: boolean
         required: true
         default: false
@@ -321,6 +321,7 @@ jobs:
         uses: actions/cache/save@v5
         with:
           path: |
+            ~/.m2/repository/org/operaton
             distro/**/*.tar.gz
             distro/**/*.zip
             distro/webjar/target/operaton-webapp-webjar-*.jar
@@ -346,7 +347,7 @@ jobs:
     if: |
       always() && !cancelled() && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.integration_tests == 'true') ||
+        (github.event_name == 'workflow_dispatch' && (github.event.inputs.integration_tests == 'true' || github.event.inputs.integration_tests == true)) ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')
       )
     steps:
@@ -409,7 +410,6 @@ jobs:
     needs:
       - detect-recent-changes
       - determine-pr-config
-      - build
     if: |
       always() && !cancelled() && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
@@ -455,6 +455,7 @@ jobs:
         uses: actions/cache@v5
         with:
           path: |
+            ~/.m2/repository/org/operaton
             distro/**/*.tar.gz
             distro/**/*.zip
             distro/webjar/target/operaton-webapp-webjar-*.jar
@@ -483,6 +484,10 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
+          JRELEASER_NEXUS2_SNAPSHOT_DEPLOY_USERNAME: ${{secrets.OSSRH_USERNAME}}
+          JRELEASER_NEXUS2_SNAPSHOT_DEPLOY_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
+          JRELEASER_NEXUS2_USERNAME: ${{secrets.OSSRH_USERNAME}}
+          JRELEASER_NEXUS2_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{ github.event_name == 'schedule' && false || github.event.inputs.dry_run }}
           JRELEASER_PRERELEASE_ENABLED: true
           JRELEASER_PROJECT_SNAPSHOT_LABEL: ${{needs.build.outputs.project_version}}
@@ -515,8 +520,6 @@ jobs:
     name: Post-Release
     runs-on: ubuntu-latest
     needs:
-      - detect-recent-changes
-      - determine-pr-config
       - build
       - release
     if: |

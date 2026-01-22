@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.bpmn.job;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -332,7 +333,9 @@ class JobPrioritizationBpmnConstantValueTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/miBodyAsyncProcess.bpmn20.xml")
-  public void FAILING_testMultiInstanceBodyActivityPriority() {
+  @Test
+  @Disabled("Fixme: Expected priority does not match")
+  void testMultiInstanceBodyActivityPriority() {
     // given a process instance that executes an async mi body
     runtimeService.startProcessInstanceByKey("miBodyAsyncPriorityProcess");
 

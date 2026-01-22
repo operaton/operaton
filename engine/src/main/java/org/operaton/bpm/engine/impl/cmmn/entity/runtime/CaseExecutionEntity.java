@@ -81,11 +81,11 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   protected transient CaseExecutionEntity parent;
 
   /** nested executions */
-  protected List<CaseExecutionEntity> caseExecutions;
+  private List<CaseExecutionEntity> caseExecutions;
 
   /** nested case sentry parts */
-  protected List<CaseSentryPartEntity> caseSentryParts;
-  protected Map<String, List<CmmnSentryPart>> sentries;
+  private List<CaseSentryPartEntity> caseSentryParts;
+  private Map<String, List<CmmnSentryPart>> sentries;
 
   /** reference to a sub process instance, not-null if currently subprocess is started from this execution */
   protected transient ExecutionEntity subProcessInstance;
@@ -99,7 +99,7 @@ public class CaseExecutionEntity extends CmmnExecution implements CaseExecution,
   // associated entities /////////////////////////////////////////////////////
 
   @SuppressWarnings({ "unchecked" })
-  protected VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
+  private transient VariableStore<VariableInstanceEntity> variableStore = new VariableStore<>(
       this, new CaseExecutionEntityReferencer(this));
 
   // Persistence //////////////////////////////////////////////////////////////

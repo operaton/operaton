@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -82,8 +83,9 @@ class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
     checkVariables("foo", "var_s", "var_xml", "var_json");
   }
 
-  // Check https://jira.camunda.com/browse/CAM-5869
-  public void FAILING_testSpinInternalVariablesNotExportedByJavascriptScriptTask() {
+  @Test
+  @Disabled("https://jira.camunda.com/browse/CAM-5869")
+  void testSpinInternalVariablesNotExportedByJavascriptScriptTask() {
     String importXML = "var XML = org.operaton.spin.Spin.XML;\n";
     String importJSON = "var JSON = org.operaton.spin.Spin.JSON;\n";
 

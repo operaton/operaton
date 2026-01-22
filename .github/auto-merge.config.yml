@@ -7,6 +7,8 @@
 #   labels: List of labels that must be present on the PR (optional)
 #   includes: List of dependency patterns to allow (optional, used with labels)
 #            (supports wildcards with *)
+#   excludes: List of dependency patterns to exclude (optional, overrides includes)
+#            (supports wildcards with *)
 #   title: Pattern to match PR titles using wildcards (optional, alternative to includes)
 
 auto-merge-rules:
@@ -22,6 +24,8 @@ auto-merge-rules:
     labels: ['dependencies:npm']
     includes:
       - '*'
+    excludes:
+      - '*bootstrap*'
 
   # Additional Maven dependencies that are safe to auto-merge
   # Note: DB drivers are NOT included as they require integration tests

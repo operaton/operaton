@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.form;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +28,7 @@ import org.operaton.bpm.engine.form.OperatonFormRef;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public abstract class FormDataImpl implements FormData, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public abstract class FormDataImpl implements FormData {
 
   protected String formKey;
   protected OperatonFormRef operatonFormRef;

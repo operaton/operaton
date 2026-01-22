@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.standalone.pvm;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.impl.pvm.ProcessDefinitionBuilder;
@@ -26,6 +24,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmProcessInstance;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.Automatic;
 import org.operaton.bpm.engine.test.standalone.pvm.activities.WaitState;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Tom Baeyens
@@ -54,13 +53,16 @@ class PvmProcessInstanceEndTest {
     PvmProcessInstance processInstance = processDefinition.createProcessInstance();
     processInstance.start();
 
-    System.err.println(eventCollector);
+    assertThat(eventCollector.getEvents()).hasSize(2)
+      .allSatisfy(event ->
+        assertThat(event).startsWith("start on"));
 
+    // when
     processInstance.deleteCascade("test");
 
-    System.err.println();
-    System.err.println(eventCollector);
-
-    assertThat(eventCollector.toString()).isEqualTo("start on ProcessDefinition(null)\nstart on Activity(wait)\nend on Activity(wait)\nend on ProcessDefinition(null)\n");
+    assertThat(eventCollector.getEvents()).hasSize(4);
+    assertThat(eventCollector.getEvents().subList(2,3))
+      .allSatisfy(event ->
+        assertThat(event).startsWith("end on"));
   }
 }

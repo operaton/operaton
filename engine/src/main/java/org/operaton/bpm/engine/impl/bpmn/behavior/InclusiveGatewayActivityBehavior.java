@@ -21,8 +21,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import java.util.stream.Collectors;
+
 import org.operaton.bpm.engine.impl.Condition;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;

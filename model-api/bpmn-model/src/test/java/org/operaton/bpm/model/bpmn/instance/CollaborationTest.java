@@ -39,7 +39,6 @@ public class CollaborationTest extends BpmnModelElementInstanceTest {
       new ChildElementAssumption(ParticipantAssociation.class),
       new ChildElementAssumption(MessageFlowAssociation.class),
       new ChildElementAssumption(CorrelationKey.class),
-      /** TODO: choreographyRef */
       new ChildElementAssumption(ConversationLink.class)
     );
   }

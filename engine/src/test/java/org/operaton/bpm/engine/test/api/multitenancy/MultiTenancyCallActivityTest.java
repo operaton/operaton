@@ -188,7 +188,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
@@ -210,7 +210,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no processes deployed with key 'subProcess'");
   }
@@ -235,7 +235,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
@@ -250,7 +250,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
@@ -366,7 +366,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no case definition deployed with key = 'Case_1'");
   }
@@ -388,7 +388,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no case definition deployed with key 'Case_1'");
   }
@@ -413,7 +413,7 @@ class MultiTenancyCallActivityTest {
         .processDefinitionTenantId(TENANT_ONE);
 
     // when/then
-    assertThatThrownBy(() -> processInstantiationBuilder.execute())
+    assertThatThrownBy(processInstantiationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no case definition deployed with key = 'Case_1'");
   }

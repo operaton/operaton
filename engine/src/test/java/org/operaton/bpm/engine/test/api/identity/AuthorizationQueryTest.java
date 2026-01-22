@@ -26,6 +26,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -264,11 +265,13 @@ class AuthorizationQueryTest {
     // cannot query for user id and group id at the same time
 
     // when/then
-    assertThatThrownBy(() -> authorizationService.createAuthorizationQuery().groupIdIn("a").userIdIn("b").count())
+    var authorizationQuery = authorizationService.createAuthorizationQuery().groupIdIn("a");
+    assertThatThrownBy(() -> authorizationQuery.userIdIn("b"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
 
-    assertThatThrownBy(() -> authorizationService.createAuthorizationQuery().userIdIn("b").groupIdIn("a").count())
+    AuthorizationQuery authorizationQuery1 = authorizationService.createAuthorizationQuery().userIdIn("b");
+    assertThatThrownBy(() -> authorizationQuery1.groupIdIn("a"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
   }

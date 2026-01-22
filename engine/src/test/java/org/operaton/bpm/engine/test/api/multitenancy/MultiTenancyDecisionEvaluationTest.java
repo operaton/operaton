@@ -68,13 +68,12 @@ class MultiTenancyDecisionEvaluationTest {
     VariableMap variables = createVariables();
     String decisionDefinitionId = decisionDefinition.getId();
 
-    // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionById(decisionDefinitionId)
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinitionId)
         .variables(variables)
-        .decisionDefinitionWithoutTenantId()
-        .evaluate()
-    )
+        .decisionDefinitionWithoutTenantId();
+
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id");
   }
@@ -88,13 +87,12 @@ class MultiTenancyDecisionEvaluationTest {
     VariableMap variables = createVariables();
     String decisionDefinitionId = decisionDefinition.getId();
 
-    // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionById(decisionDefinitionId)
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinitionId)
         .variables(variables)
-        .decisionDefinitionTenantId(TENANT_ONE)
-        .evaluate()
-    )
+        .decisionDefinitionTenantId(TENANT_ONE);
+
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Cannot specify a tenant-id");
   }
@@ -106,13 +104,12 @@ class MultiTenancyDecisionEvaluationTest {
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
     VariableMap variables = createVariables();
 
-    // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
         .variables(variables)
-        .decisionDefinitionTenantId("nonExistingTenantId")
-        .evaluate()
-    )
+        .decisionDefinitionTenantId("nonExistingTenantId");
+
+    // when/then
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
   }
@@ -123,13 +120,11 @@ class MultiTenancyDecisionEvaluationTest {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
     VariableMap variables = createVariables();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+        .variables(variables);
 
     // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-        .variables(variables)
-        .evaluate()
-    )
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("multiple tenants.");
   }
@@ -221,13 +216,11 @@ class MultiTenancyDecisionEvaluationTest {
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     VariableMap variables = createVariables();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+        .variables(variables);
 
     // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-        .variables(variables)
-        .evaluate()
-    )
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("no decision definition deployed with key 'decision'");
   }
@@ -239,13 +232,12 @@ class MultiTenancyDecisionEvaluationTest {
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     VariableMap variables = createVariables();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
+        .decisionDefinitionTenantId(TENANT_ONE)
+        .variables(variables);
 
     // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionByKey(DECISION_DEFINITION_KEY)
-        .decisionDefinitionTenantId(TENANT_ONE)
-        .variables(variables)
-        .evaluate()
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate
     )
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot evaluate the decision");
@@ -263,13 +255,11 @@ class MultiTenancyDecisionEvaluationTest {
     identityService.setAuthentication("user", null, null);
     VariableMap variables = createVariables();
     String decisionDefinitionId = decisionDefinition.getId();
+    var decisionsEvaluationBuilder = decisionService.evaluateDecisionById(decisionDefinitionId)
+        .variables(variables);
 
     // when/then
-    assertThatThrownBy(() ->
-      decisionService.evaluateDecisionById(decisionDefinitionId)
-        .variables(variables)
-        .evaluate()
-    )
+    assertThatThrownBy(decisionsEvaluationBuilder::evaluate)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot evaluate the decision");
   }

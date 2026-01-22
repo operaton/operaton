@@ -146,12 +146,12 @@ class ProcessInstanceModificationTest {
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     String task1InstanceId = getInstanceIdForActivity(tree, "task1");
     String task2InstanceId = getInstanceIdForActivity(tree, "task2");
+    var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification("foo")
+        .cancelActivityInstance(task1InstanceId)
+        .cancelActivityInstance(task2InstanceId);
 
     // when/then
-    assertThatThrownBy(() -> runtimeService.createProcessInstanceModification("foo")
-        .cancelActivityInstance(task1InstanceId)
-        .cancelActivityInstance(task2InstanceId)
-        .execute())
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageStartingWith("ENGINE-13036")
       .hasMessageContaining("Process instance '%s' cannot be modified".formatted("foo"));

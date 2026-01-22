@@ -1385,12 +1385,12 @@ class CaseServiceTest {
         .singleResult()
         .getId();
 
-    // when/then
-    assertThatThrownBy(() -> caseService
+    var caseExecutionCommandBuilder = caseService
         .withCaseExecution(caseExecutionId)
-        .removeVariable("aVariableName")
-        .setVariable("aVariableName", "xyz")
-        .execute())
+        .removeVariable("aVariableName");
+
+    // when/then
+    assertThatThrownBy(() -> caseExecutionCommandBuilder.setVariable("aVariableName", "xyz"))
       .isInstanceOf(NotValidException.class)
       .hasMessageContaining("Cannot set and remove a variable with the same variable name: 'aVariableName' within a command.");
   }
@@ -1418,12 +1418,12 @@ class CaseServiceTest {
         .singleResult()
         .getId();
 
-    // when/then
-    assertThatThrownBy(() -> caseService
+    var caseExecutionCommandBuilder = caseService
         .withCaseExecution(caseExecutionId)
-        .setVariableLocal("aVariableName", "xyz")
-        .removeVariableLocal("aVariableName")
-        .execute())
+        .setVariableLocal("aVariableName", "xyz");
+
+    // when/then
+    assertThatThrownBy(() -> caseExecutionCommandBuilder.removeVariableLocal("aVariableName"))
       .isInstanceOf(NotValidException.class)
       .hasMessageContaining("Cannot set and remove a variable with the same variable name: 'aVariableName' within a command.");
   }

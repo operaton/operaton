@@ -380,7 +380,7 @@ public class HistoryServiceTest {
       .superProcessInstanceId("processInstanceId");
 
     // when/then
-    assertThatThrownBy(() -> historicProcessInstanceQuery2.rootProcessInstances())
+    assertThatThrownBy(historicProcessInstanceQuery2::rootProcessInstances)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
   }

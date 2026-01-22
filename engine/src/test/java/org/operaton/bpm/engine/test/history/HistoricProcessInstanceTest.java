@@ -710,11 +710,11 @@ class HistoricProcessInstanceTest {
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
 
     // when/then
-    assertThatThrownBy(() -> historicProcessInstanceQuery.asc())
+    assertThatThrownBy(historicProcessInstanceQuery::asc)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
 
-    assertThatThrownBy(() -> historicProcessInstanceQuery.desc())
+    assertThatThrownBy(historicProcessInstanceQuery::desc)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
 
@@ -722,7 +722,7 @@ class HistoricProcessInstanceTest {
     var historicProcessInstanceQuery1 = historicProcessInstanceQuery.orderByProcessInstanceId();
 
     // when/then
-    assertThatThrownBy(() -> historicProcessInstanceQuery1.list())
+    assertThatThrownBy(historicProcessInstanceQuery1::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessage("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
   }

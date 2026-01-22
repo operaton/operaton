@@ -242,19 +242,19 @@ class AuthorizationQueryTest {
     var authorizationQuery = authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId();
 
     // when/then
-    assertThatThrownBy(() -> authorizationQuery.list())
+    assertThatThrownBy(authorizationQuery::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    assertThatThrownBy(() -> authorizationQuery.list())
+    assertThatThrownBy(authorizationQuery::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    assertThatThrownBy(() -> authorizationQuery.list())
+    assertThatThrownBy(authorizationQuery::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    assertThatThrownBy(() -> authorizationQuery.list())
+    assertThatThrownBy(authorizationQuery::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }

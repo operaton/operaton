@@ -46,8 +46,6 @@ public interface Process extends CallableElement {
 
   void setExecutable(boolean executable);
 
-  // TODO: collaboration ref
-
   Auditing getAuditing();
 
   void setAuditing(Auditing auditing);

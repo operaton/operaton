@@ -393,7 +393,7 @@ public abstract class AbstractBaseElementBuilder<B extends AbstractBaseElementBu
       edgeSource = (FlowNode) association.getSource();
       edgeTarget = (FlowNode) association.getTarget();
     } else {
-      throw new RuntimeException("Bpmn element type not supported");
+      throw new BpmnModelException("BPMN element type not supported");
     }
 
     setWaypointsWithSourceAndTarget(edge, edgeSource, edgeTarget);

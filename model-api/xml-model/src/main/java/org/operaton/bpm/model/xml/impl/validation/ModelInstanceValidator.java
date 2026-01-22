@@ -18,6 +18,7 @@ package org.operaton.bpm.model.xml.impl.validation;
 
 import java.util.Collection;
 
+import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.ModelInstanceImpl;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.validation.ModelElementValidator;
@@ -55,7 +56,7 @@ public class ModelInstanceValidator {
           validator.validate(element, resultsCollector);
         }
         catch(RuntimeException e) {
-          throw new RuntimeException("Validator %s threw an exception while validating %s".formatted(validator, element), e);
+          throw new ModelValidationException("Validator %s threw an exception while validating %s".formatted(validator, element), e);
         }
       }
 

@@ -220,88 +220,86 @@ public class VariableMapImpl implements VariableMap, Serializable, VariableConte
 
   @Override
   public Set<java.util.Map.Entry<String, Object>> entrySet() {
-
     // NOTE: cannot naively return Set of entries here. A proper implementation must
     // return a Set which is backed by the actual map
+    return new VariableMapEntrySet();
+  }
 
-    return new AbstractSet<>() {
+  private class VariableMapEntrySet extends AbstractSet<java.util.Map.Entry<String, Object>> {
 
-      @Override
-      public Iterator<java.util.Map.Entry<String, Object>> iterator() {
+    @Override
+    public Iterator<java.util.Map.Entry<String, Object>> iterator() {
+      return new Iterator<>() {
 
-        return new Iterator<>() {
+        // wrapped iterator. Must be local to the iterator() method
+        final Iterator<java.util.Map.Entry<String, TypedValue>> iterator = variables.entrySet().iterator();
 
-          // wrapped iterator. Must be local to the iterator() method
-          final Iterator<java.util.Map.Entry<String, TypedValue>> iterator = variables.entrySet().iterator();
+        @Override
+        public boolean hasNext() {
+          return iterator.hasNext();
+        }
 
-          @Override
-          public boolean hasNext() {
-            return iterator.hasNext();
-          }
+        @Override
+        public java.util.Map.Entry<String, Object> next() {
 
-          @Override
-          public java.util.Map.Entry<String, Object> next() {
+          final java.util.Map.Entry<String, TypedValue> underlyingEntry = iterator.next();
 
-            final java.util.Map.Entry<String, TypedValue> underlyingEntry = iterator.next();
+          // return wrapper backed by the underlying entry
+          return new Entry<>() {
+            @Override
+            public String getKey() {
+              return underlyingEntry.getKey();
+            }
 
-            // return wrapper backed by the underlying entry
-            return new Entry<>() {
-              @Override
-              public String getKey() {
-                return underlyingEntry.getKey();
-              }
+            @Override
+            public Object getValue() {
+              return underlyingEntry.getValue().getValue();
+            }
 
-              @Override
-              public Object getValue() {
-                return underlyingEntry.getValue().getValue();
-              }
+            @Override
+            public Object setValue(Object value) {
+              TypedValue typedValue = Variables.untypedValue(value);
+              return underlyingEntry.setValue(typedValue);
+            }
 
-              @Override
-              public Object setValue(Object value) {
-                TypedValue typedValue = Variables.untypedValue(value);
-                return underlyingEntry.setValue(typedValue);
-              }
-
-              @Override
-              public final boolean equals(Object o) {
-                if (!(o instanceof Map.Entry)) {
-                  return false;
-                }
-                Entry<?, ?> e = (Entry<?, ?>) o;
-                Object k1 = getKey();
-                Object k2 = e.getKey();
-                if (k1 == k2 || (k1 != null && k1.equals(k2))) {
-                  Object v1 = getValue();
-                  Object v2 = e.getValue();
-                  if (v1 == v2 || (v1 != null && v1.equals(v2))) {
-                    return true;
-                  }
-                }
+            @Override
+            public final boolean equals(Object o) {
+              if (!(o instanceof Map.Entry)) {
                 return false;
               }
-
-              @Override
-              public final int hashCode() {
-                String key = getKey();
-                Object value = getValue();
-                return (key == null ? 0 : key.hashCode()) ^ (value == null ? 0 : value.hashCode());
+              Entry<?, ?> e = (Entry<?, ?>) o;
+              Object k1 = getKey();
+              Object k2 = e.getKey();
+              if (k1 == k2 || (k1 != null && k1.equals(k2))) {
+                Object v1 = getValue();
+                Object v2 = e.getValue();
+                if (v1 == v2 || (v1 != null && v1.equals(v2))) {
+                  return true;
+                }
               }
-            };
-          }
+              return false;
+            }
 
-          @Override
-          public void remove() {
-            iterator.remove();
-          }
-        };
-      }
+            @Override
+            public final int hashCode() {
+              String key = getKey();
+              Object value = getValue();
+              return (key == null ? 0 : key.hashCode()) ^ (value == null ? 0 : value.hashCode());
+            }
+          };
+        }
 
-      @Override
-      public int size() {
-        return variables.size();
-      }
+        @Override
+        public void remove() {
+          iterator.remove();
+        }
+      };
+    }
 
-    };
+    @Override
+    public int size() {
+      return variables.size();
+    }
   }
 
   @Override

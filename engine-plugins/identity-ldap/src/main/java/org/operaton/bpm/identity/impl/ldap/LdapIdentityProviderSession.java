@@ -144,54 +144,88 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   }
 
   protected List<User> findUsersByGroupId(LdapUserQueryImpl query) {
+    List<String> groupMembers = collectGroupMembers(query);
+    return findUsersFromGroupMembers(query, groupMembers);
+  }
+
+  private List<String> collectGroupMembers(LdapUserQueryImpl query) {
     String baseDn = getDnForGroup(query.getGroupId());
-
-    // compose group search filter
     String groupSearchFilter = "(& %s)".formatted(ldapConfiguration.getGroupSearchFilter());
-
     initializeControls(query);
-
+    
     List<String> groupMembers = new ArrayList<>();
     int resultCount = 0;
 
     do {
-      try (LdapSearchResults searchResults = ldapClient.search(baseDn, groupSearchFilter)) {
-        // first find group
-        while (searchResults.hasMoreElements()) {
-          String groupMemberAttribute = ldapConfiguration.getGroupMemberAttribute();
-          NamingEnumeration<String> allGroupMembers = LdapClient.getAllMembers(groupMemberAttribute, searchResults);
-          if (allGroupMembers != null) {
-            // iterate group members
-            while (allGroupMembers.hasMoreElements()) {
-              if (resultCount >= query.getFirstResult()) {
-                groupMembers.add(allGroupMembers.nextElement());
-              }
-              resultCount++;
-            }
-          }
-        }
-      }
+      resultCount = processGroupSearchResults(query, groupMembers, resultCount, baseDn, groupSearchFilter);
     } while (paginationContinues(groupMembers.size(), query.getMaxResults()));
 
+    return groupMembers;
+  }
+
+  private int processGroupSearchResults(LdapUserQueryImpl query, List<String> groupMembers,
+                                        int resultCount, String baseDn, String groupSearchFilter) {
+    try (LdapSearchResults searchResults = ldapClient.search(baseDn, groupSearchFilter)) {
+      while (searchResults.hasMoreElements()) {
+        resultCount = extractGroupMembers(query, groupMembers, resultCount, searchResults);
+      }
+    }
+    return resultCount;
+  }
+
+  private int extractGroupMembers(LdapUserQueryImpl query, List<String> groupMembers,
+                                  int resultCount, LdapSearchResults searchResults) {
+    String groupMemberAttribute = ldapConfiguration.getGroupMemberAttribute();
+    NamingEnumeration<String> allGroupMembers = LdapClient.getAllMembers(groupMemberAttribute, searchResults);
+    
+    if (allGroupMembers != null) {
+      resultCount = addMembersToList(query, groupMembers, resultCount, allGroupMembers);
+    }
+    return resultCount;
+  }
+
+  private int addMembersToList(LdapUserQueryImpl query, List<String> groupMembers,
+                               int resultCount, NamingEnumeration<String> allGroupMembers) {
+    while (allGroupMembers.hasMoreElements()) {
+      if (resultCount >= query.getFirstResult()) {
+        groupMembers.add(allGroupMembers.nextElement());
+      }
+      resultCount++;
+    }
+    return resultCount;
+  }
+
+  private List<User> findUsersFromGroupMembers(LdapUserQueryImpl query, List<String> groupMembers) {
     List<User> userList = new ArrayList<>();
     String userBaseDn = composeDn(ldapConfiguration.getUserSearchBase(), ldapConfiguration.getBaseDn());
     int memberCount = 0;
+
     for (String memberId : groupMembers) {
-      if (userList.size() < query.getMaxResults() && memberCount >= query.getFirstResult()) {
-        if (ldapConfiguration.isUsePosixGroups()) {
-          query.userId(memberId);
-        }
-        List<User> users = ldapConfiguration.isUsePosixGroups() ?
-            findUsersWithoutGroupId(query, userBaseDn, true) :
-            findUsersWithoutGroupId(query, memberId, true);
-        if (!users.isEmpty()) {
-          userList.add(users.get(0));
+      if (shouldProcessMember(query, userList, memberCount)) {
+        User user = findUserForMember(query, userBaseDn, memberId);
+        if (user != null) {
+          userList.add(user);
         }
       }
       memberCount++;
     }
 
     return userList;
+  }
+
+  private boolean shouldProcessMember(LdapUserQueryImpl query, List<User> userList, int memberCount) {
+    return userList.size() < query.getMaxResults() && memberCount >= query.getFirstResult();
+  }
+
+  private User findUserForMember(LdapUserQueryImpl query, String userBaseDn, String memberId) {
+    if (ldapConfiguration.isUsePosixGroups()) {
+      query.userId(memberId);
+    }
+    
+    String searchBaseDn = ldapConfiguration.isUsePosixGroups() ? userBaseDn : memberId;
+    List<User> users = findUsersWithoutGroupId(query, searchBaseDn, true);
+    
+    return users.isEmpty() ? null : users.get(0);
   }
 
   @Override
@@ -395,7 +429,6 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   // Utils ////////////////////////////////////////////
 
-  @SuppressWarnings("unchecked")
   protected <E extends DbEntity, T> List<T> retrieveResults(String baseDn,
                                                             String filter,
                                                             Function<SearchResult, E> transformEntity,
@@ -403,49 +436,116 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
                                                             int maxResults,
                                                             int firstResult,
                                                             boolean ignorePagination) {
-    StringBuilder resultLogger = new StringBuilder();
-    if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
-      resultLogger.append("LDAP query results: [");
-    }
-
+    ResultLogger resultLogger = initializeResultLogger();
     List<T> entities = new ArrayList<>();
-
     int resultCount = 0;
 
     do {
-      try (LdapSearchResults searchResults = ldapClient.search(baseDn, filter)) {
-        while (searchResults.hasMoreElements() && (entities.size() < maxResults || ignorePagination)) {
-          SearchResult result = searchResults.nextElement();
-
-          E entity = transformEntity.apply(result);
-
-          String id = entity.getId();
-          if (id == null) {
-            LdapPluginLogger.INSTANCE.invalidLdapEntityReturned(entity, result);
-          } else {
-            if (resultCountPredicate.test(id)) {
-              if (resultCount >= firstResult || ignorePagination) {
-                if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
-                  resultLogger.append(entity);
-                  resultLogger.append(" based on ");
-                  resultLogger.append(result);
-                  resultLogger.append(", ");
-                }
-                entities.add((T) entity);
-              }
-              resultCount++;
-            }
-          }
-        }
-      }
+      resultCount = processSearchPage(baseDn, filter, transformEntity, resultCountPredicate, 
+                                      maxResults, firstResult, ignorePagination, 
+                                      entities, resultCount, resultLogger);
     } while (paginationContinues(entities.size(), maxResults));
 
+    logResults(resultLogger);
+    return entities;
+  }
+
+  private <E extends DbEntity, T> int processSearchPage(String baseDn,
+                                                        String filter,
+                                                        Function<SearchResult, E> transformEntity,
+                                                        Predicate<String> resultCountPredicate,
+                                                        int maxResults,
+                                                        int firstResult,
+                                                        boolean ignorePagination,
+                                                        List<T> entities,
+                                                        int resultCount,
+                                                        ResultLogger resultLogger) {
+    try (LdapSearchResults searchResults = ldapClient.search(baseDn, filter)) {
+      while (searchResults.hasMoreElements() && shouldContinueProcessing(entities, maxResults, ignorePagination)) {
+        SearchResult result = searchResults.nextElement();
+        resultCount = processSearchResult(result, transformEntity, resultCountPredicate, 
+                                         firstResult, ignorePagination, entities, 
+                                         resultCount, resultLogger);
+      }
+    }
+    return resultCount;
+  }
+
+  private <T> boolean shouldContinueProcessing(List<T> entities, int maxResults, boolean ignorePagination) {
+    return entities.size() < maxResults || ignorePagination;
+  }
+
+  @SuppressWarnings("unchecked")
+  private <E extends DbEntity, T> int processSearchResult(SearchResult result,
+                                                          Function<SearchResult, E> transformEntity,
+                                                          Predicate<String> resultCountPredicate,
+                                                          int firstResult,
+                                                          boolean ignorePagination,
+                                                          List<T> entities,
+                                                          int resultCount,
+                                                          ResultLogger resultLogger) {
+    E entity = transformEntity.apply(result);
+    String id = entity.getId();
+
+    if (id == null) {
+      LdapPluginLogger.INSTANCE.invalidLdapEntityReturned(entity, result);
+      return resultCount;
+    }
+
+    if (resultCountPredicate.test(id)) {
+      if (shouldAddEntity(resultCount, firstResult, ignorePagination)) {
+        logEntityIfDebugEnabled(entity, result, resultLogger);
+        entities.add((T) entity);
+      }
+      resultCount++;
+    }
+
+    return resultCount;
+  }
+
+  private boolean shouldAddEntity(int resultCount, int firstResult, boolean ignorePagination) {
+    return resultCount >= firstResult || ignorePagination;
+  }
+
+  private <E extends DbEntity> void logEntityIfDebugEnabled(E entity, SearchResult result, ResultLogger resultLogger) {
+    if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
+      resultLogger.append(entity);
+      resultLogger.append(" based on ");
+      resultLogger.append(result);
+      resultLogger.append(", ");
+    }
+  }
+
+  private ResultLogger initializeResultLogger() {
+    ResultLogger logger = new ResultLogger();
+    if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
+      logger.append("LDAP query results: [");
+    }
+    return logger;
+  }
+
+  private void logResults(ResultLogger resultLogger) {
     if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
       resultLogger.append("]");
       LdapPluginLogger.INSTANCE.queryResult(resultLogger.toString());
     }
+  }
 
-    return entities;
+  private static class ResultLogger {
+    private final StringBuilder builder = new StringBuilder();
+
+    public void append(Object obj) {
+      builder.append(obj);
+    }
+
+    public void append(String str) {
+      builder.append(str);
+    }
+
+    @Override
+    public String toString() {
+      return builder.toString();
+    }
   }
 
   protected String getDnForUser(String userId) {

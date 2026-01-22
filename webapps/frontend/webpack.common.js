@@ -124,7 +124,7 @@ module.exports = (_env, argv = {}) => {
         {
           test: /\.s[ac]ss$/i, // Matches both .scss and .sass files
           use: [
-            'style-loader',
+            MiniCssExtractPlugin.loader,
             'css-loader',
             {
               loader: 'sass-loader',

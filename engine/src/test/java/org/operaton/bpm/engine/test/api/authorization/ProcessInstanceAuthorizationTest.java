@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.AuthorizationException;
@@ -1228,10 +1229,9 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
-  /**
-   * currently the ThrowSignalEventActivityBehavior does not check authorization
-   */
-  public void FAILING_testStartProcessInstanceByThrowSignalEventWithCreatePermissionOnProcessInstance() {
+  @Test
+  @Disabled("currently the ThrowSignalEventActivityBehavior does not check authorization")
+  void testStartProcessInstanceByThrowSignalEventWithCreatePermissionOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
     createGrantAuthorization(PROCESS_DEFINITION, THROW_WARNING_SIGNAL_PROCESS_KEY, userId, CREATE_INSTANCE);
@@ -1259,10 +1259,9 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
-  /**
-   * currently the ThrowSignalEventActivityBehavior does not check authorization
-   */
-  public void FAILING_testThrowSignalEventWithoutAuthorization() {
+  @Test
+  @Disabled("currently the ThrowSignalEventActivityBehavior does not check authorization")
+  void testThrowSignalEventWithoutAuthorization() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
     createGrantAuthorization(PROCESS_DEFINITION, THROW_ALERT_SIGNAL_PROCESS_KEY, userId, CREATE_INSTANCE);

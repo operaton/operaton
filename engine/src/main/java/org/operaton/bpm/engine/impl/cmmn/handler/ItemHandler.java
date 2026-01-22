@@ -269,9 +269,9 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     activity.setProperty(PROPERTY_ACTIVITY_TYPE, activityType);
   }
 
-  @SuppressWarnings("unused")
+  @SuppressWarnings({"unused", "deprecation"})
   protected void initializeDescription(CmmnElement element, CmmnActivity activity, CmmnHandlerContext context) {
-    String description = getDesciption(element);
+    String description = getDescription(element);
     if (description == null) {
       description = getDocumentation(element);
     }
@@ -685,6 +685,7 @@ public abstract class ItemHandler extends CmmnElementHandler<CmmnElement, CmmnAc
     return getDescription(element);
   }
 
+  @SuppressWarnings("deprecation")
   protected String getDescription(CmmnElement element) {
     String description = element.getDescription();
 

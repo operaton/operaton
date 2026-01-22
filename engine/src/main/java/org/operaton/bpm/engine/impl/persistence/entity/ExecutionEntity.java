@@ -379,7 +379,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // scopes ///////////////////////////////////////////////////////////////////
 
   @Override
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked", "deprecation" })
   public void initialize() {
     LOG.initializeExecution(this);
 

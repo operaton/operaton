@@ -1537,7 +1537,8 @@ class ProcessInstanceModificationTest {
   }
 
   @Deployment(resources = { CALL_ACTIVITY_PARENT_PROCESS, CALL_ACTIVITY_CHILD_PROCESS })
-  public void FAILING_testCancelCallActivityInstance() {
+  @Test
+  void testCancelCallActivityInstance() {
     // given
     ProcessInstance parentProcess = runtimeService.startProcessInstanceByKey("parentprocess");
     ProcessInstance subProcess = runtimeService.createProcessInstanceQuery().processDefinitionKey("subprocess").singleResult();

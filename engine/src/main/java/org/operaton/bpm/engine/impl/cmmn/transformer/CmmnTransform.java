@@ -91,8 +91,7 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
       throw LOG.transformResourceException(resourceName, e);
     }
 
-    // TODO: use model API to validate (ie.
-    // semantic and execution validation) model
+    // TODO: use model API to validate (i.e. semantic and execution validation) model
 
     context.setModel(model);
     context.setDeployment(deployment);

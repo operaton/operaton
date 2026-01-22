@@ -115,5 +115,4 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
     return ((HistoricCaseInstanceEntity) historicCaseInstance).getState();
   }
 
-  //TODO override other caseExecution methods
 }

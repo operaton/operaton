@@ -367,7 +367,6 @@ public final class ReflectUtil {
 
   private static Method findMethod(Class< ? extends Object> clazz, String methodName, Class< ? >[] args) {
     for (Method method : clazz.getDeclaredMethods()) {
-      // TODO add parameter matching
       if ( method.getName().equals(methodName)
            && matches(method.getParameterTypes(), args)
          ) {

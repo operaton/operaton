@@ -1595,8 +1595,7 @@ class ProcessInstanceModificationTest {
         .isEqualTo("category-value");
   }
 
-  // TODO: check if starting with a non-existing activity/transition id is
-  // handled properly
+  // TODO: check if starting with a non-existing activity/transition id is handled properly
 
   protected String getInstanceIdForActivity(ActivityInstance activityInstance, String activityId) {
     ActivityInstance instance = getChildInstanceForActivity(activityInstance, activityId);

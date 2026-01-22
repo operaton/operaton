@@ -54,7 +54,8 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executio
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.hierarchical;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -951,11 +952,11 @@ class ExecutionQueryTest {
     ExecutionQuery executionQuery2 = runtimeService.createExecutionQuery().variableValueEquals("serializableVar", new DummySerializable());
 
     // then
-    assertThatThrownBy(() -> executionQuery1.list())
+    assertThatThrownBy(executionQuery1::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Variables of type ByteArray cannot be used to query");
 
-    assertThatThrownBy(() -> executionQuery2.list())
+    assertThatThrownBy(executionQuery2::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Object values cannot be used to query");
 

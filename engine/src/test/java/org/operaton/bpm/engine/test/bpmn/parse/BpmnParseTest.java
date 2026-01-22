@@ -112,7 +112,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("timerEventDefinition is not allowed on start event within a subprocess")
         .satisfies(e -> {
@@ -130,7 +130,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("messageEventDefinition only allowed on start event if subprocess is an event subprocess")
         .satisfies(e -> {
@@ -148,7 +148,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("subProcess must define a startEvent element")
         .satisfies(e -> {
@@ -164,7 +164,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("The content of element 'bpmn2:conditionalEventDefinition' is not complete.")
         .hasMessageContaining("conditionalEventDefinition is not allowed on start event within a subprocess")
@@ -184,7 +184,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("signalEventDefinition only allowed on start event if subprocess is an event subprocess")
         .satisfies(e -> {
@@ -202,7 +202,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("errorEventDefinition only allowed on start event if subprocess is an event subprocess")
         .satisfies(e -> {
@@ -220,7 +220,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("escalationEventDefinition is not allowed on start event within a subprocess")
         .satisfies(e -> {
@@ -238,7 +238,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("compensateEventDefinition is not allowed on start event within a subprocess")
         .satisfies(e -> {
@@ -256,7 +256,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("messageEventDefinition only allowed on start event if subprocess is an event subprocess")
         .satisfies(e -> {
@@ -274,7 +274,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("timerEventDefinition is not allowed on start event within a subprocess")
         .satisfies(e -> {
@@ -292,7 +292,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("The content of element 'bpmn2:conditionalEventDefinition' is not complete.")
         .hasMessageContaining("conditionalEventDefinition is not allowed on start event within a subprocess")
@@ -312,7 +312,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("signalEventDefinition only allowed on start event if subprocess is an event subprocess")
         .satisfies(e -> {
@@ -330,7 +330,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("errorEventDefinition only allowed on start event if subprocess is an event subprocess")
         .satisfies(e -> {
@@ -348,7 +348,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("escalationEventDefinition is not allowed on start event within a subprocess")
         .satisfies(e -> {
@@ -366,7 +366,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("compensateEventDefinition is not allowed on start event within a subprocess")
         .satisfies(e -> {
@@ -384,7 +384,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("cvc-complex-type.3.2.2:")
         .hasMessageContaining("invalidAttribute")
@@ -402,7 +402,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Error parsing '${currentUser()': syntax error at position 15, encountered 'null', expected '}'");
   }
@@ -414,7 +414,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("The end-tag for element type \"bpmndi:BPMNLabel\" must end with a '>' delimiter");
   }
@@ -426,7 +426,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("start event of event subprocess must be of type 'error', 'message', 'timer', 'signal', 'compensation' or 'escalation'")
         .hasMessageContaining("Invalid incoming sequence flow of event subprocess")
@@ -448,7 +448,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("process must define a startEvent element")
         .satisfies(e -> {
@@ -470,7 +470,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("timerEventDefinition is not allowed on start event within a subprocess")
         .hasMessageContaining("messageEventDefinition only allowed on start event if subprocess is an event subprocess")
@@ -513,7 +513,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("'asyncAfter' not supported for")
         .satisfies(e -> {
@@ -775,7 +775,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("The content of element 'bpmn:conditionalEventDefinition' is not complete.")
         .hasMessageContaining("Conditional event must contain an expression for evaluation.")
@@ -875,7 +875,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Missing parameter 'source' or 'sourceExpression' when passing variables")
         .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
@@ -907,7 +907,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Empty attribute 'source' when passing variables")
         .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
@@ -939,7 +939,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
         .satisfies(e -> {
@@ -957,7 +957,7 @@ class BpmnParseTest {
       var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
       // when/then
-      assertThatThrownBy(() -> deploymentBuilder.deploy())
+      assertThatThrownBy(deploymentBuilder::deploy)
           .isInstanceOf(ParseException.class)
           .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
           .satisfies(e -> {
@@ -976,7 +976,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Empty attribute 'target' when attribute 'source' or 'sourceExpression' is set")
         .satisfies(e -> {
@@ -1004,7 +1004,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Missing parameter 'source' or 'sourceExpression' when passing variables")
         .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
@@ -1036,7 +1036,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Empty attribute 'source' when passing variables")
         .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
@@ -1068,7 +1068,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
         .satisfies(e -> {
@@ -1086,7 +1086,7 @@ class BpmnParseTest {
       var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
       // when/then
-      assertThatThrownBy(() -> deploymentBuilder.deploy())
+      assertThatThrownBy(deploymentBuilder::deploy)
           .isInstanceOf(ParseException.class)
           .hasMessageContaining("Missing attribute 'target' when attribute 'source' or 'sourceExpression' is set")
           .satisfies(e -> {
@@ -1105,7 +1105,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Empty attribute 'target' when attribute 'source' or 'sourceExpression' is set")
         .satisfies(e -> {
@@ -1161,7 +1161,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Cannot parse historyTimeToLive")
         .satisfies(e -> {
@@ -1222,7 +1222,7 @@ class BpmnParseTest {
       var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
       // when/then
-      assertThatThrownBy(() -> deploymentBuilder.deploy())
+      assertThatThrownBy(deploymentBuilder::deploy)
           .isInstanceOf(ParseException.class)
           .hasMessageContaining("Cannot parse historyTimeToLive");
     } finally {
@@ -1239,7 +1239,7 @@ class BpmnParseTest {
       var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
       // when/then
-      assertThatThrownBy(() -> deploymentBuilder.deploy())
+      assertThatThrownBy(deploymentBuilder::deploy)
           .isInstanceOf(ParseException.class)
           .hasMessageContaining("Cannot parse historyTimeToLive");
     } finally {
@@ -1256,7 +1256,7 @@ class BpmnParseTest {
       var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
       // when/then
-      assertThatThrownBy(() -> deploymentBuilder.deploy())
+      assertThatThrownBy(deploymentBuilder::deploy)
           .isInstanceOf(ParseException.class)
           .hasMessageContaining("Cannot parse historyTimeToLive");
     } finally {
@@ -1271,7 +1271,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Cannot parse historyTimeToLive");
   }
@@ -1283,7 +1283,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Cannot parse historyTimeToLive");
   }
@@ -1306,7 +1306,7 @@ class BpmnParseTest {
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Attribute 'class' cannot be empty")
         .satisfies(e -> {
@@ -1322,7 +1322,7 @@ class BpmnParseTest {
     DeploymentBuilder deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Attribute 'delegateExpression' cannot be empty")
         .satisfies(e -> {
@@ -1374,7 +1374,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("JAXP00010002");
   }
@@ -1455,7 +1455,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().addString("process.bpmn20.xml", timerWithoutDetails);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Timer needs configuration (either timeDate, timeCycle or timeDuration is needed).")
         .satisfies(e -> {
@@ -1482,7 +1482,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().addString("process.bpmn20.xml", incorrectSequenceFlow);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("Invalid destination 'eventBasedGateway' of sequence flow 'null'")
         .satisfies(e -> {
@@ -1501,7 +1501,7 @@ class BpmnParseTest {
     var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
 
     // when/then
-    assertThatThrownBy(() -> deploymentBuilder.deploy())
+    assertThatThrownBy(deploymentBuilder::deploy)
         .isInstanceOf(ParseException.class)
         .hasMessageContaining("multiple none start events or timer start events not supported on process definition")
         .hasMessageContaining("multiple start events not supported for subprocess")

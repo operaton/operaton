@@ -60,7 +60,8 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processI
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.processInstanceByProcessInstanceId;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static java.util.Collections.emptySet;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez
@@ -1187,7 +1188,7 @@ public class ProcessInstanceQueryTest {
     var processInstanceQuery = runtimeService.createProcessInstanceQuery().variableValueEquals("bytesVar", testBytes);
 
     // when/then
-    assertThatThrownBy(() -> processInstanceQuery.list())
+    assertThatThrownBy(processInstanceQuery::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Variables of type ByteArray cannot be used to query");
 
@@ -1195,7 +1196,7 @@ public class ProcessInstanceQueryTest {
     var processInstanceQuery2 = runtimeService.createProcessInstanceQuery().variableValueEquals("serializableVar", dummySerializable);
 
     // when/then
-    assertThatThrownBy(() -> processInstanceQuery2.list())
+    assertThatThrownBy(processInstanceQuery2::list)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Object values cannot be used to query");
 
@@ -2197,7 +2198,7 @@ public class ProcessInstanceQueryTest {
       .superProcessInstanceId("processInstanceId");
 
     // when/then
-    assertThatThrownBy(() -> processInstanceQuery2.rootProcessInstances())
+    assertThatThrownBy(processInstanceQuery2::rootProcessInstances)
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
   }

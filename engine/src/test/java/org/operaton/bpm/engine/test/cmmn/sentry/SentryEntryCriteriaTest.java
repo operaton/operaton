@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.cmmn.sentry;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.exception.NotAllowedException;
@@ -571,7 +572,9 @@ class SentryEntryCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testEnableOnParentSuspendInsideStage.cmmn"})
-  public void FAILING_testEnableOnParentSuspendInsideStage() {
+  @Test
+  @Disabled("Fixme")
+  void testEnableOnParentSuspendInsideStage() {
     // given
     createCaseInstance();
 
@@ -619,7 +622,9 @@ class SentryEntryCriteriaTest extends CmmnTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testEnableOnParentResumeInsideStage.cmmn"})
-  public void FAILING_testEnableOnParentResumeInsideStage() {
+  @Test
+  @Disabled("Fixme")
+  void testEnableOnParentResumeInsideStage() {
     // given
     createCaseInstance();
 
@@ -673,7 +678,9 @@ class SentryEntryCriteriaTest extends CmmnTest {
    * will be suspended.
    */
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/sentry/SentryEntryCriteriaTest.testResume.cmmn"})
-  public void FAILING_testResume() {
+  @Test
+  @Disabled("Fixme")
+  void testResume() {
     // given
     createCaseInstance();
 

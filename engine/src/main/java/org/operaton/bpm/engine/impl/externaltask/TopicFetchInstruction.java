@@ -47,7 +47,7 @@ public class TopicFetchInstruction implements Serializable {
   protected String[] tenantIds;
   private List<String> variablesToFetch;
 
-  private List<QueryVariableValue> filterVariables;
+  private final List<QueryVariableValue> filterVariables;
   protected long lockDuration;
   protected boolean deserializeVariables;
   protected boolean localVariables;

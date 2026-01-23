@@ -37,9 +37,9 @@ public class CmmnSentryDeclaration implements Serializable {
 
   private String id;
 
-  private Map<String, List<CmmnOnPartDeclaration>> onPartMap = new HashMap<>();
-  private List<CmmnOnPartDeclaration> onParts = new ArrayList<>();
-  private List<CmmnVariableOnPartDeclaration> variableOnParts = new ArrayList<>();
+  private final Map<String, List<CmmnOnPartDeclaration>> onPartMap = new HashMap<>();
+  private final List<CmmnOnPartDeclaration> onParts = new ArrayList<>();
+  private final List<CmmnVariableOnPartDeclaration> variableOnParts = new ArrayList<>();
 
   private CmmnIfPartDeclaration ifPart;
 

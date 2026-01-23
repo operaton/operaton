@@ -76,7 +76,7 @@ mvn jetty:run -Pdevelop
 npm run start
 ```
 
-The webapps are then available pointing a browser at [http://localhost:8080](http://localhost:8080). To login as an admin user, use `jonny1` as username and password.
+The webapps are then available pointing a browser at [http://localhost:8080](http://localhost:8080). To login as an admin user, use `jonny1` as User ID and password.
 
 You can now start developing using the `npm run start` command in the frontend directory.
 

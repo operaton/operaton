@@ -4,7 +4,7 @@
   <parent>
     <artifactId>operaton-connect-root</artifactId>
     <groupId>org.operaton.connect</groupId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
   <artifactId>operaton-connect-http-client</artifactId>
   <name>Operaton - Connect - HTTP Client</name>

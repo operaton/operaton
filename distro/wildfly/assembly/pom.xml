@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
 
   <artifactId>operaton-wildfly-assembly</artifactId>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.commons</groupId>
     <artifactId>operaton-commons-root</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
   <artifactId>operaton-commons-logging</artifactId>
   <name>Operaton - Commons - Logging</name>

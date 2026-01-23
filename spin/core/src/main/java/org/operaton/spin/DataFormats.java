@@ -109,13 +109,9 @@ public class DataFormats {
   /**
    * Detect all available dataformats on the classpath using a {@link ServiceLoader}.
    */
-  protected void ensureDataformatsInitialized() {
+  protected synchronized void ensureDataformatsInitialized() {
     if(availableDataFormats == null) {
-      synchronized(DataFormats.class) {
-        if(availableDataFormats == null) {
-          registerDataFormats(null);
-        }
-      }
+      registerDataFormats(null);
     }
   }
 

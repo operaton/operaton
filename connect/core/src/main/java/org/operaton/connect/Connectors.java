@@ -142,13 +142,9 @@ public class Connectors {
   /**
    * Detect all available connectors in the classpath using a {@link ServiceLoader}.
    */
-  protected void ensureConnectorProvidersInitialized() {
+  protected synchronized void ensureConnectorProvidersInitialized() {
     if (availableConnectors == null) {
-      synchronized (Connectors.class) {
-        if (availableConnectors == null) {
-          initializeConnectors(null);
-        }
-      }
+      initializeConnectors(null);
     }
   }
 

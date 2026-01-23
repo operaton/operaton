@@ -52,6 +52,10 @@
           <groupId>org.jboss.openjdk-orb</groupId>
           <artifactId>openjdk-orb</artifactId>
         </exclusion>
+        <exclusion>
+          <groupId>org.jgroups</groupId>
+          <artifactId>jgroups</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>

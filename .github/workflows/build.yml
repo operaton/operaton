@@ -113,6 +113,12 @@ jobs:
           # Use a glob pattern to include all package-lock.json files
           # This ensures the cache is unique based on ANY lock file change
           cache-dependency-path: '**/package-lock.json'
+      - name: Maven Dependency Tree
+        id: maven-dependency-tree
+        shell: bash
+        run: |
+            echo "ℹ️ Generating Maven dependency tree"
+            ./mvnw dependency:tree
       - name: Maven Build
         id: maven-build
         shell: bash

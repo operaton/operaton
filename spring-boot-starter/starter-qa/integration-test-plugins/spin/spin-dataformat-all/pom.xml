@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>qa-plugins-spin</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
   <artifactId>qa-plugins-spin-dataformat-all</artifactId>
   <name>Operaton - Spring Boot Starter - QA - Plugins - Spin All</name>

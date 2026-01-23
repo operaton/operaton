@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.example</groupId>
     <artifactId>operaton-example-root</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
   <artifactId>operaton-example-invoice</artifactId>
   <packaging>war</packaging>

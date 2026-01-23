@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
   </parent>
   <artifactId>operaton-wildfly-subsystem</artifactId>
   <name>Operaton - Wildfly Subsystem</name>
@@ -36,12 +36,6 @@
     <!-- Override jgroups -->
     <!-- org.wildfly:wildfly-connector:jar:37.0.1.Final:provided depends on org.jgroups:jgroups:jar:5.4.9.Final:provided -->
     <!-- jgroups 5.4.9.Final is not on Maven Central -->
-    <dependency>
-      <groupId>org.jgroups</groupId>
-      <artifactId>jgroups</artifactId>
-      <version>5.4.12.Final</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>org.wildfly</groupId>
       <artifactId>wildfly-ejb3</artifactId>

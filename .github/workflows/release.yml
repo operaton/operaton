@@ -134,6 +134,21 @@ jobs:
       - name: Maven Build
         run: |
           PROJECT_ROOT=$(pwd)
+          
+          # workaround for https://github.com/operaton/operaton/issues/2165
+          
+          # Download jgroups 5.4.12.Final
+          ./mvnw dependency:get -Dartifact=org.jgroups:jgroups:5.4.12.Final
+          
+          # Install it as 5.4.9.Final in local repository
+          ./mvnw install:install-file \
+          -Dfile=$HOME/.m2/repository/org/jgroups/jgroups/5.4.12.Final/jgroups-5.4.12.Final.jar \
+          -DgroupId=org.jgroups \
+          -DartifactId=jgroups \
+          -Dversion=5.4.9.Final \
+          -Dpackaging=jar \
+          -DgeneratePom=true
+          
           # Make a verification build. Also the deploy step will need the tomcat distro for building, but we don't want to deploy it.
           ./mvnw \
             -Pdistro,distro-run,distro-tomcat,distro-wildfly,distro-webjar,distro-starter,distro-serverless,h2-in-memory \

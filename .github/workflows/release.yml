@@ -156,8 +156,7 @@ jobs:
             versions:dependency-updates-aggregate-report \
             versions:plugin-updates-aggregate-report \
             -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc \
-            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list \
-            -DskipTests
+            -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=$PROJECT_ROOT/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list
           .github/scripts/prepare-reports.sh
           .github/scripts/prepare-deploy.sh
           ./mvnw -Psonatype-oss-release -DskipTests=true -Dskip.frontend.build=true deploy

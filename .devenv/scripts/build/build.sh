@@ -87,8 +87,6 @@ if ([ "$SKIP_TESTS" = "true" ]); then
   MVN_ARGS+=(-DskipTests)
 fi
 
-MVN_ARGS+=(dependency:tree)
-
 case "$BUILD_PROFILE" in
   "fast")
     PROFILES+=(distro h2-in-memory)

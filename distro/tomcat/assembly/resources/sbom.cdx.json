@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:1b1c144b-e6c8-4e74-ae16-075ce6e9f8ad",
+  "serialNumber": "urn:uuid:f09724c9-8eec-47ed-b54f-525895810b5a",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-22T05:50:09Z",
+    "timestamp": "2026-01-23T06:55:54Z",
     "tools": {
       "components": [
         {
@@ -12388,44 +12388,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-observation",
-      "version": "1.15.7",
+      "version": "1.15.8",
       "description": "Module containing Observation related code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "142407ad0b6073a6b6c60d477d4e4049"
+          "content": "0759394328fa08c0a5c69ce2f6c41374"
         },
         {
           "alg": "SHA-1",
-          "content": "f1b617aa0056e4f5266d30f6126113c1b82b1365"
+          "content": "609bf17faca7f9a860dea92f959152d1d586d845"
         },
         {
           "alg": "SHA-256",
-          "content": "6cb1072c6d3e429eeddda077aa13b36da87f8abc975df75b43ac62a0d36748ce"
+          "content": "cdd217ccb7f896b5dcd555cef260dd1ec6e9c458a82e1a91f63848a35199bfaa"
         },
         {
           "alg": "SHA-512",
-          "content": "aac86e17edbbf8d00f21cbbbd060fd39f5b0fe6e9bc4eff18bb012885c92cae096b057aaf514682475f338a69c315272c8c42758a0f6d5827062e161661fc24f"
+          "content": "30e2165beb73953f719f501f0afb9074a02c5ce0a59e923da1fd901d92d059e2bca11cb2784bcf6382eaadac51f948205cc5ce1be2bd83e555706ffb15b0f73a"
         },
         {
           "alg": "SHA-384",
-          "content": "a6d367f37a34258d4bdf5be4120931858440cd18f5873b7598b6708d48aee252906e8cf1d247a41bdf4deb81ce294e11"
+          "content": "96e8de32612cab13746f6262e909135aa6abebea2b9ef0756b1174fecb3da44e8835519c5df7673f7b5097f76462c35d"
         },
         {
           "alg": "SHA3-384",
-          "content": "4b73488db02ee95fe27957a8b0aaad6e3b5cbd5c6b5e5e3619e1bd80647e594c461f80b0773bc893d756939a6da8d490"
+          "content": "b9b499ac22d22d9ea765157296631d4472405139f5182ca58702520ce8a40f93937b96f57d6e9676fa35504f24b0f93c"
         },
         {
           "alg": "SHA3-256",
-          "content": "5be559c65c56f90b2304602ad873c2d6a02220ef8d6d6669de4d55450f325f9a"
+          "content": "a9b8e2ef38b581b608050d49d5256fc37e4fefeab49b6c02041386453221b278"
         },
         {
           "alg": "SHA3-512",
-          "content": "1072c23d693167df40d94ca9c3498118b3b028476f867934ef4354d12bf7b52b1384d7445c348c98941feeafd6d4a12c9679e4caf08332222d9717885f4cc9c4"
+          "content": "a7d8df50e5f12decdec104c6d5bb812423f8346ed7e9fb82e9fb4bac38a4d99b060631a72681d1be72fc79118b19549c1d57b7a94960513c13bfae6db0d15998"
         }
       ],
       "licenses": [
@@ -12435,7 +12435,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -12445,44 +12445,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-commons",
-      "version": "1.15.7",
+      "version": "1.15.8",
       "description": "Module containing common code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8df4ab0ef754b802275916b0b98bf7b2"
+          "content": "e43b15b235df578e3b3ee44f1d42b5e2"
         },
         {
           "alg": "SHA-1",
-          "content": "4f4ddbb4363ddb191633751607efb8a18707559c"
+          "content": "a850d358fadc1354d40071db693caaca27b542fd"
         },
         {
           "alg": "SHA-256",
-          "content": "bf8118b3fdc498855679bf01df4cbdf2b78fc8ef561b9faff648c4ceb2a24179"
+          "content": "c7e7ad7bd333f767d571d6991cb28e3cc4514df16959d6bcd77d3da5900e71c3"
         },
         {
           "alg": "SHA-512",
-          "content": "b1e5afd26c8f6c49ca7526fa60bb85744105de3e6aba3928de841e5c617a2b21a2f31c774152a4875eb0512ddcf39ce99b782fd6614ff6912a3fdf7ecaffabea"
+          "content": "0257942fa515552a483f8dd4e846da4abb2d4a21b759620afa6019b262f5bea4015d07f5babf3c62566728c0c5e047e01cf042699c76a4d64fea04f4cfac8ec3"
         },
         {
           "alg": "SHA-384",
-          "content": "20f120f4173ffdea030b11e03483382463246f9a6e149dcc9fbb1908372419b22b8354878e2b191a87ca90cfbec59819"
+          "content": "45ff040fe041f3e4d73405eee84180a8733d97a0a0b7f5611941662a02b90d6569bcb567faab094b81a7cd5f06c01b4e"
         },
         {
           "alg": "SHA3-384",
-          "content": "01a699c8f3a712ca9d8c01df953248c0c61377d7a6c6b4362e932dc95b49ccee76811bcb5444a06d7b2433898a70234c"
+          "content": "7da459a8b2c8c5c94c7e615b28b844e1bab55885831d9fe815b01813e0504b49f7bc6605e1cfd35d147acd9638ac2377"
         },
         {
           "alg": "SHA3-256",
-          "content": "43fc172d86767024b9e444c0832c469e2c03ea098ebcbb9609385cf91d3acfbb"
+          "content": "9949a4372a3297a5803228f83e7fa7a7b8dd4cd0c09b609173d60fc2240d3dcc"
         },
         {
           "alg": "SHA3-512",
-          "content": "7c5f9593c73bce215d979e8063549e60087fe04324c25c70f06c862f6efab73db8633ad523c55a165a09600cb929db159813dce67857c8a4c70f169e0504a146"
+          "content": "776834813ffcf379b0321bae3055a5308f5e1845ee949f8585b675cd0d7bd3a88731b1bf1e6050b1d3b30e81bdca6d2bbe5ed3d7bc45c51cb988c6c34a929b00"
         }
       ],
       "licenses": [
@@ -12492,7 +12492,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -18837,191 +18837,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@1.1.0-SNAPSHOT?type=jar",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm.qa",
-      "name": "operaton-qa-integration-tests-engine",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - QA Integration Tests - Engine",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@1.1.0-SNAPSHOT?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-engine",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-engine",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar",
-      "group": "org.operaton.bpm.jakartaee",
-      "name": "operaton-ejb-client",
-      "version": "1.1.0-SNAPSHOT",
-      "scope": "required",
-      "purl": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar"
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
-      "publisher": "OW2",
-      "group": "org.ow2.asm",
-      "name": "asm",
-      "version": "9.7.1",
-      "description": "ASM, a very small and fast Java bytecode manipulation framework",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "e2cdd32d198ad31427d298eee9d39d8d"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "f0ed132a49244b042cd0e15702ab9f2ce3cc8436"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "4767b01603dad5c79cc1e2b5f3722f72b1059d928f184f446ba11badeb1b381b3a3a9a801cc43d25d396df950b09d19597c73173c411b1da890de808b94f1f50"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "166e2be10a19ca6a6d7cadb542eb1c948562483f02557b467a50a3d19d01318e12e5c3b495c482f3f5369be1b7f20eed"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "e301862376e84df61c3547dbf637252750224fb5b74feb82f20e1527a8e3152c45f620192a9111a2db5e2f0e73ebd7ca"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "7edcc4ff09b3ace15091a8c550f552a324b5cee6c1527944db5823df7eba8d64"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "9d220edc5528e4d788605721490f3d29483dd4bd506765e85d781048419aa89b686a70e316b82ef2a856ead56bb7be6b5d52d77b7ca6f27d5e0e347e9669d731"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-3-Clause",
-            "url": "https://opensource.org/licenses/BSD-3-Clause"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://asm.ow2.io/",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.ow2.org/nexus/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://gitlab.ow2.org/asm/asm/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail.ow2.org/wws/arc/asm/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://gitlab.ow2.org/asm/asm/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.datatype",
-      "name": "jackson-datatype-joda",
-      "version": "2.21.0",
-      "description": "Add-on module for Jackson (https://github.com/FasterXML/jackson) to support Joda (https://www.joda.org/joda-time/) data types.",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "a6e9f6da2da0fd873b2a563b953a4c7e"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "3e7311b8724759394ad167145a4485467d309e7e"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "b622f7a51f1f91f7bf0be97ac15e91c1b52e3b68b66013fce5f661e321281719"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "7544b487b2f8f897eb4fc56d8335c4bdbee935e0e40d0af67eec468c879018483f9c0ced317d7ca1b4ade718bfe180df8149cae01156e682daeda2a95d2fc608"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "dfab50fb0cb98dd0f1497963fa27591aa74dadc2163e2bc8c3330b336798ce2504619491d8e47176b9fbdfc0982695b5"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "15a7b761685546dbb48f974ff0d03c6f05ab80f4550ae4d4fc37a80095e665035cab3853aa5fb963081d015dbcaa2547"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "3c5a72a2298d3439d440603c1155289406bd8bb620f7be5cb968f89080c05d53"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "cff8189c58073d4cef9a6ae631ae5c8b6bf8a30e67a206e3d26c0ed466ac43933750f4df7b89ce89fa66b21de1560eea8a610a38a5bb8a6fb6835c3b83fab508"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson-datatype-joda",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-datatype-joda/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-datatype-joda",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@1.1.0-SNAPSHOT?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
@@ -19290,6 +19105,81 @@
         },
         {
           "url": "https://github.com/operaton/operaton/operaton-spin-dataformat-all",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "publisher": "OW2",
+      "group": "org.ow2.asm",
+      "name": "asm",
+      "version": "9.7.1",
+      "description": "ASM, a very small and fast Java bytecode manipulation framework",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "e2cdd32d198ad31427d298eee9d39d8d"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "f0ed132a49244b042cd0e15702ab9f2ce3cc8436"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "4767b01603dad5c79cc1e2b5f3722f72b1059d928f184f446ba11badeb1b381b3a3a9a801cc43d25d396df950b09d19597c73173c411b1da890de808b94f1f50"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "166e2be10a19ca6a6d7cadb542eb1c948562483f02557b467a50a3d19d01318e12e5c3b495c482f3f5369be1b7f20eed"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "e301862376e84df61c3547dbf637252750224fb5b74feb82f20e1527a8e3152c45f620192a9111a2db5e2f0e73ebd7ca"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "7edcc4ff09b3ace15091a8c550f552a324b5cee6c1527944db5823df7eba8d64"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9d220edc5528e4d788605721490f3d29483dd4bd506765e85d781048419aa89b686a70e316b82ef2a856ead56bb7be6b5d52d77b7ca6f27d5e0e347e9669d731"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause",
+            "url": "https://opensource.org/licenses/BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://asm.ow2.io/",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.ow2.org/nexus/service/local/staging/deploy/maven2",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://gitlab.ow2.org/asm/asm/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail.ow2.org/wws/arc/asm/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://gitlab.ow2.org/asm/asm/",
           "type": "vcs"
         }
       ]
@@ -21116,7 +21006,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "fc975ba0-6ea9-4428-bcd7-5a97dd7a32ef",
+      "bom-ref": "83064a22-6bb0-4cad-a1c9-c5285c095be8",
       "name": "package-lock.json",
       "properties": [
         {
@@ -23756,14 +23646,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/lodash@4.17.21",
+      "bom-ref": "pkg:npm/lodash@4.17.23",
       "name": "lodash",
-      "version": "4.17.21",
-      "purl": "pkg:npm/lodash@4.17.21",
+      "version": "4.17.23",
+      "purl": "pkg:npm/lodash@4.17.23",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "lodash@4.17.21"
+          "value": "lodash@4.17.23"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24725,7 +24615,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b8e988a8-d93f-4d6f-95a4-04ed49c4c2fd",
+      "bom-ref": "d9ded0be-8f92-4e4a-beed-527515a3739e",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26638,7 +26528,7 @@
         "pkg:maven/org.springframework/spring-beans@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-core@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-expression@6.2.15?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar"
       ]
     },
     {
@@ -26655,13 +26545,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar",
       "dependsOn": [
-        "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar"
+        "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar",
       "dependsOn": []
     },
     {
@@ -26693,7 +26583,7 @@
       "dependsOn": [
         "pkg:maven/org.springframework/spring-beans@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-core@6.2.15?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar"
       ]
     },
     {
@@ -26764,49 +26654,6 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@1.1.0-SNAPSHOT?type=jar",
-      "dependsOn": [
-        "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar",
-        "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
-        "pkg:maven/jakarta.enterprise.concurrent/jakarta.enterprise.concurrent-api@3.0.1?type=jar",
-        "pkg:maven/jakarta.enterprise/jakarta.enterprise.cdi-api@4.0.1?type=jar",
-        "pkg:maven/jakarta.inject/jakarta.inject-api@2.0.1?type=jar",
-        "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
-        "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
-        "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-spring@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-core@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-core@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.springframework/spring-context@6.2.15?type=jar",
-        "pkg:maven/org.springframework/spring-jdbc@6.2.15?type=jar",
-        "pkg:maven/org.springframework/spring-tx@6.2.15?type=jar",
-        "pkg:maven/org.springframework/spring-orm@6.2.15?type=jar",
-        "pkg:maven/org.springframework/spring-web@6.2.15?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
-      "dependsOn": [
-        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
-        "pkg:maven/joda-time/joda-time@2.14.0?type=jar"
-      ]
-    },
-    {
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
@@ -26871,6 +26718,10 @@
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar"
       ]
+    },
+    {
+      "ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
@@ -27315,13 +27166,7 @@
       "dependsOn": []
     },
     {
-      "ref": "b8e988a8-d93f-4d6f-95a4-04ed49c4c2fd",
-      "dependsOn": [
-        "fc975ba0-6ea9-4428-bcd7-5a97dd7a32ef"
-      ]
-    },
-    {
-      "ref": "fc975ba0-6ea9-4428-bcd7-5a97dd7a32ef",
+      "ref": "83064a22-6bb0-4cad-a1c9-c5285c095be8",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -27359,13 +27204,19 @@
         "pkg:npm/fast-xml-parser@5.3.3",
         "pkg:npm/jquery-ui@1.13.2",
         "pkg:npm/jquery@4.0.0",
-        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/lodash@4.17.23",
         "pkg:npm/moment@2.30.1",
         "pkg:npm/mousetrap@1.6.5",
         "pkg:npm/q@1.5.1",
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "d9ded0be-8f92-4e4a-beed-527515a3739e",
+      "dependsOn": [
+        "83064a22-6bb0-4cad-a1c9-c5285c095be8"
       ]
     },
     {
@@ -27485,7 +27336,7 @@
         "pkg:npm/feelin@4.6.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@1.0.5",
-        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/lodash@4.17.23",
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/marked@16.4.2",
         "pkg:npm/min-dash@4.2.3",
@@ -28393,7 +28244,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/lodash@4.17.21",
+      "ref": "pkg:npm/lodash@4.17.23",
       "dependsOn": []
     },
     {

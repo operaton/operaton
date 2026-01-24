@@ -790,21 +790,14 @@ class ProcessInstanceSuspensionTest {
     var processInstanceId = processInstance.getId();
     runtimeService.suspendProcessInstanceById(processInstanceId);
 
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -817,21 +810,14 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
     String processInstanceId = processInstance.getId();
 
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -844,21 +830,14 @@ class ProcessInstanceSuspensionTest {
     var processInstanceId = processInstance.getId();
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment
@@ -870,21 +849,14 @@ class ProcessInstanceSuspensionTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testMessageEventReceiveFailAfterSuspend.bpmn20.xml"})
@@ -896,21 +868,14 @@ class ProcessInstanceSuspensionTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testMessageEventReceiveFailAfterSuspend.bpmn20.xml"})
@@ -922,21 +887,14 @@ class ProcessInstanceSuspensionTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment
@@ -962,21 +920,15 @@ class ProcessInstanceSuspensionTest {
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
-    try {
-      runtimeService.signalEventReceived(signal, executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
 
-    try {
-      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
+
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -1007,21 +959,15 @@ class ProcessInstanceSuspensionTest {
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
-    try {
-      runtimeService.signalEventReceived(signal, executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
 
-    try {
-      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
+
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -1057,21 +1003,15 @@ class ProcessInstanceSuspensionTest {
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
-    try {
-      runtimeService.signalEventReceived(signal, executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
 
-    try {
-      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
+
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -1782,12 +1722,10 @@ class ProcessInstanceSuspensionTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("theTask");
 
     // try to start before activity for suspended processDefinition
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -1804,12 +1742,10 @@ class ProcessInstanceSuspensionTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("theTask");
 
     // try to start after activity for suspended processDefinition
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .satisfies(e -> assertThat(e.getMessage().toLowerCase()).contains("is suspended"));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",

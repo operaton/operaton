@@ -155,53 +155,25 @@ public class InclusiveGatewayActivityBehavior extends GatewayActivityBehavior {
     // To avoid infinite looping, we must capture every node we visit and
     // check before going further in the graph if we have already visited the node.
     visitedActivities.add(srcActivity);
-
     List<PvmTransition> outgoingTransitions = srcActivity.getOutgoingTransitions();
 
     if (outgoingTransitions.isEmpty()) {
-
       if (srcActivity.getActivityBehavior() instanceof EventBasedGatewayActivityBehavior) {
-
         ActivityImpl eventBasedGateway = (ActivityImpl) srcActivity;
         Set<ActivityImpl> eventActivities = eventBasedGateway.getEventActivities();
-
-        for (ActivityImpl eventActivity : eventActivities) {
-          boolean isReachable = isReachable(eventActivity, targetActivity, visitedActivities);
-
-          if (isReachable) {
-            return true;
-          }
-        }
-
-      }
-      else {
-
+        return eventActivities.stream().anyMatch(activity -> isReachable(activity, targetActivity, visitedActivities));
+      } else {
         ScopeImpl flowScope = srcActivity.getFlowScope();
         if (flowScope instanceof PvmActivity pvmActivity) {
           return isReachable(pvmActivity, targetActivity, visitedActivities);
         }
-
       }
-
       return false;
+    } else {
+      return outgoingTransitions.stream()
+          .map(PvmTransition::getDestination)
+          .filter(activity -> activity != null && !visitedActivities.contains(activity))
+          .anyMatch(activity -> isReachable(activity, targetActivity, visitedActivities));
     }
-    else {
-      for (PvmTransition pvmTransition : outgoingTransitions) {
-        PvmActivity destinationActivity = pvmTransition.getDestination();
-        if (destinationActivity != null && !visitedActivities.contains(destinationActivity)) {
-
-          boolean reachable = isReachable(destinationActivity, targetActivity, visitedActivities);
-
-          // If false, we should investigate other paths, and not yet return the result
-          if (reachable) {
-            return true;
-          }
-
-        }
-      }
-    }
-
-    return false;
   }
-
 }

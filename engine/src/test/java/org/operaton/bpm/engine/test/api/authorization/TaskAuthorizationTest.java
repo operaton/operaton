@@ -6383,15 +6383,16 @@ verifyGetVariables(variables);  }
   // helper ////////////////////////////////////////////////////////////////////////////////
 
   protected void verifyMessageIsValid(String taskId, String message) {
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(UPDATE_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-    testRule.assertTextPresent(UPDATE_TASK_VARIABLE.getName(), message);
-    testRule.assertTextPresent(PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    assertThat(message)
+        .contains(userId)
+        .contains(UPDATE.getName())
+        .contains(UPDATE_VARIABLE.getName())
+        .contains(taskId)
+        .contains(TASK.resourceName())
+        .contains(UPDATE_TASK.getName())
+        .contains(UPDATE_TASK_VARIABLE.getName())
+        .contains(PROCESS_KEY)
+        .contains(PROCESS_DEFINITION.resourceName());
   }
 
   protected void verifyVariableInstanceCountDisabledAuthorization(int count) {

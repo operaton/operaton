@@ -145,9 +145,9 @@ class CompetingSentrySatisfactionTest {
     threadTwo.proceedAndWaitTillDone();
     assertThat(threadTwo.exception).isNotNull();
 
-    String message = threadTwo.exception.getMessage();
-    testRule.assertTextPresent("CaseSentryPartEntity", message);
-    testRule.assertTextPresent("was updated by another transaction concurrently", message);
+    assertThat(threadTwo.exception.getMessage())
+        .contains("CaseSentryPartEntity")
+        .contains("was updated by another transaction concurrently");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testExitCriteriaWithAndSentry.cmmn"})
@@ -188,9 +188,9 @@ class CompetingSentrySatisfactionTest {
     threadTwo.proceedAndWaitTillDone();
     assertThat(threadTwo.exception).isNotNull();
 
-    String message = threadTwo.exception.getMessage();
-    testRule.assertTextPresent("CaseSentryPartEntity", message);
-    testRule.assertTextPresent("was updated by another transaction concurrently", message);
+    assertThat(threadTwo.exception.getMessage())
+        .contains("CaseSentryPartEntity")
+        .contains("was updated by another transaction concurrently");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testEntryCriteriaWithOrSentry.cmmn"})
@@ -231,9 +231,9 @@ class CompetingSentrySatisfactionTest {
     threadTwo.proceedAndWaitTillDone();
     assertThat(threadTwo.exception).isNotNull();
 
-    String message = threadTwo.exception.getMessage();
-    testRule.assertTextPresent("CaseExecutionEntity", message);
-    testRule.assertTextPresent("was updated by another transaction concurrently", message);
+    assertThat(threadTwo.exception.getMessage())
+        .contains("CaseExecutionEntity")
+        .contains("was updated by another transaction concurrently");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testExitCriteriaWithOrSentry.cmmn",
@@ -282,9 +282,9 @@ class CompetingSentrySatisfactionTest {
     threadTwo.proceedAndWaitTillDone();
     assertThat(threadTwo.exception).isNotNull();
 
-    String message = threadTwo.exception.getMessage();
-    testRule.assertTextPresent("CaseExecutionEntity", message);
-    testRule.assertTextPresent("was updated by another transaction concurrently", message);
+    assertThat(threadTwo.exception.getMessage())
+        .contains("CaseExecutionEntity")
+        .contains("was updated by another transaction concurrently");
   }
 
 }

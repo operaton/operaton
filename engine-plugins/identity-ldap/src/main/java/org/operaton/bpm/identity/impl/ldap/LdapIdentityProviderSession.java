@@ -150,6 +150,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
   private List<String> collectGroupMembers(LdapUserQueryImpl query) {
     String baseDn = getDnForGroup(query.getGroupId());
+    // compose group search filter
     String groupSearchFilter = "(& %s)".formatted(ldapConfiguration.getGroupSearchFilter());
     initializeControls(query);
     
@@ -436,7 +437,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
                                                             int maxResults,
                                                             int firstResult,
                                                             boolean ignorePagination) {
-    ResultLogger resultLogger = initializeResultLogger();
+    StringBuilder resultLogger = initializeResultLogger();
     List<T> entities = new ArrayList<>();
     int resultCount = 0;
 
@@ -459,7 +460,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
                                                         boolean ignorePagination,
                                                         List<T> entities,
                                                         int resultCount,
-                                                        ResultLogger resultLogger) {
+                                                        StringBuilder resultLogger) {
     try (LdapSearchResults searchResults = ldapClient.search(baseDn, filter)) {
       while (searchResults.hasMoreElements() && shouldContinueProcessing(entities, maxResults, ignorePagination)) {
         SearchResult result = searchResults.nextElement();
@@ -483,7 +484,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
                                                           boolean ignorePagination,
                                                           List<T> entities,
                                                           int resultCount,
-                                                          ResultLogger resultLogger) {
+                                                          StringBuilder resultLogger) {
     E entity = transformEntity.apply(result);
     String id = entity.getId();
 
@@ -507,7 +508,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return resultCount >= firstResult || ignorePagination;
   }
 
-  private <E extends DbEntity> void logEntityIfDebugEnabled(E entity, SearchResult result, ResultLogger resultLogger) {
+  private <E extends DbEntity> void logEntityIfDebugEnabled(E entity, SearchResult result, StringBuilder resultLogger) {
     if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
       resultLogger.append(entity);
       resultLogger.append(" based on ");
@@ -516,35 +517,18 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     }
   }
 
-  private ResultLogger initializeResultLogger() {
-    ResultLogger logger = new ResultLogger();
+  private StringBuilder initializeResultLogger() {
+    StringBuilder logger = new StringBuilder();
     if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
       logger.append("LDAP query results: [");
     }
     return logger;
   }
 
-  private void logResults(ResultLogger resultLogger) {
+  private void logResults(StringBuilder resultLogger) {
     if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
       resultLogger.append("]");
       LdapPluginLogger.INSTANCE.queryResult(resultLogger.toString());
-    }
-  }
-
-  private static class ResultLogger {
-    private final StringBuilder builder = new StringBuilder();
-
-    public void append(Object obj) {
-      builder.append(obj);
-    }
-
-    public void append(String str) {
-      builder.append(str);
-    }
-
-    @Override
-    public String toString() {
-      return builder.toString();
     }
   }
 

@@ -19,6 +19,7 @@ package org.operaton.bpm.identity.impl.ldap;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -199,16 +200,10 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
   private List<User> findUsersFromGroupMembers(LdapUserQueryImpl query, List<String> groupMembers) {
     List<User> userList = new ArrayList<>();
     String userBaseDn = composeDn(ldapConfiguration.getUserSearchBase(), ldapConfiguration.getBaseDn());
-    int memberCount = 0;
 
-    for (String memberId : groupMembers) {
-      if (shouldProcessMember(query, userList, memberCount)) {
-        User user = findUserForMember(query, userBaseDn, memberId);
-        if (user != null) {
-          userList.add(user);
-        }
-      }
-      memberCount++;
+    for (int memberIndex = 0; memberIndex < groupMembers.size(); memberIndex++) {
+      String memberId = groupMembers.get(memberIndex);
+      findUserForMember(query, userBaseDn, memberId).ifPresent(userList::add);
     }
 
     return userList;
@@ -218,7 +213,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return userList.size() < query.getMaxResults() && memberCount >= query.getFirstResult();
   }
 
-  private User findUserForMember(LdapUserQueryImpl query, String userBaseDn, String memberId) {
+  private Optional<User> findUserForMember(LdapUserQueryImpl query, String userBaseDn, String memberId) {
     if (ldapConfiguration.isUsePosixGroups()) {
       query.userId(memberId);
     }
@@ -226,7 +221,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     String searchBaseDn = ldapConfiguration.isUsePosixGroups() ? userBaseDn : memberId;
     List<User> users = findUsersWithoutGroupId(query, searchBaseDn, true);
     
-    return users.isEmpty() ? null : users.get(0);
+    return users.isEmpty() ? Optional.empty() : Optional.of(users.get(0));
   }
 
   @Override
@@ -495,7 +490,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
 
     if (resultCountPredicate.test(id)) {
       if (shouldAddEntity(resultCount, firstResult, ignorePagination)) {
-        logEntityIfDebugEnabled(entity, result, resultLogger);
+        logEntity(entity, result, resultLogger);
         entities.add((T) entity);
       }
       resultCount++;
@@ -508,7 +503,7 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return resultCount >= firstResult || ignorePagination;
   }
 
-  private <E extends DbEntity> void logEntityIfDebugEnabled(E entity, SearchResult result, StringBuilder resultLogger) {
+  private <E extends DbEntity> void logEntity(E entity, SearchResult result, StringBuilder resultLogger) {
     if (LdapPluginLogger.INSTANCE.isDebugEnabled()) {
       resultLogger.append(entity);
       resultLogger.append(" based on ");

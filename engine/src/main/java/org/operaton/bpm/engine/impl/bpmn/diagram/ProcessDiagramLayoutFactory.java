@@ -24,6 +24,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import java.util.function.Function;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,6 +46,9 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.repository.DiagramElement;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 import org.operaton.bpm.engine.repository.DiagramNode;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as
@@ -143,9 +149,7 @@ public class ProcessDiagramLayoutFactory {
       Double width = Double.valueOf(element.getAttribute("width"));
       Double height = Double.valueOf(element.getAttribute("height"));
 
-      if (!allValuesAreZero(x, y, width, height)) {
-        bounds.update(x, y, width, height);
-      }
+      bounds.update(x, y, width, height);
     }
 
     // Edge bend points
@@ -165,7 +169,7 @@ public class ProcessDiagramLayoutFactory {
     return diagramBounds;
   }
 
-  protected static class DiagramBounds {
+  private static class DiagramBounds {
     Double minX;
     Double minY;
     Double maxX;
@@ -176,6 +180,9 @@ public class ProcessDiagramLayoutFactory {
     }
 
     public void update(Double x, Double y, Double width, Double height) {
+      if (Stream.of(x, y, width, height).allMatch(value -> value == 0.0)) {
+        return;
+      }
       if (minX == null || x < minX) {
         minX = x;
       }
@@ -191,9 +198,6 @@ public class ProcessDiagramLayoutFactory {
     }
   }
 
-  private boolean allValuesAreZero(Double x, Double y, Double width, Double height) {
-    return x == 0.0 && y == 0.0 && width == 0.0 && height == 0.0;
-  }
 
   protected DiagramNode getDiagramBoundsFromImage(InputStream imageStream) {
     return getDiagramBoundsFromImage(imageStream, 0, 0);
@@ -213,10 +217,10 @@ public class ProcessDiagramLayoutFactory {
     int width = image.getWidth();
     int height = image.getHeight();
 
-    boolean[] rowIsWhite = new boolean[height];
-    Arrays.fill(rowIsWhite, true);
-    boolean[] columnIsWhite = new boolean[width];
-    Arrays.fill(columnIsWhite, true);
+    Boolean[] rowIsWhite = new Boolean[height];
+    Arrays.fill(rowIsWhite, TRUE);
+    Boolean[] columnIsWhite = new Boolean[width];
+    Arrays.fill(columnIsWhite, TRUE);
 
     for (int row = 0; row < height; row++) {
       if (row <= offsetTop || row > image.getHeight() - offsetBottom) {
@@ -225,16 +229,16 @@ public class ProcessDiagramLayoutFactory {
 
       for (int column = 0; column < width; column++) {
         if (!isPixelWhite(image.getRGB(column, row))) {
-          rowIsWhite[row] = false;
-          columnIsWhite[column] = false;
+          rowIsWhite[row] = FALSE;
+          columnIsWhite[column] = FALSE;
         }
       }
     }
 
-    int marginTop = findMarginTop(height, rowIsWhite);
-    int marginLeft = findMarginLeft(width, columnIsWhite);
-    int marginRight = findMarginRight(width, columnIsWhite);
-    int marginBottom = findMarginBottom(height, rowIsWhite);
+    int marginTop = findMargin(height, rowIsWhite, true);
+    int marginLeft = findMargin(width, columnIsWhite, true);
+    int marginRight = findMargin(width, columnIsWhite, false);
+    int marginBottom = findMargin(height, rowIsWhite, false);
 
     DiagramNode diagramBoundsImage = new DiagramNode();
     diagramBoundsImage.setX((double) marginLeft);
@@ -256,56 +260,19 @@ public class ProcessDiagramLayoutFactory {
     return red >= GREY_THRESHOLD && green >= GREY_THRESHOLD && blue >= GREY_THRESHOLD;
 }
 
-  private int findMarginTop(int height, boolean[] rowIsWhite) {
-    int marginTop = 0;
-    for (int row = 0; row < height; row++) {
-      if (rowIsWhite[row]) {
-        ++marginTop;
-      } else {
-        // Margin Top Found
-        break;
-      }
+  private int findMargin(int maxValue, Boolean[] valueIsWhite, boolean searchFromStart) {
+    int margin = 0;
+    if (searchFromStart) {
+      return (int) Arrays.stream(valueIsWhite, 0, maxValue)
+        .takeWhile(Boolean::booleanValue)
+        .count();
+    } else {
+      return (int) IntStream.range(0, maxValue)
+        .map(i -> maxValue - 1 - i)
+        .mapToObj(idx -> valueIsWhite[idx])
+        .takeWhile(Boolean::booleanValue)
+        .count();
     }
-    return marginTop;
-  }
-
-  private int findMarginLeft(int width, boolean[] columnIsWhite) {
-    int marginLeft = 0;
-    for (int column = 0; column < width; column++) {
-      if (columnIsWhite[column]) {
-        ++marginLeft;
-      } else {
-        // Margin Left Found
-        break;
-      }
-    }
-    return marginLeft;
-  }
-
-  private int findMarginRight(int width, boolean[] columnIsWhite) {
-    int marginRight = 0;
-    for (int column = width - 1; column >= 0; column--) {
-      if (columnIsWhite[column]) {
-        ++marginRight;
-      } else {
-        // Margin Right Found
-        break;
-      }
-    }
-    return marginRight;
-  }
-
-  private int findMarginBottom(int height, boolean[] rowIsWhite) {
-    int marginBottom = 0;
-    for (int row = height - 1; row >= 0; row--) {
-      if (rowIsWhite[row]) {
-        ++marginBottom;
-      } else {
-        // Margin Bottom Found
-        break;
-      }
-    }
-    return marginBottom;
   }
 
   protected Map<String, DiagramNode> getElementBoundsFromBpmnDi(Document bpmnModel) {

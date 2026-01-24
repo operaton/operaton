@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:6e7505a8-ead2-4c97-bd71-2a27549d12a0",
+  "serialNumber": "urn:uuid:960c973b-b280-4b4d-87c1-6f4b1c70d526",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-23T06:14:22Z",
+    "timestamp": "2026-01-24T07:04:51Z",
     "tools": {
       "components": [
         {
@@ -20968,40 +20968,6 @@
       "version": "2.0.0-M1",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "be52b2688c7883e238ad6cdfadcbf67b"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "c014dca0c46b3e30647b4e91ade0495cc5351c93"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "8b07b0b5915305d7c8a98fc754fea622c30e18451deeace7495e19f221bb98ce"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "1e30ab971e6efb589bbdbf6ed271464a2c88a72acc5fb36da887c0cc566e647cf72a90940c2ef7b4d45e76687d5989b80362b36061cb535a2321a43efec9dd52"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "839b47cd7ce0b17189e0cb0ad0ccbdbf4dc4dc55ca61eba5ab2c450a0a0736d20db5a266e18d69a76f688bc517d02a08"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "c5719b774bb0f0b1905747e5cd81ac1c81fbbdccf645c5097e4b0cd46e9dd268cf214ff7c00aca6e17815019b6ac0c69"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "eb6159a1cc459b113be9011509767f6ec6f8040aca4ca31bfe01f48d753d294b"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "b94067f59045c847d7aa2fca49fe41cc618daa76cc53d0b3798ffddd9f4bd4c5c2889176b1968e125545878f6f6c076afd5ccb2d25a1bfa328775f9f34946dae"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -21363,35 +21329,35 @@
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d6be51343bd97e1ad0cae5285ad50c25"
+          "content": "28c3c40cd7777a7f860fdbcf81c2ef7a"
         },
         {
           "alg": "SHA-1",
-          "content": "d70412a628b10ffd68bc3c80b3a7eba1cf110fed"
+          "content": "d409bf83e188b31f161344f0a6690e4ccca25fd8"
         },
         {
           "alg": "SHA-256",
-          "content": "1b6739ee20f497463649b129ce7a923e7948a17e374040e461117f02aeaf3e86"
+          "content": "869ba50f3f579fd9b17fb381a88550233060da832d5b48cb7c351baa6b025b77"
         },
         {
           "alg": "SHA-512",
-          "content": "fb8cd10a372230fac317f0f524f09e29d51125f05b70e81aec6796f24a20507bf0f8c5b9fa9090002bf244baf4519a990174f9f217bee91744d4257bdeabb917"
+          "content": "f5009602f02f1656e7a189c23fe7e307f1c210fa278ddae0a5a1e4f4beabebb5b5910083c38430967fdd7d3ad5308362eb45fa993ebdc2985df9741e42098ac2"
         },
         {
           "alg": "SHA-384",
-          "content": "7c2ed2e52a727a6da4ca3bd7d74c0a8e5bec472bf1e3f6d65f7dc032444827e5b86a7d97c52826e8206e125a7848c2a1"
+          "content": "9ac67cc7a6372a1903eabc0585078c410057ce35dbade6e096efe20447f695e3a8fe9ddc1e11a2e3d89675b180db6e2b"
         },
         {
           "alg": "SHA3-384",
-          "content": "c9570e84caae25f631d4bdb1b9b3e80bb5fe9fd9114098f802b4c0f10825660cb8d56be834170d48846b5ea35d780f13"
+          "content": "361ccbe5bfbf0b19a60f043f87ed611d2b48ec3ff9640ed16e2fc68868553cef53b22d93bc016ca780a8dc35515324a3"
         },
         {
           "alg": "SHA3-256",
-          "content": "7af736100c9e385e4aca59d3124478c0db309fff631a12ad1f906adddf7f048e"
+          "content": "5d29c93ef55bbd65d56d501f8572ada273593fe76ca6526f125d3c7306adaee7"
         },
         {
           "alg": "SHA3-512",
-          "content": "3ee0398929a60f91ca332bc56f879961a759332cdec222cd5fadd12f5f6507ce52efcea668eb50847a2bd63a8b9e9e4c7cf1bc351bfe32a7df114173f7dece42"
+          "content": "1661787171b8e6e12b3a0996449807211fb24732efecace3d7efe19ea6c77ae8fe4423dc067d2e4dc42e0f5ce46002636ad225c7fc7cbb3c7aaa385dc7b5ae23"
         }
       ],
       "licenses": [
@@ -21450,7 +21416,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e389e933-4edd-4c22-9264-f0bf75e0caef",
+      "bom-ref": "eb57b067-d5d0-4ffa-8f3e-96e65a48b216",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21469,13 +21435,6 @@
       "group": "@bpmn-io",
       "name": "align-to-origin",
       "version": "0.7.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
       "properties": [
         {
@@ -21494,13 +21453,6 @@
       "group": "@bpmn-io",
       "name": "cm-theme",
       "version": "0.1.0-alpha.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
       "properties": [
         {
@@ -21519,13 +21471,6 @@
       "group": "@bpmn-io",
       "name": "diagram-js-ui",
       "version": "0.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
       "properties": [
         {
@@ -21540,22 +21485,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "group": "@bpmn-io",
       "name": "dmn-migrate",
-      "version": "0.6.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/dmn-migrate@0.6.0"
+          "value": "@bpmn-io/dmn-migrate@0.7.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -21569,13 +21507,6 @@
       "group": "@bpmn-io",
       "name": "dmn-variable-resolver",
       "version": "0.7.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
       "properties": [
         {
@@ -21594,13 +21525,6 @@
       "group": "@bpmn-io",
       "name": "draggle",
       "version": "4.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/draggle@4.1.2",
       "properties": [
         {
@@ -21619,13 +21543,6 @@
       "group": "@bpmn-io",
       "name": "feel-editor",
       "version": "2.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/feel-editor@2.0.0",
       "properties": [
         {
@@ -21644,13 +21561,6 @@
       "group": "@bpmn-io",
       "name": "feel-lint",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/feel-lint@1.4.0",
       "properties": [
         {
@@ -21669,13 +21579,6 @@
       "group": "@bpmn-io",
       "name": "feel-lint",
       "version": "3.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/feel-lint@3.0.0",
       "properties": [
         {
@@ -21694,13 +21597,6 @@
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
       "version": "1.18.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.18.0",
       "properties": [
         {
@@ -21719,13 +21615,6 @@
       "group": "@bpmn-io",
       "name": "form-js-editor",
       "version": "1.18.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.18.0",
       "properties": [
         {
@@ -21744,13 +21633,6 @@
       "group": "@bpmn-io",
       "name": "form-js-playground",
       "version": "1.18.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.18.0",
       "properties": [
         {
@@ -21769,13 +21651,6 @@
       "group": "@bpmn-io",
       "name": "form-js-viewer",
       "version": "1.18.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.18.0",
       "properties": [
         {
@@ -21794,13 +21669,6 @@
       "group": "@bpmn-io",
       "name": "form-js",
       "version": "1.18.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/form-js@1.18.0",
       "properties": [
         {
@@ -21819,13 +21687,6 @@
       "group": "@bpmn-io",
       "name": "lang-feel",
       "version": "3.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
       "properties": [
         {
@@ -21844,13 +21705,6 @@
       "group": "@bpmn-io",
       "name": "lezer-feel",
       "version": "2.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/lezer-feel@2.0.0",
       "properties": [
         {
@@ -21869,13 +21723,6 @@
       "group": "@bpmn-io",
       "name": "properties-panel",
       "version": "3.35.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
       "properties": [
         {
@@ -21894,13 +21741,6 @@
       "group": "@camunda",
       "name": "feel-builtins",
       "version": "0.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40camunda/feel-builtins@0.2.0",
       "properties": [
         {
@@ -21919,13 +21759,6 @@
       "group": "@carbon",
       "name": "grid",
       "version": "11.46.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40carbon/grid@11.46.0",
       "properties": [
         {
@@ -21944,13 +21777,6 @@
       "group": "@carbon",
       "name": "icons",
       "version": "11.71.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40carbon/icons@11.71.0",
       "properties": [
         {
@@ -21969,13 +21795,6 @@
       "group": "@carbon",
       "name": "layout",
       "version": "11.44.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40carbon/layout@11.44.0",
       "properties": [
         {
@@ -21994,13 +21813,6 @@
       "group": "@codemirror",
       "name": "autocomplete",
       "version": "6.20.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/autocomplete@6.20.0",
       "properties": [
         {
@@ -22019,13 +21831,6 @@
       "group": "@codemirror",
       "name": "commands",
       "version": "6.10.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/commands@6.10.1",
       "properties": [
         {
@@ -22044,13 +21849,6 @@
       "group": "@codemirror",
       "name": "lang-json",
       "version": "6.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/lang-json@6.0.2",
       "properties": [
         {
@@ -22069,13 +21867,6 @@
       "group": "@codemirror",
       "name": "language",
       "version": "6.11.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/language@6.11.3",
       "properties": [
         {
@@ -22094,13 +21885,6 @@
       "group": "@codemirror",
       "name": "lint",
       "version": "6.9.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/lint@6.9.2",
       "properties": [
         {
@@ -22119,13 +21903,6 @@
       "group": "@codemirror",
       "name": "search",
       "version": "6.5.11",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/search@6.5.11",
       "properties": [
         {
@@ -22144,13 +21921,6 @@
       "group": "@codemirror",
       "name": "state",
       "version": "6.5.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/state@6.5.2",
       "properties": [
         {
@@ -22169,13 +21939,6 @@
       "group": "@codemirror",
       "name": "view",
       "version": "6.39.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40codemirror/view@6.39.6",
       "properties": [
         {
@@ -22194,13 +21957,6 @@
       "group": "@ibm",
       "name": "plex",
       "version": "6.4.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "OFL-1.1"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40ibm/plex@6.4.1",
       "properties": [
         {
@@ -22219,13 +21975,6 @@
       "group": "@ibm",
       "name": "telemetry-js",
       "version": "1.10.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40ibm/telemetry-js@1.10.1",
       "properties": [
         {
@@ -22244,13 +21993,6 @@
       "group": "@kurkle",
       "name": "color",
       "version": "0.3.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40kurkle/color@0.3.4",
       "properties": [
         {
@@ -22269,13 +22011,6 @@
       "group": "@lezer",
       "name": "common",
       "version": "1.5.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/common@1.5.0",
       "properties": [
         {
@@ -22294,13 +22029,6 @@
       "group": "@lezer",
       "name": "highlight",
       "version": "1.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/highlight@1.2.3",
       "properties": [
         {
@@ -22319,13 +22047,6 @@
       "group": "@lezer",
       "name": "json",
       "version": "1.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/json@1.0.3",
       "properties": [
         {
@@ -22344,13 +22065,6 @@
       "group": "@lezer",
       "name": "lr",
       "version": "1.4.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/lr@1.4.5",
       "properties": [
         {
@@ -22369,13 +22083,6 @@
       "group": "@lezer",
       "name": "markdown",
       "version": "1.4.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40lezer/markdown@1.4.3",
       "properties": [
         {
@@ -22394,13 +22101,6 @@
       "group": "@marijn",
       "name": "find-cluster-break",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40marijn/find-cluster-break@1.0.2",
       "properties": [
         {
@@ -22419,13 +22119,6 @@
       "group": "@noble",
       "name": "hashes",
       "version": "1.8.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40noble/hashes@1.8.0",
       "properties": [
         {
@@ -22444,13 +22137,6 @@
       "group": "@paralleldrive",
       "name": "cuid2",
       "version": "2.3.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40paralleldrive/cuid2@2.3.1",
       "properties": [
         {
@@ -22469,13 +22155,6 @@
       "group": "@types",
       "name": "trusted-types",
       "version": "2.0.7",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/%40types/trusted-types@2.0.7",
       "properties": [
         {
@@ -22493,13 +22172,6 @@
       "bom-ref": "pkg:npm/angular-animate@1.8.3",
       "name": "angular-animate",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-animate@1.8.3",
       "properties": [
         {
@@ -22517,13 +22189,6 @@
       "bom-ref": "pkg:npm/angular-cookies@1.8.3",
       "name": "angular-cookies",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-cookies@1.8.3",
       "properties": [
         {
@@ -22541,13 +22206,6 @@
       "bom-ref": "pkg:npm/angular-data-depend@1.0.0",
       "name": "angular-data-depend",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-data-depend@1.0.0",
       "properties": [
         {
@@ -22565,13 +22223,6 @@
       "bom-ref": "pkg:npm/angular-loader@1.8.3",
       "name": "angular-loader",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-loader@1.8.3",
       "properties": [
         {
@@ -22589,13 +22240,6 @@
       "bom-ref": "pkg:npm/angular-moment@1.3.0",
       "name": "angular-moment",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-moment@1.3.0",
       "properties": [
         {
@@ -22613,13 +22257,6 @@
       "bom-ref": "pkg:npm/angular-resource@1.8.3",
       "name": "angular-resource",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-resource@1.8.3",
       "properties": [
         {
@@ -22637,13 +22274,6 @@
       "bom-ref": "pkg:npm/angular-route@1.8.3",
       "name": "angular-route",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-route@1.8.3",
       "properties": [
         {
@@ -22661,13 +22291,6 @@
       "bom-ref": "pkg:npm/angular-sanitize@1.8.3",
       "name": "angular-sanitize",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-sanitize@1.8.3",
       "properties": [
         {
@@ -22685,13 +22308,6 @@
       "bom-ref": "pkg:npm/angular-touch@1.8.3",
       "name": "angular-touch",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-touch@1.8.3",
       "properties": [
         {
@@ -22709,13 +22325,6 @@
       "bom-ref": "pkg:npm/angular-translate@2.19.1",
       "name": "angular-translate",
       "version": "2.19.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-translate@2.19.1",
       "properties": [
         {
@@ -22733,13 +22342,6 @@
       "bom-ref": "pkg:npm/angular-ui-bootstrap@2.5.6",
       "name": "angular-ui-bootstrap",
       "version": "2.5.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular-ui-bootstrap@2.5.6",
       "properties": [
         {
@@ -22757,13 +22359,6 @@
       "bom-ref": "pkg:npm/angular@1.8.3",
       "name": "angular",
       "version": "1.8.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/angular@1.8.3",
       "properties": [
         {
@@ -22781,13 +22376,6 @@
       "bom-ref": "pkg:npm/array-move@4.0.0",
       "name": "array-move",
       "version": "4.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/array-move@4.0.0",
       "properties": [
         {
@@ -22805,13 +22393,6 @@
       "bom-ref": "pkg:npm/asap@2.0.6",
       "name": "asap",
       "version": "2.0.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/asap@2.0.6",
       "properties": [
         {
@@ -22829,13 +22410,6 @@
       "bom-ref": "pkg:npm/asynckit@0.4.0",
       "name": "asynckit",
       "version": "0.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/asynckit@0.4.0",
       "properties": [
         {
@@ -22853,13 +22427,6 @@
       "bom-ref": "pkg:npm/atoa@1.0.0",
       "name": "atoa",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/atoa@1.0.0",
       "properties": [
         {
@@ -22877,13 +22444,6 @@
       "bom-ref": "pkg:npm/big.js@7.0.1",
       "name": "big.js",
       "version": "7.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/big.js@7.0.1",
       "properties": [
         {
@@ -22901,13 +22461,6 @@
       "bom-ref": "pkg:npm/bootstrap@3.4.1",
       "name": "bootstrap",
       "version": "3.4.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/bootstrap@3.4.1",
       "properties": [
         {
@@ -22925,13 +22478,6 @@
       "bom-ref": "pkg:npm/bpmn-font@0.12.1",
       "name": "bpmn-font",
       "version": "0.12.1",
-      "licenses": [
-        {
-          "license": {
-            "name": "SIL"
-          }
-        }
-      ],
       "purl": "pkg:npm/bpmn-font@0.12.1",
       "properties": [
         {
@@ -22949,13 +22495,6 @@
       "bom-ref": "pkg:npm/bpmn-js@18.10.1",
       "name": "bpmn-js",
       "version": "18.10.1",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/bpmn-js@18.10.1",
       "properties": [
         {
@@ -22973,13 +22512,6 @@
       "bom-ref": "pkg:npm/bpmn-moddle@9.0.4",
       "name": "bpmn-moddle",
       "version": "9.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/bpmn-moddle@9.0.4",
       "properties": [
         {
@@ -22997,13 +22529,6 @@
       "bom-ref": "pkg:npm/call-bind-apply-helpers@1.0.2",
       "name": "call-bind-apply-helpers",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/call-bind-apply-helpers@1.0.2",
       "properties": [
         {
@@ -23021,13 +22546,6 @@
       "bom-ref": "pkg:npm/call-bound@1.0.4",
       "name": "call-bound",
       "version": "1.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/call-bound@1.0.4",
       "properties": [
         {
@@ -23045,13 +22563,6 @@
       "bom-ref": "pkg:npm/camunda-dmn-js@3.6.0",
       "name": "camunda-dmn-js",
       "version": "3.6.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/camunda-dmn-js@3.6.0",
       "properties": [
         {
@@ -23069,13 +22580,6 @@
       "bom-ref": "pkg:npm/camunda-dmn-moddle@1.3.0",
       "name": "camunda-dmn-moddle",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/camunda-dmn-moddle@1.3.0",
       "properties": [
         {
@@ -23093,13 +22597,6 @@
       "bom-ref": "pkg:npm/chart.js@4.5.1",
       "name": "chart.js",
       "version": "4.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/chart.js@4.5.1",
       "properties": [
         {
@@ -23117,13 +22614,6 @@
       "bom-ref": "pkg:npm/classnames@2.5.1",
       "name": "classnames",
       "version": "2.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/classnames@2.5.1",
       "properties": [
         {
@@ -23141,13 +22631,6 @@
       "bom-ref": "pkg:npm/clipboard@2.0.11",
       "name": "clipboard",
       "version": "2.0.11",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/clipboard@2.0.11",
       "properties": [
         {
@@ -23165,13 +22648,6 @@
       "bom-ref": "pkg:npm/clsx@2.1.1",
       "name": "clsx",
       "version": "2.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/clsx@2.1.1",
       "properties": [
         {
@@ -23189,13 +22665,6 @@
       "bom-ref": "pkg:npm/cmmn-font@0.5.0",
       "name": "cmmn-font",
       "version": "0.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SIL"
-          }
-        }
-      ],
       "purl": "pkg:npm/cmmn-font@0.5.0",
       "properties": [
         {
@@ -23213,13 +22682,6 @@
       "bom-ref": "pkg:npm/cmmn-js@0.20.0",
       "name": "cmmn-js",
       "version": "0.20.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/cmmn-js@0.20.0",
       "properties": [
         {
@@ -23237,13 +22699,6 @@
       "bom-ref": "pkg:npm/cmmn-moddle@5.0.0",
       "name": "cmmn-moddle",
       "version": "5.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/cmmn-moddle@5.0.0",
       "properties": [
         {
@@ -23261,13 +22716,6 @@
       "bom-ref": "pkg:npm/codemirror@6.0.2",
       "name": "codemirror",
       "version": "6.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/codemirror@6.0.2",
       "properties": [
         {
@@ -23285,13 +22733,6 @@
       "bom-ref": "pkg:npm/combined-stream@1.0.8",
       "name": "combined-stream",
       "version": "1.0.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/combined-stream@1.0.8",
       "properties": [
         {
@@ -23309,13 +22750,6 @@
       "bom-ref": "pkg:npm/component-emitter@1.3.1",
       "name": "component-emitter",
       "version": "1.3.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/component-emitter@1.3.1",
       "properties": [
         {
@@ -23350,13 +22784,6 @@
       "bom-ref": "pkg:npm/component-event@0.2.1",
       "name": "component-event",
       "version": "0.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/component-event@0.2.1",
       "properties": [
         {
@@ -23391,13 +22818,6 @@
       "bom-ref": "pkg:npm/component-xor@0.0.4",
       "name": "component-xor",
       "version": "0.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/component-xor@0.0.4",
       "properties": [
         {
@@ -23415,13 +22835,6 @@
       "bom-ref": "pkg:npm/contra@1.9.4",
       "name": "contra",
       "version": "1.9.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/contra@1.9.4",
       "properties": [
         {
@@ -23439,13 +22852,6 @@
       "bom-ref": "pkg:npm/cookiejar@2.1.4",
       "name": "cookiejar",
       "version": "2.1.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/cookiejar@2.1.4",
       "properties": [
         {
@@ -23460,21 +22866,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.47.0",
+      "bom-ref": "pkg:npm/core-js@3.48.0",
       "name": "core-js",
-      "version": "3.47.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/core-js@3.47.0",
+      "version": "3.48.0",
+      "purl": "pkg:npm/core-js@3.48.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.47.0"
+          "value": "core-js@3.48.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23487,13 +22886,6 @@
       "bom-ref": "pkg:npm/crelt@1.0.6",
       "name": "crelt",
       "version": "1.0.6",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/crelt@1.0.6",
       "properties": [
         {
@@ -23511,13 +22903,6 @@
       "bom-ref": "pkg:npm/css.escape@1.5.1",
       "name": "css.escape",
       "version": "1.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/css.escape@1.5.1",
       "properties": [
         {
@@ -23535,13 +22920,6 @@
       "bom-ref": "pkg:npm/debug@4.4.1",
       "name": "debug",
       "version": "4.4.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/debug@4.4.1",
       "properties": [
         {
@@ -23559,13 +22937,6 @@
       "bom-ref": "pkg:npm/delayed-stream@1.0.0",
       "name": "delayed-stream",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/delayed-stream@1.0.0",
       "properties": [
         {
@@ -23583,13 +22954,6 @@
       "bom-ref": "pkg:npm/delegate@3.2.0",
       "name": "delegate",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/delegate@3.2.0",
       "properties": [
         {
@@ -23607,13 +22971,6 @@
       "bom-ref": "pkg:npm/dezalgo@1.0.4",
       "name": "dezalgo",
       "version": "1.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/dezalgo@1.0.4",
       "properties": [
         {
@@ -23631,13 +22988,6 @@
       "bom-ref": "pkg:npm/diagram-js-direct-editing@1.8.0",
       "name": "diagram-js-direct-editing",
       "version": "1.8.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-direct-editing@1.8.0",
       "properties": [
         {
@@ -23655,13 +23005,6 @@
       "bom-ref": "pkg:npm/diagram-js-direct-editing@3.2.0",
       "name": "diagram-js-direct-editing",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-direct-editing@3.2.0",
       "properties": [
         {
@@ -23679,13 +23022,6 @@
       "bom-ref": "pkg:npm/diagram-js-grid@1.1.0",
       "name": "diagram-js-grid",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-grid@1.1.0",
       "properties": [
         {
@@ -23703,13 +23039,6 @@
       "bom-ref": "pkg:npm/diagram-js-origin@1.4.0",
       "name": "diagram-js-origin",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js-origin@1.4.0",
       "properties": [
         {
@@ -23727,13 +23056,6 @@
       "bom-ref": "pkg:npm/diagram-js@15.5.0",
       "name": "diagram-js",
       "version": "15.5.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js@15.5.0",
       "properties": [
         {
@@ -23751,13 +23073,6 @@
       "bom-ref": "pkg:npm/diagram-js@4.0.3",
       "name": "diagram-js",
       "version": "4.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/diagram-js@4.0.3",
       "properties": [
         {
@@ -23775,13 +23090,6 @@
       "bom-ref": "pkg:npm/didi@10.2.2",
       "name": "didi",
       "version": "10.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/didi@10.2.2",
       "properties": [
         {
@@ -23799,13 +23107,6 @@
       "bom-ref": "pkg:npm/didi@4.0.0",
       "name": "didi",
       "version": "4.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/didi@4.0.0",
       "properties": [
         {
@@ -23823,13 +23124,6 @@
       "bom-ref": "pkg:npm/dmn-font@0.6.2",
       "name": "dmn-font",
       "version": "0.6.2",
-      "licenses": [
-        {
-          "license": {
-            "name": "SIL"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-font@0.6.2",
       "properties": [
         {
@@ -23847,13 +23141,6 @@
       "bom-ref": "pkg:npm/dmn-js-boxed-expression@17.5.0",
       "name": "dmn-js-boxed-expression",
       "version": "17.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-boxed-expression@17.5.0",
       "properties": [
         {
@@ -23871,13 +23158,6 @@
       "bom-ref": "pkg:npm/dmn-js-decision-table@17.5.0",
       "name": "dmn-js-decision-table",
       "version": "17.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-decision-table@17.5.0",
       "properties": [
         {
@@ -23895,13 +23175,6 @@
       "bom-ref": "pkg:npm/dmn-js-drd@17.5.0",
       "name": "dmn-js-drd",
       "version": "17.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-drd@17.5.0",
       "properties": [
         {
@@ -23919,13 +23192,6 @@
       "bom-ref": "pkg:npm/dmn-js-literal-expression@17.5.0",
       "name": "dmn-js-literal-expression",
       "version": "17.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-literal-expression@17.5.0",
       "properties": [
         {
@@ -23943,13 +23209,6 @@
       "bom-ref": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "name": "dmn-js-properties-panel",
       "version": "3.9.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "properties": [
         {
@@ -23967,13 +23226,6 @@
       "bom-ref": "pkg:npm/dmn-js-shared@17.5.0",
       "name": "dmn-js-shared",
       "version": "17.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js-shared@17.5.0",
       "properties": [
         {
@@ -23991,13 +23243,6 @@
       "bom-ref": "pkg:npm/dmn-js@17.5.0",
       "name": "dmn-js",
       "version": "17.5.0",
-      "licenses": [
-        {
-          "license": {
-            "name": "SEE-LICENSE-IN-LICENSE"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-js@17.5.0",
       "properties": [
         {
@@ -24015,13 +23260,6 @@
       "bom-ref": "pkg:npm/dmn-moddle@11.0.0",
       "name": "dmn-moddle",
       "version": "11.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dmn-moddle@11.0.0",
       "properties": [
         {
@@ -24036,16 +23274,26 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/dmn-moddle@12.0.1",
+      "name": "dmn-moddle",
+      "version": "12.0.1",
+      "purl": "pkg:npm/dmn-moddle@12.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-moddle@12.0.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/dom-iterator@1.0.2",
       "name": "dom-iterator",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dom-iterator@1.0.2",
       "properties": [
         {
@@ -24080,13 +23328,6 @@
       "bom-ref": "pkg:npm/domify@1.4.2",
       "name": "domify",
       "version": "1.4.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/domify@1.4.2",
       "properties": [
         {
@@ -24104,13 +23345,6 @@
       "bom-ref": "pkg:npm/domify@2.0.0",
       "name": "domify",
       "version": "2.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/domify@2.0.0",
       "properties": [
         {
@@ -24128,11 +23362,6 @@
       "bom-ref": "pkg:npm/dompurify@3.3.1",
       "name": "dompurify",
       "version": "3.3.1",
-      "licenses": [
-        {
-          "expression": "MPL-2.0 OR Apache-2.0"
-        }
-      ],
       "purl": "pkg:npm/dompurify@3.3.1",
       "properties": [
         {
@@ -24150,13 +23379,6 @@
       "bom-ref": "pkg:npm/downloadjs@1.4.7",
       "name": "downloadjs",
       "version": "1.4.7",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/downloadjs@1.4.7",
       "properties": [
         {
@@ -24174,13 +23396,6 @@
       "bom-ref": "pkg:npm/dunder-proto@1.0.1",
       "name": "dunder-proto",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/dunder-proto@1.0.1",
       "properties": [
         {
@@ -24198,13 +23413,6 @@
       "bom-ref": "pkg:npm/es-define-property@1.0.1",
       "name": "es-define-property",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-define-property@1.0.1",
       "properties": [
         {
@@ -24222,13 +23430,6 @@
       "bom-ref": "pkg:npm/es-errors@1.3.0",
       "name": "es-errors",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-errors@1.3.0",
       "properties": [
         {
@@ -24246,13 +23447,6 @@
       "bom-ref": "pkg:npm/es-object-atoms@1.1.1",
       "name": "es-object-atoms",
       "version": "1.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-object-atoms@1.1.1",
       "properties": [
         {
@@ -24270,13 +23464,6 @@
       "bom-ref": "pkg:npm/es-set-tostringtag@2.1.0",
       "name": "es-set-tostringtag",
       "version": "2.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/es-set-tostringtag@2.1.0",
       "properties": [
         {
@@ -24294,13 +23481,6 @@
       "bom-ref": "pkg:npm/escape-html@1.0.3",
       "name": "escape-html",
       "version": "1.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/escape-html@1.0.3",
       "properties": [
         {
@@ -24318,13 +23498,6 @@
       "bom-ref": "pkg:npm/events@3.3.0",
       "name": "events",
       "version": "3.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/events@3.3.0",
       "properties": [
         {
@@ -24342,13 +23515,6 @@
       "bom-ref": "pkg:npm/fast-safe-stringify@2.1.1",
       "name": "fast-safe-stringify",
       "version": "2.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/fast-safe-stringify@2.1.1",
       "properties": [
         {
@@ -24366,13 +23532,6 @@
       "bom-ref": "pkg:npm/fast-xml-parser@5.3.3",
       "name": "fast-xml-parser",
       "version": "5.3.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/fast-xml-parser@5.3.3",
       "properties": [
         {
@@ -24390,13 +23549,6 @@
       "bom-ref": "pkg:npm/feelers@1.4.0",
       "name": "feelers",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/feelers@1.4.0",
       "properties": [
         {
@@ -24414,13 +23566,6 @@
       "bom-ref": "pkg:npm/feelin@3.2.0",
       "name": "feelin",
       "version": "3.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/feelin@3.2.0",
       "properties": [
         {
@@ -24438,13 +23583,6 @@
       "bom-ref": "pkg:npm/feelin@4.6.0",
       "name": "feelin",
       "version": "4.6.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/feelin@4.6.0",
       "properties": [
         {
@@ -24462,13 +23600,6 @@
       "bom-ref": "pkg:npm/file-drops@0.6.2",
       "name": "file-drops",
       "version": "0.6.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/file-drops@0.6.2",
       "properties": [
         {
@@ -24486,13 +23617,6 @@
       "bom-ref": "pkg:npm/flatpickr@4.6.13",
       "name": "flatpickr",
       "version": "4.6.13",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/flatpickr@4.6.13",
       "properties": [
         {
@@ -24510,13 +23634,6 @@
       "bom-ref": "pkg:npm/focus-trap@7.6.5",
       "name": "focus-trap",
       "version": "7.6.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/focus-trap@7.6.5",
       "properties": [
         {
@@ -24534,13 +23651,6 @@
       "bom-ref": "pkg:npm/form-data@4.0.5",
       "name": "form-data",
       "version": "4.0.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/form-data@4.0.5",
       "properties": [
         {
@@ -24558,13 +23668,6 @@
       "bom-ref": "pkg:npm/formidable@3.5.4",
       "name": "formidable",
       "version": "3.5.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/formidable@3.5.4",
       "properties": [
         {
@@ -24582,13 +23685,6 @@
       "bom-ref": "pkg:npm/function-bind@1.1.2",
       "name": "function-bind",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/function-bind@1.1.2",
       "properties": [
         {
@@ -24606,13 +23702,6 @@
       "bom-ref": "pkg:npm/get-intrinsic@1.3.0",
       "name": "get-intrinsic",
       "version": "1.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/get-intrinsic@1.3.0",
       "properties": [
         {
@@ -24630,13 +23719,6 @@
       "bom-ref": "pkg:npm/get-proto@1.0.1",
       "name": "get-proto",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/get-proto@1.0.1",
       "properties": [
         {
@@ -24654,13 +23736,6 @@
       "bom-ref": "pkg:npm/good-listener@1.2.2",
       "name": "good-listener",
       "version": "1.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/good-listener@1.2.2",
       "properties": [
         {
@@ -24678,13 +23753,6 @@
       "bom-ref": "pkg:npm/gopd@1.2.0",
       "name": "gopd",
       "version": "1.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/gopd@1.2.0",
       "properties": [
         {
@@ -24702,13 +23770,6 @@
       "bom-ref": "pkg:npm/hammerjs@2.0.8",
       "name": "hammerjs",
       "version": "2.0.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/hammerjs@2.0.8",
       "properties": [
         {
@@ -24726,13 +23787,6 @@
       "bom-ref": "pkg:npm/has-symbols@1.1.0",
       "name": "has-symbols",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/has-symbols@1.1.0",
       "properties": [
         {
@@ -24750,13 +23804,6 @@
       "bom-ref": "pkg:npm/has-tostringtag@1.0.2",
       "name": "has-tostringtag",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/has-tostringtag@1.0.2",
       "properties": [
         {
@@ -24774,13 +23821,6 @@
       "bom-ref": "pkg:npm/hasown@2.0.2",
       "name": "hasown",
       "version": "2.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/hasown@2.0.2",
       "properties": [
         {
@@ -24798,13 +23838,6 @@
       "bom-ref": "pkg:npm/hat@0.0.3",
       "name": "hat",
       "version": "0.0.3",
-      "licenses": [
-        {
-          "license": {
-            "name": "MIT-X11"
-          }
-        }
-      ],
       "purl": "pkg:npm/hat@0.0.3",
       "properties": [
         {
@@ -24822,13 +23855,6 @@
       "bom-ref": "pkg:npm/htm@3.1.1",
       "name": "htm",
       "version": "3.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
       "purl": "pkg:npm/htm@3.1.1",
       "properties": [
         {
@@ -24846,13 +23872,6 @@
       "bom-ref": "pkg:npm/ids@0.2.2",
       "name": "ids",
       "version": "0.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ids@0.2.2",
       "properties": [
         {
@@ -24870,18 +23889,28 @@
       "bom-ref": "pkg:npm/ids@1.0.5",
       "name": "ids",
       "version": "1.0.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ids@1.0.5",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "ids@1.0.5"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ids@3.0.0",
+      "name": "ids",
+      "version": "3.0.0",
+      "purl": "pkg:npm/ids@3.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "ids@3.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24911,13 +23940,6 @@
       "bom-ref": "pkg:npm/inferno-shared@5.6.3",
       "name": "inferno-shared",
       "version": "5.6.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/inferno-shared@5.6.3",
       "properties": [
         {
@@ -24935,13 +23957,6 @@
       "bom-ref": "pkg:npm/inferno-vnode-flags@5.6.3",
       "name": "inferno-vnode-flags",
       "version": "5.6.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/inferno-vnode-flags@5.6.3",
       "properties": [
         {
@@ -24959,13 +23974,6 @@
       "bom-ref": "pkg:npm/inferno@5.6.3",
       "name": "inferno",
       "version": "5.6.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/inferno@5.6.3",
       "properties": [
         {
@@ -24983,13 +23991,6 @@
       "bom-ref": "pkg:npm/inherits-browser@0.1.0",
       "name": "inherits-browser",
       "version": "0.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/inherits-browser@0.1.0",
       "properties": [
         {
@@ -25007,13 +24008,6 @@
       "bom-ref": "pkg:npm/inherits@2.0.4",
       "name": "inherits",
       "version": "2.0.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/inherits@2.0.4",
       "properties": [
         {
@@ -25031,13 +24025,6 @@
       "bom-ref": "pkg:npm/jquery-ui@1.14.1",
       "name": "jquery-ui",
       "version": "1.14.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/jquery-ui@1.14.1",
       "properties": [
         {
@@ -25055,13 +24042,6 @@
       "bom-ref": "pkg:npm/jquery@4.0.0",
       "name": "jquery",
       "version": "4.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/jquery@4.0.0",
       "properties": [
         {
@@ -25079,13 +24059,6 @@
       "bom-ref": "pkg:npm/lezer-feel@1.9.0",
       "name": "lezer-feel",
       "version": "1.9.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/lezer-feel@1.9.0",
       "properties": [
         {
@@ -25100,21 +24073,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/lodash@4.17.21",
+      "bom-ref": "pkg:npm/lodash@4.17.23",
       "name": "lodash",
-      "version": "4.17.21",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/lodash@4.17.21",
+      "version": "4.17.23",
+      "purl": "pkg:npm/lodash@4.17.23",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "lodash@4.17.21"
+          "value": "lodash@4.17.23"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25127,13 +24093,6 @@
       "bom-ref": "pkg:npm/luxon@3.7.2",
       "name": "luxon",
       "version": "3.7.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/luxon@3.7.2",
       "properties": [
         {
@@ -25151,13 +24110,6 @@
       "bom-ref": "pkg:npm/marked@16.4.2",
       "name": "marked",
       "version": "16.4.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/marked@16.4.2",
       "properties": [
         {
@@ -25175,13 +24127,6 @@
       "bom-ref": "pkg:npm/matches-selector@1.2.0",
       "name": "matches-selector",
       "version": "1.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/matches-selector@1.2.0",
       "properties": [
         {
@@ -25199,13 +24144,6 @@
       "bom-ref": "pkg:npm/math-intrinsics@1.1.0",
       "name": "math-intrinsics",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/math-intrinsics@1.1.0",
       "properties": [
         {
@@ -25223,13 +24161,6 @@
       "bom-ref": "pkg:npm/methods@1.1.2",
       "name": "methods",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/methods@1.1.2",
       "properties": [
         {
@@ -25247,13 +24178,6 @@
       "bom-ref": "pkg:npm/mime-db@1.52.0",
       "name": "mime-db",
       "version": "1.52.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mime-db@1.52.0",
       "properties": [
         {
@@ -25271,13 +24195,6 @@
       "bom-ref": "pkg:npm/mime-types@2.1.35",
       "name": "mime-types",
       "version": "2.1.35",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mime-types@2.1.35",
       "properties": [
         {
@@ -25295,13 +24212,6 @@
       "bom-ref": "pkg:npm/mime@2.6.0",
       "name": "mime",
       "version": "2.6.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mime@2.6.0",
       "properties": [
         {
@@ -25319,13 +24229,6 @@
       "bom-ref": "pkg:npm/min-dash@3.8.1",
       "name": "min-dash",
       "version": "3.8.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dash@3.8.1",
       "properties": [
         {
@@ -25343,13 +24246,6 @@
       "bom-ref": "pkg:npm/min-dash@4.2.3",
       "name": "min-dash",
       "version": "4.2.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dash@4.2.3",
       "properties": [
         {
@@ -25364,16 +24260,26 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/min-dash@5.0.0",
+      "name": "min-dash",
+      "version": "5.0.0",
+      "purl": "pkg:npm/min-dash@5.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "min-dash@5.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/min-dom@3.2.1",
       "name": "min-dom",
       "version": "3.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dom@3.2.1",
       "properties": [
         {
@@ -25391,13 +24297,6 @@
       "bom-ref": "pkg:npm/min-dom@4.2.1",
       "name": "min-dom",
       "version": "4.2.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dom@4.2.1",
       "properties": [
         {
@@ -25415,13 +24314,6 @@
       "bom-ref": "pkg:npm/min-dom@5.1.1",
       "name": "min-dom",
       "version": "5.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/min-dom@5.1.1",
       "properties": [
         {
@@ -25439,13 +24331,6 @@
       "bom-ref": "pkg:npm/mitt@3.0.1",
       "name": "mitt",
       "version": "3.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/mitt@3.0.1",
       "properties": [
         {
@@ -25463,13 +24348,6 @@
       "bom-ref": "pkg:npm/moddle-xml@11.0.0",
       "name": "moddle-xml",
       "version": "11.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle-xml@11.0.0",
       "properties": [
         {
@@ -25484,16 +24362,26 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/moddle-xml@12.0.0",
+      "name": "moddle-xml",
+      "version": "12.0.0",
+      "purl": "pkg:npm/moddle-xml@12.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle-xml@12.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/moddle-xml@7.5.0",
       "name": "moddle-xml",
       "version": "7.5.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle-xml@7.5.0",
       "properties": [
         {
@@ -25511,13 +24399,6 @@
       "bom-ref": "pkg:npm/moddle@4.1.0",
       "name": "moddle",
       "version": "4.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle@4.1.0",
       "properties": [
         {
@@ -25535,13 +24416,6 @@
       "bom-ref": "pkg:npm/moddle@7.2.0",
       "name": "moddle",
       "version": "7.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moddle@7.2.0",
       "properties": [
         {
@@ -25556,16 +24430,26 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/moddle@8.0.0",
+      "name": "moddle",
+      "version": "8.0.0",
+      "purl": "pkg:npm/moddle@8.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle@8.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/moment@2.30.1",
       "name": "moment",
       "version": "2.30.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/moment@2.30.1",
       "properties": [
         {
@@ -25583,11 +24467,6 @@
       "bom-ref": "pkg:npm/mousetrap@1.6.5",
       "name": "mousetrap",
       "version": "1.6.5",
-      "licenses": [
-        {
-          "expression": "Apache-2.0 WITH LLVM-exception"
-        }
-      ],
       "purl": "pkg:npm/mousetrap@1.6.5",
       "properties": [
         {
@@ -25605,13 +24484,6 @@
       "bom-ref": "pkg:npm/ms@2.1.3",
       "name": "ms",
       "version": "2.1.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ms@2.1.3",
       "properties": [
         {
@@ -25629,13 +24501,6 @@
       "bom-ref": "pkg:npm/object-inspect@1.13.4",
       "name": "object-inspect",
       "version": "1.13.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/object-inspect@1.13.4",
       "properties": [
         {
@@ -25653,13 +24518,6 @@
       "bom-ref": "pkg:npm/object-refs@0.3.0",
       "name": "object-refs",
       "version": "0.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/object-refs@0.3.0",
       "properties": [
         {
@@ -25677,13 +24535,6 @@
       "bom-ref": "pkg:npm/object-refs@0.4.0",
       "name": "object-refs",
       "version": "0.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/object-refs@0.4.0",
       "properties": [
         {
@@ -25701,13 +24552,6 @@
       "bom-ref": "pkg:npm/once@1.4.0",
       "name": "once",
       "version": "1.4.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/once@1.4.0",
       "properties": [
         {
@@ -25725,13 +24569,6 @@
       "bom-ref": "pkg:npm/opencollective-postinstall@2.0.3",
       "name": "opencollective-postinstall",
       "version": "2.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/opencollective-postinstall@2.0.3",
       "properties": [
         {
@@ -25749,13 +24586,6 @@
       "bom-ref": "pkg:npm/path-intersection@1.1.1",
       "name": "path-intersection",
       "version": "1.1.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/path-intersection@1.1.1",
       "properties": [
         {
@@ -25773,13 +24603,6 @@
       "bom-ref": "pkg:npm/path-intersection@4.0.1",
       "name": "path-intersection",
       "version": "4.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/path-intersection@4.0.1",
       "properties": [
         {
@@ -25797,13 +24620,6 @@
       "bom-ref": "pkg:npm/preact@10.28.2",
       "name": "preact",
       "version": "10.28.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/preact@10.28.2",
       "properties": [
         {
@@ -25821,13 +24637,6 @@
       "bom-ref": "pkg:npm/q@1.5.1",
       "name": "q",
       "version": "1.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/q@1.5.1",
       "properties": [
         {
@@ -25845,13 +24654,6 @@
       "bom-ref": "pkg:npm/qs@6.14.1",
       "name": "qs",
       "version": "6.14.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-3-Clause"
-          }
-        }
-      ],
       "purl": "pkg:npm/qs@6.14.1",
       "properties": [
         {
@@ -25869,13 +24671,6 @@
       "bom-ref": "pkg:npm/requirejs-angular-define@1.1.0",
       "name": "requirejs-angular-define",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/requirejs-angular-define@1.1.0",
       "properties": [
         {
@@ -25910,13 +24705,6 @@
       "bom-ref": "pkg:npm/requirejs@2.3.8",
       "name": "requirejs",
       "version": "2.3.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/requirejs@2.3.8",
       "properties": [
         {
@@ -25934,13 +24722,6 @@
       "bom-ref": "pkg:npm/saxen@10.0.0",
       "name": "saxen",
       "version": "10.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/saxen@10.0.0",
       "properties": [
         {
@@ -25955,16 +24736,26 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/saxen@11.0.2",
+      "name": "saxen",
+      "version": "11.0.2",
+      "purl": "pkg:npm/saxen@11.0.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "saxen@11.0.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/saxen@8.1.2",
       "name": "saxen",
       "version": "8.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/saxen@8.1.2",
       "properties": [
         {
@@ -25982,13 +24773,6 @@
       "bom-ref": "pkg:npm/select@1.1.2",
       "name": "select",
       "version": "1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/select@1.1.2",
       "properties": [
         {
@@ -26006,13 +24790,6 @@
       "bom-ref": "pkg:npm/selection-ranges@3.0.3",
       "name": "selection-ranges",
       "version": "3.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/selection-ranges@3.0.3",
       "properties": [
         {
@@ -26030,13 +24807,6 @@
       "bom-ref": "pkg:npm/selection-ranges@4.0.3",
       "name": "selection-ranges",
       "version": "4.0.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/selection-ranges@4.0.3",
       "properties": [
         {
@@ -26054,13 +24824,6 @@
       "bom-ref": "pkg:npm/selection-update@0.1.2",
       "name": "selection-update",
       "version": "0.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/selection-update@0.1.2",
       "properties": [
         {
@@ -26078,13 +24841,6 @@
       "bom-ref": "pkg:npm/side-channel-list@1.0.0",
       "name": "side-channel-list",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel-list@1.0.0",
       "properties": [
         {
@@ -26102,13 +24858,6 @@
       "bom-ref": "pkg:npm/side-channel-map@1.0.1",
       "name": "side-channel-map",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel-map@1.0.1",
       "properties": [
         {
@@ -26126,13 +24875,6 @@
       "bom-ref": "pkg:npm/side-channel-weakmap@1.0.2",
       "name": "side-channel-weakmap",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel-weakmap@1.0.2",
       "properties": [
         {
@@ -26150,13 +24892,6 @@
       "bom-ref": "pkg:npm/side-channel@1.1.0",
       "name": "side-channel",
       "version": "1.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/side-channel@1.1.0",
       "properties": [
         {
@@ -26174,13 +24909,6 @@
       "bom-ref": "pkg:npm/strnum@2.1.2",
       "name": "strnum",
       "version": "2.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/strnum@2.1.2",
       "properties": [
         {
@@ -26198,13 +24926,6 @@
       "bom-ref": "pkg:npm/style-mod@4.1.2",
       "name": "style-mod",
       "version": "4.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/style-mod@4.1.2",
       "properties": [
         {
@@ -26222,13 +24943,6 @@
       "bom-ref": "pkg:npm/superagent@10.3.0",
       "name": "superagent",
       "version": "10.3.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/superagent@10.3.0",
       "properties": [
         {
@@ -26246,13 +24960,6 @@
       "bom-ref": "pkg:npm/tabbable@6.2.0",
       "name": "tabbable",
       "version": "6.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tabbable@6.2.0",
       "properties": [
         {
@@ -26270,13 +24977,6 @@
       "bom-ref": "pkg:npm/table-js@9.2.0",
       "name": "table-js",
       "version": "9.2.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/table-js@9.2.0",
       "properties": [
         {
@@ -26294,13 +24994,6 @@
       "bom-ref": "pkg:npm/ticky@1.0.1",
       "name": "ticky",
       "version": "1.0.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/ticky@1.0.1",
       "properties": [
         {
@@ -26318,13 +25011,6 @@
       "bom-ref": "pkg:npm/tiny-emitter@2.1.0",
       "name": "tiny-emitter",
       "version": "2.1.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tiny-emitter@2.1.0",
       "properties": [
         {
@@ -26342,13 +25028,6 @@
       "bom-ref": "pkg:npm/tiny-svg@2.2.4",
       "name": "tiny-svg",
       "version": "2.2.4",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tiny-svg@2.2.4",
       "properties": [
         {
@@ -26366,13 +25045,6 @@
       "bom-ref": "pkg:npm/tiny-svg@3.1.3",
       "name": "tiny-svg",
       "version": "3.1.3",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/tiny-svg@3.1.3",
       "properties": [
         {
@@ -26390,13 +25062,6 @@
       "bom-ref": "pkg:npm/w3c-keyname@2.2.8",
       "name": "w3c-keyname",
       "version": "2.2.8",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/w3c-keyname@2.2.8",
       "properties": [
         {
@@ -26414,13 +25079,6 @@
       "bom-ref": "pkg:npm/wrappy@1.0.2",
       "name": "wrappy",
       "version": "1.0.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
       "purl": "pkg:npm/wrappy@1.0.2",
       "properties": [
         {
@@ -26438,13 +25096,6 @@
       "bom-ref": "pkg:npm/zeebe-dmn-moddle@1.0.0",
       "name": "zeebe-dmn-moddle",
       "version": "1.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
       "purl": "pkg:npm/zeebe-dmn-moddle@1.0.0",
       "properties": [
         {
@@ -26459,7 +25110,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "955b07c2-a2f0-46f2-8db5-ee34a13d21a7",
+      "bom-ref": "4076aba1-f940-4226-a0e4-ad0150fdc003",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29094,15 +27745,15 @@
       "dependsOn": []
     },
     {
-      "ref": "955b07c2-a2f0-46f2-8db5-ee34a13d21a7",
+      "ref": "4076aba1-f940-4226-a0e4-ad0150fdc003",
       "dependsOn": [
-        "e389e933-4edd-4c22-9264-f0bf75e0caef"
+        "eb57b067-d5d0-4ffa-8f3e-96e65a48b216"
       ]
     },
     {
-      "ref": "e389e933-4edd-4c22-9264-f0bf75e0caef",
+      "ref": "eb57b067-d5d0-4ffa-8f3e-96e65a48b216",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+        "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/angular-animate@1.8.3",
@@ -29124,7 +27775,7 @@
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.47.0",
+        "pkg:npm/core-js@3.48.0",
         "pkg:npm/dmn-font@0.6.2",
         "pkg:npm/dmn-js-decision-table@17.5.0",
         "pkg:npm/dmn-js-drd@17.5.0",
@@ -29138,7 +27789,7 @@
         "pkg:npm/fast-xml-parser@5.3.3",
         "pkg:npm/jquery-ui@1.14.1",
         "pkg:npm/jquery@4.0.0",
-        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/lodash@4.17.23",
         "pkg:npm/moment@2.30.1",
         "pkg:npm/mousetrap@1.6.5",
         "pkg:npm/q@1.5.1",
@@ -29167,11 +27818,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "dependsOn": [
-        "pkg:npm/dmn-moddle@11.0.0",
-        "pkg:npm/ids@1.0.5",
-        "pkg:npm/min-dash@4.2.3"
+        "pkg:npm/dmn-moddle@12.0.1",
+        "pkg:npm/ids@3.0.0",
+        "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
@@ -29264,7 +27915,7 @@
         "pkg:npm/feelin@4.6.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@1.0.5",
-        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/lodash@4.17.23",
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/marked@16.4.2",
         "pkg:npm/min-dash@4.2.3",
@@ -29700,7 +28351,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.47.0",
+      "ref": "pkg:npm/core-js@3.48.0",
       "dependsOn": []
     },
     {
@@ -29897,6 +28548,14 @@
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/moddle-xml@11.0.0",
         "pkg:npm/moddle@7.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-moddle@12.0.1",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle-xml@12.0.0",
+        "pkg:npm/moddle@8.0.0"
       ]
     },
     {
@@ -30122,6 +28781,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/ids@3.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/indexof@0.0.1",
       "dependsOn": []
     },
@@ -30168,7 +28831,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/lodash@4.17.21",
+      "ref": "pkg:npm/lodash@4.17.23",
       "dependsOn": []
     },
     {
@@ -30214,6 +28877,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/min-dash@5.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/min-dom@3.2.1",
       "dependsOn": [
         "pkg:npm/component-event@0.1.4",
@@ -30251,6 +28918,14 @@
       ]
     },
     {
+      "ref": "pkg:npm/moddle-xml@12.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle@8.0.0",
+        "pkg:npm/saxen@11.0.2"
+      ]
+    },
+    {
       "ref": "pkg:npm/moddle-xml@7.5.0",
       "dependsOn": [
         "pkg:npm/min-dash@3.8.1",
@@ -30268,6 +28943,12 @@
       "ref": "pkg:npm/moddle@7.2.0",
       "dependsOn": [
         "pkg:npm/min-dash@4.2.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/moddle@8.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
@@ -30342,6 +29023,10 @@
     },
     {
       "ref": "pkg:npm/saxen@10.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/saxen@11.0.2",
       "dependsOn": []
     },
     {
@@ -31547,59 +30232,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2025-13465",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 6.5,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:L"
-        }
-      ],
-      "cwes": [
-        1321
-      ],
-      "description": "Lodash versions 4.0.0 through 4.17.22 are vulnerable to prototype pollution in the _.unset\u00A0and _.omit\u00A0functions. An attacker can pass crafted paths which cause Lodash to delete methods from global prototypes.\n\nThe issue permits deletion of properties but does not allow overwriting their original behavior.\n\nThis issue is patched on 4.17.23",
-      "recommendation": "Upgrade lodash to version 4.17.23",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2025-13465"
-        },
-        {
-          "url": "https://github.com/lodash/lodash"
-        },
-        {
-          "url": "https://github.com/lodash/lodash/commit/edadd452146f7e4bad4ea684e955708931d84d81"
-        },
-        {
-          "url": "https://github.com/lodash/lodash/security/advisories/GHSA-xxjr-mmjv-4gpg"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-13465"
-        }
-      ],
-      "published": "2026-01-21T20:16:05Z",
-      "updated": "2026-01-21T20:16:05Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/lodash@4.17.21",
-          "versions": [
-            {
-              "version": "4.17.21",
               "status": "affected"
             }
           ]

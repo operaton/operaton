@@ -33,10 +33,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
 import org.operaton.bpm.engine.impl.util.JsonUtil;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.FORM_RESOURCE_SUFFIXES;
+
 public class OperatonFormDefinitionDeployer extends AbstractDefinitionDeployer<OperatonFormDefinitionEntity> {
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
-  public static final String[] FORM_RESOURCE_SUFFIXES = new String[] { "form" };
 
   @Override
   protected String[] getResourcesSuffixes() {

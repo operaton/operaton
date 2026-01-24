@@ -4230,7 +4230,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4324,7 +4332,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4419,7 +4435,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4507,7 +4531,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4594,7 +4626,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4681,7 +4721,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4769,7 +4817,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4857,7 +4913,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -4946,7 +5010,15 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // when (2)
     List<String> variableNames = List.of(VARIABLE_NAME);
@@ -4954,14 +5026,30 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then (2)
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // when (3)
     assertThatThrownBy(() -> runtimeServiceImpl.updateVariables(processInstanceId, variableMap, variableNames))
       // then (3)
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -5051,21 +5139,45 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
       // then (1)
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // when (2)
     assertThatThrownBy(() -> runtimeServiceImpl.updateVariablesLocal(processInstanceId, null, variableNames))
       // then (2)
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
 
     // when (3)
     assertThatThrownBy(() -> runtimeServiceImpl.updateVariablesLocal(processInstanceId, variableMap, variableNames))
       // then (3)
       .withFailMessage("Exception expected: It should not be to set a variable")
       .isInstanceOf(AuthorizationException.class)
-      .satisfies(e -> verifyMessageIsValid(processInstanceId, e.getMessage()));
+      .hasMessageContaining(userId)
+      .hasMessageContaining(UPDATE.getName())
+      .hasMessageContaining(UPDATE_VARIABLE.getName())
+      .hasMessageContaining(processInstanceId)
+      .hasMessageContaining(PROCESS_INSTANCE.resourceName())
+      .hasMessageContaining(UPDATE_INSTANCE.getName())
+      .hasMessageContaining(UPDATE_INSTANCE_VARIABLE.getName())
+      .hasMessageContaining(PROCESS_KEY)
+      .hasMessageContaining(PROCESS_DEFINITION.resourceName());
   }
 
   @Test
@@ -5141,18 +5253,6 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   // helper /////////////////////////////////////////////////////
-
-  protected void verifyMessageIsValid(String processInstanceId, String message) {
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(UPDATE_VARIABLE.getName(), message);
-    testRule.assertTextPresent(processInstanceId, message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE_VARIABLE.getName(), message);
-    testRule.assertTextPresent(PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-  }
 
   protected void verifyVariableInstanceCountDisabledAuthorization(int count) {
     disableAuthorization();

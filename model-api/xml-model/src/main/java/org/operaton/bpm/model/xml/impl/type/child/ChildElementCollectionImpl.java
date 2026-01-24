@@ -74,15 +74,6 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
 
   // view /////////////////////////////////////////////////////////
 
-  /**
-   * Internal method providing access to the view represented by this collection.
-   *
-   * @return the view represented by this collection
-   */
-  private Collection<DomElement> getView(ModelElementInstanceImpl modelElement) {
-    return modelElement.getDomElement().getChildElementsByType(modelElement.getModelInstance(), childElementTypeClass);
-  }
-
   @Override
   public int getMinOccurs() {
     return minOccurs;
@@ -116,24 +107,6 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
     this.maxOccurs = maxOccurs;
   }
 
-  /** the "add" operation used by the collection */
-  private void performAddOperation(ModelElementInstanceImpl modelElement, T e) {
-    modelElement.addChildElement(e);
-  }
-
-  /** the "remove" operation used by this collection */
-  private boolean performRemoveOperation(ModelElementInstanceImpl modelElement, Object e) {
-    return modelElement.removeChildElement((ModelElementInstanceImpl)e);
-  }
-
-  /** the "clear" operation used by this collection */
-  private void performClearOperation(ModelElementInstanceImpl modelElement, Collection<DomElement> elementsToRemove) {
-    Collection<ModelElementInstance> modelElements = ModelUtil.getModelElementCollection(elementsToRemove, modelElement.getModelInstance());
-    for (ModelElementInstance element : modelElements) {
-      modelElement.removeChildElement(element);
-    }
-  }
-
   @Override
   public Collection<T> get(ModelElementInstance element) {
     return new ModelElementInstanceCollection((ModelElementInstanceImpl) element);
@@ -145,6 +118,33 @@ public class ChildElementCollectionImpl<T extends ModelElementInstance> implemen
 
     public ModelElementInstanceCollection(ModelElementInstanceImpl modelElement) {
       this.modelElement = modelElement;
+    }
+
+    /**
+     * Internal method providing access to the view represented by this collection.
+     *
+     * @return the view represented by this collection
+     */
+    private Collection<DomElement> getView(ModelElementInstanceImpl modelElement) {
+      return modelElement.getDomElement().getChildElementsByType(modelElement.getModelInstance(), childElementTypeClass);
+    }
+
+    /** the "add" operation used by the collection */
+    private void performAddOperation(ModelElementInstanceImpl modelElement, T e) {
+      modelElement.addChildElement(e);
+    }
+
+    /** the "remove" operation used by this collection */
+    private boolean performRemoveOperation(ModelElementInstanceImpl modelElement, Object e) {
+      return modelElement.removeChildElement((ModelElementInstanceImpl)e);
+    }
+
+    /** the "clear" operation used by this collection */
+    private void performClearOperation(ModelElementInstanceImpl modelElement, Collection<DomElement> elementsToRemove) {
+      Collection<ModelElementInstance> modelElements = ModelUtil.getModelElementCollection(elementsToRemove, modelElement.getModelInstance());
+      for (ModelElementInstance element : modelElements) {
+        modelElement.removeChildElement(element);
+      }
     }
 
     @Override

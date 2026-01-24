@@ -55,34 +55,34 @@ public class HistoricCaseInstanceQueryDto extends AbstractQueryDto<HistoricCaseI
     SORT_BY_TENANT_ID
     );
 
-  public String caseInstanceId;
-  public Set<String> caseInstanceIds;
-  public String caseDefinitionId;
-  public String caseDefinitionKey;
-  public String caseDefinitionName;
-  public String caseDefinitionNameLike;
-  public List<String> caseDefinitionKeyNotIn;
-  public String caseInstanceBusinessKey;
-  public String caseInstanceBusinessKeyLike;
-  public String superCaseInstanceId;
-  public String subCaseInstanceId;
+  private String caseInstanceId;
+  private Set<String> caseInstanceIds;
+  private String caseDefinitionId;
+  private String caseDefinitionKey;
+  private String caseDefinitionName;
+  private String caseDefinitionNameLike;
+  private List<String> caseDefinitionKeyNotIn;
+  private String caseInstanceBusinessKey;
+  private String caseInstanceBusinessKeyLike;
+  private String superCaseInstanceId;
+  private String subCaseInstanceId;
   private String superProcessInstanceId;
   private String subProcessInstanceId;
   private List<String> tenantIds;
   private Boolean withoutTenantId;
-  public String createdBy;
-  public List<String> caseActivityIdIn;
+  private String createdBy;
+  private List<String> caseActivityIdIn;
 
-  public Date createdBefore;
-  public Date createdAfter;
-  public Date closedBefore;
-  public Date closedAfter;
+  private Date createdBefore;
+  private Date createdAfter;
+  private Date closedBefore;
+  private Date closedAfter;
 
-  public Boolean active;
-  public Boolean completed;
-  public Boolean terminated;
-  public Boolean closed;
-  public Boolean notClosed;
+  private Boolean active;
+  private Boolean completed;
+  private Boolean terminated;
+  private Boolean closed;
+  private Boolean notClosed;
 
   protected List<VariableQueryParameterDto> variables;
 

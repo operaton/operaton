@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:966a4178-8eee-4f22-a771-2f7f8649f92f",
+  "serialNumber": "urn:uuid:5d9e4b54-02c4-4fe6-931b-4044dcd6d7f0",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-23T06:55:55Z",
+    "timestamp": "2026-01-24T07:05:13Z",
     "tools": {
       "components": [
         {
@@ -33612,7 +33612,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "83064a22-6bb0-4cad-a1c9-c5285c095be8",
+      "bom-ref": "dfa5ad89-261c-4ce2-abb1-acdc5559dc44",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33681,15 +33681,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "group": "@bpmn-io",
       "name": "dmn-migrate",
-      "version": "0.6.0",
-      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/dmn-migrate@0.6.0"
+          "value": "@bpmn-io/dmn-migrate@0.7.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35062,14 +35062,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.47.0",
+      "bom-ref": "pkg:npm/core-js@3.48.0",
       "name": "core-js",
-      "version": "3.47.0",
-      "purl": "pkg:npm/core-js@3.47.0",
+      "version": "3.48.0",
+      "purl": "pkg:npm/core-js@3.48.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.47.0"
+          "value": "core-js@3.48.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35461,6 +35461,23 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "dmn-moddle@11.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-moddle@12.0.1",
+      "name": "dmn-moddle",
+      "version": "12.0.1",
+      "purl": "pkg:npm/dmn-moddle@12.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-moddle@12.0.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36082,6 +36099,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/ids@3.0.0",
+      "name": "ids",
+      "version": "3.0.0",
+      "purl": "pkg:npm/ids@3.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "ids@3.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/indexof@0.0.1",
       "name": "indexof",
       "version": "0.0.1",
@@ -36439,6 +36473,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/min-dash@5.0.0",
+      "name": "min-dash",
+      "version": "5.0.0",
+      "purl": "pkg:npm/min-dash@5.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "min-dash@5.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/min-dom@3.2.1",
       "name": "min-dom",
       "version": "3.2.1",
@@ -36524,6 +36575,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/moddle-xml@12.0.0",
+      "name": "moddle-xml",
+      "version": "12.0.0",
+      "purl": "pkg:npm/moddle-xml@12.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle-xml@12.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/moddle-xml@7.5.0",
       "name": "moddle-xml",
       "version": "7.5.0",
@@ -36566,6 +36634,23 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "moddle@7.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/moddle@8.0.0",
+      "name": "moddle",
+      "version": "8.0.0",
+      "purl": "pkg:npm/moddle@8.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle@8.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36855,6 +36940,23 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "saxen@10.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/saxen@11.0.2",
+      "name": "saxen",
+      "version": "11.0.2",
+      "purl": "pkg:npm/saxen@11.0.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "saxen@11.0.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37221,7 +37323,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d9ded0be-8f92-4e4a-beed-527515a3739e",
+      "bom-ref": "693b51f5-5b8e-4ec8-b0c5-f3f27641a393",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -41167,9 +41269,15 @@
       "dependsOn": []
     },
     {
-      "ref": "83064a22-6bb0-4cad-a1c9-c5285c095be8",
+      "ref": "693b51f5-5b8e-4ec8-b0c5-f3f27641a393",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+        "dfa5ad89-261c-4ce2-abb1-acdc5559dc44"
+      ]
+    },
+    {
+      "ref": "dfa5ad89-261c-4ce2-abb1-acdc5559dc44",
+      "dependsOn": [
+        "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/angular-animate@1.8.3",
@@ -41191,7 +41299,7 @@
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.47.0",
+        "pkg:npm/core-js@3.48.0",
         "pkg:npm/dmn-font@0.6.2",
         "pkg:npm/dmn-js-decision-table@17.5.0",
         "pkg:npm/dmn-js-drd@17.5.0",
@@ -41215,12 +41323,6 @@
       ]
     },
     {
-      "ref": "d9ded0be-8f92-4e4a-beed-527515a3739e",
-      "dependsOn": [
-        "83064a22-6bb0-4cad-a1c9-c5285c095be8"
-      ]
-    },
-    {
       "ref": "pkg:npm/%40bpmn-io/align-to-origin@0.7.0",
       "dependsOn": []
     },
@@ -41240,11 +41342,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "dependsOn": [
-        "pkg:npm/dmn-moddle@11.0.0",
-        "pkg:npm/ids@1.0.5",
-        "pkg:npm/min-dash@4.2.3"
+        "pkg:npm/dmn-moddle@12.0.1",
+        "pkg:npm/ids@3.0.0",
+        "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
@@ -41773,7 +41875,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.47.0",
+      "ref": "pkg:npm/core-js@3.48.0",
       "dependsOn": []
     },
     {
@@ -41970,6 +42072,14 @@
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/moddle-xml@11.0.0",
         "pkg:npm/moddle@7.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-moddle@12.0.1",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle-xml@12.0.0",
+        "pkg:npm/moddle@8.0.0"
       ]
     },
     {
@@ -42195,6 +42305,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/ids@3.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/indexof@0.0.1",
       "dependsOn": []
     },
@@ -42291,6 +42405,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/min-dash@5.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/min-dom@3.2.1",
       "dependsOn": [
         "pkg:npm/component-event@0.1.4",
@@ -42328,6 +42446,14 @@
       ]
     },
     {
+      "ref": "pkg:npm/moddle-xml@12.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle@8.0.0",
+        "pkg:npm/saxen@11.0.2"
+      ]
+    },
+    {
       "ref": "pkg:npm/moddle-xml@7.5.0",
       "dependsOn": [
         "pkg:npm/min-dash@3.8.1",
@@ -42345,6 +42471,12 @@
       "ref": "pkg:npm/moddle@7.2.0",
       "dependsOn": [
         "pkg:npm/min-dash@4.2.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/moddle@8.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
@@ -42419,6 +42551,10 @@
     },
     {
       "ref": "pkg:npm/saxen@10.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/saxen@11.0.2",
       "dependsOn": []
     },
     {

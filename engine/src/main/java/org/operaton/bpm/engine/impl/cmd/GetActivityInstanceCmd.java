@@ -313,9 +313,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
       childTransitionInstances.entrySet()) {
       ActivityInstanceImpl instance = entry.getKey();
       List<TransitionInstanceImpl> childInstances = entry.getValue();
-      if (childTransitionInstances != null) {
-        instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
-      }
+      instance.setChildTransitionInstances(childInstances.toArray(new TransitionInstanceImpl[childInstances.size()]));
     }
   }
 

@@ -20,7 +20,7 @@ import org.operaton.bpm.engine.impl.el.Expression;
 
 public class OperatonErrorEventDefinition extends ErrorEventDefinition {
 
-  private transient Expression expression;
+  private Expression expression;
 
   public OperatonErrorEventDefinition(String handlerActivityId, Expression expression) {
     super(handlerActivityId);

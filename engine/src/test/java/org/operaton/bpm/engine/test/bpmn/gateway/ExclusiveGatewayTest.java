@@ -40,6 +40,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez
@@ -84,13 +85,13 @@ class ExclusiveGatewayTest {
   @Deployment
   @Test
   void testNoSequenceFlowSelected() {
+    // given
     var variables = CollectionUtil.singletonMap("input", 4);
-    try {
-      runtimeService.startProcessInstanceByKey("exclusiveGwNoSeqFlowSelected", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-02004 No outgoing sequence flow for the element with id 'exclusiveGw' could be selected for continuing the process.", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("exclusiveGwNoSeqFlowSelected", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-02004 No outgoing sequence flow for the element with id 'exclusiveGw' could be selected for continuing the process.");
   }
 
   /**
@@ -108,14 +109,14 @@ class ExclusiveGatewayTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/ExclusiveGatewayTest.testDivergingExclusiveGateway.bpmn20.xml"})
   @Test
   void testUnknownVariableInExpression() {
+    // given
     var variables = CollectionUtil.singletonMap("iinput", 1);
+
+    // when/then
     // Instead of 'input' we're starting a process instance with the name 'iinput' (ie. a typo)
-    try {
-      runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Unknown property used in expression", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("exclusiveGwDiverging", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Unknown property used in expression");
   }
 
   @Deployment
@@ -170,13 +171,13 @@ class ExclusiveGatewayTest {
   @Deployment
   @Test
   void testInvalidMethodExpression() {
+    // given
     var variables = CollectionUtil.singletonMap("order", new ExclusiveGatewayTestOrder(50));
-    try {
-      runtimeService.startProcessInstanceByKey("invalidMethodExpression", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("invalidMethodExpression", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Unknown method used in expression");
   }
 
   @Deployment

@@ -17,11 +17,11 @@
 package org.operaton.bpm.spring.boot.starter.util;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.env.PropertiesPropertySource;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.util.ProductPropertiesUtil;
 
 import static org.operaton.bpm.spring.boot.starter.util.OperatonBpmVersion.key;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,10 +41,12 @@ class OperatonBpmVersionTest {
   @BeforeAll
   static void setUp() {
     currentVersion = ProcessEngine.class.getPackage().getImplementationVersion();
+    if (currentVersion == null) {
+      currentVersion = ProductPropertiesUtil.getProductVersion();
+    }
   }
 
   @Test
-  @Disabled("FIXME: This test is failing")
   void currentVersion() {
     final OperatonBpmVersion version =  new OperatonBpmVersion();
     assertThat(version.isEnterprise()).isFalse();

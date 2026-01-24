@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -71,13 +71,10 @@ class ExternalScriptTaskTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsVariable.bpmn20.xml"})
   @Test
   void testDefaultExternalScriptAsNonExistingVariable() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Process variable 'scriptPath' not defined");
-    }
-    catch(ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("Cannot resolve identifier 'scriptPath'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot resolve identifier 'scriptPath'");
   }
 
   @Deployment
@@ -125,13 +122,10 @@ class ExternalScriptTaskTest {
   @Deployment
   @Test
   void testScriptNotFoundInClasspath() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Resource does not exist in classpath");
-    }
-    catch (NotFoundException e) {
-      testRule.assertTextPresentIgnoreCase("unable to find resource at path classpath://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("unable to find resource at path classpath://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
   }
 
   @Deployment(resources = {
@@ -191,25 +185,19 @@ class ExternalScriptTaskTest {
   @Deployment
   @Test
   void testScriptNotFoundInDeployment() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Resource does not exist in classpath");
-    }
-    catch (NotFoundException e) {
-      testRule.assertTextPresentIgnoreCase("unable to find resource at path deployment://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("unable to find resource at path deployment://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
   }
 
   @Deployment
   @Test
   void testNotExistingImport() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Should fail during script compilation");
-    }
-    catch (ScriptCompilationException e) {
-      testRule.assertTextPresentIgnoreCase("import unknown", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ScriptCompilationException.class)
+        .hasMessageContaining("import unknown");
   }
 
 }

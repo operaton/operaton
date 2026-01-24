@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 public class ConditionalEventDefinition extends EventSubscriptionDeclaration {
 
   private String conditionAsString;
-  private final transient Condition condition;
+  private final Condition condition;
   private boolean interrupting;
   private String variableName;
   private Set<String> variableEvents;

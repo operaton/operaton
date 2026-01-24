@@ -123,23 +123,18 @@ public class CreateAndResolveIncidentTest {
 
   @Test
   void createIncidentWithNullIncidentType() {
-    try {
-      runtimeService.createIncident(null, "processInstanceId", "foo", "bar");
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("incidentType is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createIncident(null, "processInstanceId", "foo", "bar"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("incidentType is null");
   }
 
   @Test
   void createIncidentWithNonExistingExecution() {
-
-    try {
-      runtimeService.createIncident("foo", "aaa", "bbb", "bar");
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot find an execution with executionId 'aaa'");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createIncident("foo", "aaa", "bbb", "bar"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot find an execution with executionId 'aaa'");
   }
 
   @Test
@@ -159,22 +154,18 @@ public class CreateAndResolveIncidentTest {
 
   @Test
   void resolveUnexistingIncident() {
-    try {
-      runtimeService.resolveIncident("foo");
-      fail("Exception expected");
-    } catch (NotFoundException e) {
-      assertThat(e.getMessage()).contains("Cannot find an incident with id 'foo'");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.resolveIncident("foo"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find an incident with id 'foo'");
   }
 
   @Test
   void resolveNullIncident() {
-    try {
-      runtimeService.resolveIncident(null);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("incidentId is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.resolveIncident(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("incidentId is null");
   }
 
   @Test
@@ -194,12 +185,9 @@ public class CreateAndResolveIncidentTest {
     // then
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
     var incidentId = incident.getId();
-    try {
-      runtimeService.resolveIncident(incidentId);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot resolve an incident of type failedJob");
-    }
+    assertThatThrownBy(() -> runtimeService.resolveIncident(incidentId))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot resolve an incident of type failedJob");
   }
 
   @Test

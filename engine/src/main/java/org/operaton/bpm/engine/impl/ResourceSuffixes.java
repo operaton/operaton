@@ -29,4 +29,5 @@ public final class ResourceSuffixes {
   public static final String[] CMMN_RESOURCE_SUFFIXES = new String[] { "cmmn11.xml", "cmmn10.xml", "cmmn" };
   public static final String[] DMN_RESOURCE_SUFFIXES = new String[] { "dmn11.xml", "dmn" };
   public static final String[] DIAGRAM_RESOURCE_SUFFIXES = new String[] { "png", "jpg", "gif", "svg" };
+  public static final String[] FORM_RESOURCE_SUFFIXES = new String[] { "form" };
 }

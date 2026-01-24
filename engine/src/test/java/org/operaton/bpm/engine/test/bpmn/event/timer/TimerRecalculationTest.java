@@ -42,7 +42,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -79,38 +79,26 @@ class TimerRecalculationTest {
 
   @Test
   void testUnknownId() {
-    try {
-      // when
-      managementService.recalculateJobDuedate("unknownID", false);
-      fail("The recalculation with an unknown job ID should not be possible");
-    } catch (ProcessEngineException pe) {
-      // then
-      testRule.assertTextPresent("No job found with id '" + "unknownID", pe.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.recalculateJobDuedate("unknownID", false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No job found with id 'unknownID");
   }
 
   @Test
   void testEmptyId() {
-    try {
-      // when
-      managementService.recalculateJobDuedate("", false);
-      fail("The recalculation with an unknown job ID should not be possible");
-    } catch (ProcessEngineException pe) {
-      // then
-      testRule.assertTextPresent("The job id is mandatory: jobId is empty", pe.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.recalculateJobDuedate("", false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The job id is mandatory: jobId is empty");
   }
 
   @Test
   void testNullId() {
-    try {
-      // when
-      managementService.recalculateJobDuedate(null, false);
-      fail("The recalculation with an unknown job ID should not be possible");
-    } catch (ProcessEngineException pe) {
-      // then
-      testRule.assertTextPresent("The job id is mandatory: jobId is null", pe.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.recalculateJobDuedate(null, false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The job id is mandatory: jobId is null");
   }
 
   @Deployment
@@ -134,14 +122,10 @@ class TimerRecalculationTest {
     assertThat(managementService.createJobQuery().processInstanceId(pi1.getId()).count()).isZero();
     testRule.assertProcessEnded(pi1.getProcessInstanceId());
 
-    try {
-      // when
-      managementService.recalculateJobDuedate(jobId, false);
-      fail("The recalculation of a finished job should not be possible");
-    } catch (ProcessEngineException pe) {
-      // then
-      testRule.assertTextPresent("No job found with id '" + jobId, pe.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.recalculateJobDuedate(jobId, false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No job found with id '" + jobId);
   }
 
   @Test
@@ -172,14 +156,11 @@ class TimerRecalculationTest {
   protected void tryRecalculateUnsupported(Job job, String type) {
     // given
     String jobId = job.getId();
-    try {
-      // when
-      managementService.recalculateJobDuedate(jobId, false);
-      fail("The recalculation with an unsupported type should not be possible");
-    } catch (ProcessEngineException pe) {
-      // then
-      testRule.assertTextPresent("Only timer jobs can be recalculated, but the job with id '%s' is of type '%s".formatted(jobId, type), pe.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> managementService.recalculateJobDuedate(jobId, false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Only timer jobs can be recalculated, but the job with id '%s' is of type '%s".formatted(jobId, type));
   }
 
 

@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -126,19 +126,16 @@ class JobPrioritizationBpmnExpressionValueTest {
   @Disabled("CAM-4207")
   @Test
   void testVariableValueExpressionPrioritizationFailsWhenVariableMisses() {
+    // given
     var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task1");
-    // when
-    try {
-      processInstantiationBuilder.execute();
-      fail("this should not succeed since the priority variable is not defined");
-    } catch (ProcessEngineException e) {
 
-      testRule.assertTextPresentIgnoreCase("Unknown property used in expression: ${priority}. "
-          + "Cause: Cannot resolve identifier 'priority'",
-          e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Unknown property used in expression: ${priority}")
+        .hasMessageContaining("Cause: Cannot resolve identifier 'priority'");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
@@ -160,50 +157,46 @@ class JobPrioritizationBpmnExpressionValueTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
   @Test
   void testExpressionEvaluatesToNull() {
+    // given
     var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task3")
         .setVariable("priority", null);
-    // when
-    try {
-      processInstantiationBuilder.execute();
-      fail("this should not succeed since the priority variable is not defined");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("Priority value is not an Integer", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Priority value is not an Integer");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
   @Test
   void testExpressionEvaluatesToNonNumericalValue() {
+    // given
     var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task3")
         .setVariable("priority", "aNonNumericalVariableValue");
-    // when
-    try {
-      processInstantiationBuilder.execute();
-      fail("this should not succeed since the priority must be integer");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("Priority value is not an Integer", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Priority value is not an Integer");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
   @Test
   void testExpressionEvaluatesToNonIntegerValue() {
+    // given
     var processInstantiationBuilder = runtimeService
         .createProcessInstanceByKey("jobPrioExpressionProcess")
         .startBeforeActivity("task3")
         .setVariable("priority", 4.2d);
-    // when
-    try {
-      processInstantiationBuilder.execute();
-      fail("this should not succeed since the priority must be integer");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("Priority value must be either Short, Integer, or Long",
-          e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Priority value must be either Short, Integer, or Long");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
@@ -249,16 +242,16 @@ class JobPrioritizationBpmnExpressionValueTest {
   void testDisableGracefulDegradation() {
     try {
       processEngineConfiguration.setEnableGracefulDegradationOnContextSwitchFailure(false);
+
+      // given
       var processInstantiationBuilder = runtimeService
           .createProcessInstanceByKey("jobPrioExpressionProcess")
           .startBeforeActivity("task1");
 
-      try {
-        processInstantiationBuilder.execute();
-        fail("should not succeed due to missing variable");
-      } catch (ProcessEngineException e) {
-        testRule.assertTextPresentIgnoreCase("unknown property used in expression", e.getMessage());
-      }
+      // when/then
+      assertThatThrownBy(processInstantiationBuilder::execute)
+          .isInstanceOf(ProcessEngineException.class)
+          .hasMessageContaining("unknown property used in expression");
 
     } finally {
       processEngineConfiguration.setEnableGracefulDegradationOnContextSwitchFailure(true);

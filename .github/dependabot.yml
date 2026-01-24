@@ -113,7 +113,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 13
+    milestone: 16
     groups:
       httpcomponents5:
         patterns:
@@ -131,7 +131,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 13
+    milestone: 16
     groups:
       angular:
         patterns:
@@ -164,7 +164,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 13
+    milestone: 16
     groups:
       react:
         patterns:
@@ -178,7 +178,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:github-action"
-    milestone: 13
+    milestone: 16
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -186,7 +186,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 13
+    milestone: 16
 
   # Release 1.0.x branch - patch updates only
   - package-ecosystem: "maven"
@@ -203,7 +203,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 11
+    milestone: 10
     groups:
       httpcomponents5:
         patterns:
@@ -224,7 +224,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:npm"
-    milestone: 11
+    milestone: 10
     groups:
       angular:
         patterns:
@@ -260,7 +260,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:npm"
-    milestone: 11
+    milestone: 10
     groups:
       react:
         patterns:
@@ -279,7 +279,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:github-action"
-    milestone: 11
+    milestone: 10
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -292,4 +292,4 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:devcontainers"
-    milestone: 11
+    milestone: 10

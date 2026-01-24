@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import javax.sql.DataSource;
@@ -126,16 +127,13 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
   }
 
   private String determineResourceName(Resource resource) {
-    String resourceName;
-
     if (resource instanceof ContextResource contextResource) {
-      resourceName = contextResource.getPathWithinContext();
+      return contextResource.getPathWithinContext();
     } else if (resource instanceof ByteArrayResource) {
-      resourceName = resource.getDescription();
+      return resource.getDescription();
     } else {
-      resourceName = getFileResourceName(resource);
+      return getFileResourceName(resource);
     }
-    return resourceName;
   }
 
   private void tryAddInputStream(Resource resource, String resourceName, DeploymentBuilder deploymentBuilder) {
@@ -151,7 +149,7 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
   }
 
   private boolean resourceIsAnArchive(String resourceName) {
-    return resourceName.endsWith(".bar") || resourceName.endsWith(".zip") || resourceName.endsWith(".jar");
+    return Stream.of(".bar", ".zip", ".jar").anyMatch(resourceName::endsWith);
   }
 
   protected String getFileResourceName(Resource resource) {

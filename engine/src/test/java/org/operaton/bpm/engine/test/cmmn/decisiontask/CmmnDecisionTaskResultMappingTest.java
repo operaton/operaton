@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.StringValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -119,49 +119,37 @@ class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   @Deployment(resources = {SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION})
   @Test
   void testSingleEntryMappingFailureMultipleOutputs() {
-    try {
-      createTestCase("single entry list");
-
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22001", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> createTestCase("single entry list"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-22001");
   }
 
   @Deployment(resources = {SINGLE_ENTRY_MAPPING_CMMN, TEST_DECISION})
   @Test
   void testSingleEntryMappingFailureMultipleValues() {
-    try {
-      createTestCase("multiple entries");
-
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22001", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> createTestCase("multiple entries"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-22001");
   }
 
   @Deployment(resources = {SINGLE_RESULT_MAPPING_CMMN, TEST_DECISION})
   @Test
   void testSingleResultMappingFailure() {
-    try {
-      createTestCase("single entry list");
-
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22001", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> createTestCase("single entry list"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-22001");
   }
 
   @Deployment(resources = {COLLECT_ENTRIES_MAPPING_CMMN, TEST_DECISION})
   @Test
   void testCollectEntriesMappingFailure() {
-    try {
-      createTestCase("multiple entries");
-
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22002", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> createTestCase("multiple entries"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-22002");
   }
 
   @Deployment(resources = {DEFAULT_MAPPING_CMMN, TEST_DECISION})
@@ -177,14 +165,10 @@ class CmmnDecisionTaskResultMappingTest extends CmmnTest {
   @Deployment(resources = {OVERRIDE_DECISION_RESULT_CMMN, TEST_DECISION})
   @Test
   void testFailedToOverrideDecisionResultVariable() {
-    try {
-      // the transient variable "decisionResult" should not be overridden by the task result variable
-      createTestCase("single entry");
-      fail("expect exception");
-
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("transient variable with name 'decisionResult' to non-transient", e.getMessage());
-    }
+    // when/then the transient variable "decisionResult" should not be overridden by the task result variable
+    assertThatThrownBy(() -> createTestCase("single entry"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("transient variable with name 'decisionResult' to non-transient");
   }
 
   protected CaseInstance createTestCase(String input) {

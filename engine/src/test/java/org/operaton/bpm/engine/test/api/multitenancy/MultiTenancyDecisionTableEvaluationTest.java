@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyDecisionTableEvaluationTest {
 
@@ -63,65 +63,63 @@ class MultiTenancyDecisionTableEvaluationTest {
   void testFailToEvaluateDecisionByIdWithoutTenantId() {
    testRule.deploy(DMN_FILE);
 
+    // given
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableById(decisionDefinition.getId())
           .variables(createVariables())
           .decisionDefinitionWithoutTenantId();
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-      fail("BadUserRequestException exception");
-    } catch(BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToEvaluateDecisionByIdWithTenantId() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
 
+    // given
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableById(decisionDefinition.getId())
           .variables(createVariables())
           .decisionDefinitionTenantId(TENANT_ONE);
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-      fail("BadUserRequestException exception");
-    } catch(BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToEvaluateDecisionByKeyForNonExistingTenantID() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+
+    // given
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
           .variables(createVariables())
           .decisionDefinitionTenantId("nonExistingTenantId");
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no decision definition deployed with key 'decision' and tenant-id 'nonExistingTenantId'");
   }
 
   @Test
   void testFailToEvaluateDecisionByKeyForMultipleTenants() {
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
+
+    // given
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
           .variables(createVariables());
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("multiple tenants.");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("multiple tenants.");
   }
 
   @Test
@@ -209,16 +207,15 @@ class MultiTenancyDecisionTableEvaluationTest {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+
+    // given
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
         .variables(createVariables());
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision'");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no decision definition deployed with key 'decision'");
   }
 
   @Test
@@ -226,17 +223,16 @@ class MultiTenancyDecisionTableEvaluationTest {
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, DMN_FILE);
+
+    // given
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableByKey(DECISION_DEFINITION_KEY)
         .decisionDefinitionTenantId(TENANT_ONE)
         .variables(createVariables());
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot evaluate the decision");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot evaluate the decision");
   }
 
   @Test
@@ -248,16 +244,15 @@ class MultiTenancyDecisionTableEvaluationTest {
       .singleResult();
 
     identityService.setAuthentication("user", null, null);
+
+    // given
     var decisionEvaluationBuilder = decisionService.evaluateDecisionTableById(decisionDefinition.getId())
         .variables(createVariables());
 
-    try {
-      decisionEvaluationBuilder.evaluate();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot evaluate the decision");
-    }
+    // when/then
+    assertThatThrownBy(decisionEvaluationBuilder::evaluate)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot evaluate the decision");
   }
 
   @Test

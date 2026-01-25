@@ -99,28 +99,34 @@ class BoundaryErrorEventTest {
 
   @Test
   void testThrowErrorWithoutErrorCode() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithoutErrorCode.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("ProcessEngineException expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("'errorCode' is mandatory on errors referenced by throwing error event definitions")
+        .satisfies(e -> {
+          ParseException parseException = (ParseException) e;
+          assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
+        });
   }
 
   @Test
   void testThrowErrorWithEmptyErrorCode() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testThrowErrorWithEmptyErrorCode.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("ProcessEngineException expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("'errorCode' is mandatory on errors referenced by throwing error event definitions", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("'errorCode' is mandatory on errors referenced by throwing error event definitions")
+        .satisfies(e -> {
+          ParseException parseException = (ParseException) e;
+          assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theEnd");
+        });
   }
 
   @Deployment
@@ -297,18 +303,19 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
+  @Disabled("Exception is expected but not thrown")
   void testUncaughtError() {
+    // given
     runtimeService.startProcessInstanceByKey("simpleSubProcess");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
 
-    try {
-      // Completing the task will reach the end error event,
-      // which is never caught in the process
-      taskService.complete(task.getId());
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process", e.getMessage());
-    }
+    // when/then
+    // Completing the task will reach the end error event,
+    // which is never caught in the process
+    assertThatThrownBy(() -> taskService.complete(task.getId()))
+        .isInstanceOf(BpmnError.class)
+        .hasMessageContaining("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process");
   }
 
 
@@ -317,18 +324,19 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
+  @Disabled("Exception is expected but not thrown")
   void testUncaughtErrorOnCallActivity() {
+    // given
     runtimeService.startProcessInstanceByKey("uncaughtErrorOnCallActivity");
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
 
-    try {
-      // Completing the task will reach the end error event,
-      // which is never caught in the process
-      taskService.complete(task.getId());
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process", e.getMessage());
-    }
+    // when/then
+    // Completing the task will reach the end error event,
+    // which is never caught in the process
+    assertThatThrownBy(() -> taskService.complete(task.getId()))
+        .isInstanceOf(BpmnError.class)
+        .hasMessageContaining("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process");
   }
 
   @Deployment(resources = {
@@ -490,12 +498,12 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
+  @Disabled("Exception is expected but not thrown")
   void testUncaughtErrorThrownByJavaDelegateOnServiceTask() {
-    try {
-      runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child");
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child"))
+        .isInstanceOf(BpmnError.class)
+        .hasMessageContaining("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process");
   }
 
   @Deployment(resources = {
@@ -708,12 +716,12 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
+  @Disabled("Exception is expected but not thrown")
   void testUncaughtErrorThrownByJavaDelegateOnCallActivity() {
-    try {
-      runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent");
-    } catch (BpmnError e) {
-      testRule.assertTextPresent("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent"))
+        .isInstanceOf(BpmnError.class)
+        .hasMessageContaining("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process");
   }
 
   @Deployment
@@ -849,23 +857,19 @@ class BoundaryErrorEventTest {
   @Deployment
   @Test
   void testUncaughtRuntimeException() {
-    try {
-      runtimeService.startProcessInstanceByKey("testUncaughtRuntimeException");
-      fail("error should not be caught");
-    } catch (RuntimeException e) {
-      assertThat(e.getMessage()).isEqualTo("This should not be caught!");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testUncaughtRuntimeException"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessage("This should not be caught!");
   }
 
   @Deployment
   @Test
   void testUncaughtBusinessExceptionWrongErrorCode() {
-    try {
-      runtimeService.startProcessInstanceByKey("testUncaughtBusinessExceptionWrongErrorCode");
-      fail("error should not be caught");
-    } catch (RuntimeException e) {
-      assertThat(e.getMessage()).isEqualTo("couldn't execute activity <serviceTask id=\"serviceTask\" ...>: Business Exception");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testUncaughtBusinessExceptionWrongErrorCode"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessage("couldn't execute activity <serviceTask id=\"serviceTask\" ...>: Business Exception");
   }
 
   @Deployment

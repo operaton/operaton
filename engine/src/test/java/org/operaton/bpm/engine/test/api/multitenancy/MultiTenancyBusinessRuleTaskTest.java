@@ -28,7 +28,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MultiTenancyBusinessRuleTaskTest {
 
@@ -234,7 +234,7 @@ public class MultiTenancyBusinessRuleTaskTest {
 
   @Test
   void testFailEvaluateDecisionFromOtherTenantWithDeploymentBinding() {
-
+    // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
         .businessRuleTask()
@@ -249,18 +249,15 @@ public class MultiTenancyBusinessRuleTaskTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no decision definition deployed with key = 'decision'");
   }
 
   @Test
   void testFailEvaluateDecisionFromOtherTenantWithLatestBinding() {
-
+    // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
         .businessRuleTask()
@@ -275,18 +272,15 @@ public class MultiTenancyBusinessRuleTaskTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no decision definition deployed with key 'decision'");
   }
 
   @Test
   void testFailEvaluateDecisionFromOtherTenantWithVersionBinding() {
-
+    // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")
         .startEvent()
         .businessRuleTask()
@@ -304,13 +298,10 @@ public class MultiTenancyBusinessRuleTaskTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', version = '2' and tenant-id = 'tenant1'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no decision definition deployed with key = 'decision', version = '2' and tenant-id = 'tenant1'");
   }
 
   @Test
@@ -334,15 +325,10 @@ public class MultiTenancyBusinessRuleTaskTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("process")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      // when
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', versionTag = '0.0.2' and tenant-id = 'tenant1': decisionDefinition is null");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no decision definition deployed with key = 'decision', versionTag = '0.0.2' and tenant-id = 'tenant1': decisionDefinition is null");
   }
 
   @Test

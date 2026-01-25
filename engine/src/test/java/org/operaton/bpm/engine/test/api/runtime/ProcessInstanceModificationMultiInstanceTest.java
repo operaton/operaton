@@ -42,7 +42,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -646,41 +646,33 @@ public class ProcessInstanceModificationMultiInstanceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialUserTasks");
     completeTasksInOrder("beforeTask");
-
-    // then creating a second inner instance is not possible
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     var processInstanceModificationBuilder = runtimeService
       .createProcessInstanceModification(processInstance.getId())
       .startBeforeActivity("miTasks", tree.getActivityInstances("miTasks#multiInstanceBody")[0].getId());
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent(e.getMessage(), "Concurrent instantiation not possible for activities "
-          + "in scope miTasks#multiInstanceBody");
-    }
 
+    // when/then
+    // creating a second inner instance is not possible
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Concurrent instantiation not possible for activities in scope miTasks#multiInstanceBody");
   }
 
   @Deployment(resources = SEQUENTIAL_MULTI_INSTANCE_SUBPROCESS_PROCESS)
   @Test
   void testStartBeforeInnerActivitySequentialSubprocess() {
-    // given the mi body is already instantiated
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
     completeTasksInOrder("beforeTask");
-
-    // when
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
     var processInstanceModificationBuilder = runtimeService
         .createProcessInstanceModification(processInstance.getId())
         .startBeforeActivity("miSubProcess", tree.getActivityInstances("miSubProcess#multiInstanceBody")[0].getId());
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-       testRule.assertTextPresent(e.getMessage(), "Concurrent instantiation not possible for activities "
-          + "in scope miSubProcess#multiInstanceBody");
-    }
+
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Concurrent instantiation not possible for activities in scope miSubProcess#multiInstanceBody");
   }
 
   @Deployment(resources = SEQUENTIAL_MULTI_INSTANCE_TASK_PROCESS)

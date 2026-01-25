@@ -436,17 +436,11 @@ class TaskQueryTest {
   void testQueryByAssigneeInNull() {
     // given
     String[] assignees = null;
-
-    // when
     TaskQuery query = taskService.createTaskQuery();
 
-    // then
-    try {
-      query.taskAssigneeIn(assignees);
-      fail("Exception expected");
-    } catch (Exception ex) {
-      assertThat(ex.getMessage()).isEqualTo("Assignees is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> query.taskAssigneeIn(assignees))
+      .hasMessage("Assignees is null");
   }
 
   @Test
@@ -494,17 +488,11 @@ class TaskQueryTest {
   void testQueryByAssigneeNotInNull() {
     // given
     String[] assignees = null;
-
-    // when
     TaskQuery query = taskService.createTaskQuery();
 
-    // then
-    try {
-        query.taskAssigneeNotIn(assignees);
-      fail("Exception expected");
-    } catch (Exception ex) {
-      assertThat(ex.getMessage()).isEqualTo("Assignees is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> query.taskAssigneeNotIn(assignees))
+      .hasMessage("Assignees is null");
   }
 
   @Test
@@ -5037,13 +5025,10 @@ class TaskQueryTest {
       .processInstanceId(processInstance.getId())
       .singleResult();
 
-    try {
-      // then the form key is not retrievable
-      task.getFormKey();
-      fail("exception expected.");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).isEqualTo("ENGINE-03052 The form key / form reference is not initialized. You must call initializeFormKeys() on the task query before you can retrieve the form key or the form reference.");
-    }
+    // when/then
+    assertThatThrownBy(task::getFormKey)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("ENGINE-03052 The form key / form reference is not initialized. You must call initializeFormKeys() on the task query before you can retrieve the form key or the form reference.");
   }
 
   @Test

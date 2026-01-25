@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:c8e2bcfa-d23f-4b3a-bb6f-41f12b37f3ea",
+  "serialNumber": "urn:uuid:5d9e4b54-02c4-4fe6-931b-4044dcd6d7f0",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-22T05:50:10Z",
+    "timestamp": "2026-01-24T07:05:13Z",
     "tools": {
       "components": [
         {
@@ -12710,44 +12710,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-observation",
-      "version": "1.15.7",
+      "version": "1.15.8",
       "description": "Module containing Observation related code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "142407ad0b6073a6b6c60d477d4e4049"
+          "content": "0759394328fa08c0a5c69ce2f6c41374"
         },
         {
           "alg": "SHA-1",
-          "content": "f1b617aa0056e4f5266d30f6126113c1b82b1365"
+          "content": "609bf17faca7f9a860dea92f959152d1d586d845"
         },
         {
           "alg": "SHA-256",
-          "content": "6cb1072c6d3e429eeddda077aa13b36da87f8abc975df75b43ac62a0d36748ce"
+          "content": "cdd217ccb7f896b5dcd555cef260dd1ec6e9c458a82e1a91f63848a35199bfaa"
         },
         {
           "alg": "SHA-512",
-          "content": "aac86e17edbbf8d00f21cbbbd060fd39f5b0fe6e9bc4eff18bb012885c92cae096b057aaf514682475f338a69c315272c8c42758a0f6d5827062e161661fc24f"
+          "content": "30e2165beb73953f719f501f0afb9074a02c5ce0a59e923da1fd901d92d059e2bca11cb2784bcf6382eaadac51f948205cc5ce1be2bd83e555706ffb15b0f73a"
         },
         {
           "alg": "SHA-384",
-          "content": "a6d367f37a34258d4bdf5be4120931858440cd18f5873b7598b6708d48aee252906e8cf1d247a41bdf4deb81ce294e11"
+          "content": "96e8de32612cab13746f6262e909135aa6abebea2b9ef0756b1174fecb3da44e8835519c5df7673f7b5097f76462c35d"
         },
         {
           "alg": "SHA3-384",
-          "content": "4b73488db02ee95fe27957a8b0aaad6e3b5cbd5c6b5e5e3619e1bd80647e594c461f80b0773bc893d756939a6da8d490"
+          "content": "b9b499ac22d22d9ea765157296631d4472405139f5182ca58702520ce8a40f93937b96f57d6e9676fa35504f24b0f93c"
         },
         {
           "alg": "SHA3-256",
-          "content": "5be559c65c56f90b2304602ad873c2d6a02220ef8d6d6669de4d55450f325f9a"
+          "content": "a9b8e2ef38b581b608050d49d5256fc37e4fefeab49b6c02041386453221b278"
         },
         {
           "alg": "SHA3-512",
-          "content": "1072c23d693167df40d94ca9c3498118b3b028476f867934ef4354d12bf7b52b1384d7445c348c98941feeafd6d4a12c9679e4caf08332222d9717885f4cc9c4"
+          "content": "a7d8df50e5f12decdec104c6d5bb812423f8346ed7e9fb82e9fb4bac38a4d99b060631a72681d1be72fc79118b19549c1d57b7a94960513c13bfae6db0d15998"
         }
       ],
       "licenses": [
@@ -12757,7 +12757,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -12767,44 +12767,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar",
+      "bom-ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar",
       "group": "io.micrometer",
       "name": "micrometer-commons",
-      "version": "1.15.7",
+      "version": "1.15.8",
       "description": "Module containing common code",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8df4ab0ef754b802275916b0b98bf7b2"
+          "content": "e43b15b235df578e3b3ee44f1d42b5e2"
         },
         {
           "alg": "SHA-1",
-          "content": "4f4ddbb4363ddb191633751607efb8a18707559c"
+          "content": "a850d358fadc1354d40071db693caaca27b542fd"
         },
         {
           "alg": "SHA-256",
-          "content": "bf8118b3fdc498855679bf01df4cbdf2b78fc8ef561b9faff648c4ceb2a24179"
+          "content": "c7e7ad7bd333f767d571d6991cb28e3cc4514df16959d6bcd77d3da5900e71c3"
         },
         {
           "alg": "SHA-512",
-          "content": "b1e5afd26c8f6c49ca7526fa60bb85744105de3e6aba3928de841e5c617a2b21a2f31c774152a4875eb0512ddcf39ce99b782fd6614ff6912a3fdf7ecaffabea"
+          "content": "0257942fa515552a483f8dd4e846da4abb2d4a21b759620afa6019b262f5bea4015d07f5babf3c62566728c0c5e047e01cf042699c76a4d64fea04f4cfac8ec3"
         },
         {
           "alg": "SHA-384",
-          "content": "20f120f4173ffdea030b11e03483382463246f9a6e149dcc9fbb1908372419b22b8354878e2b191a87ca90cfbec59819"
+          "content": "45ff040fe041f3e4d73405eee84180a8733d97a0a0b7f5611941662a02b90d6569bcb567faab094b81a7cd5f06c01b4e"
         },
         {
           "alg": "SHA3-384",
-          "content": "01a699c8f3a712ca9d8c01df953248c0c61377d7a6c6b4362e932dc95b49ccee76811bcb5444a06d7b2433898a70234c"
+          "content": "7da459a8b2c8c5c94c7e615b28b844e1bab55885831d9fe815b01813e0504b49f7bc6605e1cfd35d147acd9638ac2377"
         },
         {
           "alg": "SHA3-256",
-          "content": "43fc172d86767024b9e444c0832c469e2c03ea098ebcbb9609385cf91d3acfbb"
+          "content": "9949a4372a3297a5803228f83e7fa7a7b8dd4cd0c09b609173d60fc2240d3dcc"
         },
         {
           "alg": "SHA3-512",
-          "content": "7c5f9593c73bce215d979e8063549e60087fe04324c25c70f06c862f6efab73db8633ad523c55a165a09600cb929db159813dce67857c8a4c70f169e0504a146"
+          "content": "776834813ffcf379b0321bae3055a5308f5e1845ee949f8585b675cd0d7bd3a88731b1bf1e6050b1d3b30e81bdca6d2bbe5ed3d7bc45c51cb988c6c34a929b00"
         }
       ],
       "licenses": [
@@ -12814,7 +12814,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar",
+      "purl": "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/micrometer-metrics/micrometer",
@@ -12824,45 +12824,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/io.undertow/undertow-core@2.3.20.Final?type=jar",
+      "bom-ref": "pkg:maven/io.undertow/undertow-core@2.3.22.Final?type=jar",
       "publisher": "JBoss by Red Hat",
       "group": "io.undertow",
       "name": "undertow-core",
-      "version": "2.3.20.Final",
+      "version": "2.3.22.Final",
       "description": "Undertow",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "7e6a114ffbb16bffc325b803ff20efb9"
+          "content": "5cf42bf72ddff0c935b8e72df18e7d0c"
         },
         {
           "alg": "SHA-1",
-          "content": "7f13527182f7ea1cfe4748972a4d5a24588a9b33"
+          "content": "94be13cd8329d9e810b0d59a49acf6b0b4a576d8"
         },
         {
           "alg": "SHA-256",
-          "content": "d136d75592efde90068bf81556339e93ba1c9489089c8a3880e6c805a2630ca6"
+          "content": "26504abfbcec60cef2ad036148ef55cae4d1d9cebfe55cca463863ba7045e3b3"
         },
         {
           "alg": "SHA-512",
-          "content": "88fdf2913c4ffea563ccc79c8663c6999770063fe563d44dd5e5060dfbfed607f76c4feac9dd8c0327d6d2d13c584d7855a46e3b8ef3e25df75e986dd476024e"
+          "content": "b4bb88475800ef2019135e9171bc2d8dfbe8801bfb901fb7d41c5122fb57e8846bc54fe7018a36ff2d463acccd98a88b4e24db49d51bd894e3e1d05ed44ab0af"
         },
         {
           "alg": "SHA-384",
-          "content": "34db7147d75b25c432424d0925f4f34a54bf79e527d4bf8563b6058e1e29d34021c374bbb8406697dc58810805e3b0e4"
+          "content": "6241c63f2b6c9b46a774fc3713e7b4a0d03048862f4907e9a53932a752db5bc3a973a6d05319288221efdce4f9dc1e5e"
         },
         {
           "alg": "SHA3-384",
-          "content": "5c54e39f4c5d6ff22c45f4785942a86c958535f0e4e644af3e319c85f577fb724c552f9bcef665af109b572fcbc9138f"
+          "content": "18284f01b82c9327aab40e5866a2649b9a97912956f578f5c92888e90ffc4d50365a52ebe4997b75e9ff90757991eed6"
         },
         {
           "alg": "SHA3-256",
-          "content": "c0660e3f0ffba98ef5312e04bc88b62b25c2dc9bc0c64017e54ae7217e4aef4f"
+          "content": "605ee547b7e9274d0cbb2c500d2fce7dfb25ead7764a0e07e0cee5eb37fb674f"
         },
         {
           "alg": "SHA3-512",
-          "content": "57d55b1d5ee0288f0942747c93f3c68dc815265d5175187cd74341c144b3ba62403ff5111cae225d1c1946e43db25e52c7a7fa9a1bea94cd2003a84b98916b31"
+          "content": "6f34cd8716e5c3db005b927b0cd91b787f2a5bbd128c825c1c4d39591d24886292195358cc64bff5324b442ff7eb1c998af1ce65da3bf87f98de33e879954330"
         }
       ],
       "licenses": [
@@ -12872,7 +12872,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/io.undertow/undertow-core@2.3.20.Final?type=jar",
+      "purl": "pkg:maven/io.undertow/undertow-core@2.3.22.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://undertow.io/",
@@ -21182,111 +21182,6 @@
         },
         {
           "url": "https://github.com/operaton/operaton-external-task-client-java/operaton-external-task-client-qa/engine-variable-test",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@1.1.0-SNAPSHOT?type=jar",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm",
-      "name": "operaton-external-task-client",
-      "version": "1.1.0-SNAPSHOT",
-      "description": "Operaton - Java External Task Client - Client",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-external-task-client@1.1.0-SNAPSHOT?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-external-task-client-root/operaton-external-task-client",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton-external-task-client-java/operaton-external-task-client",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar",
-      "publisher": "Eclipse Foundation",
-      "group": "com.sun.istack",
-      "name": "istack-commons-runtime",
-      "version": "4.2.0",
-      "description": "istack common utility code",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "669f50fb835d86fcb3a9523a729f4d5e"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "131351109ff27c4aa0958a988bb273e879687232"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "21025b7a096ef93f74de659c1be5990fa0c24e59a0f98a706e392e7088725ff6"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "7d3b5e74d59c099d5c307c2c2e35159514c997bda03c8305192852afed584472662249c3ab70095e4016c171bf689282983049e66116ede590df8986fd4d032f"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "81423e69fdf9eb644f1ddd4eb654c4131a9853b71d7336c88ea44c97ba8b2553ed76c71f04f555a87671d1d3d2e4d069"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "d073adca6dafc5a17982ffe207954b6b47c761602e495bc0f3b6df8dc34e96e886992f8a13e9e456a8cff2ec5088aaa3"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "6435693c5a60a5f3f2edfb37e9a55c716ef9e3a64406fe83eb51e2d13971a940"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "73ab88eae454d43ee9aeecbc0e2980bcb3710a3e82b5696b964494488d7aedb4520961eaf3f6271e5fff27c338fcafe74559bf5b71d017e1a74e63ac739e5950"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-3-Clause"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://projects.eclipse.org/projects/ee4j/istack-commons/istack-commons-runtime",
-          "type": "website"
-        },
-        {
-          "url": "https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/eclipse-ee4j/jaxb-istack-commons/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://dev.eclipse.org/mhonarc/lists/jaxb-impl-dev",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/eclipse-ee4j/jaxb-istack-commons/istack-commons-runtime",
           "type": "vcs"
         }
       ]
@@ -33717,7 +33612,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "fc975ba0-6ea9-4428-bcd7-5a97dd7a32ef",
+      "bom-ref": "dfa5ad89-261c-4ce2-abb1-acdc5559dc44",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33786,15 +33681,15 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "group": "@bpmn-io",
       "name": "dmn-migrate",
-      "version": "0.6.0",
-      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/dmn-migrate@0.6.0"
+          "value": "@bpmn-io/dmn-migrate@0.7.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35167,14 +35062,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/core-js@3.47.0",
+      "bom-ref": "pkg:npm/core-js@3.48.0",
       "name": "core-js",
-      "version": "3.47.0",
-      "purl": "pkg:npm/core-js@3.47.0",
+      "version": "3.48.0",
+      "purl": "pkg:npm/core-js@3.48.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "core-js@3.47.0"
+          "value": "core-js@3.48.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -35566,6 +35461,23 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "dmn-moddle@11.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/dmn-moddle@12.0.1",
+      "name": "dmn-moddle",
+      "version": "12.0.1",
+      "purl": "pkg:npm/dmn-moddle@12.0.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "dmn-moddle@12.0.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36187,6 +36099,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/ids@3.0.0",
+      "name": "ids",
+      "version": "3.0.0",
+      "purl": "pkg:npm/ids@3.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "ids@3.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/indexof@0.0.1",
       "name": "indexof",
       "version": "0.0.1",
@@ -36357,14 +36286,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/lodash@4.17.21",
+      "bom-ref": "pkg:npm/lodash@4.17.23",
       "name": "lodash",
-      "version": "4.17.21",
-      "purl": "pkg:npm/lodash@4.17.21",
+      "version": "4.17.23",
+      "purl": "pkg:npm/lodash@4.17.23",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "lodash@4.17.21"
+          "value": "lodash@4.17.23"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36544,6 +36473,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/min-dash@5.0.0",
+      "name": "min-dash",
+      "version": "5.0.0",
+      "purl": "pkg:npm/min-dash@5.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "min-dash@5.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/min-dom@3.2.1",
       "name": "min-dom",
       "version": "3.2.1",
@@ -36629,6 +36575,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/moddle-xml@12.0.0",
+      "name": "moddle-xml",
+      "version": "12.0.0",
+      "purl": "pkg:npm/moddle-xml@12.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle-xml@12.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/moddle-xml@7.5.0",
       "name": "moddle-xml",
       "version": "7.5.0",
@@ -36671,6 +36634,23 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "moddle@7.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/moddle@8.0.0",
+      "name": "moddle",
+      "version": "8.0.0",
+      "purl": "pkg:npm/moddle@8.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "moddle@8.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36960,6 +36940,23 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "saxen@10.0.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/saxen@11.0.2",
+      "name": "saxen",
+      "version": "11.0.2",
+      "purl": "pkg:npm/saxen@11.0.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "saxen@11.0.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37326,7 +37323,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b8e988a8-d93f-4d6f-95a4-04ed49c4c2fd",
+      "bom-ref": "693b51f5-5b8e-4ec8-b0c5-f3f27641a393",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -39249,7 +39246,7 @@
         "pkg:maven/org.springframework/spring-beans@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-core@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-expression@6.2.15?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar"
       ]
     },
     {
@@ -39266,13 +39263,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar",
       "dependsOn": [
-        "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar"
+        "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.7?type=jar",
+      "ref": "pkg:maven/io.micrometer/micrometer-commons@1.15.8?type=jar",
       "dependsOn": []
     },
     {
@@ -39304,7 +39301,7 @@
       "dependsOn": [
         "pkg:maven/org.springframework/spring-beans@6.2.15?type=jar",
         "pkg:maven/org.springframework/spring-core@6.2.15?type=jar",
-        "pkg:maven/io.micrometer/micrometer-observation@1.15.7?type=jar"
+        "pkg:maven/io.micrometer/micrometer-observation@1.15.8?type=jar"
       ]
     },
     {
@@ -39676,24 +39673,6 @@
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar"
       ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@1.1.0-SNAPSHOT?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
-        "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
-        "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
-        "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar",
-      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@1.1.0-SNAPSHOT?type=pom",
@@ -40326,7 +40305,7 @@
         "pkg:maven/org.jboss.stdio/jboss-stdio@1.1.0.Final?type=jar",
         "pkg:maven/org.jboss.threads/jboss-threads@3.9.1?type=jar",
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
-        "pkg:maven/io.undertow/undertow-core@2.3.20.Final?type=jar",
+        "pkg:maven/io.undertow/undertow-core@2.3.22.Final?type=jar",
         "pkg:maven/org.wildfly.common/wildfly-common@2.0.1?type=jar",
         "pkg:maven/org.eclipse.jgit/org.eclipse.jgit.ssh.apache@7.3.0.202506031305-r?type=jar",
         "pkg:maven/org.eclipse.jgit/org.eclipse.jgit@7.3.0.202506031305-r?type=jar",
@@ -40343,7 +40322,7 @@
     {
       "ref": "pkg:maven/org.wildfly.core/wildfly-domain-http-interface@30.0.0.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/io.undertow/undertow-core@2.3.20.Final?type=jar",
+        "pkg:maven/io.undertow/undertow-core@2.3.22.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-controller@30.0.0.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-controller-client@30.0.0.Final?type=jar",
         "pkg:maven/org.wildfly.core/wildfly-domain-management@30.0.0.Final?type=jar",
@@ -40358,7 +40337,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/io.undertow/undertow-core@2.3.20.Final?type=jar",
+      "ref": "pkg:maven/io.undertow/undertow-core@2.3.22.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
         "pkg:maven/org.jboss.xnio/xnio-api@3.8.16.Final?type=jar",
@@ -41290,15 +41269,15 @@
       "dependsOn": []
     },
     {
-      "ref": "b8e988a8-d93f-4d6f-95a4-04ed49c4c2fd",
+      "ref": "693b51f5-5b8e-4ec8-b0c5-f3f27641a393",
       "dependsOn": [
-        "fc975ba0-6ea9-4428-bcd7-5a97dd7a32ef"
+        "dfa5ad89-261c-4ce2-abb1-acdc5559dc44"
       ]
     },
     {
-      "ref": "fc975ba0-6ea9-4428-bcd7-5a97dd7a32ef",
+      "ref": "dfa5ad89-261c-4ce2-abb1-acdc5559dc44",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+        "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/angular-animate@1.8.3",
@@ -41320,7 +41299,7 @@
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
-        "pkg:npm/core-js@3.47.0",
+        "pkg:npm/core-js@3.48.0",
         "pkg:npm/dmn-font@0.6.2",
         "pkg:npm/dmn-js-decision-table@17.5.0",
         "pkg:npm/dmn-js-drd@17.5.0",
@@ -41334,7 +41313,7 @@
         "pkg:npm/fast-xml-parser@5.3.3",
         "pkg:npm/jquery-ui@1.13.2",
         "pkg:npm/jquery@4.0.0",
-        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/lodash@4.17.23",
         "pkg:npm/moment@2.30.1",
         "pkg:npm/mousetrap@1.6.5",
         "pkg:npm/q@1.5.1",
@@ -41363,11 +41342,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.6.0",
+      "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "dependsOn": [
-        "pkg:npm/dmn-moddle@11.0.0",
-        "pkg:npm/ids@1.0.5",
-        "pkg:npm/min-dash@4.2.3"
+        "pkg:npm/dmn-moddle@12.0.1",
+        "pkg:npm/ids@3.0.0",
+        "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
@@ -41460,7 +41439,7 @@
         "pkg:npm/feelin@4.6.0",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@1.0.5",
-        "pkg:npm/lodash@4.17.21",
+        "pkg:npm/lodash@4.17.23",
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/marked@16.4.2",
         "pkg:npm/min-dash@4.2.3",
@@ -41896,7 +41875,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/core-js@3.47.0",
+      "ref": "pkg:npm/core-js@3.48.0",
       "dependsOn": []
     },
     {
@@ -42093,6 +42072,14 @@
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/moddle-xml@11.0.0",
         "pkg:npm/moddle@7.2.0"
+      ]
+    },
+    {
+      "ref": "pkg:npm/dmn-moddle@12.0.1",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle-xml@12.0.0",
+        "pkg:npm/moddle@8.0.0"
       ]
     },
     {
@@ -42318,6 +42305,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/ids@3.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/indexof@0.0.1",
       "dependsOn": []
     },
@@ -42368,7 +42359,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/lodash@4.17.21",
+      "ref": "pkg:npm/lodash@4.17.23",
       "dependsOn": []
     },
     {
@@ -42414,6 +42405,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/min-dash@5.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/min-dom@3.2.1",
       "dependsOn": [
         "pkg:npm/component-event@0.1.4",
@@ -42451,6 +42446,14 @@
       ]
     },
     {
+      "ref": "pkg:npm/moddle-xml@12.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle@8.0.0",
+        "pkg:npm/saxen@11.0.2"
+      ]
+    },
+    {
       "ref": "pkg:npm/moddle-xml@7.5.0",
       "dependsOn": [
         "pkg:npm/min-dash@3.8.1",
@@ -42468,6 +42471,12 @@
       "ref": "pkg:npm/moddle@7.2.0",
       "dependsOn": [
         "pkg:npm/min-dash@4.2.3"
+      ]
+    },
+    {
+      "ref": "pkg:npm/moddle@8.0.0",
+      "dependsOn": [
+        "pkg:npm/min-dash@5.0.0"
       ]
     },
     {
@@ -42542,6 +42551,10 @@
     },
     {
       "ref": "pkg:npm/saxen@10.0.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/saxen@11.0.2",
       "dependsOn": []
     },
     {

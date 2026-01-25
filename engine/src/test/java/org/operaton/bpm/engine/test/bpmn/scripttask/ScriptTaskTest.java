@@ -424,15 +424,13 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @Test
   void testSourceAsExpressionAsNonExistingVariable() {
+    // given
     deployProcess(PYTHON, "${scriptSource}");
 
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("Process variable 'scriptSource' not defined");
-    }
-    catch (ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("Cannot resolve identifier 'scriptSource'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot resolve identifier 'scriptSource'");
   }
 
   @Test
@@ -532,15 +530,13 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @Test
   void testGroovyNotExistingImport() {
+    // given
     deployProcess(GROOVY, "import unknown");
 
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("Should fail during script compilation");
-    }
-    catch (ScriptCompilationException e) {
-      testRule.assertTextPresentIgnoreCase("import unknown", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(ScriptCompilationException.class)
+      .hasMessageContaining("import unknown");
   }
 
   @Test
@@ -548,14 +544,14 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     // disable script compilation
     processEngineConfiguration.setEnableScriptCompilation(false);
 
-    deployProcess(GROOVY, "import unknown");
-
     try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("Should fail during script evaluation");
-    }
-    catch (ScriptEvaluationException e) {
-      testRule.assertTextPresentIgnoreCase("import unknown", e.getMessage());
+      // given
+      deployProcess(GROOVY, "import unknown");
+
+      // when/then
+      assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+        .isInstanceOf(ScriptEvaluationException.class)
+        .hasMessageContaining("import unknown");
     }
     finally {
       // re-enable script compilation
@@ -656,12 +652,12 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
   @org.operaton.bpm.engine.test.Deployment
   @Test
   void testScriptEvaluationException() {
+    // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("Process_1").singleResult();
-    try {
-      runtimeService.startProcessInstanceByKey("Process_1");
-    } catch (ScriptEvaluationException e) {
-      testRule.assertTextPresent("Unable to evaluate script while executing activity 'Failing' in the process definition with id '%s'".formatted(processDefinition.getId()), e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("Process_1"))
+      .isInstanceOf(ScriptEvaluationException.class)
+      .hasMessageContaining("Unable to evaluate script while executing activity 'Failing' in the process definition with id '%s'", processDefinition.getId());
   }
 
   @Test

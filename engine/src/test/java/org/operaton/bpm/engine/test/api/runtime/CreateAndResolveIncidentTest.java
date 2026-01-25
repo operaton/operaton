@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentHandler;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
@@ -42,6 +44,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -123,23 +127,18 @@ public class CreateAndResolveIncidentTest {
 
   @Test
   void createIncidentWithNullIncidentType() {
-    try {
-      runtimeService.createIncident(null, "processInstanceId", "foo", "bar");
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("incidentType is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createIncident(null, "processInstanceId", "foo", "bar"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("incidentType is null");
   }
 
   @Test
   void createIncidentWithNonExistingExecution() {
-
-    try {
-      runtimeService.createIncident("foo", "aaa", "bbb", "bar");
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot find an execution with executionId 'aaa'");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.createIncident("foo", "aaa", "bbb", "bar"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot find an execution with executionId 'aaa'");
   }
 
   @Test
@@ -159,22 +158,18 @@ public class CreateAndResolveIncidentTest {
 
   @Test
   void resolveUnexistingIncident() {
-    try {
-      runtimeService.resolveIncident("foo");
-      fail("Exception expected");
-    } catch (NotFoundException e) {
-      assertThat(e.getMessage()).contains("Cannot find an incident with id 'foo'");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.resolveIncident("foo"))
+      .isInstanceOf(NotFoundException.class)
+      .hasMessageContaining("Cannot find an incident with id 'foo'");
   }
 
   @Test
   void resolveNullIncident() {
-    try {
-      runtimeService.resolveIncident(null);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("incidentId is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.resolveIncident(null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("incidentId is null");
   }
 
   @Test
@@ -194,12 +189,9 @@ public class CreateAndResolveIncidentTest {
     // then
     Incident incident = runtimeService.createIncidentQuery().processInstanceId(processInstance.getId()).singleResult();
     var incidentId = incident.getId();
-    try {
-      runtimeService.resolveIncident(incidentId);
-      fail("Exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot resolve an incident of type failedJob");
-    }
+    assertThatThrownBy(() -> runtimeService.resolveIncident(incidentId))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot resolve an incident of type failedJob");
   }
 
   @Test
@@ -378,11 +370,11 @@ public class CreateAndResolveIncidentTest {
 
   public static class CustomIncidentHandler implements IncidentHandler {
 
-    private String incidentType;
+    private final String incidentType;
 
-    private List<IncidentContext> createEvents = new ArrayList<>();
-    private List<IncidentContext> resolveEvents = new ArrayList<>();
-    private List<IncidentContext> deleteEvents = new ArrayList<>();
+    private final List<IncidentContext> createEvents = new ArrayList<>();
+    private final List<IncidentContext> resolveEvents = new ArrayList<>();
+    private final List<IncidentContext> deleteEvents = new ArrayList<>();
 
     public CustomIncidentHandler(String type) {
       this.incidentType = type;
@@ -412,7 +404,8 @@ public class CreateAndResolveIncidentTest {
     }
 
     private void deleteIncidentEntity(IncidentContext context) {
-      List<Incident> incidents = Context.getCommandContext().getIncidentManager()
+      CommandContext commandContext = requireNonNull(Context.getCommandContext());
+      List<Incident> incidents = commandContext.getIncidentManager()
           .findIncidentByConfigurationAndIncidentType(context.getConfiguration(), incidentType);
 
       incidents.forEach(i -> ((IncidentEntity) i).delete());

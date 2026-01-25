@@ -266,7 +266,7 @@ jobs:
       - detect-recent-changes
       - determine-pr-config
     if: |
-      always() && !cancelled() && (
+      always() && !cancelled() && github.event_name != 'push' && (
         (github.event_name == 'schedule' && needs.detect-recent-changes.outputs.recent_changes == 'true') ||
         (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build == 'false') ||
         (github.event_name == 'pull_request' && needs.determine-pr-config.outputs.needs_integration_build == 'true')

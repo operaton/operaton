@@ -118,49 +118,45 @@ public class DeploymentResourcesResourceImpl implements DeploymentResourcesResou
     RepositoryService repositoryService = engine.getRepositoryService();
     InputStream resourceAsStream = repositoryService.getResourceAsStreamById(deploymentId, resourceId);
 
-    if (resourceAsStream != null) {
-
-      DeploymentResourceDto resource = getDeploymentResource(resourceId);
-
-      String name = resource.getName();
-
-      String filename = null;
-      String mediaType = null;
-
-      if (name != null) {
-        name = name.replace("\\", "/");
-        String[] filenameParts = name.split("/");
-        if (filenameParts.length > 0) {
-          int idx = filenameParts.length-1;
-          filename = filenameParts[idx];
-        }
-
-        String[] extensionParts = name.split("\\.");
-        if (extensionParts.length > 0) {
-          int idx = extensionParts.length-1;
-          String extension = extensionParts[idx];
-          if (extension != null) {
-            mediaType = MEDIA_TYPE_MAPPING.get(extension);
-          }
-        }
-      }
-
-      if (filename == null) {
-        filename = "data";
-      }
-
-      if (mediaType == null) {
-        mediaType = MediaType.APPLICATION_OCTET_STREAM;
-      }
-
-      return Response
-          .ok(resourceAsStream, mediaType)
-          .header("Content-Disposition", URLEncodingUtil.buildAttachmentValue(filename))
-          .build();
-    }
-    else {
+    if (resourceAsStream == null) {
       throw new InvalidRequestException(Status.NOT_FOUND,
-        "Deployment resource '%s' for deployment id '%s' does not exist.".formatted(resourceId, deploymentId));
+          "Deployment resource '%s' for deployment id '%s' does not exist.".formatted(resourceId, deploymentId));
     }
+
+    DeploymentResourceDto resource = getDeploymentResource(resourceId);
+    String name = resource.getName();
+    String filename = null;
+    String mediaType = null;
+
+    if (name != null) {
+      name = name.replace("\\", "/");
+      String[] filenameParts = name.split("/");
+      if (filenameParts.length > 0) {
+        int idx = filenameParts.length-1;
+        filename = filenameParts[idx];
+      }
+
+      String[] extensionParts = name.split("\\.");
+      if (extensionParts.length > 0) {
+        int idx = extensionParts.length-1;
+        String extension = extensionParts[idx];
+        if (extension != null) {
+          mediaType = MEDIA_TYPE_MAPPING.get(extension);
+        }
+      }
+    }
+
+    if (filename == null) {
+      filename = "data";
+    }
+
+    if (mediaType == null) {
+      mediaType = MediaType.APPLICATION_OCTET_STREAM;
+    }
+
+    return Response
+        .ok(resourceAsStream, mediaType)
+        .header("Content-Disposition", URLEncodingUtil.buildAttachmentValue(filename))
+        .build();
   }
 }

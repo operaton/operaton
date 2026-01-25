@@ -308,12 +308,13 @@ class BoundaryErrorEventTest {
     // given
     runtimeService.startProcessInstanceByKey("simpleSubProcess");
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
 
     // when/then
     // Completing the task will reach the end error event,
     // which is never caught in the process
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
         .isInstanceOf(BpmnError.class)
         .hasMessageContaining("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process");
   }
@@ -329,12 +330,13 @@ class BoundaryErrorEventTest {
     // given
     runtimeService.startProcessInstanceByKey("uncaughtErrorOnCallActivity");
     Task task = taskService.createTaskQuery().singleResult();
+    String taskId = task.getId();
     assertThat(task.getName()).isEqualTo("Task in subprocess");
 
     // when/then
     // Completing the task will reach the end error event,
     // which is never caught in the process
-    assertThatThrownBy(() -> taskService.complete(task.getId()))
+    assertThatThrownBy(() -> taskService.complete(taskId))
         .isInstanceOf(BpmnError.class)
         .hasMessageContaining("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process");
   }

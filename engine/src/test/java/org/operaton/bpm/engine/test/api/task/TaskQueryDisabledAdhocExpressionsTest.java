@@ -147,15 +147,18 @@ public class TaskQueryDisabledAdhocExpressionsTest {
   }
 
   protected void extendFilterAndValidateFailingQuery(Filter filter, TaskQuery query) {
+    // given
+    String filterId = filter.getId();
+
     // when/then
-    assertThatThrownBy(() -> filterService.list(filter.getId(), query))
+    assertThatThrownBy(() -> filterService.list(filterId, query))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
 
     // when/then
-    assertThatThrownBy(() -> filterService.count(filter.getId(), query))
+    assertThatThrownBy(() -> filterService.count(filterId, query))
         .isInstanceOf(BadUserRequestException.class)
         .hasMessageContaining(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE);
 

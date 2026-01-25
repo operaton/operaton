@@ -212,6 +212,7 @@ public abstract class ProcessEngineConfiguration {
   protected boolean jobExecutorPreferTimerJobs;
   protected boolean jobExecutorAcquireByDueDate;
   protected boolean jobExecutorAcquireByPriority;
+  protected boolean jobExecutorAcquireWithSkipLocked;
 
   protected boolean ensureJobDueDateNotNull;
   protected boolean producePrioritizedJobs = true;
@@ -919,6 +920,14 @@ public abstract class ProcessEngineConfiguration {
 
   public void setJobExecutorAcquireByPriority(boolean jobExecutorAcquireByPriority) {
     this.jobExecutorAcquireByPriority = jobExecutorAcquireByPriority;
+  }
+
+  public boolean isJobExecutorAcquireWithSkipLocked() {
+    return jobExecutorAcquireWithSkipLocked;
+  }
+
+  public void setJobExecutorAcquireWithSkipLocked(boolean jobExecutorAcquireWithSkipLocked) {
+    this.jobExecutorAcquireWithSkipLocked = jobExecutorAcquireWithSkipLocked;
   }
 
   public boolean isProducePrioritizedExternalTasks() {

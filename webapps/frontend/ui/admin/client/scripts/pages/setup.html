@@ -5,10 +5,10 @@
        id="users"
        ng-switch on="created">
     <header class="row">
-      <div class="col-xs-8">
+      <div class="col-8">
         <h3>{{ 'SETUP_SETUP' | translate }}</h3>
       </div>
-      <div class="col-xs-4 text-right">
+      <div class="col-4 text-right">
       </div>
     </header>
 
@@ -36,8 +36,8 @@
               name="createUserForm">
           <div class="h4">{{ 'SETUP_USER_ACCOUNT' | translate }}</div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4"
+          <div class="form-group row">
+            <label class="control-label col-sm-4 text-right"
                    for="inputUserId">{{ 'SETUP_USER_ID' | translate }}</label>
 
             <div class="col-sm-8">
@@ -55,8 +55,8 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4"
+          <div class="form-group row">
+            <label class="control-label col-sm-4 text-right"
                    for="inputPassword">{{ 'SETUP_USER_PASSWORD' | translate }}</label>
 
             <div class="col-sm-8">
@@ -76,8 +76,8 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4"
+          <div class="form-group row">
+            <label class="control-label col-sm-4 text-right"
                    for="inputPasswordRepeat">{{ 'SETUP_USER_PASSWORD_REPEAT' | translate }}</label>
 
             <div class="col-sm-8">
@@ -97,8 +97,8 @@
 
           <div class="h4">{{ 'SETUP_USER_PROFILE' | translate }}</div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4"
+          <div class="form-group row">
+            <label class="control-label col-sm-4 text-right"
                 for="inputFirstname">{{ 'SETUP_USER_FIRSTNAME' | translate }}</label>
 
             <div class="col-sm-8">
@@ -117,8 +117,8 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4"
+          <div class="form-group row">
+            <label class="control-label col-sm-4 text-right"
                 for="inputLastname">{{ 'SETUP_USER_LASTNAME' | translate }}</label>
 
             <div class="col-sm-8">
@@ -136,8 +136,8 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4"
+          <div class="form-group row">
+            <label class="control-label col-sm-4 text-right"
                 for="inputEmail">{{ 'SETUP_USER_EMAIL' | translate }}</label>
 
             <div class="col-sm-8">
@@ -155,8 +155,8 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <div class="col-sm-8 col-sm-offset-4">
+          <div class="form-group row">
+            <div class="col-sm-8 offset-sm-4 text-right">
               <button type="submit"
                       class="btn btn-primary"
                       ng-disabled="!createUserForm.$valid || !credentials.valid"

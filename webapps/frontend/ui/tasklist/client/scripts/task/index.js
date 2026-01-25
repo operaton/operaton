@@ -36,7 +36,7 @@ var angular = require('operaton-commons-ui/vendor/angular'),
   /* API */
   apiClient = require('../api/index');
 
-require('angular-ui-bootstrap');
+require('ui-bootstrap4');
 require('angular-moment');
 
 var taskModule = angular.module('cam.tasklist.task', [

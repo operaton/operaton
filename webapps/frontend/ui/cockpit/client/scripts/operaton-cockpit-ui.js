@@ -20,12 +20,13 @@
 if (process.env.NODE_ENV === 'development') {
   require('../../../common/scripts/util/dev-setup').setupDev();
 }
-
+window.jQuery = window.jQuery || require('jquery');
+window.$ = window.jQuery;
 const $ = window.jQuery;
 
 // DOM Polyfills
 require('dom4');
-
+window.Popper = require('popper.js').default;
 require('operaton-commons-ui/vendor/bootstrap');
 
 var commons = require('operaton-commons-ui/lib');

@@ -20,6 +20,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -55,6 +56,9 @@ import static org.assertj.core.api.Assertions.*;
  * @author Joram Barrez
  */
 class ProcessInstanceSuspensionTest {
+  private static final Map<String, String> emptyProperties = emptyMap();
+  private static final Map<String, Object> emptyProcessVariables = emptyMap();
+
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
   @RegisterExtension
@@ -751,7 +755,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    assertThatThrownBy(() -> formService.submitTaskForm(taskQuery, emptyMap())).isInstanceOf(SuspendedEntityInteractionException.class);
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -762,7 +766,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    assertThatThrownBy(() -> formService.submitTaskForm(taskQuery, emptyMap())).isInstanceOf(SuspendedEntityInteractionException.class);
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -773,7 +777,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     var taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId();
 
-    assertThatThrownBy(() -> formService.submitTaskForm(taskQuery, emptyMap())).isInstanceOf(SuspendedEntityInteractionException.class);
+    assertThatThrownBy(() -> formService.submitTaskFormData(taskQuery, emptyProperties)).isInstanceOf(SuspendedEntityInteractionException.class);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -791,7 +795,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
   }
@@ -811,7 +815,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
   }
@@ -831,7 +835,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
   }
@@ -850,7 +854,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
   }
@@ -869,7 +873,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
   }
@@ -888,7 +892,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
   }
@@ -922,7 +926,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
@@ -961,7 +965,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
@@ -1005,7 +1009,7 @@ class ProcessInstanceSuspensionTest {
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 
-    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyMap()))
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
       .isInstanceOf(SuspendedEntityInteractionException.class)
       .hasMessageContaining("is suspended");
 

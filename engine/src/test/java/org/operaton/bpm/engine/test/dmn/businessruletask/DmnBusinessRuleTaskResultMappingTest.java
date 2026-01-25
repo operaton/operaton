@@ -36,8 +36,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.StringValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Tests the mapping of the decision result.
@@ -151,65 +150,67 @@ class DmnBusinessRuleTaskResultMappingTest {
   @Deployment(resources = {SINGLE_ENTRY_BPMN, TEST_DECISION})
   @Test
   void testSingleEntryMappingFailureMultipleOutputs() {
-    try {
-      startTestProcess("single entry list");
+    // given
+    String input = "single entry list";
 
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22001", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> startTestProcess(input))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-22001");
   }
 
   @Deployment(resources = {SINGLE_ENTRY_BPMN, TEST_DECISION})
   @Test
   void testSingleEntryMappingFailureMultipleValues() {
-    try {
-      startTestProcess("multiple entries");
+    // given
+    String input = "multiple entries";
 
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22001", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> startTestProcess(input))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-22001");
   }
 
   @Deployment(resources = {SINGLE_RESULT_BPMN, TEST_DECISION})
   @Test
   void testSingleResultMappingFailure() {
-    try {
-      startTestProcess("single entry list");
+    // given
+    String input = "single entry list";
 
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22001", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> startTestProcess(input))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-22001");
   }
 
   @Deployment(resources = {COLLECT_ENTRIES_BPMN, TEST_DECISION})
   @Test
   void testCollectEntriesMappingFailure() {
-    try {
-      startTestProcess("multiple entries");
+    // given
+    String input = "multiple entries";
 
-      fail("expect exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("ENGINE-22002", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> startTestProcess(input))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-22002");
   }
 
   @Test
   void testInvalidMapping() {
+    // given
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource(INVALID_MAPPING_BPMN);
-    try {
-      testRule.deploy(deploymentBuilder);
 
-      fail("expect parse exception");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("No decision result mapper found for name 'invalid'", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors()).hasSize(1);
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("ruleTask");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
+            .isInstanceOf(ParseException.class)
+            .hasMessageContaining("No decision result mapper found for name 'invalid'")
+            .satisfies(e -> {
+              ParseException parseException = (ParseException) e;
+              assertThat(parseException.getResourceReports().get(0).getErrors()).hasSize(1);
+              assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("ruleTask");
+            });
   }
 
   @Deployment(resources = {DEFAULT_MAPPING_BPMN, TEST_DECISION})
@@ -227,14 +228,14 @@ class DmnBusinessRuleTaskResultMappingTest {
   @Deployment(resources = {OVERRIDE_DECISION_RESULT_BPMN, TEST_DECISION})
   @Test
   void testFailedToOverrideDecisionResultVariable() {
-    try {
-      // the transient variable "decisionResult" should not be overridden by the task result variable
-      startTestProcess("single entry");
-      fail("expect exception");
+    // given
+    String input = "single entry";
 
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("transient variable with name 'decisionResult' to non-transient", e.getMessage());
-    }
+    // when/then
+    // the transient variable "decisionResult" should not be overridden by the task result variable
+    assertThatThrownBy(() -> startTestProcess(input))
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("transient variable with name 'decisionResult' to non-transient");
   }
 
   @Deployment(resources = {SINGLE_ENTRY_BPMN, TEST_DECISION})

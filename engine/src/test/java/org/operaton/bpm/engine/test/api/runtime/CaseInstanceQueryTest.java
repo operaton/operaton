@@ -613,19 +613,17 @@ class CaseInstanceQueryTest {
 
   @Test
   void testQueryByNullVariableValueGreaterThan() {
+    // given
     caseService
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery();
 
-    try {
-      query.variableValueGreaterThan("aNullValue", null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
-    }
-
+    // when/then
+    assertThatThrownBy(() -> query.variableValueGreaterThan("aNullValue", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Booleans and null cannot be used in 'greater than' condition");
   }
 
   @Test
@@ -645,19 +643,17 @@ class CaseInstanceQueryTest {
 
   @Test
   void testQueryByBooleanVariableValueGreaterThan() {
+    // given
     caseService
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery();
 
-    try {
-      query.variableValueGreaterThan("aBooleanValue", false);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than' condition");
-    }
-
+    // when/then
+    assertThatThrownBy(() -> query.variableValueGreaterThan("aBooleanValue", false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Booleans and null cannot be used in 'greater than' condition");
   }
 
   @Test
@@ -774,19 +770,17 @@ class CaseInstanceQueryTest {
 
   @Test
   void testQueryByNullVariableValueGreaterThanOrEqual() {
+    // given
     caseService
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery();
 
-    try {
-      query.variableValueGreaterThanOrEqual("aNullValue", null);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
-    }
-
+    // when/then
+    assertThatThrownBy(() -> query.variableValueGreaterThanOrEqual("aNullValue", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Booleans and null cannot be used in 'greater than or equal' condition");
   }
 
   @Test
@@ -812,19 +806,17 @@ class CaseInstanceQueryTest {
 
   @Test
   void testQueryByBooleanVariableValueGreaterThanOrEqual() {
+    // given
     caseService
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery();
 
-    try {
-      query.variableValueGreaterThanOrEqual("aBooleanValue", false);
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'greater than or equal' condition");
-    }
-
+    // when/then
+    assertThatThrownBy(() -> query.variableValueGreaterThanOrEqual("aBooleanValue", false))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Booleans and null cannot be used in 'greater than or equal' condition");
   }
 
   @Test

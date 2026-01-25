@@ -35,6 +35,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -82,15 +83,15 @@ public class TaskQueryDisabledStoredExpressionsTest {
 
   @Test
   void testStoreFilterWithExpression() {
+    // given
     TaskQuery taskQuery = taskService.createTaskQuery().dueAfterExpression(STATE_MANIPULATING_EXPRESSION);
     Filter filter = filterService.newTaskFilter("filter");
     filter.setQuery(taskQuery);
 
-    try {
-      filterService.saveFilter(filter);
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> filterService.saveFilter(filter))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining(EXPECTED_STORED_QUERY_FAILURE_MESSAGE);
     assertThat(fieldIsUnchanged()).isTrue();
   }
 
@@ -102,15 +103,14 @@ public class TaskQueryDisabledStoredExpressionsTest {
     filter.setQuery(taskQuery);
     filterService.saveFilter(filter);
 
-    // updating the filter with an expression does not suceed
+    // when - updating the filter with an expression does not succeed
     filter.setQuery(taskQuery.dueBeforeExpression(STATE_MANIPULATING_EXPRESSION));
     assertThat(filterService.createFilterQuery().count()).isOne();
 
-    try {
-      filterService.saveFilter(filter);
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // then
+    assertThatThrownBy(() -> filterService.saveFilter(filter))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining(EXPECTED_STORED_QUERY_FAILURE_MESSAGE);
     assertThat(fieldIsUnchanged()).isTrue();
 
     // cleanup
@@ -142,19 +142,16 @@ public class TaskQueryDisabledStoredExpressionsTest {
   }
 
   protected void extendFilterAndValidateFailingQuery(String filterId, TaskQuery query) {
-    try {
-      filterService.list(filterId, query);
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> filterService.list(filterId, query))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining(EXPECTED_STORED_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
 
-    try {
-      filterService.count(filterId, query);
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(EXPECTED_STORED_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    assertThatThrownBy(() -> filterService.count(filterId, query))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining(EXPECTED_STORED_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
   }

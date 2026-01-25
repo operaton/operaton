@@ -430,7 +430,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContainingIgnoringCase("Cannot resolve identifier 'scriptSource'");
+      .hasMessageContaining("Cannot resolve identifier 'scriptSource'");
   }
 
   @Test
@@ -536,7 +536,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
       .isInstanceOf(ScriptCompilationException.class)
-      .hasMessageContainingIgnoringCase("import unknown");
+      .hasMessageContaining("import unknown");
   }
 
   @Test
@@ -551,7 +551,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
       // when/then
       assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
         .isInstanceOf(ScriptEvaluationException.class)
-        .hasMessageContainingIgnoringCase("import unknown");
+        .hasMessageContaining("import unknown");
     }
     finally {
       // re-enable script compilation
@@ -654,12 +654,10 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
   void testScriptEvaluationException() {
     // given
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey("Process_1").singleResult();
-    var expectedMessage = "Unable to evaluate script while executing activity 'Failing' in the process definition with id '%s'".formatted(processDefinition.getId());
-
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("Process_1"))
       .isInstanceOf(ScriptEvaluationException.class)
-      .hasMessageContaining(expectedMessage);
+      .hasMessageContaining("Unable to evaluate script while executing activity 'Failing' in the process definition with id '%s'", processDefinition.getId());
   }
 
   @Test

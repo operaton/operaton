@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentHandler;
+import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.IncidentEntity;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
@@ -42,6 +44,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static java.util.Objects.requireNonNull;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -366,11 +370,11 @@ public class CreateAndResolveIncidentTest {
 
   public static class CustomIncidentHandler implements IncidentHandler {
 
-    private String incidentType;
+    private final String incidentType;
 
-    private List<IncidentContext> createEvents = new ArrayList<>();
-    private List<IncidentContext> resolveEvents = new ArrayList<>();
-    private List<IncidentContext> deleteEvents = new ArrayList<>();
+    private final List<IncidentContext> createEvents = new ArrayList<>();
+    private final List<IncidentContext> resolveEvents = new ArrayList<>();
+    private final List<IncidentContext> deleteEvents = new ArrayList<>();
 
     public CustomIncidentHandler(String type) {
       this.incidentType = type;
@@ -400,7 +404,8 @@ public class CreateAndResolveIncidentTest {
     }
 
     private void deleteIncidentEntity(IncidentContext context) {
-      List<Incident> incidents = Context.getCommandContext().getIncidentManager()
+      CommandContext commandContext = requireNonNull(Context.getCommandContext());
+      List<Incident> incidents = commandContext.getIncidentManager()
           .findIncidentByConfigurationAndIncidentType(context.getConfiguration(), incidentType);
 
       incidents.forEach(i -> ((IncidentEntity) i).delete());

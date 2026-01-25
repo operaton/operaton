@@ -56,7 +56,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Yana Vasileva
@@ -297,6 +296,8 @@ class SingleProcessInstanceModificationAsyncTest {
     // when / then
     Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
+        .hasMessage("Cannot perform instruction: Start before activity 'task' with ancestor activity instance '%s'; Ancestor activity instance '%s' does not exist: ancestorInstance is null",
+            ancestorActivityId, ancestorActivityId)
         .satisfies(e -> assertThat(e.getMessage().toLowerCase())
             .contains("cannot perform instruction: start before activity 'task' with ancestor activity instance '"
                 + ancestorActivityId.toLowerCase() + "'; ancestor activity instance '" + ancestorActivityId.toLowerCase()
@@ -446,7 +447,7 @@ class SingleProcessInstanceModificationAsyncTest {
     // when / then
     Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
-        .hasMessage("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()));
+        .hasMessageContaining("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()));
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)

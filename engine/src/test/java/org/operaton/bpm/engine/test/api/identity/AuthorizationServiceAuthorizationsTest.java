@@ -88,6 +88,7 @@ class AuthorizationServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(JONNY_2);
 
     // when/then
+    // we cannot create another authorization
     assertThatThrownBy(() -> authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL))
       .isInstanceOf(AuthorizationException.class)
       .satisfies(e -> {
@@ -135,9 +136,9 @@ class AuthorizationServiceAuthorizationsTest {
       .isInstanceOf(AuthorizationException.class)
       .satisfies(e -> {
         AuthorizationException ae = (AuthorizationException) e;
+        assertThat(ae.getUserId()).isEqualTo(JONNY_2);
         assertThat(ae.getMissingAuthorizations()).hasSize(1);
         MissingAuthorization info = ae.getMissingAuthorizations().get(0);
-        assertThat(ae.getUserId()).isEqualTo(JONNY_2);
         assertExceptionInfo(DELETE.getName(), AUTHORIZATION.resourceName(), basePerms.getId(), info);
       });
   }
@@ -225,13 +226,13 @@ class AuthorizationServiceAuthorizationsTest {
       .hasMessageContaining("The resource type with id:'0' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
 
     // given
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId("userId");
-    authorization.addPermission(Permissions.ACCESS);
-    authorization.setResource(Resources.BATCH);
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization2.setUserId("userId");
+    authorization2.addPermission(Permissions.ACCESS);
+    authorization2.setResource(Resources.BATCH);
 
     // when/then
-    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("The resource type with id:'13' is not valid for 'ACCESS' permission.");
   }
@@ -270,13 +271,13 @@ class AuthorizationServiceAuthorizationsTest {
       .hasMessageContaining("The resource type with id:'6' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
 
     // given
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
-    authorization.setUserId("userId");
-    authorization.addPermission(Permissions.ACCESS);
-    authorization.setResource(Resources.PROCESS_DEFINITION);
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
+    authorization2.setUserId("userId");
+    authorization2.addPermission(Permissions.ACCESS);
+    authorization2.setResource(Resources.PROCESS_DEFINITION);
 
     // when/then
-    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("The resource type with id:'6' is not valid for 'ACCESS' permission.");
   }
@@ -298,13 +299,13 @@ class AuthorizationServiceAuthorizationsTest {
       .hasMessageContaining("The resource type with id:'8' is not valid for 'CREATE_BATCH_MIGRATE_PROCESS_INSTANCES' permission.");
 
     // given
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId("userId");
-    authorization.setPermissions(new Permissions[] { Permissions.CREATE, Permissions.ACCESS });
-    authorization.setResource(Resources.PROCESS_INSTANCE);
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization2.setUserId("userId");
+    authorization2.setPermissions(new Permissions[] { Permissions.CREATE, Permissions.ACCESS });
+    authorization2.setResource(Resources.PROCESS_INSTANCE);
 
     // when/then
-    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("The resource type with id:'8' is not valid for 'ACCESS' permission.");
   }
@@ -417,7 +418,7 @@ class AuthorizationServiceAuthorizationsTest {
     }
   }
 
-  class ResourceImpl implements Resource {
+  static class ResourceImpl implements Resource {
 
     String resourceName;
     int resourceType;

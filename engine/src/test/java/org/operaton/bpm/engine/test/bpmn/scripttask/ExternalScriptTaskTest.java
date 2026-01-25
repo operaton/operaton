@@ -125,7 +125,7 @@ class ExternalScriptTaskTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
         .isInstanceOf(NotFoundException.class)
-        .hasMessageContaining("unable to find resource at path classpath://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
+        .hasMessageContaining("Unable to find resource at path classpath://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
   }
 
   @Deployment(resources = {
@@ -188,7 +188,7 @@ class ExternalScriptTaskTest {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
         .isInstanceOf(NotFoundException.class)
-        .hasMessageContaining("unable to find resource at path deployment://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
+        .hasMessageContaining("Unable to find resource at path deployment://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
   }
 
   @Deployment

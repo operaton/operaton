@@ -251,7 +251,7 @@ class JobPrioritizationBpmnExpressionValueTest {
       // when/then
       assertThatThrownBy(processInstantiationBuilder::execute)
           .isInstanceOf(ProcessEngineException.class)
-          .hasMessageContaining("unknown property used in expression");
+          .hasMessageContaining("Unknown property used in expression");
 
     } finally {
       processEngineConfiguration.setEnableGracefulDegradationOnContextSwitchFailure(true);

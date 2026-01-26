@@ -46,11 +46,9 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.*;
-import static org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions.UPDATE_TASK_VARIABLE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
-import static org.operaton.bpm.engine.authorization.TaskPermissions.UPDATE_VARIABLE;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.*;
 
@@ -65,7 +63,6 @@ class TaskAuthorizationTest extends AuthorizationTest {
   protected static final String DEMO_ASSIGNEE_PROCESS_KEY = "demoAssigneeProcess";
   protected static final String CANDIDATE_USERS_PROCESS_KEY = "candidateUsersProcess";
   protected static final String CANDIDATE_GROUPS_PROCESS_KEY = "candidateGroupsProcess";
-  protected static final String INVALID_PERMISSION = "invalidPermission";
 
   @Override
   @BeforeEach
@@ -6381,18 +6378,6 @@ verifyGetVariables(variables);  }
 
 
   // helper ////////////////////////////////////////////////////////////////////////////////
-
-  protected void verifyMessageIsValid(String taskId, String message) {
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(UPDATE_VARIABLE.getName(), message);
-    testRule.assertTextPresent(taskId, message);
-    testRule.assertTextPresent(TASK.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_TASK.getName(), message);
-    testRule.assertTextPresent(UPDATE_TASK_VARIABLE.getName(), message);
-    testRule.assertTextPresent(PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
-  }
 
   protected void verifyVariableInstanceCountDisabledAuthorization(int count) {
     disableAuthorization();

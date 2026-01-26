@@ -45,7 +45,8 @@ import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -199,17 +200,16 @@ class ProcessInstantiationAtActivitiesTest {
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
   void testStartWithInvalidInitialActivity() {
+    // given
     var processInstantiationBuilder = runtimeService
           .createProcessInstanceByKey("exclusiveGateway")
           .startBeforeActivity("someNonExistingActivity");
-    try {
-      // when
-      processInstantiationBuilder.execute();
-      fail("should not succeed");
-    } catch (NotValidException e) {
-      // then
-      testRule.assertTextPresentIgnoreCase("element 'someNonExistingActivity' does not exist in process ", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+        .isInstanceOf(NotValidException.class)
+        .message()
+        .containsIgnoringCase("element 'someNonExistingActivity' does not exist in process ");
   }
 
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
@@ -305,21 +305,21 @@ class ProcessInstantiationAtActivitiesTest {
 
   @Test
   void testStartNonExistingProcessDefinition() {
+    // given
     var processInstantiationBuilder1 = runtimeService.createProcessInstanceById("I don't exist").startBeforeActivity("start");
-    try {
-      processInstantiationBuilder1.execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no deployed process definition found with id", e.getMessage());
-    }
 
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder1::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no deployed process definition found with id");
+
+    // given
     var processInstantiationBuilder2 = runtimeService.createProcessInstanceByKey("I don't exist either").startBeforeActivity("start");
-    try {
-      processInstantiationBuilder2.execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no processes deployed with key", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder2::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("no processes deployed with key");
   }
 
   @Test

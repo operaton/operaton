@@ -65,9 +65,9 @@ public abstract class AbstractQuery<T extends Query<?,?>, U> extends ListQueryPa
 
   protected ResultType resultType;
 
-  protected Map<String, String> expressions = new HashMap<>();
+  protected transient Map<String, String> expressions = new HashMap<>();
 
-  protected Set<Validator<AbstractQuery<?, ?>>> validators = new HashSet<>();
+  protected transient Set<Validator<AbstractQuery<?, ?>>> validators = new HashSet<>();
 
   protected boolean maxResultsLimitEnabled;
 

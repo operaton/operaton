@@ -113,7 +113,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 13
+    milestone: 16
     groups:
       httpcomponents5:
         patterns:
@@ -131,7 +131,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 13
+    milestone: 16
     groups:
       angular:
         patterns:
@@ -164,7 +164,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 13
+    milestone: 16
     groups:
       react:
         patterns:
@@ -178,7 +178,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:github-action"
-    milestone: 13
+    milestone: 16
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -186,110 +186,5 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 13
+    milestone: 16
 
-  # Release 1.0.x branch - patch updates only
-  - package-ecosystem: "maven"
-    directory: "/"
-    schedule:
-      interval: "daily"
-      time: "01:30"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-    labels:
-      - "dependencies:maven"
-    milestone: 11
-    groups:
-      httpcomponents5:
-        patterns:
-          - "org.apache.httpcomponents.core5:*"
-          - "org.apache.httpcomponents.client5:*"
-      httpcomponents4:
-        patterns:
-          - "org.apache.httpcomponents:*"
-  - package-ecosystem: "npm"
-    directory: "/webapps/frontend"
-    schedule:
-      interval: "weekly"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.0.x"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-    labels:
-      - "dependencies:npm"
-    milestone: 11
-    groups:
-      angular:
-        patterns:
-          - "angular*"
-      babel:
-        patterns:
-          - "@babel/core"
-          - "@babel/preset-env"
-          - "@babel/eslint-parser"
-      dmn-js:
-        patterns:
-          - "dmn-js"
-          - "dmn-js-decision-table"
-          - "dmn-js-drd"
-          - "dmn-js-literal-expression"
-          - "dmn-js-shared"
-      eslint:
-        patterns:
-          - "eslint*"
-          - "prettier"
-      webpack:
-        patterns:
-          - "webpack*"
-  - package-ecosystem: "npm"
-    directory: "/engine-rest/docs"
-    schedule:
-      interval: "weekly"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.0.x"
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-    labels:
-      - "dependencies:npm"
-    milestone: 11
-    groups:
-      react:
-        patterns:
-          - "react*"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      time: "01:30"
-    reviewers:
-      - "kthoms"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-    labels:
-      - "dependencies:github-action"
-    milestone: 11
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      time: "01:30"
-    target-branch: "release/1.0.x"
-    open-pull-requests-limit: 10
-    ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major", "version-update:semver-minor"]
-    labels:
-      - "dependencies:devcontainers"
-    milestone: 11

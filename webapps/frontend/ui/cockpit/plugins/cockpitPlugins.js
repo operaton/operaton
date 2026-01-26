@@ -17,7 +17,7 @@
 
 'use strict';
 
-import 'ui/cockpit/plugins/styles.less';
+import 'ui/cockpit/plugins/styles.scss';
 
 var angular = require('angular'),
   base = require('./base/app/plugin'),

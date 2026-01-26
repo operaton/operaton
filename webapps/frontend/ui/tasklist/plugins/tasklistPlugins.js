@@ -17,7 +17,7 @@
 
 'use strict';
 
-import 'ui/tasklist/plugins/styles.less';
+import 'ui/tasklist/plugins/styles.scss';
 
 var angular = require('angular'),
   standaloneTask = require('./standaloneTask/app/plugin'),

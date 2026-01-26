@@ -1885,7 +1885,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // then
-    testRule.assertTextPresent(userOperationLogEntry.getAnnotation(), "anAnnotation");
+    assertThat(userOperationLogEntry.getAnnotation()).contains("anAnnotation");
   }
 
   @Test
@@ -1919,7 +1919,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // then
-    testRule.assertTextPresent(userOperationLogEntry.getAnnotation(), "anAnnotation");
+    assertThat(userOperationLogEntry.getAnnotation()).contains("anAnnotation");
   }
 
 
@@ -1982,7 +1982,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // then
-    testRule.assertTextPresent(userOperationLogEntry.getAnnotation(), "anAnnotation");
+    assertThat(userOperationLogEntry.getAnnotation()).contains("anAnnotation");
   }
 
   @Test
@@ -2016,7 +2016,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // then
-    testRule.assertTextPresent(userOperationLogEntry.getAnnotation(), "anAnnotation");
+    assertThat(userOperationLogEntry.getAnnotation()).contains("anAnnotation");
   }
 
   @Test
@@ -2073,7 +2073,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // then
-    testRule.assertTextPresent(userOperationLogEntry.getAnnotation(), "anAnnotation");
+    assertThat(userOperationLogEntry.getAnnotation()).contains("anAnnotation");
 
     // cleanup
     deleteTask("aTaskId", true);
@@ -2107,7 +2107,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     enableAuthorization();
 
     // then
-    testRule.assertTextPresent(userOperationLogEntry.getAnnotation(), "anAnnotation");
+    assertThat(userOperationLogEntry.getAnnotation()).contains("anAnnotation");
 
     // cleanup
     deleteTask("aTaskId", true);

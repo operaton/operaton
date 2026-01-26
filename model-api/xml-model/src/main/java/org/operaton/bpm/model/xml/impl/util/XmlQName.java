@@ -87,57 +87,49 @@ public class XmlQName {
   }
 
   private String determinePrefixAndNamespaceUri() {
-    if (namespaceUri != null) {
-      if (rootElement != null && namespaceUri.equals(rootElement.getNamespaceURI())) {
-        // global namespaces do not have a prefix or namespace URI
-        return null;
-      }
-      else {
-        // lookup for prefix
-        String lookupPrefix = lookupPrefix();
-        if (lookupPrefix == null && rootElement != null) {
-          // if no prefix is found we generate a new one
-          // search for known prefixes
-         String knownPrefix = KNOWN_PREFIXES.get(namespaceUri);
-          if (knownPrefix == null) {
-            // generate namespace
-            return rootElement.registerNamespace(namespaceUri);
-          }
-          else if (knownPrefix.isEmpty()) {
-            // ignored namespace
-            return null;
-          }
-          else {
-            // register known prefix
-            rootElement.registerNamespace(knownPrefix, namespaceUri);
-            return knownPrefix;
-          }
-        }
-        else {
-          return lookupPrefix;
-        }
-      }
-    }
-    else {
-      // no namespace so no prefix
+    if (namespaceUri == null) {
       return null;
+    }
+
+    if (rootElement != null && namespaceUri.equals(rootElement.getNamespaceURI())) {
+      // global namespaces do not have a prefix or namespace URI
+      return null;
+    }
+
+    // lookup for prefix
+    String lookupPrefix = lookupPrefix();
+    if (lookupPrefix != null || rootElement == null) {
+      return lookupPrefix;
+    }
+
+    // if no prefix is found we generate a new one
+    // search for known prefixes
+    String knownPrefix = KNOWN_PREFIXES.get(namespaceUri);
+    if (knownPrefix == null) {
+      // generate namespace
+      return rootElement.registerNamespace(namespaceUri);
+    } else if (knownPrefix.isEmpty()) {
+      // ignored namespace
+      return null;
+    } else {
+      // register known prefix
+      rootElement.registerNamespace(knownPrefix, namespaceUri);
+      return knownPrefix;
     }
   }
 
   private String lookupPrefix() {
-    if (namespaceUri != null) {
-      String lookupPrefix = null;
-      if (element != null) {
-        lookupPrefix = element.lookupPrefix(namespaceUri);
-      }
-      else if (rootElement != null) {
-        lookupPrefix = rootElement.lookupPrefix(namespaceUri);
-      }
-      return lookupPrefix;
-    }
-    else {
+    if (namespaceUri == null) {
       return null;
     }
-  }
 
+    String lookupPrefix = null;
+    if (element != null) {
+      lookupPrefix = element.lookupPrefix(namespaceUri);
+    } else if (rootElement != null) {
+      lookupPrefix = rootElement.lookupPrefix(namespaceUri);
+    }
+
+    return lookupPrefix;
+  }
 }

@@ -70,7 +70,6 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -202,20 +201,15 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(messageName)
         .processInstanceVariableEquals("aKey", "aValue");
 
-    try {
-      runtimeService.correlateMessage(messageName, correlationKeys);
-      fail("Expected an Exception");
-    } catch (MismatchingMessageCorrelationException e) {
-      testRule.assertTextPresent("2 executions match the correlation keys", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.correlateMessage(messageName, correlationKeys))
+      .isInstanceOf(MismatchingMessageCorrelationException.class)
+      .hasMessageContaining("2 executions match the correlation keys");
 
     // fluent builder fails as well
-    try {
-      messageCorrelationBuilder.correlate();
-      fail("Expected an Exception");
-    } catch (MismatchingMessageCorrelationException e) {
-      testRule.assertTextPresent("2 executions match the correlation keys", e.getMessage());
-    }
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(MismatchingMessageCorrelationException.class)
+      .hasMessageContaining("2 executions match the correlation keys");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -931,21 +925,16 @@ class MessageCorrelationTest {
   @Test
   void testMessageStartEventCorrelationWithNonMatchingDefinition() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("aMessageName");
-    try {
-      runtimeService.correlateMessage("aMessageName");
-      fail("Expect an Exception");
-    } catch (MismatchingMessageCorrelationException e) {
-      testRule.assertTextPresent("Cannot correlate message", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.correlateMessage("aMessageName"))
+      .isInstanceOf(MismatchingMessageCorrelationException.class)
+      .hasMessageContaining("Cannot correlate message");
 
     // fluent builder //////////////////
-
-    try {
-      messageCorrelationBuilder.correlate();
-      fail("Expect an Exception");
-    } catch (MismatchingMessageCorrelationException e) {
-      testRule.assertTextPresent("Cannot correlate message", e.getMessage());
-    }
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(MismatchingMessageCorrelationException.class)
+      .hasMessageContaining("Cannot correlate message");
 
     // fluent builder with multiple correlation //////////////////
     // This should not fail
@@ -1063,12 +1052,10 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("aMessageName");
 
     // correlation with only the name is ambiguous:
-    try {
-      messageCorrelationBuilder.correlate();
-      fail("Expect an Exception");
-    } catch (MismatchingMessageCorrelationException e) {
-      testRule.assertTextPresent("Cannot correlate message", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(MismatchingMessageCorrelationException.class)
+      .hasMessageContaining("Cannot correlate message");
 
     // use process instance id as well
     runtimeService.createMessageCorrelation("newInvoiceMessage")
@@ -1139,13 +1126,10 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(messageName)
         .processInstanceBusinessKey("aBusinessKey");
 
-    try {
-      messageCorrelationBuilder.setVariable(null, "aVariableValue");
-      fail("Variable name is null");
-    }
-    catch (NullValueException e) {
-      testRule.assertTextPresent("null", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> messageCorrelationBuilder.setVariable(null, "aVariableValue"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("null");
 
   }
 
@@ -1160,13 +1144,10 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(messageName)
         .processInstanceBusinessKey("aBusinessKey");
 
-    try {
-      messageCorrelationBuilder.processInstanceVariableEquals(null, "bar");
-      fail("Variable name is null");
-    }
-    catch (NullValueException e) {
-      testRule.assertTextPresent("null", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> messageCorrelationBuilder.processInstanceVariableEquals(null, "bar"))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("null");
 
   }
 
@@ -1324,19 +1305,14 @@ class MessageCorrelationTest {
     runtimeService.startProcessInstanceByKey("process");
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null);
 
-    try {
-      messageCorrelationBuilder.correlate();
-      fail("expected exception");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).isEqualTo("At least one of the following correlation criteria has to be present: messageName, businessKey, correlationKeys, processInstanceId");
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(NullValueException.class)
+      .hasMessage("At least one of the following correlation criteria has to be present: messageName, businessKey, correlationKeys, processInstanceId");
 
-    try {
-      runtimeService.correlateMessage(null);
-      fail("expected exception");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).isEqualTo("At least one of the following correlation criteria has to be present: messageName, businessKey, correlationKeys, processInstanceId");
-    }
+    assertThatThrownBy(() -> runtimeService.correlateMessage(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessage("At least one of the following correlation criteria has to be present: messageName, businessKey, correlationKeys, processInstanceId");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/twoBoundaryEventSubscriptions.bpmn20.xml")
@@ -1347,18 +1323,10 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation(null)
         .processInstanceId(instance.getId());
 
-    try {
-      messageCorrelationBuilder.correlate();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // note: this does not expect a MismatchingCorrelationException since the exception
-      // is only raised in the MessageEventReceivedCmd. Otherwise, this would require explicit checking in the
-      // correlation handler that a matched execution without message name has exactly one message (now it checks for
-      // at least one message)
-
-      // expected
-      assertThat(e.getMessage()).contains("More than one matching message subscription found for execution");
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("More than one matching message subscription found for execution");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
@@ -1490,65 +1458,54 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId(latestProcessDefinition.getId());
 
-    try {
-      messageCorrelationBuilder.correlateStartMessage();
-
-      fail("expected exception");
-    } catch (MismatchingMessageCorrelationException e){
-      testRule.assertTextPresent("Cannot correlate message 'a'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
+      .isInstanceOf(MismatchingMessageCorrelationException.class)
+      .hasMessageContaining("Cannot correlate message 'a'");
   }
 
   @Test
   void testFailCorrelateMessageStartEventWithNonExistingProcessDefinitionId() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId("not existing");
-    try {
-      messageCorrelationBuilder.correlateStartMessage();
 
-      fail("expected exception");
-    } catch (ProcessEngineException e){
-      testRule.assertTextPresent("no deployed process definition found", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no deployed process definition found");
   }
 
   @Test
   void testFailCorrelateMessageWithProcessDefinitionId() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId("id");
-    try {
-      messageCorrelationBuilder.correlate();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e){
-      testRule.assertTextPresent("Cannot specify a process definition id", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a process definition id");
   }
 
   @Test
   void testFailCorrelateMessagesWithProcessDefinitionId() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processDefinitionId("id");
-    try {
-      messageCorrelationBuilder.correlateAll();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e){
-      testRule.assertTextPresent("Cannot specify a process definition id", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlateAll)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a process definition id");
   }
 
   @Test
   void testFailCorrelateMessageStartEventWithCorrelationVariable() {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .processInstanceVariableEquals("var", "value");
-    try {
-      messageCorrelationBuilder.correlateStartMessage();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e){
-      testRule.assertTextPresent("Cannot specify correlation variables ", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify correlation variables ");
   }
 
   @Test
@@ -1558,13 +1515,11 @@ class MessageCorrelationTest {
               .createVariables()
               .putValue("var1", "b")
               .putValue("var2", "c"));
-    try {
-      messageCorrelationBuilder.correlateStartMessage();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e){
-      testRule.assertTextPresent("Cannot specify correlation variables ", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlateStartMessage)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify correlation variables ");
   }
 
   @Test
@@ -1827,7 +1782,7 @@ class MessageCorrelationTest {
       } else if (procInstance2.getId().equalsIgnoreCase(execution.getProcessInstanceId())) {
         assertThat(variables.getValue("var2", String.class)).isEqualTo("bar");
       } else {
-        fail("Only those process instances should exist");
+        assertThat(execution.getProcessInstanceId()).as("Only those process instances should exist").isIn(procInstance1.getId(), procInstance2.getId());
       }
     }
   }
@@ -2106,13 +2061,11 @@ class MessageCorrelationTest {
     var messageCorrelationBuilder = runtimeService.createMessageCorrelation("a")
         .startMessageOnly()
         .processInstanceVariableEquals("var", "value");
-    try {
-      messageCorrelationBuilder.correlate();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e){
-      testRule.assertTextPresent("Cannot specify correlation variables ", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlate)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify correlation variables ");
   }
 
   @Test
@@ -2123,13 +2076,11 @@ class MessageCorrelationTest {
               .createVariables()
               .putValue("var1", "b")
               .putValue("var2", "c"));
-    try {
-      messageCorrelationBuilder.correlateAll();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e){
-      testRule.assertTextPresent("Cannot specify correlation variables ", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(messageCorrelationBuilder::correlateAll)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify correlation variables ");
   }
 
   @Test

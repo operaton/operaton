@@ -16,10 +16,14 @@
  */
 package org.operaton.bpm.spring.boot.starter.configuration.condition;
 
+import java.lang.reflect.Field;
+import java.util.Optional;
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.ReflectionUtils;
 
 public class NeedsHistoryAutoConfigurationCondition extends SpringBootCondition {
 
@@ -43,10 +47,15 @@ public class NeedsHistoryAutoConfigurationCondition extends SpringBootCondition 
   }
 
   protected boolean isHistoryAutoSupported() {
-    // FIXME see
-    // https://github.com/operaton/operaton-bpm-spring-boot-starter/issues/30
-    return false;
-    // return ReflectionUtils.findField(ProcessEngineConfiguration.class,
-    // historyAutoFieldName) != null;
+    Field historyAutoField = ReflectionUtils.findField(ProcessEngineConfiguration.class, historyAutoFieldName);
+    return Optional.ofNullable(historyAutoField).map(f -> {
+      try {
+        return f.get(null);
+      } catch (IllegalAccessException e) {
+        return null;
+      }
+    })
+      .map("auto"::equals)
+      .orElse(false);
   }
 }

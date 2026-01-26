@@ -110,8 +110,8 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected Integer maxPriority;
   protected String assignee;
   protected String assigneeLike;
-  protected Set<String> assigneeIn;
-  protected Set<String> assigneeNotIn;
+  private Set<String> assigneeIn;
+  private Set<String> assigneeNotIn;
   protected String involvedUser;
   protected String owner;
   protected Boolean unassigned;
@@ -121,7 +121,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String candidateUser;
   protected String candidateGroup;
   protected String candidateGroupLike;
-  protected List<String> candidateGroups;
+  private List<String> candidateGroups;
   protected Boolean withCandidateGroups;
   protected Boolean withoutCandidateGroups;
   protected Boolean withCandidateUsers;
@@ -147,7 +147,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String processInstanceBusinessKey;
   protected String[] processInstanceBusinessKeys;
   protected String processInstanceBusinessKeyLike;
-  protected List<TaskQueryVariableValue> variables = new ArrayList<>();
+  private List<TaskQueryVariableValue> variables = new ArrayList<>();
   protected Date dueDate;
   protected Date dueBefore;
   protected Date dueAfter;
@@ -178,11 +178,11 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
   protected String caseInstanceBusinessKeyLike;
   protected String caseExecutionId;
 
-  protected List<String> cachedCandidateGroups;
-  protected Map<String, List<String>> cachedUserGroups;
+  private List<String> cachedCandidateGroups;
+  private Map<String, List<String>> cachedUserGroups;
 
   // or query /////////////////////////////
-  protected List<TaskQueryImpl> queries = new ArrayList<>(List.of(this));
+  private List<TaskQueryImpl> queries = new ArrayList<>(List.of(this));
   protected boolean isOrQueryActive;
   protected boolean withCommentAttachmentInfo;
 

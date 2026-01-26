@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -119,7 +120,9 @@ class BpmnDeploymentTest {
     return new String(bytes);
   }
 
-  void FAILING_testViolateProcessDefinitionIdMaximumLength() {
+  @Test
+  @Disabled("Expected exception not thrown")
+  void testViolateProcessDefinitionIdMaximumLength() {
     // given
     DeploymentBuilder deployment = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/deployment/processWithLongId.bpmn20.xml");

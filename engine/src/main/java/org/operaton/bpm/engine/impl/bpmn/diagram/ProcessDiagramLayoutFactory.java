@@ -19,10 +19,12 @@ package org.operaton.bpm.engine.impl.bpmn.diagram;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.imageio.ImageIO;
 import javax.xml.parsers.DocumentBuilder;
@@ -43,6 +45,9 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.repository.DiagramElement;
 import org.operaton.bpm.engine.repository.DiagramLayout;
 import org.operaton.bpm.engine.repository.DiagramNode;
+
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * Provides positions and dimensions of elements in a process diagram as
@@ -132,11 +137,8 @@ public class ProcessDiagramLayoutFactory {
   }
 
   protected DiagramNode getDiagramBoundsFromBpmnDi(Document bpmnModel) {
-    Double minX = null;
-    Double minY = null;
-    Double maxX = null;
-    Double maxY = null;
-  
+    DiagramBounds bounds = new DiagramBounds();
+
     // Node positions and dimensions
     NodeList setOfBounds = bpmnModel.getElementsByTagNameNS(BpmnParser.BPMN_DC_NS, "Bounds");
     for (int i = 0; i < setOfBounds.getLength(); i++) {
@@ -145,51 +147,56 @@ public class ProcessDiagramLayoutFactory {
       Double y = Double.valueOf(element.getAttribute("y"));
       Double width = Double.valueOf(element.getAttribute("width"));
       Double height = Double.valueOf(element.getAttribute("height"));
-  
-      if (!(x == 0.0 && y == 0.0 && width == 0.0 && height == 0.0)) {
-        if (minX == null || x < minX) {
-          minX = x;
-        }
-        if (minY == null || y < minY) {
-          minY = y;
-        }
-        if (maxX == null || maxX < (x + width)) {
-          maxX = x + width;
-        }
-        if (maxY == null || maxY < (y + height)) {
-          maxY = y + height;
-        }
-      }
+
+      bounds.update(x, y, width, height);
     }
-  
+
     // Edge bend points
     NodeList waypoints = bpmnModel.getElementsByTagNameNS(BpmnParser.OMG_DI_NS, "waypoint");
     for (int i = 0; i < waypoints.getLength(); i++) {
       Element waypoint = (Element) waypoints.item(i);
       Double x = Double.valueOf(waypoint.getAttribute("x"));
       Double y = Double.valueOf(waypoint.getAttribute("y"));
-  
+      bounds.update(x, y);
+    }
+
+    DiagramNode diagramBounds = new DiagramNode("BPMNDiagram");
+    diagramBounds.setX(bounds.minX);
+    diagramBounds.setY(bounds.minY);
+    diagramBounds.setWidth(bounds.maxX - bounds.minX);
+    diagramBounds.setHeight(bounds.maxY - bounds.minY);
+    return diagramBounds;
+  }
+
+  private static class DiagramBounds {
+    Double minX;
+    Double minY;
+    Double maxX;
+    Double maxY;
+
+    public void update(Double x, Double y) {
+      update(x, y, 0.0, 0.0);
+    }
+
+    public void update(Double x, Double y, Double width, Double height) {
+      if (Stream.of(x, y, width, height).allMatch(value -> value == 0.0)) {
+        return;
+      }
       if (minX == null || x < minX) {
         minX = x;
       }
       if (minY == null || y < minY) {
         minY = y;
       }
-      if (maxX == null || maxX < x) {
-        maxX = x;
+      if (maxX == null || maxX < (x + width)) {
+        maxX = x + width;
       }
-      if (maxY == null || maxY < y) {
-        maxY = y;
+      if (maxY == null || maxY < (y + height)) {
+        maxY = y + height;
       }
     }
-  
-    DiagramNode diagramBounds = new DiagramNode("BPMNDiagram");
-    diagramBounds.setX(minX);
-    diagramBounds.setY(minY);
-    diagramBounds.setWidth(maxX - minX);
-    diagramBounds.setHeight(maxY - minY);
-    return diagramBounds;
   }
+
 
   protected DiagramNode getDiagramBoundsFromImage(InputStream imageStream) {
     return getDiagramBoundsFromImage(imageStream, 0, 0);
@@ -208,34 +215,30 @@ public class ProcessDiagramLayoutFactory {
   protected DiagramNode getDiagramBoundsFromImage(BufferedImage image, int offsetTop, int offsetBottom) {
     int width = image.getWidth();
     int height = image.getHeight();
-    
-    Map<Integer, Boolean> rowIsWhite = new TreeMap<>();
-    Map<Integer, Boolean> columnIsWhite = new TreeMap<>();
-    
+
+    Boolean[] rowIsWhite = new Boolean[height];
+    Arrays.fill(rowIsWhite, TRUE);
+    Boolean[] columnIsWhite = new Boolean[width];
+    Arrays.fill(columnIsWhite, TRUE);
+
     for (int row = 0; row < height; row++) {
-      if (!rowIsWhite.containsKey(row)) {
-        rowIsWhite.put(row, true);
-      }
       if (row <= offsetTop || row > image.getHeight() - offsetBottom) {
-        rowIsWhite.put(row, true);
-      } else {
-        for (int column = 0; column < width; column++) {
-          if (!columnIsWhite.containsKey(column)) {
-            columnIsWhite.put(column, true);
-          }
-          if (!isPixelWhite(image.getRGB(column, row))) {
-            rowIsWhite.put(row, false);
-            columnIsWhite.put(column, false);
-          }
+        continue;
+      }
+
+      for (int column = 0; column < width; column++) {
+        if (!isPixelWhite(image.getRGB(column, row))) {
+          rowIsWhite[row] = FALSE;
+          columnIsWhite[column] = FALSE;
         }
       }
     }
-  
-    int marginTop = findMarginTop(height, rowIsWhite);    
-    int marginLeft = findMarginLeft(width, columnIsWhite);    
-    int marginRight = findMarginRight(width, columnIsWhite);    
-    int marginBottom = findMarginBottom(height, rowIsWhite);
-    
+
+    int marginTop = findMargin(height, rowIsWhite, true);
+    int marginLeft = findMargin(width, columnIsWhite, true);
+    int marginRight = findMargin(width, columnIsWhite, false);
+    int marginBottom = findMargin(height, rowIsWhite, false);
+
     DiagramNode diagramBoundsImage = new DiagramNode();
     diagramBoundsImage.setX((double) marginLeft);
     diagramBoundsImage.setY((double) marginTop);
@@ -243,7 +246,7 @@ public class ProcessDiagramLayoutFactory {
     diagramBoundsImage.setHeight((double) (height - marginBottom - marginTop));
     return diagramBoundsImage;
   }
-  
+
   private boolean isPixelWhite(int pixel) {
     int alpha = (pixel >> 24) & 0xff;
     if (alpha == 0) {
@@ -256,56 +259,19 @@ public class ProcessDiagramLayoutFactory {
     return red >= GREY_THRESHOLD && green >= GREY_THRESHOLD && blue >= GREY_THRESHOLD;
 }
 
-  private int findMarginTop(int height, Map<Integer, Boolean> rowIsWhite) {
-    int marginTop = 0;
-    for (int row = 0; row < height; row++) {
-      if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
-        ++marginTop;
-      } else {
-        // Margin Top Found
-        break;
-      }
+  private int findMargin(int maxValue, Boolean[] valueIsWhite, boolean searchFromStart) {
+    int margin = 0;
+    if (searchFromStart) {
+      return (int) Arrays.stream(valueIsWhite, 0, maxValue)
+        .takeWhile(Boolean::booleanValue)
+        .count();
+    } else {
+      return (int) IntStream.range(0, maxValue)
+        .map(i -> maxValue - 1 - i)
+        .mapToObj(idx -> valueIsWhite[idx])
+        .takeWhile(Boolean::booleanValue)
+        .count();
     }
-    return marginTop;
-  }
-
-  private int findMarginLeft(int width, Map<Integer, Boolean> columnIsWhite) {
-    int marginLeft = 0;
-    for (int column = 0; column < width; column++) {
-      if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
-        ++marginLeft;
-      } else {
-        // Margin Left Found
-        break;
-      }
-    }
-    return marginLeft;
-  }
-  
-  private int findMarginRight(int width, Map<Integer, Boolean> columnIsWhite) {
-    int marginRight = 0;
-    for (int column = width - 1; column >= 0; column--) {
-      if (Boolean.TRUE.equals(columnIsWhite.get(column))) {
-        ++marginRight;
-      } else {
-        // Margin Right Found
-        break;
-      }
-    }
-    return marginRight;
-  }
-
-  private int findMarginBottom(int height, Map<Integer, Boolean> rowIsWhite) {
-    int marginBottom = 0;
-    for (int row = height -1; row >= 0; row--) {
-      if (Boolean.TRUE.equals(rowIsWhite.get(row))) {
-        ++marginBottom;
-      } else {
-        // Margin Bottom Found
-        break;
-      }
-    }
-    return marginBottom;
   }
 
   protected Map<String, DiagramNode> getElementBoundsFromBpmnDi(Document bpmnModel) {

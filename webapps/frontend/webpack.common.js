@@ -122,17 +122,22 @@ module.exports = (_env, argv = {}) => {
           type: 'asset/source',
         },
         {
-          test: /\.less$/i,
+          test: /\.s[ac]ss$/i, // Matches both .scss and .sass files
           use: [
             MiniCssExtractPlugin.loader,
             'css-loader',
             {
-              loader: 'less-loader',
+              loader: 'sass-loader',
               options: {
-                lessOptions: {
-                  globalVars: {
-                    'ce-banner-height': eeBuild ? '0' : '20px',
-                  },
+                // Optional: helps sass-loader handle modern Sass features
+                implementation: require('sass'),
+                additionalData: `$ce-banner-height: ${eeBuild ? '0' : '20px'};`,
+                sassOptions: {
+                  // This tells Sass to look inside the 'frontend' folder automatically
+                  includePaths: [path.resolve(__dirname, 'frontend')],
+                  //globalVars: {
+                  //  'ce-banner-height': eeBuild ? '0' : '20px',
+                  //},
                 },
               },
             },
@@ -234,6 +239,9 @@ module.exports = (_env, argv = {}) => {
       new webpack.ProvidePlugin({
         CAMUNDA_EDITION: eeBuild ? '"EE"' : '"CE"',
         DEV_MODE: devMode,
+        Popper: ['popper.js', 'default'],
+        $: 'jquery',
+        jQuery: 'jquery'
       }),
       new ESLintPlugin(),
     ],

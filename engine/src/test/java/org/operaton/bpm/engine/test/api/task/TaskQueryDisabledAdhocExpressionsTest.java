@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -130,37 +131,36 @@ public class TaskQueryDisabledAdhocExpressionsTest {
   }
 
   protected void executeAndValidateFailingQuery(TaskQuery query) {
-    try {
-      query.list();
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(query::list)
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
 
-    try {
-      query.count();
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(query::count)
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
   }
 
   protected void extendFilterAndValidateFailingQuery(Filter filter, TaskQuery query) {
-    try {
-      filterService.list(filter.getId(), query);
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // given
+    String filterId = filter.getId();
+
+    // when/then
+    assertThatThrownBy(() -> filterService.list(filterId, query))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
 
-    try {
-      filterService.count(filter.getId(), query);
-    } catch (BadUserRequestException e) {
-      testRule.assertTextPresent(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE, e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> filterService.count(filterId, query))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessageContaining(EXPECTED_ADHOC_QUERY_FAILURE_MESSAGE);
 
     assertThat(fieldIsUnchanged()).isTrue();
   }

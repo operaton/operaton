@@ -115,12 +115,6 @@
       <classifier>tests</classifier>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit6</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
       <scope>test</scope>

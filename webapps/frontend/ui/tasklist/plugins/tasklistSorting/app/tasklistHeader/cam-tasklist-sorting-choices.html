@@ -9,7 +9,7 @@
       on-toggle="openDropdown(index, open)"
       uib-dropdown>
     <a href
-       class="glyphicon glyphicon-remove-sign"
+       class="glyphicon glyphicon-remove"
        ng-if="sortings.length > 1"
        tabindex="0"
        ng-click="removeSorting(index)"
@@ -18,7 +18,7 @@
 
     <a href
        tabindex="0"
-       uib-dropdown-toggle class="dropdown-toggle">
+       uib-dropdown-toggle>
       <span class="sort-by">{{ byLabel(index) }}</span>
     </a>
 

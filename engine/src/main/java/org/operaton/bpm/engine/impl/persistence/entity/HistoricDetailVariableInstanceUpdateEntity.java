@@ -42,9 +42,9 @@ public class HistoricDetailVariableInstanceUpdateEntity extends HistoricVariable
   @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected TypedValueField typedValueField = new TypedValueField(this, false);
+  protected transient TypedValueField typedValueField = new TypedValueField(this, false);
 
-  protected ByteArrayField byteArrayField = new ByteArrayField(this, ResourceTypes.HISTORY);
+  protected transient ByteArrayField byteArrayField = new ByteArrayField(this, ResourceTypes.HISTORY);
 
   @Override
   public Object getValue() {

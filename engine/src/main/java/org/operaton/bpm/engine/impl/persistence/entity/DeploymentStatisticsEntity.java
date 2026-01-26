@@ -16,15 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.management.DeploymentStatistics;
 import org.operaton.bpm.engine.management.IncidentStatistics;
 
 public class DeploymentStatisticsEntity extends DeploymentEntity implements DeploymentStatistics {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected int instances;
   protected int failedJobs;

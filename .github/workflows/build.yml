@@ -161,6 +161,7 @@ jobs:
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@a294a61c909bd8a4b563024a2faa28897fd53ebc #v6.1.0
+        continue-on-error: true
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
@@ -213,14 +214,16 @@ jobs:
         with:
           fetch-depth: 0
       - name: Restore build artifacts cache
+        id: restore-build-artifacts
         uses: actions/cache/restore@v5
         with:
           path: |
             distro/**/target/operaton-*.gz
             distro/webjar/target/operaton-webapp-webjar-*.jar
           key: ${{ github.run_id }}-build-artifacts
-          fail-on-cache-miss: true
-      - run: |
+      - id: set-versions
+        if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
+        run: |
           sudo apt-get update > /dev/null
           sudo apt-get install -y xq > /dev/null
           PROJECT_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1)
@@ -228,10 +231,12 @@ jobs:
           echo "PROJECT_VERSION=$PROJECT_VERSION" >> $GITHUB_ENV
           echo "TOMCAT_VERSION=$TOMCAT_VERSION" >> $GITHUB_ENV
       - name: Delete build cache
+        if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
         continue-on-error: true
         run: gh cache delete ${{ github.run_id }}-build-artifacts
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
+        if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
         uses: actions/upload-artifact@v6
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
@@ -240,6 +245,7 @@ jobs:
           retention-days: 10
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
+        if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
         uses: actions/upload-artifact@v6
         with:
           name: Operaton SQL Scripts

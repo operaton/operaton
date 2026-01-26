@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.zip.ZipInputStream;
 
 import javax.sql.DataSource;
@@ -105,43 +106,50 @@ public class SpringTransactionsProcessEngineConfiguration extends ProcessEngineC
   }
 
   protected void autoDeployResources(ProcessEngine processEngine) {
-    if (deploymentResources!=null && deploymentResources.length>0) {
-      RepositoryService repositoryService = processEngine.getRepositoryService();
-
-      DeploymentBuilder deploymentBuilder = repositoryService
-        .createDeployment()
-        .enableDuplicateFiltering(deployChangedOnly)
-        .name(deploymentName)
-        .tenantId(deploymentTenantId);
-
-      for (Resource resource : deploymentResources) {
-        String resourceName = null;
-
-        if (resource instanceof ContextResource contextResource) {
-          resourceName = contextResource.getPathWithinContext();
-
-        } else if (resource instanceof ByteArrayResource) {
-          resourceName = resource.getDescription();
-
-        } else {
-          resourceName = getFileResourceName(resource);
-        }
-
-        try {
-          if ( resourceName.endsWith(".bar")
-               || resourceName.endsWith(".zip")
-               || resourceName.endsWith(".jar") ) {
-            deploymentBuilder.addZipInputStream(new ZipInputStream(resource.getInputStream()));
-          } else {
-            deploymentBuilder.addInputStream(resourceName, resource.getInputStream());
-          }
-        } catch (IOException e) {
-          throw new ProcessEngineException("couldn't auto deploy resource '%s': %s".formatted(resource, e.getMessage()), e);
-        }
-      }
-
-      deploymentBuilder.deploy();
+    if (deploymentResources == null || deploymentResources.length == 0) {
+      return;
     }
+
+    RepositoryService repositoryService = processEngine.getRepositoryService();
+
+    DeploymentBuilder deploymentBuilder = repositoryService
+      .createDeployment()
+      .enableDuplicateFiltering(deployChangedOnly)
+      .name(deploymentName)
+      .tenantId(deploymentTenantId);
+
+    for (Resource resource : deploymentResources) {
+      String resourceName = determineResourceName(resource);
+      tryAddInputStream(resource, resourceName, deploymentBuilder);
+    }
+
+    deploymentBuilder.deploy();
+  }
+
+  private String determineResourceName(Resource resource) {
+    if (resource instanceof ContextResource contextResource) {
+      return contextResource.getPathWithinContext();
+    } else if (resource instanceof ByteArrayResource) {
+      return resource.getDescription();
+    } else {
+      return getFileResourceName(resource);
+    }
+  }
+
+  private void tryAddInputStream(Resource resource, String resourceName, DeploymentBuilder deploymentBuilder) {
+    try {
+      if (resourceIsAnArchive(resourceName)) {
+        deploymentBuilder.addZipInputStream(new ZipInputStream(resource.getInputStream()));
+      } else {
+        deploymentBuilder.addInputStream(resourceName, resource.getInputStream());
+      }
+    } catch (IOException e) {
+      throw new ProcessEngineException("couldn't auto deploy resource '%s': %s".formatted(resource, e.getMessage()), e);
+    }
+  }
+
+  private boolean resourceIsAnArchive(String resourceName) {
+    return Stream.of(".bar", ".zip", ".jar").anyMatch(resourceName::endsWith);
   }
 
   protected String getFileResourceName(Resource resource) {

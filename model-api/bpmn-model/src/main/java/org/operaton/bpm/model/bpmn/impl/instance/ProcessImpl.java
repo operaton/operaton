@@ -57,7 +57,6 @@ public class ProcessImpl extends CallableElementImpl implements Process {
   protected static Attribute<ProcessType> processTypeAttribute;
   protected static Attribute<Boolean> isClosedAttribute;
   protected static Attribute<Boolean> isExecutableAttribute;
-  // TODO: definitionalCollaborationRef
   protected static ChildElement<Auditing> auditingChild;
   protected static ChildElement<Monitoring> monitoringChild;
   protected static ChildElementCollection<Property> propertyCollection;
@@ -94,8 +93,6 @@ public class ProcessImpl extends CallableElementImpl implements Process {
 
     isExecutableAttribute = typeBuilder.booleanAttribute(BPMN_ATTRIBUTE_IS_EXECUTABLE)
       .build();
-
-    // TODO: definitionalCollaborationRef
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

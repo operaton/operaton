@@ -150,6 +150,7 @@ import static org.mockito.Mockito.when;
  * @author Thorben Lindhauer
  *
  */
+@SuppressWarnings("deprecation")
 public abstract class MockProvider {
 
   public static final String FORMAT_APPLICATION_JSON = "application/json";

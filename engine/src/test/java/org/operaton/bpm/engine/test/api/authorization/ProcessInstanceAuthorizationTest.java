@@ -21,6 +21,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.AuthorizationException;
@@ -1228,10 +1229,9 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
-  /**
-   * currently the ThrowSignalEventActivityBehavior does not check authorization
-   */
-  public void FAILING_testStartProcessInstanceByThrowSignalEventWithCreatePermissionOnProcessInstance() {
+  @Test
+  @Disabled("currently the ThrowSignalEventActivityBehavior does not check authorization")
+  void testStartProcessInstanceByThrowSignalEventWithCreatePermissionOnProcessInstance() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
     createGrantAuthorization(PROCESS_DEFINITION, THROW_WARNING_SIGNAL_PROCESS_KEY, userId, CREATE_INSTANCE);
@@ -1259,10 +1259,9 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("task");
   }
 
-  /**
-   * currently the ThrowSignalEventActivityBehavior does not check authorization
-   */
-  public void FAILING_testThrowSignalEventWithoutAuthorization() {
+  @Test
+  @Disabled("currently the ThrowSignalEventActivityBehavior does not check authorization")
+  void testThrowSignalEventWithoutAuthorization() {
     // given
     createGrantAuthorization(PROCESS_INSTANCE, ANY, userId, CREATE);
     createGrantAuthorization(PROCESS_DEFINITION, THROW_ALERT_SIGNAL_PROCESS_KEY, userId, CREATE_INSTANCE);
@@ -5144,15 +5143,16 @@ class ProcessInstanceAuthorizationTest extends AuthorizationTest {
   // helper /////////////////////////////////////////////////////
 
   protected void verifyMessageIsValid(String processInstanceId, String message) {
-    testRule.assertTextPresent(userId, message);
-    testRule.assertTextPresent(UPDATE.getName(), message);
-    testRule.assertTextPresent(UPDATE_VARIABLE.getName(), message);
-    testRule.assertTextPresent(processInstanceId, message);
-    testRule.assertTextPresent(PROCESS_INSTANCE.resourceName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE.getName(), message);
-    testRule.assertTextPresent(UPDATE_INSTANCE_VARIABLE.getName(), message);
-    testRule.assertTextPresent(PROCESS_KEY, message);
-    testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), message);
+    assertThat(message)
+      .contains(userId)
+      .contains(UPDATE.getName())
+      .contains(UPDATE_VARIABLE.getName())
+      .contains(processInstanceId)
+      .contains(PROCESS_INSTANCE.resourceName())
+      .contains(UPDATE_INSTANCE.getName())
+      .contains(UPDATE_INSTANCE_VARIABLE.getName())
+      .contains(PROCESS_KEY)
+      .contains(PROCESS_DEFINITION.resourceName());
   }
 
   protected void verifyVariableInstanceCountDisabledAuthorization(int count) {

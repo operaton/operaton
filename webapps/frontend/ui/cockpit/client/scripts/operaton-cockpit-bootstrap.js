@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import 'ui/cockpit/client/styles/styles.less';
-import 'ui/cockpit/client/styles/styles-components.less';
+import 'ui/cockpit/client/styles/styles.scss';
+import 'ui/cockpit/client/styles/styles-components.scss';
 
 window.$ = window.jQuery = require('jquery');
 

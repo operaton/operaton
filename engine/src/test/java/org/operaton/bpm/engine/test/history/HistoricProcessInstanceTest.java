@@ -77,7 +77,6 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySo
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Tom Baeyens
@@ -477,24 +476,24 @@ class HistoricProcessInstanceTest {
 
   @Test
   void testHistoricProcessInstanceQueryWithIncidentMessageNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.incidentMessage(null);
-      fail("incidentMessage with null value is not allowed");
-    } catch( NullValueException nex ) {
-      assertThat(nex.getMessage()).isEqualTo("incidentMessage is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.incidentMessage(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessage("incidentMessage is null");
   }
 
   @Test
   void testHistoricProcessInstanceQueryWithIncidentMessageLikeNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.incidentMessageLike(null);
-      fail("incidentMessageLike with null value is not allowed");
-    } catch( NullValueException nex ) {
-      assertThat(nex.getMessage()).isEqualTo("incidentMessageLike is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.incidentMessageLike(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessage("incidentMessageLike is null");
   }
 
   @Test
@@ -586,17 +585,16 @@ class HistoricProcessInstanceTest {
     exludeIds.add("oneTaskProcess");
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey("oneTaskProcess").processDefinitionKeyNotIn(exludeIds).count()).isZero();
     assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKeyNotIn(exludeIds).count()).isZero();
+
+    // given
     var emptyProcessDefinitionKeys = List.of("");
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
 
-    try {
-      // oracle handles empty string like null which seems to lead to undefined behavior of the LIKE comparison
-      historicProcessInstanceQuery.processDefinitionKeyNotIn(emptyProcessDefinitionKeys);
-      fail("Exception expected");
-    }
-    catch (NotValidException e) {
-      assertThat(e.getMessage()).isEqualTo("processDefinitionKeys contains empty string");
-    }
+    // when/then
+    // oracle handles empty string like null which seems to lead to undefined behavior of the LIKE comparison
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processDefinitionKeyNotIn(emptyProcessDefinitionKeys))
+      .isInstanceOf(NotValidException.class)
+      .hasMessage("processDefinitionKeys contains empty string");
 
     // After finishing process
     taskService.complete(taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult().getId());
@@ -708,28 +706,25 @@ class HistoricProcessInstanceTest {
 
   @Test
   void testInvalidSorting() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.asc();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
-    }
 
-    try {
-      historicProcessInstanceQuery.desc();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
-    }
+    // when/then
+    assertThatThrownBy(historicProcessInstanceQuery::asc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
 
+    assertThatThrownBy(historicProcessInstanceQuery::desc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
+
+    // given
     var historicProcessInstanceQuery1 = historicProcessInstanceQuery.orderByProcessInstanceId();
-    try {
-      historicProcessInstanceQuery1.list();
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
-    }
+
+    // when/then
+    assertThatThrownBy(historicProcessInstanceQuery1::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
   }
 
   // ACT-1098
@@ -1557,24 +1552,24 @@ class HistoricProcessInstanceTest {
 
   @Test
   void testHistoricProcInstQueryWithExecutedActivityIdsNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.executedActivityIdIn((String[]) null);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.executedActivityIdIn((String[]) null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("activity ids is null");
   }
 
   @Test
   void testHistoricProcInstQueryWithExecutedActivityIdsContainNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.executedActivityIdIn(null, "1");
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids contains null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.executedActivityIdIn(null, "1"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("activity ids contains null");
   }
 
   @Test
@@ -1606,26 +1601,24 @@ class HistoricProcessInstanceTest {
 
   @Test
   void shouldFailWhenQueryByNullActivityId() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.activityIdIn((String) null);
-      fail("exception expected");
-    }
-    catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids contains null value");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.activityIdIn((String) null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("activity ids contains null value");
   }
 
   @Test
   void shouldFailWhenQueryByNullActivityIds() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.activityIdIn((String[]) null);
-      fail("exception expected");
-    }
-    catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.activityIdIn((String[]) null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("activity ids is null");
   }
 
   @Test
@@ -2088,24 +2081,24 @@ class HistoricProcessInstanceTest {
 
   @Test
   void testHistoricProcInstQueryWithActiveActivityIdsNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.activeActivityIdIn((String[]) null);
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.activeActivityIdIn((String[]) null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("activity ids is null");
   }
 
   @Test
   void testHistoricProcInstQueryWithActiveActivityIdsContainNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.activeActivityIdIn(null, "1");
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("activity ids contains null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.activeActivityIdIn(null, "1"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("activity ids contains null");
   }
 
   @Test
@@ -2284,13 +2277,13 @@ class HistoricProcessInstanceTest {
 
   @Test
   void shouldFailWhenQueryWithNullIncidentIdIn() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.incidentIdIn(null);
-      fail("incidentMessage with null value is not allowed");
-    } catch( NullValueException nex ) {
-      assertThat(nex.getMessage()).isEqualTo("incidentIds is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.incidentIdIn(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessage("incidentIds is null");
   }
 
   @Test

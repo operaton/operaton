@@ -104,12 +104,12 @@
         <div ng-if="ctrl.getLoadingState('selection') == 'LOADED'">
           <div class="row"
                ng-init="selection = ctrl.getSelection()">
-            <h3 class="col-xs-8">
+            <h3 class="col-8">
               <span ng-if="ctrl.getSelectionType() == 'history'">{{ 'BATCHES_PROGRESS_COMPLETED' | translate }}</span>
               <span ng-if="ctrl.getSelectionType() == 'runtime'">{{ 'BATCHES_PROGRESS_IN_PROGRESS' | translate }}</span> {{ 'BATCHES_PROGRESS_BATCH_DETAILS' | translate }}
             </h3>
 
-            <div class="col-xs-4 text-right">
+            <div class="col-4 text-right">
               <div class="btn-group batch-controls">
                 <a ng-if="ctrl.getSelectionType() == 'runtime' && !ctrl.getSuspendedState()"
                    ng-click="ctrl.toggleSuspension()"

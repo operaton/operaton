@@ -33,7 +33,7 @@ public class FormFieldValidatorException extends FormException {
   protected final String id;
   protected final String name;
   protected final String config;
-  protected final Object value;
+  protected final transient Object value;
 
   public FormFieldValidatorException(String id, String name, String config, Object value, String message,
       Throwable cause) {

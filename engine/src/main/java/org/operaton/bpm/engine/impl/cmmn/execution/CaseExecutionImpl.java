@@ -52,9 +52,9 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // current position /////////////////////////////////////////////////////////
 
-  protected List<CaseExecutionImpl> caseExecutions;
+  private List<CaseExecutionImpl> caseExecutions;
 
-  protected List<CaseSentryPartImpl> caseSentryParts;
+  private List<CaseSentryPartImpl> caseSentryParts;
 
   protected CaseExecutionImpl caseInstance;
 
@@ -70,7 +70,7 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   // variables ////////////////////////////////////////////////////////////////
 
-  protected VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
+  protected transient VariableStore<SimpleVariableInstance> variableStore = new VariableStore<>();
 
   // case definition id ///////////////////////////////////////////////////////
 

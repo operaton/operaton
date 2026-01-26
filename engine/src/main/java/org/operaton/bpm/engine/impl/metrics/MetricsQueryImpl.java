@@ -93,7 +93,7 @@ public class MetricsQueryImpl extends ListQueryParameterObject implements Serial
    * Note: this enables to quit with the enum distinction
    * </p>
    */
-  protected Command<Object> callback;
+  protected transient Command<Object> callback;
 
   @Override
   public List<MetricIntervalValue> interval() {

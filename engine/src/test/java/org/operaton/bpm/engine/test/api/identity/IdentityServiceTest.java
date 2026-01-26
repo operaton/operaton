@@ -56,7 +56,6 @@ import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProc
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -912,71 +911,70 @@ class IdentityServiceTest {
 
   @Test
   void testInvalidUserId() {
+    // given
     String invalidId = "john doe";
     User user = identityService.newUser(invalidId);
 
-    try {
-      identityService.saveUser(user);
-      fail("Invalid user id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidId));
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.saveUser(user))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("User", invalidId));
   }
 
   @Test
   void testInvalidUserIdOnSave() {
+    // given
     String invalidId = "john doe";
     User updatedUser = identityService.newUser("john");
     updatedUser.setId(invalidId);
-    try {
-      identityService.saveUser(updatedUser);
 
-      fail("Invalid user id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidId));
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.saveUser(updatedUser))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("User", invalidId));
   }
 
   @Test
   void testInvalidGroupId() {
+    // given
     String invalidId = "john's group";
     Group group = identityService.newGroup(invalidId);
-    try {
-      identityService.saveGroup(group);
-      fail("Invalid group id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidId));
-    }
+
+    // when/then
+    assertThatThrownBy(() -> identityService.saveGroup(group))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Group", invalidId));
   }
 
   @Test
   void testInvalidGroupIdOnSave() {
+    // given
     String invalidId = "john's group";
     Group updatedGroup = identityService.newGroup("group");
     updatedGroup.setId(invalidId);
-    try {
-      identityService.saveGroup(updatedGroup);
 
-      fail("Invalid group id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidId));
-    }
+    // when/then
+    assertThatThrownBy(() -> identityService.saveGroup(updatedGroup))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Group", invalidId));
   }
 
   @Test
   void testOperatonAdminId() {
+    // given
     String operatonAdminID = "operaton-admin";
-    try {
+
+    // when/then
+    assertThatCode(() -> {
       identityService.newUser(operatonAdminID);
       identityService.newGroup(operatonAdminID);
       identityService.newTenant(operatonAdminID);
-    } catch (ProcessEngineException ex) {
-      fail(operatonAdminID + " should be a valid id.");
-    }
+    }).doesNotThrowAnyException();
   }
 
   @Test
   void testCustomResourceWhitelist() {
+    // given
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.whitelist.operaton.cfg.xml")
       .setProcessEngineName(PROCESS_ENGINE_NAME)
@@ -990,33 +988,31 @@ class IdentityServiceTest {
 
     User user = processEngineIdentityService.newUser(invalidUserId);
 
-    try {
-      processEngineIdentityService.saveUser(user);
-      fail("Invalid user id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidUserId));
-    }
+    // when/then
+    assertThatThrownBy(() -> processEngineIdentityService.saveUser(user))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("User", invalidUserId));
 
+    // given
     Group johnsGroup = processEngineIdentityService.newGroup("johnsGroup");
 
-    try {
-      processEngineIdentityService.saveGroup(johnsGroup);
-      fail("Invalid group id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidGroupId));
-    }
+    // when/then
+    assertThatThrownBy(() -> processEngineIdentityService.saveGroup(johnsGroup))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Group", invalidGroupId));
 
+    // given
     Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
-    try {
-      processEngineIdentityService.saveTenant(tenant);
-      fail("Invalid tenant id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidTenantId));
-    }
+
+    // when/then
+    assertThatThrownBy(() -> processEngineIdentityService.saveTenant(tenant))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Tenant", invalidTenantId));
   }
 
   @Test
   void testSeparateResourceWhitelistPatterns() {
+    // given
     processEngine = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/api/identity/custom.resource.whitelist.operaton.cfg.xml")
       .setProcessEngineName(PROCESS_ENGINE_NAME)
@@ -1030,32 +1026,29 @@ class IdentityServiceTest {
 
     User user = processEngineIdentityService.newUser(invalidUserId);
 
+    // when/then
     // pattern: [a-zA-Z]+
-    try {
-      processEngineIdentityService.saveUser(user);
-      fail("Invalid user id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("User", invalidUserId));
-    }
+    assertThatThrownBy(() -> processEngineIdentityService.saveUser(user))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("User", invalidUserId));
 
+    // given
     Group group = processEngineIdentityService.newGroup(invalidGroupId);
 
+    // when/then
     // pattern: \d+
-    try {
-      processEngineIdentityService.saveGroup(group);
-      fail("Invalid group id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Group", invalidGroupId));
-    }
+    assertThatThrownBy(() -> processEngineIdentityService.saveGroup(group))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Group", invalidGroupId));
 
+    // given
     Tenant tenant = processEngineIdentityService.newTenant(invalidTenantId);
+
+    // when/then
     // new general pattern (used for tenant whitelisting): [a-zA-Z0-9]+
-    try {
-      processEngineIdentityService.saveTenant(tenant);
-      fail("Invalid tenant id exception expected!");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getMessage()).isEqualTo(INVALID_ID_MESSAGE.formatted("Tenant", invalidTenantId));
-    }
+    assertThatThrownBy(() -> processEngineIdentityService.saveTenant(tenant))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage(INVALID_ID_MESSAGE.formatted("Tenant", invalidTenantId));
   }
 
   @Test

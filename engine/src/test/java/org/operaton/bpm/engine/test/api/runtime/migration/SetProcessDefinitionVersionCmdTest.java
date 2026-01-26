@@ -51,7 +51,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -93,33 +93,21 @@ class SetProcessDefinitionVersionCmdTest {
 
   @Test
   void testSetProcessDefinitionVersionEmptyArguments() {
-    try {
-      new SetProcessDefinitionVersionCmd(null, 23);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("The process instance id is mandatory: processInstanceId is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> new SetProcessDefinitionVersionCmd(null, 23))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The process instance id is mandatory: processInstanceId is null");
 
-    try {
-      new SetProcessDefinitionVersionCmd("", 23);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("The process instance id is mandatory: processInstanceId is empty", ae.getMessage());
-    }
+    assertThatThrownBy(() -> new SetProcessDefinitionVersionCmd("", 23))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The process instance id is mandatory: processInstanceId is empty");
 
-    try {
-      new SetProcessDefinitionVersionCmd("42", null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("The process definition version is mandatory: processDefinitionVersion is null", ae.getMessage());
-    }
+    assertThatThrownBy(() -> new SetProcessDefinitionVersionCmd("42", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The process definition version is mandatory: processDefinitionVersion is null");
 
-    try {
-      new SetProcessDefinitionVersionCmd("42", -1);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("The process definition version must be positive: processDefinitionVersion is not greater than 0", ae.getMessage());
-    }
+    assertThatThrownBy(() -> new SetProcessDefinitionVersionCmd("42", -1))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The process definition version must be positive: processDefinitionVersion is not greater than 0");
   }
 
   @Test
@@ -127,18 +115,17 @@ class SetProcessDefinitionVersionCmdTest {
     // given
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     var setProcessDefinitionVersionCmd = new SetProcessDefinitionVersionCmd("42", 23);
-    try {
-      commandExecutor.execute(setProcessDefinitionVersionCmd);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("No process instance found for id = '42'.", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> commandExecutor.execute(setProcessDefinitionVersionCmd))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No process instance found for id = '42'.");
   }
 
   @Deployment(resources = {TEST_PROCESS_WITH_PARALLEL_GATEWAY})
   @Test
   void testSetProcessDefinitionVersionPIIsSubExecution() {
-    // start process instance
+    // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("forkJoin");
 
     Execution execution = runtimeService.createExecutionQuery()
@@ -146,29 +133,26 @@ class SetProcessDefinitionVersionCmdTest {
       .singleResult();
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     SetProcessDefinitionVersionCmd command = new SetProcessDefinitionVersionCmd(execution.getId(), 1);
-    try {
-      commandExecutor.execute(command);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("A process instance id is required, but the provided id '"+execution.getId()+"' points to a child execution of process instance '"+pi.getId()+"'. Please invoke the "+command.getClass().getSimpleName()+" with a root execution id.", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> commandExecutor.execute(command))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("A process instance id is required, but the provided id '"+execution.getId()+"' points to a child execution of process instance '"+pi.getId()+"'. Please invoke the "+command.getClass().getSimpleName()+" with a root execution id.");
   }
 
   @Deployment(resources = {TEST_PROCESS})
   @Test
   void testSetProcessDefinitionVersionNonExistingPD() {
-    // start process instance
+    // given
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("receiveTask");
 
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     var setProcessDefinitionVersionCmd = new SetProcessDefinitionVersionCmd(pi.getId(), 23);
 
-    try {
-      commandExecutor.execute(setProcessDefinitionVersionCmd);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("no processes deployed with key = 'receiveTask', version = '23'", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> commandExecutor.execute(setProcessDefinitionVersionCmd))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'receiveTask', version = '23'");
   }
 
   @Deployment(resources = {TEST_PROCESS})
@@ -190,15 +174,14 @@ class SetProcessDefinitionVersionCmdTest {
       .deploy();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
 
-    // migrate process instance to new process definition version
+    // when
     CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequired();
     SetProcessDefinitionVersionCmd setProcessDefinitionVersionCmd = new SetProcessDefinitionVersionCmd(pi.getId(), 2);
-    try {
-      commandExecutor.execute(setProcessDefinitionVersionCmd);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-       testRule.assertTextPresent("The new process definition (key = 'receiveTask') does not contain the current activity 'waitState1' of the process instance '", ae.getMessage());
-    }
+
+    // then
+    assertThatThrownBy(() -> commandExecutor.execute(setProcessDefinitionVersionCmd))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("The new process definition (key = 'receiveTask') does not contain the current activity 'waitState1' of the process instance '");
 
     // undeploy "manually" deployed process definition
     repositoryService.deleteDeployment(deployment.getId(), true);

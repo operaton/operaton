@@ -44,11 +44,6 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit6</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-rest</artifactId>
       <type>jar</type>
       <classifier>classes</classifier>

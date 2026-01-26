@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
-import java.io.Serial;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
@@ -38,8 +37,6 @@ import org.operaton.bpm.engine.impl.pvm.PvmScope;
  * @author Daniel Meyer
  */
 public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerEntity> {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected Expression description;
   protected TimerDeclarationType type;

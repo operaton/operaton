@@ -142,13 +142,13 @@ class InclusiveGatewayTest {
   @Deployment
   @Test
   void testNoSequenceFlowSelected() {
+    // given
     var variables = CollectionUtil.singletonMap("input", 4);
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveGwNoSeqFlowSelected", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-       testRule.assertTextPresent("ENGINE-02004 No outgoing sequence flow for the element with id 'inclusiveGw' could be selected for continuing the process.", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveGwNoSeqFlowSelected", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ENGINE-02004 No outgoing sequence flow for the element with id 'inclusiveGw' could be selected for continuing the process.");
   }
 
   /**
@@ -214,15 +214,15 @@ class InclusiveGatewayTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testDivergingInclusiveGateway.bpmn20.xml"})
   @Test
   void testUnknownVariableInExpression() {
+    // given
     var variables = CollectionUtil.singletonMap("iinput", 1);
     // Instead of 'input' we're starting a process instance with the name
     // 'iinput' (i.e. a typo)
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveGwDiverging", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-       testRule.assertTextPresent("Unknown property used in expression", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveGwDiverging", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Unknown property used in expression");
   }
 
   @Deployment
@@ -319,13 +319,13 @@ class InclusiveGatewayTest {
   @Deployment
   @Test
   void testInvalidMethodExpression() {
+    // given
     var variables = CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(50));
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveInvalidMethodExpression", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveInvalidMethodExpression", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Unknown method used in expression");
   }
 
   @Deployment

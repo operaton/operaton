@@ -44,7 +44,7 @@ public class CaseInstanceQueryImpl extends AbstractVariableQueryImpl<CaseInstanc
   protected String caseDefinitionId;
   protected String caseDefinitionKey;
   protected String deploymentId;
-  protected CaseExecutionState state;
+  protected transient CaseExecutionState state;
   protected String superProcessInstanceId;
   protected String subProcessInstanceId;
   protected String superCaseInstanceId;

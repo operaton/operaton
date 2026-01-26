@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import '../styles/styles.less';
+import '../styles/styles.scss';
 
 window.$ = window.jQuery = require('jquery');
 

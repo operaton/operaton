@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:8f2cb1f8-2a5a-48c6-9ced-cad726b0b83b",
+  "serialNumber": "urn:uuid:63d873b4-5782-442c-97c8-8b0a92775e63",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-24T07:05:13Z",
+    "timestamp": "2026-01-26T21:21:53Z",
     "tools": {
       "components": [
         {
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.25",
+      "version": "1.5.26",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ecd0a349fd799f57f28e52c3f713d479"
+          "content": "efb83be97c6b69c37cea9ed4adf30e57"
         },
         {
           "alg": "SHA-1",
-          "content": "20c4bbe98fb58f50ee1ca6befd7e7731f13a19d3"
+          "content": "b8d5680d89b36772e61a9963b338d5e2abd3465a"
         },
         {
           "alg": "SHA-256",
-          "content": "93163d85a0972e3d4813385af2d037bc94eed0542c4d74abc131830c84af070e"
+          "content": "3e84709b6a238c60f066e74ca40017dc1c72833f54655e0287cef690f5b2dd73"
         },
         {
           "alg": "SHA-512",
-          "content": "54d871eb375c98be429bdc05a960e54b382404012993a7d7da78f6ac713fa72c087e4ba625fcc3fcf8503c64b0ae277f448117f8c4589e7c0e4525f7e34e4b69"
+          "content": "231d7f78a1233929baa4288f1dbd1180e2903599f0ebc78ae1c0693cff2bab9a0b370f62cc8a40218868156c70c1697f6d27983cd89dbc403d282a949e088664"
         },
         {
           "alg": "SHA-384",
-          "content": "4aee9fcdbe168543119523bb3ef88bc05680acf9eacfc7506c2bc2fa14e893b41efb187b8afc255dea530827fda720ad"
+          "content": "eb6979de0cbd88244e2e96baa9211a90fa62f8b282675d5353aa39855fd7395bdc27726d09cc10f72b7ed24049a62266"
         },
         {
           "alg": "SHA3-384",
-          "content": "e03c4bc02790f4d3c46baf8cc91738e6d3b1244aa9c3a529360c89ba064246d8ef4f3e88a8dbace7b6a065939bfb7c88"
+          "content": "5c7944d9397182b201b5bc54a300dc71b71ef34d559186fe9205c111b2f64a33fec53344a2b2bc13b3054fff8fc8e0f5"
         },
         {
           "alg": "SHA3-256",
-          "content": "aa3579b643449ceaf889b788f9fc0d9ba383c8ced654decf7a08f01aedf4cadd"
+          "content": "54678dd436d898b15b2790b3c67c2f4b0e506f352fb84f47bdd55840f25a1555"
         },
         {
           "alg": "SHA3-512",
-          "content": "4e0c0cf616d700d0c0c60b894eb7245312f6389e61de74a02e8f09a38a38b6a5b1a7f72e24e1a2bd5ec946cd472407c1ac426bd7fff247ad30aea744bf382733"
+          "content": "f5a52a2e795b404ef43c6fdd7a3993aee4d4ca203d46aecc9395f309f41f46db15dbfcd1e2f28b1916952adb55e00b9f8f67b82fc368d3d1f615b8b37f735bae"
         }
       ],
       "licenses": [
@@ -309,7 +309,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -327,45 +327,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.25",
+      "version": "1.5.26",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6a1c2feb8e1ecb20417a4d0e74c9ad51"
+          "content": "dcf084908c69ac2d5c300f92157e906a"
         },
         {
           "alg": "SHA-1",
-          "content": "137f4ae0af7acaa0f9600a2ca18ddc9f3a0b899b"
+          "content": "d349b601e695b7d79b08454b81bb4f47bfc22164"
         },
         {
           "alg": "SHA-256",
-          "content": "aeb86d749936a960a1ec897aa821fe611ab6b105f1170ad334ae5eadc4bd689c"
+          "content": "08220d2a5cc9e35fc9ff0b7dbe1e86a9d9ca11e9b0c655aa34c7b63937678c5f"
         },
         {
           "alg": "SHA-512",
-          "content": "c9556c9ae438e8eb396f6be6ae5eb66c7403b291e7901bac37cb85eca8ed959e4b3ed98917351bbea32181e8a47c8ee66aa8c8114644d082f45e53cf2b92ed1f"
+          "content": "f3650ba90754425b7feb133f3822cfded4d90c25b68b10759b93b65b7d505a6179c1ab0a44b6afb3d9ed8fe37a673c76613486962f2af4f49bcd7dea38ae83e1"
         },
         {
           "alg": "SHA-384",
-          "content": "08c1981f61be52a85a1dbb25d9581537564546187339fec33a8f6fec1ead6a5bf56a721aeff98c67bc6fc038a3434f6f"
+          "content": "a45f7b354aa2914bacfe6e88922a4f8be663f9bf56fce880fa28601ec71e99990202801631c51671f736b338f6f93a30"
         },
         {
           "alg": "SHA3-384",
-          "content": "7f8bb7c37385d10125455a2c442ea902a62185d31cb7ea4adeb8d0f8f643df6dd66ecafc110db86e003a45fa2a942629"
+          "content": "0938bac87b786896cb14d214bd15f952b6ad666db10ccb03ac718f13451f80cf1a5b2c7a1a37c561e5f84c7471c611dc"
         },
         {
           "alg": "SHA3-256",
-          "content": "02a5e8558337d704a3fe8a5e5c9ed27cd7c9a887cf58959bd153c60033b06332"
+          "content": "5414e5de4b732fa9056a861a9e9b816206da3d997bccd649282b49b57e4a2f57"
         },
         {
           "alg": "SHA3-512",
-          "content": "4d05a893be8379221fe6b721511d86568ee12211ceabe19371dad114baf44a97ff2a773a55c68388618b353b1416821968dcabbe15b19ea25f772d8812bd388f"
+          "content": "85e2ccc63ef1be52c8326c2c835c9bf77cf596d87f72cba0e0c37dbc1402be1cefffdc497f045922be37caf3c272a4e5b80f2a5faab78cfa57850053b0f88a90"
         }
       ],
       "licenses": [
@@ -381,7 +381,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -399,44 +399,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "bom-ref": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "group": "org.assertj",
       "name": "assertj-core",
-      "version": "3.27.6",
+      "version": "3.27.7",
       "description": "Rich and fluent assertions for testing in Java",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "79563d5e0a3400a566b2105dde08b8e3"
+          "content": "9c893dc59af35a8beceb4166ad0602dc"
         },
         {
           "alg": "SHA-1",
-          "content": "8f34ccd6808899ad1d0aac6a770b73191f2f2a53"
+          "content": "2f4f64f054c9d618d4b1d89e7611559f5e2cfff7"
         },
         {
           "alg": "SHA-256",
-          "content": "b27872b049abc88e23c853ce5917945dd57d43bd31175d852e3941d2a6fd0231"
+          "content": "c4a445426c3c2861666863b842cc4ec7bbb1c4226fefd370b6d2fe83d6c4ff0f"
         },
         {
           "alg": "SHA-512",
-          "content": "4f5bf74bae003781141bd47066be6756e1c74ba48f8f412e2cd978a7585b013ff1f4672ce259d40dcd1e691a47102a1eab4ff5e2fc3120dc2272a96ff111fdd4"
+          "content": "adde16df9fd0b61d9b8cf4c28740b93a58d411300043258c594612d59e76321a42406f7847f5643baad8bddf08fb8b6ac6d6554c36739e8b1fa6ce35456f9d19"
         },
         {
           "alg": "SHA-384",
-          "content": "8d63fd48c68f4fd9e18edabecaf43bafdae1ffbca61da0e8484a9f6ada619dda794276f959482e7f91940ea336b3af37"
+          "content": "7da0353046fa08a2055c28f06bc7592cd97ae133aa633a0937d182d92c3d7372cf6617f5dbf2ed3dcedad260077bc278"
         },
         {
           "alg": "SHA3-384",
-          "content": "48eadf1ac0551770aadfd531380218ec7b31bf41e9ea136aca8adfc1445d1ff2c8d8cda257a4dd8bb593585f2fba112f"
+          "content": "8a992027bbe840a2098e08e56561344c2efdcaa4c1f39f70319a32e6b9bff1399c54a7f79f1f44b517929618de58a61d"
         },
         {
           "alg": "SHA3-256",
-          "content": "fad5f455b79606512cbf2d31f6711776e7c2cc1e98231e3b04808aaf25c1b0bf"
+          "content": "7b6f61a1dc618e07669b4510cc74c313a0aaa549c21f8787e909a903f6d6c90a"
         },
         {
           "alg": "SHA3-512",
-          "content": "5cf02af92fa38cd04eb4661f5e09a3e43bd00e18bd5e8b3c99cc0af283e6034624fcd54d2c743cdba86c7ad5de0923b46a9a997bad7caf58b4ded4ffa30d5c38"
+          "content": "c7d81d4037c39329fd29569115b77c20f38aa9a35c76ce631229c54f8f09428f5c1cb413bbc78e3cc1e09beb274016465ddd06b8e8c58c1ac9e8fb2d2f263676"
         }
       ],
       "licenses": [
@@ -447,7 +447,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "purl": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "externalReferences": [
         {
           "url": "https://assertj.github.io/doc/#assertj-core",
@@ -18837,6 +18837,191 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@1.1.0-SNAPSHOT?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm.qa",
+      "name": "operaton-qa-integration-tests-engine",
+      "version": "1.1.0-SNAPSHOT",
+      "description": "Operaton - QA Integration Tests - Engine",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@1.1.0-SNAPSHOT?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-engine",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-engine",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar",
+      "group": "org.operaton.bpm.jakartaee",
+      "name": "operaton-ejb-client",
+      "version": "1.1.0-SNAPSHOT",
+      "scope": "required",
+      "purl": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "publisher": "OW2",
+      "group": "org.ow2.asm",
+      "name": "asm",
+      "version": "9.7.1",
+      "description": "ASM, a very small and fast Java bytecode manipulation framework",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "e2cdd32d198ad31427d298eee9d39d8d"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "f0ed132a49244b042cd0e15702ab9f2ce3cc8436"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "4767b01603dad5c79cc1e2b5f3722f72b1059d928f184f446ba11badeb1b381b3a3a9a801cc43d25d396df950b09d19597c73173c411b1da890de808b94f1f50"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "166e2be10a19ca6a6d7cadb542eb1c948562483f02557b467a50a3d19d01318e12e5c3b495c482f3f5369be1b7f20eed"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "e301862376e84df61c3547dbf637252750224fb5b74feb82f20e1527a8e3152c45f620192a9111a2db5e2f0e73ebd7ca"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "7edcc4ff09b3ace15091a8c550f552a324b5cee6c1527944db5823df7eba8d64"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9d220edc5528e4d788605721490f3d29483dd4bd506765e85d781048419aa89b686a70e316b82ef2a856ead56bb7be6b5d52d77b7ca6f27d5e0e347e9669d731"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause",
+            "url": "https://opensource.org/licenses/BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://asm.ow2.io/",
+          "type": "website"
+        },
+        {
+          "url": "https://repository.ow2.org/nexus/service/local/staging/deploy/maven2",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://gitlab.ow2.org/asm/asm/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail.ow2.org/wws/arc/asm/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://gitlab.ow2.org/asm/asm/",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.datatype",
+      "name": "jackson-datatype-joda",
+      "version": "2.21.0",
+      "description": "Add-on module for Jackson (https://github.com/FasterXML/jackson) to support Joda (https://www.joda.org/joda-time/) data types.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "a6e9f6da2da0fd873b2a563b953a4c7e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "3e7311b8724759394ad167145a4485467d309e7e"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "b622f7a51f1f91f7bf0be97ac15e91c1b52e3b68b66013fce5f661e321281719"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "7544b487b2f8f897eb4fc56d8335c4bdbee935e0e40d0af67eec468c879018483f9c0ced317d7ca1b4ade718bfe180df8149cae01156e682daeda2a95d2fc608"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "dfab50fb0cb98dd0f1497963fa27591aa74dadc2163e2bc8c3330b336798ce2504619491d8e47176b9fbdfc0982695b5"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "15a7b761685546dbb48f974ff0d03c6f05ab80f4550ae4d4fc37a80095e665035cab3853aa5fb963081d015dbcaa2547"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "3c5a72a2298d3439d440603c1155289406bd8bb620f7be5cb968f89080c05d53"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "cff8189c58073d4cef9a6ae631ae5c8b6bf8a30e67a206e3d26c0ed466ac43933750f4df7b89ce89fa66b21de1560eea8a610a38a5bb8a6fb6835c3b83fab508"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson-datatype-joda",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-datatype-joda/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-datatype-joda",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@1.1.0-SNAPSHOT?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
@@ -19105,81 +19290,6 @@
         },
         {
           "url": "https://github.com/operaton/operaton/operaton-spin-dataformat-all",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
-      "publisher": "OW2",
-      "group": "org.ow2.asm",
-      "name": "asm",
-      "version": "9.7.1",
-      "description": "ASM, a very small and fast Java bytecode manipulation framework",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "e2cdd32d198ad31427d298eee9d39d8d"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "f0ed132a49244b042cd0e15702ab9f2ce3cc8436"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "4767b01603dad5c79cc1e2b5f3722f72b1059d928f184f446ba11badeb1b381b3a3a9a801cc43d25d396df950b09d19597c73173c411b1da890de808b94f1f50"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "166e2be10a19ca6a6d7cadb542eb1c948562483f02557b467a50a3d19d01318e12e5c3b495c482f3f5369be1b7f20eed"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "e301862376e84df61c3547dbf637252750224fb5b74feb82f20e1527a8e3152c45f620192a9111a2db5e2f0e73ebd7ca"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "7edcc4ff09b3ace15091a8c550f552a324b5cee6c1527944db5823df7eba8d64"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "9d220edc5528e4d788605721490f3d29483dd4bd506765e85d781048419aa89b686a70e316b82ef2a856ead56bb7be6b5d52d77b7ca6f27d5e0e347e9669d731"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-3-Clause",
-            "url": "https://opensource.org/licenses/BSD-3-Clause"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
-      "externalReferences": [
-        {
-          "url": "http://asm.ow2.io/",
-          "type": "website"
-        },
-        {
-          "url": "https://repository.ow2.org/nexus/service/local/staging/deploy/maven2",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://gitlab.ow2.org/asm/asm/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail.ow2.org/wws/arc/asm/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://gitlab.ow2.org/asm/asm/",
           "type": "vcs"
         }
       ]
@@ -21006,7 +21116,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "dfa5ad89-261c-4ce2-abb1-acdc5559dc44",
+      "bom-ref": "ebdeb1f2-0e15-497e-9fe1-ddee3f9ad2e0",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21741,6 +21851,24 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/%40popperjs/core@2.11.8",
+      "group": "@popperjs",
+      "name": "core",
+      "version": "2.11.8",
+      "purl": "pkg:npm/%40popperjs/core@2.11.8",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "@popperjs/core@2.11.8"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/%40types/trusted-types@2.0.7",
       "group": "@types",
       "name": "trusted-types",
@@ -21929,23 +22057,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/angular-ui-bootstrap@2.5.6",
-      "name": "angular-ui-bootstrap",
-      "version": "2.5.6",
-      "purl": "pkg:npm/angular-ui-bootstrap@2.5.6",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "angular-ui-bootstrap@2.5.6"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/angular@1.8.3",
       "name": "angular",
       "version": "1.8.3",
@@ -22048,14 +22159,31 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bootstrap@3.4.1",
-      "name": "bootstrap",
-      "version": "3.4.1",
-      "purl": "pkg:npm/bootstrap@3.4.1",
+      "bom-ref": "pkg:npm/bootstrap-icons@1.13.1",
+      "name": "bootstrap-icons",
+      "version": "1.13.1",
+      "purl": "pkg:npm/bootstrap-icons@1.13.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bootstrap@3.4.1"
+          "value": "bootstrap-icons@1.13.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/bootstrap@4.0.0",
+      "name": "bootstrap",
+      "version": "4.0.0",
+      "purl": "pkg:npm/bootstrap@4.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "bootstrap@4.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23646,23 +23774,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/jquery@4.0.0",
-      "name": "jquery",
-      "version": "4.0.0",
-      "purl": "pkg:npm/jquery@4.0.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "jquery@4.0.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/lezer-feel@1.9.0",
       "name": "lezer-feel",
       "version": "1.9.0",
@@ -24224,6 +24335,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/popper.js@1.16.1",
+      "name": "popper.js",
+      "version": "1.16.1",
+      "purl": "pkg:npm/popper.js@1.16.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "popper.js@1.16.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/preact@10.28.2",
       "name": "preact",
       "version": "10.28.2",
@@ -24666,6 +24794,23 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/ui-bootstrap4@3.0.7",
+      "name": "ui-bootstrap4",
+      "version": "3.0.7",
+      "purl": "pkg:npm/ui-bootstrap4@3.0.7",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "ui-bootstrap4@3.0.7"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/w3c-keyname@2.2.8",
       "name": "w3c-keyname",
       "version": "2.2.8",
@@ -24717,7 +24862,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "693b51f5-5b8e-4ec8-b0c5-f3f27641a393",
+      "bom-ref": "83b317b5-0691-468e-912f-fe68ccea11d4",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24812,7 +24957,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@1.1.0-SNAPSHOT?type=jar",
@@ -24820,7 +24965,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "ref": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "dependsOn": [
         "pkg:maven/net.bytebuddy/byte-buddy@1.17.8?type=jar"
       ]
@@ -24833,7 +24978,7 @@
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -24863,7 +25008,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -24871,7 +25016,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -24888,7 +25033,7 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.0?type=jar"
       ]
     },
@@ -24901,13 +25046,13 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@1.1.0-SNAPSHOT?type=pom",
       "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@1.1.0-SNAPSHOT?type=jar",
@@ -24918,7 +25063,7 @@
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -24928,7 +25073,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -24936,7 +25081,7 @@
       "dependsOn": [
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -24992,7 +25137,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@1.1.0-SNAPSHOT?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -25016,19 +25161,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
       "dependsOn": []
     },
     {
@@ -25186,7 +25331,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter@5.14.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@5.14.2?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.apache.ant/ant@1.10.15?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
@@ -25197,8 +25342,8 @@
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -26756,6 +26901,49 @@
       ]
     },
     {
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@1.1.0-SNAPSHOT?type=jar",
+      "dependsOn": [
+        "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar",
+        "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
+        "pkg:maven/jakarta.enterprise.concurrent/jakarta.enterprise.concurrent-api@3.0.1?type=jar",
+        "pkg:maven/jakarta.enterprise/jakarta.enterprise.cdi-api@4.0.1?type=jar",
+        "pkg:maven/jakarta.inject/jakarta.inject-api@2.0.1?type=jar",
+        "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.0.0?type=jar",
+        "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
+        "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-spring@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-core@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-core@1.1.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.springframework/spring-context@6.2.15?type=jar",
+        "pkg:maven/org.springframework/spring-jdbc@6.2.15?type=jar",
+        "pkg:maven/org.springframework/spring-tx@6.2.15?type=jar",
+        "pkg:maven/org.springframework/spring-orm@6.2.15?type=jar",
+        "pkg:maven/org.springframework/spring-web@6.2.15?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@1.1.0-SNAPSHOT?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
+      "dependsOn": [
+        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.0?type=jar"
+      ]
+    },
+    {
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar",
@@ -26766,7 +26954,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar"
       ]
     },
     {
@@ -26822,10 +27010,6 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
       "dependsOn": [
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.0?type=jar",
@@ -26853,7 +27037,7 @@
       "ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -26864,7 +27048,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@5.14.2?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar"
       ]
     },
     {
@@ -26877,7 +27061,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@1.1.0-SNAPSHOT?type=jar"
       ]
     },
@@ -27268,17 +27452,18 @@
       "dependsOn": []
     },
     {
-      "ref": "693b51f5-5b8e-4ec8-b0c5-f3f27641a393",
+      "ref": "83b317b5-0691-468e-912f-fe68ccea11d4",
       "dependsOn": [
-        "dfa5ad89-261c-4ce2-abb1-acdc5559dc44"
+        "ebdeb1f2-0e15-497e-9fe1-ddee3f9ad2e0"
       ]
     },
     {
-      "ref": "dfa5ad89-261c-4ce2-abb1-acdc5559dc44",
+      "ref": "ebdeb1f2-0e15-497e-9fe1-ddee3f9ad2e0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
         "pkg:npm/%40ibm/plex@6.4.1",
+        "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
         "pkg:npm/angular-cookies@1.8.3",
         "pkg:npm/angular-data-depend@1.0.0",
@@ -27289,9 +27474,9 @@
         "pkg:npm/angular-sanitize@1.8.3",
         "pkg:npm/angular-touch@1.8.3",
         "pkg:npm/angular-translate@2.19.1",
-        "pkg:npm/angular-ui-bootstrap@2.5.6",
         "pkg:npm/angular@1.8.3",
-        "pkg:npm/bootstrap@3.4.1",
+        "pkg:npm/bootstrap-icons@1.13.1",
+        "pkg:npm/bootstrap@4.0.0",
         "pkg:npm/bpmn-font@0.12.1",
         "pkg:npm/bpmn-js@18.10.1",
         "pkg:npm/camunda-dmn-js@3.6.0",
@@ -27311,14 +27496,16 @@
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.3.3",
         "pkg:npm/jquery-ui@1.13.2",
-        "pkg:npm/jquery@4.0.0",
+        "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
         "pkg:npm/moment@2.30.1",
         "pkg:npm/mousetrap@1.6.5",
+        "pkg:npm/popper.js@1.16.1",
         "pkg:npm/q@1.5.1",
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
-        "pkg:npm/superagent@10.3.0"
+        "pkg:npm/superagent@10.3.0",
+        "pkg:npm/ui-bootstrap4@3.0.7"
       ]
     },
     {
@@ -27634,6 +27821,10 @@
       ]
     },
     {
+      "ref": "pkg:npm/%40popperjs/core@2.11.8",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/%40types/trusted-types@2.0.7",
       "dependsOn": []
     },
@@ -27682,10 +27873,6 @@
       ]
     },
     {
-      "ref": "pkg:npm/angular-ui-bootstrap@2.5.6",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:npm/angular@1.8.3",
       "dependsOn": []
     },
@@ -27710,8 +27897,15 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bootstrap@3.4.1",
+      "ref": "pkg:npm/bootstrap-icons@1.13.1",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/bootstrap@4.0.0",
+      "dependsOn": [
+        "pkg:npm/jquery@3.7.1",
+        "pkg:npm/popper.js@1.16.1"
+      ]
     },
     {
       "ref": "pkg:npm/bpmn-font@0.12.1",
@@ -28346,10 +28540,6 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/jquery@4.0.0",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:npm/lezer-feel@1.9.0",
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
@@ -28521,6 +28711,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/popper.js@1.16.1",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/preact@10.28.2",
       "dependsOn": []
     },
@@ -28671,6 +28865,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/ui-bootstrap4@3.0.7",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/w3c-keyname@2.2.8",
       "dependsOn": []
     },
@@ -28684,6 +28882,1477 @@
     }
   ],
   "vulnerabilities": [
+    {
+      "id": "CVE-2018-14040",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "amazon"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "cbl-mariner"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 4.3,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:M/Au:N/C:N/I:P/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ruby-advisory-db"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
+        }
+      ],
+      "cwes": [
+        79
+      ],
+      "description": "In Bootstrap before 4.1.2, XSS is possible in the collapse data-parent attribute.",
+      "recommendation": "Upgrade bootstrap to version 4.1.2, 3.4.0",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2018-14040"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/152787/dotCMS-5.1.1-Vulnerable-Dependencies.html"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/156743/OctoberCMS-Insecure-Dependencies.html"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/10"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/11"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/13"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2018-14040"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2018/07/12/bootstrap-4-1-2"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2018/07/12/bootstrap-4-1-2/"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1376706"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1399546"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1406505"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1601614"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1601617"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1666907"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1668097"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1686454"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1695901"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1701972"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1706521"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1710171"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1721684"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1724433"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1732565"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1732981"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1777579"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1805541"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1817247"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1821851"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1822246"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1824939"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1824948"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1825998"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1828406"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1842734"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1842736"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1843537"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1845447"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1850004"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1854043"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1854959"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1855273"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1855319"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1856368"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1857933"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1861911"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1869893"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1871064"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1873235"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9251"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-10735"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14040"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14042"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10146"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10179"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10221"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11358"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-8331"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11022"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11023"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15720"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1721"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1935"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1938"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-25715"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25762"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2020-4670.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2020:4847"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-3wqf-4x89-9g79"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/bootstrap-sass/CVE-2018-14040.yml"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/bootstrap/CVE-2018-14040.yml"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap-rubygem/commit/f34c43c936ac7d0ebb129289321d8c51cd56aed1#diff-4e736e880b7fc39eb5e85576b629f6e3cd08f02f45104a7b4581f82852e97a81R1306"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/blob/v3.4.1/js/collapse.js#L140"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/blob/v3.4.1/js/scrollspy.js#L56"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/blob/v3.4.1/js/tooltip.js#L352"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/commit/149096016f70fd815540d62c0989fd99cdc809e0"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/commit/2a5ba23ce8f041f3548317acc992ed8a736b609d"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26423"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26625"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/pull/26630"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2018-14040.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2020-4847.html"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e%40%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e@%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc%40%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714%40%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714@%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26%40%3Ccommits.pulsar.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26@%3Ccommits.pulsar.apache.org%3E"
+        },
+        {
+          "url": "https://lists.debian.org/debian-lts-announce/2018/08/msg00027.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-14040"
+        },
+        {
+          "url": "https://seclists.org/bugtraq/2019/May/18"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2018-14040"
+        },
+        {
+          "url": "https://www.oracle.com/security-alerts/cpuApr2021.html"
+        },
+        {
+          "url": "https://www.tenable.com/security/tns-2021-14"
+        }
+      ],
+      "published": "2018-07-13T14:29:00Z",
+      "updated": "2024-11-21T03:48:29Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/bootstrap@4.0.0",
+          "versions": [
+            {
+              "version": "4.0.0",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2018-14041",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 4.3,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:M/Au:N/C:N/I:P/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "ruby-advisory-db"
+          },
+          "severity": "medium",
+          "method": "Null"
+        }
+      ],
+      "cwes": [
+        79
+      ],
+      "description": "In Bootstrap before 4.1.2, XSS is possible in the data-target property of scrollspy.",
+      "recommendation": "Upgrade bootstrap to version 4.1.2",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2018-14041"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/152787/dotCMS-5.1.1-Vulnerable-Dependencies.html"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/156743/OctoberCMS-Insecure-Dependencies.html"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/10"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/11"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/13"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2019:1456"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2018-14041"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2018/07/12/bootstrap-4-1-2"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2018/07/12/bootstrap-4-1-2/"
+        },
+        {
+          "url": "https://github.com/FriendsOfPHP/security-advisories/blob/master/typo3/cms-core/CVE-2018-14041.yaml"
+        },
+        {
+          "url": "https://github.com/FriendsOfPHP/security-advisories/blob/master/typo3/cms/CVE-2018-14041.yaml"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-pj7m-g53m-7638"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/bootstrap/CVE-2018-14041.yml"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/blob/v3.4.1/js/collapse.js#L140"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/commit/149096016f70fd815540d62c0989fd99cdc809e0"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26423"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26625"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26627"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26628"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/pull/26630"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e%40%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e@%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc%40%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714%40%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714@%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.debian.org/debian-lts-announce/2018/08/msg00027.html"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-14041"
+        },
+        {
+          "url": "https://seclists.org/bugtraq/2019/May/18"
+        },
+        {
+          "url": "https://typo3.org/security/advisory/typo3-core-sa-2019-006"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2018-14041"
+        },
+        {
+          "url": "https://www.oracle.com/security-alerts/cpuApr2021.html"
+        },
+        {
+          "url": "https://www.tenable.com/security/tns-2021-14"
+        }
+      ],
+      "published": "2018-07-13T14:29:00Z",
+      "updated": "2024-11-21T03:48:29Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/bootstrap@4.0.0",
+          "versions": [
+            {
+              "version": "4.0.0",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2018-14042",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "amazon"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 4.3,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:M/Au:N/C:N/I:P/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ruby-advisory-db"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
+        }
+      ],
+      "cwes": [
+        79
+      ],
+      "description": "In Bootstrap before 4.1.2, XSS is possible in the data-container property of tooltip.",
+      "recommendation": "Upgrade bootstrap to version 4.1.2, 3.4.0",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2018-14042"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/156743/OctoberCMS-Insecure-Dependencies.html"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/10"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/11"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/13"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2018-14042"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2018/07/12/bootstrap-4-1-2"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2018/07/12/bootstrap-4-1-2/"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1376706"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1399546"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1406505"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1601614"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1601617"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1666907"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1668097"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1686454"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1695901"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1701972"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1706521"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1710171"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1721684"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1724433"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1732565"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1732981"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1777579"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1805541"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1817247"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1821851"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1822246"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1824939"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1824948"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1825998"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1828406"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1842734"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1842736"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1843537"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1845447"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1850004"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1854043"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1854959"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1855273"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1855319"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1856368"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1857933"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1861911"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1869893"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1871064"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1873235"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9251"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-10735"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14040"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14042"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10146"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10179"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10221"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11358"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-8331"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11022"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11023"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15720"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1721"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1935"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1938"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-25715"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25762"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2020-4670.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2020:4847"
+        },
+        {
+          "url": "https://github.com/advisories/GHSA-7mvr-5x2g-wfc8"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/bootstrap-sass/CVE-2018-14042.yml"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/bootstrap/CVE-2018-14042.yml"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/commit/2a5ba23ce8f041f3548317acc992ed8a736b609d"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/commit/2d90d369bbc2bd2647620246c55cec8c4705e3d0"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26423"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26428"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/issues/26628"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/pull/26630"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2018-14042.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2020-4847.html"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e%40%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e@%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc%40%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714%40%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714@%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26%40%3Ccommits.pulsar.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26@"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26@%3Ccommits.pulsar.apache.org%3E"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-14042"
+        },
+        {
+          "url": "https://seclists.org/bugtraq/2019/May/18"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2018-14042"
+        },
+        {
+          "url": "https://www.oracle.com/security-alerts/cpuApr2021.html"
+        },
+        {
+          "url": "https://www.tenable.com/security/tns-2021-14"
+        }
+      ],
+      "published": "2018-07-13T14:29:00Z",
+      "updated": "2024-11-21T03:48:29Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/bootstrap@4.0.0",
+          "versions": [
+            {
+              "version": "4.0.0",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2019-8331",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "alma"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "amazon"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 4.3,
+          "severity": "medium",
+          "method": "CVSSv2",
+          "vector": "AV:N/AC:M/Au:N/C:N/I:P/A:N"
+        },
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "oracle-oval"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv3",
+          "vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "rocky"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ruby-advisory-db"
+          },
+          "severity": "medium",
+          "method": "Null"
+        },
+        {
+          "source": {
+            "name": "ubuntu"
+          },
+          "severity": "medium",
+          "method": "Null"
+        }
+      ],
+      "cwes": [
+        79
+      ],
+      "description": "In Bootstrap before 3.4.1 and 4.3.x before 4.3.1, XSS is possible in the tooltip or popover data-template attribute.",
+      "recommendation": "Upgrade bootstrap to version 4.3.1, 3.4.1",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2019-8331"
+        },
+        {
+          "url": "http://packetstormsecurity.com/files/156743/OctoberCMS-Insecure-Dependencies.html"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/10"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/11"
+        },
+        {
+          "url": "http://seclists.org/fulldisclosure/2019/May/13"
+        },
+        {
+          "url": "http://www.securityfocus.com/bid/107375"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2019:1456"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2019:3023"
+        },
+        {
+          "url": "https://access.redhat.com/errata/RHSA-2019:3024"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2019-8331"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2019/02/13/bootstrap-4-3-1-and-3-4-1"
+        },
+        {
+          "url": "https://blog.getbootstrap.com/2019/02/13/bootstrap-4-3-1-and-3-4-1/"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1376706"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1399546"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1406505"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1601614"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1601617"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1666907"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1668097"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1686454"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1695901"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1701972"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1706521"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1710171"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1721684"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1724433"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1732565"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1732981"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1777579"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1805541"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1817247"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1821851"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1822246"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1824939"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1824948"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1825998"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1828406"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1842734"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1842736"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1843537"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1845447"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1850004"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1854043"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1854959"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1855273"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1855319"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1856368"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1857933"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1861911"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1869893"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1871064"
+        },
+        {
+          "url": "https://bugzilla.redhat.com/show_bug.cgi?id=1873235"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-9251"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-10735"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14040"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-14042"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10146"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10179"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-10221"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-11358"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-8331"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11022"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-11023"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-15720"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1721"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1935"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-1938"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-25715"
+        },
+        {
+          "url": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-25762"
+        },
+        {
+          "url": "https://errata.almalinux.org/8/ALSA-2020-4670.html"
+        },
+        {
+          "url": "https://errata.rockylinux.org/RLSA-2020:4847"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/bootstrap/CVE-2019-8331.yml"
+        },
+        {
+          "url": "https://github.com/rubysec/ruby-advisory-db/blob/master/gems/twitter-bootstrap-rails/CVE-2019-8331.yml"
+        },
+        {
+          "url": "https://github.com/seyhunak/twitter-bootstrap-rails/tree/master/app/assets/javascripts/twitter/bootstrap"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap-sass/releases/tag/v3.4.1"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/pull/28236"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/releases/tag/v3.4.1"
+        },
+        {
+          "url": "https://github.com/twbs/bootstrap/releases/tag/v4.3.1"
+        },
+        {
+          "url": "https://linux.oracle.com/cve/CVE-2019-8331.html"
+        },
+        {
+          "url": "https://linux.oracle.com/errata/ELSA-2020-4847.html"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/10f0f3aefd51444d1198c65f44ffdf2d78ca3359423dbc1c168c9731%40%3Cdev.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/10f0f3aefd51444d1198c65f44ffdf2d78ca3359423dbc1c168c9731@%3Cdev.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/17ff53f7999e74fbe3cc0ceb4e1c3b00b180b7c5afec8e978837bc49%40%3Cuser.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/17ff53f7999e74fbe3cc0ceb4e1c3b00b180b7c5afec8e978837bc49@%3Cuser.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/519eb0fd45642dcecd9ff74cb3e71c20a4753f7d82e2f07864b5108f@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52bafac05ad174000ea465fe275fd3cc7bd5c25535a7631c0bc9bfb2%40%3Cuser.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52bafac05ad174000ea465fe275fd3cc7bd5c25535a7631c0bc9bfb2@%3Cuser.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e%40%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/52e0e6b5df827ee7f1e68f7cc3babe61af3b2160f5d74a85469b7b0e@%3Cdev.superset.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/54df3aeb4239b64b50b356f0ca6f986e3c4ca5b84c515dce077c7854%40%3Cuser.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/54df3aeb4239b64b50b356f0ca6f986e3c4ca5b84c515dce077c7854@%3Cuser.flink.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442%40%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/b0656d359c7d40ec9f39c8cc61bca66802ef9a2a12ee199f5b0c1442@%3Cdev.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc%40%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/f9bc3e55f4e28d1dcd1a69aae6d53e609a758e34d2869b4d798e13cc@%3Cissues.drill.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714%40%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/r3dc0cac8d856bca02bd6997355d7ff83027dcfc82f8646a29b89b714@%3Cissues.hbase.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26%40%3Ccommits.pulsar.apache.org%3E"
+        },
+        {
+          "url": "https://lists.apache.org/thread.html/rd0e44e8ef71eeaaa3cf3d1b8b41eb25894372e2995ec908ce7624d26@%3Ccommits.pulsar.apache.org%3E"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-8331"
+        },
+        {
+          "url": "https://seclists.org/bugtraq/2019/May/18"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K24383845"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K24383845?utm_source=f5support\u0026amp%3Butm_medium=RSS"
+        },
+        {
+          "url": "https://support.f5.com/csp/article/K24383845?utm_source=f5support\u0026amp;utm_medium=RSS"
+        },
+        {
+          "url": "https://web.archive.org/web/20200227083900/http://www.securityfocus.com/bid/107375"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2019-8331"
+        },
+        {
+          "url": "https://www.oracle.com/security-alerts/cpuApr2021.html"
+        },
+        {
+          "url": "https://www.tenable.com/security/tns-2021-14"
+        }
+      ],
+      "published": "2019-02-20T16:29:00Z",
+      "updated": "2024-11-21T04:49:42Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/bootstrap@4.0.0",
+          "versions": [
+            {
+              "version": "4.0.0",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
     {
       "id": "CVE-2022-25844",
       "source": {
@@ -29412,90 +31081,6 @@
       ]
     },
     {
-      "id": "CVE-2024-6485",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "cbl-mariner"
-          },
-          "severity": "medium",
-          "method": "Null"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 6.4,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 6.4,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "ubuntu"
-          },
-          "severity": "medium",
-          "method": "Null"
-        }
-      ],
-      "cwes": [
-        79
-      ],
-      "description": "A security vulnerability has been discovered in bootstrap that could enable Cross-Site Scripting (XSS) attacks. The vulnerability is associated with the data-loading-text attribute within the button plugin. This vulnerability can be exploited by injecting malicious JavaScript code into the attribute, which would then be executed when the button\u0027s loading state is triggered.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2024-6485"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2024-6485"
-        },
-        {
-          "url": "https://github.com/twbs/bootstrap"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/04/msg00020.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-6485"
-        },
-        {
-          "url": "https://ubuntu.com/security/notices/USN-7556-1"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2024-6485"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2024-6485"
-        }
-      ],
-      "published": "2024-07-11T17:15:17Z",
-      "updated": "2025-11-03T20:17:03Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/bootstrap@3.4.1",
-          "versions": [
-            {
-              "version": "3.4.1",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "id": "CVE-2024-8372",
       "source": {
         "name": "ghsa",
@@ -29759,80 +31344,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2025-1647",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "amazon"
-          },
-          "severity": "medium",
-          "method": "Null"
-        },
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 5.6,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 5.6,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L"
-        }
-      ],
-      "cwes": [
-        79
-      ],
-      "description": "Improper Neutralization of Input During Web Page Generation (XSS or \u0027Cross-site Scripting\u0027) vulnerability in Bootstrap allows Cross-Site Scripting (XSS).This issue affects Bootstrap: from 3.4.1 before 4.0.0.",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2025-1647"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2025-1647"
-        },
-        {
-          "url": "https://github.com/twbs/bootstrap"
-        },
-        {
-          "url": "https://lists.debian.org/debian-lts-announce/2025/06/msg00001.html"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-1647"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2025-1647"
-        },
-        {
-          "url": "https://www.herodevs.com/vulnerability-directory/cve-2025-1647"
-        }
-      ],
-      "published": "2025-05-15T17:15:47Z",
-      "updated": "2025-06-01T11:15:20Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/bootstrap@3.4.1",
-          "versions": [
-            {
-              "version": "3.4.1",
               "status": "affected"
             }
           ]

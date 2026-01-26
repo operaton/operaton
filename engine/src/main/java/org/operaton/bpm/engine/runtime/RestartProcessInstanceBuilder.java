@@ -71,14 +71,13 @@ public interface RestartProcessInstanceBuilder extends InstantiationBuilder<Rest
   RestartProcessInstanceBuilder skipIoMappings();
 
   /**
-   * Executes the restart synchronously.
+   * Executes the restart synchronously. Consider to use the batch operation {@link #executeAsync()} instead
+   *
    * @throws BadUserRequestException
    *   When the affected instances count exceeds the maximum results limit. A maximum results
    *   limit can be specified with the process engine configuration property
    *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
-   *  @deprecated Use the batch operation {@link #executeAsync()} instead.
    */
-  @Deprecated(forRemoval = true, since = "1.0")
   void execute();
 
   /**

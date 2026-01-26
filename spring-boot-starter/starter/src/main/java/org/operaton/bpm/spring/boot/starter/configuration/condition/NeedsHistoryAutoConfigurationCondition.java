@@ -55,7 +55,7 @@ public class NeedsHistoryAutoConfigurationCondition extends SpringBootCondition 
         return null;
       }
     })
-      .map(value -> "auto" .equals(value))
+      .map("auto"::equals)
       .orElse(false);
   }
 }

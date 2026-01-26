@@ -638,7 +638,6 @@ class SignalEventTest {
     // then there is a process instance
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
     assertThat(processInstance).isNotNull();
-//    assertEquals(catchingProcessDefinition.getId(), processInstance.getProcessDefinitionId());
 
     // and a task
     assertThat(taskService.createTaskQuery().count()).isOne();

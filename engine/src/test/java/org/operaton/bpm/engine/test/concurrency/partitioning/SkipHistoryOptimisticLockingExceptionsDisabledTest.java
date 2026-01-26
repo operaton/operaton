@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.HistoricVariableInstanceE
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Tassilo Weidner
@@ -64,7 +65,8 @@ class SkipHistoryOptimisticLockingExceptionsDisabledTest extends AbstractPartiti
     asyncThread.waitUntilDone();
 
     // then
-    testRule.assertTextPresent("Entity was updated by another transaction concurrently", asyncThread.getException().getMessage());
+    assertThat(asyncThread.getException())
+      .hasMessageContaining("Entity was updated by another transaction concurrently");
   }
 
   public class AsyncThread extends ControllableCommand<Void> {

@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -140,13 +141,13 @@ class CompetingActivityInstanceCancellationTest {
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertThat(threadTwo.exception).isNotNull();
-    testRule.assertTextPresent("was updated by another transaction concurrently", threadTwo.exception.getMessage());
+    assertThat(threadTwo.exception).isNotNull()
+      .hasMessageContaining("was updated by another transaction concurrently");
 
     LOG.debug("test thread notifies thread 3");
     threadThree.proceedAndWaitTillDone();
-    assertThat(threadThree.exception).isNotNull();
-    testRule.assertTextPresent("was updated by another transaction concurrently", threadThree.exception.getMessage());
+    assertThat(threadThree.exception).isNotNull()
+      .hasMessageContaining("was updated by another transaction concurrently");
   }
 
 }

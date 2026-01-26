@@ -72,9 +72,9 @@ public interface MigrationPlanExecutionBuilder {
    *   When the affected instances count exceeds the maximum results limit. A maximum results
    *   limit can be specified with the process engine configuration property
    *   <code>queryMaxResultsLimit</code> (default {@link Integer#MAX_VALUE}).
-   *  @deprecated Use the batch operation {@link #executeAsync()} instead.
+   *  @deprecated Use the batch operation {@link #executeAsync()} instead. Use this method only in tests.
    */
-  @Deprecated(forRemoval = true, since = "1.0")
+  @Deprecated(since = "1.0")
   void execute();
 
   /**

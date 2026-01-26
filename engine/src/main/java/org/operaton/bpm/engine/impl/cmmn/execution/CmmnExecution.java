@@ -641,35 +641,40 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       }
     }
 
-    if (ifPart != null) {
-
-      CmmnExecution execution = ifPart.getCaseExecution();
-      ensureNotNull("Case execution of sentry '%s': is null".formatted(ifPart.getSentryId()), execution);
-
-      CmmnActivity cmmnActivity = ifPart.getCaseExecution().getActivity();
-      ensureNotNull("Case execution '%s': has no current activity".formatted(id), "activity", cmmnActivity);
-
-      CmmnSentryDeclaration sentryDeclaration = cmmnActivity.getSentry(sentryId);
-      ensureNotNull("Case execution '%s': has no declaration for sentry '%s'".formatted(id, sentryId), "sentryDeclaration", sentryDeclaration);
-
-      CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
-      ensureNotNull("Sentry declaration '%s' has no defined ifPart, but there should be one defined for case execution '%s'.".formatted(sentryId, id), "ifPartDeclaration", ifPartDeclaration);
-
-      Expression condition = ifPartDeclaration.getCondition();
-      ensureNotNull("A condition was expected for ifPart of Sentry declaration '%s' for case execution '%s'.".formatted(sentryId, id), "condition", condition);
-
-      Object result = condition.getValue(this);
-      ensureInstanceOf("condition expression returns non-Boolean", "result", result, Boolean.class);
-
-      Boolean booleanResult = (Boolean) result;
-      ifPart.setSatisfied(booleanResult);
-      return booleanResult;
-
-    }
-
     // if all onParts are satisfied and there is no
     // ifPart then the whole sentry is satisfied.
-    return true;
+    if (ifPart == null) {
+      return true;
+    }
+
+    // therefore evaluate the ifPart
+    Boolean booleanResult = isIfPartSatisfied(sentryId, ifPart);
+    ifPart.setSatisfied(booleanResult);
+    return booleanResult;
+  }
+
+  private Boolean isIfPartSatisfied(String sentryId, CmmnSentryPart ifPart) {
+    CmmnExecution execution = ifPart.getCaseExecution();
+    ensureNotNull("Case execution of sentry '%s': is null".formatted(ifPart.getSentryId()), execution);
+
+    CmmnActivity cmmnActivity = ifPart.getCaseExecution().getActivity();
+    ensureNotNull("Case execution '%s': has no current activity".formatted(id), "activity", cmmnActivity);
+
+    CmmnSentryDeclaration sentryDeclaration = cmmnActivity.getSentry(sentryId);
+    ensureNotNull("Case execution '%s': has no declaration for sentry '%s'".formatted(id, sentryId), "sentryDeclaration", sentryDeclaration);
+
+    CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
+    ensureNotNull("Sentry declaration '%s' has no defined ifPart, but there should be one defined for case execution '%s'.".formatted(
+        sentryId, id), "ifPartDeclaration", ifPartDeclaration);
+
+    Expression condition = ifPartDeclaration.getCondition();
+    ensureNotNull("A condition was expected for ifPart of Sentry declaration '%s' for case execution '%s'.".formatted(
+        sentryId, id), "condition", condition);
+
+    Object result = condition.getValue(this);
+    ensureInstanceOf("condition expression returns non-Boolean", "result", result, Boolean.class);
+
+    return (Boolean) result;
   }
 
   protected boolean containsIfPartAndExecutionActive(String sentryId, Map<String,List<CmmnSentryPart>> sentries) {

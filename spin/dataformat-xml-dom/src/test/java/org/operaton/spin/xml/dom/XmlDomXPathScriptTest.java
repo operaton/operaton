@@ -33,6 +33,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOf
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings({"java:S4144", "java:S5976"}) // tests are different by expression in @Script annotation
 public abstract class XmlDomXPathScriptTest extends ScriptTest {
 
   private static final String XML = "<root><child id=\"child\"><a id=\"a\"/><b id=\"b\"/><a id=\"c\"/></child></root>";

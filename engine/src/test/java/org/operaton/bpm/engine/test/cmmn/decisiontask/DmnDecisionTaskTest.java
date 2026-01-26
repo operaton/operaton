@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -203,13 +203,10 @@ class DmnDecisionTaskTest extends CmmnTest {
     var caseExecutionCommandBuilder = caseService
         .withCaseExecution(decisionTaskId);
 
-    try {
-      // when
-      caseExecutionCommandBuilder.manualStart();
-      fail("It should not be possible to evaluate a not existing decision.");
-    } catch (DecisionDefinitionNotFoundException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'testDecision'");
-    }
+    // when/then
+    assertThatThrownBy(caseExecutionCommandBuilder::manualStart)
+      .isInstanceOf(DecisionDefinitionNotFoundException.class)
+      .hasMessageContaining("no decision definition deployed with key 'testDecision'");
   }
 
   @Deployment(resources = {

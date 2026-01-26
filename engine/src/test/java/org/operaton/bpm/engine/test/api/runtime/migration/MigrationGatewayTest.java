@@ -32,7 +32,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -244,21 +244,21 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("join",
-        "Activities have incompatible types "
-        + "(ParallelGatewayActivityBehavior is not compatible with InclusiveGatewayActivityBehavior)"
-      );
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("join",
+            "Activities have incompatible types "
+            + "(ParallelGatewayActivityBehavior is not compatible with InclusiveGatewayActivityBehavior)"
+          );
+      });
   }
 
   @Test
@@ -266,21 +266,21 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("join",
-        "Activities have incompatible types "
-        + "(InclusiveGatewayActivityBehavior is not compatible with ParallelGatewayActivityBehavior)"
-      );
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("join",
+            "Activities have incompatible types "
+            + "(InclusiveGatewayActivityBehavior is not compatible with ParallelGatewayActivityBehavior)"
+          );
+      });
   }
 
   /**
@@ -293,20 +293,20 @@ class MigrationGatewayTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(GatewayModels.PARALLEL_GW)
         .removeFlowNode("parallel2"));
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("join",
-        "The target gateway must have at least the same number of incoming sequence flows that the source gateway has"
-      );
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("join",
+            "The target gateway must have at least the same number of incoming sequence flows that the source gateway has"
+          );
+      });
   }
 
   /**
@@ -361,20 +361,20 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW_IN_SUBPROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("join",
-        "The gateway's flow scope 'subProcess' must be mapped"
-      );
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("join",
+            "The gateway's flow scope 'subProcess' must be mapped"
+          );
+      });
   }
 
   /**
@@ -386,21 +386,21 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join")
         .mapActivities("fork", "join");
 
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("join",
-        "Only one gateway can be mapped to gateway 'join'"
-       );
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("join",
+            "Only one gateway can be mapped to gateway 'join'"
+          );
+      });
   }
 }
 

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:79a1e305-794d-4357-bcbc-253746aa1c21",
+  "serialNumber": "urn:uuid:b76c1190-4390-4c2c-8b98-9d58707c4cb7",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-24T07:04:51Z",
+    "timestamp": "2026-01-26T22:31:01Z",
     "tools": {
       "components": [
         {
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.25",
+      "version": "1.5.26",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ecd0a349fd799f57f28e52c3f713d479"
+          "content": "efb83be97c6b69c37cea9ed4adf30e57"
         },
         {
           "alg": "SHA-1",
-          "content": "20c4bbe98fb58f50ee1ca6befd7e7731f13a19d3"
+          "content": "b8d5680d89b36772e61a9963b338d5e2abd3465a"
         },
         {
           "alg": "SHA-256",
-          "content": "93163d85a0972e3d4813385af2d037bc94eed0542c4d74abc131830c84af070e"
+          "content": "3e84709b6a238c60f066e74ca40017dc1c72833f54655e0287cef690f5b2dd73"
         },
         {
           "alg": "SHA-512",
-          "content": "54d871eb375c98be429bdc05a960e54b382404012993a7d7da78f6ac713fa72c087e4ba625fcc3fcf8503c64b0ae277f448117f8c4589e7c0e4525f7e34e4b69"
+          "content": "231d7f78a1233929baa4288f1dbd1180e2903599f0ebc78ae1c0693cff2bab9a0b370f62cc8a40218868156c70c1697f6d27983cd89dbc403d282a949e088664"
         },
         {
           "alg": "SHA-384",
-          "content": "4aee9fcdbe168543119523bb3ef88bc05680acf9eacfc7506c2bc2fa14e893b41efb187b8afc255dea530827fda720ad"
+          "content": "eb6979de0cbd88244e2e96baa9211a90fa62f8b282675d5353aa39855fd7395bdc27726d09cc10f72b7ed24049a62266"
         },
         {
           "alg": "SHA3-384",
-          "content": "e03c4bc02790f4d3c46baf8cc91738e6d3b1244aa9c3a529360c89ba064246d8ef4f3e88a8dbace7b6a065939bfb7c88"
+          "content": "5c7944d9397182b201b5bc54a300dc71b71ef34d559186fe9205c111b2f64a33fec53344a2b2bc13b3054fff8fc8e0f5"
         },
         {
           "alg": "SHA3-256",
-          "content": "aa3579b643449ceaf889b788f9fc0d9ba383c8ced654decf7a08f01aedf4cadd"
+          "content": "54678dd436d898b15b2790b3c67c2f4b0e506f352fb84f47bdd55840f25a1555"
         },
         {
           "alg": "SHA3-512",
-          "content": "4e0c0cf616d700d0c0c60b894eb7245312f6389e61de74a02e8f09a38a38b6a5b1a7f72e24e1a2bd5ec946cd472407c1ac426bd7fff247ad30aea744bf382733"
+          "content": "f5a52a2e795b404ef43c6fdd7a3993aee4d4ca203d46aecc9395f309f41f46db15dbfcd1e2f28b1916952adb55e00b9f8f67b82fc368d3d1f615b8b37f735bae"
         }
       ],
       "licenses": [
@@ -309,7 +309,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -327,45 +327,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.25",
+      "version": "1.5.26",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6a1c2feb8e1ecb20417a4d0e74c9ad51"
+          "content": "dcf084908c69ac2d5c300f92157e906a"
         },
         {
           "alg": "SHA-1",
-          "content": "137f4ae0af7acaa0f9600a2ca18ddc9f3a0b899b"
+          "content": "d349b601e695b7d79b08454b81bb4f47bfc22164"
         },
         {
           "alg": "SHA-256",
-          "content": "aeb86d749936a960a1ec897aa821fe611ab6b105f1170ad334ae5eadc4bd689c"
+          "content": "08220d2a5cc9e35fc9ff0b7dbe1e86a9d9ca11e9b0c655aa34c7b63937678c5f"
         },
         {
           "alg": "SHA-512",
-          "content": "c9556c9ae438e8eb396f6be6ae5eb66c7403b291e7901bac37cb85eca8ed959e4b3ed98917351bbea32181e8a47c8ee66aa8c8114644d082f45e53cf2b92ed1f"
+          "content": "f3650ba90754425b7feb133f3822cfded4d90c25b68b10759b93b65b7d505a6179c1ab0a44b6afb3d9ed8fe37a673c76613486962f2af4f49bcd7dea38ae83e1"
         },
         {
           "alg": "SHA-384",
-          "content": "08c1981f61be52a85a1dbb25d9581537564546187339fec33a8f6fec1ead6a5bf56a721aeff98c67bc6fc038a3434f6f"
+          "content": "a45f7b354aa2914bacfe6e88922a4f8be663f9bf56fce880fa28601ec71e99990202801631c51671f736b338f6f93a30"
         },
         {
           "alg": "SHA3-384",
-          "content": "7f8bb7c37385d10125455a2c442ea902a62185d31cb7ea4adeb8d0f8f643df6dd66ecafc110db86e003a45fa2a942629"
+          "content": "0938bac87b786896cb14d214bd15f952b6ad666db10ccb03ac718f13451f80cf1a5b2c7a1a37c561e5f84c7471c611dc"
         },
         {
           "alg": "SHA3-256",
-          "content": "02a5e8558337d704a3fe8a5e5c9ed27cd7c9a887cf58959bd153c60033b06332"
+          "content": "5414e5de4b732fa9056a861a9e9b816206da3d997bccd649282b49b57e4a2f57"
         },
         {
           "alg": "SHA3-512",
-          "content": "4d05a893be8379221fe6b721511d86568ee12211ceabe19371dad114baf44a97ff2a773a55c68388618b353b1416821968dcabbe15b19ea25f772d8812bd388f"
+          "content": "85e2ccc63ef1be52c8326c2c835c9bf77cf596d87f72cba0e0c37dbc1402be1cefffdc497f045922be37caf3c272a4e5b80f2a5faab78cfa57850053b0f88a90"
         }
       ],
       "licenses": [
@@ -381,7 +381,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -399,44 +399,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "bom-ref": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "group": "org.assertj",
       "name": "assertj-core",
-      "version": "3.27.6",
+      "version": "3.27.7",
       "description": "Rich and fluent assertions for testing in Java",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "79563d5e0a3400a566b2105dde08b8e3"
+          "content": "9c893dc59af35a8beceb4166ad0602dc"
         },
         {
           "alg": "SHA-1",
-          "content": "8f34ccd6808899ad1d0aac6a770b73191f2f2a53"
+          "content": "2f4f64f054c9d618d4b1d89e7611559f5e2cfff7"
         },
         {
           "alg": "SHA-256",
-          "content": "b27872b049abc88e23c853ce5917945dd57d43bd31175d852e3941d2a6fd0231"
+          "content": "c4a445426c3c2861666863b842cc4ec7bbb1c4226fefd370b6d2fe83d6c4ff0f"
         },
         {
           "alg": "SHA-512",
-          "content": "4f5bf74bae003781141bd47066be6756e1c74ba48f8f412e2cd978a7585b013ff1f4672ce259d40dcd1e691a47102a1eab4ff5e2fc3120dc2272a96ff111fdd4"
+          "content": "adde16df9fd0b61d9b8cf4c28740b93a58d411300043258c594612d59e76321a42406f7847f5643baad8bddf08fb8b6ac6d6554c36739e8b1fa6ce35456f9d19"
         },
         {
           "alg": "SHA-384",
-          "content": "8d63fd48c68f4fd9e18edabecaf43bafdae1ffbca61da0e8484a9f6ada619dda794276f959482e7f91940ea336b3af37"
+          "content": "7da0353046fa08a2055c28f06bc7592cd97ae133aa633a0937d182d92c3d7372cf6617f5dbf2ed3dcedad260077bc278"
         },
         {
           "alg": "SHA3-384",
-          "content": "48eadf1ac0551770aadfd531380218ec7b31bf41e9ea136aca8adfc1445d1ff2c8d8cda257a4dd8bb593585f2fba112f"
+          "content": "8a992027bbe840a2098e08e56561344c2efdcaa4c1f39f70319a32e6b9bff1399c54a7f79f1f44b517929618de58a61d"
         },
         {
           "alg": "SHA3-256",
-          "content": "fad5f455b79606512cbf2d31f6711776e7c2cc1e98231e3b04808aaf25c1b0bf"
+          "content": "7b6f61a1dc618e07669b4510cc74c313a0aaa549c21f8787e909a903f6d6c90a"
         },
         {
           "alg": "SHA3-512",
-          "content": "5cf02af92fa38cd04eb4661f5e09a3e43bd00e18bd5e8b3c99cc0af283e6034624fcd54d2c743cdba86c7ad5de0923b46a9a997bad7caf58b4ded4ffa30d5c38"
+          "content": "c7d81d4037c39329fd29569115b77c20f38aa9a35c76ce631229c54f8f09428f5c1cb413bbc78e3cc1e09beb274016465ddd06b8e8c58c1ac9e8fb2d2f263676"
         }
       ],
       "licenses": [
@@ -447,7 +447,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "purl": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "externalReferences": [
         {
           "url": "https://assertj.github.io/doc/#assertj-core",
@@ -5187,68 +5187,6 @@
         },
         {
           "url": "https://github.com/testcontainers/testcontainers-java/",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm",
-      "name": "operaton-bpm-junit5",
-      "version": "2.0.0-M1",
-      "description": "Operaton - JUnit 5 Extension",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-junit5",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-bpm-junit5",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@2.0.0-M1?type=jar",
-      "publisher": "Operaton",
-      "group": "org.operaton.bpm",
-      "name": "operaton-bpm-junit6",
-      "version": "2.0.0-M1",
-      "description": "Operaton - JUnit 6 Extension",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@2.0.0-M1?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-junit6",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-bpm-junit6",
           "type": "vcs"
         }
       ]
@@ -20281,6 +20219,37 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm",
+      "name": "operaton-bpm-junit5",
+      "version": "2.0.0-M1",
+      "description": "Operaton - JUnit 5 Extension",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-junit5",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-bpm-junit5",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
@@ -21111,6 +21080,111 @@
         },
         {
           "url": "https://github.com/operaton/operaton-external-task-client-java/operaton-external-task-client-qa/engine-variable-test",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm",
+      "name": "operaton-external-task-client",
+      "version": "2.0.0-M1",
+      "description": "Operaton - Java External Task Client - Client",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-external-task-client-root/operaton-external-task-client",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton-external-task-client-java/operaton-external-task-client",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar",
+      "publisher": "Eclipse Foundation",
+      "group": "com.sun.istack",
+      "name": "istack-commons-runtime",
+      "version": "4.2.0",
+      "description": "istack common utility code",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "669f50fb835d86fcb3a9523a729f4d5e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "131351109ff27c4aa0958a988bb273e879687232"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "21025b7a096ef93f74de659c1be5990fa0c24e59a0f98a706e392e7088725ff6"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "7d3b5e74d59c099d5c307c2c2e35159514c997bda03c8305192852afed584472662249c3ab70095e4016c171bf689282983049e66116ede590df8986fd4d032f"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "81423e69fdf9eb644f1ddd4eb654c4131a9853b71d7336c88ea44c97ba8b2553ed76c71f04f555a87671d1d3d2e4d069"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "d073adca6dafc5a17982ffe207954b6b47c761602e495bc0f3b6df8dc34e96e886992f8a13e9e456a8cff2ec5088aaa3"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "6435693c5a60a5f3f2edfb37e9a55c716ef9e3a64406fe83eb51e2d13971a940"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "73ab88eae454d43ee9aeecbc0e2980bcb3710a3e82b5696b964494488d7aedb4520961eaf3f6271e5fff27c338fcafe74559bf5b71d017e1a74e63ac739e5950"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-3-Clause"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://projects.eclipse.org/projects/ee4j/istack-commons/istack-commons-runtime",
+          "type": "website"
+        },
+        {
+          "url": "https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/eclipse-ee4j/jaxb-istack-commons/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://dev.eclipse.org/mhonarc/lists/jaxb-impl-dev",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/eclipse-ee4j/jaxb-istack-commons/istack-commons-runtime",
           "type": "vcs"
         }
       ]
@@ -33215,7 +33289,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "eb57b067-d5d0-4ffa-8f3e-96e65a48b216",
+      "bom-ref": "2e1108e6-6dcd-4ae5-b5ff-883173f8f48e",
       "name": "package-lock.json",
       "properties": [
         {
@@ -36909,7 +36983,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "4076aba1-f940-4226-a0e4-ad0150fdc003",
+      "bom-ref": "332e68d4-cb4b-4eba-9c06-ff5207ce9069",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -37005,7 +37079,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M1?type=pom",
       "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
@@ -37013,7 +37087,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+      "ref": "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
       "dependsOn": [
         "pkg:maven/net.bytebuddy/byte-buddy@1.17.8?type=jar"
       ]
@@ -37026,7 +37100,7 @@
       "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37062,7 +37136,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37070,7 +37144,7 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37087,7 +37161,7 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar"
       ]
     },
@@ -37100,13 +37174,13 @@
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M1?type=pom",
       "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
@@ -37117,7 +37191,7 @@
       "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37127,7 +37201,7 @@
         "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37135,7 +37209,7 @@
       "dependsOn": [
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37191,7 +37265,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.2?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
@@ -37216,33 +37290,32 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.25?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
       "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M1?type=pom",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M1?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M1?type=pom",
         "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M1?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M1?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M1?type=pom",
@@ -37372,19 +37445,6 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@2.0.0-M1?type=jar",
-      "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar"
-      ]
-    },
-    {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
@@ -37400,7 +37460,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.2?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.apache.ant/ant@1.10.15?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
@@ -37411,6 +37471,8 @@
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -37887,7 +37949,6 @@
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-depchain@3.3.4?type=pom",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-junit6@2.0.0-M1?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@4.0.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.0?type=jar",
@@ -39055,7 +39116,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.25?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar"
       ]
     },
     {
@@ -39138,12 +39199,19 @@
       "ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar"
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar"
+      ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
@@ -39155,7 +39223,7 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.assertj/assertj-core@3.27.6?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
       ]
     },
@@ -39300,6 +39368,24 @@
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.2?type=jar"
       ]
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar",
+      "dependsOn": [
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
+        "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
+        "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
+        "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
+        "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M1?type=pom",
@@ -40845,13 +40931,7 @@
       "dependsOn": []
     },
     {
-      "ref": "4076aba1-f940-4226-a0e4-ad0150fdc003",
-      "dependsOn": [
-        "eb57b067-d5d0-4ffa-8f3e-96e65a48b216"
-      ]
-    },
-    {
-      "ref": "eb57b067-d5d0-4ffa-8f3e-96e65a48b216",
+      "ref": "2e1108e6-6dcd-4ae5-b5ff-883173f8f48e",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -40896,6 +40976,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "332e68d4-cb4b-4eba-9c06-ff5207ce9069",
+      "dependsOn": [
+        "2e1108e6-6dcd-4ae5-b5ff-883173f8f48e"
       ]
     },
     {

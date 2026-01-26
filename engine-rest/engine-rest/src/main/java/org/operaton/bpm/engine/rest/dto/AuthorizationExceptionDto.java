@@ -40,6 +40,7 @@ public class AuthorizationExceptionDto extends ExceptionDto {
 
   // transformer /////////////////////////////
 
+  @SuppressWarnings("java:S5738") // To be refactored when deprecated fields are removed
   public static AuthorizationExceptionDto fromException(AuthorizationException e) {
     AuthorizationExceptionDto dto = new AuthorizationExceptionDto();
 

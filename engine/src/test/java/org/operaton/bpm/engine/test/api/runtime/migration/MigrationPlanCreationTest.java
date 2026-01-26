@@ -87,12 +87,12 @@ public class MigrationPlanCreationTest {
   void testMigrateNonExistingSourceDefinition() {
     // given
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan("aNonExistingProcDefId", processDefinition.getId())
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Source process definition with id 'aNonExistingProcDefId' does not exist");
   }
@@ -101,12 +101,12 @@ public class MigrationPlanCreationTest {
   void testMigrateNullSourceDefinition() {
     // given
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(null, processDefinition.getId())
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Source process definition id is null");
   }
@@ -115,12 +115,12 @@ public class MigrationPlanCreationTest {
   void testMigrateNonExistingTargetDefinition() {
     // given
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(processDefinition.getId(), "aNonExistingProcDefId")
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Target process definition with id 'aNonExistingProcDefId' does not exist");
   }
@@ -129,12 +129,12 @@ public class MigrationPlanCreationTest {
   void testMigrateNullTargetDefinition() {
     // given
     ProcessDefinition processDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(processDefinition.getId(), null)
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(BadUserRequestException.class)
       .hasMessageContaining("Target process definition id is null");
   }
@@ -144,12 +144,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("thisActivityDoesNotExist", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -163,12 +163,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities(null, "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -182,12 +182,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("userTask", "thisActivityDoesNotExist");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -201,12 +201,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("userTask", null);
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -238,12 +238,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_RECEIVE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("userTask", "receiveTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -261,12 +261,12 @@ public class MigrationPlanCreationTest {
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(modify(ProcessModels.SUBPROCESS_PROCESS)
       .swapElementIds("userTask", "subProcess")
     );
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -289,13 +289,13 @@ public class MigrationPlanCreationTest {
       .boundaryEvent("boundary").signal(SIGNAL_NAME)
       .done()
     );
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("userTask", "userTask")
         .mapActivities("boundary", "boundary");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -309,12 +309,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceDefinition = testHelper.deployAndGetDefinition(ProcessModels.SUBPROCESS_PROCESS);
     ProcessDefinition targetDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapActivities("subProcess", targetDefinition.getId());
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -331,12 +331,12 @@ public class MigrationPlanCreationTest {
       .multiInstance().parallel().cardinality("3").multiInstanceDone().done();
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(testProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(testProcess);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -441,14 +441,14 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("userTask1", "userTask1")
         .mapActivities("userTask2", "userTask2")
         .mapActivities("boundary", "boundary");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -531,14 +531,14 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask", "userTask")
         .mapActivities("boundary", "boundary");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -563,14 +563,14 @@ public class MigrationPlanCreationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceProcess);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(targetProcess);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask", "userTask")
         .mapActivities("boundary", "boundary");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -723,13 +723,13 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("userTask1", "userTask1")
         .mapActivities("userTask1", "userTask2");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -746,12 +746,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("userTask", "userTask").updateEventTrigger();
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -767,12 +767,12 @@ public class MigrationPlanCreationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("eventSubProcess", "eventSubProcess").updateEventTrigger();
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -1008,7 +1008,7 @@ public class MigrationPlanCreationTest {
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition =
         testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
           .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
           .setVariables(
               Variables.putValueTyped("foo",
@@ -1021,7 +1021,7 @@ public class MigrationPlanCreationTest {
           .mapEqualActivities();
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -1044,7 +1044,7 @@ public class MigrationPlanCreationTest {
         .objectTypeName(ArrayList.class.getName())
         .serializationDataFormat(Variables.SerializationDataFormats.JAVA.getName())
         .create();
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
           .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
           .setVariables(
               Variables.putValueTyped("foo", objectValue)
@@ -1053,7 +1053,7 @@ public class MigrationPlanCreationTest {
           .mapEqualActivities();
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -1078,14 +1078,14 @@ public class MigrationPlanCreationTest {
         .objectTypeName(ArrayList.class.getName())
         .serializationDataFormat(Variables.SerializationDataFormats.JAVA.getName())
         .create();
-    var migrationPlanBuilder = runtimeService
+    var migrationInstructionBuilder = runtimeService
           .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
           .setVariables(Variables.putValueTyped("foo", objectValue))
           .mapActivities("foo", "bar")
           .mapActivities("bar", "foo");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;

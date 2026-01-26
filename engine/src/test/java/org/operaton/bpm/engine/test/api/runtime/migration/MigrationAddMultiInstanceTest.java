@@ -45,12 +45,12 @@ class MigrationAddMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -67,12 +67,12 @@ class MigrationAddMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -89,16 +89,15 @@ class MigrationAddMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
-        exception.printStackTrace();
         assertThat(exception.getValidationReport())
           .hasInstructionFailures("userTask",
             "Target activity 'userTask' is a descendant of multi-instance body 'subProcess#multiInstanceBody' "

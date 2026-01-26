@@ -364,14 +364,14 @@ class MigrationRemoveSubprocessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_TASK_AND_SUBPROCESS_PROCESS);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask1", "userTask1")
         .mapActivities("userTask2", "userTask2");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -547,14 +547,14 @@ class MigrationRemoveSubprocessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess1", "subProcess1")
         .mapActivities("subProcess3", "subProcess1")
         .mapActivities("userTask", "userTask");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;

@@ -23,6 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
@@ -1992,7 +1993,7 @@ class CaseExecutionListenerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(caseInstanceBuilder::create)
-      .isInstanceOf(Exception.class)
+      .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '%s'".formatted(CaseExecutionListener.class.getName()));
   }
 
@@ -2006,7 +2007,7 @@ class CaseExecutionListenerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(caseInstanceBuilder::create)
-      .isInstanceOf(Exception.class)
+      .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Delegate expression ${myListener} did not resolve to an implementation of interface "+CaseExecutionListener.class.getName());
   }
 
@@ -2018,7 +2019,7 @@ class CaseExecutionListenerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(caseInstanceBuilder::create)
-      .isInstanceOf(Exception.class)
+      .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Exception while instantiating class 'org.operaton.bpm.engine.test.cmmn.listener.NotExistingCaseExecutionListener'");
   }
 

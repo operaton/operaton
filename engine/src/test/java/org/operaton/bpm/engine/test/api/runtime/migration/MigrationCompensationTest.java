@@ -884,13 +884,13 @@ class MigrationCompensationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
-    var migrationBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("outerSubProcess", "innerSubProcess")
         .mapActivities("innerSubProcess", "outerSubProcess");
 
     // when / then
-    assertThatThrownBy(migrationBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -913,13 +913,13 @@ class MigrationCompensationTest {
           .startEvent()
           .endEvent()
         .done());
-    var migrationBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "addedSubProcess")
         .mapActivities("compensationBoundary", "compensationBoundary");
 
     // when / then
-    assertThatThrownBy(migrationBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -936,12 +936,12 @@ class MigrationCompensationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
-    var migrationBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("eventSubProcessStart", "eventSubProcessStart");
 
     // when / then
-    assertThatThrownBy(migrationBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -960,12 +960,12 @@ class MigrationCompensationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(model);
-    var migrationBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("eventSubProcessStart", "eventSubProcessStart");
 
     // when / then
-    assertThatThrownBy(migrationBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;

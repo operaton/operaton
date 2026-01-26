@@ -81,7 +81,8 @@ class CmmnDeployerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(deploymentBuilder::deploy)
-      .isInstanceOf(Exception.class);
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageStartingWith("The deployment contains definitions with the same key 'Case_1' (id attribute), this is not allowed");
 
     // Verify that nothing is deployed
     assertThat(repositoryService.createDeploymentQuery().count()).isZero();

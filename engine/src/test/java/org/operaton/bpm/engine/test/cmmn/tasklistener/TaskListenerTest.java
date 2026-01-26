@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.test.cmmn.tasklistener;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.TaskListener;
 import org.operaton.bpm.engine.impl.cmmn.execution.CmmnExecution;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
@@ -1299,7 +1300,7 @@ class TaskListenerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(caseInstanceBuilder::create)
-      .isInstanceOf(Exception.class)
+      .isInstanceOf(ProcessEngineException.class)
       .cause()
       .hasMessageContaining("NotTaskListener doesn't implement "+TaskListener.class);
   }
@@ -1314,7 +1315,7 @@ class TaskListenerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(caseInstanceBuilder::create)
-      .isInstanceOf(Exception.class)
+      .isInstanceOf(ProcessEngineException.class)
       .cause()
       .hasMessageContaining("Delegate expression ${myTaskListener} did not resolve to an implementation of interface "+TaskListener.class.getName());
   }
@@ -1327,7 +1328,7 @@ class TaskListenerTest extends CmmnTest {
 
     // when/then
     assertThatThrownBy(caseInstanceBuilder::create)
-      .isInstanceOf(Exception.class)
+      .isInstanceOf(ProcessEngineException.class)
       .cause()
       .hasMessageContaining("Exception while instantiating class 'org.operaton.bpm.engine.test.cmmn.tasklistener.util.NotExistingTaskListener'");
   }

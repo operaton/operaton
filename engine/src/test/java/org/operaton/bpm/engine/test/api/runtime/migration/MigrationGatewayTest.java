@@ -244,12 +244,12 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -266,12 +266,12 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.INCLUSIVE_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -293,12 +293,12 @@ class MigrationGatewayTest {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(modify(GatewayModels.PARALLEL_GW)
         .removeFlowNode("parallel2"));
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -361,12 +361,12 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW_IN_SUBPROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;
@@ -386,13 +386,13 @@ class MigrationGatewayTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(GatewayModels.PARALLEL_GW);
-    var migrationPlanBuilder = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("join", "join")
         .mapActivities("fork", "join");
 
     // when/then
-    assertThatThrownBy(migrationPlanBuilder::build)
+    assertThatThrownBy(migrationInstructionBuilder::build)
       .isInstanceOf(MigrationPlanValidationException.class)
       .satisfies(e -> {
         var exception = (MigrationPlanValidationException) e;

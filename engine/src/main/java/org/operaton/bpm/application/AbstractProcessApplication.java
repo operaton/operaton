@@ -167,13 +167,9 @@ public abstract class AbstractProcessApplication implements ProcessApplicationIn
   }
 
   @Override
-  public ELResolver getElResolver() {
+  public synchronized ELResolver getElResolver() {
     if (processApplicationElResolver == null) {
-      synchronized (this) {
-        if (processApplicationElResolver == null) {
-          processApplicationElResolver = initProcessApplicationElResolver();
-        }
-      }
+      processApplicationElResolver = initProcessApplicationElResolver();
     }
     return processApplicationElResolver;
 

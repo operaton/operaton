@@ -45,7 +45,6 @@ import org.operaton.commons.utils.CollectionUtil;
 
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez

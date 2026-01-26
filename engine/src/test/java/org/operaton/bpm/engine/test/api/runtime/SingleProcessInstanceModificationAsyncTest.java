@@ -51,7 +51,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.test.util.ActivityInstanceAssert;
 import org.operaton.bpm.engine.test.util.ExecutionTree;
 import org.operaton.bpm.engine.variable.Variables;
-
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
@@ -294,7 +294,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessage("Cannot perform instruction: Start before activity 'task' with ancestor activity instance '%s'; Ancestor activity instance '%s' does not exist: ancestorInstance is null",
             ancestorActivityId, ancestorActivityId)
@@ -313,7 +313,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(NotValidException.class)
         .satisfies(e -> assertThat(e.getMessage().toLowerCase())
             .contains("element 'somenonexistingactivity' does not exist in process "));
@@ -445,7 +445,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("Cannot perform instruction: Start transition 'invalidFlowId'; Element 'invalidFlowId' does not exist in process '%s'".formatted(processInstance.getProcessDefinitionId()));
   }
@@ -548,7 +548,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
         .satisfies(e -> assertThat(e.getMessage().toLowerCase())
             .contains("cannot perform instruction: start after activity 'task' with ancestor activity instance '"
@@ -568,7 +568,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("activity has more than one outgoing sequence flow");
   }
@@ -585,7 +585,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("activity has no outgoing sequence flow to take");
   }
@@ -602,7 +602,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(NotValidException.class)
         .satisfies(e -> assertThat(e.getMessage().toLowerCase())
             .contains("cannot perform instruction: start after activity 'somenonexistingactivity'; "
@@ -910,7 +910,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(NotValidException.class)
         .hasMessageContaining("Cannot perform instruction: Cancel activity instance 'nonExistingActivityInstance'; "
             + "Activity instance 'nonExistingActivityInstance' does not exist");
@@ -929,7 +929,7 @@ class SingleProcessInstanceModificationAsyncTest {
     Assertions.assertThat(modificationBatch).isNotNull();
 
     // when / then
-    Assertions.assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
+    assertThatThrownBy(() -> executeSeedAndBatchJobs(modificationBatch))
         .isInstanceOf(NotValidException.class)
         .hasMessageContaining(
             "Cannot perform instruction: Cancel transition instance 'nonExistingActivityInstance'; "
@@ -962,7 +962,7 @@ class SingleProcessInstanceModificationAsyncTest {
 
   @Test
   void testModifyNullProcessInstance() {
-    Assertions.assertThatThrownBy(() -> runtimeService.createProcessInstanceModification(null))
+    assertThatThrownBy(() -> runtimeService.createProcessInstanceModification(null))
         .isInstanceOf(NotValidException.class)
         .hasMessageContaining("processInstanceId is null");
   }

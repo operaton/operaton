@@ -40,7 +40,6 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez

@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyDecisionTaskTest {
 
@@ -113,46 +113,40 @@ class MultiTenancyDecisionTaskTest {
 
   @Test
   void testFailEvaluateDecisionFromOtherTenantWithDeploymentBinding() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
 
-    try {
-      createCaseInstance(CASE_DEFINITION_KEY, TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance(CASE_DEFINITION_KEY, TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no decision definition deployed with key = 'decision'");
   }
 
   @Test
   void testFailEvaluateDecisionFromOtherTenantWithLatestBinding() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
 
-    try {
-      createCaseInstance(CASE_DEFINITION_KEY, TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key 'decision'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance(CASE_DEFINITION_KEY, TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no decision definition deployed with key 'decision'");
   }
 
   @Test
   void testFailEvaluateDecisionFromOtherTenantWithVersionBinding() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_VERSION_2, DMN_FILE);
 
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
     testRule.deployForTenant(TENANT_TWO, DMN_FILE);
 
-    try {
-      createCaseInstance(CASE_DEFINITION_KEY, TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no decision definition deployed with key = 'decision', version = '2' and tenant-id = 'tenant1'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance(CASE_DEFINITION_KEY, TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no decision definition deployed with key = 'decision', version = '2' and tenant-id = 'tenant1'");
   }
 
   @Test

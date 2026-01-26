@@ -43,7 +43,7 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -72,19 +72,17 @@ class MigrationCompensationTest {
       .mapActivities("compensationHandler", "compensationHandler")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures("compensationEvent",
-          "The type of the source activity is not supported for activity instance migration"
-        );
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures("compensationEvent",
+            "The type of the source activity is not supported for activity instance migration"
+          );
+      });
   }
 
   @Test
@@ -102,19 +100,17 @@ class MigrationCompensationTest {
       .mapActivities("compensationHandler", "compensationHandler")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures("transactionEndEvent",
-          "The type of the source activity is not supported for activity instance migration"
-        );
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures("transactionEndEvent",
+            "The type of the source activity is not supported for activity instance migration"
+          );
+      });
   }
 
   @Test
@@ -132,20 +128,18 @@ class MigrationCompensationTest {
       .mapActivities("compensationHandler", "compensationHandler")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures("compensationEvent",
-          "There is no migration instruction for this instance's activity",
-          "The type of the source activity is not supported for activity instance migration"
-        );
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures("compensationEvent",
+            "There is no migration instruction for this instance's activity",
+            "The type of the source activity is not supported for activity instance migration"
+          );
+      });
   }
 
   @Test
@@ -163,20 +157,18 @@ class MigrationCompensationTest {
       .mapActivities("compensationHandler", "compensationHandler")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures("compensationEvent",
-          "There is no migration instruction for this instance's activity",
-          "The type of the source activity is not supported for activity instance migration"
-        );
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures("compensationEvent",
+            "There is no migration instruction for this instance's activity",
+            "The type of the source activity is not supported for activity instance migration"
+          );
+      });
   }
 
   @Test
@@ -193,20 +185,18 @@ class MigrationCompensationTest {
       .mapActivities("userTask2", "userTask2")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures(
-            sourceProcessDefinition.getId(),
-            "Cannot migrate subscription for compensation handler 'compensationHandler'. "
-            + "There is no migration instruction for the compensation boundary event");
-      }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures(
+              sourceProcessDefinition.getId(),
+              "Cannot migrate subscription for compensation handler 'compensationHandler'. "
+              + "There is no migration instruction for the compensation boundary event");
+      });
   }
 
   @Test
@@ -223,20 +213,18 @@ class MigrationCompensationTest {
       .mapActivities("userTask2", "userTask2")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures(
-            sourceProcessDefinition.getId(),
-            "Cannot migrate subscription for compensation handler 'compensationHandler'. "
-            + "There is no migration instruction for the compensation boundary event");
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures(
+              sourceProcessDefinition.getId(),
+              "Cannot migrate subscription for compensation handler 'compensationHandler'. "
+              + "There is no migration instruction for the compensation boundary event");
+      });
   }
 
   @Test
@@ -847,19 +835,17 @@ class MigrationCompensationTest {
       .mapActivities("compensationBoundary", "compensationBoundary")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures(sourceProcessDefinition.getId(),
-            "Cannot migrate subscription for compensation handler 'eventSubProcess'. "
-            + "There is no migration instruction for the compensation start event");
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures(sourceProcessDefinition.getId(),
+              "Cannot migrate subscription for compensation handler 'eventSubProcess'. "
+              + "There is no migration instruction for the compensation start event");
+      });
   }
 
   @Test
@@ -880,19 +866,17 @@ class MigrationCompensationTest {
       .mapActivities("userTask2", "userTask2")
       .build();
 
-    // when
-    try {
-      testHelper.migrateProcessInstance(migrationPlan, processInstance);
-      fail("should fail");
-    }
-    catch (MigratingProcessInstanceValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
-        .hasActivityInstanceFailures(sourceProcessDefinition.getId(),
-            "Cannot migrate subscription for compensation handler 'eventSubProcess'. "
-            + "There is no migration instruction for the compensation start event");
-    }
+    // when / then
+    assertThatThrownBy(() -> testHelper.migrateProcessInstance(migrationPlan, processInstance))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasProcessInstanceId(testHelper.snapshotBeforeMigration.getProcessInstanceId())
+          .hasActivityInstanceFailures(sourceProcessDefinition.getId(),
+              "Cannot migrate subscription for compensation handler 'eventSubProcess'. "
+              + "There is no migration instruction for the compensation start event");
+      });
   }
 
   @Test
@@ -900,24 +884,22 @@ class MigrationCompensationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.DOUBLE_SUBPROCESS_MODEL);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("outerSubProcess", "innerSubProcess")
         .mapActivities("innerSubProcess", "outerSubProcess");
 
-    try {
-      // when
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("innerSubProcess",
-        "The closest mapped ancestor 'outerSubProcess' is mapped to scope 'innerSubProcess' "
-        + "which is not an ancestor of target scope 'outerSubProcess'"
-      );
-    }
-
+    // when / then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("innerSubProcess",
+            "The closest mapped ancestor 'outerSubProcess' is mapped to scope 'innerSubProcess' "
+            + "which is not an ancestor of target scope 'outerSubProcess'"
+          );
+      });
   }
 
   @Test
@@ -931,23 +913,22 @@ class MigrationCompensationTest {
           .startEvent()
           .endEvent()
         .done());
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "addedSubProcess")
         .mapActivities("compensationBoundary", "compensationBoundary");
 
-    try {
-      // when
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("compensationBoundary",
-        "The closest mapped ancestor 'subProcess' is mapped to scope 'addedSubProcess' "
-        + "which is not an ancestor of target scope 'compensationBoundary'"
-      );
-    }
+    // when / then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("compensationBoundary",
+            "The closest mapped ancestor 'subProcess' is mapped to scope 'addedSubProcess' "
+            + "which is not an ancestor of target scope 'compensationBoundary'"
+          );
+      });
   }
 
   @Test
@@ -955,21 +936,20 @@ class MigrationCompensationTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(CompensationModels.COMPENSATION_EVENT_SUBPROCESS_MODEL);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("eventSubProcessStart", "eventSubProcessStart");
 
-    try {
-      // when
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures("eventSubProcessStart",
-          "The source activity's event scope (subProcess) must be mapped to the target activity's event scope (subProcess)"
-        );
-    }
+    // when / then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("eventSubProcessStart",
+            "The source activity's event scope (subProcess) must be mapped to the target activity's event scope (subProcess)"
+          );
+      });
   }
 
   @Test
@@ -980,20 +960,19 @@ class MigrationCompensationTest {
 
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(model);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("eventSubProcessStart", "eventSubProcessStart");
 
-    try {
-      // when
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures("eventSubProcessStart",
-          "The source activity's event scope (subProcess) must be mapped to the target activity's event scope (subProcess)"
-      );
-    }
+    // when / then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("eventSubProcessStart",
+            "The source activity's event scope (subProcess) must be mapped to the target activity's event scope (subProcess)"
+          );
+      });
   }
 }

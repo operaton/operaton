@@ -40,7 +40,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -109,20 +109,23 @@ class MessageBoundaryEventTest {
 
   @Test
   void testDoubleBoundaryMessageEventSameMessageId() {
+    // given
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageBoundaryEventTest.testDoubleBoundaryMessageEventSameMessageId.bpmn20.xml");
+
+    // when/then
     // deployment fails when two boundary message events have the same messageId
-    try {
-      deploymentBuilder.deploy();
-      fail("Deployment should fail because Activiti cannot handle two boundary message events with same messageId.");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("Cannot have more than one message event subscription with name 'messageName' for scope 'task'", e.getMessage());
-      assertThat(repositoryService.createDeploymentQuery().count()).isZero();
-      List<Problem> errors = e.getResourceReports().get(0).getErrors();
-      assertThat(errors).hasSize(1);
-      assertThat(errors.get(0).getMainElementId()).isEqualTo("messageBoundary_2");
-    }
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Cannot have more than one message event subscription with name 'messageName' for scope 'task'")
+      .satisfies(e -> {
+        ParseException pe = (ParseException) e;
+        assertThat(repositoryService.createDeploymentQuery().count()).isZero();
+        List<Problem> errors = pe.getResourceReports().get(0).getErrors();
+        assertThat(errors).hasSize(1);
+        assertThat(errors.get(0).getMainElementId()).isEqualTo("messageBoundary_2");
+      });
   }
 
   @Deployment
@@ -153,13 +156,11 @@ class MessageBoundaryEventTest {
     // 1. first message received cancels the task and the execution and both subscriptions
     runtimeService.messageEventReceived("messageName_1", execution1.getId());
 
+    // when/then
     // this should then throw an exception because execution2 no longer exists
-    try {
-      runtimeService.messageEventReceived("messageName_2", execution2Id);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("does not have a subscription to a message event with name 'messageName_2'", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("messageName_2", execution2Id))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("does not have a subscription to a message event with name 'messageName_2'");
 
     userTask = taskService.createTaskQuery().singleResult();
     assertThat(userTask).isNotNull();
@@ -214,13 +215,11 @@ class MessageBoundaryEventTest {
     // 1. first message received cancels all tasks and the executions and both subscriptions
     runtimeService.messageEventReceived("messageName_1", execution1.getId());
 
+    // when/then
     // this should then throw an exception because execution2 no longer exists
-    try {
-      runtimeService.messageEventReceived("messageName_2", execution2Id);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("does not have a subscription to a message event with name 'messageName_2'", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("messageName_2", execution2Id))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("does not have a subscription to a message event with name 'messageName_2'");
 
     // only process instance left
     assertThat(runtimeService.createExecutionQuery().count()).isOne();

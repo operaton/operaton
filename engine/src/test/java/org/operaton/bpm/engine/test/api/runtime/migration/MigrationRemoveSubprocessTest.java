@@ -39,7 +39,7 @@ import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnM
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -364,23 +364,22 @@ class MigrationRemoveSubprocessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_GATEWAY_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.PARALLEL_TASK_AND_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess", "subProcess")
         .mapActivities("userTask1", "userTask1")
         .mapActivities("userTask2", "userTask2");
 
-    // when
-    try {
-      runtimeService.build();
-
-      fail("should not validate");
-    } catch (MigrationPlanValidationException e) {
-      MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
-        .hasInstructionFailures("userTask2",
-          "The closest mapped ancestor 'subProcess' is mapped to scope 'subProcess' which is not an ancestor of target scope 'userTask2'"
-        );
-    }
+    // when/then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        MigrationPlanValidationReportAssert.assertThat(exception.getValidationReport())
+          .hasInstructionFailures("userTask2",
+            "The closest mapped ancestor 'subProcess' is mapped to scope 'subProcess' which is not an ancestor of target scope 'userTask2'"
+          );
+      });
   }
 
   @Test
@@ -548,25 +547,22 @@ class MigrationRemoveSubprocessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.TRIPLE_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("subProcess1", "subProcess1")
         .mapActivities("subProcess3", "subProcess1")
         .mapActivities("userTask", "userTask");
 
-    // when
-    try {
-      // subProcess2 is not migrated
-      // subProcess 3 is moved out of the subProcess1 scope (by becoming a subProcess1 itself)
-      runtimeService.build();
-
-      fail("should not validate");
-    } catch (MigrationPlanValidationException e) {
-      MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
-        .hasInstructionFailures("subProcess3",
-          "The closest mapped ancestor 'subProcess1' is mapped to scope 'subProcess1' which is not an ancestor of target scope 'subProcess1'"
-        );
-    }
+    // when/then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        MigrationPlanValidationReportAssert.assertThat(exception.getValidationReport())
+          .hasInstructionFailures("subProcess3",
+            "The closest mapped ancestor 'subProcess1' is mapped to scope 'subProcess1' which is not an ancestor of target scope 'subProcess1'"
+          );
+      });
   }
 
 }

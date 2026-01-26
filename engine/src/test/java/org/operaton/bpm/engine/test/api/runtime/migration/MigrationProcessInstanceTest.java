@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@SuppressWarnings("java:S5738") // MigrationPlanExecutionBuilder::execute accepted to be called in tests
 class MigrationProcessInstanceTest {
 
   @RegisterExtension

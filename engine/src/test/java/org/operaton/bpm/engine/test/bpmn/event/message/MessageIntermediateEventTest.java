@@ -204,7 +204,8 @@ class MessageIntermediateEventTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
-    assertThatThrownBy(() -> new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject())
+    var objectInputStream = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+    assertThatThrownBy(() -> objectInputStream.readObject())
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object.");
 

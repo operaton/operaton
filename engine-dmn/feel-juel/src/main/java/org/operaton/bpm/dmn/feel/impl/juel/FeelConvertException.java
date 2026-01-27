@@ -23,7 +23,7 @@ import org.operaton.bpm.dmn.feel.impl.FeelException;
  */
 public class FeelConvertException extends FeelException {
 
-  protected final Object value;
+  protected final transient Object value;
   protected final Class<?> type;
 
   public FeelConvertException(String message, Object value, Class<?> type) {

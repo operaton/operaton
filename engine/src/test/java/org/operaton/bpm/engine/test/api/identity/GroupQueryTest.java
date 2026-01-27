@@ -32,7 +32,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -107,14 +106,14 @@ class GroupQueryTest {
   void testQueryByInvalidId() {
     GroupQuery query = identityService.createGroupQuery().groupId("invalid");
     verifyQueryResults(query, 0);
-    var groupQuery = identityService.createGroupQuery();
 
-    try {
-      groupQuery.groupId(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Provided id is null");
-    }
+    // given
+    GroupQuery groupQuery = identityService.createGroupQuery();
+
+    // when/then
+    assertThatThrownBy(() -> groupQuery.groupId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided id is null");
   }
 
   @Test
@@ -138,9 +137,9 @@ class GroupQueryTest {
           found = true; break;
         }
       }
-      if(!found) {
-        fail("Expected to find group " + group);
-      }
+      assertThat(found)
+        .withFailMessage("Expected to find group " + group)
+        .isTrue();
     }
   }
 
@@ -157,14 +156,14 @@ class GroupQueryTest {
   void testQueryByInvalidName() {
     GroupQuery query = identityService.createGroupQuery().groupName("invalid");
     verifyQueryResults(query, 0);
-    var groupQuery = identityService.createGroupQuery();
 
-    try {
-      groupQuery.groupName(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Provided name is null");
-    }
+    // given
+    GroupQuery groupQuery = identityService.createGroupQuery();
+
+    // when/then
+    assertThatThrownBy(() -> groupQuery.groupName(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided name is null");
   }
 
   @Test
@@ -186,14 +185,14 @@ class GroupQueryTest {
   void testQueryByInvalidNameLike() {
     GroupQuery query = identityService.createGroupQuery().groupNameLike("%invalid%");
     verifyQueryResults(query, 0);
-    var groupQuery = identityService.createGroupQuery();
 
-    try {
-      groupQuery.groupNameLike(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Provided nameLike is null");
-    }
+    // given
+    GroupQuery groupQuery = identityService.createGroupQuery();
+
+    // when/then
+    assertThatThrownBy(() -> groupQuery.groupNameLike(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided nameLike is null");
   }
 
   @Test
@@ -209,14 +208,14 @@ class GroupQueryTest {
   void testQueryByInvalidType() {
     GroupQuery query = identityService.createGroupQuery().groupType("invalid");
     verifyQueryResults(query, 0);
-    var groupQuery = identityService.createGroupQuery();
 
-    try {
-      groupQuery.groupType(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Provided type is null");
-    }
+    // given
+    GroupQuery groupQuery = identityService.createGroupQuery();
+
+    // when/then
+    assertThatThrownBy(() -> groupQuery.groupType(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided type is null");
   }
 
   @Test
@@ -245,14 +244,14 @@ class GroupQueryTest {
   void testQueryByInvalidMember() {
     GroupQuery query = identityService.createGroupQuery().groupMember("invalid");
     verifyQueryResults(query, 0);
-    var groupQuery = identityService.createGroupQuery();
 
-    try {
-      groupQuery.groupMember(null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Provided userId is null");
-    }
+    // given
+    GroupQuery groupQuery = identityService.createGroupQuery();
+
+    // when/then
+    assertThatThrownBy(() -> groupQuery.groupMember(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Provided userId is null");
   }
 
   @Test

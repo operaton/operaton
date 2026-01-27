@@ -17,13 +17,16 @@
 package org.operaton.spin.plugin.script;
 
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
@@ -68,45 +71,20 @@ class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
     runtimeService.deleteProcessInstance(processInstance.getId(), "Test shutdown");
   }
 
-  @Test
-  void spinInternalVariablesNotExportedGroovyScriptTask() {
-    String importXML = "XML = org.operaton.spin.Spin.&XML\n";
-    String importJSON = "JSON = org.operaton.spin.Spin.&JSON\n";
-
-    String script = importXML + importJSON + TEST_SCRIPT;
-
-    deployProcess("groovy", script);
-
-    startProcess();
-    checkVariables("foo", "var_s", "var_xml", "var_json");
-    continueProcess();
-    checkVariables("foo", "var_s", "var_xml", "var_json");
+  static Stream<Arguments> dataForSpinInternalVariablesTests() {
+    return Stream.of(
+      // Arguments.of("javascript", "var XML = org.operaton.spin.Spin.XML;\n", "var JSON = org.operaton.spin.Spin.JSON;\n"), // @Disabled("https://jira.camunda.com/browse/CAM-5869")
+      Arguments.of("groovy", "XML = org.operaton.spin.Spin.&XML\n", "JSON = org.operaton.spin.Spin.&JSON\n"),
+      Arguments.of("python", "import org.operaton.spin.Spin.XML as XML;\n", "import org.operaton.spin.Spin.JSON as JSON;\n")
+    );
   }
 
-  @Test
-  @Disabled("https://jira.camunda.com/browse/CAM-5869")
-  void testSpinInternalVariablesNotExportedByJavascriptScriptTask() {
-    String importXML = "var XML = org.operaton.spin.Spin.XML;\n";
-    String importJSON = "var JSON = org.operaton.spin.Spin.JSON;\n";
-
+  @ParameterizedTest
+  @MethodSource("dataForSpinInternalVariablesTests")
+  void spinInternalVariablesNotExportedScriptTask(String taskType, String importXML, String importJSON) {
     String script = importXML + importJSON + TEST_SCRIPT;
 
-    deployProcess("javascript", script);
-
-    startProcess();
-    checkVariables("foo", "var_s", "var_xml", "var_json");
-    continueProcess();
-    checkVariables("foo", "var_s", "var_xml", "var_json");
-  }
-
-  @Test
-  void spinInternalVariablesNotExportedByPythonScriptTask() {
-    String importXML = "import org.operaton.spin.Spin.XML as XML;\n";
-    String importJSON = "import org.operaton.spin.Spin.JSON as JSON;\n";
-
-    String script = importXML + importJSON + TEST_SCRIPT;
-
-    deployProcess("python", script);
+    deployProcess(taskType, script);
 
     startProcess();
     checkVariables("foo", "var_s", "var_xml", "var_json");

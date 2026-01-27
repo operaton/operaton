@@ -260,7 +260,6 @@ public class ProcessDiagramLayoutFactory {
 }
 
   private int findMargin(int maxValue, Boolean[] valueIsWhite, boolean searchFromStart) {
-    int margin = 0;
     if (searchFromStart) {
       return (int) Arrays.stream(valueIsWhite, 0, maxValue)
         .takeWhile(Boolean::booleanValue)

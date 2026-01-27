@@ -16,20 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.repository.Resource;
 
-
 /**
  * @author Tom Baeyens
  */
-public class ResourceEntity implements Serializable, DbEntity, Resource {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class ResourceEntity implements DbEntity, Resource {
 
   protected String id;
   protected String name;

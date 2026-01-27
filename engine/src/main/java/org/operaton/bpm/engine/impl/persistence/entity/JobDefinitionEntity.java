@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 
 import org.operaton.bpm.engine.impl.db.DbEntity;
@@ -31,9 +29,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
  * @author Daniel Meyer
  *
  */
-public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class JobDefinitionEntity implements JobDefinition, HasDbRevision, HasDbReferences, DbEntity {
 
   protected String id;
   protected int revision;

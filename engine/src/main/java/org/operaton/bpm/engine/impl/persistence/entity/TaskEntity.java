@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -92,7 +90,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Falko Menge
  * @author Deivarayan Azhagappan
  */
-public class TaskEntity extends AbstractVariableScope implements Task, DelegateTask, Serializable, DbEntity, HasDbRevision, HasDbReferences, CommandContextListener, VariablesProvider<VariableInstanceEntity> {
+public class TaskEntity extends AbstractVariableScope implements Task, DelegateTask, DbEntity, HasDbRevision, HasDbReferences, CommandContextListener, VariablesProvider<VariableInstanceEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -105,8 +103,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   public static final String DELETE_REASON_COMPLETED = "completed";
   public static final String DELETE_REASON_DELETED   = "deleted";
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision;
@@ -169,7 +165,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @SuppressWarnings({ "unchecked" })
   protected transient VariableStore<VariableInstanceEntity> variableStore
   = new VariableStore<>(this, new TaskEntityReferencer(this));
-
 
   protected transient boolean skipCustomListeners;
 
@@ -1630,7 +1625,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public void setTaskState(String taskState) {
     this.taskState = taskState;
   }
-
 
   @Override
   public void setFollowUpDate(Date followUpDate) {

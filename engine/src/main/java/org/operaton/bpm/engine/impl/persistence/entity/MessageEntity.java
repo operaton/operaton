@@ -16,14 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
 import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
-
 
 /**
  * NOTE: instances of Message Entity should be created via {@link MessageJobDeclaration}.
@@ -33,8 +31,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 public class MessageEntity extends JobEntity {
 
   public static final String TYPE = "message";
-
-  @Serial private static final long serialVersionUID = 1L;
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.dmn.engine;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * output entries of this rule.
  * </p>
  */
-public interface DmnDecisionResult extends List<DmnDecisionResultEntries>, Serializable {
+public interface DmnDecisionResult extends List<DmnDecisionResultEntries> {
 
   /**
    * Returns the first {@link DmnDecisionResultEntries}.

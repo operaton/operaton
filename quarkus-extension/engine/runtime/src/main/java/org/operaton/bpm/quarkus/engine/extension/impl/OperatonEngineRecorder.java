@@ -50,6 +50,12 @@ import static io.quarkus.datasource.common.runtime.DataSourceUtil.DEFAULT_DATASO
 @Recorder
 public class OperatonEngineRecorder {
 
+  private final RuntimeValue<OperatonEngineConfig> operatonEngineConfig;
+
+  public OperatonEngineRecorder(RuntimeValue<OperatonEngineConfig> operatonEngineConfig) {
+    this.operatonEngineConfig = operatonEngineConfig;
+  }
+
   public void configureProcessEngineCdiBeans(BeanContainer beanContainer) {
 
     if (BeanManagerLookup.getLocalInstance() == null) {
@@ -57,9 +63,9 @@ public class OperatonEngineRecorder {
     }
   }
 
-  public RuntimeValue<ProcessEngineConfigurationImpl> createProcessEngineConfiguration(BeanContainer beanContainer,
-                                                                                       OperatonEngineConfig config) {
+  public RuntimeValue<ProcessEngineConfigurationImpl> createProcessEngineConfiguration(BeanContainer beanContainer) {
 
+    OperatonEngineConfig config = operatonEngineConfig.getValue();
     QuarkusProcessEngineConfiguration configuration = getBeanFromContainer(QuarkusProcessEngineConfiguration.class,
         beanContainer);
 
@@ -80,7 +86,7 @@ public class OperatonEngineRecorder {
     // configure job executor,
     // if not already configured by a custom configuration
     if (configuration.getJobExecutor() == null) {
-      configureJobExecutor(configuration, config);
+      configureJobExecutor(configuration);
     }
 
     configureCdiEventBridge(configuration);
@@ -142,9 +148,9 @@ public class OperatonEngineRecorder {
     });
   }
 
-  protected void configureJobExecutor(ProcessEngineConfigurationImpl configuration,
-                                      OperatonEngineConfig config) {
+  protected void configureJobExecutor(ProcessEngineConfigurationImpl configuration) {
 
+    OperatonEngineConfig config = operatonEngineConfig.getValue();
     int maxPoolSize = config.jobExecutor().threadPool().maxPoolSize();
     int queueSize = config.jobExecutor().threadPool().queueSize();
 

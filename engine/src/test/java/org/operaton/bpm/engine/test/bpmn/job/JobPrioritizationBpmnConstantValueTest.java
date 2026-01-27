@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -215,17 +215,20 @@ class JobPrioritizationBpmnConstantValueTest {
 
   @Test
   void testFailOnMalformedInput() {
+    // given
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("deploying a process with malformed priority should not succeed");
-    } catch (ParseException e) {
-      testRule.assertTextPresentIgnoreCase("value 'thisIsNotANumber' for attribute 'jobPriority' "
-          + "is not a valid number", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("task2");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .satisfies(e -> {
+        ParseException parseException = (ParseException) e;
+        assertThat(parseException.getMessage()).containsIgnoringCase("value 'thisIsNotANumber' for attribute 'jobPriority' "
+            + "is not a valid number");
+        assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("task2");
+      });
   }
 
   @Test

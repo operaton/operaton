@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
-import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.ActivityTypes;
@@ -63,8 +62,6 @@ import static org.operaton.bpm.engine.impl.pvm.runtime.ActivityInstanceState.END
  */
 public abstract class PvmExecutionImpl extends CoreExecution implements
   ActivityExecution, PvmProcessInstance {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   private static final PvmLogger LOG = ProcessEngineLogger.PVM_LOGGER;
 

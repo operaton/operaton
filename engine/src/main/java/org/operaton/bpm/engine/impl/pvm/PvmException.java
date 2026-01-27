@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 
 
@@ -25,8 +23,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
  * @author Tom Baeyens
  */
 public class PvmException extends ProcessEngineException {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   public PvmException(String message, Throwable cause) {
     super(message, cause);

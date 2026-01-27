@@ -49,7 +49,6 @@ import org.operaton.bpm.model.dmn.instance.Text;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class DecisionDefinitionDeployerTest {
 
@@ -362,12 +361,10 @@ class DecisionDefinitionDeployerTest {
     DmnModelInstance dmnModelInstance = createDmnModelInstanceNegativeHistoryTimeToLive();
     var deploymentBuilder = repositoryService.createDeployment().addModelInstance("foo.dmn", dmnModelInstance);
 
-    try {
-      testRule.deploy(deploymentBuilder);
-      fail("Exception for negative time to live value is expected.");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getCause().getMessage()).contains("negative value is not allowed");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(ex -> assertThat(ex.getCause().getMessage()).contains("negative value is not allowed"));
   }
 
   @SuppressWarnings("deprecation")
@@ -531,12 +528,10 @@ class DecisionDefinitionDeployerTest {
 
   @Test
   void testDeployDecisionDefinitionWithMalformedStringHistoryTimeToLive() {
-    try {
-      testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithMalformedHistoryTimeToLive.dmn11.xml");
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithMalformedHistoryTimeToLive.dmn11.xml"))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(e -> assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive"));
   }
 
   @Test

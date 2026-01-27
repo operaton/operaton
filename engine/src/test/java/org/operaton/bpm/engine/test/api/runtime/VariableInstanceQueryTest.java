@@ -2221,11 +2221,7 @@ class VariableInstanceQueryTest {
         assertThat(instance.getTypeName()).isEqualTo("bytes");
       } else if ("serializableVar".equals(instance.getName())) {
         assertThat(instance.getName()).isEqualTo("serializableVar");
-        try {
-          instance.getValue();
-        } catch(NullPointerException e) {
-          // the serialized value has not been initially loaded
-        }
+        assertThatCode(instance::getValue).doesNotThrowAnyException();
       } else {
         fail("An unexpected variable '%s' was found with value %s".formatted(instance.getName(), instance.getValue()));
       }
@@ -2450,13 +2446,12 @@ class VariableInstanceQueryTest {
       ObjectValue typedValue = (ObjectValue) variableInstance.getTypedValue();
       assertThat(typedValue).isNotNull();
       assertThat(typedValue.isDeserialized()).isFalse();
+
       // cannot access the deserialized value
-      try {
-        typedValue.getValue();
-      }
-      catch(IllegalStateException e) {
-        testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-      }
+      assertThatThrownBy(typedValue::getValue)
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("Object is not deserialized");
+
       assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 

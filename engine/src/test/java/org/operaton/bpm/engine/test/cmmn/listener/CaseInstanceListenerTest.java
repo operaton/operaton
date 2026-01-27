@@ -1009,57 +1009,40 @@ class CaseInstanceListenerTest extends CmmnTest {
   @Test
   void testDoesNotImplementCaseExecutionListenerInterfaceByClass() {
     // given
+    var caseInstanceBuilder = caseService
+        .withCaseDefinitionByKey("case");
 
-
-    try {
-      // when
-      caseService
-        .withCaseDefinitionByKey("case")
-        .create();
-    } catch (Exception e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '"+CaseExecutionListener.class.getName() + "'", message);
-    }
-
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '"+CaseExecutionListener.class.getName() + "'");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseInstanceListenerTest.testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression.cmmn"})
   @Test
   void testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression() {
     // given
-
-    try {
-      // when
-      caseService
+    var caseInstanceBuilder = caseService
         .withCaseDefinitionByKey("case")
-        .setVariable("myListener", new NotCaseExecutionListener())
-        .create();
-    } catch (Exception e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("Delegate expression ${myListener} did not resolve to an implementation of interface "+CaseExecutionListener.class.getName(), message);
-    }
+        .setVariable("myListener", new NotCaseExecutionListener());
 
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("Delegate expression ${myListener} did not resolve to an implementation of interface "+CaseExecutionListener.class.getName());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseInstanceListenerTest.testListenerDoesNotExist.cmmn"})
   @Test
   void testListenerDoesNotExist() {
     // given
+    var caseInstanceBuilder = caseService
+        .withCaseDefinitionByKey("case");
 
-    try {
-      // when
-      caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-    } catch (Exception e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("Exception while instantiating class", message);
-    }
-
+    // when/then
+    assertThatThrownBy(() -> caseInstanceBuilder.create().getId())
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("Exception while instantiating class");
   }
 
 }

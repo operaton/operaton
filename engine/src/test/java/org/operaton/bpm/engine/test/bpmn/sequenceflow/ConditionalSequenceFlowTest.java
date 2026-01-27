@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -102,13 +102,13 @@ class ConditionalSequenceFlowTest {
   @Deployment
   @Test
   void testNoExpressionTrueThrowsException() {
+    // given
     Map<String, Object> variables = CollectionUtil.singletonMap("input", "non-existing-value");
-    try {
-      runtimeService.startProcessInstanceByKey("condSeqFlowUelExpr", variables);
-      fail("Expected ProcessEngineException");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("No conditional sequence flow leaving the Flow Node 'theStart' could be selected for continuing the process", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("condSeqFlowUelExpr", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No conditional sequence flow leaving the Flow Node 'theStart' could be selected for continuing the process");
   }
 
 }

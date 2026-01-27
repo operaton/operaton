@@ -138,13 +138,13 @@ class StandaloneTaskTest {
 
   @Test
   void testSaveTaskWithGenericResourceId() {
+    // given
     Task task = taskService.newTask("*");
-    try {
-      taskService.saveTask(task);
-      fail("it should not be possible to save a task with the generic resource id *");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Entity Task[*] has an invalid id: id cannot be *. * is a reserved identifier", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> taskService.saveTask(task))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Entity Task[*] has an invalid id: id cannot be *. * is a reserved identifier");
   }
 
   @Test

@@ -60,19 +60,16 @@ class TaskVariablesTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/task/TaskVariablesTest.testTaskExecutionVariables.bpmn20.xml"})
   @Test
   void testTaskExecutionVariableLongValue() {
+    // given
     String processInstanceId = runtimeService.startProcessInstanceByKey("oneTaskProcess").getId();
-
     StringBuffer longString = new StringBuffer();
     longString.append("tensymbols".repeat(500));
-    try {
-      runtimeService.setVariable(processInstanceId, "var", longString.toString());
-    } catch (Exception ex) {
-      if (!(ex instanceof BadUserRequestException)) {
-        fail("BadUserRequestException is expected, but another exception was received:  " + ex);
-      }
-      assertThat(ex.getMessage()).isEqualTo("Variable value is too long");
-    }
+    String longValue = longString.toString();
 
+    // when/then
+    assertThatThrownBy(() -> runtimeService.setVariable(processInstanceId, "var", longValue))
+        .isInstanceOf(BadUserRequestException.class)
+        .hasMessage("Variable value is too long");
   }
 
   @Deployment

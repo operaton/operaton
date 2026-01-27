@@ -37,8 +37,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
@@ -127,13 +127,11 @@ class ExecutionEntityTest {
 
     @Override
     public void notify(DelegateTask delegateTask) {
-      try {
-        // then (see #testRemoveExecutionSequence)
+      // then (see #testRemoveExecutionSequence)
+      assertThatCode(() -> {
         StringValue variable = delegateTask.getExecution().getVariableLocalTyped("localVar");
         assertThat(variable.getValue()).isEqualTo("localVarVal");
-      } catch (NullPointerException e) {
-        fail("Local variable shouldn't be null.");
-      }
+      }).doesNotThrowAnyException();
     }
   }
 }

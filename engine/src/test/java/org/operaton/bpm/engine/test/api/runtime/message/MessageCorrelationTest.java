@@ -392,11 +392,8 @@ class MessageCorrelationTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
   void testExecutionCorrelationSetSerializedVariableValue() throws Exception {
-
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-
-    // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -404,12 +401,12 @@ class MessageCorrelationTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
         engineRule.getProcessEngine());
 
-    // then it is not possible to deserialize the object
-    try {
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
-    } catch (RuntimeException e) {
-      testRule.assertTextPresent("Exception while deserializing object.", e.getMessage());
-    }
+    // when - it is not possible to deserialize the object
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Exception while deserializing object.");
 
     // but it can be set as a variable:
     runtimeService
@@ -434,11 +431,8 @@ class MessageCorrelationTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testCatchingMessageEventCorrelation.bpmn20.xml")
   @Test
   void testExecutionCorrelationSetSerializedVariableValues() throws Exception {
-
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-
-    // when
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -446,12 +440,12 @@ class MessageCorrelationTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
         engineRule.getProcessEngine());
 
-    // then it is not possible to deserialize the object
-    try {
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
-    } catch (RuntimeException e) {
-      testRule.assertTextPresent("Exception while deserializing object.", e.getMessage());
-    }
+    // when - it is not possible to deserialize the object
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Exception while deserializing object.");
 
     // but it can be set as a variable:
     runtimeService
@@ -586,8 +580,7 @@ class MessageCorrelationTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
   void testMessageStartEventCorrelationSetSerializedVariableValue() throws Exception {
-
-    // when
+    // given
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -595,12 +588,12 @@ class MessageCorrelationTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
         engineRule.getProcessEngine());
 
-    // then it is not possible to deserialize the object
-    try {
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
-    } catch (RuntimeException e) {
-      testRule.assertTextPresent("Exception while deserializing object.", e.getMessage());
-    }
+    // when - it is not possible to deserialize the object
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Exception while deserializing object.");
 
     // but it can be set as a variable:
     runtimeService
@@ -628,8 +621,7 @@ class MessageCorrelationTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/api/runtime/message/MessageCorrelationTest.testMessageStartEventCorrelation.bpmn20.xml")
   @Test
   void testMessageStartEventCorrelationSetSerializedVariableValues() throws Exception {
-
-    // when
+    // given
     FailingJavaSerializable javaSerializable = new FailingJavaSerializable("foo");
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -637,12 +629,12 @@ class MessageCorrelationTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()),
         engineRule.getProcessEngine());
 
-    // then it is not possible to deserialize the object
-    try {
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
-    } catch (RuntimeException e) {
-      testRule.assertTextPresent("Exception while deserializing object.", e.getMessage());
-    }
+    // when - it is not possible to deserialize the object
+    ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Exception while deserializing object.");
 
     // but it can be set as a variable:
     runtimeService

@@ -25,7 +25,7 @@ import org.operaton.bpm.dmn.feel.impl.juel.FeelLogger;
 public class IntervalTransformer implements FeelToJuelTransformer {
 
   public static final FeelEngineLogger LOG = FeelLogger.ENGINE_LOGGER;
-  public static final Pattern INTERVAL_PATTERN = Pattern.compile("^(\\(|\\[|\\])(.*[^\\.])\\.\\.(.+)(\\)|\\]|\\[)$");
+  public static final Pattern INTERVAL_PATTERN = Pattern.compile("^([(\\[\\]])(.*[^.])\\.\\.(.+)([)\\]\\[])$");
 
   @Override
   public boolean canTransform(String feelExpression) {

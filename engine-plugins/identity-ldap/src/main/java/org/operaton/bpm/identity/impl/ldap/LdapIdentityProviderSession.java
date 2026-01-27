@@ -209,10 +209,6 @@ public class LdapIdentityProviderSession implements ReadOnlyIdentityProvider {
     return userList;
   }
 
-  private boolean shouldProcessMember(LdapUserQueryImpl query, List<User> userList, int memberCount) {
-    return userList.size() < query.getMaxResults() && memberCount >= query.getFirstResult();
-  }
-
   private Optional<User> findUserForMember(LdapUserQueryImpl query, String userBaseDn, String memberId) {
     if (ldapConfiguration.isUsePosixGroups()) {
       query.userId(memberId);

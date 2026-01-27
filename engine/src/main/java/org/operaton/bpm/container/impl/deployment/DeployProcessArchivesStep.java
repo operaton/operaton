@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -24,6 +25,7 @@ import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
 import org.operaton.bpm.application.impl.metadata.spi.ProcessesXml;
 import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
 
@@ -52,12 +54,12 @@ public class DeployProcessArchivesStep extends DeploymentOperationStep {
     for (Entry<URL, ProcessesXml> processesXml : processesXmls.entrySet()) {
       for (ProcessArchiveXml processArchive : processesXml.getValue().getProcessArchives()) {
         // for each process archive add an individual operation step
-        operationContext.addStep(createDeployProcessArchiveStep(processArchive, processesXml.getKey()));
+        operationContext.addStep(createDeployProcessArchiveStep(processArchive, ReflectUtil.urlToURI(processesXml.getKey())));
       }
     }
   }
 
-  protected DeployProcessArchiveStep createDeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URL url) {
-    return new DeployProcessArchiveStep(parsedProcessArchive, url);
+  protected DeployProcessArchiveStep createDeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URI uri) {
+    return new DeployProcessArchiveStep(parsedProcessArchive, uri);
   }
 }

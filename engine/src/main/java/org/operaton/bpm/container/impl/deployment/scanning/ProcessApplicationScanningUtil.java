@@ -16,11 +16,15 @@
  */
 package org.operaton.bpm.container.impl.deployment.scanning;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
+import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
@@ -28,6 +32,7 @@ import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUF
 import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
 
 public final class ProcessApplicationScanningUtil {
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   private ProcessApplicationScanningUtil() {
   }
@@ -38,12 +43,12 @@ public final class ProcessApplicationScanningUtil {
    *          the classloader to scan
    * @param paResourceRootPath
    *          see {@link ProcessArchiveXml#PROP_RESOURCE_ROOT_PATH}
-   * @param metaFileUrl
-   *          the URL to the META-INF/processes.xml file
+   * @param metaFileUri
+   *          the URI to the META-INF/processes.xml file
    * @return a Map of process definitions
    */
-  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl) {
-    return findResources(classLoader, paResourceRootPath, metaFileUrl, null);
+  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URI metaFileUri) {
+    return findResources(classLoader, paResourceRootPath, metaFileUri, null);
   }
 
   /**
@@ -52,14 +57,14 @@ public final class ProcessApplicationScanningUtil {
    *          the classloader to scan
    * @param paResourceRootPath
    *          see {@link ProcessArchiveXml#PROP_RESOURCE_ROOT_PATH}
-   * @param metaFileUrl
-   *          the URL to the META-INF/processes.xml file
+   * @param metaFileUri
+   *          the URI to the META-INF/processes.xml file
    * @param additionalResourceSuffixes
    *          a list of additional suffixes for resources
    * @return a Map of process definitions
    */
-  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl, String[] additionalResourceSuffixes) {
-    ProcessApplicationScanner scanner = null;
+  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URI metaFileUri, String[] additionalResourceSuffixes) {
+    ProcessApplicationScanner scanner;
 
     try {
       // check if we must use JBoss VFS
@@ -70,8 +75,14 @@ public final class ProcessApplicationScanningUtil {
       scanner = new ClassPathProcessApplicationScanner();
     }
 
-    return scanner.findResources(classLoader, paResourceRootPath, metaFileUrl, additionalResourceSuffixes);
+    URL metaFileUrl;
+     try {
+       metaFileUrl = metaFileUri != null ? metaFileUri.toURL() : null;
+     } catch (MalformedURLException e) {
+       throw LOG.invalidDeploymentDescriptorLocation(metaFileUri.getPath(), e);
+     }
 
+    return scanner.findResources(classLoader, paResourceRootPath, metaFileUrl, additionalResourceSuffixes);
   }
 
   public static boolean isDeployable(String filename) {

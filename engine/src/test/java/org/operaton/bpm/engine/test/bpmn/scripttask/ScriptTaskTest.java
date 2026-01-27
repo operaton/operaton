@@ -541,22 +541,20 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @Test
   void testGroovyNotExistingImportWithoutCompilation() {
+    // given
     // disable script compilation
     processEngineConfiguration.setEnableScriptCompilation(false);
 
-    try {
-      // given
+    // when/then
+    assertThatCode(() -> {
       deployProcess(GROOVY, "import unknown");
-
-      // when/then
       assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
-        .isInstanceOf(ScriptEvaluationException.class)
-        .hasMessageContaining("import unknown");
-    }
-    finally {
-      // re-enable script compilation
-      processEngineConfiguration.setEnableScriptCompilation(true);
-    }
+          .isInstanceOf(ScriptEvaluationException.class)
+          .hasMessageContaining("import unknown");
+    }).doesNotThrowAnyException();
+
+    // re-enable script compilation
+    processEngineConfiguration.setEnableScriptCompilation(true);
   }
 
   @Test
@@ -595,17 +593,11 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
   @org.operaton.bpm.engine.test.Deployment
   @Test
   void testPreviousTaskShouldNotHandleException(){
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("");
-    }
-    // since the NVE extends the ProcessEngineException we have to handle it
-    // separately
-    catch (NullValueException nve) {
-      fail("Shouldn't have received NullValueException");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Invalid format");
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ProcessEngineException.class)
+        .isNotInstanceOf(NullValueException.class)
+        .hasMessageContaining("Invalid format");
   }
 
   @org.operaton.bpm.engine.test.Deployment
@@ -624,18 +616,18 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
   @org.operaton.bpm.engine.test.Deployment
   @Test
   void testGroovyScriptExecution() {
-    try {
+    // given
+    processEngineConfiguration.setAutoStoreScriptVariables(true);
+    int[] inputArray = new int[] {1, 2, 3, 4, 5};
 
-      processEngineConfiguration.setAutoStoreScriptVariables(true);
-      int[] inputArray = new int[] {1, 2, 3, 4, 5};
-      ProcessInstance pi = runtimeService.startProcessInstanceByKey("scriptExecution", CollectionUtil.singletonMap("inputArray", inputArray));
+    // when
+    ProcessInstance pi = runtimeService.startProcessInstanceByKey("scriptExecution", CollectionUtil.singletonMap("inputArray", inputArray));
 
-      Integer result = (Integer) runtimeService.getVariable(pi.getId(), "sum");
-      assertThat(result.intValue()).isEqualTo(15);
+    // then
+    Integer result = (Integer) runtimeService.getVariable(pi.getId(), "sum");
+    assertThat(result.intValue()).isEqualTo(15);
 
-    } finally {
-      processEngineConfiguration.setAutoStoreScriptVariables(false);
-    }
+    processEngineConfiguration.setAutoStoreScriptVariables(false);
   }
 
   @org.operaton.bpm.engine.test.Deployment
@@ -662,33 +654,32 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
 
   @Test
   void shouldLoadExternalScriptJavascript() {
-    try {
-      // GIVEN
-      // an external JS file with a function
-      // and external file loading being allowed
-      processEngineConfiguration.setEnableScriptEngineLoadExternalResources(true);
+    // given
+    // an external JS file with a function
+    // and external file loading being allowed
+    processEngineConfiguration.setEnableScriptEngineLoadExternalResources(true);
+    String normalizedPath = getNormalizedResourcePath("/org/operaton/bpm/engine/test/bpmn/scripttask/sum.js");
 
-      deployProcess(JAVASCRIPT,
-          // WHEN
-          // we load a function from an external file
-          "load(\"" + getNormalizedResourcePath("/org/operaton/bpm/engine/test/bpmn/scripttask/sum.js") + "\");"
-          // THEN
-          // we can use that function
-        + "execution.setVariable('foo', sum(3, 4));"
-      );
+    deployProcess(JAVASCRIPT,
+        // WHEN
+        // we load a function from an external file
+        "load(\"" + normalizedPath + "\");"
+        // THEN
+        // we can use that function
+      + "execution.setVariable('foo', sum(3, 4));"
+    );
 
-      // WHEN
-      // we start an instance of this process
-      ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
+    // WHEN
+    // we start an instance of this process
+    ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
-      // THEN
-      // the script task can be executed without exceptions
-      // the execution variable is stored and has the correct value
-      Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
-      assertThat(variableValue).isEqualTo(7);
-    } finally {
-      processEngineConfiguration.setEnableScriptEngineLoadExternalResources(false);
-    }
+    // THEN
+    // the script task can be executed without exceptions
+    // the execution variable is stored and has the correct value
+    Object variableValue = runtimeService.getVariable(pi.getId(), "foo");
+    assertThat(variableValue).isEqualTo(7);
+
+    processEngineConfiguration.setEnableScriptEngineLoadExternalResources(false);
   }
 
   @Test

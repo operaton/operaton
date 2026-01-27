@@ -40,8 +40,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 @Parameterized
 public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
@@ -284,12 +284,10 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   private void assertHasPropertyValue(Task task, String operationName, Object expectedValue) {
-    try {
+    // when/then
+    assertThatCode(() -> {
       Object actualValue = ObjectProperty.ofSetterMethod(task, operationName).getValue();
-
       assertThat(actualValue).isEqualTo(expectedValue);
-    } catch (Exception e) {
-      fail("Failed to assert property for operationName=%s due to : %s".formatted(operationName, e.getMessage()));
-    }
+    }).doesNotThrowAnyException();
   }
 }

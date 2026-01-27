@@ -80,12 +80,10 @@ public abstract class AbstractScriptTaskTest {
   }
 
   protected String getNormalizedResourcePath(String classPathResource) {
-    try {
-      return Path.of(getClass().getResource(classPathResource).toURI()).toString().replace('\\', '/');
-    } catch (Exception e) {
-      fail("Cannot read path of '%s': %s".formatted(classPathResource, e.getMessage()));
-      return null;
-    }
+    String[] result = new String[1];
+    assertThatCode(() -> result[0] = Path.of(getClass().getResource(classPathResource).toURI()).toString().replace('\\', '/'))
+        .doesNotThrowAnyException();
+    return result[0];
   }
 
 }

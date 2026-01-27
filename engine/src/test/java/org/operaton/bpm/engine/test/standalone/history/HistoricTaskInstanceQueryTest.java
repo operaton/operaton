@@ -134,15 +134,11 @@ class HistoricTaskInstanceQueryTest {
 
     assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", "vahid").count()).isZero();
     assertThat(historyService.createHistoricTaskInstanceQuery().processVariableValueLike("nonExistingVar", "string%").count()).isZero();
-    var historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
 
-    // test with null value
-    try {
-      historicTaskInstanceQuery.processVariableValueLike("requester", null);
-      fail("expected exception");
-    } catch (final ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Booleans and null cannot be used in 'like' condition");
-    }
+    // when/then test with null value
+    assertThatThrownBy(() -> historyService.createHistoricTaskInstanceQuery().processVariableValueLike("requester", null))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Booleans and null cannot be used in 'like' condition");
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")

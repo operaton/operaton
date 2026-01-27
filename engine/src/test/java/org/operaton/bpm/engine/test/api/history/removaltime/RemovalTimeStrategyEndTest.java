@@ -357,13 +357,10 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
     ClockUtil.setCurrentTime(START_DATE);
 
-    // when
-    try {
-      IntStream.range(0, degreeOfParallelism).parallel().forEach(i -> runtimeService.startProcessInstanceByKey("process"));
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail("No exception should occur");
-    }
+    // when/then
+    assertThatCode(() -> IntStream.range(0, degreeOfParallelism).parallel()
+        .forEach(i -> runtimeService.startProcessInstanceByKey("process")))
+        .doesNotThrowAnyException();
   }
 
   @Test

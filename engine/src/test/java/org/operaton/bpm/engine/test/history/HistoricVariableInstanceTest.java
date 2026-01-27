@@ -752,12 +752,9 @@ class HistoricVariableInstanceTest {
       assertThat(typedValue).isNotNull();
       assertThat(typedValue.isDeserialized()).isFalse();
       // cannot access the deserialized value
-      try {
-        typedValue.getValue();
-      }
-      catch(IllegalStateException e) {
-        testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-      }
+      assertThatThrownBy(typedValue::getValue)
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("Object is not deserialized");
       assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 
@@ -792,12 +789,9 @@ class HistoricVariableInstanceTest {
       assertThat(typedValue).isNotNull();
       assertThat(typedValue.isDeserialized()).isFalse();
       // cannot access the deserialized value
-      try {
-        typedValue.getValue();
-      }
-      catch(IllegalStateException e) {
-        testRule.assertTextPresent("Object is not deserialized", e.getMessage());
-      }
+      assertThatThrownBy(typedValue::getValue)
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("Object is not deserialized");
       assertThat(typedValue.getValueSerialized()).isNotNull();
     }
 

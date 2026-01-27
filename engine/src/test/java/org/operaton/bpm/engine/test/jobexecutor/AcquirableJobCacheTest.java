@@ -39,7 +39,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class AcquirableJobCacheTest {
 
@@ -58,18 +58,13 @@ class AcquirableJobCacheTest {
     // given
     runtimeService.startProcessInstanceByKey("asyncServiceTaskProcess");
 
-    try {
-      // when
-      fetchJobAfterCachedAcquirableJob();
-      fail("expected exception");
-    } catch (Exception e) {
-      // then
-      assertThat(e).isInstanceOf(ProcessEngineException.class);
-      assertThat(e.getMessage())
+    // when/then
+    assertThatThrownBy(this::fetchJobAfterCachedAcquirableJob)
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(e -> assertThat(e.getMessage())
           .contains("Could not lookup entity of type")
           .contains(AcquirableJobEntity.class.getSimpleName())
-          .contains(JobEntity.class.getSimpleName());
-    }
+          .contains(JobEntity.class.getSimpleName()));
   }
 
   @Test
@@ -86,18 +81,13 @@ class AcquirableJobCacheTest {
     Execution execution = runtimeService.createExecutionQuery().activityId("userTask").singleResult();
     var executionId = execution.getId();
 
-    try {
-      // when
-      fetchTimerJobAfterCachedAcquirableJob(executionId);
-      fail("expected exception");
-    } catch (Exception e) {
-      // then
-      assertThat(e).isInstanceOf(ProcessEngineException.class);
-      assertThat(e.getMessage())
+    // when/then
+    assertThatThrownBy(() -> fetchTimerJobAfterCachedAcquirableJob(executionId))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(e -> assertThat(e.getMessage())
           .contains("Could not lookup entity of type")
           .contains(TimerEntity.class.getSimpleName())
-          .contains(AcquirableJobEntity.class.getSimpleName());
-    }
+          .contains(AcquirableJobEntity.class.getSimpleName()));
   }
 
   @Test

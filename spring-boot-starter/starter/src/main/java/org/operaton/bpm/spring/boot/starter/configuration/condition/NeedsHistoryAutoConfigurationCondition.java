@@ -18,12 +18,14 @@ package org.operaton.bpm.spring.boot.starter.configuration.condition;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
-import org.operaton.bpm.engine.ProcessEngineConfiguration;
+
 import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.util.ReflectionUtils;
+
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
 
 public class NeedsHistoryAutoConfigurationCondition extends SpringBootCondition {
 

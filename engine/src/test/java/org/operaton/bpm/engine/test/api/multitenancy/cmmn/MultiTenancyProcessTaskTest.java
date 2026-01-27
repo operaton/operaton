@@ -32,7 +32,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyProcessTaskTest {
 
@@ -128,49 +128,40 @@ class MultiTenancyProcessTaskTest {
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
-
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
 
-    try {
-      createCaseInstance("testCaseDeployment", TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'testProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance("testCaseDeployment", TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'testProcess'");
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
-
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
 
-    try {
-      createCaseInstance("testCase", TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key 'testProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance("testCase", TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key 'testProcess'");
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
-
+    // given
     testRule.deployForTenant(TENANT_ONE, PROCESS, CMMN_VERSION_2);
 
     testRule.deployForTenant(TENANT_TWO, PROCESS);
     testRule.deployForTenant(TENANT_TWO, PROCESS);
 
-    try {
-      createCaseInstance("testCaseVersion", TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'testProcess'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance("testCaseVersion", TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'testProcess'");
   }
 
   @Test

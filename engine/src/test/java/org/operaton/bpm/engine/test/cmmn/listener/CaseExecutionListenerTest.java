@@ -23,6 +23,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.delegate.CaseExecutionListener;
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
@@ -30,6 +31,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -1987,57 +1989,38 @@ class CaseExecutionListenerTest extends CmmnTest {
   @Test
   void testDoesNotImplementCaseExecutionListenerInterfaceByClass() {
     // given
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
 
-
-    try {
-      // when
-      caseService
-        .withCaseDefinitionByKey("case")
-        .create();
-    } catch (Exception e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '%s'".formatted(CaseExecutionListener.class.getName()), message);
-    }
-
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-05016 Class 'org.operaton.bpm.engine.test.cmmn.listener.NotCaseExecutionListener' doesn't implement '%s'".formatted(CaseExecutionListener.class.getName()));
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression.cmmn"})
   @Test
   void testDoesNotImplementCaseExecutionListenerInterfaceByDelegateExpression() {
     // given
+    var caseInstanceBuilder = caseService
+          .withCaseDefinitionByKey("case")
+          .setVariable("myListener", new NotCaseExecutionListener());
 
-    try {
-      // when
-      caseService
-        .withCaseDefinitionByKey("case")
-        .setVariable("myListener", new NotCaseExecutionListener())
-        .create();
-    } catch (Exception e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("Delegate expression ${myListener} did not resolve to an implementation of interface "+CaseExecutionListener.class.getName(), message);
-    }
-
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Delegate expression ${myListener} did not resolve to an implementation of interface "+CaseExecutionListener.class.getName());
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testListenerDoesNotExist.cmmn"})
   @Test
   void testListenerDoesNotExist() {
     // given
+    var caseInstanceBuilder = caseService.withCaseDefinitionByKey("case");
 
-    try {
-      // when
-      caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-    } catch (Exception e) {
-      // then
-      String message = e.getMessage();
-      testRule.assertTextPresent("Exception while instantiating class 'org.operaton.bpm.engine.test.cmmn.listener.NotExistingCaseExecutionListener'", message);
-    }
-
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Exception while instantiating class 'org.operaton.bpm.engine.test.cmmn.listener.NotExistingCaseExecutionListener'");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/cmmn/listener/CaseExecutionListenerTest.testBusinessKeyAsCaseBusinessKey.cmmn"})

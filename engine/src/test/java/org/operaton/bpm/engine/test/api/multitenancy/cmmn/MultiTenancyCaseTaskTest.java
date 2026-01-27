@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyCaseTaskTest {
 
@@ -121,49 +121,40 @@ class MultiTenancyCaseTaskTest {
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
-
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_DEPLOYMENT);
     testRule.deployForTenant(TENANT_TWO, CMMN_CASE);
 
-    try {
-      createCaseInstance("caseTaskCaseDeployment", TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key = 'oneTaskCase'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance("caseTaskCaseDeployment", TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key = 'oneTaskCase'");
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
-
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_LATEST);
     testRule.deployForTenant(TENANT_TWO, CMMN_CASE);
 
-    try {
-      createCaseInstance("caseTaskCase", TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key 'oneTaskCase'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance("caseTaskCase", TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key 'oneTaskCase'");
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
-
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_VERSION_2, CMMN_CASE);
 
     testRule.deployForTenant(TENANT_TWO, CMMN_CASE);
     testRule.deployForTenant(TENANT_TWO, CMMN_CASE);
 
-    try {
-      createCaseInstance("caseTaskCaseVersion", TENANT_ONE);
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key = 'oneTaskCase'");
-    }
+    // when/then
+    assertThatThrownBy(() -> createCaseInstance("caseTaskCaseVersion", TENANT_ONE))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key = 'oneTaskCase'");
   }
 
   @Test

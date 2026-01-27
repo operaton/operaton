@@ -54,7 +54,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigratingProcessInstanceValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -192,13 +192,13 @@ class MigrationUserTaskTest {
 
 
     // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should not succeed because the userTask2 instance is not mapped");
-    } catch (MigratingProcessInstanceValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasActivityInstanceFailures("userTask2", "There is no migration instruction for this instance's activity");
-    }
+    assertThatThrownBy(() -> testHelper.createProcessInstanceAndMigrate(migrationPlan))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasActivityInstanceFailures("userTask2", "There is no migration instruction for this instance's activity");
+      });
   }
 
   @Test
@@ -220,13 +220,13 @@ class MigrationUserTaskTest {
 
 
     // when
-    try {
-      testHelper.createProcessInstanceAndMigrate(migrationPlan);
-      fail("should not succeed because the userTask2 instance is not mapped");
-    } catch (MigratingProcessInstanceValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasTransitionInstanceFailures("userTask2", "There is no migration instruction for this instance's activity");
-    }
+    assertThatThrownBy(() -> testHelper.createProcessInstanceAndMigrate(migrationPlan))
+      .isInstanceOf(MigratingProcessInstanceValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigratingProcessInstanceValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasTransitionInstanceFailures("userTask2", "There is no migration instruction for this instance's activity");
+      });
   }
 
   @Test

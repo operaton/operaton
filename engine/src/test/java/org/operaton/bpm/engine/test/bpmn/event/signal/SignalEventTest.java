@@ -55,6 +55,7 @@ import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 import org.operaton.bpm.engine.variable.value.ObjectValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -586,11 +587,10 @@ class SignalEventTest {
     String serializedObject = StringUtil.fromBytes(Base64.getEncoder().encode(baos.toByteArray()), engineRule.getProcessEngine());
 
     // then it is not possible to deserialize the object
-    try {
-      new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray())).readObject();
-    } catch (RuntimeException e) {
-      testRule.assertTextPresent("Exception while deserializing object.", e.getMessage());
-    }
+    var objectInputStream = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
+    assertThatThrownBy(() -> objectInputStream.readObject())
+      .isInstanceOf(RuntimeException.class)
+      .hasMessageContaining("Exception while deserializing object.");
 
     // but it can be set as a variable when delivering a message:
     runtimeService

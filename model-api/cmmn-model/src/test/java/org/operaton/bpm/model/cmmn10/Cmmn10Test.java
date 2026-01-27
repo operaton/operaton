@@ -51,6 +51,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("java:S1874") // Tests for deprecated methods
 class Cmmn10Test {
 
   @Test

@@ -31,7 +31,7 @@ import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.persistence.entity.DeploymentEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -151,13 +151,10 @@ class CaseHandlerTest extends CmmnElementHandlerTest {
     Integer historyTimeToLive = -6;
     caseDefinition.setOperatonHistoryTimeToLiveString(historyTimeToLive.toString());
 
-    try {
-      // when
-      handler.handleElement(caseDefinition, context);
-      fail("Exception is expected, that negative value is not allowed.");
-    } catch (NotValidException ex) {
-      assertThat(ex.getMessage()).contains("negative value is not allowed");
-    }
+    // when/then
+    assertThatThrownBy(() -> handler.handleElement(caseDefinition, context))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("negative value is not allowed");
   }
 
 }

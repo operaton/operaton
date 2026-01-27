@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyCreateCaseInstanceTest {
 
@@ -55,63 +55,59 @@ class MultiTenancyCreateCaseInstanceTest {
 
   @Test
   void testFailToCreateCaseInstanceByIdWithoutTenantId() {
+    // given
    testRule.deploy(CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     var caseInstanceBuilder = caseService.withCaseDefinition(caseDefinition.getId())
           .caseDefinitionWithoutTenantId();
 
-    try {
-      caseInstanceBuilder.create();
-      fail("BadUserRequestException exception");
-    } catch(BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToCreateCaseInstanceByIdWithTenantId() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     var caseInstanceBuilder = caseService.withCaseDefinition(caseDefinition.getId())
           .caseDefinitionTenantId(TENANT_ONE);
 
-    try {
-      caseInstanceBuilder.create();
-      fail("BadUserRequestException exception");
-    } catch(BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot specify a tenant-id");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot specify a tenant-id");
   }
 
   @Test
   void testFailToCreateCaseInstanceByKeyForNonExistingTenantID() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
           .caseDefinitionTenantId("nonExistingTenantId");
 
-    try {
-      caseInstanceBuilder.create();
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key 'oneTaskCase' and tenant-id 'nonExistingTenantId'");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key 'oneTaskCase' and tenant-id 'nonExistingTenantId'");
   }
 
   @Test
   void testFailToCreateCaseInstanceByKeyForMultipleTenants() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     testRule.deployForTenant(TENANT_TWO, CMMN_FILE);
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY);
 
-    try {
-      caseInstanceBuilder.create();
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("multiple tenants.");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("multiple tenants.");
   }
 
   @Test
@@ -166,39 +162,36 @@ class MultiTenancyCreateCaseInstanceTest {
 
   @Test
   void testFailToCreateCaseInstanceByKeyNoAuthenticatedTenants() {
+    // given
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY);
 
-    try {
-      caseInstanceBuilder.create();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key 'oneTaskCase'");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key 'oneTaskCase'");
   }
 
   @Test
   void testFailToCreateCaseInstanceByKeyWithTenantIdNoAuthenticatedTenants() {
+    // given
     identityService.setAuthentication("user", null, null);
 
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
     var caseInstanceBuilder = caseService.withCaseDefinitionByKey(CASE_DEFINITION_KEY)
         .caseDefinitionTenantId(TENANT_ONE);
 
-    try {
-      caseInstanceBuilder.create();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot create an instance of the case definition");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create an instance of the case definition");
   }
 
   @Test
   void testFailToCreateCaseInstanceByIdNoAuthenticatedTenants() {
+    // given
     testRule.deployForTenant(TENANT_ONE, CMMN_FILE);
 
     CaseDefinition caseDefinition = repositoryService
@@ -208,13 +201,10 @@ class MultiTenancyCreateCaseInstanceTest {
     identityService.setAuthentication("user", null, null);
     var caseInstanceBuilder = caseService.withCaseDefinition(caseDefinition.getId());
 
-    try {
-      caseInstanceBuilder.create();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot create an instance of the case definition");
-    }
+    // when/then
+    assertThatThrownBy(caseInstanceBuilder::create)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot create an instance of the case definition");
   }
 
   @Test

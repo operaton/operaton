@@ -708,7 +708,7 @@ class BpmnParseTest {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
-    assertThat(flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
+    assertThat(flowScope.getProperty(BpmnParse.TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
     assertThat(((ActivityImpl) flowScope).getActivityId()).isEqualTo("bookHotel" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
   }
 
@@ -719,7 +719,7 @@ class BpmnParseTest {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
-    assertThat(flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
+    assertThat(flowScope.getProperty(BpmnParse.TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
     assertThat(((ActivityImpl) flowScope).getActivityId()).isEqualTo("scope" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
   }
 
@@ -1366,8 +1366,8 @@ class BpmnParseTest {
 
   @Test
   void testFeatureSecureProcessingRejectsDefinitionDueToAttributeLimit() {
-    // IBM JDKs do not check on attribute number limits, skip the test there
-    assumeThat(System.getProperty("java.vm.vendor")).doesNotContain("IBM");
+    // IBM & Eclipse JDKs do not check on attribute number limits, skip the test there
+    assumeThat(System.getProperty("java.vm.vendor")).doesNotContain("IBM", "Eclipse");
 
     // given
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionFSP");

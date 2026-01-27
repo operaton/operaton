@@ -16,18 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.repository.ResourceDefinitionEntity;
 import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 
 public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
-    ResourceDefinitionEntity<OperatonFormDefinitionEntity>, DbEntity, HasDbRevision, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+    ResourceDefinitionEntity<OperatonFormDefinitionEntity>, DbEntity, HasDbRevision {
 
   protected String id;
   protected int revision = 1;
@@ -36,7 +31,6 @@ public class OperatonFormDefinitionEntity implements OperatonFormDefinition,
   protected String deploymentId;
   protected String resourceName;
   protected String tenantId;
-
 
   public OperatonFormDefinitionEntity(String key, String deploymentId, String resourceName, String tenantId) {
     this.key = key;

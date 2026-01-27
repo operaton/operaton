@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -28,9 +26,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.HasDbReferences;
 
-public class TaskMeterLogEntity implements DbEntity, HasDbReferences, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class TaskMeterLogEntity implements DbEntity, HasDbReferences {
 
   protected String id;
 

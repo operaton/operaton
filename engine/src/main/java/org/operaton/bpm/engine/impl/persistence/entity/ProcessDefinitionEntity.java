@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.delegate.Expression;
@@ -39,14 +38,11 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 
-
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
 public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
-
-  @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected String key;

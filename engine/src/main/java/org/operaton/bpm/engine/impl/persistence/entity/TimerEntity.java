@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -49,9 +48,6 @@ public class TimerEntity extends JobEntity {
   private static final DateTimeFormatter ISO_LOCAL_DATE_TIME_WITHOUT_NANOS = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
   public static final String TYPE = "timer";
-
-  @Serial
-  private static final long serialVersionUID = 1L;
 
   protected String repeat;
 

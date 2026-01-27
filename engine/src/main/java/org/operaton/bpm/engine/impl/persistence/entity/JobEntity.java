@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.*;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -53,14 +51,12 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
  * @author Frederik Heremans
  */
 public abstract class JobEntity extends AcquirableJobEntity
-  implements Serializable, Job, DbEntity,
+  implements Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   public static final int DEFAULT_RETRIES = 3;
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String executionId;
 
@@ -365,7 +361,6 @@ public abstract class JobEntity extends AcquirableJobEntity
         }
 
       }
-
 
       IncidentContext incidentContext = createIncidentContext();
       incidentContext.setActivityId(getActivityId());

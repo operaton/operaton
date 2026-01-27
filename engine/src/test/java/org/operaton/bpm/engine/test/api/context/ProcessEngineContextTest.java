@@ -32,7 +32,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ProcessEngineContextTest {
 
@@ -145,11 +145,8 @@ class ProcessEngineContextTest {
           .singleResult();
 
       if (Boolean.TRUE.equals(requiresNew)) {
-        try {
-          ProcessEngineContext.withNewProcessEngineContext(this::executeNestedCommand);
-        } catch (Exception e) {
-          fail("Test failed with exception: " + e.getMessage());
-        }
+        assertThatCode(() -> ProcessEngineContext.withNewProcessEngineContext(this::executeNestedCommand))
+          .doesNotThrowAnyException();
       } else {
         return executeNestedCommand();
       }
@@ -191,11 +188,9 @@ class ProcessEngineContextTest {
         .processDefinitionKey(SIMPLE_PROCESS_KEY)
         .singleResult();
 
-      try {
-        return call();
-      } catch (Exception e) {
-        fail("Test failed with exception: " + e.getMessage());
-      }
+      // when/then
+      assertThatCode(() -> call())
+        .doesNotThrowAnyException();
 
       return null;
     }

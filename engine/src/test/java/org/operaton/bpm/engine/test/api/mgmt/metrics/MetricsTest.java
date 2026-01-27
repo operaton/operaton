@@ -36,8 +36,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -258,17 +258,14 @@ class MetricsTest {
   void testReportNowIfMetricsIsDisabled() {
     boolean defaultIsMetricsEnabled = processEngineConfiguration.isMetricsEnabled();
 
-    // given
-    processEngineConfiguration.setMetricsEnabled(false);
+    try {
+      // given
+      processEngineConfiguration.setMetricsEnabled(false);
 
-   try {
-      // when
-      managementService.reportDbMetricsNow();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // then an exception is thrown
-      assertThat(e.getMessage()).contains("Metrics reporting is disabled");
+      // when/then
+      assertThatThrownBy(() -> managementService.reportDbMetricsNow())
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Metrics reporting is disabled");
     }
     finally {
       // reset metrics setting
@@ -281,18 +278,15 @@ class MetricsTest {
     boolean defaultIsMetricsEnabled = processEngineConfiguration.isMetricsEnabled();
     boolean defaultIsMetricsReporterActivate = processEngineConfiguration.isDbMetricsReporterActivate();
 
-    // given
-    processEngineConfiguration.setMetricsEnabled(true);
-    processEngineConfiguration.setDbMetricsReporterActivate(false);
-
     try {
-      // when
-      managementService.reportDbMetricsNow();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // then an exception is thrown
-      assertThat(e.getMessage()).contains("Metrics reporting to database is disabled");
+      // given
+      processEngineConfiguration.setMetricsEnabled(true);
+      processEngineConfiguration.setDbMetricsReporterActivate(false);
+
+      // when/then
+      assertThatThrownBy(() -> managementService.reportDbMetricsNow())
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Metrics reporting to database is disabled");
     } finally {
       processEngineConfiguration.setMetricsEnabled(defaultIsMetricsEnabled);
       processEngineConfiguration.setDbMetricsReporterActivate(defaultIsMetricsReporterActivate);

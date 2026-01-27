@@ -676,9 +676,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueGreaterThan("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueGreaterThan("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than' condition");
   }
@@ -705,9 +706,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueGreaterThan("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueGreaterThan("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than' condition");
   }
@@ -835,9 +837,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueGreaterThanOrEqual("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueGreaterThanOrEqual("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than or equal' condition");
 
@@ -871,9 +874,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueGreaterThanOrEqual("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueGreaterThanOrEqual("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than or equal' condition");
 
@@ -1032,9 +1036,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueLessThan("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueLessThan("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than' condition");
 
@@ -1062,9 +1067,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueLessThan("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueLessThan("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than' condition");
 
@@ -1191,8 +1197,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
+
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueLessThanOrEqual("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueLessThanOrEqual("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than or equal' condition");
 
@@ -1226,9 +1234,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueLessThanOrEqual("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueLessThanOrEqual("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than or equal' condition");
 
@@ -1386,9 +1395,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().variableValueLike("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.variableValueLike("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'like' condition");
 
@@ -1716,9 +1726,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThan("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueGreaterThan("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than' condition");
 
@@ -1746,9 +1757,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThan("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueGreaterThan("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than' condition");
 
@@ -1877,9 +1889,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThanOrEqual("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueGreaterThanOrEqual("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than or equal' condition");
 
@@ -1913,9 +1926,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueGreaterThanOrEqual("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueGreaterThanOrEqual("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'greater than or equal' condition");
 
@@ -2074,9 +2088,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThan("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueLessThan("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than' condition");
 
@@ -2104,9 +2119,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThan("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueLessThan("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than' condition");
 
@@ -2234,9 +2250,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThanOrEqual("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueLessThanOrEqual("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than or equal' condition");
 
@@ -2270,9 +2287,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
 
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueLessThanOrEqual("aBooleanValue", false))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueLessThanOrEqual("aBooleanValue", false))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'less than or equal' condition");
 
@@ -2430,8 +2448,10 @@ class CaseExecutionQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
+    var caseExecutionQuery = caseService.createCaseExecutionQuery();
+
     // when/then
-    assertThatThrownBy(() -> caseService.createCaseExecutionQuery().caseInstanceVariableValueLike("aNullValue", null))
+    assertThatThrownBy(() -> caseExecutionQuery.caseInstanceVariableValueLike("aNullValue", null))
         .isInstanceOf(NotValidException.class)
         .hasMessage("Booleans and null cannot be used in 'like' condition");
 
@@ -2628,7 +2648,7 @@ class CaseExecutionQueryTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/required/RequiredRuleTest.testVariableBasedRule.cmmn")
   @Test
   void testQueryByRequired() {
-    caseService.createCaseInstanceByKey("case", Collections.<String, Object>singletonMap("required", true));
+    caseService.createCaseInstanceByKey("case", Collections.singletonMap("required", true));
 
     CaseExecutionQuery query = caseService
         .createCaseExecutionQuery()

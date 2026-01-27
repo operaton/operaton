@@ -403,7 +403,8 @@ class MessageCorrelationTest {
 
     // when - it is not possible to deserialize the object
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    assertThatThrownBy(() -> new ObjectInputStream(bais).readObject())
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object.");
 
@@ -441,7 +442,8 @@ class MessageCorrelationTest {
 
     // when - it is not possible to deserialize the object
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    assertThatThrownBy(() -> new ObjectInputStream(bais).readObject())
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object.");
 
@@ -588,7 +590,8 @@ class MessageCorrelationTest {
 
     // when - it is not possible to deserialize the object
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    assertThatThrownBy(() -> new ObjectInputStream(bais).readObject())
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object.");
 
@@ -628,7 +631,8 @@ class MessageCorrelationTest {
 
     // when - it is not possible to deserialize the object
     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
-    assertThatThrownBy(() -> new ObjectInputStream(bais).readObject())
+    ObjectInputStream ois = new ObjectInputStream(bais);
+    assertThatThrownBy(ois::readObject)
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object.");
 

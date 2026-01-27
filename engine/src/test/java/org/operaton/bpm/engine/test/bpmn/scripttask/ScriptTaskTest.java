@@ -33,8 +33,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  *
@@ -305,7 +305,7 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
     // THEN
     // the variable is defined
     Object variable = runtimeService.getVariable(pi.getId(), "foo");
-    assertThat(variable).isEqualTo(3l);
+    assertThat(variable).isEqualTo(3L);
 
   }
 
@@ -669,11 +669,11 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
       + "execution.setVariable('foo', sum(3, 4));"
     );
 
-    // WHEN
+    // when
     // we start an instance of this process
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
 
-    // THEN
+    // then
     // the script task can be executed without exceptions
     // the execution variable is stored and has the correct value
     Object variableValue = runtimeService.getVariable(pi.getId(), "foo");

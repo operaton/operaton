@@ -46,7 +46,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -211,18 +211,18 @@ public class ProcessDiagramRetrievalTest {
   }
 
   private void assertLayoutCorrect(DiagramLayout processDiagramLayout) {
-    // given
     String html = generateHtmlCode(imageFileName, processDiagramLayout, highlightedActivityId);
-    File htmlFile = new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".html");
 
-    // when/then
-    assertThatCode(() -> {
+    File htmlFile = new File("src/test/resources/org/operaton/bpm/engine/test/api/repository/diagram/" + imageFileName + ".html");
+    try {
       if (OVERWRITE_EXPECTED_HTML_FILES) {
         FileUtils.writeStringToFile(htmlFile, html, StandardCharsets.UTF_8);
-        assertThat(false).withFailMessage("The assertions of this test only work if ProcessDiagramRetrievalTest#OVERWRITE_EXPECTED_HTML_FILES is set to false.").isTrue();
+        fail("The assertions of this test only work if ProcessDiagramRetrievalTest#OVERWRITE_EXPECTED_HTML_FILES is set to false.");
       }
       assertThat(html).isEqualTo(FileUtils.readFileToString(htmlFile, StandardCharsets.UTF_8).replace("\r", "")); // remove carriage returns in case the files have been fetched via Git on Windows
-    }).doesNotThrowAnyException();
+    } catch (IOException e) {
+      fail("Could not read or write file: " + e.getMessage());
+    }
   }
 
   private static String generateHtmlCode(String imageUrl, DiagramLayout processDiagramLayout, String highlightedActivityId) {

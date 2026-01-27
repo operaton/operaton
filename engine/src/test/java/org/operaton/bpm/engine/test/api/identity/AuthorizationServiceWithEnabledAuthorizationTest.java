@@ -202,7 +202,6 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
 
   @Test
   void testNullAuthorizationCheckUserGroup() {
-    // when/then
     assertThatThrownBy(() -> authorizationService.isUserAuthorized(null, null, UPDATE, TestResource.RESOURCE1))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("Authorization must have a 'userId' or/and a 'groupId'");
@@ -210,7 +209,6 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
 
   @Test
   void testNullAuthorizationCheckPermission() {
-    // when/then
     assertThatThrownBy(() -> authorizationService.isUserAuthorized("jonny", null, null, TestResource.RESOURCE1))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("Invalid permission for an authorization");
@@ -218,7 +216,6 @@ class AuthorizationServiceWithEnabledAuthorizationTest {
 
   @Test
   void testNullAuthorizationCheckResource() {
-    // when/then
     assertThatThrownBy(() -> authorizationService.isUserAuthorized("jonny", null, UPDATE, null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("Invalid resource for an authorization");

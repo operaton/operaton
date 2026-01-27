@@ -284,10 +284,11 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   private void assertHasPropertyValue(Task task, String operationName, Object expectedValue) {
-    // when/then
     assertThatCode(() -> {
       Object actualValue = ObjectProperty.ofSetterMethod(task, operationName).getValue();
       assertThat(actualValue).isEqualTo(expectedValue);
-    }).doesNotThrowAnyException();
+    })
+        .withFailMessage("Failed to assert property for operationName=%s".formatted(operationName))
+        .doesNotThrowAnyException();
   }
 }

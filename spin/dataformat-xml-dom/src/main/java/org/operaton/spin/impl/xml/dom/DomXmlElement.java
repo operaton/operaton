@@ -23,6 +23,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import java.util.concurrent.atomic.AtomicReference;
 import javax.xml.transform.Transformer;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
@@ -54,9 +55,7 @@ public class DomXmlElement extends SpinXmlElement {
 
   private static final DomXmlLogger LOG = DomXmlLogger.XML_DOM_LOGGER;
 
-  protected static Transformer cachedTransformer;
-
-  protected static XPathFactory cachedXPathFactory;
+  private static AtomicReference<XPathFactory> cachedXPathFactory = new AtomicReference<>();
 
   protected final Element domElement;
   protected final DomXmlDataFormat dataFormat;
@@ -428,10 +427,10 @@ public class DomXmlElement extends SpinXmlElement {
    * @return the XPath factory
    */
   protected XPathFactory getXPathFactory() {
-    if (cachedXPathFactory == null) {
-      cachedXPathFactory = XPathFactory.newInstance();
+    if (cachedXPathFactory.get() == null) {
+      cachedXPathFactory.set(XPathFactory.newInstance());
     }
-    return cachedXPathFactory;
+    return cachedXPathFactory.get();
   }
 
   @Override

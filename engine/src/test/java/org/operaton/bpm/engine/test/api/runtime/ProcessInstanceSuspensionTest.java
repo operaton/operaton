@@ -156,22 +156,22 @@ class ProcessInstanceSuspensionTest {
     assertThatCode(() -> {
       //activate
       runtimeService.activateProcessInstanceById(processInstance.getId());
-      var processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isFalse();
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isFalse();
     }).doesNotThrowAnyException();
 
     assertThatCode(() -> {
       //activate
       runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-      var processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isFalse();
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isFalse();
     }).doesNotThrowAnyException();
 
     assertThatCode(() -> {
       //activate
       runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-      var processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isFalse();
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isFalse();
     }).doesNotThrowAnyException();
   }
 
@@ -188,20 +188,20 @@ class ProcessInstanceSuspensionTest {
 
     assertThatCode(() -> {
       runtimeService.suspendProcessInstanceById(processInstance.getId());
-      var processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isTrue();
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isTrue();
     }).doesNotThrowAnyException();
 
     assertThatCode(() -> {
       runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-      var processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isTrue();
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isTrue();
     }).doesNotThrowAnyException();
 
     assertThatCode(() -> {
       runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-      var processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isTrue();
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isTrue();
     }).doesNotThrowAnyException();
   }
 

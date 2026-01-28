@@ -467,6 +467,7 @@ class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void shouldThrowExceptionWhenInstanceModification_MaxResultsLimitExceeded() {
     // given
     engineRule.getProcessEngineConfiguration().setQueryMaxResultsLimit(2);
@@ -497,6 +498,7 @@ class BoundedNumberOfMaxResultsTest {
   }
 
   @Test
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void shouldSyncProcessInstanceModification() {
     // given
     BpmnModelInstance process = Bpmn.createExecutableProcess("process")

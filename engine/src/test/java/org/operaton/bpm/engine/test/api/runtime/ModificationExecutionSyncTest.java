@@ -48,6 +48,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class ModificationExecutionSyncTest {
 
   @RegisterExtension

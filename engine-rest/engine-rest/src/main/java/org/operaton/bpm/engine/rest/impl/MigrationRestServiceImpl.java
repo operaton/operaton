@@ -90,6 +90,7 @@ public class MigrationRestServiceImpl extends AbstractRestProcessEngineAware imp
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   public void executeMigrationPlan(MigrationExecutionDto migrationExecution) {
     createMigrationPlanExecutionBuilder(migrationExecution).execute();
   }

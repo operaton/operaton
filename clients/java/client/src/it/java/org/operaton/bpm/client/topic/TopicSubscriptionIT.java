@@ -36,6 +36,7 @@ import org.operaton.bpm.client.util.RecordingExternalTaskHandler;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.operaton.bpm.client.util.ProcessModels.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -282,7 +283,7 @@ class TopicSubscriptionIT {
 
     List<ExternalTask> handledTasks = handler.getHandledTasks();
     assertThat(handledTasks).hasSize(2);
-    assertThat(handledTasks.get(0).getProcessDefinitionVersionTag()).isEqualTo(null);
+    assertThat(handledTasks.get(0).getProcessDefinitionVersionTag()).isNull();
     assertThat(handledTasks.get(1).getProcessDefinitionVersionTag()).isEqualTo(PROCESS_DEFINITION_VERSION_TAG);
   }
 
@@ -472,74 +473,67 @@ class TopicSubscriptionIT {
   void shouldThrowExceptionDueToClientLockDurationNotGreaterThanZero() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
+    var topicSubscriptionBuilder = client.subscribe(EXTERNAL_TASK_TOPIC_FOO).lockDuration(0);
 
     // when + then
-    assertThatThrownBy(() ->
-      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-        .lockDuration(0)
-        .open()
-    ).isInstanceOf(ExternalTaskClientException.class);
+    assertThatThrownBy(topicSubscriptionBuilder::open)
+      .isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
   void shouldThrowExceptionDueToTopicNameNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
+    var topicSubscriptionBuilder = client.subscribe(null);
 
     // when + then
-    assertThatThrownBy(() -> client.subscribe(null).open()).isInstanceOf(ExternalTaskClientException.class);
+    assertThatThrownBy(topicSubscriptionBuilder::open).isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
   void shouldThrowExceptionDueToMissingHandler() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
+    var topicSubscriptionBuilder = client.subscribe(EXTERNAL_TASK_TOPIC_FOO);
 
     // when + then
-    assertThatThrownBy(() -> client.subscribe(EXTERNAL_TASK_TOPIC_FOO).open()).isInstanceOf(ExternalTaskClientException.class);
+    assertThatThrownBy(topicSubscriptionBuilder::open)
+      .isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
   void shouldThrowExceptionDueToHandlerNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
+    var topicSubscriptionBuilder = client.subscribe(EXTERNAL_TASK_TOPIC_FOO).handler(null);
 
     // when + then
-    assertThatThrownBy(() -> client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(null)
-      .open())
-            .isInstanceOf(ExternalTaskClientException.class);
+    assertThatThrownBy(topicSubscriptionBuilder::open)
+      .isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test
   void shouldUnsubscribeFromTopic() {
     // given
-    TopicSubscription topicSubscription = client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    var topicSubscriptionBuilder = client.subscribe(EXTERNAL_TASK_TOPIC_FOO).handler(handler);
+    var topicSubscription = topicSubscriptionBuilder.open();
 
     // when
     topicSubscription.close();
 
     // then
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    assertThatCode(topicSubscriptionBuilder::open).doesNotThrowAnyException();
   }
 
   @Test
   void shouldThrowExceptionDueToTopicNameAlreadySubscribed() {
     // given
-    client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
-      .open();
+    var topicSubscriptionBuilder = client.subscribe(EXTERNAL_TASK_TOPIC_FOO).handler(handler);
+    topicSubscriptionBuilder.open();
 
     // when + then
-    assertThatThrownBy(() ->
-      client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-        .handler(handler)
-        .open()
-    ).isInstanceOf(ExternalTaskClientException.class);
+    assertThatThrownBy(topicSubscriptionBuilder::open)
+      .isInstanceOf(ExternalTaskClientException.class);
   }
 
   @Test

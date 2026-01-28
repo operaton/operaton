@@ -17,7 +17,7 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MariaDBContainer;
+import org.testcontainers.mariadb.MariaDBContainer;
 import org.testcontainers.containers.MariaDBContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
@@ -34,6 +34,6 @@ public class OperatonMariaDBContainerProvider extends MariaDBContainerProvider {
   public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mariadb", tag, "mariadb");
-    return new MariaDBContainer<>(dockerImageName).withCommand("--transaction-isolation=READ-COMMITTED");
+    return new MariaDBContainer(dockerImageName).withCommand("--transaction-isolation=READ-COMMITTED");
   }
 }

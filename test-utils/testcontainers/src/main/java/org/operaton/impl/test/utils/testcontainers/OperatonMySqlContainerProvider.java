@@ -17,7 +17,7 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.mysql.MySQLContainer;
 import org.testcontainers.containers.MySQLContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
@@ -34,7 +34,7 @@ public class OperatonMySqlContainerProvider extends MySQLContainerProvider {
   public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("mysql", tag, "mysql");
-    return new MySQLContainer<>(dockerImageName)
+    return new MySQLContainer(dockerImageName)
             .withCommand("--transaction-isolation=READ-COMMITTED")
             // See https://docs.operaton.org/docs/documentation/user-guide/process-engine/database/mysql-configuration#jdbc-driver-configuration
             .withUrlParam("sendFractionalSeconds", "false");

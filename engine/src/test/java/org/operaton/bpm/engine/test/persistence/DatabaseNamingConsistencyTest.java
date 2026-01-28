@@ -41,7 +41,7 @@ public class DatabaseNamingConsistencyTest {
       "org/operaton/bpm/engine/db/liquibase/baseline" };
 
   @Test
-  void shouldNotFindLowercaseDbColumnNamesInMappings() throws IOException {
+  void shouldNotFindLowercaseDbColumnNamesInMappings() throws Exception {
     // given
     Pattern pattern = Pattern.compile(COLUMN_NAME_REGEX);
     StringBuilder errorMessageBuilder = new StringBuilder();

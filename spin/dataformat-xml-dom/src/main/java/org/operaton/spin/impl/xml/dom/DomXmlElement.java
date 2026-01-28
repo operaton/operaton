@@ -22,9 +22,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import java.util.concurrent.atomic.AtomicReference;
-import javax.xml.transform.Transformer;
+
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Attr;
@@ -55,7 +54,7 @@ public class DomXmlElement extends SpinXmlElement {
 
   private static final DomXmlLogger LOG = DomXmlLogger.XML_DOM_LOGGER;
 
-  private static AtomicReference<XPathFactory> cachedXPathFactory = new AtomicReference<>();
+  private static final AtomicReference<XPathFactory> cachedXPathFactory = new AtomicReference<>();
 
   protected final Element domElement;
   protected final DomXmlDataFormat dataFormat;

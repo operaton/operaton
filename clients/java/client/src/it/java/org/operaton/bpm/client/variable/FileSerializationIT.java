@@ -61,7 +61,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class FileSerializationIT {
+class FileSerializationIT {
 
   protected static final String VARIABLE_NAME_FILE = "fileVariable";
   protected static final String VARIABLE_VALUE_FILE_NAME = "aFileName.txt";
@@ -92,7 +92,7 @@ public class FileSerializationIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -101,7 +101,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGet() {
+  void shouldGet() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_FILE, VARIABLE_VALUE_FILE);
 
@@ -121,7 +121,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetLocalAndGlobalVariables() {
+  void shouldGetLocalAndGlobalVariables() {
     // given
     ProcessDefinitionDto processDefinitionDto = engineRule.deploy(
         Bpmn.createExecutableProcess("process")
@@ -156,7 +156,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetAll() {
+  void shouldGetAll() {
     // given
     Map<String, TypedValue> variables = new HashMap<>();
     variables.put(VARIABLE_NAME_FILE, VARIABLE_VALUE_FILE);
@@ -181,7 +181,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetTyped_Deferred() {
+  void shouldGetTyped_Deferred() {
     // given
     ProcessInstanceDto processInstanceDto = engineRule.startProcessInstance(processDefinition.getId(),
         VARIABLE_NAME_FILE,
@@ -209,7 +209,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetVariableTypedForLocalVariable() {
+  void shouldGetVariableTypedForLocalVariable() {
     // given
     ProcessDefinitionDto processDefinitionDto = engineRule.deploy(
         Bpmn.createExecutableProcess("process")
@@ -248,7 +248,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetTyped_Loaded() {
+  void shouldGetTyped_Loaded() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_FILE, VARIABLE_VALUE_FILE);
 
@@ -280,7 +280,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetTyped_Encoding() {
+  void shouldGetTyped_Encoding() {
     // given
     FileValue fileValue = Variables
       .fileValue(VARIABLE_VALUE_FILE_NAME)
@@ -309,7 +309,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldGetTyped_MimeType() {
+  void shouldGetTyped_MimeType() {
     // given
     FileValue fileValue = Variables
       .fileValue(VARIABLE_VALUE_FILE_NAME)
@@ -338,7 +338,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSetTyped_Encoding() {
+  void shouldSetTyped_Encoding() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -380,7 +380,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSetTyped_MimeType() {
+  void shouldSetTyped_MimeType() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -421,7 +421,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSet_Bytes() {
+  void shouldSet_Bytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -465,7 +465,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSet_InputStream() {
+  void shouldSet_InputStream() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -510,7 +510,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSet_File() {
+  void shouldSet_File() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -555,7 +555,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldFailWhenCompletingWithDeferredFileValue() {
+  void shouldFailWhenCompletingWithDeferredFileValue() {
     // given
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_FILE, VARIABLE_VALUE_FILE);
 
@@ -595,7 +595,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSet_LoadedFileValue() {
+  void shouldSet_LoadedFileValue() {
     // given
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_FILE, VARIABLE_VALUE_FILE);
 
@@ -636,7 +636,7 @@ public class FileSerializationIT {
   }
 
   @Test
-  public void shouldSet_Transient() {
+  void shouldSet_Transient() {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2,
       "${" + VARIABLE_NAME_FILE + " != null}");

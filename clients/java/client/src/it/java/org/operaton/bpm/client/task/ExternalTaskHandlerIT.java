@@ -60,7 +60,7 @@ public class ExternalTaskHandlerIT {
   protected ProcessInstanceDto processInstance;
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
 
     adjustProcessToAddErrorMessageVariable();
@@ -79,7 +79,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandler() {
+  void shouldInvokeHandler() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
@@ -110,7 +110,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCompleteTask() {
+  void shouldCompleteTask() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.complete(task));
@@ -130,7 +130,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldSetVariablesByProcessInstanceId() {
+  void shouldSetVariablesByProcessInstanceId() {
     // given
     String variableName = "progress";
     Integer variableValue = 10;
@@ -161,7 +161,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldSetVariablesByExternalTask() {
+  void shouldSetVariablesByExternalTask() {
     // given
     String variableName = "progress";
     Integer variableValue = 10;
@@ -192,7 +192,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCompleteWithVariables() {
+  void shouldCompleteWithVariables() {
     // given
     String variableName = "foo";
     String variableValue = "bar";
@@ -220,7 +220,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCompleteWithLocalVariables() {
+  void shouldCompleteWithLocalVariables() {
     // given
     ProcessDefinitionDto definition = engineRule.deploy(ProcessModels.ONE_EXTERNAL_TASK_WITH_OUTPUT_PARAM_PROCESS).get(0);
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
@@ -251,7 +251,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCompleteWithVariablesAndLocalVariables() {
+  void shouldCompleteWithVariablesAndLocalVariables() {
     // given
     ProcessDefinitionDto definition = engineRule.deploy(ProcessModels.ONE_EXTERNAL_TASK_WITH_OUTPUT_PARAM_PROCESS).get(0);
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
@@ -293,7 +293,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCompleteWithTransientVariables() {
+  void shouldCompleteWithTransientVariables() {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2, "${foo == 'bar'}");
     ProcessDefinitionDto definition = engineRule.deploy(process).get(0);
@@ -326,7 +326,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCompleteById() {
+  void shouldCompleteById() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.complete(task.getId(), null, null));
@@ -346,7 +346,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldLock() {
+  void shouldLock() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       // an external task may be locked again by the same worker
@@ -365,7 +365,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldLockById() {
+  void shouldLockById() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       // an external task may be locked again by the same worker
@@ -384,7 +384,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldExtendLock() {
+  void shouldExtendLock() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.extendLock(task, LOCK_DURATION * 10));
@@ -404,7 +404,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldExtendLockById() {
+  void shouldExtendLockById() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.extendLock(task.getId(), LOCK_DURATION * 10));
@@ -424,7 +424,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldUnlockTask() {
+  void shouldUnlockTask() {
     // given
     final AtomicBoolean unlocked = new AtomicBoolean(false);
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
@@ -447,7 +447,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandleBpmnError() {
+  void shouldInvokeHandleBpmnError() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.handleBpmnError(task, "500"));
@@ -467,7 +467,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandleBpmnErrorWithVariables() {
+  void shouldInvokeHandleBpmnErrorWithVariables() {
     // given
     String variableName = "foo";
     String variableValue = "bar";
@@ -498,7 +498,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandleBpmnErrorWithErrorMessage() {
+  void shouldInvokeHandleBpmnErrorWithErrorMessage() {
     // given
     String anErrorMessage = "meaningful error message";
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
@@ -523,7 +523,7 @@ public class ExternalTaskHandlerIT {
 
 
   @Test
-  public void shouldInvokeHandleBpmnErrorById() {
+  void shouldInvokeHandleBpmnErrorById() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.handleBpmnError(task.getId(), "500", null, null));
@@ -543,7 +543,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandleFailure() {
+  void shouldInvokeHandleFailure() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.handleFailure(task, "my-message", "my-details", 0, 0));
@@ -563,7 +563,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandleFailureWithRetries() {
+  void shouldInvokeHandleFailureWithRetries() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.handleFailure(task, "my-message", "my-details", 1, 0));
@@ -589,7 +589,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldInvokeHandleFailureById() {
+  void shouldInvokeHandleFailureById() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) ->
       client.handleFailure(task.getId(), "my-message", "my-details", 0, 0));
@@ -609,7 +609,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldFailWithVariables() {
+  void shouldFailWithVariables() {
     // given
     ProcessDefinitionDto definition = engineRule.deploy(ProcessModels.BPMN_ERROR_EXTERNAL_TASK_WITH_OUTPUT_MAPPING_PROCESS).get(0);
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
@@ -644,7 +644,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldFailWithLocalVariables() {
+  void shouldFailWithLocalVariables() {
     // given
     ProcessDefinitionDto definition = engineRule.deploy(ProcessModels.BPMN_ERROR_EXTERNAL_TASK_WITH_OUTPUT_MAPPING_PROCESS).get(0);
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
@@ -679,7 +679,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldFailWithVariablesAndLocalVariables() {
+  void shouldFailWithVariablesAndLocalVariables() {
     // given
     ProcessDefinitionDto definition = engineRule.deploy(ProcessModels.BPMN_ERROR_EXTERNAL_TASK_WITH_OUTPUT_MAPPING_PROCESS).get(0);
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
@@ -726,7 +726,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCheckExecutionId() {
+  void shouldCheckExecutionId() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
@@ -745,7 +745,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCheckTenantId() {
+  void shouldCheckTenantId() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
     processDefinition = engineRule.deploy("aTenantId", BPMN_ERROR_EXTERNAL_TASK_PROCESS).get(0);
@@ -765,7 +765,7 @@ public class ExternalTaskHandlerIT {
   }
 
   @Test
-  public void shouldCheckTaskPriority() {
+  void shouldCheckTaskPriority() {
     // given
     RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
     // when

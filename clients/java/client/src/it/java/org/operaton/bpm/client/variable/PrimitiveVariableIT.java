@@ -46,7 +46,7 @@ import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCE
 import static org.operaton.bpm.engine.variable.type.ValueType.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PrimitiveVariableIT {
+class PrimitiveVariableIT {
 
   protected static final String VARIABLE_NAME = "foo";
 
@@ -84,7 +84,7 @@ public class PrimitiveVariableIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -93,7 +93,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Integer() {
+  void shoudGetVariable_Integer() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.integerValue(VARIABLE_VALUE_INT));
 
@@ -112,7 +112,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Integer() {
+  void shoudGetVariableTyped_Integer() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.integerValue(VARIABLE_VALUE_INT));
 
@@ -132,7 +132,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullInteger() {
+  void shoudGetVariable_NullInteger() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.integerValue(null));
 
@@ -151,7 +151,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullInteger() {
+  void shoudGetVariableTyped_NullInteger() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.integerValue(null));
 
@@ -171,7 +171,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Integer() {
+  void shoudSetVariable_Integer() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -208,7 +208,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Integer() {
+  void shoudSetVariableTyped_Integer() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -245,7 +245,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Integer() {
+  void shoudSetVariableUntyped_Integer() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -282,7 +282,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullInteger() {
+  void shoudSetVariableTyped_NullInteger() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -319,7 +319,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Long() {
+  void shoudGetVariable_Long() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.longValue(VARIABLE_VALUE_LONG));
 
@@ -338,7 +338,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Long() {
+  void shoudGetVariableTyped_Long() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.longValue(VARIABLE_VALUE_LONG));
 
@@ -358,7 +358,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullLong() {
+  void shoudGetVariable_NullLong() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.longValue(null));
 
@@ -377,7 +377,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullLong() {
+  void shoudGetVariableTyped_NullLong() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.longValue(null));
 
@@ -397,7 +397,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Long() {
+  void shoudSetVariable_Long() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -434,7 +434,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Long() {
+  void shoudSetVariableTyped_Long() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -471,7 +471,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Long() {
+  void shoudSetVariableUntyped_Long() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -508,7 +508,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullLong() {
+  void shoudSetVariableTyped_NullLong() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -545,7 +545,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Short() {
+  void shoudGetVariable_Short() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.shortValue(VARIABLE_VALUE_SHORT));
 
@@ -564,7 +564,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Short() {
+  void shoudGetVariableTyped_Short() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.shortValue(VARIABLE_VALUE_SHORT));
 
@@ -584,7 +584,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullShort() {
+  void shoudGetVariable_NullShort() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.shortValue(null));
 
@@ -603,7 +603,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullShort() {
+  void shoudGetVariableTyped_NullShort() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.shortValue(null));
 
@@ -623,7 +623,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Short() {
+  void shoudSetVariable_Short() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -660,7 +660,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Short() {
+  void shoudSetVariableTyped_Short() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -697,7 +697,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Short() {
+  void shoudSetVariableUntyped_Short() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -734,7 +734,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullShort() {
+  void shoudSetVariableTyped_NullShort() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -771,7 +771,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Double() {
+  void shoudGetVariable_Double() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.doubleValue(VARIABLE_VALUE_DOUBLE));
 
@@ -790,7 +790,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Double() {
+  void shoudGetVariableTyped_Double() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.doubleValue(VARIABLE_VALUE_DOUBLE));
 
@@ -810,7 +810,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullDouble() {
+  void shoudGetVariable_NullDouble() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.doubleValue(null));
 
@@ -829,7 +829,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullDouble() {
+  void shoudGetVariableTyped_NullDouble() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.doubleValue(null));
 
@@ -849,7 +849,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Double() {
+  void shoudSetVariable_Double() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -886,7 +886,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Double() {
+  void shoudSetVariableTyped_Double() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -923,7 +923,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Double() {
+  void shoudSetVariableUntyped_Double() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -960,7 +960,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullDouble() {
+  void shoudSetVariableTyped_NullDouble() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -997,7 +997,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_String() {
+  void shoudGetVariable_String() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE_STRING));
 
@@ -1016,7 +1016,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_String() {
+  void shoudGetVariableTyped_String() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE_STRING));
 
@@ -1036,7 +1036,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullString() {
+  void shoudGetVariable_NullString() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.stringValue(null));
 
@@ -1055,7 +1055,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullString() {
+  void shoudGetVariableTyped_NullString() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.stringValue(null));
 
@@ -1075,7 +1075,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_String() {
+  void shoudSetVariable_String() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1112,7 +1112,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_String() {
+  void shoudSetVariableTyped_String() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1149,7 +1149,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_String() {
+  void shoudSetVariableUntyped_String() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1186,7 +1186,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullString() {
+  void shoudSetVariableTyped_NullString() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1223,7 +1223,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Boolean() {
+  void shoudGetVariable_Boolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.booleanValue(VARIABLE_VALUE_BOOLEAN));
 
@@ -1242,7 +1242,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Boolean() {
+  void shoudGetVariableTyped_Boolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.booleanValue(VARIABLE_VALUE_BOOLEAN));
 
@@ -1262,7 +1262,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullBoolean() {
+  void shoudGetVariable_NullBoolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.booleanValue(null));
 
@@ -1281,7 +1281,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullBoolean() {
+  void shoudGetVariableTyped_NullBoolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.booleanValue(null));
 
@@ -1301,7 +1301,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Boolean() {
+  void shoudSetVariable_Boolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1338,7 +1338,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Boolean() {
+  void shoudSetVariableTyped_Boolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1375,7 +1375,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Boolean() {
+  void shoudSetVariableUntyped_Boolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1412,7 +1412,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullBoolean() {
+  void shoudSetVariableTyped_NullBoolean() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1449,7 +1449,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Date() {
+  void shoudGetVariable_Date() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.dateValue(VARIABLE_VALUE_DATE));
 
@@ -1468,7 +1468,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Date() {
+  void shoudGetVariableTyped_Date() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.dateValue(VARIABLE_VALUE_DATE));
 
@@ -1488,7 +1488,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullDate() {
+  void shoudGetVariable_NullDate() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.dateValue(null));
 
@@ -1507,7 +1507,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullDate() {
+  void shoudGetVariableTyped_NullDate() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.dateValue(null));
 
@@ -1527,7 +1527,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Date() {
+  void shoudSetVariable_Date() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1564,7 +1564,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Date() {
+  void shoudSetVariableTyped_Date() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1601,7 +1601,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Date() {
+  void shoudSetVariableUntyped_Date() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1638,7 +1638,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullDate() {
+  void shoudSetVariableTyped_NullDate() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1675,7 +1675,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Bytes() {
+  void shoudGetVariable_Bytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.byteArrayValue(VARIABLE_VALUE_BYTES));
 
@@ -1694,7 +1694,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Bytes() {
+  void shoudGetVariableTyped_Bytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.byteArrayValue(VARIABLE_VALUE_BYTES));
 
@@ -1714,7 +1714,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_NullBytes() {
+  void shoudGetVariable_NullBytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.byteArrayValue(null));
 
@@ -1733,7 +1733,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_NullBytes() {
+  void shoudGetVariableTyped_NullBytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.byteArrayValue(null));
 
@@ -1753,7 +1753,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Bytes() {
+  void shoudSetVariable_Bytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1790,7 +1790,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Bytes() {
+  void shoudSetVariableTyped_Bytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1827,7 +1827,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Bytes() {
+  void shoudSetVariableUntyped_Bytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1864,7 +1864,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_NullBytes() {
+  void shoudSetVariableTyped_NullBytes() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1901,7 +1901,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Bytes_InputStream() {
+  void shoudSetVariable_Bytes_InputStream() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1939,7 +1939,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Bytes_InputStream() {
+  void shoudSetVariableUntyped_Bytes_InputStream() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -1977,7 +1977,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariable_Null() {
+  void shoudGetVariable_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.untypedNullValue());
 
@@ -1996,7 +1996,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetVariableTyped_Null() {
+  void shoudGetVariableTyped_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.untypedNullValue());
 
@@ -2016,7 +2016,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariable_Null() {
+  void shoudSetVariable_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -2053,7 +2053,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Null() {
+  void shoudSetVariableTyped_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -2090,7 +2090,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudSetVariableUntyped_Null() {
+  void shoudSetVariableUntyped_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -2127,7 +2127,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetAllVariable() {
+  void shoudGetAllVariable() {
     // given
     Map<String, TypedValue> variables = new HashMap<>();
     variables.put(VARIABLE_NAME_INT, Variables.integerValue(VARIABLE_VALUE_INT));
@@ -2166,7 +2166,7 @@ public class PrimitiveVariableIT {
   }
 
   @Test
-  public void shoudGetAllVariableTyped() {
+  void shoudGetAllVariableTyped() {
     // given
     Map<String, TypedValue> variables = new HashMap<>();
     variables.put(VARIABLE_NAME_INT, Variables.integerValue(VARIABLE_VALUE_INT));

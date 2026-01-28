@@ -50,7 +50,7 @@ import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclus
 import static org.operaton.bpm.client.variable.ClientValues.XML;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class XmlValueIT {
+class XmlValueIT {
 
   protected static final String VARIABLE_NAME_XML = "xmlVariable";
 
@@ -75,7 +75,7 @@ public class XmlValueIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -84,7 +84,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldGetXml() {
+  void shouldGetXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_VALUE);
 
@@ -104,7 +104,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldGetTypedXml() {
+  void shouldGetTypedXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_VALUE);
 
@@ -124,7 +124,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldGetNull() {
+  void shouldGetNull() {
     // given
     XmlValue xmlValue = ClientValues.xmlValue(null);
 
@@ -145,7 +145,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoulGetNullTyped() {
+  void shoulGetNullTyped() {
     // given
     XmlValue xmlValue = ClientValues.xmlValue(null);
 
@@ -167,7 +167,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shouldReturnBrokenXml() {
+  void shouldReturnBrokenXml() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_XML, VARIABLE_VALUE_XML_VALUE_BROKEN);
 
@@ -185,7 +185,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoudSetVariable() {
+  void shoudSetVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -222,7 +222,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoudSetVariableNull() {
+  void shoudSetVariableNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -259,7 +259,7 @@ public class XmlValueIT {
   }
 
   @Test
-  public void shoudSetTransientVariable() {
+  void shoudSetTransientVariable() {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2, "${XML(" + VARIABLE_NAME_XML + ").attr('attrName').value() == 'attrValue'}");
     ProcessDefinitionDto definition = engineRule.deploy(process).get(0);

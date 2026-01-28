@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 /**
  * @author Tassilo Weidner
  */
-public class TopicSubscriptionIT {
+class TopicSubscriptionIT {
 
   protected static final String BUSINESS_KEY = "aBusinessKey";
   protected static final String VARIABLE_NAME = "aVariableName";
@@ -65,7 +65,7 @@ public class TopicSubscriptionIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     handler.clear();
     processDefinition = engineRule.deploy(BPMN_ERROR_EXTERNAL_TASK_PROCESS).get(0);
@@ -73,7 +73,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldSetTopicName() {
+  void shouldSetTopicName() {
     // given
     TopicSubscriptionBuilder topicSubscriptionBuilder = client
       .subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -87,7 +87,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldSetExternalTaskHandler() {
+  void shouldSetExternalTaskHandler() {
     // given
     TopicSubscriptionBuilder topicSubscriptionBuilder = client
       .subscribe(EXTERNAL_TASK_TOPIC_FOO)
@@ -101,7 +101,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByBusinessKey() {
+  void shouldFilterByBusinessKey() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY);
 
@@ -120,7 +120,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByProcessDefinitionId() {
+  void shouldFilterByProcessDefinitionId() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
     String processDefinitionId2 = processDefinition2.getId();
@@ -142,7 +142,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterBySingleProcessDefinitionIdIn() {
+  void shouldFilterBySingleProcessDefinitionIdIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
     String processDefinitionId2 = processDefinition2.getId();
@@ -163,7 +163,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByProcessDefinitionIdIn() {
+  void shouldFilterByProcessDefinitionIdIn() {
     // given
     String processDefinitionId1 = processDefinition.getId();
     engineRule.startProcessInstance(processDefinitionId1);
@@ -184,7 +184,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByProcessDefinitionKey() {
+  void shouldFilterByProcessDefinitionKey() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
     engineRule.startProcessInstance(processDefinition2.getId());
@@ -205,7 +205,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterBySingleProcessDefinitionKeyIn() {
+  void shouldFilterBySingleProcessDefinitionKeyIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
     engineRule.startProcessInstance(processDefinition2.getId());
@@ -225,7 +225,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByProcessDefinitionKeyIn() {
+  void shouldFilterByProcessDefinitionKeyIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
     engineRule.startProcessInstance(processDefinition2.getId());
@@ -244,7 +244,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByProcessDefinitionVersionTag() {
+  void shouldFilterByProcessDefinitionVersionTag() {
     // given
     ProcessDefinitionDto processDefinitionWithVersionTag = engineRule.deploy(ONE_EXTERNAL_TASK_WITH_VERSION_TAG).get(0);
     engineRule.startProcessInstance(processDefinitionWithVersionTag.getId());
@@ -266,7 +266,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldSetProcessDefinitionVersionTag() {
+  void shouldSetProcessDefinitionVersionTag() {
     // given
     ProcessDefinitionDto processDefinitionWithVersionTag = engineRule.deploy(ONE_EXTERNAL_TASK_WITH_VERSION_TAG).get(0);
     engineRule.startProcessInstance(processDefinitionWithVersionTag.getId());
@@ -287,7 +287,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByNoTenantId() {
+  void shouldFilterByNoTenantId() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -304,7 +304,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldNotApplyAnyFilter() {
+  void shouldNotApplyAnyFilter() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -323,7 +323,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterWithoutTenantId() {
+  void shouldFilterWithoutTenantId() {
     // given
     ProcessInstanceDto processInstance = engineRule.startProcessInstance(processDefinition.getId());
     String tenantId = "aTenantId";
@@ -347,7 +347,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByTenantId() {
+  void shouldFilterByTenantId() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
     String tenantId = "aTenantId";
@@ -371,7 +371,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByBusinessKeyAndVariable() {
+  void shouldFilterByBusinessKeyAndVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY, VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY, ANOTHER_VARIABLE_NAME, Variables.stringValue(ANOTHER_VARIABLE_VALUE));
@@ -404,7 +404,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByNotExistingVariable() {
+  void shouldFilterByNotExistingVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
     engineRule.startProcessInstance(processDefinition.getId(), ANOTHER_VARIABLE_NAME, Variables.stringValue(ANOTHER_VARIABLE_VALUE));
@@ -426,7 +426,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByNoVariable() {
+  void shouldFilterByNoVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
     engineRule.startProcessInstance(processDefinition.getId(), ANOTHER_VARIABLE_NAME, Variables.stringValue(ANOTHER_VARIABLE_VALUE));
@@ -448,7 +448,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldSetLockDuration() {
+  void shouldSetLockDuration() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -469,7 +469,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToClientLockDurationNotGreaterThanZero() {
+  void shouldThrowExceptionDueToClientLockDurationNotGreaterThanZero() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -482,7 +482,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToTopicNameNull() {
+  void shouldThrowExceptionDueToTopicNameNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -491,7 +491,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToMissingHandler() {
+  void shouldThrowExceptionDueToMissingHandler() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -500,7 +500,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToHandlerNull() {
+  void shouldThrowExceptionDueToHandlerNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -512,7 +512,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldUnsubscribeFromTopic() {
+  void shouldUnsubscribeFromTopic() {
     // given
     TopicSubscription topicSubscription = client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
       .handler(handler)
@@ -528,7 +528,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToTopicNameAlreadySubscribed() {
+  void shouldThrowExceptionDueToTopicNameAlreadySubscribed() {
     // given
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
       .handler(handler)
@@ -543,7 +543,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByOneToOneProcessVariableEquals() {
+  void shouldFilterByOneToOneProcessVariableEquals() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -561,7 +561,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByOneToAnyProcessVariableEquals() {
+  void shouldFilterByOneToAnyProcessVariableEquals() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -584,7 +584,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByManyToAnyProcessVariableEquals() {
+  void shouldFilterByManyToAnyProcessVariableEquals() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -609,7 +609,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldNotFilterByManyToNoneProcessVariableEquals() {
+  void shouldNotFilterByManyToNoneProcessVariableEquals() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -636,7 +636,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByOneToOneProcessVariablesEqualsIn() {
+  void shouldFilterByOneToOneProcessVariablesEqualsIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -657,7 +657,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByOneToAnyProcessVariablesEqualsIn() {
+  void shouldFilterByOneToAnyProcessVariablesEqualsIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -682,7 +682,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldFilterByManyToAnyProcessVariablesEqualsIn() {
+  void shouldFilterByManyToAnyProcessVariablesEqualsIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY,
         VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
@@ -709,7 +709,7 @@ public class TopicSubscriptionIT {
   }
 
   @Test
-  public void shouldNotFilterByManyToNoneProcessVariablesEqualsIn() {
+  void shouldNotFilterByManyToNoneProcessVariablesEqualsIn() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), BUSINESS_KEY, VARIABLE_NAME, Variables.stringValue(VARIABLE_VALUE));
     Map<String, TypedValue> twoProcessVariables = new HashMap<>();

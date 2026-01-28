@@ -250,7 +250,7 @@ class ClientIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToBaseUrlResolverIsNull() {
+  void shouldThrowExceptionDueToBaseUrlResolverIsNull() {
     AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
 
     try {
@@ -273,7 +273,7 @@ class ClientIT {
   }
 
   @Test
-  public void shouldThrowExceptionDueToBaseUrlAndBaseUrlResolverIsNull() {
+  void shouldThrowExceptionDueToBaseUrlAndBaseUrlResolverIsNull() {
     AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
 
     try {

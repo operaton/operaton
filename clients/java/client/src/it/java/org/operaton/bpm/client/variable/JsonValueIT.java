@@ -52,7 +52,7 @@ import static org.operaton.bpm.client.util.ProcessModels.createProcessWithExclus
 import static org.operaton.bpm.client.variable.ClientValues.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JsonValueIT {
+class JsonValueIT {
 
   protected static final String VARIABLE_NAME_JSON = "jsonVariable";
 
@@ -77,7 +77,7 @@ public class JsonValueIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -86,7 +86,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shouldGetJson() throws JSONException {
+  void shouldGetJson() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_VALUE);
 
@@ -105,7 +105,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shouldGetTypedJson() throws JSONException {
+  void shouldGetTypedJson() throws JSONException {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_VALUE);
 
@@ -125,7 +125,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shouldGetNull() {
+  void shouldGetNull() {
     // given
     JsonValue jsonValue = ClientValues.jsonValue(null);
 
@@ -146,7 +146,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shouldGetNullTyped() {
+  void shouldGetNullTyped() {
     // given
     JsonValue jsonValue = ClientValues.jsonValue(null);
 
@@ -168,7 +168,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shouldReturnBrokenJson() {
+  void shouldReturnBrokenJson() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JSON, VARIABLE_VALUE_JSON_VALUE_BROKEN);
 
@@ -186,7 +186,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shoudSetVariable() {
+  void shoudSetVariable() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -223,7 +223,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shoudSetVariableNull() {
+  void shoudSetVariableNull() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -260,7 +260,7 @@ public class JsonValueIT {
   }
 
   @Test
-  public void shoudSetTransientVariable() {
+  void shoudSetTransientVariable() {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2, "${S(" + VARIABLE_NAME_JSON + ").prop(\"foo\").stringValue() == \"bar\"}");
     ProcessDefinitionDto definition = engineRule.deploy(process).get(0);

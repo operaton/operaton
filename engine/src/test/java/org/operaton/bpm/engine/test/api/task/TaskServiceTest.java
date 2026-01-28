@@ -2801,7 +2801,8 @@ class TaskServiceTest {
     // this works
     VariableMap variablesTyped = taskService.getVariablesTyped(taskId, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
-    variablesTyped = taskService.getVariablesTyped(taskId, List.of("broken"), false);
+    List<String> variableNames = List.of("broken");
+    variablesTyped = taskService.getVariablesTyped(taskId, variableNames, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // when/then - this does not work (deserialization fails)
@@ -2809,7 +2810,7 @@ class TaskServiceTest {
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
 
-    assertThatThrownBy(() -> taskService.getVariablesTyped(taskId, List.of("broken"), true))
+    assertThatThrownBy(() -> taskService.getVariablesTyped(taskId, variableNames, true))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
   }
@@ -2844,7 +2845,8 @@ class TaskServiceTest {
     // this works
     VariableMap variablesTyped = taskService.getVariablesLocalTyped(taskId, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
-    variablesTyped = taskService.getVariablesLocalTyped(taskId, List.of("broken"), false);
+    List<String> variableNames = List.of("broken");
+    variablesTyped = taskService.getVariablesLocalTyped(taskId, variableNames, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // when/then - this does not work (deserialization fails)
@@ -2852,7 +2854,7 @@ class TaskServiceTest {
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
 
-    assertThatThrownBy(() -> taskService.getVariablesLocalTyped(taskId, List.of("broken"), true))
+    assertThatThrownBy(() -> taskService.getVariablesLocalTyped(taskId, variableNames, true))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
 

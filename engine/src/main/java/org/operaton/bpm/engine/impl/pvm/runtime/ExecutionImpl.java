@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -47,12 +45,7 @@ import org.operaton.bpm.model.bpmn.instance.FlowElement;
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class ExecutionImpl extends PvmExecutionImpl implements
-        Serializable,
-        ActivityExecution,
-        PvmProcessInstance {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class ExecutionImpl extends PvmExecutionImpl implements ActivityExecution, PvmProcessInstance {
 
   private static final AtomicInteger idGenerator = new AtomicInteger();
 

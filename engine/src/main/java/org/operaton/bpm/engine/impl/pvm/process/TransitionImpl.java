@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.process;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +31,6 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
  */
 public class TransitionImpl extends CoreModelElement implements PvmTransition {
 
-  @Serial private static final long serialVersionUID = 1L;
 
   protected ActivityImpl source;
   protected ActivityImpl destination;

@@ -16,16 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 /**
  * Contains a predefined set of states activity instances may be in
  * during the execution of a process instance.
  *
  * @author nico.rehwaldt
  */
-public interface ActivityInstanceState extends Serializable {
+public interface ActivityInstanceState {
 
   ActivityInstanceState DEFAULT = new ActivityInstanceStateImpl(0, "default");
   ActivityInstanceState SCOPE_COMPLETE = new ActivityInstanceStateImpl(1, "scopeComplete");
@@ -38,7 +35,6 @@ public interface ActivityInstanceState extends Serializable {
   // /////////////////////////////////////////////////// default implementation
 
   class ActivityInstanceStateImpl implements ActivityInstanceState {
-    @Serial private static final long serialVersionUID = 1L;
 
     public final int stateCode;
     protected final String name;

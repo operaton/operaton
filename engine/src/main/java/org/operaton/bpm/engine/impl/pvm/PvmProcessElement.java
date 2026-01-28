@@ -16,15 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.pvm;
 
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.core.model.Properties;
 
 
 /**
  * @author Tom Baeyens
  */
-public interface PvmProcessElement extends Serializable {
+public interface PvmProcessElement {
 
   /**
    * The id of the element

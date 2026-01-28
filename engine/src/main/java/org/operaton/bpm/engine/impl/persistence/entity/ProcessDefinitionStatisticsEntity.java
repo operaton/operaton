@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.management.IncidentStatistics;
 import org.operaton.bpm.engine.management.ProcessDefinitionStatistics;
 
 public class ProcessDefinitionStatisticsEntity extends ProcessDefinitionEntity implements ProcessDefinitionStatistics {
+
   protected int instances;
   protected int failedJobs;
   protected List<IncidentStatistics> incidentStatistics;

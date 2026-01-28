@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.pvm.process;
 
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +37,6 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  */
 public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefinition {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String description;
   protected ActivityImpl initial;

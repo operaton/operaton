@@ -588,7 +588,7 @@ class SignalEventTest {
 
     // then it is not possible to deserialize the object
     var objectInputStream = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
-    assertThatThrownBy(() -> objectInputStream.readObject())
+    assertThatThrownBy(objectInputStream::readObject)
       .isInstanceOf(RuntimeException.class)
       .hasMessageContaining("Exception while deserializing object.");
 

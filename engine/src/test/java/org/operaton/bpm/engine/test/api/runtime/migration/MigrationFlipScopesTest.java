@@ -26,7 +26,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -44,22 +44,21 @@ class MigrationFlipScopesTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.DOUBLE_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("outerSubProcess", "innerSubProcess")
         .mapActivities("innerSubProcess", "outerSubProcess")
         .mapActivities("userTask", "userTask");
 
-    // when
-    try {
-      runtimeService.build();
-
-      fail("should not validate");
-    } catch (MigrationPlanValidationException e) {
-      MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
-        .hasInstructionFailures("innerSubProcess",
-          "The closest mapped ancestor 'outerSubProcess' is mapped to scope 'innerSubProcess' which is not an ancestor of target scope 'outerSubProcess'"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        MigrationPlanValidationReportAssert.assertThat(ex.getValidationReport())
+          .hasInstructionFailures("innerSubProcess",
+            "The closest mapped ancestor 'outerSubProcess' is mapped to scope 'innerSubProcess' which is not an ancestor of target scope 'outerSubProcess'"
+          );
+      });
   }
 }

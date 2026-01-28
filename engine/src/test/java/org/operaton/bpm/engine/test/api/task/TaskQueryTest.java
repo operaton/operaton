@@ -74,6 +74,7 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.*;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
@@ -559,65 +560,35 @@ class TaskQueryTest {
   @Test
   void testQueryByIncludeAssignedTasksWithoutMissingCandidateUserOrGroup() {
     // We expect no exceptions when the there is at least 1 candidate user or group present
-    try {
-      taskService.createTaskQuery().taskCandidateUser("user").includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a taskCandidateUser is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().taskCandidateUser("user").includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().taskCandidateGroupLike("%group%").includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a candidateGroupLike is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().taskCandidateGroupLike("%group%").includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().taskCandidateGroupIn(List.of("group")).includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a taskCandidateGroupIn is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().taskCandidateGroupIn(List.of("group")).includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().withCandidateGroups().includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a withCandidateGroups is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().withCandidateGroups().includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().withoutCandidateGroups().includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a withoutCandidateGroups is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().withoutCandidateGroups().includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().withCandidateUsers().includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a withCandidateUsers is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().withCandidateUsers().includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().withoutCandidateUsers().includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a withoutCandidateUsers is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().withoutCandidateUsers().includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().taskCandidateUserExpression("expression").includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a taskCandidateUserExpression is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().taskCandidateUserExpression("expression").includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().taskCandidateGroupExpression("expression").includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a taskCandidateGroupExpression is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().taskCandidateGroupExpression("expression").includeAssignedTasks())
+      .doesNotThrowAnyException();
 
-    try {
-      taskService.createTaskQuery().taskCandidateGroupInExpression("expression").includeAssignedTasks();
-    } catch (ProcessEngineException e) {
-      fail("We expect no exceptions when a taskCandidateGroupInExpression is present");
-    }
+    assertThatCode(() -> taskService.createTaskQuery().taskCandidateGroupInExpression("expression").includeAssignedTasks())
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -3088,12 +3059,9 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueEquals(variableName, fileValue);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Variables of type File cannot be used to query");
-    }
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type File cannot be used to query");
   }
 
   /**
@@ -3266,12 +3234,10 @@ class TaskQueryTest {
     startDefaultCaseWithVariable(fileValue, variableName);
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueNotEquals(variableName, fileValue);
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Variables of type File cannot be used to query");
-    }
+
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type File cannot be used to query");
   }
 
   /**
@@ -3533,12 +3499,9 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueGreaterThan(variableName, fileValue);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Variables of type File cannot be used to query");
-      }
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type File cannot be used to query");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3770,12 +3733,9 @@ class TaskQueryTest {
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueGreaterThanOrEquals(variableName, fileValue);
 
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Variables of type File cannot be used to query");
-    }
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type File cannot be used to query");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -3970,12 +3930,10 @@ class TaskQueryTest {
     startDefaultCaseWithVariable(fileValue, variableName);
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueLessThan(variableName, fileValue);
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Variables of type File cannot be used to query");
-    }
+
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type File cannot be used to query");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4206,12 +4164,10 @@ class TaskQueryTest {
     startDefaultCaseWithVariable(fileValue, variableName);
     TaskQuery query = taskService.createTaskQuery();
     var taskQuery = query.caseInstanceVariableValueLessThanOrEquals(variableName, fileValue);
-    try {
-      taskQuery.list();
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Variables of type File cannot be used to query");
-    }
+
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type File cannot be used to query");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})
@@ -4766,46 +4722,35 @@ class TaskQueryTest {
 
   @Test
   void testQueryByUnsupportedValueTypes() {
-    var taskQuery = taskService.createTaskQuery();
-    try {
-      taskQuery.orderByProcessVariable("var", ValueType.BYTES);
-      fail("this type is not supported");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot order by variables of type byte", e.getMessage());
-    }
+    var taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.BYTES);
 
-    try {
-      taskQuery.orderByProcessVariable("var", ValueType.NULL);
-      fail("this type is not supported");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot order by variables of type null", e.getMessage());
-    }
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot order by variables of type byte");
 
-    try {
-      taskQuery.orderByProcessVariable("var", ValueType.NUMBER);
-      fail("this type is not supported");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot order by variables of type number", e.getMessage());
-    }
+    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.NULL);
 
-    try {
-      taskQuery.orderByProcessVariable("var", ValueType.OBJECT);
-      fail("this type is not supported");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot order by variables of type object", e.getMessage());
-    }
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot order by variables of type null");
 
-    try {
-      taskQuery.orderByProcessVariable("var", ValueType.FILE);
-      fail("this type is not supported");
-    } catch (ProcessEngineException e) {
-      // happy path
-      testRule.assertTextPresent("Cannot order by variables of type file", e.getMessage());
-    }
+    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.NUMBER);
+
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot order by variables of type number");
+
+    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.OBJECT);
+
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot order by variables of type object");
+
+    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.FILE);
+
+    assertThatThrownBy(taskQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot order by variables of type file");
   }
 
   /**

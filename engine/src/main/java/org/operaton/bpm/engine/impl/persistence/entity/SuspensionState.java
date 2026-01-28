@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
+import java.io.Serializable;
+
 /**
  * Contains a predefined set of states for process definitions and process instances
  *
  * @author Daniel Meyer
  */
-public interface SuspensionState {
+public interface SuspensionState extends Serializable {
 
   SuspensionState ACTIVE = new SuspensionStateImpl(1, "active");
   SuspensionState SUSPENDED = new SuspensionStateImpl(2, "suspended");

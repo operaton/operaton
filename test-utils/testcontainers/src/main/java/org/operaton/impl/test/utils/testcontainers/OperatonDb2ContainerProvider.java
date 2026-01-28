@@ -15,9 +15,9 @@
  */
 package org.operaton.impl.test.utils.testcontainers;
 
-import org.testcontainers.db2.Db2Container;
 import org.testcontainers.containers.Db2ContainerProvider;
 import org.testcontainers.containers.JdbcDatabaseContainer;
+import org.testcontainers.db2.Db2Container;
 import org.testcontainers.utility.DockerImageName;
 
 public class OperatonDb2ContainerProvider extends Db2ContainerProvider {

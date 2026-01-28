@@ -17,8 +17,8 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.containers.PostgreSQLContainerProvider;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class OperatonPostgreSQLContainerProvider extends PostgreSQLContainerProvider {

@@ -23,6 +23,7 @@ import java.util.function.Supplier;
 import org.springframework.core.env.PropertiesPropertySource;
 
 import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.impl.util.ProductPropertiesUtil;
 
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.PREFIX;
 
@@ -56,6 +57,8 @@ public class OperatonBpmVersion implements Supplier<String> {
   OperatonBpmVersion(final Package pkg) {
     this.version = Optional.ofNullable(pkg.getImplementationVersion())
       .map(String::trim)
+      .filter(v -> !v.isEmpty())
+      .or(() -> Optional.ofNullable(ProductPropertiesUtil.getProductVersion()))
       .orElse("");
     this.isEnterprise = version.endsWith("-ee");
     this.formattedVersion = VERSION_FORMAT.formatted(version);

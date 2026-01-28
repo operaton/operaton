@@ -99,8 +99,9 @@ class XmlValueIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     String variableValue = task.getVariable(VARIABLE_NAME_XML);
-    assertThat(variableValue).isNotNull();
-    assertThat(variableValue).isEqualTo(VARIABLE_VALUE_XML_SERIALIZED);
+    assertThat(variableValue)
+      .isNotNull()
+      .isEqualTo(VARIABLE_VALUE_XML_SERIALIZED);
   }
 
   @Test
@@ -263,28 +264,28 @@ class XmlValueIT {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2, "${XML(" + VARIABLE_NAME_XML + ").attr('attrName').value() == 'attrValue'}");
     ProcessDefinitionDto definition = engineRule.deploy(process).get(0);
-    ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
+    ProcessInstanceDto processInstanceDto = engineRule.startProcessInstance(definition.getId());
 
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
+    RecordingExternalTaskHandler taskHandler = new RecordingExternalTaskHandler((task, externalTaskService) -> {
       Map<String, Object> variables = new HashMap<>();
       variables.put(VARIABLE_NAME_XML, ClientValues.xmlValue(VARIABLE_VALUE_XML_SERIALIZED, true));
-      client.complete(task, variables);
+      externalTaskService.complete(task, variables);
     });
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
+      .handler(taskHandler)
       .open();
 
     // then
-    clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
+    clientRule.waitForFetchAndLockUntil(() -> !taskHandler.getHandledTasks().isEmpty());
 
-    TaskDto task = engineRule.getTaskByProcessInstanceId(processInstance.getId());
+    TaskDto task = engineRule.getTaskByProcessInstanceId(processInstanceDto.getId());
     assertThat(task).isNotNull();
-    assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getProcessInstanceId()).isEqualTo(processInstanceDto.getId());
     assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
-    List<VariableInstanceDto> variables = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), VARIABLE_NAME_XML);
+    List<VariableInstanceDto> variables = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstanceDto.getId(), VARIABLE_NAME_XML);
     assertThat(variables).isEmpty();
   }
 

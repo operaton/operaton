@@ -264,28 +264,28 @@ class JsonValueIT {
     // given
     BpmnModelInstance process = createProcessWithExclusiveGateway(PROCESS_KEY_2, "${S(" + VARIABLE_NAME_JSON + ").prop(\"foo\").stringValue() == \"bar\"}");
     ProcessDefinitionDto definition = engineRule.deploy(process).get(0);
-    ProcessInstanceDto processInstance = engineRule.startProcessInstance(definition.getId());
+    ProcessInstanceDto processInstanceDto = engineRule.startProcessInstance(definition.getId());
 
-    RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler((task, client) -> {
+    RecordingExternalTaskHandler externalTaskHandler = new RecordingExternalTaskHandler((task, externalTaskService) -> {
       Map<String, Object> variables = new HashMap<>();
       variables.put(VARIABLE_NAME_JSON, ClientValues.jsonValue(VARIABLE_VALUE_JSON_SERIALIZED, true));
-      client.complete(task, variables);
+      externalTaskService.complete(task, variables);
     });
 
     // when
     client.subscribe(EXTERNAL_TASK_TOPIC_FOO)
-      .handler(handler)
+      .handler(externalTaskHandler)
       .open();
 
     // then
-    clientRule.waitForFetchAndLockUntil(() -> !handler.getHandledTasks().isEmpty());
+    clientRule.waitForFetchAndLockUntil(() -> !externalTaskHandler.getHandledTasks().isEmpty());
 
-    TaskDto task = engineRule.getTaskByProcessInstanceId(processInstance.getId());
+    TaskDto task = engineRule.getTaskByProcessInstanceId(processInstanceDto.getId());
     assertThat(task).isNotNull();
-    assertThat(task.getProcessInstanceId()).isEqualTo(processInstance.getId());
+    assertThat(task.getProcessInstanceId()).isEqualTo(processInstanceDto.getId());
     assertThat(task.getTaskDefinitionKey()).isEqualTo(USER_TASK_ID);
 
-    List<VariableInstanceDto> variables = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstance.getId(), VARIABLE_NAME_JSON);
+    List<VariableInstanceDto> variables = engineRule.getVariablesByProcessInstanceIdAndVariableName(processInstanceDto.getId(), VARIABLE_NAME_JSON);
     assertThat(variables).isEmpty();
   }
 

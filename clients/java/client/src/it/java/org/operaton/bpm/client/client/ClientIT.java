@@ -34,7 +34,6 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 
 import org.operaton.bpm.client.ExternalTaskClient;
 import org.operaton.bpm.client.ExternalTaskClientBuilder;
-import org.operaton.bpm.client.UrlResolver;
 import org.operaton.bpm.client.backoff.BackoffStrategy;
 import org.operaton.bpm.client.backoff.ErrorAwareBackoffStrategy;
 import org.operaton.bpm.client.dto.ProcessDefinitionDto;
@@ -212,13 +211,13 @@ class ClientIT {
     AtomicReference<ExternalTaskClient> client = new AtomicReference<>();
 
     try {
-      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
-              .baseUrl(null);
+      var externalTaskClientBuilder = ExternalTaskClient
+        .create()
+        .baseUrl(null);
 
       // when + then
-      assertThatThrownBy(() ->
-        client.set(externalTaskClientBuilder.build())
-      ).isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
       if (client.get() != null) {
@@ -233,14 +232,13 @@ class ClientIT {
 
     try {
       // given
-      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
+      var externalTaskClientBuilder = ExternalTaskClient.create()
           .baseUrl(URL_ENGINE_REST)
           .maxTasks(0);
 
       // when + then
-      assertThatThrownBy(() ->
-              client.set(externalTaskClientBuilder.build())
-      ).isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
       if (client.get() != null) {
@@ -255,14 +253,13 @@ class ClientIT {
 
     try {
       // given
-      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
+      var externalTaskClientBuilder = ExternalTaskClient
+        .create()
+        .urlResolver(null);
 
       // when + then
-      assertThatThrownBy(() ->
-              client.set(externalTaskClientBuilder
-                    .urlResolver(null)
-                    .build())
-      ).isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
 
     }
     finally {
@@ -278,16 +275,14 @@ class ClientIT {
 
     try {
       // given
-      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create();
+      var externalTaskClientBuilder = ExternalTaskClient
+        .create()
+        .baseUrl(null)
+        .urlResolver(null);
 
       // when + then
-      assertThatThrownBy(() ->
-              client.set(externalTaskClientBuilder
-                      .baseUrl(null)
-                      .urlResolver(null)
-                      .build())
-
-      ).isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
       if (client.get() != null) {
@@ -329,13 +324,13 @@ class ClientIT {
 
     try {
       // given
-      ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create()
+      var externalTaskClientBuilder = ExternalTaskClient.create()
           .baseUrl(URL_ENGINE_REST)
           .asyncResponseTimeout(0);
 
       // when
-      assertThatThrownBy(() -> client.set(clientBuilder.build()))
-              .isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
       if (client.get() != null) {
@@ -402,13 +397,13 @@ class ClientIT {
 
     try {
       // given
-      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
+      var externalTaskClientBuilder = ExternalTaskClient.create()
           .baseUrl(URL_ENGINE_REST)
           .lockDuration(0);
 
       // when + then
-      assertThatThrownBy(() -> client.set(externalTaskClientBuilder.build()))
-              .isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
       if (client.get() != null) {
@@ -423,13 +418,13 @@ class ClientIT {
 
     try {
       // given
-      ExternalTaskClientBuilder externalTaskClientBuilder = ExternalTaskClient.create()
+      var externalTaskClientBuilder = ExternalTaskClient.create()
         .baseUrl(URL_ENGINE_REST)
         .addInterceptor(null);
 
       // when + then
-      assertThatThrownBy(() -> client.set(externalTaskClientBuilder.build()))
-              .isInstanceOf(ExternalTaskClientException.class);
+      assertThatThrownBy(externalTaskClientBuilder::build)
+        .isInstanceOf(ExternalTaskClientException.class);
     }
     finally {
       if (client.get() != null) {

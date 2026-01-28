@@ -2152,17 +2152,17 @@ class PrimitiveVariableIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     Map<String, Object> fetchedVariables = task.getAllVariables();
-    assertThat(fetchedVariables).hasSize(variables.size());
-
-    assertThat(fetchedVariables.get(VARIABLE_NAME_INT)).isEqualTo(VARIABLE_VALUE_INT);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_LONG)).isEqualTo(VARIABLE_VALUE_LONG);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_SHORT)).isEqualTo(VARIABLE_VALUE_SHORT);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_DOUBLE)).isEqualTo(VARIABLE_VALUE_DOUBLE);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_STRING)).isEqualTo(VARIABLE_VALUE_STRING);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_BOOLEAN)).isEqualTo(VARIABLE_VALUE_BOOLEAN);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_DATE)).isEqualTo(VARIABLE_VALUE_DATE);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_BYTES)).isEqualTo(VARIABLE_VALUE_BYTES);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_NULL)).isEqualTo(null);
+    assertThat(fetchedVariables)
+      .hasSize(variables.size())
+      .containsEntry(VARIABLE_NAME_INT, VARIABLE_VALUE_INT)
+      .containsEntry(VARIABLE_NAME_LONG, VARIABLE_VALUE_LONG)
+      .containsEntry(VARIABLE_NAME_SHORT, VARIABLE_VALUE_SHORT)
+      .containsEntry(VARIABLE_NAME_DOUBLE, VARIABLE_VALUE_DOUBLE)
+      .containsEntry(VARIABLE_NAME_STRING, VARIABLE_VALUE_STRING)
+      .containsEntry(VARIABLE_NAME_BOOLEAN, VARIABLE_VALUE_BOOLEAN)
+      .containsEntry(VARIABLE_NAME_DATE, VARIABLE_VALUE_DATE)
+      .containsEntry(VARIABLE_NAME_BYTES, VARIABLE_VALUE_BYTES);
+    assertThat(fetchedVariables.get(VARIABLE_NAME_NULL)).isNull();
   }
 
   @Test
@@ -2191,16 +2191,16 @@ class PrimitiveVariableIT {
     ExternalTask task = handler.getHandledTasks().get(0);
 
     VariableMap fetchedVariables = task.getAllVariablesTyped();
-    assertThat(fetchedVariables).hasSize(variables.size());
-
-    assertThat(fetchedVariables.get(VARIABLE_NAME_INT)).isEqualTo(VARIABLE_VALUE_INT);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_LONG)).isEqualTo(VARIABLE_VALUE_LONG);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_SHORT)).isEqualTo(VARIABLE_VALUE_SHORT);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_DOUBLE)).isEqualTo(VARIABLE_VALUE_DOUBLE);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_STRING)).isEqualTo(VARIABLE_VALUE_STRING);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_BOOLEAN)).isEqualTo(VARIABLE_VALUE_BOOLEAN);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_DATE)).isEqualTo(VARIABLE_VALUE_DATE);
-    assertThat(fetchedVariables.get(VARIABLE_NAME_BYTES)).isEqualTo(VARIABLE_VALUE_BYTES);
+    assertThat(fetchedVariables)
+      .hasSize(variables.size())
+      .containsEntry(VARIABLE_NAME_INT, VARIABLE_VALUE_INT)
+      .containsEntry(VARIABLE_NAME_LONG, VARIABLE_VALUE_LONG)
+      .containsEntry(VARIABLE_NAME_SHORT, VARIABLE_VALUE_SHORT)
+      .containsEntry(VARIABLE_NAME_DOUBLE, VARIABLE_VALUE_DOUBLE)
+      .containsEntry(VARIABLE_NAME_STRING, VARIABLE_VALUE_STRING)
+      .containsEntry(VARIABLE_NAME_BOOLEAN, VARIABLE_VALUE_BOOLEAN)
+      .containsEntry(VARIABLE_NAME_DATE, VARIABLE_VALUE_DATE)
+      .containsEntry(VARIABLE_NAME_BYTES, VARIABLE_VALUE_BYTES);
 
     TypedValue intTypedValue = fetchedVariables.getValueTyped(VARIABLE_NAME_INT);
     assertThat(intTypedValue.getValue()).isEqualTo(VARIABLE_VALUE_INT);

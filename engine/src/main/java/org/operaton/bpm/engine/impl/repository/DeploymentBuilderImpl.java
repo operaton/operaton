@@ -76,7 +76,7 @@ public class DeploymentBuilderImpl implements DeploymentBuilder, Serializable {
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
 
   protected transient RepositoryServiceImpl repositoryService;
-  protected DeploymentEntity deployment = new DeploymentEntity();
+  protected transient DeploymentEntity deployment = new DeploymentEntity();
   protected boolean isDuplicateFilterEnabled;
   protected boolean deployChangedOnly;
   protected Date processDefinitionsActivationDate;

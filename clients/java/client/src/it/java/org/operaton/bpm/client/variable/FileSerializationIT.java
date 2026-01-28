@@ -183,7 +183,7 @@ class FileSerializationIT {
   @Test
   void shouldGetTyped_Deferred() {
     // given
-    ProcessInstanceDto processInstanceDto = engineRule.startProcessInstance(processDefinition.getId(),
+    engineRule.startProcessInstance(processDefinition.getId(),
         VARIABLE_NAME_FILE,
         VARIABLE_VALUE_FILE);
 

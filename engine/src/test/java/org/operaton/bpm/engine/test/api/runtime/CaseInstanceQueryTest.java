@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -967,14 +968,11 @@ class CaseInstanceQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery().variableValueLessThan("aNullValue", null);
 
-    try {
-      query.variableValueLessThan("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
-    }
+    assertThatThrownBy(query::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than' condition");
 
   }
 
@@ -999,14 +997,11 @@ class CaseInstanceQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery().variableValueLessThan("aBooleanValue", false);
 
-    try {
-      query.variableValueLessThan("aBooleanValue", false);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than' condition");
-    }
+    assertThatThrownBy(query::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than' condition");
 
   }
 
@@ -1128,14 +1123,11 @@ class CaseInstanceQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery().variableValueLessThanOrEqual("aNullValue", null);
 
-    try {
-      query.variableValueLessThanOrEqual("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
-    }
+    assertThatThrownBy(query::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than or equal' condition");
 
   }
 
@@ -1166,14 +1158,11 @@ class CaseInstanceQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aBooleanValue", true)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery().variableValueLessThanOrEqual("aBooleanValue", false);
 
-    try {
-      query.variableValueLessThanOrEqual("aBooleanValue", false);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'less than or equal' condition");
-    }
+    assertThatThrownBy(query::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than or equal' condition");
 
   }
 
@@ -1325,14 +1314,11 @@ class CaseInstanceQueryTest {
       .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
       .setVariable("aNullValue", null)
       .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery().variableValueLike("aNullValue", null);
 
-    try {
-      query.variableValueLike("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'like' condition");
-    }
+    assertThatThrownBy(query::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'like' condition");
 
   }
 
@@ -1368,14 +1354,11 @@ class CaseInstanceQueryTest {
             .withCaseDefinitionByKey(CASE_DEFINITION_KEY)
             .setVariable("aNullValue", null)
             .create();
-    CaseInstanceQuery query = caseService.createCaseInstanceQuery();
+    var query = caseService.createCaseInstanceQuery().variableValueNotLike("aNullValue", null);
 
-    try {
-      query.variableValueNotLike("aNullValue", null);
-      fail("");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Booleans and null cannot be used in 'not like' condition");
-    }
+    assertThatThrownBy(query::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'not like' condition");
 
   }
 

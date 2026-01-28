@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -70,14 +70,11 @@ class EventSubscriptionQueryTest {
     assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult()).isNotNull();
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventSubscriptionId(null);
 
-    try {
-      eventSubscriptionQuery.eventSubscriptionId(null);
-      fail("Expected ProcessEngineException");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("event subscription id is null");
-    }
+    assertThatThrownBy(eventSubscriptionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("event subscription id is null");
 
     cleanDb();
   }
@@ -96,14 +93,11 @@ class EventSubscriptionQueryTest {
       .eventName("messageName2")
       .list();
     assertThat(list).hasSize(1);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventName(null);
 
-    try {
-      eventSubscriptionQuery.eventName(null);
-      fail("Expected ProcessEngineException");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("event name is null");
-    }
+    assertThatThrownBy(eventSubscriptionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("event name is null");
 
     cleanDb();
 
@@ -123,14 +117,11 @@ class EventSubscriptionQueryTest {
       .eventType("message")
       .list();
     assertThat(list).hasSize(2);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventType(null);
 
-    try {
-      eventSubscriptionQuery.eventType(null);
-      fail("Expected ProcessEngineException");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("event type is null");
-    }
+    assertThatThrownBy(eventSubscriptionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("event type is null");
 
     cleanDb();
 
@@ -151,14 +142,11 @@ class EventSubscriptionQueryTest {
       .eventType("message")
       .list();
     assertThat(list).hasSize(2);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().activityId(null);
 
-    try {
-      eventSubscriptionQuery.activityId(null);
-      fail("Expected ProcessEngineException");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("activity id is null");
-    }
+    assertThatThrownBy(eventSubscriptionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("activity id is null");
 
     cleanDb();
 
@@ -190,14 +178,11 @@ class EventSubscriptionQueryTest {
     assertThat(signalSubscription).isNotNull();
 
     assertThat(subscription).isEqualTo(signalSubscription);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().executionId(null);
 
-    try {
-      eventSubscriptionQuery.executionId(null);
-      fail("Expected ProcessEngineException");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("execution id is null");
-    }
+    assertThatThrownBy(eventSubscriptionQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("execution id is null");
 
     cleanDb();
 

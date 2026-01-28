@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.variable.value.ObjectValue;
 import static org.operaton.bpm.engine.test.util.TypedValueAssert.assertObjectValueSerializedJava;
 import static org.operaton.bpm.engine.variable.Variables.serializedObjectValue;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Represents the test class for the process instantiation on which
@@ -124,13 +124,9 @@ class ProcessInstantiationWithVariablesInReturnTest {
     assertThat(serializedVar.isDeserialized()).isFalse();
     assertObjectValueSerializedJava(serializedVar, javaSerializable);
 
-    //access on value should fail because variable is not deserialized
-    try {
-      serializedVar.getValue();
-      fail("Deserialization should fail!");
-    } catch (IllegalStateException ise) {
-      assertThat(ise.getMessage()).isEqualTo("Object is not deserialized.");
-    }
+    assertThatThrownBy(serializedVar::getValue)
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessageContaining("Object is not deserialized");
   }
 
   @Test

@@ -42,7 +42,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author roman.smirnov
@@ -540,26 +539,20 @@ public class IncidentQueryTest {
 
   @Test
   void testQueryByNullJobDefinitionId() {
-    var incidentQuery = runtimeService.createIncidentQuery();
-    try {
-      incidentQuery.jobDefinitionIdIn((String) null);
-      fail("Should fail");
-    }
-    catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("jobDefinitionIds contains null value");
-    }
+    var incidentQuery = runtimeService.createIncidentQuery().jobDefinitionIdIn((String) null);
+
+    assertThatThrownBy(incidentQuery::list)
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("jobDefinitionIds contains null value");
   }
 
   @Test
   void testQueryByNullJobDefinitionIds() {
-    var incidentQuery = runtimeService.createIncidentQuery();
-    try {
-      incidentQuery.jobDefinitionIdIn((String[]) null);
-      fail("Should fail");
-    }
-    catch (NullValueException e) {
-      assertThat(e.getMessage()).contains("jobDefinitionIds is null");
-    }
+    var incidentQuery = runtimeService.createIncidentQuery().jobDefinitionIdIn((String[]) null);
+
+    assertThatThrownBy(incidentQuery::list)
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("jobDefinitionIds is null");
   }
 
   @Test

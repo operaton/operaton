@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -97,21 +96,21 @@ public final class ProcessEngines {
     }
 
     ClassLoader classLoader = ReflectUtil.getClassLoader();
-    Set<URL> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
+    Set<URI> configResources = getResources(classLoader, "operaton.cfg.xml", "activiti.cfg.xml", forceCreate);
     if (configResources.isEmpty() && !forceCreate) {
       return;
     }
 
-    for (URL resource : configResources) {
+    for (URI resource : configResources) {
       initProcessEngineFromResource(resource);
     }
 
-    Set<URL> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
+    Set<URI> springResources = getResources(classLoader, "activiti-context.xml", null, forceCreate);
     if (springResources.isEmpty() && !forceCreate) {
       return;
     }
 
-    for (URL resource : springResources) {
+    for (URI resource : springResources) {
       initProcessEngineFromSpringResource(resource);
     }
 
@@ -120,14 +119,14 @@ public final class ProcessEngines {
 
   // Remove duplicated configuration URL's using set. Some classloaders may
   // return identical URL's twice, causing duplicate startups
-  private static Set<URL> getResources(ClassLoader classLoader, String resourceName,
+  private static Set<URI> getResources(ClassLoader classLoader, String resourceName,
       String fallbackResourceName, boolean forceCreate) {
     try {
-      return CollectionUtil.toSet(classLoader.getResources(resourceName));
+      return CollectionUtil.toSet(classLoader.getResources(resourceName), ReflectUtil::urlToURI);
     } catch (IOException e) {
       if (fallbackResourceName != null) {
         try {
-          return CollectionUtil.toSet(classLoader.getResources(fallbackResourceName));
+          return CollectionUtil.toSet(classLoader.getResources(fallbackResourceName), ReflectUtil::urlToURI);
         } catch (IOException ex) {
           return handleGetResourcesException(resourceName, fallbackResourceName, forceCreate, ex);
         }
@@ -136,7 +135,7 @@ public final class ProcessEngines {
     }
   }
 
-  private static Set<URL> handleGetResourcesException(String resourceName, String fallbackResourceName,
+  private static Set<URI> handleGetResourcesException(String resourceName, String fallbackResourceName,
       boolean forceCreate, IOException e) {
     if (forceCreate) {
       String message = "problem retrieving " + resourceName
@@ -147,11 +146,11 @@ public final class ProcessEngines {
     return Collections.emptySet();
   }
 
-  protected static void initProcessEngineFromSpringResource(URL resource) {
+  protected static void initProcessEngineFromSpringResource(URI resource) {
     try {
       Class<?> springConfigurationHelperClass = ReflectUtil.loadClass(
           "org.operaton.bpm.engine.spring.SpringConfigurationHelper");
-      Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", URL.class);
+      Method method = springConfigurationHelperClass.getMethod("buildProcessEngine", URI.class);
       ProcessEngine processEngine = (ProcessEngine) method.invoke(null, resource);
 
       String processEngineName = processEngine.getName();
@@ -190,7 +189,7 @@ public final class ProcessEngines {
     return processEngines.containsKey(processEngineName);
   }
 
-  private static ProcessEngineInfo initProcessEngineFromResource(URL resourceUrl) {
+  private static ProcessEngineInfo initProcessEngineFromResource(URI resourceUrl) {
     ProcessEngineInfo processEngineInfo = PROCESS_ENGINE_INFOS_BY_RESOURCE_URL.get(resourceUrl.toString());
     // if there is an existing process engine info
     if (processEngineInfo != null) {
@@ -229,10 +228,10 @@ public final class ProcessEngines {
     return sw.toString();
   }
 
-  private static ProcessEngine buildProcessEngine(URL resource) {
+  private static ProcessEngine buildProcessEngine(URI resource) {
     InputStream inputStream = null;
     try {
-      inputStream = resource.openStream();
+      inputStream = resource.toURL().openStream();
       ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration
           .createProcessEngineConfigurationFromInputStream(inputStream);
       return processEngineConfiguration.buildProcessEngine();
@@ -291,11 +290,9 @@ public final class ProcessEngines {
    */
   public static ProcessEngineInfo retry(String resourceUrl) {
     try {
-      return initProcessEngineFromResource(new URI(resourceUrl).toURL());
+      return initProcessEngineFromResource(new URI(resourceUrl));
     } catch (URISyntaxException e) {
       throw new ProcessEngineException("invalid uri: %s".formatted(resourceUrl), e);
-    } catch (MalformedURLException e) {
-      throw new ProcessEngineException("invalid url: %s".formatted(resourceUrl), e);
     }
   }
 

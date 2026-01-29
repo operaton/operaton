@@ -18,6 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -34,10 +35,10 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import org.operaton.bpm.container.impl.spi.DeploymentOperationStep;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.IoUtil;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
 
 import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
 import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESS_APPLICATION;
-
 
 /**
  * <p>Detects and parses all META-INF/processes.xml files within the process application
@@ -60,44 +61,45 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
 
     final AbstractProcessApplication processApplication = operationContext.getAttachment(PROCESS_APPLICATION);
 
-    Map<URL, ProcessesXml> parsedFiles = parseProcessesXmlFiles(processApplication);
+    Map<URI, ProcessesXml> parsedFiles = parseProcessesXmlFiles(processApplication);
 
     // attach parsed metadata
     operationContext.addAttachment(PROCESSES_XML_RESOURCES, parsedFiles);
   }
 
-  protected Map<URL, ProcessesXml> parseProcessesXmlFiles(final AbstractProcessApplication processApplication) {
+  protected Map<URI, ProcessesXml> parseProcessesXmlFiles(final AbstractProcessApplication processApplication) {
 
     String[] deploymentDescriptors = getDeploymentDescriptorLocations(processApplication);
-    List<URL> processesXmlUrls = getProcessesXmlUrls(deploymentDescriptors, processApplication);
+    List<URI> processesXmlUris = getProcessesXmlUris(deploymentDescriptors, processApplication);
 
-    Map<URL, ProcessesXml> parsedFiles = new HashMap<>();
+    Map<URI, ProcessesXml> parsedFiles = new HashMap<>();
 
     // perform parsing
-    for (URL url : processesXmlUrls) {
+    for (URI uri : processesXmlUris) {
 
-      LOG.foundProcessesXmlFile(url.toString());
+      LOG.foundProcessesXmlFile(uri.toString());
 
-      if(isEmptyFile(url)) {
-        parsedFiles.put(url, ProcessesXml.EMPTY_PROCESSES_XML);
+      if (isEmptyFile(uri)) {
+        parsedFiles.put(uri, ProcessesXml.EMPTY_PROCESSES_XML);
         LOG.emptyProcessesXml();
 
       } else {
-        parsedFiles.put(url, parseProcessesXml(url));
+        parsedFiles.put(uri, parseProcessesXml(uri));
       }
     }
 
-    if(parsedFiles.isEmpty()) {
+    if (parsedFiles.isEmpty()) {
       LOG.noProcessesXmlForPa(processApplication.getName());
     }
 
     return parsedFiles;
   }
 
-  protected List<URL> getProcessesXmlUrls(String[] deploymentDescriptors, AbstractProcessApplication processApplication) {
+  protected List<URI> getProcessesXmlUris(String[] deploymentDescriptors,
+      AbstractProcessApplication processApplication) {
     ClassLoader processApplicationClassloader = processApplication.getProcessApplicationClassloader();
 
-    List<URL> result = new ArrayList<>();
+    List<URI> result = new ArrayList<>();
 
     // load all deployment descriptor files using the classloader of the process application
     for (String deploymentDescriptor : deploymentDescriptors) {
@@ -105,13 +107,12 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
       Enumeration<URL> processesXmlFileLocations = null;
       try {
         processesXmlFileLocations = processApplicationClassloader.getResources(deploymentDescriptor);
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
         throw LOG.exceptionWhileReadingProcessesXml(deploymentDescriptor, e);
       }
 
       while (processesXmlFileLocations.hasMoreElements()) {
-        result.add(processesXmlFileLocations.nextElement());
+        result.add(ReflectUtil.urlToURI(processesXmlFileLocations.nextElement()));
       }
 
     }
@@ -121,8 +122,8 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
 
   protected String[] getDeploymentDescriptorLocations(AbstractProcessApplication processApplication) {
     ProcessApplication annotation = processApplication.getClass().getAnnotation(ProcessApplication.class);
-    if(annotation == null) {
-      return new String[] {ProcessApplication.DEFAULT_META_INF_PROCESSES_XML};
+    if (annotation == null) {
+      return new String[] { ProcessApplication.DEFAULT_META_INF_PROCESSES_XML };
 
     } else {
       return annotation.deploymentDescriptors();
@@ -130,32 +131,30 @@ public class ParseProcessesXmlStep extends DeploymentOperationStep {
     }
   }
 
-  protected boolean isEmptyFile(URL url) {
+  protected boolean isEmptyFile(URI uri) {
 
     InputStream inputStream = null;
 
     try {
-      inputStream = url.openStream();
+      inputStream = uri.toURL().openStream();
       return inputStream.available() == 0;
 
-    }
-    catch (IOException e) {
-      throw LOG.exceptionWhileReadingProcessesXml(url.toString(), e);
-    }
-    finally {
+    } catch (IOException e) {
+      throw LOG.exceptionWhileReadingProcessesXml(uri.toString(), e);
+    } finally {
       IoUtil.closeSilently(inputStream);
 
     }
   }
 
-  protected ProcessesXml parseProcessesXml(URL url) {
+  protected ProcessesXml parseProcessesXml(URI uri) {
 
     final ProcessesXmlParser processesXmlParser = new ProcessesXmlParser();
 
     return processesXmlParser.createParse()
-      .sourceUrl(url)
-      .execute()
-      .getProcessesXml();
+        .sourceUri(uri)
+        .execute()
+        .getProcessesXml();
 
   }
 

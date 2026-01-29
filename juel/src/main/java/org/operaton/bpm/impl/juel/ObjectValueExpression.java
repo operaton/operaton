@@ -29,7 +29,7 @@ public final class ObjectValueExpression extends jakarta.el.ValueExpression {
   @Serial private static final long serialVersionUID = 1L;
 
 	private final TypeConverter converter;
-	private final Object object;
+	private final transient Object object;
 	private final Class<?> type;
 
 	/**

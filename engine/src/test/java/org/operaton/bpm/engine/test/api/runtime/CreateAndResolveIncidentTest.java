@@ -47,7 +47,6 @@ import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringExc
 import static java.util.Objects.requireNonNull;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 public class CreateAndResolveIncidentTest {
 
@@ -115,13 +114,9 @@ public class CreateAndResolveIncidentTest {
 
   @Test
   void createIncidentWithNullExecution() {
-
-    try {
-      runtimeService.createIncident("foo", null, "userTask1", "bar");
-      fail("exception expected");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Execution id cannot be null");
-    }
+    assertThatThrownBy(() -> runtimeService.createIncident("foo", null, "userTask1", "bar"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Execution id cannot be null");
   }
 
   @Test

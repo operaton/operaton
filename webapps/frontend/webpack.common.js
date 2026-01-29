@@ -100,8 +100,8 @@ module.exports = (_env, argv = {}) => {
         jquery: path.resolve(__dirname, 'node_modules/jquery'),
         'core-js': path.resolve(__dirname, 'node_modules/core-js'),
         angular: path.resolve(__dirname, 'node_modules/angular'), // avoid loading angular twice
-        // prevent ids from being tree shaken (transitive dependency of form-js)
-        ids: path.resolve(__dirname, 'node_modules/ids/dist/index.umd.js'),
+        // compatibility layer for `ids` module, which is needed differently by dmn-migrate and form-js
+        'ids$': path.resolve(__dirname, 'ids-compatibility.js'),
         // prevent`preact-markup`being tree shaken (transitive dependency of form-js
         'preact-markup': path.resolve(
           __dirname,

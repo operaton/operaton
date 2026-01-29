@@ -60,29 +60,29 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   /** the process instance.  this is the root of the execution tree.
    * the processInstance of a process instance is a self reference. */
-  protected ExecutionImpl processInstance;
+  private ExecutionImpl processInstance;
 
   /** the parent execution */
-  protected ExecutionImpl parent;
+  private ExecutionImpl parent;
 
   /** nested executions representing scopes or concurrent paths */
-  protected List<ExecutionImpl> executions;
+  private List<ExecutionImpl> executions;
 
   /** super execution, not-null if this execution is part of a subprocess */
-  protected ExecutionImpl superExecution;
+  private ExecutionImpl superExecution;
 
   /** reference to a subprocessinstance, not-null if currently subprocess is started from this execution */
-  protected ExecutionImpl subProcessInstance;
+  private ExecutionImpl subProcessInstance;
 
   /** super case execution, not-null if this execution is part of a case execution */
-  protected CaseExecutionImpl superCaseExecution;
+  private CaseExecutionImpl superCaseExecution;
 
   /** reference to a subcaseinstance, not-null if currently subcase is started from this execution */
-  protected CaseExecutionImpl subCaseInstance;
+  private CaseExecutionImpl subCaseInstance;
 
   // variables/////////////////////////////////////////////////////////////////
 
-  protected VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
+  private transient VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
 
   // lifecycle methods ////////////////////////////////////////////////////////
 

@@ -49,11 +49,11 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   protected boolean isSubProcessScope;
 
   /** The activities for which the flow scope is this scope  */
-  protected List<ActivityImpl> flowActivities = new ArrayList<>();
-  protected Map<String, ActivityImpl> namedFlowActivities = new HashMap<>();
+  private List<ActivityImpl> flowActivities = new ArrayList<>();
+  private Map<String, ActivityImpl> namedFlowActivities = new HashMap<>();
 
   /** activities for which this is the event scope **/
-  protected Set<ActivityImpl> eventActivities = new HashSet<>();
+  private Set<ActivityImpl> eventActivities = new HashSet<>();
 
   protected ProcessDefinitionImpl processDefinition;
 

@@ -29,6 +29,7 @@ public class AbstractTypedValue<T> implements TypedValue {
 
   @Serial private static final long serialVersionUID = 1L;
 
+  @SuppressWarnings("java:S1948") // ObjectValueImpl overrides serialization handling
   protected T value;
 
   protected ValueType type;

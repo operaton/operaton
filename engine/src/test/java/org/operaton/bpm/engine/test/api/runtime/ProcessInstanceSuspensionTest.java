@@ -27,7 +27,6 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;

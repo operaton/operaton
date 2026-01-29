@@ -41,6 +41,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Thorben Lindhauer
  *
  */
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class MultiTenancyMigrationTenantProviderTest {
 
   protected static final String TENANT_ONE = "tenant1";

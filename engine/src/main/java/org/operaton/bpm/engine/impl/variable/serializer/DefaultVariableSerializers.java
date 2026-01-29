@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +30,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
-public class DefaultVariableSerializers implements Serializable, VariableSerializers {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DefaultVariableSerializers implements VariableSerializers {
 
   protected List<TypedValueSerializer<?>> serializerList = new ArrayList<>();
   protected Map<String, TypedValueSerializer<?>> serializerMap = new HashMap<>();

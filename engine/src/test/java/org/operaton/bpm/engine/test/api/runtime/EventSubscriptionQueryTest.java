@@ -70,9 +70,9 @@ class EventSubscriptionQueryTest {
     assertThat(query.count()).isOne();
     assertThat(query.list()).hasSize(1);
     assertThat(query.singleResult()).isNotNull();
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventSubscriptionId(null);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
-    assertThatThrownBy(eventSubscriptionQuery::list)
+    assertThatThrownBy(() -> eventSubscriptionQuery.eventSubscriptionId(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("event subscription id is null");
 
@@ -93,9 +93,9 @@ class EventSubscriptionQueryTest {
       .eventName("messageName2")
       .list();
     assertThat(list).hasSize(1);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventName(null);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
-    assertThatThrownBy(eventSubscriptionQuery::list)
+    assertThatThrownBy(() -> eventSubscriptionQuery.eventName(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("event name is null");
 
@@ -117,9 +117,9 @@ class EventSubscriptionQueryTest {
       .eventType("message")
       .list();
     assertThat(list).hasSize(2);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventType(null);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
-    assertThatThrownBy(eventSubscriptionQuery::list)
+    assertThatThrownBy(() -> eventSubscriptionQuery.eventType(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("event type is null");
 
@@ -142,9 +142,9 @@ class EventSubscriptionQueryTest {
       .eventType("message")
       .list();
     assertThat(list).hasSize(2);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().activityId(null);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
-    assertThatThrownBy(eventSubscriptionQuery::list)
+    assertThatThrownBy(() -> eventSubscriptionQuery.activityId(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("activity id is null");
 
@@ -178,9 +178,9 @@ class EventSubscriptionQueryTest {
     assertThat(signalSubscription).isNotNull();
 
     assertThat(subscription).isEqualTo(signalSubscription);
-    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().executionId(null);
+    var eventSubscriptionQuery = runtimeService.createEventSubscriptionQuery();
 
-    assertThatThrownBy(eventSubscriptionQuery::list)
+    assertThatThrownBy(() -> eventSubscriptionQuery.executionId(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("execution id is null");
 

@@ -83,6 +83,7 @@ import static org.assertj.core.api.Assertions.fail;
  * @author Frederik Heremans
  * @author Falko Menge
  */
+@SuppressWarnings("java:S5961") // Tests with many assertions are acceptable
 class TaskQueryTest {
 
   @RegisterExtension
@@ -4722,33 +4723,25 @@ class TaskQueryTest {
 
   @Test
   void testQueryByUnsupportedValueTypes() {
-    var taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.BYTES);
+    var taskQuery = taskService.createTaskQuery();
 
-    assertThatThrownBy(taskQuery::list)
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable("var", ValueType.BYTES))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot order by variables of type byte");
 
-    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.NULL);
-
-    assertThatThrownBy(taskQuery::list)
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable("var", ValueType.NULL))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot order by variables of type null");
 
-    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.NUMBER);
-
-    assertThatThrownBy(taskQuery::list)
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable("var", ValueType.NUMBER))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot order by variables of type number");
 
-    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.OBJECT);
-
-    assertThatThrownBy(taskQuery::list)
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable("var", ValueType.OBJECT))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot order by variables of type object");
 
-    taskQuery = taskService.createTaskQuery().orderByProcessVariable("var", ValueType.FILE);
-
-    assertThatThrownBy(taskQuery::list)
+    assertThatThrownBy(() -> taskQuery.orderByProcessVariable("var", ValueType.FILE))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot order by variables of type file");
   }

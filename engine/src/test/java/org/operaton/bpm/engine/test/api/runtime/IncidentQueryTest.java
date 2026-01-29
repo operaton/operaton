@@ -539,18 +539,18 @@ public class IncidentQueryTest {
 
   @Test
   void testQueryByNullJobDefinitionId() {
-    var incidentQuery = runtimeService.createIncidentQuery().jobDefinitionIdIn((String) null);
+    var incidentQuery = runtimeService.createIncidentQuery();
 
-    assertThatThrownBy(incidentQuery::list)
+    assertThatThrownBy(() -> incidentQuery.jobDefinitionIdIn((String) null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("jobDefinitionIds contains null value");
   }
 
   @Test
   void testQueryByNullJobDefinitionIds() {
-    var incidentQuery = runtimeService.createIncidentQuery().jobDefinitionIdIn((String[]) null);
+    var incidentQuery = runtimeService.createIncidentQuery();
 
-    assertThatThrownBy(incidentQuery::list)
+    assertThatThrownBy(() -> incidentQuery.jobDefinitionIdIn((String[]) null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("jobDefinitionIds is null");
   }

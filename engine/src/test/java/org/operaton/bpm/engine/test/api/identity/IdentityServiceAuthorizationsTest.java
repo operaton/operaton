@@ -45,6 +45,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserEntity;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GLOBAL;
 import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -435,7 +436,7 @@ class IdentityServiceAuthorizationsTest {
   @Test
   void testGroupUpdateAuthorizations() {
 
-    // crate group while still in god-mode:
+    // create group while still in god-mode:
     Group group1 = identityService.newGroup("group1");
     identityService.saveGroup(group1);
 
@@ -452,10 +453,10 @@ class IdentityServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // fetch user:
-    group1 = identityService.createGroupQuery().singleResult();
-    group1.setName("Group 1");
+    Group loadedGroup1 = identityService.createGroupQuery().singleResult();
+    loadedGroup1.setName("Group 1");
 
-    assertThatThrownBy(() -> identityService.saveGroup(group1))
+    assertThatThrownBy(() -> identityService.saveGroup(loadedGroup1))
       .isInstanceOf(AuthorizationException.class)
       .satisfies(e -> {
         AuthorizationException ex = (AuthorizationException) e;
@@ -566,10 +567,10 @@ class IdentityServiceAuthorizationsTest {
     identityService.setAuthenticatedUserId(USER_ID);
 
     // fetch user:
-    tenant = identityService.createTenantQuery().singleResult();
-    tenant.setName("newName");
+    Tenant fetchedTenant = identityService.createTenantQuery().singleResult();
+    fetchedTenant.setName("newName");
 
-    assertThatThrownBy(() -> identityService.saveTenant(tenant))
+    assertThatThrownBy(() -> identityService.saveTenant(fetchedTenant))
       .isInstanceOf(AuthorizationException.class)
       .satisfies(e -> {
         AuthorizationException ex = (AuthorizationException) e;

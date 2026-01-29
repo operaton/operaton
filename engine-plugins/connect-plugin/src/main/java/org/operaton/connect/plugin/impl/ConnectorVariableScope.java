@@ -16,7 +16,6 @@
  */
 package org.operaton.connect.plugin.impl;
 
-import java.io.Serial;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +39,9 @@ import org.operaton.connect.spi.ConnectorResponse;
  */
 public class ConnectorVariableScope extends AbstractVariableScope {
 
-  @Serial private static final long serialVersionUID = 1L;
-
   protected AbstractVariableScope parent;
 
-  protected VariableStore<SimpleVariableInstance> variableStore;
+  protected transient VariableStore<SimpleVariableInstance> variableStore;
 
   public ConnectorVariableScope(AbstractVariableScope parent) {
     this.parent = parent;

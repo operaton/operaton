@@ -153,7 +153,7 @@ public abstract class PvmExecutionImpl extends CoreExecution implements
 
   protected boolean activityInstanceEndListenersFailed;
 
-  protected Map<String, Object> payloadForTriggeredScope;
+  protected transient Map<String, Object> payloadForTriggeredScope;
 
   // sequence counter ////////////////////////////////////////////////////////
   protected long sequenceCounter;

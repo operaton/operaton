@@ -313,11 +313,11 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   /**
    * The delegate for the async before attribute update.
    */
-  protected AsyncBeforeUpdate delegateAsyncBeforeUpdate;
+  protected transient AsyncBeforeUpdate delegateAsyncBeforeUpdate;
   /**
    * The delegate for the async after attribute update.
    */
-  protected AsyncAfterUpdate delegateAsyncAfterUpdate;
+  protected transient AsyncAfterUpdate delegateAsyncAfterUpdate;
 
   public AsyncBeforeUpdate getDelegateAsyncBeforeUpdate() {
     return delegateAsyncBeforeUpdate;

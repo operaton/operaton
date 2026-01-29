@@ -30,12 +30,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
  *
  */
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class MultiTenancyMigrationTest {
 
   protected static final String TENANT_ONE = "tenant1";
@@ -51,18 +52,13 @@ class MultiTenancyMigrationTest {
     // given
     ProcessDefinition tenant1Definition = testHelper.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition tenant2Definition = testHelper.deployForTenantAndGetDefinition(TENANT_TWO, ProcessModels.ONE_TASK_PROCESS);
-    var runtimeService = engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
+    var migrationPlanBuilder = engineRule.getRuntimeService().createMigrationPlan(tenant1Definition.getId(), tenant2Definition.getId())
       .mapEqualActivities();
 
-    // when
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains(
-          "Cannot migrate process instances between processes of different tenants ('tenant1' != 'tenant2')");
-    }
+    // when/then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot migrate process instances between processes of different tenants ('tenant1' != 'tenant2')");
   }
 
   @Test
@@ -143,19 +139,15 @@ class MultiTenancyMigrationTest {
     MigrationPlan migrationPlan = engineRule.getRuntimeService().createMigrationPlan(sourceDefinition.getId(), targetDefinition.getId())
         .mapEqualActivities()
         .build();
-    var runtimeService = engineRule.getRuntimeService()
+    var migrationBuilder = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
         .processInstanceIds(List.of(processInstance.getId()));
 
-    // when
-    try {
-      runtimeService.execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains(
-          "Cannot migrate process instance '" + processInstance.getId()
+    // when/then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot migrate process instance '" + processInstance.getId()
               + "' without tenant to a process definition with a tenant ('tenant1')");
-    }
   }
 
   @Test

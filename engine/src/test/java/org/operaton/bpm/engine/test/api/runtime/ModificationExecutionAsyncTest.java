@@ -68,7 +68,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.operaton.bpm.engine.test.api.runtime.migration.ModifiableBpmnModelInstance.modify;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Parameterized
 public class ModificationExecutionAsyncTest {
@@ -165,22 +165,16 @@ public class ModificationExecutionAsyncTest {
   void createModificationWithNullProcessInstanceIdsListAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((List<String>) null);
 
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not succeed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids is empty");
-    }
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids is empty");
   }
 
   @TestTemplate
   void createModificationWithNullProcessDefinitionId() {
-    try {
-      runtimeService.createModification(null);
-      fail("Should not succeed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("processDefinitionId is null");
-    }
+    assertThatThrownBy(() -> runtimeService.createModification(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processDefinitionId is null");
   }
 
 
@@ -188,71 +182,54 @@ public class ModificationExecutionAsyncTest {
   void createModificationUsingProcessInstanceIdsListWithNullValueAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Arrays.asList("foo", null, "bar"));
 
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not succeed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids contains null value");
-    }
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids contains null value");
   }
 
   @TestTemplate
   void createModificationWithEmptyProcessInstanceIdsListAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds(Collections.<String> emptyList());
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not succeed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids is empty");
-    }
+
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids is empty");
   }
 
   @TestTemplate
   void createModificationWithNullProcessInstanceIdsArrayAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceIds((String[]) null);
 
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not be able to modify");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids is empty");
-    }
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids is empty");
   }
 
   @TestTemplate
   void createModificationUsingProcessInstanceIdsArrayWithNullValueAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").cancelAllForActivity("user1").processInstanceIds("foo", null, "bar");
 
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not be able to modify");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids contains null value");
-    }
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids contains null value");
   }
 
   @TestTemplate
   void testNullProcessInstanceQueryAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").processInstanceQuery(null);
 
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not succeed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids is empty");
-    }
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids is empty");
   }
 
   @TestTemplate
   void testNullHistoricProcessInstanceQueryAsync() {
     var modificationBuilder = runtimeService.createModification("processDefinitionId").startAfterActivity("user1").historicProcessInstanceQuery(null);
 
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not succeed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Process instance ids is empty");
-    }
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance ids is empty");
   }
 
   @TestTemplate
@@ -262,12 +239,10 @@ public class ModificationExecutionAsyncTest {
 
     List<String> processInstanceIds = helper.startInstances("process1", 2);
     var modificationBuilder = runtimeService.createModification("foo").cancelAllForActivity("activityId").processInstanceIds(processInstanceIds);
-    try {
-      modificationBuilder.executeAsync();
-      fail("Should not succed");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("processDefinition is null");
-    }
+
+    assertThatThrownBy(modificationBuilder::executeAsync)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processDefinition is null");
   }
 
   @TestTemplate

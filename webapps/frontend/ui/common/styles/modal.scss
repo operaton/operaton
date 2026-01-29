@@ -15,7 +15,7 @@
 }
 
 .modal-backdrop {
-  background-color: fade($white, 85%);
+  background-color: rgba($white, 0.85);
   bottom: 0;
   cursor: pointer;
 

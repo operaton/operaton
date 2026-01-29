@@ -18,7 +18,7 @@
     text-align: center;
     height: $grid-gutter-width;
 
-    @include gradient(top, fade($column-center-bg, 0), $column-center-bg);
+    @include gradient(top, rgba($column-center-bg, 0), $column-center-bg);
 
     background-position-y: 100%;
     background-repeat: repeat-x;

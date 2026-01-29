@@ -32,7 +32,7 @@
     "angular-sanitize": "1.8.3",
     "angular-touch": "1.8.3",
     "angular-translate": "2.19.1",
-    "bootstrap": "4.0.0",
+    "bootstrap": "4.6.2",
     "bootstrap-icons": "^1.13.1",
     "bpmn-font": "0.12.1",
     "bpmn-js": "18.10.1",

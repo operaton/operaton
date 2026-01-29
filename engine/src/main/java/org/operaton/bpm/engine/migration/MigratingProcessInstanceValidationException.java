@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.migration;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 
 /**
@@ -28,9 +26,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
  */
 public class MigratingProcessInstanceValidationException extends ProcessEngineException {
 
-  @Serial private static final long serialVersionUID = 1L;
-
-  protected final MigratingProcessInstanceValidationReport validationReport;
+  protected final transient MigratingProcessInstanceValidationReport validationReport;
 
   public MigratingProcessInstanceValidationException(String message, MigratingProcessInstanceValidationReport validationReport) {
     super(message);

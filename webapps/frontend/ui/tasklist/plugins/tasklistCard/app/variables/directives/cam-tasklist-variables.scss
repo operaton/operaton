@@ -4,7 +4,7 @@
   font-size: 12px;
 
   .undefined {
-    color: fade($text-color, 50%);
+    color: rgba($text-color, 0.5);
   }
 
   div.row {

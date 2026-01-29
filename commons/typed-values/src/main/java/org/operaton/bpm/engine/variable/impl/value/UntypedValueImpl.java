@@ -32,7 +32,7 @@ public class UntypedValueImpl implements TypedValue {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected Object value;
+  protected transient Object value;
 
   protected boolean isTransient;
 

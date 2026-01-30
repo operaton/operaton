@@ -22,6 +22,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -481,23 +483,34 @@ public class ProcessInstanceModificationMultiInstanceTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = PARALLEL_MULTI_INSTANCE_TASK_PROCESS)
-  @Test
-  void testStartBeforeInnerActivityWithMiBodyParallelTasksActivityStatistics() {
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+    "Parallel Multi Instance Tasks, miParallelUserTasks, miTasks",
+    "Parallel Multi Instance Subprocess, miParallelSubprocess, subProcessTask",
+    "Sequential Multi Instance Tasks, miSequentialUserTasks, miTasks",
+    "Sequential Multi Instance Subprocess, miSequentialSubprocess, subProcessTask"
+  })
+  @Deployment(resources = {
+      PARALLEL_MULTI_INSTANCE_TASK_PROCESS,
+      PARALLEL_MULTI_INSTANCE_SUBPROCESS_PROCESS,
+      SEQUENTIAL_MULTI_INSTANCE_TASK_PROCESS,
+      SEQUENTIAL_MULTI_INSTANCE_SUBPROCESS_PROCESS
+  })
+  void testStartBeforeInnerActivityWithMiBody (String testCaseName, String processDefinitionKey, String activityId) {
     // given the mi body is not yet instantiated
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miParallelUserTasks");
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
 
     // when
     runtimeService
-      .createProcessInstanceModification(processInstance.getId())
-      .startBeforeActivity("miTasks")
-      .execute();
+        .createProcessInstanceModification(processInstance.getId())
+        .startBeforeActivity(activityId)
+        .execute();
 
     // then the activity instance statistics are correct
     List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
     assertThat(statistics).hasSize(2);
 
-    ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
+    ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, activityId);
     assertThat(miTasksStatistics).isNotNull();
     assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
 
@@ -554,32 +567,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
         "subProcessTask", "subProcessTask", "afterTask");
     testRule.assertProcessEnded(processInstance.getId());
   }
-
-  @Deployment(resources = PARALLEL_MULTI_INSTANCE_SUBPROCESS_PROCESS)
-  @Test
-  void testStartBeforeInnerActivityWithMiBodyParallelSubprocessActivityStatistics() {
-    // given the mi body is not yet instantiated
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miParallelSubprocess");
-
-    // when
-    runtimeService
-      .createProcessInstanceModification(processInstance.getId())
-      .startBeforeActivity("subProcessTask")
-      .execute();
-
-    // then the activity instance statistics are correct
-    List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics).hasSize(2);
-
-    ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
-    assertThat(miTasksStatistics).isNotNull();
-    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
-
-    ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertThat(beforeTaskStatistics).isNotNull();
-    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
-  }
-
 
   @Deployment(resources = PARALLEL_MULTI_INSTANCE_SUBPROCESS_PROCESS)
   @Test
@@ -719,31 +706,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = SEQUENTIAL_MULTI_INSTANCE_TASK_PROCESS)
-  @Test
-  void testStartBeforeInnerActivityWithMiBodySequentialTasksActivityStatistics() {
-    // given the mi body is not yet instantiated
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialUserTasks");
-
-    // when
-    runtimeService
-      .createProcessInstanceModification(processInstance.getId())
-      .startBeforeActivity("miTasks")
-      .execute();
-
-    // then the activity instance statistics are correct
-    List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics).hasSize(2);
-
-    ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "miTasks");
-    assertThat(miTasksStatistics).isNotNull();
-    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
-
-    ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertThat(beforeTaskStatistics).isNotNull();
-    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
-  }
-
   protected ActivityStatistics getStatisticsForActivity(List<ActivityStatistics> statistics, String activityId) {
     for (ActivityStatistics statisticsInstance : statistics) {
       if (statisticsInstance.getId().equals(activityId)) {
@@ -798,31 +760,6 @@ public class ProcessInstanceModificationMultiInstanceTest {
     completeTasksInOrder("subProcessTask", "afterTask",
         "beforeTask", "subProcessTask", "subProcessTask", "subProcessTask", "afterTask");
     testRule.assertProcessEnded(processInstance.getId());
-  }
-
-  @Deployment(resources = SEQUENTIAL_MULTI_INSTANCE_SUBPROCESS_PROCESS)
-  @Test
-  void testStartBeforeInnerActivityWithMiBodySequentialSubprocessActivityStatistics() {
-    // given the mi body is not yet instantiated
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("miSequentialSubprocess");
-
-    // when
-    runtimeService
-      .createProcessInstanceModification(processInstance.getId())
-      .startBeforeActivity("subProcessTask")
-      .execute();
-
-    // then the activity instance statistics are correct
-    List<ActivityStatistics> statistics = managementService.createActivityStatisticsQuery(processInstance.getProcessDefinitionId()).list();
-    assertThat(statistics).hasSize(2);
-
-    ActivityStatistics miTasksStatistics = getStatisticsForActivity(statistics, "subProcessTask");
-    assertThat(miTasksStatistics).isNotNull();
-    assertThat(miTasksStatistics.getInstances()).isEqualTo(1);
-
-    ActivityStatistics beforeTaskStatistics = getStatisticsForActivity(statistics, "beforeTask");
-    assertThat(beforeTaskStatistics).isNotNull();
-    assertThat(beforeTaskStatistics.getInstances()).isEqualTo(1);
   }
 
   @Deployment(resources = SEQUENTIAL_MULTI_INSTANCE_SUBPROCESS_PROCESS)

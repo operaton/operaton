@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.test.dmn.feel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelSyntaxException;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.test.Deployment;
@@ -41,22 +43,16 @@ class FeelEnableLegacyBehaviorConfigTest {
 
   DecisionService decisionService;
 
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/literal-expression.dmn"})
-  void shouldEvaluateLiteralExpression() {
-    // given
-
-    // when
-    String result = decisionService.evaluateDecisionByKey("c").evaluate()
-        .getSingleEntry();
-
-    // then
-    assertThat(result).isEqualTo("foo");
-  }
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Input Expression, org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn",
+      "Input Rule, org/operaton/bpm/engine/test/dmn/feel/legacy/input-rule.dmn",
+      "Output Rule, org/operaton/bpm/engine/test/dmn/feel/output-rule.dmn"
+  })
 
   @Test
   @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn"})
-  void shouldEvaluateInputExpression() {
+  void shouldEvaluate() {
     // given
 
     // when
@@ -78,19 +74,6 @@ class FeelEnableLegacyBehaviorConfigTest {
       .hasCauseInstanceOf(FeelSyntaxException.class)
       .extracting("cause.message")
       .isEqualTo("FEEL-01010 Syntax error in expression 'for x in 1..3 return x * 2'");
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/output-rule.dmn"})
-  void shouldEvaluateOutputRule() {
-    // given
-
-    // when
-    String result = decisionService.evaluateDecisionByKey("c").evaluate()
-        .getSingleEntry();
-
-    // then
-    assertThat(result).isEqualTo("foo");
   }
 
 }

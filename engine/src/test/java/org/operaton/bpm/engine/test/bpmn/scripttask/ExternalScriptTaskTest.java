@@ -22,6 +22,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.ScriptCompilationException;
@@ -39,6 +41,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * @author Sebastian Menski
  */
 class ExternalScriptTaskTest {
+  private static final String GREETING_PY = "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py";
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -61,7 +64,7 @@ class ExternalScriptTaskTest {
   @Test
   void testDefaultExternalScriptAsVariable() {
     Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptPath", "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
+    variables.put("scriptPath", GREETING_PY);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
@@ -77,21 +80,21 @@ class ExternalScriptTaskTest {
         .hasMessageContaining("Cannot resolve identifier 'scriptPath'");
   }
 
-  @Deployment
-  @Test
-  void testDefaultExternalScriptAsBean() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptResourceBean", new ScriptResourceBean());
+  @ParameterizedTest
+  @CsvSource({
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsBean.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInClasspath.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInClasspathAsBean.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsBean.bpmn20.xml"
+  })
+  void withScriptResourceBean(String bpmnResource) {
+    // given
+    testRule.deploy(bpmnResource, GREETING_PY);
+
+    // when
+    Map<String, Object> variables = Map.of("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment
-  @Test
-  void testScriptInClasspath() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
@@ -110,17 +113,6 @@ class ExternalScriptTaskTest {
 
   @Deployment
   @Test
-  void testScriptInClasspathAsBean() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptResourceBean", new ScriptResourceBean());
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment
-  @Test
   void testScriptNotFoundInClasspath() {
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
@@ -130,19 +122,7 @@ class ExternalScriptTaskTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
-  })
-  @Test
-  void testScriptInDeployment() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      GREETING_PY
   })
   @Test
   void testScriptInDeploymentAfterCacheWasCleaned() {
@@ -156,26 +136,12 @@ class ExternalScriptTaskTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsVariable.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      GREETING_PY
   })
   @Test
   void testScriptInDeploymentAsVariable() {
     Map<String, Object> variables = new HashMap<>();
     variables.put("scriptPath", "deployment://org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsBean.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
-  })
-  @Test
-  void testScriptInDeploymentAsBean() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");

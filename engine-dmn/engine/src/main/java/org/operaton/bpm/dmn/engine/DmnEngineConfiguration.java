@@ -20,8 +20,9 @@ import java.util.List;
 
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionEvaluationListener;
 import org.operaton.bpm.dmn.engine.delegate.DmnDecisionTableEvaluationListener;
-import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
+import org.operaton.bpm.dmn.engine.spi.DmnEngineConfigurationFactory;
 import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 /**
  * The configuration of a {@link DmnEngine}. It can be used
@@ -40,12 +41,17 @@ import org.operaton.bpm.dmn.engine.spi.DmnEngineMetricCollector;
  * </p>
  */
 public abstract class DmnEngineConfiguration {
+  private static final DmnEngineConfigurationFactory DMN_ENGINE_CONFIGURATION_FACTORY;
+
+  static {
+    DMN_ENGINE_CONFIGURATION_FACTORY = ServiceLoaderUtil.loadSingleService(DmnEngineConfigurationFactory.class);
+  }
 
   /**
    * @return a new default dmn engine configuration
    */
   public static DmnEngineConfiguration createDefaultDmnEngineConfiguration() {
-    return new DefaultDmnEngineConfiguration();
+    return DMN_ENGINE_CONFIGURATION_FACTORY.createDefaultDmnEngineConfiguration();
   }
 
   /**

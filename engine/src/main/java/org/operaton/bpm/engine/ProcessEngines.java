@@ -21,9 +21,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -146,7 +146,23 @@ public final class ProcessEngines {
     return Collections.emptySet();
   }
 
-  protected static void initProcessEngineFromSpringResource(URI resource) {
+  /**
+   * @deprecated Planned for removal
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
+  @SuppressWarnings("java:S1133")
+  protected static void initProcessEngineFromSpringResource(URL resource) {
+    try {
+      initProcessEngineFromSpringResource(resource.toURI());
+    } catch (URISyntaxException e) {
+      throw new ProcessEngineException(
+        "couldn't initialize process engine from spring configuration resource %s: %s".formatted(resource.toString(),
+          e.getMessage()),
+        e);
+    }
+  }
+
+  private static void initProcessEngineFromSpringResource(URI resource) {
     try {
       Class<?> springConfigurationHelperClass = ReflectUtil.loadClass(
           "org.operaton.bpm.engine.spring.SpringConfigurationHelper");

@@ -1579,46 +1579,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected void initDataSource() {
     if (dataSource == null) {
       if (dataSourceJndiName != null) {
-        try {
-          dataSource = (DataSource) new InitialContext().lookup(dataSourceJndiName);
-        } catch (Exception e) {
-          throw new ProcessEngineException("couldn't lookup datasource from %s: %s".formatted(dataSourceJndiName, e.getMessage()), e);
-        }
+        initJndiDataSource();
 
       } else if (jdbcUrl != null) {
-        if (jdbcDriver == null || jdbcUsername == null) {
-          throw new ProcessEngineException("DataSource or JDBC properties have to be specified in a process engine configuration");
-        }
-
-        PooledDataSource pooledDataSource =
-            new PooledDataSource(ReflectUtil.getClassLoader(), jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
-
-        if (jdbcMaxActiveConnections > 0) {
-          pooledDataSource.setPoolMaximumActiveConnections(jdbcMaxActiveConnections);
-        }
-        if (jdbcMaxIdleConnections > 0) {
-          pooledDataSource.setPoolMaximumIdleConnections(jdbcMaxIdleConnections);
-        }
-        if (jdbcMaxCheckoutTime > 0) {
-          pooledDataSource.setPoolMaximumCheckoutTime(jdbcMaxCheckoutTime);
-        }
-        if (jdbcMaxWaitTime > 0) {
-          pooledDataSource.setPoolTimeToWait(jdbcMaxWaitTime);
-        }
-        if (jdbcPingEnabled) {
-          pooledDataSource.setPoolPingEnabled(true);
-          if (jdbcPingQuery != null) {
-            pooledDataSource.setPoolPingQuery(jdbcPingQuery);
-          }
-          pooledDataSource.setPoolPingConnectionsNotUsedFor(jdbcPingConnectionNotUsedFor);
-        }
-        dataSource = pooledDataSource;
+        initJdbcUrlDataSource();
       }
 
-      if (dataSource instanceof PooledDataSource pooledDataSource) {
-        // ACT-233: connection pool of Ibatis is not properely initialized if this is not called!
-        pooledDataSource.forceCloseAll();
-      }
+      cleanupPooledDataSource();
     }
 
     if (dataSource != null) {
@@ -1627,6 +1594,51 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
     if (databaseType == null) {
       initDatabaseType();
+    }
+  }
+
+  private void cleanupPooledDataSource() {
+    if (dataSource instanceof PooledDataSource pooledDataSource) {
+      // ACT-233: connection pool of Ibatis is not properely initialized if this is not called!
+      pooledDataSource.forceCloseAll();
+    }
+  }
+
+  private void initJdbcUrlDataSource() {
+    if (jdbcDriver == null || jdbcUsername == null) {
+      throw new ProcessEngineException("DataSource or JDBC properties have to be specified in a process engine configuration");
+    }
+
+    PooledDataSource pooledDataSource =
+        new PooledDataSource(ReflectUtil.getClassLoader(), jdbcDriver, jdbcUrl, jdbcUsername, jdbcPassword);
+
+    if (jdbcMaxActiveConnections > 0) {
+      pooledDataSource.setPoolMaximumActiveConnections(jdbcMaxActiveConnections);
+    }
+    if (jdbcMaxIdleConnections > 0) {
+      pooledDataSource.setPoolMaximumIdleConnections(jdbcMaxIdleConnections);
+    }
+    if (jdbcMaxCheckoutTime > 0) {
+      pooledDataSource.setPoolMaximumCheckoutTime(jdbcMaxCheckoutTime);
+    }
+    if (jdbcMaxWaitTime > 0) {
+      pooledDataSource.setPoolTimeToWait(jdbcMaxWaitTime);
+    }
+    if (jdbcPingEnabled) {
+      pooledDataSource.setPoolPingEnabled(true);
+      if (jdbcPingQuery != null) {
+        pooledDataSource.setPoolPingQuery(jdbcPingQuery);
+      }
+      pooledDataSource.setPoolPingConnectionsNotUsedFor(jdbcPingConnectionNotUsedFor);
+    }
+    dataSource = pooledDataSource;
+  }
+
+  private void initJndiDataSource() {
+    try {
+      dataSource = (DataSource) new InitialContext().lookup(dataSourceJndiName);
+    } catch (Exception e) {
+      throw new ProcessEngineException("couldn't lookup datasource from %s: %s".formatted(dataSourceJndiName, e.getMessage()), e);
     }
   }
 

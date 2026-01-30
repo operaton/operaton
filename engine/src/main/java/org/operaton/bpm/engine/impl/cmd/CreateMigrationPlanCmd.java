@@ -187,40 +187,51 @@ public class CreateMigrationPlanCmd implements Command<MigrationPlan> {
   protected ValidatingMigrationInstructions wrapMigrationInstructions(MigrationPlan migrationPlan, ProcessDefinitionImpl sourceProcessDefinition, ProcessDefinitionImpl targetProcessDefinition, MigrationPlanValidationReportImpl planReport) {
     ValidatingMigrationInstructions validatingMigrationInstructions = new ValidatingMigrationInstructions();
     for (MigrationInstruction migrationInstruction : migrationPlan.getInstructions()) {
-      MigrationInstructionValidationReportImpl instructionReport = new MigrationInstructionValidationReportImpl(migrationInstruction);
-
-      String sourceActivityId = migrationInstruction.getSourceActivityId();
-      String targetActivityId = migrationInstruction.getTargetActivityId();
-      if (sourceActivityId != null && targetActivityId != null) {
-        ActivityImpl sourceActivity = sourceProcessDefinition.findActivity(sourceActivityId);
-        ActivityImpl targetActivity = targetProcessDefinition.findActivity(migrationInstruction.getTargetActivityId());
-
-        if (sourceActivity != null && targetActivity != null) {
-          validatingMigrationInstructions.addInstruction(new ValidatingMigrationInstructionImpl(sourceActivity, targetActivity, migrationInstruction.isUpdateEventTrigger()));
-        }
-        else {
-          if (sourceActivity == null) {
-            instructionReport.addFailure("Source activity '%s' does not exist".formatted(sourceActivityId));
-          }
-          if (targetActivity == null) {
-            instructionReport.addFailure("Target activity '%s' does not exist".formatted(targetActivityId));
-          }
-        }
-      }
-      else {
-        if (sourceActivityId == null) {
-          instructionReport.addFailure("Source activity id is null");
-        }
-        if (targetActivityId == null) {
-          instructionReport.addFailure("Target activity id is null");
-        }
-      }
-
-      if (instructionReport.hasFailures()) {
-        planReport.addInstructionReport(instructionReport);
-      }
+      createValidatingMigrationInstruction(migrationInstruction, sourceProcessDefinition, targetProcessDefinition, planReport, validatingMigrationInstructions);
     }
     return validatingMigrationInstructions;
+  }
+
+  protected void createValidatingMigrationInstruction(MigrationInstruction migrationInstruction, ProcessDefinitionImpl sourceProcessDefinition, ProcessDefinitionImpl targetProcessDefinition, MigrationPlanValidationReportImpl planReport, ValidatingMigrationInstructions validatingMigrationInstructions) {
+    MigrationInstructionValidationReportImpl instructionReport = new MigrationInstructionValidationReportImpl(migrationInstruction);
+
+    String sourceActivityId = migrationInstruction.getSourceActivityId();
+    String targetActivityId = migrationInstruction.getTargetActivityId();
+
+    if (sourceActivityId != null && targetActivityId != null) {
+      resolveActivities(migrationInstruction, sourceProcessDefinition, targetProcessDefinition, validatingMigrationInstructions, instructionReport, sourceActivityId, targetActivityId);
+    } else {
+      validateActivityIds(instructionReport, sourceActivityId, targetActivityId);
+    }
+
+    if (instructionReport.hasFailures()) {
+      planReport.addInstructionReport(instructionReport);
+    }
+  }
+
+  private void validateActivityIds(MigrationInstructionValidationReportImpl instructionReport, String sourceActivityId, String targetActivityId) {
+    if (sourceActivityId == null) {
+      instructionReport.addFailure("Source activity id is null");
+    }
+    if (targetActivityId == null) {
+      instructionReport.addFailure("Target activity id is null");
+    }
+  }
+
+  private void resolveActivities(MigrationInstruction migrationInstruction, ProcessDefinitionImpl sourceProcessDefinition, ProcessDefinitionImpl targetProcessDefinition, ValidatingMigrationInstructions validatingMigrationInstructions, MigrationInstructionValidationReportImpl instructionReport, String sourceActivityId, String targetActivityId) {
+    ActivityImpl sourceActivity = sourceProcessDefinition.findActivity(sourceActivityId);
+    ActivityImpl targetActivity = targetProcessDefinition.findActivity(targetActivityId);
+
+    if (sourceActivity != null && targetActivity != null) {
+      validatingMigrationInstructions.addInstruction(new ValidatingMigrationInstructionImpl(sourceActivity, targetActivity, migrationInstruction.isUpdateEventTrigger()));
+    } else {
+      if (sourceActivity == null) {
+        instructionReport.addFailure("Source activity '%s' does not exist".formatted(sourceActivityId));
+      }
+      if (targetActivity == null) {
+        instructionReport.addFailure("Target activity '%s' does not exist".formatted(targetActivityId));
+      }
+    }
   }
 
 }

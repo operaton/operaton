@@ -203,51 +203,57 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
       CommandContext commandContext,
       DeploymentEntity candidateDeployment) {
 
-    Map<String, ResourceEntity> resourcesToDeploy = new HashMap<>();
     Map<String, ResourceEntity> candidateResources = candidateDeployment.getResources();
 
     if (deploymentBuilder.isDuplicateFilterEnabled()) {
-
       if (candidateDeployment.getName() == null) {
         LOG.warnFilteringDuplicatesEnabledWithNullDeploymentName();
       }
+      String source = initDeploymentSource(candidateDeployment);
+      Map<String, ResourceEntity> existingResources = resolveLatestResources(commandContext, candidateDeployment, candidateResources, source);
+      return filterResourcesToDeploy(candidateResources, existingResources);
+    } else {
+      return candidateResources;
+    }
+  }
 
-      String source = candidateDeployment.getSource();
-      if (source == null || source.isEmpty()) {
-        source = ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE;
-      }
+  private String initDeploymentSource(DeploymentEntity candidateDeployment) {
+    String source = candidateDeployment.getSource();
+    if (source == null || source.isEmpty()) {
+      source = ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE;
+    }
+    return source;
+  }
 
-      Map<String, ResourceEntity> existingResources = commandContext
-          .getResourceManager()
-          .findLatestResourcesByDeploymentName(
-              candidateDeployment.getName(),
-              candidateResources.keySet(),
-              source,
-              candidateDeployment.getTenantId());
+  private Map<String, ResourceEntity> resolveLatestResources(CommandContext commandContext, DeploymentEntity candidateDeployment, Map<String, ResourceEntity> candidateResources, String source) {
+    return commandContext
+        .getResourceManager()
+        .findLatestResourcesByDeploymentName(
+            candidateDeployment.getName(),
+            candidateResources.keySet(),
+            source,
+            candidateDeployment.getTenantId());
+  }
 
-      for (ResourceEntity deployedResource : candidateResources.values()) {
-        String resourceName = deployedResource.getName();
-        ResourceEntity existingResource = existingResources.get(resourceName);
+  private Map<String, ResourceEntity> filterResourcesToDeploy(Map<String, ResourceEntity> candidateResources, Map<String, ResourceEntity> existingResources) {
+    Map<String, ResourceEntity> resourcesToDeploy = new HashMap<>();
+    for (ResourceEntity deployedResource : candidateResources.values()) {
+      String resourceName = deployedResource.getName();
+      ResourceEntity existingResource = existingResources.get(resourceName);
 
-        if (existingResource == null
-            || existingResource.isGenerated()
-            || deploymentHandler.shouldDeployResource(deployedResource, existingResource)) {
+      if (existingResource == null
+          || existingResource.isGenerated()
+          || deploymentHandler.shouldDeployResource(deployedResource, existingResource)) {
 
-          if (deploymentBuilder.isDeployChangedOnly()) {
-            // resource should be deployed
-            resourcesToDeploy.put(resourceName, deployedResource);
-          } else {
-            // all resources should be deployed
-            resourcesToDeploy = candidateResources;
-            break;
-          }
+        if (deploymentBuilder.isDeployChangedOnly()) {
+          // resource should be deployed
+          resourcesToDeploy.put(resourceName, deployedResource);
+        } else {
+          // all resources should be deployed
+          return candidateResources;
         }
       }
-
-    } else {
-      resourcesToDeploy = candidateResources;
     }
-
     return resourcesToDeploy;
   }
 

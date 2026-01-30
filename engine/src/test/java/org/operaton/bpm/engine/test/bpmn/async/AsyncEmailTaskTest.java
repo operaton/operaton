@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.test.bpmn.async;
 import java.util.Arrays;
 import java.util.List;
 
+import ch.martinelli.oss.testcontainers.mailpit.Message;
 import org.junit.jupiter.api.Test;
 import org.subethamail.wiser.WiserMessage;
 
@@ -41,16 +42,16 @@ class AsyncEmailTaskTest extends EmailTestCase {
   void testSimpleTextMail() {
     String procId = runtimeService.startProcessInstanceByKey("simpleTextOnly").getId();
 
-    List<WiserMessage> messages = wiser.getMessages();
+    List<Message> messages = getReceivedEmails();
     assertThat(messages).isEmpty();
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    messages = wiser.getMessages();
+    messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
 
-    WiserMessage message = messages.get(0);
-    EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
+    String rawMessage = getRawMessage(messages.get(0));
+    assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
             Arrays.asList("kermit@operaton.org"), null);
     testRule.assertProcessEnded(procId);
   }
@@ -61,16 +62,16 @@ class AsyncEmailTaskTest extends EmailTestCase {
   void testSimpleTextMailSendTask() {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
-    List<WiserMessage> messages = wiser.getMessages();
+    List<Message> messages = getReceivedEmails();
     assertThat(messages).isEmpty();
 
     testRule.waitForJobExecutorToProcessAllJobs(5000L);
 
-    messages = wiser.getMessages();
+    messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
 
-    WiserMessage message = messages.get(0);
-    EmailServiceTaskTest.assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
+    String rawMessage = getRawMessage(messages.get(0));
+    assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
             Arrays.asList("kermit@operaton.org"), null);
   }
 

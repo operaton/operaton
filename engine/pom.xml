@@ -385,6 +385,24 @@
     </dependency>
 
     <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.martinelli.oss</groupId>
+      <artifactId>testcontainers-mailpit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-bpm-archunit</artifactId>
       <version>${project.version}</version>

@@ -20,12 +20,15 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.User;
@@ -65,22 +68,23 @@ public class PasswordPolicyUserDataTest {
     String attributeValue = CANDIDATE_PASSWORD;
 
     // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
+    var results = getResultsForAttributes(attributeValue);
 
     // then
     assertRuleViolated(results);
   }
 
-  @Test
-  void shouldFulfillRule() {
-    // given
-    String attributeValue = "another value";
-
+  @ParameterizedTest
+  @MethodSource("shouldFulfillRule_args")
+  void shouldFulfillRule(String attributeValue) {
     // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
-
+    var results = getResultsForAttributes(attributeValue);
     // then
     assertRuleFulfilled(results);
+  }
+
+  static Stream<String> shouldFulfillRule_args() {
+    return Stream.of("another value", "", null);
   }
 
   @Test
@@ -93,30 +97,6 @@ public class PasswordPolicyUserDataTest {
 
     // then
     assertRuleViolated(results);
-  }
-
-  @Test
-  void shouldFulfillRuleOnEmptyAttributeValue() {
-    // given
-    String attributeValue = "";
-
-    // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
-
-    // then
-    assertRuleFulfilled(results);
-  }
-
-  @Test
-  void shouldFulfillRuleOnNullAttributeValue() {
-    // given
-    String attributeValue = null;
-
-    // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
-
-    // then
-    assertRuleFulfilled(results);
   }
 
   // helper ////////////////////////////////////////////////////////////////////////////////////////

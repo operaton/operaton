@@ -43,7 +43,8 @@ import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.cmmn.CmmnTest;
 import org.operaton.bpm.engine.variable.Variables;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -458,31 +459,22 @@ class HistoricCaseInstanceTest extends CmmnTest {
 
   @Test
   void testInvalidSorting() {
+    // given
     var historicCaseInstanceQuery = historicQuery();
-    try {
-      historicCaseInstanceQuery.asc();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
-    }
 
-    try {
-      historicCaseInstanceQuery.desc();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
-    }
+    // when/then
+    assertThatThrownBy(historicCaseInstanceQuery::asc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
+
+    assertThatThrownBy(historicCaseInstanceQuery::desc)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("You should call any of the orderBy methods first before specifying a direction: currentOrderingProperty is null");
 
     var historicCaseInstanceQuery1 = historicCaseInstanceQuery.orderByCaseInstanceId();
-    try {
-      historicCaseInstanceQuery1.count();
-      fail("Exception expected");
-    }
-    catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
-    }
+    assertThatThrownBy(historicCaseInstanceQuery1::count)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("Invalid query: call asc() or desc() after using orderByXX(): direction is null");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn"})

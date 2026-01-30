@@ -33,9 +33,9 @@ public class DmnDecisionResultEntriesImpl implements DmnDecisionResultEntries {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  public static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
+  private static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 
-  protected final Map<String, TypedValue> outputValues = new LinkedHashMap<>();
+  private final Map<String, TypedValue> outputValues = new LinkedHashMap<>();
 
   public void putValue(String name, TypedValue value) {
     outputValues.put(name, value);

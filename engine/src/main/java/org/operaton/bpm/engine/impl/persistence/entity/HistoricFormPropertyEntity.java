@@ -16,20 +16,16 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
 import java.util.Optional;
 
 import org.operaton.bpm.engine.history.HistoricFormField;
 import org.operaton.bpm.engine.history.HistoricFormProperty;
 import org.operaton.bpm.engine.impl.history.event.HistoricFormPropertyEventEntity;
 
-
 /**
  * @author Tom Baeyens
  */
 public class HistoricFormPropertyEntity extends HistoricFormPropertyEventEntity implements HistoricFormProperty, HistoricFormField {
-
-  @Serial private static final long serialVersionUID = 1L;
 
   @Override
   public String getPropertyValue() {

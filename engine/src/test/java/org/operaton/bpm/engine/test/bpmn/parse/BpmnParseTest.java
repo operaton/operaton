@@ -24,6 +24,9 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.ParseException;
@@ -486,23 +489,17 @@ class BpmnParseTest {
         });
   }
 
-  @Test
-  void testParseWithBpmnNamespacePrefix() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+    "WithBpmnNamespacePrefix",
+    "WithMultipleDocumentation",
+    "CollaborationPlane",
+    "SwitchedSourceAndTargetRefsForAssociations",
+    "EmptyExtensionProperty"
+  })
+  void testParseVariousResources (String resourceSuffix) {
     repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithBpmnNamespacePrefix.bpmn20.xml").deploy();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
-  }
-
-  @Test
-  void testParseWithMultipleDocumentation() {
-    repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseWithMultipleDocumentation.bpmn20.xml").deploy();
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
-  }
-
-  @Test
-  void testParseCollaborationPlane() {
-    repositoryService.createDeployment().addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseCollaborationPlane.bpmn").deploy();
+      .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParse%s.bpmn20.xml".formatted(resourceSuffix)).deploy();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
@@ -693,14 +690,6 @@ class BpmnParseTest {
     assertThat(miBody.isAsyncAfter()).isTrue();
   }
 
-  @Test
-  void testParseSwitchedSourceAndTargetRefsForAssociations() {
-    repositoryService.createDeployment()
-        .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseSwitchedSourceAndTargetRefsForAssociations.bpmn20.xml").deploy();
-
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
-  }
-
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.compensationMiActivity.bpmn20.xml")
   @Test
   @SuppressWarnings("deprecation")
@@ -708,7 +697,7 @@ class BpmnParseTest {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
-    assertThat(flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
+    assertThat(flowScope.getProperty(BpmnParse.TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
     assertThat(((ActivityImpl) flowScope).getActivityId()).isEqualTo("bookHotel" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
   }
 
@@ -719,7 +708,7 @@ class BpmnParseTest {
     ActivityImpl miActivity = findActivityInDeployedProcessDefinition("undoBookHotel");
     ScopeImpl flowScope = miActivity.getFlowScope();
 
-    assertThat(flowScope.getProperty(BpmnParse.PROPERTYNAME_TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
+    assertThat(flowScope.getProperty(BpmnParse.TYPE)).isEqualTo(ActivityTypes.MULTI_INSTANCE_BODY);
     assertThat(((ActivityImpl) flowScope).getActivityId()).isEqualTo("scope" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX);
   }
 
@@ -1213,9 +1202,14 @@ class BpmnParseTest {
     }
   }
 
-  @Test
-  void testParseProcessDefinitionWithoutTtlWithMalformedConfigDefault() {
-    processEngineConfiguration.setHistoryTimeToLive("PP555DDD");
+  @ParameterizedTest
+  @CsvSource({
+      "Malformed, PP555DDD",
+      "Invalid, invalidValue",
+      "Negative, -6"
+  })
+  void testParseProcessDefinitionWithoutTtlWithConfigDefault(String ttlDefaultType, String ttlDefaultValue) {
+    processEngineConfiguration.setHistoryTimeToLive(ttlDefaultType);
     try {
       // given
       String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
@@ -1223,42 +1217,8 @@ class BpmnParseTest {
 
       // when/then
       assertThatThrownBy(deploymentBuilder::deploy)
-          .isInstanceOf(ParseException.class)
-          .hasMessageContaining("Cannot parse historyTimeToLive");
-    } finally {
-      processEngineConfiguration.setHistoryTimeToLive(null);
-    }
-  }
-
-  @Test
-  void testParseProcessDefinitionWithoutTtlWithInvalidConfigDefault() {
-    processEngineConfiguration.setHistoryTimeToLive("invalidValue");
-    try {
-      // given
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
-      var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
-
-      // when/then
-      assertThatThrownBy(deploymentBuilder::deploy)
-          .isInstanceOf(ParseException.class)
-          .hasMessageContaining("Cannot parse historyTimeToLive");
-    } finally {
-      processEngineConfiguration.setHistoryTimeToLive(null);
-    }
-  }
-
-  @Test
-  void testParseProcessDefinitionWithoutTtlWithNegativeConfigDefault() {
-    processEngineConfiguration.setHistoryTimeToLive("-6");
-    try {
-      // given
-      String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionWithoutTtl");
-      var deploymentBuilder = repositoryService.createDeployment().name(resource).addClasspathResource(resource);
-
-      // when/then
-      assertThatThrownBy(deploymentBuilder::deploy)
-          .isInstanceOf(ParseException.class)
-          .hasMessageContaining("Cannot parse historyTimeToLive");
+        .isInstanceOf(ParseException.class)
+        .hasMessageContaining("Cannot parse historyTimeToLive");
     } finally {
       processEngineConfiguration.setHistoryTimeToLive(null);
     }
@@ -1366,8 +1326,8 @@ class BpmnParseTest {
 
   @Test
   void testFeatureSecureProcessingRejectsDefinitionDueToAttributeLimit() {
-    // IBM JDKs do not check on attribute number limits, skip the test there
-    assumeThat(System.getProperty("java.vm.vendor")).doesNotContain("IBM");
+    // IBM & Eclipse JDKs do not check on attribute number limits, skip the test there
+    assumeThat(System.getProperty("java.vm.vendor")).doesNotContain("IBM", "Eclipse");
 
     // given
     String resource = TestHelper.getBpmnProcessDefinitionResource(getClass(), "testParseProcessDefinitionFSP");
@@ -1530,17 +1490,6 @@ class BpmnParseTest {
     String logMessage = "definitionKey: process; It is not recommended to use an intermediate catch timer event with a time cycle, "
         + "element with id 'timerintermediatecatchevent1'.";
     assertThat(loggingRule.getFilteredLog(logMessage)).hasSize(1);
-  }
-
-  @Test
-  void testParseEmptyExtensionProperty() {
-    // given process definition with empty property (key and value = null) is deployed
-    // when
-    repositoryService.createDeployment()
-    .addClasspathResource("org/operaton/bpm/engine/test/bpmn/parse/BpmnParseTest.testParseEmptyExtensionProperty.bpmn").deploy();
-
-    // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   protected boolean doesJdkSupportExternalSchemaAccessProperty() {

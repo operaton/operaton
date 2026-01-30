@@ -34,12 +34,15 @@ import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.history.event.HistoryEvent;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventProcessor;
 import org.operaton.bpm.engine.impl.history.event.HistoryEventType;
-import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.impl.incident.IncidentContext;
 import org.operaton.bpm.engine.impl.incident.IncidentLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.runtime.Incident;
+
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCIDENT_CREATE;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCIDENT_DELETE;
+import static org.operaton.bpm.engine.impl.history.event.HistoryEventTypes.INCIDENT_RESOLVE;
 
 /**
  * @author roman.smirnov
@@ -173,7 +176,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
       .getDbEntityManager()
       .insert(incident);
 
-    incident.fireHistoricIncidentEvent(HistoryEventTypes.INCIDENT_CREATE);
+    incident.fireHistoricIncidentEvent(INCIDENT_CREATE);
   }
 
   public void delete() {
@@ -218,7 +221,7 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
       .delete(this);
 
     // update historic incident
-    HistoryEventType eventType = resolved ? HistoryEventTypes.INCIDENT_RESOLVE : HistoryEventTypes.INCIDENT_DELETE;
+    HistoryEventType eventType = resolved ? INCIDENT_RESOLVE : INCIDENT_DELETE;
     fireHistoricIncidentEvent(eventType);
   }
 
@@ -231,15 +234,12 @@ public class IncidentEntity implements Incident, DbEntity, HasDbRevision, HasDbR
       HistoryEventProcessor.processHistoryEvents(new HistoryEventProcessor.HistoryEventCreator() {
         @Override
         public HistoryEvent createHistoryEvent(HistoryEventProducer producer) {
-
           HistoryEvent event = null;
-          if (HistoryEvent.INCIDENT_CREATE.equals(eventType.getEventName())) {
+          if (INCIDENT_CREATE.equals(eventType)) {
             event = producer.createHistoricIncidentCreateEvt(IncidentEntity.this);
-
-          } else if (HistoryEvent.INCIDENT_RESOLVE.equals(eventType.getEventName())) {
+          } else if (INCIDENT_RESOLVE.equals(eventType)) {
             event = producer.createHistoricIncidentResolveEvt(IncidentEntity.this);
-
-          } else if (HistoryEvent.INCIDENT_DELETE.equals(eventType.getEventName())) {
+          } else if (INCIDENT_DELETE.equals(eventType)) {
             event = producer.createHistoricIncidentDeleteEvt(IncidentEntity.this);
           }
           return event;

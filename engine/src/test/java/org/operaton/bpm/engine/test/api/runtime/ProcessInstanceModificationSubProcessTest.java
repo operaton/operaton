@@ -46,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Svetlana Dorokhova.
  */
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class ProcessInstanceModificationSubProcessTest {
 
   @RegisterExtension

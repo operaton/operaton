@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -52,18 +52,20 @@ class ExternalTaskParseTest {
 
   @Test
   void testParseExternalTaskWithoutTopic() {
+    // given
     DeploymentBuilder deploymentBuilder = repositoryService
       .createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/bpmn/external/ExternalTaskParseTest.testParseExternalTaskWithoutTopic.bpmn20.xml");
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("External tasks must specify a 'topic' attribute in the operaton namespace", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors()).hasSize(1);
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTask");
-    }
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .satisfies(e -> {
+        ParseException parseException = (ParseException) e;
+        assertThat(parseException.getMessage()).contains("External tasks must specify a 'topic' attribute in the operaton namespace");
+        assertThat(parseException.getResourceReports().get(0).getErrors()).hasSize(1);
+        assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("externalTask");
+      });
   }
 
   @Deployment

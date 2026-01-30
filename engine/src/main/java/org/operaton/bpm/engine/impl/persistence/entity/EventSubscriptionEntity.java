@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +38,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Daniel Meyer
  */
-public class EventSubscriptionEntity implements EventSubscription, DbEntity, HasDbRevision, HasDbReferences, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class EventSubscriptionEntity implements EventSubscription, DbEntity, HasDbRevision, HasDbReferences {
 
   // persistent state ///////////////////////////
   protected String id;
@@ -135,7 +130,6 @@ public class EventSubscriptionEntity implements EventSubscription, DbEntity, Has
       .insert(this);
     addToExecution();
   }
-
 
   public static EventSubscriptionEntity createAndInsert(ExecutionEntity executionEntity, EventType eventType, ActivityImpl activity) {
     return createAndInsert(executionEntity, eventType, activity, null);

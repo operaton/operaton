@@ -42,7 +42,6 @@ import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutio
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Thorben Lindhauer
@@ -268,21 +267,21 @@ public class MigrationExternalTaskTest {
   void cannotMigrateFromExternalToClassDelegateServiceTask() {
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(ServiceTaskModels.oneClassDelegateServiceTask("foo.Bar"));
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities("externalTask", "serviceTask");
 
-    try {
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      assertThat(e.getValidationReport())
-      .hasInstructionFailures("externalTask",
-        "Activities have incompatible types (ExternalTaskActivityBehavior is not compatible with"
-        + " ClassDelegateActivityBehavior)"
-      );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures("externalTask",
+            "Activities have incompatible types (ExternalTaskActivityBehavior is not compatible with"
+            + " ClassDelegateActivityBehavior)"
+          );
+      });
   }
 
   @Test

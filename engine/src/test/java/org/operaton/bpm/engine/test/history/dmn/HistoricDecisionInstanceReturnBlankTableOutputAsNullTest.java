@@ -16,9 +16,10 @@
  */
 package org.operaton.bpm.engine.test.history.dmn;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.history.HistoricDecisionInstance;
 import org.operaton.bpm.engine.test.Deployment;
@@ -40,14 +41,21 @@ public class HistoricDecisionInstanceReturnBlankTableOutputAsNullTest {
 
   public static final String RESULT_TEST_DMN = "org/operaton/bpm/engine/test/history/ReturnBlankTableOutputAsNull.dmn";
 
-  @Test
+  @ParameterizedTest
+  @CsvSource({
+    "A, ",
+    "B, ",
+    "C, <empty>",
+    "D, "
+  })
   @Deployment(resources = RESULT_TEST_DMN)
-  void shouldReturnNullWhenExpressionIsNull() {
+  void shouldEvaluteToExpectedGivenName(String name, String expectedOutput) {
     // given
+    expectedOutput = "<empty>".equals(expectedOutput) ? "" : expectedOutput;
 
     // when
     engineRule.getDecisionService().evaluateDecisionByKey("Decision_0vmcc71")
-        .variables(Variables.putValue("name", "A"))
+        .variables(Variables.putValue("name", name))
         .evaluate();
 
     // then
@@ -59,73 +67,7 @@ public class HistoricDecisionInstanceReturnBlankTableOutputAsNullTest {
 
     assertThat(historicDecisionInstance.getOutputs())
         .extracting("variableName", "value")
-        .containsOnly(tuple("output", null));
-  }
-
-  @Test
-  @Deployment(resources = RESULT_TEST_DMN)
-  void shouldReturnNullWhenTextTagEmpty() {
-    // given
-
-    // when
-    engineRule.getDecisionService().evaluateDecisionByKey("Decision_0vmcc71")
-        .variables(Variables.putValue("name", "B"))
-        .evaluate();
-
-    // then
-    HistoricDecisionInstance historicDecisionInstance = engineRule.getProcessEngine()
-        .getHistoryService()
-        .createHistoricDecisionInstanceQuery()
-        .includeOutputs()
-        .singleResult();
-
-    assertThat(historicDecisionInstance.getOutputs())
-        .extracting("variableName", "value")
-        .containsOnly(tuple("output", null));
-  }
-
-  @Test
-  @Deployment(resources = RESULT_TEST_DMN)
-  void shouldReturnEmpty() {
-    // given
-
-    // when
-    engineRule.getDecisionService().evaluateDecisionByKey("Decision_0vmcc71")
-        .variables(Variables.putValue("name", "C"))
-        .evaluate();
-
-    // then
-    HistoricDecisionInstance historicDecisionInstance = engineRule.getProcessEngine()
-        .getHistoryService()
-        .createHistoricDecisionInstanceQuery()
-        .includeOutputs()
-        .singleResult();
-
-    assertThat(historicDecisionInstance.getOutputs())
-        .extracting("variableName", "value")
-        .containsOnly(tuple("output", ""));
-  }
-
-  @Test
-  @Deployment(resources = RESULT_TEST_DMN)
-  void shouldReturnNullWhenOutputEntryEmpty() {
-    // given
-
-    // when
-    engineRule.getDecisionService().evaluateDecisionByKey("Decision_0vmcc71")
-        .variables(Variables.putValue("name", "D"))
-        .evaluate();
-
-    // then
-    HistoricDecisionInstance historicDecisionInstance = engineRule.getProcessEngine()
-        .getHistoryService()
-        .createHistoricDecisionInstanceQuery()
-        .includeOutputs()
-        .singleResult();
-
-    assertThat(historicDecisionInstance.getOutputs())
-        .extracting("variableName", "value")
-        .containsOnly(tuple("output", null));
+        .containsOnly(tuple("output", expectedOutput));
   }
 
 }

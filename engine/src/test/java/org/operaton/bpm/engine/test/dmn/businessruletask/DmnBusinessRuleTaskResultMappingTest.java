@@ -23,6 +23,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -261,30 +263,14 @@ class DmnBusinessRuleTaskResultMappingTest {
     assertThat(resultTyped).isEqualTo(Variables.untypedNullValue());
   }
 
-  @Deployment(resources = {COLLECT_ENTRIES_BPMN, TEST_DECISION})
-  @SuppressWarnings("unchecked")
-  @Test
-  void testCollectEntriesEmptyResult() {
-    ProcessInstance processInstance = startTestProcess("empty result");
-
-    List<Object> result = (List<Object>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertThat(result).isEmpty();
-  }
-
-  @Deployment(resources = {RESULT_LIST_BPMN, TEST_DECISION})
-  @SuppressWarnings("unchecked")
-  @Test
-  void testResultListEmptyResult() {
-    ProcessInstance processInstance = startTestProcess("empty result");
-
-    List<Object> result = (List<Object>) runtimeService.getVariable(processInstance.getId(), "result");
-    assertThat(result).isEmpty();
-  }
-
-  @Deployment(resources = {DEFAULT_MAPPING_BPMN, TEST_DECISION})
-  @SuppressWarnings("unchecked")
-  @Test
-  void testDefaultMappingEmptyResult() {
+  @ParameterizedTest
+  @CsvSource({
+      COLLECT_ENTRIES_BPMN,
+      RESULT_LIST_BPMN,
+      DEFAULT_MAPPING_BPMN
+  })
+  void testEmptyResult (String bpmnResource) {
+    testRule.deploy(bpmnResource, TEST_DECISION);
     ProcessInstance processInstance = startTestProcess("empty result");
 
     List<Object> result = (List<Object>) runtimeService.getVariable(processInstance.getId(), "result");

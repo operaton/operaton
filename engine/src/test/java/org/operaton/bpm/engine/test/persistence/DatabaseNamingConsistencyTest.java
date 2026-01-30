@@ -31,7 +31,6 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 public class DatabaseNamingConsistencyTest {
 
@@ -42,48 +41,43 @@ public class DatabaseNamingConsistencyTest {
       "org/operaton/bpm/engine/db/liquibase/baseline" };
 
   @Test
-  void shouldNotFindLowercaseDbColumnNamesInMappings() {
-    // given the rule that all DB column names are created in uppercase
-
-    // when scanning all mapping files for lowercase column names
-    StringBuilder errorMessageBuilder = new StringBuilder();
+  void shouldNotFindLowercaseDbColumnNamesInMappings() throws Exception {
+    // given
     Pattern pattern = Pattern.compile(COLUMN_NAME_REGEX);
-    try {
-      for (String scannedFolder : SCANNED_FOLDERS) {
-        URL resource = getClass().getClassLoader().getResource(scannedFolder);
-        if (resource == null) {
-          throw new IOException("Could not find path: " + scannedFolder);
-        }
-        File folder = new File(resource.getFile());
-        File[] filesInFolder = folder.listFiles();
-        for (File file : filesInFolder) {
-          AtomicInteger lineNumber = new AtomicInteger(0);
-          try (Stream<String> lines = Files.lines(file.toPath())) {
-            lines.forEach(line -> {
-              lineNumber.getAndIncrement();
-              Matcher matcher = pattern.matcher(line);
-              while (matcher.find()) {
-                errorMessageBuilder
-                  .append("Found illegal lowercase column name ")
-                  .append(matcher.group(1))
-                  .append(" in SQL ")
-                  .append(file)
-                  .append(" at line ")
-                  .append(lineNumber.get())
-                  .append(". All SQL column names should be uppercase.\n");
-              }
-            });
-          }
+    StringBuilder errorMessageBuilder = new StringBuilder();
+
+    // when
+    for (String scannedFolder : SCANNED_FOLDERS) {
+      URL resource = getClass().getClassLoader().getResource(scannedFolder);
+      if (resource == null) {
+        throw new IOException("Could not find path: " + scannedFolder);
+      }
+      File folder = new File(resource.getFile());
+      File[] filesInFolder = folder.listFiles();
+      for (File file : filesInFolder) {
+        AtomicInteger lineNumber = new AtomicInteger(0);
+        try (Stream<String> lines = Files.lines(file.toPath())) {
+          lines.forEach(line -> {
+            lineNumber.getAndIncrement();
+            Matcher matcher = pattern.matcher(line);
+            while (matcher.find()) {
+              errorMessageBuilder
+                .append("Found illegal lowercase column name ")
+                .append(matcher.group(1))
+                .append(" in SQL ")
+                .append(file)
+                .append(" at line ")
+                .append(lineNumber.get())
+                .append(". All SQL column names should be uppercase.\n");
+            }
+          });
         }
       }
-    } catch (IOException e) {
-      fail("Unable to find test resource for test %s%n%s".formatted(getClass().getName(), e.getMessage()));
     }
-    // then don't expect any results
+
+    // then
     String errorMessage = errorMessageBuilder.toString();
-    if (!errorMessage.isEmpty()) {
-      fail(errorMessage);
-    }
+    assertThat(errorMessage).withFailMessage(errorMessage).isEmpty();
   }
 
   @Test

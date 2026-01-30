@@ -16,17 +16,19 @@
  */
 package org.operaton.bpm.engine.test.standalone.identity;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.identity.PasswordPolicyResult;
 import org.operaton.bpm.engine.identity.User;
@@ -36,7 +38,7 @@ import org.operaton.bpm.engine.impl.identity.PasswordPolicyUserDataRuleImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ExtendWith(ProcessEngineExtension.class)
 public class PasswordPolicyUserDataTest {
@@ -66,22 +68,23 @@ public class PasswordPolicyUserDataTest {
     String attributeValue = CANDIDATE_PASSWORD;
 
     // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
+    var results = getResultsForAttributes(attributeValue);
 
     // then
     assertRuleViolated(results);
   }
 
-  @Test
-  void shouldFulfillRule() {
-    // given
-    String attributeValue = "another value";
-
+  @ParameterizedTest
+  @MethodSource("shouldFulfillRule_args")
+  void shouldFulfillRule(String attributeValue) {
     // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
-
+    var results = getResultsForAttributes(attributeValue);
     // then
     assertRuleFulfilled(results);
+  }
+
+  static Stream<String> shouldFulfillRule_args() {
+    return Stream.of("another value", "", null);
   }
 
   @Test
@@ -96,30 +99,6 @@ public class PasswordPolicyUserDataTest {
     assertRuleViolated(results);
   }
 
-  @Test
-  void shouldFulfillRuleOnEmptyAttributeValue() {
-    // given
-    String attributeValue = "";
-
-    // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
-
-    // then
-    assertRuleFulfilled(results);
-  }
-
-  @Test
-  void shouldFulfillRuleOnNullAttributeValue() {
-    // given
-    String attributeValue = null;
-
-    // when
-    Map<String, PasswordPolicyResult> results = getResultsForAttributes(attributeValue);
-
-    // then
-    assertRuleFulfilled(results);
-  }
-
   // helper ////////////////////////////////////////////////////////////////////////////////////////
 
   public Map<String, PasswordPolicyResult> getResultsForAttributes(String attrValue) {
@@ -132,13 +111,8 @@ public class PasswordPolicyUserDataTest {
       if (methodName.startsWith("set") && !"setPassword".equals(methodName)) {
         User user = identityService.newUser("");
 
-        try {
-          method.invoke(user, attrValue);
-
-        } catch (IllegalAccessException | InvocationTargetException e) {
-          fail(e.getMessage());
-
-        }
+        assertThatCode(() -> method.invoke(user, attrValue))
+            .doesNotThrowAnyException();
 
         PasswordPolicyResult passwordPolicyResult =
             identityService.checkPasswordAgainstPolicy(CANDIDATE_PASSWORD, user);
@@ -151,31 +125,21 @@ public class PasswordPolicyUserDataTest {
   }
 
   protected void assertRuleViolated(Map<String, PasswordPolicyResult> results) {
-    results.forEach((methodName, result) -> {
-      try {
+    results.forEach((methodName, result) ->
         assertThat(result.getViolatedRules())
+            .withFailMessage("Rule not violated with %s", methodName)
             .extracting("placeholder")
-            .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
-
-      } catch (AssertionError e) {
-        fail("Rule not violated with %s:%s".formatted(methodName, e.getMessage()));
-
-      }
-    });
+            .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER)
+    );
   }
 
   protected void assertRuleFulfilled(Map<String, PasswordPolicyResult> results) {
-    results.forEach((methodName, result) -> {
-      try {
+    results.forEach((methodName, result) ->
         assertThat(result.getFulfilledRules())
+            .withFailMessage("Rule not fulfilled with %s", methodName)
             .extracting("placeholder")
-            .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER);
-
-      } catch (AssertionError e) {
-        fail("Rule not fulfilled with %s:%s".formatted(methodName, e.getMessage()));
-
-      }
-    });
+            .contains(PasswordPolicyUserDataRuleImpl.PLACEHOLDER)
+    );
   }
 
 }

@@ -21,6 +21,8 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.RuntimeService;
@@ -50,43 +52,26 @@ class HistoricActivityInstanceStateTest {
   RuntimeService runtimeService;
   HistoryService historyService;
 
-  @Deployment
-  @Test
-  void testSingleEndEvent() {
-    startProcess();
+  @ParameterizedTest
+  @CsvSource({
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testSingleEndEvent.bpmn, start, 1",
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testSingleEndActivity.bpmn, start, 1",
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testSingleEndEventAfterParallelJoin.bpmn, parallelJoin, 2",
+      "org/operaton/bpm/engine/test/history/HistoricActivityInstanceStateTest.testIntermediateTask.bpmn, intermediateTask, 1"
+  })
+  void processShouldHaveExpectedHistoricActivityInstances (String bpmnResource, String activityId, int expectedNonCompletingActivityInstanceCount) {
+    // given
+    testRule.deploy(bpmnResource);
 
+    // when
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
+    testRule.assertProcessEnded(processInstance.getId());
+
+    // then
     List<HistoricActivityInstance> allInstances = getAllActivityInstances();
 
-    assertNonCompletingActivityInstance(allInstances, "start", 1);
-    assertNonCanceledActivityInstance(allInstances, "start");
-
-    assertIsCompletingActivityInstances(allInstances, "end", 1);
-    assertNonCanceledActivityInstance(allInstances, "end");
-  }
-
-  @Deployment
-  @Test
-  void testSingleEndActivity() {
-    startProcess();
-
-    List<HistoricActivityInstance> allInstances = getAllActivityInstances();
-
-    assertNonCompletingActivityInstance(allInstances, "start", 1);
-    assertNonCanceledActivityInstance(allInstances, "start");
-
-    assertIsCompletingActivityInstances(allInstances, "end", 1);
-    assertNonCanceledActivityInstance(allInstances, "end");
-  }
-
-  @Deployment
-  @Test
-  void testSingleEndEventAfterParallelJoin() {
-    startProcess();
-
-    List<HistoricActivityInstance> allInstances = getAllActivityInstances();
-
-    assertNonCompletingActivityInstance(allInstances, "parallelJoin", 2);
-    assertNonCanceledActivityInstance(allInstances, "parallelJoin");
+    assertNonCompletingActivityInstance(allInstances, activityId, expectedNonCompletingActivityInstanceCount);
+    assertNonCanceledActivityInstance(allInstances, activityId);
 
     assertIsCompletingActivityInstances(allInstances, "end", 1);
     assertNonCanceledActivityInstance(allInstances, "end");
@@ -220,20 +205,6 @@ class HistoricActivityInstanceStateTest {
 
     assertNonCompletingActivityInstance(allInstances, "intermediateSubprocess#multiInstanceBody", 1);
     assertNonCanceledActivityInstance(allInstances, "intermediateSubprocess#multiInstanceBody");
-
-    assertIsCompletingActivityInstances(allInstances, "end", 1);
-    assertNonCanceledActivityInstance(allInstances, "end");
-  }
-
-  @Deployment
-  @Test
-  void testIntermediateTask() {
-    startProcess();
-
-    List<HistoricActivityInstance> allInstances = getAllActivityInstances();
-
-    assertNonCompletingActivityInstance(allInstances, "intermediateTask", 1);
-    assertNonCanceledActivityInstance(allInstances, "intermediateTask");
 
     assertIsCompletingActivityInstances(allInstances, "end", 1);
     assertNonCanceledActivityInstance(allInstances, "end");

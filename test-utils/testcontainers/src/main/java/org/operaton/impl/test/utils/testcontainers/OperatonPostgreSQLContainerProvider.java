@@ -17,8 +17,8 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.PostgreSQLContainerProvider;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class OperatonPostgreSQLContainerProvider extends PostgreSQLContainerProvider {
@@ -31,7 +31,7 @@ public class OperatonPostgreSQLContainerProvider extends PostgreSQLContainerProv
   }
 
   @Override
-  public JdbcDatabaseContainer newInstance(String tag) {
+  public JdbcDatabaseContainer<?> newInstance(String tag) {
     DockerImageName dockerImageName = TestcontainersHelper
       .resolveDockerImageName("postgresql", tag, "postgres");
     return new PostgreSQLContainer(dockerImageName);

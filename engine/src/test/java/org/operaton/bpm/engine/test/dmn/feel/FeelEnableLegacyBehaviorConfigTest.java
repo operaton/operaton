@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.test.dmn.feel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.dmn.feel.impl.juel.FeelSyntaxException;
 import org.operaton.bpm.engine.DecisionService;
 import org.operaton.bpm.engine.test.Deployment;
@@ -41,23 +43,15 @@ class FeelEnableLegacyBehaviorConfigTest {
 
   DecisionService decisionService;
 
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/literal-expression.dmn"})
-  void shouldEvaluateLiteralExpression() {
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Literal Expression, org/operaton/bpm/engine/test/dmn/feel/legacy/literal-expression.dmn",
+      "Input Expression, org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn",
+      "Output Rule, org/operaton/bpm/engine/test/dmn/feel/legacy/output-rule.dmn"
+  })
+  void shouldEvaluate(String name, String dmnResource) {
     // given
-
-    // when
-    String result = decisionService.evaluateDecisionByKey("c").evaluate()
-        .getSingleEntry();
-
-    // then
-    assertThat(result).isEqualTo("foo");
-  }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn"})
-  void shouldEvaluateInputExpression() {
-    // given
+    testRule.deploy(dmnResource);
 
     // when
     String result = decisionService.evaluateDecisionByKey("c").evaluate()
@@ -79,18 +73,4 @@ class FeelEnableLegacyBehaviorConfigTest {
       .extracting("cause.message")
       .isEqualTo("FEEL-01010 Syntax error in expression 'for x in 1..3 return x * 2'");
   }
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/output-rule.dmn"})
-  void shouldEvaluateOutputRule() {
-    // given
-
-    // when
-    String result = decisionService.evaluateDecisionByKey("c").evaluate()
-        .getSingleEntry();
-
-    // then
-    assertThat(result).isEqualTo("foo");
-  }
-
 }

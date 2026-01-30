@@ -1188,6 +1188,7 @@ public class ExecutionListenerTest {
   }
 
   @Test
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void testThrowBpmnErrorInStartListenerOnModificationShouldNotTriggerPropagation() {
     // given
     BpmnModelInstance model = Bpmn.createExecutableProcess(PROCESS_KEY)

@@ -51,7 +51,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class DeploymentAwareJobExecutorTest {
 
@@ -149,15 +149,13 @@ class DeploymentAwareJobExecutorTest {
 
   @Test
   void testRegistrationOfNonExistingDeployment() {
+    // given
     String nonExistingDeploymentId = "some non-existing id";
 
-    try {
-      managementService.registerDeploymentForJobExecutor(nonExistingDeploymentId);
-      fail("Registering a non-existing deployment should not succeed");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Deployment %s does not exist".formatted(nonExistingDeploymentId), e.getMessage());
-      // happy path
-    }
+    // when/then
+    assertThatThrownBy(() -> managementService.registerDeploymentForJobExecutor(nonExistingDeploymentId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Deployment %s does not exist".formatted(nonExistingDeploymentId));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
@@ -174,16 +172,13 @@ class DeploymentAwareJobExecutorTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")
   @Test
   void testNoUnregistrationOnFailingUndeployment() {
+    // given
     String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     runtimeService.startProcessInstanceByKey("simpleAsyncProcess");
 
-    try {
-      repositoryService.deleteDeployment(deploymentId, false);
-      fail("");
-    } catch (Exception e) {
-      // should still be registered, if not successfully undeployed
-      assertThat(managementService.getRegisteredDeployments()).hasSize(1);
-    }
+    // when/then
+    assertThatThrownBy(() -> repositoryService.deleteDeployment(deploymentId, false))
+      .satisfies(e -> assertThat(managementService.getRegisteredDeployments()).hasSize(1));
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")

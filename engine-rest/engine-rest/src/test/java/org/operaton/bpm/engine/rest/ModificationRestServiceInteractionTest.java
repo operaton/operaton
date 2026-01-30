@@ -48,6 +48,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 public class ModificationRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @RegisterExtension

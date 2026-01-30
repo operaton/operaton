@@ -181,6 +181,7 @@ class ModificationUserOperationLogTest {
   }
 
   @Test
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void testBatchSyncModificationLogCreationWithAnnotation() {
     // given
     ProcessDefinition processDefinition = testRule.deployAndGetDefinition(instance);

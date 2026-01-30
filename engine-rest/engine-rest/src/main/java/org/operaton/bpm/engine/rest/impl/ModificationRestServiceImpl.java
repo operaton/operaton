@@ -40,6 +40,7 @@ public class ModificationRestServiceImpl extends AbstractRestProcessEngineAware 
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   public void executeModification(ModificationDto modificationExecutionDto) {
      try {
        createModificationBuilder(modificationExecutionDto).execute();

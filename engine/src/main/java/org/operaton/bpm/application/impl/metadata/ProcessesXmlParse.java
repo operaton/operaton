@@ -72,10 +72,10 @@ public class ProcessesXmlParse extends DeploymentMetadataParse {
 
     for (Element element : rootElement.elements()) {
 
-      if(PROCESS_ENGINE.equals(element.getTagName())) {
+      if (PROCESS_ENGINE.equals(element.getTagName())) {
         parseProcessEngine(element, processEngines);
 
-      } else if(PROCESS_ARCHIVE.equals(element.getTagName())) {
+      } else if (PROCESS_ARCHIVE.equals(element.getTagName())) {
         parseProcessArchive(element, processArchives);
 
       }
@@ -100,13 +100,13 @@ public class ProcessesXmlParse extends DeploymentMetadataParse {
 
     Map<String, String> properties = new HashMap<>();
     for (Element childElement : element.elements()) {
-      if(PROCESS_ENGINE.equals(childElement.getTagName())) {
+      if (PROCESS_ENGINE.equals(childElement.getTagName())) {
         processArchive.setProcessEngineName(childElement.getText());
 
-      } else if(PROCESS.equals(childElement.getTagName()) || RESOURCE.equals(childElement.getTagName())) {
+      } else if (PROCESS.equals(childElement.getTagName()) || RESOURCE.equals(childElement.getTagName())) {
         processResourceNames.add(childElement.getText());
 
-      } else if(PROPERTIES.equals(childElement.getTagName())) {
+      } else if (PROPERTIES.equals(childElement.getTagName())) {
         parseProperties(childElement, properties);
 
       }
@@ -130,6 +130,12 @@ public class ProcessesXmlParse extends DeploymentMetadataParse {
   @Override
   public ProcessesXmlParse sourceUrl(URL url) {
     super.sourceUrl(url);
+    return this;
+  }
+
+  @Override
+  public ProcessesXmlParse sourceUri(java.net.URI uri) {
+    super.sourceUri(uri);
     return this;
   }
 

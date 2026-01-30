@@ -40,13 +40,13 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected List<TransitionImpl> outgoingTransitions = new ArrayList<>();
-  protected Map<String, TransitionImpl> namedOutgoingTransitions = new HashMap<>();
-  protected List<TransitionImpl> incomingTransitions = new ArrayList<>();
+  private List<TransitionImpl> outgoingTransitions = new ArrayList<>();
+  private final Map<String, TransitionImpl> namedOutgoingTransitions = new HashMap<>();
+  private List<TransitionImpl> incomingTransitions = new ArrayList<>();
 
   /** the inner behavior of an activity. For activities which are flow scopes,
    * this must be a CompositeActivityBehavior. */
-  protected ActivityBehavior activityBehavior;
+  private transient ActivityBehavior activityBehavior;
 
   /** The start behavior for this activity. */
   protected ActivityStartBehavior activityStartBehavior = ActivityStartBehavior.DEFAULT;
@@ -191,13 +191,13 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
 
   public void setEventScope(ScopeImpl eventScope) {
     if (this.eventScope != null) {
-      this.eventScope.eventActivities.remove(this);
+      this.eventScope.getEventActivities().remove(this);
     }
 
     this.eventScope = eventScope;
 
     if (eventScope != null) {
-      this.eventScope.eventActivities.add(this);
+      this.eventScope.getEventActivities().add(this);
     }
   }
 
@@ -313,11 +313,11 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   /**
    * The delegate for the async before attribute update.
    */
-  protected AsyncBeforeUpdate delegateAsyncBeforeUpdate;
+  protected transient AsyncBeforeUpdate delegateAsyncBeforeUpdate;
   /**
    * The delegate for the async after attribute update.
    */
-  protected AsyncAfterUpdate delegateAsyncAfterUpdate;
+  protected transient AsyncAfterUpdate delegateAsyncAfterUpdate;
 
   public AsyncBeforeUpdate getDelegateAsyncBeforeUpdate() {
     return delegateAsyncBeforeUpdate;

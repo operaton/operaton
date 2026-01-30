@@ -43,7 +43,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.ExternalTaskModels.ONE_EXTERNAL_TASK_PROCESS;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_PROCESS_KEY;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class MultiTenancyHistoricExternalTaskLogTest {
@@ -266,19 +267,12 @@ class MultiTenancyHistoricExternalTaskLogTest {
     identityService.clearAuthentication();
     identityService.setAuthentication("user", null, null);
 
-
-    try {
-      // when
-      historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId);
-      fail("Exception expected: It should not be possible to retrieve the error details");
-    } catch (ProcessEngineException e) {
-      // then
-      String errorMessage = e.getMessage();
-      assertThat(errorMessage)
-              .contains("Cannot get the historic external task log ")
-              .contains(failedHistoricExternalTaskLogId)
-              .contains("because it belongs to no authenticated tenant.");
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.getHistoricExternalTaskLogErrorDetails(failedHistoricExternalTaskLogId))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot get the historic external task log ")
+        .hasMessageContaining(failedHistoricExternalTaskLogId)
+        .hasMessageContaining("because it belongs to no authenticated tenant.");
   }
 
   @Test

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,13 +25,10 @@ import org.operaton.bpm.engine.impl.db.HasDbRevision;
 import org.operaton.bpm.engine.impl.db.HistoricEntity;
 import org.operaton.bpm.engine.task.Attachment;
 
-
 /**
  * @author Tom Baeyens
  */
-public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, HistoricEntity, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class AttachmentEntity implements Attachment, DbEntity, HasDbRevision, HistoricEntity {
 
   protected String id;
   protected int revision;

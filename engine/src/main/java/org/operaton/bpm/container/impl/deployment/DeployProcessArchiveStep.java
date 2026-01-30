@@ -18,7 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -60,12 +60,12 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected final ProcessArchiveXml processArchive;
-  protected URL metaFileUrl;
+  protected URI metaFileUri;
   protected ProcessApplicationDeployment deployment;
 
-  public DeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URL url) {
+  public DeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URI uri) {
     processArchive = parsedProcessArchive;
-    this.metaFileUrl = url;
+    this.metaFileUri = uri;
   }
 
   @Override
@@ -181,7 +181,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
   }
 
   protected Map<String, byte[]> findResources(final ClassLoader processApplicationClassloader, String paResourceRoot, String[] additionalResourceSuffixes) {
-    return ProcessApplicationScanningUtil.findResources(processApplicationClassloader, paResourceRoot, metaFileUrl, additionalResourceSuffixes);
+    return ProcessApplicationScanningUtil.findResources(processApplicationClassloader, paResourceRoot, metaFileUri, additionalResourceSuffixes);
   }
 
   @Override

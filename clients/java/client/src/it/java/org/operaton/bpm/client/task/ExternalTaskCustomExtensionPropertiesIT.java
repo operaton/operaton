@@ -33,7 +33,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
-public class ExternalTaskCustomExtensionPropertiesIT {
+class ExternalTaskCustomExtensionPropertiesIT {
 
   protected BpmnModelInstance externalTaskProcess;
 
@@ -50,13 +50,13 @@ public class ExternalTaskCustomExtensionPropertiesIT {
   protected RecordingExternalTaskHandler handler = new RecordingExternalTaskHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     handler.clear();
   }
 
   @Test
-  public void shouldReceiveCustomExtensionProperties() {
+  void shouldReceiveCustomExtensionProperties() {
     // given
     externalTaskProcess = Bpmn.readModelFromStream(
         getClass().getClassLoader().getResourceAsStream("model/ExternalTaskCustomExtensionPropertiesIT.oneExternalTaskWithCustomProperties.bpmn20.xml"));
@@ -78,7 +78,7 @@ public class ExternalTaskCustomExtensionPropertiesIT {
   }
 
   @Test
-  public void shouldReceiveEmptyCustomExtensionProperties() {
+  void shouldReceiveEmptyCustomExtensionProperties() {
     // given
     externalTaskProcess = Bpmn.readModelFromStream(
         getClass().getClassLoader().getResourceAsStream("model/ExternalTaskCustomExtensionPropertiesIT.oneExternalTaskWithoutCustomProperties.bpmn20.xml"));
@@ -96,7 +96,7 @@ public class ExternalTaskCustomExtensionPropertiesIT {
   }
 
   @Test
-  public void shouldNotReceiveCustomExtensionProperties() {
+  void shouldNotReceiveCustomExtensionProperties() {
     // given
     externalTaskProcess = Bpmn.readModelFromStream(
         getClass().getClassLoader().getResourceAsStream("model/ExternalTaskCustomExtensionPropertiesIT.oneExternalTaskWithCustomProperties.bpmn20.xml"));

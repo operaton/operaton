@@ -16,17 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.db.DbEntity;
 
 /**
  * A relationship between a tenant and an user or a group.
  */
-public class TenantMembershipEntity implements Serializable, DbEntity {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class TenantMembershipEntity implements DbEntity {
 
   protected TenantEntity tenant;
   protected UserEntity user;

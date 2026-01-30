@@ -50,7 +50,7 @@ $bpmn-nav-radius: 3px;
     ry: 14px;
     stroke-width: 2px !important;
     stroke: $bpmn-highlight-border-color !important;
-    fill: fade($bpmn-highlight-bg, 40%) !important;
+    fill: rgba($bpmn-highlight-bg, 0.4) !important;
   }
 
   .diagram-holder .highlight:not(.djs-connection) .djs-visual > :nth-child(1) {

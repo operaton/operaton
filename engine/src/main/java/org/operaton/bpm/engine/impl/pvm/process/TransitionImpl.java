@@ -34,13 +34,13 @@ public class TransitionImpl extends CoreModelElement implements PvmTransition {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  protected ActivityImpl source;
-  protected ActivityImpl destination;
+  private ActivityImpl source;
+  private ActivityImpl destination;
 
-  protected ProcessDefinitionImpl processDefinition;
+  private final ProcessDefinitionImpl processDefinition;
 
   /** Graphical information: a list of waypoints: x1, y1, x2, y2, x3, y3, .. */
-  protected List<Integer> waypoints = new ArrayList<>();
+  private List<Integer> waypoints = new ArrayList<>();
 
 
   public TransitionImpl(String id, ProcessDefinitionImpl processDefinition) {

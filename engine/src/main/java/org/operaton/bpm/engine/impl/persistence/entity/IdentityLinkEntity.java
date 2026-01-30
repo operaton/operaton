@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,14 +33,11 @@ import org.operaton.bpm.engine.impl.history.event.HistoryEventTypes;
 import org.operaton.bpm.engine.impl.history.producer.HistoryEventProducer;
 import org.operaton.bpm.engine.task.IdentityLink;
 
-
 /**
  * @author Joram Barrez
  * @author Deivarayan Azhagappan
  */
-public class IdentityLinkEntity implements Serializable, IdentityLink, DbEntity, HasDbReferences {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class IdentityLinkEntity implements IdentityLink, DbEntity, HasDbReferences {
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected String id;

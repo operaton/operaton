@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.RepositoryService;
@@ -34,7 +36,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -101,19 +103,27 @@ class JobPrioritizationBpmnConstantValueTest {
     assertThat(job.getPriority()).isEqualTo(EXPECTED_DEFAULT_PRIORITY);
   }
 
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
-  @Test
-  void testProcessDefinitionPrioritizationAsyncBefore() {
+  @ParameterizedTest
+  @CsvSource({
+    "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml, jobPrioProcess, task1, 10",
+    "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml, intermediateTimerJobPrioProcess, timer1, 8",
+    "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml, jobPrioProcess, task2, 5",
+    "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml, intermediateTimerJobPrioProcess, timer2, 4"
+  })
+  void testJobPrioritization(String bpmnResource, String processDefinitionKey, String startBeforeActivity, int expectedPriority) {
+    // given
+    testRule.deploy(bpmnResource);
+
     // when
     runtimeService
-      .createProcessInstanceByKey("jobPrioProcess")
-      .startBeforeActivity("task1")
+      .createProcessInstanceByKey(processDefinitionKey)
+      .startBeforeActivity(startBeforeActivity)
       .execute();
 
     // then
     Job job = managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();
-    assertThat(job.getPriority()).isEqualTo(10);
+    assertThat(job.getPriority()).isEqualTo(expectedPriority);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
@@ -134,36 +144,6 @@ class JobPrioritizationBpmnConstantValueTest {
     assertThat(job.getPriority()).isEqualTo(10);
   }
 
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml")
-  @Test
-  void testProcessDefinitionPrioritizationTimer() {
-    // when
-    runtimeService
-      .createProcessInstanceByKey("intermediateTimerJobPrioProcess")
-      .startBeforeActivity("timer1")
-      .execute();
-
-    // then
-    Job job = managementService.createJobQuery().singleResult();
-    assertThat(job).isNotNull();
-    assertThat(job.getPriority()).isEqualTo(8);
-  }
-
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
-  @Test
-  void testActivityPrioritizationAsyncBefore() {
-    // when
-    runtimeService
-      .createProcessInstanceByKey("jobPrioProcess")
-      .startBeforeActivity("task2")
-      .execute();
-
-    // then
-    Job job = managementService.createJobQuery().singleResult();
-    assertThat(job).isNotNull();
-    assertThat(job.getPriority()).isEqualTo(5);
-  }
-
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioProcess.bpmn20.xml")
   @Test
   void testActivityPrioritizationAsyncAfter() {
@@ -180,21 +160,6 @@ class JobPrioritizationBpmnConstantValueTest {
     Job job = managementService.createJobQuery().singleResult();
     assertThat(job).isNotNull();
     assertThat(job.getPriority()).isEqualTo(5);
-  }
-
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/intermediateTimerJobPrioProcess.bpmn20.xml")
-  @Test
-  void testActivityPrioritizationTimer() {
-    // when
-    runtimeService
-      .createProcessInstanceByKey("intermediateTimerJobPrioProcess")
-      .startBeforeActivity("timer2")
-      .execute();
-
-    // then
-    Job job = managementService.createJobQuery().singleResult();
-    assertThat(job).isNotNull();
-    assertThat(job.getPriority()).isEqualTo(4);
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/subProcessJobPrioProcess.bpmn20.xml")
@@ -215,17 +180,20 @@ class JobPrioritizationBpmnConstantValueTest {
 
   @Test
   void testFailOnMalformedInput() {
+    // given
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/job/invalidPrioProcess.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("deploying a process with malformed priority should not succeed");
-    } catch (ParseException e) {
-      testRule.assertTextPresentIgnoreCase("value 'thisIsNotANumber' for attribute 'jobPriority' "
-          + "is not a valid number", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("task2");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .satisfies(e -> {
+        ParseException parseException = (ParseException) e;
+        assertThat(parseException.getMessage()).containsIgnoringCase("value 'thisIsNotANumber' for attribute 'jobPriority' "
+            + "is not a valid number");
+        assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("task2");
+      });
   }
 
   @Test

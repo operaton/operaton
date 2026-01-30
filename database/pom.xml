@@ -23,7 +23,7 @@
     <version.mariadb>3.5.7</version.mariadb>
     <version.mariadb-v1>1.1.8</version.mariadb-v1>
     <version.sqlserver>13.2.1.jre11</version.sqlserver>
-    <version.mysql>9.5.0</version.mysql>
+    <version.mysql>9.6.0</version.mysql>
     <version.db2-11.5>11.5.9.0</version.db2-11.5>
     <version.db2>12.1.3.0</version.db2>
     <version.postgresql>42.7.9</version.postgresql>

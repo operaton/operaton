@@ -41,7 +41,7 @@ public class ActivityImpl extends ScopeImpl implements PvmActivity, HasDIBounds 
   @Serial private static final long serialVersionUID = 1L;
 
   private List<TransitionImpl> outgoingTransitions = new ArrayList<>();
-  private Map<String, TransitionImpl> namedOutgoingTransitions = new HashMap<>();
+  private final Map<String, TransitionImpl> namedOutgoingTransitions = new HashMap<>();
   private List<TransitionImpl> incomingTransitions = new ArrayList<>();
 
   /** the inner behavior of an activity. For activities which are flow scopes,

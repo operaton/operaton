@@ -82,7 +82,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
 
   // variables/////////////////////////////////////////////////////////////////
 
-  private transient VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
+  private final transient VariableStore<CoreVariableInstance> variableStore = new VariableStore<>();
 
   // lifecycle methods ////////////////////////////////////////////////////////
 

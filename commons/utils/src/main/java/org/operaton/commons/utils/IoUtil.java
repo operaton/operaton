@@ -61,7 +61,9 @@ public class IoUtil {
    *
    * @param reader the Reader
    * @return the Reader content as String
+   * @deprecated Do not use. This method will be removed.
    */
+  @Deprecated(since = "1.1", forRemoval = true)
   public static String readerAsString(Reader reader) {
     try {
       StringWriter writer = new StringWriter();

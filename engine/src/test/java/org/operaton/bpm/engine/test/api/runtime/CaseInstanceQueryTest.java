@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**

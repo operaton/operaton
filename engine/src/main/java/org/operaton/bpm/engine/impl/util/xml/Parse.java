@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.BpmnParseException;
 import org.operaton.bpm.engine.Problem;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.impl.util.io.InputStreamSource;
 import org.operaton.bpm.engine.impl.util.io.ResourceStreamSource;
 import org.operaton.bpm.engine.impl.util.io.StreamSource;
@@ -38,12 +39,10 @@ import org.operaton.bpm.engine.impl.util.io.StringStreamSource;
 import org.operaton.bpm.engine.impl.util.io.UriStreamSource;
 import org.operaton.bpm.engine.impl.xml.ProblemImpl;
 
-
 /**
  * @author Tom Baeyens
  */
 public abstract class Parse extends DefaultHandler {
-
 
   protected static final EngineUtilLogger LOG = ProcessEngineLogger.UTIL_LOGGER;
 
@@ -73,7 +72,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceInputStream(InputStream inputStream) {
-    if (name==null) {
+    if (name == null) {
       name("inputStream");
     }
     setStreamSource(new InputStreamSource(inputStream));
@@ -85,15 +84,11 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceUrl(URL url) {
-    if (name==null) {
-      name(url.toString());
-    }
-    setStreamSource(new UriStreamSource(url));
-    return this;
+    return sourceUri(ReflectUtil.urlToURI(url));
   }
 
   public Parse sourceUri(URI uri) {
-    if (name==null) {
+    if (name == null) {
       name(uri.toString());
     }
     setStreamSource(new UriStreamSource(uri));
@@ -109,7 +104,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceResource(String resource, ClassLoader classLoader) {
-    if (name==null) {
+    if (name == null) {
       name(resource);
     }
     setStreamSource(new ResourceStreamSource(resource, classLoader));
@@ -117,7 +112,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   public Parse sourceString(String string) {
-    if (name==null) {
+    if (name == null) {
       name("string");
     }
     setStreamSource(new StringStreamSource(string));
@@ -125,7 +120,7 @@ public abstract class Parse extends DefaultHandler {
   }
 
   protected void setStreamSource(StreamSource streamSource) {
-    if (this.streamSource!=null) {
+    if (this.streamSource != null) {
       throw LOG.multipleSourcesException(this.streamSource, streamSource);
     }
     this.streamSource = streamSource;

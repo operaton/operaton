@@ -22,6 +22,8 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
@@ -55,6 +57,19 @@ class DeploymentAwareJobExecutorForOracleTest {
     Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     // when
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
+    // then
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
+  }
+
+  @ParameterizedTest
+  @ValueSource(ints = {1000, 1001, 2000})
+  void testFindAcquirableJobsWhenNInstancesDeployed(int instanceCount) {
+    // given
+    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
+    // when
+    for (int i=0; i<instanceCount; i++) {
+      testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
+    }
     // then
     assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }

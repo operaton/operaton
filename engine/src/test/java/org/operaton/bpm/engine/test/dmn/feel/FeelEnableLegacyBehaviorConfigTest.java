@@ -45,15 +45,13 @@ class FeelEnableLegacyBehaviorConfigTest {
 
   @ParameterizedTest(name = "{0}")
   @CsvSource({
+      "Literal Expression, org/operaton/bpm/engine/test/dmn/feel/legacy/literal-expression.dmn",
       "Input Expression, org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn",
-      "Input Rule, org/operaton/bpm/engine/test/dmn/feel/legacy/input-rule.dmn",
-      "Output Rule, org/operaton/bpm/engine/test/dmn/feel/output-rule.dmn"
+      "Output Rule, org/operaton/bpm/engine/test/dmn/feel/legacy/output-rule.dmn"
   })
-
-  @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/dmn/feel/legacy/input-expression.dmn"})
-  void shouldEvaluate() {
+  void shouldEvaluate(String name, String dmnResource) {
     // given
+    testRule.deploy(dmnResource);
 
     // when
     String result = decisionService.evaluateDecisionByKey("c").evaluate()
@@ -75,5 +73,4 @@ class FeelEnableLegacyBehaviorConfigTest {
       .extracting("cause.message")
       .isEqualTo("FEEL-01010 Syntax error in expression 'for x in 1..3 return x * 2'");
   }
-
 }

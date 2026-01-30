@@ -20,9 +20,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -70,12 +71,18 @@ class JobDefinitionCreationAndDeletionWithParseListenerTest {
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Test
-  void testDeleteNonExistingAndCreateNewJobDefinitionWithParseListener() {
+  @ParameterizedTest
+  @CsvSource({
+      "jobCreationWithinParseListener.bpmn20.xml",
+      //given the asyncBefore is set in the xml
+      "jobAsyncBeforeCreationWithinParseListener.bpmn20.xml",
+      //given the asyncBefore AND asyncAfter is set in the xml
+      "jobAsyncBothCreationWithinParseListener.bpmn20.xml"
+  })
+  void testDeleteJobDefinition(String bpmnResource) {
     //given
-    String modelFileName = "jobCreationWithinParseListener.bpmn20.xml";
-    InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(modelFileName);
-    DeploymentBuilder builder = engineRule.getRepositoryService().createDeployment().addInputStream(modelFileName, in);
+    InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(bpmnResource);
+    DeploymentBuilder builder = engineRule.getRepositoryService().createDeployment().addInputStream(bpmnResource, in);
 
     //when the asyncBefore is set to false and the asyncAfter to true in the parse listener
     Deployment deployment = builder.deploy();
@@ -90,43 +97,4 @@ class JobDefinitionCreationAndDeletionWithParseListenerTest {
     assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
   }
 
-  @Test
-  void testDeleteJobDefinitionWithParseListenerAndAsyncInXml() {
-    //given the asyncBefore is set in the xml
-    String modelFileName = "jobAsyncBeforeCreationWithinParseListener.bpmn20.xml";
-    InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(modelFileName);
-    DeploymentBuilder builder = engineRule.getRepositoryService().createDeployment().addInputStream(modelFileName, in);
-
-    //when the asyncBefore is set to false and the asyncAfter to true in the parse listener
-    Deployment deployment = builder.deploy();
-    engineRule.manageDeployment(deployment);
-
-    //then there exists one job definition
-    JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    JobDefinition jobDef = query.singleResult();
-    assertThat(jobDef).isNotNull();
-    assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
-    assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
-    assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
-  }
-
-  @Test
-  void testDeleteJobDefinitionWithParseListenerAndAsyncBothInXml() {
-    //given the asyncBefore AND asyncAfter is set in the xml
-    String modelFileName = "jobAsyncBothCreationWithinParseListener.bpmn20.xml";
-    InputStream in = JobDefinitionCreationWithParseListenerTest.class.getResourceAsStream(modelFileName);
-    DeploymentBuilder builder = engineRule.getRepositoryService().createDeployment().addInputStream(modelFileName, in);
-
-    //when the asyncBefore is set to false and the asyncAfter to true in the parse listener
-    Deployment deployment = builder.deploy();
-    engineRule.manageDeployment(deployment);
-
-    //then there exists one job definition
-    JobDefinitionQuery query = engineRule.getManagementService().createJobDefinitionQuery();
-    JobDefinition jobDef = query.singleResult();
-    assertThat(jobDef).isNotNull();
-    assertThat(jobDef.getProcessDefinitionKey()).isEqualTo("oneTaskProcess");
-    assertThat(jobDef.getActivityId()).isEqualTo("servicetask1");
-    assertThat(jobDef.getJobConfiguration()).isEqualTo(MessageJobDeclaration.ASYNC_AFTER);
-  }
 }

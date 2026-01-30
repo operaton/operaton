@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -31,7 +30,6 @@ import org.operaton.bpm.engine.impl.cmmn.cmd.CompleteCaseExecutionCmd;
 import org.operaton.bpm.engine.impl.cmmn.cmd.ManualStartCaseExecutionCmd;
 import org.operaton.bpm.engine.impl.cmmn.cmd.StateTransitionCaseExecutionCmd;
 import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 

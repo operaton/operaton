@@ -27,6 +27,8 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestLogger;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+import java.net.ServerSocket;
+
 
 
 /**
@@ -46,17 +48,26 @@ public abstract class EmailTestCase {
 
   protected Wiser wiser;
 
+
   @BeforeEach
-  public void setUp() {
-    int port = processEngineConfiguration.getMailServerPort();
+public void setUp() throws Exception {
+  // Ask OS for a free port (prevents conflicts in parallel tests)
+  ServerSocket socket = new ServerSocket(0);
+  int port = socket.getLocalPort();
+  socket.close();
 
-    wiser = new Wiser();
-    wiser.setPort(port);
+  // Override engine mail server port for this test instance
+  processEngineConfiguration.setMailServerPort(port);
 
-    LOG.info("Starting Wiser mail server on port: {}", port);
-    wiser.start();
-    LOG.info("Wiser mail server listening on port: {}", port);
-  }
+  // Start embedded SMTP server (Wiser) on the dynamic port
+  wiser = new Wiser();
+  wiser.setPort(port);
+
+  LOG.info("Starting Wiser mail server on port: {}", port);
+  wiser.start();
+  LOG.info("Wiser mail server listening on port: {}", port);
+}
+
 
   @AfterEach
   public void tearDown() {

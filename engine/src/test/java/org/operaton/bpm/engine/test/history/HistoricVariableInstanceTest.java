@@ -29,6 +29,8 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FormService;
@@ -950,7 +952,7 @@ class HistoricVariableInstanceTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testImplicitVariableUpdate.bpmn20.xml")
-  @Disabled
+  @Disabled("Historic variable's activity is not the historicServiceTask")
   @Test
   void testImplicitVariableUpdateActivityInstanceId() {
     // given
@@ -982,7 +984,7 @@ class HistoricVariableInstanceTest {
 
   @SuppressWarnings("unchecked")
   @Deployment(resources = "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testImplicitVariableUpdate.bpmn20.xml")
-  @Disabled
+  @Disabled("historicDetails has just 2 instead of 3 expected entries")
   @Test
   void testImplicitVariableUpdateAndReplacementInOneTransaction() {
     // given
@@ -1723,52 +1725,16 @@ class HistoricVariableInstanceTest {
     taskService.deleteTask(taskId, true);
   }
 
-  @Deployment
-  @Test
-  void testJoinParallelGatewayLocalVariableOnLastJoiningExecution() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testJoinParallelGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testNestedJoinParallelGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testJoinInclusiveGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
+      "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testNestedJoinInclusiveGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml"
+  })
+  void shouldSetHistoricVariable (String bpmnResource) {
     // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
-
-    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertThat(historicVariable).isNotNull();
-    assertThat(historicVariable.getName()).isEqualTo("testVar");
-  }
-
-  @Deployment
-  @Test
-  void testNestedJoinParallelGatewayLocalVariableOnLastJoiningExecution() {
-    // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
-
-    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertThat(historicVariable).isNotNull();
-    assertThat(historicVariable.getName()).isEqualTo("testVar");
-  }
-
-  @Deployment
-  @Test
-  void testJoinInclusiveGatewayLocalVariableOnLastJoiningExecution() {
-    // when
-    runtimeService.startProcessInstanceByKey("process");
-
-    // then
-    assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
-
-    HistoricVariableInstance historicVariable = historyService.createHistoricVariableInstanceQuery().singleResult();
-    assertThat(historicVariable).isNotNull();
-    assertThat(historicVariable.getName()).isEqualTo("testVar");
-  }
-
-  @Deployment
-  @Test
-  void testNestedJoinInclusiveGatewayLocalVariableOnLastJoiningExecution() {
-    // when
+    testRule.deploy(bpmnResource);
     runtimeService.startProcessInstanceByKey("process");
 
     // then

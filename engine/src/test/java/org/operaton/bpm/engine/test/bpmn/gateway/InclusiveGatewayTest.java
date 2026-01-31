@@ -23,6 +23,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -592,46 +594,15 @@ class InclusiveGatewayTest {
 
   }
 
-  @Deployment
-  @Test
-  void testJoinAfterSequentialMultiInstanceSubProcess() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterSequentialMultiInstanceSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterParallelMultiInstanceSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterNestedScopes.bpmn20.xml"
+  })
+  void testJoin(String bpmnResource) {
     // given
-    runtimeService.startProcessInstanceByKey("process");
-
-    TaskQuery query = taskService.createTaskQuery();
-
-    // when
-    Task task = query
-        .taskDefinitionKey("task")
-        .singleResult();
-    taskService.complete(task.getId());
-
-    // then
-    assertThat(query.taskDefinitionKey("taskAfterJoin").singleResult()).isNull();
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterParallelMultiInstanceSubProcess() {
-    // given
-    runtimeService.startProcessInstanceByKey("process");
-
-    TaskQuery query = taskService.createTaskQuery();
-
-    // when
-    Task task = query
-        .taskDefinitionKey("task")
-        .singleResult();
-    taskService.complete(task.getId());
-
-    // then
-    assertThat(query.taskDefinitionKey("taskAfterJoin").singleResult()).isNull();
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterNestedScopes() {
-    // given
+    testRule.deploy(bpmnResource);
     runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery query = taskService.createTaskQuery();
@@ -725,54 +696,15 @@ class InclusiveGatewayTest {
     assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
-  @Deployment
-  @Test
-  void testJoinAfterEventBasedGateway() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterEventBasedGateway.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterEventBasedGatewayInSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterEventBasedGatewayContainedInSubProcess.bpmn20.xml"
+  })
+  void testJoinAfterEventBasedGateway(String resource) {
     // given
-    TaskQuery taskQuery = taskService.createTaskQuery();
-
-    runtimeService.startProcessInstanceByKey("process");
-    Task task = taskQuery.singleResult();
-    taskService.complete(task.getId());
-
-    // assume
-    assertThat(taskQuery.singleResult()).isNull();
-
-    // when
-    runtimeService.correlateMessage("foo");
-
-    // then
-    task = taskQuery.singleResult();
-    assertThat(task).isNotNull();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterJoin");
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterEventBasedGatewayInSubProcess() {
-    // given
-    TaskQuery taskQuery = taskService.createTaskQuery();
-
-    runtimeService.startProcessInstanceByKey("process");
-    Task task = taskQuery.singleResult();
-    taskService.complete(task.getId());
-
-    // assume
-    assertThat(taskQuery.singleResult()).isNull();
-
-    // when
-    runtimeService.correlateMessage("foo");
-
-    // then
-    task = taskQuery.singleResult();
-    assertThat(task).isNotNull();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterJoin");
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterEventBasedGatewayContainedInSubProcess() {
-    // given
+    testRule.deploy(resource);
     TaskQuery taskQuery = taskService.createTaskQuery();
 
     runtimeService.startProcessInstanceByKey("process");

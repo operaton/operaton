@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.spring;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -27,7 +28,6 @@ import org.springframework.core.io.UrlResource;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
 
-
 /**
  * @author Tom Baeyens
  */
@@ -38,13 +38,22 @@ public final class SpringConfigurationHelper {
   private SpringConfigurationHelper() {
   }
 
+  public static ProcessEngine buildProcessEngine(URI resource) {
+    try {
+      return buildProcessEngine(resource.toURL());
+    } catch (java.io.IOException e) {
+      throw new org.operaton.bpm.engine.ProcessEngineException(
+          "couldn't open resource stream: %s".formatted(e.getMessage()), e);
+    }
+  }
+
   public static ProcessEngine buildProcessEngine(URL resource) {
     log.fine("==== BUILDING SPRING APPLICATION CONTEXT AND PROCESS ENGINE =========================================");
 
     ApplicationContext applicationContext = new GenericXmlApplicationContext(new UrlResource(resource));
     Map<String, ProcessEngine> beansOfType = applicationContext.getBeansOfType(ProcessEngine.class);
     if (beansOfType.isEmpty()) {
-      throw new ProcessEngineException("no "+ProcessEngine.class.getName()+" defined in the application context "+resource.toString());
+      throw new ProcessEngineException("no " + ProcessEngine.class.getName() + " defined in the application context " + resource.toString());
     }
 
     ProcessEngine processEngine = beansOfType.values().iterator().next();

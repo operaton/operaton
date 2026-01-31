@@ -20,6 +20,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.MismatchingMessageCorrelationException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -321,9 +323,14 @@ class ReceiveTaskTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTask.bpmn20.xml")
-  @Test
-  void testSupportsMessageEventReceivedOnParallelMultiReceiveTask() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+    "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiParallelReceiveTask.bpmn20.xml",
+    "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiSubProcessReceiveTask.bpmn20.xml",
+    "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.parallelGatewayReceiveTask.bpmn20.xml"
+  })
+  void testSupportsMessageEventReceived (String bpmnResource) {
+    testRule.deploy(bpmnResource);
 
     // given: a process instance waiting in two receive tasks
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
@@ -458,50 +465,6 @@ class ReceiveTaskTest {
     runtimeService.messageEventReceived(subscription.getEventName(), subscription.getExecutionId());
 
     // expect: subscription is removed
-    assertThat(getEventSubscriptionList()).isEmpty();
-
-    // expect: this ends the process instance
-    testRule.assertProcessEnded(processInstance.getId());
-  }
-
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.multiSubProcessReceiveTask.bpmn20.xml")
-  @Test
-  void testSupportsMessageEventReceivedOnMultiSubProcessReceiveTask() {
-
-    // given: a process instance waiting in two parallel sub-process receive tasks
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
-
-    // expect: there are two message event subscriptions
-    List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertThat(subscriptions).hasSize(2);
-
-    // then: we can trigger both receive task event subscriptions
-    runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
-    runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
-
-    // expect: subscriptions are removed
-    assertThat(getEventSubscriptionList()).isEmpty();
-
-    // expect: this ends the process instance
-    testRule.assertProcessEnded(processInstance.getId());
-  }
-
-  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/receivetask/ReceiveTaskTest.parallelGatewayReceiveTask.bpmn20.xml")
-  @Test
-  void testSupportsMessageEventReceivedOnReceiveTaskBehindParallelGateway() {
-
-    // given: a process instance waiting in two receive tasks
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testProcess");
-
-    // expect: there are two message event subscriptions
-    List<EventSubscription> subscriptions = getEventSubscriptionList();
-    assertThat(subscriptions).hasSize(2);
-
-    // then: we can trigger both receive task event subscriptions
-    runtimeService.messageEventReceived(subscriptions.get(0).getEventName(), subscriptions.get(0).getExecutionId());
-    runtimeService.messageEventReceived(subscriptions.get(1).getEventName(), subscriptions.get(1).getExecutionId());
-
-    // expect: subscriptions are removed
     assertThat(getEventSubscriptionList()).isEmpty();
 
     // expect: this ends the process instance

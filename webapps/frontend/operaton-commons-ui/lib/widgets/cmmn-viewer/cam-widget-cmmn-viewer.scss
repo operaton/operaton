@@ -39,7 +39,7 @@ $bpmn-nav-radius: 3px;
   .diagram-holder .highlight .djs-outline {
     stroke-width: 2px !important;
     stroke: $bpmn-highlight-border-color !important;
-    fill: fade($bpmn-highlight-bg, 40%) !important;
+    fill: rgba($bpmn-highlight-bg, 0.4) !important;
   }
 
   .diagram-holder .highlight .djs-visual > :nth-child(1) {

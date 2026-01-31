@@ -31,73 +31,85 @@ public abstract class AbstractNumericValidator implements FormFieldValidator {
 
     String configurationString = validatorContext.getConfiguration();
 
-    // Double
-
     if (submittedValue instanceof Double doubleValue) {
-      Double configuration = null;
-      try {
-        configuration = Double.parseDouble(configurationString);
-      } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Double value %s: configuration %s cannot be parsed as Double."
-            .formatted(submittedValue, configurationString));
-      }
-      return validate(doubleValue, configuration);
+      return validateDoubleValue(submittedValue, doubleValue, configurationString);
     }
-
-    // Float
 
     if (submittedValue instanceof Float floatValue) {
-      Float configuration = null;
-      try {
-        configuration = Float.parseFloat(configurationString);
-      } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Float value %s: configuration %s cannot be parsed as Float."
-            .formatted(submittedValue, configurationString));
-      }
-      return validate(floatValue, configuration);
+      return validateFloatValue(submittedValue, floatValue, configurationString);
     }
-
-    // Long
 
     if (submittedValue instanceof Long longValue) {
-      Long configuration = null;
-      try {
-        configuration = Long.parseLong(configurationString);
-      } catch(NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Long value %s: configuration %s cannot be parsed as Long."
-            .formatted(submittedValue, configurationString));
-      }
-      return validate(longValue, configuration);
+      return validateLongValue(submittedValue, longValue, configurationString);
     }
-
-    // Integer
 
     if (submittedValue instanceof Integer integerValue) {
-      Integer configuration = null;
-      try {
-        configuration = Integer.parseInt(configurationString);
-      } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Integer value %s: configuration %s cannot be parsed as Integer."
-            .formatted(submittedValue, configurationString));
-      }
-      return validate(integerValue, configuration);
+      return validateIntegerValue(submittedValue, integerValue, configurationString);
     }
 
-    // Short
-
     if (submittedValue instanceof Short shortValue) {
-      Short configuration = null;
-      try {
-        configuration = Short.parseShort(configurationString);
-      } catch( NumberFormatException e) {
-        throw new FormFieldConfigurationException(configurationString, "Cannot validate Short value %s: configuration %s cannot be parsed as Short.".formatted(submittedValue, configurationString));
-      }
-      return validate(shortValue, configuration);
+      return validateShortValue(submittedValue, shortValue, configurationString);
     }
 
     throw new FormFieldValidationException("Numeric validator %s cannot be used on non-numeric value "
         .formatted(getClass().getSimpleName())+submittedValue);
   }
+
+  private boolean validateDoubleValue(Object submittedValue, Double doubleValue, String configurationString) {
+    Double configuration = null;
+    try {
+      configuration = Double.parseDouble(configurationString);
+    } catch( NumberFormatException e) {
+      throw new FormFieldConfigurationException(configurationString, "Cannot validate Double value %s: configuration %s cannot be parsed as Double."
+          .formatted(submittedValue, configurationString));
+    }
+    return validate(doubleValue, configuration);
+  }
+
+  private boolean validateFloatValue(Object submittedValue, Float floatValue, String configurationString) {
+    Float configuration = null;
+    try {
+      configuration = Float.parseFloat(configurationString);
+    } catch( NumberFormatException e) {
+      throw new FormFieldConfigurationException(configurationString, "Cannot validate Float value %s: configuration %s cannot be parsed as Float."
+          .formatted(submittedValue, configurationString));
+    }
+    return validate(floatValue, configuration);
+  }
+
+  private boolean validateLongValue(Object submittedValue, Long longValue, String configurationString) {
+    Long configuration = null;
+    try {
+      configuration = Long.parseLong(configurationString);
+    } catch(NumberFormatException e) {
+      throw new FormFieldConfigurationException(configurationString, "Cannot validate Long value %s: configuration %s cannot be parsed as Long."
+          .formatted(submittedValue, configurationString));
+    }
+    return validate(longValue, configuration);
+  }
+
+  private boolean validateIntegerValue(Object submittedValue, Integer integerValue, String configurationString) {
+    Integer configuration = null;
+    try {
+      configuration = Integer.parseInt(configurationString);
+    } catch( NumberFormatException e) {
+      throw new FormFieldConfigurationException(configurationString, "Cannot validate Integer value %s: configuration %s cannot be parsed as Integer."
+          .formatted(submittedValue, configurationString));
+    }
+    return validate(integerValue, configuration);
+  }
+
+  private boolean validateShortValue(Object submittedValue, Short shortValue, String configurationString) {
+    Short configuration = null;
+    try {
+      configuration = Short.parseShort(configurationString);
+    } catch( NumberFormatException e) {
+      throw new FormFieldConfigurationException(configurationString, "Cannot validate Short value %s: configuration %s cannot be parsed as Short.".formatted(
+          submittedValue, configurationString));
+    }
+    return validate(shortValue, configuration);
+  }
+
 
   protected boolean isNullValid() {
     return true;

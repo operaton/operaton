@@ -17,8 +17,9 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.slf4j.Logger;
 
 import org.operaton.bpm.engine.CaseService;
@@ -29,7 +30,6 @@ import org.operaton.bpm.engine.impl.cmmn.cmd.CompleteCaseExecutionCmd;
 import org.operaton.bpm.engine.impl.cmmn.cmd.ManualStartCaseExecutionCmd;
 import org.operaton.bpm.engine.impl.cmmn.cmd.StateTransitionCaseExecutionCmd;
 import org.operaton.bpm.engine.runtime.CaseExecution;
-import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
@@ -107,9 +107,16 @@ class CompetingSentrySatisfactionTest {
 
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testEntryCriteriaWithAndSentry.cmmn"})
-  @Test
-  void testEntryCriteriaWithAndSentry() {
+  @ParameterizedTest
+  @CsvSource({
+      "org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testEntryCriteriaWithAndSentry.cmmn, CaseSentryPartEntity",
+      "org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testExitCriteriaWithAndSentry.cmmn, CaseSentryPartEntity",
+      "org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testEntryCriteriaWithOrSentry.cmmn, CaseExecutionEntity",
+      "org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testExitCriteriaWithOrSentry.cmmn, CaseExecutionEntity"
+  })
+  void testEntryOrExitCriteriaWithSentry(String cmmnResource, String expectedEntityInExceptionMessage) {
+    testRule.deploy(cmmnResource);
+
     String caseInstanceId = caseService
         .withCaseDefinitionByKey("case")
         .create()
@@ -129,48 +136,15 @@ class CompetingSentrySatisfactionTest {
         .singleResult()
         .getId();
 
-    LOG.debug("test thread starts thread one");
-    SingleThread threadOne = new ManualStartSingleThread(firstHumanTaskId);
-    threadOne.startAndWaitUntilControlIsReturned();
-
-    LOG.debug("test thread continues to start thread two");
-    SingleThread threadTwo = new CompletionSingleThread(secondHumanTaskId);
-    threadTwo.startAndWaitUntilControlIsReturned();
-
-    LOG.debug("test thread notifies thread 1");
-    threadOne.proceedAndWaitTillDone();
-    assertThat(threadOne.exception).isNull();
-
-    LOG.debug("test thread notifies thread 2");
-    threadTwo.proceedAndWaitTillDone();
-    assertThat(threadTwo.exception).isNotNull();
-
-    assertThat(threadTwo.exception.getMessage())
-        .contains("CaseSentryPartEntity")
-        .contains("was updated by another transaction concurrently");
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testExitCriteriaWithAndSentry.cmmn"})
-  @Test
-  void testExitCriteriaWithAndSentry() {
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    String firstHumanTaskId = caseService
-        .createCaseExecutionQuery()
-        .caseInstanceId(caseInstanceId)
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    String secondHumanTaskId = caseService
-        .createCaseExecutionQuery()
-        .caseInstanceId(caseInstanceId)
-        .activityId("PI_HumanTask_2")
-        .singleResult()
-        .getId();
+    if (cmmnResource.contains("testExitCriteriaWithOrSentry")) {
+      testRule.deploy("org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.oneTaskProcess.bpmn20.xml");
+      CaseExecution thirdTask = caseService
+          .createCaseExecutionQuery()
+          .caseInstanceId(caseInstanceId)
+          .activityId("ProcessTask_3")
+          .singleResult();
+      caseService.manuallyStartCaseExecution(thirdTask.getId());
+    }
 
     LOG.debug("test thread starts thread one");
     SingleThread threadOne = new ManualStartSingleThread(firstHumanTaskId);
@@ -189,101 +163,7 @@ class CompetingSentrySatisfactionTest {
     assertThat(threadTwo.exception).isNotNull();
 
     assertThat(threadTwo.exception.getMessage())
-        .contains("CaseSentryPartEntity")
-        .contains("was updated by another transaction concurrently");
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testEntryCriteriaWithOrSentry.cmmn"})
-  @Test
-  void testEntryCriteriaWithOrSentry() {
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    String firstHumanTaskId = caseService
-        .createCaseExecutionQuery()
-        .caseInstanceId(caseInstanceId)
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    String secondHumanTaskId = caseService
-        .createCaseExecutionQuery()
-        .caseInstanceId(caseInstanceId)
-        .activityId("PI_HumanTask_2")
-        .singleResult()
-        .getId();
-
-    LOG.debug("test thread starts thread one");
-    SingleThread threadOne = new ManualStartSingleThread(firstHumanTaskId);
-    threadOne.startAndWaitUntilControlIsReturned();
-
-    LOG.debug("test thread continues to start thread two");
-    SingleThread threadTwo = new CompletionSingleThread(secondHumanTaskId);
-    threadTwo.startAndWaitUntilControlIsReturned();
-
-    LOG.debug("test thread notifies thread 1");
-    threadOne.proceedAndWaitTillDone();
-    assertThat(threadOne.exception).isNull();
-
-    LOG.debug("test thread notifies thread 2");
-    threadTwo.proceedAndWaitTillDone();
-    assertThat(threadTwo.exception).isNotNull();
-
-    assertThat(threadTwo.exception.getMessage())
-        .contains("CaseExecutionEntity")
-        .contains("was updated by another transaction concurrently");
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.testExitCriteriaWithOrSentry.cmmn",
-    "org/operaton/bpm/engine/test/concurrency/CompetingSentrySatisfactionTest.oneTaskProcess.bpmn20.xml"})
-  @Test
-  void testExitCriteriaWithOrSentry() {
-    String caseInstanceId = caseService
-        .withCaseDefinitionByKey("case")
-        .create()
-        .getId();
-
-    String firstHumanTaskId = caseService
-        .createCaseExecutionQuery()
-        .caseInstanceId(caseInstanceId)
-        .activityId("PI_HumanTask_1")
-        .singleResult()
-        .getId();
-
-    String secondHumanTaskId = caseService
-        .createCaseExecutionQuery()
-        .caseInstanceId(caseInstanceId)
-        .activityId("PI_HumanTask_2")
-        .singleResult()
-        .getId();
-
-    CaseExecution thirdTask = caseService
-      .createCaseExecutionQuery()
-      .caseInstanceId(caseInstanceId)
-      .activityId("ProcessTask_3")
-      .singleResult();
-    caseService.manuallyStartCaseExecution(thirdTask.getId());
-
-    LOG.debug("test thread starts thread one");
-    SingleThread threadOne = new ManualStartSingleThread(firstHumanTaskId);
-    threadOne.startAndWaitUntilControlIsReturned();
-
-    LOG.debug("test thread continues to start thread two");
-    SingleThread threadTwo = new CompletionSingleThread(secondHumanTaskId);
-    threadTwo.startAndWaitUntilControlIsReturned();
-
-    LOG.debug("test thread notifies thread 1");
-    threadOne.proceedAndWaitTillDone();
-    assertThat(threadOne.exception).isNull();
-
-    LOG.debug("test thread notifies thread 2");
-    threadTwo.proceedAndWaitTillDone();
-    assertThat(threadTwo.exception).isNotNull();
-
-    assertThat(threadTwo.exception.getMessage())
-        .contains("CaseExecutionEntity")
+        .contains(expectedEntityInExceptionMessage)
         .contains("was updated by another transaction concurrently");
   }
 

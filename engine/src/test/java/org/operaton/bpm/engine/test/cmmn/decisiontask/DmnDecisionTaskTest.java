@@ -17,6 +17,8 @@
 package org.operaton.bpm.engine.test.cmmn.decisiontask;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.exception.dmn.DecisionDefinitionNotFoundException;
 import org.operaton.bpm.engine.runtime.CaseInstance;
@@ -48,7 +50,6 @@ class DmnDecisionTaskTest extends CmmnTest {
 
   static final String CASE_KEY = "case";
   static final String DECISION_TASK = "PI_DecisionTask_1";
-  static final String DECISION_KEY = "testDecision";
 
   @Deployment(resources = {CMMN_CALL_DECISION_CONSTANT, DECISION_OKAY_DMN})
   @Test
@@ -89,13 +90,16 @@ class DmnDecisionTaskTest extends CmmnTest {
     assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
   }
 
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallLatestDecision.cmmn",
-      DECISION_OKAY_DMN
+  @ParameterizedTest
+  @CsvSource({
+      "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallLatestDecision.cmmn, not okay",
+      "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByDeployment.cmmn, okay",
+      "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByVersion.cmmn, not okay"
   })
-  @Test
-  void testCallLatestCase() {
+  void callShouldHaveExpectedResult(String cmmnResource, String expectedResult) {
     // given
+    testRule.deploy(cmmnResource, DECISION_OKAY_DMN);
+
     String deploymentId = repositoryService.createDeployment()
         .addClasspathResource(DECISION_NOT_OKAY_DMN)
         .deploy()
@@ -105,49 +109,7 @@ class DmnDecisionTaskTest extends CmmnTest {
 
     // then
     assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
-    assertThat(getDecisionResult(caseInstance)).isEqualTo("not okay");
-
-    repositoryService.deleteDeployment(deploymentId, true);
-  }
-
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByDeployment.cmmn",
-      DECISION_OKAY_DMN
-  })
-  @Test
-  void testCallDecisionByDeployment() {
-    // given
-    String deploymentId = repositoryService.createDeployment()
-        .addClasspathResource(DECISION_NOT_OKAY_DMN)
-        .deploy()
-        .getId();
-
-    CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
-
-    // then
-    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
-    assertThat(getDecisionResult(caseInstance)).isEqualTo("okay");
-
-    repositoryService.deleteDeployment(deploymentId, true);
-  }
-
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/cmmn/decisiontask/DmnDecisionTaskTest.testCallDecisionByVersion.cmmn",
-      DECISION_OKAY_DMN
-  })
-  @Test
-  void testCallDecisionByVersion() {
-    // given
-    String deploymentId = repositoryService.createDeployment()
-        .addClasspathResource(DECISION_NOT_OKAY_DMN)
-        .deploy()
-        .getId();
-
-    CaseInstance caseInstance = createCaseInstanceByKey(CASE_KEY);
-
-    // then
-    assertThat(queryCaseExecutionByActivityId(DECISION_TASK)).isNull();
-    assertThat(getDecisionResult(caseInstance)).isEqualTo("not okay");
+    assertThat(getDecisionResult(caseInstance)).isEqualTo(expectedResult);
 
     repositoryService.deleteDeployment(deploymentId, true);
   }

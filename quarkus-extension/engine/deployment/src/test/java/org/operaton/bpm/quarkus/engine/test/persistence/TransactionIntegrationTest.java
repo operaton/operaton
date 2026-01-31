@@ -16,6 +16,9 @@
  */
 package org.operaton.bpm.quarkus.engine.test.persistence;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,10 +38,13 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -47,6 +53,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -73,6 +80,9 @@ class TransactionIntegrationTest {
 
   @Inject
   protected RuntimeService runtimeService;
+
+  @Inject
+  protected RepositoryService repositoryService;
 
   @Inject
   protected TaskService taskService;
@@ -167,11 +177,19 @@ class TransactionIntegrationTest {
     assertThat(incident.getIncidentMessage()).isEqualTo("error");
   }
 
-  @Deployment
-  @Test
-  void shouldRollbackInServiceTask() {
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "In service task, org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldRollbackInServiceTask.bpmn20.xml, txRollbackServiceTask, setRollbackOnly called",
+      "In Service task with custom retry cycle, org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldRollbackInServiceTaskWithCustomRetryCycle.bpmn20.xml, txRollbackServiceTaskWithCustomRetryCycle, setRollbackOnly called",
+      "On exception in transaction listener, org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldRollbackOnExceptionInTransactionListener.bpmn20.xml, failingTransactionListener, exception in transaction listener"
+  })
+  void shouldRollback(String name, String bpmnResource, String processDefinitionKey, String expectedStackTraceContent) throws Exception {
     // given
-    runtimeService.startProcessInstanceByKey("txRollbackServiceTask");
+    InputStream is = Files.newInputStream(Path.of("src/test/resources/" + bpmnResource));
+    DeploymentBuilder builder = repositoryService.createDeployment().addInputStream(bpmnResource, is);
+    var deployment = builder.deploy();
+
+    var pi = runtimeService.startProcessInstanceByKey(processDefinitionKey);
 
     // when
     waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
@@ -183,45 +201,10 @@ class TransactionIntegrationTest {
     assertThat(job.getExceptionMessage()).isEqualTo("Unable to commit transaction");
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).contains("setRollbackOnly called");
-  }
+    assertThat(stacktrace).contains(expectedStackTraceContent);
 
-  @Deployment
-  @Test
-  void shouldRollbackInServiceTaskWithCustomRetryCycle() {
-    // given
-    runtimeService.startProcessInstanceByKey("txRollbackServiceTaskWithCustomRetryCycle");
-
-    // when
-    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
-
-    // then
-    Job job = managementService.createJobQuery().singleResult();
-
-    assertThat(job.getRetries()).isZero();
-    assertThat(job.getExceptionMessage()).isEqualTo("Unable to commit transaction");
-
-    String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).contains("setRollbackOnly called");
-  }
-
-  @Deployment
-  @Test
-  void shouldRollbackOnExceptionInTransactionListener() {
-    // given
-    runtimeService.startProcessInstanceByKey("failingTransactionListener");
-
-    // when
-    waitForJobExecutorToProcessAllJobs(configuration, 20_000, 1_000);
-
-    // then
-    Job job = managementService.createJobQuery().singleResult();
-
-    assertThat(job.getRetries()).isZero();
-    assertThat(job.getExceptionMessage()).isEqualTo("Unable to commit transaction");
-
-    String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
-    assertThat(stacktrace).contains("java.lang.RuntimeException: exception in transaction listener");
+    runtimeService.deleteProcessInstance(pi.getId(), "test cleanup");
+    repositoryService.deleteDeployment(deployment.getId());
   }
 
   @Dependent

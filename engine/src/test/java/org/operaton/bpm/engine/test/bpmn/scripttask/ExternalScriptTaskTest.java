@@ -21,9 +21,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.ScriptCompilationException;
@@ -81,7 +81,7 @@ class ExternalScriptTaskTest {
   }
 
   @ParameterizedTest
-  @CsvSource({
+  @ValueSource(strings = {
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsBean.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInClasspath.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",

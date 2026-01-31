@@ -22,9 +22,9 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -264,7 +264,7 @@ class DmnBusinessRuleTaskResultMappingTest {
   }
 
   @ParameterizedTest
-  @CsvSource({
+  @ValueSource(strings = {
       COLLECT_ENTRIES_BPMN,
       RESULT_LIST_BPMN,
       DEFAULT_MAPPING_BPMN

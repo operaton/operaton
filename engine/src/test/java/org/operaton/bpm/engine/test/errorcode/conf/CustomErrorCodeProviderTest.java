@@ -23,10 +23,9 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -85,11 +84,7 @@ class CustomErrorCodeProviderTest {
   }
 
   @ParameterizedTest
-  @CsvSource({
-      "22_222",
-      "20_000",
-      "39_999"
-  })
+  @ValueSource(ints = {22_222, 20_000, 39_999})
   void shouldOverrideProvidedExceptionCode(Integer code) {
     // given
     BpmnModelInstance myProcess = Bpmn.createExecutableProcess("foo")

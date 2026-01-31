@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.quarkus.engine.test.persistence;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,9 +38,9 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -184,8 +183,7 @@ class TransactionIntegrationTest {
       "In Service task with custom retry cycle, org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldRollbackInServiceTaskWithCustomRetryCycle.bpmn20.xml, txRollbackServiceTaskWithCustomRetryCycle, setRollbackOnly called",
       "On exception in transaction listener, org/operaton/bpm/quarkus/engine/test/persistence/TransactionIntegrationTest.shouldRollbackOnExceptionInTransactionListener.bpmn20.xml, failingTransactionListener, exception in transaction listener"
   })
-  void shouldRollback(String name, String bpmnResource, String processDefinitionKey, String expectedStackTraceContent) throws
-      IOException {
+  void shouldRollback(String name, String bpmnResource, String processDefinitionKey, String expectedStackTraceContent) throws Exception {
     // given
     InputStream is = Files.newInputStream(Path.of("src/test/resources/" + bpmnResource));
     DeploymentBuilder builder = repositoryService.createDeployment().addInputStream(bpmnResource, is);

@@ -29,9 +29,9 @@ import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
@@ -1726,7 +1726,7 @@ class HistoricVariableInstanceTest {
   }
 
   @ParameterizedTest
-  @CsvSource({
+  @ValueSource(strings = {
       "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testJoinParallelGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
       "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testNestedJoinParallelGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",
       "org/operaton/bpm/engine/test/history/HistoricVariableInstanceTest.testJoinInclusiveGatewayLocalVariableOnLastJoiningExecution.bpmn20.xml",

@@ -21,9 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.extension.RegisterExtension;
-
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
+
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -72,7 +72,7 @@ class JobDefinitionCreationAndDeletionWithParseListenerTest {
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
   @ParameterizedTest
-  @CsvSource({
+  @ValueSource(strings = {
       "jobCreationWithinParseListener.bpmn20.xml",
       //given the asyncBefore is set in the xml
       "jobAsyncBeforeCreationWithinParseListener.bpmn20.xml",

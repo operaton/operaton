@@ -37,7 +37,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class HttpRequestInvocationTest {
+class HttpRequestInvocationTest {
 
   private HttpClient httpClient;
   private HttpGet httpRequest;
@@ -106,7 +106,7 @@ public class HttpRequestInvocationTest {
         httpRequest, connectorRequest, interceptorChain, httpClient);
 
     // when/then
-    assertThatThrownBy(() -> invocation.invokeTarget())
+    assertThatThrownBy(invocation::invokeTarget)
         .isEqualTo(expectedException);
   }
 

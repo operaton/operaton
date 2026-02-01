@@ -32,7 +32,7 @@ import org.operaton.bpm.integrationtest.jobexecutor.beans.PriorityBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * Requires fix for CAM-3163
@@ -63,14 +63,9 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
   @Test
   @Order(1)
   void testPriorityOnTimerStartEvent() {
-    // when
-    try {
-      deployer.deploy("timerStart");
-
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail("deployment should be successful, i.e. bean for timer start event should get resolved");
-    }
+    // when/then
+    assertThatCode(() -> deployer.deploy("timerStart"))
+      .doesNotThrowAnyException();
   }
 
   @Test

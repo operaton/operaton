@@ -90,22 +90,25 @@ public class PvmAtomicOperationDeleteCascadeFireActivityEnd extends PvmAtomicOpe
       // remove this execution and its concurrent parent (if exists)
       execution.remove();
 
-      boolean continueRemoval = !execution.isDeleteRoot();
-
-      if (continueRemoval) {
-        PvmExecutionImpl propagatingExecution = execution.getParent();
-        if (propagatingExecution != null && !propagatingExecution.isScope() && !propagatingExecution.hasChildren()) {
-          propagatingExecution.remove();
-          continueRemoval = !propagatingExecution.isDeleteRoot();
-          propagatingExecution = propagatingExecution.getParent();
-        }
-
-        if (continueRemoval && propagatingExecution != null && (propagatingExecution.getActivity() == null && activity != null && activity.getFlowScope() != null)) {
-          // continue deletion with the next scope execution
-          // set activity on parent in case the parent is an inactive scope execution and activity has been set to 'null'.
-          propagatingExecution.setActivity(getFlowScopeActivity(activity));
-        }
+      if (!execution.isDeleteRoot()) {
+        continueRemoval(execution, activity);
       }
+    }
+  }
+
+  private void continueRemoval(PvmExecutionImpl execution, PvmActivity activity) {
+    boolean continueRemoval = true;
+    PvmExecutionImpl propagatingExecution = execution.getParent();
+    if (propagatingExecution != null && !propagatingExecution.isScope() && !propagatingExecution.hasChildren()) {
+      propagatingExecution.remove();
+      continueRemoval = !propagatingExecution.isDeleteRoot();
+      propagatingExecution = propagatingExecution.getParent();
+    }
+
+    if (continueRemoval && propagatingExecution != null && (propagatingExecution.getActivity() == null && activity != null && activity.getFlowScope() != null)) {
+      // continue deletion with the next scope execution
+      // set activity on parent in case the parent is an inactive scope execution and activity has been set to 'null'.
+      propagatingExecution.setActivity(getFlowScopeActivity(activity));
     }
   }
 

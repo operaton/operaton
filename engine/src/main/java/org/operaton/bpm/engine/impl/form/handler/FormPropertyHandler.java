@@ -47,7 +47,22 @@ public class FormPropertyHandler {
     FormPropertyImpl formProperty = new FormPropertyImpl(this);
     Object modelValue = null;
 
-    if (execution!=null) {
+    modelValue = getModelValue(execution, modelValue);
+
+    if (modelValue instanceof String string) {
+      formProperty.setValue(string);
+    } else if (type != null) {
+      String formValue = type.convertModelValueToFormValue(modelValue);
+      formProperty.setValue(formValue);
+    } else if (modelValue != null) {
+      formProperty.setValue(modelValue.toString());
+    }
+
+    return formProperty;
+  }
+
+  private Object getModelValue(ExecutionEntity execution, Object modelValue) {
+    if (execution !=null) {
       if (variableName != null || variableExpression == null) {
         final String varName = variableName != null ? variableName : id;
         if (execution.hasVariable(varName)) {
@@ -65,17 +80,7 @@ public class FormPropertyHandler {
         modelValue = defaultExpression.getValue(StartProcessVariableScope.getSharedInstance());
       }
     }
-
-    if (modelValue instanceof String string) {
-      formProperty.setValue(string);
-    } else if (type != null) {
-      String formValue = type.convertModelValueToFormValue(modelValue);
-      formProperty.setValue(formValue);
-    } else if (modelValue != null) {
-      formProperty.setValue(modelValue.toString());
-    }
-
-    return formProperty;
+    return modelValue;
   }
 
   public void submitFormProperty(VariableScope variableScope, VariableMap variables) {

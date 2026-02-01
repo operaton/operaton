@@ -35,7 +35,7 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -200,13 +200,9 @@ public class ReferenceTest extends TestModelTest {
     assertThat(referenceTargetElements.removeAll(flightPartners)).isTrue();
     assertThat(referenceTargetElements).isEmpty();
 
-    try {
-      referenceTargetElements.retainAll(flightPartners);
-      fail("retainAll method is not implemented");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(UnsupportedModelOperationException.class);
-    }
+    // when/then
+    assertThatThrownBy(() -> referenceTargetElements.retainAll(flightPartners))
+      .isInstanceOf(UnsupportedModelOperationException.class);
 
     referenceTargetElements.addAll(flightPartners);
     assertThat(referenceTargetElements).isNotEmpty();

@@ -35,7 +35,7 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -128,13 +128,9 @@ class UnknownAnimalTest {
     friendRelationshipDefinition.setId("friend-relationship");
     friendRelationshipDefinition.setAttributeValue("animalRef", flipper.getAttributeValue("id"));
 
-    try {
-      wanda.addChildElement(friendRelationshipDefinition);
-      fail("Cannot add relationship definition to UnknownAnimal cause no child types are defined");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(ModelException.class);
-    }
+    // when/then
+    assertThatThrownBy(() -> wanda.addChildElement(friendRelationshipDefinition))
+      .isInstanceOf(ModelException.class);
 
     wanda.insertElementAfter(friendRelationshipDefinition, null);
 

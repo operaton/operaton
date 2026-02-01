@@ -36,11 +36,11 @@ import org.operaton.bpm.engine.history.UserOperationLogQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.ProcessEngineRule;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.bpm.engine.authorization.Permissions.DELETE_HISTORY;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 /**
  * @author Yana.Vasileva
@@ -90,18 +90,20 @@ public class SuspendProcessDefinitionDeleteAuthorizationTest {
 
     engineRule.getProcessEngineConfiguration().setAuthorizationEnabled(true);
 
-    try {
-      // when
-      historyService.deleteUserOperationLogEntry(entry.getId());
-      fail("Exception expected: It should not be possible to delete the user operation log");
-    } catch (AuthorizationException e) {
-      // then
-      String message = e.getMessage();
-      assertTrue(message.contains(USER_ID));
-      assertTrue(message.contains(DELETE_HISTORY.getName()));
-      assertTrue(message.contains(PROCESS_DEFINITION.resourceName()));
-      assertTrue(message.contains("timerBoundaryProcess"));
-    }
+    // given
+    var entryId = entry.getId();
+
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteUserOperationLogEntry(entryId))
+      .isInstanceOf(AuthorizationException.class)
+      .satisfies(e -> {
+        var exception = (AuthorizationException) e;
+        var message = exception.getMessage();
+        assertThat(message).contains(USER_ID);
+        assertThat(message).contains(DELETE_HISTORY.getName());
+        assertThat(message).contains(PROCESS_DEFINITION.resourceName());
+        assertThat(message).contains("timerBoundaryProcess");
+      });
   }
 
   @Test

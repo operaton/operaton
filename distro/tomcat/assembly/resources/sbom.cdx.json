@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:56e2def0-a793-4647-b027-75f4f6a6ce27",
+  "serialNumber": "urn:uuid:1feca787-25b6-4a44-898f-acf84340eb46",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-01-31T10:45:37Z",
+    "timestamp": "2026-02-01T15:03:07Z",
     "tools": {
       "components": [
         {
@@ -7069,6 +7069,216 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-databind",
+      "version": "2.21.0",
+      "description": "General data-binding functionality for Jackson: works on core streaming API",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "6da51758193ce8b00c39e742010b6c45"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "a6b96ee168ca8734a293b6dc70acd5d495119521"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "0057817ee40bc71544072dc2a3ba575ef91dce53a2d87489bde91c05f3a22621"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "757949bf3a5d21f7a2d6567b1d2d80de60faaf11f8705b0d713e73361787cc78e12ffb328e9b2afee4e0dc005418599680bcbcc3a2c9df78cc9f29ecb60651ad"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "db3a6d27c738601cd0e9fa1cbb17877b4202818faf220edc53586887e202bbb80926e2aa8a2f0e711a8ed5d9461df354"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "6502dad7f54a82be440ca937a7d5e0efa348ca0bbd55e7a1b0ebec46c41a37290b3b890659c7e5b9d6eb68db526184f1"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "5894aedda8b2fba0d8dea3a97c5d0099a0d7898e6e109f3d5f0d21ead9ed516d"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "d3a0cf9349b5644e82d5328a0a0124d1fabb742eca91f9e20de66f1e2530dbfe6d60db1f454abfad0ba49376a2b226e7859ce58786c3f3c8c2f94342f14bedd4"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-databind/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-databind",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.core",
+      "name": "jackson-core",
+      "version": "2.21.0",
+      "description": "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "eeaf6f2d71789f1c04ba944aeaa8e18e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "1f7c3f82e6e2ef5def0a12d7dd754e26f0c0ae28"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "e22604bcd9b24e462d5df102007cb06e1ed811e86f1ce6081ca62f385f2db87b"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "4f00351e57ce480428216691c52c59a75ca824674d5c26ef902250cc3d012f22042c82eab9ca530c6328031b597239143e9e3b68c1c7a6cc6d49cef8cb420774"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e34dea00b650d09efa43d8ae8bb2660528857248032285b5d92aa6cd510a5d8916261b302859e00434553dac4ceeb1c3"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "b44c51c7594ca0f2ff72fa0c05395bdf308bb7be64a75cc9df9d09db312b98ace47cd49a87dd638ec41b040974f408c6"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "e9d2a765039b8bdda3c3abaabd4f3bd49b5c48aadfe42d28928276da5dc3916a"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "41a8a4714d9f5a77541dba112960bd2b8719c9971a5e2bb2d8a219626df169e1cdf13344785d50b84887c316299397b39c2642f3669927baf50f930d67cae4fd"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson-core",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-core/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-core",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
+      "publisher": "FasterXML",
+      "group": "com.fasterxml.jackson.datatype",
+      "name": "jackson-datatype-jsr310",
+      "version": "2.21.0",
+      "description": "Add-on module to support JSR-310 (Java 8 Date \u0026 Time API) data types.",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "87cbf6f62ac03289225809efd6fb6698"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "019aeeb3523112059e0ee7a859d337c0842f10af"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "b350169a3b2cc53d781541fe1bfbc0f00c978d185884da79b8330be8fb7aefeb"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a3df0a08e799c3ca30e50ddb2fd2d76bdaa5921b079677b9a9fa5c4e8320362e8817d47dea1780fe78c3ad39f14af8e31b47425e56f7bc2488854934a6214a7b"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "7d886e5e840139386b5ead1e17a74e9028bfbf056c3fbb360499a35dc35425b7f9205e0fbb09664af3de0492db81a3cf"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "1e7a003849f33ff0bc27dd83a7ad43e08a5d63a830200d43a6dbe278240b706db43dbb4f64ce6c5c0cf90cd91fb9029f"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "cd407cfd4ef768daa0d753c7f07ca390eb12822e4c0305c0ef57d9eae255444f"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "73fb46551f9f13ef2378c529eb7332e13d3adde3da5b2898c1d279774fcdbbff771e4f093da5096cb194c3aa81003be9370bd6e375b6a1ee06565b6105395bb0"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310",
+          "type": "website"
+        },
+        {
+          "url": "https://central.sonatype.com/api/v1/publisher",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/FasterXML/jackson-modules-java8/issues",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar",
       "group": "org.awaitility",
       "name": "awaitility",
@@ -7638,216 +7848,6 @@
         },
         {
           "url": "https://github.com/FasterXML/jackson-modules-base/jackson-module-jakarta-xmlbind-annotations",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.core",
-      "name": "jackson-databind",
-      "version": "2.21.0",
-      "description": "General data-binding functionality for Jackson: works on core streaming API",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "6da51758193ce8b00c39e742010b6c45"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "a6b96ee168ca8734a293b6dc70acd5d495119521"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "0057817ee40bc71544072dc2a3ba575ef91dce53a2d87489bde91c05f3a22621"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "757949bf3a5d21f7a2d6567b1d2d80de60faaf11f8705b0d713e73361787cc78e12ffb328e9b2afee4e0dc005418599680bcbcc3a2c9df78cc9f29ecb60651ad"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "db3a6d27c738601cd0e9fa1cbb17877b4202818faf220edc53586887e202bbb80926e2aa8a2f0e711a8ed5d9461df354"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "6502dad7f54a82be440ca937a7d5e0efa348ca0bbd55e7a1b0ebec46c41a37290b3b890659c7e5b9d6eb68db526184f1"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "5894aedda8b2fba0d8dea3a97c5d0099a0d7898e6e109f3d5f0d21ead9ed516d"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "d3a0cf9349b5644e82d5328a0a0124d1fabb742eca91f9e20de66f1e2530dbfe6d60db1f454abfad0ba49376a2b226e7859ce58786c3f3c8c2f94342f14bedd4"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-databind/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-databind",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.core",
-      "name": "jackson-core",
-      "version": "2.21.0",
-      "description": "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "eeaf6f2d71789f1c04ba944aeaa8e18e"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "1f7c3f82e6e2ef5def0a12d7dd754e26f0c0ae28"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "e22604bcd9b24e462d5df102007cb06e1ed811e86f1ce6081ca62f385f2db87b"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "4f00351e57ce480428216691c52c59a75ca824674d5c26ef902250cc3d012f22042c82eab9ca530c6328031b597239143e9e3b68c1c7a6cc6d49cef8cb420774"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "e34dea00b650d09efa43d8ae8bb2660528857248032285b5d92aa6cd510a5d8916261b302859e00434553dac4ceeb1c3"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "b44c51c7594ca0f2ff72fa0c05395bdf308bb7be64a75cc9df9d09db312b98ace47cd49a87dd638ec41b040974f408c6"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "e9d2a765039b8bdda3c3abaabd4f3bd49b5c48aadfe42d28928276da5dc3916a"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "41a8a4714d9f5a77541dba112960bd2b8719c9971a5e2bb2d8a219626df169e1cdf13344785d50b84887c316299397b39c2642f3669927baf50f930d67cae4fd"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson-core",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-core/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-core",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
-      "publisher": "FasterXML",
-      "group": "com.fasterxml.jackson.datatype",
-      "name": "jackson-datatype-jsr310",
-      "version": "2.21.0",
-      "description": "Add-on module to support JSR-310 (Java 8 Date \u0026 Time API) data types.",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "87cbf6f62ac03289225809efd6fb6698"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "019aeeb3523112059e0ee7a859d337c0842f10af"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "b350169a3b2cc53d781541fe1bfbc0f00c978d185884da79b8330be8fb7aefeb"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "a3df0a08e799c3ca30e50ddb2fd2d76bdaa5921b079677b9a9fa5c4e8320362e8817d47dea1780fe78c3ad39f14af8e31b47425e56f7bc2488854934a6214a7b"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "7d886e5e840139386b5ead1e17a74e9028bfbf056c3fbb360499a35dc35425b7f9205e0fbb09664af3de0492db81a3cf"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "1e7a003849f33ff0bc27dd83a7ad43e08a5d63a830200d43a6dbe278240b706db43dbb4f64ce6c5c0cf90cd91fb9029f"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "cd407cfd4ef768daa0d753c7f07ca390eb12822e4c0305c0ef57d9eae255444f"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "73fb46551f9f13ef2378c529eb7332e13d3adde3da5b2898c1d279774fcdbbff771e4f093da5096cb194c3aa81003be9370bd6e375b6a1ee06565b6105395bb0"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310",
-          "type": "website"
-        },
-        {
-          "url": "https://central.sonatype.com/api/v1/publisher",
-          "type": "distribution-intake"
-        },
-        {
-          "url": "https://github.com/FasterXML/jackson-modules-java8/issues",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "http://github.com/FasterXML/jackson-modules-java8/jackson-datatype-jsr310",
           "type": "vcs"
         }
       ]
@@ -21385,7 +21385,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "41678750-2559-4021-86b0-f338cf0a2edf",
+      "bom-ref": "410ed4b9-0ba1-4ed5-bfbf-a9b7c1c33fc8",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24347,9 +24347,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.3.3",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.3.4",
       "name": "fast-xml-parser",
-      "version": "5.3.3",
+      "version": "5.3.4",
       "licenses": [
         {
           "license": {
@@ -24357,11 +24357,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.3.3",
+      "purl": "pkg:npm/fast-xml-parser@5.3.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.3.3"
+          "value": "fast-xml-parser@5.3.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26587,7 +26587,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5987e6dc-5d0e-495b-804d-3a06f3756821",
+      "bom-ref": "4afa70bf-8c5c-4655-aeaa-051b14f83c83",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29216,7 +29216,7 @@
       "dependsOn": []
     },
     {
-      "ref": "41678750-2559-4021-86b0-f338cf0a2edf",
+      "ref": "410ed4b9-0ba1-4ed5-bfbf-a9b7c1c33fc8",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -29252,7 +29252,7 @@
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.3.3",
+        "pkg:npm/fast-xml-parser@5.3.4",
         "pkg:npm/jquery-ui@1.14.1",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
@@ -29266,9 +29266,9 @@
       ]
     },
     {
-      "ref": "5987e6dc-5d0e-495b-804d-3a06f3756821",
+      "ref": "4afa70bf-8c5c-4655-aeaa-051b14f83c83",
       "dependsOn": [
-        "41678750-2559-4021-86b0-f338cf0a2edf"
+        "410ed4b9-0ba1-4ed5-bfbf-a9b7c1c33fc8"
       ]
     },
     {
@@ -30111,7 +30111,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.3.3",
+      "ref": "pkg:npm/fast-xml-parser@5.3.4",
       "dependsOn": [
         "pkg:npm/strnum@2.1.2"
       ]
@@ -31703,78 +31703,6 @@
           "versions": [
             {
               "version": "1.8.3",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2026-25128",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "ghsa"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 5.3,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L"
-        }
-      ],
-      "cwes": [
-        20,
-        248
-      ],
-      "description": "fast-xml-parser allows users to validate XML, parse XML to JS object, or build XML from JS object without C/C\u002B\u002B based libraries and no callback. In versions 4.3.6 through 5.3.3, a RangeError vulnerability exists in the numeric entity processing of fast-xml-parser when parsing XML with out-of-range entity code points (e.g., \u0060\u0026#9999999;\u0060 or \u0060\u0026#xFFFFFF;\u0060). This causes the parser to throw an uncaught exception, crashing any application that processes untrusted XML input. Version 5.3.4 fixes the issue.",
-      "recommendation": "Upgrade fast-xml-parser to version 5.3.4",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2026-25128"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2026-25128"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/commit/4e387f61c4a5cef792f6a2f42467013290bf95dc"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/releases/tag/v5.3.4"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/security/advisories/GHSA-37qj-frw5-hhjh"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25128"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2026-25128"
-        }
-      ],
-      "published": "2026-01-30T16:16:14Z",
-      "updated": "2026-01-30T16:16:14Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/fast-xml-parser@5.3.3",
-          "versions": [
-            {
-              "version": "5.3.3",
               "status": "affected"
             }
           ]

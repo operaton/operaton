@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.function.Consumer;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.form.FormField;
@@ -49,6 +50,8 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 import org.operaton.bpm.engine.variable.value.SerializableValue;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 
 /**
  * @author Tom Baeyens
@@ -225,29 +228,9 @@ public class DefaultFormHandler implements FormHandler {
       AbstractFormFieldType type = formTypes.parseFormPropertyType(formPropertyElement, bpmnParse);
       formPropertyHandler.setType(type);
 
-      String requiredText = formPropertyElement.attribute("required", "false");
-      Boolean required = bpmnParse.parseBooleanAttribute(requiredText);
-      if (required!=null) {
-        formPropertyHandler.setRequired(required);
-      } else {
-        bpmnParse.addError("attribute 'required' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}", formPropertyElement);
-      }
-
-      String readableText = formPropertyElement.attribute("readable", "true");
-      Boolean readable = bpmnParse.parseBooleanAttribute(readableText);
-      if (readable!=null) {
-        formPropertyHandler.setReadable(readable);
-      } else {
-        bpmnParse.addError("attribute 'readable' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}", formPropertyElement);
-      }
-
-      String writableText = formPropertyElement.attribute("writable", "true");
-      Boolean writable = bpmnParse.parseBooleanAttribute(writableText);
-      if (writable!=null) {
-        formPropertyHandler.setWritable(writable);
-      } else {
-        bpmnParse.addError("attribute 'writable' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}", formPropertyElement);
-      }
+      setFromBooleanFormProperty(formPropertyElement, bpmnParse, "required", FALSE, formPropertyHandler::setReadable);
+      setFromBooleanFormProperty(formPropertyElement, bpmnParse, "readable", TRUE, formPropertyHandler::setReadable);
+      setFromBooleanFormProperty(formPropertyElement, bpmnParse, "writable", TRUE, formPropertyHandler::setReadable);
 
       String variableName = formPropertyElement.attribute("variable");
       formPropertyHandler.setVariableName(variableName);
@@ -277,6 +260,20 @@ public class DefaultFormHandler implements FormHandler {
       }
     }
     formData.setFormProperties(formProperties);
+  }
+
+  private void setFromBooleanFormProperty (Element formPropertyElement,
+                                           BpmnParse bpmnParse,
+                                           String propertyName,
+                                           Boolean propertyDefaultValue,
+                                           Consumer<Boolean> setter) {
+    String requiredText = formPropertyElement.attribute(propertyName, propertyDefaultValue.toString());
+    Boolean attributeValue = bpmnParse.parseBooleanAttribute(requiredText);
+    if (attributeValue!=null) {
+      setter.accept(attributeValue);
+    } else {
+      bpmnParse.addError("attribute '%s' must be one of {on|yes|true|enabled|active|off|no|false|disabled|inactive}".formatted(propertyName), formPropertyElement);
+    }
   }
 
   protected void initializeFormFields(FormDataImpl taskFormData, ExecutionEntity execution) {

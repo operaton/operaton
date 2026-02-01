@@ -65,30 +65,7 @@ public abstract class AbstractAtomicOperationCaseExecutionComplete extends Abstr
         superCaseExecution.complete();
 
       } else if (superExecution != null) {
-        SubProcessActivityBehavior behavior = (SubProcessActivityBehavior) getActivityBehavior(superExecution);
-
-        try {
-          behavior.passOutputVariables(superExecution, execution);
-        } catch (RuntimeException e) {
-          LOG.completingSubCaseError(execution, e);
-          throw e;
-        } catch (Exception e) {
-          LOG.completingSubCaseError(execution, e);
-          throw LOG.completingSubCaseErrorException(execution, e);
-        }
-
-        // set sub case instance to null
-        superExecution.setSubCaseInstance(null);
-
-        try {
-          behavior.completed(superExecution);
-        } catch (RuntimeException e) {
-          LOG.completingSubCaseError(execution, e);
-          throw e;
-        } catch (Exception e) {
-          LOG.completingSubCaseError(execution, e);
-          throw LOG.completingSubCaseErrorException(execution, e);
-        }
+        completeSubProcessActivity(execution, superExecution);
       }
 
       execution.setSuperCaseExecution(null);
@@ -103,6 +80,33 @@ public abstract class AbstractAtomicOperationCaseExecutionComplete extends Abstr
       }
     }
 
+  }
+
+  private static void completeSubProcessActivity(CmmnExecution execution, PvmExecutionImpl superExecution) {
+    SubProcessActivityBehavior behavior = (SubProcessActivityBehavior) getActivityBehavior(superExecution);
+
+    try {
+      behavior.passOutputVariables(superExecution, execution);
+    } catch (RuntimeException e) {
+      LOG.completingSubCaseError(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.completingSubCaseError(execution, e);
+      throw LOG.completingSubCaseErrorException(execution, e);
+    }
+
+    // set sub case instance to null
+    superExecution.setSubCaseInstance(null);
+
+    try {
+      behavior.completed(superExecution);
+    } catch (RuntimeException e) {
+      LOG.completingSubCaseError(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.completingSubCaseError(execution, e);
+      throw LOG.completingSubCaseErrorException(execution, e);
+    }
   }
 
   protected abstract void triggerBehavior(CmmnActivityBehavior behavior, CmmnExecution execution);

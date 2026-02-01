@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.OutgoingExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-
+import org.springframework.lang.NonNull;
 
 /**
  * @author Tom Baeyens
@@ -60,27 +60,20 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
     execution.setTransitionsToTake(null);
 
     // check whether the current scope needs to be destroyed
-    if (execution.isScope() && activity.isScope()) {
-
-      if (!LegacyBehavior.destroySecondNonScope(execution)) {
-        if (execution.isConcurrent()) {
-          // legacy behavior
-          LegacyBehavior.destroyConcurrentScope(execution);
-        }
-        else {
-          propagatingExecution = execution.getParent();
-          LOG.debugDestroyScope(execution, propagatingExecution);
-          execution.destroy();
-          propagatingExecution.setActivity(execution.getActivity());
-          propagatingExecution.setTransition(execution.getTransition());
-          propagatingExecution.setActive(true);
-          execution.remove();
-        }
+    if (execution.isScope() && activity.isScope() && !LegacyBehavior.destroySecondNonScope(execution)) {
+      if (execution.isConcurrent()) {
+        // legacy behavior
+        LegacyBehavior.destroyConcurrentScope(execution);
       }
-
-    } else {
-      // activity is not scope => nothing to do
-      propagatingExecution = execution;
+      else {
+        propagatingExecution = execution.getParent();
+        LOG.debugDestroyScope(execution, propagatingExecution);
+        execution.destroy();
+        propagatingExecution.setActivity(execution.getActivity());
+        propagatingExecution.setTransition(execution.getTransition());
+        propagatingExecution.setActive(true);
+        execution.remove();
+      }
     }
 
     // take the specified transitions
@@ -94,39 +87,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
     else {
       propagatingExecution.inactivate();
 
-      List<OutgoingExecution> outgoingExecutions = new ArrayList<>();
-
-      for (int i = 0; i < transitionsToTake.size(); i++) {
-        PvmTransition transition = transitionsToTake.get(i);
-
-        PvmExecutionImpl scopeExecution = propagatingExecution.isScope() ?
-            propagatingExecution : propagatingExecution.getParent();
-
-        // reuse concurrent, propagating execution for first transition
-        PvmExecutionImpl concurrentExecution = null;
-        if (i == 0) {
-          concurrentExecution = propagatingExecution;
-        }
-        else {
-          concurrentExecution = scopeExecution.createConcurrentExecution();
-
-          if (i == 1 && !propagatingExecution.isConcurrent()) {
-            outgoingExecutions.remove(0);
-            // get a hold of the concurrent execution that replaced the scope propagating execution
-            PvmExecutionImpl replacingExecution = null;
-            for (PvmExecutionImpl concurrentChild : scopeExecution.getNonEventScopeExecutions())  {
-              if (concurrentChild != propagatingExecution) {
-                replacingExecution = concurrentChild;
-                break;
-              }
-            }
-
-            outgoingExecutions.add(new OutgoingExecution(replacingExecution, transitionsToTake.get(0)));
-          }
-        }
-
-        outgoingExecutions.add(new OutgoingExecution(concurrentExecution, transition));
-      }
+      List<OutgoingExecution> outgoingExecutions = collectOutgoingExecutions(transitionsToTake, propagatingExecution);
 
       // start executions in reverse order (order will be reversed again in command context with the effect that they are
       // actually be started in correct order :) )
@@ -137,6 +98,45 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
       }
     }
 
+  }
+
+  @NonNull
+  private static List<OutgoingExecution> collectOutgoingExecutions(List<PvmTransition> transitionsToTake,
+      PvmExecutionImpl propagatingExecution) {
+    List<OutgoingExecution> outgoingExecutions = new ArrayList<>();
+
+    for (int i = 0; i < transitionsToTake.size(); i++) {
+      PvmTransition transition = transitionsToTake.get(i);
+
+      PvmExecutionImpl scopeExecution = propagatingExecution.isScope() ?
+          propagatingExecution : propagatingExecution.getParent();
+
+      // reuse concurrent, propagating execution for first transition
+      PvmExecutionImpl concurrentExecution = null;
+      if (i == 0) {
+        concurrentExecution = propagatingExecution;
+      }
+      else {
+        concurrentExecution = scopeExecution.createConcurrentExecution();
+
+        if (i == 1 && !propagatingExecution.isConcurrent()) {
+          outgoingExecutions.remove(0);
+          // get a hold of the concurrent execution that replaced the scope propagating execution
+          PvmExecutionImpl replacingExecution = null;
+          for (PvmExecutionImpl concurrentChild : scopeExecution.getNonEventScopeExecutions())  {
+            if (concurrentChild != propagatingExecution) {
+              replacingExecution = concurrentChild;
+              break;
+            }
+          }
+
+          outgoingExecutions.add(new OutgoingExecution(replacingExecution, transitionsToTake.get(0)));
+        }
+      }
+
+      outgoingExecutions.add(new OutgoingExecution(concurrentExecution, transition));
+    }
+    return outgoingExecutions;
   }
 
   @Override

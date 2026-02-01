@@ -19,6 +19,9 @@ package org.operaton.bpm.engine.impl.runtime;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
+import org.springframework.lang.NonNull;
+
+import static java.util.Collections.emptyMap;
 
 public class CorrelationSet {
 
@@ -46,12 +49,14 @@ public class CorrelationSet {
     return businessKey;
   }
 
+  @NonNull
   public Map<String, Object> getCorrelationKeys() {
-    return correlationKeys;
+    return correlationKeys != null ? correlationKeys : emptyMap();
   }
 
+  @NonNull
   public Map<String, Object> getLocalCorrelationKeys() {
-    return localCorrelationKeys;
+    return localCorrelationKeys != null ? localCorrelationKeys : emptyMap();
   }
 
   public String getProcessInstanceId() {

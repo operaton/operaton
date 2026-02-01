@@ -63,7 +63,7 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
 
   protected AbstractHttpConnector(String connectorId) {
     super(connectorId);
-    connectionManager = ServiceLoaderUtil.loadSingleService(HttpClientConnectionManager.class);
+    connectionManager = new PoolingHttpClientConnectionManager();
     httpClient = createClient();
     charset = StandardCharsets.UTF_8;
   }

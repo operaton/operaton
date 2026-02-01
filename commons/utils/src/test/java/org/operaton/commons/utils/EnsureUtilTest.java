@@ -27,7 +27,8 @@ class EnsureUtilTest {
 
   @Test
   void ensureNotNull() {
-    String string = "string";
+    // given
+    var string = "string";
 
     assertThatCode(() -> EnsureUtil.ensureNotNull("string", string))
       .doesNotThrowAnyException();
@@ -42,6 +43,7 @@ class EnsureUtilTest {
 
   @Test
   void ensureParameterInstanceOfClass() {
+    // given
     Object string = "string";
 
     assertThatCode(() ->

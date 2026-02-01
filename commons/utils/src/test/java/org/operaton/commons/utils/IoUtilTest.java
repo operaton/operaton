@@ -25,8 +25,8 @@ import java.net.URL;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Sebastian Menski
@@ -76,18 +76,19 @@ public class IoUtilTest {
 
   @Test
   void getFileContentAsStream() {
-    InputStream stream = IoUtil.fileAsStream(TEST_FILE_NAME);
-    BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-    StringBuilder output = new StringBuilder();
-    String line;
-    try {
+    // given
+    var stream = IoUtil.fileAsStream(TEST_FILE_NAME);
+    var reader = new BufferedReader(new InputStreamReader(stream));
+    var output = new StringBuilder();
+
+    // when/then
+    assertThatCode(() -> {
+      String line;
       while((line = reader.readLine()) != null) {
         output.append(line);
       }
       assertThat(output).hasToString("This is a Test!");
-    } catch(Exception e) {
-      fail("Something went wrong while reading the input stream");
-    }
+    }).doesNotThrowAnyException();
   }
 
   @Test

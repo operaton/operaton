@@ -40,6 +40,7 @@ import static org.operaton.bpm.engine.impl.DefaultPriorityProvider.DEFAULT_PRIOR
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
+import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
 
 /**
  * Stub of the common parts of a Job. You will normally work with a subclass of
@@ -325,56 +326,56 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   protected void createFailedJobIncident() {
     final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    if (!processEngineConfiguration.isCreateIncidentOnFailedJobEnabled()) {
+      return;
+    }
 
-    if (processEngineConfiguration
-        .isCreateIncidentOnFailedJobEnabled()) {
+    // make sure job has an ID set:
+    if (id == null) {
+      id = processEngineConfiguration
+          .getIdGenerator()
+          .getNextId();
 
-      String incidentHandlerType = Incident.FAILED_JOB_HANDLER_TYPE;
+    }
 
-      // make sure job has an ID set:
-      if(id == null) {
-        id = processEngineConfiguration
-            .getIdGenerator()
-            .getNextId();
-
-      } else {
-        // check whether there exists already an incident
-        // for this job
-        List<Incident> failedJobIncidents = Context
-            .getCommandContext()
-            .getIncidentManager()
-            .findIncidentByConfigurationAndIncidentType(id, incidentHandlerType);
-
-        if (!failedJobIncidents.isEmpty()) {
-          // update the historic job log id in the historic incidents (if available)
-          for (Incident incident : failedJobIncidents) {
-            HistoricIncidentEntity historicIncidentEvent = Context
-                .getCommandContext()
-                .getHistoricIncidentManager()
-                .findHistoricIncidentById(incident.getId());
-            if (historicIncidentEvent != null) {
-              historicIncidentEvent.setHistoryConfiguration(getLastFailureLogId());
-              Context.getCommandContext().getDbEntityManager().merge(historicIncidentEvent);
-            }
-          }
-          return;
-        }
-
-      }
-
+    if (!existsIncidentForJob(FAILED_JOB_HANDLER_TYPE)) {
       IncidentContext incidentContext = createIncidentContext();
       incidentContext.setActivityId(getActivityId());
       incidentContext.setHistoryConfiguration(getLastFailureLogId());
       incidentContext.setFailedActivityId(getFailedActivityId());
 
-      IncidentHandling.createIncident(incidentHandlerType, incidentContext, exceptionMessage);
-
+      IncidentHandling.createIncident(FAILED_JOB_HANDLER_TYPE, incidentContext, exceptionMessage);
     }
+  }
+
+  private boolean existsIncidentForJob(String incidentHandlerType) {
+    // check whether there exists already an incident
+    // for this job
+    List<Incident> failedJobIncidents = Context
+        .getCommandContext()
+        .getIncidentManager()
+        .findIncidentByConfigurationAndIncidentType(id, incidentHandlerType);
+
+    if (!failedJobIncidents.isEmpty()) {
+      // update the historic job log id in the historic incidents (if available)
+      for (Incident incident : failedJobIncidents) {
+        HistoricIncidentEntity historicIncidentEvent = Context
+            .getCommandContext()
+            .getHistoricIncidentManager()
+            .findHistoricIncidentById(incident.getId());
+        if (historicIncidentEvent != null) {
+          historicIncidentEvent.setHistoryConfiguration(getLastFailureLogId());
+          Context.getCommandContext().getDbEntityManager().merge(historicIncidentEvent);
+        }
+      }
+      return true;
+    }
+    return false;
   }
 
   protected void removeFailedJobIncident(boolean incidentResolved) {
     IncidentContext incidentContext = createIncidentContext();
-    IncidentHandling.removeIncidents(Incident.FAILED_JOB_HANDLER_TYPE, incidentContext, incidentResolved);
+    IncidentHandling.removeIncidents(FAILED_JOB_HANDLER_TYPE, incidentContext, incidentResolved);
   }
 
   protected IncidentContext createIncidentContext() {

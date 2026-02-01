@@ -31,7 +31,7 @@ import org.operaton.spin.xml.SpinXmlDataFormatException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.mapping.Customer;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -54,24 +54,28 @@ class JaxBContextProviderTest {
 
     // using the custom jaxb context provider should fail with a JAXBException
     ((DomXmlDataFormat) DataFormats.xml()).setJaxBContextProvider(new EmptyContextProvider());
-    try {
-      spinWrapper = Spin.XML(objectToConvert);
-      spinWrapper.writeToWriter(new StringWriter());
-    } catch (SpinXmlDataFormatException e) {
-
-      // assert that there is a jaxb exception somewhere in the exception hierarchy
-      Set<Throwable> processedExceptions = new HashSet<>();
-      while (!processedExceptions.contains(e.getCause()) && e.getCause() != null) {
-        if (e.getCause() instanceof JAXBException) {
-          // happy path
-          return;
+    
+    // when/then
+    assertThatThrownBy(() -> {
+      var spinWrap = Spin.XML(objectToConvert);
+      spinWrap.writeToWriter(new StringWriter());
+    })
+      .isInstanceOf(SpinXmlDataFormatException.class)
+      .satisfies(e -> {
+        var exception = (SpinXmlDataFormatException) e;
+        // assert that there is a jaxb exception somewhere in the exception hierarchy
+        var processedExceptions = new HashSet<Throwable>();
+        var cause = exception.getCause();
+        while (!processedExceptions.contains(cause) && cause != null) {
+          if (cause instanceof JAXBException) {
+            // happy path - found JAXBException in cause hierarchy
+            return;
+          }
+          processedExceptions.add(cause);
+          cause = cause.getCause();
         }
-
-        processedExceptions.add(e.getCause());
-      }
-
-      fail("expected a JAXBException in the cause hierarchy of the spin exception");
-    }
+        throw new AssertionError("expected a JAXBException in the cause hierarchy of the spin exception");
+      });
 
   }
 

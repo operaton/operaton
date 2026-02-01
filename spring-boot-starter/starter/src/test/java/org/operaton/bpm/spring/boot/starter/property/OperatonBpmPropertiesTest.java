@@ -31,9 +31,9 @@ class OperatonBpmPropertiesTest {
     final String[] patterns = OperatonBpmProperties.initDeploymentResourcePattern();
 
     assertThat(patterns)
-            .hasSize(7)
-            .containsOnly("classpath*:**/*.bpmn", "classpath*:**/*.bpmn20.xml", "classpath*:**/*.dmn", "classpath*:**/*.dmn11.xml",
-      "classpath*:**/*.cmmn", "classpath*:**/*.cmmn10.xml", "classpath*:**/*.cmmn11.xml");
+        .hasSize(7)
+        .containsOnly("classpath*:**/*.bpmn", "classpath*:**/*.bpmn20.xml", "classpath*:**/*.dmn", "classpath*:**/*.dmn11.xml",
+            "classpath*:**/*.cmmn", "classpath*:**/*.cmmn10.xml", "classpath*:**/*.cmmn11.xml");
   }
 
   @Test
@@ -48,5 +48,20 @@ class OperatonBpmPropertiesTest {
     assertThatIllegalArgumentException().isThrownBy(() -> databaseProperty.setSchemaUpdate("foo"));
   }
 
+  @Test
+  void previewFeaturesEnabled_shouldBeFalseByDefault() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+
+    assertThat(properties.getPreviewFeaturesEnabled()).isFalse();
+  }
+
+  @Test
+  void previewFeaturesEnabled_shouldReflectAssignedValue() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+
+    properties.setPreviewFeaturesEnabled(Boolean.TRUE);
+
+    assertThat(properties.getPreviewFeaturesEnabled()).isTrue();
+  }
 
 }

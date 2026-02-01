@@ -19,6 +19,7 @@ package org.operaton.bpm.dmn.engine.impl.transform;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.operaton.bpm.dmn.engine.impl.DefaultDmnEngineConfiguration;
 import org.operaton.bpm.dmn.engine.impl.hitpolicy.DefaultHitPolicyHandlerRegistry;
 import org.operaton.bpm.dmn.engine.impl.spi.hitpolicy.DmnHitPolicyHandlerRegistry;
 import org.operaton.bpm.dmn.engine.impl.spi.transform.DmnElementTransformHandlerRegistry;
@@ -35,7 +36,11 @@ public class DefaultDmnTransformer implements DmnTransformer {
   protected List<DmnTransformListener> transformListeners = new ArrayList<>();
   protected DmnElementTransformHandlerRegistry elementTransformHandlerRegistry = new DefaultElementTransformHandlerRegistry();
   protected DmnDataTypeTransformerRegistry dataTypeTransformerRegistry = new DefaultDataTypeTransformerRegistry();
-  protected DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry();
+  protected DmnHitPolicyHandlerRegistry hitPolicyHandlerRegistry;
+
+  public DefaultDmnTransformer(DefaultDmnEngineConfiguration defaultDmnEngineConfiguration) {
+    hitPolicyHandlerRegistry = new DefaultHitPolicyHandlerRegistry(defaultDmnEngineConfiguration);
+  }
 
   @Override
   public DmnTransformFactory getTransformFactory() {

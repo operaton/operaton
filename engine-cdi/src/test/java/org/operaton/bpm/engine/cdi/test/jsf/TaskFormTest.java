@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.cdi.test.jsf;
 
 import java.util.Set;
-import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.spi.Bean;
 import jakarta.enterprise.inject.spi.BeanManager;
 

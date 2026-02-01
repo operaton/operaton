@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.service;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;

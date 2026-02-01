@@ -888,11 +888,12 @@ public class RuntimeServiceTest {
               .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
               .objectTypeName("unexisting").create()));
     var processInstanceId = processInstance.getId();
+    List<String> variableNames = List.of("broken");
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
-    variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), false);
+    variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), variableNames, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
@@ -900,7 +901,7 @@ public class RuntimeServiceTest {
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
 
-    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId, List.of("broken"), true))
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId, variableNames, true))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
   }
@@ -929,11 +930,12 @@ public class RuntimeServiceTest {
               .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
               .objectTypeName("unexisting").create()));
     var processInstanceId = processInstance.getId();
+    List<String> variableNames = List.of("broken");
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
-    variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), false);
+    variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), variableNames, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
@@ -941,7 +943,7 @@ public class RuntimeServiceTest {
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
 
-    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId, List.of("broken"), true))
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId, variableNames, true))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Cannot deserialize object");
   }
@@ -2750,6 +2752,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("java:S5961")
   void testBasicVariableOperations() {
 
     Date now = new Date();

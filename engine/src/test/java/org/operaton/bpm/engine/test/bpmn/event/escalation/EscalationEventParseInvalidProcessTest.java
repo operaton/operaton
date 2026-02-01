@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Parse an invalid process definition and assert the error message.
@@ -81,19 +81,21 @@ public class EscalationEventParseInvalidProcessTest {
 
   @TestTemplate
   void testParseInvalidProcessDefinition() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected: " + expectedErrorMessage);
-    } catch (ParseException e) {
-      assertExceptionMessageContainsText(e, expectedErrorMessage);
-      List<Problem> errors = e.getResourceReports().get(0).getErrors();
-      for (int i = 0; i < bpmnElementIds.length; i++) {
-        assertThat(errors.get(i).getMainElementId()).isEqualTo(bpmnElementIds[i]);
-      }
-    }
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .satisfies(e -> {
+        ParseException pe = (ParseException) e;
+        assertExceptionMessageContainsText(pe, expectedErrorMessage);
+        List<Problem> errors = pe.getResourceReports().get(0).getErrors();
+        for (int i = 0; i < bpmnElementIds.length; i++) {
+          assertThat(errors.get(i).getMainElementId()).isEqualTo(bpmnElementIds[i]);
+        }
+      });
   }
 
   public void assertExceptionMessageContainsText(Exception e, String expectedMessage) {

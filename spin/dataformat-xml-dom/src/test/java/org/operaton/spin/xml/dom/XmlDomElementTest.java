@@ -29,6 +29,7 @@ import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.SpinXmlElementException;
+import org.xmlunit.assertj.XmlAssert;
 
 import static org.operaton.spin.Spin.S;
 import static org.operaton.spin.Spin.XML;
@@ -676,7 +677,7 @@ class XmlDomElementTest {
 
   @Test
   void canWriteToString() {
-    assertThat(element.toString()).isXmlEqualTo(EXAMPLE_XML);
+    XmlAssert.assertThat(element.toString()).isEqualTo(EXAMPLE_XML);
   }
 
   @Test
@@ -684,7 +685,7 @@ class XmlDomElementTest {
     StringWriter writer = new StringWriter();
     element.writeToWriter(writer);
     String value = writer.toString();
-    assertThat(value).isXmlEqualTo(EXAMPLE_XML);
+    XmlAssert.assertThat(value).isEqualTo(EXAMPLE_XML);
   }
 
   // text content

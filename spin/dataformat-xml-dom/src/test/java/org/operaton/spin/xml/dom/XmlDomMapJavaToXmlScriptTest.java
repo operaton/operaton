@@ -22,6 +22,7 @@ import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.xml.XmlTestUtil;
 import org.operaton.spin.xml.mapping.Order;
+import org.xmlunit.assertj.XmlAssert;
 
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
@@ -43,7 +44,7 @@ public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest {
     //different timezone
     String exampleValidationXmlWoTimezone = XmlTestUtil.removeTimeZone(EXAMPLE_VALIDATION_XML);
     xml = XmlTestUtil.removeTimeZone(xml);
-    assertThat(xml).isXmlEqualTo(exampleValidationXmlWoTimezone);
+    XmlAssert.assertThat(xml).isEqualTo(exampleValidationXmlWoTimezone);
   }
 
   @Test

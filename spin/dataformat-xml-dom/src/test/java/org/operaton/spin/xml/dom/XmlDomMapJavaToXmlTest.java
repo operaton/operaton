@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.spin.xml.XmlTestUtil;
 import org.operaton.spin.xml.mapping.NonXmlRootElementType;
 import org.operaton.spin.xml.mapping.Order;
+import org.xmlunit.assertj.XmlAssert;
 
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
@@ -38,7 +39,7 @@ class XmlDomMapJavaToXmlTest {
     //different timezone
     String exampleValidationXmlWoTimezone = XmlTestUtil.removeTimeZone(EXAMPLE_VALIDATION_XML);
     orderAsString = XmlTestUtil.removeTimeZone(orderAsString);
-    assertThat(orderAsString).isXmlEqualTo(exampleValidationXmlWoTimezone);
+    XmlAssert.assertThat(orderAsString).isEqualTo(exampleValidationXmlWoTimezone);
   }
 
   @Test

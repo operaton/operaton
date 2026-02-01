@@ -18,8 +18,10 @@ package org.operaton.connect.httpclient.impl.util;
 
 import java.util.Map;
 
-import org.apache.hc.client5.http.config.RequestConfig.Builder;
+import org.apache.hc.client5.http.config.ConnectionConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
 
+import org.operaton.connect.httpclient.impl.ConnectionConfigOption;
 import org.operaton.connect.httpclient.impl.HttpConnectorLogger;
 import org.operaton.connect.httpclient.impl.HttpLogger;
 import org.operaton.connect.httpclient.impl.RequestConfigOption;
@@ -31,7 +33,19 @@ public final class ParseUtil {
   private ParseUtil() {
   }
 
-  public static void parseConfigOptions(Map<String, Object> configOptions, Builder configBuilder) {
+  public static void parseConfigOptions(Map<String, Object> configOptions, ConnectionConfig.Builder configBuilder) {
+    for (ConnectionConfigOption option : ConnectionConfigOption.values()) {
+      try {
+        if (configOptions.containsKey(option.getName())) {
+          option.apply(configBuilder, configOptions.get(option.getName()));
+        }
+      } catch (ClassCastException e) {
+        throw LOG.invalidConfigurationOption(option.getName(), e);
+      }
+    }
+  }
+
+  public static void parseConfigOptions(Map<String, Object> configOptions, RequestConfig.Builder configBuilder) {
     for (RequestConfigOption option : RequestConfigOption.values()) {
       try {
         if (configOptions.containsKey(option.getName())) {

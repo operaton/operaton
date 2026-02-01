@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.mail;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,18 +23,17 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import jakarta.activation.DataHandler;
-import jakarta.mail.MessagingException;
+
+import ch.martinelli.oss.testcontainers.mailpit.Address;
+import ch.martinelli.oss.testcontainers.mailpit.Message;
 import jakarta.mail.internet.MimeMessage;
 
 import org.junit.jupiter.api.Test;
-import org.subethamail.wiser.WiserMessage;
 
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.commons.utils.CollectionUtil;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Joram Barrez
@@ -49,11 +46,11 @@ class EmailSendTaskTest extends EmailTestCase {
   void testSimpleTextMail() {
     runtimeService.startProcessInstanceByKey("simpleTextOnly");
 
-    List<WiserMessage> messages = wiser.getMessages();
+    List<Message> messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
 
-    WiserMessage message = messages.get(0);
-    assertEmailSend(message, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
+    String rawMessage = getRawMessage(messages.get(0));
+    assertEmailSend(rawMessage, false, "Hello Kermit!", "This a text only e-mail.", "operaton@localhost",
             Arrays.asList("kermit@operaton.org"), null);
   }
 
@@ -62,14 +59,14 @@ class EmailSendTaskTest extends EmailTestCase {
   void testSimpleTextMailMultipleRecipients() {
     runtimeService.startProcessInstanceByKey("simpleTextOnlyMultipleRecipients");
 
-    // 3 recipients == 3 emails in wiser with different receivers
-    List<WiserMessage> messages = wiser.getMessages();
-    assertThat(messages).hasSize(3);
+    // in Mailpit we have 1 email (just 1 email was sent by BPMN workflow) with 3 recipients
+    List<Message> messages = getReceivedEmails();
+    assertThat(messages).hasSize(1);
 
     // sort recipients for easy assertion
     List<String> recipients = new ArrayList<>();
-    for (WiserMessage message : messages) {
-      recipients.add(message.getEnvelopeReceiver());
+    for (Address receiver : messages.get(0).to()) {
+      recipients.add(receiver.address());
     }
     Collections.sort(recipients);
 
@@ -95,11 +92,11 @@ class EmailSendTaskTest extends EmailTestCase {
 
     runtimeService.startProcessInstanceByKey("textMailExpressions", vars);
 
-    List<WiserMessage> messages = wiser.getMessages();
+    List<Message> messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
 
-    WiserMessage message = messages.get(0);
-    assertEmailSend(message, false, subject, "Hello " + recipientName + ", this is an e-mail",
+    String rawMessage = getRawMessage(messages.get(0));
+    assertEmailSend(rawMessage, false, subject, "Hello " + recipientName + ", this is an e-mail",
             sender, Arrays.asList(recipient), null);
   }
 
@@ -108,13 +105,16 @@ class EmailSendTaskTest extends EmailTestCase {
   void testCcAndBcc() {
     runtimeService.startProcessInstanceByKey("ccAndBcc");
 
-    List<WiserMessage> messages = wiser.getMessages();
-    assertEmailSend(messages.get(0), false, "Hello world", "This is the content", "operaton@localhost",
+    List<Message> messages = getReceivedEmails();
+    Message emailMsg = messages.get(0);
+    String rawMessage = getRawMessage(emailMsg);
+    assertEmailSend(rawMessage, false, "Hello world", "This is the content", "operaton@localhost",
             Arrays.asList("kermit@operaton.org"), Arrays.asList("fozzie@operaton.org"));
 
     // Bcc is not stored in the header (obviously)
-    // so the only way to verify the bcc, is that there are three messages send.
-    assertThat(messages).hasSize(3);
+    // so the only way to verify the bcc, is that the messae has the bcc field in Mailpit message.
+    assertThat(emailMsg.bcc()).hasSize(1);
+    assertThat(emailMsg.bcc().get(0).address()).isEqualTo("mispiggy@operaton.org");
   }
 
   @Deployment
@@ -122,9 +122,10 @@ class EmailSendTaskTest extends EmailTestCase {
   void testHtmlMail() {
     runtimeService.startProcessInstanceByKey("htmlMail", CollectionUtil.singletonMap("gender", "male"));
 
-    List<WiserMessage> messages = wiser.getMessages();
+    List<Message> messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
-    assertEmailSend(messages.get(0), true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", Arrays.asList("kermit@operaton.org"), null);
+    String rawMessage = getRawMessage(messages.get(0));
+    assertEmailSend(rawMessage, true, "Test", "Mr. <b>Kermit</b>", "operaton@localhost", Arrays.asList("kermit@operaton.org"), null);
   }
 
   @Deployment
@@ -148,56 +149,15 @@ class EmailSendTaskTest extends EmailTestCase {
 
     runtimeService.startProcessInstanceByKey("sendMailExample", vars);
 
-    List<WiserMessage> messages = wiser.getMessages();
+    List<Message> messages = getReceivedEmails();
     assertThat(messages).hasSize(1);
 
-    WiserMessage message = messages.get(0);
-    MimeMessage mimeMessage = message.getMimeMessage();
+    String rawMessage = getRawMessage(messages.get(0));
+    MimeMessage mimeMessage = createMimeMessageFromRawData(rawMessage);
 
     assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo("Your order " + orderId + " has been shipped");
     assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
     assertThat(mimeMessage.getHeader("To", null)).contains(recipient);
-  }
-
-  // Helper
-
-  private void assertEmailSend(WiserMessage emailMessage, boolean htmlMail, String subject, String message,
-          String from, List<String> to, List<String> cc) {
-    try {
-      MimeMessage mimeMessage = emailMessage.getMimeMessage();
-
-      if (htmlMail) {
-        assertThat(mimeMessage.getContentType()).contains("multipart/mixed");
-      } else {
-        assertThat(mimeMessage.getContentType()).contains("text/plain");
-      }
-
-      assertThat(mimeMessage.getHeader("Subject", null)).isEqualTo(subject);
-      assertThat(mimeMessage.getHeader("From", null)).isEqualTo(from);
-      assertThat(getMessage(mimeMessage)).contains(message);
-
-      for (String t : to) {
-        assertThat(mimeMessage.getHeader("To", null)).contains(t);
-      }
-
-      if (cc != null) {
-        for (String c : cc) {
-          assertThat(mimeMessage.getHeader("Cc", null)).contains(c);
-        }
-      }
-
-    } catch (jakarta.mail.MessagingException | IOException e) {
-      fail(e.getMessage());
-    }
-
-  }
-
-  protected String getMessage(MimeMessage mimeMessage) throws MessagingException, IOException {
-    DataHandler dataHandler = mimeMessage.getDataHandler();
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    dataHandler.writeTo(baos);
-    baos.flush();
-    return baos.toString();
   }
 
 }

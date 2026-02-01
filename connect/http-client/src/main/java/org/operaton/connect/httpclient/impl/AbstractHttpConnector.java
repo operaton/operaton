@@ -19,6 +19,7 @@ package org.operaton.connect.httpclient.impl;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -31,15 +32,21 @@ import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.classic.methods.HttpTrace;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
+import org.apache.hc.client5.http.config.ConnectionConfig;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.config.RequestConfig.Builder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.BasicHttpClientConnectionManager;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.InputStreamEntity;
 import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 
+import org.apache.hc.core5.util.Timeout;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.connect.httpclient.HttpBaseRequest;
 import org.operaton.connect.httpclient.HttpResponse;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
@@ -51,15 +58,21 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
 
   protected CloseableHttpClient httpClient;
   protected final Charset charset;
+  private Map<String, Object> connectionConfigOptions;
+  private final HttpClientConnectionManager connectionManager;
 
   protected AbstractHttpConnector(String connectorId) {
     super(connectorId);
+    connectionManager = new PoolingHttpClientConnectionManager();
     httpClient = createClient();
     charset = StandardCharsets.UTF_8;
   }
 
   protected CloseableHttpClient createClient() {
-    return HttpClients.createSystem();
+    return HttpClients.custom()
+      .useSystemProperties()
+      .setConnectionManager(connectionManager)
+      .build();
   }
 
   public CloseableHttpClient getHttpClient() {
@@ -106,6 +119,8 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
    */
   protected <T extends BasicClassicHttpRequest> T createHttpRequest(Q request) {
     T httpRequest = createHttpRequestBase(request);
+
+    applyConfig(connectionManager, connectionConfigOptions);
 
     applyConfig(httpRequest, request.getConfigOptions());
 
@@ -183,5 +198,34 @@ public abstract class AbstractHttpConnector<Q extends HttpBaseRequest<Q, R>, R e
     }
   }
 
+  private <T extends HttpClientConnectionManager> void applyConfig(T connectionManager, Map<String, Object> configOptions) {
+    ConnectionConfig.Builder configBuilder = ConnectionConfig.custom();
+    if (configOptions != null && !configOptions.isEmpty()) {
+      ParseUtil.parseConfigOptions(configOptions, configBuilder);
+    }
+    ConnectionConfig connectionConfig = configBuilder.build();
+    if (connectionManager instanceof BasicHttpClientConnectionManager cm) {
+      cm.setConnectionConfig(connectionConfig);
+    } else if (connectionManager instanceof PoolingHttpClientConnectionManager cm) {
+      cm.setDefaultConnectionConfig(connectionConfig);
+    } else {
+      throw LOG.unknownConnectionManagerType(connectionManager.getClass());
+    }
+  }
 
+  /**
+   * @since 1.1
+   */
+  public AbstractConnector<Q, R> configOption(String field, Object value) {
+    if (field == null || field.isEmpty() || value == null) {
+      LOG.ignoreConfig(field, value);
+    } else {
+      if (connectionConfigOptions == null) {
+        connectionConfigOptions = new HashMap<>();
+      }
+      connectionConfigOptions.put(field, value);
+    }
+
+    return this;
+  }
 }

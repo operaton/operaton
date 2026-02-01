@@ -255,6 +255,13 @@
         <scope>test</scope>
       </dependency>
 
+      <dependency>
+        <groupId>ch.martinelli.oss</groupId>
+        <artifactId>testcontainers-mailpit</artifactId>
+        <version>1.2.0</version>
+        <scope>test</scope>
+      </dependency>
+
       <!-- Other dependencies -->
       <dependency>
         <groupId>org.camunda.feel</groupId>

@@ -16,6 +16,7 @@
  */
 package org.operaton.connect.httpclient.impl;
 
+import org.apache.hc.client5.http.io.HttpClientConnectionManager;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.ConnectorResponseException;
 import org.operaton.connect.impl.ConnectLogger;
@@ -28,7 +29,6 @@ public class HttpConnectorLogger extends ConnectLogger {
 
   public void ignoreHeader(String field, String value) {
     logInfo("002", "Ignoring header with name '{}' and value '{}'", field, value);
-
   }
 
   public void payloadIgnoredForHttpMethod(String method) {
@@ -64,4 +64,7 @@ public class HttpConnectorLogger extends ConnectLogger {
         + " Response: {}", statusCode, connectorResponse));
   }
 
+  public <T extends HttpClientConnectionManager> ConnectorRequestException unknownConnectionManagerType(Class<T> connectionManagerClass) {
+    return new ConnectorRequestException(exceptionMessage("011", "Unknown connection manager type: {}", connectionManagerClass.getName()));
+  }
 }

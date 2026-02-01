@@ -49,13 +49,8 @@ public class IoUtil {
    * @return the input stream as byte[].
    */
   public static byte[] inputStreamAsByteArray(InputStream inputStream) {
-    try (var os = new ByteArrayOutputStream(); inputStream) {
-      byte[] buffer = new byte[16 * 1024];
-      int read;
-      while ((read = inputStream.read(buffer)) > 0) {
-        os.write(buffer, 0, read);
-      }
-      return os.toByteArray();
+    try {
+      return inputStream.readAllBytes();
     } catch (IOException e) {
       throw LOG.unableToReadInputStream(e);
     }
@@ -66,16 +61,14 @@ public class IoUtil {
    *
    * @param reader the Reader
    * @return the Reader content as String
+   * @deprecated Do not use. This method will be removed.
    */
+  @Deprecated(since = "1.1", forRemoval = true)
   public static String readerAsString(Reader reader) {
-    StringBuilder buffer = new StringBuilder();
-    char[] chars = new char[16 * 1024];
-    int numCharsRead;
     try {
-      while ((numCharsRead = reader.read(chars, 0, chars.length)) != -1) {
-        buffer.append(chars, 0, numCharsRead);
-      }
-      return buffer.toString();
+      StringWriter writer = new StringWriter();
+      reader.transferTo(writer);
+      return writer.toString();
     } catch (IOException e) {
       throw LOG.unableToReadFromReader(e);
     }

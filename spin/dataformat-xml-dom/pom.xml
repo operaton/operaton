@@ -90,6 +90,12 @@
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.xmlunit</groupId>
+      <artifactId>xmlunit-assertj</artifactId>
+      <version>2.11.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <profiles>
     <!-- check for api differences between latest minor release -->

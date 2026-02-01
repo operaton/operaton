@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Joram Barrez
  */
-public class EmailServiceTaskTest extends EmailTestCase {
+class EmailServiceTaskTest extends EmailTestCase {
 
   @Deployment
   @Test

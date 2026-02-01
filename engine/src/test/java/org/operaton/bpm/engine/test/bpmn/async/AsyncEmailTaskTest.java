@@ -21,10 +21,8 @@ import java.util.List;
 
 import ch.martinelli.oss.testcontainers.mailpit.Message;
 import org.junit.jupiter.api.Test;
-import org.subethamail.wiser.WiserMessage;
 
 import org.operaton.bpm.engine.test.Deployment;
-import org.operaton.bpm.engine.test.bpmn.mail.EmailServiceTaskTest;
 import org.operaton.bpm.engine.test.bpmn.mail.EmailTestCase;
 
 import static org.assertj.core.api.Assertions.assertThat;

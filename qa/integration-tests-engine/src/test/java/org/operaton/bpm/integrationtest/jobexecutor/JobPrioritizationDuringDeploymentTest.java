@@ -63,8 +63,8 @@ public class JobPrioritizationDuringDeploymentTest extends AbstractFoxPlatformIn
   @Test
   @Order(1)
   void testPriorityOnTimerStartEvent() {
-    // when/then
     assertThatCode(() -> deployer.deploy("timerStart"))
+      .withFailMessage("deployment should be successful, i.e. bean for timer start event should get resolved")
       .doesNotThrowAnyException();
   }
 

@@ -223,8 +223,7 @@ class StartAuthorizationTest {
 
 	    // Authentication should not be done. So an unidentified user should also be able to start the process
 	    identityService.setAuthenticatedUserId("unauthorizedUser");
-	    assertThatCode(() -> runtimeService.startProcessInstanceByKey("potentialStarter"))
-        .doesNotThrowAnyException();
+      runtimeService.startProcessInstanceByKey("potentialStarter");
 
 	    // check with an authorized user obviously it should be no problem starting the process
 	    identityService.setAuthenticatedUserId("user1");

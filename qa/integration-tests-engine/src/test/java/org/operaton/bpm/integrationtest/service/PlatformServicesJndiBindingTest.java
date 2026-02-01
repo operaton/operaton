@@ -41,15 +41,15 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
 
   @Test
   void testProcessApplicationServiceBinding() {
-    // when/then
     assertThatCode(() -> InitialContext.doLookup(testConstants.getProcessApplicationService()))
+      .withFailMessage("Failed to lookup ProcessApplicationService '%s'".formatted(TestConstants.PROCESS_APPLICATION_SERVICE_JNDI_NAME))
       .doesNotThrowAnyException();
   }
 
   @Test
   void testProcessEngineServiceBinding() {
-    // when/then
     assertThatCode(() -> InitialContext.doLookup(testConstants.getEngineService()))
+      .withFailMessage("Failed to lookup ProcessEngineService '%s'".formatted(TestConstants.PROCESS_ENGINE_SERVICE_JNDI_NAME))
       .doesNotThrowAnyException();
   }
 

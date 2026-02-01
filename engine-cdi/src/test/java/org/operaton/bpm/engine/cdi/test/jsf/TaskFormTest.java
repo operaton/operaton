@@ -38,35 +38,31 @@ class TaskFormTest extends CdiProcessEngineTestCase {
 
   @Test
   void testTaskFormInjectable() {
-
     BeanManager beanManager = getBeanManager();
-
-    // given
     Set<Bean<?>> taskForm = beanManager.getBeans(TaskForm.class);
 
-    // when/then
     assertThatCode(() -> {
       Bean<? extends Object> bean = beanManager.resolve(taskForm);
       assertThat(bean).isNotNull();
-    }).doesNotThrowAnyException();
+    })
+      .withFailMessage("Injection of TaskForm is ambiguous.")
+      .doesNotThrowAnyException();
 
-    // given
     Set<Bean<?>> foxTaskForm = beanManager.getBeans(FoxTaskForm.class);
-
-    // when/then
     assertThatCode(() -> {
       Bean<? extends Object> bean = beanManager.resolve(foxTaskForm);
       assertThat(bean).isNotNull();
-    }).doesNotThrowAnyException();
+    })
+      .withFailMessage("Injection of FoxTaskForm is ambiguous.")
+      .doesNotThrowAnyException();
 
-    // given
     Set<Bean<?>> operatonTaskForm = beanManager.getBeans(OperatonTaskForm.class);
-
-    // when/then
     assertThatCode(() -> {
       Bean<? extends Object> bean = beanManager.resolve(operatonTaskForm);
       assertThat(bean).isNotNull();
-    }).doesNotThrowAnyException();
+    })
+      .withFailMessage("Injection of OperatonTaskForm is ambiguous.")
+      .doesNotThrowAnyException();
 
   }
 

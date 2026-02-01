@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
@@ -58,8 +59,8 @@ public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {
         "}";
 
     // when/then
-    assertThatCode(() -> runtimeService.startProcessInstanceByKey("jsonpath-process",
-        Variables.createVariables().putValue("data", json)))
+    VariableMap variables = Variables.createVariables().putValue("data", json);
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("jsonpath-process", variables))
       .doesNotThrowAnyException();
   }
 

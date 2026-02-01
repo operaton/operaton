@@ -167,13 +167,14 @@ public class RedeploymentProcessApplicationTest {
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
 
-    // when/then
+    // when - second deployment
     var deploymentBuilder = repositoryService
         .createDeployment()
         .name(DEPLOYMENT_NAME)
         .addDeploymentResources(deployment1.getId());
 
     assertThatThrownBy(deploymentBuilder::deploy)
+        .withFailMessage("Deployment2 should throw ProcessEngineException due to mandatory historyTimeToLive")
         .isInstanceOf(ProcessEngineException.class);
 
     // cleanup

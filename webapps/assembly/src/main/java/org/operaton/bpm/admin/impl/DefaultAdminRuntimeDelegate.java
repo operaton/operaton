@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.admin.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.concurrent.ConcurrentHashMap;
 import org.operaton.bpm.admin.AdminRuntimeDelegate;
 import org.operaton.bpm.admin.plugin.spi.AdminPlugin;
 import org.operaton.bpm.engine.ProcessEngine;
@@ -46,7 +46,7 @@ public class DefaultAdminRuntimeDelegate extends AbstractAppRuntimeDelegate<Admi
 
   public DefaultAdminRuntimeDelegate() {
     super(AdminPlugin.class);
-    this.commandExecutors = new HashMap<>();
+    this.commandExecutors = new ConcurrentHashMap<>();
   }
 
   @Override

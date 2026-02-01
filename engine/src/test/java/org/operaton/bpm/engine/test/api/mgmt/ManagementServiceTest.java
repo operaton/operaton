@@ -145,13 +145,15 @@ class ManagementServiceTest {
         .singleResult();
 
     assertThat(timerJob).isNotNull();
-    assertThat(timerJob.getExceptionMessage()).isNotNull();
-    testRule.assertTextPresent("This is an exception thrown from scriptTask", timerJob.getExceptionMessage());
+    assertThat(timerJob.getExceptionMessage())
+        .isNotNull()
+        .contains("This is an exception thrown from scriptTask");
 
     // Get the full stacktrace using the managementService
     String exceptionStack = managementService.getJobExceptionStacktrace(timerJob.getId());
-    assertThat(exceptionStack).isNotNull();
-    testRule.assertTextPresent("This is an exception thrown from scriptTask", exceptionStack);
+    assertThat(exceptionStack)
+        .isNotNull()
+        .contains("This is an exception thrown from scriptTask");
   }
 
   @Test

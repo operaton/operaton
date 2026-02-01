@@ -895,18 +895,18 @@ public class RuntimeServiceTest {
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
-    try {
-      runtimeService.getVariablesTyped(processInstance.getId());
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    // given
+    var processInstanceId = processInstance.getId();
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
 
     // this does not
-    try {
-      runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), true);
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId, List.of("broken"), true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
   }
 
   @Deployment(resources = {
@@ -940,18 +940,18 @@ public class RuntimeServiceTest {
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
-    try {
-      runtimeService.getVariablesLocalTyped(processInstance.getId());
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    // given
+    var processInstanceId2 = processInstance.getId();
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId2))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
 
     // this does not
-    try {
-      runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), true);
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId2, List.of("broken"), true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
 
   }
 

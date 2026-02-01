@@ -33,6 +33,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 /**
@@ -270,13 +271,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(businessProcess.getVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
-    try {
-      businessProcess.setVariableLocal("aVariableName", "aVariableValue");
-      fail("exception expected!");
-    }
-    catch(ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
-    }
+    // when/then
+    assertThatThrownBy(() -> businessProcess.setVariableLocal("aVariableName", "aVariableValue"))
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
@@ -302,13 +300,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(businessProcess.getCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
-    try {
-      businessProcess.setVariableLocal("aVariableName", "aVariableValue");
-      fail("exception expected!");
-    }
-    catch(ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
-    }
+    // when/then
+    assertThatThrownBy(() -> businessProcess.setVariableLocal("aVariableName", "aVariableValue"))
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 
@@ -357,13 +352,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
-    try {
-      businessProcess.setVariableLocal("aVariableName", "aVariableValue");
-      fail("exception expected!");
-    }
-    catch(ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
-    }
+    // when/then
+    assertThatThrownBy(() -> businessProcess.setVariableLocal("aVariableName", "aVariableValue"))
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
 
     // the variable cache is still empty
     assertThat(businessProcess.getAndClearVariableLocalCache()).isEqualTo(Collections.emptyMap());
@@ -389,13 +381,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
 
     // set a variable - this should fail before the process is started
-    try {
-      businessProcess.setVariableLocal("aVariableName", "aVariableValue");
-      fail("exception expected!");
-    }
-    catch(ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
-    }
+    // when/then
+    assertThatThrownBy(() -> businessProcess.setVariableLocal("aVariableName", "aVariableValue"))
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("Cannot set a local cached variable: neither a Task nor an Execution is associated.");
 
     // the variable cache is still empty
     assertThat(businessProcess.getAndClearCachedLocalVariableMap()).isEqualTo(Collections.emptyMap());
@@ -418,14 +407,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot flush variable cache in absence of an association:
-    try {
-      businessProcess.flushVariableCache();
-      fail("exception expected!");
-
-    } catch (ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("Cannot flush variable cache: neither a Task nor an Execution is associated.");
-
-    }
+    // when/then
+    assertThatThrownBy(businessProcess::flushVariableCache)
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("Cannot flush variable cache: neither a Task nor an Execution is associated.");
 
     businessProcess.startProcessByKey("businessProcessBeanTest");
 

@@ -1470,12 +1470,10 @@ class CaseCallActivityTest extends CmmnTest {
     runtimeService.setVariable(processInstance.getId(), "globalVariable", "42");
     var beforeSecondCallActivityTaskId = taskService.createTaskQuery().singleResult().getId();
 
-    try {
-      taskService.complete(beforeSecondCallActivityTaskId);
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot resolve identifier 'globalVariable'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> taskService.complete(beforeSecondCallActivityTaskId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot resolve identifier 'globalVariable'");
   }
 
   @Deployment(resources = {

@@ -685,17 +685,14 @@ class RepositoryServiceTest {
 
   @Test
   void testGetDecisionRequirementsDiagramByInvalidId() {
-    try {
-      repositoryService.getDecisionRequirementsDiagram("invalid");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("no deployed decision requirements definition found with id 'invalid'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> repositoryService.getDecisionRequirementsDiagram("invalid"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no deployed decision requirements definition found with id 'invalid'");
 
-    try {
-      repositoryService.getDecisionRequirementsDiagram(null);
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("decisionRequirementsDefinitionId is null", e.getMessage());
-    }
+    assertThatThrownBy(() -> repositoryService.getDecisionRequirementsDiagram(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("decisionRequirementsDefinitionId is null");
   }
 
   @Test

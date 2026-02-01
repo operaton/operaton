@@ -40,7 +40,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
   private ProcessDefinitionRestService resource;
@@ -114,14 +114,10 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     processEngineConfiguration.setQueryMaxResultsLimit(10);
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryStatistics(uriInfo, 0, 11);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("Max results limit of 10 exceeded!");
-    }
+    // when/then
+    assertThatThrownBy(() -> resource.queryStatistics(uriInfo, 0, 11))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("Max results limit of 10 exceeded!");
   }
 
   @Test
@@ -130,14 +126,10 @@ class ProcessDefinitionRestServiceTest extends AbstractCockpitPluginTest {
     processEngineConfiguration.setQueryMaxResultsLimit(10);
     identityService.setAuthenticatedUserId("foo");
 
-    try {
-      // when
-      resource.queryStatistics(uriInfo, null, null);
-      fail("Exception expected!");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e).hasMessage("An unbound number of results is forbidden!");
-    }
+    // when/then
+    assertThatThrownBy(() -> resource.queryStatistics(uriInfo, null, null))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessage("An unbound number of results is forbidden!");
   }
 
   @Test

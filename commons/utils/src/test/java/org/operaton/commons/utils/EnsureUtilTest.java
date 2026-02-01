@@ -29,11 +29,8 @@ class EnsureUtilTest {
   void ensureNotNull() {
     String string = "string";
 
-    try {
-      EnsureUtil.ensureNotNull("string", string);
-    } catch(IllegalArgumentException e) {
-      fail("Not expected the following exception: ", e);
-    }
+    assertThatCode(() -> EnsureUtil.ensureNotNull("string", string))
+      .doesNotThrowAnyException();
   }
 
   @Test
@@ -47,12 +44,10 @@ class EnsureUtilTest {
   void ensureParameterInstanceOfClass() {
     Object string = "string";
 
-    try{
+    assertThatCode(() -> {
       assertThat(EnsureUtil.ensureParamInstanceOf("string", string, String.class))
         .isInstanceOf(String.class);
-    } catch(IllegalArgumentException e) {
-      fail("Not expected the following exception: ", e);
-    }
+    }).doesNotThrowAnyException();
   }
 
   @Test

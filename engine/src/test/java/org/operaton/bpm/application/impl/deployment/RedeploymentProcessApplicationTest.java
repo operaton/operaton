@@ -44,7 +44,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -166,31 +166,24 @@ public class RedeploymentProcessApplicationTest {
           .deploy();
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
-    try {
 
-      // when - second deployment
-      deployment2 = repositoryService
-          .createDeployment()
-          .name(DEPLOYMENT_NAME)
-          .addDeploymentResources(deployment1.getId())
-          .deploy();
+    // when - second deployment
+    var deploymentBuilder = repositoryService
+        .createDeployment()
+        .name(DEPLOYMENT_NAME)
+        .addDeploymentResources(deployment1.getId());
 
-      fail("The second deployment should have thrown an exception due to mandatory enforcement of historyTimeToLive");
-    } catch (Exception e) {
-      // then
-      assertThat(e)
-          .withFailMessage("Deployment2 should throw ProcessEngineException due to mandatory historyTimeToLive")
-          .isInstanceOf(ProcessEngineException.class);
-    } finally {
+    assertThatThrownBy(deploymentBuilder::deploy)
+        .withFailMessage("Deployment2 should throw ProcessEngineException due to mandatory historyTimeToLive")
+        .isInstanceOf(ProcessEngineException.class);
 
-      // cleanup
-      if (deployment1 != null) {
-        deploymentsToCleanup.add(deployment1);
-      }
+    // cleanup
+    if (deployment1 != null) {
+      deploymentsToCleanup.add(deployment1);
+    }
 
-      if (deployment2 != null) {
-        deploymentsToCleanup.add(deployment2);
-      }
+    if (deployment2 != null) {
+      deploymentsToCleanup.add(deployment2);
     }
   }
 

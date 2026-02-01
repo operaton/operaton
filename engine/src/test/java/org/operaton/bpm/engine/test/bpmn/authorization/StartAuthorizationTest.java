@@ -36,7 +36,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -223,12 +222,7 @@ class StartAuthorizationTest {
 
 	    // Authentication should not be done. So an unidentified user should also be able to start the process
 	    identityService.setAuthenticatedUserId("unauthorizedUser");
-	    try {
-	      runtimeService.startProcessInstanceByKey("potentialStarter");
-
-	    }  catch (Exception e) {
-        fail("No StartAuthorizationException expected, %s caught.".formatted(e.getClass().getName()));
-	    }
+      runtimeService.startProcessInstanceByKey("potentialStarter");
 
 	    // check with an authorized user obviously it should be no problem starting the process
 	    identityService.setAuthenticatedUserId("user1");

@@ -881,32 +881,29 @@ public class RuntimeServiceTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testGetVariablesTypedDeserialize() {
-
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess",
         Variables.createVariables()
           .putValue("broken", Variables.serializedObjectValue("broken")
               .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
               .objectTypeName("unexisting").create()));
+    var processInstanceId = processInstance.getId();
+    List<String> variableNames = List.of("broken");
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
-    variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), false);
+    variablesTyped = runtimeService.getVariablesTyped(processInstance.getId(), variableNames, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
-    try {
-      runtimeService.getVariablesTyped(processInstance.getId());
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
 
-    // this does not
-    try {
-      runtimeService.getVariablesTyped(processInstance.getId(), List.of("broken"), true);
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesTyped(processInstanceId, variableNames, true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
   }
 
   @Deployment(resources = {
@@ -932,27 +929,23 @@ public class RuntimeServiceTest {
           .putValue("broken", Variables.serializedObjectValue("broken")
               .serializationDataFormat(Variables.SerializationDataFormats.JAVA)
               .objectTypeName("unexisting").create()));
+    var processInstanceId = processInstance.getId();
+    List<String> variableNames = List.of("broken");
 
     // this works
     VariableMap variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
-    variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), false);
+    variablesTyped = runtimeService.getVariablesLocalTyped(processInstance.getId(), variableNames, false);
     assertThat(variablesTyped.<ObjectValue>getValueTyped("broken")).isNotNull();
 
     // this does not
-    try {
-      runtimeService.getVariablesLocalTyped(processInstance.getId());
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
 
-    // this does not
-    try {
-      runtimeService.getVariablesLocalTyped(processInstance.getId(), List.of("broken"), true);
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot deserialize object", e.getMessage());
-    }
-
+    assertThatThrownBy(() -> runtimeService.getVariablesLocalTyped(processInstanceId, variableNames, true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot deserialize object");
   }
 
   @SuppressWarnings("unchecked")
@@ -2759,6 +2752,7 @@ public class RuntimeServiceTest {
 
   @Deployment
   @Test
+  @SuppressWarnings("java:S5961")
   void testBasicVariableOperations() {
 
     Date now = new Date();

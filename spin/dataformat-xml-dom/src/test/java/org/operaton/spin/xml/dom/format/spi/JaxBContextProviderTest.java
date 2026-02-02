@@ -60,23 +60,9 @@ class JaxBContextProviderTest {
       var spinWrap = Spin.XML(objectToConvert);
       spinWrap.writeToWriter(new StringWriter());
     })
+      .withFailMessage("expected a JAXBException in the cause hierarchy of the spin exception")
       .isInstanceOf(SpinXmlDataFormatException.class)
-      .satisfies(e -> {
-        var exception = (SpinXmlDataFormatException) e;
-        // assert that there is a jaxb exception somewhere in the exception hierarchy
-        var processedExceptions = new HashSet<Throwable>();
-        var cause = exception.getCause();
-        while (!processedExceptions.contains(cause) && cause != null) {
-          if (cause instanceof JAXBException) {
-            // happy path - found JAXBException in cause hierarchy
-            return;
-          }
-          processedExceptions.add(cause);
-          cause = cause.getCause();
-        }
-        throw new AssertionError("expected a JAXBException in the cause hierarchy of the spin exception");
-      });
-
+      .hasRootCauseInstanceOf(JAXBException.class);
   }
 
   @AfterEach

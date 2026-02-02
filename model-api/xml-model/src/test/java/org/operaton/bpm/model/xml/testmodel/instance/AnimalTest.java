@@ -315,7 +315,6 @@ public class AnimalTest extends TestModelTest {
     assertThat(tweety.getGender()).isNull();
 
     // gender is required, so the model is invalid without
-    // when/then
     assertThatThrownBy(this::validateModel)
       .isInstanceOf(ModelValidationException.class);
 

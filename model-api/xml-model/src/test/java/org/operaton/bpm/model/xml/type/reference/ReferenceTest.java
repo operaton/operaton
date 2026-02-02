@@ -200,7 +200,6 @@ public class ReferenceTest extends TestModelTest {
     assertThat(referenceTargetElements.removeAll(flightPartners)).isTrue();
     assertThat(referenceTargetElements).isEmpty();
 
-    // when/then
     assertThatThrownBy(() -> referenceTargetElements.retainAll(flightPartners))
       .isInstanceOf(UnsupportedModelOperationException.class);
 

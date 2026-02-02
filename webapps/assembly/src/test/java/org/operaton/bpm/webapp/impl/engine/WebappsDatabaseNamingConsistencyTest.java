@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.fail;
 
 public class WebappsDatabaseNamingConsistencyTest {
 
@@ -43,8 +44,8 @@ public class WebappsDatabaseNamingConsistencyTest {
     // when scanning all mapping files for lowercase column names
     var errorMessageBuilder = new StringBuilder();
     var pattern = Pattern.compile(COLUMN_NAME_REGEX);
-    
-    assertThatCode(() -> {
+
+    try {
       for (String scannedFolder : SCANNED_FOLDERS) {
         URL resource = getClass().getClassLoader().getResource(scannedFolder);
         if (resource == null) {
@@ -71,8 +72,9 @@ public class WebappsDatabaseNamingConsistencyTest {
           }
         }
       }
-    }).as("Unable to find test resource for test " + getClass().getName())
-      .doesNotThrowAnyException();
+    } catch (IOException e) {
+      throw new RuntimeException("Unable to find test resource for test " + getClass().getName() + "\n" + e.getMessage());
+    }
     
     // then don't expect any results
     var errorMessage = errorMessageBuilder.toString();

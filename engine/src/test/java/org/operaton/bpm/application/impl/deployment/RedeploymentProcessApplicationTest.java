@@ -167,7 +167,7 @@ public class RedeploymentProcessApplicationTest {
     // given
     processEngineConfiguration.setEnforceHistoryTimeToLive(true);
 
-    // given
+    // when - second deployment
     var deploymentBuilder = repositoryService
         .createDeployment()
         .name(DEPLOYMENT_NAME)

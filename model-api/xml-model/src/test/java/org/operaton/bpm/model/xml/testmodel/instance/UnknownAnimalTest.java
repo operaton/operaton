@@ -128,7 +128,6 @@ class UnknownAnimalTest {
     friendRelationshipDefinition.setId("friend-relationship");
     friendRelationshipDefinition.setAttributeValue("animalRef", flipper.getAttributeValue("id"));
 
-    // when/then
     assertThatThrownBy(() -> wanda.addChildElement(friendRelationshipDefinition))
       .isInstanceOf(ModelException.class);
 

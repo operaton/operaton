@@ -88,7 +88,9 @@ public class IoUtilTest {
         output.append(line);
       }
       assertThat(output).hasToString("This is a Test!");
-    }).doesNotThrowAnyException();
+    })
+      .withFailMessage("Something went wrong while reading the input stream")
+      .doesNotThrowAnyException();
   }
 
   @Test

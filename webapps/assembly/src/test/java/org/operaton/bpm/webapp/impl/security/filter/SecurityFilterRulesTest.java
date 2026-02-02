@@ -39,7 +39,7 @@ import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
 import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *
@@ -64,12 +64,13 @@ class SecurityFilterRulesTest {
 
   public void initSecurityFilterRulesTest(String applicationPath) {
     this.applicationPath = applicationPath;
-    assertThatCode(() -> {
+    try {
       try (InputStream is = new FileInputStream(FILTER_RULES_FILE)) {
         filterRules = FilterRules.load(is, applicationPath);
       }
-    }).as("Could not load security filter rules from " + FILTER_RULES_FILE)
-      .doesNotThrowAnyException();
+    } catch (IOException e) {
+      fail("Could not load security filter rules from " + FILTER_RULES_FILE, e);
+    }
 
   }
 

@@ -146,7 +146,7 @@ public class UpgradeTestExtension extends ProcessEngineExtension {
     ProcessInstance instance = processInstanceQuery().singleResult();
 
     if (instance == null) {
-      throw new RuntimeException("There is no process instance for scenario " + getBusinessKey());
+      throw new IllegalStateException("There is no process instance for scenario " + getBusinessKey());
     }
 
     return instance;
@@ -159,7 +159,7 @@ public class UpgradeTestExtension extends ProcessEngineExtension {
         .singleResult();
 
     if (historicProcessInstance == null) {
-      throw new RuntimeException("There is no historic process instance for scenario " + getBusinessKey());
+      throw new IllegalStateException("There is no historic process instance for scenario " + getBusinessKey());
     }
 
     return historicProcessInstance;
@@ -197,7 +197,7 @@ public class UpgradeTestExtension extends ProcessEngineExtension {
     CaseInstance instance = caseInstanceQuery().singleResult();
 
     if (instance == null) {
-      throw new RuntimeException("There is no case instance for scenario " + getBusinessKey());
+      throw new IllegalStateException("There is no case instance for scenario " + getBusinessKey());
     }
 
     return instance;

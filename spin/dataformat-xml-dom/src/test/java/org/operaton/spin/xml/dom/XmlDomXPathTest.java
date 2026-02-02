@@ -22,6 +22,8 @@ import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXPathException;
 import org.operaton.spin.xml.SpinXPathQuery;
@@ -48,22 +50,33 @@ class XmlDomXPathTest {
     elementWithDefaultNamespace = S("<root xmlns=\"http://operaton.com/example\" xmlns:bar=\"http://operaton.org\" xmlns:foo=\"http://operaton.com\"><foo:child id=\"child\"><bar:a id=\"a\"/><foo:b id=\"b\"/><a id=\"c\"/></foo:child></root>");
   }
 
-  @Test
-  void canNotQueryDocumentAsElement() {
-    SpinXPathQuery pathQuery = element.xPath("/");
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Document, /",
+      "Attribute, /root/child/@id",
+      "Non existing element, /root/nonExisting"
+  })
+  void canNotQueryAsElement(String name, String expression) {
+    SpinXPathQuery pathQuery = element.xPath(expression);
     assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::element);
+  }
+
+
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Document, /",
+      "Element, /root/child/",
+      "Non existing attribute, /root/child/@nonExisting"
+  })
+  void canNotQueryAsAttribute(String name, String expression) {
+    SpinXPathQuery pathQuery = element.xPath(expression);
+    assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::attribute);
   }
 
   @Test
   void canNotQueryDocumentAsElementList() {
     SpinXPathQuery pathQuery = element.xPath("/");
     assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::elementList);
-  }
-
-  @Test
-  void canNotQueryDocumentAsAttribute() {
-    SpinXPathQuery pathQuery = element.xPath("/");
-    assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::attribute);
   }
 
   @Test
@@ -102,18 +115,6 @@ class XmlDomXPathTest {
   }
 
   @Test
-  void canNotQueryElement() {
-    SpinXPathQuery pathQuery = element.xPath("/root/nonExisting");
-    assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::element);
-  }
-
-  @Test
-  void canNotQueryElementAsAttribute() {
-    SpinXPathQuery pathQuery = element.xPath("/root/child/");
-    assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::attribute);
-  }
-
-  @Test
   void canQueryElementList() {
     SpinList<SpinXmlElement> childs = element.xPath("/root/child/a").elementList();
     assertThat(childs).hasSize(2);
@@ -129,18 +130,6 @@ class XmlDomXPathTest {
   void canQueryAttribute() {
     SpinXmlAttribute attribute = element.xPath("/root/child/@id").attribute();
     assertThat(attribute.value()).isEqualTo("child");
-  }
-
-  @Test
-  void canNotQueryAttribute() {
-    SpinXPathQuery pathQuery = element.xPath("/root/child/@nonExisting");
-    assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::attribute);
-  }
-
-  @Test
-  void canNotQueryAttributeAsElement() {
-    SpinXPathQuery pathQuery = element.xPath("/root/child/@id");
-    assertThatExceptionOfType(SpinXPathException.class).isThrownBy(pathQuery::element);
   }
 
   @Test

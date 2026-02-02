@@ -17,11 +17,10 @@
 package org.operaton.bpm.engine.test.bpmn.mail;
 
 import java.util.*;
+import jakarta.mail.internet.MimeMessage;
 
 import ch.martinelli.oss.testcontainers.mailpit.Address;
 import ch.martinelli.oss.testcontainers.mailpit.Message;
-import jakarta.mail.internet.MimeMessage;
-
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.test.Deployment;

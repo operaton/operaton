@@ -23,11 +23,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jakarta.mail.internet.MimeMessage;
 
 import ch.martinelli.oss.testcontainers.mailpit.Address;
 import ch.martinelli.oss.testcontainers.mailpit.Message;
-import jakarta.mail.internet.MimeMessage;
-
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.test.Deployment;

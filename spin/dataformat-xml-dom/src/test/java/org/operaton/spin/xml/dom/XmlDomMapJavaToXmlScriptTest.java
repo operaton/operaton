@@ -17,16 +17,15 @@
 package org.operaton.spin.xml.dom;
 
 import org.junit.jupiter.api.Test;
+import org.xmlunit.assertj.XmlAssert;
 
 import org.operaton.spin.impl.test.Script;
 import org.operaton.spin.impl.test.ScriptTest;
 import org.operaton.spin.xml.XmlTestUtil;
 import org.operaton.spin.xml.mapping.Order;
-import org.xmlunit.assertj.XmlAssert;
 
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;
 import static org.operaton.spin.xml.XmlTestConstants.createExampleOrder;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
 
 public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest {

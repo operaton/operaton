@@ -17,8 +17,6 @@
 package org.operaton.spin.xml.dom.format.spi;
 
 import java.io.StringWriter;
-import java.util.HashSet;
-import java.util.Set;
 import jakarta.xml.bind.JAXBException;
 
 import org.junit.jupiter.api.AfterEach;
@@ -54,12 +52,9 @@ class JaxBContextProviderTest {
 
     // using the custom jaxb context provider should fail with a JAXBException
     ((DomXmlDataFormat) DataFormats.xml()).setJaxBContextProvider(new EmptyContextProvider());
-    
+
     // when/then
-    assertThatThrownBy(() -> {
-      var spinWrap = Spin.XML(objectToConvert);
-      spinWrap.writeToWriter(new StringWriter());
-    })
+    assertThatThrownBy(() -> Spin.XML(objectToConvert))
       .withFailMessage("expected a JAXBException in the cause hierarchy of the spin exception")
       .isInstanceOf(SpinXmlDataFormatException.class)
       .hasRootCauseInstanceOf(JAXBException.class);

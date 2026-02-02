@@ -71,6 +71,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.wildfly.core</groupId>
       <artifactId>wildfly-subsystem-test-framework</artifactId>
       <version>30.0.0.Final</version>

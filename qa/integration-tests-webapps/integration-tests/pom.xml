@@ -16,6 +16,13 @@
         (e.g. set to "${project.build.directory}/selenium-screenshots");
         no screenshots created if not set
    -->
+
+  <properties>
+    <wildfly.container.adapter.groupId>org.wildfly.arquillian</wildfly.container.adapter.groupId>
+    <wildfly.container.adapter.version>5.1.0.Final</wildfly.container.adapter.version>
+    <version.arquillian>1.9.3.Final</version.arquillian>
+  </properties>
+
   <dependencies>
     <!-- set shrinkwrap artifacts -->
     <dependency>
@@ -97,5 +104,86 @@
       <groupId>jakarta.ws.rs</groupId>
       <artifactId>jakarta.ws.rs-api</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!--TODO:  make profile later-->
+    <dependency>
+      <!-- make sure this comes after runtime in the reactor build -->
+      <groupId>org.operaton.bpm.qa</groupId>
+      <artifactId>operaton-qa-wildfly-runtime</artifactId>
+      <version>${project.version}</version>
+      <scope>provided</scope>
+      <type>pom</type>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly.arquillian</groupId>
+      <artifactId>wildfly-arquillian-container-managed</artifactId>
+      <version>${wildfly.container.adapter.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly.arquillian</groupId>
+      <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
+      <version>${wildfly.container.adapter.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <!-- Copy relevant wars to target so that they can be accessed from Unittests directly -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.9.0</version>
+        <executions>
+          <execution>
+            <id>copy-war</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.operaton.bpm.example</groupId>
+                  <artifactId>operaton-example-invoice</artifactId>
+                  <version>${project.version}</version>
+                  <type>war</type>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <destFileName>operaton-example-invoice.war</destFileName>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.operaton.bpm.webapp</groupId>
+                  <artifactId>operaton-webapp-jboss</artifactId>
+                  <version>${project.version}</version>
+                  <type>war</type>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <destFileName>operaton-webapp.war</destFileName>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.operaton.bpm</groupId>
+                  <artifactId>operaton-engine-rest</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>wildfly</classifier>
+                  <type>war</type>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                  <destFileName>operaton-engine-rest.war</destFileName>
+                  <overWrite>true</overWrite>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

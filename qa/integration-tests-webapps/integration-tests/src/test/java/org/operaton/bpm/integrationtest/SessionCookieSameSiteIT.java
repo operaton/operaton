@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +27,8 @@ import org.junit.jupiter.api.Timeout;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
+@SuppressWarnings("java:S5960")
+class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
   void createClient() {
@@ -37,23 +38,23 @@ class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
   @Test
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
-  void shouldCheckPresenceOfProperties() {
+  void shouldCheckPresenceOfSameSiteProperties() {
     // when
-    // Send GET request and return the Response
     HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(200);
-    assertThat(isCookieHeaderValuePresent("HttpOnly", response)).isTrue();
-    assertThat(isCookieHeaderValuePresent("Secure", response)).isFalse();
+    assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
   }
 
   protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<String> response) {
     List<String> values = response.getHeaders().get("Set-Cookie");
 
-    for (Object value : values) {
-      if (value.toString().startsWith("JSESSIONID=")) {
-        return value.toString().contains(expectedHeaderValue);
+    if (values != null) {
+      for (String value : values) {
+        if (value.startsWith("JSESSIONID=")) {
+          return value.contains(expectedHeaderValue);
+        }
       }
     }
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
 
 import java.util.Collection;
 import java.util.List;

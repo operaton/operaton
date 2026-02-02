@@ -14,51 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+package org.operaton.bpm.integrationtest;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Timeout;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("java:S5960")
-class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
+class ErrorPageIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
   void createClient() {
-    preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
   @Test
-  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
-  void shouldCheckPresenceOfSameSiteProperties() {
+  void shouldCheckNonFoundResponse() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(appBasePath + "nonexisting").asString();
 
     // then
-    assertThat(response.getStatus()).isEqualTo(200);
-    assertThat(isCookieHeaderValuePresent("SameSite=Lax", response)).isTrue();
-  }
-
-  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<String> response) {
-    List<String> values = response.getHeaders().get("Set-Cookie");
-
-    if (values != null) {
-      for (String value : values) {
-        if (value.startsWith("JSESSIONID=")) {
-          return value.contains(expectedHeaderValue);
-        }
-      }
-    }
-
-    return false;
+    assertThat(response.getStatus()).isEqualTo(404);
+    assertThat(response.getHeaders().get("Content-Type").get(0)).startsWith("text/html");
+    String responseEntity = response.getBody();
+    assertThat(responseEntity)
+            .contains("Operaton")
+            .contains("Not Found");
   }
 
 }

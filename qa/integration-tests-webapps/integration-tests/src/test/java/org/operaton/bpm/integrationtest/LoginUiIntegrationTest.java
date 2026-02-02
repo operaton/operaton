@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
 
 import java.net.URI;
 import java.time.Duration;
@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-public class LoginIT extends AbstractWebappUiIntegrationTest {
+public class LoginUiIntegrationTest extends AbstractWebappUiIntegrationTest {
 
   protected WebDriverWait wait;
 

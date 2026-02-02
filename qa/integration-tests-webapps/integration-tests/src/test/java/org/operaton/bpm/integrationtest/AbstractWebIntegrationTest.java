@@ -14,8 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
 
+import java.io.File;
+import java.net.URL;
 import java.util.List;
 import jakarta.ws.rs.core.MediaType;
 
@@ -23,8 +25,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.HttpResponse;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.container.test.api.OperateOnDeployment;
+import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.junit5.ArquillianExtension;
+import org.jboss.arquillian.test.api.ArquillianResource;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +45,8 @@ import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
  * @author Daniel Meyer
  * @author Roman Smirnov
  */
+@ExtendWith(ArquillianExtension.class)
+@RunAsClient
 public abstract class AbstractWebIntegrationTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractWebIntegrationTest.class);
@@ -55,6 +67,32 @@ public abstract class AbstractWebIntegrationTest {
 
   protected String csrfToken;
   protected String sessionId;
+
+  @Deployment(name = "engine-rest", testable = false, order = 1)
+  public static WebArchive createRestEngineDeployment() {
+    return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/operaton-engine-rest.war"))
+            .addAsWebInfResource(new File("src/test/resources/jboss-deployment-structure.xml"), "jboss-deployment-structure.xml");
+  }
+
+  @Deployment(name = "invoice-example", testable = false, order = 2)
+  public static WebArchive createInvoiceExampleDeployment() {
+    return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/operaton-example-invoice.war"))
+            .addAsWebInfResource(new File("src/test/resources/jboss-deployment-structure.xml"), "jboss-deployment-structure.xml");
+  }
+
+  @Deployment(name = "operaton", testable = false, order = 3)
+  public static WebArchive createWebappsDeployment() {
+    return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/operaton-webapp.war"))
+            .addAsWebInfResource(new File("src/test/resources/jboss-deployment-structure.xml"), "jboss-deployment-structure.xml");
+  }
+
+  @ArquillianResource
+  @OperateOnDeployment("engine-rest")
+  public static URL restApiBaseUrl;
+
+  @ArquillianResource
+  @OperateOnDeployment("operaton")
+  public static URL appBaseUrl;
 
   @BeforeAll
   public static void setUpClass() {
@@ -89,7 +127,7 @@ public abstract class AbstractWebIntegrationTest {
   public void createClient(String ctxPath) {
     testProperties = new TestProperties();
 
-    appBasePath = testProperties.getApplicationPath("/" + ctxPath);
+    appBasePath = appBaseUrl.toString();
     LOGGER.info("Connecting to application {}", appBasePath);
   }
 

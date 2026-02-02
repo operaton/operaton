@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.util;
+package org.operaton.bpm.integrationtest.util;
 
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
@@ -27,7 +27,7 @@ import jakarta.ws.rs.core.Response;
 import com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider;
 import org.glassfish.jersey.client.ClientConfig;
 
-import org.operaton.bpm.TestProperties;
+import org.operaton.bpm.integrationtest.TestProperties;
 import org.operaton.bpm.engine.rest.dto.identity.UserCredentialsDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserDto;
 import org.operaton.bpm.engine.rest.dto.identity.UserProfileDto;

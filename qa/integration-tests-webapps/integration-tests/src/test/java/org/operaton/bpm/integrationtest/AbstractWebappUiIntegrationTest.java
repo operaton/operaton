@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
 
 import java.net.URI;
 
@@ -28,7 +28,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-import org.operaton.bpm.util.SeleniumScreenshotExtension;
+import org.operaton.bpm.integrationtest.util.SeleniumScreenshotExtension;
 
 public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {
 
@@ -78,7 +78,7 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   void createClient() {
     preventRaceConditions();
     createClient(getWebappCtxPath());
-    appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
+    appUrl = appBaseUrl.toString();
   }
 
   @AfterAll

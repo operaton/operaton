@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
 
 import java.util.concurrent.TimeUnit;
 import jakarta.ws.rs.core.MediaType;
@@ -57,7 +57,7 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldRejectModifyingRequest() {
     // given
-    String baseUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
+    String baseUrl = appBaseUrl.toString();
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
 
     // when

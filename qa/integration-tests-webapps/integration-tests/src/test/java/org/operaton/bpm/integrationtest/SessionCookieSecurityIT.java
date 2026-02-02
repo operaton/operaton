@@ -14,35 +14,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm;
+package org.operaton.bpm.integrationtest;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SuppressWarnings("java:S5960")
-class ErrorPageIT extends AbstractWebIntegrationTest {
+class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
 
   @BeforeEach
   void createClient() {
+    preventRaceConditions();
     createClient(getWebappCtxPath());
   }
 
   @Test
-  void shouldCheckNonFoundResponse() {
+  @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
+  void shouldCheckPresenceOfProperties() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + "nonexisting").asString();
+    // Send GET request and return the Response
+    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
 
     // then
-    assertThat(response.getStatus()).isEqualTo(404);
-    assertThat(response.getHeaders().get("Content-Type").get(0)).startsWith("text/html");
-    String responseEntity = response.getBody();
-    assertThat(responseEntity)
-            .contains("Operaton")
-            .contains("Not Found");
+    assertThat(response.getStatus()).isEqualTo(200);
+    assertThat(isCookieHeaderValuePresent("HttpOnly", response)).isTrue();
+    assertThat(isCookieHeaderValuePresent("Secure", response)).isFalse();
+  }
+
+  protected boolean isCookieHeaderValuePresent(String expectedHeaderValue, HttpResponse<String> response) {
+    List<String> values = response.getHeaders().get("Set-Cookie");
+
+    for (Object value : values) {
+      if (value.toString().startsWith("JSESSIONID=")) {
+        return value.toString().contains(expectedHeaderValue);
+      }
+    }
+
+    return false;
   }
 
 }

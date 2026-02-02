@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.rest;
+package org.operaton.bpm.integrationtest.rest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +33,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
-import org.operaton.bpm.AbstractWebIntegrationTest;
+import org.operaton.bpm.integrationtest.AbstractWebIntegrationTest;
 
 import static jakarta.ws.rs.core.HttpHeaders.ACCEPT;
 import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
@@ -59,7 +59,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    HttpResponse<JsonNode> response = Unirest.post(appBasePath + FETCH_AND_LOCK_PATH)
+    HttpResponse<JsonNode> response = Unirest.post(restApiBaseUrl + FETCH_AND_LOCK_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(payload)
@@ -77,7 +77,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
       requestBody.put("workerId", "aWorkerId");
       requestBody.put("asyncResponseTimeout", 1000);
 
-      HttpResponse<String> response = Unirest.post(appBasePath + FETCH_AND_LOCK_PATH)
+      HttpResponse<String> response = Unirest.post(restApiBaseUrl + FETCH_AND_LOCK_PATH)
               .header(CONTENT_TYPE, APPLICATION_JSON)
               .body(requestBody)
               .asString();

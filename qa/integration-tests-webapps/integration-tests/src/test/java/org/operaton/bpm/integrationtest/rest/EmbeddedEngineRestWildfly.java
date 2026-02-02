@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.rest;
+package org.operaton.bpm.integrationtest.rest;
 
 import org.jboss.arquillian.container.test.api.Deployer;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -29,8 +29,10 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import org.operaton.bpm.rest.beans.CustomProcessEngineProvider;
-import org.operaton.bpm.rest.beans.CustomRestApplication;
+import org.operaton.bpm.integrationtest.rest.beans.CustomProcessEngineProvider;
+import org.operaton.bpm.integrationtest.rest.beans.CustomRestApplication;
+
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -42,15 +44,13 @@ public class EmbeddedEngineRestWildfly {
   @ArquillianResource
   private Deployer deployer;
 
-  @Deployment(managed=false, name = EMBEDDED_ENGINE_REST)
-  public static WebArchive createDeployment() {
-    JavaArchive[] engineRestClasses = getEngineRestClasses();
-    return ShrinkWrap.create(WebArchive.class, "embedded-engine-rest.war")
-        .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-        .addAsWebInfResource("jboss-deployment-structure.xml")
-        .addAsManifestResource("org.operaton.bpm.engine.rest.spi.ProcessEngineProvider", "META-INF/services/org.operaton.bpm.engine.rest.spi.ProcessEngineProvider")
-        .addAsLibraries(engineRestClasses)
-        .addClasses(CustomRestApplication.class, CustomProcessEngineProvider.class);
+  @Deployment(name = EMBEDDED_ENGINE_REST, managed = false)
+  public static WebArchive createRestEngineDeployment() {
+    return ShrinkWrap.createFromZipFile(WebArchive.class, new File("target/operaton-engine-rest.war"))
+            .addAsWebInfResource(new File("src/test/resources/jboss-deployment-structure.xml"), "jboss-deployment-structure.xml")
+            .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+            .addAsManifestResource(new File("src/test/resources/META-INF/services/org.operaton.bpm.engine.rest.spi.ProcessEngineProvider"), "META-INF/services/org.operaton.bpm.engine.rest.spi.ProcessEngineProvider")
+            .addClasses(CustomRestApplication.class, CustomProcessEngineProvider.class);
   }
 
   @Test

@@ -14,29 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.rest.beans;
+package org.operaton.bpm.integrationtest.rest.beans;
 
+import java.util.HashSet;
 import java.util.Set;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 
-import org.operaton.bpm.BpmPlatform;
-import org.operaton.bpm.engine.ProcessEngine;
-import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
+import org.operaton.bpm.engine.rest.impl.OperatonRestResources;
 
-public class CustomProcessEngineProvider implements ProcessEngineProvider {
-
-  @Override
-  public ProcessEngine getDefaultProcessEngine() {
-    return BpmPlatform.getDefaultProcessEngine();
-  }
+@ApplicationPath("/")
+public class CustomRestApplication extends Application {
 
   @Override
-  public ProcessEngine getProcessEngine(String name) {
-    return BpmPlatform.getProcessEngineService().getProcessEngine(name);
-  }
+  public Set<Class<?>> getClasses() {
+    Set<Class<?>> classes = new HashSet<>();
 
-  @Override
-  public Set<String> getProcessEngineNames() {
-    return BpmPlatform.getProcessEngineService().getProcessEngineNames();
+    // add all operaton engine rest resources (or just add those that you actually need).
+    classes.addAll(OperatonRestResources.getResourceClasses());
+
+    // mandatory
+    classes.addAll(OperatonRestResources.getConfigurationClasses());
+
+    return classes;
   }
 
 }

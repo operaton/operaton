@@ -125,15 +125,17 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
           // get a hold of the concurrent execution that replaced the scope propagating execution
           PvmExecutionImpl replacingExecution = null;
           for (PvmExecutionImpl concurrentChild : scopeExecution.getNonEventScopeExecutions())  {
-            if (concurrentChild != propagatingExecution && concurrentChild != concurrentExecution) {
+            if (concurrentChild != propagatingExecution) {
               replacingExecution = concurrentChild;
               break;
             }
           }
 
-          // Use the first outgoing execution if no specific replacing execution was found
+          // If no replacing execution was found, this indicates an inconsistent execution tree state
           if (replacingExecution == null) {
-            replacingExecution = concurrentExecution;
+            throw new ProcessEngineException(
+                "Expected to find a replacing execution after creating concurrent execution, " +
+                "but none was found in scope execution %s".formatted(scopeExecution));
           }
 
           outgoingExecutions.add(new OutgoingExecution(replacingExecution, transitionsToTake.get(0)));

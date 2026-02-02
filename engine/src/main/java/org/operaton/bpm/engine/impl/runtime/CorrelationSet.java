@@ -19,7 +19,8 @@ package org.operaton.bpm.engine.impl.runtime;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
-import org.springframework.lang.NonNull;
+
+import jakarta.annotation.Nonnull;
 
 import static java.util.Collections.emptyMap;
 
@@ -49,12 +50,12 @@ public class CorrelationSet {
     return businessKey;
   }
 
-  @NonNull
+  @Nonnull
   public Map<String, Object> getCorrelationKeys() {
     return correlationKeys != null ? correlationKeys : emptyMap();
   }
 
-  @NonNull
+  @Nonnull
   public Map<String, Object> getLocalCorrelationKeys() {
     return localCorrelationKeys != null ? localCorrelationKeys : emptyMap();
   }

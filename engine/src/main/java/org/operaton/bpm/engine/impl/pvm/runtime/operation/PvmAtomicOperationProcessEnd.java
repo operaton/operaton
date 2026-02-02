@@ -27,7 +27,8 @@ import org.operaton.bpm.engine.impl.pvm.PvmLogger;
 import org.operaton.bpm.engine.impl.pvm.delegate.SubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-import org.springframework.lang.NonNull;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Tom Baeyens
@@ -84,7 +85,7 @@ public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInst
     }
   }
 
-  @NonNull
+  @Nonnull
   private static SubProcessActivityBehavior passOutputVariables(PvmExecutionImpl superExecution, PvmExecutionImpl execution) {
     PvmActivity activity = superExecution.getActivity();
     SubProcessActivityBehavior subProcessActivityBehavior = (SubProcessActivityBehavior) activity.getActivityBehavior();

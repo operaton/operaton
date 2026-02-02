@@ -28,7 +28,8 @@ import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
 import org.operaton.bpm.engine.impl.pvm.runtime.OutgoingExecution;
 import org.operaton.bpm.engine.impl.pvm.runtime.PvmExecutionImpl;
-import org.springframework.lang.NonNull;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * @author Tom Baeyens
@@ -100,7 +101,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
 
   }
 
-  @NonNull
+  @Nonnull
   private static List<OutgoingExecution> collectOutgoingExecutions(List<PvmTransition> transitionsToTake,
       PvmExecutionImpl propagatingExecution) {
     List<OutgoingExecution> outgoingExecutions = new ArrayList<>();
@@ -124,10 +125,15 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
           // get a hold of the concurrent execution that replaced the scope propagating execution
           PvmExecutionImpl replacingExecution = null;
           for (PvmExecutionImpl concurrentChild : scopeExecution.getNonEventScopeExecutions())  {
-            if (concurrentChild != propagatingExecution) {
+            if (concurrentChild != propagatingExecution && concurrentChild != concurrentExecution) {
               replacingExecution = concurrentChild;
               break;
             }
+          }
+
+          // Use the first outgoing execution if no specific replacing execution was found
+          if (replacingExecution == null) {
+            replacingExecution = concurrentExecution;
           }
 
           outgoingExecutions.add(new OutgoingExecution(replacingExecution, transitionsToTake.get(0)));

@@ -34,7 +34,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
@@ -449,12 +448,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot save task in absence of an association:
-    try {
-      businessProcess.saveTask();
-      fail();
-    } catch (ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("No task associated. Call businessProcess.startTask() first.");
-    }
+    // when/then
+    assertThatThrownBy(businessProcess::saveTask)
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("No task associated. Call businessProcess.startTask() first.");
 
     // start the process
     String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", (Object) "value")).getId();
@@ -486,12 +483,10 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
 
     // cannot stop task in absence of an association:
-    try {
-      businessProcess.stopTask();
-      fail();
-    } catch (ProcessEngineCdiException e) {
-      assertThat(e.getMessage()).isEqualTo("No task associated. Call businessProcess.startTask() first.");
-    }
+    // when/then
+    assertThatThrownBy(businessProcess::stopTask)
+      .isInstanceOf(ProcessEngineCdiException.class)
+      .hasMessage("No task associated. Call businessProcess.startTask() first.");
 
     // start the process
     String processInstanceId = businessProcess.startProcessByKey("businessProcessBeanTest", Collections.singletonMap("key", (Object) "value")).getId();

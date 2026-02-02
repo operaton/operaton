@@ -196,69 +196,81 @@ public class DbEntityCache {
   protected void putInternal(CachedDbEntity entityToAdd) {
     Class<? extends DbEntity> type = entityToAdd.getEntity().getClass();
     Class<?> cacheKey = cacheKeyMapping.getEntityCacheKey(type);
-
     Map<String, CachedDbEntity> map = cachedEntites.computeIfAbsent(cacheKey, k -> new HashMap<>());
 
     // check whether this object is already present in the cache
     CachedDbEntity existingCachedEntity = map.get(entityToAdd.getEntity().getId());
-    if(existingCachedEntity == null) {
+    if (existingCachedEntity == null) {
       // no such entity exists -> put it into the cache
       map.put(entityToAdd.getEntity().getId(), entityToAdd);
-
     } else {
       // the same entity is already cached
-      switch (entityToAdd.getEntityState()) {
+      handleDuplicateEntityPut(entityToAdd, existingCachedEntity, map);
+    }
+  }
 
+  protected void handleDuplicateEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
+    switch (entityToAdd.getEntityState()) {
       case TRANSIENT:
-        // cannot put TRANSIENT entity if entity with same id already exists in cache.
-        if(existingCachedEntity.getEntityState() == TRANSIENT) {
-          throw LOG.entityCacheDuplicateEntryException("TRANSIENT", entityToAdd.getEntity().getId(),
-            entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
-        }
-        else {
-          throw LOG.alreadyMarkedEntityInEntityCacheException(entityToAdd.getEntity().getId(),
-            entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
-        }
-
+        handleTransientEntityPut(entityToAdd, existingCachedEntity);
+        break;
       case PERSISTENT:
-        if(existingCachedEntity.getEntityState() == PERSISTENT) {
-          // use new entity state, replacing the existing one.
-          map.put(entityToAdd.getEntity().getId(), entityToAdd);
-          break;
-        }
-        if(existingCachedEntity.getEntityState() == DELETED_PERSISTENT
-            || existingCachedEntity.getEntityState() == DELETED_MERGED) {
-          // ignore put -> this is already marked to be deleted
-          break;
-        }
-
-        // otherwise fail:
-        throw LOG.entityCacheDuplicateEntryException("PERSISTENT", entityToAdd.getEntity().getId(),
-          entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
-
+        handlePersistentEntityPut(entityToAdd, existingCachedEntity, map);
+        break;
       case MERGED:
-        if(existingCachedEntity.getEntityState() == PERSISTENT
-            || existingCachedEntity.getEntityState() == MERGED) {
-          // use new entity state, replacing the existing one.
-          map.put(entityToAdd.getEntity().getId(), entityToAdd);
-          break;
-        }
-        if(existingCachedEntity.getEntityState() == DELETED_PERSISTENT
-            || existingCachedEntity.getEntityState() == DELETED_MERGED) {
-          // ignore put -> this is already marked to be deleted
-          break;
-        }
-
-        // otherwise fail:
-        throw LOG.entityCacheDuplicateEntryException("MERGED", entityToAdd.getEntity().getId(),
-          entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
-
+        handleMergedEntityPut(entityToAdd, existingCachedEntity, map);
+        break;
       default:
         // deletes are always added
         map.put(entityToAdd.getEntity().getId(), entityToAdd);
         break;
-      }
     }
+  }
+
+  protected void handleTransientEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity) {
+    // cannot put TRANSIENT entity if entity with same id already exists in cache.
+    if (existingCachedEntity.getEntityState() == TRANSIENT) {
+      throw LOG.entityCacheDuplicateEntryException("TRANSIENT", entityToAdd.getEntity().getId(),
+          entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
+    } else {
+      throw LOG.alreadyMarkedEntityInEntityCacheException(entityToAdd.getEntity().getId(),
+          entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
+    }
+  }
+
+  protected void handlePersistentEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
+    if (existingCachedEntity.getEntityState() == PERSISTENT) {
+      // use new entity state, replacing the existing one.
+      map.put(entityToAdd.getEntity().getId(), entityToAdd);
+      return;
+    }
+    if (existingCachedEntity.getEntityState() == DELETED_PERSISTENT
+        || existingCachedEntity.getEntityState() == DELETED_MERGED) {
+      // ignore put -> this is already marked to be deleted
+      return;
+    }
+
+    // otherwise fail:
+    throw LOG.entityCacheDuplicateEntryException("PERSISTENT", entityToAdd.getEntity().getId(),
+        entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
+  }
+
+  protected void handleMergedEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
+    if (existingCachedEntity.getEntityState() == PERSISTENT
+        || existingCachedEntity.getEntityState() == MERGED) {
+      // use new entity state, replacing the existing one.
+      map.put(entityToAdd.getEntity().getId(), entityToAdd);
+      return;
+    }
+    if (existingCachedEntity.getEntityState() == DELETED_PERSISTENT
+        || existingCachedEntity.getEntityState() == DELETED_MERGED) {
+      // ignore put -> this is already marked to be deleted
+      return;
+    }
+
+    // otherwise fail:
+    throw LOG.entityCacheDuplicateEntryException("MERGED", entityToAdd.getEntity().getId(),
+        entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
   }
 
   /**

@@ -149,6 +149,18 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
       return true;
     }
 
+    if (!ensureNoActiveChildren(children, throwException, id)) {
+      return false;
+    }
+
+    if (autoComplete) {
+      return ensureRequiredChildrenCompleted(children, throwException, id);
+    } else {
+      return ensureAllChildrenCompleted(children, throwException, id);
+    }
+  }
+
+  private boolean ensureNoActiveChildren(List<? extends CmmnExecution> children, boolean throwException, String id) {
     // verify there are no STATE_ACTIVE children
     for (CmmnExecution child : children) {
       if (child.isNew() || child.isActive()) {
@@ -160,42 +172,43 @@ public class StageActivityBehavior extends StageOrTaskActivityBehavior implement
         return false;
       }
     }
+    return true;
+  }
 
-    if (autoComplete) {
-      // ensure that all required children are DISABLED, STATE_COMPLETED and/or TERMINATED
-      // available in the case execution tree.
+  private boolean ensureRequiredChildrenCompleted(List<? extends CmmnExecution> children, boolean throwException, String id) {
+    // ensure that all required children are DISABLED, STATE_COMPLETED and/or TERMINATED
+    // available in the case execution tree.
 
-      for (CmmnExecution child : children) {
-        if (child.isRequired() && !child.isDisabled() && !child.isCompleted() && !child.isTerminated()) {
+    for (CmmnExecution child : children) {
+      if (child.isRequired() && !child.isDisabled() && !child.isCompleted() && !child.isTerminated()) {
 
-          if (throwException) {
-            throw LOG.remainingChildException(TRANSITION_COMPLETE, id, child.getId(), child.getCurrentState());
-          }
-
-          return false;
+        if (throwException) {
+          throw LOG.remainingChildException(TRANSITION_COMPLETE, id, child.getId(), child.getCurrentState());
         }
+
+        return false;
       }
+    }
+    return true;
+  }
 
-    } else { /* autoComplete == false && manualCompletion == false */
-      // ensure that ALL children are DISABLED, STATE_COMPLETED and/or TERMINATED
+  private boolean ensureAllChildrenCompleted(List<? extends CmmnExecution> children, boolean throwException, String id) {
+    // ensure that ALL children are DISABLED, STATE_COMPLETED and/or TERMINATED
 
-      for (CmmnExecution child : children) {
-        if (!child.isDisabled() && !child.isCompleted() && !child.isTerminated()) {
+    for (CmmnExecution child : children) {
+      if (!child.isDisabled() && !child.isCompleted() && !child.isTerminated()) {
 
-          if (throwException) {
-            throw LOG.wrongChildStateException(TRANSITION_COMPLETE, id, child.getId(), "[available|enabled|suspended]");
-          }
-
-          return false;
+        if (throwException) {
+          throw LOG.wrongChildStateException(TRANSITION_COMPLETE, id, child.getId(), "[available|enabled|suspended]");
         }
+
+        return false;
       }
-
-      // TODO: are there any DiscretionaryItems?
-      // if yes, then it is not possible to complete
-      // this stage (NOTE: manualCompletion == false)!
-
     }
 
+    // TODO: are there any DiscretionaryItems?
+    // if yes, then it is not possible to complete
+    // this stage (NOTE: manualCompletion == false)!
     return true;
   }
 

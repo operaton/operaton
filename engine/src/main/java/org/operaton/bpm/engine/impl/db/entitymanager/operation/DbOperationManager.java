@@ -248,23 +248,32 @@ public class DbOperationManager {
   }
 
   protected void determineDependencies(List<DbOperation> flush) {
-    TreeSet<DbEntityOperation> defaultValue = new TreeSet<>();
     for (DbOperation operation : flush) {
       if (operation instanceof DbEntityOperation dbEntityOperation) {
-        DbEntity entity = dbEntityOperation.getEntity();
-        if (entity instanceof HasDbReferences hasDbReferences) {
-          Map<String, Class<?>> dependentEntities = hasDbReferences.getDependentEntities();
-
-          if (dependentEntities != null) {
-            dependentEntities.forEach((id, type) -> deletes.getOrDefault(type, defaultValue).forEach(o -> {
-              if (id.equals(o.getEntity().getId())) {
-                o.setDependency(operation);
-              }
-            }));
-          }
-
-        }
+        determineDependenciesForOperation(dbEntityOperation);
       }
     }
+  }
+
+  protected void determineDependenciesForOperation(DbEntityOperation operation) {
+    DbEntity entity = operation.getEntity();
+    if (entity instanceof HasDbReferences hasDbReferences) {
+      Map<String, Class<?>> dependentEntities = hasDbReferences.getDependentEntities();
+
+      if (dependentEntities != null) {
+        resolveDependentEntities(operation, dependentEntities);
+      }
+    }
+  }
+
+  protected void resolveDependentEntities(DbEntityOperation operation, Map<String, Class<?>> dependentEntities) {
+    TreeSet<DbEntityOperation> defaultValue = new TreeSet<>();
+    dependentEntities.forEach((id, type) -> {
+      deletes.getOrDefault(type, defaultValue).forEach(o -> {
+        if (id.equals(o.getEntity().getId())) {
+          o.setDependency(operation);
+        }
+      });
+    });
   }
 }

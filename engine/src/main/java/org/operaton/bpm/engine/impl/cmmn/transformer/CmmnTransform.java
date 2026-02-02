@@ -238,57 +238,66 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
 
   protected void transformPlanItem(PlanItem planItem, CmmnActivity parent) {
     PlanItemDefinition definition = planItem.getDefinition();
+    ItemHandler planItemTransformer = getPlanItemHandler(definition);
 
-    ItemHandler planItemTransformer = null;
-
-    if (definition instanceof HumanTask) {
-      planItemTransformer = getPlanItemHandler(HumanTask.class);
-    } else if (definition instanceof ProcessTask) {
-      planItemTransformer = getPlanItemHandler(ProcessTask.class);
-    } else if (definition instanceof CaseTask) {
-      planItemTransformer = getPlanItemHandler(CaseTask.class);
-    } else if (definition instanceof DecisionTask) {
-      planItemTransformer = getPlanItemHandler(DecisionTask.class);
-    } else if (definition instanceof Task) {
-      planItemTransformer = getPlanItemHandler(Task.class);
-    } else if (definition instanceof Stage) {
-      planItemTransformer = getPlanItemHandler(Stage.class);
-    } else if (definition instanceof Milestone) {
-      planItemTransformer = getPlanItemHandler(Milestone.class);
-    } else if (definition instanceof EventListener) {
-      planItemTransformer = getPlanItemHandler(EventListener.class);
+    if (planItemTransformer == null) {
+      return;
     }
 
-    if (planItemTransformer != null) {
-      CmmnActivity newActivity = planItemTransformer.handleElement(planItem, context);
+    CmmnActivity newActivity = planItemTransformer.handleElement(planItem, context);
+    handleSpecialDefinitionLogic(definition, newActivity, parent);
+    notifyTransformListeners(planItem, definition, newActivity);
+  }
 
-      if (definition instanceof Stage stage) {
-        transformStage(stage, newActivity);
-        context.setParent(parent);
+  protected ItemHandler getPlanItemHandler(PlanItemDefinition definition) {
+    if (definition instanceof HumanTask) {
+      return getPlanItemHandler(HumanTask.class);
+    } else if (definition instanceof ProcessTask) {
+      return getPlanItemHandler(ProcessTask.class);
+    } else if (definition instanceof CaseTask) {
+      return getPlanItemHandler(CaseTask.class);
+    } else if (definition instanceof DecisionTask) {
+      return getPlanItemHandler(DecisionTask.class);
+    } else if (definition instanceof Task) {
+      return getPlanItemHandler(Task.class);
+    } else if (definition instanceof Stage) {
+      return getPlanItemHandler(Stage.class);
+    } else if (definition instanceof Milestone) {
+      return getPlanItemHandler(Milestone.class);
+    } else if (definition instanceof EventListener) {
+      return getPlanItemHandler(EventListener.class);
+    }
+    return null;
+  }
 
-      } else if (definition instanceof HumanTask humanTask) {
-        Optional.ofNullable(humanTask.getPlanningTable())
-            .ifPresent(planningTable -> transformPlanningTable(planningTable, parent));
-      }
+  protected void handleSpecialDefinitionLogic(PlanItemDefinition definition, CmmnActivity newActivity, CmmnActivity parent) {
+    if (definition instanceof Stage stage) {
+      transformStage(stage, newActivity);
+      context.setParent(parent);
+    } else if (definition instanceof HumanTask humanTask) {
+      Optional.ofNullable(humanTask.getPlanningTable())
+          .ifPresent(planningTable -> transformPlanningTable(planningTable, parent));
+    }
+  }
 
-      for (CmmnTransformListener transformListener : transformListeners) {
-        if (definition instanceof HumanTask task) {
-          transformListener.transformHumanTask(planItem, task, newActivity);
-        } else if (definition instanceof ProcessTask task) {
-          transformListener.transformProcessTask(planItem, task, newActivity);
-        } else if (definition instanceof CaseTask task) {
-          transformListener.transformCaseTask(planItem, task, newActivity);
-        } else if (definition instanceof DecisionTask task) {
-          transformListener.transformDecisionTask(planItem, task, newActivity);
-        } else if (definition instanceof Task task) {
-          transformListener.transformTask(planItem, task, newActivity);
-        } else if (definition instanceof Stage stage) {
-          transformListener.transformStage(planItem, stage, newActivity);
-        } else if (definition instanceof Milestone milestone) {
-          transformListener.transformMilestone(planItem, milestone, newActivity);
-        } else if (definition instanceof EventListener listener) {
-          transformListener.transformEventListener(planItem, listener, newActivity);
-        }
+  protected void notifyTransformListeners(PlanItem planItem, PlanItemDefinition definition, CmmnActivity newActivity) {
+    for (CmmnTransformListener transformListener : transformListeners) {
+      if (definition instanceof HumanTask task) {
+        transformListener.transformHumanTask(planItem, task, newActivity);
+      } else if (definition instanceof ProcessTask task) {
+        transformListener.transformProcessTask(planItem, task, newActivity);
+      } else if (definition instanceof CaseTask task) {
+        transformListener.transformCaseTask(planItem, task, newActivity);
+      } else if (definition instanceof DecisionTask task) {
+        transformListener.transformDecisionTask(planItem, task, newActivity);
+      } else if (definition instanceof Task task) {
+        transformListener.transformTask(planItem, task, newActivity);
+      } else if (definition instanceof Stage stage) {
+        transformListener.transformStage(planItem, stage, newActivity);
+      } else if (definition instanceof Milestone milestone) {
+        transformListener.transformMilestone(planItem, milestone, newActivity);
+      } else if (definition instanceof EventListener listener) {
+        transformListener.transformEventListener(planItem, listener, newActivity);
       }
     }
   }

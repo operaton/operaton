@@ -611,33 +611,27 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   }
 
   protected boolean isSentryPartsSatisfied(String sentryId, List<? extends CmmnSentryPart> sentryParts) {
+    if (sentryParts == null || sentryParts.isEmpty()) {
+      return true;
+    }
+
     // if part will be evaluated in the end
     CmmnSentryPart ifPart = null;
-
-    if (sentryParts != null && !sentryParts.isEmpty()) {
-      for (CmmnSentryPart sentryPart : sentryParts) {
-
-        if (PLAN_ITEM_ON_PART.equals(sentryPart.getType())) {
-
-          if (!sentryPart.isSatisfied()) {
-            return false;
-          }
-
-        } else if (VARIABLE_ON_PART.equals(sentryPart.getType())) {
-          if (!sentryPart.isSatisfied()) {
-            return false;
-          }
-        } else { /* IF_PART.equals(sentryPart.getType) == true */
-
-          ifPart = sentryPart;
-
-          // once the ifPart has been satisfied the whole sentry is satisfied
-          if (ifPart.isSatisfied()) {
-            return true;
-          }
-
+    for (CmmnSentryPart sentryPart : sentryParts) {
+      if (PLAN_ITEM_ON_PART.equals(sentryPart.getType())) {
+        if (!sentryPart.isSatisfied()) {
+          return false;
         }
-
+      } else if (VARIABLE_ON_PART.equals(sentryPart.getType())) {
+        if (!sentryPart.isSatisfied()) {
+          return false;
+        }
+      } else { /* IF_PART.equals(sentryPart.getType) == true */
+        ifPart = sentryPart;
+        // once the ifPart has been satisfied the whole sentry is satisfied
+        if (ifPart.isSatisfied()) {
+          return true;
+        }
       }
     }
 

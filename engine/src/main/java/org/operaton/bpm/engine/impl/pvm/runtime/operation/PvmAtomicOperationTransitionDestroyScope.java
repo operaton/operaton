@@ -135,7 +135,7 @@ public class PvmAtomicOperationTransitionDestroyScope implements PvmAtomicOperat
           if (replacingExecution == null) {
             throw new ProcessEngineException(
                 "Expected to find a replacing execution after creating concurrent execution, " +
-                "but none was found in scope execution %s".formatted(scopeExecution));
+                "but none was found in scope execution: " + scopeExecution);
           }
 
           outgoingExecutions.add(new OutgoingExecution(replacingExecution, transitionsToTake.get(0)));

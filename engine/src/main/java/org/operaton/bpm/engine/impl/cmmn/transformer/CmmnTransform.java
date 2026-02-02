@@ -249,7 +249,7 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
     notifyTransformListeners(planItem, definition, newActivity);
   }
 
-  protected ItemHandler getPlanItemHandler(PlanItemDefinition definition) {
+  private ItemHandler getPlanItemHandler(PlanItemDefinition definition) {
     if (definition instanceof HumanTask) {
       return getPlanItemHandler(HumanTask.class);
     } else if (definition instanceof ProcessTask) {
@@ -270,7 +270,7 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
     return null;
   }
 
-  protected void handleSpecialDefinitionLogic(PlanItemDefinition definition, CmmnActivity newActivity, CmmnActivity parent) {
+  private void handleSpecialDefinitionLogic(PlanItemDefinition definition, CmmnActivity newActivity, CmmnActivity parent) {
     if (definition instanceof Stage stage) {
       transformStage(stage, newActivity);
       context.setParent(parent);
@@ -280,7 +280,7 @@ public class CmmnTransform implements Transform<CaseDefinitionEntity> {
     }
   }
 
-  protected void notifyTransformListeners(PlanItem planItem, PlanItemDefinition definition, CmmnActivity newActivity) {
+  private void notifyTransformListeners(PlanItem planItem, PlanItemDefinition definition, CmmnActivity newActivity) {
     for (CmmnTransformListener transformListener : transformListeners) {
       if (definition instanceof HumanTask task) {
         transformListener.transformHumanTask(planItem, task, newActivity);

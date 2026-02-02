@@ -91,16 +91,17 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     return true;
   }
 
-  protected boolean hasValidOnPart(Collection<OnPart> onParts) {
-    for (OnPart onPart : onParts) {
-      if (onPart instanceof PlanItemOnPart planItemOnPart && planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
-        return true;
-      }
+  private boolean hasValidOnPart(Collection<OnPart> onParts) {
+    if (onParts == null) {
+      return false;
     }
-    return false;
+    return onParts.stream()
+      .filter(PlanItemOnPart.class::isInstance)
+      .map(PlanItemOnPart.class::cast)
+      .anyMatch(part -> part.getSource() != null && part.getStandardEvent() != null);
   }
 
-  protected CmmnSentryDeclaration createSentryDeclaration(String id, Sentry element, IfPart ifPart, List<OperatonVariableOnPart> variableOnParts, CmmnHandlerContext context) {
+  private CmmnSentryDeclaration createSentryDeclaration(String id, Sentry element, IfPart ifPart, List<OperatonVariableOnPart> variableOnParts, CmmnHandlerContext context) {
     CmmnSentryDeclaration sentryDeclaration = new CmmnSentryDeclaration(id);
 
     // the ifPart will be initialized immediately
@@ -108,6 +109,18 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
 
     // the variableOnParts will be initialized immediately as it does not have any dependency
     initializeVariableOnParts(element, sentryDeclaration, context, variableOnParts);
+
+    // ...whereas the onParts will be initialized later because the
+    // the reference to the plan items (sourceRef) and the reference
+    // to the sentry (sentryRef) cannot be set in this step. To set
+    // the corresponding reference (sourceRef or sentryRef) on the
+    // transformed sentry all planned items and all sentries inside
+    // the current stage should be already transformed.
+
+    CmmnActivity parent = context.getParent();
+    if (parent != null) {
+      parent.addSentry(sentryDeclaration);
+    }
 
     return sentryDeclaration;
   }

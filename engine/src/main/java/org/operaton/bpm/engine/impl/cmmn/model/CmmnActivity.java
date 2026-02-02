@@ -191,7 +191,7 @@ public class CmmnActivity extends CoreActivity {
     return listenerCache.computeIfAbsent(eventName, k -> resolveVariableListeners(eventName, includeCustomListeners));
   }
 
-  protected Map<String, Map<String, List<VariableListener<?>>>> getVariableListenerCache(boolean includeCustomListeners) {
+  private Map<String, Map<String, List<VariableListener<?>>>> getVariableListenerCache(boolean includeCustomListeners) {
     if (includeCustomListeners) {
       if (resolvedVariableListeners == null) {
         resolvedVariableListeners = new HashMap<>();
@@ -205,7 +205,7 @@ public class CmmnActivity extends CoreActivity {
     }
   }
 
-  protected Map<String, List<VariableListener<?>>> resolveVariableListeners(String eventName, boolean includeCustomListeners) {
+  private Map<String, List<VariableListener<?>>> resolveVariableListeners(String eventName, boolean includeCustomListeners) {
     Map<String, List<VariableListener<?>>> resolvedListenersForEvent = new HashMap<>();
     CmmnActivity currentActivity = this;
 
@@ -221,7 +221,7 @@ public class CmmnActivity extends CoreActivity {
     return resolvedListenersForEvent;
   }
 
-  protected List<VariableListener<?>> getVariableListenersLocal(CmmnActivity activity, String eventName, boolean includeCustomListeners) {
+  private List<VariableListener<?>> getVariableListenersLocal(CmmnActivity activity, String eventName, boolean includeCustomListeners) {
     if (includeCustomListeners) {
       return activity.getVariableListenersLocal(eventName);
     } else {

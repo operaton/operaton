@@ -209,7 +209,7 @@ public class DbEntityCache {
     }
   }
 
-  protected void handleDuplicateEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
+  private void handleDuplicateEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
     switch (entityToAdd.getEntityState()) {
       case TRANSIENT:
         handleTransientEntityPut(entityToAdd, existingCachedEntity);
@@ -227,7 +227,7 @@ public class DbEntityCache {
     }
   }
 
-  protected void handleTransientEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity) {
+  private void handleTransientEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity) {
     // cannot put TRANSIENT entity if entity with same id already exists in cache.
     if (existingCachedEntity.getEntityState() == TRANSIENT) {
       throw LOG.entityCacheDuplicateEntryException("TRANSIENT", entityToAdd.getEntity().getId(),
@@ -238,7 +238,7 @@ public class DbEntityCache {
     }
   }
 
-  protected void handlePersistentEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
+  private void handlePersistentEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
     if (existingCachedEntity.getEntityState() == PERSISTENT) {
       // use new entity state, replacing the existing one.
       map.put(entityToAdd.getEntity().getId(), entityToAdd);
@@ -255,7 +255,7 @@ public class DbEntityCache {
         entityToAdd.getEntity().getClass(), existingCachedEntity.getEntityState());
   }
 
-  protected void handleMergedEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
+  private void handleMergedEntityPut(CachedDbEntity entityToAdd, CachedDbEntity existingCachedEntity, Map<String, CachedDbEntity> map) {
     if (existingCachedEntity.getEntityState() == PERSISTENT
         || existingCachedEntity.getEntityState() == MERGED) {
       // use new entity state, replacing the existing one.

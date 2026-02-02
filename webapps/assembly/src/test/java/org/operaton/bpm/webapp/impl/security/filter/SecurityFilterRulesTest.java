@@ -39,7 +39,7 @@ import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
 import org.operaton.bpm.webapp.impl.security.filter.util.FilterRules;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  *

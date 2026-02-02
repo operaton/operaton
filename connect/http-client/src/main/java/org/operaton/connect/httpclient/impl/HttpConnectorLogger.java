@@ -17,6 +17,7 @@
 package org.operaton.connect.httpclient.impl;
 
 import org.apache.hc.client5.http.io.HttpClientConnectionManager;
+
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.ConnectorResponseException;
 import org.operaton.connect.impl.ConnectLogger;

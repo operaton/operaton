@@ -16,6 +16,9 @@
  */
 package org.operaton.connect.httpclient;
 
+import java.util.Map;
+import java.util.stream.Stream;
+
 import com.github.tomakehurst.wiremock.http.FixedDelayDistribution;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
@@ -28,13 +31,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import org.operaton.connect.httpclient.impl.ConnectionConfigOption;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
 
-import java.util.Map;
-import java.util.stream.Stream;
-
+import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONNECTION_REQUEST_TIMEOUT;
+import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONNECTION_TIMEOUT;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
@@ -42,8 +45,6 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONNECTION_REQUEST_TIMEOUT;
-import static org.operaton.connect.httpclient.impl.RequestConfigOption.CONNECTION_TIMEOUT;
 import static org.wiremock.webhooks.Webhooks.webhook;
 
 @WireMockTest

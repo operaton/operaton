@@ -16,16 +16,24 @@
  */
 package org.operaton.bpm.engine.test.bpmn.mail;
 
-import ch.martinelli.oss.testcontainers.mailpit.MailpitClient;
-import ch.martinelli.oss.testcontainers.mailpit.Message;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Properties;
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
+import jakarta.mail.internet.MimeMessage;
+
+import ch.martinelli.oss.testcontainers.mailpit.MailpitClient;
+import ch.martinelli.oss.testcontainers.mailpit.MailpitContainer;
+import ch.martinelli.oss.testcontainers.mailpit.Message;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
-import ch.martinelli.oss.testcontainers.mailpit.MailpitContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
@@ -34,15 +42,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.test.TestLogger;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
-
-import jakarta.mail.internet.MimeMessage;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Properties;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;

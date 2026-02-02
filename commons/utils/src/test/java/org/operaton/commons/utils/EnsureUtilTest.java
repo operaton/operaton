@@ -44,10 +44,9 @@ class EnsureUtilTest {
   void ensureParameterInstanceOfClass() {
     Object string = "string";
 
-    assertThatCode(() -> {
+    assertThatCode(() ->
       assertThat(EnsureUtil.ensureParamInstanceOf("string", string, String.class))
-        .isInstanceOf(String.class);
-    }).doesNotThrowAnyException();
+        .isInstanceOf(String.class)).doesNotThrowAnyException();
   }
 
   @Test

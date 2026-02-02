@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import org.apache.hc.client5.http.ConnectTimeoutException;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.config.RequestConfig.Builder;
 import org.apache.hc.core5.http.HttpHost;
@@ -35,9 +34,9 @@ import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.operaton.connect.httpclient.impl.RequestConfigOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class HttpRequestConfigTest {

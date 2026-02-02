@@ -16,6 +16,7 @@
 package org.operaton.connect.httpclient.impl;
 
 import java.util.function.BiConsumer;
+
 import org.apache.hc.client5.http.config.ConnectionConfig.Builder;
 import org.apache.hc.core5.util.Timeout;
 

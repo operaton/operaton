@@ -23,13 +23,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.xmlunit.assertj.XmlAssert;
 
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXmlAttribute;
 import org.operaton.spin.xml.SpinXmlAttributeException;
 import org.operaton.spin.xml.SpinXmlElement;
 import org.operaton.spin.xml.SpinXmlElementException;
-import org.xmlunit.assertj.XmlAssert;
 
 import static org.operaton.spin.Spin.S;
 import static org.operaton.spin.Spin.XML;

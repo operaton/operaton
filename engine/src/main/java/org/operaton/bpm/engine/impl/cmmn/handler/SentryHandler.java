@@ -66,16 +66,8 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
         LOG.ignoredSentryWithMissingCondition(id);
         return null;
       } else {
-        boolean atLeastOneOnPartsValid = false;
 
-        for (OnPart onPart : onParts) {
-          if (onPart instanceof PlanItemOnPart planItemOnPart && planItemOnPart.getSource() != null && planItemOnPart.getStandardEvent() != null) {
-            atLeastOneOnPartsValid = true;
-            break;
-          }
-        }
-
-        if (!atLeastOneOnPartsValid) {
+        if (!hasValidOnPart(onParts)) {
           LOG.ignoredSentryWithInvalidParts(id);
           return null;
         }
@@ -103,6 +95,16 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     }
 
     return sentryDeclaration;
+  }
+
+  private boolean hasValidOnPart(Collection<OnPart> onParts) {
+    if (onParts == null) {
+      return false;
+    }
+    return onParts.stream()
+      .filter(PlanItemOnPart.class::isInstance)
+      .map(PlanItemOnPart.class::cast)
+      .anyMatch(part -> part.getSource() != null && part.getStandardEvent() != null);
   }
 
   public void initializeOnParts(Sentry sentry, CmmnHandlerContext context) {

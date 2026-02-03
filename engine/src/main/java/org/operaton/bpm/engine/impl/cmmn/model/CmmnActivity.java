@@ -186,39 +186,46 @@ public class CmmnActivity extends CoreActivity {
    * the listener is defined on.
    */
   public Map<String, List<VariableListener<?>>> getVariableListeners(String eventName, boolean includeCustomListeners) {
-    Map<String, Map<String, List<VariableListener<?>>>> listenerCache;
+    Map<String, Map<String, List<VariableListener<?>>>> listenerCache = getVariableListenerCache(includeCustomListeners);
+
+    return listenerCache.computeIfAbsent(eventName, k -> resolveVariableListeners(eventName, includeCustomListeners));
+  }
+
+  private Map<String, Map<String, List<VariableListener<?>>>> getVariableListenerCache(boolean includeCustomListeners) {
     if (includeCustomListeners) {
       if (resolvedVariableListeners == null) {
         resolvedVariableListeners = new HashMap<>();
       }
-
-      listenerCache = resolvedVariableListeners;
+      return resolvedVariableListeners;
     } else {
       if (resolvedBuiltInVariableListeners == null) {
         resolvedBuiltInVariableListeners = new HashMap<>();
       }
-      listenerCache = resolvedBuiltInVariableListeners;
+      return resolvedBuiltInVariableListeners;
     }
+  }
 
-    return listenerCache.computeIfAbsent(eventName, k -> {
-      Map<String, List<VariableListener<?>>> resolvedListenersForEvent2 = new HashMap<>();
-      CmmnActivity currentActivity = this;
+  private Map<String, List<VariableListener<?>>> resolveVariableListeners(String eventName, boolean includeCustomListeners) {
+    Map<String, List<VariableListener<?>>> resolvedListenersForEvent = new HashMap<>();
+    CmmnActivity currentActivity = this;
 
-      while (currentActivity != null) {
-        List<VariableListener<?>> localListeners = null;
-        if (includeCustomListeners) {
-          localListeners = currentActivity.getVariableListenersLocal(eventName);
-        } else {
-          localListeners = currentActivity.getBuiltInVariableListenersLocal(eventName);
-        }
+    while (currentActivity != null) {
+      List<VariableListener<?>> localListeners = getVariableListenersLocal(currentActivity, eventName, includeCustomListeners);
 
-        if (localListeners != null && !localListeners.isEmpty()) {
-          resolvedListenersForEvent2.put(currentActivity.getId(), localListeners);
-        }
-
-        currentActivity = currentActivity.getParent();
+      if (localListeners != null && !localListeners.isEmpty()) {
+        resolvedListenersForEvent.put(currentActivity.getId(), localListeners);
       }
-      return resolvedListenersForEvent2;
-    });
+
+      currentActivity = currentActivity.getParent();
+    }
+    return resolvedListenersForEvent;
+  }
+
+  private List<VariableListener<?>> getVariableListenersLocal(CmmnActivity activity, String eventName, boolean includeCustomListeners) {
+    if (includeCustomListeners) {
+      return activity.getVariableListenersLocal(eventName);
+    } else {
+      return activity.getBuiltInVariableListenersLocal(eventName);
+    }
   }
 }

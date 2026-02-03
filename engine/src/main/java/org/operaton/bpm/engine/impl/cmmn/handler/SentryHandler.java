@@ -54,54 +54,26 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
 
   @Override
   public CmmnSentryDeclaration handleElement(Sentry element, CmmnHandlerContext context) {
+
     String id = element.getId();
     Collection<OnPart> onParts = element.getOnParts();
     IfPart ifPart = element.getIfPart();
     List<OperatonVariableOnPart> variableOnParts = queryExtensionElementsByClass(element, OperatonVariableOnPart.class);
 
-    if (!isSentryValid(id, ifPart, onParts, variableOnParts)) {
-      return null;
+    if ((ifPart == null || ifPart.getCondition() == null) && variableOnParts.isEmpty()) {
+
+      if (onParts == null || onParts.isEmpty()) {
+        LOG.ignoredSentryWithMissingCondition(id);
+        return null;
+      } else {
+
+        if (!hasValidOnPart(onParts)) {
+          LOG.ignoredSentryWithInvalidParts(id);
+          return null;
+        }
+      }
     }
 
-    CmmnSentryDeclaration sentryDeclaration = createSentryDeclaration(id, element, ifPart, variableOnParts, context);
-
-    CmmnActivity parent = context.getParent();
-    if (parent != null) {
-      parent.addSentry(sentryDeclaration);
-    }
-
-    return sentryDeclaration;
-  }
-
-  protected boolean isSentryValid(String id, IfPart ifPart, Collection<OnPart> onParts, List<OperatonVariableOnPart> variableOnParts) {
-    if ((ifPart != null && ifPart.getCondition() != null) || !variableOnParts.isEmpty()) {
-      return true;
-    }
-
-    if (onParts == null || onParts.isEmpty()) {
-      LOG.ignoredSentryWithMissingCondition(id);
-      return false;
-    }
-
-    if (!hasValidOnPart(onParts)) {
-      LOG.ignoredSentryWithInvalidParts(id);
-      return false;
-    }
-
-    return true;
-  }
-
-  private boolean hasValidOnPart(Collection<OnPart> onParts) {
-    if (onParts == null) {
-      return false;
-    }
-    return onParts.stream()
-      .filter(PlanItemOnPart.class::isInstance)
-      .map(PlanItemOnPart.class::cast)
-      .anyMatch(part -> part.getSource() != null && part.getStandardEvent() != null);
-  }
-
-  private CmmnSentryDeclaration createSentryDeclaration(String id, Sentry element, IfPart ifPart, List<OperatonVariableOnPart> variableOnParts, CmmnHandlerContext context) {
     CmmnSentryDeclaration sentryDeclaration = new CmmnSentryDeclaration(id);
 
     // the ifPart will be initialized immediately
@@ -123,6 +95,16 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
     }
 
     return sentryDeclaration;
+  }
+
+  private boolean hasValidOnPart(Collection<OnPart> onParts) {
+    if (onParts == null) {
+      return false;
+    }
+    return onParts.stream()
+      .filter(PlanItemOnPart.class::isInstance)
+      .map(PlanItemOnPart.class::cast)
+      .anyMatch(part -> part.getSource() != null && part.getStandardEvent() != null);
   }
 
   public void initializeOnParts(Sentry sentry, CmmnHandlerContext context) {

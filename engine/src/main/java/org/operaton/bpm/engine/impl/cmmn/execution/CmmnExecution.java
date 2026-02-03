@@ -618,11 +618,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
     // if part will be evaluated in the end
     CmmnSentryPart ifPart = null;
     for (CmmnSentryPart sentryPart : sentryParts) {
-      if (PLAN_ITEM_ON_PART.equals(sentryPart.getType())) {
-        if (!sentryPart.isSatisfied()) {
-          return false;
-        }
-      } else if (VARIABLE_ON_PART.equals(sentryPart.getType())) {
+      if (PLAN_ITEM_ON_PART.equals(sentryPart.getType()) || VARIABLE_ON_PART.equals(sentryPart.getType())) {
         if (!sentryPart.isSatisfied()) {
           return false;
         }

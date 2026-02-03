@@ -84,6 +84,14 @@ public class FormPropertyHandler {
   }
 
   public void submitFormProperty(VariableScope variableScope, VariableMap variables) {
+    validateFormProperty(variables);
+    Object modelValue = getSubmittedValue(variableScope, variables);
+    if (modelValue != null) {
+      assignValueToVariable(variableScope, modelValue);
+    }
+  }
+
+  private void validateFormProperty(VariableMap variables) {
     if (!isWritable && variables.containsKey(id)) {
       throw new ProcessEngineException("form property '%s' is not writable".formatted(id));
     }
@@ -91,34 +99,38 @@ public class FormPropertyHandler {
     if (isRequired && !variables.containsKey(id) && defaultExpression == null) {
       throw new ProcessEngineException("form property '%s' is required".formatted(id));
     }
+  }
 
-    Object modelValue = null;
+  private Object getSubmittedValue(VariableScope variableScope, VariableMap variables) {
     if (variables.containsKey(id)) {
-      final Object propertyValue = variables.remove(id);
+      Object propertyValue = variables.remove(id);
       if (type != null) {
-        modelValue = type.convertFormValueToModelValue(propertyValue);
+        return type.convertFormValueToModelValue(propertyValue);
       } else {
-        modelValue = propertyValue;
+        return propertyValue;
       }
     } else if (defaultExpression != null) {
-      final Object expressionValue = defaultExpression.getValue(variableScope);
-      if (type != null && expressionValue != null) {
-        modelValue = type.convertFormValueToModelValue(expressionValue.toString());
-      } else if (expressionValue != null) {
-        modelValue = expressionValue.toString();
+      Object expressionValue = defaultExpression.getValue(variableScope);
+      if (expressionValue != null) {
+        if (type != null) {
+          return type.convertFormValueToModelValue(expressionValue.toString());
+        } else {
+          return expressionValue.toString();
+        }
       } else if (isRequired) {
         throw new ProcessEngineException("form property '%s' is required".formatted(id));
       }
     }
+    return null;
+  }
 
-    if (modelValue != null) {
-      if (variableName != null) {
-        variableScope.setVariable(variableName, modelValue);
-      } else if (variableExpression != null) {
-        variableExpression.setValue(modelValue, variableScope);
-      } else {
-        variableScope.setVariable(id, modelValue);
-      }
+  private void assignValueToVariable(VariableScope variableScope, Object modelValue) {
+    if (variableName != null) {
+      variableScope.setVariable(variableName, modelValue);
+    } else if (variableExpression != null) {
+      variableExpression.setValue(modelValue, variableScope);
+    } else {
+      variableScope.setVariable(id, modelValue);
     }
   }
 

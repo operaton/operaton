@@ -70,6 +70,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public String getBody() {
     Body body = bodyChild.getChild(this);
     if (body != null) {
@@ -79,6 +80,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public void setBody(String body) {
     bodyChild.getChild(this).setTextContent(body);
   }
@@ -93,6 +95,7 @@ public class ExpressionImpl extends CmmnElementImpl implements Expression {
     languageAttribute.setValue(this, language);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Expression.class, CMMN_ELEMENT_EXPRESSION)
         .namespaceUri(CMMN11_NS)

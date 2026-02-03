@@ -117,8 +117,8 @@ class TransactionIntegrationTest {
   @Test
   @Deployment
   void shouldRollbackOnException() {
-    // given
-    try {
+    // given / when / then
+    assertThatCode(() -> {
       try (Connection connection = dataSource.getConnection()) {
         try (Statement statement = connection.createStatement()) {
           statement.execute("create table MY_TABLE (MY_TEXT varchar);");
@@ -155,9 +155,7 @@ class TransactionIntegrationTest {
           statement.execute("drop table MY_TABLE if exists;");
         }
       }
-    } catch (SQLException e) {
-      fail(e.getMessage());
-    }
+    }).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {

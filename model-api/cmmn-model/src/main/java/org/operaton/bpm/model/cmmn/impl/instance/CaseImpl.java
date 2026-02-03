@@ -75,6 +75,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Collection<CaseRole> getCaseRoles() {
     return caseRolesCollection.get(this);
   }
@@ -119,6 +120,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     caseFileModelChild.setChild(this, caseFileModel);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Case.class, CMMN_ELEMENT_CASE)
         .extendsType(CmmnElement.class)

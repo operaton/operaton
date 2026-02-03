@@ -27,7 +27,7 @@ class EnsureUtilTest {
 
   @Test
   void ensureNotNull() {
-    String string = "string";
+    var string = "string";
 
     assertThatCode(() -> EnsureUtil.ensureNotNull("string", string))
       .doesNotThrowAnyException();

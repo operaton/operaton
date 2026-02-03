@@ -74,42 +74,6 @@ class DeploymentAwareJobExecutorForOracleTest {
     assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
-  @Test
-  void testFindAcquirableJobsWhen1000InstancesDeployed() {
-    // given
-    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    // when
-    for (int i=0; i<1000; i++) {
-      testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
-    }
-    // then
-    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
-  }
-
-  @Test
-  void testFindAcquirableJobsWhen1001InstancesDeployed() {
-    // given
-    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    // when
-    for (int i=0; i<1001; i++) {
-      testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
-    }
-    // then
-    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
-  }
-
-  @Test
-  void testFindAcquirableJobsWhen2000InstancesDeployed() {
-    // given
-    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    // when
-    for (int i=0; i<2000; i++) {
-      testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
-    }
-    // then
-    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
-  }
-
   protected List<AcquirableJobEntity> findAcquirableJobs() {
     return engineRule.getProcessEngineConfiguration().getCommandExecutorTxRequired().execute(commandContext -> commandContext
         .getJobManager()

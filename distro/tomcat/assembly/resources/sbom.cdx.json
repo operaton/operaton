@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:1feca787-25b6-4a44-898f-acf84340eb46",
+  "serialNumber": "urn:uuid:f7b1bb54-fd9d-4200-9458-0191e72012de",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-01T15:03:07Z",
+    "timestamp": "2026-02-04T03:55:39Z",
     "tools": {
       "components": [
         {
@@ -255,45 +255,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.26",
+      "version": "1.5.27",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "efb83be97c6b69c37cea9ed4adf30e57"
+          "content": "1b4fd13f1c2567266b42bc771b3f8aa2"
         },
         {
           "alg": "SHA-1",
-          "content": "b8d5680d89b36772e61a9963b338d5e2abd3465a"
+          "content": "a078334aec912226e6c9cf0daf0762cb9cfca09d"
         },
         {
           "alg": "SHA-256",
-          "content": "3e84709b6a238c60f066e74ca40017dc1c72833f54655e0287cef690f5b2dd73"
+          "content": "dc228a2172a593605f4a1206cb9b7d282a18c0d1087ba0457b2728545b1ada72"
         },
         {
           "alg": "SHA-512",
-          "content": "231d7f78a1233929baa4288f1dbd1180e2903599f0ebc78ae1c0693cff2bab9a0b370f62cc8a40218868156c70c1697f6d27983cd89dbc403d282a949e088664"
+          "content": "1983d63ee906a3a1cea1f8b267204d0adabf7eb7cbc4d531724593f22fe9fb342836c9d30d565a0d06fe443032692ada387f64ba969c2deb5d3eb5dfb3ab461d"
         },
         {
           "alg": "SHA-384",
-          "content": "eb6979de0cbd88244e2e96baa9211a90fa62f8b282675d5353aa39855fd7395bdc27726d09cc10f72b7ed24049a62266"
+          "content": "bd0fe108dcd661b527f93c59284ae3377a179627489da2a685613b94b38411491a5d5c29d4f6304a1c61658e4ffb2730"
         },
         {
           "alg": "SHA3-384",
-          "content": "5c7944d9397182b201b5bc54a300dc71b71ef34d559186fe9205c111b2f64a33fec53344a2b2bc13b3054fff8fc8e0f5"
+          "content": "3caf22ad7920eea3ac113d80a9176db41ccbf961560f5632b2b1b387e950c6999580caa0edf1754416dba2682ebc0acc"
         },
         {
           "alg": "SHA3-256",
-          "content": "54678dd436d898b15b2790b3c67c2f4b0e506f352fb84f47bdd55840f25a1555"
+          "content": "d2cedbc3fb9742fd9165261e427b186a38c4935928c231c92b8cc3b9172aa320"
         },
         {
           "alg": "SHA3-512",
-          "content": "f5a52a2e795b404ef43c6fdd7a3993aee4d4ca203d46aecc9395f309f41f46db15dbfcd1e2f28b1916952adb55e00b9f8f67b82fc368d3d1f615b8b37f735bae"
+          "content": "711959a8b93040b7d22a062e1b26f7303d5e828c11392de7e1478d1a9e619d678f20a2fefd9b330fef1c9aaa57e7dfa552c6b88544420c4305a4a453a65782ca"
         }
       ],
       "licenses": [
@@ -309,7 +309,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -327,45 +327,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.27?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.26",
+      "version": "1.5.27",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "dcf084908c69ac2d5c300f92157e906a"
+          "content": "062ddedcee2f9d65b3917b2766b8eb57"
         },
         {
           "alg": "SHA-1",
-          "content": "d349b601e695b7d79b08454b81bb4f47bfc22164"
+          "content": "4ec5363bc3d5469c00ad6665d65d0112037388ff"
         },
         {
           "alg": "SHA-256",
-          "content": "08220d2a5cc9e35fc9ff0b7dbe1e86a9d9ca11e9b0c655aa34c7b63937678c5f"
+          "content": "608ac608e3faf72f4704d946d7b36439fa5dedfec44416ee678824a561d0dde9"
         },
         {
           "alg": "SHA-512",
-          "content": "f3650ba90754425b7feb133f3822cfded4d90c25b68b10759b93b65b7d505a6179c1ab0a44b6afb3d9ed8fe37a673c76613486962f2af4f49bcd7dea38ae83e1"
+          "content": "a8de4e137b6e92c61e14410081dc077cc471f66c976760cf0408534159cf5b4162dcdc9f00fb5b3895dd02558cdc57ceedb2b2ee3b3eeefd9a93fa277d263e16"
         },
         {
           "alg": "SHA-384",
-          "content": "a45f7b354aa2914bacfe6e88922a4f8be663f9bf56fce880fa28601ec71e99990202801631c51671f736b338f6f93a30"
+          "content": "0b8722957a79cba9eecbf24688417e719dd6263a267f99d6cf911e82654121458d39aba91914e7a2d70494ce6d8debff"
         },
         {
           "alg": "SHA3-384",
-          "content": "0938bac87b786896cb14d214bd15f952b6ad666db10ccb03ac718f13451f80cf1a5b2c7a1a37c561e5f84c7471c611dc"
+          "content": "2f7af75bd8882a603d9d99a9d288d21829e55b4b915893bc868f01a2e42b22d4afdba8469b2842c6d7ad675ee2dc3b93"
         },
         {
           "alg": "SHA3-256",
-          "content": "5414e5de4b732fa9056a861a9e9b816206da3d997bccd649282b49b57e4a2f57"
+          "content": "3753ad363a0bbc174d14864fb22344d03b03c65b155b7e9ad66c531f8acecf2b"
         },
         {
           "alg": "SHA3-512",
-          "content": "85e2ccc63ef1be52c8326c2c835c9bf77cf596d87f72cba0e0c37dbc1402be1cefffdc497f045922be37caf3c272a4e5b80f2a5faab78cfa57850053b0f88a90"
+          "content": "82ad47866cd51bb3c84cb1cec937fcceb88cccde63ce9ae71a92847cb63eeacbfc2baac1e9797ae5ee643bd6c4c1e41c6d818e7c891cc1b7735286ce7a875d47"
         }
       ],
       "licenses": [
@@ -381,7 +381,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.27?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -3659,45 +3659,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "bom-ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.commons",
       "name": "commons-compress",
-      "version": "1.27.1",
+      "version": "1.28.0",
       "description": "Apache Commons Compress defines an API for working with compression and archive formats. These include bzip2, gzip, pack200, LZMA, XZ, Snappy, traditional Unix Compress, DEFLATE, DEFLATE64, LZ4, Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1db4bd87b0082044c6e7a6af0b977a3e"
+          "content": "f33efe616d561f8281ef7bf9f2576ad0"
         },
         {
           "alg": "SHA-1",
-          "content": "a19151084758e2fbb6b41eddaa88e7b8ff4e6599"
+          "content": "e482f2c7a88dac3c497e96aa420b6a769f59c8d7"
         },
         {
           "alg": "SHA-256",
-          "content": "293d80f54b536b74095dcd7ea3cf0a29bbfc3402519281332495f4420d370d16"
+          "content": "e1522945218456f3649a39bc4afd70ce4bd466221519dba7d378f2141a4642ca"
         },
         {
           "alg": "SHA-512",
-          "content": "5e1fcf9f552ab86beceef6743609e97d700dcbaa5b5ee58858e765c1238cd4dbca2852e1eb415bc2a09dad478d31197ddf09b2ba148dd30be8c9ecd565775226"
+          "content": "f1f140f4f40ab3cf3265919db9dbb95a631a29aa784e305f291de4e68876bb711d9217d62d7937cddddd393982decdf71a608b4b3ab7f4e6375cf28af2893d7f"
         },
         {
           "alg": "SHA-384",
-          "content": "307707c885a45c1725e940b9e42d75871d47442fcc31ec9d8fa56af2e1a2372eed178ebf86c61b5a577465a2674c0f1f"
+          "content": "afe6a8fc8e7486c4ecce95276bb1467763d7ff7d941c7bcff8661bbbd4bff442fd0899ff7a11bc540cda86818ee4a8f0"
         },
         {
           "alg": "SHA3-384",
-          "content": "b87d7b7f6f0db51fcfb4bf0adf31795dc0083564dcc524df345fbbe3546c8357b61ebef793654003a5bcc2e7368bc3a4"
+          "content": "6afb636ad0805e522913cfd91c8293c485b7f4eff5e45dd3a17a716c3f4b8ab8969e9c00927559a5fb762cba1fdb3d3f"
         },
         {
           "alg": "SHA3-256",
-          "content": "39b8fb032df8934793dddf257ec49d0d7cd16a75e45bea716a21aa0278901621"
+          "content": "4420e0b462b5dcc45077e95e012a82a5ae17659e5abe8a685fa086dab6995298"
         },
         {
           "alg": "SHA3-512",
-          "content": "40f6d1a9074546b05b42b3841c95b23e21df6f3e2bbe8bbe2905e9676ae51da768df315819cdffaa4f703ea3aec7aeb89f8f3b07c82ea2df3a936d425d606634"
+          "content": "23e37d13c8ee6c7369e407c29d1f9ee1bb44eca9f09a6f9742f6b4cf3d38dd7a0509fe0142536cd8087b68a76e71d819105af2c23f2aeed08acc58eb93cf7e61"
         }
       ],
       "licenses": [
@@ -3708,14 +3708,14 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "purl": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-compress/",
           "type": "website"
         },
         {
-          "url": "https://github.com/apache/commons-parent/actions",
+          "url": "https://github.com/apache/commons-compress/actions",
           "type": "build-system"
         },
         {
@@ -21385,7 +21385,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "410ed4b9-0ba1-4ed5-bfbf-a9b7c1c33fc8",
+      "bom-ref": "37775310-0980-4721-bf68-6dd820d9be6c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -22906,9 +22906,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.10.1",
+      "bom-ref": "pkg:npm/bpmn-js@18.11.0",
       "name": "bpmn-js",
-      "version": "18.10.1",
+      "version": "18.11.0",
       "licenses": [
         {
           "license": {
@@ -22916,11 +22916,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.10.1",
+      "purl": "pkg:npm/bpmn-js@18.11.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.10.1"
+          "value": "bpmn-js@18.11.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22930,9 +22930,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-moddle@9.0.4",
+      "bom-ref": "pkg:npm/bpmn-moddle@10.0.0",
       "name": "bpmn-moddle",
-      "version": "9.0.4",
+      "version": "10.0.0",
       "licenses": [
         {
           "license": {
@@ -22940,11 +22940,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-moddle@9.0.4",
+      "purl": "pkg:npm/bpmn-moddle@10.0.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-moddle@9.0.4"
+          "value": "bpmn-moddle@10.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23492,9 +23492,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/debug@4.4.1",
+      "bom-ref": "pkg:npm/debug@4.4.3",
       "name": "debug",
-      "version": "4.4.1",
+      "version": "4.4.3",
       "licenses": [
         {
           "license": {
@@ -23502,11 +23502,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/debug@4.4.1",
+      "purl": "pkg:npm/debug@4.4.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "debug@4.4.1"
+          "value": "debug@4.4.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23612,9 +23612,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.2.0",
+      "bom-ref": "pkg:npm/diagram-js-direct-editing@3.3.0",
       "name": "diagram-js-direct-editing",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "licenses": [
         {
           "license": {
@@ -23622,11 +23622,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js-direct-editing@3.2.0",
+      "purl": "pkg:npm/diagram-js-direct-editing@3.3.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js-direct-editing@3.2.0"
+          "value": "diagram-js-direct-editing@3.3.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23684,9 +23684,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.5.0",
+      "bom-ref": "pkg:npm/diagram-js@15.7.0",
       "name": "diagram-js",
-      "version": "15.5.0",
+      "version": "15.7.0",
       "licenses": [
         {
           "license": {
@@ -23694,11 +23694,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js@15.5.0",
+      "purl": "pkg:npm/diagram-js@15.7.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.5.0"
+          "value": "diagram-js@15.7.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23747,6 +23747,30 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "didi@10.2.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/didi@11.0.0",
+      "name": "didi",
+      "version": "11.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/didi@11.0.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "didi@11.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25036,9 +25060,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/jquery-ui@1.14.1",
+      "bom-ref": "pkg:npm/jquery-ui@1.14.2",
       "name": "jquery-ui",
-      "version": "1.14.1",
+      "version": "1.14.2",
       "licenses": [
         {
           "license": {
@@ -25046,11 +25070,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/jquery-ui@1.14.1",
+      "purl": "pkg:npm/jquery-ui@1.14.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "jquery-ui@1.14.1"
+          "value": "jquery-ui@1.14.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -25468,6 +25492,30 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/min-dom@5.2.0",
+      "name": "min-dom",
+      "version": "5.2.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/min-dom@5.2.0",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "min-dom@5.2.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/mitt@3.0.1",
       "name": "mitt",
       "version": "3.0.1",
@@ -25850,9 +25898,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/path-intersection@4.0.1",
+      "bom-ref": "pkg:npm/path-intersection@4.1.0",
       "name": "path-intersection",
-      "version": "4.0.1",
+      "version": "4.1.0",
       "licenses": [
         {
           "license": {
@@ -25860,11 +25908,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/path-intersection@4.0.1",
+      "purl": "pkg:npm/path-intersection@4.1.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "path-intersection@4.0.1"
+          "value": "path-intersection@4.1.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26515,6 +26563,30 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/tiny-svg@4.1.4",
+      "name": "tiny-svg",
+      "version": "4.1.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/tiny-svg@4.1.4",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "tiny-svg@4.1.4"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/w3c-keyname@2.2.8",
       "name": "w3c-keyname",
       "version": "2.2.8",
@@ -26587,7 +26659,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "4afa70bf-8c5c-4655-aeaa-051b14f83c83",
+      "bom-ref": "03e8b1ca-929f-4b70-bcd1-68c862241916",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26893,19 +26965,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.27?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.27?type=jar",
       "dependsOn": []
     },
     {
@@ -26941,14 +27013,14 @@
       "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+        "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
         "pkg:maven/org.rnorth.duct-tape/duct-tape@1.0.8?type=jar",
         "pkg:maven/com.github.docker-java/docker-java-api@3.7.0?type=jar",
         "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.7.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "dependsOn": [
         "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
@@ -27074,8 +27146,8 @@
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-core@1.5.26?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.27?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -27973,7 +28045,7 @@
         "pkg:maven/org.apache.maven.shared/maven-invoker@3.3.0?type=jar",
         "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar"
+        "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar"
       ]
     },
     {
@@ -28718,7 +28790,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.14?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.14?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar"
       ]
     },
     {
@@ -28812,7 +28884,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.26?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar"
       ]
     },
     {
@@ -29216,7 +29288,13 @@
       "dependsOn": []
     },
     {
-      "ref": "410ed4b9-0ba1-4ed5-bfbf-a9b7c1c33fc8",
+      "ref": "03e8b1ca-929f-4b70-bcd1-68c862241916",
+      "dependsOn": [
+        "37775310-0980-4721-bf68-6dd820d9be6c"
+      ]
+    },
+    {
+      "ref": "37775310-0980-4721-bf68-6dd820d9be6c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -29236,7 +29314,7 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.10.1",
+        "pkg:npm/bpmn-js@18.11.0",
         "pkg:npm/camunda-dmn-js@3.6.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
@@ -29253,7 +29331,7 @@
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.3.4",
-        "pkg:npm/jquery-ui@1.14.1",
+        "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
         "pkg:npm/moment@2.30.1",
@@ -29263,12 +29341,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "4afa70bf-8c5c-4655-aeaa-051b14f83c83",
-      "dependsOn": [
-        "410ed4b9-0ba1-4ed5-bfbf-a9b7c1c33fc8"
       ]
     },
     {
@@ -29675,24 +29747,24 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.10.1",
+      "ref": "pkg:npm/bpmn-js@18.11.0",
       "dependsOn": [
-        "pkg:npm/bpmn-moddle@9.0.4",
-        "pkg:npm/diagram-js-direct-editing@3.2.0",
-        "pkg:npm/diagram-js@15.5.0",
-        "pkg:npm/ids@1.0.5",
+        "pkg:npm/bpmn-moddle@10.0.0",
+        "pkg:npm/diagram-js-direct-editing@3.3.0",
+        "pkg:npm/diagram-js@15.7.0",
+        "pkg:npm/ids@3.0.0",
         "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/min-dom@4.2.1",
-        "pkg:npm/tiny-svg@3.1.3"
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dom@5.2.0",
+        "pkg:npm/tiny-svg@4.1.4"
       ]
     },
     {
-      "ref": "pkg:npm/bpmn-moddle@9.0.4",
+      "ref": "pkg:npm/bpmn-moddle@10.0.0",
       "dependsOn": [
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/moddle-xml@11.0.0",
-        "pkg:npm/moddle@7.2.0"
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/moddle-xml@12.0.0",
+        "pkg:npm/moddle@8.0.0"
       ]
     },
     {
@@ -29716,7 +29788,7 @@
         "pkg:npm/camunda-dmn-moddle@1.3.0",
         "pkg:npm/diagram-js-grid@1.1.0",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js-drd@17.5.0",
         "pkg:npm/dmn-js-properties-panel@3.9.0",
         "pkg:npm/dmn-js@17.5.0",
@@ -29843,7 +29915,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/debug@4.4.1",
+      "ref": "pkg:npm/debug@4.4.3",
       "dependsOn": [
         "pkg:npm/ms@2.1.3"
       ]
@@ -29872,11 +29944,11 @@
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js-direct-editing@3.2.0",
+      "ref": "pkg:npm/diagram-js-direct-editing@3.3.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.5.0",
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/min-dom@4.2.1"
+        "pkg:npm/diagram-js@15.7.0",
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dom@5.2.0"
       ]
     },
     {
@@ -29889,22 +29961,22 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@15.5.0",
+      "ref": "pkg:npm/diagram-js@15.7.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
         "pkg:npm/clsx@2.1.1",
-        "pkg:npm/didi@10.2.2",
+        "pkg:npm/didi@11.0.0",
         "pkg:npm/inherits-browser@0.1.0",
-        "pkg:npm/min-dash@4.2.3",
-        "pkg:npm/min-dom@4.2.1",
+        "pkg:npm/min-dash@5.0.0",
+        "pkg:npm/min-dom@5.2.0",
         "pkg:npm/object-refs@0.4.0",
-        "pkg:npm/path-intersection@4.0.1",
-        "pkg:npm/tiny-svg@3.1.3"
+        "pkg:npm/path-intersection@4.1.0",
+        "pkg:npm/tiny-svg@4.1.4"
       ]
     },
     {
@@ -29926,6 +29998,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/didi@11.0.0",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/didi@4.0.0",
       "dependsOn": []
     },
@@ -29937,7 +30013,7 @@
       "ref": "pkg:npm/dmn-js-boxed-expression@17.5.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js-shared@17.5.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@4.2.3",
@@ -29950,7 +30026,7 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js-shared@17.5.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -29963,8 +30039,8 @@
     {
       "ref": "pkg:npm/dmn-js-drd@17.5.0",
       "dependsOn": [
-        "pkg:npm/diagram-js-direct-editing@3.2.0",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js-direct-editing@3.3.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js-shared@17.5.0",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@4.2.3",
@@ -29977,7 +30053,7 @@
       "ref": "pkg:npm/dmn-js-literal-expression@17.5.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js-shared@17.5.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -29990,7 +30066,7 @@
       "ref": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.35.1",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js@17.5.0",
         "pkg:npm/min-dash@4.2.3",
         "pkg:npm/min-dom@4.2.1"
@@ -30000,7 +30076,7 @@
       "ref": "pkg:npm/dmn-js-shared@17.5.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.0.0",
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/didi@10.2.2",
         "pkg:npm/dmn-moddle@11.0.0",
         "pkg:npm/ids@1.0.5",
@@ -30293,7 +30369,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/jquery-ui@1.14.1",
+      "ref": "pkg:npm/jquery-ui@1.14.2",
       "dependsOn": [
         "pkg:npm/jquery@3.7.1"
       ]
@@ -30386,6 +30462,13 @@
       ]
     },
     {
+      "ref": "pkg:npm/min-dom@5.2.0",
+      "dependsOn": [
+        "pkg:npm/domify@2.0.0",
+        "pkg:npm/min-dash@5.0.0"
+      ]
+    },
+    {
       "ref": "pkg:npm/mitt@3.0.1",
       "dependsOn": []
     },
@@ -30470,7 +30553,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/path-intersection@4.0.1",
+      "ref": "pkg:npm/path-intersection@4.1.0",
       "dependsOn": []
     },
     {
@@ -30586,7 +30669,7 @@
       "dependsOn": [
         "pkg:npm/component-emitter@1.3.1",
         "pkg:npm/cookiejar@2.1.4",
-        "pkg:npm/debug@4.4.1",
+        "pkg:npm/debug@4.4.3",
         "pkg:npm/fast-safe-stringify@2.1.1",
         "pkg:npm/form-data@4.0.5",
         "pkg:npm/formidable@3.5.4",
@@ -30602,7 +30685,7 @@
     {
       "ref": "pkg:npm/table-js@9.2.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.5.0",
+        "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/didi@10.2.2",
         "pkg:npm/ids@1.0.5",
         "pkg:npm/inferno@5.6.3",
@@ -30625,6 +30708,10 @@
     },
     {
       "ref": "pkg:npm/tiny-svg@3.1.3",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/tiny-svg@4.1.4",
       "dependsOn": []
     },
     {

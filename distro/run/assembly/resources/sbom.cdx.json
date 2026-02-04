@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:f5225aa7-fb67-4427-acc4-a1b171970d6c",
+  "serialNumber": "urn:uuid:7af38732-43ad-4a58-b981-5eac95763057",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-04T04:18:05Z",
+    "timestamp": "2026-02-04T07:24:55Z",
     "tools": {
       "components": [
         {
@@ -4218,45 +4218,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar",
+      "bom-ref": "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.commons",
       "name": "commons-lang3",
-      "version": "3.19.0",
-      "description": "Apache Commons Lang, a package of Java utility classes for the classes that are in java.lang\u0027s hierarchy, or are considered to be so standard as to justify existence in java.lang. The code is tested using the latest revision of the JDK for supported LTS releases: 8, 11, 17 and 21 currently. See https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml Please ensure your build environment is up-to-date and kindly report any build issues.",
+      "version": "3.20.0",
+      "description": "Apache Commons Lang, a package of Java utility classes for the classes that are in java.lang\u0027s hierarchy, or are considered to be so standard as to justify existence in java.lang. The code is tested using the latest revision of the JDK for supported LTS releases: 8, 11, 17, 21 and 25 currently. See https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml Please ensure your build environment is up-to-date and kindly report any build issues.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "2ac2db154e365d55d167ec1215125a3a"
+          "content": "4b29562ded527aa074e1d44f8646dac5"
         },
         {
           "alg": "SHA-1",
-          "content": "d6524b169a6574cd253760c472d419b47bfd37e6"
+          "content": "65897b3e5731220962e659e001904af3c3cbeba9"
         },
         {
           "alg": "SHA-256",
-          "content": "32733ab4bc90b45b63eb72677d886961003fd4ed113e07b1028f9877cb2ac735"
+          "content": "69e5c9fa35da7a51a5fd2099dfe56a2d8d32cf233e2f6d770e796146440263f4"
         },
         {
           "alg": "SHA-512",
-          "content": "24cf9bfc7c32736277d2a1e82a455d004ec7d4989e8d0dc2831c910a04b6ff8b30ca9c49ec25562cf0b7f1ffc27726e7510a54bb99e75a3be83ddf6030c37978"
+          "content": "1c72db334ea44f932c35e602b78907865f5bab43e30c871c9be67c8184eaa778f32d7bc3ab525d5921cd28619d3f9babfd483f17de54f007ee07db2e074b0307"
         },
         {
           "alg": "SHA-384",
-          "content": "90c567c8f42b58d0f3f24233260258e7e3bae1f8284ee33f9730e1cecc4fe2c98b7d6ebbba2a6598b50d444ddfa70722"
+          "content": "77dd27c4d5e9372c002bd6878d2cfaaec3cf46dd57d65de63d7f2e09351344531cfa81a537b56628ac6db18adee7e484"
         },
         {
           "alg": "SHA3-384",
-          "content": "397a7aafd4f66cdec80cf4682a72db0873b3fc6a3db3cdd7be747b24ae13804dfc290e2441a115d50b0add9ce76af2dd"
+          "content": "3456de40eef224b3ad195d2f218dd28eacb0da07607aee7ead94bd8d54bd8311d51c28d4066db4bf8b69a2df48c415f5"
         },
         {
           "alg": "SHA3-256",
-          "content": "4c0809e7ff0474603b0a1bcdf2f745cec9233ffdc6c652b077d93f2630d52f8b"
+          "content": "36e3f71352fa14bc580db45a05b09b063392c6d39acf9e24ffa6a67bbc07a336"
         },
         {
           "alg": "SHA3-512",
-          "content": "25564027878618e00dc24ea5caf8365a9396c25597aaf4ea8a37997fd699dabdf4b6f9ce4c1c9f86abedb4afa26041ac234d238c63ffecc207ce2068a6271956"
+          "content": "6ecbc05bb5cd3f7537078b0cf51b0a5f7189dfa60c22e5ec0d6b9e2fd3f7fa7566770b5da87e0c9929f48769933c3e3a473fd5cc7231672fca36ab1fee1f8670"
         }
       ],
       "licenses": [
@@ -4267,7 +4267,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar",
+      "purl": "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-lang/",
@@ -6718,45 +6718,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.logging/jboss-logging@3.6.2.Final?type=jar",
       "publisher": "JBoss by Red Hat",
       "group": "org.jboss.logging",
       "name": "jboss-logging",
-      "version": "3.6.1.Final",
+      "version": "3.6.2.Final",
       "description": "The JBoss Logging Framework",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "acab989faf62db02c092448e95614fab"
+          "content": "dca3f5ac156cb5e29490d77990cec10d"
         },
         {
           "alg": "SHA-1",
-          "content": "886afbb445b4016a37c8960a7aef6ebd769ce7e5"
+          "content": "3e0a139d7a74cc13b5e01daa8aaa7f71dccd577e"
         },
         {
           "alg": "SHA-256",
-          "content": "5e08a4b092dc85b337f0910a740571d8720cfa565fabd880a8caf94a657ca416"
+          "content": "f423e07bffce73bf2b6cc872f30981c06fe9cfd5a86a0b4f5fbdd11cfe0148e0"
         },
         {
           "alg": "SHA-512",
-          "content": "3dee7fadc04407538248def38fd0ae885c2aa454e2a38ecaaf7ef74abc1505f4efcd3e1a4e024c9f28d37fabb663c19cc3f29b7641b3094d5a504e93730c4a22"
+          "content": "f3283ad1a48c0d4a4f4f1d4d38f7f25c10fe1f8b0f80b4a4a4f18c58097965b67089e700b9eb1786e295fdaaff0ee3dd4f593d770a436e6da7b2fde7f77091dd"
         },
         {
           "alg": "SHA-384",
-          "content": "26b1ba129bd9cd1777ba90da087d343698b1f7fa48b855ce0a1030afc1c7ae81433f75e7b8293eb42fc063ce35386280"
+          "content": "c9b5e92358bc0a3f3aee03162c37790beaf6245c75666e5d592f7690810e75309f5af1efa5997a8bc08737ad61bdbaa9"
         },
         {
           "alg": "SHA3-384",
-          "content": "7fbed126ae79578a4136d769f31d9d879e14cd0f0b78ec91515be7cfce5fea7f1c1ca10bf752d19edd5511d3d4ef5254"
+          "content": "a76a6eaa5dad88d111163e4c27b93bfa6fc244a45e9e22494ae7e3bc3d18220f92b1cd92a5f1d37f22d8934a146ec166"
         },
         {
           "alg": "SHA3-256",
-          "content": "0de02a61df5dc9fbb8e9a344a8744356f3e867b4567ca2baa0bbf16a8763de01"
+          "content": "4e5943546b6d6a1f7267effcdf2900890b9a493f644a292a99d134fbdd064a6d"
         },
         {
           "alg": "SHA3-512",
-          "content": "2c7b522c04afab22900222f287da17c1526b3b3fd6a9376298613112918afb050af3d8ead2239be3e7dc3337ae74a636bf1963a1bc56426996b0f7283681bb3c"
+          "content": "6cd6b83c86734dacfbbf3f3fa30cc7ce2e2a2a32437deebd32b945057f3ba9e35ef87ee57d8330ebdd5f6a5e84b0c1428aada290fdbdcf38701f0823e4db83bd"
         }
       ],
       "licenses": [
@@ -6767,10 +6767,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.logging/jboss-logging@3.6.2.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://www.jboss.org",
+          "url": "https://www.jboss.org",
           "type": "website"
         },
         {
@@ -13043,6 +13043,77 @@
         },
         {
           "url": "https://github.com/resteasy/resteasy",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+      "publisher": "JBoss by Red Hat",
+      "group": "org.jboss.logging",
+      "name": "jboss-logging",
+      "version": "3.6.1.Final",
+      "description": "The JBoss Logging Framework",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "acab989faf62db02c092448e95614fab"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "886afbb445b4016a37c8960a7aef6ebd769ce7e5"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "5e08a4b092dc85b337f0910a740571d8720cfa565fabd880a8caf94a657ca416"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "3dee7fadc04407538248def38fd0ae885c2aa454e2a38ecaaf7ef74abc1505f4efcd3e1a4e024c9f28d37fabb663c19cc3f29b7641b3094d5a504e93730c4a22"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "26b1ba129bd9cd1777ba90da087d343698b1f7fa48b855ce0a1030afc1c7ae81433f75e7b8293eb42fc063ce35386280"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "7fbed126ae79578a4136d769f31d9d879e14cd0f0b78ec91515be7cfce5fea7f1c1ca10bf752d19edd5511d3d4ef5254"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "0de02a61df5dc9fbb8e9a344a8744356f3e867b4567ca2baa0bbf16a8763de01"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "2c7b522c04afab22900222f287da17c1526b3b3fd6a9376298613112918afb050af3d8ead2239be3e7dc3337ae74a636bf1963a1bc56426996b0f7283681bb3c"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://www.jboss.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.redhat.com/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "http://lists.jboss.org/pipermail/jboss-user/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/jboss-logging/jboss-logging/tree/main/",
           "type": "vcs"
         }
       ]
@@ -28463,7 +28534,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "70b73a37-7dec-426c-baf8-f916a02fca74",
+      "bom-ref": "37e6f57a-ce90-4e3f-881f-2f86037819d6",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33737,7 +33808,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "76fa0171-8b7a-408c-ba81-634d157b62d7",
+      "bom-ref": "bc029603-7d42-4e1e-b33a-43c9f77967c4",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -34102,7 +34173,7 @@
       "dependsOn": [
         "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar"
+        "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
       ]
     },
     {
@@ -34114,7 +34185,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar",
+      "ref": "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
       "dependsOn": []
     },
     {
@@ -34220,7 +34291,7 @@
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-catalina@11.0.18?type=jar",
-        "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+        "pkg:maven/org.jboss.logging/jboss-logging@3.6.2.Final?type=jar",
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
@@ -34391,7 +34462,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.logging/jboss-logging@3.6.2.Final?type=jar",
       "dependsOn": []
     },
     {
@@ -34597,6 +34668,10 @@
         "pkg:maven/jakarta.validation/jakarta.validation-api@3.1.1?type=jar",
         "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar"
       ]
+    },
+    {
+      "ref": "pkg:maven/org.jboss.logging/jboss-logging@3.6.1.Final?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
@@ -36396,7 +36471,7 @@
         "pkg:maven/org.springframework.boot/spring-boot-autoconfigure@4.0.2?type=jar",
         "pkg:maven/org.springframework.boot/spring-boot-health@4.0.2?type=jar",
         "pkg:maven/org.springframework.boot/spring-boot-jackson2@4.0.2?type=jar",
-        "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar"
+        "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
       ]
     },
     {
@@ -37136,7 +37211,7 @@
       ]
     },
     {
-      "ref": "70b73a37-7dec-426c-baf8-f916a02fca74",
+      "ref": "37e6f57a-ce90-4e3f-881f-2f86037819d6",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -37186,9 +37261,9 @@
       ]
     },
     {
-      "ref": "76fa0171-8b7a-408c-ba81-634d157b62d7",
+      "ref": "bc029603-7d42-4e1e-b33a-43c9f77967c4",
       "dependsOn": [
-        "70b73a37-7dec-426c-baf8-f916a02fca74"
+        "37e6f57a-ce90-4e3f-881f-2f86037819d6"
       ]
     },
     {

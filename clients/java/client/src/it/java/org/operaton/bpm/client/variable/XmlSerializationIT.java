@@ -43,7 +43,8 @@ import org.operaton.spin.xml.SpinXmlElement;
 import static org.operaton.bpm.client.util.ProcessModels.*;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.XML;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class XmlSerializationIT {
 
@@ -325,12 +326,8 @@ class XmlSerializationIT {
 
     ExternalTask task = handler.getHandledTasks().get(0);
 
-    try {
-      task.getVariableTyped(VARIABLE_NAME_XML);
-      fail("exception expected");
-    }
-    catch (Exception e) {
-    }
+    assertThatThrownBy(() -> task.getVariableTyped(VARIABLE_NAME_XML))
+      .isInstanceOf(Exception.class);
 
     // However, the serialized value can be accessed
     ObjectValue typedValue = task.getVariableTyped(VARIABLE_NAME_XML, false);
@@ -344,26 +341,14 @@ class XmlSerializationIT {
     assertThat(VARIABLE_VALUE_XML_DESERIALIZED.getIntProperty()).isEqualTo(Integer.parseInt(serializedValue.childElement("intProperty").textContent()));
 
     // but not the deserialized properties
-    try {
-      typedValue.getValue();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getValue)
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getValue(XmlSerializable.class);
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(() -> typedValue.getValue(XmlSerializable.class))
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getObjectType();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getObjectType)
+      .isInstanceOf(IllegalStateException.class);
   }
 
   @Test

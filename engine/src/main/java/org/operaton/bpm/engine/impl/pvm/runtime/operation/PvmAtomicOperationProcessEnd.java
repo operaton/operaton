@@ -52,54 +52,65 @@ public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInst
     PvmExecutionImpl superExecution = execution.getSuperExecution();
     CmmnActivityExecution superCaseExecution = execution.getSuperCaseExecution();
 
-    SubProcessActivityBehavior subProcessActivityBehavior = null;
-    TransferVariablesActivityBehavior transferVariablesBehavior = null;
-
-    // copy variables before destroying the ended sub process instance
     if (superExecution != null) {
-      PvmActivity activity = superExecution.getActivity();
-      subProcessActivityBehavior = (SubProcessActivityBehavior) activity.getActivityBehavior();
-      try {
-        subProcessActivityBehavior.passOutputVariables(superExecution, execution);
-      } catch (RuntimeException e) {
-        LOG.exceptionWhileCompletingSupProcess(execution, e);
-        throw e;
-      } catch (Exception e) {
-        LOG.exceptionWhileCompletingSupProcess(execution, e);
-        throw new ProcessEngineException("Error while completing sub process of execution %s".formatted(execution), e);
-      }
+      completeSubProcessExecution(execution, superExecution);
     } else if (superCaseExecution != null) {
-      CmmnActivity activity = superCaseExecution.getActivity();
-      transferVariablesBehavior = (TransferVariablesActivityBehavior) activity.getActivityBehavior();
-      try {
-        transferVariablesBehavior.transferVariables(execution, superCaseExecution);
-      } catch (RuntimeException e) {
-        LOG.exceptionWhileCompletingSupProcess(execution, e);
-        throw e;
-      } catch (Exception e) {
-        LOG.exceptionWhileCompletingSupProcess(execution, e);
-        throw new ProcessEngineException("Error while completing sub process of execution %s".formatted(execution), e);
-      }
+      completeSuperCaseExecution(execution, superCaseExecution);
+    } else {
+      execution.destroy();
+      execution.remove();
+    }
+  }
+
+  private static void completeSubProcessExecution(PvmExecutionImpl execution, PvmExecutionImpl superExecution) {
+    // copy variables before destroying the ended sub process instance
+    PvmActivity activity = superExecution.getActivity();
+    SubProcessActivityBehavior subProcessActivityBehavior = (SubProcessActivityBehavior) activity.getActivityBehavior();
+    try {
+      subProcessActivityBehavior.passOutputVariables(superExecution, execution);
+    } catch (RuntimeException e) {
+      LOG.exceptionWhileCompletingSupProcess(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.exceptionWhileCompletingSupProcess(execution, e);
+      throw new ProcessEngineException("Error while completing sub process of execution %s".formatted(execution), e);
     }
 
     execution.destroy();
     execution.remove();
 
     // and trigger execution afterwards
-    if (superExecution != null) {
-      superExecution.setSubProcessInstance(null);
-      try {
-        subProcessActivityBehavior.completed(superExecution);
-      } catch (RuntimeException e) {
-        LOG.exceptionWhileCompletingSupProcess(execution, e);
-        throw e;
-      } catch (Exception e) {
-        LOG.exceptionWhileCompletingSupProcess(execution, e);
-        throw new ProcessEngineException("Error while completing sub process of execution %s".formatted(execution), e);
-      }
-    } else if (superCaseExecution != null) {
-      superCaseExecution.complete();
+    superExecution.setSubProcessInstance(null);
+    try {
+      subProcessActivityBehavior.completed(superExecution);
+    } catch (RuntimeException e) {
+      LOG.exceptionWhileCompletingSupProcess(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.exceptionWhileCompletingSupProcess(execution, e);
+      throw new ProcessEngineException("Error while completing sub process of execution %s".formatted(execution), e);
     }
+  }
+
+  private static void completeSuperCaseExecution(PvmExecutionImpl execution, CmmnActivityExecution superCaseExecution) {
+    TransferVariablesActivityBehavior transferVariablesBehavior;
+    CmmnActivity activity = superCaseExecution.getActivity();
+    transferVariablesBehavior = (TransferVariablesActivityBehavior) activity.getActivityBehavior();
+    try {
+      transferVariablesBehavior.transferVariables(execution, superCaseExecution);
+    } catch (RuntimeException e) {
+      LOG.exceptionWhileCompletingSupProcess(execution, e);
+      throw e;
+    } catch (Exception e) {
+      LOG.exceptionWhileCompletingSupProcess(execution, e);
+      throw new ProcessEngineException("Error while completing sub process of execution %s".formatted(execution), e);
+    }
+
+    execution.destroy();
+    execution.remove();
+
+    // and trigger execution afterwards
+    superCaseExecution.complete();
   }
 
   @Override

@@ -31,7 +31,6 @@ import java.util.concurrent.TimeUnit;
 import org.joda.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -67,6 +66,7 @@ import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingEx
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 
 /**
  * @author Joram Barrez
@@ -115,9 +115,7 @@ class StartTimerEventTest {
     // timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
 
-    executeAllJobs();
-
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -136,7 +134,7 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isOne();
 
     ClockUtil.setCurrentTime(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("15/11/2036 11:12:30"));
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -145,10 +143,7 @@ class StartTimerEventTest {
 
   }
 
-  // FIXME: This test likes to run in an endless loop when invoking the
-  // waitForJobExecutorOnCondition method
   @Deployment
-  @Disabled
   @Test
   void testCycleDateStartTimerEvent() {
     ClockUtil.setCurrentTime(new Date());
@@ -162,12 +157,11 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
     assertThat(jobQuery.count()).isOne();
 
-    moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
 
     assertThat(jobQuery.count()).isOne();
@@ -195,7 +189,7 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
     assertThat(jobQuery.count()).isOne();
 
@@ -204,7 +198,7 @@ class StartTimerEventTest {
     assertThat(job.getDeploymentId()).isNotNull();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isEqualTo(2);
     assertThat(jobQuery.count()).isZero();
 
@@ -230,7 +224,7 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isOne();
     assertThat(jobQuery.count()).isOne();
 
@@ -250,7 +244,7 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isOne();
 
     ClockUtil.setCurrentTime(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("15/11/2036 11:12:30"));
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -287,7 +281,7 @@ class StartTimerEventTest {
 
     // move the clock forward 2 hours and 2 min
     moveByMinutes(122);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
@@ -318,7 +312,7 @@ class StartTimerEventTest {
 
     // move the clock forward 2 hours and 1 minute
     moveByMinutes(121);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
@@ -346,7 +340,7 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isOne();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").singleResult();
     String pi = processInstance.getProcessInstanceId();
     assertThat(runtimeService.getActiveActivityIds(pi).get(0)).isEqualTo("changed");

@@ -1373,32 +1373,55 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
                                     Map<String, ExecutionEntity> executionsMap,
                                     Map<String, List<VariableInstanceEntity>> variablesByScope) {
     for (ExecutionEntity execution : executions) {
-      if (execution.executions == null) {
-        execution.executions = new ArrayList<>();
-      }
-      if (execution.eventSubscriptions == null && eventSubscriptions != null) {
-        execution.eventSubscriptions = new ArrayList<>();
-      }
-      if (variables != null) {
-        execution.variableStore
-            .setVariablesProvider(new VariableCollectionProvider<>(variablesByScope.get(execution.id)));
-      }
-      String parentid = execution.getParentId();
-      ExecutionEntity parentExecution = executionsMap.get(parentid);
-      if (!execution.isProcessInstanceExecution()) {
-        if (parentExecution == null) {
-          throw LOG.resolveParentOfExecutionFailedException(parentid, execution.getId());
-        }
-        execution.processInstance = this;
-        execution.parent = parentExecution;
-        if (parentExecution.executions == null) {
-          parentExecution.executions = new ArrayList<>();
-        }
-        parentExecution.executions.add(execution);
-      } else {
-        execution.processInstance = execution;
-      }
+      restoreExecution(execution, eventSubscriptions, variables, executionsMap, variablesByScope);
     }
+  }
+
+  private void restoreExecution(ExecutionEntity execution,
+                                  Collection<EventSubscriptionEntity> eventSubscriptions,
+                                  Collection<VariableInstanceEntity> variables,
+                                  Map<String, ExecutionEntity> executionsMap,
+                                  Map<String, List<VariableInstanceEntity>> variablesByScope) {
+    initializeAssociations(execution, eventSubscriptions, variables, variablesByScope);
+
+    if (execution.isProcessInstanceExecution()) {
+      execution.processInstance = execution;
+    } else {
+      linkToParent(execution, executionsMap);
+    }
+  }
+
+  private void initializeAssociations(ExecutionEntity execution,
+                                        Collection<EventSubscriptionEntity> eventSubscriptions,
+                                        Collection<VariableInstanceEntity> variables,
+                                        Map<String, List<VariableInstanceEntity>> variablesByScope) {
+    if (execution.executions == null) {
+      execution.executions = new ArrayList<>();
+    }
+    if (execution.eventSubscriptions == null && eventSubscriptions != null) {
+      execution.eventSubscriptions = new ArrayList<>();
+    }
+    if (variables != null) {
+      execution.variableStore
+          .setVariablesProvider(new VariableCollectionProvider<>(variablesByScope.get(execution.id)));
+    }
+  }
+
+  private void linkToParent(ExecutionEntity execution, Map<String, ExecutionEntity> executionsMap) {
+    String parentid = execution.getParentId();
+    ExecutionEntity parentExecution = executionsMap.get(parentid);
+
+    if (parentExecution == null) {
+      throw LOG.resolveParentOfExecutionFailedException(parentid, execution.getId());
+    }
+
+    execution.processInstance = this;
+    execution.parent = parentExecution;
+
+    if (parentExecution.executions == null) {
+      parentExecution.executions = new ArrayList<>();
+    }
+    parentExecution.executions.add(execution);
   }
 
   private void restoreEventSubscriptions(Collection<EventSubscriptionEntity> eventSubscriptions,

@@ -536,3 +536,13 @@ jobs:
             echo "Failed to notify Docker repository. HTTP response code: $response"
             exit 1
           fi
+      - name: Upload server logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-logs
+          path: |
+            qa/wildfly-runtime/target/server/wildfly-*.Final/standalone/log
+            qa/tomcat-runtime/target/server/apache-tomcat-*/logs
+          if-no-files-found: ignore
+

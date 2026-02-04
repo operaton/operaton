@@ -56,6 +56,9 @@ public class PvmAtomicOperationProcessEnd extends PvmAtomicOperationActivityInst
       completeSubProcessExecution(execution, superExecution);
     } else if (superCaseExecution != null) {
       completeSuperCaseExecution(execution, superCaseExecution);
+    } else {
+      execution.destroy();
+      execution.remove();
     }
   }
 

@@ -180,7 +180,7 @@
                     <artifactItem>
                       <groupId>org.jboss.weld.servlet</groupId>
                       <artifactId>weld-servlet-shaded</artifactId>
-                      <version>6.0.0.Final</version>
+                      <version>5.1.7.Final</version>
                       <outputDirectory>target/server/apache-tomcat-${version.tomcat}/lib</outputDirectory>
                     </artifactItem>
                     <artifactItem>
@@ -309,7 +309,7 @@
         <dependency>
           <groupId>org.jboss.weld.servlet</groupId>
           <artifactId>weld-servlet-shaded</artifactId>
-          <version>5.1.2.Final</version>
+          <version>5.1.7.Final</version>
           <scope>runtime</scope>
         </dependency>
       </dependencies>

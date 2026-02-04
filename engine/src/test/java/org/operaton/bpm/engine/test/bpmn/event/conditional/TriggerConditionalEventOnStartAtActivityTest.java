@@ -478,7 +478,7 @@ class TriggerConditionalEventOnStartAtActivityTest extends AbstractConditionalEv
   }
 
   @Test
-  @Disabled
+  @Disabled("The expected 2nd task instance from the boundary event is missing")
   void testTwoInstructions() {
     //given
     BpmnModelInstance modelInstance =  Bpmn.createExecutableProcess(CONDITIONAL_EVENT_PROCESS_KEY)
@@ -502,8 +502,8 @@ class TriggerConditionalEventOnStartAtActivityTest extends AbstractConditionalEv
       .endEvent()
       .done();
     boolean isInterrupting = true;
-    modelInstance = addConditionalBoundaryEvent(modelInstance, SUB_PROCESS_ID, TASK_AFTER_CONDITION_ID, isInterrupting);
-    modelInstance = addConditionalBoundaryEvent(modelInstance, SUB_PROCESS_ID + 1, TASK_AFTER_CONDITION_ID + 1, isInterrupting);
+    modelInstance = addConditionalBoundaryEvent(modelInstance, SUB_PROCESS_ID, CONDITION_EXPR, TASK_AFTER_CONDITION_ID, TASK_AFTER_CONDITION_ID, isInterrupting);
+    modelInstance = addConditionalBoundaryEvent(modelInstance, SUB_PROCESS_ID + 1, CONDITION_EXPR, TASK_AFTER_CONDITION_ID + 1, TASK_AFTER_CONDITION_ID + 1, isInterrupting);
     engine.manageDeployment(repositoryService.createDeployment().addModelInstance(CONDITIONAL_MODEL, modelInstance).deploy());
 
     //when

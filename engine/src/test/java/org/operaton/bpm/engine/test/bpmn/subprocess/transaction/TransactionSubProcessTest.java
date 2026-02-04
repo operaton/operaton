@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -645,41 +645,50 @@ class TransactionSubProcessTest {
 
   @Test
   void testMultipleCancelBoundaryFails() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultipleCancelBoundaryFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("multiple boundary events with cancelEventDefinition not supported on same transaction");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx2");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("multiple boundary events with cancelEventDefinition not supported on same transaction")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx2");
+      });
   }
 
   @Test
   void testCancelBoundaryNoTransactionFails() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelBoundaryNoTransactionFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("boundary event with cancelEventDefinition only supported on transaction subprocesses");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("boundary event with cancelEventDefinition only supported on transaction subprocesses")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx");
+      });
   }
 
   @Test
   void testCancelEndNoTransactionFails() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelEndNoTransactionFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("end event with cancelEventDefinition only supported inside transaction subprocess");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("failure");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("end event with cancelEventDefinition only supported inside transaction subprocess")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("failure");
+      });
   }
 
   @Deployment

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:c1d84583-ce22-4b2e-a3b6-bec4187522a4",
+  "serialNumber": "urn:uuid:39aa35c3-6aa3-4957-8615-d2f2316afae6",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-04T04:10:40Z",
+    "timestamp": "2026-02-04T05:43:16Z",
     "tools": {
       "components": [
         {
@@ -4078,45 +4078,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "commons-io",
       "name": "commons-io",
-      "version": "2.20.0",
+      "version": "2.21.0",
       "description": "The Apache Commons IO library contains utility classes, stream implementations, file filters, file comparators, endian transformation classes, and much more.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "94e7e6b9b5fe82388687b584d3571081"
+          "content": "bc7e020873f086ede85f97bd9f013215"
         },
         {
           "alg": "SHA-1",
-          "content": "36f3474daec2849c149e877614e7f979b2082cd2"
+          "content": "52a6f68fe5afe335cde95461dd5c3412f04996f7"
         },
         {
           "alg": "SHA-256",
-          "content": "df90bba0fe3cb586b7f164e78fe8f8f4da3f2dd5c27fa645f888100ccc25dd72"
+          "content": "7d643a2afea8b058b762aa6fb90e5b256f6c729739f8b3784c3370ddc609e88d"
         },
         {
           "alg": "SHA-512",
-          "content": "fea08e150473673b0608eaee3ae1cb4e73834039db80d3b758710d6baf3a5840a0878a4eb64739ae9bb21ccc7148c8520fe873616a3f6d5cdb4305deabdd015c"
+          "content": "7ac1aa4d834cd7cdecaee223a64c63d481810c73dfdb5109f402234a05cadf754e414cead99072f5140d4f7042ee084161935fb28129a631d908d989c5bbac5d"
         },
         {
           "alg": "SHA-384",
-          "content": "22db5e18e3512ed44474e75a124a052d5a1a6f35ce458f6a201a5ccc9510c57c10c117dba80ac6ce91745cf2b51e63f2"
+          "content": "97c07e5c4f62484c98b6777f63ab032ee09eeb1c9ddae8332890126df9c665afb9cd554db02495171738720d23c53732"
         },
         {
           "alg": "SHA3-384",
-          "content": "a70700d24df3c276ff387c359e0e940b834e413b72a49917de9a82615836eca8cca1bee1ed71790606c795da795e9151"
+          "content": "e3e44c9f4a5f4075fb62a438a84015fe2abf878e9793835a7816dc3c35141bb79fe96dfdc6bb5aef96b7c5bbbcf453c1"
         },
         {
           "alg": "SHA3-256",
-          "content": "a8d044d3a4a069d0f20d24112b6427a3a6f02a925b31b932721d1f545ff32cec"
+          "content": "1f8f4ce25b7169452dabb10ce843b3246378ea55c1971acd2300e417747b3a68"
         },
         {
           "alg": "SHA3-512",
-          "content": "3417bf811d7e5fc1e71b8540f3379751434ea8540c421ff2c8bb5f5ce34401cd0ad8a829b65aa55e055c57141181762c4827099352c2bba453e48ad2df67526a"
+          "content": "175630adf10305aeb31d737f833021a25582ffe2ef66fda6e7f694598af9c68cebbd205ade469eca4faaf6b9d349244289e62179d9cf48d93427090e2c008cf8"
         }
       ],
       "licenses": [
@@ -4127,7 +4127,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+      "purl": "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-io/",
@@ -23264,7 +23264,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "217787d2-b106-4428-991f-9008fdf09b2e",
+      "bom-ref": "3b92b33c-337b-45cc-9e7d-34da331e3aaa",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28562,7 +28562,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "d096bf6d-b3eb-48f3-83bc-711cc5d07352",
+      "bom-ref": "88125321-a42f-49dd-b842-e209ed48be62",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28918,7 +28918,7 @@
       "ref": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
       "dependsOn": [
         "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar"
       ]
     },
@@ -28927,7 +28927,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+      "ref": "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
       "dependsOn": []
     },
     {
@@ -29288,7 +29288,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
@@ -29370,7 +29370,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@1.1.0-SNAPSHOT?classifier=sources\u0026type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
@@ -29383,7 +29383,7 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@1.1.0-SNAPSHOT?classifier=tests\u0026type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.operaton.commons/operaton-commons-utils@1.1.0-SNAPSHOT?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
@@ -29526,7 +29526,7 @@
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-java@4.40.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@3.1.0?type=jar",
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar"
@@ -29939,7 +29939,7 @@
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven@3.3.4?type=jar",
         "pkg:maven/org.apache.maven.shared/maven-invoker@3.3.0?type=jar",
         "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar"
       ]
     },
@@ -30784,7 +30784,7 @@
       "dependsOn": [
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar"
       ]
     },
@@ -31391,7 +31391,7 @@
       "dependsOn": []
     },
     {
-      "ref": "217787d2-b106-4428-991f-9008fdf09b2e",
+      "ref": "3b92b33c-337b-45cc-9e7d-34da331e3aaa",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -31442,9 +31442,9 @@
       ]
     },
     {
-      "ref": "d096bf6d-b3eb-48f3-83bc-711cc5d07352",
+      "ref": "88125321-a42f-49dd-b842-e209ed48be62",
       "dependsOn": [
-        "217787d2-b106-4428-991f-9008fdf09b2e"
+        "3b92b33c-337b-45cc-9e7d-34da331e3aaa"
       ]
     },
     {

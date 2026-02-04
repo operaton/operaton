@@ -40,7 +40,8 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
 import static org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_CSS;
 import static org.operaton.bpm.webapp.plugin.resource.AbstractAppPluginRootResource.MIME_TYPE_TEXT_JAVASCRIPT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Parameterized
 public class AbstractAppPluginRootResourceTest {
@@ -107,12 +108,11 @@ public class AbstractAppPluginRootResourceTest {
     ByteArrayInputStream inputStream = new ByteArrayInputStream(ASSET_CONTENT.getBytes());
     Mockito.doReturn(inputStream).when(mockServletContext).getResourceAsStream(resourceName);
 
-    try {
-      // when
-      final Response actual = pluginRootResource.getAsset(assetName);
-
-      // then
-      if (assetAllowed) {
+    if (assetAllowed) {
+      // when/then - should not throw exception
+      assertThatCode(() -> {
+        final Response actual = pluginRootResource.getAsset(assetName);
+        
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ((StreamingOutput) actual.getEntity()).write(output);
 
@@ -121,28 +121,20 @@ public class AbstractAppPluginRootResourceTest {
         assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
         // In IDE it's String, with maven it's MediaType class
         assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0)).hasToString(assetMediaType);
+      }).doesNotThrowAnyException();
 
-        Mockito.verify(runtimeDelegate).getAppPluginRegistry();
-        Mockito.verify(pluginRegistry).getPlugin(PLUGIN_NAME);
-        Mockito.verify(mockServletContext).getResourceAsStream(resourceName);
-      } else {
-        fail("should throw RestException for '%s'", assetName);
-      }
+      Mockito.verify(runtimeDelegate).getAppPluginRegistry();
+      Mockito.verify(pluginRegistry).getPlugin(PLUGIN_NAME);
+      Mockito.verify(mockServletContext).getResourceAsStream(resourceName);
+    } else {
+      // when/then - should throw RestException
+      assertThatThrownBy(() -> pluginRootResource.getAsset(assetName))
+        .isInstanceOf(RestException.class)
+        .hasMessage("Not allowed to load the following file '%s'.".formatted(assetName));
 
-    } catch (RestException e) {
-      // then
-      if (assetAllowed) {
-        e.printStackTrace();
-        fail("should not throw RestException for '%s'", assetName);
-      } else {
-        assertThat(e)
-                .isInstanceOf(RestException.class)
-                .hasMessage("Not allowed to load the following file '%s'.".formatted(assetName));
-
-        Mockito.verify(runtimeDelegate, Mockito.never()).getAppPluginRegistry();
-        Mockito.verify(pluginRegistry, Mockito.never()).getPlugin(PLUGIN_NAME);
-        Mockito.verify(mockServletContext, Mockito.never()).getResourceAsStream(assetName);
-      }
+      Mockito.verify(runtimeDelegate, Mockito.never()).getAppPluginRegistry();
+      Mockito.verify(pluginRegistry, Mockito.never()).getPlugin(PLUGIN_NAME);
+      Mockito.verify(mockServletContext, Mockito.never()).getResourceAsStream(assetName);
     }
   }
 

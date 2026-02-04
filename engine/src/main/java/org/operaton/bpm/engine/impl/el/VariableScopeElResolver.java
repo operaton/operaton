@@ -81,9 +81,12 @@ public class VariableScopeElResolver extends ELResolver {
     }
 
     if (variableScope.hasVariable(variable)) {
-      context.setPropertyResolved(true);
+      context.setPropertyResolved(true); // if not set, the next elResolver in the CompositeElResolver will be called
       return variableScope.getVariable(variable);
     }
+
+    // property resolution (eg. bean.value) will be done by the BeanElResolver (part of the CompositeElResolver)
+    // It will use the bean resolved in this resolver as base.
 
     return null;
   }
@@ -102,7 +105,7 @@ public class VariableScopeElResolver extends ELResolver {
         && executionEntity.getActivity().getActivityBehavior() instanceof ExternalTaskActivityBehavior;
   }
 
-  private Object getExternalTask(VariableScope variableScope) {
+  private ExternalTaskEntity getExternalTask(VariableScope variableScope) {
     ExecutionEntity executionEntity = (ExecutionEntity) variableScope;
     List<ExternalTaskEntity> externalTasks = executionEntity.getExternalTasks();
     if (externalTasks.size() != 1) {

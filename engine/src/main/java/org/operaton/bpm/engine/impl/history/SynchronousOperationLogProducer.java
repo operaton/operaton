@@ -85,8 +85,10 @@ public interface SynchronousOperationLogProducer<T> {
   }
 
   private void produceSummaryLog(CommandContext commandContext, List<T> results) {
+    // create summary from multi-result operation
     List<PropertyChange> propChanges = getSummarizingPropChangesForOperation(results);
     if (propChanges == null) {
+      // convert null return value to empty list
       propChanges = Collections.singletonList(PropertyChange.EMPTY_CHANGE);
     }
     // use first result as representative for summarized operation log entry
@@ -94,6 +96,7 @@ public interface SynchronousOperationLogProducer<T> {
   }
 
   private void produceDetailedLogs(CommandContext commandContext, List<T> results, long limit) {
+    // create detailed log for each operation result
     Map<T, List<PropertyChange>> propChangesMap = getPropChangesForOperation(results);
     if (propChangesMap == null) {
       propChangesMap = results.stream().collect(Collectors.toMap(Function.identity(),
@@ -102,6 +105,7 @@ public interface SynchronousOperationLogProducer<T> {
 
     validateLimit(limit, propChangesMap.size());
 
+    // produce one operation log per affected entity
     for (Entry<T, List<PropertyChange>> entry : propChangesMap.entrySet()) {
       createOperationLogEntry(commandContext, entry.getKey(), entry.getValue(), false);
     }

@@ -121,8 +121,8 @@ updates:
     groups:
       httpcomponents5:
         patterns:
-          - "org.apache.httpcomponents.core5:*"
-          - "org.apache.httpcomponents.client5:*"
+          - "org.apache.httpcomponents.core5:httpcore5"
+          - "org.apache.httpcomponents.client5:httpclient5"
       httpcomponents4:
         patterns:
           - "org.apache.httpcomponents:*"

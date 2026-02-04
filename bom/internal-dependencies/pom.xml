@@ -388,7 +388,7 @@
       <dependency>
         <groupId>org.jboss.weld</groupId>
         <artifactId>weld-core-bom</artifactId>
-        <version>5.1.6.Final</version>
+        <version>5.1.7.Final</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

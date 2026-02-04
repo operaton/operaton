@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.springboot.project</groupId>
     <artifactId>qa-plugins</artifactId>
-    <version>2.0.0-M1</version>
+    <version>2.0.0-M2</version>
   </parent>
   <artifactId>qa-plugins-spin</artifactId>
   <packaging>pom</packaging>

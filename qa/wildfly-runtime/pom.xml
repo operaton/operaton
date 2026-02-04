@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>2.0.0-M1</version>
+    <version>2.0.0-M2</version>
   </parent>
   <artifactId>operaton-qa-wildfly-runtime</artifactId>
   <name>Operaton - QA Wildfly Test Runtime</name>

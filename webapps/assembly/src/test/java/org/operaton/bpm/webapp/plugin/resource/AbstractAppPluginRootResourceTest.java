@@ -101,7 +101,7 @@ public class AbstractAppPluginRootResourceTest {
 
   @MethodSource("getAssets")
   @ParameterizedTest
-  void shouldGetAssetIfAllowed(String assetName, String assetMediaType, boolean assetAllowed) throws Exception {
+  void shouldGetAssetIfAllowed(String assetName, String assetMediaType, boolean assetAllowed) {
     initAbstractAppPluginRootResourceTest(assetName, assetMediaType, assetAllowed);
     // given
     String resourceName = "/" + ASSET_DIR + "/" + assetName;
@@ -112,14 +112,13 @@ public class AbstractAppPluginRootResourceTest {
       // when/then - should not throw exception
       assertThatCode(() -> {
         final Response actual = pluginRootResource.getAsset(assetName);
-        
+
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         ((StreamingOutput) actual.getEntity()).write(output);
 
         assertThat(output).hasToString(ASSET_CONTENT);
         assertThat(actual.getHeaders()).containsKey(HttpHeaders.CONTENT_TYPE).hasSize(1);
         assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE)).hasSize(1);
-        // In IDE it's String, with maven it's MediaType class
         assertThat(actual.getHeaders().get(HttpHeaders.CONTENT_TYPE).get(0)).hasToString(assetMediaType);
       }).doesNotThrowAnyException();
 

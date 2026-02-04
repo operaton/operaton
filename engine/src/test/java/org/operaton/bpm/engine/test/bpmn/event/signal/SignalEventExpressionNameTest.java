@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.signal;
 
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
@@ -220,11 +221,8 @@ class SignalEventExpressionNameTest {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventExpressionNameTest.testSignalCatchIntermediate.bpmn20.xml"})
   @Test
   void testSignalExpressionErrorHandling() {
-
-    String expectedErrorMessage = "Unknown property used in expression: alert-${var}. Cannot resolve identifier 'var'";
-
     // given an empty variable mapping
-    var variables = new HashMap<String, Object>();
+    var variables = Collections.<String,Object>emptyMap();
 
     // when/then - the expression cannot be resolved and no signal should be available
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("catchSignal", variables))

@@ -97,7 +97,6 @@ class CompositeDbHistoryEventHandlerTest extends AbstractCompositeHistoryEventHa
 
   @Test
   void shouldUseCompositeDbHistoryEventHandlerArgumentConstructorWithNullTwoVarargs() {
-    // when/then
     assertThatThrownBy(() -> new CompositeDbHistoryEventHandler(null, null))
       .isInstanceOf(NullValueException.class)
       .hasMessageContaining("History event handler is null");

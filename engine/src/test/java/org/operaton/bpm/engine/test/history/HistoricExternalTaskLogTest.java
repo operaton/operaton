@@ -223,7 +223,6 @@ class HistoricExternalTaskLogTest {
 
   @Test
   void testGetExceptionStacktraceForNonexistentExternalTaskId() {
-    // when/then
     assertThatThrownBy(() -> historyService.getHistoricExternalTaskLogErrorDetails("foo"))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("No historic external task log found with id foo");
@@ -231,7 +230,6 @@ class HistoricExternalTaskLogTest {
 
   @Test
   void testGetExceptionStacktraceForNullExternalTaskId() {
-    // when/then
     assertThatThrownBy(() -> historyService.getHistoricExternalTaskLogErrorDetails(null))
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("historicExternalTaskLogId is null");

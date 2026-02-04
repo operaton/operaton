@@ -50,7 +50,6 @@ import org.operaton.commons.utils.cache.Cache;
 import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  *
@@ -130,9 +129,14 @@ class DeleteProcessDefinitionTest {
     runtimeService.createProcessInstanceByKey("process").executeWithVariablesInReturn();
     var processDefinitionId = processDefinition.getId();
 
-    // when/then - deletion should fail since there exists a process instance
+    //when the corresponding process definition is deleted from the deployment
     assertThatThrownBy(() -> repositoryService.deleteProcessDefinition(processDefinitionId))
-      .isInstanceOf(ProcessEngineException.class)
+        .as("""
+            then Exception is expected, the deletion should fail since there exist a process instance
+            and the cascade flag is per default false
+            """
+        )
+        .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining("Deletion of process definition without cascading failed.");
 
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();

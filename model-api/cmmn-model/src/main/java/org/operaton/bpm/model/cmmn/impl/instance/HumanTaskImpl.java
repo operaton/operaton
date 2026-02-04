@@ -77,6 +77,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Collection<PlanningTable> getPlanningTables() {
     return planningTableCollection.get(this);
   }
@@ -187,6 +188,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     operatonPriorityAttribute.setValue(this, operatonPriority);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(HumanTask.class, CMMN_ELEMENT_HUMAN_TASK)
         .namespaceUri(CMMN11_NS)

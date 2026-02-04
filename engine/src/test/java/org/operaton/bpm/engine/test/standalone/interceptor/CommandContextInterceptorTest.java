@@ -26,14 +26,14 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
-import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.test.RequiredHistoryLevel;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Tom Baeyens
@@ -83,18 +83,18 @@ class CommandContextInterceptorTest {
 
   @Test
   void testCommandContextNestedTryCatch() {
+    // given
     final ExceptionThrowingCmd innerCommand = new ExceptionThrowingCmd(new IdentifiableRuntimeException(1));
 
     processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
-      CommandExecutor commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutorTxRequired();
+      var commandExecutor = Context.getProcessEngineConfiguration().getCommandExecutorTxRequired();
 
-      try {
-        commandExecutor.execute(innerCommand);
-        fail("exception expected to pop up during execution of inner command");
-      } catch (IdentifiableRuntimeException e) {
-        // happy path
-        assertThat(Context.getCommandInvocationContext().getThrowable()).as("the exception should not have been propagated to this command's context").isNull();
-      }
+      // when/then
+      assertThatThrownBy(() -> commandExecutor.execute(innerCommand))
+        .isInstanceOf(IdentifiableRuntimeException.class);
+
+      // the exception should not have been propagated to this command's context
+      assertThat(Context.getCommandInvocationContext().getThrowable()).isNull();
 
       return null;
     });

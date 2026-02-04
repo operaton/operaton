@@ -61,11 +61,13 @@ public class PlanItemOnPartImpl extends OnPartImpl implements PlanItemOnPart {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Sentry getSentry() {
     return sentryRefAttribute.getReferenceTargetElement(this);
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public void setSentry(Sentry sentry) {
     sentryRefAttribute.setReferenceTargetElement(this, sentry);
   }
@@ -102,6 +104,7 @@ public class PlanItemOnPartImpl extends OnPartImpl implements PlanItemOnPart {
     child.setValue(standardEvent);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(PlanItemOnPart.class, CMMN_ELEMENT_PLAN_ITEM_ON_PART)
         .extendsType(OnPart.class)

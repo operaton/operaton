@@ -31,6 +31,10 @@ updates:
       httpcomponents4:
         patterns:
           - "org.apache.httpcomponents:*"
+      jboss-weld:
+        patterns:
+          - "org.jboss.weld.servlet:weld-servlet-shaded"
+          - "org.jboss.weld:weld-core-bom"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -117,11 +121,15 @@ updates:
     groups:
       httpcomponents5:
         patterns:
-          - "org.apache.httpcomponents.core5:*"
-          - "org.apache.httpcomponents.client5:*"
+          - "org.apache.httpcomponents.core5:httpcore5"
+          - "org.apache.httpcomponents.client5:httpclient5"
       httpcomponents4:
         patterns:
           - "org.apache.httpcomponents:*"
+      jboss-weld:
+        patterns:
+          - "org.jboss.weld.servlet:weld-servlet-shaded"
+          - "org.jboss.weld:weld-core-bom"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:

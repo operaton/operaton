@@ -36,7 +36,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.quarkus.engine.test.helper.ProcessEngineAwareExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserTransactionIntegrationTest {
 
@@ -97,17 +97,10 @@ class UserTransactionIntegrationTest {
     try {
       userTransactionManager.begin();
 
-      try {
-        runtimeService.startProcessInstanceByKey("testProcessFailure");
-        fail("Exception expected");
-      } catch (Exception ex) {
-        if (!(ex instanceof RuntimeException)) {
-          fail("Wrong exception of type " + ex + " RuntimeException expected!");
-        }
-        if (!ex.getMessage().contains("I'm a complete failure!")) {
-          fail("Different message expected");
-        }
-      }
+      // when/then
+      assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcessFailure"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("I'm a complete failure!");
 
       // assert that now our transaction is marked rollback-only:
       assertThat(userTransactionManager.getStatus()).isEqualTo(Status.STATUS_MARKED_ROLLBACK);

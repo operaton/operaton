@@ -148,13 +148,18 @@ public final class LegacyBehavior {
     boolean performLegacyBehavior = isLegacyBehaviorRequired(endedExecution);
 
     if(performLegacyBehavior) {
-      LOG.endConcurrentExecutionInEventSubprocess();
-      // notify the grandparent flow scope in a similar way PvmAtomicOperationAcitivtyEnd does
-      ScopeImpl flowScope = endedExecution.getActivity().getFlowScope();
-      if (flowScope != null) {
-        flowScope = flowScope.getFlowScope();
+      eventSubprocessConcurrentChildExecutionEndedLegacyBehavior(scopeExecution, endedExecution);
+    }
 
-        if (flowScope != null) {
+    return performLegacyBehavior;
+  }
+
+  private static void eventSubprocessConcurrentChildExecutionEndedLegacyBehavior(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
+    LOG.endConcurrentExecutionInEventSubprocess();
+    // notify the grandparent flow scope in a similar way PvmAtomicOperationAcitivtyEnd does
+    Optional.ofNullable(endedExecution.getActivity().getFlowScope())
+        .map(ScopeImpl::getFlowScope)
+        .ifPresent(flowScope -> {
           if (flowScope == endedExecution.getActivity().getProcessDefinition()) {
             endedExecution.remove();
             scopeExecution.tryPruneLastConcurrentChild();
@@ -168,11 +173,7 @@ public final class LegacyBehavior {
               compositeActivityBehavior.concurrentChildExecutionEnded(scopeExecution, endedExecution);
             }
           }
-        }
-      }
-    }
-
-    return performLegacyBehavior;
+        });
   }
 
   /**

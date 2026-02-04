@@ -47,7 +47,6 @@ import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormat
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class JsonSerializationIT {
 
@@ -287,12 +286,8 @@ class JsonSerializationIT {
 
     ExternalTask task = handler.getHandledTasks().get(0);
 
-    try {
-      task.getVariableTyped(VARIABLE_NAME_JSON);
-      fail("exception expected");
-    }
-    catch (Exception e) {
-    }
+    assertThatThrownBy(() -> task.getVariableTyped(VARIABLE_NAME_JSON))
+      .isInstanceOf(Exception.class);
 
     // However, the serialized value can be accessed
     ObjectValue typedValue = task.getVariableTyped(VARIABLE_NAME_JSON, false);
@@ -302,26 +297,14 @@ class JsonSerializationIT {
     assertThat(typedValue.isDeserialized()).isFalse();
 
     // but not the deserialized properties
-    try {
-      typedValue.getValue();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getValue)
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getValue(JsonSerializable.class);
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(() -> typedValue.getValue(JsonSerializable.class))
+      .isInstanceOf(IllegalStateException.class);
 
-    try {
-      typedValue.getObjectType();
-      fail("exception expected");
-    }
-    catch(IllegalStateException e) {
-    }
+    assertThatThrownBy(typedValue::getObjectType)
+      .isInstanceOf(IllegalStateException.class);
   }
 
   @Test

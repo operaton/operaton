@@ -120,17 +120,8 @@ public abstract class AbstractConditionalEventTestCase {
     tasksAfterVariableIsSet = null;
   }
 
-
-
   public static void assertTaskNames(List<Task> actualTasks, String ... expectedTaskNames ) {
-    List<String> expectedNames = new ArrayList<>(List.of(expectedTaskNames));
-    for (Task task : actualTasks) {
-      String actualTaskName = task.getName();
-      if (expectedNames.contains(actualTaskName)) {
-        expectedNames.remove(actualTaskName);
-      }
-    }
-    assertThat(expectedNames).isEmpty();
+    assertThat(actualTasks.stream().map(Task::getName)).contains(expectedTaskNames);
   }
 
   // conditional event sub process //////////////////////////////////////////////////////////////////////////////////////////
@@ -186,14 +177,23 @@ public abstract class AbstractConditionalEventTestCase {
                                                           String conditionExpr,
                                                           String userTaskId,
                                                           boolean isInterrupting) {
+    return addConditionalBoundaryEvent(model, activityId, conditionExpr, userTaskId, TASK_AFTER_CONDITION, isInterrupting);
+  }
+
+  protected BpmnModelInstance addConditionalBoundaryEvent(BpmnModelInstance model,
+      String activityId,
+      String conditionExpr,
+      String userTaskId,
+      String userTaskName,
+      boolean isInterrupting) {
     return modify(model)
-      .activityBuilder(activityId)
-      .boundaryEvent()
-        .cancelActivity(isInterrupting)
-        .condition(conditionExpr)
-      .userTask(userTaskId)
-        .name(TASK_AFTER_CONDITION)
-      .endEvent()
-      .done();
+        .activityBuilder(activityId)
+          .boundaryEvent()
+            .cancelActivity(isInterrupting)
+            .condition(conditionExpr)
+          .userTask(userTaskId)
+            .name(userTaskName)
+          .endEvent()
+        .done();
   }
 }

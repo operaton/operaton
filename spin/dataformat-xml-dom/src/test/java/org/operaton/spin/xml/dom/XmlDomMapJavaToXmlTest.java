@@ -17,11 +17,11 @@
 package org.operaton.spin.xml.dom;
 
 import org.junit.jupiter.api.Test;
+import org.xmlunit.assertj.XmlAssert;
 
 import org.operaton.spin.xml.XmlTestUtil;
 import org.operaton.spin.xml.mapping.NonXmlRootElementType;
 import org.operaton.spin.xml.mapping.Order;
-import org.xmlunit.assertj.XmlAssert;
 
 import static org.operaton.spin.Spin.XML;
 import static org.operaton.spin.xml.XmlTestConstants.EXAMPLE_VALIDATION_XML;

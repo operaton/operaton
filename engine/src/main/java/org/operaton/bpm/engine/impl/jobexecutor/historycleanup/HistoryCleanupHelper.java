@@ -113,16 +113,36 @@ public final class HistoryCleanupHelper {
   public static void prepareNextBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext) {
     final HistoryCleanupJobHandlerConfiguration configuration = historyCleanupBatch.getConfiguration();
     final Integer batchSize = getHistoryCleanupBatchSize(commandContext);
-    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
 
     //add process instance ids
+    addProcessInstanceIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add decision instance ids
+    addDecisionInstanceIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add case instance ids
+    addCaseInstanceIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add batch ids
+    addBatchIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add task metric ids
+    addTaskMetricIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+  }
+
+
+  private static void addProcessInstanceIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext, Integer batchSize,
+      HistoryCleanupJobHandlerConfiguration configuration) {
     final List<String> historicProcessInstanceIds = commandContext.getHistoricProcessInstanceManager()
         .findHistoricProcessInstanceIdsForCleanup(batchSize, configuration.getMinuteFrom(), configuration.getMinuteTo());
     if (!historicProcessInstanceIds.isEmpty()) {
       historyCleanupBatch.setHistoricProcessInstanceIds(historicProcessInstanceIds);
     }
+  }
 
-    //if batch is not full, add decision instance ids
+  private static void addDecisionInstanceIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     if (historyCleanupBatch.size() < batchSize && processEngineConfiguration.isDmnEnabled()) {
       final List<String> historicDecisionInstanceIds = commandContext.getHistoricDecisionInstanceManager()
           .findHistoricDecisionInstanceIdsForCleanup(batchSize - historyCleanupBatch.size(), configuration.getMinuteFrom(), configuration.getMinuteTo());
@@ -130,8 +150,11 @@ public final class HistoryCleanupHelper {
         historyCleanupBatch.setHistoricDecisionInstanceIds(historicDecisionInstanceIds);
       }
     }
+  }
 
-    //if batch is not full, add case instance ids
+  private static void addCaseInstanceIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     if (historyCleanupBatch.size() < batchSize && processEngineConfiguration.isCmmnEnabled()) {
       final List<String> historicCaseInstanceIds = commandContext.getHistoricCaseInstanceManager()
           .findHistoricCaseInstanceIdsForCleanup(batchSize - historyCleanupBatch.size(), configuration.getMinuteFrom(), configuration.getMinuteTo());
@@ -139,8 +162,11 @@ public final class HistoryCleanupHelper {
         historyCleanupBatch.setHistoricCaseInstanceIds(historicCaseInstanceIds);
       }
     }
+  }
 
-    //if batch is not full, add batch ids
+  private static void addBatchIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     Map<String, Integer> batchOperationsForHistoryCleanup = processEngineConfiguration.getParsedBatchOperationsForHistoryCleanup();
     if (historyCleanupBatch.size() < batchSize && batchOperationsForHistoryCleanup != null && !batchOperationsForHistoryCleanup.isEmpty()) {
       List<String> historicBatchIds = commandContext
@@ -150,8 +176,11 @@ public final class HistoryCleanupHelper {
         historyCleanupBatch.setHistoricBatchIds(historicBatchIds);
       }
     }
+  }
 
-    //if batch is not full, add task metric ids
+  private static void addTaskMetricIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     Integer parsedTaskMetricsTimeToLive = processEngineConfiguration.getParsedTaskMetricsTimeToLive();
     if (parsedTaskMetricsTimeToLive != null && historyCleanupBatch.size() < batchSize) {
       final List<String> taskMetricIds = commandContext.getMeterLogManager()

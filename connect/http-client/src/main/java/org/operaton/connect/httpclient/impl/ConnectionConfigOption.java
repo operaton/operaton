@@ -15,12 +15,9 @@
  */
 package org.operaton.connect.httpclient.impl;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Collection;
 import java.util.function.BiConsumer;
+
 import org.apache.hc.client5.http.config.ConnectionConfig.Builder;
-import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.util.Timeout;
 
 /**
@@ -67,22 +64,6 @@ public enum ConnectionConfigOption {
         return toTimeout(Integer.parseInt(str));
       } else {
           throw new IllegalArgumentException("Expected Timeout or Integer, got " + value.getClass().getSimpleName());
-      }
-  }
-
-  private static HttpHost toHttpHost(Object value) {
-      if (value instanceof HttpHost host) {
-          return host;
-      } else if (value instanceof String str) {
-        try {
-          return HttpHost.create(str);
-        } catch (URISyntaxException e) {
-          throw new IllegalArgumentException(str, e);
-        }
-      } else if (value instanceof URI uri) {
-        return HttpHost.create(uri);
-      } else {
-          throw new IllegalArgumentException("Expected HttpHost or String, got " + value.getClass().getSimpleName());
       }
   }
 

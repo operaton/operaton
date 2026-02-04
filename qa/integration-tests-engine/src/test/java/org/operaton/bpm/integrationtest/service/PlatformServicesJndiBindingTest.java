@@ -17,7 +17,6 @@
 package org.operaton.bpm.integrationtest.service;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
@@ -27,7 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestConstants;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ExtendWith(ArquillianExtension.class)
 public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrationTest {
@@ -41,20 +40,16 @@ public class PlatformServicesJndiBindingTest extends AbstractFoxPlatformIntegrat
 
   @Test
   void testProcessApplicationServiceBinding() {
-    try {
-      InitialContext.doLookup(testConstants.getProcessApplicationService());
-    } catch (NamingException e) {
-      fail("Failed to lookup ProcessApplicationService '%s'. Reason: %s".formatted(TestConstants.PROCESS_APPLICATION_SERVICE_JNDI_NAME, e));
-    }
+    assertThatCode(() -> InitialContext.doLookup(testConstants.getProcessApplicationService()))
+      .withFailMessage("Failed to lookup ProcessApplicationService '%s'".formatted(TestConstants.PROCESS_APPLICATION_SERVICE_JNDI_NAME))
+      .doesNotThrowAnyException();
   }
 
   @Test
   void testProcessEngineServiceBinding() {
-    try {
-      InitialContext.doLookup(testConstants.getEngineService());
-    } catch (NamingException e) {
-      fail("Failed to lookup ProcessEngineService '%s'. Reason: %s".formatted(TestConstants.PROCESS_ENGINE_SERVICE_JNDI_NAME, e));
-    }
+    assertThatCode(() -> InitialContext.doLookup(testConstants.getEngineService()))
+      .withFailMessage("Failed to lookup ProcessEngineService '%s'".formatted(TestConstants.PROCESS_ENGINE_SERVICE_JNDI_NAME))
+      .doesNotThrowAnyException();
   }
 
 }

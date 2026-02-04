@@ -28,7 +28,7 @@ import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.engine.test.Deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Alexander Tyatenkov
@@ -61,13 +61,13 @@ class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEventHand
 
   @Test
   void shouldUseCompositeHistoryEventHandlerNonArgumentConstructorAddNullEvent() {
-    CompositeHistoryEventHandler compositeHistoryEventHandler = new CompositeHistoryEventHandler();
-    try {
-      compositeHistoryEventHandler.add(null);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("History event handler is null");
-    }
+    // given
+    var compositeHistoryEventHandler = new CompositeHistoryEventHandler();
+
+    // when/then
+    assertThatThrownBy(() -> compositeHistoryEventHandler.add(null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("History event handler is null");
   }
 
   @Test
@@ -99,23 +99,21 @@ class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEventHand
 
   @Test
   void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNullVarargs() {
+    // given
     HistoryEventHandler historyEventHandler = null;
-    try {
-      new CompositeHistoryEventHandler(historyEventHandler);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("History event handler is null");
-    }
+
+    // when/then
+    assertThatThrownBy(() -> new CompositeHistoryEventHandler(historyEventHandler))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("History event handler is null");
   }
 
   @Test
   void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNullTwoVarargs() {
-    try {
-      new CompositeHistoryEventHandler(null, null);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("History event handler is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> new CompositeHistoryEventHandler(null, null))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("History event handler is null");
   }
 
   @Test
@@ -156,17 +154,15 @@ class CompositeHistoryEventHandlerTest extends AbstractCompositeHistoryEventHand
 
   @Test
   void shouldUseCompositeHistoryEventHandlerArgumentConstructorWithNotEmptyListNullTwoEvents() {
-    // prepare the list with two null events
-    List<HistoryEventHandler> historyEventHandlers = new ArrayList<>();
+    // given - prepare the list with two null events
+    var historyEventHandlers = new ArrayList<HistoryEventHandler>();
     historyEventHandlers.add(null);
     historyEventHandlers.add(null);
 
-    try {
-      new CompositeHistoryEventHandler(historyEventHandlers);
-      fail("NullValueException expected");
-    } catch (NullValueException e) {
-      assertThat(e.getMessage()).containsIgnoringCase("History event handler is null");
-    }
+    // when/then
+    assertThatThrownBy(() -> new CompositeHistoryEventHandler(historyEventHandlers))
+      .isInstanceOf(NullValueException.class)
+      .hasMessageContaining("History event handler is null");
   }
 
   @Test

@@ -71,38 +71,51 @@ public interface SynchronousOperationLogProducer<T> {
    * The implementing command can call this method to produce the operation log entries for the current operation.
    */
   default void produceOperationLog(CommandContext commandContext, List<T> results) {
-    if(results == null || results.isEmpty()) {
+    if (results == null || results.isEmpty()) {
       return;
     }
 
-    long logEntriesPerSyncOperationLimit = commandContext.getProcessEngineConfiguration()
+    long limit = commandContext.getProcessEngineConfiguration()
         .getLogEntriesPerSyncOperationLimit();
-    if(logEntriesPerSyncOperationLimit == SUMMARY_LOG && results.size() > 1) {
-      // create summary from multi-result operation
-      List<PropertyChange> propChangesForOperation = getSummarizingPropChangesForOperation(results);
-      if(propChangesForOperation == null) {
-        // convert null return value to empty list
-        propChangesForOperation = Collections.singletonList(PropertyChange.EMPTY_CHANGE);
-      }
-      // use first result as representative for summarized operation log entry
-      createOperationLogEntry(commandContext, results.get(0), propChangesForOperation, true);
+    if (limit == SUMMARY_LOG && results.size() > 1) {
+      produceSummaryLog(commandContext, results);
     } else {
-      // create detailed log for each operation result
-      Map<T, List<PropertyChange>> propChangesForOperation = getPropChangesForOperation(results);
-      if(propChangesForOperation == null ) {
-        // create a map with empty result lists for each result item
-        propChangesForOperation = results.stream().collect(Collectors.toMap(Function.identity(), result -> Collections.singletonList(PropertyChange.EMPTY_CHANGE)));
-      }
-      if (logEntriesPerSyncOperationLimit != UNLIMITED_LOG && logEntriesPerSyncOperationLimit < propChangesForOperation.size()) {
-        throw new ProcessEngineException(
-            "Maximum number of operation log entries for operation type synchronous APIs reached. Configured limit is %s but %s entities were affected by API call."
-                .formatted(logEntriesPerSyncOperationLimit, propChangesForOperation.size()));
-      } else {
-        // produce one operation log per affected entity
-        for (Entry<T, List<PropertyChange>> propChanges : propChangesForOperation.entrySet()) {
-          createOperationLogEntry(commandContext, propChanges.getKey(), propChanges.getValue(), false);
-        }
-      }
+      produceDetailedLogs(commandContext, results, limit);
+    }
+  }
+
+  private void produceSummaryLog(CommandContext commandContext, List<T> results) {
+    // create summary from multi-result operation
+    List<PropertyChange> propChanges = getSummarizingPropChangesForOperation(results);
+    if (propChanges == null) {
+      // convert null return value to empty list
+      propChanges = Collections.singletonList(PropertyChange.EMPTY_CHANGE);
+    }
+    // use first result as representative for summarized operation log entry
+    createOperationLogEntry(commandContext, results.get(0), propChanges, true);
+  }
+
+  private void produceDetailedLogs(CommandContext commandContext, List<T> results, long limit) {
+    // create detailed log for each operation result
+    Map<T, List<PropertyChange>> propChangesMap = getPropChangesForOperation(results);
+    if (propChangesMap == null) {
+      propChangesMap = results.stream().collect(Collectors.toMap(Function.identity(),
+          result -> Collections.singletonList(PropertyChange.EMPTY_CHANGE)));
+    }
+
+    validateLimit(limit, propChangesMap.size());
+
+    // produce one operation log per affected entity
+    for (Entry<T, List<PropertyChange>> entry : propChangesMap.entrySet()) {
+      createOperationLogEntry(commandContext, entry.getKey(), entry.getValue(), false);
+    }
+  }
+
+  private void validateLimit(long limit, int affectedEntities) {
+    if (limit != UNLIMITED_LOG && limit < affectedEntities) {
+      throw new ProcessEngineException(
+          "Maximum number of operation log entries for operation type synchronous APIs reached. Configured limit is %s but %s entities were affected by API call."
+              .formatted(limit, affectedEntities));
     }
   }
 }

@@ -43,7 +43,8 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.historic
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
 import static java.util.Collections.singletonList;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -154,16 +155,11 @@ class MultiTenancyHistoricBatchQueryTest {
     identityService.setAuthentication("user", null, singletonList(TENANT_ONE));
     var tenant2BatchId = tenant2Batch.getId();
 
-    // when
-    try {
-      historyService.deleteHistoricBatch(tenant2BatchId);
-      fail("exception expected");
-    }
-    catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("Cannot delete historic batch '"+ tenant2Batch.getId()
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricBatch(tenant2BatchId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot delete historic batch '"+ tenant2Batch.getId()
         +"' because it belongs to no authenticated tenant");
-    }
 
     identityService.clearAuthentication();
   }

@@ -45,8 +45,6 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.InputStreamEntity;
 import org.apache.hc.core5.http.message.BasicClassicHttpRequest;
 
-import org.apache.hc.core5.util.Timeout;
-import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.connect.httpclient.HttpBaseRequest;
 import org.operaton.connect.httpclient.HttpResponse;
 import org.operaton.connect.httpclient.impl.util.ParseUtil;

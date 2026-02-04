@@ -26,7 +26,7 @@ import org.operaton.bpm.model.xml.testmodel.instance.*;
 
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
 import static org.operaton.bpm.model.xml.testmodel.TestModelConstants.MODEL_NAMESPACE;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -127,21 +127,12 @@ class ModelElementTypeTest {
     Animals animals = (Animals) animalsType.newInstance(modelInstance);
     modelInstance.setDocumentElement(animals);
 
-    try {
-      animalType.newInstance(modelInstance);
-      fail("Animal is a abstract type and not instance can be created.");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(ModelTypeException.class);
-    }
+    // when/then
+    assertThatThrownBy(() -> animalType.newInstance(modelInstance))
+      .isInstanceOf(ModelTypeException.class);
 
-    try {
-      flyingAnimalType.newInstance(modelInstance);
-      fail("Flying animal is a abstract type and not instance can be created.");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(ModelTypeException.class);
-    }
+    assertThatThrownBy(() -> flyingAnimalType.newInstance(modelInstance))
+      .isInstanceOf(ModelTypeException.class);
 
     animals.getAnimals().add((Animal) birdType.newInstance(modelInstance));
     animals.getAnimals().add((Animal) birdType.newInstance(modelInstance));

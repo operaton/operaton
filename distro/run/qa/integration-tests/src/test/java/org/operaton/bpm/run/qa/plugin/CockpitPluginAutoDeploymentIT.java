@@ -31,7 +31,7 @@ import org.operaton.bpm.run.qa.util.SpringBootManagedContainer;
 
 import static io.restassured.RestAssured.when;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class CockpitPluginAutoDeploymentIT {
 
@@ -105,11 +105,9 @@ class CockpitPluginAutoDeploymentIT {
 
   void undeployPlugins() {
     for (String pluginPath : deployedPlugins) {
-      try {
-        Files.delete(Path.of(pluginPath));
-      } catch (IOException e) {
-        fail("unable to undeploy plugin " + pluginPath);
-      }
+      assertThatCode(() -> Files.delete(Path.of(pluginPath)))
+        .as("unable to undeploy plugin " + pluginPath)
+        .doesNotThrowAnyException();
     }
   }
 }

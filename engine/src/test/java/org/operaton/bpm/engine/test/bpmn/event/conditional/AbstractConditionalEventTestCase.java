@@ -123,14 +123,7 @@ public abstract class AbstractConditionalEventTestCase {
 
 
   public static void assertTaskNames(List<Task> actualTasks, String ... expectedTaskNames ) {
-    List<String> expectedNames = new ArrayList<>(List.of(expectedTaskNames));
-    for (Task task : actualTasks) {
-      String actualTaskName = task.getName();
-      if (expectedNames.contains(actualTaskName)) {
-        expectedNames.remove(actualTaskName);
-      }
-    }
-    assertThat(expectedNames).isEmpty();
+    assertThat(actualTasks.stream().map(Task::getName)).contains(expectedTaskNames);
   }
 
   // conditional event sub process //////////////////////////////////////////////////////////////////////////////////////////

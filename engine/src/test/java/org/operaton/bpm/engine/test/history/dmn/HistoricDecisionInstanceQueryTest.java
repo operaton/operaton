@@ -53,7 +53,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Philipp Ossler
@@ -286,13 +287,13 @@ class HistoricDecisionInstanceQueryTest {
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
   void testQueryByInvalidDecisionDefinitionIdIn() {
-    HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    try {
-      query.decisionDefinitionIdIn("aFake", null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("decisionDefinitionIdIn contains null value");
-    }
+    // given
+    var query = historyService.createHistoricDecisionInstanceQuery();
+
+    // when/then
+    assertThatThrownBy(() -> query.decisionDefinitionIdIn("aFake", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("decisionDefinitionIdIn contains null value");
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
@@ -315,13 +316,13 @@ class HistoricDecisionInstanceQueryTest {
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
   void testQueryByInvalidDecisionDefinitionKeyIn() {
-    HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    try {
-      query.decisionDefinitionKeyIn("aFake", null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("decisionDefinitionKeyIn contains null value");
-    }
+    // given
+    var query = historyService.createHistoricDecisionInstanceQuery();
+
+    // when/then
+    assertThatThrownBy(() -> query.decisionDefinitionKeyIn("aFake", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("decisionDefinitionKeyIn contains null value");
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})

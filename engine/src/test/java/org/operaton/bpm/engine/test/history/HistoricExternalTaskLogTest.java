@@ -42,8 +42,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.DEFAULT_TOPIC;
 import static org.operaton.bpm.engine.test.api.runtime.migration.models.builder.DefaultExternalTaskModelBuilder.createDefaultExternalTaskModel;
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class HistoricExternalTaskLogTest {
@@ -223,24 +223,16 @@ class HistoricExternalTaskLogTest {
 
   @Test
   void testGetExceptionStacktraceForNonexistentExternalTaskId() {
-    try {
-      historyService.getHistoricExternalTaskLogErrorDetails("foo");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      String expectedMessage = "No historic external task log found with id foo";
-      assertThat(re.getMessage()).contains(expectedMessage);
-    }
+    assertThatThrownBy(() -> historyService.getHistoricExternalTaskLogErrorDetails("foo"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic external task log found with id foo");
   }
 
   @Test
   void testGetExceptionStacktraceForNullExternalTaskId() {
-    try {
-      historyService.getHistoricExternalTaskLogErrorDetails(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      String expectedMessage = "historicExternalTaskLogId is null";
-      assertThat(re.getMessage()).contains(expectedMessage);
-    }
+    assertThatThrownBy(() -> historyService.getHistoricExternalTaskLogErrorDetails(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("historicExternalTaskLogId is null");
   }
 
   @Test

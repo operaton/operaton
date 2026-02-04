@@ -120,8 +120,6 @@ public abstract class AbstractConditionalEventTestCase {
     tasksAfterVariableIsSet = null;
   }
 
-
-
   public static void assertTaskNames(List<Task> actualTasks, String ... expectedTaskNames ) {
     assertThat(actualTasks.stream().map(Task::getName)).contains(expectedTaskNames);
   }
@@ -179,14 +177,23 @@ public abstract class AbstractConditionalEventTestCase {
                                                           String conditionExpr,
                                                           String userTaskId,
                                                           boolean isInterrupting) {
+    return addConditionalBoundaryEvent(model, activityId, conditionExpr, userTaskId, TASK_AFTER_CONDITION, isInterrupting);
+  }
+
+  protected BpmnModelInstance addConditionalBoundaryEvent(BpmnModelInstance model,
+      String activityId,
+      String conditionExpr,
+      String userTaskId,
+      String userTaskName,
+      boolean isInterrupting) {
     return modify(model)
-      .activityBuilder(activityId)
-      .boundaryEvent()
-        .cancelActivity(isInterrupting)
-        .condition(conditionExpr)
-      .userTask(userTaskId)
-        .name(TASK_AFTER_CONDITION)
-      .endEvent()
-      .done();
+        .activityBuilder(activityId)
+          .boundaryEvent()
+            .cancelActivity(isInterrupting)
+            .condition(conditionExpr)
+          .userTask(userTaskId)
+            .name(userTaskName)
+          .endEvent()
+        .done();
   }
 }

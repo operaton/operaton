@@ -247,7 +247,7 @@ class FoxJobRetryCmdTest {
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedIntermediateThrowingSignalEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.failingSignalStart.bpmn20.xml" })
   @Test
-  @Disabled
+  @Disabled("Runs into endless loop - investigate why")
   void testFailedIntermediateThrowingSignalEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedIntermediateThrowingSignalEvent");
 
@@ -304,7 +304,7 @@ class FoxJobRetryCmdTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
   @Test
-  @Disabled
+  @Disabled("job.getLockExpirationTime is null")
   void testFailedRetryWithTimeShift() throws Exception {
     // set date to hour before time shift (2015-10-25T03:00:00 CEST =>
     // 2015-10-25T02:00:00 CET)

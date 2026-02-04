@@ -1153,7 +1153,7 @@ class CompensateEventTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  @Disabled
+  @Disabled("Activity id at index 2 is 'subProcess' instead of 'subProcessEnd' - investigate")
   @Test
   void testDeleteInstanceWithEventScopeExecution()
   {

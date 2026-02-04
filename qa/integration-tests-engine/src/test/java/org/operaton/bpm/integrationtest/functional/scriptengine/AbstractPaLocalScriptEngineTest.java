@@ -22,7 +22,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.application.ProcessApplicationReference;
-import org.operaton.bpm.application.ProcessApplicationUnavailableException;
 import org.operaton.bpm.engine.impl.application.ProcessApplicationManager;
 import org.operaton.bpm.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;

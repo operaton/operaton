@@ -64,52 +64,66 @@ public final class TypeHelper {
   static JavaType constructType(Object value) {
     TypeFactory typeFactory = TypeFactory.defaultInstance();
     if (value instanceof Collection<?> collection) {
-      int size = collection.size();
-      if (size > 0) {
-        Iterator<?> iterator = collection.iterator();
-
-        Object element = null;
-        do {
-          element = iterator.next();
-
-          if (bindingsArePresent(value.getClass(), 1) && (element != null || size == 1)) {
-            JavaType elementType = constructType(element);
-            return typeFactory.constructCollectionType(guessCollectionType(value), elementType);
-
-          }
-        } while (iterator.hasNext() && element == null);
+      JavaType collectionType = constructCollectionType(collection);
+      if (collectionType != null) {
+        return collectionType;
       }
     } else if (value instanceof Map<?, ?> map) {
-      int size = map.size();
-      if (size > 0) {
-        Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
-        Iterator<? extends Map.Entry<?, ?>> iterator = entries.iterator();
-
-        Map.Entry<?, ?> entry = null;
-        do {
-          entry = iterator.next();
-
-          if (bindingsArePresent(value.getClass(), 2) && (entry.getValue() != null || size == 1)) {
-            JavaType keyType = constructType(entry.getKey());
-            JavaType valueType = constructType(entry.getValue());
-            return typeFactory.constructMapType(Map.class, keyType, valueType);
-
-          }
-        } while (iterator.hasNext() && entry.getValue() == null);
-
-        JavaType keyType = constructType(entry.getKey());
-        return typeFactory.constructMapType(Map.class, keyType, TypeFactory.unknownType());
-
+      JavaType mapType = constructMapType(map);
+      if (mapType != null) {
+        return mapType;
       }
     }
 
     if (value != null) {
       return typeFactory.constructType(value.getClass());
-
     } else {
       return TypeFactory.unknownType();
-
     }
+  }
+
+  private static JavaType constructCollectionType (Collection<?> collection) {
+    TypeFactory typeFactory = TypeFactory.defaultInstance();
+    if (collection.isEmpty()) {
+      return null;
+    }
+
+    Iterator<?> iterator = collection.iterator();
+    Object element;
+    do {
+      element = iterator.next();
+
+      if (bindingsArePresent(collection.getClass(), 1) && (element != null || collection.size() == 1)) {
+        JavaType elementType = constructType(element);
+        return typeFactory.constructCollectionType(guessCollectionType(collection), elementType);
+
+      }
+    } while (iterator.hasNext() && element == null);
+    return null;
+  }
+
+  private static JavaType constructMapType (Map<?,?> map) {
+    TypeFactory typeFactory = TypeFactory.defaultInstance();
+    if (map.isEmpty()) {
+      return null;
+    }
+    Set<? extends Map.Entry<?, ?>> entries = map.entrySet();
+    Iterator<? extends Map.Entry<?, ?>> iterator = entries.iterator();
+
+    Map.Entry<?, ?> entry;
+    do {
+      entry = iterator.next();
+
+      if (bindingsArePresent(map.getClass(), 2) && (entry.getValue() != null || map.size() == 1)) {
+        JavaType keyType = constructType(entry.getKey());
+        JavaType valueType = constructType(entry.getValue());
+        return typeFactory.constructMapType(Map.class, keyType, valueType);
+
+      }
+    } while (iterator.hasNext() && entry.getValue() == null);
+
+    JavaType keyType = constructType(entry.getKey());
+    return typeFactory.constructMapType(Map.class, keyType, TypeFactory.unknownType());
   }
 
   /**

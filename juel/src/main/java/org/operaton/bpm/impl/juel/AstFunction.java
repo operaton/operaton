@@ -53,60 +53,96 @@ public class AstFunction extends AstRightValue implements FunctionNode {
 		throws InvocationTargetException, IllegalAccessException {
 		Class<?>[] types = method.getParameterTypes();
 		Object[] invocationParams = null;
-		if (types.length > 0) {
-			invocationParams = new Object[types.length];
-			if (varargs && method.isVarArgs()) {
-				for (int i = 0; i < invocationParams.length - 1; i++) {
-					Object param = getParam(i).eval(bindings, context);
-					if (param != null || types[i].isPrimitive()) {
-						invocationParams[i] = bindings.convert(param, types[i]);
-					}
-				}
-				int varargIndex = types.length - 1;
-				Class<?> varargType = types[varargIndex].getComponentType();
-				int length = getParamCount() - varargIndex;
-				Object array = null;
-				if (length == 1) { // special: eventually use argument as is
-					Object param = getParam(varargIndex).eval(bindings, context);
-					if (param != null && param.getClass().isArray()) {
-						if (types[varargIndex].isInstance(param)) {
-							array = param;
-						} else { // coerce array elements
-							length = Array.getLength(param);
-							array = Array.newInstance(varargType, length);
-							for (int i = 0; i < length; i++) {
-								Object elem = Array.get(param, i);
-								if (elem != null || varargType.isPrimitive()) {
-									Array.set(array, i, bindings.convert(elem, varargType));
-								}
-							}
-						}
-					} else { // single element array
-						array = Array.newInstance(varargType, 1);
-						if (param != null || varargType.isPrimitive()) {
-							Array.set(array, 0, bindings.convert(param, varargType));
-						}
-					}
-				} else {
-					array = Array.newInstance(varargType, length);
-					for (int i = 0; i < length; i++) {
-						Object param = getParam(varargIndex + i).eval(bindings, context);
-						if (param != null || varargType.isPrimitive()) {
-							Array.set(array, i, bindings.convert(param, varargType));
-						}
-					}
-				}
-				invocationParams[varargIndex] = array;
-			} else {
-				for (int i = 0; i < invocationParams.length; i++) {
-					Object param = getParam(i).eval(bindings, context);
-					if (param != null || types[i].isPrimitive()) {
-						invocationParams[i] = bindings.convert(param, types[i]);
-					}
-				}
+		if (types.length == 0) {
+		return method.invoke(base, invocationParams);
+		}
+
+		invocationParams = new Object[types.length];
+		if (varargs && method.isVarArgs()) {
+			convertVarArgsInvocationParams(bindings, context, invocationParams, types);
+		} else {
+			convertNonVarArgsInvocationParams(bindings, context, invocationParams, types);
+		}
+
+		return method.invoke(base, invocationParams);
+	}
+
+	private void convertVarArgsInvocationParams(Bindings bindings, ELContext context, Object[] invocationParams, Class<?>[] types) {
+		for (int i = 0; i < invocationParams.length - 1; i++) {
+			Object param = getParam(i).eval(bindings, context);
+			if (param != null || types[i].isPrimitive()) {
+				invocationParams[i] = bindings.convert(param, types[i]);
 			}
 		}
-		return method.invoke(base, invocationParams);
+		int varargIndex = types.length - 1;
+		Class<?> varargType = types[varargIndex].getComponentType();
+		int length = getParamCount() - varargIndex;
+		Object array;
+		switch (length) {
+		case 0:
+			array = Array.newInstance(varargType, 0);
+			break;
+		case 1:
+			array = convertSingleVarArgsParamToArray(bindings, context, types, varargIndex, varargType);
+			break;
+		default:
+			array = convertMultiVarArgParamsToArray(bindings, context, varargType, length, varargIndex);
+			break;
+		}
+
+		invocationParams[varargIndex] = array;
+	}
+
+
+	private Object convertSingleVarArgsParamToArray(Bindings bindings, ELContext context, Class<?>[] types, int varargIndex, Class<?> varargType) {
+		Object array;
+		Object param = getParam(varargIndex).eval(bindings, context);
+		if (param != null && param.getClass().isArray()) {
+			if (types[varargIndex].isInstance(param)) {
+				array = param;
+			} else { // coerce array elements
+				array = coerceArrayElements(bindings, param, varargType);
+			}
+		} else { // single element array
+			array = Array.newInstance(varargType, 1);
+			if (param != null || varargType.isPrimitive()) {
+				Array.set(array, 0, bindings.convert(param, varargType));
+			}
+		}
+		return array;
+	}
+
+	private Object convertMultiVarArgParamsToArray(Bindings bindings, ELContext context, Class<?> varargType, int length, int varargIndex) {
+		Object array;
+		array = Array.newInstance(varargType, length);
+		for (int i = 0; i < length; i++) {
+			Object param = getParam(varargIndex + i).eval(bindings, context);
+			if (param != null || varargType.isPrimitive()) {
+				Array.set(array, i, bindings.convert(param, varargType));
+			}
+		}
+		return array;
+	}
+
+	private static Object coerceArrayElements(Bindings bindings, Object param, Class<?> varargType) {
+		int length = Array.getLength(param);
+		Object array = Array.newInstance(varargType, length);
+		for (int i = 0; i < length; i++) {
+			Object elem = Array.get(param, i);
+			if (elem != null || varargType.isPrimitive()) {
+				Array.set(array, i, bindings.convert(elem, varargType));
+			}
+		}
+		return array;
+	}
+
+	private void convertNonVarArgsInvocationParams(Bindings bindings, ELContext context, Object[] invocationParams, Class<?>[] types) {
+		for (int i = 0; i < invocationParams.length; i++) {
+			Object param = getParam(i).eval(bindings, context);
+			if (param != null || types[i].isPrimitive()) {
+				invocationParams[i] = bindings.convert(param, types[i]);
+			}
+		}
 	}
 
 	@Override

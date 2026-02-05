@@ -604,31 +604,42 @@ public class Parser {
 		while (true) {
 			switch (token.getSymbol()) {
 				case DOT:
-					consumeToken();
-					String name = consumeToken(Scanner.Symbol.IDENTIFIER).getImage();
-					AstDot dot = createAstDot(v, name, lvalue);
-					if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
-						v = createAstMethod(dot, params());
-					} else {
-						v = dot;
-					}
+					v = parseDotToken(v, lvalue);
 					break;
 				case LBRACK:
-					consumeToken();
-					AstNode property = expr(true);
-					boolean strict = !context.isEnabled(Builder.Feature.NULL_PROPERTIES);
-					consumeToken(Scanner.Symbol.RBRACK);
-					AstBracket bracket = createAstBracket(v, property, lvalue, strict);
-					if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
-						v = createAstMethod(bracket, params());
-					} else {
-						v = bracket;
-					}
+					v = parseLBrackToken(v, lvalue);
 					break;
 				default:
 					return v;
 			}
 		}
+	}
+
+	private AstNode parseDotToken(AstNode v, boolean lvalue) throws Scanner.ScanException, ParseException {
+		consumeToken();
+		String name = consumeToken(Scanner.Symbol.IDENTIFIER).getImage();
+		AstDot dot = createAstDot(v, name, lvalue);
+		if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
+			v = createAstMethod(dot, params());
+		} else {
+			v = dot;
+		}
+		return v;
+	}
+
+
+	private AstNode parseLBrackToken(AstNode v, boolean lvalue) throws Scanner.ScanException, ParseException {
+		consumeToken();
+		AstNode property = expr(true);
+		boolean strict = !context.isEnabled(Builder.Feature.NULL_PROPERTIES);
+		consumeToken(Scanner.Symbol.RBRACK);
+		AstBracket bracket = createAstBracket(v, property, lvalue, strict);
+		if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
+			v = createAstMethod(bracket, params());
+		} else {
+			v = bracket;
+		}
+		return v;
 	}
 
 	/**

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:2eae993f-f5d2-43ed-bf95-e943f7037102",
+  "serialNumber": "urn:uuid:70381c53-1920-490a-929f-85de86fdb722",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-04T19:53:33Z",
+    "timestamp": "2026-02-05T08:50:37Z",
     "tools": {
       "components": [
         {
@@ -3920,45 +3920,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "bom-ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.commons",
       "name": "commons-compress",
-      "version": "1.27.1",
+      "version": "1.28.0",
       "description": "Apache Commons Compress defines an API for working with compression and archive formats. These include bzip2, gzip, pack200, LZMA, XZ, Snappy, traditional Unix Compress, DEFLATE, DEFLATE64, LZ4, Brotli, Zstandard and ar, cpio, jar, tar, zip, dump, 7z, arj.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "1db4bd87b0082044c6e7a6af0b977a3e"
+          "content": "f33efe616d561f8281ef7bf9f2576ad0"
         },
         {
           "alg": "SHA-1",
-          "content": "a19151084758e2fbb6b41eddaa88e7b8ff4e6599"
+          "content": "e482f2c7a88dac3c497e96aa420b6a769f59c8d7"
         },
         {
           "alg": "SHA-256",
-          "content": "293d80f54b536b74095dcd7ea3cf0a29bbfc3402519281332495f4420d370d16"
+          "content": "e1522945218456f3649a39bc4afd70ce4bd466221519dba7d378f2141a4642ca"
         },
         {
           "alg": "SHA-512",
-          "content": "5e1fcf9f552ab86beceef6743609e97d700dcbaa5b5ee58858e765c1238cd4dbca2852e1eb415bc2a09dad478d31197ddf09b2ba148dd30be8c9ecd565775226"
+          "content": "f1f140f4f40ab3cf3265919db9dbb95a631a29aa784e305f291de4e68876bb711d9217d62d7937cddddd393982decdf71a608b4b3ab7f4e6375cf28af2893d7f"
         },
         {
           "alg": "SHA-384",
-          "content": "307707c885a45c1725e940b9e42d75871d47442fcc31ec9d8fa56af2e1a2372eed178ebf86c61b5a577465a2674c0f1f"
+          "content": "afe6a8fc8e7486c4ecce95276bb1467763d7ff7d941c7bcff8661bbbd4bff442fd0899ff7a11bc540cda86818ee4a8f0"
         },
         {
           "alg": "SHA3-384",
-          "content": "b87d7b7f6f0db51fcfb4bf0adf31795dc0083564dcc524df345fbbe3546c8357b61ebef793654003a5bcc2e7368bc3a4"
+          "content": "6afb636ad0805e522913cfd91c8293c485b7f4eff5e45dd3a17a716c3f4b8ab8969e9c00927559a5fb762cba1fdb3d3f"
         },
         {
           "alg": "SHA3-256",
-          "content": "39b8fb032df8934793dddf257ec49d0d7cd16a75e45bea716a21aa0278901621"
+          "content": "4420e0b462b5dcc45077e95e012a82a5ae17659e5abe8a685fa086dab6995298"
         },
         {
           "alg": "SHA3-512",
-          "content": "40f6d1a9074546b05b42b3841c95b23e21df6f3e2bbe8bbe2905e9676ae51da768df315819cdffaa4f703ea3aec7aeb89f8f3b07c82ea2df3a936d425d606634"
+          "content": "23e37d13c8ee6c7369e407c29d1f9ee1bb44eca9f09a6f9742f6b4cf3d38dd7a0509fe0142536cd8087b68a76e71d819105af2c23f2aeed08acc58eb93cf7e61"
         }
       ],
       "licenses": [
@@ -3969,14 +3969,14 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "purl": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-compress/",
           "type": "website"
         },
         {
-          "url": "https://github.com/apache/commons-parent/actions",
+          "url": "https://github.com/apache/commons-compress/actions",
           "type": "build-system"
         },
         {
@@ -33788,7 +33788,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5cf9dfd7-6100-418e-8e41-0b8eb6bb801b",
+      "bom-ref": "174fdaac-3b2e-47f7-92a9-af5ebc5ba77b",
       "name": "package-lock.json",
       "properties": [
         {
@@ -37463,9 +37463,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/jquery-ui@1.13.2",
+      "bom-ref": "pkg:npm/jquery-ui@1.14.2",
       "name": "jquery-ui",
-      "version": "1.13.2",
+      "version": "1.14.2",
       "licenses": [
         {
           "license": {
@@ -37473,11 +37473,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/jquery-ui@1.13.2",
+      "purl": "pkg:npm/jquery-ui@1.14.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "jquery-ui@1.13.2"
+          "value": "jquery-ui@1.14.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -39086,7 +39086,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "92c0de5c-bacc-4a8a-bdf7-7dbbac8a9ddc",
+      "bom-ref": "c1bbbd47-21f6-41fe-ba01-9900b520d500",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -39433,14 +39433,14 @@
       "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
-        "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+        "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
         "pkg:maven/org.rnorth.duct-tape/duct-tape@1.0.8?type=jar",
         "pkg:maven/com.github.docker-java/docker-java-api@3.7.0?type=jar",
         "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.7.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "dependsOn": [
         "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
@@ -40465,7 +40465,7 @@
         "pkg:maven/org.apache.maven.shared/maven-invoker@3.3.0?type=jar",
         "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
-        "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar"
+        "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar"
       ]
     },
     {
@@ -43053,7 +43053,7 @@
       "dependsOn": []
     },
     {
-      "ref": "5cf9dfd7-6100-418e-8e41-0b8eb6bb801b",
+      "ref": "174fdaac-3b2e-47f7-92a9-af5ebc5ba77b",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -43090,7 +43090,7 @@
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.3.4",
-        "pkg:npm/jquery-ui@1.13.2",
+        "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
         "pkg:npm/moment@2.30.1",
@@ -43104,9 +43104,9 @@
       ]
     },
     {
-      "ref": "92c0de5c-bacc-4a8a-bdf7-7dbbac8a9ddc",
+      "ref": "c1bbbd47-21f6-41fe-ba01-9900b520d500",
       "dependsOn": [
-        "5cf9dfd7-6100-418e-8e41-0b8eb6bb801b"
+        "174fdaac-3b2e-47f7-92a9-af5ebc5ba77b"
       ]
     },
     {
@@ -44135,7 +44135,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/jquery-ui@1.13.2",
+      "ref": "pkg:npm/jquery-ui@1.14.2",
       "dependsOn": [
         "pkg:npm/jquery@3.7.1"
       ]

@@ -98,7 +98,8 @@ class TaskCountByCandidateGroupAuthorizationTest {
     authenticate();
 
     // when/then
-    assertThatThrownBy(() -> taskService.createTaskReport().taskCountByCandidateGroup())
+    var taskReport = taskService.createTaskReport();
+    assertThatThrownBy(taskReport::taskCountByCandidateGroup)
       .isInstanceOf(AuthorizationException.class)
       .hasMessageContaining(userId + "' does not have 'READ' permission on resource '*' of type 'Task'");
 

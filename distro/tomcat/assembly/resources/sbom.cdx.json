@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:ba868c7d-768c-4ee2-8b62-84419067566d",
+  "serialNumber": "urn:uuid:9e917018-ad2e-4447-9586-50c99645bc04",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-04T07:24:55Z",
+    "timestamp": "2026-02-05T05:05:54Z",
     "tools": {
       "components": [
         {
@@ -62,11 +62,11 @@
     },
     "component": {
       "type": "application",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "This pom defines the modules that make up the build. The parent pom for all Operaton projects can be found in the parent directory relative to this file.",
       "licenses": [
         {
@@ -75,7 +75,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org",
@@ -95,11 +95,11 @@
   "components": [
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-parent",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "This pom is the parent of all Operaton projects",
       "licenses": [
         {
@@ -108,7 +108,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org",
@@ -126,11 +126,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.commons",
       "name": "operaton-commons-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Commons - Root POM",
       "licenses": [
         {
@@ -139,7 +139,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-commons-root",
@@ -157,11 +157,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.commons",
       "name": "operaton-commons-logging",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Commons - Logging",
       "licenses": [
         {
@@ -170,7 +170,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-logging",
@@ -1071,11 +1071,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.commons",
       "name": "operaton-commons-utils",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Commons - Utils",
       "licenses": [
         {
@@ -1084,7 +1084,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-utils",
@@ -1102,11 +1102,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-archunit",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - ArchUnit",
       "licenses": [
         {
@@ -1115,7 +1115,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-bpm-archunit",
@@ -1402,11 +1402,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.model",
       "name": "operaton-model-apis",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Model APIs",
       "licenses": [
         {
@@ -1415,7 +1415,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-model-apis",
@@ -1433,11 +1433,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.model",
       "name": "operaton-xml-model",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - XML Model API",
       "licenses": [
         {
@@ -1446,7 +1446,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-model-apis/operaton-xml-model",
@@ -1464,11 +1464,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.model",
       "name": "operaton-bpmn-model",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - BPMN Model API",
       "licenses": [
         {
@@ -1477,7 +1477,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-model-apis/operaton-bpmn-model",
@@ -1495,11 +1495,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.model",
       "name": "operaton-cmmn-model",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - CMMN Model API",
       "licenses": [
         {
@@ -1508,7 +1508,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-model-apis/operaton-cmmn-model",
@@ -1526,11 +1526,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.juel",
       "name": "operaton-juel",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - JUEL",
       "licenses": [
         {
@@ -1539,7 +1539,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-juel",
@@ -1637,11 +1637,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.commons",
       "name": "operaton-commons-typed-values",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Commons - Typed Values",
       "licenses": [
         {
@@ -1650,7 +1650,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-commons-typed-values",
@@ -1940,11 +1940,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.model",
       "name": "operaton-dmn-model",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Model API",
       "licenses": [
         {
@@ -1953,7 +1953,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-model-apis/operaton-dmn-model",
@@ -2045,11 +2045,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.dmn",
       "name": "operaton-engine-dmn-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Engine - Root",
       "licenses": [
         {
@@ -2058,7 +2058,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-engine-dmn-root",
@@ -2076,11 +2076,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.dmn",
       "name": "operaton-engine-feel-api",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Engine - FEEL - API",
       "licenses": [
         {
@@ -2089,7 +2089,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-engine-dmn-root/operaton-engine-feel-api",
@@ -2107,11 +2107,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.dmn",
       "name": "operaton-engine-feel-juel",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Engine - FEEL - JUEL",
       "licenses": [
         {
@@ -2120,7 +2120,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-engine-dmn-root/operaton-engine-feel-juel",
@@ -2138,11 +2138,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.dmn",
       "name": "operaton-engine-feel-scala",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Engine - FEEL - SCALA",
       "licenses": [
         {
@@ -2151,7 +2151,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-engine-dmn-root/operaton-engine-feel-scala",
@@ -2562,11 +2562,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.dmn",
       "name": "operaton-engine-dmn",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Engine",
       "licenses": [
         {
@@ -2575,7 +2575,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-engine-dmn-root/operaton-engine-dmn",
@@ -3433,11 +3433,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.commons",
       "name": "operaton-commons-testing",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Commons - Testing",
       "licenses": [
         {
@@ -3446,7 +3446,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-commons-root/operaton-commons-testing",
@@ -3464,11 +3464,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-database-settings",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Provides general dependencies and profiles for database testing",
       "licenses": [
         {
@@ -3477,7 +3477,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings",
@@ -3562,11 +3562,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-test-utils-testcontainers",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Test Utils - Testcontainers",
       "licenses": [
         {
@@ -3575,7 +3575,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-test-utils-testcontainers",
@@ -3738,45 +3738,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
+      "bom-ref": "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "commons-codec",
       "name": "commons-codec",
-      "version": "1.19.0",
+      "version": "1.21.0",
       "description": "The Apache Commons Codec component contains encoders and decoders for formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e46fa78c69544eb6239c4e8447e72544"
+          "content": "c49977029838babaf8a71485aa9aaef8"
         },
         {
           "alg": "SHA-1",
-          "content": "8c0dbe3ae883fceda9b50a6c76e745e548073388"
+          "content": "d95f998db5f89900fe895daf6cd2cddcb2f1d64b"
         },
         {
           "alg": "SHA-256",
-          "content": "5c3881e4f556855e9c532927ee0c9dfde94cc66760d5805c031a59887070af5f"
+          "content": "4da851cb6abfb98bfe9eb77c5e5fc47f5414fa28b94e21b7fd9a646705dc167f"
         },
         {
           "alg": "SHA-512",
-          "content": "d98a7a1cfcc08aa9cce4f7778e3f37ecb99da7b1da01944e5fa8faf06fbf9f969f2efb0b416832f419d53085250f711c071f1dac9fa0968483c37034198367fb"
+          "content": "3ceb4aa588d0b918e46b1ddda9ff41b5a765985bf66542d2728458fc3f83b9dedfd972ff5d919cf6f456fbaa9f8c4e5f0c0913848ec3a471c316374e683b1f2a"
         },
         {
           "alg": "SHA-384",
-          "content": "f0edec3cd84b2320e6930380d3fe13335d33f041470d27fb93789db0c696ec01dda21b471f0015bf70bffffcbfdb67c0"
+          "content": "05786582b0a85264688ad5b49ad6da09db1cdfe6301cf31ddea48f97f45b13ff25d9e3def1702890457fd5bbbd00f793"
         },
         {
           "alg": "SHA3-384",
-          "content": "ce771ef9f0df326a34ab37e70f710801bb18d545aca0ee492db62770db323ab8a0b5082123ca4826f3d3182748537cfc"
+          "content": "805bda170837bbedbecc5c63a5defc6a348777952906d8e6f33544866e86aa25c9d28f3b351e981d0fa49bb16e07884c"
         },
         {
           "alg": "SHA3-256",
-          "content": "8296db95bb2fac86a0eb68e61e9730084f4272ad6a4a4327a5259c631840e98e"
+          "content": "cbc2eafcba305c08e852133d0881d209799c4dc83d587869eed5f281d6bed4f3"
         },
         {
           "alg": "SHA3-512",
-          "content": "05da2f8674a257c5d8a1137cadbda71d2635f22237450bf2cbc980380a56905247bea38049c8cd80e60077be2be73b1eae6b466c228e4277763a54979cf856fb"
+          "content": "244e6a342d4b5a6e7d077426427979f26320be305f1cb33d933672c926ea3a96fe4f284c9f592970f604928209fe0e149613b64990202d595bce01a669de418b"
         }
       ],
       "licenses": [
@@ -3787,14 +3787,14 @@
           }
         }
       ],
-      "purl": "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
+      "purl": "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-codec/",
           "type": "website"
         },
         {
-          "url": "https://github.com/apache/commons-cli/actions",
+          "url": "https://github.com/apache/commons-codec/actions",
           "type": "build-system"
         },
         {
@@ -3817,45 +3817,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+      "bom-ref": "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "commons-io",
       "name": "commons-io",
-      "version": "2.20.0",
+      "version": "2.21.0",
       "description": "The Apache Commons IO library contains utility classes, stream implementations, file filters, file comparators, endian transformation classes, and much more.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "94e7e6b9b5fe82388687b584d3571081"
+          "content": "bc7e020873f086ede85f97bd9f013215"
         },
         {
           "alg": "SHA-1",
-          "content": "36f3474daec2849c149e877614e7f979b2082cd2"
+          "content": "52a6f68fe5afe335cde95461dd5c3412f04996f7"
         },
         {
           "alg": "SHA-256",
-          "content": "df90bba0fe3cb586b7f164e78fe8f8f4da3f2dd5c27fa645f888100ccc25dd72"
+          "content": "7d643a2afea8b058b762aa6fb90e5b256f6c729739f8b3784c3370ddc609e88d"
         },
         {
           "alg": "SHA-512",
-          "content": "fea08e150473673b0608eaee3ae1cb4e73834039db80d3b758710d6baf3a5840a0878a4eb64739ae9bb21ccc7148c8520fe873616a3f6d5cdb4305deabdd015c"
+          "content": "7ac1aa4d834cd7cdecaee223a64c63d481810c73dfdb5109f402234a05cadf754e414cead99072f5140d4f7042ee084161935fb28129a631d908d989c5bbac5d"
         },
         {
           "alg": "SHA-384",
-          "content": "22db5e18e3512ed44474e75a124a052d5a1a6f35ce458f6a201a5ccc9510c57c10c117dba80ac6ce91745cf2b51e63f2"
+          "content": "97c07e5c4f62484c98b6777f63ab032ee09eeb1c9ddae8332890126df9c665afb9cd554db02495171738720d23c53732"
         },
         {
           "alg": "SHA3-384",
-          "content": "a70700d24df3c276ff387c359e0e940b834e413b72a49917de9a82615836eca8cca1bee1ed71790606c795da795e9151"
+          "content": "e3e44c9f4a5f4075fb62a438a84015fe2abf878e9793835a7816dc3c35141bb79fe96dfdc6bb5aef96b7c5bbbcf453c1"
         },
         {
           "alg": "SHA3-256",
-          "content": "a8d044d3a4a069d0f20d24112b6427a3a6f02a925b31b932721d1f545ff32cec"
+          "content": "1f8f4ce25b7169452dabb10ce843b3246378ea55c1971acd2300e417747b3a68"
         },
         {
           "alg": "SHA3-512",
-          "content": "3417bf811d7e5fc1e71b8540f3379751434ea8540c421ff2c8bb5f5ce34401cd0ad8a829b65aa55e055c57141181762c4827099352c2bba453e48ad2df67526a"
+          "content": "175630adf10305aeb31d737f833021a25582ffe2ef66fda6e7f694598af9c68cebbd205ade469eca4faaf6b9d349244289e62179d9cf48d93427090e2c008cf8"
         }
       ],
       "licenses": [
@@ -3866,7 +3866,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+      "purl": "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
       "externalReferences": [
         {
           "url": "https://commons.apache.org/proper/commons-io/",
@@ -4871,11 +4871,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine",
       "licenses": [
         {
@@ -4884,7 +4884,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine",
@@ -7348,11 +7348,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA",
       "licenses": [
         {
@@ -7361,7 +7361,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa",
@@ -7379,11 +7379,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa-ensure-clean-db",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA - Ensure clean DB plugin",
       "licenses": [
         {
@@ -7392,7 +7392,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-ensure-clean-db",
@@ -7410,11 +7410,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bom-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - BOM Root",
       "licenses": [
         {
@@ -7423,7 +7423,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-bom-root",
@@ -7441,11 +7441,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton bill of material",
       "licenses": [
         {
@@ -7454,7 +7454,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://operaton.org",
@@ -7472,11 +7472,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-core-internal-dependencies",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "This is a Bill of Materials (BOM) for internal dependencies of Operaton. All modules should import this BOM to ensure consistent versions of dependencies. By using this BOM, you can omit the version tag in dependency declarations.",
       "licenses": [
         {
@@ -7485,7 +7485,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-core-internal-dependencies",
@@ -7503,11 +7503,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - Root",
       "licenses": [
         {
@@ -7516,7 +7516,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root",
@@ -7534,11 +7534,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-core",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST",
       "licenses": [
         {
@@ -7547,7 +7547,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-core",
@@ -7935,47 +7935,13 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?classifier=junit6\u0026type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "a9c666cce3da4a9bed1807ae8c33dba5"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "5f61bd091af0836a52c163fa928d6623afca4ea8"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "7176983be0359572e80a09bd76677c0b21a6a0c43f0f971706ae448c954c8deb"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "008b566bf6d109fa7aed76a3379af832da49eb27f6f11a53b06ab32c0fd5bfd915e1e43ea749e5bd49431adb56c7c42062d342dd8cd10796b05755578c88e575"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "2780198039b8d75a9c7e3a15b5590c87ac4921505856e694cc6d685a4afca78ed8e2bfc380f959a21ed404e07cb653e6"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "a0b589f91054fd47eb33e8d7f64165d7ef96b02a59532589284364ea36ac5490db8324f556371b9029c897ed36f3ed11"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "73fc9bb40a7b0006afd079ba13b427166de463a28bb7b84a8d9573bd6a150772"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "ecc21d3e2d004a64bc3e078497095d338f43c21fca15bfd384d2995c627c71ebaede815a1a70f4a76a8a286af67ae1a29caa0852e96a43be2f09d343f701ef17"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -7983,7 +7949,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?classifier=junit6\u0026type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine",
@@ -13387,11 +13353,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - Assembly",
       "licenses": [
         {
@@ -13400,7 +13366,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?type=war",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest",
@@ -13418,47 +13384,13 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=sources\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=sources\u0026type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-core",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "83160577cfb5c7e26bcc912e07a7bfbc"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "3a2d2d70d3bb17254981e9c6e6e355ecf22dafc1"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "9e08e5a3956c3dc7bf8f04c5c17b7b301515952efd36958c6651a11e344ff98e"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "3594118ede17fe3dce66b28448a3f4cc1b43ead6f243e17a03e2099f4dab21e3972366842ec12bfc6ad4a51d3f0b94d5b9f76f4a81654fdb7a9c553eed7e1fe1"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "cf3e3f595549d743a7dde3c0a150516172cd882d920025b282d3ebd7ee3a239f11434a25e686819bcdcbd090c12874cd"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "84b8ddee2f94c71305c9939146a8aded0d21d14b4c212498fee739f0b66034562fe5052b07e551643cb9d6b9d168957d"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "3d8a11531e7a4d93c6726bf2a787c102b2d3684d88f8e8f70981c396b9c14012"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "6357733f3f8cfeeac5aacc65c21746a6c71ba0cd3e2a27cf79702681be6e7b1b4de5fd3003ffce7767ec030534d335531c8d872882b842d00f94918bd2cbd738"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -13466,7 +13398,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=sources\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=sources\u0026type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-core",
@@ -13484,47 +13416,13 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=tests\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=tests\u0026type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-core",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "2a83add8e8b2bf0fb3b069da06ad56e5"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "376234be4a16d2841b368437ebd3a7f5ef55e1ce"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "2f3df867971e539839687c19a349a196eee53bebb0933906c5850c91fc9df3cf"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "a88c225164f82764c6f22d3bf2153425618d4360e8587243a2e15cd4e5e760016a18843c58dd8562f62f33fdd207c5856aa9a7cf1b23633e6fd17035ff9a7900"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "0a0767635d26f6694f32ff0ebe5e5a2c08c6bcd61a94fec859905e6e5266e342e38a0dba0cdc87ff74559d4f898c3bbf"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "972d9fb94b1aceb5860de6d0a09e9d2479154eb99ab98a1155131d8900b8c75825dc49afca253fd4b84d8bcaae3e7dea"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "cbb472a7180f8a06c82ef5bf04f00ff588d465a55e2cbae381a4eae4862a7c88"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "f329e9913883ef6a43dadbfdad9b5431de3d1e75d730dc26ad7abe25cb1e9132955196cc1bca7ca73b404f3e5bff98e4cae1d40c7706066f860bc368493b0ec0"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -13532,7 +13430,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=tests\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=tests\u0026type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-core",
@@ -13550,11 +13448,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.example",
       "name": "operaton-example-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Example - Root",
       "licenses": [
         {
@@ -13563,7 +13461,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-example-root",
@@ -13581,11 +13479,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M1?type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M2?type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.example",
       "name": "operaton-example-invoice",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Example - Invoice",
       "licenses": [
         {
@@ -13594,7 +13492,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M1?type=war",
+      "purl": "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M2?type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-example-root/operaton-example-invoice",
@@ -13612,11 +13510,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa-integration-tests-webapps-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA Integration Tests - Webapps Root",
       "licenses": [
         {
@@ -13625,7 +13523,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-webapps-root",
@@ -16724,45 +16622,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.client5",
       "name": "httpclient5",
-      "version": "5.5.1",
+      "version": "5.6",
       "description": "Apache HttpComponents Client",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "618bd65cc2b1f9d0b67b2d6dd17907f0"
+          "content": "8e98420f56516748e455a2088b930d53"
         },
         {
           "alg": "SHA-1",
-          "content": "89ab9084b94afb7893a54f4d09b07c25246af5a7"
+          "content": "f502ee00ba82d44a6a29bda06a18f5b959808e09"
         },
         {
           "alg": "SHA-256",
-          "content": "2e1e5d0ccf60d078bac6e3b029076afa8433a6a6d93eefdb46bce50720b58b7d"
+          "content": "0992b7dd57fbfc8334df2201e1788a2752ff11b6a638f5ce521915bef72ca4ad"
         },
         {
           "alg": "SHA-512",
-          "content": "e37c53f33accc31f5435db8eddcde6b426d5c52693b78705cac267ba172657f503dce1636409ebc2cad99a18acd6b16433b46285042fb75f5c155544bf08c196"
+          "content": "882c161383be70b737cc4e0a4cf0e324fdc431713402b74e05efd306d910e06d183308df869bb2aa5d4b22c83b556fed9b255fc3c0f5354f257401a92a0e0c41"
         },
         {
           "alg": "SHA-384",
-          "content": "6e9ab97427c7a9b8579a6773da5d7a7892029232caaca3c4e2b42bb290dee006aa970781c9b0ade35eddb389ba166bd4"
+          "content": "46ba01e4bb399ec9ef322ea7067b49681a0287cae68d56ced41c00f9cbc4cd0ffeabb28a200fc3282951c19682da6e14"
         },
         {
           "alg": "SHA3-384",
-          "content": "4d8c8a91a6e4ef31011abd6c956b80850efdb8dd3227065813d0ab3cf1fa7efcc297b5e055de26f1800aaa67608d3474"
+          "content": "ec05de27cc8246d09940f35db6ade82bc60d7b3f4eb33157ece989315a8e56b1dd7d0d232bac614fa51c8e374e5fc126"
         },
         {
           "alg": "SHA3-256",
-          "content": "5ebd145876a786e45c0e53a73deca3c9c89790d064a6aae9b07ee32c7e442ecf"
+          "content": "ac67b4264e06503cf0fcf38d149035a11fe216e6f5c7f45a94ef1b7cd7e19ac0"
         },
         {
           "alg": "SHA3-512",
-          "content": "a1a68c3c926b2d9ebc1a41c87b569d099fcee8fb6de41df2fe4eeeb03acdccddcd2053f4af407b848fa26a005b8c32a507481eaf4b53c57d63373cd6107f589a"
+          "content": "08d24970b969dfb409411e006029d06c47b174ca1cbc2a000fd2c841cafdd7b0f12def7b6282af1756537e266994f35d040a7d7688c2a21c72ffb9312b88f6c1"
         }
       ],
       "licenses": [
@@ -16772,10 +16670,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-client-5.5.x/5.5.1/httpclient5/",
+          "url": "https://hc.apache.org/httpcomponents-client-5.5.x/5.6/httpclient5/",
           "type": "website"
         },
         {
@@ -16791,52 +16689,52 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-client/tree/5.5.1/httpclient5",
+          "url": "https://github.com/apache/httpcomponents-client/tree/5.6/httpclient5",
           "type": "vcs"
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.3.6?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.core5",
       "name": "httpcore5",
-      "version": "5.3.6",
+      "version": "5.4",
       "description": "Apache HttpComponents HTTP/1.1 core components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "ddf45aa72b3c500fcd277cf75fcc1732"
+          "content": "584964cc15b7390de975e97e8eb2e6e1"
         },
         {
           "alg": "SHA-1",
-          "content": "2c7f0d11747f9485a02c9f622c0f0477d7ce8677"
+          "content": "e40011ec0dae056466399f8e414ede4772001621"
         },
         {
           "alg": "SHA-256",
-          "content": "8fb4528d3e970aca440523a1bd698a389fa710ecfea4c5c6096698b86d1669ce"
+          "content": "cec2981fa7f520efb63f0787c24f10af2679e31f9f75c448c4dde40a3ae8100d"
         },
         {
           "alg": "SHA-512",
-          "content": "a1f1f25498521bbe9df9fef8e43b86b9b709c40db2037bd9ff7a4a34b58cfdf8fd1e2595d3652eb5692c150ac638087c66535c1f4aa4a23d6f2273d4186372ef"
+          "content": "5d0dc9ea175373a6bbf76e48246bb3f4d3c43a4ca1cc4db0a10970736a30d3fd72996cce5fe07d675eabb0cad4da1e2fd6b3100d31e7d9d4507c617fc1bbe425"
         },
         {
           "alg": "SHA-384",
-          "content": "975154449c95efaa8e3a0ff2d29a4aebbf46d55af571975b23fecc0901354aa7572cf91849f3937a390d3e0bbcadb4b4"
+          "content": "7a9cf59bf40074c84dc395cd6dc91c2b2da630a2932eff8d42567bd870f0fc94f9605ea6c0725a83a7faf03f8d967305"
         },
         {
           "alg": "SHA3-384",
-          "content": "47f654cacce5ffbce2f46793295357862894aefcc404960f805854dbb503dabf665f7dbc8d8baad2a042d009c8b37cac"
+          "content": "2acb353316cbf3d0649e7c2f0765591f3ab9bab2f3a4aa1029f86a15338e7806a9ec41b101fa06b7fb29111d807eb33d"
         },
         {
           "alg": "SHA3-256",
-          "content": "75c8d503ab4878b182aa1a1a04a78e2fd2cbc3cf5008f8aff8560e5331eb21c8"
+          "content": "47dea1de78d259c1fb903bac72dd61acce885fbe2ab8e6b6d4f6e2439710699e"
         },
         {
           "alg": "SHA3-512",
-          "content": "8f6bfc94d08af1a555ed2fd8c4d86055e6a04c44334f980ec38fffe15dbffe3a593d793288b39719a46abd8226092577f990a47ae7cc7a77b20273bc35f23a49"
+          "content": "37c162c8a37107846e5950b2b15168d3b5677a4338dbc37b2f178f6fb5d5ad21c5cd81a6178054efe007d8fd088c42e8b2398df3e8d636d973a5035a01306808"
         }
       ],
       "licenses": [
@@ -16846,10 +16744,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.3.6?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-core-5.3.x/5.3.6/httpcore5/",
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4/httpcore5/",
           "type": "website"
         },
         {
@@ -16865,7 +16763,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.3.6/httpcore5",
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4/httpcore5",
           "type": "vcs"
         }
       ]
@@ -17160,47 +17058,13 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=classes\u0026type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=classes\u0026type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - Assembly",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "2bca2fe849249cb48cb4d0bed05f9643"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "3021883b74714b8a227e2099aee180740c195220"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "4bc9aa3f6e7696018ba086a74d2e2308af49ddaf7fc811f9ef173afe3a8f451f"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "fa2490f92f991726b9756b55866a5509adcd48ac61395a13810f1d2eff9d4226fb9590d28cf18612f7f4b550d382b6840adc2df226e25bcca74d0f63278b2cf8"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "50447ebd3d895af7419830ea84c315cace1a0a12969851f2ac6cf6f03eb77e9b9a2152f27adaa3bea6f0fec9c01d8dc4"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "3928bfdcd0f732a4f2a53e6656aac0b7dda6f392e54c81e87c3ea57c1df3f7869bfb73abd5c03d56ba85d374be0b52f6"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "8cc9f93a2c1f1c95c78093e99689cf1526a665dfa80def4329c515196bc46dfd"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "aeed62a2774fb024a6bef937a282b4e387e5e22c934fe6d0062f40594409f3d337659929375ab43626f661523a7418f7f8015715757b4cc543cbb69bde051507"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -17208,7 +17072,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=classes\u0026type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=classes\u0026type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest",
@@ -17226,11 +17090,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa-integration-tests-webapps",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA Integration Tests - Webapps ITs",
       "licenses": [
         {
@@ -17239,7 +17103,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-webapps-root/operaton-qa-integration-tests-webapps",
@@ -17542,11 +17406,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa-integration-tests-webapps-shared-engine",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA Integration Tests - Webapps Shared Engine",
       "licenses": [
         {
@@ -17555,7 +17419,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-webapps-root/operaton-qa-integration-tests-webapps-shared-engine",
@@ -17573,11 +17437,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-cdi",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - CDI",
       "licenses": [
         {
@@ -17586,7 +17450,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-cdi",
@@ -17952,11 +17816,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-spring",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - Spring",
       "licenses": [
         {
@@ -17965,7 +17829,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-spring",
@@ -18750,11 +18614,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.spin",
       "name": "operaton-spin-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Spin - Root",
       "licenses": [
         {
@@ -18763,7 +18627,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-spin-root",
@@ -18781,11 +18645,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.spin",
       "name": "operaton-spin-core",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Spin - Core",
       "licenses": [
         {
@@ -18794,7 +18658,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-spin-root/operaton-spin-core",
@@ -18997,11 +18861,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.spin",
       "name": "operaton-spin-dataformat-json-jackson",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Spin - Jackson JSON data format",
       "licenses": [
         {
@@ -19010,7 +18874,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-spin-root/operaton-spin-dataformat-json-jackson",
@@ -19028,11 +18892,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.connect",
       "name": "operaton-connect-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Connect - Root",
       "licenses": [
         {
@@ -19041,7 +18905,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-connect-root",
@@ -19059,11 +18923,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.connect",
       "name": "operaton-connect-core",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Connect - Core",
       "licenses": [
         {
@@ -19072,7 +18936,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-connect-root/operaton-connect-core",
@@ -19090,11 +18954,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa-integration-tests-engine",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA Integration Tests - Engine",
       "licenses": [
         {
@@ -19103,7 +18967,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-integration-tests-engine",
@@ -19121,69 +18985,12 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M1?type=jar",
-      "publisher": "Operaton",
+      "bom-ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M2?type=jar",
       "group": "org.operaton.bpm.jakartaee",
       "name": "operaton-ejb-client",
-      "version": "2.0.0-M1",
-      "description": "Operaton - Client",
+      "version": "2.0.0-M2",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "e306312c2c44e32fb1380f76d22cf5b7"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "0e4ba604cf35160491e592cc7470e9dd53b44880"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "f4390a170730ce369a53309030a5bc9a349926e2f35386544240674d07524c89"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "5f6a627ebf0ae862ab72d4bf5f4cdf27e45b3ac0a4281c59f959e0bd8e04b83323ab48e2c8afad03fbdd047f3a759c5608c368d4f1b62d373b65d9edb88b3d64"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "e033799057c5e4045a7e2323628e263b562e70578d061e5e2203c776d158c3b00b8e498fdd96460c7799470b00ba33dc"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "9b028ae962a6712eb3faf4418a2e16fe2187ead2a205e49e9f7137e45762929f99db310efc64c7655bc3c94642efbc45"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "72be4572fc32ab485ce676084fe4fa8e556cee0a39426c32551d7ba7b1356b1d"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "2ba838cabb8447dc954a41e4ef8e82b863679e308567836e3018b7a9766d7308b88c8c8a337c6b56a39fd1b0b59f59a6617c22e61c0cade53ada8f474c4f2017"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M1?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://www.operaton.org/operaton-ejb-client",
-          "type": "website"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/issues/",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-ejb-client",
-          "type": "vcs"
-        }
-      ]
+      "purl": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M2?type=jar"
     },
     {
       "type": "library",
@@ -19332,11 +19139,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-qa-performance-tests-engine",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA Performance Tests Engine",
       "licenses": [
         {
@@ -19345,7 +19152,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/operaton-qa-performance-tests-engine",
@@ -19420,11 +19227,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "large-data-tests",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Large Data Tests",
       "licenses": [
         {
@@ -19433,7 +19240,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-qa/large-data-tests",
@@ -19451,11 +19258,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.connect",
       "name": "operaton-connect-http-client",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Connect - HTTP Client",
       "licenses": [
         {
@@ -19464,7 +19271,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-connect-root/operaton-connect-http-client",
@@ -19482,11 +19289,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.connect",
       "name": "operaton-connect-soap-http-client",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Connect - SOAP HTTP Client",
       "licenses": [
         {
@@ -19495,7 +19302,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-connect-root/operaton-connect-soap-http-client",
@@ -19513,11 +19320,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.connect",
       "name": "operaton-connect-connectors-all",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Connect - All connectors in one",
       "licenses": [
         {
@@ -19526,7 +19333,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-connect-root/operaton-connect-connectors-all",
@@ -19544,11 +19351,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.spin",
       "name": "operaton-spin-dataformat-xml-dom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Spin - DOM XML data format",
       "licenses": [
         {
@@ -19557,7 +19364,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-spin-root/operaton-spin-dataformat-xml-dom",
@@ -19575,11 +19382,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.spin",
       "name": "operaton-spin-dataformat-all",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Spin - All data formats in one",
       "licenses": [
         {
@@ -19588,7 +19395,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-spin-root/operaton-spin-dataformat-all",
@@ -19606,11 +19413,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.template-engines",
       "name": "operaton-template-engines-freemarker",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Template Engine - JSR223 Freemarker",
       "licenses": [
         {
@@ -19619,7 +19426,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-template-engines-freemarker",
@@ -19707,11 +19514,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-junit5",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - JUnit 5 Extension",
       "licenses": [
         {
@@ -19720,7 +19527,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-junit5",
@@ -19738,11 +19545,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-assert-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Assert - Root",
       "licenses": [
         {
@@ -19751,7 +19558,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-assert-root",
@@ -19769,11 +19576,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-assert",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Assert",
       "licenses": [
         {
@@ -19782,7 +19589,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-assert-root/operaton-bpm-assert",
@@ -19800,11 +19607,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-assert-qa",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - QA - Assert",
       "licenses": [
         {
@@ -19813,7 +19620,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-bpm-assert-root/operaton-bpm-assert-qa",
@@ -19831,11 +19638,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.dmn",
       "name": "operaton-engine-dmn-bom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - DMN - Engine - BOM",
       "licenses": [
         {
@@ -19844,7 +19651,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-engine-dmn-bom",
@@ -19862,11 +19669,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-openapi-generator",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - OpenAPI (JSON Generator)",
       "licenses": [
         {
@@ -19875,7 +19682,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-openapi-generator",
@@ -20162,11 +19969,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest-openapi",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - OpenAPI",
       "licenses": [
         {
@@ -20175,7 +19982,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest-openapi",
@@ -20331,11 +20138,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/docs@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/docs@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "docs",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - Docs",
       "licenses": [
         {
@@ -20344,7 +20151,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/docs@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/docs@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/docs",
@@ -20362,11 +20169,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.webapp",
       "name": "operaton-webapp-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Webapp - Root",
       "licenses": [
         {
@@ -20375,7 +20182,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-webapp-root",
@@ -20393,11 +20200,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M1?type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M2?type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.webapp",
       "name": "operaton-webapp",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Webapp - Assembly",
       "licenses": [
         {
@@ -20406,7 +20213,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M1?type=war",
+      "purl": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M2?type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-webapp-root/operaton-webapp",
@@ -20424,11 +20231,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-plugins",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine Plugins",
       "licenses": [
         {
@@ -20437,7 +20244,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-plugins",
@@ -20455,11 +20262,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.identity",
       "name": "operaton-identity-ldap",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine Plugins - Identity - LDAP",
       "licenses": [
         {
@@ -20468,7 +20275,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-plugins/operaton-identity-ldap",
@@ -20486,11 +20293,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-plugin-connect",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine Plugins - Connect",
       "licenses": [
         {
@@ -20499,7 +20306,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-plugins/operaton-engine-plugin-connect",
@@ -20517,11 +20324,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-plugin-spin",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine Plugins - Spin",
       "licenses": [
         {
@@ -20530,7 +20337,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-plugins/operaton-engine-plugin-spin",
@@ -20548,11 +20355,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-external-task-client-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Java External Task Client - Root",
       "licenses": [
         {
@@ -20561,7 +20368,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-external-task-client-root",
@@ -20579,11 +20386,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "operaton-external-task-client-qa",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Java External Task Client - QA",
       "licenses": [
         {
@@ -20592,7 +20399,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-external-task-client-root/operaton-external-task-client-qa",
@@ -20610,11 +20417,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M1?type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M2?type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.qa",
       "name": "engine-variable-test",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Java External Task Client - QA Variable Test",
       "licenses": [
         {
@@ -20623,7 +20430,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M1?type=war",
+      "purl": "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M2?type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-external-task-client-root/operaton-external-task-client-qa/engine-variable-test",
@@ -20641,11 +20448,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.tomcat",
       "name": "operaton-tomcat",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Tomcat",
       "licenses": [
         {
@@ -20654,7 +20461,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-tomcat",
@@ -20672,11 +20479,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.tomcat",
       "name": "operaton-tomcat-assembly",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully",
       "licenses": [
         {
@@ -20685,7 +20492,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-tomcat/operaton-tomcat-assembly",
@@ -20970,11 +20777,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M2?type=jar",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-external-task-client",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Java External Task Client - Client",
       "licenses": [
         {
@@ -20983,7 +20790,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M2?type=jar",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-external-task-client-root/operaton-external-task-client",
@@ -21001,11 +20808,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=tar.gz",
+      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=tar.gz",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.tomcat",
       "name": "operaton-tomcat-assembly",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully",
       "scope": "required",
       "licenses": [
@@ -21015,7 +20822,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=tar.gz",
+      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=tar.gz",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-tomcat/operaton-tomcat-assembly",
@@ -21033,47 +20840,13 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=tomcat\u0026type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=tomcat\u0026type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-engine-rest",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Engine - REST - Assembly",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "5fed2ef05479e824e4881f2f6f4aa43f"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "0e7016f6ee8db1be1691c40d035b87fd5d39c97d"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "faf47977accfa3f94e85e75aae1517a8743816cc41c5aa845c399ed0829be23b"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "89ebf017f730a73bba395a7a7a24dd7142531528e15bb3a374265d5667c3e8c6ff4762e1f991d39535a8aaf0f6b88a68dde45c2a70331b7fbb2f0edca7cb3a64"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "e33da0a35d7865ae995df8f2993a8380b25cb700f512a8407589ac8e4691b73b17c4f7cfd016bd41687555398cb4e749"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "1534310abcfe81f1dbe754770022c2c3ec2ac25447e95cfad987de7ec0a9aa970beddfb409cf1e6832ead9d850b1685d"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "672441e5879b45cd85857e91c7cb4edf1e324d41e9e859c1a7ae5db37257c953"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "92a576e70bd3acdd9aa3468a744b04f281610ae1ec9837e1132b4697ec047e3c4f66c3b4c4f11a25d9e533d922076f339fe44454494cc55cb07c1d4f10d30fb8"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -21081,7 +20854,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=tomcat\u0026type=war",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=tomcat\u0026type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-engine-rest-root/operaton-engine-rest",
@@ -21173,11 +20946,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-only-bom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton Only bill of material",
       "licenses": [
         {
@@ -21186,7 +20959,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://operaton.org",
@@ -21204,11 +20977,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.commons",
       "name": "operaton-commons-bom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Commons - BOM",
       "licenses": [
         {
@@ -21217,7 +20990,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-commons-bom",
@@ -21235,11 +21008,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.connect",
       "name": "operaton-connect-bom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Connect - BOM",
       "licenses": [
         {
@@ -21248,7 +21021,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-connect-bom",
@@ -21266,11 +21039,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.spin",
       "name": "operaton-spin-bom",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Spin - BOM",
       "licenses": [
         {
@@ -21279,7 +21052,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-spin-bom",
@@ -21297,11 +21070,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M1?type=war",
+      "bom-ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M2?type=war",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.webapp",
       "name": "operaton-webapp-tomcat",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Webapp - Tomcat",
       "licenses": [
         {
@@ -21310,7 +21083,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M1?type=war",
+      "purl": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M2?type=war",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-tomcat/operaton-webapp-tomcat",
@@ -21328,11 +21101,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.tomcat",
       "name": "operaton-bpm-tomcat",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "Operaton - Tomcat - Distro",
       "licenses": [
         {
@@ -21341,7 +21114,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org/operaton-database-settings/operaton-tomcat/operaton-bpm-tomcat",
@@ -21425,11 +21198,11 @@
     },
     {
       "type": "application",
-      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M1?type=pom",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M2?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
       "name": "operaton-root",
-      "version": "2.0.0-M1",
+      "version": "2.0.0-M2",
       "description": "This pom defines the modules that make up the build. The parent pom for all Operaton projects can be found in the parent directory relative to this file.",
       "licenses": [
         {
@@ -21438,7 +21211,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M1?type=pom",
+      "purl": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M2?type=pom",
       "externalReferences": [
         {
           "url": "https://www.operaton.org",
@@ -21456,7 +21229,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "37e6f57a-ce90-4e3f-881f-2f86037819d6",
+      "bom-ref": "53575a1c-d9f1-4cbb-ba6d-266e96cd2969",
       "name": "package-lock.json",
       "properties": [
         {
@@ -26730,7 +26503,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "bc029603-7d42-4e1e-b33a-43c9f77967c4",
+      "bom-ref": "8db6bdd8-f70b-45fa-8f98-62c687369945",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26742,43 +26515,43 @@
   ],
   "dependencies": [
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M1?type=pom"
+        "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M2?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-parent@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M1?type=pom"
+        "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M2?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
@@ -26788,13 +26561,13 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-archunit@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/com.tngtech.archunit/archunit-junit4@1.4.1?type=jar"
       ]
@@ -26823,13 +26596,13 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.model/operaton-model-apis@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M2?type=jar"
       ]
     },
     {
@@ -26843,7 +26616,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
@@ -26878,23 +26651,23 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/jakarta.el/jakarta.el-api@6.0.1?type=jar"
       ]
@@ -26904,10 +26677,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar"
       ]
     },
@@ -26916,45 +26688,45 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-xml-model@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-root@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
@@ -26998,19 +26770,19 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-dmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-api@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-juel@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M2?type=jar",
         "pkg:maven/org.camunda.feel/feel-engine@1.19.3?classifier=scala-shaded\u0026type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.2?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
-        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
       ]
     },
@@ -27033,7 +26805,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar",
@@ -27052,24 +26824,24 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-database-settings@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M1?type=pom"
+        "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M2?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.testcontainers/testcontainers@2.0.3?type=jar",
         "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.3?type=jar",
@@ -27093,17 +26865,17 @@
     {
       "ref": "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
       "dependsOn": [
-        "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
+      "ref": "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+      "ref": "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
       "dependsOn": []
     },
     {
@@ -27191,14 +26963,14 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.3?type=jar",
         "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
@@ -27425,58 +27197,58 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-ensure-clean-db@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bom-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M1?type=pom"
+        "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M2?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bom@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-core-internal-dependencies@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?type=war",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/docs@2.0.0-M1?type=pom"
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?type=war",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/docs@2.0.0-M2?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar"
       ]
@@ -27539,22 +27311,22 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?type=war",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?type=war",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=sources\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=tests\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=sources\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=tests\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=sources\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=sources\u0026type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
@@ -27563,11 +27335,11 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?classifier=tests\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?classifier=tests\u0026type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.0?type=jar",
@@ -27631,25 +27403,25 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.example/operaton-example-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M1?type=war"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M2?type=war"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M1?type=war",
+      "ref": "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M2?type=war",
       "dependsOn": [
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-root@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar",
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M2?type=jar"
       ]
     },
     {
@@ -27659,7 +27431,7 @@
         "pkg:maven/org.apache.httpcomponents/httpmime@4.5.13?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore-nio@4.4.16?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpasyncclient@4.1.5?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar"
       ]
     },
@@ -27668,7 +27440,7 @@
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
         "pkg:maven/commons-logging/commons-logging@1.3.5?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar"
+        "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"
       ]
     },
     {
@@ -27694,19 +27466,20 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-depchain@3.3.4?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=classes\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?classifier=junit6\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=classes\u0026type=jar",
         "pkg:maven/org.glassfish.jersey.core/jersey-client@4.0.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider@2.21.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-engine@6.0.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
         "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-java@4.40.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar"
@@ -27893,7 +27666,7 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-util@1.9.22?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpclient@4.5.14?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
         "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.17?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
@@ -28118,20 +27891,20 @@
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven-embedded@3.3.4?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-impl-maven@3.3.4?type=jar",
         "pkg:maven/org.apache.maven.shared/maven-invoker@3.3.0?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.19.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?classifier=junit6\u0026type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
         "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
         "pkg:maven/org.springframework/spring-beans@7.0.3?type=jar",
         "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
@@ -28140,9 +27913,9 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=classes\u0026type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=classes\u0026type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar"
       ]
     },
     {
@@ -28199,21 +27972,21 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.3.6?type=jar",
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.3.6?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
       "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.3.6?type=jar"
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar"
       ]
     },
     {
@@ -28613,15 +28386,15 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps-shared-engine@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/com.konghq/unirest-java@3.14.5?classifier=standalone\u0026type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
         "pkg:maven/jakarta.inject/jakarta.inject-api@2.0.1?type=jar",
         "pkg:maven/jakarta.enterprise/jakarta.enterprise.cdi-api@4.1.0?type=jar",
         "pkg:maven/jakarta.interceptor/jakarta.interceptor-api@2.2.0?type=jar",
@@ -28661,9 +28434,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
         "pkg:maven/org.springframework/spring-context@7.0.3?type=jar",
         "pkg:maven/org.springframework/spring-jdbc@7.0.3?type=jar",
         "pkg:maven/org.springframework/spring-tx@7.0.3?type=jar",
@@ -28741,31 +28514,30 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.spin/operaton-spin-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
-        "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
-        "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.2?type=jar"
+        "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar"
       ]
     },
     {
@@ -28792,23 +28564,23 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.connect/operaton-connect-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-engine@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
         "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
@@ -28817,15 +28589,15 @@
         "pkg:maven/jakarta.inject/jakarta.inject-api@2.0.1?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
-        "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-spring@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-joda@2.21.0?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
         "pkg:maven/org.springframework/spring-context@7.0.3?type=jar",
         "pkg:maven/org.springframework/spring-jdbc@7.0.3?type=jar",
         "pkg:maven/org.springframework/spring-tx@7.0.3?type=jar",
@@ -28834,12 +28606,8 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M1?type=jar",
-      "dependsOn": [
-        "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
-        "pkg:maven/jakarta.ejb/jakarta.ejb-api@4.0.1?type=jar",
-        "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar"
-      ]
+      "ref": "pkg:maven/org.operaton.bpm.jakartaee/operaton-ejb-client@2.0.0-M2?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.ow2.asm/asm@9.7.1?type=jar",
@@ -28855,13 +28623,14 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-performance-tests-engine@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.2?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
+        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?classifier=junit6\u0026type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.18?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.18?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
@@ -28875,46 +28644,46 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.qa/large-data-tests@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?classifier=junit6\u0026type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?classifier=junit6\u0026type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar"
+        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.connect/operaton-connect-http-client@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-soap-http-client@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-json-jackson@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-M2?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar"
@@ -28945,10 +28714,9 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
-        "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar"
+        "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar"
       ]
     },
     {
@@ -28956,43 +28724,43 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.2?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.27?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-assert-qa@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.2?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn-bom@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi-generator@2.0.0-M2?type=jar",
       "dependsOn": [
         "pkg:maven/org.freemarker/freemarker@2.3.34?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
-        "pkg:maven/commons-io/commons-io@2.20.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar"
       ]
     },
@@ -29022,9 +28790,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
         "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar"
       ]
@@ -29036,98 +28804,98 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/docs@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/docs@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-root@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M1?type=war"
+        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M2?type=war"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M1?type=war",
+      "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M2?type=war",
       "dependsOn": [
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
         "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugins@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-M2?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client-root@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.2?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar"
+        "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.qa/operaton-external-task-client-qa@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.2?type=jar",
-        "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M1?type=war"
+        "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M2?type=war"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M1?type=war",
+      "ref": "pkg:maven/org.operaton.bpm.qa/engine-variable-test@2.0.0-M2?type=war",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter@6.0.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat@2.0.0-M2?type=pom",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=pom",
-        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M1?type=war",
-        "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M1?type=pom"
+        "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=pom",
+        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M2?type=war",
+        "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M2?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/org.apache.tomcat/tomcat@11.0.18?type=tar.gz",
         "pkg:maven/com.h2database/h2@2.4.240?type=jar",
@@ -29142,16 +28910,16 @@
         "pkg:maven/org.apache.groovy/groovy-datetime@5.0.4?type=jar",
         "pkg:maven/org.graalvm.js/js-scriptengine@25.0.2?type=jar",
         "pkg:maven/org.graalvm.js/js-language@25.0.2?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M2?type=jar",
         "pkg:maven/org.slf4j/slf4j-jdk14@2.0.17?type=jar"
       ]
     },
@@ -29273,11 +29041,11 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M1?type=jar",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-external-task-client@2.0.0-M2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M1?type=jar",
-        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.5.1?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-M2?type=jar",
+        "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
@@ -29291,36 +29059,36 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.commons/operaton-commons-bom@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.connect/operaton-connect-bom@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.spin/operaton-spin-bom@2.0.0-M2?type=pom",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M1?type=war",
+      "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M2?type=war",
       "dependsOn": [
-        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M1?type=war",
+        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.0.0-M2?type=war",
         "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M1?type=pom",
+      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-bpm-tomcat@2.0.0-M2?type=pom",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.distro/operaton-sql-scripts@7.24.0?type=jar",
-        "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=tar.gz",
-        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M1?type=war",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=tomcat\u0026type=war",
-        "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M1?type=war"
+        "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=tar.gz",
+        "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.0.0-M2?type=war",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=tomcat\u0026type=war",
+        "pkg:maven/org.operaton.bpm.example/operaton-example-invoice@2.0.0-M2?type=war"
       ]
     },
     {
@@ -29330,7 +29098,7 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M1?type=tar.gz",
+      "ref": "pkg:maven/org.operaton.bpm.tomcat/operaton-tomcat-assembly@2.0.0-M2?type=tar.gz",
       "dependsOn": [
         "pkg:maven/org.apache.tomcat/tomcat@11.0.18?type=tar.gz",
         "pkg:maven/com.h2database/h2@2.4.240?type=jar",
@@ -29345,25 +29113,25 @@
         "pkg:maven/org.apache.groovy/groovy-datetime@5.0.4?type=jar",
         "pkg:maven/org.graalvm.js/js-scriptengine@25.0.2?type=jar",
         "pkg:maven/org.graalvm.js/js-language@25.0.2?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M1?type=jar",
-        "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M1?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-cdi@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm.identity/operaton-identity-ldap@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-spin@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.spin/operaton-spin-dataformat-all@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-core@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-plugin-connect@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.connect/operaton-connect-connectors-all@2.0.0-M2?type=jar",
+        "pkg:maven/org.operaton.template-engines/operaton-template-engines-freemarker@2.0.0-M2?type=jar",
         "pkg:maven/org.slf4j/slf4j-jdk14@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M1?classifier=tomcat\u0026type=war",
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest@2.0.0-M2?classifier=tomcat\u0026type=war",
       "dependsOn": []
     },
     {
-      "ref": "37e6f57a-ce90-4e3f-881f-2f86037819d6",
+      "ref": "53575a1c-d9f1-4cbb-ba6d-266e96cd2969",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -29413,9 +29181,9 @@
       ]
     },
     {
-      "ref": "bc029603-7d42-4e1e-b33a-43c9f77967c4",
+      "ref": "8db6bdd8-f70b-45fa-8f98-62c687369945",
       "dependsOn": [
-        "37e6f57a-ce90-4e3f-881f-2f86037819d6"
+        "53575a1c-d9f1-4cbb-ba6d-266e96cd2969"
       ]
     },
     {

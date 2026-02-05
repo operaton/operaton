@@ -64,9 +64,9 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
-import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 
 /**
  * @author Joram Barrez

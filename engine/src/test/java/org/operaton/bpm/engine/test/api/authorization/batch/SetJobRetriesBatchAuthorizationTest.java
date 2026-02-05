@@ -173,7 +173,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   @TestTemplate
   void testWithTwoInvocationsProcessQueryBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
-    setupAndExecuteJobsQueryBasedTest();
+    setupAndExecuteProcessListBasedTest();
 
     // then
     assertScenario();

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:operaton="http://operaton.org/schema/1.0/bpmn"
+                  id="Definitions_1"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <bpmn:error id="Error_1" name="Error" errorCode="errorCode" />
+
+  <bpmn:process id="invalidOperatonErrorEventDefinitionProcess" isExecutable="true">
+    <bpmn:startEvent id="start">
+      <bpmn:outgoing>flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="externalTask" />
+    <bpmn:serviceTask id="externalTask" operaton:type="external" operaton:topic="testTopic">
+      <bpmn:extensionElements>
+        <!-- Missing 'expression' attribute - this should cause a parse error -->
+        <operaton:errorEventDefinition id="OperatonErrorEventDefinition" errorRef="Error_1" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>flow1</bpmn:incoming>
+      <bpmn:outgoing>flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="flow2" sourceRef="externalTask" targetRef="end" />
+    <bpmn:endEvent id="end">
+      <bpmn:incoming>flow2</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+
+</bpmn:definitions>

@@ -35,6 +35,8 @@ import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientExceptio
 import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
 import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 
+import static java.lang.Boolean.TRUE;
+import static java.util.Optional.ofNullable;
 import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_ASC_VALUE;
 import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_DESC_VALUE;
 
@@ -55,54 +57,63 @@ public class ClientFactory
   @Override
   public ExternalTaskClient getObject() {
     if (client == null) {
-      ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create();
-      if (clientConfiguration.getBaseUrl() != null) {
-          clientBuilder.baseUrl(resolve(clientConfiguration.getBaseUrl()));
-      }
-      if (clientConfiguration.getWorkerId() != null) {
-        clientBuilder.workerId(resolve(clientConfiguration.getWorkerId()));
-      }
-
-      addClientRequestInterceptors(clientBuilder);
-
-      if (clientConfiguration.getMaxTasks() != null) {
-        clientBuilder.maxTasks(clientConfiguration.getMaxTasks());
-      }
-      if (clientConfiguration.getUsePriority() != null && Boolean.FALSE.equals(clientConfiguration.getUsePriority())) {
-        clientBuilder.usePriority(false);
-      }
-      if (clientConfiguration.getDefaultSerializationFormat() != null) {
-        clientBuilder.defaultSerializationFormat(resolve(clientConfiguration.getDefaultSerializationFormat()));
-      }
-      if (clientConfiguration.getDateFormat() != null) {
-        clientBuilder.dateFormat(resolve(clientConfiguration.getDateFormat()));
-      }
-      if (clientConfiguration.getAsyncResponseTimeout() != null) {
-        clientBuilder.asyncResponseTimeout(clientConfiguration.getAsyncResponseTimeout());
-      }
-      if (clientConfiguration.getLockDuration() != null) {
-        clientBuilder.lockDuration(clientConfiguration.getLockDuration());
-      }
-      if (clientConfiguration.getDisableAutoFetching() != null &&
-          clientConfiguration.getDisableAutoFetching()) {
-        clientBuilder.disableAutoFetching();
-      }
-      if (clientConfiguration.getDisableBackoffStrategy() != null &&
-          clientConfiguration.getDisableBackoffStrategy()) {
-        clientBuilder.disableBackoffStrategy();
-      }
-      if (backoffStrategy != null) {
-        clientBuilder.backoffStrategy(backoffStrategy);
-      }
-
-      tryConfigureCreateTimeOrder(clientBuilder);
-
-      client = clientBuilder.build();
+      initClient();
     }
 
     LOG.bootstrapped();
 
     return client;
+  }
+
+  private void initClient() {
+    ExternalTaskClientBuilder clientBuilder = ExternalTaskClient.create();
+
+    ofNullable(clientConfiguration.getBaseUrl())
+      .map(this::resolve)
+      .ifPresent(clientBuilder::baseUrl);
+
+    ofNullable(clientConfiguration.getWorkerId())
+      .map(this::resolve)
+      .ifPresent(clientBuilder::workerId);
+
+    addClientRequestInterceptors(clientBuilder);
+
+    ofNullable(clientConfiguration.getMaxTasks())
+      .ifPresent(clientBuilder::maxTasks);
+
+    if (clientConfiguration.getUsePriority() != null && Boolean.FALSE.equals(clientConfiguration.getUsePriority())) {
+      clientBuilder.usePriority(false);
+    }
+
+    ofNullable(clientConfiguration.getDefaultSerializationFormat())
+      .map(this::resolve)
+      .ifPresent(clientBuilder::defaultSerializationFormat);
+
+    ofNullable(clientConfiguration.getDateFormat())
+      .map(this::resolve)
+      .ifPresent(clientBuilder::dateFormat);
+
+    ofNullable(clientConfiguration.getAsyncResponseTimeout())
+      .ifPresent(clientBuilder::asyncResponseTimeout);
+
+    ofNullable(clientConfiguration.getLockDuration())
+      .ifPresent(clientBuilder::lockDuration);
+
+    if (TRUE.equals(clientConfiguration.getDisableAutoFetching())) {
+      clientBuilder.disableAutoFetching();
+    }
+
+    if (TRUE.equals(clientConfiguration.getDisableBackoffStrategy())) {
+      clientBuilder.disableBackoffStrategy();
+    }
+
+    if (backoffStrategy != null) {
+      clientBuilder.backoffStrategy(backoffStrategy);
+    }
+
+    tryConfigureCreateTimeOrder(clientBuilder);
+
+    client = clientBuilder.build();
   }
 
   protected void addClientRequestInterceptors(ExternalTaskClientBuilder taskClientBuilder) {
@@ -144,7 +155,7 @@ public class ClientFactory
   }
 
   protected boolean isUseCreateTimeEnabled() {
-    return Boolean.TRUE.equals(clientConfiguration.getUseCreateTime());
+    return TRUE.equals(clientConfiguration.getUseCreateTime());
   }
 
   protected void checkForCreateTimeMisconfiguration() {
@@ -174,15 +185,11 @@ public class ClientFactory
   }
 
   @Override
-  public boolean isSingleton() {
-    return true;
-  }
-
-  @Override
   public void afterPropertiesSet() {
     // no-op
   }
 
+  @SuppressWarnings("unused")
   public ClientConfiguration getClientConfiguration() {
     return clientConfiguration;
   }

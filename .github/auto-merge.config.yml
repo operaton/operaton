@@ -47,6 +47,7 @@ auto-merge-rules:
       - 'com.unboundid:unboundid-ldapsdk'
       - 'com.nimbusds:nimbus-jose-jwt'
       - 'commons-codec:commons-codec'
+      - 'commons-io:commons-io'
       - 'io.smallrye:jandex'
       - 'joda-time:joda-time'
       - 'org.apache.commons:commons-lang3'

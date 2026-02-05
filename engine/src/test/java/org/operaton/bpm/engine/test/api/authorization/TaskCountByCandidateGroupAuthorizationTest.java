@@ -38,7 +38,7 @@ import static org.operaton.bpm.engine.authorization.Authorization.AUTH_TYPE_GRAN
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Stefan Hentschel.
@@ -94,27 +94,16 @@ class TaskCountByCandidateGroupAuthorizationTest {
   @Test
   void shouldFailToFetchTaskCountWithMissingAuthorization() {
     // given
-    boolean testFailed = false;
     processEngineConfiguration.setAuthorizationEnabled(true);
     authenticate();
 
-    // when
-    try {
-      taskService.createTaskReport().taskCountByCandidateGroup();
-      testFailed = true;
+    // when/then
+    assertThatThrownBy(() -> taskService.createTaskReport().taskCountByCandidateGroup())
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageContaining(userId + "' does not have 'READ' permission on resource '*' of type 'Task'");
 
-    } catch (AuthorizationException aex) {
-      if (!aex.getMessage().contains(userId + "' does not have 'READ' permission on resource '*' of type 'Task'")) {
-        testFailed = true;
-      }
-    }
-
-    // then
+    // cleanup
     processEngineConfiguration.setAuthorizationEnabled(false);
-
-    if (testFailed) {
-      fail("There should be an authorization exception for '%s' because of a missing 'READ' permission on 'Task'.".formatted(userId));
-    }
   }
 
   protected void authenticate() {

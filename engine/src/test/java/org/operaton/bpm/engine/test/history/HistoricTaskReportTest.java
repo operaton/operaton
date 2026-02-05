@@ -39,7 +39,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Stefan Hentschel.
@@ -167,26 +167,24 @@ class HistoricTaskReportTest {
 
   @Test
   void testCompletedAfterWithNullValue() {
+    // given
     var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
-    try {
-      historicTaskInstanceReport.completedAfter(null);
 
-      fail("Expected NotValidException");
-    } catch( NotValidException nve) {
-      assertThat(nve.getMessage()).contains("completedAfter");
-    }
+    // when/then
+    assertThatThrownBy(() -> historicTaskInstanceReport.completedAfter(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("completedAfter");
   }
 
   @Test
   void testCompletedBeforeWithNullValue() {
+    // given
     var historicTaskInstanceReport = historyService.createHistoricTaskInstanceReport();
-    try {
-      historicTaskInstanceReport.completedBefore(null);
 
-      fail("Expected NotValidException");
-    } catch( NotValidException nve) {
-      assertThat(nve.getMessage()).contains("completedBefore");
-    }
+    // when/then
+    assertThatThrownBy(() -> historicTaskInstanceReport.completedBefore(null))
+      .isInstanceOf(NotValidException.class)
+      .hasMessageContaining("completedBefore");
   }
 
   @Test

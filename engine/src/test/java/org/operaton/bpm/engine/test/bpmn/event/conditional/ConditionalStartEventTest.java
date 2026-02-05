@@ -446,17 +446,16 @@ class ConditionalStartEventTest {
 
   @Test
   void testDeploymentOfTwoEqualConditionalStartEvent() {
-    try {
-      // when
-      testRule.deploy(TWO_EQUAL_CONDITIONAL_START_EVENT_XML);
-      fail("Expected exception");
-    } catch (ParseException e) {
-      // then
-      assertThat(e.getMessage()).contains("Cannot have more than one conditional event subscription with the same condition '${variable == 1}'");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
-      List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
-      assertThat(eventSubscriptions).isEmpty();
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(TWO_EQUAL_CONDITIONAL_START_EVENT_XML))
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Cannot have more than one conditional event subscription with the same condition '${variable == 1}'")
+      .satisfies(e -> {
+        var parseException = (ParseException) e;
+        assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
+        List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
+        assertThat(eventSubscriptions).isEmpty();
+      });
   }
 
   @Test

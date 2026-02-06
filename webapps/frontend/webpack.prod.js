@@ -22,6 +22,7 @@ const webpack = require('webpack');
 
 const {merge} = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
 
@@ -75,7 +76,6 @@ module.exports = (_env, argv = {}) => {
     optimization: {
       minimize: true,
       minimizer: [
-        `...`, // Keep webpack's default minimizers (including CSS)
         new TerserPlugin({
           extractComments: {
             condition: (astNode, comment) => {
@@ -90,6 +90,9 @@ module.exports = (_env, argv = {}) => {
             },
           },
           exclude: [/scripts\/config\.js/, /lib\/globalize\.js/],
+        }),
+        new CssMinimizerPlugin({
+          minify: CssMinimizerPlugin.lightningCssMinify,
         }),
       ],
       // Bundle all third-party modules into the lib/deps.js bundle

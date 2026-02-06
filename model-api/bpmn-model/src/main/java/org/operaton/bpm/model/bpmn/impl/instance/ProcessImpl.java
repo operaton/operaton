@@ -319,21 +319,6 @@ public class ProcessImpl extends CallableElementImpl implements Process {
   }
 
   @Override
-  public Integer getOperatonHistoryTimeToLive() {
-    String ttl = getOperatonHistoryTimeToLiveString();
-    if (ttl != null) {
-      return Integer.parseInt(ttl);
-    }
-    return null;
-  }
-
-  @Override
-  public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
-    var value = historyTimeToLive == null ? null : String.valueOf(historyTimeToLive);
-    setOperatonHistoryTimeToLiveString(value);
-  }
-
-  @Override
   public String getOperatonHistoryTimeToLiveString() {
     return operatonHistoryTimeToLiveAttribute.getValue(this);
   }

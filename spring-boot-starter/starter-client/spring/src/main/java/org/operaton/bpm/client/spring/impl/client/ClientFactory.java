@@ -35,10 +35,10 @@ import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientExceptio
 import org.operaton.bpm.client.spring.impl.client.util.ClientLoggerUtil;
 import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 
-import static java.lang.Boolean.TRUE;
-import static java.util.Optional.ofNullable;
 import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_ASC_VALUE;
 import static org.operaton.bpm.client.spring.annotation.EnableExternalTaskClient.STRING_ORDER_BY_DESC_VALUE;
+import static java.lang.Boolean.TRUE;
+import static java.util.Optional.ofNullable;
 
 public class ClientFactory
   implements FactoryBean<ExternalTaskClient>, InitializingBean {

@@ -1,95 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta http-equiv="X-UA-Compatible"
-        content="IE=edge"/>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-  <title>Operaton Tasklist</title>
+    <title>Operaton Tasklist</title>
 
-  <meta charset="utf-8"/>
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <meta name="description"
-        content="Operaton Tasklist"/>
-  <meta name="author"
-        content="Camunda services GmbH"/>
+    <meta name="description" content="Operaton Tasklist" />
+    <meta name="author" content="Camunda services GmbH" />
 
-  <base href="<%= htmlWebpackPlugin.options.appBase %>"
-        admin-api="<%= htmlWebpackPlugin.options.appRoot %>/api/admin/"
-        cockpit-api="<%= htmlWebpackPlugin.options.appRoot %>/api/cockpit/"
-        tasklist-api="<%= htmlWebpackPlugin.options.appRoot %>/api/tasklist/"
-        welcome-api="<%= htmlWebpackPlugin.options.appRoot %>/api/welcome/"
-        engine-api="<%= htmlWebpackPlugin.options.appRoot %>/api/engine/"
-        app-root="<%= htmlWebpackPlugin.options.appRoot %>"
-        app-name="tasklist"/>
+    <base
+      href="<%= htmlWebpackPlugin.options.appBase %>"
+      admin-api="<%= htmlWebpackPlugin.options.appRoot %>/api/admin/"
+      cockpit-api="<%= htmlWebpackPlugin.options.appRoot %>/api/cockpit/"
+      tasklist-api="<%= htmlWebpackPlugin.options.appRoot %>/api/tasklist/"
+      welcome-api="<%= htmlWebpackPlugin.options.appRoot %>/api/welcome/"
+      engine-api="<%= htmlWebpackPlugin.options.appRoot %>/api/engine/"
+      app-root="<%= htmlWebpackPlugin.options.appRoot %>"
+      app-name="tasklist"
+    />
 
-  <%= htmlWebpackPlugin.tags.headTags %>
+    <%= htmlWebpackPlugin.tags.headTags %>
 
-  <link rel="stylesheet"
-        type="text/css"
-        href="<%= htmlWebpackPlugin.options.appRoot %>/app/tasklist/styles/user-styles.css?bust=<%= htmlWebpackPlugin.options.version %>">
-</head>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="<%= htmlWebpackPlugin.options.appRoot %>/app/tasklist/styles/user-styles.css?bust=<%= htmlWebpackPlugin.options.version %>"
+    />
+  </head>
 
-<body ng-controller="camTasklistAppCtrl">
-<div cam-widget-header
-     authentication="authentication"
-     user-name="userFullName"
-     current-app="tasklist"
-     toggle-navigation="{{ 'TOGGLE_NAVIGATION' | translate }}"
-     sign-out="{{ 'SIGN_OUT_ACTION' | translate }}"
-     my-profile="{{ 'MY_PROFILE' | translate }}"
-     ng-cloak>
-  <ul cam-if-logged-in
-      ng-controller="camHeaderViewsCtrl">
-    <li ng-repeat="actionProvider in navbarActions"
-        ng-class="actionProvider.id">
-      <view ng-cloak
-            provider="actionProvider"
-            vars="navbarVars">
-      </view>
-    </li>
-  </ul>
-</div>
+  <body ng-controller="camTasklistAppCtrl">
+    <div
+      cam-widget-header
+      authentication="authentication"
+      user-name="userFullName"
+      current-app="tasklist"
+      toggle-navigation="{{ 'TOGGLE_NAVIGATION' | translate }}"
+      sign-out="{{ 'SIGN_OUT_ACTION' | translate }}"
+      my-profile="{{ 'MY_PROFILE' | translate }}"
+      ng-cloak
+    >
+      <ul cam-if-logged-in ng-controller="camHeaderViewsCtrl">
+        <li
+          ng-repeat="actionProvider in navbarActions"
+          ng-class="actionProvider.id"
+        >
+          <view ng-cloak provider="actionProvider" vars="navbarVars"> </view>
+        </li>
+      </ul>
+    </div>
 
-<div class="site-wrap">
-
-    <!-- # page-content -->
-    <div class="page-wrap three-cols-layout" ng-view>
-      <div class="app-splash"><div>
-        <div class="spinner spinner-big"></div>
+    <div class="site-wrap">
+      <!-- # page-content -->
+      <div class="page-wrap three-cols-layout" ng-view>
+        <div class="app-splash">
+          <div>
+            <div class="spinner spinner-big"></div>
+          </div>
+        </div>
+        <!-- / .app-splash -->
       </div>
-    </div><!-- / .app-splash -->
-  </div>
-  <!-- / page-content -->
+      <!-- / page-content -->
+    </div>
 
-</div>
+    <div notifications-panel class="page-notifications"></div>
 
+    <!-- # page-footer -->
+    <footer
+      cam-widget-footer
+      version="v<%= htmlWebpackPlugin.options.version %>"
+    ></footer>
 
-<div notifications-panel
-     class="page-notifications"></div>
+    <script type="text/javascript" $CSP_NONCE>
+      window.tasklistConf = {
+        apiUri: '<%= htmlWebpackPlugin.options.appRoot %>/api/engine',
+        mock: false,
 
+        // overrides the settings above
+        resources: {}
+      };
 
-<!-- # page-footer -->
-<footer cam-widget-footer
-        version="v<%= htmlWebpackPlugin.options.version %>"></footer>
+      window.PLUGIN_DEPENDENCIES = <%= htmlWebpackPlugin.options.pluginDeps %> || [];
+      window.PLUGIN_PACKAGES = <%= htmlWebpackPlugin.options.pluginPackages %> || [];
 
-
-<script type="text/javascript" $CSP_NONCE>
-  window.tasklistConf = {
-    apiUri: '<%= htmlWebpackPlugin.options.appRoot %>/api/engine',
-    mock: false,
-
-    // overrides the settings above
-    resources: {}
-  };
-
-  window.PLUGIN_DEPENDENCIES = <%= htmlWebpackPlugin.options.pluginDeps %> || [];
-  window.PLUGIN_PACKAGES = <%= htmlWebpackPlugin.options.pluginPackages %> || [];
-
-  window.require = {
-    waitSeconds: 0
-  };
-</script>
-</body>
+      window.require = {
+        waitSeconds: 0
+      };
+    </script>
+  </body>
 </html>

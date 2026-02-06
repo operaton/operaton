@@ -80,24 +80,23 @@ var OperatonFormAngular = OperatonForm.extend({
     var scope = this.formElement.scope();
 
     /*eslint-disable */
-      (function(camForm, $scope, moment) {
-        // hook to create the service with injection
-        var inject = function(extensions) {
-          // if result is an array or function we expect
-          // an injectable service
-          if (angular.isFunction(extensions) || angular.isArray(extensions)) {
-            injector.instantiate(extensions, { $scope: scope });
-          } else {
-            throw new Error('Must call inject(array|fn)');
-          }
-        };
+    (function (camForm, $scope, moment) {
+      // hook to create the service with injection
+      var inject = function (extensions) {
+        // if result is an array or function we expect
+        // an injectable service
+        if (angular.isFunction(extensions) || angular.isArray(extensions)) {
+          injector.instantiate(extensions, {$scope: scope});
+        } else {
+          throw new Error('Must call inject(array|fn)');
+        }
+      };
 
       /* jshint evil: true */
-        eval(script);
+      eval(script);
       /* jshint evil: false */
-
-      })(this, scope, moment);
-      /*eslint-enable */
+    })(this, scope, moment);
+    /*eslint-enable */
   },
 
   fireEvent: function () {

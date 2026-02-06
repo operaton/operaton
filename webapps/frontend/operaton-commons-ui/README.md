@@ -23,7 +23,6 @@ Common frontend / UI resources, widgets and libraries for the [Operaton web appl
   - `less` - base less files to generate CSS stylesheets
 - [`widgets`](#widgets)
 
-
 ### Widgets
 
 Widgets are reusable components which should be easy to integrate in the [Operaton webapp][webapp] and your own projects.
@@ -32,7 +31,6 @@ Widgets are reusable components which should be easy to integrate in the [Operat
 
 A good way to get familiar with the widgets integration in your projects is by reading the source code of the `lib/widgets/*/test/*.spec.html`.
 In those examples, we use uncompiled versions of the library and its dependencies and wire the whole with [requirejs](//requirejs.org).
-
 
 #### Available widgets
 
@@ -67,18 +65,22 @@ grunt
 ```
 
 While developing widgets, you may want to run the tests as a change occurs, here is a way to achieve that:
+
 ```sh
 npm install -g nodemon
 nodemon -w lib/widgets/ --exec "protractor ./test/protractor.conf.js"
 ```
 
 You can also run the tests on a single widget like that:
+
 ```
 TESTED=variable nodemon -w lib/widgets/ --exec "protractor ./test/protractor.conf.js"
 ```
+
 This will only run the `cam-widget-variable` tests.
 
 ## grunt connect keep alive web server
+
 ```
 grunt connect:widgetTests:keepalive
 ```
@@ -92,35 +94,39 @@ grunt karma
 ### Testing the widgets under macOS
 
 Add to protractor.config.js:
+
 ```
 directConnect: true,
 ```
+
 Run in commons-ui folder:
+
 ```
 rm -rf node_modules
 npm install —-legacy-bundling
 ```
+
 Open webdriver-manager and change mac32.zip to mac64.zip if you run a newer macOS version.
+
 ```
 vim /operaton-commons-ui/node_modules/protractor/bin/webdriver-manager
 ```
+
 Run chrome update for protractor
+
 ```
 operaton-commons-ui/node_modules/protractor/bin/webdriver-manager --chrome update
 ```
-
-
 
 ## License
 
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
-
 ## Authors
 
- - [Daniel _meyerdan_ Meyer](https://github.com/meyerdan) - [@meyerdan](http://twitter.com/meyerdan)
- - [Valentin _zeropaper_ Vago](https://github.com/zeropaper) - [@zeropaper](http://twitter.com/zeropaper)
- - [Nico _Nikku_ Rehwaldt](https://github.com/nikku) - [@nrehwaldt](http://twitter.com/nrehwaldt)
- - [Sebastian Stamm](https://github.com/SebastianStamm) - [@seb_stamm](https://twitter.com/seb_stamm)
+- [Daniel _meyerdan_ Meyer](https://github.com/meyerdan) - [@meyerdan](http://twitter.com/meyerdan)
+- [Valentin _zeropaper_ Vago](https://github.com/zeropaper) - [@zeropaper](http://twitter.com/zeropaper)
+- [Nico _Nikku_ Rehwaldt](https://github.com/nikku) - [@nrehwaldt](http://twitter.com/nrehwaldt)
+- [Sebastian Stamm](https://github.com/SebastianStamm) - [@seb_stamm](https://twitter.com/seb_stamm)
 
 [webapp]: https://github.com/operaton/operaton/tree/master/webapps

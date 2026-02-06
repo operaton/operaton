@@ -2,64 +2,64 @@
 // NOTE: Bootstrap 4 SCSS requires variables and mixins to be imported first.
 // The main 'bootstrap' file typically handles the dependencies in the correct order.
 
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables"; // If you plan to customize colors, fonts, etc., import your *own* variables here *after* Bootstrap's but *before* the rest.
-@import "~bootstrap/scss/mixins";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables'; // If you plan to customize colors, fonts, etc., import your *own* variables here *after* Bootstrap's but *before* the rest.
+@import '~bootstrap/scss/mixins';
 
 // 2. Base Bootstrap Components (Selectively import what you need)
 // This is the SCSS equivalent of your LESS list.
 // The syntax changes: @import "path/file.less" becomes @import "path/file";
 
 // Reset & Core CSS
-@import "~bootstrap/scss/root"; // New in v4/v5
-@import "~bootstrap/scss/reboot"; // Replacement for normalize.less and scaffolding.less reset
+@import '~bootstrap/scss/root'; // New in v4/v5
+@import '~bootstrap/scss/reboot'; // Replacement for normalize.less and scaffolding.less reset
 // Overrides for BS4 variables
-$headings-font-weight:        400;
-$h2-font-size:         1.875rem;
-$h3-font-size:         1.5rem;
-$h4-font-size:         1.125rem;
-$h5-font-size:         0.875rem;
+$headings-font-weight: 400;
+$h2-font-size: 1.875rem;
+$h3-font-size: 1.5rem;
+$h4-font-size: 1.125rem;
+$h5-font-size: 0.875rem;
 $headings-color: $gray-700;
 $headings-line-height: 1.125;
 $modal-header-padding: 2rem 1rem 1rem 1rem;
-@import "~bootstrap/scss/type";
-@import "~bootstrap/scss/images"; // New in v4/v5
-@import "~bootstrap/scss/code";
-@import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/tables";
+@import '~bootstrap/scss/type';
+@import '~bootstrap/scss/images'; // New in v4/v5
+@import '~bootstrap/scss/code';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/tables';
 // Bootstrap 4 replaced Glyphicons with built-in SVG icons and recommends using an external icon library (like Font Awesome).
 // @import "~bootstrap/scss/glyphicons"; // REMOVED in BS4. Use an external icon library.
-@import "~bootstrap/scss/forms";
-@import "~bootstrap/scss/buttons";
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/buttons';
 
 // Components
-@import "~bootstrap/scss/transitions"; // Replacement for component-animations.less
-@import "~bootstrap/scss/dropdown";
-@import "~bootstrap/scss/button-group";
-@import "~bootstrap/scss/input-group";
-@import "~bootstrap/scss/custom-forms"; // New in v4/v5
-@import "~bootstrap/scss/nav";
-@import "~bootstrap/scss/navbar";
-@import "~bootstrap/scss/card"; // Replacement for panels.less and wells.less
-@import "~bootstrap/scss/breadcrumb";
-@import "~bootstrap/scss/pagination";
-@import "~bootstrap/scss/badge"; // Replacement for badges.less and labels.less
-@import "~bootstrap/scss/jumbotron";
-@import "~bootstrap/scss/alert";
-@import "~bootstrap/scss/progress";
-@import "~bootstrap/scss/media";
-@import "~bootstrap/scss/list-group";
-@import "~bootstrap/scss/close";
+@import '~bootstrap/scss/transitions'; // Replacement for component-animations.less
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/button-group';
+@import '~bootstrap/scss/input-group';
+@import '~bootstrap/scss/custom-forms'; // New in v4/v5
+@import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/card'; // Replacement for panels.less and wells.less
+@import '~bootstrap/scss/breadcrumb';
+@import '~bootstrap/scss/pagination';
+@import '~bootstrap/scss/badge'; // Replacement for badges.less and labels.less
+@import '~bootstrap/scss/jumbotron';
+@import '~bootstrap/scss/alert';
+@import '~bootstrap/scss/progress';
+@import '~bootstrap/scss/media';
+@import '~bootstrap/scss/list-group';
+@import '~bootstrap/scss/close';
 
 // Components w/ JavaScript
 $modal-content-bg: #eeeeee;
 
-@import "~bootstrap/scss/modal";
-@import "~bootstrap/scss/tooltip";
-@import "~bootstrap/scss/popover";
-@import "~bootstrap/scss/carousel";
+@import '~bootstrap/scss/modal';
+@import '~bootstrap/scss/tooltip';
+@import '~bootstrap/scss/popover';
+@import '~bootstrap/scss/carousel';
 
 // Utility classes (includes responsive utilities)
-@import "~bootstrap/scss/utilities";
+@import '~bootstrap/scss/utilities';
 // @import "~bootstrap/scss/responsive-utilities"; // Merged into utilities.scss
-@import "~bootstrap/scss/print";
+@import '~bootstrap/scss/print';

@@ -1,7 +1,7 @@
-$primary:                      #e66e2e;
-@import "./_app-variables";
-@import "~ui/common/styles/cam-webapps-common.scss";
-@import "~ui/common/styles/app-splash";
+$primary: #e66e2e;
+@import './_app-variables';
+@import '~ui/common/styles/cam-webapps-common.scss';
+@import '~ui/common/styles/app-splash';
 
 /* ---------------------------------------------------------------- */
 
@@ -25,7 +25,9 @@ form .btn {
 .welcome-page {
   background-color: $custom-gray-light;
   position: absolute;
-  min-height: calc(100% - ($header-height + $ce-banner-height + $footer-height));
+  min-height: calc(
+    100% - ($header-height + $ce-banner-height + $footer-height)
+  );
   width: 100%;
   // padding-top: @grid-gutter-width;
   // padding-bottom: @grid-gutter-width;
@@ -53,10 +55,10 @@ form .btn {
 
 /* ---------------------------------------------------------------- */
 
-@import "./../scripts/pages/welcome";
+@import './../scripts/pages/welcome';
 
 /* ---------------------------------------------------------------- */
 
-@import "./../scripts/directives/user-profile";
-@import "./../scripts/directives/custom-links";
-@import "~operaton-commons-ui/lib/widgets/password/cam-widget-password";
+@import './../scripts/directives/user-profile';
+@import './../scripts/directives/custom-links';
+@import '~operaton-commons-ui/lib/widgets/password/cam-widget-password';

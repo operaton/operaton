@@ -22,7 +22,7 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/admin/default/#/tenant-create',
 
-  newTenantIdInput: function(inputValue) {
+  newTenantIdInput: function (inputValue) {
     var inputField = element(by.model('tenant.id'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -30,7 +30,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  newTenantNameInput: function(inputValue) {
+  newTenantNameInput: function (inputValue) {
     var inputField = element(by.model('tenant.name'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -38,13 +38,13 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  createNewTenantButton: function() {
+  createNewTenantButton: function () {
     return element(by.css('[ng-click="createTenant()"]'));
   },
 
-  createNewTenant: function(tenantId, tenantName) {
+  createNewTenant: function (tenantId, tenantName) {
     this.newTenantIdInput(tenantId);
     this.newTenantNameInput(tenantName);
     this.createNewTenantButton().click();
-  }
+  },
 });

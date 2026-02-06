@@ -306,12 +306,10 @@ OperatonForm.prototype.executeFormScripts = function () {
 OperatonForm.prototype.executeFormScript = function (script) {
   /*eslint-disable */
   /* jshint unused: false */
-  (function(camForm) {
-
+  (function (camForm) {
     /* jshint evil: true */
     eval(script);
     /* jshint evil: false */
-
   })(this);
   /*eslint-enable */
 };

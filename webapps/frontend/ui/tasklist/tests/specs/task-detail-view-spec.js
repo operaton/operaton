@@ -24,23 +24,23 @@ var dashboardPage = require('../pages/dashboard');
 var taskListPage = dashboardPage.taskList;
 var taskViewPage = dashboardPage.currentTask;
 
-describe('Tasklist Detail View Spec', function() {
-  describe('the task detail view', function() {
-    before(function() {
-      return testHelper(setupFile.setup1, function() {
+describe('Tasklist Detail View Spec', function () {
+  describe('the task detail view', function () {
+    before(function () {
+      return testHelper(setupFile.setup1, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    it('should display info text when no task is selected', function() {
+    it('should display info text when no task is selected', function () {
       // then
       expect(taskViewPage.noTaskInfoText()).to.eventually.eql(
-        'Select a task in the list.'
+        'Select a task in the list.',
       );
     });
 
-    it('should appear when a task is selected', function() {
+    it('should appear when a task is selected', function () {
       // when
       taskListPage.selectTask('Task 1');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -49,12 +49,12 @@ describe('Tasklist Detail View Spec', function() {
       expect(taskViewPage.taskName()).to.eventually.eql('Task 1');
     });
 
-    describe('description tab', function() {
-      before(function() {
+    describe('description tab', function () {
+      before(function () {
         taskListPage.selectTask('Task 1');
       });
 
-      it('should display description of a task', function() {
+      it('should display description of a task', function () {
         // given
         dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
 
@@ -63,17 +63,17 @@ describe('Tasklist Detail View Spec', function() {
 
         // then
         expect(taskViewPage.description.descriptionField()).to.eventually.eql(
-          setupFile.setup1[1].params.description
+          setupFile.setup1[1].params.description,
         );
       });
     });
 
-    describe('add a comment', function() {
-      before(function() {
+    describe('add a comment', function () {
+      before(function () {
         taskListPage.selectTask('Task 1');
       });
 
-      it('should display comment in the history tab', function() {
+      it('should display comment in the history tab', function () {
         // given
         var commentText =
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris.' +
@@ -94,25 +94,25 @@ describe('Tasklist Detail View Spec', function() {
         taskViewPage.history.selectTab();
         expect(taskViewPage.history.eventType(0)).to.eventually.eql('Comment');
         expect(taskViewPage.history.commentMessage(0)).to.eventually.eql(
-          commentText
+          commentText,
         );
         expect(taskViewPage.history.operationUser(0)).to.eventually.eql(
-          'admin'
+          'admin',
         );
       });
     });
   });
 
-  describe('form tab', function() {
-    before(function() {
-      return testHelper(setupFile.setup1, function() {
+  describe('form tab', function () {
+    before(function () {
+      return testHelper(setupFile.setup1, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    describe('with generic form and unclaimed task', function() {
-      it('should disable form elements', function() {
+    describe('with generic form and unclaimed task', function () {
+      it('should disable form elements', function () {
         // given
         taskListPage.selectTask('Task 1');
         dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -126,12 +126,12 @@ describe('Tasklist Detail View Spec', function() {
       });
     });
 
-    describe('with generic form and claimed task', function() {
-      before(function() {
+    describe('with generic form and claimed task', function () {
+      before(function () {
         return testHelper(setupFile.setup2, true);
       });
 
-      it('should enable form elements', function() {
+      it('should enable form elements', function () {
         // given
         taskListPage.selectTask('Task 1');
         dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -146,15 +146,15 @@ describe('Tasklist Detail View Spec', function() {
     });
   });
 
-  describe('form tab with failing form', function() {
-    before(function() {
-      return testHelper(setupFile.setup5, function() {
+  describe('form tab with failing form', function () {
+    before(function () {
+      return testHelper(setupFile.setup5, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    it('should enable form element after fail', function() {
+    it('should enable form element after fail', function () {
       //given
       taskListPage.selectTask('Prevent_Task');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -173,15 +173,15 @@ describe('Tasklist Detail View Spec', function() {
     });
   });
 
-  describe('bpmn diagram tab', function() {
-    before(function() {
-      return testHelper(setupFile.setup3, function() {
+  describe('bpmn diagram tab', function () {
+    before(function () {
+      return testHelper(setupFile.setup3, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    it('should display the process and highlight current task', function() {
+    it('should display the process and highlight current task', function () {
       // given
       taskListPage.selectTask('User Task 1');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -195,15 +195,15 @@ describe('Tasklist Detail View Spec', function() {
     });
   });
 
-  describe('cmmn diagram tab', function() {
-    before(function() {
-      return testHelper(setupFile.setup4, function() {
+  describe('cmmn diagram tab', function () {
+    before(function () {
+      return testHelper(setupFile.setup4, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    it('should display the process and highlight current task', function() {
+    it('should display the process and highlight current task', function () {
       // given
       taskListPage.selectTask('Task1');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -216,7 +216,7 @@ describe('Tasklist Detail View Spec', function() {
         .eventually.be.true;
     });
 
-    it('should display diagram and highlight current task after changing task', function() {
+    it('should display diagram and highlight current task after changing task', function () {
       // given
       taskListPage.selectTask('Task1');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -231,15 +231,15 @@ describe('Tasklist Detail View Spec', function() {
     });
   });
 
-  describe('multi tenancy', function() {
-    before(function() {
-      return testHelper(setupFile.multiTenancySetup, function() {
+  describe('multi tenancy', function () {
+    before(function () {
+      return testHelper(setupFile.multiTenancySetup, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    it('should display the tenant id', function() {
+    it('should display the tenant id', function () {
       // given
       taskListPage.selectTask('Task 1');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());
@@ -248,11 +248,11 @@ describe('Tasklist Detail View Spec', function() {
       expect(taskViewPage.taskTenantIdField().isPresent()).to.eventually.be
         .true;
       expect(taskViewPage.taskTenantIdField().getText()).to.eventually.eql(
-        'tenant1'
+        'tenant1',
       );
     });
 
-    it('should not display the tenant id if not exist', function() {
+    it('should not display the tenant id if not exist', function () {
       // given
       taskListPage.selectTask('Task 2');
       dashboardPage.waitForElementToBeVisible(taskViewPage.taskName());

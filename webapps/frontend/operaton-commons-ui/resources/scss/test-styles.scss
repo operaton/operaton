@@ -1,29 +1,29 @@
-@import "shared/variables"; // Assuming this is converted to _variables.scss
+@import 'shared/variables'; // Assuming this is converted to _variables.scss
 
-$brand-logo:      'resources/img/operaton-logo.png';
-$font-path:       "./vendor/fonts/";
-$bpmn-font-path:  $font-path;
-$icon-font-path:  $font-path;
-$dmn-font-path:   $font-path;
+$brand-logo: 'resources/img/operaton-logo.png';
+$font-path: './vendor/fonts/';
+$bpmn-font-path: $font-path;
+$icon-font-path: $font-path;
+$dmn-font-path: $font-path;
 
 // 2. Library & Widget Imports
-@import "shared/bootstrap";
-@import "shared/base";
-@import "inline-field/cam-widget-inline-field";
-@import "bpmn-viewer/cam-widget-bpmn-viewer";
-@import "cmmn-viewer/cam-widget-cmmn-viewer";
-@import "dmn-viewer/cam-widget-dmn-viewer";
+@import 'shared/bootstrap';
+@import 'shared/base';
+@import 'inline-field/cam-widget-inline-field';
+@import 'bpmn-viewer/cam-widget-bpmn-viewer';
+@import 'cmmn-viewer/cam-widget-cmmn-viewer';
+@import 'dmn-viewer/cam-widget-dmn-viewer';
 
-@import "footer/cam-widget-footer";
-@import "header/cam-widget-header";
-@import "loader/cam-widget-loader";
-@import "search/cam-widget-search";
-@import "cam-share-link/cam-share-link";
-@import "search-pill/cam-widget-search-pill";
-@import "variable/cam-widget-variable";
-@import "variables-table/cam-widget-variables-table";
-@import "clipboard/cam-widget-clipboard";
-@import "password/cam-widget-password";
+@import 'footer/cam-widget-footer';
+@import 'header/cam-widget-header';
+@import 'loader/cam-widget-loader';
+@import 'search/cam-widget-search';
+@import 'cam-share-link/cam-share-link';
+@import 'search-pill/cam-widget-search-pill';
+@import 'variable/cam-widget-variable';
+@import 'variables-table/cam-widget-variables-table';
+@import 'clipboard/cam-widget-clipboard';
+@import 'password/cam-widget-password';
 
 // 3. Custom Styles for the testing suite
 .cam-brand-header {
@@ -44,7 +44,7 @@ $dmn-font-path:   $font-path;
   .brand-logo::before {
     color: $primary; // Mapping @brand-primary to BS4 $primary
     display: inline-block;
-    font-family: "bpmn";
+    font-family: 'bpmn';
     font-style: normal;
     font-weight: normal;
     content: '\e831';
@@ -78,21 +78,24 @@ body {
     @extend .container-fluid; // Replaces .container-fluid() mixin
 
     // Mapping BS3 screen-min variables to BS4 breakpoints
-    @media (min-width: map-get($grid-breakpoints, "sm")) {
-      width: map-get($container-max-widths, "sm");
+    @media (min-width: map-get($grid-breakpoints, 'sm')) {
+      width: map-get($container-max-widths, 'sm');
     }
 
-    @media (min-width: map-get($grid-breakpoints, "md")) {
-      width: map-get($container-max-widths, "md");
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+      width: map-get($container-max-widths, 'md');
     }
 
-    @media (min-width: map-get($grid-breakpoints, "lg")) {
-      width: map-get($container-max-widths, "lg");
+    @media (min-width: map-get($grid-breakpoints, 'lg')) {
+      width: map-get($container-max-widths, 'lg');
     }
   }
 
   &.gh-pages {
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       font-weight: 100;
     }
 

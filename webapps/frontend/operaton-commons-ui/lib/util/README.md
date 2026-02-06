@@ -15,4 +15,3 @@ Can be used (in conjunction with the notifications-panel directive) to display m
 ## Filters
 
 ### uri
-

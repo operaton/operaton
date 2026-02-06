@@ -25,34 +25,34 @@ module.exports = Table.extend({
   tabLabel: 'User Tasks',
   tableRepeater: 'userTask in userTasks',
 
-  activity: function(item) {
+  activity: function (item) {
     return this.tableItem(item, by.binding('userTask.instance.name'));
   },
 
-  assignee: function(item) {
+  assignee: function (item) {
     return this.tableItem(item, '.assignee');
   },
 
-  addNewAssignee: function(item, inputValue) {
+  addNewAssignee: function (item, inputValue) {
     this.tableItem(item, '.edit-toggle').click();
     element(by.css('.in-place-edit')).clear();
     element(by.css('.in-place-edit')).sendKeys(inputValue);
     this.tableItem(item, '.btn-group [type="submit"]').click();
   },
 
-  changeGroupIdentityLinksButton: function() {
+  changeGroupIdentityLinksButton: function () {
     return element(by.css('.change-group-identity-links'));
   },
 
-  clickChangeGroupIdentityLinksButton: function() {
+  clickChangeGroupIdentityLinksButton: function () {
     this.changeGroupIdentityLinksButton().click();
   },
 
-  changeUserIdentityLinksButton: function() {
+  changeUserIdentityLinksButton: function () {
     return element(by.css('.change-user-identity-links'));
   },
 
-  clickChangeUserIdentityLinksButton: function() {
+  clickChangeUserIdentityLinksButton: function () {
     this.changeUserIdentityLinksButton().click();
-  }
+  },
 });

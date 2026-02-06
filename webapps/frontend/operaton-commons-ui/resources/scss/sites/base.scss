@@ -1,30 +1,31 @@
-@import "./../shared/bootstrap";
-@import "./../shared/base";
-@import "./../shared/font-opensans";
-@import "mixins";
+@import './../shared/bootstrap';
+@import './../shared/base';
+@import './../shared/font-opensans';
+@import 'mixins';
 
 // 2. Variables (Define these before they are used)
-$font-family-sans-serif:      'open_sansregular', Helvetica, Arial, Verdana, sans-serif;
-$font-size-base:              1rem;
-$line-height-base:            1.6;
+$font-family-sans-serif:
+  'open_sansregular', Helvetica, Arial, Verdana, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.6;
 
 // BS4 uses $font-family-base instead of @font-family-base
-$font-family-base:            $font-family-sans-serif;
-$navbar-font-size:            14px;
+$font-family-base: $font-family-sans-serif;
+$navbar-font-size: 14px;
 
-$headings-font-weight:        400;
-$headings-font-family:        $font-family-base;
-$link-hover-decoration:       none;
+$headings-font-weight: 400;
+$headings-font-family: $font-family-base;
+$link-hover-decoration: none;
 
 // Header Math
-$header-height:               65px;
+$header-height: 65px;
 // Note: ensured $header-computed-height is defined in your variables or shared files
-$header-site-name-size:       calc($header-height / 3);
+$header-site-name-size: calc($header-height / 3);
 $header-brand-logo-font-size: 33px;
 
 // 3. Mixin conversion for .cam-header
 @mixin cam-header {
-@include link(#545454, #333333);
+  @include link(#545454, #333333);
 }
 
 // 4. Styles
@@ -38,4 +39,4 @@ $header-brand-logo-font-size: 33px;
 }
 
 // 5. Final Imports
-@import "headers";
+@import 'headers';

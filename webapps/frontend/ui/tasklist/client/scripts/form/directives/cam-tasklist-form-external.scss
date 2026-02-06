@@ -3,7 +3,13 @@
     @extend .btn; // Basic button behavior
     @include button-variant($light, $border-color);
     // BS4 Args: padding-y, padding-x, font-size, line-height, border-radius
-    @include button-size($btn-padding-y-lg, $btn-padding-x-lg, $font-size-lg, $line-height-lg, $btn-border-radius-lg);
+    @include button-size(
+      $btn-padding-y-lg,
+      $btn-padding-x-lg,
+      $font-size-lg,
+      $line-height-lg,
+      $btn-border-radius-lg
+    );
 
     display: block;
     max-width: 50%;

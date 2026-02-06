@@ -13,7 +13,10 @@
 
   .activity-highlight {
     // SCSS interpolation for complex mixin arguments
-    @include box-shadow(0 0 #{$border-radius-base} #{$border-radius-base} #{$highlihgt-shadow-color});
+    @include box-shadow(
+      0 0 #{$border-radius-base} #{$border-radius-base}
+        #{$highlihgt-shadow-color}
+    );
 
     border-radius: $border-radius-base;
     cursor: pointer;

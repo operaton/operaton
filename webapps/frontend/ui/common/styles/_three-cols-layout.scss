@@ -1,8 +1,9 @@
 // 1. Side Stroke Mixin
 @mixin side-stroke(
-$hover-color: $link-color,
-$active-color: $primary, // Mapped from brand-primary
-$padding: calc(#{$grid-gutter-width} * 0.5)
+  $hover-color: $link-color,
+  $active-color: $primary,
+  // Mapped from brand-primary
+  $padding: calc(#{$grid-gutter-width} * 0.5)
 ) {
   padding-left: calc(#{$padding} - 5px);
   padding-right: calc(#{$padding} - 5px);
@@ -24,10 +25,11 @@ $padding: calc(#{$grid-gutter-width} * 0.5)
 
 // 2. Item Colors
 @mixin column-list-item-colors(
-$base-color: $body-color, // Mapped from text-color
-$active-color: $black,
-$active-link-color: $link-color,
-$active-link-hover-color: $link-hover-color
+  $base-color: $body-color,
+  // Mapped from text-color
+  $active-color: $black,
+  $active-link-color: $link-color,
+  $active-link-hover-color: $link-hover-color
 ) {
   color: $base-color;
   transition: color 0.218s ease;
@@ -60,8 +62,8 @@ $active-link-hover-color: $link-hover-color
     word-wrap: break-word;
   }
 
-@include side-stroke();
-@include column-list-item-colors($gray-600, $black, $black, $black);
+  @include side-stroke();
+  @include column-list-item-colors($gray-600, $black, $black, $black);
 }
 
 // 3. Column List Containers
@@ -104,7 +106,7 @@ $active-link-hover-color: $link-hover-color
 @mixin three-cols-layout-base() {
   .site-wrap {
     // Assuming abs-box mixin exists or replace with manual positioning
-  @include abs-box(0, 0, 0, 0);
+    @include abs-box(0, 0, 0, 0);
     z-index: 2;
 
     > .navbar {
@@ -123,7 +125,7 @@ $active-link-hover-color: $link-hover-color
   .page-wrap,
   .three-cols-layout-columns,
   .column {
-  @include abs-box();
+    @include abs-box();
   }
 
   .page-wrap {
@@ -140,10 +142,10 @@ $active-link-hover-color: $link-hover-color
       width: auto;
       min-height: auto;
       transition:
-              left $layout-transition-duration $layout-transition-timing,
-              right $layout-transition-duration $layout-transition-timing,
-              margin-left $layout-transition-duration $layout-transition-timing,
-              margin-right $layout-transition-duration $layout-transition-timing;
+        left $layout-transition-duration $layout-transition-timing,
+        right $layout-transition-duration $layout-transition-timing,
+        margin-left $layout-transition-duration $layout-transition-timing,
+        margin-right $layout-transition-duration $layout-transition-timing;
     }
 
     .three-cols-layout-cell {
@@ -155,7 +157,8 @@ $active-link-hover-color: $link-hover-color
       right: 0;
 
       &.content {
-        transition: opacity $layout-transition-duration $layout-transition-timing;
+        transition: opacity $layout-transition-duration
+          $layout-transition-timing;
         overflow-x: hidden;
         overflow-y: auto;
       }
@@ -262,7 +265,9 @@ $active-link-hover-color: $link-hover-color
 
     .column.tasks-list {
       left: $grid-gutter-width;
-      margin-right: calc(0px - (#{$center-width} + (#{$grid-gutter-width} * 1)));
+      margin-right: calc(
+        0px - (#{$center-width} + (#{$grid-gutter-width} * 1))
+      );
     }
 
     .column.task-details {
@@ -384,15 +389,18 @@ $active-link-hover-color: $link-hover-color
 // 9. Header Mixin
 @mixin three-cols-layout-header() {
   .three-cols-layout-cell.top {
-    min-height: calc(#{$column-top-height} + (#{$padding-base-vertical} * 2) + #{$border-width});
-    padding: calc(#{$padding-base-vertical} + 2px) calc(#{$grid-gutter-width} * 0.5) calc(#{$padding-base-vertical} - 2px) calc(#{$grid-gutter-width} * 0.5);
+    min-height: calc(
+      #{$column-top-height} + (#{$padding-base-vertical} * 2) + #{$border-width}
+    );
+    padding: calc(#{$padding-base-vertical} + 2px)
+      calc(#{$grid-gutter-width} * 0.5) calc(#{$padding-base-vertical} - 2px)
+      calc(#{$grid-gutter-width} * 0.5);
 
     // Negative margin math fix
-    margin:
-            calc(0px - (#{$grid-gutter-width} * 0.5))
-            calc(0px - (#{$grid-gutter-width} * 0.5))
-            calc(#{$grid-gutter-width} * 0.5)
-            calc(0px - (#{$grid-gutter-width} * 0.5));
+    margin: calc(0px - (#{$grid-gutter-width} * 0.5))
+      calc(0px - (#{$grid-gutter-width} * 0.5))
+      calc(#{$grid-gutter-width} * 0.5)
+      calc(0px - (#{$grid-gutter-width} * 0.5));
 
     > button,
     > div {

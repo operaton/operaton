@@ -29,14 +29,14 @@ var deployFirst = combine(
       files: [
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
+          content: readResource('assign-approver-groups.dmn'),
         },
         {
           name: 'invoice.bpmn',
-          content: readResource('invoice.bpmn')
-        }
-      ]
-    }
+          content: readResource('invoice.bpmn'),
+        },
+      ],
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -45,10 +45,10 @@ var deployFirst = combine(
       businessKey: 'invoice1',
       variables: {
         amount: {value: 100},
-        invoiceCategory: {value: 'travelExpenses'}
-      }
-    }
-  ])
+        invoiceCategory: {value: 'travelExpenses'},
+      },
+    },
+  ]),
 );
 
 var deploySecond = operation('deployment', 'create', [
@@ -57,10 +57,10 @@ var deploySecond = operation('deployment', 'create', [
     files: [
       {
         name: 'assign-approver-groups-changed.dmn',
-        content: readResource('assign-approver-groups-changed.dmn')
-      }
-    ]
-  }
+        content: readResource('assign-approver-groups-changed.dmn'),
+      },
+    ],
+  },
 ]);
 
 var deployThird = combine(
@@ -71,15 +71,15 @@ var deployThird = combine(
         {
           name: 'assign-approver-groups-clauses-without-name.dmn',
           content: readResource(
-            'assign-approver-groups-clauses-without-name.dmn'
-          )
+            'assign-approver-groups-clauses-without-name.dmn',
+          ),
         },
         {
           name: 'invoice.bpmn',
-          content: readResource('invoice.bpmn')
-        }
-      ]
-    }
+          content: readResource('invoice.bpmn'),
+        },
+      ],
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -88,10 +88,10 @@ var deployThird = combine(
       businessKey: 'invoice1',
       variables: {
         amount: {value: 100},
-        invoiceCategory: {value: 'travelExpenses'}
-      }
-    }
-  ])
+        invoiceCategory: {value: 'travelExpenses'},
+      },
+    },
+  ]),
 );
 
 var deploy4 = combine(
@@ -101,10 +101,10 @@ var deploy4 = combine(
       files: [
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
-        }
-      ]
-    }
+          content: readResource('assign-approver-groups.dmn'),
+        },
+      ],
+    },
   ]),
 
   operation('decision-definition', 'evaluate', [
@@ -112,10 +112,10 @@ var deploy4 = combine(
       key: 'invoice-assign-approver',
       variables: {
         amount: {value: 100},
-        invoiceCategory: {value: 'travelExpenses'}
-      }
-    }
-  ])
+        invoiceCategory: {value: 'travelExpenses'},
+      },
+    },
+  ]),
 );
 
 var multiTenancyDeployment = combine(
@@ -127,14 +127,14 @@ var multiTenancyDeployment = combine(
         {
           name: 'invoice.bpmn',
           filename: 'invoice-deployment-binding.bpmn',
-          content: readResource('invoice-deployment-binding.bpmn')
+          content: readResource('invoice-deployment-binding.bpmn'),
         },
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
-        }
-      ]
-    }
+          content: readResource('assign-approver-groups.dmn'),
+        },
+      ],
+    },
   ]),
 
   operation('deployment', 'create', [
@@ -144,14 +144,14 @@ var multiTenancyDeployment = combine(
         {
           name: 'invoice.bpmn',
           filename: 'invoice-deployment-binding.bpmn',
-          content: readResource('invoice-deployment-binding.bpmn')
+          content: readResource('invoice-deployment-binding.bpmn'),
         },
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
-        }
-      ]
-    }
+          content: readResource('assign-approver-groups.dmn'),
+        },
+      ],
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -161,18 +161,18 @@ var multiTenancyDeployment = combine(
       variables: {
         creditor: {
           value: 'test',
-          type: 'String'
+          type: 'String',
         },
         amount: {
           value: 20.5,
-          type: 'Double'
+          type: 'Double',
         },
         invoiceCategory: {
           value: 'Travel Expenses',
-          type: 'String'
-        }
-      }
-    }
+          type: 'String',
+        },
+      },
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -181,19 +181,19 @@ var multiTenancyDeployment = combine(
       variables: {
         creditor: {
           value: 'test',
-          type: 'String'
+          type: 'String',
         },
         amount: {
           value: 15.0,
-          type: 'Double'
+          type: 'Double',
         },
         invoiceCategory: {
           value: 'Travel Expenses',
-          type: 'String'
-        }
-      }
-    }
-  ])
+          type: 'String',
+        },
+      },
+    },
+  ]),
 );
 
 var deployMultipleInstances = combine(
@@ -203,14 +203,14 @@ var deployMultipleInstances = combine(
       files: [
         {
           name: 'assign-approver-groups.dmn',
-          content: readResource('assign-approver-groups.dmn')
+          content: readResource('assign-approver-groups.dmn'),
         },
         {
           name: 'invoice.bpmn',
-          content: readResource('invoice.bpmn')
-        }
-      ]
-    }
+          content: readResource('invoice.bpmn'),
+        },
+      ],
+    },
   ]),
 
   operation('process-definition', 'start', [
@@ -219,9 +219,9 @@ var deployMultipleInstances = combine(
       businessKey: 'invoice1',
       variables: {
         amount: {value: 100},
-        invoiceCategory: {value: 'travelExpenses'}
-      }
-    }
+        invoiceCategory: {value: 'travelExpenses'},
+      },
+    },
   ]),
   operation('process-definition', 'start', [
     {
@@ -229,10 +229,10 @@ var deployMultipleInstances = combine(
       businessKey: 'invoice2',
       variables: {
         amount: {value: 200},
-        invoiceCategory: {value: 'travelExpenses2'}
-      }
-    }
-  ])
+        invoiceCategory: {value: 'travelExpenses2'},
+      },
+    },
+  ]),
 );
 
 module.exports = {
@@ -241,5 +241,5 @@ module.exports = {
   setup3: deployThird,
   setup4: deploy4,
   setup5: deployMultipleInstances,
-  multiTenancySetup: multiTenancyDeployment
+  multiTenancySetup: multiTenancyDeployment,
 };

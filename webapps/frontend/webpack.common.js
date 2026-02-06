@@ -101,7 +101,7 @@ module.exports = (_env, argv = {}) => {
         'core-js': path.resolve(__dirname, 'node_modules/core-js'),
         angular: path.resolve(__dirname, 'node_modules/angular'), // avoid loading angular twice
         // compatibility layer for `ids` module, which is needed differently by dmn-migrate and form-js
-        'ids$': path.resolve(__dirname, 'ids-compatibility.js'),
+        ids$: path.resolve(__dirname, 'ids-compatibility.js'),
         // prevent`preact-markup`being tree shaken (transitive dependency of form-js
         'preact-markup': path.resolve(
           __dirname,
@@ -241,7 +241,7 @@ module.exports = (_env, argv = {}) => {
         DEV_MODE: devMode,
         Popper: ['popper.js', 'default'],
         $: 'jquery',
-        jQuery: 'jquery'
+        jQuery: 'jquery',
       }),
       new ESLintPlugin(),
     ],

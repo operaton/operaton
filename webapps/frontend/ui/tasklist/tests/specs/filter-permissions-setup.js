@@ -30,10 +30,10 @@ module.exports = {
         query: {},
         properties: {
           priority: 5,
-          description: 'Filter without variable definitions'
+          description: 'Filter without variable definitions',
         },
-        resourceType: 'Task'
-      }
+        resourceType: 'Task',
+      },
     ]),
 
     operation('user', 'create', [
@@ -41,29 +41,29 @@ module.exports = {
         id: 'test',
         firstName: 'Montgomery',
         lastName: 'QA',
-        password: 'test'
+        password: 'test',
       },
       {
         id: 'juri',
         firstName: 'Juri',
         lastName: 'Gagarin',
-        password: 'juri'
-      }
+        password: 'juri',
+      },
     ]),
 
     operation('group', 'create', [
       {
         id: 'marketing',
         name: 'Marketing',
-        type: 'WORKFLOW'
-      }
+        type: 'WORKFLOW',
+      },
     ]),
 
     operation('group', 'createMember', [
       {
         id: 'marketing',
-        userId: 'juri'
-      }
+        userId: 'juri',
+      },
     ]),
 
     operation('authorization', 'create', [
@@ -73,7 +73,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 0,
-        resourceId: 'tasklist'
+        resourceId: 'tasklist',
       },
       {
         type: 1,
@@ -81,8 +81,8 @@ module.exports = {
         userId: 'juri',
         groupId: null,
         resourceType: 0,
-        resourceId: 'tasklist'
-      }
-    ])
-  )
+        resourceId: 'tasklist',
+      },
+    ]),
+  ),
 };

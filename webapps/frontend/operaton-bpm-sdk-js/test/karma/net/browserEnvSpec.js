@@ -18,19 +18,16 @@
 'use strict';
 var CamSDK = require('../../../lib/index-browser.js');
 
-describe('The browser usage', function() {
-
-  it('exists globally', function() {
+describe('The browser usage', function () {
+  it('exists globally', function () {
     expect(CamSDK).to.not.be.undefined;
   });
 
-
-  xit('can be required', function() {
+  xit('can be required', function () {
     expect(require).to.not.be.undefined;
 
-    expect(function() {
+    expect(function () {
       var camSdk = require('operaton-bpm-sdk');
     }).not.to.throw();
   });
-
 });

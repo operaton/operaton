@@ -22,15 +22,14 @@
 
 var Pill = require('./cam-widget-search-pill-object.page.js');
 
-function Page() { }
+function Page() {}
 
-Page.prototype.pill = function(identifier) {
+Page.prototype.pill = function (identifier) {
   return new Pill(element(by.id(identifier)));
 };
 
-Page.prototype.body = function() {
+Page.prototype.body = function () {
   return element(by.tagName('body'));
 };
-
 
 module.exports = new Page();

@@ -24,22 +24,22 @@ var dashboardPage = require('../pages/dashboard');
 var taskViewPage = dashboardPage.currentTask;
 var taskListPage = dashboardPage.taskList;
 
-describe.skip('Task Dates Spec', function() {
-  describe('follow-up dates', function() {
+describe.skip('Task Dates Spec', function () {
+  describe('follow-up dates', function () {
     var followUpCreateTime;
 
-    before(function() {
-      return testHelper(setupFile.setup1, function() {
+    before(function () {
+      return testHelper(setupFile.setup1, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
         taskListPage.selectTask('Task 1');
       });
     });
 
-    it('should set follow up date to now', function() {
+    it('should set follow up date to now', function () {
       // given
       expect(taskViewPage.followUpDate()).to.eventually.eql(
-        'Set follow-up date'
+        'Set follow-up date',
       );
 
       // when
@@ -48,38 +48,38 @@ describe.skip('Task Dates Spec', function() {
 
       // then
       expect(taskViewPage.followUpDate()).to.eventually.eql(
-        'a few seconds ago'
+        'a few seconds ago',
       );
     });
 
-    it('should display the absolute date in the tooltip in the task detail view', function() {
+    it('should display the absolute date in the tooltip in the task detail view', function () {
       // then
       expect(taskViewPage.followUpDateTooltip()).to.eventually.include(
-        followUpCreateTime.getDate()
+        followUpCreateTime.getDate(),
       );
       expect(taskViewPage.followUpDateTooltip()).to.eventually.include(
-        followUpCreateTime.getFullYear()
+        followUpCreateTime.getFullYear(),
       );
     });
 
-    it('should display relative follow up date in the list of tasks', function() {
+    it('should display relative follow up date in the list of tasks', function () {
       // then
       expect(taskListPage.taskFollowUpDate('Task 1')).to.eventually.include(
-        'a few seconds ago'
+        'a few seconds ago',
       );
     });
 
-    it('should display absolute follow up date in the tooltip in the list of tasks', function() {
+    it('should display absolute follow up date in the tooltip in the list of tasks', function () {
       // then
       expect(
-        taskListPage.taskFollowUpDateTooltip('Task 1')
+        taskListPage.taskFollowUpDateTooltip('Task 1'),
       ).to.eventually.include(followUpCreateTime.getDate());
       expect(
-        taskListPage.taskFollowUpDateTooltip('Task 1')
+        taskListPage.taskFollowUpDateTooltip('Task 1'),
       ).to.eventually.include(followUpCreateTime.getFullYear());
     });
 
-    it('should display follow up date in the tasks history', function() {
+    it('should display follow up date in the tasks history', function () {
       // when
       taskViewPage.history.selectTab();
 
@@ -87,28 +87,28 @@ describe.skip('Task Dates Spec', function() {
       expect(taskViewPage.history.eventType(0)).to.eventually.eql('Update');
       expect(taskViewPage.history.operationUser(0)).to.eventually.eql('admin');
       expect(taskViewPage.history.subEventType(0)).to.eventually.eql(
-        'Follow-up date'
+        'Follow-up date',
       );
       expect(taskViewPage.history.subEventNewValue(0, 0)).to.eventually.include(
-        followUpCreateTime.getDate()
+        followUpCreateTime.getDate(),
       );
       expect(taskViewPage.history.subEventNewValue(0, 0)).to.eventually.include(
-        followUpCreateTime.getFullYear()
+        followUpCreateTime.getFullYear(),
       );
     });
 
-    it('should edit follow up date', function() {
+    it('should edit follow up date', function () {
       // when
       taskViewPage.setFollowUpDate('15:33');
 
       // then
       expect(taskViewPage.followUpDateTooltip()).to.eventually.include('15:33');
       expect(
-        taskListPage.taskFollowUpDateTooltip('Task 1')
+        taskListPage.taskFollowUpDateTooltip('Task 1'),
       ).to.eventually.include('15:33');
     });
 
-    it('should validate change in history tab', function() {
+    it('should validate change in history tab', function () {
       // when
       taskViewPage.history.selectTab();
 
@@ -116,29 +116,29 @@ describe.skip('Task Dates Spec', function() {
       expect(taskViewPage.history.eventType(0)).to.eventually.eql('Update');
       expect(taskViewPage.history.operationUser(0)).to.eventually.eql('admin');
       expect(taskViewPage.history.subEventType(0)).to.eventually.eql(
-        'Follow-up date'
+        'Follow-up date',
       );
       expect(taskViewPage.history.subEventNewValue(0, 0)).to.eventually.include(
-        '15:33'
+        '15:33',
       );
     });
   });
 
-  describe('due dates', function() {
+  describe('due dates', function () {
     var dueDateCreateTime;
 
-    before(function() {
-      return testHelper(setupFile.setup1, function() {
+    before(function () {
+      return testHelper(setupFile.setup1, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
         taskListPage.selectTask('Task 1');
       });
     });
 
-    it('should set due date to now', function() {
+    it('should set due date to now', function () {
       // given
       expect(taskViewPage.dueDateElement().getText()).to.eventually.eql(
-        'Set due date'
+        'Set due date',
       );
 
       // when
@@ -149,34 +149,34 @@ describe.skip('Task Dates Spec', function() {
       expect(taskViewPage.dueDate()).to.eventually.eql('a few seconds ago');
     });
 
-    it('should display absolute due date in the tooltip in the task detail view', function() {
+    it('should display absolute due date in the tooltip in the task detail view', function () {
       // then
       expect(taskViewPage.dueDateTooltip()).to.eventually.include(
-        dueDateCreateTime.getDate()
+        dueDateCreateTime.getDate(),
       );
       expect(taskViewPage.dueDateTooltip()).to.eventually.include(
-        dueDateCreateTime.getFullYear()
+        dueDateCreateTime.getFullYear(),
       );
     });
 
-    it('should display relative due date in the list of tasks', function() {
+    it('should display relative due date in the list of tasks', function () {
       // then
       expect(taskListPage.taskDueDate('Task 1')).to.eventually.include(
-        'a few seconds ago'
+        'a few seconds ago',
       );
     });
 
-    it('should display absolute due date in the tooltip in the list of tasks', function() {
+    it('should display absolute due date in the tooltip in the list of tasks', function () {
       // then
       expect(taskListPage.taskDueDateTooltip('Task 1')).to.eventually.include(
-        dueDateCreateTime.getDate()
+        dueDateCreateTime.getDate(),
       );
       expect(taskListPage.taskDueDateTooltip('Task 1')).to.eventually.include(
-        dueDateCreateTime.getFullYear()
+        dueDateCreateTime.getFullYear(),
       );
     });
 
-    it('should display due date in the tasks history', function() {
+    it('should display due date in the tasks history', function () {
       // when
       taskViewPage.history.selectTab();
 
@@ -184,28 +184,28 @@ describe.skip('Task Dates Spec', function() {
       expect(taskViewPage.history.eventType(0)).to.eventually.eql('Update');
       expect(taskViewPage.history.operationUser(0)).to.eventually.eql('admin');
       expect(taskViewPage.history.subEventType(0)).to.eventually.eql(
-        'Due date'
+        'Due date',
       );
       expect(taskViewPage.history.subEventNewValue(0, 0)).to.eventually.include(
-        dueDateCreateTime.getDate()
+        dueDateCreateTime.getDate(),
       );
       expect(taskViewPage.history.subEventNewValue(0, 0)).to.eventually.include(
-        dueDateCreateTime.getFullYear()
+        dueDateCreateTime.getFullYear(),
       );
     });
 
-    it('should edit due date', function() {
+    it('should edit due date', function () {
       // when
       taskViewPage.setDueDate('23:55');
 
       // then
       expect(taskViewPage.dueDateTooltip()).to.eventually.include('23:55');
       expect(taskListPage.taskDueDateTooltip('Task 1')).to.eventually.include(
-        '23:55'
+        '23:55',
       );
     });
 
-    it('should validate change in history tab', function() {
+    it('should validate change in history tab', function () {
       // when
       taskViewPage.history.selectTab();
 
@@ -213,10 +213,10 @@ describe.skip('Task Dates Spec', function() {
       expect(taskViewPage.history.eventType(0)).to.eventually.eql('Update');
       expect(taskViewPage.history.operationUser(0)).to.eventually.eql('admin');
       expect(taskViewPage.history.subEventType(0)).to.eventually.eql(
-        'Due date'
+        'Due date',
       );
       expect(taskViewPage.history.subEventNewValue(0, 0)).to.eventually.include(
-        '23:55'
+        '23:55',
       );
     });
   });

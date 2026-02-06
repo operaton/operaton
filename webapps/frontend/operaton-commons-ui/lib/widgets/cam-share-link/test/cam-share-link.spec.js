@@ -23,13 +23,15 @@
 var path = require('path');
 var projectRoot = path.resolve(__dirname, '../../../../');
 var pkg = require(path.join(projectRoot, 'package.json'));
-var pageUrl = 'http://localhost:' + pkg.gruntConfig.connectPort +
-              '/lib/widgets/cam-share-link/test/cam-share-link.spec.html';
+var pageUrl =
+  'http://localhost:' +
+  pkg.gruntConfig.connectPort +
+  '/lib/widgets/cam-share-link/test/cam-share-link.spec.html';
 
 var page = require('./cam-widget-clipboard.page.js');
 
-describe('cam-share-link widget', function() {
-  it('can copy values to the clipboard', function() {
+describe('cam-share-link widget', function () {
+  it('can copy values to the clipboard', function () {
     browser.go(pageUrl);
     browser.sleep(2000);
 
@@ -39,8 +41,8 @@ describe('cam-share-link widget', function() {
 
     target.sendKeys(protractor.Key.chord(browser.controlKey, 'v'));
 
-    expect(
-      target.getAttribute('value')
-    ).to.eventually.eql(browser.getCurrentUrl());
+    expect(target.getAttribute('value')).to.eventually.eql(
+      browser.getCurrentUrl(),
+    );
   });
 });

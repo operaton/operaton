@@ -1,10 +1,9 @@
 form.execution-metrics {
-
   .task-worker-metrics {
     margin-bottom: 10px;
   }
 
-  input[type="checkbox"].tw-checkbox-show {
+  input[type='checkbox'].tw-checkbox-show {
     margin-right: 8px;
   }
 
@@ -44,7 +43,8 @@ form.execution-metrics {
         width: 10%;
       }
 
-      td.metric-action-value, th.metric-action-header {
+      td.metric-action-value,
+      th.metric-action-header {
         text-align: center;
       }
     }
@@ -53,5 +53,4 @@ form.execution-metrics {
   div.monthly-metrics-chart {
     height: 200px;
   }
-
 }

@@ -24,5 +24,5 @@ var pagesModule = require('../../main');
 
 module.exports = angular.module('cam.cockpit.pages.tests', [
   testModule.name,
-  pagesModule.name
+  pagesModule.name,
 ]);

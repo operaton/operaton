@@ -54,7 +54,8 @@
     border: none;
     vertical-align: top;
     // 2. Fix Unit Math (assuming padding-base-vertical is rem)
-    margin: calc(#{$padding-base-vertical} + 1px) 0 calc(#{$padding-base-vertical} - 2px) 0;
+    margin: calc(#{$padding-base-vertical} + 1px) 0
+      calc(#{$padding-base-vertical} - 2px) 0;
     margin-top: calc(#{$padding-base-vertical} - 1px);
   }
 
@@ -63,7 +64,8 @@
     display: block;
     min-height: $icon-size;
     // 2. Fix Unit Math for padding
-    padding: calc(#{$padding-base-vertical} - 4px) $padding-base-horizontal calc(#{$padding-base-vertical} - 4px) $padding-base-horizontal;
+    padding: calc(#{$padding-base-vertical} - 4px) $padding-base-horizontal
+      calc(#{$padding-base-vertical} - 4px) $padding-base-horizontal;
     box-shadow: $input-box-shadow;
     border-radius: $input-border-radius;
 
@@ -124,7 +126,7 @@
 
   &.multiline-pills {
     // 1. Call mixin
-  @include cam-widget-search-multiline-pill();
+    @include cam-widget-search-multiline-pill();
   }
 
   .search-field {
@@ -182,7 +184,7 @@
       font-weight: 500;
     }
 
-    [disabled="disabled"] {
+    [disabled='disabled'] {
       opacity: 0.65;
     }
   }

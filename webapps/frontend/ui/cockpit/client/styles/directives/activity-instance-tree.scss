@@ -13,8 +13,8 @@
     cursor: pointer;
   }
 
-  [class^="icon-"],
-  [class*=" icon-"] {
+  [class^='icon-'],
+  [class*=' icon-'] {
     display: inline-block;
 
     &::before {
@@ -79,8 +79,8 @@
       border-color: $bpmn-highlight-border-color;
       z-index: 11;
 
-      [class^="icon-"],
-      [class*=" icon-"] {
+      [class^='icon-'],
+      [class*=' icon-'] {
         &::before {
           background-color: $bpmn-highlight-bg;
           border-color: $bpmn-highlight-border-color;
@@ -112,8 +112,8 @@
       z-index: 99;
 
       > .tree-node > .tree-node-group > .tree-node-label {
-        > [class^="icon-"],
-        > [class*=" icon-"] {
+        > [class^='icon-'],
+        > [class*=' icon-'] {
           &::before {
             transform: scale(3);
           }

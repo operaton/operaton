@@ -20,44 +20,40 @@
 var Page = require('./../dashboard-view');
 
 module.exports = Page.extend({
-  formElement: function() {
+  formElement: function () {
     return element(by.css('[cam-tasklist-task]'));
   },
 
-  noTaskInfoText: function() {
-    return this.formElement()
-      .element(by.css('.no-task'))
-      .getText();
+  noTaskInfoText: function () {
+    return this.formElement().element(by.css('.no-task')).getText();
   },
 
-  waitForTaskDetailView: function() {
+  waitForTaskDetailView: function () {
     var elementToWaitFor = this.taskName();
     this.waitForElementToBeVisible(elementToWaitFor);
   },
 
-  taskName: function() {
-    return this.formElement()
-      .element(by.binding('task.name'))
-      .getText();
+  taskName: function () {
+    return this.formElement().element(by.binding('task.name')).getText();
   },
 
-  processName: function() {
+  processName: function () {
     return this.formElement()
       .element(by.binding('task._embedded.processDefinition[0].name'))
       .getText();
   },
 
-  commentModalFormElement: function() {
+  commentModalFormElement: function () {
     return element(by.name('newComment'));
   },
 
-  addCommentButton: function() {
+  addCommentButton: function () {
     return element(by.css('[ng-click="createComment()"]'));
   },
 
-  commentInputField: function(inputValue) {
+  commentInputField: function (inputValue) {
     var inputField = this.commentModalFormElement().element(
-      by.model('comment.message')
+      by.model('comment.message'),
     );
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -65,13 +61,13 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  commentSaveButton: function() {
+  commentSaveButton: function () {
     return this.commentModalFormElement().element(
-      by.css('[ng-click="submit()"]')
+      by.css('[ng-click="submit()"]'),
     );
   },
 
-  addComment: function(comment) {
+  addComment: function (comment) {
     var openDialogElement = this.commentInputField();
     this.addCommentButton().click();
     this.waitForElementToBeVisible(openDialogElement);
@@ -83,63 +79,63 @@ module.exports = Page.extend({
     this.waitForElementToBeNotPresent(closedDialogElement);
   },
 
-  claim: function() {
+  claim: function () {
     var claimButton = element(by.css('[ng-click="claim()"]'));
     claimButton.click();
     this.waitForElementToBeNotPresent(claimButton);
   },
 
-  unclaim: function() {
+  unclaim: function () {
     element(by.css('[ng-click="unclaim()"]')).click();
   },
 
-  isTaskClaimed: function() {
+  isTaskClaimed: function () {
     return element(
-      by.css('.task-card .assignee[ng-if="task.assignee"]')
+      by.css('.task-card .assignee[ng-if="task.assignee"]'),
     ).isPresent();
   },
 
-  claimedUserField: function() {
+  claimedUserField: function () {
     return element(by.css('.task-card .assignee'));
   },
 
-  claimedUserFieldEditMode: function() {
+  claimedUserFieldEditMode: function () {
     return this.claimedUserField().element(by.model('editValue'));
   },
 
-  claimedUser: function() {
+  claimedUser: function () {
     return this.claimedUserField().getText();
   },
 
-  clickClaimedUserField: function() {
+  clickClaimedUserField: function () {
     element(by.css('.set-value [ng-click*="startEditing()"]')).click();
   },
 
-  editClaimedUser: function(userName) {
+  editClaimedUser: function (userName) {
     this.clickClaimedUserField();
     this.claimedUserFieldEditMode().clear();
     this.claimedUserFieldEditMode().sendKeys(userName);
     element(
       by.css(
-        'body > .cam-widget-inline-field > [ng-click="applyChange($event);"]'
-      )
+        'body > .cam-widget-inline-field > [ng-click="applyChange($event);"]',
+      ),
     ).click();
   },
 
-  cancelEditClaimedUser: function() {
+  cancelEditClaimedUser: function () {
     element(by.css('[ng-click*="cancelChange($event)"]')).click();
   },
 
-  datePickerDialogElement: function() {
+  datePickerDialogElement: function () {
     return element(by.css('.cam-widget-inline-field'));
   },
 
-  editDate: function(newTime, newDate) {
+  editDate: function (newTime, newDate) {
     var datePickerButton = element(
-      by.css('.cam-widget-inline-field.btn-group')
+      by.css('.cam-widget-inline-field.btn-group'),
     );
     var datePickerField = element(
-      by.css('.cam-widget-inline-field.field-control')
+      by.css('.cam-widget-inline-field.field-control'),
     );
     this.waitForElementToBeVisible(datePickerField);
 
@@ -165,11 +161,11 @@ module.exports = Page.extend({
     this.waitForElementToBeNotPresent(datePickerField);
   },
 
-  followUpDateElement: function() {
+  followUpDateElement: function () {
     return this.formElement().element(by.css('.followup-date'));
   },
 
-  setFollowUpDate: function(newTime, newDate) {
+  setFollowUpDate: function (newTime, newDate) {
     this.followUpDateElement()
       .element(by.css('[ng-click*="startEditing()"]'))
       .click();
@@ -177,31 +173,26 @@ module.exports = Page.extend({
     browser.sleep(500);
   },
 
-  followUpDate: function() {
-    return this.followUpDateElement()
-      .element(by.css('.view-value'))
-      .getText();
+  followUpDate: function () {
+    return this.followUpDateElement().element(by.css('.view-value')).getText();
   },
 
-  followUpDateTooltip: function() {
+  followUpDateTooltip: function () {
     var tooltipTriggerer = this.followUpDateElement().element(
-      by.css('[am-time-ago="task.followUp"]')
+      by.css('[am-time-ago="task.followUp"]'),
     );
-    browser
-      .actions()
-      .mouseMove(tooltipTriggerer)
-      .perform();
+    browser.actions().mouseMove(tooltipTriggerer).perform();
 
     var tooltipWidget = element(by.css('body > [tooltip-popup]'));
     this.waitForElementToBeVisible(tooltipWidget);
     return tooltipWidget.getText();
   },
 
-  dueDateElement: function() {
+  dueDateElement: function () {
     return this.formElement().element(by.css('.due-date'));
   },
 
-  setDueDate: function(newTime, newDate) {
+  setDueDate: function (newTime, newDate) {
     this.dueDateElement()
       .element(by.css('[ng-click*="startEditing()"]'))
       .click();
@@ -209,27 +200,22 @@ module.exports = Page.extend({
     browser.sleep(500);
   },
 
-  dueDate: function() {
-    return this.dueDateElement()
-      .element(by.css('.view-value'))
-      .getText();
+  dueDate: function () {
+    return this.dueDateElement().element(by.css('.view-value')).getText();
   },
 
-  dueDateTooltip: function() {
+  dueDateTooltip: function () {
     var tooltipTriggerer = this.dueDateElement().element(
-      by.css('[am-time-ago="task.due"]')
+      by.css('[am-time-ago="task.due"]'),
     );
-    browser
-      .actions()
-      .mouseMove(tooltipTriggerer)
-      .perform();
+    browser.actions().mouseMove(tooltipTriggerer).perform();
 
     var tooltipWidget = element(by.css('body > [tooltip-popup]'));
     this.waitForElementToBeVisible(tooltipWidget);
     return tooltipWidget.getText();
   },
 
-  taskTenantIdField: function() {
+  taskTenantIdField: function () {
     return this.formElement().element(by.css('.tenant-id'));
-  }
+  },
 });

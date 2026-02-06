@@ -1,19 +1,23 @@
 <!-- # CE - operaton-bpm-webapp/webapp/src/main/resources-plugin/base/app/views/processDefinition/update-suspension-state-action.html -->
-<a class="btn btn-outline-secondary mt-1 btn-suspend-action"
-   href
-   ng-click="openDialog()"
-   uib-tooltip="{{'PLUGIN_SUSPENSION_SUSPEND_PROCESS' | translate}}"
-   tooltip-placement="left"
-   ng-show="!processDefinition.suspended">
+<a
+  class="btn btn-outline-secondary mt-1 btn-suspend-action"
+  href
+  ng-click="openDialog()"
+  uib-tooltip="{{'PLUGIN_SUSPENSION_SUSPEND_PROCESS' | translate}}"
+  tooltip-placement="left"
+  ng-show="!processDefinition.suspended"
+>
   <span class="glyphicon glyphicon-pause"></span>
 </a>
 
-<a class="btn btn-outline-secondary mt-1"
-   href
-   ng-click="openDialog()"
-   uib-tooltip="{{'PLUGIN_SUSPENSION_ACTIVATE_PROCESS' | translate}}"
-   tooltip-placement="left"
-   ng-hide="!processDefinition.suspended">
+<a
+  class="btn btn-outline-secondary mt-1"
+  href
+  ng-click="openDialog()"
+  uib-tooltip="{{'PLUGIN_SUSPENSION_ACTIVATE_PROCESS' | translate}}"
+  tooltip-placement="left"
+  ng-hide="!processDefinition.suspended"
+>
   <span class="glyphicon glyphicon-play"></span>
 </a>
 <!-- / CE - operaton-bpm-webapp/webapp/src/main/resources-plugin/base/app/views/processDefinition/update-suspension-state-action.html -->

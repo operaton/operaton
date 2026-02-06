@@ -24,8 +24,6 @@ import org.operaton.bpm.engine.migration.MigrationInstruction;
 
 public class MigrationInstructionJsonConverter implements JsonObjectConverter<MigrationInstruction> {
 
-  public static final MigrationInstructionJsonConverter INSTANCE = new MigrationInstructionJsonConverter();
-
   public static final String SOURCE_ACTIVITY_IDS = "sourceActivityIds";
   public static final String TARGET_ACTIVITY_IDS = "targetActivityIds";
   public static final String UPDATE_EVENT_TRIGGER = "updateEventTrigger";

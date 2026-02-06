@@ -10,7 +10,7 @@
   > .view-value,
   > .preview {
     // .form-control-static in BS3 is roughly .form-control-plaintext in BS4
-    @extend .form-control-plaintext;
+  @extend .form-control-plaintext;
 
     display: block;
     float: left;
@@ -49,9 +49,9 @@
     min-width: 0;
   }
 
-  &[type='date'],
-  &[type='time'],
-  &[type='datetime'] {
+  &[type="date"],
+  &[type="time"],
+  &[type="datetime"] {
     > .edit {
       position: relative;
       z-index: 99;
@@ -116,7 +116,7 @@
 
   &.field-control {
     // BS4 Mixin for box shadow
-    @include box-shadow(0 3px 9px rgba(0, 0, 0, 0.5));
+  @include box-shadow(0 3px 9px rgba(0,0,0,0.5));
 
     margin-top: -2px;
 

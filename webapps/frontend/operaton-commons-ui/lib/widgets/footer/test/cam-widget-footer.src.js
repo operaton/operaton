@@ -18,7 +18,7 @@
 'use strict';
 
 var angular = require('operaton-bpm-sdk-js/vendor/angular'),
-  footerDefinition = require('../cam-widget-footer');
+    footerDefinition = require('../cam-widget-footer');
 
 var footerModule = angular.module('footerModule', []);
 

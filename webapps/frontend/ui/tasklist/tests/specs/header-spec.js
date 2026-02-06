@@ -19,5 +19,5 @@
 
 describe(
   'Tasklist page header Spec',
-  require('../../../common/tests/specs/header-spec-definition')('Tasklist'),
+  require('../../../common/tests/specs/header-spec-definition')('Tasklist')
 );

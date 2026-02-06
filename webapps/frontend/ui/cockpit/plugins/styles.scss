@@ -1,12 +1,12 @@
-@import 'ui/cockpit/client/styles/_app-variables';
+@import "ui/cockpit/client/styles/_app-variables";
 
 // use `reference` to avoid duplicate bootstrap styles
 // as they are already available in other compiled CSS
-@import '../../../operaton-commons-ui/resources/scss/shared/bootstrap';
+@import "../../../operaton-commons-ui/resources/scss/shared/bootstrap";
 
 /* add plugin styles here */
 
-@import 'base/app/views/common/diagramPlugins/styles';
-@import 'base/app/views/processesDashboard/styles';
-@import 'base/app/views/processInstance/styles';
-@import 'base/app/views/processDefinition/called-process-definition-table';
+@import "base/app/views/common/diagramPlugins/styles";
+@import "base/app/views/processesDashboard/styles";
+@import "base/app/views/processInstance/styles";
+@import "base/app/views/processDefinition/called-process-definition-table";

@@ -33,12 +33,12 @@ module.exports = {
           variables: [
             {
               name: 'testVar',
-              label: 'Test Variable',
-            },
+              label: 'Test Variable'
+            }
           ],
-          showUndefinedVariable: true,
-        },
-      },
+          showUndefinedVariable: true
+        }
+      }
     ]),
 
     operation('user', 'create', [
@@ -46,8 +46,8 @@ module.exports = {
         id: 'test',
         firstName: 'test',
         lastName: 'test',
-        password: 'test',
-      },
+        password: 'test'
+      }
     ]),
 
     operation('authorization', 'create', [
@@ -57,7 +57,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 0,
-        resourceId: 'tasklist',
+        resourceId: 'tasklist'
       },
       {
         type: 1,
@@ -65,7 +65,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 5,
-        resourceId: '*',
+        resourceId: '*'
       },
       {
         type: 1,
@@ -73,8 +73,8 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 7,
-        resourceId: '*',
-      },
+        resourceId: '*'
+      }
     ]),
 
     operation('task', 'create', [
@@ -82,20 +82,20 @@ module.exports = {
         id: '1',
         name: 'Task 1',
         assignee: 'test',
-        due: '2016-09-15T15:45:48',
+        due: '2016-09-15T15:45:48'
       },
       {
         id: '2',
         name: 'Task 2',
         assignee: 'test',
-        due: '2016-09-16T15:45:48',
+        due: '2016-09-16T15:45:48'
       },
       {
         id: 'abc123',
         name: 'My Task',
         assignee: 'test',
-        due: '2016-09-15T15:46:48',
-      },
+        due: '2016-09-15T15:46:48'
+      }
     ]),
 
     operation('task', 'localVariable', [
@@ -103,8 +103,8 @@ module.exports = {
         id: '1',
         varId: 'testVar',
         value: 42,
-        type: 'Integer',
-      },
-    ]),
-  ),
+        type: 'Integer'
+      }
+    ])
+  )
 };

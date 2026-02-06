@@ -1,95 +1,83 @@
 <nav class="navbar navbar-expand-md app-menu p-0">
   <div class="navbar-header d-flex align-items-center order-1">
-    <button
-      type="button"
-      class="navbar-toggler"
-      ng-class="{open: !!navbarOpen}"
-      ng-click="navbarOpen = !navbarOpen"
-      aria-label="{{ toggleNavigation }}"
-    >
+    <button type="button"
+            class="navbar-toggler"
+            ng-class="{open: !!navbarOpen}"
+            ng-click="navbarOpen = !navbarOpen"
+            aria-label="{{ toggleNavigation }}">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <a
-      class="navbar-brand app-banner"
-      ng-if="authentication.name"
-      href="#/"
-      title="{{ brandName }} {{ appName }}"
-    >
+    <a class="navbar-brand app-banner"
+       ng-if="authentication.name"
+       href="#/"
+       title="{{ brandName }} {{ appName }}">
       <span class="brand-name" ng-cloak>{{ brandName }}</span>
     </a>
 
     <div class="small-screen-warning ml-2">
-      <span
-        class="glyphicon glyphicon-exclamation-sign"
-        uib-tooltip="{{ smallScreenWarning | translate }}"
-        tooltip-placement="bottom"
-      ></span>
+    <span class="glyphicon glyphicon-exclamation-sign"
+          uib-tooltip="{{ smallScreenWarning | translate }}"
+          tooltip-placement="bottom"></span>
     </div>
   </div>
   <ul class="ml-auto d-flex order-4" ng-class="{collapse: !navbarOpen}">
+
     <li engine-select class="nav-item"></li>
 
-    <li
-      class="account nav-item dropdown"
-      ng-if="authentication.name"
-      ng-cloak
-      uib-dropdown
-    >
-      <a href class="nav-link dropdown-toggle" uib-dropdown-toggle>
+    <li class="account nav-item dropdown"
+        ng-if="authentication.name"
+        ng-cloak
+        uib-dropdown>
+      <a href
+         class="nav-link dropdown-toggle"
+         uib-dropdown-toggle>
         <span class="glyphicon glyphicon-user"></span>
         {{ (userName || authentication.name) }}
       </a>
 
       <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-        <a
-          class="dropdown-item profile"
-          ng-if="currentApp !== 'welcome'"
-          ng-href="{{ '../../welcome/:engine/' | uri }}"
-        >
+        <a class="dropdown-item profile"
+           ng-if="currentApp !== 'welcome'"
+           ng-href="{{ '../../welcome/:engine/' | uri }}">
           {{ myProfile | translate }}
         </a>
 
         <div class="dropdown-divider" ng-if="currentApp !== 'welcome'"></div>
 
-        <a href class="dropdown-item logout" ng-click="logout()">
+        <a href class="dropdown-item logout"
+           ng-click="logout()">
           {{ signOut | translate }}
         </a>
       </div>
     </li>
 
-    <li
-      class="nav-item border-left mx-2 d-none d-md-block"
-      style="height: 24px; align-self: center"
-      ng-if="authentication.name"
-      ng-cloak
-    ></li>
+    <li class="nav-item border-left mx-2 d-none d-md-block"
+        style="height: 24px; align-self: center;"
+        ng-if="authentication.name"
+        ng-cloak></li>
 
-    <li
-      class="app-switch nav-item dropdown"
-      ng-if="showAppDropDown"
-      uib-dropdown
-    >
-      <a href class="nav-link dropdown-toggle" uib-dropdown-toggle>
+    <li class="app-switch nav-item dropdown"
+        ng-if="showAppDropDown"
+        uib-dropdown>
+      <a href
+         class="nav-link dropdown-toggle"
+         uib-dropdown-toggle>
         <span class="glyphicon glyphicon-home"></span>
       </a>
 
       <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-        <a
-          ng-repeat="(appName, app) in apps"
-          class="dropdown-item"
-          ng-class="appName"
-          ng-href="{{ (':appRoot/app/' + appName + '/:engine/' | uri) + getTargetRoute() }}"
-        >
+        <a ng-repeat="(appName, app) in apps"
+           class="dropdown-item"
+           ng-class="appName"
+           ng-href="{{ (':appRoot/app/' + appName + '/:engine/' | uri) + getTargetRoute() }}">
           {{ app.label }}
         </a>
       </div>
     </li>
   </ul>
 
-  <div
-    ng-transclude
-    class="sections-menu order-3"
-    ng-class="{collapse: !navbarOpen}"
-  ></div>
+  <div ng-transclude
+       class="sections-menu order-3"
+       ng-class="{collapse: !navbarOpen}"></div>
 </nav>

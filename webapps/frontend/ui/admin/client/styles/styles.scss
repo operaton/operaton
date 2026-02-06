@@ -1,6 +1,6 @@
-@import './_app-variables';
-@import 'ui/common/styles/cam-webapps-common.scss';
-@import 'ui/common/styles/app-splash.scss';
+@import "./_app-variables";
+@import "ui/common/styles/cam-webapps-common.scss";
+@import "ui/common/styles/app-splash.scss";
 
 /* ---------------------------------------------------------------- */
 
@@ -14,7 +14,7 @@ aside {
   background-color: $custom-gray-lighter;
 
   ul {
-    @include menu-ul(16px, 24px);
+  @include menu-ul(16px, 24px);
 
     margin-top: 8px;
   }
@@ -93,10 +93,10 @@ table.cam-table > tbody > tr > td.action {
 
 /* ---------------------------------------------------------------- */
 
-@import '../scripts/pages/authorizations.scss';
-@import '../scripts/pages/execution-metrics.scss';
-@import 'ui/common/styles/pages/dashboard.scss';
-@import 'ui/common/styles/directives/cam-breadcrumbs-panel.scss';
+@import "../scripts/pages/authorizations.scss";
+@import "../scripts/pages/execution-metrics.scss";
+@import "ui/common/styles/pages/dashboard.scss";
+@import "ui/common/styles/directives/cam-breadcrumbs-panel.scss";
 
 .dashboard section .stats {
   padding-bottom: $grid-gutter-width * 0.5;

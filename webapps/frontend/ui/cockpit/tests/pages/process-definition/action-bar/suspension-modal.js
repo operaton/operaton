@@ -20,15 +20,15 @@
 var Base = require('./../../base');
 
 module.exports = Base.extend({
-  suspendButton: function () {
+  suspendButton: function() {
     return element(
-      by.css('.modal-footer [ng-click="updateSuspensionState()"]'),
+      by.css('.modal-footer [ng-click="updateSuspensionState()"]')
     );
   },
 
-  okButton: function () {
+  okButton: function() {
     return element(
-      by.css('.modal-footer [ng-click="close(status)"]:not(.ng-hide)'),
+      by.css('.modal-footer [ng-click="close(status)"]:not(.ng-hide)')
     );
-  },
+  }
 });

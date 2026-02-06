@@ -37,7 +37,7 @@ const baseImportPath = `${appRoot}/app/cockpit/`;
 
 requirejs.config({
   baseUrl: baseImportPath,
-  urlArgs: `bust=${CAMUNDA_VERSION}`, // eslint-disable-line
+  urlArgs: `bust=${CAMUNDA_VERSION}` // eslint-disable-line
 });
 
 function withSuffix(string, suffix) {
@@ -51,7 +51,7 @@ const loadConfig = (async function () {
 
   if (Array.isArray(config.bpmnJs && config.bpmnJs.additionalModules)) {
     const fetchers = config.bpmnJs.additionalModules.map(
-      (el) => _import(withSuffix(baseImportPath + el, '.js')), // eslint-disable-line
+      el => _import(withSuffix(baseImportPath + el, '.js')) // eslint-disable-line
     );
     const bpmnJsModules = await Promise.all(fetchers);
     config.bpmnJs.additionalModules = bpmnJsModules.map((el) => el.default);
@@ -108,7 +108,7 @@ define('operaton-cockpit-bootstrap', function () {
         node.setAttribute('rel', 'stylesheet');
         node.setAttribute(
           'href',
-          plugin.location + `/plugin.css?bust=${CAMUNDA_VERSION}`, // eslint-disable-line
+          plugin.location + `/plugin.css?bust=${CAMUNDA_VERSION}` // eslint-disable-line
         );
         document.head.appendChild(node);
       });
@@ -225,23 +225,22 @@ define('operaton-cockpit-bootstrap', function () {
                     })
                     .fail(function (response) {
                       if (response.status === 404) {
-                        /* eslint-disable */
-                        console.error(
-                          'bpmn-js moddle extension "' +
-                            extensionName +
-                            '" could not be loaded.',
-                        );
-                      } else {
-                        /* eslint-disable */
-                        console.error(
-                          'unhandled error with bpmn-js moddle extension "' +
-                            extensionName +
-                            '"',
-                        );
-                      }
-                    });
-                },
-              );
+                      /* eslint-disable */
+                      console.error(
+                        'bpmn-js moddle extension "' +
+                          extensionName +
+                          '" could not be loaded.'
+                      );
+                    } else {
+                      /* eslint-disable */
+                      console.error(
+                        'unhandled error with bpmn-js moddle extension "' +
+                          extensionName +
+                          '"'
+                      );
+                    }
+                  });
+              });
 
               loadRequireJsDeps();
             });
@@ -259,7 +258,7 @@ define('operaton-cockpit-bootstrap', function () {
           // executed yet and the angular modules provided by those plugins will
           // not have been defined yet. Placing a new require call here will put
           // the bootstrapping of the angular app at the end of the queue
-          rjsrequire([], function () {
+          rjsrequire([], function() {
             initCockpitUi(pluginDependencies);
           });
         }
@@ -269,7 +268,7 @@ define('operaton-cockpit-bootstrap', function () {
           requirejs.config({baseUrl: '../', ...conf});
 
           // load the dependencies and bootstrap the AngularJS application
-          requirejs(custom.deps || [], function () {
+          requirejs(custom.deps || [], function() {
             // create a AngularJS module (with possible AngularJS module dependencies)
             // on which the custom scripts can register their
             // directives, controllers, services and all when loaded
@@ -299,9 +298,9 @@ define('operaton-cockpit-bootstrap', function () {
       });
     });
   };
-  loadConfig.then((config) => {
+  loadConfig.then(config => {
     bootstrap(config);
   });
 });
 
-requirejs(['operaton-cockpit-bootstrap'], function () {});
+requirejs(['operaton-cockpit-bootstrap'], function() {});

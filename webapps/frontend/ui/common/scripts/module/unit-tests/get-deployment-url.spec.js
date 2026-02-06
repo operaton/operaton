@@ -27,7 +27,7 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cam-common getDeploymentUrl', function () {
+describe('cam-common getDeploymentUrl', function() {
   var searchParams;
   var $location;
   var url;
@@ -39,36 +39,36 @@ describe('cam-common getDeploymentUrl', function () {
   beforeEach(module(camCommon.name));
 
   beforeEach(
-    module(function ($provide) {
+    module(function($provide) {
       searchParams = {
         deploymentsSortBy: 'b',
-        deploymentsSortOrder: 'asc',
+        deploymentsSortOrder: 'asc'
       };
       $location = {
-        search: sinon.stub().returns(searchParams),
+        search: sinon.stub().returns(searchParams)
       };
       $provide.value('$location', $location);
 
       url = 'some-url';
       routeUtil = {
-        redirectTo: sinon.stub().returns(url),
+        redirectTo: sinon.stub().returns(url)
       };
       $provide.value('routeUtil', routeUtil);
 
       deployment = {
-        id: 'dep-id',
+        id: 'dep-id'
       };
       resource = {
-        name: 'resource-name',
+        name: 'resource-name'
       };
-    }),
+    })
   );
 
-  beforeEach(inject(function ($injector) {
+  beforeEach(inject(function($injector) {
     getDeploymentUrl = $injector.get('getDeploymentUrl');
   }));
 
-  it('should return url', function () {
+  it('should return url', function() {
     expect(getDeploymentUrl(deployment, resource)).to.eql(url);
   });
 
@@ -82,13 +82,13 @@ describe('cam-common getDeploymentUrl', function () {
           {
             type: 'id',
             operator: 'eq',
-            value: deployment.id,
-          },
+            value: deployment.id
+          }
         ]),
         deploymentsSortBy: searchParams.deploymentsSortBy,
         deploymentsSortOrder: searchParams.deploymentsSortOrder,
-        resourceName: resource.name,
-      }),
+        resourceName: resource.name
+      })
     ).to.eql(true);
   });
 });

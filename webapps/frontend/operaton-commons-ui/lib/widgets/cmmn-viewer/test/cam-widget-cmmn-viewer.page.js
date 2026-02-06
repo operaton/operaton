@@ -20,80 +20,69 @@
           element: false, expect: false, by: false, protractor: false, $: false */
 'use strict';
 
-var ViewerNode = function (node) {
+var ViewerNode = function(node) {
   this.node = node;
 };
 
-ViewerNode.prototype.click = function () {
+ViewerNode.prototype.click = function() {
   return this.node.click();
 };
 
-ViewerNode.prototype.hover = function () {
+ViewerNode.prototype.hover = function() {
   browser.actions().mouseMove(this.node).perform();
 };
 
-ViewerNode.prototype.isHighlighted = function () {
-  return this.node.getAttribute('class').then(function (classes) {
+ViewerNode.prototype.isHighlighted = function() {
+  return this.node.getAttribute('class').then(function(classes) {
     return classes.split(' ').indexOf('highlight') !== -1;
   });
 };
 
-var Viewer = function (node) {
+var Viewer = function(node) {
   this.node = node;
 };
 
-Viewer.prototype.isPresent = function () {
+Viewer.prototype.isPresent = function() {
   return this.node.isPresent();
 };
 
-Viewer.prototype.element = function (id) {
-  return new ViewerNode(
-    this.node.element(by.css('[data-element-id="' + id + '"]')),
-  );
+Viewer.prototype.element = function(id) {
+  return new ViewerNode(this.node.element(by.css('[data-element-id="'+id+'"]')));
 };
 
-Viewer.prototype.badgeFor = function (id) {
-  return this.node.element(
-    by.css(
-      '.djs-overlays[data-container-id="' +
-        id +
-        '"] > .djs-overlay:first-child',
-    ),
-  );
+Viewer.prototype.badgeFor = function(id) {
+  return this.node.element(by.css('.djs-overlays[data-container-id="'+id +'"] > .djs-overlay:first-child'));
 };
 
-Viewer.prototype.navigationButtons = function () {
+Viewer.prototype.navigationButtons = function() {
   return this.node.element(by.css('.navigation.zoom'));
 };
 
-Viewer.prototype.zoomInButton = function () {
+Viewer.prototype.zoomInButton = function() {
   return this.node.element(by.css('.btn.in'));
 };
 
-Viewer.prototype.zoomOutButton = function () {
+Viewer.prototype.zoomOutButton = function() {
   return this.node.element(by.css('.btn.out'));
 };
 
-Viewer.prototype.resetZoomButton = function () {
+Viewer.prototype.resetZoomButton = function() {
   return this.node.element(by.css('.navigation.reset > button'));
 };
 
-Viewer.prototype.zoomLevel = function () {
-  return this.node
-    .element(by.css('.viewport'))
-    .getAttribute('transform')
-    .then(function (transform) {
-      return parseFloat(transform.substr(7));
-    });
+Viewer.prototype.zoomLevel = function() {
+  return this.node.element(by.css('.viewport')).getAttribute('transform').then(function(transform) {
+    return parseFloat(transform.substr(7));
+  });
 };
 
-function Page() {}
+function Page() { }
 
-Page.prototype.diagram = function (id) {
+Page.prototype.diagram = function(id) {
   return new Viewer(element(by.id(id)));
 };
 
-Page.prototype.hoveredElementsText = function () {
+Page.prototype.hoveredElementsText = function() {
   return element(by.id('hoveredElementsList')).getText();
 };
 

@@ -1,6 +1,5 @@
 .dashboard, /* admin */
-.cockpit-section-dashboard {
-  // cockpit
+.cockpit-section-dashboard {// cockpit
   position: absolute;
   background-color: $custom-gray-light;
   display: block;
@@ -53,8 +52,7 @@
       margin: 0;
       padding: 0;
 
-      ul > li {
-        /* stylelint-disable-line */
+      ul > li { /* stylelint-disable-line */
         display: list-item;
         list-style: disc inside;
       }
@@ -110,8 +108,7 @@
 }
 
 .ctn-view.dashboard, /* cockpit */
-.ctn-wrapper > [ng-view] > .dashboard {
-  // admin
+.ctn-wrapper > [ng-view] > .dashboard { // admin
   width: 100%;
   bottom: 0;
 }

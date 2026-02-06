@@ -1,13 +1,11 @@
-@import '~operaton-commons-ui/resources/scss/shared/_mixins';
+@import "~operaton-commons-ui/resources/scss/shared/_mixins";
 
 .task-card-details {
   overflow: hidden;
   margin-top: 5px;
   max-height: 45px;
   padding-bottom: 0;
-  transition:
-    max-height 0.218s ease,
-    padding-bottom 0.218s ease;
+  transition: max-height 0.218s ease, padding-bottom 0.218s ease;
   position: relative;
 
   .shutter {

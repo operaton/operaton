@@ -22,53 +22,53 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/cockpit/default/#/process-instance/:instance/runtime',
 
-  pageHeader: function () {
+  pageHeader: function() {
     return element(by.binding('{{ processInstance.id }}'));
   },
 
-  fullPageHeaderProcessInstanceName: function () {
+  fullPageHeaderProcessInstanceName: function() {
     return this.pageHeader().getText();
   },
 
-  pageHeaderProcessInstanceName: function () {
+  pageHeaderProcessInstanceName: function() {
     return element(by.binding('{{ processInstance.id }}'))
       .getText()
-      .then(function (fullString) {
+      .then(function(fullString) {
         return fullString.replace('<', '').replace('>', '');
       });
   },
 
-  processName: function () {
+  processName: function() {
     return element(
-      by.binding('{{ processDefinition.name || processDefinition.key }}'),
+      by.binding('{{ processDefinition.name || processDefinition.key }}')
     ).getText();
   },
 
-  instanceId: function () {
+  instanceId: function() {
     return element(by.binding('{{ processInstance.id }}'))
       .getText()
-      .then(function (fullString) {
+      .then(function(fullString) {
         return fullString.replace('<', '').replace('>', '');
       });
   },
 
-  businessKey: function () {
+  businessKey: function() {
     return element(by.binding('{{ processInstance.businessKey}}'))
       .getText()
-      .then(function (fullString) {
+      .then(function(fullString) {
         return fullString.replace('<', '').replace('>', '');
       });
   },
 
-  isInstanceSuspended: function () {
+  isInstanceSuspended: function() {
     return element(
-      by.css('.cam-breadcrumb .active .badge-suspended'),
+      by.css('.cam-breadcrumb .active .badge-suspended')
     ).isPresent();
   },
 
-  sidebarTabClick: function (name) {
+  sidebarTabClick: function(name) {
     return element(
-      by.cssContainingText('.ctn-sidebar .nav-tabs a', name),
+      by.cssContainingText('.ctn-sidebar .nav-tabs a', name)
     ).click();
-  },
+  }
 });

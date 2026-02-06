@@ -22,17 +22,17 @@ var Base = require('./new-base');
 module.exports = Base.extend({
   url: '/operaton/app/admin/default/#/user-create',
 
-  createNewUserButton: function () {
+  createNewUserButton: function() {
     return element(by.css('[ng-click="createUser()"]'));
   },
 
-  createNewUser: function (
+  createNewUser: function(
     userId,
     userPassword,
     userPasswordRepeat,
     userFirstName,
     userLastName,
-    userEmail,
+    userEmail
   ) {
     this.userIdInput(userId);
     this.passwordInput(userPassword);
@@ -42,5 +42,5 @@ module.exports = Base.extend({
     this.userEmailInput(userEmail);
 
     this.createNewUserButton().click();
-  },
+  }
 });

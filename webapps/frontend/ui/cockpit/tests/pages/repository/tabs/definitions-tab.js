@@ -25,19 +25,19 @@ module.exports = Table.extend({
   tabLabel: 'Definitions',
   tableRepeater: 'definition in definitions',
 
-  name: function (idx) {
+  name: function(idx) {
     return this.tableItem(idx, '.name');
   },
 
-  key: function (idx) {
+  key: function(idx) {
     return this.tableItem(idx, '.key');
   },
 
-  version: function (idx) {
+  version: function(idx) {
     return this.tableItem(idx, '.version');
   },
 
-  instanceCount: function (idx) {
+  instanceCount: function(idx) {
     return this.tableItem(idx, '.instance-count');
-  },
+  }
 });

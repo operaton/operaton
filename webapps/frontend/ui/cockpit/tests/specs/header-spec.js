@@ -19,5 +19,5 @@
 
 describe(
   'Cockpit page header Spec',
-  require('../../../common/tests/specs/header-spec-definition')('Cockpit'),
+  require('../../../common/tests/specs/header-spec-definition')('Cockpit')
 );

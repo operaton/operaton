@@ -7,13 +7,11 @@
   </div>
 
   <div notifications-panel></div>
-
-  <div
-    cam-widget-debug
-    display-name="{{ 'DIAGNOSTICS_DATA' | translate }}"
-    debugged="data"
-    disable-toggle-button="true"
-    ng-if="data"
-  ></div>
+  
+  <div cam-widget-debug
+       display-name="{{ 'DIAGNOSTICS_DATA' | translate }}"
+       debugged="data"
+       disable-toggle-button="true"
+       ng-if="data"></div>
 </form>
 <!-- / CE - operaton-bpm-webapp/ui/admin/client/scripts/pages/diagnostics.html -->

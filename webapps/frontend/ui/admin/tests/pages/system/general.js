@@ -22,5 +22,5 @@ var Page = require('./system-base');
 var groupsSection = element(by.id('groups'));
 
 module.exports = Page.extend({
-  url: '/operaton/app/admin/default/#/system?section=system-settings-general',
+  url: '/operaton/app/admin/default/#/system?section=system-settings-general'
 });

@@ -87,13 +87,13 @@
     }
   ],
   "operators": {
-    "undefined": [
+    "undefined":  [
       {
         "key": "eq",
         "value": "="
       }
     ],
-    "string": [
+    "string":     [
       {
         "key": "eq",
         "value": "="
@@ -103,7 +103,7 @@
         "value": "REPOSITORY_SEARCH_TYPE_OPERATOR_LIKE"
       }
     ],
-    "date": [
+    "date":       [
       {
         "key": "lteq",
         "value": "REPOSITORY_SEARCH_TYPE_BEFORE"

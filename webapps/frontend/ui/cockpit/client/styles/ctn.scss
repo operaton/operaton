@@ -16,7 +16,7 @@ $ctn-resize-handle-width: 5px;
 
 .ctn-view {
   overflow: auto;
-  // Standard CSS calc works natively in SCSS;
+  // Standard CSS calc works natively in SCSS; 
   // ensure $header-height and $footer-height are defined in your variables file.
   max-height: calc(100vh - (#{$header-height} + #{$footer-height}));
 }
@@ -284,14 +284,12 @@ a.expand-collapse {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 ($grid-gutter-width * 0.5) ($grid-gutter-width * 0.5)
-    ($grid-gutter-width * 0.5);
+  padding: 0 ($grid-gutter-width * 0.5) ($grid-gutter-width * 0.5) ($grid-gutter-width * 0.5);
 }
 
 .ctn-tabbed.ctn-content-bottom > h4 {
   margin: 2px 0 0 0;
-  padding: ($grid-gutter-width * 0.5) ($grid-gutter-width * 0.5) 5px
-    ($grid-gutter-width * 0.5);
+  padding: ($grid-gutter-width * 0.5) ($grid-gutter-width * 0.5) 5px ($grid-gutter-width * 0.5);
   border-bottom: 1px solid $custom-gray-light;
 }
 

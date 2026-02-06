@@ -22,15 +22,15 @@ var Page = require('./page');
 module.exports = Page.extend({
   url: '/operaton/app/:webapp/default/#/login',
 
-  formElement: function () {
+  formElement: function() {
     return element(by.css('form[name="signinForm"]'));
   },
 
-  loginButton: function () {
+  loginButton: function() {
     return this.formElement().element(by.css('[type="submit"]'));
   },
 
-  usernameInput: function (inputValue) {
+  usernameInput: function(inputValue) {
     var inputField = this.formElement().element(by.model('username'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -38,7 +38,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  passwordInput: function (inputValue) {
+  passwordInput: function(inputValue) {
     var inputField = this.formElement().element(by.model('password'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -46,7 +46,7 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  userLogin: function (username, password) {
+  userLogin: function(username, password) {
     this.usernameInput().clear();
     this.passwordInput().clear();
     this.usernameInput(username);
@@ -54,18 +54,18 @@ module.exports = Page.extend({
     this.loginButton().click();
   },
 
-  ensureUserLogout: function () {
+  ensureUserLogout: function() {
     var self = this;
     var el = element(by.css('.account.dropdown'));
-    el.isPresent().then(function (yepNope) {
+    el.isPresent().then(function(yepNope) {
       if (yepNope) {
         self.userLogout();
       }
     });
   },
 
-  userLogout: function () {
+  userLogout: function() {
     element(by.css('.account.dropdown > .dropdown-toggle')).click();
     element(by.css('.account.dropdown > .dropdown-menu > .logout > a')).click();
-  },
+  }
 });

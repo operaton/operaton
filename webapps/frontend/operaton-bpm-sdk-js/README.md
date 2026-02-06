@@ -38,6 +38,7 @@ grunt karma:dev-form
 grunt karma:dev-form-angularjs
 ```
 
+
 #### Mocha CLI
 
 ```sh
@@ -80,16 +81,16 @@ grunt publish:version --setversion='myNewVersion'
 
 ### Available options
 
-- --no-bower -> skip bower release
-- --no-write -> dryRun mode
+* --no-bower -> skip bower release
+* --no-write -> dryRun mode
 
 ### Examples
 
-- [standalone usage](https://github.com/camunda/camunda-bpm-examples/tree/master/sdk-js)
+* [standalone usage](https://github.com/camunda/camunda-bpm-examples/tree/master/sdk-js)
 
 ### Contributing
 
-You are **more than welcome** to take part on the development of this project!
+You are __more than welcome__ to take part on the development of this project!
 
 #### Coding
 

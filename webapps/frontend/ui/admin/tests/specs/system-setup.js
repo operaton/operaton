@@ -30,8 +30,8 @@ module.exports = {
         password: 'cam123',
         firstName: 'Ringo',
         lastName: 'Starr',
-        email: 'ringo.starr@the-beatles.com',
-      },
+        email: 'ringo.starr@the-beatles.com'
+      }
     ]),
 
     operation('task', 'create', [
@@ -39,20 +39,20 @@ module.exports = {
         id: '1',
         name: 'Task 1',
         assignee: 'test',
-        due: '2016-09-15T15:45:48',
+        due: '2016-09-15T15:45:48'
       },
       {
         id: '2',
         name: 'Task 2',
         assignee: 'test',
-        due: '2016-09-16T15:45:48',
+        due: '2016-09-16T15:45:48'
       },
       {
         id: 'abc123',
         name: 'My Task',
         assignee: 'test',
-        due: '2016-09-15T15:46:48',
-      },
+        due: '2016-09-15T15:46:48'
+      }
     ]),
 
     operation('task', 'localVariable', [
@@ -60,8 +60,8 @@ module.exports = {
         id: '1',
         varId: 'testVar',
         value: 42,
-        type: 'Integer',
-      },
+        type: 'Integer'
+      }
     ]),
 
     operation('deployment', 'create', [
@@ -70,19 +70,19 @@ module.exports = {
         files: [
           {
             name: 'assign-approver-groups.dmn',
-            content: readResource('assign-approver-groups.dmn'),
-          },
-        ],
+            content: readResource('assign-approver-groups.dmn')
+          }
+        ]
       },
       {
         deploymentName: 'invoice',
         files: [
           {
             name: 'invoice.bpmn',
-            content: readResource('invoice.bpmn'),
-          },
-        ],
-      },
+            content: readResource('invoice.bpmn')
+          }
+        ]
+      }
     ]),
 
     operation('process-definition', 'start', [
@@ -91,9 +91,9 @@ module.exports = {
         businessKey: 'invoice1',
         variables: {
           amount: {value: 100},
-          invoiceCategory: {value: 'travelExpenses'},
-        },
-      },
-    ]),
-  ),
+          invoiceCategory: {value: 'travelExpenses'}
+        }
+      }
+    ])
+  )
 };

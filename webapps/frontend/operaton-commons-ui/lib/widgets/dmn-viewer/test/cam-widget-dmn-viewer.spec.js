@@ -22,38 +22,36 @@
 var path = require('path');
 var projectRoot = path.resolve(__dirname, '../../../../');
 var pkg = require(path.join(projectRoot, 'package.json'));
-var pageUrl =
-  'http://localhost:' +
-  pkg.gruntConfig.connectPort +
-  '/lib/widgets/dmn-viewer/test/cam-widget-dmn-viewer.spec.html';
+var pageUrl = 'http://localhost:' + pkg.gruntConfig.connectPort +
+              '/lib/widgets/dmn-viewer/test/cam-widget-dmn-viewer.spec.html';
 
 var page = require('./cam-widget-dmn-viewer.page.js');
 
-describe('Dmn Viewer', function () {
-  beforeEach(function () {
+describe('Dmn Viewer', function() {
+  beforeEach((function() {
     browser.get(pageUrl);
-  });
+  }));
 
-  describe('table display', function () {
+  describe('table display', function() {
     var table;
 
-    beforeEach(function () {
+    beforeEach(function() {
       table = page.table('viewer1');
     });
 
-    it('should display a table', function () {
+    it('should display a table', function() {
       expect(table.isPresent()).to.eventually.eql(true);
     });
   });
 
-  describe('drd display', function () {
+  describe('drd display', function() {
     var drd;
 
-    beforeEach(function () {
+    beforeEach(function() {
       drd = page.drdDiagram('example-4');
     });
 
-    it('should display a table', function () {
+    it('should display a table', function() {
       expect(drd.isPresent()).to.eventually.eql(true);
     });
   });

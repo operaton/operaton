@@ -134,10 +134,7 @@
     > .set-null,
     .null-value {
       // In SCSS, these must be mixin includes
-      @include button-variant(
-        $secondary,
-        $secondary
-      ); // BS4 equivalent of .btn-default
+    @include button-variant($secondary, $secondary); // BS4 equivalent of .btn-default
 
       display: table-cell;
       text-align: center;
@@ -182,10 +179,8 @@
       width: 15px;
       height: 15px;
       background-color: $danger;
-      -webkit-mask: url(~operaton-commons-ui/resources/img/error-sign.svg)
-        no-repeat center;
-      mask: url(~operaton-commons-ui/resources/img/error-sign.svg) no-repeat
-        center;
+      -webkit-mask: url(~operaton-commons-ui/resources/img/error-sign.svg) no-repeat center;
+      mask: url(~operaton-commons-ui/resources/img/error-sign.svg) no-repeat center;
     }
 
     .glyphicon-ok {

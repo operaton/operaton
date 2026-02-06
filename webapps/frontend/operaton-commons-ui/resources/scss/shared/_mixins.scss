@@ -15,11 +15,7 @@
   overflow: hidden;
 }
 
-@mixin gradient(
-  $origin: top,
-  $start: rgba(255, 255, 255, 0),
-  $stop: rgba(255, 255, 255, 1)
-) {
+@mixin gradient($origin: top, $start: rgba(255, 255, 255, 0), $stop: rgba(255, 255, 255, 1)) {
   background-color: $start;
   background-image: -webkit-linear-gradient($origin, $start, $stop);
   background-image: -moz-linear-gradient($origin, $start, $stop);
@@ -40,9 +36,7 @@
     min-width: 16px;
     margin: 3px 0;
     background-color: $navbar-default-link-color;
-    transition:
-      transform 0.218s ease,
-      opacity 0.218s ease;
+    transition: transform 0.218s ease, opacity 0.218s ease;
 
     &:first-of-type {
       margin-top: 0;
@@ -84,10 +78,7 @@
   }
 }
 
-@mixin navbar-a(
-  $color: $navbar-default-link-color,
-  $hover-color: $navbar-default-link-hover-color
-) {
+@mixin navbar-a($color: $navbar-default-link-color, $hover-color: $navbar-default-link-hover-color) {
   font-size: $menu-font-size;
   color: $color;
 
@@ -156,11 +147,7 @@
   }
 }
 
-@mixin menu-a(
-  $size: $menu-font-size,
-  $line-height: $menu-line-height,
-  $hover-color: $navbar-default-link-hover-bg
-) {
+@mixin menu-a($size: $menu-font-size, $line-height: $menu-line-height, $hover-color: $navbar-default-link-hover-bg) {
   display: block;
   font-size: $size;
   line-height: $line-height;
@@ -192,12 +179,7 @@
   }
 }
 
-@mixin menu-ul(
-  $size,
-  $line-height,
-  $hover-color: $navbar-default-link-hover-bg,
-  $active-color: $black
-) {
+@mixin menu-ul($size, $line-height, $hover-color: $navbar-default-link-hover-bg, $active-color: $black) {
   display: block;
   margin: 0;
   padding: 0;
@@ -256,7 +238,7 @@
 
     &.dropdown-menu {
       &::before {
-        content: '';
+        content: "";
         width: 100%;
         height: 4px;
         margin-top: -2px;
@@ -296,10 +278,9 @@
   // If $header-brand-logo-font-size is set (non-null/true), use it; otherwise derive from header height.
   .brand-logo {
     font-size: if(
-      $header-brand-logo-font-size != null and $header-brand-logo-font-size !=
-        false,
-      $header-brand-logo-font-size,
-      ($header-computed-height / 2)
+                    $header-brand-logo-font-size != null and $header-brand-logo-font-size != false,
+                    $header-brand-logo-font-size,
+                            ($header-computed-height / 2)
     );
   }
 }

@@ -20,22 +20,22 @@
 var Page = require('./../dashboard-view');
 
 module.exports = Page.extend({
-  formElement: function () {
+  formElement: function() {
     return element(by.css('[cam-tasklist-filters]'));
   },
 
-  filterList: function () {
+  filterList: function() {
     return this.formElement().all(by.repeater('(delta, filter) in filters'));
   },
 
-  filterListInfoText: function () {
+  filterListInfoText: function() {
     return this.formElement().getText();
   },
 
-  findFilter: function (filterName) {
-    this.filterList().then(function (arr) {
+  findFilter: function(filterName) {
+    this.filterList().then(function(arr) {
       for (var i = 0; i < arr.length; ++i) {
-        arr[i].getText().then(function (text) {
+        arr[i].getText().then(function(text) {
           console.log(text);
           if (filterName === text) console.log('got you ' + text);
         });
@@ -43,16 +43,20 @@ module.exports = Page.extend({
     });
   },
 
-  selectFilter: function (item) {
-    return this.filterList().get(item).click();
+  selectFilter: function(item) {
+    return this.filterList()
+      .get(item)
+      .click();
   },
 
-  filterStatus: function (item) {
-    return this.filterList().get(item).getAttribute('class');
+  filterStatus: function(item) {
+    return this.filterList()
+      .get(item)
+      .getAttribute('class');
   },
 
-  isFilterSelected: function (item) {
-    return this.filterStatus(item).then(function (matcher) {
+  isFilterSelected: function(item) {
+    return this.filterStatus(item).then(function(matcher) {
       if (matcher.indexOf('active') !== -1) {
         return true;
       }
@@ -60,16 +64,21 @@ module.exports = Page.extend({
     });
   },
 
-  filterNameElement: function (item) {
-    return this.filterList().get(item).element(by.binding('filter.name'));
+  filterNameElement: function(item) {
+    return this.filterList()
+      .get(item)
+      .element(by.binding('filter.name'));
   },
 
-  filterName: function (item) {
+  filterName: function(item) {
     return this.filterNameElement(item).getText();
   },
 
-  filterDescriptionElement: function (item) {
-    browser.actions().mouseMove(this.filterNameElement(item)).perform();
+  filterDescriptionElement: function(item) {
+    browser
+      .actions()
+      .mouseMove(this.filterNameElement(item))
+      .perform();
 
     browser.sleep(1000);
 
@@ -79,21 +88,21 @@ module.exports = Page.extend({
       .getAttribute('tooltip');
   },
 
-  filterDescription: function (item) {
+  filterDescription: function(item) {
     return this.filterDescriptionElement(item);
   },
 
-  createFilterButton: function () {
+  createFilterButton: function() {
     return element(by.css('[ng-click="openModal($event)"]'));
   },
 
-  createFilter: function () {
+  createFilter: function() {
     var theElement = element(by.css('.modal-title'));
     this.createFilterButton().click();
     this.waitForElementToBeVisible(theElement, 5000);
   },
 
-  editFilter: function (item) {
+  editFilter: function(item) {
     var self = this;
     this.selectFilter(item)
       .element(by.css('[ng-click="openModal($event, filter)"]'))
@@ -101,5 +110,5 @@ module.exports = Page.extend({
     // browser.actions().mouseMove(this.filterNameElement(item)).perform().then(function() {
     //   self.filterList().get(item).element(by.css('[ng-click="openModal($event, filter)"]')).click();
     // });
-  },
+  }
 });

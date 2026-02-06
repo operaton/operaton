@@ -28,7 +28,7 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabController', function () {
+describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabController', function() {
   var $controller;
   var $rootScope;
   var $scope;
@@ -42,7 +42,7 @@ describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabC
 
   beforeEach(module(testModule.name));
 
-  beforeEach(inject(function ($injector) {
+  beforeEach(inject(function($injector) {
     $controller = $injector.get('$controller');
     $rootScope = $injector.get('$rootScope');
 
@@ -51,40 +51,40 @@ describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabC
     $location = {
       path: sinon.spy(),
       search: sinon.spy(),
-      replace: sinon.spy(),
+      replace: sinon.spy()
     };
 
     Notifications = {
       addMessage: sinon.spy(),
-      addError: sinon.spy(),
+      addError: sinon.spy()
     };
 
     ProcessInstanceResource = {
       count: sinon.stub().returns({
-        $promise: 'count',
+        $promise: 'count'
       }),
       query: sinon.stub().returns({
-        $promise: 'query',
-      }),
+        $promise: 'query'
+      })
     };
 
     $modalInstance = {
-      close: sinon.spy(),
+      close: sinon.spy()
     };
 
     processInstance = {
       $delete: sinon.spy(),
-      id: 'some-id',
+      id: 'some-id'
     };
 
     processData = {
       newChild: sinon.stub().returnsThis(),
       provide: sinon.stub().callsArg(1),
-      observe: sinon.spy(),
+      observe: sinon.spy()
     };
 
     Views = {
-      getProvider: sinon.stub().returnsThis(),
+      getProvider: sinon.stub().returnsThis()
     };
 
     $controller(cancelInstanceDialog, {
@@ -95,69 +95,69 @@ describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabC
       $modalInstance: $modalInstance,
       processInstance: processInstance,
       processData: processData,
-      Views: Views,
+      Views: Views
     });
   }));
 
-  it('should close modal when route changes', function () {
+  it('should close modal when route changes', function() {
     $scope.$broadcast('$routeChangeStart');
 
     expect($modalInstance.close.calledOnce).to.eql(true);
   });
 
-  it('should create new data provider on $scope', function () {
+  it('should create new data provider on $scope', function() {
     expect(processData.newChild.calledWith($scope)).to.eql(true);
   });
 
-  it('should create default request options', function () {
+  it('should create default request options', function() {
     expect($scope.options).to.exist;
   });
 
-  describe('subProcessInstances', function () {
-    it('should provide sub process instances', function () {
+  describe('subProcessInstances', function() {
+    it('should provide sub process instances', function() {
       expect(processData.provide.calledWith('subProcessInstances')).to.eql(
-        true,
+        true
       );
     });
 
-    it('should provide sub process instances count', function () {
+    it('should provide sub process instances count', function() {
       expect(processData.provide.calledWith('subProcessInstancesCount')).to.eql(
-        true,
+        true
       );
     });
 
-    it('should query and count process instances', function () {
+    it('should query and count process instances', function() {
       var params = ProcessInstanceResource.query.lastCall.args[1];
 
       expect(params).to.eql({
-        superProcessInstance: processInstance.id,
+        superProcessInstance: processInstance.id
       });
 
       expect(
         ProcessInstanceResource.count.calledWith({
-          superProcessInstance: processInstance.id,
-        }),
+          superProcessInstance: processInstance.id
+        })
       ).to.eql(true);
     });
 
-    it('should observe sub processes', function () {
+    it('should observe sub processes', function() {
       expect(
         processData.observe.calledWith([
           'subProcessInstancesCount',
-          'subProcessInstances',
-        ]),
+          'subProcessInstances'
+        ])
       ).to.eql(true);
     });
   });
 
-  describe('cancelProcessInstance', function () {
-    it('should delete process instance with options', function () {
+  describe('cancelProcessInstance', function() {
+    it('should delete process instance with options', function() {
       $scope.cancelProcessInstance();
 
       expect(processInstance.$delete.calledWith($scope.options)).to.eql(true);
     });
 
-    it('should set status to success and notifiction when delete request succeded', function () {
+    it('should set status to success and notifiction when delete request succeded', function() {
       $scope.cancelProcessInstance();
 
       var successCallback = processInstance.$delete.lastCall.args[1];
@@ -168,11 +168,11 @@ describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabC
       expect(Notifications.addMessage.calledOnce).to.eql(true);
     });
 
-    it('should set status to fail and notifiction when delete request failed', function () {
+    it('should set status to fail and notifiction when delete request failed', function() {
       var err = {
         data: {
-          message: 'whatever',
-        },
+          message: 'whatever'
+        }
       };
 
       $scope.cancelProcessInstance();
@@ -188,8 +188,8 @@ describe('cockpit.plugin.process-instance-runtime-tab ProcessInstanceRuntimeTabC
           message:
             'The cancellation of the process instance failed. ' +
             err.data.message,
-          exclusive: ['type'],
-        }),
+          exclusive: ['type']
+        })
       ).to.eql(true);
     });
   });

@@ -2,18 +2,14 @@
   <head>
     <title>Operaton commons UI library</title>
     <base href="/" />
-    <!--[if IE
-      ]><script type="text/javascript">
+    <!--[if IE]><script type="text/javascript">
         // Fix for IE ignoring relative base tags.
         // See http://stackoverflow.com/questions/3926197/html-base-tag-and-local-folder-path-with-internet-explorer
-        (function () {
-          var baseTag = document.getElementsByTagName('base');
-          if (baseTag[0]) {
-            baseTag[0].href = baseTag[0].href;
-          }
+        (function() {
+            var baseTag = document.getElementsByTagName('base');
+            if (baseTag[0]) { baseTag[0].href = baseTag[0].href; }
         })();
-      </script><!
-    [endif]-->
+    </script><![endif]-->
     <link rel="icon" href="resources/img/favicon.ico" />
     <link href="styles.css" rel="stylesheet" />
     <link href="test-styles.css" rel="stylesheet" />
@@ -27,7 +23,7 @@
       </div>
     </header>
 
-    <section class="widget-description">
+        <section class="widget-description">
       <header>
         <h2>Description</h2>
       </header>
@@ -48,10 +44,7 @@
         <dd>if this attribute is present, the default tooltip is not added</dd>
 
         <dt><span class="badge">?</span> link-before</dt>
-        <dd>
-          if this attribute is present, copy link/icon is placed before
-          transcluded content
-        </dd>
+        <dd>if this attribute is present, copy link/icon is placed before transcluded content</dd>
       </dl>
     </section>
 
@@ -60,21 +53,21 @@
         <h2>Examples</h2>
       </header>
 
-      <div class="widget-example" id="default" ng-controller="testController">
+      <div class="widget-example"
+           id="default"
+           ng-controller="testController">
         <h3>Basic usage</h3>
-        <pre ng-non-bindable>
-&lt;input ng-model="obj.varToCopy"
+        <pre ng-non-bindable>&lt;input ng-model="obj.varToCopy"
        class="form-control"
        type="text"/&gt;
-&lt;span cam-widget-clipboard="varToCopy"&gt;With some transcluded content&lt;/span&gt;</pre
-        >
+&lt;span cam-widget-clipboard="varToCopy"&gt;With some transcluded content&lt;/span&gt;</pre>
         <div class="test-container">
-          <input ng-model="obj.varToCopy" class="form-control" type="text" />
+          <input ng-model="obj.varToCopy"
+                 class="form-control"
+                 type="text"/>
           <span cam-widget-clipboard="obj.varToCopy">Hover this ;)</span>
-        </div>
-        <!-- /.test-container -->
-      </div>
-      <!-- /.widget-example -->
+        </div><!-- /.test-container -->
+      </div><!-- /.widget-example -->
     </section>
 
     <!-- gh-pages-footer -->

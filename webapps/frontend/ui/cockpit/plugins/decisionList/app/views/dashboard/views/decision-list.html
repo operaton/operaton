@@ -1,18 +1,18 @@
 <!-- # CE - operaton-bpm-webapp/webapp/src/main/resources-plugin/decisionList/app/views/dashboard/decision-list.html -->
-<div
-  class="deployed-decisions"
-  cam-widget-loader
-  loading-state="{{ loadingState }}"
-  text-error="{{ loadingError }}"
->
-  <div
-    decisions-table
-    decisions="decisions"
-    decision-count="decisionCount"
-    is-drd-available="isDrdDashboardAvailable"
-    pagination="paginationController"
-  ></div>
+<div class="deployed-decisions"
+     cam-widget-loader
+     loading-state="{{ loadingState }}"
+     text-error="{{ loadingError }}">
 
-  <view provider="drdDashboard" vars="drdDashboardVars"> </view>
+  <div decisions-table
+       decisions="decisions"
+       decision-count="decisionCount"
+       is-drd-available="isDrdDashboardAvailable"
+       pagination="paginationController">
+  </div>
+
+  <view provider="drdDashboard"
+        vars="drdDashboardVars">
+  </view>
 </div>
 <!-- / CE - operaton-bpm-webapp/webapp/src/main/resources-plugin/decisionList/app/views/dashboard/decision-list.html -->

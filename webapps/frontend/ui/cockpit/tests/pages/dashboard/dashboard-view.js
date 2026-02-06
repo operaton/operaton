@@ -22,11 +22,11 @@ var Base = require('./../base');
 module.exports = Base.extend({
   url: '/operaton/app/cockpit/default/#/dashboard',
 
-  pluginList: function () {
+  pluginList: function() {
     return element.all(by.css('.dashboard > .sections > section'));
   },
 
-  plugin: function (idx) {
+  plugin: function(idx) {
     return this.pluginList().get(idx);
-  },
+  }
 });

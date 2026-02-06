@@ -1,212 +1,214 @@
 // 1. Import Bootstrap 4 functions and variables first
 // so that variables like $gray-600 and $body-bg are available.
-@import '~bootstrap/scss/functions';
-$main-color: #e66e2e;
-$brand-primary: $main-color;
-$primary: $brand-primary;
-$brand-success: #5cb85c;
-$brand-info: #5bc0de;
-$brand-warning: #f0ad4e;
-$brand-danger: #d9534f;
-$danger-bg: #f2dede;
-$danger-border: darken(adjust-hue($danger-bg, -10deg), 5%);
-$danger-text: #a94442;
-$info-bg: #d9edf7;
-$info-border: darken(adjust-hue($info-bg, -10), 7%);
-$info-text: #31708f;
-$success-text: #3c763d;
-$success-bg: #dff0d8;
-$success-border: darken(adjust-hue($success-bg, -10), 5%);
-$state-circle-size: 20px;
-$body-color: #495057;
-@import '~bootstrap/scss/variables';
+@import "~bootstrap/scss/functions";
+$main-color:                      #e66e2e;
+$brand-primary:                   $main-color;
+$primary:                         $brand-primary;
+$brand-success:                   #5cb85c;
+$brand-info:                      #5bc0de;
+$brand-warning:                   #f0ad4e;
+$brand-danger:                    #d9534f;
+$danger-bg:                       #f2dede;
+$danger-border:                   darken(adjust-hue($danger-bg, -10deg), 5%);
+$danger-text:                     #a94442;
+$info-bg:                         #d9edf7;
+$info-border:                     darken(adjust-hue($info-bg, -10), 7%);
+$info-text:                       #31708f;
+$success-text:                    #3c763d;
+$success-bg:                      #dff0d8;
+$success-border:                  darken(adjust-hue($success-bg, -10), 5%);
+$state-circle-size:               20px;
+$body-color:                         #495057;
+@import "~bootstrap/scss/variables";
 
 // Legacy Bootstrap 3 Padding Mappings
-$padding-base-vertical: 6px !default; // ~6px (BS4 default for inputs/buttons)
-$padding-base-horizontal: 12px !default; // ~12px
-$padding-large-vertical: 8px !default; // ~8px
-$padding-large-horizontal: 16px !default; // ~16px
-$padding-small-vertical: 4px !default; // ~4px
-$padding-small-horizontal: 0.5rem !default; // ~8px
+$padding-base-vertical:     6px !default; // ~6px (BS4 default for inputs/buttons)
+$padding-base-horizontal:   12px !default;  // ~12px
+$padding-large-vertical:    8px !default;   // ~8px
+$padding-large-horizontal:  16px !default;     // ~16px
+$padding-small-vertical:    4px !default;  // ~4px
+$padding-small-horizontal:  0.5rem !default;   // ~8px
 
 $line-height-computed: calc(#{$font-size-base} * #{$line-height-base}) !default;
 
 // Legacy Border Radius (if needed)
-$border-radius-base: 4px !default;
-$border-radius-large: 5px !default;
-$border-radius-small: 3px !default;
+$border-radius-base:        4px !default;
+$border-radius-large:       5px !default;
+$border-radius-small:       3px !default;
 
 // Legacy Gray Mappings
-$gray-darker: $gray-900 !default;
-$gray-dark: $gray-800 !default;
-$gray: $gray-700 !default; // Standard gray
-$gray-light: $gray-600 !default;
+$gray-darker:  $gray-900 !default;
+$gray-dark:    $gray-800 !default;
+$gray:         $gray-700 !default; // Standard gray
+$gray-light:   $gray-600 !default;
 $gray-lighter: $gray-200 !default; // Used for borders/backgrounds
 
 // Colors ------------------------------------------------------------
 
-$text-color: $gray-600; // BS3 @gray -> BS4 $gray-600
-$font-size-base: 0.875rem;
-$main-darker: darken($main-color, 25%);
 
-$important-color: #b94a48;
-$important-darker: darken($important-color, 45%);
+$text-color:                      $gray-600; // BS3 @gray -> BS4 $gray-600
+$font-size-base:                  0.875rem;
+$main-darker:                     darken($main-color, 25%);
 
-$warning-color: #f89406;
-$warning-darker: darken($warning-color, 45%);
+$important-color:                 #b94a48;
+$important-darker:                darken($important-color, 45%);
 
-$warning-text: #8a6d3b;
-$warning-bg: #fcf8e3;
-$warning-border: darken(adjust-hue($warning-bg, -10), 5%);
+$warning-color:                   #f89406;
+$warning-darker:                  darken($warning-color, 45%);
+
+$warning-text:                    #8a6d3b;
+$warning-bg:                      #fcf8e3;
+$warning-border:                  darken(adjust-hue($warning-bg, -10), 5%);
+
 
 // Process state colors
-$running-color: desaturate(lighten(#08c, 25%), 40%);
-$running-darker: darken($running-color, 45%);
+$running-color:                   desaturate(lighten(#08c, 25%), 40%);
+$running-darker:                  darken($running-color, 45%);
 
-$completed-color: #bbb;
-$completed-darker: darken($completed-color, 45%);
+$completed-color:                 #bbb;
+$completed-darker:                darken($completed-color, 45%);
 
-$canceled-color: desaturate(lighten($warning-color, 20%), 25%);
-$canceled-darker: darken($canceled-color, 45%);
+$canceled-color:                  desaturate(lighten($warning-color, 20%), 25%);
+$canceled-darker:                 darken($canceled-color, 45%);
 
-$line-style: dotted;
-$line-color: $gray-500; // BS3 @gray-light -> BS4 $gray-500
+$line-style:                      dotted;
+$line-color:                      $gray-500; // BS3 @gray-light -> BS4 $gray-500
 
-$link-color: #155cb5;
-$link-hover-color: #0b2d5f;
-$link-hover-decoration: none;
+$link-color:                      #155cb5;
+$link-hover-color:                #0b2d5f;
+$link-hover-decoration:           none;
 
-$highlight-bg: #fffdab;
+$highlight-bg:                    #FFFDAB;
 
-$bpmn-highlight-border-color: $link-color;
-$bpmn-highlight-bg: desaturate(lighten($bpmn-highlight-border-color, 45%), 25%);
+$bpmn-highlight-border-color:     $link-color;
+$bpmn-highlight-bg:               desaturate(lighten($bpmn-highlight-border-color, 45%), 25%);
 
-$border-radius-base: 0;
-$border-radius-large: 0;
-$border-radius-small: 0;
+$border-radius-base:              0;
+$border-radius-large:             0;
+$border-radius-small:             0;
 
-$btn-border-radius-base: 2px;
-$btn-border-radius-large: 4px;
-$btn-border-radius-small: 2px;
+$btn-border-radius-base:          2px;
+$btn-border-radius-large:         4px;
+$btn-border-radius-small:         2px;
 
 // Grid
 // BS3 @screen-sm-min was 768px but corresponds to BS4 @md. We use BS4 @md for consistency. Same for @lg and @xl.
-$grid-float-breakpoint: map-get($grid-breakpoints, md);
-$grid-float-breakpoint-max: ($grid-float-breakpoint - 1);
-$screen-xs-min: map-get($grid-breakpoints, sm);
-$screen-xs-max: map-get($grid-breakpoints, md)-1;
-$screen-sm-min: map-get($grid-breakpoints, md);
-$screen-sm-max: map-get($grid-breakpoints, lg) - 1;
-$screen-md-min: map-get($grid-breakpoints, lg);
-$screen-md-max: map-get($grid-breakpoints, xl) - 1;
-$screen-lg-min: map-get($grid-breakpoints, xl);
+$grid-float-breakpoint:          map-get($grid-breakpoints, md);
+$grid-float-breakpoint-max:      ($grid-float-breakpoint - 1);
+$screen-xs-min:                  map-get($grid-breakpoints, sm);
+$screen-xs-max:                  map-get($grid-breakpoints, md)-1;
+$screen-sm-min:                  map-get($grid-breakpoints, md);
+$screen-sm-max:                  map-get($grid-breakpoints, lg) - 1;
+$screen-md-min:                  map-get($grid-breakpoints, lg);
+$screen-md-max:                  map-get($grid-breakpoints, xl) - 1;
+$screen-lg-min:                  map-get($grid-breakpoints, xl);
 
 // Forms
-$input-bg: $body-bg;
-$input-color: $text-color;
-$input-border: lighten($input-color, 33%); // Note: Added % for Sass
-$input-border-focus: $link-hover-color;
-$input-color-placeholder: $input-border;
+$input-bg:                       $body-bg;
+$input-color:                    $text-color;
+$input-border:                   lighten($input-color, 33%); // Note: Added % for Sass
+$input-border-focus:             $link-hover-color;
+$input-color-placeholder:        $input-border;
 
-$input-box-shadow: none;
-$input-box-shadow-focus: none;
+$input-box-shadow:               none;
+$input-box-shadow-focus:         none;
 
-$input-border-radius: $btn-border-radius-base;
-$input-border-radius-large: $btn-border-radius-large;
-$input-border-radius-small: $btn-border-radius-small;
+$input-border-radius:            $btn-border-radius-base;
+$input-border-radius-large:      $btn-border-radius-large;
+$input-border-radius-small:      $btn-border-radius-small;
 
-$dropdown-link-active-color: $gray-800; // BS3 @gray-dark -> BS4 $gray-800
-$dropdown-link-active-bg: $gray-200; // BS3 @gray-lighter -> BS4 $gray-200
+$dropdown-link-active-color:      $gray-800; // BS3 @gray-dark -> BS4 $gray-800
+$dropdown-link-active-bg:         $gray-200; // BS3 @gray-lighter -> BS4 $gray-200
 
 // Custom colors
-$custom-gray-light: #e5e5e5;
-$custom-gray-lighter: #fafafa;
-$highlihgt-shadow-color: rgba($link-hover-color, 0.5); // fade() -> rgba()
+$custom-gray-light:               #e5e5e5;
+$custom-gray-lighter:             #fafafa;
+$highlihgt-shadow-color:          rgba($link-hover-color, 0.5); // fade() -> rgba()
 
 // Pagination
-$pagination-active-bg: $gray-500; // BS3 @gray-light -> BS4 $gray-500
-$pagination-active-border: $gray-500;
+$pagination-active-bg:            $gray-500; // BS3 @gray-light -> BS4 $gray-500
+$pagination-active-border:        $gray-500;
 
 // Navigation
-$navbar-height: 45px;
-$header-brand-logo-font-size: false;
-$navbar-font-size: $font-size-base;
+$navbar-height:                   45px;
+$header-brand-logo-font-size:     false;
+$navbar-font-size:                $font-size-base;
 
-$navbar-default-color: $gray-500;
-$navbar-default-bg: $body-bg;
-$navbar-default-border: $navbar-default-color;
+$navbar-default-color:             $gray-500;
+$navbar-default-bg:                $body-bg;
+$navbar-default-border:            $navbar-default-color;
 
 // Navbar links
-$navbar-default-link-color: #545454;
-$navbar-default-link-hover-color: $gray-900; // BS3 @gray-darker -> BS4 $gray-900
-$navbar-default-link-hover-bg: transparent;
-$navbar-default-link-active-color: $black; // BS3 @gray-base -> BS4 $black
-$navbar-default-link-active-bg: $gray-200;
-$navbar-default-link-disabled-color: #ccc;
-$navbar-default-link-disabled-bg: transparent;
+$navbar-default-link-color:                #545454;
+$navbar-default-link-hover-color:          $gray-900; // BS3 @gray-darker -> BS4 $gray-900
+$navbar-default-link-hover-bg:             transparent;
+$navbar-default-link-active-color:         $black;    // BS3 @gray-base -> BS4 $black
+$navbar-default-link-active-bg:            $gray-200;
+$navbar-default-link-disabled-color:       #ccc;
+$navbar-default-link-disabled-bg:          transparent;
 
 // Navbar brand label
-$navbar-default-brand-color: $navbar-default-link-color;
-$navbar-default-brand-hover-color: darken($navbar-default-brand-color, 10%);
-$navbar-default-brand-hover-bg: transparent;
+$navbar-default-brand-color:               $navbar-default-link-color;
+$navbar-default-brand-hover-color:         darken($navbar-default-brand-color, 10%);
+$navbar-default-brand-hover-bg:            transparent;
 
 // Navbar toggle
-$navbar-default-toggle-hover-bg: #ddd;
-$navbar-default-toggle-icon-bar-bg: #888;
-$navbar-default-toggle-border-color: #ddd;
+$navbar-default-toggle-hover-bg:           #ddd;
+$navbar-default-toggle-icon-bar-bg:        #888;
+$navbar-default-toggle-border-color:       #ddd;
 
-$header-height: $navbar-height;
-$header-border-bottom-width: 3px;
-$header-computed-height: $header-height - $header-border-bottom-width;
-$header-border-bottom-color: $brand-primary;
-$primary: $brand-primary;
+$header-height:                   $navbar-height;
+$header-border-bottom-width:      3px;
+$header-computed-height:          $header-height - $header-border-bottom-width;
+$header-border-bottom-color:      $brand-primary;
+$primary:                         $brand-primary;
 
-$header-site-name-size: ($header-computed-height - 6) / 2;
+$header-site-name-size:           ($header-computed-height - 6) / 2;
 
-$breadcrumb-height: 35px;
+$breadcrumb-height:               35px;
 
-$footer-height: 24px;
+$footer-height:                   24px;
 
-$dropdown-link-hover-bg: transparent;
-$dropdown-link-active-bg: transparent;
+$dropdown-link-hover-bg:         transparent;
+$dropdown-link-active-bg:        transparent;
 
-$shadow-color: $gray-600;
+$shadow-color:                   $gray-600;
 
-$box-shadow: 0 2px 10px -4px $shadow-color;
-$box-shadow-low: 0 2px 8px -4px $shadow-color;
-$box-shadow-lower: 0 2px 6px -4px $shadow-color;
+$box-shadow:        0 2px 10px -4px $shadow-color;
+$box-shadow-low:    0 2px 8px -4px $shadow-color;
+$box-shadow-lower:  0 2px 6px -4px $shadow-color;
 
-$color-shift: 12%;
-$column-left-bg: darken($body-bg, $color-shift * 6.18);
-$column-center-bg: darken($body-bg, $color-shift * (6.18 * 0.618));
-$column-right-bg: darken($body-bg, $color-shift * 0);
-$column-top-height: 22px;
-$border-thick-width: 5px;
-$border-thin-width: 1px;
+$color-shift:                       12%;
+$column-left-bg:                    darken($body-bg, $color-shift * 6.18);
+$column-center-bg:                  darken($body-bg, $color-shift * (6.18 * 0.618));
+$column-right-bg:                   darken($body-bg, $color-shift * 0);
+$column-top-height:                 22px;
+$border-thick-width:                5px;
+$border-thin-width:                 1px;
 
-$hover-color-bg: mix($column-center-bg, $column-right-bg, 50%);
+$hover-color-bg:                    mix($column-center-bg, $column-right-bg, 50%);
 
 $layout-transition-timing: ease-in-out;
 $layout-transition-duration: 0.536s;
 
 // Code
-$code-color: currentColor;
-$code-bg: transparent;
+$code-color:                  currentColor;
+$code-bg:                     transparent;
 
-$kbd-color: #fff;
-$kbd-bg: #333;
+$kbd-color:                   #fff;
+$kbd-bg:                      #333;
 
-$pre-bg: #f5f5f5;
-$pre-color: $gray-800;
-$pre-border-color: #ccc;
-$pre-scrollable-max-height: 340px;
+$pre-bg:                      #f5f5f5;
+$pre-color:                   $gray-800;
+$pre-border-color:            #ccc;
+$pre-scrollable-max-height:   340px;
 
 $menu-font-size: 14px;
 $menu-line-height: 18px;
 
-$nav-tabs-active-link-hover-color: $link-color;
+$nav-tabs-active-link-hover-color:        $link-color;
 $nav-tabs-active-link-hover-border-color: $navbar-default-link-active-bg;
-$nav-tabs-active-link-border-color: $navbar-default-link-active-bg;
+$nav-tabs-active-link-border-color:       $navbar-default-link-active-bg;
 
 $well-bg: $body-bg;
 $well-border: mix($gray-500, $gray-200);

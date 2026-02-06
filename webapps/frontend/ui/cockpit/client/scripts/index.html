@@ -1,27 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge" />
 
     <title>Operaton Cockpit</title>
 
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
-    <meta name="description" content="Operaton Cockpit" />
-    <meta name="author" content="Operaton" />
+    <meta name="description"
+          content="Operaton Cockpit" />
+    <meta name="author"
+          content="Operaton" />
 
     <!-- settings the base path for relative links -->
-    <base
-      href="<%= htmlWebpackPlugin.options.appBase %>"
-      admin-api="<%= htmlWebpackPlugin.options.appRoot %>/api/admin/"
-      cockpit-api="<%= htmlWebpackPlugin.options.appRoot %>/api/cockpit/"
-      tasklist-api="<%= htmlWebpackPlugin.options.appRoot %>/api/tasklist/"
-      welcome-api="<%= htmlWebpackPlugin.options.appRoot %>/api/welcome/"
-      engine-api="<%= htmlWebpackPlugin.options.appRoot %>/api/engine/"
-      app-root="<%= htmlWebpackPlugin.options.appRoot %>"
-      app-name="cockpit"
-    />
+    <base href="<%= htmlWebpackPlugin.options.appBase %>"
+          admin-api="<%= htmlWebpackPlugin.options.appRoot %>/api/admin/"
+          cockpit-api="<%= htmlWebpackPlugin.options.appRoot %>/api/cockpit/"
+          tasklist-api="<%= htmlWebpackPlugin.options.appRoot %>/api/tasklist/"
+          welcome-api="<%= htmlWebpackPlugin.options.appRoot %>/api/welcome/"
+          engine-api="<%= htmlWebpackPlugin.options.appRoot %>/api/engine/"
+          app-root="<%= htmlWebpackPlugin.options.appRoot %>"
+          app-name="cockpit" />
 
     <!-- an example of plugin/feature exclusion -->
     <!--
@@ -37,43 +39,38 @@
 
     <%= htmlWebpackPlugin.tags.headTags %>
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="<%= htmlWebpackPlugin.options.appRoot %>/app/cockpit/styles/user-styles.css?bust=<%= htmlWebpackPlugin.options.version %>"
-    />
+    <link rel="stylesheet"
+          type="text/css"
+          href="<%= htmlWebpackPlugin.options.appRoot %>/app/cockpit/styles/user-styles.css?bust=<%= htmlWebpackPlugin.options.version %>">
   </head>
   <body class="no-breadcrumbs">
     <!-- navigation -->
-    <div
-      cam-widget-header
-      class="Header"
-      authentication="authentication"
-      user-name="userFullName"
-      current-app="cockpit"
-      ng-cloak
-      sign-out="{{ 'SIGN_OUT_ACTION' | translate }}"
-      my-profile="{{ 'MY_PROFILE' | translate }}"
-    >
-      <ul cam-if-logged-in ng-controller="camHeaderViewsCtrl">
-        <li
-          ng-repeat="actionProvider in menuActions"
-          ng-if="actionProvider.accessible"
-          ng-class="activeClass(actionProvider)"
-        >
-          <view provider="actionProvider"></view>
+    <div cam-widget-header
+         class="Header"
+         authentication="authentication"
+         user-name="userFullName"
+         current-app="cockpit"
+         ng-cloak
+         sign-out="{{ 'SIGN_OUT_ACTION' | translate }}"
+         my-profile="{{ 'MY_PROFILE' | translate }}">
+      <ul cam-if-logged-in
+          ng-controller="camHeaderViewsCtrl">
+        <li ng-repeat="actionProvider in menuActions"
+            ng-if="actionProvider.accessible"
+            ng-class="activeClass(actionProvider)">
+            <view provider="actionProvider"></view>
         </li>
-        <li class="dropdown" ng-if="dropdownActions.length" uib-dropdown>
-          <a class="dropdown-toggle" uib-dropdown-toggle href
-            >{{ 'COCKPIT_MORE' | translate}} <i class="caret"></i
-          ></a>
+        <li class="dropdown"
+            ng-if="dropdownActions.length"
+            uib-dropdown>
+          <a class="dropdown-toggle"
+             uib-dropdown-toggle
+             href>{{ 'COCKPIT_MORE' | translate}} <i class="caret"></i></a>
           <ul class="dropdown-menu" uib-dropdown-menu>
-            <li
-              ng-repeat="actionProvider in dropdownActions"
-              ng-if="actionProvider.accessible"
-              ng-class="activeClass(actionProvider)"
-            >
-              <view provider="actionProvider"></view>
+            <li ng-repeat="actionProvider in dropdownActions"
+                ng-if="actionProvider.accessible"
+                ng-class="activeClass(actionProvider)">
+                <view provider="actionProvider"></view>
             </li>
           </ul>
         </li>
@@ -83,43 +80,37 @@
     <!-- content -->
     <div class="ctn-main">
       <div class="ctn-wrapper">
-        <div
-          ng-if="showBreadcrumbs"
-          ng-cloak
-          cam-breadcrumbs-panel
-          divider="&raquo;"
-          class="breadcrumbs-panel"
-        ></div>
+        <div ng-if="showBreadcrumbs"
+             ng-cloak
+             cam-breadcrumbs-panel
+             divider="&raquo;"
+             class="breadcrumbs-panel"></div>
 
-        <div notifications-panel class="page-notifications"></div>
+        <div notifications-panel
+             class="page-notifications"></div>
 
         <!-- view body provided by ngView -->
         <div ng-view>
-          <div class="app-splash">
-            <div>
-              <div class="spinner spinner-big"></div>
-            </div>
-          </div>
-          <!-- / .app-splash -->
+          <div class="app-splash"><div>
+            <div class="spinner spinner-big"></div>
+          </div></div><!-- / .app-splash -->
         </div>
       </div>
     </div>
 
     <!-- footer -->
-    <footer
-      cam-widget-footer
-      version="v<%= htmlWebpackPlugin.options.version %>"
-    ></footer>
+    <footer cam-widget-footer
+            version="v<%= htmlWebpackPlugin.options.version %>"></footer>
 
     <script type="application/javascript" $CSP_NONCE>
-      window.camCockpitConf = {};
+        window.camCockpitConf = {};
 
-      window.PLUGIN_DEPENDENCIES = <%= htmlWebpackPlugin.options.pluginDeps %> || [];
-      window.PLUGIN_PACKAGES = <%= htmlWebpackPlugin.options.pluginPackages %> || [];
+        window.PLUGIN_DEPENDENCIES = <%= htmlWebpackPlugin.options.pluginDeps %> || [];
+        window.PLUGIN_PACKAGES = <%= htmlWebpackPlugin.options.pluginPackages %> || [];
 
-      window.require = {
-        waitSeconds: 0
-      };
+        window.require = {
+          waitSeconds: 0
+        };
     </script>
   </body>
 </html>

@@ -27,7 +27,7 @@
     }
 
     &.copy-error::before {
-      content: '\e107';
+      content: "\e107";
       color: $warning;
     }
   }

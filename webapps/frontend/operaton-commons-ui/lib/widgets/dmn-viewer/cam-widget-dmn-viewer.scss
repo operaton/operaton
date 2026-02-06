@@ -1,29 +1,27 @@
 /* dmn-js assets imports */
-@import '~dmn-js/dist/assets/dmn-js-drd.css';
-@import '~dmn-js/dist/assets/dmn-js-shared.css';
-@import '~dmn-js/dist/assets/dmn-js-decision-table.css';
-@import '~dmn-js/dist/assets/dmn-js-decision-table-controls.css';
-@import '~dmn-js/dist/assets/dmn-js-literal-expression.css';
-@import '~dmn-js/dist/assets/dmn-font/css/dmn.css';
+@import "~dmn-js/dist/assets/dmn-js-drd.css";
+@import "~dmn-js/dist/assets/dmn-js-shared.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table-controls.css";
+@import "~dmn-js/dist/assets/dmn-js-literal-expression.css";
+@import "~dmn-js/dist/assets/dmn-font/css/dmn.css";
 
 @font-face {
   font-family: 'dmn';
   src: url('~dmn-font/dist/font/dmn.eot?48901938');
-  src:
-    url('~dmn-font/dist/font/dmn.eot?48901938#iefix')
-      format('embedded-opentype'),
-    url('~dmn-font/dist/font/dmn.woff2?48901938') format('woff2'),
-    url('~dmn-font/dist/font/dmn.woff?48901938') format('woff'),
-    url('~dmn-font/dist/font/dmn.ttf?48901938') format('truetype'),
-    url('~dmn-font/dist/font/dmn.svg?48901938#dmn') format('svg');
+  src: url('~dmn-font/dist/font/dmn.eot?48901938#iefix') format('embedded-opentype'),
+  url('~dmn-font/dist/font/dmn.woff2?48901938') format('woff2'),
+  url('~dmn-font/dist/font/dmn.woff?48901938') format('woff'),
+  url('~dmn-font/dist/font/dmn.ttf?48901938') format('truetype'),
+  url('~dmn-font/dist/font/dmn.svg?48901938#dmn') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 [cam-widget-dmn-viewer] {
-  &[edit-mode='true'] {
+  &[edit-mode="true"] {
     // SCSS supports nested imports, though it's less common for raw CSS
-    @import '~diagram-js/assets/diagram-js.css';
+    @import "~diagram-js/assets/diagram-js.css";
   }
 
   th {

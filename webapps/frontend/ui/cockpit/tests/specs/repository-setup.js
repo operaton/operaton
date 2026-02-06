@@ -31,18 +31,18 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
       },
       {
         deploymentName: 'second-deployment',
         files: [
           {
             name: 'suspension-process.bpmn',
-            content: readResource('suspension-process.bpmn'),
-          },
-        ],
+            content: readResource('suspension-process.bpmn')
+          }
+        ]
       },
       {
         deploymentName: 'third-deployment',
@@ -50,23 +50,23 @@ module.exports = {
         files: [
           {
             name: 'failing-process.bpmn',
-            content: readResource('failing-process.bpmn'),
-          },
-        ],
-      },
+            content: readResource('failing-process.bpmn')
+          }
+        ]
+      }
     ]),
 
     operation('process-definition', 'start', [
       {
-        key: 'user-tasks',
+        key: 'user-tasks'
       },
       {
-        key: 'suspension-process',
+        key: 'suspension-process'
       },
       {
-        key: 'failing-process',
-      },
-    ]),
+        key: 'failing-process'
+      }
+    ])
   ),
 
   setup2: combine(
@@ -76,72 +76,72 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
       },
       {
         deploymentName: 'cmmn',
         files: [
           {
             name: 'loan-application.cmmn',
-            content: readResource('loan-application.cmmn'),
-          },
-        ],
+            content: readResource('loan-application.cmmn')
+          }
+        ]
       },
       {
         deploymentName: 'dmn',
         files: [
           {
             name: 'assign-approver-groups.dmn',
-            content: readResource('assign-approver-groups.dmn'),
+            content: readResource('assign-approver-groups.dmn')
           },
           {
             name: 'drd.dmn',
-            content: readResource('drd.dmn'),
-          },
-        ],
+            content: readResource('drd.dmn')
+          }
+        ]
       },
       {
         deploymentName: 'image',
         files: [
           {
             name: 'diagram.svg',
-            content: readResource('diagram.svg'),
-          },
-        ],
+            content: readResource('diagram.svg')
+          }
+        ]
       },
       {
         deploymentName: 'script',
         files: [
           {
             name: 'my-script.groovy',
-            content: readResource('my-script.groovy'),
-          },
-        ],
-      },
+            content: readResource('my-script.groovy')
+          }
+        ]
+      }
     ]),
 
     operation('process-definition', 'start', [
       {
-        key: 'user-tasks',
+        key: 'user-tasks'
       },
       {
-        key: 'user-tasks',
-      },
+        key: 'user-tasks'
+      }
     ]),
 
     operation('case-definition', 'create', [
       {
-        key: 'loanApplicationCase',
+        key: 'loanApplicationCase'
       },
       {
-        key: 'loanApplicationCase',
+        key: 'loanApplicationCase'
       },
       {
-        key: 'loanApplicationCase',
-      },
-    ]),
+        key: 'loanApplicationCase'
+      }
+    ])
   ),
 
   multiTenancySetup: combine(
@@ -152,10 +152,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
-      },
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
+      }
     ]),
 
     operation('deployment', 'create', [
@@ -164,10 +164,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn'),
-          },
-        ],
-      },
-    ]),
-  ),
+            content: readResource('user-tasks.bpmn')
+          }
+        ]
+      }
+    ])
+  )
 };

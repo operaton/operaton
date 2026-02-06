@@ -22,11 +22,11 @@ var Page = require('./../base');
 module.exports = Page.extend({
   url: '/operaton/app/admin/default/#/tenants/:tenant?tab=tenant',
 
-  updateTenantButton: function () {
+  updateTenantButton: function() {
     return element(by.css('[ng-click="updateTenant()"]'));
   },
 
-  tenantNameInput: function (inputValue) {
+  tenantNameInput: function(inputValue) {
     var inputField = element(by.model('tenant.name'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -34,20 +34,20 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  deleteTenantButton: function () {
+  deleteTenantButton: function() {
     return element(by.css('[ng-click="deleteTenant()"]'));
   },
 
-  deleteTenantAlert: function () {
+  deleteTenantAlert: function() {
     return browser.switchTo().alert();
   },
 
-  deleteTenant: function () {
+  deleteTenant: function() {
     this.deleteTenantButton().click();
     element(by.css('.modal-footer [ng-click="$close()"]')).click();
   },
 
-  selectUserNavbarItem: function (navbarItem) {
+  selectUserNavbarItem: function(navbarItem) {
     var index = ['Information', 'Groups', 'Users'];
 
     var item;
@@ -61,5 +61,5 @@ module.exports = Page.extend({
 
     item.click();
     return item;
-  },
+  }
 });

@@ -22,27 +22,27 @@ var ActionBar = require('./../../action-bar');
 module.exports = ActionBar.extend({
   barRepeater: 'tabProvider in processInstanceActions',
 
-  suspendInstanceButton: function () {
+  suspendInstanceButton: function() {
     return this.getActionButton(3);
   },
 
-  suspendInstance: function () {
+  suspendInstance: function() {
     var modal = this.modal;
     this.suspendInstanceButton()
       .click()
-      .then(function () {
+      .then(function() {
         browser.sleep(500);
         modal
           .suspendButton()
           .click()
-          .then(function () {
+          .then(function() {
             browser.sleep(500);
             modal.okButton().click();
           });
       });
   },
 
-  activateInstance: function () {
+  activateInstance: function() {
     this.suspendInstance();
-  },
+  }
 });

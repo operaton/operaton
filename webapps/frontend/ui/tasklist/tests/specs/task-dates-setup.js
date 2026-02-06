@@ -33,22 +33,22 @@ module.exports = {
           variables: [
             {
               name: 'testVar',
-              label: 'Test Variable',
+              label: 'Test Variable'
             },
             {
               name: 'testString',
-              label: 'String Variable',
-            },
-          ],
-        },
-      },
+              label: 'String Variable'
+            }
+          ]
+        }
+      }
     ]),
 
     operation('task', 'create', [
       {
         id: '1',
-        name: 'Task 1',
-      },
-    ]),
-  ),
+        name: 'Task 1'
+      }
+    ])
+  )
 };

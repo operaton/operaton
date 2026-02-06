@@ -1,29 +1,26 @@
 <form cam-form role="form" name="form">
-  <input
-    cam-variable-name="stringVar"
+
+  <input cam-variable-name="stringVar"
     cam-variable-type="String"
     type="text"
     name="stringVar"
     ng-model="modelProperty"
     min-length="5"
-    max-length="10"
-  />
+    max-length="10">
 
-  <input
-    cam-variable-name="autoBindVar"
+  <input cam-variable-name="autoBindVar"
     cam-variable-type="String"
-    type="text"
-  />
+    type="text">
 
-  <p>{{modelProperty}}</p>
+  <p>
+  {{modelProperty}}
+  </p>
 
-  <input
-    cam-variable-name="integerVar"
+  <input cam-variable-name="integerVar"
     cam-variable-type="Integer"
     type="text"
     name="integerVar"
-    ng-model="integerProperty"
-  />
+    ng-model="integerProperty">
 
   <script cam-script type="text/form-script">
 
@@ -42,5 +39,8 @@
         throw Error('Expecting "$scope.modelProperty" to be defined');
       }
     });
+
   </script>
+
 </form>
+

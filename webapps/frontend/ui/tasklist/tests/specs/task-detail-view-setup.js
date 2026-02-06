@@ -32,16 +32,16 @@ var fragment1 = combine(
         variables: [
           {
             name: 'testVar',
-            label: 'Test Variable',
+            label: 'Test Variable'
           },
           {
             name: 'testString',
-            label: 'String Variable',
-          },
-        ],
-      },
-    },
-  ]),
+            label: 'String Variable'
+          }
+        ]
+      }
+    }
+  ])
 );
 
 var fragment2 = combine(
@@ -49,18 +49,18 @@ var fragment2 = combine(
     {
       id: '1',
       name: 'Task 1',
-      description: 'This task is for testing purpose only!!!',
-    },
-  ]),
+      description: 'This task is for testing purpose only!!!'
+    }
+  ])
 );
 
 var fragment3 = combine(
   operation('task', 'assignee', [
     {
       taskId: '1',
-      userId: 'admin',
-    },
-  ]),
+      userId: 'admin'
+    }
+  ])
 );
 
 var fragment4 = combine(
@@ -70,17 +70,17 @@ var fragment4 = combine(
       files: [
         {
           name: 'user-tasks.bpmn',
-          content: readResource('user-tasks.bpmn'),
-        },
-      ],
-    },
+          content: readResource('user-tasks.bpmn')
+        }
+      ]
+    }
   ]),
   operation('process-definition', 'start', [
     {
       key: 'user-tasks',
-      businessKey: 'Instance1',
-    },
-  ]),
+      businessKey: 'Instance1'
+    }
+  ])
 );
 
 var fragment5 = combine(
@@ -90,27 +90,27 @@ var fragment5 = combine(
       files: [
         {
           name: 'case-task.cmmn',
-          content: readResource('case-task.cmmn'),
+          content: readResource('case-task.cmmn')
         },
         {
           name: 'case-task2.cmmn',
-          content: readResource('case-task2.cmmn'),
-        },
-      ],
-    },
+          content: readResource('case-task2.cmmn')
+        }
+      ]
+    }
   ]),
   operation('case-definition', 'create', [
     {
       key: 'Case_1',
-      businessKey: 'Instance1',
-    },
+      businessKey: 'Instance1'
+    }
   ]),
   operation('case-definition', 'create', [
     {
       key: 'Case_2',
-      businessKey: 'Instance1',
-    },
-  ]),
+      businessKey: 'Instance1'
+    }
+  ])
 );
 
 var fragment6 = combine(
@@ -120,21 +120,21 @@ var fragment6 = combine(
       files: [
         {
           name: 'invoice-prevent.bpmn',
-          content: readResource('invoice-prevent.bpmn'),
+          content: readResource('invoice-prevent.bpmn')
         },
         {
           name: 'invoice-prevent.html',
-          content: readResource('invoice-prevent.html'),
-        },
-      ],
-    },
+          content: readResource('invoice-prevent.html')
+        }
+      ]
+    }
   ]),
   operation('process-definition', 'start', [
     {
       key: 'invoice',
-      businessKey: 'invoice',
-    },
-  ]),
+      businessKey: 'invoice'
+    }
+  ])
 );
 
 var multiTenancyFragment = combine(
@@ -142,13 +142,13 @@ var multiTenancyFragment = combine(
     {
       id: '1',
       name: 'Task 1',
-      tenantId: 'tenant1',
+      tenantId: 'tenant1'
     },
     {
       id: '2',
-      name: 'Task 2',
-    },
-  ]),
+      name: 'Task 2'
+    }
+  ])
 );
 
 module.exports = {
@@ -157,5 +157,5 @@ module.exports = {
   setup3: combine(fragment1, fragment4),
   setup4: combine(fragment1, fragment5),
   setup5: combine(fragment1, fragment6),
-  multiTenancySetup: combine(fragment1, multiTenancyFragment),
+  multiTenancySetup: combine(fragment1, multiTenancyFragment)
 };

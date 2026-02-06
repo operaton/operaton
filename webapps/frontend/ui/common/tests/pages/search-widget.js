@@ -20,11 +20,11 @@
 var Base = require('./../../../cockpit/tests/pages/base');
 
 module.exports = Base.extend({
-  formElement: function () {
+  formElement: function() {
     return element(by.css('[cam-widget-search]'));
   },
 
-  createSearch: function (type, operator, value, name) {
+  createSearch: function(type, operator, value, name) {
     if (!value) {
       value = operator;
       operator = undefined;
@@ -64,22 +64,27 @@ module.exports = Base.extend({
         .element(
           by.cssContainingText(
             '[value="operator.value"] .dropdown-menu li',
-            operator,
-          ),
+            operator
+          )
         )
         .click();
     }
   },
 
-  deleteSearch: function (idx) {
-    this.searchPills().get(idx).element(by.css('.remove-search')).click();
+  deleteSearch: function(idx) {
+    this.searchPills()
+      .get(idx)
+      .element(by.css('.remove-search'))
+      .click();
   },
 
-  clearSearch: function () {
-    this.searchPills().all(by.css('.remove-search')).click();
+  clearSearch: function() {
+    this.searchPills()
+      .all(by.css('.remove-search'))
+      .click();
   },
 
-  searchPills: function () {
+  searchPills: function() {
     return this.formElement().all(by.css('[cam-widget-search-pill]'));
-  },
+  }
 });

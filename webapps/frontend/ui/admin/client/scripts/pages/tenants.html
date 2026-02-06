@@ -7,45 +7,36 @@
         <h3>{{ 'TENANTS_LIST_OF_TENANTS' | translate }}</h3>
       </div>
       <div class="col-sm-4 d-flex justify-content-end pb-2">
-        <a href="#/tenant-create" class="btn btn-light">
+        <a href="#/tenant-create"
+           class="btn btn-light">
           {{ 'TENANTS_CREATE_TENANT' | translate }}
           <span class="glyphicon glyphicon-plus-sign"></span>
         </a>
       </div>
     </header>
 
-    <div
-      cam-searchable-area
-      config="searchConfig"
-      on-search-change="onSearchChange(query, pages)"
-      loading-state="loadingState"
-      text-empty="{{ 'TENANTS_NO_TENANTS' | translate }}"
-      storage-group="'ANT'"
-      blocked="blocked"
-    >
+    <div cam-searchable-area
+         config="searchConfig"
+         on-search-change="onSearchChange(query, pages)"
+         loading-state="loadingState"
+         text-empty="{{ 'TENANTS_NO_TENANTS' | translate }}"
+         storage-group="'ANT'"
+         blocked="blocked">
       <table class="cam-table tenant">
-        <thead
-          cam-sortable-table-header
-          default-sort-by="id"
-          default-sort-order="asc"
-          sorting-id="admin-sorting-tenants"
-          on-sort-change="onSortChanged(sorting)"
-          on-sort-initialized="onSortInitialized(sorting)"
-        >
+        <thead cam-sortable-table-header
+               default-sort-by="id"
+               default-sort-order="asc"
+               sorting-id="admin-sorting-tenants"
+               on-sort-change="onSortChanged(sorting)"
+               on-sort-initialized="onSortInitialized(sorting)">
           <tr>
-            <th
-              class="tenant-id"
-              cam-sortable-table-column
-              sort-by-property="id"
-            >
-              {{ 'TENANTS_TENANT_ID' | translate }}
+            <th class="tenant-id"
+                cam-sortable-table-column
+                sort-by-property="id">{{ 'TENANTS_TENANT_ID' | translate }}
             </th>
-            <th
-              class="tenant-name"
-              cam-sortable-table-column
-              sort-by-property="name"
-            >
-              {{ 'TENANTS_TENANT_NAME' | translate }}
+            <th class="tenant-name"
+                cam-sortable-table-column
+                sort-by-property="name">{{ 'TENANTS_TENANT_NAME' | translate }}
             </th>
             <th class="action">{{ 'TENANTS_ACTION' | translate }}</th>
           </tr>
@@ -54,17 +45,15 @@
         <tbody>
           <tr ng-repeat="tenant in tenantList">
             <td class="tenant-id">
-              <a ng-href="#/tenants/{{ tenant.id | escape }}"
-                >{{ tenant.id }}</a
-              >
+              <a ng-href="#/tenants/{{ tenant.id | escape }}">{{ tenant.id }}</a>
             </td>
 
-            <td class="tenant-name">{{ tenant.name }}</td>
+            <td class="tenant-name">
+              {{ tenant.name }}
+            </td>
 
             <td class="action">
-              <a ng-href="#/tenants/{{ tenant.id | escape }}"
-                >{{ 'TENANTS_EDIT' | translate }}</a
-              >
+              <a ng-href="#/tenants/{{ tenant.id | escape }}">{{ 'TENANTS_EDIT' | translate }}</a>
             </td>
           </tr>
         </tbody>

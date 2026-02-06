@@ -27,7 +27,7 @@
     top: 0;
 
     > .btn {
-      @include border-top-radius(0);
+    @include border-top-radius(0);
     }
   }
 }

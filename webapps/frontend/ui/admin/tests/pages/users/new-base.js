@@ -20,7 +20,7 @@
 var Base = require('./../base');
 
 module.exports = Base.extend({
-  userIdInput: function (inputValue) {
+  userIdInput: function(inputValue) {
     var inputField = element(by.model('profile.id'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -28,7 +28,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  passwordInput: function (inputValue) {
+  passwordInput: function(inputValue) {
     var inputField = element(by.model('credentials.password'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -36,7 +36,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  passwordRepeatInput: function (inputValue) {
+  passwordRepeatInput: function(inputValue) {
     var inputField = element(by.model('credentials.password2'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -44,7 +44,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  userFirstNameInput: function (inputValue) {
+  userFirstNameInput: function(inputValue) {
     var inputField = element(by.model('profile.firstName'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -52,7 +52,7 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  userLastNameInput: function (inputValue) {
+  userLastNameInput: function(inputValue) {
     var inputField = element(by.model('profile.lastName'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -60,11 +60,11 @@ module.exports = Base.extend({
     return inputField;
   },
 
-  userEmailInput: function (inputValue) {
+  userEmailInput: function(inputValue) {
     var inputField = element(by.model('profile.email'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
 
     return inputField;
-  },
+  }
 });

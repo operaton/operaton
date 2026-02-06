@@ -27,10 +27,10 @@ var processesPage = require('../pages/processes');
 var definitionPage = require('../pages/process-definition');
 var instancePage = require('../pages/process-instance');
 
-describe.skip('Cockpit Process Instance Spec', function () {
-  describe('page navigation', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+describe.skip('Cockpit Process Instance Spec', function() {
+  describe('page navigation', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -38,33 +38,33 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    it('should go to process instance view', function () {
+    it('should go to process instance view', function() {
       // given
       definitionPage.processInstancesTab
         .instanceId(1)
-        .then(function (instanceId) {
+        .then(function(instanceId) {
           // when
           definitionPage.processInstancesTab.selectInstanceId(1);
 
           // then
           expect(
-            instancePage.pageHeaderProcessInstanceName(),
+            instancePage.pageHeaderProcessInstanceName()
           ).to.eventually.eql(instanceId);
         });
     });
 
-    it('should go to User Tasks tab', function () {
+    it('should go to User Tasks tab', function() {
       // when
       instancePage.userTasksTab.selectTab();
 
       // then
       expect(instancePage.userTasksTab.isTabSelected()).to.eventually.be.true;
       expect(instancePage.userTasksTab.tabName()).to.eventually.eql(
-        instancePage.userTasksTab.tabLabel,
+        instancePage.userTasksTab.tabLabel
       );
     });
 
-    it('should go to Called Process Instances tab', function () {
+    it('should go to Called Process Instances tab', function() {
       // when
       instancePage.calledInstancesTab.selectTab();
 
@@ -72,36 +72,36 @@ describe.skip('Cockpit Process Instance Spec', function () {
       expect(instancePage.calledInstancesTab.isTabSelected()).to.eventually.be
         .true;
       expect(instancePage.calledInstancesTab.tabName()).to.eventually.eql(
-        instancePage.calledInstancesTab.tabLabel,
+        instancePage.calledInstancesTab.tabLabel
       );
     });
 
-    it('should go to Incidents tab', function () {
+    it('should go to Incidents tab', function() {
       // when
       instancePage.incidentsTab.selectTab();
 
       // then
       expect(instancePage.incidentsTab.isTabSelected()).to.eventually.be.true;
       expect(instancePage.incidentsTab.tabName()).to.eventually.eql(
-        instancePage.incidentsTab.tabLabel,
+        instancePage.incidentsTab.tabLabel
       );
     });
 
-    it('should go to Variables tab', function () {
+    it('should go to Variables tab', function() {
       // when
       instancePage.variablesTab.selectTab();
 
       // then
       expect(instancePage.variablesTab.isTabSelected()).to.eventually.be.true;
       expect(instancePage.variablesTab.tabName()).to.eventually.eql(
-        instancePage.variablesTab.tabLabel,
+        instancePage.variablesTab.tabLabel
       );
     });
   });
 
-  describe('edit User Task assignee', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+  describe('edit User Task assignee', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -110,18 +110,18 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    it('should open user tasks tab', function () {
+    it('should open user tasks tab', function() {
       // when
       instancePage.userTasksTab.selectTab();
 
       // then
       expect(instancePage.userTasksTab.table().count()).to.eventually.eql(1);
       expect(instancePage.userTasksTab.activity(0).getText()).to.eventually.eql(
-        'User Task 1',
+        'User Task 1'
       );
     });
 
-    it('should select user task', function () {
+    it('should select user task', function() {
       // when
       instancePage.userTasksTab.activity(0).click();
 
@@ -130,20 +130,20 @@ describe.skip('Cockpit Process Instance Spec', function () {
         .eventually.be.true;
     });
 
-    it('should add new assignee', function () {
+    it('should add new assignee', function() {
       // when
       instancePage.userTasksTab.addNewAssignee(0, 'Franz');
 
       // then
       expect(instancePage.userTasksTab.assignee(0).getText()).is.eventually.eql(
-        'Franz',
+        'Franz'
       );
     });
   });
 
-  describe('edit User Task identity links', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+  describe('edit User Task identity links', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -153,30 +153,30 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    describe('edit group identity links', function () {
-      before(function () {
+    describe('edit group identity links', function() {
+      before(function() {
         instancePage.userTasksTab.clickChangeGroupIdentityLinksButton();
       });
 
-      it('opens', function () {
+      it('opens', function() {
         expect(
-          instancePage.userTasksTab.modal.dialog().isDisplayed(),
+          instancePage.userTasksTab.modal.dialog().isDisplayed()
         ).to.eventually.eql(true);
       });
 
-      it('has a title', function () {
+      it('has a title', function() {
         expect(instancePage.userTasksTab.modal.title()).to.eventually.eql(
-          'Manage groups',
+          'Manage groups'
         );
       });
 
-      it('initially contains two groups', function () {
+      it('initially contains two groups', function() {
         expect(
-          instancePage.userTasksTab.modal.elements().count(),
+          instancePage.userTasksTab.modal.elements().count()
         ).to.eventually.eql(2);
       });
 
-      it('adds a new group identity link', function () {
+      it('adds a new group identity link', function() {
         // when
         instancePage.userTasksTab.modal
           .nameInput()
@@ -186,39 +186,39 @@ describe.skip('Cockpit Process Instance Spec', function () {
 
         // then
         expect(
-          instancePage.userTasksTab.modal.elements().count(),
+          instancePage.userTasksTab.modal.elements().count()
         ).to.eventually.eql(3);
       });
 
-      it('deletes a group identity link', function () {
+      it('deletes a group identity link', function() {
         // when
         instancePage.userTasksTab.modal.clickDeleteNameButton('my-super-group');
 
         // then
         expect(
-          instancePage.userTasksTab.modal.elements().count(),
+          instancePage.userTasksTab.modal.elements().count()
         ).to.eventually.eql(2);
       });
 
-      it('closes the dialog', function () {
+      it('closes the dialog', function() {
         // when
         instancePage.userTasksTab.modal.clickCloseButton();
 
         // then
         expect(
-          instancePage.userTasksTab.modal.dialog().isPresent(),
+          instancePage.userTasksTab.modal.dialog().isPresent()
         ).to.eventually.eql(false);
       });
     });
 
-    describe('edit user identity links', function () {
-      before(function () {
+    describe('edit user identity links', function() {
+      before(function() {
         var el = element(by.css('[ng-click="close($event)"]'));
-        el.isPresent().then(function (yepNope) {
+        el.isPresent().then(function(yepNope) {
           if (!yepNope) {
             return;
           }
-          el.isDisplayed().then(function (yepNope) {
+          el.isDisplayed().then(function(yepNope) {
             if (!yepNope) {
               return;
             }
@@ -228,25 +228,25 @@ describe.skip('Cockpit Process Instance Spec', function () {
         instancePage.userTasksTab.clickChangeUserIdentityLinksButton();
       });
 
-      it('opens', function () {
+      it('opens', function() {
         expect(
-          instancePage.userTasksTab.modal.dialog().isDisplayed(),
+          instancePage.userTasksTab.modal.dialog().isDisplayed()
         ).to.eventually.eql(true);
       });
 
-      it('has a title', function () {
+      it('has a title', function() {
         expect(instancePage.userTasksTab.modal.title()).to.eventually.eql(
-          'Manage users',
+          'Manage users'
         );
       });
 
-      it('initially contains no users', function () {
+      it('initially contains no users', function() {
         expect(
-          instancePage.userTasksTab.modal.elements().count(),
+          instancePage.userTasksTab.modal.elements().count()
         ).to.eventually.eql(0);
       });
 
-      it('adds a new user identity link', function () {
+      it('adds a new user identity link', function() {
         // when
         instancePage.userTasksTab.modal
           .nameInput()
@@ -256,35 +256,35 @@ describe.skip('Cockpit Process Instance Spec', function () {
 
         // then
         expect(
-          instancePage.userTasksTab.modal.elements().count(),
+          instancePage.userTasksTab.modal.elements().count()
         ).to.eventually.eql(1);
       });
 
-      it('deletes a group identity link', function () {
+      it('deletes a group identity link', function() {
         // when
         instancePage.userTasksTab.modal.clickDeleteNameButton('superman');
 
         // then
         expect(
-          instancePage.userTasksTab.modal.elements().count(),
+          instancePage.userTasksTab.modal.elements().count()
         ).to.eventually.eql(0);
       });
 
-      it('closes the dialog', function () {
+      it('closes the dialog', function() {
         // when
         instancePage.userTasksTab.modal.clickCloseButton();
 
         // then
         expect(
-          instancePage.userTasksTab.modal.dialog().isPresent(),
+          instancePage.userTasksTab.modal.dialog().isPresent()
         ).to.eventually.eql(false);
       });
     });
   });
 
-  describe('diagram interaction', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+  describe('diagram interaction', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -293,13 +293,13 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    it('should display process diagram', function () {
+    it('should display process diagram', function() {
       // then
       expect(instancePage.diagram.diagramElement().isDisplayed()).to.eventually
         .be.true;
     });
 
-    it('should select unselectable task', function () {
+    it('should select unselectable task', function() {
       // when
       instancePage.diagram.selectActivity('UserTask_2');
 
@@ -308,14 +308,14 @@ describe.skip('Cockpit Process Instance Spec', function () {
         .eventually.be.false;
     });
 
-    it('should display the number of concurrent activities', function () {
+    it('should display the number of concurrent activities', function() {
       // then
       expect(
-        instancePage.diagram.instancesBadgeFor('UserTask_1').getText(),
+        instancePage.diagram.instancesBadgeFor('UserTask_1').getText()
       ).to.eventually.eql('1');
     });
 
-    it('should process clicks in diagram', function () {
+    it('should process clicks in diagram', function() {
       // given
       instancePage.sidebarTabClick('Filter');
       instancePage.instanceTree.selectInstance('User Task 1');
@@ -332,15 +332,15 @@ describe.skip('Cockpit Process Instance Spec', function () {
         .eventually.be.false;
     });
 
-    it('should keep selection after page refresh', function () {
+    it('should keep selection after page refresh', function() {
       // given
       instancePage.instanceTree.selectInstance('User Task 1');
       expect(instancePage.diagram.isActivitySelected('UserTask_1')).to
         .eventually.be.true;
 
       // when
-      browser.getCurrentUrl().then(function (url) {
-        browser.get(url).then(function () {
+      browser.getCurrentUrl().then(function(url) {
+        browser.get(url).then(function() {
           browser.sleep(500);
         });
       });
@@ -350,7 +350,7 @@ describe.skip('Cockpit Process Instance Spec', function () {
         .eventually.be.true;
     });
 
-    it('should reflect the tree view selection in diagram', function () {
+    it('should reflect the tree view selection in diagram', function() {
       // given
       instancePage.sidebarTabClick('Filter');
       instancePage.instanceTree.selectInstance('User Task 1');
@@ -366,9 +366,9 @@ describe.skip('Cockpit Process Instance Spec', function () {
     });
   });
 
-  describe('cancel instance', function () {
-    before(function () {
-      return testHelper(setupFile.setup1, function () {
+  describe('cancel instance', function() {
+    before(function() {
+      return testHelper(setupFile.setup1, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -376,12 +376,12 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    it('cancel instances', function () {
+    it('cancel instances', function() {
       // given
       definitionPage.processInstancesTab
         .table()
         .count()
-        .then(function (numberOfInstances) {
+        .then(function(numberOfInstances) {
           definitionPage.processInstancesTab.selectInstanceId(0);
 
           // when
@@ -389,15 +389,15 @@ describe.skip('Cockpit Process Instance Spec', function () {
 
           // then
           expect(
-            definitionPage.processInstancesTab.table().count(),
+            definitionPage.processInstancesTab.table().count()
           ).to.eventually.eql(numberOfInstances - 1);
         });
     });
   });
 
-  describe('Multi Instance Incidents', function () {
-    before(function () {
-      return testHelper(setupFile.setup2, function () {
+  describe('Multi Instance Incidents', function() {
+    before(function() {
+      return testHelper(setupFile.setup2, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -405,29 +405,29 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    it('show incidents badge', function () {
+    it('show incidents badge', function() {
       // given
       definitionPage.processInstancesTab
         .table()
         .count()
-        .then(function (numberOfInstances) {
+        .then(function(numberOfInstances) {
           definitionPage.processInstancesTab.selectInstanceId(0);
           browser.sleep(1000);
           // then
           expect(
-            instancePage.diagram.incidentsBadgeFor('ServiceTask_1').getText(),
+            instancePage.diagram.incidentsBadgeFor('ServiceTask_1').getText()
           ).to.eventually.eql('!');
         });
     });
   });
 
   // CAM-5846
-  describe('Retry external task incident', function () {
-    before(function (done) {
-      return testHelper(setupFile.setup4, function () {
+  describe('Retry external task incident', function() {
+    before(function(done) {
+      return testHelper(setupFile.setup4, function() {
         var camClient = new CamSDK.Client({
           mock: false,
-          apiUri: 'http://localhost:8080/engine-rest',
+          apiUri: 'http://localhost:8080/engine-rest'
         });
 
         var ExternalTask = camClient.resource('external-task');
@@ -439,11 +439,11 @@ describe.skip('Cockpit Process Instance Spec', function () {
               {
                 topicName: 'must-have-topic',
                 lockDuration: 10000,
-                variables: [],
-              },
-            ],
+                variables: []
+              }
+            ]
           },
-          function (err, res) {
+          function(err, res) {
             if (err) {
               return done(err);
             }
@@ -457,42 +457,42 @@ describe.skip('Cockpit Process Instance Spec', function () {
                   workerId: 'myWorker',
                   errorMessage: 'must-have-error-message.',
                   retries: 0,
-                  retriesTimeout: 10,
+                  retriesTimeout: 10
                 },
-                function (err) {
+                function(err) {
                   if (err) {
                     return done(err);
                   }
 
                   done();
-                },
+                }
               );
             }
-          },
+          }
         );
 
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
         processesPage.deployedProcessesList.selectProcessByName(
-          'Failed external task',
+          'Failed external task'
         );
         element(
-          by.css('.ctn-content-bottom .instance-id [ng-transclude] a'),
+          by.css('.ctn-content-bottom .instance-id [ng-transclude] a')
         ).click();
         instancePage.incidentsTab.selectTab();
       });
     });
 
-    it('should have a retry button', function () {
+    it('should have a retry button', function() {
       var retriesButton = instancePage.incidentsTab.incidentRetryAction(0);
       expect(retriesButton.isDisplayed()).to.eventually.eql(true);
     });
   });
 
-  describe('Bulk job retry', function () {
-    before(function () {
-      return testHelper(setupFile.setup3, function () {
+  describe('Bulk job retry', function() {
+    before(function() {
+      return testHelper(setupFile.setup3, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -504,7 +504,7 @@ describe.skip('Cockpit Process Instance Spec', function () {
       dashboardPage.goToSection('Processes');
       processesPage.deployedProcessesList.selectProcessByName(name);
       element(
-        by.css('.ctn-content-bottom .instance-id [ng-transclude] a'),
+        by.css('.ctn-content-bottom .instance-id [ng-transclude] a')
       ).click();
       element(by.css('.ctn-toolbar [tooltip~="Retries"]')).click();
     }
@@ -513,56 +513,56 @@ describe.skip('Cockpit Process Instance Spec', function () {
       return element.all(by.css('.modal-body [type=checkbox]:checked'));
     }
 
-    describe('when only 1 job failed', function () {
-      before(function () {
+    describe('when only 1 job failed', function() {
+      before(function() {
         goToInstanceJobRetryModal('mi-incident');
       });
 
-      it('pre-selects the job', function () {
+      it('pre-selects the job', function() {
         expect(element(by.css('.modal-body')).isDisplayed()).to.eventually.eql(
-          true,
+          true
         );
         expect(getCheckedCheckboxes().count()).to.eventually.eql(2);
       });
     });
 
-    describe('when 4 jobs failed', function () {
-      before(function () {
+    describe('when 4 jobs failed', function() {
+      before(function() {
         goToInstanceJobRetryModal('4 Failing Service Tasks');
       });
 
-      it('pre-selects the jobs', function () {
+      it('pre-selects the jobs', function() {
         expect(element(by.css('.modal-body')).isDisplayed()).to.eventually.eql(
-          true,
+          true
         );
         expect(getCheckedCheckboxes().count()).to.eventually.eql(5);
       });
     });
 
-    describe('when 7 job failed', function () {
-      before(function () {
+    describe('when 7 job failed', function() {
+      before(function() {
         goToInstanceJobRetryModal('7 Failing Service Tasks');
       });
 
-      it('does not pre-select the jobs', function () {
+      it('does not pre-select the jobs', function() {
         expect(element(by.css('.modal-body')).isDisplayed()).to.eventually.eql(
-          true,
+          true
         );
         expect(getCheckedCheckboxes().count()).to.eventually.eql(0);
       });
     });
   });
 
-  describe('multi tenancy', function () {
-    before(function () {
-      return testHelper(setupFile.multiTenancySetup, function () {
+  describe('multi tenancy', function() {
+    before(function() {
+      return testHelper(setupFile.multiTenancySetup, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
       });
     });
 
-    it('should display tenant id of instance', function () {
+    it('should display tenant id of instance', function() {
       dashboardPage.goToSection('Processes');
 
       // through sorting, first process definition is without tenant, second has tenant
@@ -574,11 +574,11 @@ describe.skip('Cockpit Process Instance Spec', function () {
 
       // then
       expect(instancePage.information.tenantId()).to.eventually.contain(
-        'tenant1',
+        'tenant1'
       );
     });
 
-    it('should not display tenant id of instance if not exists', function () {
+    it('should not display tenant id of instance if not exists', function() {
       dashboardPage.navigateToWebapp('Cockpit');
       dashboardPage.goToSection('Processes');
       // through sorting, first process definition is without tenant, second has tenant
@@ -593,9 +593,9 @@ describe.skip('Cockpit Process Instance Spec', function () {
     });
   });
 
-  describe('search widget', function () {
-    before(function () {
-      return testHelper(setupFile.multiTenancySetup, function () {
+  describe('search widget', function() {
+    before(function() {
+      return testHelper(setupFile.multiTenancySetup, function() {
         dashboardPage.navigateToWebapp('Cockpit');
         dashboardPage.authentication.userLogin('admin', 'admin');
         dashboardPage.goToSection('Processes');
@@ -607,16 +607,16 @@ describe.skip('Cockpit Process Instance Spec', function () {
       });
     });
 
-    afterEach(function () {
+    afterEach(function() {
       instancePage.search.clearSearch();
     });
 
-    it('should display search widget', function () {
+    it('should display search widget', function() {
       expect(instancePage.search.formElement().isDisplayed()).to.eventually.be
         .true;
     });
 
-    it('should have Variable Name filter with = operator', function () {
+    it('should have Variable Name filter with = operator', function() {
       //when
       instancePage.search.createSearch('Variable Name', '=', 'test');
 
@@ -628,7 +628,7 @@ describe.skip('Cockpit Process Instance Spec', function () {
       expect(eqOperator.isDisplayed()).to.eventually.be.true;
     });
 
-    it('should have Variable Name filter with like operator', function () {
+    it('should have Variable Name filter with like operator', function() {
       //when
       instancePage.search.createSearch('Variable Name', 'like', 'test');
 
@@ -640,7 +640,7 @@ describe.skip('Cockpit Process Instance Spec', function () {
       expect(likeOperator.isDisplayed()).to.eventually.be.true;
     });
 
-    it('should display only one variable with name test', function () {
+    it('should display only one variable with name test', function() {
       //when
       instancePage.search.createSearch('Variable Name', '=', 'test');
 

@@ -28,16 +28,16 @@ var fragment1 = combine(
       password: 'MobyDick',
       firstName: 'John',
       lastName: 'Bonham',
-      email: 'john.bonham@led-zeppelin.com',
+      email: 'john.bonham@led-zeppelin.com'
     },
     {
       id: 'ringo',
       password: 'cam123',
       firstName: 'Ringo',
       lastName: 'Starr',
-      email: 'ringo.starr@the-beatles.com',
-    },
-  ]),
+      email: 'ringo.starr@the-beatles.com'
+    }
+  ])
 );
 
 var authBatch2 = [];
@@ -47,7 +47,7 @@ for (var i = 0; i < 10; i++) {
     resourceType: 7,
     resourceId: '1',
     permissions: ['CREATE'],
-    userId: 'a' + i,
+    userId: 'a' + i
   });
 }
 
@@ -60,7 +60,7 @@ for (var i = 0; i < 45; i++) {
     resourceType: 7,
     resourceId: '1',
     permissions: ['CREATE'],
-    userId: 'xxxxxxxxxxx' + i,
+    userId: 'xxxxxxxxxxx' + i
   });
 }
 
@@ -69,5 +69,5 @@ var fragment3 = combine(operation('authorization', 'create', authBatch3));
 module.exports = {
   setup1: fragment1,
   setup2: fragment2,
-  setup3: fragment3,
+  setup3: fragment3
 };

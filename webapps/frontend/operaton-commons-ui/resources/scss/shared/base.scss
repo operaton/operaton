@@ -1,13 +1,12 @@
 // 1. Imports - Update extensions to .scss
-@import 'mixins'; // Sass assumes underscores for partials
-@import 'font-bpmn';
-@import 'font-opensans';
-@import 'font-IBMPlexSans';
+@import "mixins"; // Sass assumes underscores for partials
+@import "font-bpmn";
+@import "font-opensans";
+@import "font-IBMPlexSans";
 
 // 2. Typography
 // Using the variable name from your previous setup
-$font-family-sans-serif:
-  'IBMPlexSans', 'open_sansregular', Helvetica, Arial, Verdana, sans-serif;
+$font-family-sans-serif: 'IBMPlexSans', 'open_sansregular', Helvetica, Arial, Verdana, sans-serif;
 
 body {
   font-family: $font-family-sans-serif;
@@ -18,12 +17,7 @@ body {
   font-family: $font-family-monospace;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
 }
 
@@ -35,26 +29,17 @@ h1 {
   }
 }
 
-th,
-dt,
-label,
-legend,
-strong {
+th, dt, label, legend, strong {
   font-weight: 700;
 }
 
 // 3. Angular Cloak & Interaction
-[ng\:cloak],
-[ng-cloak],
-[data-ng-cloak],
-[x-ng-cloak],
-.ng-cloak,
-.x-ng-cloak {
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak {
   display: none !important;
 }
 
-[ng-click],
-[onclick] {
+[ng-click], [onclick] {
   cursor: pointer;
 }
 
@@ -99,7 +84,7 @@ strong {
   border-radius: $border-radius-base;
 
   // BS4 uses @include for mixins
-  @include box-shadow(none);
+@include box-shadow(none);
 
   blockquote {
     border-color: #ddd;
@@ -117,5 +102,5 @@ strong {
 /* ---------------------------------------------------------------- */
 
 // 6. Final Component Imports
-@import 'cam-form';
-@import 'cam-table';
+@import "cam-form";
+@import "cam-table";

@@ -41,8 +41,7 @@ table.processes-list {
   overflow: hidden;
   padding: 0;
   // Calculation for negative horizontal margin to offset tile padding
-  margin: calc(#{$grid-gutter-width} / 2)
-    calc(0px - (#{$grid-gutter-width} / 2));
+  margin: calc(#{$grid-gutter-width} / 2) calc(0px - (#{$grid-gutter-width} / 2));
 }
 
 .tile-header,

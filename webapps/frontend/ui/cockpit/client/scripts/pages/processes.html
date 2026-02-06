@@ -1,12 +1,9 @@
 <!-- # CE - operaton-cockpit-ui/client/scripts/pages/dashboard.html -->
 <div class="ctn-view cockpit-section-dashboard processes-dashboard">
-  <view
-    ng-repeat="dashboardProvider in dashboardProviders"
-    class="dashboard-view"
-    data-plugin-id="{{ dashboardProvider.id }}"
-    vars="dashboardVars"
-    provider="dashboardProvider"
-  ></view>
-</div>
-<!-- end .ctn-view -->
+  <view ng-repeat="dashboardProvider in dashboardProviders"
+        class="dashboard-view"
+        data-plugin-id="{{ dashboardProvider.id }}"
+        vars="dashboardVars"
+        provider="dashboardProvider"></view>
+</div><!-- end .ctn-view -->
 <!-- / CE - operaton-cockpit-ui/client/scripts/pages/dashboard.html -->

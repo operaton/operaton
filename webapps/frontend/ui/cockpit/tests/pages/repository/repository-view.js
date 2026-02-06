@@ -22,7 +22,7 @@ var Page = require('../base');
 module.exports = Page.extend({
   url: '/operaton/app/cockpit/default/#/repository',
 
-  tabContent: function () {
+  tabContent: function() {
     return element(by.css('.ctn-tabbed-content .tab-content'));
-  },
+  }
 });

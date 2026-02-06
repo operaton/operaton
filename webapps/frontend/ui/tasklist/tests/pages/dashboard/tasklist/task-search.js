@@ -23,20 +23,22 @@
 var Page = require('./../dashboard-view');
 
 module.exports = Page.extend({
-  formElement: function () {
+  formElement: function() {
     return element(by.css('[cam-widget-search]'));
   },
 
-  searchList: function () {
+  searchList: function() {
     return this.formElement().all(by.repeater('search in searches'));
   },
 
-  variableTypeDropdown: function (type) {
+  variableTypeDropdown: function(type) {
     return this.formElement().element(by.cssContainingText('ul > li', type));
   },
 
-  createSearch: function (type, name, operator, value) {
-    this.formElement().element(by.css('.main-field')).click();
+  createSearch: function(type, name, operator, value) {
+    this.formElement()
+      .element(by.css('.main-field'))
+      .click();
     this.variableTypeDropdown(type).click();
     if (name) {
       this.searchList()
@@ -60,22 +62,25 @@ module.exports = Page.extend({
         .element(
           by.cssContainingText(
             '[value="operator.value"] .dropdown-menu li',
-            operator,
-          ),
+            operator
+          )
         )
         .click();
     }
   },
 
-  searchInputField: function () {
+  searchInputField: function() {
     return this.formElement().element(by.css('.main-field'));
   },
 
-  deleteSearch: function (index) {
-    this.searchList().get(index).element(by.css('.remove-search')).click();
+  deleteSearch: function(index) {
+    this.searchList()
+      .get(index)
+      .element(by.css('.remove-search'))
+      .click();
   },
 
-  changeType: function (index, type) {
+  changeType: function(index, type) {
     this.searchList()
       .get(index)
       .element(by.css('[cam-widget-inline-field][value="type.value"]'))
@@ -86,7 +91,7 @@ module.exports = Page.extend({
       .click();
   },
 
-  changeOperator: function (index, operator) {
+  changeOperator: function(index, operator) {
     this.searchList()
       .get(index)
       .element(by.css('[cam-widget-inline-field][value="operator.value"]'))
@@ -97,15 +102,17 @@ module.exports = Page.extend({
       .click();
   },
 
-  changeValue: function (index, value) {
+  changeValue: function(index, value) {
     this.searchList()
       .get(index)
       .element(by.css('[cam-widget-inline-field][value="value.value"]'))
       .click();
 
-    var input = this.searchList().get(index).element(by.model('editValue'));
-    return input.clear().then(function () {
+    var input = this.searchList()
+      .get(index)
+      .element(by.model('editValue'));
+    return input.clear().then(function() {
       input.sendKeys(value, protractor.Key.ENTER);
     });
-  },
+  }
 });

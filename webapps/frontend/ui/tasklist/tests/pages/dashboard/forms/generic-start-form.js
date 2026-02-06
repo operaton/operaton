@@ -20,17 +20,19 @@
 var Page = require('./../start-process-modal');
 
 module.exports = Page.extend({
-  genericFormElement: function () {
+  genericFormElement: function() {
     return element(by.css('.generic-form-fields'));
   },
 
-  helpText: function () {
-    return this.genericFormElement().element(by.css('.text-help')).getText();
+  helpText: function() {
+    return this.genericFormElement()
+      .element(by.css('.text-help'))
+      .getText();
   },
 
-  businessKeyInput: function (inputValue) {
+  businessKeyInput: function(inputValue) {
     var inputField = this.genericFormElement().element(
-      by.css('[cam-business-key]'),
+      by.css('[cam-business-key]')
     );
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -38,19 +40,19 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  addVariableButton: function () {
+  addVariableButton: function() {
     return this.genericFormElement().element(
-      by.css('[ng-click="addVariable()"]'),
+      by.css('[ng-click="addVariable()"]')
     );
   },
 
-  addVariable: function (name, type, value) {
+  addVariable: function(name, type, value) {
     var that = this;
 
     this.addVariableButton().click();
     this.variableList()
       .count()
-      .then(function (idx) {
+      .then(function(idx) {
         idx = idx - 1;
         that.variableNameInput(idx, name);
         that.variableTypeInput(idx, type);
@@ -63,31 +65,31 @@ module.exports = Page.extend({
       });
   },
 
-  removeVariableButton: function (idx) {
+  removeVariableButton: function(idx) {
     return this.genericFormElement().element(
-      by.css('[ng-click="removeVariable(delta)"]'),
+      by.css('[ng-click="removeVariable(delta)"]')
     );
   },
 
-  removeVariable: function (idx) {
+  removeVariable: function(idx) {
     this.removeVariableButton().click();
   },
 
-  variableList: function () {
+  variableList: function() {
     return this.genericFormElement().all(
-      by.repeater('(delta, variable) in variables'),
+      by.repeater('(delta, variable) in variables')
     );
   },
 
-  variableInputElement: function (rowIdx, colIdx) {
+  variableInputElement: function(rowIdx, colIdx) {
     return this.variableList()
       .get(rowIdx)
       .element(by.css('.row .col-4:nth-child(' + colIdx + ')'));
   },
 
-  variableInputField: function (rowIdx, colIdx, inputValue) {
+  variableInputField: function(rowIdx, colIdx, inputValue) {
     var inputField = this.variableInputElement(rowIdx, colIdx).element(
-      by.css('.form-control'),
+      by.css('.form-control')
     );
 
     if (arguments.length === 3) inputField.sendKeys(inputValue);
@@ -95,45 +97,45 @@ module.exports = Page.extend({
     return inputField;
   },
 
-  variableInputHelpText: function (rowIdx, colIdx) {
+  variableInputHelpText: function(rowIdx, colIdx) {
     return this.variableInputElement(rowIdx, colIdx)
       .element(by.css('.has-error .help-block'))
       .getText();
   },
 
-  isVariableInputFieldValide: function (rowIdx, colIdx) {
+  isVariableInputFieldValide: function(rowIdx, colIdx) {
     return this.variableInputElement(rowIdx, colIdx)
       .getAttribute('class')
-      .then(function (classes) {
+      .then(function(classes) {
         return classes.indexOf('ng-valide') !== -1;
       });
   },
 
-  variableNameInput: function (idx, inputValue) {
+  variableNameInput: function(idx, inputValue) {
     return this.variableInputField(idx, 1, inputValue);
   },
 
-  variableTypeInput: function (idx, inputValue) {
+  variableTypeInput: function(idx, inputValue) {
     return this.variableInputField(idx, 2, inputValue);
   },
 
-  variableValueInput: function (idx, inputValue) {
+  variableValueInput: function(idx, inputValue) {
     return this.variableInputField(idx, 3, inputValue);
   },
 
-  variableNameHelpText: function (idx) {
+  variableNameHelpText: function(idx) {
     return this.variableInputHelpText(idx, 1);
   },
 
-  variableValueHelpText: function (idx) {
+  variableValueHelpText: function(idx) {
     return this.variableInputHelpText(idx, 3);
   },
 
-  isVariableNameInputValide: function (idx) {
+  isVariableNameInputValide: function(idx) {
     return this.isVariableInputFieldValide(idx, 1);
   },
 
-  isVariableValueInputValide: function (idx) {
+  isVariableValueInputValide: function(idx) {
     return this.isVariableInputFieldValide(idx, 3);
-  },
+  }
 });

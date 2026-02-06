@@ -20,23 +20,23 @@
 var Base = require('./../dashboard/dashboard-view');
 
 module.exports = Base.extend({
-  pluginList: function () {
+  pluginList: function() {
     return element.all(by.css('.processes-dashboard'));
   },
 
-  pluginObject: function () {
+  pluginObject: function() {
     return this.pluginList().get(0);
   },
 
-  processCountHeader: function () {
+  processCountHeader: function() {
     return this.pluginObject()
       .element(by.binding('{{ processDefinitionData.length }}'))
       .getText();
   },
 
-  switchTab: function () {
+  switchTab: function() {
     element(
-      by.css('[ng-click="selectTab(\'' + this.tabLabel.toLowerCase() + '\')"]'),
+      by.css('[ng-click="selectTab(\'' + this.tabLabel.toLowerCase() + '\')"]')
     ).click();
-  },
+  }
 });

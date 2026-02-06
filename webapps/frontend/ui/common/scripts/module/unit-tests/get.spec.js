@@ -26,25 +26,25 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cam-common get', function () {
+describe('cam-common get', function() {
   var get;
 
   beforeEach(module(drdCommon.name));
 
-  beforeEach(inject(function ($injector) {
+  beforeEach(inject(function($injector) {
     get = $injector.get('get');
   }));
 
-  it('should return value corresponding to path', function () {
+  it('should return value corresponding to path', function() {
     expect(
       get(
         {
           b: {
-            c: 1,
-          },
+            c: 1
+          }
         },
-        ['b', 'c'],
-      ),
+        ['b', 'c']
+      )
     ).to.eql(1);
   });
 
@@ -53,11 +53,11 @@ describe('cam-common get', function () {
       get(
         {
           b: {
-            c: [1, 2, 3],
-          },
+            c: [1, 2, 3]
+          }
         },
-        ['b', 'c', 2],
-      ),
+        ['b', 'c', 2]
+      )
     ).to.eql(3);
   });
 
@@ -66,11 +66,11 @@ describe('cam-common get', function () {
       get(
         {
           b: {
-            c: [1, 2, 3],
-          },
+            c: [1, 2, 3]
+          }
         },
-        ['a', 'c', 2],
-      ),
+        ['a', 'c', 2]
+      )
     ).to.eql(undefined);
   });
 
@@ -79,12 +79,12 @@ describe('cam-common get', function () {
       get(
         {
           b: {
-            c: [1, 2, 3],
-          },
+            c: [1, 2, 3]
+          }
         },
         ['a', 'c', 2],
-        'dd',
-      ),
+        'dd'
+      )
     ).to.eql('dd');
   });
 });

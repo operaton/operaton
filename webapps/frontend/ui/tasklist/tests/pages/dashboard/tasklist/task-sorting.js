@@ -20,34 +20,36 @@
 var Page = require('./../dashboard-view');
 
 module.exports = Page.extend({
-  formElement: function () {
+  formElement: function() {
     return element(by.css('[cam-sorting-choices]'));
   },
 
-  sortingList: function () {
+  sortingList: function() {
     return this.formElement().all(by.repeater('(index, sorting) in sortings'));
   },
 
-  sortingName: function (index) {
-    return this.sortingList().get(index).element(by.css('.sort-by'));
+  sortingName: function(index) {
+    return this.sortingList()
+      .get(index)
+      .element(by.css('.sort-by'));
   },
 
-  changeSortingDirection: function (index) {
+  changeSortingDirection: function(index) {
     return this.sortingList()
       .get(index)
       .element(by.css('[ng-click="changeOrder(index)"]'))
       .click();
   },
 
-  sortingDirection: function (index) {
+  sortingDirection: function(index) {
     return this.sortingList()
       .get(index)
       .element(by.css('.sort-direction'))
       .getAttribute('class');
   },
 
-  isSortingDescending: function (index) {
-    return this.sortingDirection(index).then(function (matcher) {
+  isSortingDescending: function(index) {
+    return this.sortingDirection(index).then(function(matcher) {
       if (matcher.indexOf('-down') !== -1) {
         return true;
       }
@@ -55,8 +57,8 @@ module.exports = Page.extend({
     });
   },
 
-  isSortingAscending: function (index) {
-    return this.sortingDirection(index).then(function (matcher) {
+  isSortingAscending: function(index) {
+    return this.sortingDirection(index).then(function(matcher) {
       if (matcher.indexOf('-up') !== -1) {
         return true;
       }
@@ -64,24 +66,24 @@ module.exports = Page.extend({
     });
   },
 
-  addSortingButton: function () {
+  addSortingButton: function() {
     return this.formElement().element(by.css('.dropdown.new-sort'));
   },
 
-  removeSortingButton: function (index) {
+  removeSortingButton: function(index) {
     return this.sortingList()
       .get(index)
       .element(by.css('[ng-click="removeSorting(index)"]'));
   },
 
-  sortingSelectionListElement: function (index, sortingType) {
+  sortingSelectionListElement: function(index, sortingType) {
     return this.sortingList()
       .get(index)
       .element(by.css('.sorting-choice .dropdown-menu'))
       .element(by.cssContainingText('a.ng-scope', sortingType));
   },
 
-  newSortingSelectionListElement: function (sortingType) {
+  newSortingSelectionListElement: function(sortingType) {
     return this.formElement()
       .element(by.css('.dropdown.new-sort'))
       .element(by.cssContainingText('a.ng-scope', sortingType));
@@ -102,14 +104,14 @@ module.exports = Page.extend({
    *                                    'Process Variable'
    *                                    'Task Variable'
    */
-  addNewSorting: function (sortingType, variableName, variableType) {
+  addNewSorting: function(sortingType, variableName, variableType) {
     var varInput = false;
     if (arguments.length >= 2) {
       varInput = true;
     }
     this.addSortingButton().click();
     var listElement = this.newSortingSelectionListElement(sortingType);
-    listElement.click().then(function () {
+    listElement.click().then(function() {
       if (varInput) {
         listElement
           .element(by.xpath('..'))
@@ -127,7 +129,7 @@ module.exports = Page.extend({
     });
   },
 
-  changeSorting: function (index, sortingType, variableName, variableType) {
+  changeSorting: function(index, sortingType, variableName, variableType) {
     var varInput = false;
     if (arguments.length >= 3) {
       varInput = true;
@@ -135,7 +137,7 @@ module.exports = Page.extend({
     this.sortingName(index).click();
     this.sortingSelectionListElement(index, sortingType)
       .click()
-      .then(function () {
+      .then(function() {
         if (varInput) {
           element(by.css('.variable-inputs'))
             .element(by.model('variable.varName'))
@@ -148,5 +150,5 @@ module.exports = Page.extend({
             .click();
         }
       });
-  },
+  }
 });

@@ -20,43 +20,50 @@
 var Page = require('./edit-tenants');
 
 module.exports = Page.extend({
-  pageHeader: function () {
+  pageHeader: function() {
     return element(by.css('.modal-header')).getText();
   },
 
-  tenantList: function () {
+  tenantList: function() {
     return element.all(by.repeater('tenant in availableTenants'));
   },
 
-  selectTenant: function (idx) {
-    this.tenantList().get(idx).element(by.model('tenant.checked')).click();
+  selectTenant: function(idx) {
+    this.tenantList()
+      .get(idx)
+      .element(by.model('tenant.checked'))
+      .click();
   },
 
-  tenantId: function (idx) {
-    return this.tenantList().get(idx).element(by.css('.tenant-id a'));
+  tenantId: function(idx) {
+    return this.tenantList()
+      .get(idx)
+      .element(by.css('.tenant-id a'));
   },
 
-  tenantName: function (idx) {
-    return this.tenantList().get(idx).element(by.css('.tenant-name'));
+  tenantName: function(idx) {
+    return this.tenantList()
+      .get(idx)
+      .element(by.css('.tenant-name'));
   },
 
-  addSelectedTenantButton: function () {
+  addSelectedTenantButton: function() {
     return element(by.css('[ng-click="createUserMemberships()"]'));
   },
 
-  cancelButton: function () {
+  cancelButton: function() {
     return element(by.css('[ng-click="close()"]'));
   },
 
-  okButton: function () {
+  okButton: function() {
     return element(by.css('[ng-click="close(status)"]'));
   },
 
-  selectAllCheckbox: function () {
+  selectAllCheckbox: function() {
     return element(by.css('[ng-click="checkAllTenants()"'));
   },
 
-  addTenants: function () {
+  addTenants: function() {
     var that = this;
     var theElement = this.tenantList().get(0);
 
@@ -64,12 +71,12 @@ module.exports = Page.extend({
     this.selectAllCheckbox().click();
     this.addSelectedTenantButton()
       .click()
-      .then(function () {
+      .then(function() {
         that.okButton().click();
       });
   },
 
-  addTenant: function (idx) {
+  addTenant: function(idx) {
     var that = this;
     var theElement = this.tenantList().get(idx);
 
@@ -77,8 +84,8 @@ module.exports = Page.extend({
     this.selectTenant(idx);
     this.addSelectedTenantButton()
       .click()
-      .then(function () {
+      .then(function() {
         that.okButton().click();
       });
-  },
+  }
 });

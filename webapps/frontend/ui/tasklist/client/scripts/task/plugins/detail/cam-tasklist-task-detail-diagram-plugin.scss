@@ -1,3 +1,4 @@
+
 .diagram-loader {
   background-color: rgba($body-bg, 0.4);
   position: absolute;
@@ -37,7 +38,7 @@
     }
 
     .djs-visual {
-      > :nth-child(1) {
+      >:nth-child(1) {
         fill: $success-bg !important;
       }
     }

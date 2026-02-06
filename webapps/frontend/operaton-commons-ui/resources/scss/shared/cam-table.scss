@@ -1,11 +1,11 @@
-@import 'mixins';
+@import "mixins";
 
 .cam-table {
   // Bootstrap 4 replacements for LESS mixins
-  @extend .table;
-  @extend .table-sm; // BS4 replacement for .table-condensed()
-  @extend .table-striped;
-  @extend .table-hover;
+@extend .table;
+@extend .table-sm;      // BS4 replacement for .table-condensed()
+@extend .table-striped;
+@extend .table-hover;
 
   &.cam-fixed-layout {
     table-layout: fixed;
@@ -13,7 +13,7 @@
 
   td.uuid {
     max-width: 300px;
-    @include text-truncate();
+  @include text-truncate()
   }
 
   td,
@@ -26,14 +26,14 @@
       text-align: center;
       width: 40px;
 
-      input[type='checkbox'] {
+      input[type="checkbox"] {
         margin-top: 5px;
       }
     }
   }
 
   td.checkbox {
-    input[type='checkbox'] {
+    input[type="checkbox"] {
       position: static;
       margin-left: 0;
     }

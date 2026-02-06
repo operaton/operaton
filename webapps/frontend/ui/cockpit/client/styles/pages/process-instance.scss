@@ -13,9 +13,9 @@
     position: absolute;
     z-index: 9;
     transition:
-      max-width 0.218s ease,
-      max-height 0.218s ease,
-      background-color 0.218s ease;
+            max-width 0.218s ease,
+            max-height 0.218s ease,
+            background-color 0.218s ease;
   }
 
   td.message {
@@ -39,8 +39,7 @@
     }
   }
 
-  > tbody > tr > td.message {
-    /* stylelint-disable-line no-descending-specificity */
+  > tbody > tr > td.message { /* stylelint-disable-line no-descending-specificity */
     padding: 0;
   }
 }

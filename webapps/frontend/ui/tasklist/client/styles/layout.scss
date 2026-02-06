@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-@import '~ui/common/styles/three-cols-layout';
+@import "~ui/common/styles/three-cols-layout";
 
 @include three-cols-layout-base();
 
@@ -50,11 +50,7 @@ button {
 }
 
 @include three-cols-layout-states();
-@include three-cols-layout-colors(
-  $column-left-bg,
-  $column-center-bg,
-  $column-right-bg
-);
+@include three-cols-layout-colors($column-left-bg, $column-center-bg, $column-right-bg);
 @include three-cols-layout-header();
 
 [cam-widget-header] [ng-transclude] {
@@ -108,8 +104,7 @@ button {
   .column-center {
     .alert,
     .well {
-      margin: 0 calc(#{$grid-gutter-width} * 0.5)
-        calc(#{$grid-gutter-width} * 0.5) calc(#{$grid-gutter-width} * 0.5);
+      margin: 0 calc(#{$grid-gutter-width} * 0.5) calc(#{$grid-gutter-width} * 0.5) calc(#{$grid-gutter-width} * 0.5);
     }
 
     .cells-wrapper {
@@ -273,9 +268,7 @@ button {
   }
 }
 
-body.task-column-close
-  [cam-widget-search].multiline-pills
-  [cam-widget-search-pill] {
+body.task-column-close [cam-widget-search].multiline-pills [cam-widget-search-pill] {
   width: auto;
   vertical-align: top;
 

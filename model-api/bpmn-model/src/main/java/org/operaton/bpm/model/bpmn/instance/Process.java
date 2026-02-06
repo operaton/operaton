@@ -101,7 +101,7 @@ public interface Process extends CallableElement {
   default Integer getOperatonHistoryTimeToLive() {
     String ttl = getOperatonHistoryTimeToLiveString();
     if (ttl != null) {
-      return Integer.parseInt(ttl);
+      return Integer.valueOf(ttl);
     }
     return null;
   }

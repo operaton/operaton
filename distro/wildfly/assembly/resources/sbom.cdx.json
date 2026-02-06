@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:70381c53-1920-490a-929f-85de86fdb722",
+  "serialNumber": "urn:uuid:59dd5921-ccbe-4280-9ee2-cd7651aad0b7",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-05T08:50:37Z",
+    "timestamp": "2026-02-06T10:43:27Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.69.0"
+          "version": "0.69.1"
         }
       ]
     },
@@ -20878,45 +20878,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
+      "bom-ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.9?type=jar",
       "publisher": "FasterXML",
       "group": "org.openapitools",
       "name": "jackson-databind-nullable",
-      "version": "0.2.8",
+      "version": "0.2.9",
       "description": "JsonNullable wrapper class and Jackson module to support fields with meaningful null values.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f17521ae6d61c6c7ffb8c096ebdbaccb"
+          "content": "b0f5e4afc0bfb1ca2fe906f780539888"
         },
         {
           "alg": "SHA-1",
-          "content": "06855fd89850da1c053de99994780eff3f5b9319"
+          "content": "cd43e20716ff2691d2267867ccc6678147b8bc97"
         },
         {
           "alg": "SHA-256",
-          "content": "0cef88241ce6775f5b24f1a2c993aceb6fed25e15ff285e686e7b6e1f530bec7"
+          "content": "b263565079939b40dbbd5ef3e9b422a009a23b8395e4b62d3233c1ae235b59b9"
         },
         {
           "alg": "SHA-512",
-          "content": "6f70e5a28286f746dd34588d658b963a35d7ae2f0b306ed7694991e08c4ce3aec2807f9d31eeb853c211f50f45d93cbbf87a8bc623725eb1971a9e91c8855c36"
+          "content": "2ebce99c11f07aac6421ebbefccf896d984aabf00d4a3badfe5f2f9b279b552db14cf7811ff117aa0d4706839be8f094c8661bdd55a46ecb74edd52b70bd908b"
         },
         {
           "alg": "SHA-384",
-          "content": "e6b0a518dc63d8e3463e316c56938b6e53bcdc4446c2b6b191db17bddb341d88949deea39e0c45151fd2052267827394"
+          "content": "9ca70c9acd657e71f2db2b692fa7af7bac54f5be7556f6f27f4f065e1bc36faa2661a6fa81dc9a7fad9e6ce4a25ddfe8"
         },
         {
           "alg": "SHA3-384",
-          "content": "0db1ef2525d785605eaa7a0b07d8fd1b4396afca4fc19381dc7db676c29bc33c578d1df09b9b162738d70a33740e1991"
+          "content": "acddf450166c6c04e82e0765d05cb3bebb6f755b422c5bbab1024c1c5b1472a23e2c3a83218fff98339e153d802aea08"
         },
         {
           "alg": "SHA3-256",
-          "content": "09ea26bef67122fd78f2d9afb8bbaf14b14809b26fbb44aa79c596dc5501fe05"
+          "content": "6e2301f72250d7c362f2b5a860b40a092d092d235375b51fd3258fd157c24f09"
         },
         {
           "alg": "SHA3-512",
-          "content": "8e7afc6800cda405f09e6014158938f07cf375544718c631de266adb424f048065efb3d536280a206dd49909251822790f5b3b84b847a32c17f7b943729c381a"
+          "content": "15e9cbf9fba40cd2ee2912245a4bf9791c80a85d5626ee042f9e5118147b1af3e62509ecdbbff56c48a2f465755d842364a0256997a153c208e6b7c6573fbaa0"
         }
       ],
       "licenses": [
@@ -20927,7 +20927,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
+      "purl": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.9?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/OpenAPITools/jackson-databind-nullable",
@@ -33788,7 +33788,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "174fdaac-3b2e-47f7-92a9-af5ebc5ba77b",
+      "bom-ref": "847438d5-873b-4494-abe2-c9b63b223134",
       "name": "package-lock.json",
       "properties": [
         {
@@ -39086,7 +39086,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c1bbbd47-21f6-41fe-ba01-9900b520d500",
+      "bom-ref": "9deb4902-d8e9-455e-a578-f5060787dd34",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -41347,12 +41347,12 @@
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-openapi@1.1.0-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
-        "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
+        "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.9?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@2.1.1?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.8?type=jar",
+      "ref": "pkg:maven/org.openapitools/jackson-databind-nullable@0.2.9?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.0?type=jar"
       ]
@@ -43053,7 +43053,7 @@
       "dependsOn": []
     },
     {
-      "ref": "174fdaac-3b2e-47f7-92a9-af5ebc5ba77b",
+      "ref": "847438d5-873b-4494-abe2-c9b63b223134",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.18.0",
@@ -43104,9 +43104,9 @@
       ]
     },
     {
-      "ref": "c1bbbd47-21f6-41fe-ba01-9900b520d500",
+      "ref": "9deb4902-d8e9-455e-a578-f5060787dd34",
       "dependsOn": [
-        "174fdaac-3b2e-47f7-92a9-af5ebc5ba77b"
+        "847438d5-873b-4494-abe2-c9b63b223134"
       ]
     },
     {

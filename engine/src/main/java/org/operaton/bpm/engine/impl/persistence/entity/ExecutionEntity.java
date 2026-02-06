@@ -99,7 +99,11 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  // Persistent refrenced entities state //////////////////////////////////////
+  private static final VariableInstanceEntityPersistenceListener VARIABLE_PERSISTENCE_LISTENER = new VariableInstanceEntityPersistenceListener();
+  private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
+  private static final VariableInstanceSequenceCounterListener VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER = new VariableInstanceSequenceCounterListener();
+
+  // Persistent referenced entities state /////////////////////////////////////
   public static final int EVENT_SUBSCRIPTIONS_STATE_BIT = 1;
   public static final int TASKS_STATE_BIT = 2;
   public static final int JOBS_STATE_BIT = 3;
@@ -210,7 +214,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   /**
    * persisted reference to the super execution of this execution
    *
-   * @See {@link #getSuperExecution()}
+   * @see {@link #getSuperExecution()}
    * @see <code>setSuperExecution(ExecutionEntity)</code>
    */
   protected String superExecutionId;
@@ -225,7 +229,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   /**
    * persisted reference to the super case execution of this execution
    *
-   * @See {@link #getSuperCaseExecution()}
+   * @see {@link #getSuperCaseExecution()}
    * @see <code>setSuperCaseExecution(ExecutionEntity)</code>
    */
   protected String superCaseExecutionId;
@@ -425,7 +429,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   protected static void initializeAssociations(ExecutionEntity execution) {
     // initialize the lists of referenced objects (prevents db queries)
     execution.executions = new ArrayList<>();
-    execution.variableStore.setVariablesProvider(VariableCollectionProvider.<VariableInstanceEntity> emptyVariables());
+    execution.variableStore.setVariablesProvider(VariableCollectionProvider.emptyVariables());
     execution.variableStore.forceInitialization();
     execution.eventSubscriptions = new ArrayList<>();
     execution.jobs = new ArrayList<>();
@@ -1729,10 +1733,8 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
     listeners.add(getVariablePersistenceListener());
     listeners.add((VariableInstanceLifecycleListener) new VariableInstanceConcurrentLocalInitializer(this));
-    listeners.add((VariableInstanceLifecycleListener) VariableInstanceSequenceCounterListener.INSTANCE);
-
-    listeners.add((VariableInstanceLifecycleListener) VariableInstanceHistoryListener.INSTANCE);
-
+    listeners.add((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER);
+    listeners.add((VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER);
     listeners.add((VariableInstanceLifecycleListener) new VariableListenerInvocationListener(this));
 
     listeners.addAll((List) registeredVariableListeners);
@@ -1742,7 +1744,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @SuppressWarnings({ "rawtypes", "unchecked" })
   public VariableInstanceLifecycleListener<CoreVariableInstance> getVariablePersistenceListener() {
-    return (VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE;
+    return (VariableInstanceLifecycleListener) VARIABLE_PERSISTENCE_LISTENER;
   }
 
   public Collection<VariableInstanceEntity> getVariablesInternal() {

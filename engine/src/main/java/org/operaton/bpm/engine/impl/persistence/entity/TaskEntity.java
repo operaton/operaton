@@ -94,11 +94,15 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
+  private static final VariableInstanceEntityPersistenceListener VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER = new VariableInstanceEntityPersistenceListener();
+  private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
+  private static final VariableInstanceSequenceCounterListener VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER = new VariableInstanceSequenceCounterListener();
+
   protected static final List<VariableInstanceLifecycleListener<CoreVariableInstance>> DEFAULT_VARIABLE_LIFECYCLE_LISTENERS =
       Arrays.asList(
-          (VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE,
-          (VariableInstanceLifecycleListener) VariableInstanceSequenceCounterListener.INSTANCE,
-          (VariableInstanceLifecycleListener) VariableInstanceHistoryListener.INSTANCE
+          (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
+          (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
+          (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER
           );
 
   public static final String DELETE_REASON_COMPLETED = "completed";

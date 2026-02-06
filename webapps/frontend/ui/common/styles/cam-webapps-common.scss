@@ -203,7 +203,11 @@
 .fjs-powered-by {
   display: none;
 }
+
+// Import bootstrap-icons BEFORE any files that use @extend .bi-* classes
 $bootstrap-icons-font-dir: "~bootstrap-icons/font/fonts";
+@import "~bootstrap-icons/font/bootstrap-icons.scss";
+
 @import '~operaton-commons-ui/resources/scss/shared/animation-spin';
 @import './modal.scss';
 @import 'directives/notifications-panel.scss';
@@ -212,7 +216,6 @@ $bootstrap-icons-font-dir: "~bootstrap-icons/font/fonts";
 @import '~operaton-commons-ui/lib/widgets/clipboard/cam-widget-clipboard';
 @import '~operaton-commons-ui/lib/widgets/header/cam-widget-header';
 @import '~operaton-commons-ui/lib/widgets/footer/cam-widget-footer';
-@import "~bootstrap-icons/font/bootstrap-icons.scss";
 @import "glyphicons-bootstap-map.scss";
 //@import './glyphicon-overrides.scss';
 @import  '@bpmn-io/form-js/dist/assets/form-js.css';

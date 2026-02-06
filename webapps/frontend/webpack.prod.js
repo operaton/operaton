@@ -75,6 +75,7 @@ module.exports = (_env, argv = {}) => {
     optimization: {
       minimize: true,
       minimizer: [
+        `...`, // Keep webpack's default minimizers (including CSS)
         new TerserPlugin({
           extractComments: {
             condition: (astNode, comment) => {

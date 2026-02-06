@@ -91,9 +91,18 @@ module.exports = (_env, argv = {}) => {
           },
           exclude: [/scripts\/config\.js/, /lib\/globalize\.js/],
         }),
-        new CssMinimizerPlugin({
-          minify: CssMinimizerPlugin.lightningCssMinify,
-        }),
+        // Temporarily disable CSS minimization to debug
+        // new CssMinimizerPlugin({
+        //   minimizerOptions: {
+        //     preset: [
+        //       'default',
+        //       {
+        //         discardEmpty: false,  // Don't discard rules with empty-looking content
+        //         discardUnused: false, // Don't remove unused rules
+        //       },
+        //     ],
+        //   },
+        // }),
       ],
       // Bundle all third-party modules into the lib/deps.js bundle
       splitChunks: {

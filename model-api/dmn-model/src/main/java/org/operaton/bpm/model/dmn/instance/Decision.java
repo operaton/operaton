@@ -65,7 +65,7 @@ public interface Decision extends DrgElement {
     String ttl = getOperatonHistoryTimeToLiveString();
 
     if (ttl != null) {
-      return Integer.valueOf(ttl);
+      return Integer.parseInt(ttl);
     }
     return null;
   }

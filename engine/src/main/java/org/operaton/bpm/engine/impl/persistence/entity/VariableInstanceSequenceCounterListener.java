@@ -25,8 +25,6 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycl
  */
 public class VariableInstanceSequenceCounterListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
-  public static final VariableInstanceSequenceCounterListener INSTANCE = new VariableInstanceSequenceCounterListener();
-
   @Override
   public void onDelete(VariableInstanceEntity variableInstance, AbstractVariableScope sourceScope) {
     variableInstance.incrementSequenceCounter();

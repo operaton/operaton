@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm.dmn</groupId>
     <artifactId>operaton-engine-dmn-root</artifactId>
-    <version>2.0.0-M2</version>
+    <version>2.0.0-M3-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine-feel-api</artifactId>

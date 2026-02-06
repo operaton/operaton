@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "2.0.0-M2",
+  "version": "2.0.0-M3-SNAPSHOT",
   "private": true,
   "scripts": {
     "build": "node build"

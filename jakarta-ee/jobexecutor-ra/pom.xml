@@ -34,11 +34,6 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.jboss.ironjacamar</groupId>
-      <artifactId>ironjacamar-spec-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.codehaus.fabric3.api</groupId>
       <artifactId>commonj</artifactId>
       <scope>provided</scope>

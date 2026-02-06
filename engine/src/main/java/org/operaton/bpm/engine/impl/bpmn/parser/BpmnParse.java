@@ -3383,13 +3383,17 @@ public class BpmnParse extends Parse {
         Error error = null;
         if (errorRef != null) {
           String operatonExpression = errorEventDefinitionElement.attribute(PROPERTYNAME_EXPRESSION);
-          error = bpmnParseErrors.get(errorRef);
-          OperatonErrorEventDefinition definition = new OperatonErrorEventDefinition(activity.getId(), expressionManager.createExpression(operatonExpression));
-          definition.setErrorCode(error == null ? errorRef : error.getErrorCode());
-          setErrorCodeVariableOnErrorEventDefinition(errorEventDefinitionElement, definition);
-          setErrorMessageVariableOnErrorEventDefinition(errorEventDefinitionElement, definition);
+          if (operatonExpression == null) {
+            addError("operaton:errorEventDefinition element must have 'expression' attribute", errorEventDefinitionElement, activity.getId());
+          } else {
+            error = bpmnParseErrors.get(errorRef);
+            OperatonErrorEventDefinition definition = new OperatonErrorEventDefinition(activity.getId(), expressionManager.createExpression(operatonExpression));
+            definition.setErrorCode(error == null ? errorRef : error.getErrorCode());
+            setErrorCodeVariableOnErrorEventDefinition(errorEventDefinitionElement, definition);
+            setErrorMessageVariableOnErrorEventDefinition(errorEventDefinitionElement, definition);
 
-          errorEventDefinitions.add(definition);
+            errorEventDefinitions.add(definition);
+          }
         }
       }
     }

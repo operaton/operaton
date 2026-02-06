@@ -63,7 +63,6 @@ public interface Decision extends DrgElement {
   @Deprecated(since = "1.0", forRemoval = true)
   default Integer getOperatonHistoryTimeToLive() {
     String ttl = getOperatonHistoryTimeToLiveString();
-
     if (ttl != null) {
       return Integer.parseInt(ttl);
     }

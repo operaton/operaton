@@ -4574,11 +4574,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public List<MigrationActivityValidator> getDefaultMigrationActivityValidators() {
-    List<MigrationActivityValidator> migrationActivityValidators = new ArrayList<>();
-    migrationActivityValidators.add(SupportedActivityValidator.INSTANCE);
-    migrationActivityValidators.add(SupportedPassiveEventTriggerActivityValidator.INSTANCE);
-    migrationActivityValidators.add(NoCompensationHandlerActivityValidator.INSTANCE);
-    return migrationActivityValidators;
+    return List.of(
+        new SupportedActivityValidator(),
+        new SupportedPassiveEventTriggerActivityValidator(),
+        new NoCompensationHandlerActivityValidator()
+    );
   }
 
   public void setMigrationInstructionGenerator(MigrationInstructionGenerator migrationInstructionGenerator) {

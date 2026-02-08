@@ -1,8 +1,8 @@
 ---
-status: "Proposed"
-date: 2025-08-25
-decision-makers: ["@ungerts", "@kthoms", "@javahippie"]
-consulted: []
+status: "Accepted"
+date: 2026-02-06
+decision-makers: ["@ungerts", "@kthoms", "@javahippie", "@hauptmedia"]
+consulted: ["@michael-simons"]
 informed: []
 ---
 

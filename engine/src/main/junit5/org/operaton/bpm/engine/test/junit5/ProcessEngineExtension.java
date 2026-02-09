@@ -254,7 +254,7 @@ public class ProcessEngineExtension implements TestWatcher,
   public void beforeEach(ExtensionContext context) {
     LOG.debug("beforeEach: {}", context.getDisplayName());
 
-    if (!ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
+    if (processEngine == null || !ProcessEngines.isRegisteredProcessEngine(processEngine.getName())) {
       initializeProcessEngine();
       initializeServices();
     }

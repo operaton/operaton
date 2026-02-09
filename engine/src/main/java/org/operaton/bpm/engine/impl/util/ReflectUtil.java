@@ -70,52 +70,47 @@ public final class ReflectUtil {
   }
 
   public static Class<?> loadClass(String className) {
-   Class<?> clazz = null;
-   ClassLoader classLoader = getCustomClassLoader();
+    Class<?> clazz = null;
+    Throwable throwable = null;
 
-   // First exception in chain of classloaders will be used as cause when no class is found in any of them
-   Throwable throwable = null;
+    try {
+      clazz = loadClassFromClassLoader(className, getCustomClassLoader(), "custom classloader");
+    } catch (Throwable t) {
+      throwable = t;
+    }
 
-   if(classLoader != null) {
-     try {
-       LOG.debugClassLoading(className, "custom classloader", classLoader);
-       clazz = Class.forName(className, true, classLoader);
-     }
-     catch(Throwable t) {
-       throwable = t;
-     }
-   }
-   if(clazz == null) {
-     try {
-       ClassLoader contextClassloader = ClassLoaderUtil.getContextClassloader();
-       if(contextClassloader != null) {
-         LOG.debugClassLoading(className, "current thread context classloader", contextClassloader);
-         clazz = Class.forName(className, true, contextClassloader);
-       }
-     }
-     catch(Throwable t) {
-       if(throwable == null) {
-         throwable = t;
-       }
-     }
-     if(clazz == null) {
-       try {
-         ClassLoader localClassloader = ClassLoaderUtil.getClassloader(ReflectUtil.class);
-         LOG.debugClassLoading(className, "local classloader", localClassloader);
-         clazz = Class.forName(className, true, localClassloader);
-       }
-       catch(Throwable t) {
-         if(throwable == null) {
-           throwable = t;
-         }
-       }
-     }
-   }
+    if (clazz == null) {
+      try {
+        clazz = loadClassFromClassLoader(className, ClassLoaderUtil.getContextClassloader(), "current thread context classloader");
+      } catch (Throwable t) {
+        if (throwable == null) {
+          throwable = t;
+        }
+      }
+    }
 
-   if(clazz == null) {
-     throw LOG.classLoadingException(className, throwable);
-   }
-   return clazz;
+    if (clazz == null) {
+      try {
+        clazz = loadClassFromClassLoader(className, ClassLoaderUtil.getClassloader(ReflectUtil.class), "local classloader");
+      } catch (Throwable t) {
+        if (throwable == null) {
+          throwable = t;
+        }
+      }
+    }
+
+    if (clazz == null) {
+      throw LOG.classLoadingException(className, throwable);
+    }
+    return clazz;
+  }
+
+  private static Class<?> loadClassFromClassLoader(String className, ClassLoader classLoader, String description) throws Throwable {
+    if (classLoader == null) {
+      return null;
+    }
+    LOG.debugClassLoading(className, description, classLoader);
+    return Class.forName(className, true, classLoader);
   }
 
   public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -307,243 +308,13 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
         query.addOrQuery((TaskQueryImpl) toObject(JsonUtil.getObject(jsonElement), true));
       }
     }
-    if (json.has(TASK_ID)) {
-      query.taskId(JsonUtil.getString(json,TASK_ID));
-    }
-    if (json.has(TASK_ID_IN)) {
-      query.taskIdIn(getArray(JsonUtil.getArray(json, TASK_ID_IN)));
-    }
-    if (json.has(NAME)) {
-      query.taskName(JsonUtil.getString(json, NAME));
-    }
-    if (json.has(NAME_NOT_EQUAL)) {
-      query.taskNameNotEqual(JsonUtil.getString(json, NAME_NOT_EQUAL));
-    }
-    if (json.has(NAME_LIKE)) {
-      query.taskNameLike(JsonUtil.getString(json, NAME_LIKE));
-    }
-    if (json.has(NAME_NOT_LIKE)) {
-      query.taskNameNotLike(JsonUtil.getString(json, NAME_NOT_LIKE));
-    }
-    if (json.has(DESCRIPTION)) {
-      query.taskDescription(JsonUtil.getString(json, DESCRIPTION));
-    }
-    if (json.has(DESCRIPTION_LIKE)) {
-      query.taskDescriptionLike(JsonUtil.getString(json, DESCRIPTION_LIKE));
-    }
-    if (json.has(PRIORITY)) {
-      query.taskPriority(JsonUtil.getInt(json, PRIORITY));
-    }
-    if (json.has(MIN_PRIORITY)) {
-      query.taskMinPriority(JsonUtil.getInt(json, MIN_PRIORITY));
-    }
-    if (json.has(MAX_PRIORITY)) {
-      query.taskMaxPriority(JsonUtil.getInt(json, MAX_PRIORITY));
-    }
-    if (json.has(ASSIGNEE)) {
-      query.taskAssignee(JsonUtil.getString(json, ASSIGNEE));
-    }
-    if (json.has(ASSIGNEE_LIKE)) {
-      query.taskAssigneeLike(JsonUtil.getString(json, ASSIGNEE_LIKE));
-    }
-    if (json.has(ASSIGNEE_IN)) {
-      query.taskAssigneeIn(getArray(JsonUtil.getArray(json, ASSIGNEE_IN)));
-    }
-    if (json.has(ASSIGNEE_NOT_IN)) {
-      query.taskAssigneeNotIn(getArray(JsonUtil.getArray(json, ASSIGNEE_NOT_IN)));
-    }
-    if (json.has(INVOLVED_USER)) {
-      query.taskInvolvedUser(JsonUtil.getString(json, INVOLVED_USER));
-    }
-    if (json.has(OWNER)) {
-      query.taskOwner(JsonUtil.getString(json, OWNER));
-    }
-    if (json.has(ASSIGNED) && JsonUtil.getBoolean(json, ASSIGNED)) {
-      query.taskAssigned();
-    }
-    if (json.has(UNASSIGNED) && JsonUtil.getBoolean(json, UNASSIGNED)) {
-      query.taskUnassigned();
-    }
-    if (json.has(DELEGATION_STATE)) {
-      query.taskDelegationState(DelegationState.valueOf(JsonUtil.getString(json, DELEGATION_STATE)));
-    }
-    if (json.has(CANDIDATE_USER)) {
-      query.taskCandidateUser(JsonUtil.getString(json, CANDIDATE_USER));
-    }
-    if (json.has(CANDIDATE_GROUP)) {
-      query.taskCandidateGroup(JsonUtil.getString(json, CANDIDATE_GROUP));
-    }
-    if (json.has(CANDIDATE_GROUP_LIKE)) {
-      query.taskCandidateGroupLike(JsonUtil.getString(json, CANDIDATE_GROUP_LIKE));
-    }
-    if (json.has(CANDIDATE_GROUPS) && !json.has(CANDIDATE_USER) && !json.has(CANDIDATE_GROUP)) {
-      query.taskCandidateGroupIn(getList(JsonUtil.getArray(json, CANDIDATE_GROUPS)));
-    }
-    if (json.has(WITH_CANDIDATE_GROUPS) && JsonUtil.getBoolean(json, WITH_CANDIDATE_GROUPS)) {
-      query.withCandidateGroups();
-    }
-    if (json.has(WITHOUT_CANDIDATE_GROUPS) && JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_GROUPS)) {
-      query.withoutCandidateGroups();
-    }
-    if (json.has(WITH_CANDIDATE_USERS) && JsonUtil.getBoolean(json, WITH_CANDIDATE_USERS)) {
-      query.withCandidateUsers();
-    }
-    if (json.has(WITHOUT_CANDIDATE_USERS) && JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_USERS)) {
-      query.withoutCandidateUsers();
-    }
-    if (json.has(INCLUDE_ASSIGNED_TASKS) && JsonUtil.getBoolean(json, INCLUDE_ASSIGNED_TASKS)) {
-      query.includeAssignedTasksInternal();
-    }
-    if (json.has(PROCESS_INSTANCE_ID)) {
-      query.processInstanceId(JsonUtil.getString(json, PROCESS_INSTANCE_ID));
-    }
-    if (json.has(PROCESS_INSTANCE_ID_IN)) {
-      query.processInstanceIdIn(getArray(JsonUtil.getArray(json, PROCESS_INSTANCE_ID_IN)));
-    }
-    if (json.has(EXECUTION_ID)) {
-      query.executionId(JsonUtil.getString(json, EXECUTION_ID));
-    }
-    if (json.has(ACTIVITY_INSTANCE_ID_IN)) {
-      query.activityInstanceIdIn(getArray(JsonUtil.getArray(json, ACTIVITY_INSTANCE_ID_IN)));
-    }
-    if (json.has(CREATED)) {
-      query.taskCreatedOn(new Date(JsonUtil.getLong(json, CREATED)));
-    }
-    if (json.has(CREATED_BEFORE)) {
-      query.taskCreatedBefore(new Date(JsonUtil.getLong(json, CREATED_BEFORE)));
-    }
-    if (json.has(CREATED_AFTER)) {
-      query.taskCreatedAfter(new Date(JsonUtil.getLong(json, CREATED_AFTER)));
-    }
-    if (json.has(UPDATED_AFTER)) {
-      query.taskUpdatedAfter(new Date(JsonUtil.getLong(json, UPDATED_AFTER)));
-    }
-    if (json.has(KEY)) {
-      query.taskDefinitionKey(JsonUtil.getString(json, KEY));
-    }
-    if (json.has(KEYS)) {
-      query.taskDefinitionKeyIn(getArray(JsonUtil.getArray(json, KEYS)));
-    }
-    if (json.has(KEY_NOT_IN)) {
-      query.taskDefinitionKeyNotIn(getArray(JsonUtil.getArray(json, KEY_NOT_IN)));
-    }
-    if (json.has(KEY_LIKE)) {
-      query.taskDefinitionKeyLike(JsonUtil.getString(json, KEY_LIKE));
-    }
-    if (json.has(PARENT_TASK_ID)) {
-      query.taskParentTaskId(JsonUtil.getString(json, PARENT_TASK_ID));
-    }
-    if (json.has(PROCESS_DEFINITION_KEY)) {
-      query.processDefinitionKey(JsonUtil.getString(json, PROCESS_DEFINITION_KEY));
-    }
-    if (json.has(PROCESS_DEFINITION_KEYS)) {
-      query.processDefinitionKeyIn(getArray(JsonUtil.getArray(json, PROCESS_DEFINITION_KEYS)));
-    }
-    if (json.has(PROCESS_DEFINITION_ID)) {
-      query.processDefinitionId(JsonUtil.getString(json, PROCESS_DEFINITION_ID));
-    }
-    if (json.has(PROCESS_DEFINITION_NAME)) {
-      query.processDefinitionName(JsonUtil.getString(json, PROCESS_DEFINITION_NAME));
-    }
-    if (json.has(PROCESS_DEFINITION_NAME_LIKE)) {
-      query.processDefinitionNameLike(JsonUtil.getString(json, PROCESS_DEFINITION_NAME_LIKE));
-    }
-    if (json.has(PROCESS_INSTANCE_BUSINESS_KEY)) {
-      query.processInstanceBusinessKey(JsonUtil.getString(json, PROCESS_INSTANCE_BUSINESS_KEY));
-    }
-    if (json.has(PROCESS_INSTANCE_BUSINESS_KEYS)) {
-      query.processInstanceBusinessKeyIn(getArray(JsonUtil.getArray(json, PROCESS_INSTANCE_BUSINESS_KEYS)));
-    }
-    if (json.has(PROCESS_INSTANCE_BUSINESS_KEY_LIKE)) {
-      query.processInstanceBusinessKeyLike(JsonUtil.getString(json, PROCESS_INSTANCE_BUSINESS_KEY_LIKE));
-    }
-    if (json.has(TASK_VARIABLES)) {
-      addVariables(query, JsonUtil.getArray(json, TASK_VARIABLES), true, false);
-    }
-    if (json.has(PROCESS_VARIABLES)) {
-      addVariables(query, JsonUtil.getArray(json, PROCESS_VARIABLES), false, true);
-    }
-    if (json.has(CASE_INSTANCE_VARIABLES)) {
-      addVariables(query, JsonUtil.getArray(json, CASE_INSTANCE_VARIABLES), false, false);
-    }
-    if (json.has(DUE)) {
-      query.dueDate(new Date(JsonUtil.getLong(json, DUE)));
-    }
-    if (json.has(DUE_BEFORE)) {
-      query.dueBefore(new Date(JsonUtil.getLong(json, DUE_BEFORE)));
-    }
-    if (json.has(DUE_AFTER)) {
-      query.dueAfter(new Date(JsonUtil.getLong(json, DUE_AFTER)));
-    }
-    if (json.has(WITHOUT_DUE_DATE)) {
-      query.withoutDueDate();
-    }
-    if (json.has(FOLLOW_UP)) {
-      query.followUpDate(new Date(JsonUtil.getLong(json, FOLLOW_UP)));
-    }
-    if (json.has(FOLLOW_UP_BEFORE)) {
-      query.followUpBefore(new Date(JsonUtil.getLong(json, FOLLOW_UP_BEFORE)));
-    }
-    if (json.has(FOLLOW_UP_AFTER)) {
-      query.followUpAfter(new Date(JsonUtil.getLong(json, FOLLOW_UP_AFTER)));
-    }
-    if (json.has(FOLLOW_UP_NULL_ACCEPTED)) {
-      query.setFollowUpNullAccepted(JsonUtil.getBoolean(json, FOLLOW_UP_NULL_ACCEPTED));
-    }
-    if (json.has(EXCLUDE_SUBTASKS) && JsonUtil.getBoolean(json, EXCLUDE_SUBTASKS)) {
-      query.excludeSubtasks();
-    }
-    if (json.has(SUSPENDED) && JsonUtil.getBoolean(json, SUSPENDED)) {
-      query.suspended();
-    }
-    if (json.has(ACTIVE) && JsonUtil.getBoolean(json, ACTIVE)) {
-      query.active();
-    }
-    if (json.has(CASE_DEFINITION_KEY)) {
-      query.caseDefinitionKey(JsonUtil.getString(json, CASE_DEFINITION_KEY));
-    }
-    if (json.has(CASE_DEFINITION_ID)) {
-      query.caseDefinitionId(JsonUtil.getString(json, CASE_DEFINITION_ID));
-    }
-    if (json.has(CASE_DEFINITION_NAME)) {
-      query.caseDefinitionName(JsonUtil.getString(json, CASE_DEFINITION_NAME));
-    }
-    if (json.has(CASE_DEFINITION_NAME_LIKE)) {
-      query.caseDefinitionNameLike(JsonUtil.getString(json, CASE_DEFINITION_NAME_LIKE));
-    }
-    if (json.has(CASE_INSTANCE_ID)) {
-      query.caseInstanceId(JsonUtil.getString(json, CASE_INSTANCE_ID));
-    }
-    if (json.has(CASE_INSTANCE_BUSINESS_KEY)) {
-      query.caseInstanceBusinessKey(JsonUtil.getString(json, CASE_INSTANCE_BUSINESS_KEY));
-    }
-    if (json.has(CASE_INSTANCE_BUSINESS_KEY_LIKE)) {
-      query.caseInstanceBusinessKeyLike(JsonUtil.getString(json, CASE_INSTANCE_BUSINESS_KEY_LIKE));
-    }
-    if (json.has(CASE_EXECUTION_ID)) {
-      query.caseExecutionId(JsonUtil.getString(json, CASE_EXECUTION_ID));
-    }
-    if (json.has(TENANT_IDS)) {
-      query.tenantIdIn(getArray(JsonUtil.getArray(json, TENANT_IDS)));
-    }
-    if (json.has(WITHOUT_TENANT_ID)) {
-      query.withoutTenantId();
-    }
-    if (json.has(ORDER_BY)) {
-      List<QueryOrderingProperty> orderingProperties =
-          LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER.fromOrderByString(JsonUtil.getString(json, ORDER_BY));
 
-      query.setOrderingProperties(orderingProperties);
-    }
-    if (json.has(ORDERING_PROPERTIES)) {
-      JsonArray jsonArray = JsonUtil.getArray(json, ORDERING_PROPERTIES);
-      query.setOrderingProperties(JsonQueryOrderingPropertyConverter.ARRAY_CONVERTER.toObject(jsonArray));
-    }
-
-    // expressions
     for (Map.Entry<String, JsonElement> entry : json.entrySet()) {
       String key = entry.getKey();
-      if (key.endsWith(KEY_SUFFIX_EXPRESSION)) {
+      BiConsumer<TaskQueryImpl, JsonObject> handler = handlers.get(key);
+      if (handler != null) {
+        handler.accept(query, json);
+      } else if (key.endsWith(KEY_SUFFIX_EXPRESSION)) {
         String expression = JsonUtil.getString(json, key);
         query.addExpression(key.substring(0, key.length() - KEY_SUFFIX_EXPRESSION.length()), expression);
       }
@@ -552,11 +323,90 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
     return query;
   }
 
-  protected String[] getArray(JsonArray array) {
+  protected static final Map<String, BiConsumer<TaskQueryImpl, JsonObject>> handlers = Map.<String, BiConsumer<TaskQueryImpl, JsonObject>>ofEntries(
+      Map.entry(TASK_ID, (query, json) -> query.taskId(JsonUtil.getString(json, TASK_ID))),
+      Map.entry(TASK_ID_IN, (query, json) -> query.taskIdIn(getArray(JsonUtil.getArray(json, TASK_ID_IN)))),
+      Map.entry(NAME, (query, json) -> query.taskName(JsonUtil.getString(json, NAME))),
+      Map.entry(NAME_NOT_EQUAL, (query, json) -> query.taskNameNotEqual(JsonUtil.getString(json, NAME_NOT_EQUAL))),
+      Map.entry(NAME_LIKE, (query, json) -> query.taskNameLike(JsonUtil.getString(json, NAME_LIKE))),
+      Map.entry(NAME_NOT_LIKE, (query, json) -> query.taskNameNotLike(JsonUtil.getString(json, NAME_NOT_LIKE))),
+      Map.entry(DESCRIPTION, (query, json) -> query.taskDescription(JsonUtil.getString(json, DESCRIPTION))),
+      Map.entry(DESCRIPTION_LIKE, (query, json) -> query.taskDescriptionLike(JsonUtil.getString(json, DESCRIPTION_LIKE))),
+      Map.entry(PRIORITY, (query, json) -> query.taskPriority(JsonUtil.getInt(json, PRIORITY))),
+      Map.entry(MIN_PRIORITY, (query, json) -> query.taskMinPriority(JsonUtil.getInt(json, MIN_PRIORITY))),
+      Map.entry(MAX_PRIORITY, (query, json) -> query.taskMaxPriority(JsonUtil.getInt(json, MAX_PRIORITY))),
+      Map.entry(ASSIGNEE, (query, json) -> query.taskAssignee(JsonUtil.getString(json, ASSIGNEE))),
+      Map.entry(ASSIGNEE_LIKE, (query, json) -> query.taskAssigneeLike(JsonUtil.getString(json, ASSIGNEE_LIKE))),
+      Map.entry(ASSIGNEE_IN, (query, json) -> query.taskAssigneeIn(getArray(JsonUtil.getArray(json, ASSIGNEE_IN)))),
+      Map.entry(ASSIGNEE_NOT_IN, (query, json) -> query.taskAssigneeNotIn(getArray(JsonUtil.getArray(json, ASSIGNEE_NOT_IN)))),
+      Map.entry(INVOLVED_USER, (query, json) -> query.taskInvolvedUser(JsonUtil.getString(json, INVOLVED_USER))),
+      Map.entry(OWNER, (query, json) -> query.taskOwner(JsonUtil.getString(json, OWNER))),
+      Map.entry(ASSIGNED, (query, json) -> { if (JsonUtil.getBoolean(json, ASSIGNED)) query.taskAssigned(); }),
+      Map.entry(UNASSIGNED, (query, json) -> { if (JsonUtil.getBoolean(json, UNASSIGNED)) query.taskUnassigned(); }),
+      Map.entry(DELEGATION_STATE, (query, json) -> query.taskDelegationState(DelegationState.valueOf(JsonUtil.getString(json, DELEGATION_STATE)))),
+      Map.entry(CANDIDATE_USER, (query, json) -> query.taskCandidateUser(JsonUtil.getString(json, CANDIDATE_USER))),
+      Map.entry(CANDIDATE_GROUP, (query, json) -> query.taskCandidateGroup(JsonUtil.getString(json, CANDIDATE_GROUP))),
+      Map.entry(CANDIDATE_GROUP_LIKE, (query, json) -> query.taskCandidateGroupLike(JsonUtil.getString(json, CANDIDATE_GROUP_LIKE))),
+      Map.entry(CANDIDATE_GROUPS, (query, json) -> { if (!json.has(CANDIDATE_USER) && !json.has(CANDIDATE_GROUP)) query.taskCandidateGroupIn(getList(JsonUtil.getArray(json, CANDIDATE_GROUPS))); }),
+      Map.entry(WITH_CANDIDATE_GROUPS, (query, json) -> { if (JsonUtil.getBoolean(json, WITH_CANDIDATE_GROUPS)) query.withCandidateGroups(); }),
+      Map.entry(WITHOUT_CANDIDATE_GROUPS, (query, json) -> { if (JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_GROUPS)) query.withoutCandidateGroups(); }),
+      Map.entry(WITH_CANDIDATE_USERS, (query, json) -> { if (JsonUtil.getBoolean(json, WITH_CANDIDATE_USERS)) query.withCandidateUsers(); }),
+      Map.entry(WITHOUT_CANDIDATE_USERS, (query, json) -> { if (JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_USERS)) query.withoutCandidateUsers(); }),
+      Map.entry(INCLUDE_ASSIGNED_TASKS, (query, json) -> { if (JsonUtil.getBoolean(json, INCLUDE_ASSIGNED_TASKS)) query.includeAssignedTasksInternal(); }),
+      Map.entry(PROCESS_INSTANCE_ID, (query, json) -> query.processInstanceId(JsonUtil.getString(json, PROCESS_INSTANCE_ID))),
+      Map.entry(PROCESS_INSTANCE_ID_IN, (query, json) -> query.processInstanceIdIn(getArray(JsonUtil.getArray(json, PROCESS_INSTANCE_ID_IN)))),
+      Map.entry(EXECUTION_ID, (query, json) -> query.executionId(JsonUtil.getString(json, EXECUTION_ID))),
+      Map.entry(ACTIVITY_INSTANCE_ID_IN, (query, json) -> query.activityInstanceIdIn(getArray(JsonUtil.getArray(json, ACTIVITY_INSTANCE_ID_IN)))),
+      Map.entry(CREATED, (query, json) -> query.taskCreatedOn(new Date(JsonUtil.getLong(json, CREATED)))),
+      Map.entry(CREATED_BEFORE, (query, json) -> query.taskCreatedBefore(new Date(JsonUtil.getLong(json, CREATED_BEFORE)))),
+      Map.entry(CREATED_AFTER, (query, json) -> query.taskCreatedAfter(new Date(JsonUtil.getLong(json, CREATED_AFTER)))),
+      Map.entry(UPDATED_AFTER, (query, json) -> query.taskUpdatedAfter(new Date(JsonUtil.getLong(json, UPDATED_AFTER)))),
+      Map.entry(KEY, (query, json) -> query.taskDefinitionKey(JsonUtil.getString(json, KEY))),
+      Map.entry(KEYS, (query, json) -> query.taskDefinitionKeyIn(getArray(JsonUtil.getArray(json, KEYS)))),
+      Map.entry(KEY_NOT_IN, (query, json) -> query.taskDefinitionKeyNotIn(getArray(JsonUtil.getArray(json, KEY_NOT_IN)))),
+      Map.entry(KEY_LIKE, (query, json) -> query.taskDefinitionKeyLike(JsonUtil.getString(json, KEY_LIKE))),
+      Map.entry(PARENT_TASK_ID, (query, json) -> query.taskParentTaskId(JsonUtil.getString(json, PARENT_TASK_ID))),
+      Map.entry(PROCESS_DEFINITION_KEY, (query, json) -> query.processDefinitionKey(JsonUtil.getString(json, PROCESS_DEFINITION_KEY))),
+      Map.entry(PROCESS_DEFINITION_KEYS, (query, json) -> query.processDefinitionKeyIn(getArray(JsonUtil.getArray(json, PROCESS_DEFINITION_KEYS)))),
+      Map.entry(PROCESS_DEFINITION_ID, (query, json) -> query.processDefinitionId(JsonUtil.getString(json, PROCESS_DEFINITION_ID))),
+      Map.entry(PROCESS_DEFINITION_NAME, (query, json) -> query.processDefinitionName(JsonUtil.getString(json, PROCESS_DEFINITION_NAME))),
+      Map.entry(PROCESS_DEFINITION_NAME_LIKE, (query, json) -> query.processDefinitionNameLike(JsonUtil.getString(json, PROCESS_DEFINITION_NAME_LIKE))),
+      Map.entry(PROCESS_INSTANCE_BUSINESS_KEY, (query, json) -> query.processInstanceBusinessKey(JsonUtil.getString(json, PROCESS_INSTANCE_BUSINESS_KEY))),
+      Map.entry(PROCESS_INSTANCE_BUSINESS_KEYS, (query, json) -> query.processInstanceBusinessKeyIn(getArray(JsonUtil.getArray(json, PROCESS_INSTANCE_BUSINESS_KEYS)))),
+      Map.entry(PROCESS_INSTANCE_BUSINESS_KEY_LIKE, (query, json) -> query.processInstanceBusinessKeyLike(JsonUtil.getString(json, PROCESS_INSTANCE_BUSINESS_KEY_LIKE))),
+      Map.entry(TASK_VARIABLES, (query, json) -> addVariables(query, JsonUtil.getArray(json, TASK_VARIABLES), true, false)),
+      Map.entry(PROCESS_VARIABLES, (query, json) -> addVariables(query, JsonUtil.getArray(json, PROCESS_VARIABLES), false, true)),
+      Map.entry(CASE_INSTANCE_VARIABLES, (query, json) -> addVariables(query, JsonUtil.getArray(json, CASE_INSTANCE_VARIABLES), false, false)),
+      Map.entry(DUE, (query, json) -> query.dueDate(new Date(JsonUtil.getLong(json, DUE)))),
+      Map.entry(DUE_BEFORE, (query, json) -> query.dueBefore(new Date(JsonUtil.getLong(json, DUE_BEFORE)))),
+      Map.entry(DUE_AFTER, (query, json) -> query.dueAfter(new Date(JsonUtil.getLong(json, DUE_AFTER)))),
+      Map.entry(WITHOUT_DUE_DATE, (query, json) -> query.withoutDueDate()),
+      Map.entry(FOLLOW_UP, (query, json) -> query.followUpDate(new Date(JsonUtil.getLong(json, FOLLOW_UP)))),
+      Map.entry(FOLLOW_UP_BEFORE, (query, json) -> query.followUpBefore(new Date(JsonUtil.getLong(json, FOLLOW_UP_BEFORE)))),
+      Map.entry(FOLLOW_UP_AFTER, (query, json) -> query.followUpAfter(new Date(JsonUtil.getLong(json, FOLLOW_UP_AFTER)))),
+      Map.entry(FOLLOW_UP_NULL_ACCEPTED, (query, json) -> query.setFollowUpNullAccepted(JsonUtil.getBoolean(json, FOLLOW_UP_NULL_ACCEPTED))),
+      Map.entry(EXCLUDE_SUBTASKS, (query, json) -> { if (JsonUtil.getBoolean(json, EXCLUDE_SUBTASKS)) query.excludeSubtasks(); }),
+      Map.entry(SUSPENDED, (query, json) -> { if (JsonUtil.getBoolean(json, SUSPENDED)) query.suspended(); }),
+      Map.entry(ACTIVE, (query, json) -> { if (JsonUtil.getBoolean(json, ACTIVE)) query.active(); }),
+      Map.entry(CASE_DEFINITION_KEY, (query, json) -> query.caseDefinitionKey(JsonUtil.getString(json, CASE_DEFINITION_KEY))),
+      Map.entry(CASE_DEFINITION_ID, (query, json) -> query.caseDefinitionId(JsonUtil.getString(json, CASE_DEFINITION_ID))),
+      Map.entry(CASE_DEFINITION_NAME, (query, json) -> query.caseDefinitionName(JsonUtil.getString(json, CASE_DEFINITION_NAME))),
+      Map.entry(CASE_DEFINITION_NAME_LIKE, (query, json) -> query.caseDefinitionNameLike(JsonUtil.getString(json, CASE_DEFINITION_NAME_LIKE))),
+      Map.entry(CASE_INSTANCE_ID, (query, json) -> query.caseInstanceId(JsonUtil.getString(json, CASE_INSTANCE_ID))),
+      Map.entry(CASE_INSTANCE_BUSINESS_KEY, (query, json) -> query.caseInstanceBusinessKey(JsonUtil.getString(json, CASE_INSTANCE_BUSINESS_KEY))),
+      Map.entry(CASE_INSTANCE_BUSINESS_KEY_LIKE, (query, json) -> query.caseInstanceBusinessKeyLike(JsonUtil.getString(json, CASE_INSTANCE_BUSINESS_KEY_LIKE))),
+      Map.entry(CASE_EXECUTION_ID, (query, json) -> query.caseExecutionId(JsonUtil.getString(json, CASE_EXECUTION_ID))),
+      Map.entry(TENANT_IDS, (query, json) -> query.tenantIdIn(getArray(JsonUtil.getArray(json, TENANT_IDS)))),
+      Map.entry(WITHOUT_TENANT_ID, (query, json) -> query.withoutTenantId()),
+      Map.entry(ORDER_BY, (query, json) -> query.setOrderingProperties(LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER.fromOrderByString(JsonUtil.getString(json, ORDER_BY)))),
+      Map.entry(ORDERING_PROPERTIES, (query, json) -> query.setOrderingProperties(JsonQueryOrderingPropertyConverter.ARRAY_CONVERTER.toObject(JsonUtil.getArray(json, ORDERING_PROPERTIES))))
+  );
+
+  protected static String[] getArray(JsonArray array) {
     return getList(array).toArray(new String[array.size()]);
   }
 
-  protected List<String> getList(JsonArray array) {
+  protected static List<String> getList(JsonArray array) {
     List<String> list = new ArrayList<>();
     for (JsonElement entry : array) {
       list.add(JsonUtil.getString(entry));
@@ -564,7 +414,7 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
     return list;
   }
 
-  protected void addVariables(TaskQueryImpl query, JsonArray variables, boolean isTaskVariable, boolean isProcessVariable) {
+  protected static void addVariables(TaskQueryImpl query, JsonArray variables, boolean isTaskVariable, boolean isProcessVariable) {
     for (JsonElement variable : variables) {
       JsonObject variableObj = JsonUtil.getObject(variable);
       String name = JsonUtil.getString(variableObj, NAME);

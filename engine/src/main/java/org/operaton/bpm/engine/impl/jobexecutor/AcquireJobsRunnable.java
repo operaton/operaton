@@ -39,6 +39,7 @@ public abstract class AcquireJobsRunnable implements Runnable {
     this.jobExecutor = jobExecutor;
   }
 
+  @SuppressWarnings("java:S2274") // replacing if(!interrupted) with while causes test failures
   protected void suspendAcquisition(long millis) {
     if (millis <= 0) {
       return;

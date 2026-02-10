@@ -23,6 +23,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.ParseException;
@@ -107,12 +109,14 @@ class CallActivityTest {
     testRule.assertProcessEnded(processInstance.getId());
   }
 
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessParentVariableAccess.bpmn20.xml"
+  @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml" })
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Simple sub process, org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcessParentVariableAccess.bpmn20.xml",
+      "Concurrent sub process, org/operaton/bpm/engine/test/bpmn/callactivity/concurrentSubProcessParentVariableAccess.bpmn20.xml"
   })
-  @Test
-  void testAccessSuperInstanceVariables() {
+  void testAccessSuperInstanceVariables(String name, String bpmnResource) {
+    testRule.deploy(bpmnResource);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process instance
@@ -131,35 +135,14 @@ class CallActivityTest {
 
   }
 
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcess.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/concurrentSubProcessParentVariableAccess.bpmn20.xml"
+  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
+  @ParameterizedTest(name = "{0}")
+  @CsvSource({
+      "Regular expression, org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
+      "Hash expression, org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithHashExpressions.bpmn20.xml"
   })
-  @Test
-  void testAccessSuperInstanceVariablesFromConcurrentExecution() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
-
-    // one task in the subprocess should be active after starting the process instance
-    TaskQuery taskQuery = taskService.createTaskQuery();
-    Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
-
-    // the variable does not yet exist
-    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isNull();
-
-    // completing the task executed the sub process
-    taskService.complete(taskBeforeSubProcess.getId());
-
-    // now the variable exists
-    assertThat(runtimeService.getVariable(processInstance.getId(), "greeting")).isEqualTo("hello");
-
-  }
-
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithExpressions.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
-  @Test
-  void testCallSimpleSubProcessWithExpressions() {
-
+  void testCallSimpleSubProcessWithExpressionVariants(String name, String bpmnResource) {
+    testRule.deploy(bpmnResource);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
 
     // one task in the subprocess should be active after starting the process
@@ -1188,36 +1171,6 @@ class CallActivityTest {
     }
   }
 
-  @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testCallSimpleSubProcessWithHashExpressions.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/callactivity/simpleSubProcess.bpmn20.xml"})
-  @Test
-  void testCallSimpleSubProcessWithHashExpressions() {
-
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("callSimpleSubProcess");
-
-    // one task in the subprocess should be active after starting the process
-    // instance
-    TaskQuery taskQuery = taskService.createTaskQuery();
-    Task taskBeforeSubProcess = taskQuery.singleResult();
-    assertThat(taskBeforeSubProcess.getName()).isEqualTo("Task before subprocess");
-
-    // Completing the task continues the process which leads to calling the
-    // subprocess. The sub process we want to call is passed in as a variable
-    // into this task
-    taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
-    taskService.complete(taskBeforeSubProcess.getId());
-    Task taskInSubProcess = taskQuery.singleResult();
-    assertThat(taskInSubProcess.getName()).isEqualTo("Task in subprocess");
-
-    // Completing the task in the subprocess, finishes the subprocess
-    taskService.complete(taskInSubProcess.getId());
-    Task taskAfterSubProcess = taskQuery.singleResult();
-    assertThat(taskAfterSubProcess.getName()).isEqualTo("Task after subprocess");
-
-    // Completing this task end the process instance
-    taskService.complete(taskAfterSubProcess.getId());
-    testRule.assertProcessEnded(processInstance.getId());
-  }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/callactivity/CallActivity.testInterruptingEventSubProcessEventSubscriptions.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/callactivity/interruptingEventSubProcessEventSubscriptions.bpmn20.xml"})

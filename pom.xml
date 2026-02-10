@@ -22,6 +22,7 @@
     <version.spring>7.0.3</version.spring>
     <version.spring-boot>4.0.2</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
+    <version.jspecify>1.0.0</version.jspecify>
     <maven.compiler.release>17</maven.compiler.release>
     <sonar.organization>operaton</sonar.organization>
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>

@@ -28,6 +28,11 @@
         <artifactId>java-uuid-generator</artifactId>
         <version>${version.uuid-generator}</version>
       </dependency>
+      <dependency>
+        <groupId>org.jspecify</groupId>
+        <artifactId>jspecify</artifactId>
+        <version>${version.jspecify}</version>
+      </dependency>
       <!-- Operaton public artifacts -->
       <dependency>
         <groupId>org.operaton.bpm</groupId>

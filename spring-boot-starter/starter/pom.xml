@@ -31,6 +31,11 @@
       <artifactId>operaton-engine-spring</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
       <classifier>junit6</classifier>

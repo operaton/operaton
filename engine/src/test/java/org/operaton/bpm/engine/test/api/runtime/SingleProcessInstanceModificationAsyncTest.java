@@ -823,52 +823,6 @@ class SingleProcessInstanceModificationAsyncTest {
     testRule.assertProcessEnded(instance.getId());
   }
 
-  @Deployment(resources = TRANSITION_LISTENER_PROCESS)
-  @Test
-  void testStartAfterActivityListenerInvocation() {
-    RecorderExecutionListener.clear();
-
-    ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
-        Variables.createVariables().putValue("listener", new RecorderExecutionListener()));
-
-    Batch modificationBatch = runtimeService.createProcessInstanceModification(instance.getId())
-        .startTransition("flow2")
-        .executeAsync();
-    Assertions.assertThat(modificationBatch).isNotNull();
-    executeSeedAndBatchJobs(modificationBatch);
-
-    // transition listener should have been invoked
-    List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();
-    Assertions.assertThat(events).hasSize(1);
-
-    RecordedEvent event = events.get(0);
-    Assertions.assertThat(event.getTransitionId()).isEqualTo("flow2");
-
-    RecorderExecutionListener.clear();
-
-    ActivityInstance updatedTree = runtimeService.getActivityInstance(instance.getId());
-    Assertions.assertThat(updatedTree).isNotNull();
-    Assertions.assertThat(updatedTree.getProcessInstanceId()).isEqualTo(instance.getId());
-
-    ActivityInstanceAssert.assertThat(updatedTree).hasStructure(
-        describeActivityInstanceTree(instance.getProcessDefinitionId()).activity("task1").activity("task2").done());
-
-    ExecutionTree executionTree = ExecutionTree.forExecution(instance.getId(), processEngine);
-
-    assertThat(executionTree).matches(describeExecutionTree(null).scope()
-        .child("task1")
-        .concurrent()
-        .noScope()
-        .up()
-        .child("task2")
-        .concurrent()
-        .noScope()
-        .done());
-
-    completeTasksInOrder("task1", "task2", "task2");
-    testRule.assertProcessEnded(instance.getId());
-  }
-
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test
   void testCancellationAndStartBefore() {

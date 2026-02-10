@@ -65,14 +65,12 @@ public class IoUtil {
    */
   @Deprecated(since = "1.1", forRemoval = true)
   public static String readerAsString(Reader reader) {
-    try {
-      StringWriter writer = new StringWriter();
+    try (StringWriter writer = new StringWriter()) {
       reader.transferTo(writer);
       return writer.toString();
     } catch (IOException e) {
       throw LOG.unableToReadFromReader(e);
-    }
-    finally {
+    } finally {
       closeSilently(reader);
     }
   }

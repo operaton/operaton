@@ -42,8 +42,8 @@ public enum CaseExecutionState {
   SUSPENDING_ON_SUSPENSION(13, "suspendingOnSuspension"),
   SUSPENDING_ON_PARENT_SUSPENSION(14, "suspendingOnParentSuspension");
 
-  private int statusCode;
-  private String name;
+  private final int statusCode;
+  private final String name;
   
   CaseExecutionState (int statusCode, String name) {
     this.statusCode = statusCode;

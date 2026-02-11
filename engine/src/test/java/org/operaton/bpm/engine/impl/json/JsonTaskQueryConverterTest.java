@@ -16,13 +16,14 @@
 
 package org.operaton.bpm.engine.impl.json;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.google.gson.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.task.TaskQuery;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class JsonTaskQueryConverterTest {
 

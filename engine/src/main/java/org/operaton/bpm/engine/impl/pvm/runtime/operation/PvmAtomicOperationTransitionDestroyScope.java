@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.pvm.runtime.operation;
 
-import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import jakarta.annotation.Nullable;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;

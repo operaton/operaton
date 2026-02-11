@@ -27,7 +27,7 @@ require('angular-mocks');
 var module = angular.mock.module;
 var inject = angular.mock.inject;
 
-describe('cam-common CamPaginationController', function() {
+describe('cam-common CamPaginationController', function () {
   var search;
   var paginationUtils;
   var exposeScopeProperties;
@@ -36,14 +36,14 @@ describe('cam-common CamPaginationController', function() {
 
   beforeEach(module(drdCommon.name));
 
-  beforeEach(inject(function($controller) {
+  beforeEach(inject(function ($controller) {
     $scope = {
       pages: 'pages',
-      onPaginationChange: sinon.spy()
+      onPaginationChange: sinon.spy(),
     };
     search = 'search';
     paginationUtils = {
-      initializePaginationInController: sinon.spy()
+      initializePaginationInController: sinon.spy(),
     };
     exposeScopeProperties = sinon.spy();
 
@@ -51,25 +51,25 @@ describe('cam-common CamPaginationController', function() {
       $scope: $scope,
       search: search,
       paginationUtils: paginationUtils,
-      exposeScopeProperties: exposeScopeProperties
+      exposeScopeProperties: exposeScopeProperties,
     });
   }));
 
-  it('should initialize pagination', function() {
+  it('should initialize pagination', function () {
     expect(paginationUtils.initializePaginationInController.calledOnce).to.eql(
-      true
+      true,
     );
   });
 
-  it('should expose total and pages scope properties', function() {
+  it('should expose total and pages scope properties', function () {
     expect(
-      exposeScopeProperties.calledWith($scope, instance, ['total', 'pages'])
+      exposeScopeProperties.calledWith($scope, instance, ['total', 'pages']),
     ).to.eql(true);
   });
 
-  it('should fire initial pages change', function() {
+  it('should fire initial pages change', function () {
     expect($scope.onPaginationChange.calledWith({pages: $scope.pages})).to.eql(
-      true
+      true,
     );
   });
 });

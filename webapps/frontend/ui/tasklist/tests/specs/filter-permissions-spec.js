@@ -23,29 +23,29 @@ var setupFile = require('./filter-permissions-setup');
 var dashboardPage = require('../pages/dashboard');
 var editModalPage = dashboardPage.taskFilters.editFilterPage;
 
-describe('Tasklist Filter Permissions Spec', function() {
-  describe('the permissions page', function() {
-    before(function() {
-      return testHelper(setupFile.setup1, function() {
+describe('Tasklist Filter Permissions Spec', function () {
+  describe('the permissions page', function () {
+    before(function () {
+      return testHelper(setupFile.setup1, function () {
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('admin', 'admin');
       });
     });
 
-    beforeEach(function() {
+    beforeEach(function () {
       dashboardPage.taskFilters.selectFilter(0);
       dashboardPage.taskFilters.editFilter(0);
       editModalPage.selectPanelByKey('permission');
     });
 
-    afterEach(function() {
+    afterEach(function () {
       editModalPage.closeFilter();
     });
 
-    it('should contain elements', function() {
+    it('should contain elements', function () {
       // given
       expect(editModalPage.permissionHelpText()).to.eventually.eql(
-        'This section is aimed to set read permissions for the filter.'
+        'This section is aimed to set read permissions for the filter.',
       );
       expect(editModalPage.accessibleByAllUsersCheckBox().isSelected()).to
         .eventually.be.false;
@@ -53,7 +53,7 @@ describe('Tasklist Filter Permissions Spec', function() {
         .true;
     });
 
-    it('should make filter accessible for all users', function() {
+    it('should make filter accessible for all users', function () {
       // given
       expect(editModalPage.accessibleByAllUsersCheckBox().isSelected()).to
         .eventually.be.false;
@@ -66,7 +66,7 @@ describe('Tasklist Filter Permissions Spec', function() {
         .eventually.be.true;
     });
 
-    it('should allow to add a permission for users', function() {
+    it('should allow to add a permission for users', function () {
       // when
       editModalPage.addPermission('user', 'franz');
 
@@ -74,7 +74,7 @@ describe('Tasklist Filter Permissions Spec', function() {
       expect(editModalPage.getPermissionType()).to.eventually.eql('user');
     });
 
-    it('should allow to add a permission for groups', function() {
+    it('should allow to add a permission for groups', function () {
       // when
       editModalPage.addPermission('group', 'marketing');
 
@@ -82,7 +82,7 @@ describe('Tasklist Filter Permissions Spec', function() {
       expect(editModalPage.getPermissionType()).to.eventually.eql('group');
     });
 
-    it('should keep entered data when switching accordion tab', function() {
+    it('should keep entered data when switching accordion tab', function () {
       // given
       editModalPage.addPermission('user', 'hubert');
 
@@ -95,18 +95,18 @@ describe('Tasklist Filter Permissions Spec', function() {
       expect(editModalPage.getPermissionId(0)).to.eventually.eql('hubert');
     });
 
-    it('should validate unique permissions', function() {
+    it('should validate unique permissions', function () {
       // when
       editModalPage.addPermission('group', 'sales');
       editModalPage.addPermission('group', 'sales');
 
       // then
       expect(editModalPage.permissionIdHelpText()).to.eventually.eql(
-        'Given group has already read permissions'
+        'Given group has already read permissions',
       );
     });
 
-    it('should allow to remove permissions', function() {
+    it('should allow to remove permissions', function () {
       // given
       editModalPage.addPermission('user', 'franz');
       editModalPage.addPermission('user', 'hubert');
@@ -122,20 +122,20 @@ describe('Tasklist Filter Permissions Spec', function() {
     });
   });
 
-  describe('assign permissions', function() {
-    describe('create user permission', function() {
-      before(function() {
-        return testHelper(setupFile.setup1, function() {
+  describe('assign permissions', function () {
+    describe('create user permission', function () {
+      before(function () {
+        return testHelper(setupFile.setup1, function () {
           dashboardPage.navigateToWebapp('Tasklist');
           dashboardPage.authentication.userLogin('admin', 'admin');
         });
       });
 
-      afterEach(function() {
+      afterEach(function () {
         editModalPage.logout();
       });
 
-      it('should save new permission', function() {
+      it('should save new permission', function () {
         // given
         dashboardPage.taskFilters.selectFilter(0);
         dashboardPage.taskFilters.editFilter(0);
@@ -148,31 +148,31 @@ describe('Tasklist Filter Permissions Spec', function() {
         editModalPage.saveFilter();
       });
 
-      it('should validate permission', function() {
+      it('should validate permission', function () {
         // when
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('test', 'test');
 
         // then
         expect(dashboardPage.taskFilters.filterName(0)).to.eventually.include(
-          'Empty Filter'
+          'Empty Filter',
         );
       });
     });
 
-    describe('create group permission', function() {
-      before(function() {
-        return testHelper(setupFile.setup1, function() {
+    describe('create group permission', function () {
+      before(function () {
+        return testHelper(setupFile.setup1, function () {
           dashboardPage.navigateToWebapp('Tasklist');
           dashboardPage.authentication.userLogin('admin', 'admin');
         });
       });
 
-      afterEach(function() {
+      afterEach(function () {
         editModalPage.logout();
       });
 
-      it('should save new permission', function() {
+      it('should save new permission', function () {
         // given
         dashboardPage.taskFilters.selectFilter(0);
         dashboardPage.taskFilters.editFilter(0);
@@ -185,31 +185,31 @@ describe('Tasklist Filter Permissions Spec', function() {
         editModalPage.saveFilter();
       });
 
-      it('should validate permission', function() {
+      it('should validate permission', function () {
         // when
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('juri', 'juri');
 
         // then
         expect(dashboardPage.taskFilters.filterName(0)).to.eventually.include(
-          'Empty Filter'
+          'Empty Filter',
         );
       });
     });
 
-    describe('make filter accessible for all user', function() {
-      before(function() {
-        return testHelper(setupFile.setup1, function() {
+    describe('make filter accessible for all user', function () {
+      before(function () {
+        return testHelper(setupFile.setup1, function () {
           dashboardPage.navigateToWebapp('Tasklist');
           dashboardPage.authentication.userLogin('admin', 'admin');
         });
       });
 
-      afterEach(function() {
+      afterEach(function () {
         editModalPage.logout();
       });
 
-      it('should select accessible checkbox', function() {
+      it('should select accessible checkbox', function () {
         // given
         dashboardPage.taskFilters.selectFilter(0);
         dashboardPage.taskFilters.editFilter(0);
@@ -222,14 +222,14 @@ describe('Tasklist Filter Permissions Spec', function() {
         editModalPage.saveFilter();
       });
 
-      it('should validate permission', function() {
+      it('should validate permission', function () {
         // when
         dashboardPage.navigateToWebapp('Tasklist');
         dashboardPage.authentication.userLogin('test', 'test');
 
         // then
         expect(dashboardPage.taskFilters.filterName(0)).to.eventually.include(
-          'Empty Filter'
+          'Empty Filter',
         );
       });
     });

@@ -31,22 +31,20 @@ require('angular-translate');
 var testModule = angular.module('testModule', [debugModule.name]);
 testModule.controller('testController', [
   '$scope',
-  function(
-    $scope
-  ) {
+  function ($scope) {
     $scope.varToDebug = {
       something: {
         to: {
-          debug: new Date()
-        }
+          debug: new Date(),
+        },
       },
-      array: 'abcdef'.split('')
+      array: 'abcdef'.split(''),
     };
 
     $scope.info = 'testInfo';
-  }]);
+  },
+]);
 
-
-angular.element(document).ready(function() {
+angular.element(document).ready(function () {
   angular.bootstrap(document.body, [testModule.name, 'pascalprecht.translate']);
 });

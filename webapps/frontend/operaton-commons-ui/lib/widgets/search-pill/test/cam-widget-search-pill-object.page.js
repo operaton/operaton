@@ -22,45 +22,48 @@
 
 var InlineField = require('../../inline-field/test/cam-widget-inline-field-object.page.js');
 
-var Pill = function(node) {
+var Pill = function (node) {
   this.node = node;
 };
 
-Pill.prototype.typeElement = function() {
+Pill.prototype.typeElement = function () {
   return this.node.element(by.css('.type-field'));
 };
 
-Pill.prototype.nameElement = function() {
+Pill.prototype.nameElement = function () {
   return this.node.element(by.css('.name-field'));
 };
 
-Pill.prototype.operatorElement = function() {
+Pill.prototype.operatorElement = function () {
   return this.node.element(by.css('.operator-field'));
 };
 
-Pill.prototype.valueElement = function() {
+Pill.prototype.valueElement = function () {
   return this.node.element(by.css('.value-field'));
 };
 
-Pill.prototype.typeField = function() {
+Pill.prototype.typeField = function () {
   return new InlineField(this.typeElement());
 };
-Pill.prototype.nameField = function() {
+Pill.prototype.nameField = function () {
   return new InlineField(this.nameElement());
 };
-Pill.prototype.operatorField = function() {
+Pill.prototype.operatorField = function () {
   return new InlineField(this.operatorElement());
 };
-Pill.prototype.valueField = function() {
+Pill.prototype.valueField = function () {
   return new InlineField(this.valueElement());
 };
-Pill.prototype.isValid = function() {
-  return this.node.element(by.className('search-label')).getAttribute('class').then(function(classes) {
-    return classes.split(' ').indexOf('invalid') === -1;
-  });
+Pill.prototype.isValid = function () {
+  return this.node
+    .element(by.className('search-label'))
+    .getAttribute('class')
+    .then(function (classes) {
+      return classes.split(' ').indexOf('invalid') === -1;
+    });
 };
 
-Pill.prototype.removeButton = function() {
+Pill.prototype.removeButton = function () {
   return this.node.element(by.css('.remove-search'));
 };
 

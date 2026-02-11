@@ -36,7 +36,7 @@ const baseImportPath = `${appRoot}/app/admin/`;
 
 requirejs.config({
   baseUrl: baseImportPath,
-  urlArgs: `bust=${CAMUNDA_VERSION}` // eslint-disable-line
+  urlArgs: `bust=${CAMUNDA_VERSION}`, // eslint-disable-line
 });
 
 const loadConfig = (async function () {
@@ -87,7 +87,7 @@ define('operaton-admin-bootstrap', function () {
         node.setAttribute('rel', 'stylesheet');
         node.setAttribute(
           'href',
-          plugin.location + `/plugin.css?bust=${CAMUNDA_VERSION}` // eslint-disable-line
+          plugin.location + `/plugin.css?bust=${CAMUNDA_VERSION}`, // eslint-disable-line
         );
         document.head.appendChild(node);
       });

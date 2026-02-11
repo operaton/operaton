@@ -1,10 +1,14 @@
 <span ng-if="!leftSide" ng-transclude></span>
-<a ng-if="!noTooltip"
-   uib-tooltip="{{ tooltipText }}"
-   tooltip-append-to-body="true"
-   ng-class="{'copy-ok': copyStatus === true, 'copy-error': copyStatus === false}"
-   class="glyphicon {{icon}}"></a>
-<a ng-if="noTooltip"
-   ng-class="{'copy-ok': copyStatus === true, 'copy-error': copyStatus === false}"
-   class="glyphicon {{icon}}"></a>
+<a
+  ng-if="!noTooltip"
+  uib-tooltip="{{ tooltipText }}"
+  tooltip-append-to-body="true"
+  ng-class="{'copy-ok': copyStatus === true, 'copy-error': copyStatus === false}"
+  class="glyphicon {{icon}}"
+></a>
+<a
+  ng-if="noTooltip"
+  ng-class="{'copy-ok': copyStatus === true, 'copy-error': copyStatus === false}"
+  class="glyphicon {{icon}}"
+></a>
 <span ng-if="leftSide" ng-transclude></span>

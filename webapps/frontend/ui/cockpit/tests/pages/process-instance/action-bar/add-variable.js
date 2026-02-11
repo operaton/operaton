@@ -22,17 +22,17 @@ var ActionBar = require('./../../action-bar');
 module.exports = ActionBar.extend({
   barRepeater: 'tabProvider in processInstanceActions',
 
-  addVariableButton: function() {
+  addVariableButton: function () {
     return this.getActionButton(2);
   },
 
-  modalHeading: function() {
+  modalHeading: function () {
     return element(by.css('.modal-header'));
   },
 
-  variableNameInput: function(inputValue) {
+  variableNameInput: function (inputValue) {
     var inputField = element(by.css('.modal-body .variable-name')).element(
-      by.model('newVariable.name')
+      by.model('newVariable.name'),
     );
 
     if (arguments.length !== 0) {
@@ -41,21 +41,21 @@ module.exports = ActionBar.extend({
     return inputField;
   },
 
-  variableTypeDropdown: function(type) {
+  variableTypeDropdown: function (type) {
     return element(by.css('.modal-body [ng-model="newVariable.type"]')).element(
-      by.cssContainingText('option', type)
+      by.cssContainingText('option', type),
     );
   },
 
-  variableTypeDropdownSelectedItem: function() {
+  variableTypeDropdownSelectedItem: function () {
     return element(
-      by.css('.modal-body [ng-model="newVariable.type"] [selected="selected"]')
+      by.css('.modal-body [ng-model="newVariable.type"] [selected="selected"]'),
     );
   },
 
-  variableValueInput: function(inputValue) {
+  variableValueInput: function (inputValue) {
     var inputField = element(by.css('.modal-body .variable-value')).element(
-      by.model('variable.value')
+      by.model('variable.value'),
     );
 
     if (arguments.length !== 0) {
@@ -64,27 +64,27 @@ module.exports = ActionBar.extend({
     return inputField;
   },
 
-  variableValueRadio: function(value) {
+  variableValueRadio: function (value) {
     if (value) {
       return element(
-        by.css('.modal-body .variable-value .radio [ng-value="true"]')
+        by.css('.modal-body .variable-value .radio [ng-value="true"]'),
       ).click();
     } else {
       return element(
-        by.css('.modal-body .variable-value .radio [ng-value="false"]')
+        by.css('.modal-body .variable-value .radio [ng-value="false"]'),
       ).click();
     }
   },
 
-  variableValueInfoLabel: function() {
+  variableValueInfoLabel: function () {
     return element(
-      by.css('.modal-body .variable-value .invalid:not(.ng-hide)')
+      by.css('.modal-body .variable-value .invalid:not(.ng-hide)'),
     );
   },
 
-  objectNameInput: function(inputValue) {
+  objectNameInput: function (inputValue) {
     var inputField = element(by.css('.modal-body .variable-value')).element(
-      by.model('variable.valueInfo.objectTypeName')
+      by.model('variable.valueInfo.objectTypeName'),
     );
 
     if (arguments.length !== 0) {
@@ -93,9 +93,9 @@ module.exports = ActionBar.extend({
     return inputField;
   },
 
-  objectFormatInput: function(inputValue) {
+  objectFormatInput: function (inputValue) {
     var inputField = element(by.css('.modal-body .variable-value')).element(
-      by.model('variable.valueInfo.serializationDataFormat')
+      by.model('variable.valueInfo.serializationDataFormat'),
     );
 
     if (arguments.length !== 0) {
@@ -104,9 +104,9 @@ module.exports = ActionBar.extend({
     return inputField;
   },
 
-  objectValueInput: function(inputValue) {
+  objectValueInput: function (inputValue) {
     var inputField = element(by.css('.modal-body .variable-value')).element(
-      by.model('variable.value')
+      by.model('variable.value'),
     );
 
     if (arguments.length !== 0) {
@@ -115,34 +115,34 @@ module.exports = ActionBar.extend({
     return inputField;
   },
 
-  addButton: function() {
+  addButton: function () {
     return element(by.css('[ng-click="save()"]'));
   },
 
-  okButton: function() {
+  okButton: function () {
     return element(by.css('.modal-footer [ng-click="close()"]:not(.ng-hide)'));
   },
 
-  addVariable: function(name, type, value) {
+  addVariable: function (name, type, value) {
     var that = this;
 
-    var submitFct = function() {
+    var submitFct = function () {
       that
         .addButton()
         .click()
-        .then(function() {
+        .then(function () {
           that.okButton().click();
         });
     };
 
     this.addVariableButton()
       .click()
-      .then(function() {
+      .then(function () {
         that.variableNameInput(name);
         that
           .variableTypeDropdown(type)
           .click()
-          .then(function() {
+          .then(function () {
             if (value) {
               if (typeof value === 'object') {
                 that.objectNameInput(value.objectTypeName);
@@ -158,5 +158,5 @@ module.exports = ActionBar.extend({
             }
           });
       });
-  }
+  },
 });

@@ -1,4 +1,4 @@
-@import "~operaton-commons-ui/resources/scss/shared/_mixins.scss";
+@import '~operaton-commons-ui/resources/scss/shared/_mixins.scss';
 
 @mixin link($color, $hover-color) {
   a {
@@ -7,7 +7,11 @@
     &:hover,
     &:focus {
       // Mapping @link-hover-decoration to BS4 standard
-      text-decoration: if(variable-exists(link-hover-decoration), $link-hover-decoration, none);
+      text-decoration: if(
+        variable-exists(link-hover-decoration),
+        $link-hover-decoration,
+        none
+      );
       outline: none;
       color: $hover-color;
     }
@@ -17,15 +21,15 @@
 @mixin content-link($bg: $body-bg) {
   text-decoration: none;
   box-shadow:
-          0 -2px 0 0 $bg inset,
-          0 -3px 0 0 currentColor inset;
+    0 -2px 0 0 $bg inset,
+    0 -3px 0 0 currentColor inset;
   text-shadow:
-          -3px 1px 0 $bg,
-          3px 1px 0 $bg,
-          -2px 1px 0 $bg,
-          2px 1px 0 $bg,
-          -1px 1px 0 $bg,
-          1px 1px 0 $bg;
+    -3px 1px 0 $bg,
+    3px 1px 0 $bg,
+    -2px 1px 0 $bg,
+    2px 1px 0 $bg,
+    -1px 1px 0 $bg,
+    1px 1px 0 $bg;
 }
 
 @mixin link-no-decoration() {

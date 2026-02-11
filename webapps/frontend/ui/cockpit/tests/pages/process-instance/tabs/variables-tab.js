@@ -19,8 +19,8 @@
 
 var Table = require('./../../table');
 
-var Variable = require('operaton-commons-ui/lib/widgets/variables-table/test/cam-widget-variables-table.page')
-  .Variable;
+var Variable =
+  require('operaton-commons-ui/lib/widgets/variables-table/test/cam-widget-variables-table.page').Variable;
 
 module.exports = Table.extend({
   tabRepeater: 'tabProvider in processInstanceTabs',
@@ -30,54 +30,54 @@ module.exports = Table.extend({
 
   //------------------------------------------------------------------
 
-  variableAt: function(index) {
+  variableAt: function (index) {
     if (typeof index !== 'number') {
       return new Variable(index);
     }
     return new Variable(this.tableItem(index));
   },
 
-  variableByName: function(varName) {
+  variableByName: function (varName) {
     return new Variable(
       element(by.cssContainingText('td.col-name', varName)).element(
-        by.xpath('..')
-      )
+        by.xpath('..'),
+      ),
     );
   },
 
   //------------------------------------------------------------------
 
-  variableName: function(item) {
+  variableName: function (item) {
     return this.tableItem(item, '.col-name');
   },
 
-  variableValue: function(item) {
+  variableValue: function (item) {
     return this.tableItem(item, '.col-value');
   },
 
-  variableType: function(item) {
+  variableType: function (item) {
     return this.tableItem(item, '.col-type');
   },
 
-  variableScope: function(item) {
+  variableScope: function (item) {
     return this.tableItem(item, '.col-scope');
   },
 
-  variableScopeLink: function(item) {
+  variableScopeLink: function (item) {
     return this.variableScope(item).element(by.css('a'));
   },
 
-  inlineEditRow: function() {
+  inlineEditRow: function () {
     return element(by.css('.editing'));
   },
 
-  editVariableButton: function(item) {
+  editVariableButton: function (item) {
     return this.variableValue(item).element(
-      by.css('[ng-click="editVariable(variable)"]')
+      by.css('[ng-click="editVariable(variable)"]'),
     );
   },
 
-  editVariableInput: function(inputValue) {
+  editVariableInput: function (inputValue) {
     var inputField = this.inlineEditRow().element(by.model('variable.value'));
 
     if (arguments.length !== 0) inputField.sendKeys(inputValue);
@@ -85,39 +85,37 @@ module.exports = Table.extend({
     return inputField;
   },
 
-  editVariableType: function(type) {
-    this.inlineEditRow()
-      .element(by.cssContainingText('option', type))
-      .click();
+  editVariableType: function (type) {
+    this.inlineEditRow().element(by.cssContainingText('option', type)).click();
   },
 
-  editVariableErrorText: function() {
+  editVariableErrorText: function () {
     return this.inlineEditRow()
       .element(by.css('.invalid:not(.ng-hide)'))
       .getText();
   },
 
-  editVariableConfirmButton: function() {
+  editVariableConfirmButton: function () {
     return this.inlineEditRow().element(
-      by.css('.inline-edit-footer .btn-primary')
+      by.css('.inline-edit-footer .btn-primary'),
     );
   },
 
-  editVariableCancelButton: function() {
+  editVariableCancelButton: function () {
     return this.inlineEditRow().element(
-      by.css('[ng-click="closeInPlaceEditing(variable)"]')
+      by.css('[ng-click="closeInPlaceEditing(variable)"]'),
     );
   },
 
-  deleteVariable: function(index) {
+  deleteVariable: function (index) {
     var varObj;
     if (typeof index === 'string') {
       varObj = element(by.cssContainingText('td.col-name', index)).element(
-        by.xpath('..')
+        by.xpath('..'),
       );
     } else {
       varObj = this.variableAt(index);
     }
     return varObj.deleteButton().click();
-  }
+  },
 });

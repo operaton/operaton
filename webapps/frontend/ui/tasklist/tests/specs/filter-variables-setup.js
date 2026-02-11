@@ -30,9 +30,9 @@ module.exports = {
         query: {},
         properties: {
           priority: 5,
-          description: 'Filter without variable definitions'
+          description: 'Filter without variable definitions',
         },
-        resourceType: 'Task'
+        resourceType: 'Task',
       },
       {
         name: 'Variable Filter',
@@ -43,12 +43,12 @@ module.exports = {
           variables: [
             {
               name: 'myTestVar',
-              label: 'my test variable'
-            }
-          ]
+              label: 'my test variable',
+            },
+          ],
         },
-        resourceType: 'Task'
-      }
+        resourceType: 'Task',
+      },
     ]),
 
     operation('deployment', 'create', [
@@ -57,10 +57,10 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
@@ -70,18 +70,18 @@ module.exports = {
         variables: {
           myTestVar: {
             value: 1.5,
-            type: 'Double'
+            type: 'Double',
           },
           myString: {
             value: '123 dfg',
-            type: 'String'
+            type: 'String',
           },
           extraLong: {
             value: '1234567890987654321',
-            type: 'Long'
-          }
-        }
-      }
-    ])
-  )
+            type: 'Long',
+          },
+        },
+      },
+    ]),
+  ),
 };

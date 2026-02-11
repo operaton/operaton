@@ -3,7 +3,11 @@
 
 @include three-cols-layout-base();
 @include three-cols-layout-handheld();
-@include three-cols-layout-colors($column-left-bg, $column-center-bg, $column-right-bg);
+@include three-cols-layout-colors(
+  $column-left-bg,
+  $column-center-bg,
+  $column-right-bg
+);
 @include three-cols-layout-header();
 
 // S
@@ -194,8 +198,8 @@
     }
 
     [cam-widget-search] {
-      margin: 0 calc(#{$grid-gutter-width} * 0.5) calc(#{$grid-gutter-width} * 0.5)
-      calc(#{$grid-gutter-width} * 0.5);
+      margin: 0 calc(#{$grid-gutter-width} * 0.5)
+        calc(#{$grid-gutter-width} * 0.5) calc(#{$grid-gutter-width} * 0.5);
     }
   }
 

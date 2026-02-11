@@ -26,8 +26,8 @@ module.exports = {
   setup1: combine(
     operation('user', 'delete', [
       {
-        id: 'admin'
-      }
-    ])
-  )
+        id: 'admin',
+      },
+    ]),
+  ),
 };

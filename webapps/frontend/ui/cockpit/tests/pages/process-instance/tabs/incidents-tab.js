@@ -25,21 +25,21 @@ module.exports = Table.extend({
   tabLabel: 'Incidents',
   tableRepeater: 'incident in incidents',
 
-  incidentMessage: function(item) {
+  incidentMessage: function (item) {
     return this.tableItem(item, '.message');
   },
 
-  incidentActivity: function(item) {
+  incidentActivity: function (item) {
     return this.tableItem(item, '.activity');
   },
 
-  incidentAction: function(item) {
+  incidentAction: function (item) {
     return this.tableItem(item, '.action');
   },
 
-  incidentRetryAction: function(item) {
+  incidentRetryAction: function (item) {
     return this.incidentAction(item).element(
-      by.css('.action-button[tooltip~="Retries"][tooltip$="Tasks"]')
+      by.css('.action-button[tooltip~="Retries"][tooltip$="Tasks"]'),
     );
-  }
+  },
 });

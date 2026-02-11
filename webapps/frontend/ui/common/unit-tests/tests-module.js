@@ -24,15 +24,15 @@ var localConfMock = require('./local-conf-mock');
 var ngModule = angular.module('common-tests-module', []);
 
 ngModule.value('camAPI', createCamApiMock());
-ngModule.provider('Views', function() {
+ngModule.provider('Views', function () {
   return ViewsProvider;
 });
 
-ngModule.provider('$route', function() {
+ngModule.provider('$route', function () {
   return $routeProvider;
 });
 
-ngModule.factory('localConf', function() {
+ngModule.factory('localConf', function () {
   return localConfMock;
 });
 

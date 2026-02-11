@@ -37,8 +37,8 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     loggingPrefs: {
-      browser: 'ALL'
-    }
+      browser: 'ALL',
+    },
   },
 
   // ----- What tests to run -----
@@ -46,7 +46,7 @@ exports.config = {
   // Spec patterns are relative to the location of the spec file. They may
   // include glob patterns.
   specs: [
-    '../../{admin,tasklist,cockpit,welcome}/tests/specs/' + tested + '-spec.js'
+    '../../{admin,tasklist,cockpit,welcome}/tests/specs/' + tested + '-spec.js',
   ],
 
   // A base URL for your application under test. Calls to protractor.get()
@@ -69,6 +69,6 @@ exports.config = {
     timeout: 15000,
     colors: false,
     reporter: 'mocha-multi',
-    slow: 3000
-  }
+    slow: 3000,
+  },
 };

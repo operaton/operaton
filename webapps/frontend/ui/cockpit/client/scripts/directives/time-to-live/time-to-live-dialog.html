@@ -22,9 +22,7 @@
   </div>
 
   <div ng-show="!status" class="">
-
     <form class="">
-
       <div class="row pb-4">
         <div class="col-12">
           {{ 'TIME_TO_LIVE_POPUP_SUBTITLE' | translate }}
@@ -34,38 +32,58 @@
       <div class="row" style="">
         <label class="col-sm-5 col-4 text-right" for="ttl_dialog_input_remove">
           {{ 'TIME_TO_LIVE_POPUP_RADIO_CLEAR' | translate }}
-          <span class="glyphicon glyphicon-question-sign" tooltip-placement="right"
-                uib-tooltip="{{ 'TIME_TO_LIVE_POPUP_RADIO_CLEAR_TOOLTIP' | translate }}"></span>
+          <span
+            class="glyphicon glyphicon-question-sign"
+            tooltip-placement="right"
+            uib-tooltip="{{ 'TIME_TO_LIVE_POPUP_RADIO_CLEAR_TOOLTIP' | translate }}"
+          ></span>
         </label>
         <div class="col-sm-7 col-8">
-          <input id="ttl_dialog_input_remove" type="radio" ng-model="mode" ng-value="'REMOVE'"/>
+          <input
+            id="ttl_dialog_input_remove"
+            type="radio"
+            ng-model="mode"
+            ng-value="'REMOVE'"
+          />
         </div>
       </div>
 
       <div class="row justify-content-start" style="">
         <label class="col-sm-5 col-4 text-right" for="ttl_dialog_input_value">
           {{ 'TIME_TO_LIVE_POPUP_RADIO_UPDATE' | translate }}
-          <span class="glyphicon glyphicon-question-sign" tooltip-placement="right"
-                uib-tooltip="{{ 'TIME_TO_LIVE_POPUP_RADIO_UPDATE_TOOLTIP' | translate }}"></span>
+          <span
+            class="glyphicon glyphicon-question-sign"
+            tooltip-placement="right"
+            uib-tooltip="{{ 'TIME_TO_LIVE_POPUP_RADIO_UPDATE_TOOLTIP' | translate }}"
+          ></span>
         </label>
         <div class="col-sm-7 col-8">
-          <input id="ttl_dialog_input_value" type="radio" ng-model="mode" ng-value="'UPDATE'"/>
+          <input
+            id="ttl_dialog_input_value"
+            type="radio"
+            ng-model="mode"
+            ng-value="'UPDATE'"
+          />
         </div>
       </div>
-      <div ng-show="mode === 'UPDATE'" class="row" style="margin-bottom: 10px;">
+      <div ng-show="mode === 'UPDATE'" class="row" style="margin-bottom: 10px">
         <label class="col-sm-5 col-4 text-right">
           {{ 'DECISION_DEFINITION_HISTORY_TIME_TO_LIVE' | translate }}
         </label>
         <div class="col-sm-7 col-8">
           <label>
-            <input type="number" min="0" step="1" ng-model="ttl" ng-change="validate()" />
+            <input
+              type="number"
+              min="0"
+              step="1"
+              ng-model="ttl"
+              ng-change="validate()"
+            />
             {{ 'TIME_TO_LIVE_DAYS' | translate }}
           </label>
         </div>
       </div>
-
     </form>
-
   </div>
 
   <div ng-show="status === 'SUCCESS'" class="container-fluid">
@@ -83,29 +101,48 @@
 
 <div class="modal-footer">
   <div ng-show="!status" class="text-right">
-    <button class="btn btn-link" ng-click="close(null)">{{ 'CLOSE' | translate }}</button>
-    <button type="submit"
-            class="btn btn-primary"
-            ng-click="save()"
-            ng-disabled="!isValid()">{{ 'SAVE' | translate }}
+    <button class="btn btn-link" ng-click="close(null)">
+      {{ 'CLOSE' | translate }}
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      ng-click="save()"
+      ng-disabled="!isValid()"
+    >
+      {{ 'SAVE' | translate }}
     </button>
   </div>
 
-  <div ng-show="status === 'SUCCESS' && showLinkToBatchProcess" class="text-right">
-    <button class="btn btn-link" ng-click="close(true)">{{ 'CLOSE' | translate }}</button>
-    <button type="submit"
-            class="btn btn-primary"
-            ng-click="openBatchOperation()">
+  <div
+    ng-show="status === 'SUCCESS' && showLinkToBatchProcess"
+    class="text-right"
+  >
+    <button class="btn btn-link" ng-click="close(true)">
+      {{ 'CLOSE' | translate }}
+    </button>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      ng-click="openBatchOperation()"
+    >
       {{ 'TIME_TO_LIVE_POPUP_BTN_OPEN' | translate}}
     </button>
   </div>
 
-  <div ng-show="status === 'SUCCESS' && !showLinkToBatchProcess" class="text-right">
-    <button class="btn btn-primary" ng-click="close(true)">{{ 'OK' | translate }}</button>
+  <div
+    ng-show="status === 'SUCCESS' && !showLinkToBatchProcess"
+    class="text-right"
+  >
+    <button class="btn btn-primary" ng-click="close(true)">
+      {{ 'OK' | translate }}
+    </button>
   </div>
 
   <div ng-show="status === 'FAIL'" class="text-right">
-    <button class="btn btn-primary" ng-click="close(null)">{{ 'OK' | translate }}</button>
+    <button class="btn btn-primary" ng-click="close(null)">
+      {{ 'OK' | translate }}
+    </button>
   </div>
 </div>
 <!-- / CE - operaton-bpm-webapp/ui/cockpit/client/scripts/components/ttl/time-to-live-dialog.html -->

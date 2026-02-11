@@ -29,54 +29,54 @@ var fragment1 = combine(
       password: 'MobyDick',
       firstName: 'John',
       lastName: 'Bonham',
-      email: 'john.bonham@led-zeppelin.com'
+      email: 'john.bonham@led-zeppelin.com',
     },
     {
       id: 'keith',
       password: 'abcdefg',
       firstName: 'Keith',
       lastName: 'Moon',
-      email: 'keith.moon@the-who.com'
+      email: 'keith.moon@the-who.com',
     },
     {
       id: 'ringo',
       password: 'cam123',
       firstName: 'Ringo',
       lastName: 'Starr',
-      email: 'ringo.starr@the-beatles.com'
-    }
+      email: 'ringo.starr@the-beatles.com',
+    },
   ]),
 
   operation('group', 'create', [
     {
       id: 'accounting',
       name: 'Accounting',
-      type: 'WORKFLOW'
+      type: 'WORKFLOW',
     },
     {
       id: 'sales',
       name: 'Sales',
-      type: 'WORKFLOW'
-    }
+      type: 'WORKFLOW',
+    },
   ]),
 
   operation('tenant', 'create', [
     {
       id: 'tenantOne',
-      name: 'Tenant One'
+      name: 'Tenant One',
     },
     {
       id: 'tenantTwo',
-      name: 'Tenant Two'
-    }
+      name: 'Tenant Two',
+    },
   ]),
 
   operation('group', 'createMember', [
     {
       id: 'accounting',
-      userId: 'ringo'
-    }
-  ])
+      userId: 'ringo',
+    },
+  ]),
 );
 
 var fragment2 = combine(
@@ -84,14 +84,14 @@ var fragment2 = combine(
     {
       id: '/göäüp_name',
       name: '/üöäüöäü/',
-      type: 'testgroup/üäö'
+      type: 'testgroup/üäö',
     },
     {
       id: '\\göäüp_name',
       name: '\\üöäüöäü\\',
-      type: 'testgroup\\üäö'
-    }
-  ])
+      type: 'testgroup\\üäö',
+    },
+  ]),
 );
 
 var userBatch = [];
@@ -100,7 +100,7 @@ for (var i = 0; i < 45; i++) {
     id: 'user' + i,
     password: 'cam123',
     firstName: 'abc',
-    lastName: 'def'
+    lastName: 'def',
   });
 }
 
@@ -109,5 +109,5 @@ var fragment3 = combine(operation('user', 'create', userBatch));
 module.exports = {
   setup1: fragment1,
   setup2: combine(fragment1, fragment2),
-  setup3: fragment3
+  setup3: fragment3,
 };

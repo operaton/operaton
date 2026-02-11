@@ -23,5 +23,5 @@ var externalTasksModule = require('../index');
 
 module.exports = angular.module(
   'cockpit.plugin.external-tasks.process-instance-runtime-tab.tests',
-  [testModule.name, externalTasksModule.name]
+  [testModule.name, externalTasksModule.name],
 );

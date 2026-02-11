@@ -30,10 +30,10 @@ module.exports = {
         query: {},
         properties: {
           priority: 5,
-          description: 'Filter without variable definitions'
+          description: 'Filter without variable definitions',
         },
-        resourceType: 'Task'
-      }
+        resourceType: 'Task',
+      },
     ]),
 
     operation('user', 'create', [
@@ -41,23 +41,23 @@ module.exports = {
         id: 'test',
         firstName: 'test',
         lastName: 'test',
-        password: 'test'
-      }
+        password: 'test',
+      },
     ]),
 
     operation('group', 'create', [
       {
         id: 'sales',
         name: 'Sales',
-        type: 'WORKFLOW'
-      }
+        type: 'WORKFLOW',
+      },
     ]),
 
     operation('group', 'createMember', [
       {
         id: 'sales',
-        userId: 'test'
-      }
+        userId: 'test',
+      },
     ]),
 
     operation('authorization', 'create', [
@@ -67,7 +67,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 0,
-        resourceId: 'tasklist'
+        resourceId: 'tasklist',
       },
       {
         type: 1,
@@ -75,7 +75,7 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 5,
-        resourceId: '*'
+        resourceId: '*',
       },
       {
         type: 1,
@@ -83,8 +83,8 @@ module.exports = {
         userId: 'test',
         groupId: null,
         resourceType: 7,
-        resourceId: '*'
-      }
+        resourceId: '*',
+      },
     ]),
 
     operation('deployment', 'create', [
@@ -93,17 +93,17 @@ module.exports = {
         files: [
           {
             name: 'user-tasks.bpmn',
-            content: readResource('user-tasks.bpmn')
-          }
-        ]
-      }
+            content: readResource('user-tasks.bpmn'),
+          },
+        ],
+      },
     ]),
 
     operation('process-definition', 'start', [
       {
         key: 'user-tasks',
-        businessKey: 123
-      }
+        businessKey: 123,
+      },
     ]),
 
     operation('task', 'create', [
@@ -113,7 +113,7 @@ module.exports = {
         owner: 'test',
         delegationState: 'PENDING',
         due: '2016-08-30T10:01:59',
-        followUp: '2019-08-25T11:00:01'
+        followUp: '2019-08-25T11:00:01',
       },
       {
         id: '2',
@@ -121,29 +121,29 @@ module.exports = {
         owner: 'test',
         delegationState: 'PENDING',
         due: '2014-08-30T10:01:59',
-        followUp: '2014-08-25T11:00:01'
-      }
+        followUp: '2014-08-25T11:00:01',
+      },
     ]),
 
     operation('task', 'assignee', [
       {
         taskId: '2',
-        userId: 'test'
-      }
+        userId: 'test',
+      },
     ]),
 
     operation('task', 'identityLinksAdd', [
       {
         id: '1',
         groupId: 'sales',
-        type: 'candidate'
+        type: 'candidate',
       },
       {
         id: '2',
         groupId: 'sales',
-        type: 'candidate'
-      }
-    ])
+        type: 'candidate',
+      },
+    ]),
   ),
 
   multiTenancySetup: combine(
@@ -153,10 +153,10 @@ module.exports = {
         query: {},
         properties: {
           priority: 5,
-          description: 'Filter'
+          description: 'Filter',
         },
-        resourceType: 'Task'
-      }
+        resourceType: 'Task',
+      },
     ]),
 
     operation('task', 'create', [
@@ -164,19 +164,19 @@ module.exports = {
         id: '1',
         name: 'Task 1',
         tenantId: 'tenant1',
-        owner: 'test'
+        owner: 'test',
       },
       {
         id: '2',
         name: 'Task 2',
         tenantId: 'tenant2',
-        owner: 'test'
+        owner: 'test',
       },
       {
         id: '3',
         name: 'Task 3',
-        owner: 'test'
-      }
-    ])
-  )
+        owner: 'test',
+      },
+    ]),
+  ),
 };

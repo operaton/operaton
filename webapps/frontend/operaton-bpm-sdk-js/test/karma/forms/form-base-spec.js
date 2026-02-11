@@ -22,45 +22,46 @@ var CamSDK = require('../../../lib/index-browser.js');
 var request = require('superagent');
 var mockConfig = require('../../superagent-mock-config');
 
-describe('The form', function() {
+describe('The form', function () {
   /* global jQuery: false */
   var $ = jQuery;
   var $simpleFormDoc;
   var camForm, camClient, procDef;
 
   var superagentMock;
-  before(function() {
+  before(function () {
     superagentMock = require('superagent-mock')(request, mockConfig);
   });
 
-  after(function() {
+  after(function () {
     superagentMock.unset();
   });
 
-  before(function(done) {
+  before(function (done) {
     jQuery.ajax('/base/test/karma/forms/form-simple.html', {
-      success: function(data) {
-        $simpleFormDoc = jQuery('<div id="test-form">'+ data +'</div>');
+      success: function (data) {
+        $simpleFormDoc = jQuery('<div id="test-form">' + data + '</div>');
         // the following lines allow to see the form in the browser
         var _$top = $(top.document);
         _$top.find('#test-form').remove();
         _$top.find('#browsers').after($simpleFormDoc);
 
         camClient = new CamSDK.Client({
-          apiUri: 'engine-rest/engine'
+          apiUri: 'engine-rest/engine',
         });
 
         done();
       },
 
-      error: done
+      error: done,
     });
   });
 
-
-  it('needs a process definition', function(done) {
-    camClient.resource('process-definition').list({}, function(err, result) {
-      if (err) { return done(err); }
+  it('needs a process definition', function (done) {
+    camClient.resource('process-definition').list({}, function (err, result) {
+      if (err) {
+        return done(err);
+      }
 
       procDef = result.items.pop();
 
@@ -70,40 +71,39 @@ describe('The form', function() {
     });
   });
 
-  it('gets the process definition with a promise', function() {
-    return camClient.resource('process-definition').list({}).then(
-      function(result) {
+  it('gets the process definition with a promise', function () {
+    return camClient
+      .resource('process-definition')
+      .list({})
+      .then(function (result) {
         procDef = result.items.pop();
         expect(procDef.id).to.be.ok;
-      }
-    );
+      });
   });
 
-
-  it('exists globally', function() {
+  it('exists globally', function () {
     expect(CamSDK.Form).to.be.a('function');
   });
 
-
-  it('has a DOM library', function() {
+  it('has a DOM library', function () {
     expect(CamSDK.Form.$).to.be.ok;
   });
 
-
-  it('initialize', function(done) {
+  it('initialize', function (done) {
     expect(camClient).to.be.ok;
 
     function prepare() {
       camForm = new CamSDK.Form({
-        client:               camClient,
-        processDefinitionId:  procDef.id,
-        formElement:          $simpleFormDoc.find('form[cam-form]'),
-        done:                 function() {window.setTimeout(initialized);}
+        client: camClient,
+        processDefinitionId: procDef.id,
+        formElement: $simpleFormDoc.find('form[cam-form]'),
+        done: function () {
+          window.setTimeout(initialized);
+        },
       });
     }
 
     function initialized() {
-
       expect(camForm.formFieldHandlers).to.be.an('array');
 
       expect(camForm.fields).to.be.an('array');
@@ -120,17 +120,18 @@ describe('The form', function() {
     expect(prepare).not.to.throw();
   });
 
-
-  it('submits the form', function(done) {
-
+  it('submits the form', function (done) {
     function formSubmitted(err, result) {
-      if (err) { return done(err); }
+      if (err) {
+        return done(err);
+      }
 
       expect(result.links).to.be.ok;
 
       expect(result.definitionId).to.eql(procDef.id);
 
-      var stored = mockConfig.mockedData.processInstanceFormVariables[result.id];
+      var stored =
+        mockConfig.mockedData.processInstanceFormVariables[result.id];
       expect(stored).to.be.ok;
 
       expect(stored.stringVar).to.be.ok;
@@ -143,7 +144,9 @@ describe('The form', function() {
     }
 
     function formReady(err) {
-      if (err) { return done(err); }
+      if (err) {
+        return done(err);
+      }
 
       var $el = $simpleFormDoc.find('input[type="text"]');
 
@@ -154,34 +157,35 @@ describe('The form', function() {
       camForm.submit(formSubmitted);
     }
 
-
     camForm = new CamSDK.Form({
-      client:               camClient,
-      processDefinitionId:  procDef.id,
-      formElement:          $simpleFormDoc.find('form[cam-form]'),
-      done:                 function() {window.setTimeout(formReady);}
+      client: camClient,
+      processDefinitionId: procDef.id,
+      formElement: $simpleFormDoc.find('form[cam-form]'),
+      done: function () {
+        window.setTimeout(formReady);
+      },
     });
   });
 
-
-  describe('choices field', function() {
-    before(function(done) {
+  describe('choices field', function () {
+    before(function (done) {
       camForm = new CamSDK.Form({
-        client:               camClient,
-        processDefinitionId:  procDef.id,
-        formElement:          $simpleFormDoc.find('form[cam-form]'),
-        done:                 done
+        client: camClient,
+        processDefinitionId: procDef.id,
+        formElement: $simpleFormDoc.find('form[cam-form]'),
+        done: done,
       });
     });
 
-    describe('single choice', function() {
+    describe('single choice', function () {
       var $select;
-      beforeEach(function() {
-        $select = $simpleFormDoc.find('select[cam-variable-name]:not([multiple])');
+      beforeEach(function () {
+        $select = $simpleFormDoc.find(
+          'select[cam-variable-name]:not([multiple])',
+        );
       });
 
-
-      it('can be `select`', function() {
+      it('can be `select`', function () {
         expect($select.length).to.eql(1);
 
         expect(camForm.formFieldHandlers).to.be.an('array');
@@ -190,15 +194,13 @@ describe('The form', function() {
       });
     });
 
-
-    describe('multiple choices', function() {
+    describe('multiple choices', function () {
       var $select;
-      before(function() {
+      before(function () {
         $select = $simpleFormDoc.find('select[cam-variable-name][multiple]');
       });
 
-
-      it('can be `select[multiple]`', function() {
+      it('can be `select[multiple]`', function () {
         expect($select.length).to.eql(1);
 
         expect(camForm.formFieldHandlers).to.be.an('array');

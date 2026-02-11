@@ -25,13 +25,13 @@ var setupFile = require('./tasklist-search-setup');
 
 var page = require('../pages/dashboard');
 
-describe('Tasklist Search', function() {
-  describe('the tasklist page', function() {
-    before(function() {
+describe('Tasklist Search', function () {
+  describe('the tasklist page', function () {
+    before(function () {
       return testHelper(setupFile.setup1);
     });
 
-    it('should display all tasks initially', function() {
+    it('should display all tasks initially', function () {
       // when
       page.navigateToWebapp('Tasklist');
       page.authentication.userLogin('test', 'test');
@@ -41,25 +41,25 @@ describe('Tasklist Search', function() {
       expect(
         page.taskList.taskSearch
           .variableTypeDropdown('Process Variable')
-          .isPresent()
+          .isPresent(),
       ).to.eventually.be.false;
     });
 
-    describe('add a search pill', function() {
-      it('should use wrong variable type and find nothing', function() {
+    describe('add a search pill', function () {
+      it('should use wrong variable type and find nothing', function () {
         // when
         page.taskList.taskSearch.createSearch(
           'Process Variable',
           'testVar',
           '=',
-          '48'
+          '48',
         );
 
         //then
         expect(page.taskList.taskList().count()).to.eventually.eql(0);
       });
 
-      it('should change variable type and find one task', function() {
+      it('should change variable type and find one task', function () {
         // when
         page.taskList.taskSearch.changeType(0, 'Task Variable');
 
@@ -68,7 +68,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 2');
       });
 
-      it('should change operator and find two tasks', function() {
+      it('should change operator and find two tasks', function () {
         // when
         page.taskList.taskSearch.changeOperator(0, '<=');
 
@@ -77,14 +77,14 @@ describe('Tasklist Search', function() {
       });
     });
 
-    describe('add more search pills', function() {
-      it('should add Date search and find one task', function() {
+    describe('add more search pills', function () {
+      it('should add Date search and find one task', function () {
         // when
         page.taskList.taskSearch.createSearch(
           'Task Variable',
           'testDate',
           'before',
-          '2013-11-30T10:03:00'
+          '2013-11-30T10:03:00',
         );
 
         // then
@@ -92,7 +92,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 2');
       });
 
-      it('should change operator and find two task', function() {
+      it('should change operator and find two task', function () {
         // when
         page.taskList.taskSearch.changeOperator(1, 'after');
 
@@ -101,13 +101,13 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(1)).to.eventually.eql('Task 1');
       });
 
-      it('should add String search and find Task 2', function() {
+      it('should add String search and find Task 2', function () {
         // when
         page.taskList.taskSearch.createSearch(
           'Task Variable',
           'testString',
           'like',
-          'hans'
+          'hans',
         );
 
         // then
@@ -115,10 +115,10 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 2');
       });
 
-      it('should keep search pills after page refresh', function(done) {
+      it('should keep search pills after page refresh', function (done) {
         // when
-        browser.getCurrentUrl().then(function(url) {
-          browser.get(url).then(function() {
+        browser.getCurrentUrl().then(function (url) {
+          browser.get(url).then(function () {
             browser.sleep(500);
 
             // then
@@ -130,9 +130,9 @@ describe('Tasklist Search', function() {
         });
       });
 
-      it('should change String search value and find Task 1', function(done) {
+      it('should change String search value and find Task 1', function (done) {
         // when
-        page.taskList.taskSearch.changeValue(2, "'4711'").then(function() {
+        page.taskList.taskSearch.changeValue(2, "'4711'").then(function () {
           // then
           expect(page.taskList.taskList().count()).to.eventually.eql(1);
           expect(page.taskList.taskName(0)).to.eventually.eql('Task 1');
@@ -142,8 +142,8 @@ describe('Tasklist Search', function() {
       });
     });
 
-    describe('remove search pill', function() {
-      it('should remove String search', function() {
+    describe('remove search pill', function () {
+      it('should remove String search', function () {
         // when
         page.taskList.taskSearch.deleteSearch(2);
 
@@ -151,7 +151,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskList().count()).to.eventually.eql(2);
       });
 
-      it('should remove Integer search', function() {
+      it('should remove Integer search', function () {
         // when
         page.taskList.taskSearch.deleteSearch(0);
 
@@ -159,7 +159,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskList().count()).to.eventually.eql(2);
       });
 
-      it('should remove Date search', function() {
+      it('should remove Date search', function () {
         // when
         page.taskList.taskSearch.deleteSearch(0);
 
@@ -168,14 +168,14 @@ describe('Tasklist Search', function() {
       });
     });
 
-    describe('search by label', function() {
-      it('should find tasks by label', function() {
+    describe('search by label', function () {
+      it('should find tasks by label', function () {
         // when
         page.taskList.taskSearch.createSearch(
           'Task Variable',
           'Test Variable',
           '=',
-          '42'
+          '42',
         );
 
         //then
@@ -183,7 +183,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 1');
       });
 
-      it('should remove label search', function() {
+      it('should remove label search', function () {
         // when
         page.taskList.taskSearch.deleteSearch(0);
 
@@ -192,8 +192,8 @@ describe('Tasklist Search', function() {
       });
     });
 
-    describe('search task properties', function() {
-      it('should search by name like per default', function() {
+    describe('search task properties', function () {
+      it('should search by name like per default', function () {
         // when
         page.taskList.taskSearch.searchInputField().click();
         page.taskList.taskSearch
@@ -205,7 +205,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 1');
       });
 
-      it('should not find a task if search is changed to equal', function() {
+      it('should not find a task if search is changed to equal', function () {
         // when
         page.taskList.taskSearch.changeOperator(0, '=');
 
@@ -213,7 +213,7 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskList().count()).to.eventually.eql(0);
       });
 
-      it('should find tasks by assignee', function() {
+      it('should find tasks by assignee', function () {
         // when
         page.taskList.taskSearch.deleteSearch(0);
         page.taskList.taskSearch.createSearch('Assignee', 'test', '=');
@@ -223,18 +223,18 @@ describe('Tasklist Search', function() {
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 3');
       });
 
-      it('should allow to use expressions', function() {
+      it('should allow to use expressions', function () {
         // when
         page.taskList.taskSearch.deleteSearch(0);
         page.taskList.taskSearch.createSearch(
           'Assignee',
           '${ currentUser() }',
-          '='
+          '=',
         );
 
         // then
         expect(page.taskList.taskListInfoText()).to.eventually.contain(
-          'Failure: Loading the list of tasks finished with failures.'
+          'Failure: Loading the list of tasks finished with failures.',
         );
         /*expect(page.taskList.taskList().count()).to.eventually.eql(1);
         expect(page.taskList.taskName(0)).to.eventually.eql('Task 3');*/
@@ -242,16 +242,16 @@ describe('Tasklist Search', function() {
     });
   });
 
-  describe('multi tenancy', function() {
-    before(function() {
-      return testHelper(setupFile.multiTenancySetup, function() {
+  describe('multi tenancy', function () {
+    before(function () {
+      return testHelper(setupFile.multiTenancySetup, function () {
         page.navigateToWebapp('Tasklist');
         page.authentication.userLogin('admin', 'admin');
         page.taskList.taskSorting.changeSorting(0, 'Task name');
       });
     });
 
-    it('should search by tenant id', function() {
+    it('should search by tenant id', function () {
       // when
       page.taskList.taskSearch.createSearch('Tenant ID', 'tenant1');
 
@@ -260,7 +260,7 @@ describe('Tasklist Search', function() {
       expect(page.taskList.taskName(0)).to.eventually.eql('Task 1');
     });
 
-    it('should search by tenant ids', function() {
+    it('should search by tenant ids', function () {
       // when
       page.taskList.taskSearch.changeValue(0, 'tenant1,tenant2');
 
@@ -270,7 +270,7 @@ describe('Tasklist Search', function() {
       expect(page.taskList.taskName(1)).to.eventually.eql('Task 1');
     });
 
-    it('should search tasks without tenant id', function() {
+    it('should search tasks without tenant id', function () {
       // when
       page.taskList.taskSearch.deleteSearch(0);
       page.taskList.taskSearch.createSearch('Without Tenant ID');

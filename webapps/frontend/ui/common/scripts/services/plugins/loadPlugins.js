@@ -53,15 +53,15 @@ module.exports = async function loadPlugins(config, appName) {
   const fetchers = customScripts.map((url) =>
     // eslint-disable-next-line
     _import(
-      baseImportPath + withSuffix(url, '.js') + `?bust=${CAMUNDA_VERSION}` // eslint-disable-line
+      baseImportPath + withSuffix(url, '.js') + `?bust=${CAMUNDA_VERSION}`, // eslint-disable-line
     ).catch(
-      e => console.error(e) // eslint-disable-line
+      (e) => console.error(e), // eslint-disable-line
     ),
   );
 
   fetchers.push(
     ...JARScripts.map((url) => {
-      return _import(url).catch(e => console.error(e)); // eslint-disable-line
+      return _import(url).catch((e) => console.error(e)); // eslint-disable-line
     }),
   );
 

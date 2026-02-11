@@ -105,10 +105,10 @@ if (require.main === module) {
     },
     parseResults(
       PRODUCTION_LICENSES,
-      () => console.log('Production packages license check passed'),// eslint-disable-line
+      () => console.log('Production packages license check passed'), // eslint-disable-line
       (warn) => {
-        console.warn('License check did not pass');// eslint-disable-line
-        console.warn(warn);// eslint-disable-line
+        console.warn('License check did not pass'); // eslint-disable-line
+        console.warn(warn); // eslint-disable-line
         process.exit(1);
       },
     ),
@@ -121,10 +121,10 @@ if (require.main === module) {
     },
     parseResults(
       [...PRODUCTION_LICENSES, ...DEV_LICENSES],
-      () => console.log('Development packages license check passed'),// eslint-disable-line
+      () => console.log('Development packages license check passed'), // eslint-disable-line
       (warn) => {
-        console.warn('License check did not pass');// eslint-disable-line
-        console.warn(warn);// eslint-disable-line
+        console.warn('License check did not pass'); // eslint-disable-line
+        console.warn(warn); // eslint-disable-line
         process.exit(1);
       },
     ),

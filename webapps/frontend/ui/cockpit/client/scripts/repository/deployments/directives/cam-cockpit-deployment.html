@@ -1,7 +1,9 @@
 <div class="actions">
-  <view ng-repeat="deploymentPlugin in deploymentPlugins"
-        provider="deploymentPlugin"
-        vars="deploymentVars" />
+  <view
+    ng-repeat="deploymentPlugin in deploymentPlugins"
+    provider="deploymentPlugin"
+    vars="deploymentVars"
+  />
 </div>
 
 <h4 class="name">{{ deployment.name || deployment.id }}</h4>
@@ -11,15 +13,20 @@
   <dd class="time">{{ deployment.deploymentTime | camDate:'normal' }}</dd>
 
   <dt>{{ 'REPOSITORY_DEPLOYMENTS_SOURCE' | translate }}</dt>
-  <dd class="source"
-      ng-if="deployment.source">{{ deployment.source }}</dd>
-  <dd class="source undefined"
-      ng-if="!deployment.source"><span class="null-value">{{ 'REPOSITORY_DEPLOYMENTS_NULL' | translate }}</span>
+  <dd class="source" ng-if="deployment.source">{{ deployment.source }}</dd>
+  <dd class="source undefined" ng-if="!deployment.source">
+    <span class="null-value"
+      >{{ 'REPOSITORY_DEPLOYMENTS_NULL' | translate }}</span
+    >
+  </dd>
 
   <dt>{{ 'REPOSITORY_DEPLOYMENTS_TENANT_ID' | translate }}</dt>
-  <dd class="tenant-id"
-      ng-if="deployment.tenantId">{{ deployment.tenantId }}</dd>
-  <dd class="tenant-id"
-      ng-if="!deployment.tenantId"><span class="null-value">{{ 'REPOSITORY_DEPLOYMENTS_NULL' | translate }}</span></dd>
-
+  <dd class="tenant-id" ng-if="deployment.tenantId">
+    {{ deployment.tenantId }}
+  </dd>
+  <dd class="tenant-id" ng-if="!deployment.tenantId">
+    <span class="null-value"
+      >{{ 'REPOSITORY_DEPLOYMENTS_NULL' | translate }}</span
+    >
+  </dd>
 </dl>

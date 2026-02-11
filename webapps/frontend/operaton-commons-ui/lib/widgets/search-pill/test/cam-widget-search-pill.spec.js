@@ -22,25 +22,26 @@
 var path = require('path');
 var projectRoot = path.resolve(__dirname, '../../../../');
 var pkg = require(path.join(projectRoot, 'package.json'));
-var pageUrl = 'http://localhost:' + pkg.gruntConfig.connectPort +
-              '/lib/widgets/search-pill/test/cam-widget-search-pill.spec.html';
+var pageUrl =
+  'http://localhost:' +
+  pkg.gruntConfig.connectPort +
+  '/lib/widgets/search-pill/test/cam-widget-search-pill.spec.html';
 
 var page = require('./cam-widget-search-pill.page.js');
 
-describe('Search Pill', function() {
-  before(function() {
+describe('Search Pill', function () {
+  before(function () {
     browser.get(pageUrl);
   });
   var pill;
 
-  describe('Basic', function() {
-    before(function() {
+  describe('Basic', function () {
+    before(function () {
       browser.get(pageUrl + '#basic');
       pill = page.pill('pill1');
     });
 
-    it('should open a dropdown with available types', function() {
-
+    it('should open a dropdown with available types', function () {
       var typeField = pill.typeField();
 
       typeField.click();
@@ -56,8 +57,7 @@ describe('Search Pill', function() {
       expect(typeField.text()).to.eventually.eql('Foo');
     });
 
-    it('should open a dropdown with available operators', function() {
-
+    it('should open a dropdown with available operators', function () {
       var operatorField = pill.operatorField();
 
       operatorField.click();
@@ -72,8 +72,7 @@ describe('Search Pill', function() {
       expect(operatorField.text()).to.eventually.eql('!=');
     });
 
-    it('should allow text input', function() {
-
+    it('should allow text input', function () {
       var valueField = pill.valueField();
 
       valueField.click();
@@ -82,13 +81,18 @@ describe('Search Pill', function() {
 
       // workaround to check focus
       // see: http://stackoverflow.com/a/22756276
-      browser.driver.switchTo().activeElement().getAttribute('ng-model').then(function(focusElement) {
-        expect(valueField.inputField().getAttribute('ng-model')).to.eventually.eql(focusElement);
-      });
+      browser.driver
+        .switchTo()
+        .activeElement()
+        .getAttribute('ng-model')
+        .then(function (focusElement) {
+          expect(
+            valueField.inputField().getAttribute('ng-model'),
+          ).to.eventually.eql(focusElement);
+        });
     });
 
-    it('should execute the update function and set the valid property', function() {
-
+    it('should execute the update function and set the valid property', function () {
       expect(pill.isValid()).to.eventually.eql(false);
 
       pill.typeField().click();
@@ -102,14 +106,13 @@ describe('Search Pill', function() {
     });
   });
 
-  describe('Date Enforced', function() {
-    before(function() {
+  describe('Date Enforced', function () {
+    before(function () {
       browser.get(pageUrl + '#enforcing-dates');
       pill = page.pill('pill2');
     });
 
-    it('should open a datepicker for the value field', function() {
-
+    it('should open a datepicker for the value field', function () {
       var valueField = pill.valueField();
 
       valueField.click();
@@ -118,8 +121,7 @@ describe('Search Pill', function() {
       expect(valueField.datepicker().isPresent()).to.eventually.eql(true);
     });
 
-    it('should format a date', function() {
-
+    it('should format a date', function () {
       var valueField = pill.valueField();
 
       valueField.click();
@@ -131,14 +133,13 @@ describe('Search Pill', function() {
     });
   });
 
-  describe('Date Allowed', function() {
-    before(function() {
+  describe('Date Allowed', function () {
+    before(function () {
       browser.get(pageUrl + '#allow-dates');
       pill = page.pill('pill3');
     });
 
-    it('should offer a calendar option', function() {
-
+    it('should offer a calendar option', function () {
       var valueField = pill.valueField();
 
       valueField.click();
@@ -152,14 +153,13 @@ describe('Search Pill', function() {
     });
   });
 
-  describe('Extended', function() {
-    beforeEach(function() {
+  describe('Extended', function () {
+    beforeEach(function () {
       browser.get(pageUrl + '#extended');
       pill = page.pill('pill4');
     });
 
-    it('should provide a name field', function() {
-
+    it('should provide a name field', function () {
       expect(pill.nameField().isPresent()).to.eventually.eql(false);
 
       pill.typeField().click();
@@ -169,8 +169,7 @@ describe('Search Pill', function() {
       expect(pill.nameField().isPresent()).to.eventually.eql(true);
     });
 
-    it('name field should be text input', function() {
-
+    it('name field should be text input', function () {
       pill.typeField().click();
       pill.typeField().click();
       pill.typeField().dropdownOption(1).click();
@@ -181,20 +180,25 @@ describe('Search Pill', function() {
 
       // workaround to check focus
       // see: http://stackoverflow.com/a/22756276
-      browser.driver.switchTo().activeElement().getAttribute('ng-model').then(function(focusElement) {
-        expect(pill.nameField().inputField().getAttribute('ng-model')).to.eventually.eql(focusElement);
-      });
+      browser.driver
+        .switchTo()
+        .activeElement()
+        .getAttribute('ng-model')
+        .then(function (focusElement) {
+          expect(
+            pill.nameField().inputField().getAttribute('ng-model'),
+          ).to.eventually.eql(focusElement);
+        });
     });
-
   });
 
-  describe('Potential Names', function() {
-    beforeEach(function() {
+  describe('Potential Names', function () {
+    beforeEach(function () {
       browser.get(pageUrl + '#names');
       pill = page.pill('pill5');
     });
 
-    it('name field should be dropdown', function() {
+    it('name field should be dropdown', function () {
       var nameField = pill.nameField();
 
       nameField.click();
@@ -203,40 +207,41 @@ describe('Search Pill', function() {
       expect(nameField.inputField().isPresent()).to.eventually.eql(true);
 
       expect(nameField.dropdown().isPresent()).to.eventually.eql(true);
-      expect(nameField.dropdownOption(0).getText()).to.eventually.eql('Value 1 (name1)');
-      expect(nameField.dropdownOption(1).getText()).to.eventually.eql('Value 2 (name2)');
+      expect(nameField.dropdownOption(0).getText()).to.eventually.eql(
+        'Value 1 (name1)',
+      );
+      expect(nameField.dropdownOption(1).getText()).to.eventually.eql(
+        'Value 2 (name2)',
+      );
 
       nameField.dropdownOption(0).click();
 
       expect(nameField.dropdown().isPresent()).to.eventually.eql(false);
       expect(nameField.text()).to.eventually.eql('Value 1 (name1)');
     });
-
   });
 
-  describe('Basic Attribute', function() {
-    beforeEach(function() {
+  describe('Basic Attribute', function () {
+    beforeEach(function () {
       browser.get(pageUrl + '#basic-attribute');
       pill = page.pill('pill6');
     });
 
-    it('should only contain a type element', function() {
+    it('should only contain a type element', function () {
       expect(pill.typeElement().isPresent()).to.eventually.eql(true);
       expect(pill.nameElement().isPresent()).to.eventually.eql(false);
       expect(pill.operatorElement().isPresent()).to.eventually.eql(false);
       expect(pill.valueElement().isPresent()).to.eventually.eql(false);
-
     });
-
   });
 
-  describe('Options Attribute', function() {
-    beforeEach(function() {
+  describe('Options Attribute', function () {
+    beforeEach(function () {
       browser.get(pageUrl + '#basic-attribute');
       pill = page.pill('pill8');
     });
 
-    it('value field should be dropdown', function() {
+    it('value field should be dropdown', function () {
       var valueField = pill.valueField();
 
       valueField.click();
@@ -255,5 +260,4 @@ describe('Search Pill', function() {
       expect(valueField.text()).to.eventually.eql('yes');
     });
   });
-
 });

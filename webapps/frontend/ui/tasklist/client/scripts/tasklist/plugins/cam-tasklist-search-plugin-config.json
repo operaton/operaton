@@ -72,7 +72,8 @@
           "value": "in"
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "processInstanceBusinessKey",
         "value": "PROCESS_INSTANCE_BUSINESS_KEY"
@@ -81,14 +82,15 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
-
       ],
-      "enforceString" : true
-    },    {
+      "enforceString": true
+    },
+    {
       "id": {
         "key": "processDefinitionId",
         "value": "PROCESS_DEFINITION_ID"
@@ -99,7 +101,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "processDefinitionKey",
         "value": "PROCESS_DEFINITION_KEY"
@@ -110,7 +113,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "processDefinitionName",
         "value": "PROCESS_DEFINITION_NAME"
@@ -119,13 +123,14 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
-
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "executionId",
         "value": "EXECUTION_ID"
@@ -136,7 +141,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "caseInstanceId",
         "value": "CASE_INSTANCE_ID"
@@ -147,7 +153,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "caseInstanceBusinessKey",
         "value": "CASE_INSTANCE_BUSINESS_KEY"
@@ -156,13 +163,14 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
-
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "caseDefinitionId",
         "value": "CASE_DEFINITION_ID"
@@ -173,7 +181,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "caseDefinitionKey",
         "value": "CASE_DEFINITION_KEY"
@@ -184,7 +193,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "caseDefinitionName",
         "value": "CASE_DEFINITION_NAME"
@@ -193,13 +203,14 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
-
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "caseExecutionId",
         "value": "CASE_EXECUTION_ID"
@@ -210,7 +221,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "assignee",
         "value": "ASSIGNEE"
@@ -219,12 +231,14 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "owner",
         "value": "OWNER"
@@ -235,7 +249,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "candidateGroup",
         "value": "CANDIDATE_GROUP"
@@ -246,7 +261,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "candidateUser",
         "value": "CANDIDATE_USER"
@@ -257,7 +273,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "involvedUser",
         "value": "INVOLVED_USER"
@@ -268,7 +285,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "taskDefinitionKey",
         "value": "TASK_DEFINITION_KEY"
@@ -277,12 +295,14 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "name",
         "value": "NAME"
@@ -291,14 +311,15 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
-
       ],
       "default": true
-    },    {
+    },
+    {
       "id": {
         "key": "description",
         "value": "DESCRIPTION"
@@ -307,13 +328,14 @@
         {
           "key": "Like",
           "value": "LIKE"
-        },{
+        },
+        {
           "key": "eq",
           "value": "="
         }
-
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "priority",
         "value": "PRIORITY"
@@ -332,7 +354,8 @@
           "value": "SEARCH_GREATER_THAN_EQUALS"
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "due",
         "value": "DUE_DATE"
@@ -349,13 +372,15 @@
       ],
       "allowDates": true,
       "enforceDates": true
-    },  {
+    },
+    {
       "id": {
         "key": "withoutDueDate",
         "value": "WITHOUT_DUE_DATE"
       },
-      "basic": true      
-    },    {
+      "basic": true
+    },
+    {
       "id": {
         "key": "followUp",
         "value": "FOLLOW_UP_DATE"
@@ -372,7 +397,8 @@
       ],
       "allowDates": true,
       "enforceDates": true
-    },    {
+    },
+    {
       "id": {
         "key": "created",
         "value": "CREATION_DATE"
@@ -389,7 +415,8 @@
       ],
       "allowDates": true,
       "enforceDates": true
-    },    {
+    },
+    {
       "id": {
         "key": "delegationState",
         "value": "DELEGATION_STATE"
@@ -400,7 +427,8 @@
           "value": "="
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "tenantIdIn",
         "value": "TENANT_ID"
@@ -411,7 +439,8 @@
           "value": "in"
         }
       ]
-    },    {
+    },
+    {
       "id": {
         "key": "withoutTenantId",
         "value": "WITHOUT_TENANT_ID"

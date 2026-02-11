@@ -1,7 +1,7 @@
 [cam-widget-variable] {
   // styles to display
   &[display] {
-  @include make-row();
+    @include make-row();
 
     > .type,
     > .name,
@@ -11,14 +11,14 @@
     }
 
     > .type {
-    @include make-col-ready();
-    @include make-col(2)
+      @include make-col-ready();
+      @include make-col(2);
     }
 
     > .name,
     > .value {
-    @include make-col-ready();
-    @include make-col(5)
+      @include make-col-ready();
+      @include make-col(5);
     }
 
     > .type,
@@ -50,7 +50,7 @@
       margin: 0;
       position: relative;
 
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         width: auto;
         position: absolute;
         top: 50%;

@@ -27,7 +27,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.operaton.bpm.engine.impl.QueryOperator;
-import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.TaskQueryImpl;
 import org.operaton.bpm.engine.impl.TaskQueryVariableValue;
 import org.operaton.bpm.engine.impl.persistence.entity.SuspensionState;
@@ -323,7 +322,7 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
     return query;
   }
 
-  protected static final Map<String, BiConsumer<TaskQueryImpl, JsonObject>> handlers = Map.<String, BiConsumer<TaskQueryImpl, JsonObject>>ofEntries(
+  protected static final Map<String, BiConsumer<TaskQueryImpl, JsonObject>> handlers = Map.ofEntries(
       Map.entry(TASK_ID, (query, json) -> query.taskId(JsonUtil.getString(json, TASK_ID))),
       Map.entry(TASK_ID_IN, (query, json) -> query.taskIdIn(getArray(JsonUtil.getArray(json, TASK_ID_IN)))),
       Map.entry(NAME, (query, json) -> query.taskName(JsonUtil.getString(json, NAME))),
@@ -341,18 +340,50 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
       Map.entry(ASSIGNEE_NOT_IN, (query, json) -> query.taskAssigneeNotIn(getArray(JsonUtil.getArray(json, ASSIGNEE_NOT_IN)))),
       Map.entry(INVOLVED_USER, (query, json) -> query.taskInvolvedUser(JsonUtil.getString(json, INVOLVED_USER))),
       Map.entry(OWNER, (query, json) -> query.taskOwner(JsonUtil.getString(json, OWNER))),
-      Map.entry(ASSIGNED, (query, json) -> { if (JsonUtil.getBoolean(json, ASSIGNED)) query.taskAssigned(); }),
-      Map.entry(UNASSIGNED, (query, json) -> { if (JsonUtil.getBoolean(json, UNASSIGNED)) query.taskUnassigned(); }),
+      Map.entry(ASSIGNED, (query, json) -> {
+        if (JsonUtil.getBoolean(json, ASSIGNED)) {
+          query.taskAssigned();
+        }
+      }),
+      Map.entry(UNASSIGNED, (query, json) -> {
+        if (JsonUtil.getBoolean(json, UNASSIGNED)) {
+          query.taskUnassigned();
+        }
+      }),
       Map.entry(DELEGATION_STATE, (query, json) -> query.taskDelegationState(DelegationState.valueOf(JsonUtil.getString(json, DELEGATION_STATE)))),
       Map.entry(CANDIDATE_USER, (query, json) -> query.taskCandidateUser(JsonUtil.getString(json, CANDIDATE_USER))),
       Map.entry(CANDIDATE_GROUP, (query, json) -> query.taskCandidateGroup(JsonUtil.getString(json, CANDIDATE_GROUP))),
       Map.entry(CANDIDATE_GROUP_LIKE, (query, json) -> query.taskCandidateGroupLike(JsonUtil.getString(json, CANDIDATE_GROUP_LIKE))),
-      Map.entry(CANDIDATE_GROUPS, (query, json) -> { if (!json.has(CANDIDATE_USER) && !json.has(CANDIDATE_GROUP)) query.taskCandidateGroupIn(getList(JsonUtil.getArray(json, CANDIDATE_GROUPS))); }),
-      Map.entry(WITH_CANDIDATE_GROUPS, (query, json) -> { if (JsonUtil.getBoolean(json, WITH_CANDIDATE_GROUPS)) query.withCandidateGroups(); }),
-      Map.entry(WITHOUT_CANDIDATE_GROUPS, (query, json) -> { if (JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_GROUPS)) query.withoutCandidateGroups(); }),
-      Map.entry(WITH_CANDIDATE_USERS, (query, json) -> { if (JsonUtil.getBoolean(json, WITH_CANDIDATE_USERS)) query.withCandidateUsers(); }),
-      Map.entry(WITHOUT_CANDIDATE_USERS, (query, json) -> { if (JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_USERS)) query.withoutCandidateUsers(); }),
-      Map.entry(INCLUDE_ASSIGNED_TASKS, (query, json) -> { if (JsonUtil.getBoolean(json, INCLUDE_ASSIGNED_TASKS)) query.includeAssignedTasksInternal(); }),
+      Map.entry(CANDIDATE_GROUPS, (query, json) -> {
+        if (!json.has(CANDIDATE_USER) && !json.has(CANDIDATE_GROUP)) {
+          query.taskCandidateGroupIn(getList(JsonUtil.getArray(json, CANDIDATE_GROUPS)));
+        }
+      }),
+      Map.entry(WITH_CANDIDATE_GROUPS, (query, json) -> {
+        if (JsonUtil.getBoolean(json, WITH_CANDIDATE_GROUPS)) {
+          query.withCandidateGroups();
+        }
+      }),
+      Map.entry(WITHOUT_CANDIDATE_GROUPS, (query, json) -> {
+        if (JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_GROUPS)) {
+          query.withoutCandidateGroups();
+        }
+      }),
+      Map.entry(WITH_CANDIDATE_USERS, (query, json) -> {
+        if (JsonUtil.getBoolean(json, WITH_CANDIDATE_USERS)) {
+          query.withCandidateUsers();
+        }
+      }),
+      Map.entry(WITHOUT_CANDIDATE_USERS, (query, json) -> {
+        if (JsonUtil.getBoolean(json, WITHOUT_CANDIDATE_USERS)) {
+          query.withoutCandidateUsers();
+        }
+      }),
+      Map.entry(INCLUDE_ASSIGNED_TASKS, (query, json) -> {
+        if (JsonUtil.getBoolean(json, INCLUDE_ASSIGNED_TASKS)) {
+          query.includeAssignedTasksInternal();
+        }
+      }),
       Map.entry(PROCESS_INSTANCE_ID, (query, json) -> query.processInstanceId(JsonUtil.getString(json, PROCESS_INSTANCE_ID))),
       Map.entry(PROCESS_INSTANCE_ID_IN, (query, json) -> query.processInstanceIdIn(getArray(JsonUtil.getArray(json, PROCESS_INSTANCE_ID_IN)))),
       Map.entry(EXECUTION_ID, (query, json) -> query.executionId(JsonUtil.getString(json, EXECUTION_ID))),
@@ -385,9 +416,21 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
       Map.entry(FOLLOW_UP_BEFORE, (query, json) -> query.followUpBefore(new Date(JsonUtil.getLong(json, FOLLOW_UP_BEFORE)))),
       Map.entry(FOLLOW_UP_AFTER, (query, json) -> query.followUpAfter(new Date(JsonUtil.getLong(json, FOLLOW_UP_AFTER)))),
       Map.entry(FOLLOW_UP_NULL_ACCEPTED, (query, json) -> query.setFollowUpNullAccepted(JsonUtil.getBoolean(json, FOLLOW_UP_NULL_ACCEPTED))),
-      Map.entry(EXCLUDE_SUBTASKS, (query, json) -> { if (JsonUtil.getBoolean(json, EXCLUDE_SUBTASKS)) query.excludeSubtasks(); }),
-      Map.entry(SUSPENDED, (query, json) -> { if (JsonUtil.getBoolean(json, SUSPENDED)) query.suspended(); }),
-      Map.entry(ACTIVE, (query, json) -> { if (JsonUtil.getBoolean(json, ACTIVE)) query.active(); }),
+      Map.entry(EXCLUDE_SUBTASKS, (query, json) -> {
+        if (JsonUtil.getBoolean(json, EXCLUDE_SUBTASKS)) {
+          query.excludeSubtasks();
+        }
+      }),
+      Map.entry(SUSPENDED, (query, json) -> {
+        if (JsonUtil.getBoolean(json, SUSPENDED)) {
+          query.suspended();
+        }
+      }),
+      Map.entry(ACTIVE, (query, json) -> {
+        if (JsonUtil.getBoolean(json, ACTIVE)) {
+          query.active();
+        }
+      }),
       Map.entry(CASE_DEFINITION_KEY, (query, json) -> query.caseDefinitionKey(JsonUtil.getString(json, CASE_DEFINITION_KEY))),
       Map.entry(CASE_DEFINITION_ID, (query, json) -> query.caseDefinitionId(JsonUtil.getString(json, CASE_DEFINITION_ID))),
       Map.entry(CASE_DEFINITION_NAME, (query, json) -> query.caseDefinitionName(JsonUtil.getString(json, CASE_DEFINITION_NAME))),

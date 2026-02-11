@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.task.TaskQuery;
 /**
  * @author Sebastian Menski
  */
+@SuppressWarnings({"java:S1133", "java:S5738"}) // ORDER_BY will be removed
 public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
   private static final JsonLegacyQueryOrderingPropertyConverter LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER =
       new JsonLegacyQueryOrderingPropertyConverter();
@@ -297,6 +298,7 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
     return toObject(json, false);
   }
 
+  @SuppressWarnings("java:S3776")
   protected TaskQuery toObject(JsonObject json, boolean isOrQuery) {
     TaskQueryImpl query = new TaskQueryImpl();
     if (isOrQuery) {

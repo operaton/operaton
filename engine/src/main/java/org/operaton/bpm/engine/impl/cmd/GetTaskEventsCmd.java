@@ -24,7 +24,10 @@ import org.operaton.bpm.engine.task.Event;
 
 /**
  * @author Tom Baeyens
+ * @deprecated Event will be removed in a future version. With it, this class has to be removed as well.
  */
+@SuppressWarnings("java:S5738")
+@Deprecated(since = "1.1", forRemoval = true)
 public class GetTaskEventsCmd implements Command<List<Event>> {
   protected String taskId;
 

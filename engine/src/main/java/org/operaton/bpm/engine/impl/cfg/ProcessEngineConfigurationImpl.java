@@ -2355,6 +2355,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // history //////////////////////////////////////////////////////////////////
 
+  @SuppressWarnings("java:S5738") // HISTORY_VARIABLE will be removed in the future
   public void initHistoryLevel() {
     if (historyLevel != null) {
       setHistory(historyLevel.getName());

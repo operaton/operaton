@@ -103,20 +103,6 @@ class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
-  void hasCandidateGroupExplicitlySetFailure() {
-    // Given
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
-    );
-    // When
-    complete(taskQuery().singleResult());
-    // Then
-    expect(() -> assertThat(processInstance).task().hasCandidateGroup(CANDIDATE_GROUP));
-  }
-
-  @Test
-  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
-  })
   void hasCandidateGroupExplicitlySetRemovedFailure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(

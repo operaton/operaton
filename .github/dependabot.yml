@@ -117,7 +117,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 16
+    milestone: 17
     groups:
       httpcomponents5:
         patterns:
@@ -139,7 +139,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 16
+    milestone: 17
     groups:
       angular:
         patterns:
@@ -172,7 +172,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 16
+    milestone: 17
     groups:
       react:
         patterns:
@@ -186,7 +186,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:github-action"
-    milestone: 16
+    milestone: 17
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -194,5 +194,5 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 16
+    milestone: 17
 

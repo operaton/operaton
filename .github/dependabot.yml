@@ -60,10 +60,7 @@ updates:
           - "camunda-dmn-js"
           - "cmmn-js"
           - "dmn-js"
-          - "dmn-js-decision-table"
-          - "dmn-js-drd"
-          - "dmn-js-literal-expression"
-          - "dmn-js-shared"
+          - "dmn-js-*"
       eslint:
         patterns:
           - "eslint*"
@@ -162,10 +159,7 @@ updates:
           - "camunda-dmn-js"
           - "cmmn-js"
           - "dmn-js"
-          - "dmn-js-decision-table"
-          - "dmn-js-drd"
-          - "dmn-js-literal-expression"
-          - "dmn-js-shared"
+          - "dmn-js-*"
       eslint:
         patterns:
           - "eslint*"

@@ -32,7 +32,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-  "operaton.bpm.webapp.csrf.cookieName=myFancyCookieName"
+  "operaton.bpm.webapp.csrf.cookieName=myFancyCookieName",
+        ""
 })
 @DirtiesContext
 class CookieNameIT {
@@ -61,6 +62,7 @@ class CookieNameIT {
     // then
     assertThat(xsrfCookieValue).matches("myFancyCookieName=[A-Z0-9]{32};" +
         "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
+
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");
 
     assertThat(xsrfCookieValue).contains(xsrfTokenHeader);

@@ -30,6 +30,7 @@ public class CookieConfigurator {
   protected static final String ENABLE_SAME_SITE_PARAM = "enableSameSiteCookie";
   protected static final String SAME_SITE_OPTION_PARAM = "sameSiteCookieOption";
   protected static final String SAME_SITE_VALUE_PARAM = "sameSiteCookieValue";
+  protected static final String COOKIE_NAME_PARAM = "cookieName";
 
   protected boolean isSecureCookieEnabled;
   protected boolean isSameSiteCookieEnabled;
@@ -43,9 +44,9 @@ public class CookieConfigurator {
       isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
-      cookieName = sessionCookieName;
+    String cookieNameInitParam = filterConfig.getInitParameter(COOKIE_NAME_PARAM);
+    if (hasText(cookieNameInitParam)) {
+      cookieName = cookieNameInitParam;
     }
 
     String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);

@@ -32,8 +32,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class SupportedPassiveEventTriggerActivityValidator implements MigrationActivityValidator {
 
-  public static final SupportedPassiveEventTriggerActivityValidator INSTANCE = new SupportedPassiveEventTriggerActivityValidator();
-
   private static final List<String> SUPPORTED_TYPES = List.of(
     ActivityTypes.BOUNDARY_MESSAGE,
     ActivityTypes.BOUNDARY_SIGNAL,

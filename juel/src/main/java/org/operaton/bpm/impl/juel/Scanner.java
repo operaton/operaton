@@ -238,35 +238,14 @@ public class Scanner {
 		boolean escaped = false;
 		while (i < l) {
 			char c = input.charAt(i);
-			switch (c) {
-				case '\\':
-					if (escaped) {
-						builder.append('\\');
-					} else {
-						escaped = true;
-					}
-					break;
-				case '#', '$':
-					if (i+1 < l && input.charAt(i+1) == '{') {
-						if (escaped) {
-							builder.append(c);
-						} else {
-							return token(Symbol.TEXT, builder.toString(), i - position);
-						}
-					} else {
-						if (escaped) {
-							builder.append('\\');
-						}
-						builder.append(c);
-					}
-					escaped = false;
-					break;
-				default:
-					if (escaped) {
-						builder.append('\\');
-					}
-					builder.append(c);
-					escaped = false;
+			if (escaped) {
+				escaped = handleEscaped(c, i);
+			} else if (isEvalStart(i)) {
+				return token(Symbol.TEXT, builder.toString(), i - position);
+			} else if (c == '\\') {
+				escaped = true;
+			} else {
+				builder.append(c);
 			}
 			i++;
 		}
@@ -274,6 +253,24 @@ public class Scanner {
 			builder.append('\\');
 		}
 		return token(Symbol.TEXT, builder.toString(), i - position);
+	}
+
+	private boolean isEvalStart(int i) {
+		char c = input.charAt(i);
+		return (c == '#' || c == '$') && (i + 1 < input.length()) && (input.charAt(i + 1) == '{');
+	}
+
+	private boolean handleEscaped(char c, int i) {
+		if (isEvalStart(i)) {
+			builder.append(c);
+			return false;
+		}
+		builder.append('\\');
+		if (c != '\\') {
+			builder.append(c);
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -310,36 +307,51 @@ public class Scanner {
 	 * number token
 	 */
 	protected Token nextNumber() {
-		int i = position;
+		int i = scanDigits(position);
+		Symbol symbol = Symbol.INTEGER;
+
+		int nextI = scanDot(i);
+		if (nextI > i) {
+			symbol = Symbol.FLOAT;
+			i = nextI;
+		}
+
+		nextI = scanExponent(i);
+		if (nextI > i) {
+			symbol = Symbol.FLOAT;
+			i = nextI;
+		}
+
+		return token(symbol, input.substring(position, i), i - position);
+	}
+
+	private int scanDigits(int i) {
 		int l = input.length();
 		while (i < l && isDigit(input.charAt(i))) {
 			i++;
 		}
-		Symbol symbol = Symbol.INTEGER;
-		if (i < l && input.charAt(i) == '.') {
-			i++;
-			while (i < l && isDigit(input.charAt(i))) {
-				i++;
-			}
-			symbol = Symbol.FLOAT;
+		return i;
+	}
+
+	private int scanDot(int i) {
+		if (i < input.length() && input.charAt(i) == '.') {
+			return scanDigits(i + 1);
 		}
+		return i;
+	}
+
+	private int scanExponent(int i) {
+		int l = input.length();
 		if (i < l && (input.charAt(i) == 'e' || input.charAt(i) == 'E')) {
-			int e = i;
-			i++;
-			if (i < l && (input.charAt(i) == '+' || input.charAt(i) == '-')) {
-				i++;
+			int e = i + 1;
+			if (e < l && (input.charAt(e) == '+' || input.charAt(e) == '-')) {
+				e++;
 			}
-			if (i < l && isDigit(input.charAt(i))) {
-				i++;
-				while (i < l && isDigit(input.charAt(i))) {
-					i++;
-				}
-				symbol = Symbol.FLOAT;
-			} else {
-				i = e;
+			if (e < l && isDigit(input.charAt(e))) {
+				return scanDigits(e + 1);
 			}
 		}
-		return token(symbol, input.substring(position, i), i - position);
+		return i;
 	}
 
 	/**
@@ -347,58 +359,11 @@ public class Scanner {
 	 */
 	protected Token nextEval() throws ScanException {
 		char c1 = input.charAt(position);
-		char c2 = position < input.length()-1 ? input.charAt(position+1) : (char)0;
+		char c2 = position < input.length() - 1 ? input.charAt(position + 1) : (char) 0;
 
-		switch (c1) {
-			case '*': return fixed(Symbol.MUL);
-			case '/': return fixed(Symbol.DIV);
-			case '%': return fixed(Symbol.MOD);
-			case '+': return fixed(Symbol.PLUS);
-			case '-': return fixed(Symbol.MINUS);
-			case '?': return fixed(Symbol.QUESTION);
-			case ':': return fixed(Symbol.COLON);
-			case '[': return fixed(Symbol.LBRACK);
-			case ']': return fixed(Symbol.RBRACK);
-			case '(': return fixed(Symbol.LPAREN);
-			case ')': return fixed(Symbol.RPAREN);
-			case ',': return fixed(Symbol.COMMA);
-			case '.':
-				if (!isDigit(c2)) {
-					return fixed(Symbol.DOT);
-				}
-				break;
-			case '=':
-				if (c2 == '=') {
-					return fixed(Symbol.EQ);
-				}
-				break;
-			case '&':
-				if (c2 == '&') {
-					return fixed(Symbol.AND);
-				}
-				break;
-			case '|':
-				if (c2 == '|') {
-					return fixed(Symbol.OR);
-				}
-				break;
-			case '!':
-				if (c2 == '=') {
-					return fixed(Symbol.NE);
-				}
-				return fixed(Symbol.NOT);
-			case '<':
-				if (c2 == '=') {
-					return fixed(Symbol.LE);
-				}
-				return fixed(Symbol.LT);
-			case '>':
-				if (c2 == '=') {
-					return fixed(Symbol.GE);
-				}
-				return fixed(Symbol.GT);
-			case '"', '\'': return nextString();
-			default: break;
+		Token operator = nextOperator(c1, c2);
+		if (operator != null) {
+			return operator;
 		}
 
 		if (isDigit(c1) || c1 == '.') {
@@ -406,17 +371,101 @@ public class Scanner {
 		}
 
 		if (Character.isJavaIdentifierStart(c1)) {
-			int i = position+1;
-			int l = input.length();
-			while (i < l && Character.isJavaIdentifierPart(input.charAt(i))) {
-				i++;
-			}
-			String name = input.substring(position, i);
-			Token keyword = keyword(name);
-			return keyword == null ? token(Symbol.IDENTIFIER, name, i - position) : keyword;
+			return nextIdentifier();
 		}
 
 		throw new ScanException(position, "invalid character '%s'".formatted(c1), "expression token");
+	}
+
+	private Token nextOperator(char c1, char c2) throws ScanException {
+		Token t = nextArithmeticOrBracketOperator(c1);
+		if (t != null) {
+			return t;
+		}
+		switch (c1) {
+			case '?': return fixed(Symbol.QUESTION);
+			case ':': return fixed(Symbol.COLON);
+			case ',': return fixed(Symbol.COMMA);
+			case '.':
+				if (!isDigit(c2)) {
+					return fixed(Symbol.DOT);
+				}
+				break;
+			case '=':
+				return nextEqOperator(c2);
+			case '&', '|', '!':
+				return nextLogicalOperator(c1, c2);
+			case '<', '>':
+				return nextCmpOperator(c1, c2);
+			case '"', '\'':
+				return nextString();
+			default: break;
+		}
+		return null;
+	}
+
+	private Token nextArithmeticOrBracketOperator(char c) {
+		switch (c) {
+			case '*': return fixed(Symbol.MUL);
+			case '/': return fixed(Symbol.DIV);
+			case '%': return fixed(Symbol.MOD);
+			case '+': return fixed(Symbol.PLUS);
+			case '-': return fixed(Symbol.MINUS);
+			case '[': return fixed(Symbol.LBRACK);
+			case ']': return fixed(Symbol.RBRACK);
+			case '(': return fixed(Symbol.LPAREN);
+			case ')': return fixed(Symbol.RPAREN);
+			default: return null;
+		}
+	}
+
+	private Token nextLogicalOperator(char c1, char c2) {
+		if (c1 == '&') {
+			if (c2 == '&') {
+				return fixed(Symbol.AND);
+			}
+		} else if (c1 == '|') {
+			if (c2 == '|') {
+				return fixed(Symbol.OR);
+			}
+		} else if (c1 == '!') {
+			if (c2 == '=') {
+				return fixed(Symbol.NE);
+			}
+			return fixed(Symbol.NOT);
+		}
+		return null;
+	}
+
+	private Token nextEqOperator(char c2) {
+		if (c2 == '=') {
+			return fixed(Symbol.EQ);
+		}
+		return null;
+	}
+
+	private Token nextCmpOperator(char c1, char c2) {
+		if (c1 == '<') {
+			if (c2 == '=') {
+				return fixed(Symbol.LE);
+			}
+			return fixed(Symbol.LT);
+		}
+		if (c2 == '=') {
+			return fixed(Symbol.GE);
+		}
+		return fixed(Symbol.GT);
+	}
+
+	private Token nextIdentifier() {
+		int i = position + 1;
+		int l = input.length();
+		while (i < l && Character.isJavaIdentifierPart(input.charAt(i))) {
+			i++;
+		}
+		String name = input.substring(position, i);
+		Token keyword = keyword(name);
+		return keyword == null ? token(Symbol.IDENTIFIER, name, i - position) : keyword;
 	}
 
 	protected Token nextToken() throws ScanException {

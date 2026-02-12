@@ -49,7 +49,7 @@ import static org.assertj.core.api.Assertions.fail;
 /**
  * @author Joram Barrez
  */
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 public abstract class EmailTestCase {
 
   @RegisterExtension

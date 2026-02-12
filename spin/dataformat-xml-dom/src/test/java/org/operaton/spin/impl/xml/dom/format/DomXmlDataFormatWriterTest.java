@@ -20,6 +20,7 @@ import java.io.*;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.spin.DataFormats;
 import org.operaton.spin.SpinFactory;
 import org.operaton.spin.spi.DataFormat;
@@ -48,6 +49,8 @@ class DomXmlDataFormatWriterTest {
           + "  <product>Coffee</product>" + newLine + "  <product> </product>" + newLine + "</order>";
 
   private final String formattedXmlWithWhitespaceInProduct = formattedXmlWithWhitespaceInProductIbmJDK + newLine;
+
+  private final SpinFactory spinFactory = ServiceLoaderUtil.loadSingleService(SpinFactory.class);
 
   // this is what execution.setVariable("test", spinXml); does
   // see https://github.com/operaton/operaton/blob/main/engine-plugins/spin-plugin/src/main/java/org/operaton/spin/plugin/impl/SpinValueSerializer.java
@@ -93,7 +96,7 @@ class DomXmlDataFormatWriterTest {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
-    SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(xml, dataFormat);
+    SpinXmlElement spinXml = spinFactory.createSpin(xml, dataFormat);
 
     // when
     byte[] serializedValue = serializeValue(spinXml);
@@ -119,7 +122,7 @@ class DomXmlDataFormatWriterTest {
     // given
     DataFormat<SpinXmlElement> dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
 
-    SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(formattedXml, dataFormat);
+    SpinXmlElement spinXml = spinFactory.createSpin(formattedXml, dataFormat);
 
     // when
     byte[] serializedValue = serializeValue(spinXml);
@@ -145,7 +148,7 @@ class DomXmlDataFormatWriterTest {
     DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
     dataFormat.setPrettyPrint(false);
 
-    SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(xml, dataFormat);
+    SpinXmlElement spinXml = spinFactory.createSpin(xml, dataFormat);
 
     // when
     byte[] serializedValue = serializeValue(spinXml);
@@ -176,7 +179,7 @@ class DomXmlDataFormatWriterTest {
     DomXmlDataFormat dataFormat = new DomXmlDataFormat(DataFormats.XML_DATAFORMAT_NAME);
     dataFormat.setPrettyPrint(false);
 
-    SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(formattedXmlWithWhitespaceInProduct, dataFormat);
+    SpinXmlElement spinXml = spinFactory.createSpin(formattedXmlWithWhitespaceInProduct, dataFormat);
 
     // when
     byte[] serializedValue = serializeValue(spinXml);
@@ -206,7 +209,7 @@ class DomXmlDataFormatWriterTest {
       dataFormat.setFormattingConfiguration(inputStream);
     }
 
-    final SpinXmlElement spinXml = SpinFactory.INSTANCE.createSpin(this.xml, dataFormat);
+    final SpinXmlElement spinXml = spinFactory.createSpin(this.xml, dataFormat);
 
     // when
     final byte[] serializedValue = serializeValue(spinXml);

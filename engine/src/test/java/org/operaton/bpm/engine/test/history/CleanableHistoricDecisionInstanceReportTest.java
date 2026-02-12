@@ -40,8 +40,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class CleanableHistoricDecisionInstanceReportTest {
@@ -187,40 +187,28 @@ class CleanableHistoricDecisionInstanceReportTest {
 
   @Test
   void testReportByInvalidDecisionDefinitionId() {
+    // given
     CleanableHistoricDecisionInstanceReport report = historyService.createCleanableHistoricDecisionInstanceReport();
 
-    try {
-      report.decisionDefinitionIdIn(null);
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    // when/then
+    assertThatThrownBy(() -> report.decisionDefinitionIdIn(null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.decisionDefinitionIdIn("abc", null, "def");
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.decisionDefinitionIdIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
   void testReportByInvalidDecisionDefinitionKey() {
+    // given
     CleanableHistoricDecisionInstanceReport report = historyService.createCleanableHistoricDecisionInstanceReport();
 
-    try {
-      report.decisionDefinitionKeyIn(null);
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    // when/then
+    assertThatThrownBy(() -> report.decisionDefinitionKeyIn(null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.decisionDefinitionKeyIn("abc", null, "def");
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.decisionDefinitionKeyIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test

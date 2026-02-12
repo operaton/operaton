@@ -125,7 +125,13 @@ module.exports = (_env, argv = {}) => {
           test: /\.s[ac]ss$/i, // Matches both .scss and .sass files
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                // Disable URL resolution to prevent issues with font paths
+                // url: false,
+              },
+            },
             {
               loader: 'sass-loader',
               options: {

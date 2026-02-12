@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -183,18 +184,13 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
           .get(scope.getFlowScope())
           .getParentActivityInstanceId();
 
-      if (!activityInstances.containsKey(activityInstanceId)) {
-        // regardless of the structure (compacted or not), the scope's activity instance id
-        // is the activity instance id of the parent execution and the parent activity instance id
-        // of that is the actual parent activity instance id
-        ActivityInstanceImpl scopeInstance = createActivityInstance(
-            scopeExecution,
-            scope,
-            activityInstanceId,
-            parentActivityInstanceId,
-            incidents);
-        activityInstances.put(activityInstanceId, scopeInstance);
-      }
+      activityInstances.computeIfAbsent(activityInstanceId, id ->
+          createActivityInstance(
+              scopeExecution,
+              scope,
+              id,
+              parentActivityInstanceId,
+              incidents));
     }
   }
 
@@ -205,7 +201,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   }
 
   protected void orderById(List<ExecutionEntity> leaves) {
-    Collections.sort(leaves, EXECUTION_ID_COMPARATOR);
+    leaves.sort(EXECUTION_ID_COMPARATOR);
   }
 
   protected ActivityInstanceImpl createActivityInstance(PvmExecutionImpl scopeExecution, ScopeImpl scope,
@@ -443,7 +439,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
 
   /**
    * Loads all executions that are part of this process instance tree from the dbSqlSession cache.
-   * (optionally querying the db if a child is not already loaded.
+   * (optionally querying the db if a child is not already loaded.)
    *
    * @param execution the current root execution (already contained in childExecutions)
    * @param childExecutions the list in which all child executions should be collected
@@ -485,11 +481,7 @@ public class GetActivityInstanceCmd implements Command<ActivityInstance> {
   protected List<Incident> getIncidents(Map<String, List<Incident>> incidents,
       PvmExecutionImpl execution) {
     List<Incident> incidentList = incidents.get(execution.getId());
-    if (incidentList != null) {
-      return incidentList;
-    } else {
-      return Collections.emptyList();
-    }
+    return Objects.requireNonNullElse(incidentList, Collections.emptyList());
   }
 
   public static class ExecutionIdComparator implements Comparator<ExecutionEntity> {

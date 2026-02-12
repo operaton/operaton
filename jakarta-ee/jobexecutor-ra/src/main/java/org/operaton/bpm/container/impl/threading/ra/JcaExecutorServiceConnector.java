@@ -175,7 +175,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   @Override
   public XAResource[] getXAResources(ActivationSpec[] specs) {
     LOG.finest("getXAResources()");
-    return null;
+    return new XAResource[0];
   }
 
   // getters ///////////////////////////////////////////////////////////////

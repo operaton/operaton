@@ -16,88 +16,52 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.execution;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
+import java.util.Arrays;
 
 /**
  * @author Roman Smirnov
  *
  */
-public interface CaseExecutionState {
+public enum CaseExecutionState {
 
-  Map<Integer, CaseExecutionState> CASE_EXECUTION_STATES = new HashMap<>();
+  NEW(0, "new"),
+  AVAILABLE(1, "available"),
+  ENABLED(2, "enabled"),
+  DISABLED(3, "disabled"),
+  ACTIVE(4, "active"),
+  SUSPENDED(5, "suspended"),
+  TERMINATED(6, "terminated"),
+  COMPLETED(7, "completed"),
+  FAILED(8, "failed"),
+  CLOSED(9, "closed"),
 
-  CaseExecutionState NEW = new CaseExecutionStateImpl(0, "new");
-  CaseExecutionState AVAILABLE = new CaseExecutionStateImpl(1, "available");
-  CaseExecutionState ENABLED = new CaseExecutionStateImpl(2, "enabled");
-  CaseExecutionState DISABLED = new CaseExecutionStateImpl(3, "disabled");
-  CaseExecutionState ACTIVE = new CaseExecutionStateImpl(4, "active");
-  CaseExecutionState SUSPENDED = new CaseExecutionStateImpl(5, "suspended");
-  CaseExecutionState TERMINATED = new CaseExecutionStateImpl(6, "terminated");
-  CaseExecutionState COMPLETED = new CaseExecutionStateImpl(7, "completed");
-  CaseExecutionState FAILED = new CaseExecutionStateImpl(8, "failed");
-  CaseExecutionState CLOSED = new CaseExecutionStateImpl(9, "closed");
+  TERMINATING_ON_TERMINATION(10, "terminatingOnTermination"),
+  TERMINATING_ON_PARENT_TERMINATION(11, "terminatingOnParentTermination"),
+  TERMINATING_ON_EXIT(12, "terminatingOnExit"),
 
-  CaseExecutionState TERMINATING_ON_TERMINATION = new CaseExecutionStateImpl(10, "terminatingOnTermination");
-  CaseExecutionState TERMINATING_ON_PARENT_TERMINATION = new CaseExecutionStateImpl(11, "terminatingOnParentTermination");
-  CaseExecutionState TERMINATING_ON_EXIT = new CaseExecutionStateImpl(12, "terminatingOnExit");
+  SUSPENDING_ON_SUSPENSION(13, "suspendingOnSuspension"),
+  SUSPENDING_ON_PARENT_SUSPENSION(14, "suspendingOnParentSuspension");
 
-  CaseExecutionState SUSPENDING_ON_SUSPENSION = new CaseExecutionStateImpl(13, "suspendingOnSuspension");
-  CaseExecutionState SUSPENDING_ON_PARENT_SUSPENSION = new CaseExecutionStateImpl(14, "suspendingOnParentSuspension");
-
-  int getStateCode();
-
-  // /////////////////////////////////////////////////// default implementation
-
-  class CaseExecutionStateImpl implements CaseExecutionState {
-
-    public final int stateCode;
-    protected final String name;
-
-    public CaseExecutionStateImpl(int stateCode, String string) {
-      this.stateCode = stateCode;
-      this.name = string;
-
-      CASE_EXECUTION_STATES.put(stateCode, this);
-    }
-
-    public static CaseExecutionState getStateForCode(Integer stateCode) {
-      return CASE_EXECUTION_STATES.get(stateCode);
-    }
-
-    @Override
-    public int getStateCode() {
-      return stateCode;
-    }
-
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      return prime * result + stateCode;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-      if (this == obj) {
-        return true;
-      }
-      if (obj == null) {
-        return false;
-      }
-      if (getClass() != obj.getClass()) {
-        return false;
-      }
-      CaseExecutionStateImpl other = (CaseExecutionStateImpl) obj;
-      return stateCode == other.stateCode;
-    }
-
-    @Override
-    public String toString() {
-      return name;
-    }
+  private final int statusCode;
+  private final String name;
+  
+  CaseExecutionState (int statusCode, String name) {
+    this.statusCode = statusCode;
+    this.name = name;
+  }
+  
+  public int getStateCode() {
+    return statusCode;
   }
 
+  public static CaseExecutionState forStatusCode(int statusCode) {
+    return Arrays.stream(values()).filter(state -> state.getStateCode() == statusCode)
+      .findFirst()
+      .orElseThrow(() -> new IllegalArgumentException("No case execution state with status code " + statusCode));
+  }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

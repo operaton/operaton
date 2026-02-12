@@ -1,6 +1,6 @@
-var Ids = require('ids/dist/index.umd.js');
+let Ids = require('ids');
 
-if (Ids.default) {
+if (Ids?.default) {
   Ids = Ids.default;
 }
 

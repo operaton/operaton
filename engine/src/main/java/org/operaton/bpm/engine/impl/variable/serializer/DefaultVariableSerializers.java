@@ -50,16 +50,29 @@ public class DefaultVariableSerializers implements VariableSerializers {
 
   @Override
   public TypedValueSerializer<?> findSerializerForValue(TypedValue value, VariableSerializerFactory fallBackSerializerFactory) {
+    assertValueTypeNotNull(value);
+    List<TypedValueSerializer<?>> matchedSerializers = findMatchingSerializers(value);
 
-    String defaultSerializationFormat = Context.getProcessEngineConfiguration().getDefaultSerializationFormat();
+    if(matchedSerializers.isEmpty()) {
+      return handleNoMatchingSerializers(value, fallBackSerializerFactory);
+    } else if(matchedSerializers.size() == 1) {
+      return matchedSerializers.get(0);
+    } else {
+      // ambiguous match, use default serializer
+      return handleAmbiguousMatches(matchedSerializers);
+    }
+  }
 
-    List<TypedValueSerializer<?>> matchedSerializers = new ArrayList<>();
-
+  private void assertValueTypeNotNull(TypedValue value) {
     ValueType type = value.getType();
     if (type != null && type.isAbstract()) {
       throw new ProcessEngineException("Cannot serialize value of abstract type %s".formatted(type.getName()));
     }
+  }
 
+  private List<TypedValueSerializer<?>> findMatchingSerializers(TypedValue value) {
+    List<TypedValueSerializer<?>> matchedSerializers = new ArrayList<>();
+    ValueType type = value.getType();
     for (TypedValueSerializer<?> serializer : serializerList) {
       // if type is null => ask handler whether it can handle the value
       // OR if types match, this handler can handle values of this type
@@ -71,33 +84,31 @@ public class DefaultVariableSerializers implements VariableSerializers {
         }
       }
     }
+    return matchedSerializers;
+  }
 
-    if(matchedSerializers.isEmpty()) {
-      if (fallBackSerializerFactory != null) {
-        TypedValueSerializer<?> serializer = fallBackSerializerFactory.getSerializer(value);
-        if (serializer != null) {
-          return serializer;
+  private TypedValueSerializer<?> handleNoMatchingSerializers(TypedValue value, VariableSerializerFactory fallBackSerializerFactory) {
+    if (fallBackSerializerFactory != null) {
+      TypedValueSerializer<?> serializer = fallBackSerializerFactory.getSerializer(value);
+      if (serializer != null) {
+        return serializer;
+      }
+    }
+    throw new ProcessEngineException("Cannot find serializer for value '%s'.".formatted(value));
+  }
+
+  private TypedValueSerializer<?> handleAmbiguousMatches(List<TypedValueSerializer<?>> matchedSerializers) {
+    String defaultSerializationFormat = Context.getProcessEngineConfiguration().getDefaultSerializationFormat();
+    if(defaultSerializationFormat != null) {
+      for (TypedValueSerializer<?> typedValueSerializer : matchedSerializers) {
+        if(defaultSerializationFormat.equals(typedValueSerializer.getSerializationDataformat())) {
+          return typedValueSerializer;
         }
       }
-
-      throw new ProcessEngineException("Cannot find serializer for value '%s'.".formatted(value));
-    }
-    else if(matchedSerializers.size() == 1) {
-      return matchedSerializers.get(0);
-    }
-    else {
-      // ambiguous match, use default serializer
-      if(defaultSerializationFormat != null) {
-        for (TypedValueSerializer<?> typedValueSerializer : matchedSerializers) {
-          if(defaultSerializationFormat.equals(typedValueSerializer.getSerializationDataformat())) {
-            return typedValueSerializer;
-          }
-        }
-      }
-      // no default serialization dataformat defined or default dataformat cannot serialize this value => use first serializer
-      return matchedSerializers.get(0);
     }
 
+    // no default serialization dataformat defined or default dataformat cannot serialize this value => use first serializer
+    return matchedSerializers.get(0);
   }
 
   @Override

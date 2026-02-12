@@ -28,13 +28,15 @@ public class MigrationPlanJsonConverter implements JsonObjectConverter<Migration
   public static final String TARGET_PROCESS_DEFINITION_ID = "targetProcessDefinitionId";
   public static final String INSTRUCTIONS = "instructions";
 
+  private static final MigrationInstructionJsonConverter MIGRATION_INSTRUCTION_JSON_CONVERTER = new MigrationInstructionJsonConverter();
+
   @Override
   public JsonObject toJsonObject(MigrationPlan migrationPlan) {
     JsonObject json = JsonUtil.createObject();
 
     JsonUtil.addField(json, SOURCE_PROCESS_DEFINITION_ID, migrationPlan.getSourceProcessDefinitionId());
     JsonUtil.addField(json, TARGET_PROCESS_DEFINITION_ID, migrationPlan.getTargetProcessDefinitionId());
-    JsonUtil.addListField(json, INSTRUCTIONS, MigrationInstructionJsonConverter.INSTANCE, migrationPlan.getInstructions());
+    JsonUtil.addListField(json, INSTRUCTIONS, MIGRATION_INSTRUCTION_JSON_CONVERTER, migrationPlan.getInstructions());
 
     return json;
   }
@@ -43,7 +45,7 @@ public class MigrationPlanJsonConverter implements JsonObjectConverter<Migration
   public MigrationPlan toObject(JsonObject json) {
     MigrationPlanImpl migrationPlan = new MigrationPlanImpl(JsonUtil.getString(json, SOURCE_PROCESS_DEFINITION_ID), JsonUtil.getString(json, TARGET_PROCESS_DEFINITION_ID));
 
-    migrationPlan.setInstructions(JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS), MigrationInstructionJsonConverter.INSTANCE));
+    migrationPlan.setInstructions(JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS), MIGRATION_INSTRUCTION_JSON_CONVERTER));
 
     return migrationPlan;
   }

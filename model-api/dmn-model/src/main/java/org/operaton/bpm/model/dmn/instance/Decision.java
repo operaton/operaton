@@ -60,15 +60,23 @@ public interface Decision extends DrgElement {
    * @deprecated since 1.0, use {@link #getOperatonHistoryTimeToLiveString()} instead,
    *             which returns the value as a String for more flexible configuration.
    */
-  @Deprecated(since = "1.0")
-  Integer getOperatonHistoryTimeToLive();
+  @Deprecated(since = "1.0", forRemoval = true)
+  default Integer getOperatonHistoryTimeToLive() {
+    String ttl = getOperatonHistoryTimeToLiveString();
+    if (ttl != null) {
+      return Integer.valueOf(ttl);
+    }
+    return null;
+  }
 
   /**
    * @deprecated since 1.0, use {@link #setOperatonHistoryTimeToLiveString(String)} instead,
    *             which accepts the value as a String for more flexible configuration.
    */
-  @Deprecated(since = "1.0")
-  void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
+  @Deprecated(since = "1.0", forRemoval = true)
+  default void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
+    setOperatonHistoryTimeToLiveString(historyTimeToLive != null ? String.valueOf(historyTimeToLive) : null);
+  }
 
   String getOperatonHistoryTimeToLiveString();
 

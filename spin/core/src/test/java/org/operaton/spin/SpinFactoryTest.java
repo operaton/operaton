@@ -18,6 +18,7 @@ package org.operaton.spin;
 
 import org.junit.jupiter.api.Test;
 
+import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.spin.impl.SpinFactoryImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class SpinFactoryTest {
     @Test
     void factoryInstanceLoadsSuccessfully() {
-        SpinFactory factory = SpinFactory.INSTANCE;
+        SpinFactory factory = ServiceLoaderUtil.loadSingleService(SpinFactory.class);
         assertThat(factory).isInstanceOf(SpinFactoryImpl.class);
     }
 }

@@ -2355,6 +2355,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   // history //////////////////////////////////////////////////////////////////
 
+  @SuppressWarnings("java:S5738") // HISTORY_VARIABLE will be removed in the future
   public void initHistoryLevel() {
     if (historyLevel != null) {
       setHistory(historyLevel.getName());
@@ -4574,11 +4575,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   }
 
   public List<MigrationActivityValidator> getDefaultMigrationActivityValidators() {
-    List<MigrationActivityValidator> migrationActivityValidators = new ArrayList<>();
-    migrationActivityValidators.add(SupportedActivityValidator.INSTANCE);
-    migrationActivityValidators.add(SupportedPassiveEventTriggerActivityValidator.INSTANCE);
-    migrationActivityValidators.add(NoCompensationHandlerActivityValidator.INSTANCE);
-    return migrationActivityValidators;
+    return List.of(
+        new SupportedActivityValidator(),
+        new SupportedPassiveEventTriggerActivityValidator(),
+        new NoCompensationHandlerActivityValidator()
+    );
   }
 
   public void setMigrationInstructionGenerator(MigrationInstructionGenerator migrationInstructionGenerator) {

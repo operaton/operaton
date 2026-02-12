@@ -101,7 +101,8 @@ module.exports = (_env, argv = {}) => {
         'core-js': path.resolve(__dirname, 'node_modules/core-js'),
         angular: path.resolve(__dirname, 'node_modules/angular'), // avoid loading angular twice
         // compatibility layer for `ids` module, which is needed differently by dmn-migrate and form-js
-        'ids$': path.resolve(__dirname, 'ids-compatibility.js'),
+        // Use the package's exported entry directly so webpack resolves the correct ESM shape
+        'ids$': path.resolve(__dirname, 'node_modules/ids/dist/index.js'),
         // prevent`preact-markup`being tree shaken (transitive dependency of form-js
         'preact-markup': path.resolve(
           __dirname,
@@ -125,7 +126,13 @@ module.exports = (_env, argv = {}) => {
           test: /\.s[ac]ss$/i, // Matches both .scss and .sass files
           use: [
             MiniCssExtractPlugin.loader,
-            'css-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                // Disable URL resolution to prevent issues with font paths
+                // url: false,
+              },
+            },
             {
               loader: 'sass-loader',
               options: {

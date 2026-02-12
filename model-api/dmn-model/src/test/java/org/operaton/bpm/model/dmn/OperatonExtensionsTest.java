@@ -55,7 +55,7 @@ public class OperatonExtensionsTest {
 
   @MethodSource("parameters")
   @ParameterizedTest(name = "Namespace: {0}")
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings({"deprecation", "java:S5738"})
   void testOperatonHistoryTimeToLive(DmnModelInstance originalModelInstance) {
     initOperatonExtensionsTest(originalModelInstance);
     Decision decision = modelInstance.getModelElementById("decision");

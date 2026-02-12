@@ -379,7 +379,7 @@ class DecisionDefinitionDeployerTest {
     Decision decision = modelInstance.newInstance(Decision.class);
     decision.setId("Decision-1");
     decision.setName("foo");
-    decision.setOperatonHistoryTimeToLive(-5);
+    decision.setOperatonHistoryTimeToLiveString("-5");
     modelInstance.getDefinitions().addChildElement(decision);
 
     return modelInstance;
@@ -397,7 +397,7 @@ class DecisionDefinitionDeployerTest {
     Decision decision = modelInstance.newInstance(Decision.class);
     decision.setId("Decision-1");
     decision.setName("foo");
-    decision.setOperatonHistoryTimeToLive(5);
+    decision.setOperatonHistoryTimeToLiveString("5");
     modelInstance.getDefinitions().addChildElement(decision);
 
     DecisionTable decisionTable = modelInstance.newInstance(DecisionTable.class);

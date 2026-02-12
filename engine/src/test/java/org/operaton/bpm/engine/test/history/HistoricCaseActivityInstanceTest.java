@@ -915,7 +915,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
   protected void assertHistoricState(String activityId, CaseExecutionState expectedState) {
     HistoricCaseActivityInstanceEventEntity historicActivityInstance = (HistoricCaseActivityInstanceEventEntity) queryHistoricActivityCaseInstance(activityId);
     int actualStateCode = historicActivityInstance.getCaseActivityInstanceState();
-    CaseExecutionState actualState = CaseExecutionState.CaseExecutionStateImpl.getStateForCode(actualStateCode);
+    CaseExecutionState actualState = CaseExecutionState.forStatusCode(actualStateCode);
     assertThat(actualState).as("The state of historic case activity '" + activityId + "' wasn't as expected").isEqualTo(expectedState);
   }
 
@@ -972,7 +972,7 @@ class HistoricCaseActivityInstanceTest extends CmmnTest {
   }
 
   protected class CaseExecutionStateCountMap extends HashMap<CaseExecutionState, Long> {
-    private static final Collection<CaseExecutionState> ALL_STATES = CaseExecutionState.CASE_EXECUTION_STATES.values();
+    private static final Collection<CaseExecutionState> ALL_STATES = Arrays.asList(CaseExecutionState.values());
     private static final Collection<CaseExecutionState> ENDED_STATES = Arrays.asList(COMPLETED, TERMINATED);
     private static final Collection<CaseExecutionState> NOT_ENDED_STATES = new ArrayList<>(ALL_STATES);
 

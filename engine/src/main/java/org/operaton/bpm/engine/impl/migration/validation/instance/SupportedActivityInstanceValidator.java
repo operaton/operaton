@@ -37,7 +37,7 @@ public class SupportedActivityInstanceValidator implements MigratingActivityInst
     if (sourceScope != sourceScope.getProcessDefinition()) {
       ActivityImpl sourceActivity = (ActivityImpl) migratingInstance.getSourceScope();
 
-      if (!SupportedActivityValidator.INSTANCE.isSupportedActivity(sourceActivity)) {
+      if (!SupportedActivityValidator.isSupportedActivity(sourceActivity)) {
         instanceReport.addFailure("The type of the source activity is not supported for activity instance migration");
       }
     }

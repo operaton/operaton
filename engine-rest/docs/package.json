@@ -9,5 +9,8 @@
     "redoc": "2.5.2",
     "react": "19.2.4",
     "react-dom": "19.2.4"
+  },
+  "overrides": {
+    "fast-xml-parser": "^5.3.4"
   }
 }

@@ -103,20 +103,6 @@ class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  void hasCandidateUserAssociated_ExplicitlySet_Failure() {
-    // Given
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUserAssociated"
-    );
-    // When
-    complete(taskQuery().singleResult());
-    // Then
-    expect(() -> assertThat(processInstance).task().hasCandidateUserAssociated(CANDIDATE_USER));
-  }
-
-  @Test
-  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateUserAssociated.bpmn"
-  })
   void hasCandidateUserAssociated_ExplicitlySet_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(

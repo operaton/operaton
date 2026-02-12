@@ -22,6 +22,7 @@ const webpack = require('webpack');
 
 const {merge} = require('webpack-merge');
 const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const fs = require('fs');
 
@@ -90,6 +91,18 @@ module.exports = (_env, argv = {}) => {
           },
           exclude: [/scripts\/config\.js/, /lib\/globalize\.js/],
         }),
+        // Temporarily disable CSS minimization to debug
+        // new CssMinimizerPlugin({
+        //   minimizerOptions: {
+        //     preset: [
+        //       'default',
+        //       {
+        //         discardEmpty: false,  // Don't discard rules with empty-looking content
+        //         discardUnused: false, // Don't remove unused rules
+        //       },
+        //     ],
+        //   },
+        // }),
       ],
       // Bundle all third-party modules into the lib/deps.js bundle
       splitChunks: {

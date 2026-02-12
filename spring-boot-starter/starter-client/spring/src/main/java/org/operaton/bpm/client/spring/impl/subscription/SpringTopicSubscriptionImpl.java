@@ -35,6 +35,9 @@ import org.operaton.bpm.client.task.ExternalTaskHandler;
 import org.operaton.bpm.client.topic.TopicSubscription;
 import org.operaton.bpm.client.topic.TopicSubscriptionBuilder;
 
+import static java.lang.Boolean.TRUE;
+import static java.util.Optional.ofNullable;
+
 public class SpringTopicSubscriptionImpl
   implements SpringTopicSubscription, InitializingBean {
 
@@ -71,56 +74,49 @@ public class SpringTopicSubscriptionImpl
     topicSubscriptionBuilder = client.subscribe(topicName)
         .handler(externalTaskHandler);
 
-    List<String> variableNames = subscriptionConfiguration.getVariableNames();
-    if (variableNames != null) {
-      topicSubscriptionBuilder.variables(toArray(variableNames));
-    }
-    Long lockDuration = subscriptionConfiguration.getLockDuration();
-    if (lockDuration != null) {
-      topicSubscriptionBuilder.lockDuration(lockDuration);
-    }
-    Boolean localVariables = subscriptionConfiguration.getLocalVariables();
-    if (localVariables != null && localVariables) {
+    ofNullable(subscriptionConfiguration.getVariableNames())
+        .map(this::toArray)
+        .ifPresent(topicSubscriptionBuilder::variables);
+
+    ofNullable(subscriptionConfiguration.getLockDuration())
+        .ifPresent(topicSubscriptionBuilder::lockDuration);
+
+    if (TRUE.equals(subscriptionConfiguration.getLocalVariables())) {
       topicSubscriptionBuilder.localVariables(true);
     }
-    String businessKey = subscriptionConfiguration.getBusinessKey();
-    if (businessKey != null) {
-      topicSubscriptionBuilder.businessKey(businessKey);
-    }
-    String processDefinitionId = subscriptionConfiguration.getProcessDefinitionId();
-    if (processDefinitionId != null) {
-      topicSubscriptionBuilder.processDefinitionId(processDefinitionId);
-    }
-    List<String> processDefinitionIdIn = subscriptionConfiguration.getProcessDefinitionIdIn();
-    if (processDefinitionIdIn != null) {
-      topicSubscriptionBuilder.processDefinitionIdIn(toArray(processDefinitionIdIn));
-    }
-    String processDefinitionKey = subscriptionConfiguration.getProcessDefinitionKey();
-    if (processDefinitionKey != null) {
-      topicSubscriptionBuilder.processDefinitionKey(processDefinitionKey);
-    }
-    List<String> processDefinitionKeyIn = subscriptionConfiguration.getProcessDefinitionKeyIn();
-    if (processDefinitionKeyIn != null) {
-      topicSubscriptionBuilder.processDefinitionKeyIn(toArray(processDefinitionKeyIn));
-    }
-    String processDefinitionVersionTag = subscriptionConfiguration.getProcessDefinitionVersionTag();
-    if (processDefinitionVersionTag != null) {
-      topicSubscriptionBuilder.processDefinitionVersionTag(processDefinitionVersionTag);
-    }
-    Map<String, Object> processVariablesEqualsIn = subscriptionConfiguration.getProcessVariables();
-    if (processVariablesEqualsIn != null) {
-      topicSubscriptionBuilder.processVariablesEqualsIn(processVariablesEqualsIn);
-    }
-    Boolean withoutTenantId = subscriptionConfiguration.getWithoutTenantId();
-    if (withoutTenantId != null && withoutTenantId) {
+
+    ofNullable(subscriptionConfiguration.getBusinessKey())
+        .ifPresent(topicSubscriptionBuilder::businessKey);
+
+    ofNullable(subscriptionConfiguration.getProcessDefinitionId())
+        .ifPresent(topicSubscriptionBuilder::processDefinitionId);
+
+    ofNullable(subscriptionConfiguration.getProcessDefinitionIdIn())
+        .map(this::toArray)
+        .ifPresent(topicSubscriptionBuilder::processDefinitionIdIn);
+
+    ofNullable(subscriptionConfiguration.getProcessDefinitionKey())
+        .ifPresent(topicSubscriptionBuilder::processDefinitionKey);
+
+    ofNullable(subscriptionConfiguration.getProcessDefinitionKeyIn())
+        .map(this::toArray)
+        .ifPresent(topicSubscriptionBuilder::processDefinitionKeyIn);
+
+    ofNullable(subscriptionConfiguration.getProcessDefinitionVersionTag())
+        .ifPresent(topicSubscriptionBuilder::processDefinitionVersionTag);
+
+    ofNullable(subscriptionConfiguration.getProcessVariables())
+        .ifPresent(topicSubscriptionBuilder::processVariablesEqualsIn);
+
+    if (TRUE.equals(subscriptionConfiguration.getWithoutTenantId())) {
       topicSubscriptionBuilder.withoutTenantId();
     }
-    List<String> tenantIdIn = subscriptionConfiguration.getTenantIdIn();
-    if (tenantIdIn != null) {
-      topicSubscriptionBuilder.tenantIdIn(toArray(tenantIdIn));
-    }
-    Boolean includeExtensionProperties = subscriptionConfiguration.getIncludeExtensionProperties();
-    if (includeExtensionProperties != null && includeExtensionProperties) {
+
+    ofNullable(subscriptionConfiguration.getTenantIdIn())
+        .map(this::toArray)
+        .ifPresent(topicSubscriptionBuilder::tenantIdIn);
+
+    if (TRUE.equals(subscriptionConfiguration.getIncludeExtensionProperties())) {
       topicSubscriptionBuilder.includeExtensionProperties(true);
     }
     if(isAutoOpen()) {

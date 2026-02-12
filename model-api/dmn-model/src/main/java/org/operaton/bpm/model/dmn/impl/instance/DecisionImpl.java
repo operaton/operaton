@@ -159,22 +159,6 @@ public class DecisionImpl extends DrgElementImpl implements Decision {
     expressionChild.setChild(this, expression);
   }
 
-  // operaton extensions
-  @Override
-  public Integer getOperatonHistoryTimeToLive() {
-    String ttl = getOperatonHistoryTimeToLiveString();
-
-    if (ttl != null) {
-      return Integer.valueOf(ttl);
-    }
-    return null;
-  }
-
-  @Override
-  public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
-    setOperatonHistoryTimeToLiveString(historyTimeToLive != null ? String.valueOf(historyTimeToLive) : null);
-  }
-
   @Override
   public String getOperatonHistoryTimeToLiveString() {
     return operatonHistoryTimeToLiveAttribute.getValue(this);

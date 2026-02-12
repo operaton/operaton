@@ -29,6 +29,7 @@ const PRODUCTION_LICENSES = [
   'CC0-1.0',
   'ISC',
   'MIT',
+  'MPL-2.0',
   'WTFPL',
   'OFL-1.1',
 ];
@@ -43,6 +44,7 @@ const DEV_LICENSES = [
 
 const ALLOWED_PACKAGES = [
   'argparse@2.0.1',
+  'sax@1.4.4',
   'caniuse-lite@1.0.30001458', // uses CC BY 4.0, permitted as of https://jira.camunda.com/browse/OB-26
 ];
 

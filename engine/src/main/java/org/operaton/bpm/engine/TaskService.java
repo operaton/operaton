@@ -1190,10 +1190,8 @@ public interface TaskService {
   /**
    * <p>The all events related to the given task.</p>
    *
-   * <p>As of Operaton.4 task events are only written in context of a logged in
-   * user. This behavior can be toggled in the process engine configuration using the
-   * property <code>legacyUserOperationLog</code> (default false). To restore the engine's
-   * previous behavior, set the flag to <code>true</code>.</p>
+   * <p>Task events are only written in context of a logged in
+   * user.</p>
    *
    * @deprecated It has been replaced with the operation log. See {@link UserOperationLogEntry}
    * and {@link UserOperationLogQuery}.

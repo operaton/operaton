@@ -65,6 +65,7 @@ import static org.operaton.bpm.engine.impl.bpmn.helper.CompensationUtil.SIGNAL_C
 public final class LegacyBehavior {
 
   private static final BpmnBehaviorLogger LOG = ProcessEngineLogger.BPMN_BEHAVIOR_LOGGER;
+  private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
 
   private LegacyBehavior() {
   }
@@ -651,7 +652,7 @@ public final class LegacyBehavior {
       for (VariableInstanceEntity variable : variables) {
 
         if (variable.wasCreatedBefore713()) {
-          VariableInstanceHistoryListener.INSTANCE.onCreate(variable, variable.getExecution());
+          VARIABLE_INSTANCE_HISTORY_LISTENER.onCreate(variable, variable.getExecution());
         }
       }
     }

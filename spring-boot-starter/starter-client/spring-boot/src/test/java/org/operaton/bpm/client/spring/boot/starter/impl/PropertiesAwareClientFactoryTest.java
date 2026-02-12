@@ -15,22 +15,43 @@
  */
 package org.operaton.bpm.client.spring.boot.starter.impl;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
+import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
 import org.operaton.bpm.client.spring.impl.client.ClientConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@ExtendWith(MockitoExtension.class)
-public class PropertiesAwareClientFactoryTest {
+@SpringBootTest(
+  classes = {
+    PropertiesAwareClientFactory.class,
+    ClientProperties.class
+  })
+class PropertiesAwareClientFactoryTest {
+  @Autowired
+  PropertiesAwareClientFactory clientFactory;
 
-  @Test
-  void shouldApplyProperties() {
+  @Autowired
+  ClientProperties clientProperties;
+
+  @BeforeEach
+  void setUp() {
+    clientProperties.setUseCreateTime(null);
+    clientProperties.setOrderByCreateTime(null);
+  }
+
+  @ParameterizedTest
+  @ValueSource(strings = {"useCreateTime", "orderByCreateTime"})
+  // useCreateTime and orderByCreateTime are mutually exclusive, so we test them separately
+  void shouldApplyProperties(String creationTimeProperty) {
     // given
-    ClientProperties clientProperties = new ClientProperties();
     clientProperties.setAsyncResponseTimeout(1L);
     clientProperties.setBaseUrl("base-url");
     clientProperties.setDateFormat("date-format");
@@ -39,18 +60,19 @@ public class PropertiesAwareClientFactoryTest {
     clientProperties.setDisableBackoffStrategy(Boolean.TRUE);
     clientProperties.setLockDuration(2L);
     clientProperties.setMaxTasks(3);
-    clientProperties.setOrderByCreateTime("order-by-create-time");
-    clientProperties.setUseCreateTime(Boolean.TRUE);
     clientProperties.setUsePriority(Boolean.TRUE);
     clientProperties.setWorkerId("worker-id");
-
-    PropertiesAwareClientFactory factory = new PropertiesAwareClientFactory(clientProperties);
+    if ("useCreateTime".equals(creationTimeProperty)) {
+      clientProperties.setUseCreateTime(Boolean.TRUE);
+    } else if ("orderByCreateTime".equals(creationTimeProperty)) {
+      clientProperties.setOrderByCreateTime("order-by-create-time");
+    }
 
     // when
-    factory.applyPropertiesFrom(clientProperties);
+    clientFactory.applyPropertiesFrom(clientProperties);
 
     // then
-    ClientConfiguration clientConfiguration = factory.getClientConfiguration();
+    ClientConfiguration clientConfiguration = clientFactory.getClientConfiguration();
     assertThat(clientConfiguration.getAsyncResponseTimeout()).isEqualTo(clientProperties.getAsyncResponseTimeout());
     assertThat(clientConfiguration.getBaseUrl()).isEqualTo(clientProperties.getBaseUrl());
     assertThat(clientConfiguration.getDateFormat()).isEqualTo(clientProperties.getDateFormat());
@@ -59,9 +81,24 @@ public class PropertiesAwareClientFactoryTest {
     assertThat(clientConfiguration.getDisableBackoffStrategy()).isEqualTo(clientProperties.getDisableBackoffStrategy());
     assertThat(clientConfiguration.getLockDuration()).isEqualTo(clientProperties.getLockDuration());
     assertThat(clientConfiguration.getMaxTasks()).isEqualTo(clientProperties.getMaxTasks());
-    assertThat(clientConfiguration.getOrderByCreateTime()).isEqualTo(clientProperties.getOrderByCreateTime());
-    assertThat(clientConfiguration.getUseCreateTime()).isEqualTo(clientProperties.getUseCreateTime());
     assertThat(clientConfiguration.getUsePriority()).isNull();
     assertThat(clientConfiguration.getWorkerId()).isEqualTo(clientProperties.getWorkerId());
+    if ("useCreateTime".equals(creationTimeProperty)) {
+      assertThat(clientConfiguration.getUseCreateTime()).isEqualTo(clientProperties.getUseCreateTime());
+    } else if ("orderByCreateTime".equals(creationTimeProperty)) {
+      assertThat(clientConfiguration.getOrderByCreateTime()).isEqualTo(clientProperties.getOrderByCreateTime());
+    }
+  }
+
+  @Test
+  void applyPropertiesFrom_shouldThrow_whenUseCreateTimeAndOrderByCreateTimeAreBothSet() {
+    // given
+    clientProperties.setUseCreateTime(Boolean.TRUE);
+    clientProperties.setOrderByCreateTime("order-by-create-time");
+
+    // when / then
+    assertThatThrownBy(() -> clientFactory.applyPropertiesFrom(clientProperties))
+      .isInstanceOf(SpringExternalTaskClientException.class)
+      .hasMessageContainingAll("useCreateTime", "orderByCreateTime");
   }
 }

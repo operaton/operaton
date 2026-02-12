@@ -54,8 +54,11 @@ updates:
           - "@babel/core"
           - "@babel/preset-env"
           - "@babel/eslint-parser"
-      dmn-js:
+      Xmn-js:
         patterns:
+          - "bpmn-js"
+          - "camunda-dmn-js"
+          - "cmmn-js"
           - "dmn-js"
           - "dmn-js-decision-table"
           - "dmn-js-drd"
@@ -153,8 +156,11 @@ updates:
           - "@babel/core"
           - "@babel/preset-env"
           - "@babel/eslint-parser"
-      dmn-js:
+      Xmn-js:
         patterns:
+          - "bpmn-js"
+          - "camunda-dmn-js"
+          - "cmmn-js"
           - "dmn-js"
           - "dmn-js-decision-table"
           - "dmn-js-drd"

@@ -68,6 +68,10 @@ updates:
       webpack:
         patterns:
           - "webpack*"
+    ignore:
+      - dependency-name: "eslint*"
+        # Known incompatibility with eslint 10
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -163,6 +167,10 @@ updates:
       webpack:
         patterns:
           - "webpack*"
+    ignore:
+      - dependency-name: "eslint*"
+        # Known incompatibility with eslint 10
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:

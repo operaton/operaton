@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:bde75e74-fb34-4cfc-9082-814056e8cdd6",
+  "serialNumber": "urn:uuid:c49ec9cf-3d96-4532-af4e-f99d26d06f34",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-12T07:56:32Z",
+    "timestamp": "2026-02-12T11:59:03Z",
     "tools": {
       "components": [
         {
@@ -23701,7 +23701,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "4a86fb42-2ac8-4e6f-b347-685754b29e36",
+      "bom-ref": "25d38910-c959-496f-ad8a-9e21ea13cf75",
       "name": "package-lock.json",
       "properties": [
         {
@@ -23866,10 +23866,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/feel-editor@2.4.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
       "group": "@bpmn-io",
       "name": "feel-editor",
-      "version": "2.4.0",
+      "version": "2.5.0",
       "licenses": [
         {
           "license": {
@@ -23877,11 +23877,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/feel-editor@2.4.0",
+      "purl": "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/feel-editor@2.4.0"
+          "value": "@bpmn-io/feel-editor@2.5.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24091,10 +24091,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
       "group": "@bpmn-io",
       "name": "lezer-feel",
-      "version": "2.2.1",
+      "version": "2.3.0",
       "licenses": [
         {
           "license": {
@@ -24102,11 +24102,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+      "purl": "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/lezer-feel@2.2.1"
+          "value": "@bpmn-io/lezer-feel@2.3.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24116,10 +24116,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.38.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
       "group": "@bpmn-io",
       "name": "properties-panel",
-      "version": "3.38.0",
+      "version": "3.39.0",
       "licenses": [
         {
           "license": {
@@ -24127,11 +24127,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.38.0",
+      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/properties-panel@3.38.0"
+          "value": "@bpmn-io/properties-panel@3.39.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24141,10 +24141,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40camunda/feel-builtins@0.3.0",
+      "bom-ref": "pkg:npm/%40camunda/feel-builtins@1.0.0",
       "group": "@camunda",
       "name": "feel-builtins",
-      "version": "0.3.0",
+      "version": "1.0.0",
       "licenses": [
         {
           "license": {
@@ -24152,11 +24152,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40camunda/feel-builtins@0.3.0",
+      "purl": "pkg:npm/%40camunda/feel-builtins@1.0.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@camunda/feel-builtins@0.3.0"
+          "value": "@camunda/feel-builtins@1.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24166,10 +24166,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.49.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.50.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.49.0",
+      "version": "11.50.0",
       "licenses": [
         {
           "license": {
@@ -24177,11 +24177,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/grid@11.49.0",
+      "purl": "pkg:npm/%40carbon/grid@11.50.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.49.0"
+          "value": "@carbon/grid@11.50.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24216,10 +24216,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.47.0",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.48.0",
       "group": "@carbon",
       "name": "layout",
-      "version": "11.47.0",
+      "version": "11.48.0",
       "licenses": [
         {
           "license": {
@@ -24227,11 +24227,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40carbon/layout@11.47.0",
+      "purl": "pkg:npm/%40carbon/layout@11.48.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.47.0"
+          "value": "@carbon/layout@11.48.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24341,10 +24341,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40codemirror/lint@6.9.3",
+      "bom-ref": "pkg:npm/%40codemirror/lint@6.9.4",
       "group": "@codemirror",
       "name": "lint",
-      "version": "6.9.3",
+      "version": "6.9.4",
       "licenses": [
         {
           "license": {
@@ -24352,11 +24352,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40codemirror/lint@6.9.3",
+      "purl": "pkg:npm/%40codemirror/lint@6.9.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@codemirror/lint@6.9.3"
+          "value": "@codemirror/lint@6.9.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26048,30 +26048,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/didi@10.2.2",
-      "name": "didi",
-      "version": "10.2.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/didi@10.2.2",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "didi@10.2.2"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/didi@11.0.0",
       "name": "didi",
       "version": "11.0.0",
@@ -26759,9 +26735,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/focus-trap@7.6.5",
+      "bom-ref": "pkg:npm/focus-trap@8.0.0",
       "name": "focus-trap",
-      "version": "7.6.5",
+      "version": "8.0.0",
       "licenses": [
         {
           "license": {
@@ -26769,11 +26745,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/focus-trap@7.6.5",
+      "purl": "pkg:npm/focus-trap@8.0.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "focus-trap@7.6.5"
+          "value": "focus-trap@8.0.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -27119,54 +27095,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/ids@1.0.5",
-      "name": "ids",
-      "version": "1.0.5",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ids@1.0.5",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "ids@1.0.5"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:npm/ids@3.0.0",
-      "name": "ids",
-      "version": "3.0.0",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ids@3.0.0",
-      "properties": [
-        {
-          "name": "aquasecurity:trivy:PkgID",
-          "value": "ids@3.0.0"
-        },
-        {
-          "name": "aquasecurity:trivy:PkgType",
-          "value": "npm"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:npm/ids@3.0.1",
       "name": "ids",
       "version": "3.0.1",
@@ -27424,9 +27352,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@17.0.1",
+      "bom-ref": "pkg:npm/marked@17.0.2",
       "name": "marked",
-      "version": "17.0.1",
+      "version": "17.0.2",
       "licenses": [
         {
           "license": {
@@ -27434,11 +27362,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/marked@17.0.1",
+      "purl": "pkg:npm/marked@17.0.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@17.0.1"
+          "value": "marked@17.0.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28166,9 +28094,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/qs@6.14.1",
+      "bom-ref": "pkg:npm/qs@6.14.2",
       "name": "qs",
-      "version": "6.14.1",
+      "version": "6.14.2",
       "licenses": [
         {
           "license": {
@@ -28176,11 +28104,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/qs@6.14.1",
+      "purl": "pkg:npm/qs@6.14.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "qs@6.14.1"
+          "value": "qs@6.14.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28543,9 +28471,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/tabbable@6.2.0",
+      "bom-ref": "pkg:npm/tabbable@6.4.0",
       "name": "tabbable",
-      "version": "6.2.0",
+      "version": "6.4.0",
       "licenses": [
         {
           "license": {
@@ -28553,11 +28481,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/tabbable@6.2.0",
+      "purl": "pkg:npm/tabbable@6.4.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "tabbable@6.2.0"
+          "value": "tabbable@6.4.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28783,7 +28711,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5d1e8377-2a4e-4baa-83b5-c126378a51fa",
+      "bom-ref": "174fbc2d-99ce-43fa-974d-dbfdc6bd1925",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -31710,7 +31638,13 @@
       ]
     },
     {
-      "ref": "4a86fb42-2ac8-4e6f-b347-685754b29e36",
+      "ref": "174fbc2d-99ce-43fa-974d-dbfdc6bd1925",
+      "dependsOn": [
+        "25d38910-c959-496f-ad8a-9e21ea13cf75"
+      ]
+    },
+    {
+      "ref": "25d38910-c959-496f-ad8a-9e21ea13cf75",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -31736,7 +31670,6 @@
         "pkg:npm/clipboard@2.0.11",
         "pkg:npm/cmmn-js@0.20.0",
         "pkg:npm/core-js@3.48.0",
-        "pkg:npm/didi@10.2.2",
         "pkg:npm/dmn-font@0.6.2",
         "pkg:npm/dmn-js-decision-table@17.6.0",
         "pkg:npm/dmn-js-drd@17.6.0",
@@ -31748,7 +31681,6 @@
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.3.5",
-        "pkg:npm/ids@1.0.5",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
@@ -31759,12 +31691,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "5d1e8377-2a4e-4baa-83b5-c126378a51fa",
-      "dependsOn": [
-        "4a86fb42-2ac8-4e6f-b347-685754b29e36"
       ]
     },
     {
@@ -31790,7 +31716,7 @@
       "ref": "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
       "dependsOn": [
         "pkg:npm/dmn-moddle@12.0.1",
-        "pkg:npm/ids@3.0.0",
+        "pkg:npm/ids@3.0.1",
         "pkg:npm/min-dash@5.0.0"
       ]
     },
@@ -31805,15 +31731,15 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/feel-editor@2.4.0",
+      "ref": "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
         "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
-        "pkg:npm/%40camunda/feel-builtins@0.3.0",
+        "pkg:npm/%40camunda/feel-builtins@1.0.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/commands@6.10.2",
         "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.3",
+        "pkg:npm/%40codemirror/lint@6.9.4",
         "pkg:npm/%40codemirror/state@6.5.4",
         "pkg:npm/%40codemirror/view@6.39.13",
         "pkg:npm/%40lezer/highlight@1.2.3",
@@ -31824,14 +31750,14 @@
     {
       "ref": "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+        "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
         "pkg:npm/%40codemirror/language@6.12.1"
       ]
     },
     {
       "ref": "pkg:npm/%40bpmn-io/feelin@6.1.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+        "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
         "pkg:npm/%40lezer/common@1.5.1",
         "pkg:npm/luxon@3.7.2",
         "pkg:npm/min-dash@5.0.0"
@@ -31846,7 +31772,7 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
         "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
-        "pkg:npm/%40bpmn-io/properties-panel@3.38.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/ids@3.0.1",
@@ -31864,7 +31790,7 @@
         "pkg:npm/%40codemirror/commands@6.10.2",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
         "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.3",
+        "pkg:npm/%40codemirror/lint@6.9.4",
         "pkg:npm/%40codemirror/state@6.5.4",
         "pkg:npm/%40codemirror/view@6.39.13",
         "pkg:npm/classnames@2.5.1",
@@ -31879,7 +31805,7 @@
       "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40carbon/grid@11.49.0",
+        "pkg:npm/%40carbon/grid@11.50.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
@@ -31889,7 +31815,7 @@
         "pkg:npm/ids@3.0.1",
         "pkg:npm/lodash@4.17.23",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/marked@17.0.1",
+        "pkg:npm/marked@17.0.2",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/preact@10.28.2"
       ]
@@ -31906,14 +31832,14 @@
     {
       "ref": "pkg:npm/%40bpmn-io/lang-feel@3.0.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+        "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/language@6.12.1",
         "pkg:npm/%40lezer/common@1.5.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+      "ref": "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
       "dependsOn": [
         "pkg:npm/%40lezer/highlight@1.2.3",
         "pkg:npm/%40lezer/lr@1.4.8",
@@ -31921,26 +31847,26 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.38.0",
+      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-editor@2.4.0",
+        "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
         "pkg:npm/%40carbon/icons@11.71.0",
         "pkg:npm/%40codemirror/view@6.39.13",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/feelers@1.5.1",
-        "pkg:npm/focus-trap@7.6.5",
+        "pkg:npm/focus-trap@8.0.0",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.2.0"
       ]
     },
     {
-      "ref": "pkg:npm/%40camunda/feel-builtins@0.3.0",
+      "ref": "pkg:npm/%40camunda/feel-builtins@1.0.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.49.0",
+      "ref": "pkg:npm/%40carbon/grid@11.50.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.47.0",
+        "pkg:npm/%40carbon/layout@11.48.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
@@ -31951,7 +31877,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/layout@11.47.0",
+      "ref": "pkg:npm/%40carbon/layout@11.48.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
@@ -31993,7 +31919,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40codemirror/lint@6.9.3",
+      "ref": "pkg:npm/%40codemirror/lint@6.9.4",
       "dependsOn": [
         "pkg:npm/%40codemirror/state@6.5.4",
         "pkg:npm/%40codemirror/view@6.39.13",
@@ -32179,7 +32105,7 @@
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.3.0",
         "pkg:npm/diagram-js@15.7.0",
-        "pkg:npm/ids@3.0.0",
+        "pkg:npm/ids@3.0.1",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.2.0",
@@ -32286,7 +32212,7 @@
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/commands@6.10.2",
         "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.3",
+        "pkg:npm/%40codemirror/lint@6.9.4",
         "pkg:npm/%40codemirror/search@6.6.0",
         "pkg:npm/%40codemirror/state@6.5.4",
         "pkg:npm/%40codemirror/view@6.39.13"
@@ -32421,10 +32347,6 @@
       ]
     },
     {
-      "ref": "pkg:npm/didi@10.2.2",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:npm/didi@11.0.0",
       "dependsOn": []
     },
@@ -32492,7 +32414,7 @@
     {
       "ref": "pkg:npm/dmn-js-properties-panel@3.9.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/properties-panel@3.38.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
         "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/dmn-js@17.6.0",
         "pkg:npm/min-dash@4.2.3",
@@ -32502,7 +32424,7 @@
     {
       "ref": "pkg:npm/dmn-js-shared@17.6.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/feel-editor@2.4.0",
+        "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
         "pkg:npm/diagram-js@15.7.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.0.1",
@@ -32617,11 +32539,11 @@
         "pkg:npm/%40bpmn-io/cm-theme@0.1.0-alpha.2",
         "pkg:npm/%40bpmn-io/feel-lint@3.1.0",
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40bpmn-io/lezer-feel@2.2.1",
+        "pkg:npm/%40bpmn-io/lezer-feel@2.3.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/commands@6.10.2",
         "pkg:npm/%40codemirror/language@6.12.1",
-        "pkg:npm/%40codemirror/lint@6.9.3",
+        "pkg:npm/%40codemirror/lint@6.9.4",
         "pkg:npm/%40codemirror/state@6.5.4",
         "pkg:npm/%40codemirror/view@6.39.13",
         "pkg:npm/%40lezer/common@1.5.1",
@@ -32642,9 +32564,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/focus-trap@7.6.5",
+      "ref": "pkg:npm/focus-trap@8.0.0",
       "dependsOn": [
-        "pkg:npm/tabbable@6.2.0"
+        "pkg:npm/tabbable@6.4.0"
       ]
     },
     {
@@ -32736,14 +32658,6 @@
       ]
     },
     {
-      "ref": "pkg:npm/ids@1.0.5",
-      "dependsOn": []
-    },
-    {
-      "ref": "pkg:npm/ids@3.0.0",
-      "dependsOn": []
-    },
-    {
       "ref": "pkg:npm/ids@3.0.1",
       "dependsOn": []
     },
@@ -32794,7 +32708,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@17.0.1",
+      "ref": "pkg:npm/marked@17.0.2",
       "dependsOn": []
     },
     {
@@ -32947,7 +32861,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/qs@6.14.1",
+      "ref": "pkg:npm/qs@6.14.2",
       "dependsOn": [
         "pkg:npm/side-channel@1.1.0"
       ]
@@ -33043,11 +32957,11 @@
         "pkg:npm/formidable@3.5.4",
         "pkg:npm/methods@1.1.2",
         "pkg:npm/mime@2.6.0",
-        "pkg:npm/qs@6.14.1"
+        "pkg:npm/qs@6.14.2"
       ]
     },
     {
-      "ref": "pkg:npm/tabbable@6.2.0",
+      "ref": "pkg:npm/tabbable@6.4.0",
       "dependsOn": []
     },
     {

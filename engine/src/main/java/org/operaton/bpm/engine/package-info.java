@@ -32,4 +32,7 @@
  *
  * @since 1.0
  */
+@NullMarked
 package org.operaton.bpm.engine;
+
+import org.jspecify.annotations.NullMarked;

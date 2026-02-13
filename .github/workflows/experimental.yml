@@ -32,24 +32,28 @@ jobs:
           distribution: zulu
           java-version: 17
       - name: Import GPG key
+        shell: bash
         run: |
           echo "$GPG_SECRET_KEY" | gpg --batch --import
           gpg --list-secret-keys --keyid-format LONG
         env:
           GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      - name: Deploy to Maven Central
+      - name: Create settings.xml
+        shell: bash
         run: |
           cat > .mvn/settings.xml <<EOF
           <settings>
-            <servers>
-              <server>
-                <id>central</id>
-                <username>${{ secrets.OSSRH_USERNAME2 }}</username>
-                <password>${{ secrets.OSSRH_PASSWORD2 }}</password>
-              </server>
-            </servers>
+          <servers>
+           <server>
+             <id>central</id>
+             <username>${{ secrets.OSSRH_USERNAME2 }}</username>
+             <password>${{ secrets.OSSRH_PASSWORD2 }}</password>
+           </server>
+          </servers>
           </settings>
           EOF
-          ./mvnw deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-release
+      - name: Deploy to Maven Central
+        run: |
+          ./mvnw deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-release,-integration-test-external-task-client
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

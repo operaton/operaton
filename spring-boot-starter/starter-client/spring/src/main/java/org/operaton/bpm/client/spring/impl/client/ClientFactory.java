@@ -196,6 +196,7 @@ public class ClientFactory
 
   public void setClientConfiguration(ClientConfiguration clientConfiguration) {
     this.clientConfiguration = clientConfiguration;
+    checkForCreateTimeMisconfiguration();
   }
 
   public List<ClientRequestInterceptor> getRequestInterceptors() {

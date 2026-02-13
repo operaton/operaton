@@ -63,6 +63,12 @@ public class PropertiesAwareClientFactory extends ClientFactory {
     if (clientConfigurationProps.getMaxTasks() != null) {
       clientConfiguration.setMaxTasks(clientConfigurationProps.getMaxTasks());
     }
+    if (clientConfigurationProps.getOrderByCreateTime() != null) {
+      clientConfiguration.setOrderByCreateTime(clientConfigurationProps.getOrderByCreateTime());
+    }
+    if (clientConfigurationProps.getUseCreateTime() != null) {
+      clientConfiguration.setUseCreateTime(clientConfigurationProps.getUseCreateTime());
+    }
     if (clientConfigurationProps.getUsePriority() != null && Boolean.FALSE.equals(clientConfigurationProps.getUsePriority())) {
       clientConfiguration.setUsePriority(false);
     }

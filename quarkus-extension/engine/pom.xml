@@ -16,7 +16,6 @@
   <modules>
     <module>deployment</module>
     <module>runtime</module>
-    <module>qa</module>
   </modules>
   <build>
     <plugins>
@@ -30,4 +29,12 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>distro</id>
+      <modules>
+        <module>qa</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>

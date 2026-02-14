@@ -219,7 +219,7 @@
       </properties>
     </profile>
     <profile>
-      <id>integration-test-external-task-client</id>
+      <id>distro</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>

@@ -100,28 +100,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm.qa</groupId>
-      <artifactId>engine-variable-test</artifactId>
-      <version>${project.version}</version>
-      <classifier>classes</classifier>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest</artifactId>
-      <scope>test</scope>
-      <type>war</type>
-      <classifier>tomcat</classifier>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm.qa</groupId>
-      <artifactId>engine-variable-test</artifactId>
-      <scope>test</scope>
-      <type>war</type>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>test</scope>
@@ -224,6 +202,28 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <dependencies>
+        <dependency>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>engine-variable-test</artifactId>
+          <version>${project.version}</version>
+          <classifier>classes</classifier>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-rest</artifactId>
+          <scope>test</scope>
+          <type>war</type>
+          <classifier>tomcat</classifier>
+          <version>${project.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>engine-variable-test</artifactId>
+          <scope>test</scope>
+          <type>war</type>
+          <version>${project.version}</version>
+        </dependency>
         <dependency>
           <groupId>org.operaton.bpm.tomcat</groupId>
           <artifactId>operaton-tomcat-assembly</artifactId>

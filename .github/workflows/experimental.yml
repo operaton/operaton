@@ -54,6 +54,6 @@ jobs:
           EOF
       - name: Deploy to Maven Central
         run: |
-          ./mvnw deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-release,-distro
+          ./mvnw deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-snapshot,-distro
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

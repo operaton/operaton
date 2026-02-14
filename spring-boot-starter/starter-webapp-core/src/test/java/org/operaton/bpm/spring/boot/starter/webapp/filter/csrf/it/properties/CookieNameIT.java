@@ -61,7 +61,6 @@ class CookieNameIT {
     // then
     assertThat(xsrfCookieValue).matches("myFancyCookieName=[A-Z0-9]{32};" +
         "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
-
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");
 
     assertThat(xsrfCookieValue).contains(xsrfTokenHeader);

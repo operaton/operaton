@@ -1,25 +1,22 @@
 /*
  * Copyright 2025 the Operaton contributors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at:
- * 
+ *
  *     https://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * 
+ *
  */
 package org.operaton.bpm.webapp.impl.security.filter;
 
 import jakarta.servlet.FilterConfig;
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.SessionCookieConfig;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,35 +25,25 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 
-import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.getSameSiteCookieValueInitValue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.getSameSiteCookieValueInitValue;
 
 @ExtendWith(MockitoExtension.class)
 class CookieConfiguratorTest {
     @Mock
     FilterConfig filterConfig;
-    @Mock
-    ServletContext servletContext;
-    @Mock
-    SessionCookieConfig sessionCookieConfig;
 
     @InjectMocks
     CookieConfigurator cookieConfigurator;
 
     @BeforeEach
     void setUp() {
-        // Mock the servlet context and session cookie config
-        when(filterConfig.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getSessionCookieConfig()).thenReturn(sessionCookieConfig);
-        when(sessionCookieConfig.getName()).thenReturn(CookieConstants.JSESSION_ID); // Default cookie name
-
         when(filterConfig.getInitParameter(anyString())).thenReturn(null);
         when(filterConfig.getInitParameter(CookieConfigurator.SAME_SITE_OPTION_PARAM)).thenReturn("Lax");
 

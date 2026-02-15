@@ -14,46 +14,11 @@ on:
     #   type: string
 
 jobs:
-
-  deploy-snapshots:
-    name: Deploy Snapshots
+  execute:
     runs-on: ubuntu-latest
-    if: |
-      always() && !cancelled() && (
-        (github.event_name == 'workflow_dispatch' && github.event.inputs.skip_build != 'true')
-      )
+
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-java@v4
-        with:
-          distribution: zulu
-          java-version: 17
-      - name: Import GPG key
-        shell: bash
-        run: |
-          echo "$GPG_SECRET_KEY" | gpg --batch --import
-          gpg --list-secret-keys --keyid-format LONG
-        env:
-          GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      - name: Create settings.xml
-        shell: bash
-        run: |
-          cat > .mvn/settings.xml <<EOF
-          <settings>
-          <servers>
-           <server>
-             <id>central</id>
-             <username>${{ secrets.OSSRH_USERNAME2 }}</username>
-             <password>${{ secrets.OSSRH_PASSWORD2 }}</password>
-           </server>
-          </servers>
-          </settings>
-          EOF
-      - name: Deploy to Maven Central
-        run: |
-          ./mvnw deploy -DskipTests -s ./.mvn/settings.xml -Psonatype-oss-snapshot,-distro
-        env:
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+    # Runs a single command using the runners shell
+    - name: Run commands
+      run: |
+        echo "Done"

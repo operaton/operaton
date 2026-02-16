@@ -37,7 +37,7 @@
     <version.httpcore5>5.4</version.httpcore5>
     <version.cronutils>9.2.1</version.cronutils>
     <version.unirest-java>3.14.5</version.unirest-java>
-    <version.junit5>5.14.2</version.junit5>
+    <version.junit5>5.14.3</version.junit5>
     <version.assertj>3.27.7</version.assertj>
     <version.mockito>5.21.0</version.mockito>
     <version.jna>5.18.1</version.jna>
@@ -48,10 +48,10 @@
     <version.wildfly>38.0.1.Final</version.wildfly>
     <version.tomcat>11.0.18</version.tomcat>
     <version.arquillian>1.10.0.Final</version.arquillian>
-    <version.shrinkwrap.resolvers>3.3.4</version.shrinkwrap.resolvers>
+    <version.shrinkwrap.resolvers>3.3.5</version.shrinkwrap.resolvers>
     <version.selenium>4.40.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
-    <version.logback>1.5.29</version.logback>
+    <version.logback>1.5.31</version.logback>
     <version.freemarker>2.3.34</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
     <version.nodejs>22.13.0</version.nodejs>

@@ -73,6 +73,7 @@ auto-merge-rules:
       - 'version.logback'
       - 'version.mockito'
       - 'version.quarkus'
+      - 'version.shrinkwrap.resolvers'
       - 'version.spring-boot'
       - 'version.undertow'
       # Maven plugins
@@ -80,6 +81,7 @@ auto-merge-rules:
       - 'org.codehaus.cargo:cargo-maven3-plugin'
       - 'org.codehaus.mojo:*'
       - 'org.openapitools:openapi-generator-maven-plugin'
+      - 'org.sonatype.central:central-publishing-maven-plugin'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

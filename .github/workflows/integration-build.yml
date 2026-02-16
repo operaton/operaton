@@ -438,6 +438,7 @@ jobs:
     name: Deploy Snapshots
     needs:
       - build
+      - integration-tests
     runs-on: ubuntu-latest
     if: |
       always() && !cancelled() && (

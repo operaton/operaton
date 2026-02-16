@@ -34,6 +34,8 @@ class DefaultClientConfigurationTest extends ParsePropertiesHelper {
     assertThat(properties.getBaseUrl()).isNull();
     assertThat(properties.getWorkerId()).isNull();
     assertThat(properties.getMaxTasks()).isNull();
+    assertThat(properties.getOrderByCreateTime()).isNull();
+    assertThat(properties.getUseCreateTime()).isNull();
     assertThat(properties.getUsePriority()).isNull();
     assertThat(properties.getDefaultSerializationFormat()).isNull();
     assertThat(properties.getDateFormat()).isNull();

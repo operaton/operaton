@@ -30,7 +30,6 @@
     </dependencies>
   </dependencyManagement>
   <modules>
-    <module>qa</module>
     <module>client</module>
   </modules>
   <dependencies>
@@ -45,4 +44,12 @@
     <developerConnection>scm:git:git@github.com:operaton/operaton-external-task-client-java.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
+  <profiles>
+    <profile>
+      <id>distro</id>
+      <modules>
+        <module>qa</module>
+      </modules>
+    </profile>
+  </profiles>
 </project>

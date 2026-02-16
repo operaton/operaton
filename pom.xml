@@ -803,6 +803,82 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>sonatype-oss-snapshot</id>
+      <properties>
+        <deploy.skip>false</deploy.skip>
+      </properties>
+      <modules>
+        <module>spring-boot-starter</module>
+        <module>quarkus-extension</module>
+        <module>model-api</module>
+        <module>engine</module>
+        <module>engine-cdi</module>
+        <module>engine-spring</module>
+        <module>engine-rest</module>
+        <module>engine-dmn</module>
+        <module>connect</module>
+        <module>juel</module>
+        <module>spin</module>
+        <module>commons</module>
+        <module>freemarker-template-engine</module>
+        <module>jakarta-ee/ejb-client</module>
+        <module>webapps</module>
+        <module>engine-plugins</module>
+        <module>distro/webjar</module>
+        <!--
+        Excluded since the version is final and already deployed
+        <module>distro/sql-script</module>
+        -->
+        <module>clients/java</module>
+        <module>test-utils/junit5-extension</module>
+        <module>test-utils/archunit</module>
+        <module>test-utils/assert</module>
+        <module>test-utils/testcontainers</module>
+        <module>database</module>
+        <module>parent</module>
+        <module>bom</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.10.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
     <profile>
       <id>license-header-check</id>
       <build>

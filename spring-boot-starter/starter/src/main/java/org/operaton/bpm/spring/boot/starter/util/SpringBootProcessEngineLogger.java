@@ -20,11 +20,11 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.springframework.core.io.Resource;
 
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.spring.boot.starter.property.GenericProperties;
 import org.operaton.commons.logging.BaseLogger;
 

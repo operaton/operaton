@@ -54,13 +54,13 @@ updates:
           - "@babel/core"
           - "@babel/preset-env"
           - "@babel/eslint-parser"
-      dmn-js:
+      Xmn-js:
         patterns:
+          - "bpmn-js"
+          - "camunda-dmn-js"
+          - "cmmn-js"
           - "dmn-js"
-          - "dmn-js-decision-table"
-          - "dmn-js-drd"
-          - "dmn-js-literal-expression"
-          - "dmn-js-shared"
+          - "dmn-js-*"
       eslint:
         patterns:
           - "eslint*"
@@ -68,6 +68,10 @@ updates:
       webpack:
         patterns:
           - "webpack*"
+    ignore:
+      - dependency-name: "eslint*"
+        # Known incompatibility with eslint 10
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -117,7 +121,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 16
+    milestone: 17
     groups:
       httpcomponents5:
         patterns:
@@ -139,7 +143,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 16
+    milestone: 17
     groups:
       angular:
         patterns:
@@ -149,13 +153,13 @@ updates:
           - "@babel/core"
           - "@babel/preset-env"
           - "@babel/eslint-parser"
-      dmn-js:
+      Xmn-js:
         patterns:
+          - "bpmn-js"
+          - "camunda-dmn-js"
+          - "cmmn-js"
           - "dmn-js"
-          - "dmn-js-decision-table"
-          - "dmn-js-drd"
-          - "dmn-js-literal-expression"
-          - "dmn-js-shared"
+          - "dmn-js-*"
       eslint:
         patterns:
           - "eslint*"
@@ -163,6 +167,10 @@ updates:
       webpack:
         patterns:
           - "webpack*"
+    ignore:
+      - dependency-name: "eslint*"
+        # Known incompatibility with eslint 10
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -172,7 +180,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:npm"
-    milestone: 16
+    milestone: 17
     groups:
       react:
         patterns:
@@ -186,7 +194,7 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:github-action"
-    milestone: 16
+    milestone: 17
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -194,5 +202,5 @@ updates:
     target-branch: "release/2.0.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 16
+    milestone: 17
 

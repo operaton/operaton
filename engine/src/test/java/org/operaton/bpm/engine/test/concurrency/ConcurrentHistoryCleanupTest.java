@@ -18,9 +18,11 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.awaitility.core.ConditionTimeoutException;
 
 import org.operaton.bpm.engine.impl.cmd.HistoryCleanupCmd;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
@@ -32,6 +34,7 @@ import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.util.DatabaseHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 import static org.junit.Assume.assumeTrue;
 
 /**
@@ -78,7 +81,8 @@ class ConcurrentHistoryCleanupTest extends ConcurrencyTestCase {
 
     thread2.makeContinue();
 
-    Thread.sleep(2000);
+    await().atMost(2, TimeUnit.SECONDS)
+           .until(() -> thread2.syncAvailable || thread2.getException() != null);
 
     thread1.waitUntilDone();
 

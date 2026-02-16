@@ -16,10 +16,12 @@
  */
 package org.operaton.bpm.engine.test.concurrency;
 
+import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.awaitility.core.ConditionTimeoutException;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -32,6 +34,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 
 class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelper {
@@ -89,7 +92,10 @@ class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelp
     threadOne.waitForSync();
 
     threadTwo.makeContinue();
-    Thread.sleep(3000); // wait a bit until t2 is blocked during the flush
+
+    // wait a bit until t2 is blocked during the flush
+    await().atMost(3, TimeUnit.SECONDS)
+           .until(() -> threadTwo.syncAvailable || threadTwo.getException() != null);
 
     threadOne.waitUntilDone(); // let t1 commit, unblocking t2
 

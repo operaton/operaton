@@ -17,7 +17,10 @@
 package org.operaton.bpm.engine.rest.util.container;
 
 import java.net.BindException;
+import java.util.concurrent.TimeUnit;
 import jakarta.ws.rs.core.Application;
+import org.awaitility.core.ConditionTimeoutException;
+import static org.awaitility.Awaitility.await;
 
 public abstract class EmbeddedServerBootstrap extends AbstractServerBootstrap {
 
@@ -34,20 +37,29 @@ public abstract class EmbeddedServerBootstrap extends AbstractServerBootstrap {
   @Override
   protected void startServer(int startUpRetries) {
     try {
-      startServerInternal();
-    } catch (Exception e) {
-      if ((e instanceof BindException || e.getCause() instanceof BindException) && startUpRetries > 0) {
-        stop();
-        try {
-          Thread.sleep(500L);
-        } catch (Exception ex) {
-          // ignore
-        }
-        setupServer(application);
-        startServer(--startUpRetries);
-      } else {
-        throw new ServerBootstrapException(e);
+      await()
+        .atMost((startUpRetries + 1) * 500L, TimeUnit.MILLISECONDS)
+        .pollInterval(500, TimeUnit.MILLISECONDS)
+        .ignoreExceptionsMatching(e -> e instanceof BindException || e.getCause() instanceof BindException)
+        .until(() -> {
+          try {
+            startServerInternal();
+            return true;
+          } catch (Exception e) {
+            if (e instanceof BindException || e.getCause() instanceof BindException) {
+              stop();
+              setupServer(application);
+              throw e;
+            }
+            throw new ServerBootstrapException(e);
+          }
+        });
+    } catch (ConditionTimeoutException e) {
+      Throwable cause = e.getCause();
+      if (cause instanceof Exception) {
+        throw new ServerBootstrapException((Exception) cause);
       }
+      throw new ServerBootstrapException(e);
     }
   }
 }

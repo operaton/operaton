@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.spring.test.components.scope;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.AfterEach;
@@ -39,6 +40,7 @@ import org.operaton.bpm.engine.spring.test.components.ProcessInitiatingPojo;
 import org.operaton.bpm.engine.task.Task;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * tests the scoped beans
@@ -118,7 +120,12 @@ public class ScopingTest {
 		LOGGER.info("sleeping for 10 seconds while a user performs his task. " +
 				"The first transaction has committed. A new one will start in 10 seconds");
 
-		Thread.sleep(1000 * 5);
+		await().atMost(5, TimeUnit.SECONDS)
+			.pollInterval(250, TimeUnit.MILLISECONDS)
+			.until(() -> {
+				Task task = taskService.createTaskQuery().taskId(t.getId()).singleResult();
+				return task != null && "me".equals(task.getAssignee());
+			});
 
 		this.taskService.complete(t.getId());
 

@@ -16,20 +16,25 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.operaton.bpm.engine.delegate.DelegateExecution;
 import org.operaton.bpm.engine.delegate.JavaDelegate;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * @author Joram Barrez
  */
 public class EndEventTestJavaDelegate implements JavaDelegate {
 
-  public static int timesCalled;
+  public static AtomicInteger timesCalled = new AtomicInteger(0);
 
   @Override
   public void execute(DelegateExecution execution) throws Exception {
-    timesCalled++;
-    Thread.sleep(1000L);
+    timesCalled.incrementAndGet();
+    await().atMost(5, TimeUnit.SECONDS).until(() -> timesCalled.get() >= 2);
   }
 
 }

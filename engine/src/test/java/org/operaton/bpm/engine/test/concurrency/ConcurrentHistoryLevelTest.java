@@ -17,9 +17,11 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import java.sql.Connection;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.awaitility.core.ConditionTimeoutException;
 
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
@@ -31,6 +33,7 @@ import org.operaton.bpm.engine.test.util.DatabaseHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * <p>Tests cluster scenario with two nodes trying to write the history level property in parallel.</p>
@@ -64,7 +67,8 @@ class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
     thread2.makeContinue();
 
-    Thread.sleep(2000);
+    await().atMost(2, TimeUnit.SECONDS)
+           .until(() -> thread2.syncAvailable || thread2.getException() != null);
 
     thread1.waitUntilDone();
 

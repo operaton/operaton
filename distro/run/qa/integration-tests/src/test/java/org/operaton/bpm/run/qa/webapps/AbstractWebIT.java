@@ -25,7 +25,10 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
 import org.operaton.bpm.TestProperties;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * NOTE: copied from
@@ -83,11 +86,12 @@ public abstract class AbstractWebIT {
   }
 
   public void preventRaceConditions() {
-    // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    try {
-      Thread.sleep(6 * 1000);
-    } catch (InterruptedException ignored) {
-      Thread.currentThread().interrupt();
+    // just wait until the application is available before starting because of Wildfly / Cargo race conditions
+    if (appBasePath != null) {
+      await().atMost(10, TimeUnit.SECONDS)
+        .pollInterval(500, TimeUnit.MILLISECONDS)
+        .ignoreExceptions()
+        .until(() -> Unirest.head(appBasePath).asEmpty().isSuccess());
     }
   }
 

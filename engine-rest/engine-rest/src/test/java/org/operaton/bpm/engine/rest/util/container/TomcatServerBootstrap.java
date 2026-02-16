@@ -18,12 +18,15 @@ package org.operaton.bpm.engine.rest.util.container;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleState;
 import org.apache.catalina.startup.Tomcat;
+import org.awaitility.core.ConditionTimeoutException;
+import static org.awaitility.Awaitility.await;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -72,15 +75,7 @@ public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {
   protected void startServer(int startUpRetries) {
     Properties serverProperties = readProperties();
     int port = Integer.parseInt(serverProperties.getProperty(PORT_PROPERTY));
-
-    tomcat = new Tomcat();
-    tomcat.setPort(port);
-    tomcat.setBaseDir(getWorkingDir());
-
-    tomcat.getHost().setAppBase(getWorkingDir());
-    tomcat.getHost().setAutoDeploy(true);
-    tomcat.getHost().setDeployOnStartup(true);
-
+    initializeTomcat(port);
     String contextPath = "/" + getContextPath();
 
     // 1) Must not use shrinkwrap offline mode (see longer explanation at the end of the file)
@@ -110,19 +105,38 @@ public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {
     tomcat.addWebapp(tomcat.getHost(), contextPath, webAppPath);
 
     try {
-      tomcat.start();
-      if (LifecycleState.FAILED.equals(tomcat.getConnector().getState())) {
-        stop();
-        try {
-          Thread.sleep(1500L);
-        } catch (Exception ex) {
-          // ignore
-        }
-        startServer(--startUpRetries);
-      }
-    } catch (LifecycleException e) {
-      throw new RuntimeException(e);
+      await()
+        .atMost((startUpRetries + 1) * 1500L, TimeUnit.MILLISECONDS)
+        .pollInterval(1500, TimeUnit.MILLISECONDS)
+        .until(() -> {
+          try {
+            tomcat.start();
+            if (LifecycleState.FAILED.equals(tomcat.getConnector().getState())) {
+              stop();
+              // Re-initialize tomcat for retry if needed
+              initializeTomcat(port);
+              tomcat.addWebapp(tomcat.getHost(), contextPath, webAppPath);
+              return false;
+            }
+            return true;
+          } catch (LifecycleException e) {
+            stop();
+            return false;
+          }
+        });
+    } catch (ConditionTimeoutException e) {
+      throw new RuntimeException("Failed to start Tomcat after retries", e);
     }
+  }
+
+  protected void initializeTomcat(int port) {
+    tomcat = new Tomcat();
+    tomcat.setPort(port);
+    tomcat.setBaseDir(getWorkingDir());
+
+    tomcat.getHost().setAppBase(getWorkingDir());
+    tomcat.getHost().setAutoDeploy(true);
+    tomcat.getHost().setDeployOnStartup(true);
   }
 
   protected abstract void addRuntimeSpecificLibraries(WebArchive wa, PomEquippedResolveStage resolver);

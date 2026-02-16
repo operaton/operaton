@@ -19,10 +19,12 @@ package org.operaton.bpm.engine.test.concurrency;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.awaitility.core.ConditionTimeoutException;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -39,6 +41,7 @@ import org.operaton.bpm.engine.runtime.Job;
 
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_CLEANUP_STRATEGY_END_TIME_BASED;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * <p>Tests a concurrent attempt of a bootstrapping Process Engine to reconfigure
@@ -141,7 +144,8 @@ class ConcurrentProcessEngineJobExecutorHistoryCleanupJobTest extends Concurrenc
 
     thread2.makeContinue();
 
-    Thread.sleep(2000);
+    await().atMost(2, TimeUnit.SECONDS)
+           .until(() -> thread2.syncAvailable || thread2.getException() != null);
 
     thread1.waitUntilDone();
 

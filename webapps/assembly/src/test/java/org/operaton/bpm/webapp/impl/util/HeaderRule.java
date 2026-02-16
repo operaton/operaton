@@ -21,10 +21,13 @@ import java.net.BindException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.jetty.ee10.webapp.WebAppContext;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.URLResourceFactory;
+import org.awaitility.core.ConditionTimeoutException;
+import static org.awaitility.Awaitility.await;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -79,18 +82,26 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
     server.setHandler(webAppContext);
 
     try {
-      server.start();
-    } catch (Exception e) {
-      if (e.getCause() instanceof BindException && startUpRetries > 0) {
-        try {
-          Thread.sleep(500L);
-        } catch (InterruptedException ignored) {
-          Thread.currentThread().interrupt();
-        }
-        startServer(webDescriptor, scope, contextPath, --startUpRetries);
-      } else {
-        throw new RuntimeException(e);
-      }
+      await()
+        .atMost((startUpRetries + 1) * 500L, TimeUnit.MILLISECONDS)
+        .pollInterval(500, TimeUnit.MILLISECONDS)
+        .until(() -> {
+          try {
+            server.start();
+            return true;
+          } catch (Exception e) {
+            if (e.getCause() instanceof BindException) {
+              try {
+                server.stop();
+              } catch (Exception ignored) {
+              }
+              return false;
+            }
+            throw new RuntimeException(e);
+          }
+        });
+    } catch (ConditionTimeoutException e) {
+      throw new RuntimeException("Failed to start Jetty after retries", e);
     }
   }
 

@@ -89,7 +89,7 @@
     "license-checker": "25.0.1",
     "lightningcss": "^1.31.1",
     "mini-css-extract-plugin": "2.10.0",
-    "postcss-loader": "8.2.0",
+    "postcss-loader": "8.2.1",
     "prettier": "3.8.1",
     "raw-loader": "4.0.2",
     "sass": "1.97.3",

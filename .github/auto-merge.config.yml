@@ -32,6 +32,7 @@ auto-merge-rules:
   - author: 'dependabot[bot]'
     labels: ['dependencies:maven']
     includes:
+      - 'ch.martinelli.oss:testcontainers-mailpit'
       - 'ch.qos.logback*'
       - 'com.fasterxml.jackson*'
       - 'com.fasterxml.uuid:java-uuid-generator'

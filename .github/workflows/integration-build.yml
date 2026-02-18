@@ -99,7 +99,7 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
-      - '.github/workflows/auto-merge.yml'
+      - '.github/auto-merge.config.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'

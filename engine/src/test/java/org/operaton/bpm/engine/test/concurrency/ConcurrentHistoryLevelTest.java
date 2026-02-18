@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.awaitility.core.ConditionTimeoutException;
 
 import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;

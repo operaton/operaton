@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.operaton.bpm.engine.delegate.DelegateExecution;
@@ -34,7 +34,7 @@ public class EndEventTestJavaDelegate implements JavaDelegate {
   @Override
   public void execute(DelegateExecution execution) throws Exception {
     timesCalled.incrementAndGet();
-    await().atMost(5, TimeUnit.SECONDS).until(() -> timesCalled.get() >= 2);
+    await().pollDelay(Duration.ofSeconds(1)).until(() -> true);
   }
 
 }

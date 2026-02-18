@@ -87,12 +87,10 @@ public abstract class AbstractWebIT {
 
   public void preventRaceConditions() {
     // just wait until the application is available before starting because of Wildfly / Cargo race conditions
-    if (appBasePath != null) {
-      await().atMost(10, TimeUnit.SECONDS)
-        .pollInterval(500, TimeUnit.MILLISECONDS)
-        .ignoreExceptions()
-        .until(() -> Unirest.head(appBasePath).asEmpty().isSuccess());
-    }
+    await().atMost(10, TimeUnit.SECONDS)
+      .pollInterval(500, TimeUnit.MILLISECONDS)
+      .ignoreExceptions()
+      .until(() -> appBasePath != null && Unirest.head(appBasePath).asEmpty().isSuccess());
   }
 
   protected String getWebappCtxPath() {

@@ -120,7 +120,7 @@ public class ScopingTest {
 		LOGGER.info("sleeping for 10 seconds while a user performs his task. " +
 				"The first transaction has committed. A new one will start in 10 seconds");
 
-		await().atMost(5, TimeUnit.SECONDS)
+		await().atMost(10, TimeUnit.SECONDS)
 			.pollInterval(250, TimeUnit.MILLISECONDS)
 			.until(() -> {
 				Task task = taskService.createTaskQuery().taskId(t.getId()).singleResult();

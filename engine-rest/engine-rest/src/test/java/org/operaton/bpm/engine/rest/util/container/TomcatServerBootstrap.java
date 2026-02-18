@@ -121,6 +121,9 @@ public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {
             return true;
           } catch (LifecycleException e) {
             stop();
+            // Re-initialize tomcat for retry if needed
+            initializeTomcat(port);
+            tomcat.addWebapp(tomcat.getHost(), contextPath, webAppPath);
             return false;
           }
         });

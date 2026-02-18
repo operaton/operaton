@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.end;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -42,6 +43,11 @@ class EndEventTest {
 
   RuntimeService runtimeService;
   TaskService taskService;
+
+  @BeforeEach
+  void setUp() {
+    EndEventTestJavaDelegate.timesCalled.set(0);
+  }
 
   // Test case for ACT-1259
   @Deployment

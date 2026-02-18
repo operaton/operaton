@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,6 +38,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutionRunnablesToFinish;
 import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * @author Daniel Meyer
@@ -224,7 +226,8 @@ class SequentialJobAcquisitionTest {
     waitForJobExecutorToProcessAllJobs(10000, 100, jobExecutor, engine2.getManagementService());
     waitForJobExecutionRunnablesToFinish(10000, 100, jobExecutor);
 
-    Thread.sleep(2000);
+    await().atMost(2, TimeUnit.SECONDS)
+      .until(() -> !jobExecutor.getAcquireJobsRunnable().isJobAdded());
 
     assertThat(jobExecutor.getAcquireJobsRunnable().isJobAdded()).isFalse();
 

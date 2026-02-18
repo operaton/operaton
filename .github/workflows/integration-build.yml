@@ -99,7 +99,7 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
-      - '.github/workflows/auto-merge.yml'
+      - '.github/auto-merge.config.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -462,6 +462,9 @@ jobs:
         env:
           GPG_SECRET_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       - name: Create settings.xml
+        env:
+          USERNAME: ${{ secrets.OSSRH_USERNAME2 }}
+          PASSWORD: ${{ secrets.OSSRH_PASSWORD2 }}
         shell: bash
         run: |
           cat > .mvn/settings.xml <<EOF
@@ -469,8 +472,8 @@ jobs:
           <servers>
            <server>
              <id>central</id>
-             <username>${{ secrets.OSSRH_USERNAME2 }}</username>
-             <password>${{ secrets.OSSRH_PASSWORD2 }}</password>
+             <username>$USERNAME</username>
+             <password>$PASSWORD</password>
            </server>
           </servers>
           </settings>

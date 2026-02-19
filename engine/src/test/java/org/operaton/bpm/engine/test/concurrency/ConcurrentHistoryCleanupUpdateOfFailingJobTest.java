@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +63,7 @@ class ConcurrentHistoryCleanupUpdateOfFailingJobTest extends ConcurrencyTestHelp
   }
 
   @Test
-  void testFailedHistoryCleanupJobUpdate() throws Exception {
+  void testFailedHistoryCleanupJobUpdate() {
     // given configured History cleanup
 
     String cleanUpJobId;

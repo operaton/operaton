@@ -26,7 +26,6 @@ import org.apache.catalina.LifecycleException;
 import org.apache.catalina.LifecycleState;
 import org.apache.catalina.startup.Tomcat;
 import org.awaitility.core.ConditionTimeoutException;
-import static org.awaitility.Awaitility.await;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.jboss.shrinkwrap.api.exporter.ZipExporter;
@@ -38,6 +37,8 @@ import org.jboss.shrinkwrap.resolver.api.maven.coordinate.MavenDependencies;
 
 import org.operaton.bpm.engine.rest.spi.ProcessEngineProvider;
 import org.operaton.bpm.engine.rest.spi.impl.MockedProcessEngineProvider;
+
+import static org.awaitility.Awaitility.await;
 
 
 public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {

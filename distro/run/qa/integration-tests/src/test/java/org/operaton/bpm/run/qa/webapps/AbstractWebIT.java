@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
+import java.util.concurrent.TimeUnit;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
@@ -25,7 +27,6 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
 import org.operaton.bpm.TestProperties;
 
 import static org.awaitility.Awaitility.await;

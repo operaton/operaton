@@ -23,16 +23,17 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import org.awaitility.core.ConditionTimeoutException;
 import org.eclipse.jetty.ee10.webapp.WebAppContext;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.resource.URLResourceFactory;
-import org.awaitility.core.ConditionTimeoutException;
-import static org.awaitility.Awaitility.await;
 import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * JUnit 5 extension for managing a Jetty server during tests.

@@ -83,6 +83,11 @@ public class DmnEngineConfigurationBuilder {
     return this;
   }
 
+  public DmnEngineConfigurationBuilder previewFeaturesEnabled(boolean previewFeaturesEnabled) {
+    dmnEngineConfiguration.setPreviewFeaturesEnabled(previewFeaturesEnabled);
+    return this;
+  }
+
   /**
    * Modify the given DMN engine configuration and return it.
    */

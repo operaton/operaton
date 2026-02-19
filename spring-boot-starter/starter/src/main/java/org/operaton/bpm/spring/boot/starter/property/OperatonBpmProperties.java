@@ -160,6 +160,11 @@ public class OperatonBpmProperties {
   @NestedConfigurationProperty
   private FilterProperty filter = new FilterProperty();
 
+  /**
+   * Enables experimental preview features on the process engine level. Defaults to false.
+   */
+  private Boolean previewFeaturesEnabled;
+
   public String getProcessEngineName() {
     return processEngineName;
   }
@@ -344,6 +349,14 @@ public class OperatonBpmProperties {
     this.generateUniqueProcessApplicationName = generateUniqueProcessApplicationName;
   }
 
+  public Boolean getPreviewFeaturesEnabled() {
+    return previewFeaturesEnabled != null ? previewFeaturesEnabled : Boolean.FALSE;
+  }
+
+  public void setPreviewFeaturesEnabled(Boolean previewFeaturesEnabled) {
+    this.previewFeaturesEnabled = previewFeaturesEnabled;
+  }
+
   @Override
   public String toString() {
     return joinOn(this.getClass())
@@ -369,6 +382,7 @@ public class OperatonBpmProperties {
       .add("idGenerator=" + idGenerator)
       .add("jobExecutorAcquireByPriority=" + jobExecutorAcquireByPriority)
       .add("defaultNumberOfRetries" + defaultNumberOfRetries)
+      .add("previewFeaturesEnabled=" + previewFeaturesEnabled)
       .toString();
   }
 

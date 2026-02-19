@@ -193,4 +193,5 @@ public class OperatonBpmConfiguration {
   public OperatonIntegrationDeterminator operatonIntegrationDeterminator(ProcessEngine processEngine) {
     return new OperatonIntegrationDeterminator(processEngine);
   }
+
 }

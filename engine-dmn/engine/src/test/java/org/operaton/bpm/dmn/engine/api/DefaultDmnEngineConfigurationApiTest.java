@@ -399,7 +399,7 @@ class DefaultDmnEngineConfigurationApiTest {
     assertThat(configuration.getTransformer())
       .isNull();
 
-    DmnTransformer transformer = new DefaultDmnTransformer();
+    DmnTransformer transformer = new DefaultDmnTransformer(configuration);
 
     configuration.setTransformer(transformer);
     assertThat(configuration.getTransformer())
@@ -412,7 +412,7 @@ class DefaultDmnEngineConfigurationApiTest {
     assertThat(configuration.getTransformer())
       .isNull();
 
-    DmnTransformer transformer = new DefaultDmnTransformer();
+    DmnTransformer transformer = new DefaultDmnTransformer(configuration);
 
     configuration.transformer(transformer);
     assertThat(configuration.getTransformer())
@@ -433,7 +433,7 @@ class DefaultDmnEngineConfigurationApiTest {
     DefaultScriptEngineResolver scriptEngineResolver = new DefaultScriptEngineResolver();
     ElProvider elProvider = new JuelElProvider();
     FeelEngineFactory feelEngineFactory = new FeelEngineFactoryImpl();
-    DmnTransformer transformer = new DefaultDmnTransformer();
+    DmnTransformer transformer = new DefaultDmnTransformer(configuration);
 
     DmnEngine engine = configuration
       .engineMetricCollector(metricCollector)

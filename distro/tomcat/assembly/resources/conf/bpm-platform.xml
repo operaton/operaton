@@ -17,6 +17,8 @@
       <property name="authorizationEnabled">true</property>
       <property name="jobExecutorDeploymentAware">true</property>
       <property name="historyCleanupBatchWindowStartTime">00:01</property>
+      <!-- Enables experimental preview features on the process engine level (default: false) -->
+      <!-- <property name="previewFeaturesEnabled">true</property> -->
     </properties>
 
     <plugins>

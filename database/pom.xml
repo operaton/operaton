@@ -113,6 +113,10 @@
         <database.type>db2</database.type>
         <database.driver>com.ibm.db2.jcc.DB2Driver</database.driver>
         <database.datasource.class>com.ibm.db2.jcc.DB2SimpleDataSource</database.datasource.class>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
+        <database.name>operaton</database.name>
+        <database.port>50000</database.port>
         <jboss.datasource.filename>db2-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatondb2:12.1.2.0</database.tc.url>
         <database.tc.params>/${database.name}</database.tc.params>
@@ -263,6 +267,10 @@
         <database.driver>org.mariadb.jdbc.Driver</database.driver>
         <hibernate.dialect>org.hibernate.dialect.MariaDBDialect</hibernate.dialect>
         <database.datasource.class>org.mariadb.jdbc.MariaDbDataSource</database.datasource.class>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
+        <database.name>operaton</database.name>
+        <database.port>3306</database.port>
         <database.tc.url>operatonmariadb:10.6</database.tc.url>
         <jboss.datasource.filename>mariadb-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}</database.tc.params>
@@ -301,6 +309,10 @@
         <database.type>mysql</database.type>
         <database.driver>com.mysql.cj.jdbc.Driver</database.driver>
         <database.datasource.class>com.mysql.cj.jdbc.MysqlDataSource</database.datasource.class>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
+        <database.name>operaton</database.name>
+        <database.port>3306</database.port>
         <database.tc.url>operatonmysql:9.2.0</database.tc.url>
         <jboss.datasource.filename>mysql-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
@@ -545,6 +557,10 @@
         <database.type>oracle</database.type>
         <database.driver>oracle.jdbc.OracleDriver</database.driver>
         <database.datasource.class>oracle.jdbc.pool.OracleDataSource</database.datasource.class>
+        <database.username>test</database.username>
+        <database.password>test</database.password>
+        <database.name>operaton</database.name>
+        <database.port>1521</database.port>
         <jboss.datasource.filename>oracle-ds.xml</jboss.datasource.filename>
         <database.tc.url>operatonoracle:21-faststart</database.tc.url>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
@@ -582,6 +598,8 @@
         <database.type>postgres</database.type>
         <database.username>test</database.username>
         <database.password>test</database.password>
+        <database.name>operaton</database.name>
+        <database.port>5432</database.port>
         <database.driver>org.postgresql.Driver</database.driver>
         <database.datasource.class>org.postgresql.ds.PGSimpleDataSource</database.datasource.class>
         <jboss.datasource.filename>postgresql-ds.xml</jboss.datasource.filename>
@@ -633,6 +651,7 @@
         <database.name>operaton_test</database.name>
         <database.username>sa</database.username>
         <database.password>A_Str0ng_Required_Password</database.password>
+        <database.port>1433</database.port>
         <database.tc.params>;DatabaseName=${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
       </properties>

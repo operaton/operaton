@@ -228,6 +228,127 @@
       ${orderBy}
     </if>
     ${limitAfter}
+    <if test="parameter.skipLocked">
+      FOR UPDATE SKIP LOCKED
+    </if>
+  </select>
+
+  <!-- SQL Server specific version using READPAST hint instead of FOR UPDATE SKIP LOCKED -->
+  <select id="selectNextJobsToExecute_mssql" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="acquirableJobResultMap">
+    <bind name="orderingProperties" value="parameter.orderingProperties" />
+    <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
+    ${limitBefore}
+    select RES.ID_,
+      RES.REV_,
+      RES.DUEDATE_,
+    <if test="parameter.applyExclusiveOverProcessHierarchies">
+      RES.ROOT_PROC_INST_ID_,
+    </if>
+      RES.PROCESS_INSTANCE_ID_,
+      RES.EXCLUSIVE_
+    ${limitBetweenAcquisition}
+    from ${prefix}ACT_RU_JOB RES
+    <if test="parameter.skipLocked">
+      with (ROWLOCK, READPAST)
+    </if>
+
+    where (RES.RETRIES_ &gt; 0)
+      and (
+      <if test="!parameter.alwaysSetDueDate">
+          RES.DUEDATE_ is null or
+      </if>
+          RES.DUEDATE_ &lt;= #{parameter.now, jdbcType=TIMESTAMP}
+      )
+      and (RES.LOCK_OWNER_ is null or RES.LOCK_EXP_TIME_ &lt; #{parameter.now, jdbcType=TIMESTAMP})
+      and RES.SUSPENSION_STATE_ = 1
+
+      <if test="parameter.deploymentAware">
+        and (RES.DEPLOYMENT_ID_ is null
+        <if test="parameter.deploymentIds != null">
+          or
+          <bind name="listOfIds" value="parameter.deploymentIds"/>
+          <bind name="fieldName" value="'RES.DEPLOYMENT_ID_'"/>
+          <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.applyInForPaginatedCollection"/>
+        </if>
+        )
+      </if>
+
+      <if test="parameter.jobPriorityMin != null">
+        and RES.PRIORITY_ &gt;= #{parameter.jobPriorityMin}
+      </if>
+      <if test="parameter.jobPriorityMax != null">
+        and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
+      </if>
+
+      and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+
+      <if test="!parameter.historyCleanupEnabled">
+        and HANDLER_TYPE_ != 'history-cleanup'
+      </if>
+
+    <if test="parameter.applyOrdering">
+      ${orderBy}
+    </if>
+    ${limitAfter}
+  </select>
+
+  <!-- IBM DB2 specific version using SKIP LOCKED DATA instead of FOR UPDATE SKIP LOCKED -->
+  <select id="selectNextJobsToExecute_db2" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="acquirableJobResultMap">
+    <bind name="orderingProperties" value="parameter.orderingProperties" />
+    <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
+    ${limitBefore}
+    select RES.ID_,
+      RES.REV_,
+      RES.DUEDATE_,
+    <if test="parameter.applyExclusiveOverProcessHierarchies">
+      RES.ROOT_PROC_INST_ID_,
+    </if>
+      RES.PROCESS_INSTANCE_ID_,
+      RES.EXCLUSIVE_
+    ${limitBetweenAcquisition}
+    from ${prefix}ACT_RU_JOB RES
+
+    where (RES.RETRIES_ &gt; 0)
+      and (
+      <if test="!parameter.alwaysSetDueDate">
+          RES.DUEDATE_ is null or
+      </if>
+          RES.DUEDATE_ &lt;= #{parameter.now, jdbcType=TIMESTAMP}
+      )
+      and (RES.LOCK_OWNER_ is null or RES.LOCK_EXP_TIME_ &lt; #{parameter.now, jdbcType=TIMESTAMP})
+      and RES.SUSPENSION_STATE_ = 1
+
+      <if test="parameter.deploymentAware">
+        and (RES.DEPLOYMENT_ID_ is null
+        <if test="parameter.deploymentIds != null">
+          or
+          <bind name="listOfIds" value="parameter.deploymentIds"/>
+          <bind name="fieldName" value="'RES.DEPLOYMENT_ID_'"/>
+          <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.applyInForPaginatedCollection"/>
+        </if>
+        )
+      </if>
+
+      <if test="parameter.jobPriorityMin != null">
+        and RES.PRIORITY_ &gt;= #{parameter.jobPriorityMin}
+      </if>
+      <if test="parameter.jobPriorityMax != null">
+        and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
+      </if>
+
+      and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+
+      <if test="!parameter.historyCleanupEnabled">
+        and HANDLER_TYPE_ != 'history-cleanup'
+      </if>
+
+    <if test="parameter.applyOrdering">
+      ${orderBy}
+    </if>
+    ${limitAfter}
+    <if test="parameter.skipLocked">
+      FOR UPDATE SKIP LOCKED DATA
+    </if>
   </select>
 
   <sql id="AtomicExclusiveOrNonExclusiveJobs">

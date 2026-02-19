@@ -20,13 +20,17 @@ import java.util.Date;
 import java.util.List;
 
 import com.oracle.truffle.js.scriptengine.GraalJSEngineFactory;
+import java.util.List;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import org.camunda.community.BpmnError;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestTemplate;
 
+import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ScriptEvaluationException;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptEngineResolver;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -34,11 +38,21 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameter;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameterized;
 import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters;
 
+import static org.operaton.bpm.engine.impl.scripting.engine.OperatonScriptEngineManager.CAMUNDA_NAMESPACE;
+import static org.operaton.bpm.engine.impl.scripting.engine.OperatonScriptEngineManager.OPERATON_NAMESPACE;
+import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.ECMASCRIPT_SCRIPTING_LANGUAGE;
+import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.GRAAL_JS_SCRIPT_ENGINE_NAME;
+import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.JAVASCRIPT_SCRIPTING_LANGUAGE;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import org.slf4j.Logger;
 
 @Parameterized
 public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
+
+  Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   private static final String GRAALJS = "graal.js";
 
@@ -56,6 +70,7 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
     // create custom script engine lookup to receive a fresh GraalVM JavaScript engine
     processEngineConfiguration.setScriptEngineResolver(new TestScriptEngineResolver(
         processEngineConfiguration.getScriptEngineResolver().getScriptEngineManager()));
+    processEngineConfiguration.setCamundaCompatibilityMode(ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE);
   }
 
   @AfterEach
@@ -269,6 +284,82 @@ public class ScriptTaskGraalJsTest extends AbstractScriptTaskTest {
               enableExternalResources && !configureHostAccess ? "TypeError" :
               "Operation is not allowed");
       }
+  }
+
+  @TestTemplate
+  public void shouldLoadOperatonClass() {
+
+    for (String engineName : List.of(
+        GRAALJS,
+        GRAAL_JS_SCRIPT_ENGINE_NAME,
+        JAVASCRIPT_SCRIPTING_LANGUAGE,
+        ECMASCRIPT_SCRIPTING_LANGUAGE
+    )) {
+
+      String operatonPackage = BpmnError.class.getPackageName();
+      String camundaPackage = operatonPackage.replace(OPERATON_NAMESPACE, CAMUNDA_NAMESPACE);
+      String existingCommunityPackage = org.camunda.community.BpmnError.class.getPackageName();
+      String wrongPackage = "org.wrongpackage";
+
+      List<String[]> packages = List.of(
+          new String[]{camundaPackage, operatonPackage},
+          new String[]{operatonPackage, operatonPackage},
+          new String[]{existingCommunityPackage, existingCommunityPackage},
+          new String[]{wrongPackage, null} // should not be accessible
+      );
+
+      for (String[] tuple : packages) {
+
+        String processPackage = tuple[0];
+        String expectedPackage = tuple[1];
+
+        LOG.debug(engineName + ": " + processPackage + " -> " + expectedPackage);
+
+        final String expectedClass = BpmnError.class.getSimpleName();
+        final String expectedMessage = "ServiceTaskError";
+
+        final String errorMessageVar = "errorMessage";
+        final String errorClassVar = "errorClass";
+        final String errorPackageVar = "errorPackage";
+
+        // Given
+        String scriptText = "try {"
+            + "var " + expectedClass + " = Java.type(\"" + processPackage + "." + expectedClass + "\");"
+            + ""
+            + "var error = new " + expectedClass + "(\"" + expectedMessage + "\");"
+            + "var message = error.getErrorCode() || \"Default error code\";"
+            + ""
+            + "execution.setVariable('" + errorClassVar + "', error.getClass().getName());"
+            + "execution.setVariable('" + errorPackageVar + "', error.getClass().getPackageName());"
+            + "execution.setVariable('"+ errorMessageVar + "', message);"
+            + "} catch (e) {"
+            + "execution.setVariable('" + errorMessageVar + "', e.message);"
+            + "}";
+
+        deployProcess(engineName, scriptText);
+
+        if (enableNashornCompat || configureHostAccess) {
+          // When
+          ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
+
+          // Then
+          if (expectedPackage == null) {
+            assertEquals("Access to host class " + processPackage + "." + expectedClass + " is not allowed or does not exist.", runtimeService.getVariable(pi.getId(), errorMessageVar));
+          } else {
+            assertEquals(expectedMessage, runtimeService.getVariable(pi.getId(), errorMessageVar));
+            assertEquals(expectedPackage + "." + expectedClass, runtimeService.getVariable(pi.getId(), errorClassVar));
+            assertEquals(expectedPackage, runtimeService.getVariable(pi.getId(), errorPackageVar));
+          }
+
+        } else {
+          // When
+          assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+              // Then
+              .isInstanceOf(ScriptEvaluationException.class)
+              .hasMessageContaining("Unable to evaluate script");
+        }
+      }
+    }
   }
 
   protected static class TestScriptEngineResolver extends DefaultScriptEngineResolver {

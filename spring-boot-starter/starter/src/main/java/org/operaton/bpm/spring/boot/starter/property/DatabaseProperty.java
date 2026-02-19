@@ -23,6 +23,8 @@ import org.springframework.util.Assert;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_CREATE_DROP;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_FALSE;
 import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA;
+import static org.operaton.bpm.engine.ProcessEngineConfiguration.DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_CREATE;
 import static org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl.DB_SCHEMA_UPDATE_DROP_CREATE;
 import static org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties.joinOn;
@@ -35,10 +37,19 @@ public class DatabaseProperty {
     DB_SCHEMA_UPDATE_CREATE_DROP,
     DB_SCHEMA_UPDATE_DROP_CREATE);
 
+  public static final List<String> CAMUNDA_COMPATIBILITY_MODE_VALUES = Arrays.asList(
+      DB_CAMUNDA_COMPATIBILITY_MIGRATE_DATA,
+      DB_CAMUNDA_COMPATIBILITY_TRANSLATION_MODE);
+
   /**
    * enables automatic schema update
    */
   private String schemaUpdate = DB_SCHEMA_UPDATE_TRUE;
+
+  /**
+   * enables camunda data compatibility modes
+   */
+  private String camundaCompatibilityMode;
 
   /**
    * the database type
@@ -70,6 +81,20 @@ public class DatabaseProperty {
   public void setSchemaUpdate(String schemaUpdate) {
     Assert.isTrue(SCHEMA_UPDATE_VALUES.contains(schemaUpdate), "schemaUpdate: '%s' is not valid (%s)".formatted(schemaUpdate, SCHEMA_UPDATE_VALUES));
     this.schemaUpdate = schemaUpdate;
+  }
+
+  public String getCamundaCompatibilityMode() {
+    return camundaCompatibilityMode;
+  }
+
+  /**
+   * @param camundaCompatibilityMode the camundaCompatibilityMode to set
+   */
+  public void setCamundaCompatibilityMode(String camundaCompatibilityMode) {
+    Assert.isTrue(null == camundaCompatibilityMode || "".equals(camundaCompatibilityMode)
+        || CAMUNDA_COMPATIBILITY_MODE_VALUES.contains(camundaCompatibilityMode), "camundaCompatibilityMode: '%s' is "
+        + "not valid (%s) or empty".formatted(camundaCompatibilityMode, CAMUNDA_COMPATIBILITY_MODE_VALUES));
+    this.camundaCompatibilityMode = camundaCompatibilityMode;
   }
 
   public String getType() {
@@ -113,6 +138,7 @@ public class DatabaseProperty {
     return joinOn(this.getClass())
       .add("type=" + type)
       .add("schemaUpdate=" + schemaUpdate)
+      .add("camundaCompatibilityMode=" + camundaCompatibilityMode)
       .add("schemaName=" + schemaName)
       .add("tablePrefix=" + tablePrefix)
       .add("jdbcBatchProcessing=" + jdbcBatchProcessing)

@@ -15,7 +15,8 @@ This issue is for managing the release TODO.
 
 ## Documentation
 
-- [ ] [changelog.tpl](https://github.com/operaton/operaton/blob/main/.github/jreleaser/changelog.tpl) updated
+- [ ] [changelog.tpl](https://github.com/operaton/operaton/blob/main/.github/jreleaser/changelog.tpl) updated to point to the release
+- [release notes](https://docs.operaton.org/docs/documentation/reference/release-notes/TODO) updated with:
     - [ ] Spring Boot / Spring Framework version
     - [ ] Tomcat version
     - [ ] Wildfly version
@@ -38,12 +39,12 @@ This issue is for managing the release TODO.
 - [ ] [Build on main](https://github.com/operaton/operaton/actions/workflows/build.yml?query=branch%3Amain) is green
 - [ ] [Nightly integration build](https://github.com/operaton/operaton/actions/workflows/integration-build.yml?query=branch%3Amain) is green
 - [ ] [Database Migration Tests build](https://github.com/operaton/operaton/actions/workflows/migration-test.yml?query=branch%3Amain) is green
-- [ ] [Images on DockerHub](https://hub.docker.com/search?q=operaton) are current (last updated today/1 day)
+- [ ] [Images on DockerHub](https://hub.docker.com/u/operaton) are current (last updated today/1 day)
 
 ## Distributions Check
 
 ### Download
-- [ ] Download distributions from [early-access](https://github.com/operaton/operaton/releases/tag/early-access) release
+- [ ] Download distributions from [releases](https://github.com/operaton/operaton/releases)
     - Download date: `TODO`
 
 ### Manual Check
@@ -69,7 +70,7 @@ _For each_ distribution perform these manual test steps:
 ### Tomcat Distribution
 
 - [ ] Tomcat startup
-    - Run `start.sh`
+    - Run `./start.sh`
         - Reported Tomcat version: `TODO`
     - [ ] Browser opens http://localhost:8080/operaton-welcome/index.html
     - [ ] ` ps -ef |grep catalina` shows Tomcat process is running
@@ -77,10 +78,11 @@ _For each_ distribution perform these manual test steps:
     - [ ] `grep "ENGINE-08048" -r --include=catalina.out` shows `Operaton sucessfully started at 'Apache Tomcat/<TOMCAT_VERSION>`
     - [ ] `grep "ENGINE-08050" -r --include=catalina.out` shows `InvoiceProcessApplication successfully deployed`
 - [ ] Manual Webapp tests checked
+- - Run `./shutdown.sh`
 
 ### Wildfly Distribution
 - [ ] Wildfly startup
-    - Run `start.sh`
+    - Run `./start.sh`
         - Reported Wildfly version: `TODO`
     - [ ] Browser opens http://localhost:8080/operaton-welcome/index.html
 - [ ] Manual Webapp tests checked

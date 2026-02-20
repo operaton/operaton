@@ -47,6 +47,9 @@
   <profiles>
     <profile>
       <id>distro</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <modules>
         <module>qa</module>
       </modules>

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:f3bc3829-f3ca-4163-acb4-668effad32f0",
+  "serialNumber": "urn:uuid:24643187-06c7-4c10-8767-b8eaf66cce71",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-20T08:14:01Z",
+    "timestamp": "2026-02-20T08:59:31Z",
     "tools": {
       "components": [
         {
@@ -21154,40 +21154,6 @@
       "version": "2.0.0-M3",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass sucessfully",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "0377a0566bfb5ffe20c39760982721c5"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "948fa7c0625c6b6a663613f9111108766fff27a9"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "2d7c8f6b3706eff2e06640eb0ced9f11bf96794616cb40ef49d9dda07adb268a"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "e571d4ed8deb8c40f8d6e02b7da1f67b97337d407a2f1913ab6ed1d01b7a794bbfc85e50d7e4f23a5d17fb878d01b767499cb933af2132f6dd1cf58a9e139ff7"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "295336e6912c700757b62d85abe0ffb29112a691f00ad05386ab9a28b79058baea48303d52c8b42fb0dce6203d30306b"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "fe3d68d0854214ef0f36092e7da5e64013c877aa820f8bd9035fd7a3ca1d9023fa2e27847e8319d1d202243001d513dd"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "f18dd032a5c9b9d3a2c4c5e90a561982ff3f0113d4f27c14ace91f47eef7a3c5"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "8c38e4a5eb74e1c3fed01deab2d31d3c50a6201fe82e6ced32c1ce022103ad4d7b2dd38d6d5f4f5989f4a05892460745649b639c2a25da848e175cd14fb2231e"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -21409,35 +21375,35 @@
       "hashes": [
         {
           "alg": "MD5",
-          "content": "561d106a31aba5faca1e10eb5dc25447"
+          "content": "28c3c40cd7777a7f860fdbcf81c2ef7a"
         },
         {
           "alg": "SHA-1",
-          "content": "fd00c6484ce59c2170eef2f1200393db2c6215cf"
+          "content": "d409bf83e188b31f161344f0a6690e4ccca25fd8"
         },
         {
           "alg": "SHA-256",
-          "content": "862c4ea91321c9de47913b11ccf6757d9366f91ed79680f3687962ac796d72d9"
+          "content": "869ba50f3f579fd9b17fb381a88550233060da832d5b48cb7c351baa6b025b77"
         },
         {
           "alg": "SHA-512",
-          "content": "1db65ab5a37488f2d670c91359ff2ceb85fa5b093dcf959b9f04663125a2ec079eca54ba62bd352dc8206c0907c93fea77e5f299d893c396cc221c870fb90587"
+          "content": "f5009602f02f1656e7a189c23fe7e307f1c210fa278ddae0a5a1e4f4beabebb5b5910083c38430967fdd7d3ad5308362eb45fa993ebdc2985df9741e42098ac2"
         },
         {
           "alg": "SHA-384",
-          "content": "0aa18d8f46d7a7b972282f3e7da67cbcef2f0a77baa1002c55006eb03584ca22df4505f3d8ff0f363943747ce7406a03"
+          "content": "9ac67cc7a6372a1903eabc0585078c410057ce35dbade6e096efe20447f695e3a8fe9ddc1e11a2e3d89675b180db6e2b"
         },
         {
           "alg": "SHA3-384",
-          "content": "974bb145e29969599ecb66e16e6813237ca40a24c6ddbc97e64b3361d98b001231009dc517579f3197f7f04a4c137ddd"
+          "content": "361ccbe5bfbf0b19a60f043f87ed611d2b48ec3ff9640ed16e2fc68868553cef53b22d93bc016ca780a8dc35515324a3"
         },
         {
           "alg": "SHA3-256",
-          "content": "27a9ecdd3616a86ca40e53a7f9d058b78e1fa7a59a6a03baf3fc507721454d75"
+          "content": "5d29c93ef55bbd65d56d501f8572ada273593fe76ca6526f125d3c7306adaee7"
         },
         {
           "alg": "SHA3-512",
-          "content": "e25b2cfcb7601b2df94ea360bd7eb2789a87b2cb1392ddbd6630e910bf9ab34329d876c97b707dc23d71d07b80549ff7814c0cf9894ed267e8b175cb8f8d2271"
+          "content": "1661787171b8e6e12b3a0996449807211fb24732efecace3d7efe19ea6c77ae8fe4423dc067d2e4dc42e0f5ce46002636ad225c7fc7cbb3c7aaa385dc7b5ae23"
         }
       ],
       "licenses": [
@@ -21496,7 +21462,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2b6c25ca-e6b3-493c-b961-bd542b3b746e",
+      "bom-ref": "a8b5b279-3ddf-4476-a2e1-294703ac2bfb",
       "name": "package-lock.json",
       "properties": [
         {
@@ -26434,7 +26400,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3fe137c9-69d8-49a7-8c27-b055673721fc",
+      "bom-ref": "ead7cb21-024c-4b1a-9d68-8a7df0574d3b",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29063,7 +29029,7 @@
       "dependsOn": []
     },
     {
-      "ref": "2b6c25ca-e6b3-493c-b961-bd542b3b746e",
+      "ref": "a8b5b279-3ddf-4476-a2e1-294703ac2bfb",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -29113,9 +29079,9 @@
       ]
     },
     {
-      "ref": "3fe137c9-69d8-49a7-8c27-b055673721fc",
+      "ref": "ead7cb21-024c-4b1a-9d68-8a7df0574d3b",
       "dependsOn": [
-        "2b6c25ca-e6b3-493c-b961-bd542b3b746e"
+        "a8b5b279-3ddf-4476-a2e1-294703ac2bfb"
       ]
     },
     {

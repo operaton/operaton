@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:39ce8c2b-bb88-4f94-8ff0-c2e12a74ac21",
+  "serialNumber": "urn:uuid:e1f15eee-60b5-4948-8e08-ac2537157ed4",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-20T08:14:02Z",
+    "timestamp": "2026-02-20T08:59:32Z",
     "tools": {
       "components": [
         {
@@ -21268,216 +21268,6 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.4?type=jar",
-      "publisher": "Apache Software Foundation",
-      "group": "org.apache.groovy",
-      "name": "groovy-templates",
-      "version": "5.0.4",
-      "description": "Groovy: A powerful multi-faceted language for the JVM",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "7aa9940c29839bf3f603a9961a9042f2"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "2a86c4f378beb56e0a76db0d5a4cf9ef5d27a45e"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "c093fbcbab11cd07a40809191aea7db17c7bd4419123aad8c6e1fa5044e21692"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "a00ada77a553872171103e09e57f09f339d24c46b99569dbb098fae34e5066cfd1d9448b9d9f5177874c2d5a9eab0fb52b21a9981645dbff67c689f4168c1fda"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "875864012d9556bd2abb2f3a7e6d68ea691bd08e0cc6c2243907c683c28dec2d6205b59495f6166c91fa34b44e986c4a"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "6dce8a3bd2da3f23d63f91ca5d1f6115bdc6a663844aef7381eafda66fceea9777b486538ac06402d2813343b23d3887"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "5d6a74ee28def149eb316723419e3819903ca98d1b873eae43fcdc3c7e7b5a6e"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "867d7db5247bbadf5bb9ed64f0879fa5263eaf55bd42d53b000de414b4a756326dddb6dd7b1c44178ee913d5c352405ba7659695c5295f9ed6f028b65a34436d"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-templates@5.0.4?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://groovy-lang.org",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/GROOVY",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/groovy.git",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.4?type=jar",
-      "publisher": "Apache Software Foundation",
-      "group": "org.apache.groovy",
-      "name": "groovy-dateutil",
-      "version": "5.0.4",
-      "description": "Groovy: A powerful multi-faceted language for the JVM",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "6b515b4a3654d5486d27356235fb726e"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "96330ec7d34f3fce9806328fab2e00630d960df4"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "f031218f55756dcf87699045757c35eb46ae1a0a1098c2e73a35c171a8a870f7"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "aa94ed00210b201d9e387eee18044b1f9f08084b93fbcc715bfa673859d8b93a5b5a7874319b96a846f7cc25c9473343a3ddb36cf7f2317cee58852df09b06b4"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "42eb1f7d24755985268ec5fb00ecd7fa9cec71292c0cc9b449527d15d30e79dd2656f6e38fee2c884ce937a27ff103a9"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "1fccb81629a3b3f1ae6ead2abf01f7d9e576cdfc03c38981e55d983167a713ef911304acb5542ad3c0633fb336fc0e2b"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "b5579e82b11b22332a8616b582c4ea2d8322ea548b85e588a1f989ff18f96b71"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "3f2a2344a919e39daf167f194427a030cc2f0ac142f208f88116446e032103623d69968a7506b74e2669519ce3526bc2c00b152f632320270bac5c59036494f6"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.4?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://groovy-lang.org",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/GROOVY",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/groovy.git",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.4?type=jar",
-      "publisher": "Apache Software Foundation",
-      "group": "org.apache.groovy",
-      "name": "groovy-datetime",
-      "version": "5.0.4",
-      "description": "Groovy: A powerful multi-faceted language for the JVM",
-      "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "bf3b308e28ff2ad287e27da8488bf980"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "6c56a7055a9ee1ab3ba713a12189bbb174aeb6c5"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "6311685aa92f107f1777b30194ce8ac1c3eec321d506332b723af83f6d168a61"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "44ef39168b36d1c7b63666ba7f5131c85962df74459084704f14ff13aa44d49df1f8c97d8ac8b2a0046f504b379155fb6a73b7e3c6d771ae7075ecc8537ecb76"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "e3e8f85664f29fc892180deb042ba878cb5e16ed2797a5f36d8a9665e5c11127d396c5667381fc8f40149c838c7d55ed"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "ad0243340bf07ae6d2b1f3e5f24f2c25aa03d1588f6597122bdbdf6ff1890b3be2642ea43af317f5e8d657339535dc36"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "1e3aabe698dca2e52c0f49150b7c57095a8307385590f8622353fb31e2c31ca6"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "1f920a56b32fb3bb5ea2196df54a8fec7ce773b4c74eebe7da75bf96b9a28e939b434b6a373427705459925e94fa4e863901b8bfe72d3409047a1bd87cc70e04"
-        }
-      ],
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0"
-          }
-        }
-      ],
-      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.4?type=jar",
-      "externalReferences": [
-        {
-          "url": "https://groovy-lang.org",
-          "type": "website"
-        },
-        {
-          "url": "https://issues.apache.org/jira/browse/GROOVY",
-          "type": "issue-tracker"
-        },
-        {
-          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "https://github.com/apache/groovy.git",
-          "type": "vcs"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm/operaton-only-bom@2.0.0-M3?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm",
@@ -32652,6 +32442,216 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-templates@5.0.4?type=jar",
+      "publisher": "Apache Software Foundation",
+      "group": "org.apache.groovy",
+      "name": "groovy-templates",
+      "version": "5.0.4",
+      "description": "Groovy: A powerful multi-faceted language for the JVM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "7aa9940c29839bf3f603a9961a9042f2"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "2a86c4f378beb56e0a76db0d5a4cf9ef5d27a45e"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "c093fbcbab11cd07a40809191aea7db17c7bd4419123aad8c6e1fa5044e21692"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "a00ada77a553872171103e09e57f09f339d24c46b99569dbb098fae34e5066cfd1d9448b9d9f5177874c2d5a9eab0fb52b21a9981645dbff67c689f4168c1fda"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "875864012d9556bd2abb2f3a7e6d68ea691bd08e0cc6c2243907c683c28dec2d6205b59495f6166c91fa34b44e986c4a"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "6dce8a3bd2da3f23d63f91ca5d1f6115bdc6a663844aef7381eafda66fceea9777b486538ac06402d2813343b23d3887"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "5d6a74ee28def149eb316723419e3819903ca98d1b873eae43fcdc3c7e7b5a6e"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "867d7db5247bbadf5bb9ed64f0879fa5263eaf55bd42d53b000de414b4a756326dddb6dd7b1c44178ee913d5c352405ba7659695c5295f9ed6f028b65a34436d"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.groovy/groovy-templates@5.0.4?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://groovy-lang.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/GROOVY",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/groovy.git",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.4?type=jar",
+      "publisher": "Apache Software Foundation",
+      "group": "org.apache.groovy",
+      "name": "groovy-dateutil",
+      "version": "5.0.4",
+      "description": "Groovy: A powerful multi-faceted language for the JVM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "6b515b4a3654d5486d27356235fb726e"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "96330ec7d34f3fce9806328fab2e00630d960df4"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "f031218f55756dcf87699045757c35eb46ae1a0a1098c2e73a35c171a8a870f7"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "aa94ed00210b201d9e387eee18044b1f9f08084b93fbcc715bfa673859d8b93a5b5a7874319b96a846f7cc25c9473343a3ddb36cf7f2317cee58852df09b06b4"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "42eb1f7d24755985268ec5fb00ecd7fa9cec71292c0cc9b449527d15d30e79dd2656f6e38fee2c884ce937a27ff103a9"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "1fccb81629a3b3f1ae6ead2abf01f7d9e576cdfc03c38981e55d983167a713ef911304acb5542ad3c0633fb336fc0e2b"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "b5579e82b11b22332a8616b582c4ea2d8322ea548b85e588a1f989ff18f96b71"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "3f2a2344a919e39daf167f194427a030cc2f0ac142f208f88116446e032103623d69968a7506b74e2669519ce3526bc2c00b152f632320270bac5c59036494f6"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.groovy/groovy-dateutil@5.0.4?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://groovy-lang.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/GROOVY",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/groovy.git",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.4?type=jar",
+      "publisher": "Apache Software Foundation",
+      "group": "org.apache.groovy",
+      "name": "groovy-datetime",
+      "version": "5.0.4",
+      "description": "Groovy: A powerful multi-faceted language for the JVM",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "bf3b308e28ff2ad287e27da8488bf980"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "6c56a7055a9ee1ab3ba713a12189bbb174aeb6c5"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "6311685aa92f107f1777b30194ce8ac1c3eec321d506332b723af83f6d168a61"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "44ef39168b36d1c7b63666ba7f5131c85962df74459084704f14ff13aa44d49df1f8c97d8ac8b2a0046f504b379155fb6a73b7e3c6d771ae7075ecc8537ecb76"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "e3e8f85664f29fc892180deb042ba878cb5e16ed2797a5f36d8a9665e5c11127d396c5667381fc8f40149c838c7d55ed"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "ad0243340bf07ae6d2b1f3e5f24f2c25aa03d1588f6597122bdbdf6ff1890b3be2642ea43af317f5e8d657339535dc36"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "1e3aabe698dca2e52c0f49150b7c57095a8307385590f8622353fb31e2c31ca6"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "1f920a56b32fb3bb5ea2196df54a8fec7ce773b4c74eebe7da75bf96b9a28e939b434b6a373427705459925e94fa4e863901b8bfe72d3409047a1bd87cc70e04"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.apache.groovy/groovy-datetime@5.0.4?type=jar",
+      "externalReferences": [
+        {
+          "url": "https://groovy-lang.org",
+          "type": "website"
+        },
+        {
+          "url": "https://issues.apache.org/jira/browse/GROOVY",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://mail-archives.apache.org/mod_mbox/groovy-dev/",
+          "type": "mailing-list"
+        },
+        {
+          "url": "https://github.com/apache/groovy.git",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:maven/org.operaton.bpm.wildfly/operaton-wildfly-assembly@2.0.0-M3?type=pom",
       "publisher": "Operaton",
       "group": "org.operaton.bpm.wildfly",
@@ -33178,40 +33178,6 @@
       "version": "2.0.0-M3",
       "description": "Assembles the Operaton and makes it ready for qa. The assembly is installed to maven later in the reactor, if the integration tests pass successfully",
       "scope": "required",
-      "hashes": [
-        {
-          "alg": "MD5",
-          "content": "8cf6db73e90e5cfaaf5e03c18e6f87f3"
-        },
-        {
-          "alg": "SHA-1",
-          "content": "7d039dfaefa41da0b85f9026fadea33d361ed1af"
-        },
-        {
-          "alg": "SHA-256",
-          "content": "67c23a40572ce51ec917cffac96354a152c6e589ee403f31e344a0b905570734"
-        },
-        {
-          "alg": "SHA-512",
-          "content": "90b4c1396ff1a5f9c402cf65c34d190caadd03566f5d046d9ace1777ec162d5648588487cc12c5c5385af71900e9f2ed8afb921ee21b49eecb91a4d7fea06acd"
-        },
-        {
-          "alg": "SHA-384",
-          "content": "d090993bfc3856e957c2dbd1c8bd7c4b69cb77763d99ebee59107ff3a7d1d4c701d290524ceb47a34a4a05fcd284a750"
-        },
-        {
-          "alg": "SHA3-384",
-          "content": "05ea80eea3110ccfe1c6da185a8203d2acf2d46fbcfb089f196786f154fa97d8ee9b98bc532e387ad8d46995ae850b32"
-        },
-        {
-          "alg": "SHA3-256",
-          "content": "a16507e55e2e3e3b8ca57aa1cebbc034b6b2693b1ba5e6dd51a8d0246375c90b"
-        },
-        {
-          "alg": "SHA3-512",
-          "content": "7b9b149838fe9b07b2833dda648439230156af2b3e29b868cac228b8e2bfec4cbbf310594e56da13a321251e5e2303d727ddbeee64f910b1ae413aa39057b7a0"
-        }
-      ],
       "licenses": [
         {
           "license": {
@@ -33247,35 +33213,35 @@
       "hashes": [
         {
           "alg": "MD5",
-          "content": "561d106a31aba5faca1e10eb5dc25447"
+          "content": "28c3c40cd7777a7f860fdbcf81c2ef7a"
         },
         {
           "alg": "SHA-1",
-          "content": "fd00c6484ce59c2170eef2f1200393db2c6215cf"
+          "content": "d409bf83e188b31f161344f0a6690e4ccca25fd8"
         },
         {
           "alg": "SHA-256",
-          "content": "862c4ea91321c9de47913b11ccf6757d9366f91ed79680f3687962ac796d72d9"
+          "content": "869ba50f3f579fd9b17fb381a88550233060da832d5b48cb7c351baa6b025b77"
         },
         {
           "alg": "SHA-512",
-          "content": "1db65ab5a37488f2d670c91359ff2ceb85fa5b093dcf959b9f04663125a2ec079eca54ba62bd352dc8206c0907c93fea77e5f299d893c396cc221c870fb90587"
+          "content": "f5009602f02f1656e7a189c23fe7e307f1c210fa278ddae0a5a1e4f4beabebb5b5910083c38430967fdd7d3ad5308362eb45fa993ebdc2985df9741e42098ac2"
         },
         {
           "alg": "SHA-384",
-          "content": "0aa18d8f46d7a7b972282f3e7da67cbcef2f0a77baa1002c55006eb03584ca22df4505f3d8ff0f363943747ce7406a03"
+          "content": "9ac67cc7a6372a1903eabc0585078c410057ce35dbade6e096efe20447f695e3a8fe9ddc1e11a2e3d89675b180db6e2b"
         },
         {
           "alg": "SHA3-384",
-          "content": "974bb145e29969599ecb66e16e6813237ca40a24c6ddbc97e64b3361d98b001231009dc517579f3197f7f04a4c137ddd"
+          "content": "361ccbe5bfbf0b19a60f043f87ed611d2b48ec3ff9640ed16e2fc68868553cef53b22d93bc016ca780a8dc35515324a3"
         },
         {
           "alg": "SHA3-256",
-          "content": "27a9ecdd3616a86ca40e53a7f9d058b78e1fa7a59a6a03baf3fc507721454d75"
+          "content": "5d29c93ef55bbd65d56d501f8572ada273593fe76ca6526f125d3c7306adaee7"
         },
         {
           "alg": "SHA3-512",
-          "content": "e25b2cfcb7601b2df94ea360bd7eb2789a87b2cb1392ddbd6630e910bf9ab34329d876c97b707dc23d71d07b80549ff7814c0cf9894ed267e8b175cb8f8d2271"
+          "content": "1661787171b8e6e12b3a0996449807211fb24732efecace3d7efe19ea6c77ae8fe4423dc067d2e4dc42e0f5ce46002636ad225c7fc7cbb3c7aaa385dc7b5ae23"
         }
       ],
       "licenses": [
@@ -33400,7 +33366,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2b6c25ca-e6b3-493c-b961-bd542b3b746e",
+      "bom-ref": "a8b5b279-3ddf-4476-a2e1-294703ac2bfb",
       "name": "package-lock.json",
       "properties": [
         {
@@ -38338,7 +38304,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "3fe137c9-69d8-49a7-8c27-b055673721fc",
+      "bom-ref": "ead7cb21-024c-4b1a-9d68-8a7df0574d3b",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -42286,7 +42252,7 @@
       "dependsOn": []
     },
     {
-      "ref": "2b6c25ca-e6b3-493c-b961-bd542b3b746e",
+      "ref": "a8b5b279-3ddf-4476-a2e1-294703ac2bfb",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -42336,9 +42302,9 @@
       ]
     },
     {
-      "ref": "3fe137c9-69d8-49a7-8c27-b055673721fc",
+      "ref": "ead7cb21-024c-4b1a-9d68-8a7df0574d3b",
       "dependsOn": [
-        "2b6c25ca-e6b3-493c-b961-bd542b3b746e"
+        "a8b5b279-3ddf-4476-a2e1-294703ac2bfb"
       ]
     },
     {

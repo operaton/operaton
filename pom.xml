@@ -20,7 +20,7 @@
     <version.quarkus>3.32.0</version.quarkus>
     <version.java>17</version.java>
     <version.spring>7.0.5</version.spring>
-    <version.spring-boot>4.0.2</version.spring-boot>
+    <version.spring-boot>4.0.3</version.spring-boot>
     <version.liquibase>4.33.0</version.liquibase>
     <maven.compiler.release>17</maven.compiler.release>
     <sonar.organization>operaton</sonar.organization>

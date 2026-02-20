@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.application.ProcessApplicationReference;
 import org.operaton.bpm.engine.authorization.Permissions;
 import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
@@ -562,6 +563,7 @@ public interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
+  @Nullable
   InputStream getProcessDiagram(String processDefinitionId);
 
   /**
@@ -591,6 +593,7 @@ public interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_DEFINITION}.
    */
+  @Nullable
   DiagramLayout getProcessDiagramLayout(String processDefinitionId);
 
   /**
@@ -736,6 +739,7 @@ public interface RepositoryService {
    * @return null when the diagram resource name of a {@link CaseDefinition} is null.
    * @throws ProcessEngineException when the process diagram doesn't exist.
    */
+  @Nullable
   InputStream getCaseDiagram(String caseDefinitionId);
 
   /**
@@ -800,6 +804,7 @@ public interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DECISION_DEFINITION}.
    */
+  @Nullable
   InputStream getDecisionDiagram(String decisionDefinitionId);
 
   /**
@@ -812,6 +817,7 @@ public interface RepositoryService {
    * @throws AuthorizationException
    *          If the user has no {@link Permissions#READ} permission on {@link Resources#DECISION_REQUIREMENTS_DEFINITION}.
    */
+  @Nullable
   InputStream getDecisionRequirementsDiagram(String decisionRequirementsDefinitionId);
 
   /**

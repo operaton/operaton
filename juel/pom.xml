@@ -36,5 +36,10 @@
       <artifactId>jakarta.el-api</artifactId>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 </project>

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.dmn</groupId>
     <artifactId>operaton-engine-dmn-root</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine-feel-scala</artifactId>

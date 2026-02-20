@@ -4,7 +4,7 @@
   <parent>
     <artifactId>operaton-engine-rest-root</artifactId>
     <groupId>org.operaton.bpm</groupId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
   </parent>
   <artifactId>docs</artifactId>
   <packaging>pom</packaging>

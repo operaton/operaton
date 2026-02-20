@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa.upgrade</groupId>
     <artifactId>operaton-qa-db-instance-migration</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-qa-upgrade-test-fixture-713</artifactId>
   <name>Operaton - QA - upgrade - instance migration - test fixture - 7.13.0</name>

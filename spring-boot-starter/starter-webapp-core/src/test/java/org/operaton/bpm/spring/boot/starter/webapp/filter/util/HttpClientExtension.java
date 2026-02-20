@@ -211,7 +211,7 @@ public class HttpClientExtension implements AfterEachCallback {
   }
 
   public String getHeader(String name) {
-    return getHeaders(name).get(0);
+    return getHeaders(name) != null ? getHeaders(name).get(0) : null;
   }
 
   public boolean headerExists(String name) {

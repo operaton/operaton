@@ -29,7 +29,7 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtensi
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = {"server.error.include-message=always"})
+  properties = {"spring.web.error.include-message=always"})
 @DirtiesContext
 class SessionCookieIT {
 

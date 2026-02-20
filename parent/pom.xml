@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.0.0-M3</version>
   </parent>
   <artifactId>operaton-parent</artifactId>
   <packaging>pom</packaging>
@@ -14,20 +14,22 @@
   </description>
   <properties>
     <operaton.version.old>1.0.0</operaton.version.old>
+    <version.jakarta-ee>11.0.0</version.jakarta-ee>
     <version.resteasy>3.15.6.Final</version.resteasy>
     <!-- must be in synch with transitive version from org.springframework.boot:spring-boot-starter-jersey -->
-    <version.jersey3>3.1.11</version.jersey3>
+    <version.jersey3>4.0.0</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
     <version.groovy>5.0.4</version.groovy>
+    <version.rest-assured>6.0.0</version.rest-assured>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>25.0.2</version.graal.js>
     <version.nashorn>15.7</version.nashorn>
     <version.icu.icu4j>71.1</version.icu.icu4j>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <version.json-path>2.10.0</version.json-path>
-    <version.json-smart>2.5.2</version.json-smart>
-    <version.accessors-smart>2.5.2</version.accessors-smart>
+    <version.json-smart>2.6.0</version.json-smart>
+    <version.accessors-smart>2.6.0</version.accessors-smart>
     <version.commons-codec>1.21.0</version.commons-codec>
     <version.gson>2.13.2</version.gson>
     <version.hibernate>6.6.10.Final</version.hibernate>
@@ -37,7 +39,7 @@
     <version.httpcore5>5.4</version.httpcore5>
     <version.cronutils>9.2.1</version.cronutils>
     <version.unirest-java>3.14.5</version.unirest-java>
-    <version.junit5>5.14.3</version.junit5>
+    <version.junit5>6.0.3</version.junit5>
     <version.assertj>3.27.7</version.assertj>
     <version.mockito>5.21.0</version.mockito>
     <version.jna>5.18.1</version.jna>

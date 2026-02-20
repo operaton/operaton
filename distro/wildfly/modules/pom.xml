@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.0.0-M3</version>
   </parent>
   <artifactId>operaton-wildfly-modules</artifactId>
   <name>Operaton - Wildfly Modules</name>
@@ -131,6 +131,14 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.minidev</groupId>
+      <artifactId>accessors-smart</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>net.minidev</groupId>
+      <artifactId>json-smart</artifactId>
     </dependency>
   </dependencies>
   <build>

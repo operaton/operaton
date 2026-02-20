@@ -1,7 +1,7 @@
 {
   "name": "operaton-bpm-webapp",
   "private": true,
-  "version": "1.1.0-SNAPSHOT",
+  "version": "2.0.0-M3",
   "main": "index.js",
   "scripts": {
     "dependencies": "license-checker --production --json --relativeLicensePath",
@@ -61,8 +61,7 @@
     "q": "1.5.1",
     "requirejs": "2.3.8",
     "requirejs-angular-define": "https://github.com/camunda/requirejs-angular-define.git#aaa450a66e4d1a0588819804e1098c541bed585d",
-    "superagent": "10.3.0",
-    "ui-bootstrap4": "3.0.7"
+    "superagent": "10.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.29.0",
@@ -96,6 +95,7 @@
     "sass-loader": "16.0.7",
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.3.16",
+    "ui-bootstrap4": "^3.0.7",
     "webpack": "5.105.2",
     "webpack-bundle-analyzer": "5.2.0",
     "webpack-cli": "6.0.1",

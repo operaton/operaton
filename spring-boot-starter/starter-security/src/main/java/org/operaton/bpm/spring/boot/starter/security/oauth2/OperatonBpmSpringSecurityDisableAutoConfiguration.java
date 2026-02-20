@@ -32,7 +32,7 @@ public class OperatonBpmSpringSecurityDisableAutoConfiguration {
   private static final Logger logger = LoggerFactory.getLogger(OperatonBpmSpringSecurityDisableAutoConfiguration.class);
 
   @Bean
-  public SecurityFilterChain filterChainPermitAll(HttpSecurity http) throws Exception {
+  public SecurityFilterChain filterChainPermitAll(HttpSecurity http) {
     logger.info("Disabling Operaton Spring Security oauth2 integration");
 
     http.authorizeHttpRequests(customizer -> customizer.anyRequest().permitAll())

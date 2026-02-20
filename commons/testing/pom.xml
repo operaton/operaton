@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.commons</groupId>
     <artifactId>operaton-commons-root</artifactId>
-    <version>2.0.0-M3-SNAPSHOT</version>
+    <version>2.0.0-M3</version>
   </parent>
   <artifactId>operaton-commons-testing</artifactId>
   <name>Operaton - Commons - Testing</name>

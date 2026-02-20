@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
     <relativePath>../../pom.xml</relativePath>
-    <version>2.0.0-M3-SNAPSHOT</version>
+    <version>2.0.0-M3</version>
   </parent>
   <groupId>org.operaton.spin</groupId>
   <artifactId>operaton-spin-bom</artifactId>

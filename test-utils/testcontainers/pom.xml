@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../../database</relativePath>
-    <version>2.0.0-M3-SNAPSHOT</version>
+    <version>2.0.0-M3</version>
   </parent>
   <artifactId>operaton-test-utils-testcontainers</artifactId>
   <name>Operaton - Test Utils - Testcontainers</name>

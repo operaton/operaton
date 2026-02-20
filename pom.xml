@@ -16,7 +16,7 @@
     <version.mybatis>3.5.19</version.mybatis>
     <version.joda-time>2.14.0</version.joda-time>
     <version.uuid-generator>5.2.0</version.uuid-generator>
-    <version.feel-scala>1.19.3</version.feel-scala>
+    <version.feel-scala>1.20.2</version.feel-scala>
     <version.quarkus>3.32.0</version.quarkus>
     <version.java>17</version.java>
     <version.spring>7.0.5</version.spring>

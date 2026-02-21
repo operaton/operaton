@@ -17,7 +17,7 @@
     <version.joda-time>2.14.0</version.joda-time>
     <version.uuid-generator>5.2.0</version.uuid-generator>
     <version.feel-scala>1.19.3</version.feel-scala>
-    <version.quarkus>3.30.8</version.quarkus>
+    <version.quarkus>3.32.0</version.quarkus>
     <version.java>17</version.java>
     <version.spring>6.2.16</version.spring>
     <version.spring-boot>3.5.11</version.spring-boot>

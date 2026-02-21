@@ -22,7 +22,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 10
+    milestone: 21
     groups:
       httpcomponents5:
         patterns:
@@ -44,7 +44,7 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:npm"
-    milestone: 10
+    milestone: 21
     groups:
       angular:
         patterns:
@@ -81,7 +81,7 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:npm"
-    milestone: 10
+    milestone: 21
     groups:
       react:
         patterns:
@@ -95,7 +95,7 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:github-action"
-    milestone: 10
+    milestone: 21
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
@@ -103,9 +103,9 @@ updates:
     target-branch: "main"
     labels:
       - "dependencies:devcontainers"
-    milestone: 10
+    milestone: 21
 
-  # Release 2.0.x branch - all updates
+  # Release 1.1.x branch - all updates
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
@@ -113,7 +113,7 @@ updates:
       time: "01:00"
     reviewers:
       - "kthoms"
-    target-branch: "release/2.0.x"
+    target-branch: "release/1.1.x"
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
@@ -121,7 +121,7 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
-    milestone: 17
+    milestone: 18
     groups:
       httpcomponents5:
         patterns:
@@ -140,10 +140,10 @@ updates:
       interval: "weekly"
     reviewers:
       - "kthoms"
-    target-branch: "release/2.0.x"
+    target-branch: "release/1.1.x"
     labels:
       - "dependencies:npm"
-    milestone: 17
+    milestone: 18
     groups:
       angular:
         patterns:
@@ -177,10 +177,10 @@ updates:
       interval: "weekly"
     reviewers:
       - "kthoms"
-    target-branch: "release/2.0.x"
+    target-branch: "release/1.1.x"
     labels:
       - "dependencies:npm"
-    milestone: 17
+    milestone: 18
     groups:
       react:
         patterns:
@@ -191,16 +191,16 @@ updates:
       interval: "weekly"
     reviewers:
       - "kthoms"
-    target-branch: "release/2.0.x"
+    target-branch: "release/1.1.x"
     labels:
       - "dependencies:github-action"
-    milestone: 17
+    milestone: 18
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
       interval: "weekly"
-    target-branch: "release/2.0.x"
+    target-branch: "release/1.1.x"
     labels:
       - "dependencies:devcontainers"
-    milestone: 17
+    milestone: 18
 

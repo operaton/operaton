@@ -69,9 +69,9 @@ updates:
         patterns:
           - "webpack*"
     ignore:
-      - dependency-name: "eslint*"
-        # Known incompatibility with eslint 10
+      - dependency-name: "*"
         update-types: ["version-update:semver-major"]
+
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -118,6 +118,10 @@ updates:
       - dependency-name: "*"
         update-types: ["version-update:semver-major"]
       - dependency-name: "org.jruby:*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "io.quarkus:*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "org.camunda.feel:feel-engine"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"

@@ -17,7 +17,7 @@
     "last 2 versions"
   ],
   "dependencies": {
-    "@bpmn-io/dmn-migrate": "0.7.0",
+    "@bpmn-io/dmn-migrate": "0.7.1",
     "@bpmn-io/form-js": "1.19.0",
     "@ibm/plex": "6.4.1",
     "@popperjs/core": "2.11.8",

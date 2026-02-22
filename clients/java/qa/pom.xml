@@ -11,6 +11,9 @@
   <packaging>pom</packaging>
   <name>Operaton - Java External Task Client - QA</name>
   <description>${project.name}</description>
+  <properties>
+    <maven.deploy.skip>true</maven.deploy.skip>
+  </properties>
   <modules>
     <module>engine-variable-test</module>
   </modules>

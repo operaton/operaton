@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.Typed;
 import jakarta.inject.Inject;
@@ -40,6 +41,7 @@ import org.operaton.bpm.engine.task.Task;
  *
  * @author Falko Menge
  */
+@Dependent
 public class CurrentProcessInstance {
 
   @Inject

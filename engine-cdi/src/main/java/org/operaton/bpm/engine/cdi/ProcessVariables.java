@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.cdi;
 
 import java.util.Map;
 import java.util.logging.Logger;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
@@ -38,6 +39,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  * @author Daniel Meyer
  */
+@Dependent
 public class ProcessVariables {
 
   private final Logger logger = Logger.getLogger(ProcessVariables.class.getName());

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jakarta.enterprise.context.ContextNotActiveException;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.spi.BeanManager;
 import jakarta.inject.Inject;
 import jakarta.inject.Scope;
@@ -49,6 +50,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Daniel Meyer
  */
 @SuppressWarnings("serial")
+@Dependent
 public class DefaultContextAssociationManager implements ContextAssociationManager, Serializable {
 
   protected static final Logger log = Logger.getLogger(DefaultContextAssociationManager.class.getName());

@@ -19,6 +19,8 @@ package org.operaton.bpm.engine.spring.test.components;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.Future;
+
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.annotations.BusinessKey;
 import org.operaton.bpm.engine.spring.annotations.ProcessVariable;
@@ -69,6 +71,11 @@ public class ProcessInitiatingPojo {
 
     @StartProcess(processKey = "waiter")
     public ProcessInstance enrollCustomer(@BusinessKey String key, @ProcessVariable("customerId") long customerId) {
+        return null;
+    }
+
+    @StartProcess(processKey = "waiter")
+    public Future<ProcessInstance> startAsyncProcess(@ProcessVariable("customerId") long customerId) {
         return null;
     }
 

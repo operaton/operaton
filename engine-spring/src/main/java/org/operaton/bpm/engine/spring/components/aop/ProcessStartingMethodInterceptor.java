@@ -19,13 +19,13 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 import java.util.logging.Logger;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -68,7 +68,7 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
     }
 
     @SuppressWarnings("unused")
-    boolean shouldReturnAsyncResultWithProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
+    boolean shouldReturnFutureWithProcessInstance(StartProcess startProcess, MethodInvocation methodInvocation, Object result) {
         return result instanceof Future || methodInvocation.getMethod().getReturnType().isAssignableFrom(Future.class);
     }
 
@@ -115,8 +115,8 @@ public class ProcessStartingMethodInterceptor implements MethodInterceptor {
             return pId;
           }
 
-            if (shouldReturnAsyncResultWithProcessInstance(startProcess, invocation, result)) {
-                return new AsyncResult<ProcessInstance>(pi);
+            if (shouldReturnFutureWithProcessInstance(startProcess, invocation, result)) {
+                return CompletableFuture.completedFuture(pi);
             }
 
         } catch (Throwable th) {

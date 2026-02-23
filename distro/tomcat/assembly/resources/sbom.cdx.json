@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:41b19210-e251-470c-b522-b41167c4199f",
+  "serialNumber": "urn:uuid:6b6d0f2d-a429-4f97-ac77-18d226de3f67",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-23T07:25:50Z",
+    "timestamp": "2026-02-23T21:32:25Z",
     "tools": {
       "components": [
         {
@@ -16776,45 +16776,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.core5",
       "name": "httpcore5",
-      "version": "5.4",
+      "version": "5.4.1",
       "description": "Apache HttpComponents HTTP/1.1 core components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "584964cc15b7390de975e97e8eb2e6e1"
+          "content": "26f2b862d917aa5ce27d48d6027285d7"
         },
         {
           "alg": "SHA-1",
-          "content": "e40011ec0dae056466399f8e414ede4772001621"
+          "content": "2d3bcd267ddfff652d093c0f9a743e08c6b014cb"
         },
         {
           "alg": "SHA-256",
-          "content": "cec2981fa7f520efb63f0787c24f10af2679e31f9f75c448c4dde40a3ae8100d"
+          "content": "d9dca31ae1ee4e03c760596ac3f57b1d46f405376d68da6aff40eaca3bb4e2d8"
         },
         {
           "alg": "SHA-512",
-          "content": "5d0dc9ea175373a6bbf76e48246bb3f4d3c43a4ca1cc4db0a10970736a30d3fd72996cce5fe07d675eabb0cad4da1e2fd6b3100d31e7d9d4507c617fc1bbe425"
+          "content": "221125a005ce1a6c4ed813c268adc32a29c5e02eb48faad7cf7afa28d90dae838a642f0975f926d82660994192995f4bab98d280ca7193b5ad91b163eff4c696"
         },
         {
           "alg": "SHA-384",
-          "content": "7a9cf59bf40074c84dc395cd6dc91c2b2da630a2932eff8d42567bd870f0fc94f9605ea6c0725a83a7faf03f8d967305"
+          "content": "2b9927cc87b5a1ed0eed5ba6797a7848b326fd4c0310d333e2f7b4cde5adb41c1571a7cce0fdcd5d033e88025214e9db"
         },
         {
           "alg": "SHA3-384",
-          "content": "2acb353316cbf3d0649e7c2f0765591f3ab9bab2f3a4aa1029f86a15338e7806a9ec41b101fa06b7fb29111d807eb33d"
+          "content": "4e33ac768f95512c671681acc7c955f5715c222c1648769c6ac4e25aa1521688388651f100dad1004a13dfee73087670"
         },
         {
           "alg": "SHA3-256",
-          "content": "47dea1de78d259c1fb903bac72dd61acce885fbe2ab8e6b6d4f6e2439710699e"
+          "content": "85ec40f71f8d0928953beb4965580d049d41c716a778e4354f879f93a72115c6"
         },
         {
           "alg": "SHA3-512",
-          "content": "37c162c8a37107846e5950b2b15168d3b5677a4338dbc37b2f178f6fb5d5ad21c5cd81a6178054efe007d8fd088c42e8b2398df3e8d636d973a5035a01306808"
+          "content": "8ef1e10a32dd2801f3788774ffb8cd0ad8da8a9a2cd43ec4e3e6ca90c6b32d05541fed6f87fd9fa1c58e3668f7ae1b5641ec5e7bb770ba0dc3e6ce7f26acaf70"
         }
       ],
       "licenses": [
@@ -16824,10 +16824,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4/httpcore5/",
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.1/httpcore5/",
           "type": "website"
         },
         {
@@ -16843,7 +16843,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.4/httpcore5",
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.1/httpcore5",
           "type": "vcs"
         }
       ]
@@ -21259,7 +21259,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "138fd203-9046-42d1-8fa3-ef4607f550c9",
+      "bom-ref": "1692353b-1901-4092-9be5-e59079482b2f",
       "name": "package-lock.json",
       "properties": [
         {
@@ -25743,7 +25743,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0a796803-459a-4fcd-916a-09cda12c6d9d",
+      "bom-ref": "5a454b25-386b-40d1-abd6-f6c2ee5ae432",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -27201,19 +27201,19 @@
     {
       "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
       "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4?type=jar"
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar"
       ]
     },
     {
@@ -28349,13 +28349,7 @@
       "dependsOn": []
     },
     {
-      "ref": "0a796803-459a-4fcd-916a-09cda12c6d9d",
-      "dependsOn": [
-        "138fd203-9046-42d1-8fa3-ef4607f550c9"
-      ]
-    },
-    {
-      "ref": "138fd203-9046-42d1-8fa3-ef4607f550c9",
+      "ref": "1692353b-1901-4092-9be5-e59079482b2f",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.0",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -28403,6 +28397,12 @@
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0",
         "pkg:npm/ui-bootstrap4@3.0.7"
+      ]
+    },
+    {
+      "ref": "5a454b25-386b-40d1-abd6-f6c2ee5ae432",
+      "dependsOn": [
+        "1692353b-1901-4092-9be5-e59079482b2f"
       ]
     },
     {

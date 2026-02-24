@@ -44,8 +44,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
- * @author Daniel Meyer (operaton)
- * @author Kristin Polenz (operaton)
+ * @author Daniel Meyer (Camunda)
+ * @author Kristin Polenz (Camunda)
  * @author Christian Lipphardt (Camunda)
  */
 class MessageBoundaryEventTest {

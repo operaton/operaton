@@ -53,7 +53,7 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  * </p>
  *
  * @author Tom Baeyens
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 public class ProcessEngineTestCase extends TestCase {
 

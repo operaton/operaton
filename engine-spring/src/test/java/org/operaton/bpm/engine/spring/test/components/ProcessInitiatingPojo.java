@@ -16,10 +16,10 @@
  */
 package org.operaton.bpm.engine.spring.test.components;
 
+import java.util.concurrent.Future;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.Future;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.annotations.BusinessKey;

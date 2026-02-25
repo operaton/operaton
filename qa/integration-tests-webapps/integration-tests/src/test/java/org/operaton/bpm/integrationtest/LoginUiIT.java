@@ -30,7 +30,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-public class LoginUiIntegrationTest extends AbstractWebappUiIntegrationTest {
+public class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
   protected WebDriverWait wait;
 

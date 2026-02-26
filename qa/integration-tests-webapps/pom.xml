@@ -244,7 +244,7 @@
               <systemPropertyVariables>
                 <arquillian.launch>tomcat</arquillian.launch>
                 <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
-                <version.tomcat>${version.tomcat}</version.tomcat>
+                <tomcat.runtime.location>${tomcat.runtime.location}</tomcat.runtime.location>
               </systemPropertyVariables>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
             </configuration>
@@ -339,7 +339,7 @@
                 <systemPropertyVariables>
                   <arquillian.launch>wildfly</arquillian.launch>
                   <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
-                  <version.wildfly>${version.wildfly}</version.wildfly>
+                  <wildfly.runtime.location>${wildfly.runtime.location}</wildfly.runtime.location>
                 </systemPropertyVariables>
                 <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
               </configuration>

@@ -11,7 +11,7 @@
   <container qualifier="wildfly">
     <configuration>
       <!--<version.wildfly>38.0.1.Final</version.wildfly> -->
-      <property name="jbossHome">../../wildfly-runtime/target/server/wildfly-38.0.1.Final</property>
+      <property name="jbossHome">../wildfly-runtime/target/server/wildfly-${version.wildfly}</property>
       <property name="managementPort">39990</property>
       <property name="serverConfig">standalone.xml</property>
       <property name="javaVmArguments">-Xmx1024m</property>
@@ -22,8 +22,8 @@
 
   <container qualifier="tomcat">
     <configuration>
-      <property name="catalinaHome">../../tomcat-runtime/target/server/apache-tomcat-10.1.42</property>
-      <property name="catalinaBase">../../tomcat-runtime/target/server/apache-tomcat-10.1.42</property>
+      <property name="catalinaHome">../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</property>
+      <property name="catalinaBase">../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</property>
       <property name="bindHttpPort">48080</property>
       <property name="user">arquillian</property>
       <property name="pass">arquillian</property>

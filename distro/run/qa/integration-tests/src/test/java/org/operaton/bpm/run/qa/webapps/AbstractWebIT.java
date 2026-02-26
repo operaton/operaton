@@ -27,7 +27,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.operaton.bpm.TestProperties;
+import org.operaton.bpm.integrationtest.TestProperties;
 
 import static org.awaitility.Awaitility.await;
 

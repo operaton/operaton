@@ -1,10 +1,10 @@
 # Webapp Integration Tests
 
 This module contains integration tests for the operaton webapps.
-Tests are executed with managed arqullian container.
-To run tests individually add -Darquillian.launch=%container% to your run configuration.
-Currently, you can select between wildfly and tomcat.
-You also need to run a build with wished container profile first so that your runtime is available to you
+Tests are executed with managed arquillian container. To run tests individually add -Darquillian.launch=tomcat/wildfly to your run configuration.
+You need to specify container version like -Dversion.wildfly or -Dversion.tomcat. You can find version numbers in parent/pom.xml.
+Important: You a build with wished container must be run first so that server runtime is preconfigured and available to you.
+-Dselenium.screenshot.directory for selenium screenshots
 
 ## Running protractor JS Integration Tests
 

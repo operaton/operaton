@@ -52,6 +52,7 @@
   </dependencyManagement>
   <modules>
     <module>ensure-clean-db-plugin</module>
+    <module>arquillian-extensions</module>
   </modules>
   <profiles>
     <profile>

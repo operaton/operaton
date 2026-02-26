@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.integrationtest.util;
-
-import java.util.Map;
+package org.operaton.bpm.integrationtest;
 
 import org.jboss.arquillian.container.spi.ContainerRegistry;
 import org.jboss.arquillian.core.api.annotation.Observes;
 import org.jboss.arquillian.core.spi.ServiceLoader;
-import org.testcontainers.containers.JdbcDatabaseContainer;
-
 import org.operaton.impl.test.utils.testcontainers.OperatonDb2ContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMSSQLContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMariaDBContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonMySqlContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonOracleContainerProvider;
 import org.operaton.impl.test.utils.testcontainers.OperatonPostgreSQLContainerProvider;
+import org.testcontainers.containers.JdbcDatabaseContainer;
+
+import java.util.Map;
 
 /**
  * {@link org.jboss.arquillian.core.api.annotation.Observer} for Arquillian lifecycle events.

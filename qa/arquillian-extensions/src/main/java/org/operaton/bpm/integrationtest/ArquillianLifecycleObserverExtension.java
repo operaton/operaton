@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.integrationtest.util;
+package org.operaton.bpm.integrationtest;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 

@@ -153,7 +153,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   }
 
   @TestTemplate
-  void testJobsListQueryBased() {
+  void testJobsQueryBased() {
     setupAndExecuteJobsQueryBasedTest();
     // then
     assertScenario();
@@ -173,7 +173,7 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
   @TestTemplate
   void testWithTwoInvocationsProcessQueryBased() {
     engineRule.getProcessEngineConfiguration().setInvocationsPerBatchJob(2);
-    setupAndExecuteProcessListBasedTest();
+    setupAndExecuteProcessQueryBasedTest();
 
     // then
     assertScenario();
@@ -199,9 +199,34 @@ public class SetJobRetriesBatchAuthorizationTest extends AbstractBatchAuthorizat
     executeSeedAndBatchJobs();
   }
 
+  private void setupAndExecuteProcessQueryBasedTest() {
+    //given
+    ProcessInstanceQuery processInstanceQuery = engineRule.getRuntimeService().createProcessInstanceQuery();
+    authRule
+        .init(scenario)
+        .withUser("userId")
+        .bindResource("Process", sourceDefinition.getKey())
+        .bindResource("processInstance1", processInstance.getId())
+        .bindResource("processInstance2", processInstance2.getId())
+        .start();
+
+    // when
+    batch = managementService.setJobRetriesAsync(
+        null, processInstanceQuery, RETRIES);
+
+    executeSeedAndBatchJobs();
+  }
+
   @TestTemplate
   void testProcessList() {
     setupAndExecuteProcessListBasedTest();
+    // then
+    assertScenario();
+  }
+
+  @TestTemplate
+  void testProcessQuery() {
+    setupAndExecuteProcessQueryBasedTest();
     // then
     assertScenario();
   }

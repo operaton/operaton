@@ -277,8 +277,7 @@ public class HistoricCaseActivityInstanceQueryImpl extends AbstractQuery<Histori
 
   @Override
   public HistoricCaseActivityInstanceQuery orderByCaseExecutionId() {
-    orderBy(HistoricCaseActivityInstanceQueryProperty.HISTORIC_CASE_ACTIVITY_INSTANCE_ID);
-    return this;
+    return orderByHistoricCaseActivityInstanceId();
   }
 
   @Override

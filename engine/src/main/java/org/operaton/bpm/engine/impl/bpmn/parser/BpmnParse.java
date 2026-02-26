@@ -267,6 +267,7 @@ public class BpmnParse extends Parse {
   public static final String PROPERTYNAME_IS_MULTI_INSTANCE = "isMultiInstance";
 
   public static final Namespace OPERATON_BPMN_EXTENSIONS_NS = new Namespace(BpmnParser.OPERATON_BPMN_EXTENSIONS_NS, BpmnParser.CAMUNDA_BPMN_EXTENSIONS_NS);
+  public static final Namespace FOX_ENGINE_NS = new Namespace("http://www.operaton.com/fox");
   public static final Namespace XSI_NS = new Namespace(BpmnParser.XSI_NS);
   public static final Namespace BPMN_DI_NS = new Namespace(BpmnParser.BPMN_DI_NS);
   public static final Namespace OMG_DI_NS = new Namespace(BpmnParser.OMG_DI_NS);

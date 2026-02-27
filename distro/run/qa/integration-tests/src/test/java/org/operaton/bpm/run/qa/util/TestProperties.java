@@ -72,14 +72,6 @@ public class TestProperties {
     return getStringProperty("http.host", "localhost");
   }
 
-  public String getWebappCtxPath() {
-    return getStringProperty("webapp.ctx.path", "operaton/");
-  }
-
-  public String getRestCtxPath() {
-    return getStringProperty("rest.ctx.path", "engine-rest/");
-  }
-
   public static Properties getTestProperties() {
     Properties properties = new Properties();
 

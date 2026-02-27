@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>2.0.0-M3</version>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-parent</artifactId>
   <packaging>pom</packaging>
@@ -33,7 +33,7 @@
     <version.commons-codec>1.21.0</version.commons-codec>
     <version.gson>2.13.2</version.gson>
     <version.hibernate>6.6.10.Final</version.hibernate>
-    <version.jackson>2.21.0</version.jackson>
+    <version.jackson>2.21.1</version.jackson>
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.6</version.httpclient5>
     <version.httpcore5>5.4</version.httpcore5>
@@ -51,7 +51,7 @@
     <version.tomcat>11.0.18</version.tomcat>
     <version.arquillian>1.10.0.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.5</version.shrinkwrap.resolvers>
-    <version.selenium>4.40.0</version.selenium>
+    <version.selenium>4.41.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
     <version.logback>1.5.32</version.logback>
     <version.freemarker>2.3.34</version.freemarker>

@@ -19,7 +19,9 @@ package org.operaton.bpm.engine.rest.util.container;
 import java.net.BindException;
 import java.util.concurrent.TimeUnit;
 import jakarta.ws.rs.core.Application;
+
 import org.awaitility.core.ConditionTimeoutException;
+
 import static org.awaitility.Awaitility.await;
 
 public abstract class EmbeddedServerBootstrap extends AbstractServerBootstrap {
@@ -56,8 +58,8 @@ public abstract class EmbeddedServerBootstrap extends AbstractServerBootstrap {
         });
     } catch (ConditionTimeoutException e) {
       Throwable cause = e.getCause();
-      if (cause instanceof Exception) {
-        throw new ServerBootstrapException((Exception) cause);
+      if (cause instanceof Exception exception) {
+        throw new ServerBootstrapException(exception);
       }
       throw new ServerBootstrapException(e);
     }

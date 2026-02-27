@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.integrationtest;
+package org.operaton.bpm.run.qa.util;
 
 import java.io.IOException;
 import java.io.InputStream;

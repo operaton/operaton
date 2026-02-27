@@ -65,14 +65,13 @@ class RestIT extends AbstractWebIntegrationTest {
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getRestCtxPath());
   }
 
   @Test
   void testScenario() throws Exception {
     // get process definitions for default engine
-    log.info("Checking {}{}", restApiBaseUrl, PROCESS_DEFINITION_PATH);
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + PROCESS_DEFINITION_PATH)
+    log.info("Checking {}{}", getRestApiBaseUrlAsString(), PROCESS_DEFINITION_PATH);
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + PROCESS_DEFINITION_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
@@ -104,9 +103,9 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void assertJodaTimePresent() {
-    log.info("Checking {}{}", restApiBaseUrl, TASK_PATH);
+    log.info("Checking {}{}", getRestApiBaseUrlAsString(), TASK_PATH);
 
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + TASK_PATH)
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + TASK_PATH)
             .queryString("dueAfter", "2000-01-01T00:00:00.000+0200")
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -119,7 +118,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void testDelayedJobDefinitionSuspension() {
-    log.info("Checking {}{}/suspended", restApiBaseUrl, JOB_DEFINITION_PATH);
+    log.info("Checking {}{}/suspended", getRestApiBaseUrlAsString(), JOB_DEFINITION_PATH);
 
     // Create request body as a Map (or you can use a custom DTO if required)
     Map<String, Object> requestBody = new HashMap<>();
@@ -128,7 +127,7 @@ class RestIT extends AbstractWebIntegrationTest {
     requestBody.put("includeJobs", true);
     requestBody.put("executionDate", "2014-08-25T13:55:45");
 
-    HttpResponse<String> response = Unirest.put(restApiBaseUrl + JOB_DEFINITION_PATH + "/suspended")
+    HttpResponse<String> response = Unirest.put(getRestApiBaseUrlAsString() + JOB_DEFINITION_PATH + "/suspended")
             .header(ACCEPT, APPLICATION_JSON)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(requestBody)
@@ -139,7 +138,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void testTaskQueryContentType() {
-    String resourcePath = restApiBaseUrl + TASK_PATH;
+    String resourcePath = getRestApiBaseUrlAsString() + TASK_PATH;
     log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
@@ -149,7 +148,7 @@ class RestIT extends AbstractWebIntegrationTest {
     // get id of first task
     String taskId = getFirstTask().getString("id");
 
-    String resourcePath = restApiBaseUrl + TASK_PATH + "/" + taskId;
+    String resourcePath = getRestApiBaseUrlAsString() + TASK_PATH + "/" + taskId;
     log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
@@ -167,7 +166,7 @@ class RestIT extends AbstractWebIntegrationTest {
     filter.put("name", "IT Test Filter");
     filter.put("query", query);
 
-    HttpResponse<JsonNode> response = Unirest.post(restApiBaseUrl + FILTER_PATH + "/create")
+    HttpResponse<JsonNode> response = Unirest.post(getRestApiBaseUrlAsString() + FILTER_PATH + "/create")
             .header(ACCEPT, APPLICATION_JSON)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(filter)
@@ -177,18 +176,18 @@ class RestIT extends AbstractWebIntegrationTest {
     String filterId = response.getBody().getObject().getString("id");
 
     // Check the filter resource (list)
-    String resourcePathList = "%s%s/%s/list".formatted(restApiBaseUrl, FILTER_PATH, filterId);
+    String resourcePathList = "%s%s/%s/list".formatted(getRestApiBaseUrlAsString(), FILTER_PATH, filterId);
     log.info("Checking {}", resourcePathList);
     assertMediaTypesOfResource(resourcePathList, true);
 
 
     // Check the filter resource (singleResult)
-    String resourcePathSingleResult = "%s%s/%s/singleResult".formatted(restApiBaseUrl, FILTER_PATH, filterId);
+    String resourcePathSingleResult = "%s%s/%s/singleResult".formatted(getRestApiBaseUrlAsString(), FILTER_PATH, filterId);
     log.info("Checking {}", resourcePathSingleResult);
     assertMediaTypesOfResource(resourcePathSingleResult, true);
 
     // delete test filter
-    HttpResponse<String> deleteResponse = Unirest.delete(restApiBaseUrl + FILTER_PATH + "/" + filterId).asString();
+    HttpResponse<String> deleteResponse = Unirest.delete(getRestApiBaseUrlAsString() + FILTER_PATH + "/" + filterId).asString();
     assertThat(deleteResponse.getStatus()).isEqualTo(204);
 
   }
@@ -196,7 +195,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void shouldSerializeDateWithDefinedFormat() {
     // when
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + SCHEMA_LOG_PATH)
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + SCHEMA_LOG_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
@@ -230,7 +229,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testProcessInstanceQuery() {
     // Send GET request with query parameter and accept header
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + PROCESS_INSTANCE_PATH)
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + PROCESS_INSTANCE_PATH)
             .queryString("variables", "invoiceNumber_eq_GPFE-23232323")
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -246,7 +245,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void testComplexObjectJacksonSerialization() {
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + PROCESS_DEFINITION_PATH + "/statistics")
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + PROCESS_DEFINITION_PATH + "/statistics")
             .queryString("incidents", "true")
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -282,7 +281,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testOptionsRequest() {
     // Given
-    String resourcePath = restApiBaseUrl + FILTER_PATH;
+    String resourcePath = getRestApiBaseUrlAsString() + FILTER_PATH;
     log.info("Send OPTIONS request to {}", resourcePath);
 
     // Send OPTIONS request
@@ -298,7 +297,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void testEmptyBodyFilterIsActive() {
-    HttpResponse<String> response = Unirest.post(restApiBaseUrl + FILTER_PATH + "/create")
+    HttpResponse<String> response = Unirest.post(getRestApiBaseUrlAsString() + FILTER_PATH + "/create")
             .header(ACCEPT, APPLICATION_JSON)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body("")
@@ -308,7 +307,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   protected JSONObject getFirstTask() {
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + TASK_PATH)
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + TASK_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
 
@@ -317,7 +316,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   protected JSONObject getFirstHistoricVariableUpdates() {
-    HttpResponse<JsonNode> response = Unirest.get(restApiBaseUrl + HISTORIC_DETAIL_PATH)
+    HttpResponse<JsonNode> response = Unirest.get(getRestApiBaseUrlAsString() + HISTORIC_DETAIL_PATH)
             .queryString("variableUpdates", "true")
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();

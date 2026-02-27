@@ -59,10 +59,6 @@ public abstract class AbstractWebIntegrationTest {
   protected static final String JSESSIONID_IDENTIFIER = "JSESSIONID=";
   protected static final String XSRF_TOKEN_IDENTIFIER = "XSRF-TOKEN=";
 
-  protected String appBasePath;
-  protected String appUrl;
-  protected TestProperties testProperties;
-
   protected static ChromeDriverService service;
 
   protected String csrfToken;
@@ -119,28 +115,16 @@ public abstract class AbstractWebIntegrationTest {
     });
   }
 
-  @BeforeEach
-  public void before() {
-    testProperties = new TestProperties(48080);
-  }
-
-  public void createClient(String ctxPath) {
-    testProperties = new TestProperties();
-
-    appBasePath = appBaseUrl.toString();
-    LOGGER.info("Connecting to application {}", appBasePath);
-  }
-
   protected void getTokens() {
     // First request, first set of cookies
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
     List<String> cookieValues = response.getHeaders().get(SET_COOKIE);
 
     String startCsrfCookie = getCookie(cookieValues, XSRF_TOKEN_IDENTIFIER);
     String startSessionCookie = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
     // login with user, update session cookie
-    response = Unirest.post(appBasePath + "api/admin/auth/user/default/login/cockpit")
+    response = Unirest.post(getAppBaseUrlAsString() + "api/admin/auth/user/default/login/cockpit")
             .body("username=demo&password=demo")
             .header("Content-Type", MediaType.APPLICATION_FORM_URLENCODED)
             .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, startSessionCookie))
@@ -152,7 +136,7 @@ public abstract class AbstractWebIntegrationTest {
     sessionId = getCookie(cookieValues, JSESSIONID_IDENTIFIER);
 
     // update CSRF cookie
-    response = Unirest.get(appBasePath + "api/engine/engine")
+    response = Unirest.get(getAppBaseUrlAsString() + "api/engine/engine")
             .header(COOKIE_HEADER, createCookieHeader(startCsrfCookie, sessionId))
             .header(X_XSRF_TOKEN_HEADER, startCsrfCookie)
             .asString();
@@ -207,21 +191,20 @@ public abstract class AbstractWebIntegrationTest {
     return "";
   }
 
-  // Helper methods for common test operations
-  protected String getWebappCtxPath() {
-    return testProperties.getWebappCtxPath();
-  }
-
-  protected String getRestCtxPath() {
-    return testProperties.getRestCtxPath();
-  }
-
   protected void preventRaceConditions() {
     try {
       Thread.sleep(500); // Simple delay to prevent race conditions
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
     }
+  }
+
+  protected String getAppBaseUrlAsString() {
+    return appBaseUrl != null ? appBaseUrl.toString() : null;
+  }
+
+  protected String getRestApiBaseUrlAsString() {
+    return restApiBaseUrl != null ? restApiBaseUrl.toString() : null;
   }
 
 }

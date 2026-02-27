@@ -42,11 +42,6 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   @Parameter(1)
   public boolean assetAllowed;
 
-  @BeforeEach
-  void createClient() {
-    createClient(getWebappCtxPath());
-  }
-
   @Parameters(name = "Asset: {0}, Allowed: {1}")
   public static Collection<Object[]> getAssets() {
     return List.of(
@@ -61,7 +56,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
   @Test
   void shouldGetAssetIfAllowed() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + "api/admin/plugin/adminPlugins/static/" + assetName).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + "api/admin/plugin/adminPlugins/static/" + assetName).asString();
 
     // then
     assertResponse(assetName, response);

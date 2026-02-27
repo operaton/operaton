@@ -37,7 +37,7 @@ public class LoginUiIT extends AbstractWebappUiIntegrationTest {
   public void login(String appName) {
     driver.manage().deleteAllCookies();
 
-    driver.get("%sapp/%s/default/".formatted(appUrl, appName));
+    driver.get("%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName));
 
     wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -74,7 +74,7 @@ public class LoginUiIT extends AbstractWebappUiIntegrationTest {
         By.cssSelector(".deployed .processes .stats-label"),
         "Process Definitions"));
 
-    wait.until(currentURIIs(URI.create("%sapp/%s/default/#/dashboard".formatted(appUrl, appName))));
+    wait.until(currentURIIs(URI.create("%sapp/%s/default/#/dashboard".formatted(getAppBaseUrlAsString(), appName))));
   }
 
   @Test
@@ -95,7 +95,7 @@ public class LoginUiIT extends AbstractWebappUiIntegrationTest {
         By.cssSelector(".start-process-action view a"),
         "Start process"));
 
-    wait.until(containsCurrentUrl(appUrl + "app/"
+    wait.until(containsCurrentUrl(getAppBaseUrlAsString() + "app/"
         + appName + "/default/#/?searchQuery="));
   }
 
@@ -117,7 +117,7 @@ public class LoginUiIT extends AbstractWebappUiIntegrationTest {
         By.cssSelector("[ng-class=\"activeClass('#/authorization')\"] a"),
         "Authorizations"));
 
-    wait.until(currentURIIs(URI.create("%sapp/%s/default/#/".formatted(appUrl, appName))));
+    wait.until(currentURIIs(URI.create("%sapp/%s/default/#/".formatted(getAppBaseUrlAsString(), appName))));
   }
 
   @Test
@@ -138,7 +138,7 @@ public class LoginUiIT extends AbstractWebappUiIntegrationTest {
         By.cssSelector(".webapps .section-title"),
         "Applications"));
 
-    wait.until(currentURIIs(URI.create("%sapp/%s/default/#!/welcome".formatted(appUrl, appName))));
+    wait.until(currentURIIs(URI.create("%sapp/%s/default/#!/welcome".formatted(getAppBaseUrlAsString(), appName))));
   }
 
 }

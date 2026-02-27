@@ -26,15 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("java:S5960")
 class ErrorPageIT extends AbstractWebIntegrationTest {
 
-  @BeforeEach
-  void createClient() {
-    createClient(getWebappCtxPath());
-  }
-
   @Test
   void shouldCheckNonFoundResponse() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + "nonexisting").asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + "nonexisting").asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(404);

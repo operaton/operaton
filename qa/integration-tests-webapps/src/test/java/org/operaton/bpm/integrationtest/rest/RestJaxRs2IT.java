@@ -49,7 +49,6 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getRestCtxPath());
   }
 
   @Test
@@ -59,7 +58,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
     payload.put("workerId", "aWorkerId");
     payload.put("asyncResponseTimeout", 1000 * 60 * 30 + 1);
 
-    HttpResponse<JsonNode> response = Unirest.post(restApiBaseUrl + FETCH_AND_LOCK_PATH)
+    HttpResponse<JsonNode> response = Unirest.post(getRestApiBaseUrlAsString() + FETCH_AND_LOCK_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .header(CONTENT_TYPE, APPLICATION_JSON)
             .body(payload)
@@ -77,7 +76,7 @@ class RestJaxRs2IT extends AbstractWebIntegrationTest {
       requestBody.put("workerId", "aWorkerId");
       requestBody.put("asyncResponseTimeout", 1000);
 
-      HttpResponse<String> response = Unirest.post(restApiBaseUrl + FETCH_AND_LOCK_PATH)
+      HttpResponse<String> response = Unirest.post(getRestApiBaseUrlAsString() + FETCH_AND_LOCK_PATH)
               .header(CONTENT_TYPE, APPLICATION_JSON)
               .body(requestBody)
               .asString();

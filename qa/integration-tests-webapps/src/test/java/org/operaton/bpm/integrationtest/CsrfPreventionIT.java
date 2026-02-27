@@ -32,7 +32,6 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getWebappCtxPath());
   }
 
   @Test
@@ -41,7 +40,7 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
     // given
 
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH)
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH)
             .asString();
 
     // then
@@ -57,7 +56,7 @@ class CsrfPreventionIT extends AbstractWebIntegrationTest {
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldRejectModifyingRequest() {
     // given
-    String baseUrl = appBaseUrl.toString();
+    String baseUrl = getAppBaseUrlAsString();
     String modifyingRequestPath = "api/admin/auth/user/default/login/welcome";
 
     // when

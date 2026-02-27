@@ -32,7 +32,6 @@ class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getWebappCtxPath());
   }
 
   @Test
@@ -40,7 +39,7 @@ class SessionCookieSecurityIT extends AbstractWebIntegrationTest {
   void shouldCheckPresenceOfProperties() {
     // when
     // Send GET request and return the Response
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(200);

@@ -10,10 +10,6 @@
   <name>Operaton - QA Integration Tests - Engine</name>
   <description>${project.name}</description>
   <properties>
-    <!-- Needs to be updated after a new WildFly release -->
-    <wildfly.container.adapter.groupId>org.wildfly.arquillian</wildfly.container.adapter.groupId>
-    <wildfly.container.adapter.version>5.1.0.Final</wildfly.container.adapter.version>
-    <version.arquillian>1.9.3.Final</version.arquillian>
     <redirect.test.output>true</redirect.test.output>
     <install.skip>true</install.skip>
   </properties>

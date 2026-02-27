@@ -34,17 +34,11 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
 
   public static final String CSP_VALUE = "base-uri 'self';script-src 'nonce-([-_a-zA-Z\\d]*)' 'strict-dynamic' 'unsafe-eval' https: 'self' 'unsafe-inline';style-src 'unsafe-inline' 'self';default-src 'self';img-src 'self' data:;block-all-mixed-content;form-action 'self';frame-ancestors 'none';object-src 'none';sandbox allow-forms allow-scripts allow-same-origin allow-popups allow-downloads";
 
-  @BeforeEach
-  void createClient() {
-    preventRaceConditions();
-    createClient(getWebappCtxPath());
-  }
-
   @Test
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckPresenceOfXssProtectionHeader() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
@@ -55,7 +49,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckPresenceOfContentSecurityPolicyHeader() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
@@ -66,7 +60,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckPresenceOfContentTypeOptions() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());
@@ -77,7 +71,7 @@ public class HttpHeaderSecurityIT extends AbstractWebIntegrationTest {
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckAbsenceOfHsts() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());

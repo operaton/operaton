@@ -33,14 +33,13 @@ class SessionCookieSameSiteIT extends AbstractWebIntegrationTest {
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getWebappCtxPath());
   }
 
   @Test
   @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
   void shouldCheckPresenceOfSameSiteProperties() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + TASKLIST_PATH).asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + TASKLIST_PATH).asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(200);

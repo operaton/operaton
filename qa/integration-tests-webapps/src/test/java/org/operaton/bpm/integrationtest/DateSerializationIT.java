@@ -39,14 +39,13 @@ class DateSerializationIT extends AbstractWebIntegrationTest {
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getWebappCtxPath());
     getTokens();
   }
 
   @Test
   void shouldSerializeDateWithDefinedFormat() {
     // when
-    HttpResponse<JsonNode> response = Unirest.get(appBasePath + SCHEMA_LOG_PATH)
+    HttpResponse<JsonNode> response = Unirest.get(getAppBaseUrlAsString() + SCHEMA_LOG_PATH)
             .header("Accept", "application/json")
             .header(X_XSRF_TOKEN_HEADER, csrfToken)
             .header(COOKIE_HEADER, createCookieHeader())

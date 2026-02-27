@@ -77,8 +77,6 @@ public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest 
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getWebappCtxPath());
-    appUrl = appBaseUrl.toString();
   }
 
   @AfterAll

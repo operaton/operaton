@@ -27,15 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("java:S5960")
 class ExceptionLoggerIT extends AbstractWebIntegrationTest {
 
-  @BeforeEach
-  void createClient() {
-    createClient(getWebappCtxPath());
-  }
-
   @Test
   void shouldNotFailForUndefinedUser() {
     // when
-    HttpResponse<String> response = Unirest.get(appBasePath + "app/admin/default/#/users/undefined?tab=profile").asString();
+    HttpResponse<String> response = Unirest.get(getAppBaseUrlAsString() + "app/admin/default/#/users/undefined?tab=profile").asString();
 
     // then
     assertThat(response.getStatus()).isEqualTo(OK.getStatusCode());

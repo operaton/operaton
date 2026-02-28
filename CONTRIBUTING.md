@@ -8,6 +8,7 @@
   * [Code Formatting](#code-formatting)
   * [Naming Conventions](#naming-conventions)
   * [Documentation Standards](#documentation-standards)
+  * [Null-Safety Guidelines](#null-safety-guidelines)
   * [Architectural Guidelines](#architectural-guidelines)
 * [Contribution checklist](#contribution-checklist)
 * [Commit message conventions](#commit-message-conventions)
@@ -188,15 +189,16 @@ All public APIs must include comprehensive Javadoc documentation:
 * **Public Methods**: Include `@param`, `@return`, and `@throws` tags where applicable
 * **Public Fields**: Brief description of purpose and valid values
 * **Deprecated Elements**: Use `@deprecated` with replacement information and removal timeline
+* **Nullability**: Document nullability semantics for parameters and return values (see [Null-Safety Guidelines](#null-safety-guidelines))
 
 **Example**:
 ```java
 /**
  * Executes a BPMN process instance.
  *
- * @param processDefinitionKey the key of the process definition to start
- * @param variables process variables to set on the new instance
- * @return the started process instance
+ * @param processDefinitionKey the key of the process definition to start (must not be null)
+ * @param variables process variables to set on the new instance (may be null or empty)
+ * @return the started process instance (never null)
  * @throws ProcessEngineException if the process cannot be started
  * @since 1.0
  */
@@ -214,6 +216,64 @@ public ProcessInstance startProcessInstanceByKey(String processDefinitionKey, Ma
 ### License Headers
 
 All new files must include the Apache 2.0 license header as specified in the [Copyright section](#copyright).
+
+### Null-Safety Guidelines
+
+Operaton uses [JSpecify](https://jspecify.dev/) annotations for null-safety on all public APIs (as defined in [ADR-0001](docs/decisions/0001-null-safety-strategy-for-operaton.md)).
+
+#### Annotations Usage
+
+* **@NullMarked**: Applied at the package level via `package-info.java` for all public API packages (not `.impl.` packages)
+* **@Nullable**: Use explicitly on parameters and return values that accept or return null
+* **Default**: All parameters and return values are considered non-null unless marked with `@Nullable`
+
+#### Guidelines for Contributors
+
+1. **Public APIs**: All public API methods should document nullability in both JSpecify annotations and Javadoc
+2. **Implementation Code**: Null-safety annotations in implementation packages are optional but encouraged
+3. **New Code**: When adding new public APIs, apply appropriate null-safety annotations from the start
+4. **Existing Code**: When modifying existing public APIs, add null-safety annotations if they are clearly non-null or nullable
+
+#### Example
+
+```java
+package org.operaton.bpm.engine;
+
+import org.jspecify.annotations.Nullable;
+
+/**
+ * Service for managing process instances.
+ */
+public interface RuntimeService {
+  
+  /**
+   * Starts a new process instance.
+   *
+   * @param processDefinitionKey the key of the process definition (must not be null)
+   * @param variables process variables to set (may be null or empty)
+   * @return the started process instance (never null)
+   * @throws ProcessEngineException if the process cannot be started
+   */
+  ProcessInstance startProcessInstanceByKey(
+      String processDefinitionKey,
+      @Nullable Map<String, Object> variables);
+  
+  /**
+   * Retrieves a process instance by ID.
+   *
+   * @param processInstanceId the ID to search for (must not be null)
+   * @return the process instance, or null if not found
+   */
+  @Nullable
+  ProcessInstance findProcessInstanceById(String processInstanceId);
+}
+```
+
+#### Resources
+
+* [JSpecify User Guide](https://jspecify.dev/docs/user-guide)
+* [ADR-0001: Null Safety Strategy](docs/decisions/0001-null-safety-strategy-for-operaton.md)
+* [JSpecify Javadoc](https://javadoc.io/doc/org.jspecify/jspecify/latest/index.html)
 
 ## Architectural Guidelines
 

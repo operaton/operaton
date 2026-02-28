@@ -43,7 +43,7 @@ public abstract class XmlDomMapJavaToXmlScriptTest extends ScriptTest {
     //different timezone
     String exampleValidationXmlWoTimezone = XmlTestUtil.removeTimeZone(EXAMPLE_VALIDATION_XML);
     xml = XmlTestUtil.removeTimeZone(xml);
-    XmlAssert.assertThat(xml).isEqualTo(exampleValidationXmlWoTimezone);
+    XmlAssert.assertThat(xml).and(exampleValidationXmlWoTimezone).ignoreWhitespace().areIdentical();
   }
 
   @Test

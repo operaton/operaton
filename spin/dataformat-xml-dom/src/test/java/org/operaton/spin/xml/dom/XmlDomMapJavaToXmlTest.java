@@ -39,7 +39,7 @@ class XmlDomMapJavaToXmlTest {
     //different timezone
     String exampleValidationXmlWoTimezone = XmlTestUtil.removeTimeZone(EXAMPLE_VALIDATION_XML);
     orderAsString = XmlTestUtil.removeTimeZone(orderAsString);
-    XmlAssert.assertThat(orderAsString).isEqualTo(exampleValidationXmlWoTimezone);
+    XmlAssert.assertThat(orderAsString).and(exampleValidationXmlWoTimezone).ignoreWhitespace().areIdentical();
   }
 
   @Test

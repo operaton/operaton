@@ -45,12 +45,13 @@
   </dependency>
   ```
   
-  Or for JUnit 5:
+  Or for JUnit 5 (note: the `operaton-bpm-junit5` artifact is deprecated, use this instead):
   
   ```xml
   <dependency>
     <groupId>org.operaton.bpm</groupId>
-    <artifactId>operaton-bpm-junit5</artifactId>
+    <artifactId>operaton-engine</artifactId>
+    <classifier>junit5</classifier>
     <scope>test</scope>
   </dependency>
   ```

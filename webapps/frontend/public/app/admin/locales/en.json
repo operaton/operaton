@@ -71,8 +71,24 @@
       "Friday",
       "Saturday"
     ],
-    "weekdaysMin": ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-    "weekdaysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+    "weekdaysMin": [
+      "Su",
+      "Mo",
+      "Tu",
+      "We",
+      "Th",
+      "Fr",
+      "Sa"
+    ],
+    "weekdaysShort": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ]
   },
   "labels": {
     "ABORT": "Abort",
@@ -364,7 +380,7 @@
     "PAGE_LOGIN_PASSWORD": "Password",
     "PAGE_LOGIN_PLEASE_SIGN_IN": "Please Log in",
     "PAGE_LOGIN_SIGN_IN_ACTION": "Log in",
-    "PAGE_LOGIN_USERNAME": "User ID",
+    "PAGE_LOGIN_USERNAME": "Username",
     "PAGINATION_FIRST": "First",
     "PAGINATION_LAST": "Last",
     "PAGINATION_NEXT": "Next",
@@ -479,8 +495,8 @@
     "SETUP_USER_EMAIL_NOT_VALID": "Not a valid email address.",
     "SETUP_USER_FIRSTNAME": "First Name*",
     "SETUP_USER_FIRSTNAME_REQUIRED": "First name is required.",
-    "SETUP_USER_ID": "User ID*",
-    "SETUP_USER_ID_REQUIRED": "User ID is required.",
+    "SETUP_USER_ID": "Username*",
+    "SETUP_USER_ID_REQUIRED": "Username is required.",
     "SETUP_USER_INITIAL": "You have created an initial user.",
     "SETUP_USER_LASTNAME": "Last Name*",
     "SETUP_USER_LASTNAME_REQUIRED": "Last name is required.",

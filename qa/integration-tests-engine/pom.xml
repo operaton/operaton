@@ -66,6 +66,11 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.awaitility</groupId>
+      <artifactId>awaitility</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
       <scope>provided</scope>
@@ -435,6 +440,7 @@
                 <!-- See Relevant issue: https://github.com/camunda/camunda-bpm-platform/issues/4434 -->
                 <exclude>**/CallActivityContextSwitchTest.java</exclude>
                 <exclude>**/CdiBeanCallActivityResolutionTest.java</exclude>
+                <exclude>**/CdiServletInjectionTest.java</exclude>
                 <!-- TODO and weld-servlet-shaded is resolved with integration-tests-engine -->
               </excludes>
               <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
@@ -509,6 +515,7 @@
             <configuration>
               <systemPropertyVariables>
                 <databaseType>${database.type}</databaseType>
+                <jboss.http.port>${jboss.http.port}</jboss.http.port>
               </systemPropertyVariables>
               <excludes>
                 <!-- HEMERA-2453 -->

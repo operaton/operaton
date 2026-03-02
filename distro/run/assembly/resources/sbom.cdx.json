@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:3a80cc82-6923-48e6-b247-80235b4c6922",
+  "serialNumber": "urn:uuid:c9d0b32e-9e71-4638-9696-3a455e7b41f8",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-26T08:41:42Z",
+    "timestamp": "2026-03-02T00:25:43Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.69.1"
+          "version": "0.69.2"
         }
       ]
     },
@@ -20056,7 +20056,7 @@
       "group": "org.operaton.bpm",
       "name": "operaton-bpm-junit5",
       "version": "2.0.0-SNAPSHOT",
-      "description": "Operaton - JUnit 5 Extension",
+      "description": "DEPRECATED since 1.1: This module is deprecated and will be removed in a future release. Use the following dependency instead: \u003Cdependency\u003E \u003CgroupId\u003Eorg.operaton.bpm\u003C/groupId\u003E \u003CartifactId\u003Eoperaton-engine\u003C/artifactId\u003E \u003Cclassifier\u003Ejunit5\u003C/classifier\u003E \u003Cscope\u003Etest\u003C/scope\u003E \u003C/dependency\u003E",
       "licenses": [
         {
           "license": {
@@ -20076,6 +20076,38 @@
         },
         {
           "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-bpm-junit5",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "publisher": "Operaton",
+      "group": "org.operaton.bpm",
+      "name": "operaton-engine",
+      "version": "2.0.0-SNAPSHOT",
+      "description": "Operaton - Engine",
+      "scope": "required",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "externalReferences": [
+        {
+          "url": "https://www.operaton.org/operaton-database-settings/operaton-engine",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/issues/",
+          "type": "issue-tracker"
+        },
+        {
+          "url": "https://github.com/operaton/operaton/operaton-parent/operaton-database-settings/operaton-engine",
           "type": "vcs"
         }
       ]
@@ -23792,7 +23824,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "a32d61b6-3623-42c7-a9b8-4893f07d24e5",
+      "bom-ref": "ac84d88c-68cd-4a46-a3a5-01709afeea27",
       "name": "package-lock.json",
       "properties": [
         {
@@ -26706,9 +26738,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.3.7",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.3.8",
       "name": "fast-xml-parser",
-      "version": "5.3.7",
+      "version": "5.3.8",
       "licenses": [
         {
           "license": {
@@ -26716,11 +26748,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.3.7",
+      "purl": "pkg:npm/fast-xml-parser@5.3.8",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.3.7"
+          "value": "fast-xml-parser@5.3.8"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -28730,7 +28762,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "36524b5b-9a21-4cce-9eff-4a8d7637fa22",
+      "bom-ref": "cd32a201-c701-4d06-a10c-dd391d6cae22",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -30966,8 +30998,23 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-bpm-junit5@2.0.0-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar"
+        "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-SNAPSHOT?classifier=junit5\u0026type=jar"
+      ]
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-SNAPSHOT?classifier=junit5\u0026type=jar",
+      "dependsOn": [
+        "pkg:maven/org.operaton.bpm.model/operaton-bpmn-model@2.0.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.model/operaton-cmmn-model@2.0.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.juel/operaton-juel@2.0.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.bpm.dmn/operaton-engine-dmn@2.0.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-logging@2.0.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-typed-values@2.0.0-SNAPSHOT?type=jar",
+        "pkg:maven/org.mybatis/mybatis@3.5.19?type=jar",
+        "pkg:maven/org.springframework/spring-beans@7.0.5?type=jar",
+        "pkg:maven/joda-time/joda-time@2.14.0?type=jar",
+        "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
+        "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar"
       ]
     },
     {
@@ -31670,13 +31717,7 @@
       ]
     },
     {
-      "ref": "36524b5b-9a21-4cce-9eff-4a8d7637fa22",
-      "dependsOn": [
-        "a32d61b6-3623-42c7-a9b8-4893f07d24e5"
-      ]
-    },
-    {
-      "ref": "a32d61b6-3623-42c7-a9b8-4893f07d24e5",
+      "ref": "ac84d88c-68cd-4a46-a3a5-01709afeea27",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -31712,7 +31753,7 @@
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.3.1",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.3.7",
+        "pkg:npm/fast-xml-parser@5.3.8",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
@@ -31723,6 +31764,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "cd32a201-c701-4d06-a10c-dd391d6cae22",
+      "dependsOn": [
+        "ac84d88c-68cd-4a46-a3a5-01709afeea27"
       ]
     },
     {
@@ -32557,7 +32604,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.3.7",
+      "ref": "pkg:npm/fast-xml-parser@5.3.8",
       "dependsOn": [
         "pkg:npm/strnum@2.1.2"
       ]

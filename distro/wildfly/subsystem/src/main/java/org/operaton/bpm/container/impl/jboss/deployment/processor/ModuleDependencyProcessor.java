@@ -31,6 +31,7 @@ import org.jboss.as.server.deployment.module.ModuleSpecification;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoader;
+import org.jboss.modules.filter.PathFilters;
 import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceController.Mode;
 import org.jboss.msc.service.ServiceName;
@@ -62,6 +63,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
   public static String MODULE_IDENTIFIER_DMN_MODEL = "org.operaton.bpm.model.operaton-dmn-model";
   public static String MODULE_IDENTIFIER_SPIN = "org.operaton.spin.operaton-spin-core";
   public static String MODULE_IDENTIFIER_CONNECT = "org.operaton.connect.operaton-connect-core";
+  public static String MODULE_IDENTIFIER_ENGINE_CDI = "org.operaton.bpm.operaton-engine-cdi";
   public static String MODULE_IDENTIFIER_ENGINE_DMN = "org.operaton.bpm.dmn.operaton-engine-dmn";
   public static String MODULE_IDENTIFIER_GRAAL_JS = "org.graalvm.js.js-all";
   public static String MODULE_IDENTIFIER_JUEL = "org.operaton.bpm.juel.operaton-juel";
@@ -151,6 +153,9 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_ENGINE_DMN);
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_GRAAL_JS, true);
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_JUEL, true);
+    // Keep the CDI dependency as the last addition because it is the only module
+    // dependency with custom META-INF import filters for Weld bean discovery.
+    addEngineCdiSystemDependency(moduleLoader, moduleSpecification);
   }
 
   private void addSystemDependency(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification, String identifier) {
@@ -159,6 +164,23 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
 
   private void addSystemDependency(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification, String identifier, boolean importServices) {
     moduleSpecification.addSystemDependency(new ModuleDependency(moduleLoader, identifier, false, false, importServices, false));
+  }
+
+  private void addEngineCdiSystemDependency(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification) {
+    // engine-cdi is a special case: for Weld discovery we need services plus META-INF
+    // from the module (in particular beans.xml), otherwise injections can fail with WELD-001408.
+    ModuleDependency dependency = ModuleDependency.Builder.of(moduleLoader, MODULE_IDENTIFIER_ENGINE_CDI)
+      .setOptional(false)
+      .setExport(false)
+      .setImportServices(true)
+      .setUserSpecified(false)
+      .build();
+    // Required for server-provided CDI producers from operaton-engine-cdi:
+    // services="import" alone does not import META-INF/beans.xml and leads to WELD-001408.
+    // These filters are equivalent to jboss-deployment-structure meta-inf="import".
+    dependency.addImportFilter(PathFilters.getMetaInfSubdirectoriesFilter(), true);
+    dependency.addImportFilter(PathFilters.getMetaInfFilter(), true);
+    moduleSpecification.addSystemDependency(dependency);
   }
 
 }

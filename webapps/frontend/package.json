@@ -72,7 +72,7 @@
     "@babel/preset-env": "7.29.0",
     "angular-mocks": "1.8.3",
     "babel-loader": "10.0.0",
-    "copy-webpack-plugin": "13.0.1",
+    "copy-webpack-plugin": "14.0.0",
     "css-loader": "7.1.4",
     "css-minimizer-webpack-plugin": "^7.0.4",
     "eslint": "9.39.3",

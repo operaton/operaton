@@ -17,6 +17,8 @@
     <skip-third-party-bom>false</skip-third-party-bom>
     <!-- json-smart and accessors-smart are runtime dependencies of json-path -->
     <third-party-bom-scopes>compile|runtime</third-party-bom-scopes>
+    <wildfly.modules.validator.executable>bash</wildfly.modules.validator.executable>
+    <wildfly.modules.validator.commandlineArgs>${project.basedir}/validate-modules.sh</wildfly.modules.validator.commandlineArgs>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -375,14 +377,26 @@
             </goals>
             <configuration>
               <workingDirectory>${project.basedir}</workingDirectory>
-              <executable>bash</executable>
-              <arguments>
-                <argument>${project.basedir}/validate-modules.sh</argument>
-              </arguments>
+              <executable>${wildfly.modules.validator.executable}</executable>
+              <commandlineArgs>${wildfly.modules.validator.commandlineArgs}</commandlineArgs>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>wildfly-modules-validation-windows</id>
+      <activation>
+        <os>
+          <family>Windows</family>
+        </os>
+      </activation>
+      <properties>
+        <wildfly.modules.validator.executable>powershell</wildfly.modules.validator.executable>
+        <wildfly.modules.validator.commandlineArgs>-NoProfile -ExecutionPolicy Bypass -File "${project.basedir}/validate-modules.ps1"</wildfly.modules.validator.commandlineArgs>
+      </properties>
+    </profile>
+  </profiles>
 </project>

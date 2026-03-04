@@ -126,13 +126,7 @@ module.exports = (_env, argv = {}) => {
           test: /\.s[ac]ss$/i, // Matches both .scss and .sass files
           use: [
             MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                // Disable URL resolution to prevent issues with font paths
-                // url: false,
-              },
-            },
+            'css-loader',
             {
               loader: 'sass-loader',
               options: {
@@ -140,11 +134,14 @@ module.exports = (_env, argv = {}) => {
                 implementation: require('sass'),
                 additionalData: `$ce-banner-height: ${eeBuild ? '0' : '20px'};`,
                 sassOptions: {
+                  // Force expanded output to preserve Unicode escape sequences
+                  // (e.g. "\f67f" for Bootstrap Icons). Compressed mode converts
+                  // these to literal UTF-8 bytes which break when the server does
+                  // not set charset=utf-8 on CSS responses. CSS minification is
+                  // handled by CssMinimizerPlugin instead.
+                  style: 'expanded',
                   // This tells Sass to look inside the 'frontend' folder automatically
                   includePaths: [path.resolve(__dirname, 'frontend')],
-                  //globalVars: {
-                  //  'ce-banner-height': eeBuild ? '0' : '20px',
-                  //},
                 },
               },
             },

@@ -126,13 +126,7 @@ module.exports = (_env, argv = {}) => {
           test: /\.s[ac]ss$/i, // Matches both .scss and .sass files
           use: [
             MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                // Disable URL resolution to prevent issues with font paths
-                // url: false,
-              },
-            },
+            'css-loader',
             {
               loader: 'sass-loader',
               options: {
@@ -140,11 +134,11 @@ module.exports = (_env, argv = {}) => {
                 implementation: require('sass'),
                 additionalData: `$ce-banner-height: ${eeBuild ? '0' : '20px'};`,
                 sassOptions: {
+                  // Keep unicode escapes in generated CSS (e.g. "\f4da")
+                  // so icon codepoints are not emitted as raw UTF-8 bytes.
+                  style: 'expanded',
                   // This tells Sass to look inside the 'frontend' folder automatically
                   includePaths: [path.resolve(__dirname, 'frontend')],
-                  //globalVars: {
-                  //  'ce-banner-height': eeBuild ? '0' : '20px',
-                  //},
                 },
               },
             },

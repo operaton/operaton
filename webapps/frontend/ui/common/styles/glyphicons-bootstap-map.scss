@@ -6,10 +6,17 @@
 }
 
 //* Core icons */
+.glyphicon-alert            { @extend .bi-exclamation-triangle-fill; }
+.glyphicon-arrow-up         { @extend .bi-arrow-up; }
+.glyphicon-check            { @extend .bi-check; }
 .glyphicon-ok               { @extend .bi-check; }
 .glyphicon-remove           { @extend .bi-x; }
+.glyphicon-remove-circle    { @extend .bi-x-circle; }
+.glyphicon-remove-sign      { @extend .bi-x-circle-fill; }
 .glyphicon-plus             { @extend .bi-plus; }
 .glyphicon-minus            { @extend .bi-dash; }
+.glyphicon-minus-sign       { @extend .bi-dash-circle; }
+.glyphicon-ok-circle        { @extend .bi-check-circle; }
 .glyphicon-search           { @extend .bi-search; }
 .glyphicon-user             { @extend .bi-person-fill; }
 .glyphicon-envelope         { @extend .bi-envelope; }
@@ -19,8 +26,13 @@
 .glyphicon-edit             { @extend .bi-pencil; }
 .glyphicon-eye-open         { @extend .bi-eye; }
 .glyphicon-eye-close        { @extend .bi-eye-slash; }
+.glyphicon-fire             { @extend .bi-fire; }
+.glyphicon-folder-open      { @extend .bi-folder2-open; }
 .glyphicon-warning-sign     { @extend .bi-exclamation-triangle; }
 .glyphicon-info-sign        { @extend .bi-info-circle; }
+.glyphicon-time             { @extend .bi-clock; }
+.glyphicon-thumbs-up        { @extend .bi-hand-thumbs-up-fill; }
+.glyphicon-unchecked        { @extend .bi-circle; }
 
 /* Navigation / UI */
 .glyphicon-chevron-left     { @extend .bi-chevron-left; }
@@ -29,16 +41,27 @@
 .glyphicon-chevron-down     { @extend .bi-chevron-down; }
 
 .glyphicon-menu-hamburger   { @extend .bi-list; }
+.glyphicon-menu-left        { @extend .bi-chevron-left; }
+.glyphicon-menu-right       { @extend .bi-chevron-right; }
 .glyphicon-refresh          { @extend .bi-arrow-clockwise; }
+.glyphicon-loading          {
+  @extend .bi-arrow-repeat;
+  animation: spin 1s linear infinite;
+}
 .glyphicon-download         { @extend .bi-download; }
+.glyphicon-download-alt     { @extend .bi-download; }
 .glyphicon-upload           { @extend .bi-upload; }
-.glyphicon-home             { @extend .bi-house-door-fill}
+.glyphicon-home             { @extend .bi-house-door-fill; }
 .glyphicon-plus-sign        { @extend .bi-plus; }
 .glyphicon-link             { @extend .bi-link-45deg; }
 .glyphicon-floppy-disk      { @extend .bi-floppy2; }
 .glyphicon-copy             { @extend .bi-clipboard-fill; }
 .glyphicon-calendar         { @extend .bi-calendar3; }
 .glyphicon-bell             { @extend .bi-bell-fill; }
+.glyphicon-new-window       { @extend .bi-box-arrow-up-right; }
+.glyphicon-resize-full      { @extend .bi-arrows-angle-expand; }
+.glyphicon-resize-small     { @extend .bi-arrows-angle-contract; }
+.glyphicon-signal           { @extend .bi-bar-chart-line-fill; }
 .glyphicon-th               { @extend .bi-grid-3x3-gap-fill; }
 .glyphicon-menu-down        { @extend .bi-chevron-down; }
 .glyphicon-menu-up          { @extend .bi-chevron-up; }

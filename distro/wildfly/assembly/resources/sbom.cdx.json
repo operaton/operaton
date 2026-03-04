@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:edc709af-a0ed-473f-a1a3-184e691ba8d1",
+  "serialNumber": "urn:uuid:1ab94f33-10d7-473d-ade3-59c38dadc3f1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-02-26T21:38:13Z",
+    "timestamp": "2026-03-04T04:51:42Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.69.1"
+          "version": "0.69.3"
         }
       ]
     },
@@ -33860,7 +33860,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e6d39aab-0522-4c47-bc85-f871d6087d53",
+      "bom-ref": "2dfa4a03-e998-4bc3-93de-69b523c3cabb",
       "name": "package-lock.json",
       "properties": [
         {
@@ -35136,14 +35136,21 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.12.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.12.1",
       "name": "bpmn-js",
-      "version": "18.12.0",
-      "purl": "pkg:npm/bpmn-js@18.12.0",
+      "version": "18.12.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/bpmn-js@18.12.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.12.0"
+          "value": "bpmn-js@18.12.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -38320,7 +38327,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "70be4d32-1549-458d-8976-1e1e137a2b2b",
+      "bom-ref": "5f2e3e2c-82c5-4f36-b94c-38d0def4042c",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -42300,13 +42307,7 @@
       "dependsOn": []
     },
     {
-      "ref": "70be4d32-1549-458d-8976-1e1e137a2b2b",
-      "dependsOn": [
-        "e6d39aab-0522-4c47-bc85-f871d6087d53"
-      ]
-    },
-    {
-      "ref": "e6d39aab-0522-4c47-bc85-f871d6087d53",
+      "ref": "2dfa4a03-e998-4bc3-93de-69b523c3cabb",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -42326,7 +42327,7 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.12.0",
+        "pkg:npm/bpmn-js@18.12.1",
         "pkg:npm/camunda-dmn-js@3.7.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
@@ -42354,6 +42355,12 @@
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0",
         "pkg:npm/ui-bootstrap4@3.0.7"
+      ]
+    },
+    {
+      "ref": "5f2e3e2c-82c5-4f36-b94c-38d0def4042c",
+      "dependsOn": [
+        "2dfa4a03-e998-4bc3-93de-69b523c3cabb"
       ]
     },
     {
@@ -42763,7 +42770,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.12.0",
+      "ref": "pkg:npm/bpmn-js@18.12.1",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.3.0",
@@ -44817,6 +44824,77 @@
           "versions": [
             {
               "version": "6.14.1",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CVE-2026-27942",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "nvd"
+          },
+          "score": 7.5,
+          "severity": "high",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 7.5,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        }
+      ],
+      "cwes": [
+        120
+      ],
+      "description": "fast-xml-parser allows users to validate XML, parse XML to JS object, or build XML from JS object without C/C\u002B\u002B based libraries and no callback. Prior to version 5.3.8, the application crashes with stack overflow when user use XML builder with \u0060preserveOrder:true\u0060. Version 5.3.8 fixes the issue. As a workaround, use XML builder with \u0060preserveOrder:false\u0060 or check the input data before passing to builder.",
+      "recommendation": "Upgrade fast-xml-parser to version 5.3.8",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-27942"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-27942"
+        },
+        {
+          "url": "https://github.com/NaturalIntelligence/fast-xml-parser"
+        },
+        {
+          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/commit/c13a961910f14986295dd28484eee830fa1a0e8a"
+        },
+        {
+          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/pull/791"
+        },
+        {
+          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/security/advisories/GHSA-fj3w-jwp8-x2g3"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-27942"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-27942"
+        }
+      ],
+      "published": "2026-02-26T02:16:22Z",
+      "updated": "2026-03-02T14:54:48Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/fast-xml-parser@5.3.7",
+          "versions": [
+            {
+              "version": "5.3.7",
               "status": "affected"
             }
           ]

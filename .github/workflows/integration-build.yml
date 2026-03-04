@@ -394,7 +394,7 @@ jobs:
           require_passed_tests: true
       - name: Upload Artifacts
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: surefire-reports-${{ matrix.testsuite }}-${{ matrix.distro }}-${{ matrix.database }}
           path: |
@@ -548,14 +548,14 @@ jobs:
           require_passed_tests: true
 
       - name: Archive Reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: reports
           path: |
             **/target/reports/**
 
       - name: Archive Staging Repo
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: staging
           path: |
@@ -590,7 +590,7 @@ jobs:
           fi
       - name: Upload server logs on failure
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: server-logs
           path: |

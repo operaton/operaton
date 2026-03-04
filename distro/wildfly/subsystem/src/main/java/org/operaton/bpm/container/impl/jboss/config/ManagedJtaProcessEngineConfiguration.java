@@ -31,7 +31,7 @@ public class ManagedJtaProcessEngineConfiguration extends JakartaTransactionProc
 
   public ManagedJtaProcessEngineConfiguration() {
     // override job executor auto activate: set to true in shared engine scenario
-    // if it is not specified (see #CAM-4817)
+    // if it is not specified (shared engine startup must work with the Job Executor turned off)
     setJobExecutorActivate(true);
   }
 

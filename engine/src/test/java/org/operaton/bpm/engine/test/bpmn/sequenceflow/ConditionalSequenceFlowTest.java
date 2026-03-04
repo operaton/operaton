@@ -97,7 +97,7 @@ class ConditionalSequenceFlowTest {
    * "The inclusive gateway throws an exception in case all conditions evaluate to false and a default flow has not been specified."
    * </p>
    *
-   * @see <a href="https://app.camunda.com/jira/browse/CAM-1773">https://app.camunda.com/jira/browse/CAM-1773</a>
+   * conditional Sequence Flows dont throw exception when no condition evaluates to true
    */
   @Deployment
   @Test

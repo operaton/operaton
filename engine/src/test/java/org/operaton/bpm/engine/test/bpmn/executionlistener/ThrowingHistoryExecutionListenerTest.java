@@ -181,7 +181,7 @@ class ThrowingHistoryExecutionListenerTest {
   }
 
   // CAUGHT EXCEPTION AFTER FAILED CUSTOM END LISTENER
-  // NOTE: it is fine to alter the result of these tests, see https://jira.camunda.com/browse/CAM-14408
+  // NOTE: it is fine to alter the result of these tests, bpmnError thrown from an execution listener doesnt cancel activity instance
 
   @Test
   void shouldCatchBpmnErrorFromHistoryListenerAfterBpmnErrorInEndListenerWithErrorBoundary() {

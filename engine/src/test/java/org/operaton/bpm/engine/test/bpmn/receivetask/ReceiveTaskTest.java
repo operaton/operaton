@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * see https://app.camunda.com/jira/browse/CAM-1612
+ * Receive tasks can be triggered via correlateMessage() and messageEventReceived()
  *
  * @author Daniel Meyer
  * @author Danny Gräf

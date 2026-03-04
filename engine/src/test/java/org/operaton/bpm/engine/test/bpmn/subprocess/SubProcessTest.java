@@ -521,7 +521,7 @@ class SubProcessTest {
   }
 
   @Deployment
-  // SEE https://app.camunda.com/jira/browse/CAM-2169
+  // stackoverflow when invoking GetActivityInstanceCmd
   @Test
   void testActivityInstanceTreeNestedCmd() {
     GetActInstanceDelegate.activityInstance = null;
@@ -540,7 +540,7 @@ class SubProcessTest {
   }
 
   @Deployment
-  // SEE https://app.camunda.com/jira/browse/CAM-2169
+  // stackoverflow when invoking GetActivityInstanceCmd
   @Test
   void testActivityInstanceTreeNestedCmdAfterTx() {
     GetActInstanceDelegate.activityInstance = null;

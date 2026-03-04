@@ -596,7 +596,7 @@ class TransientVariableTest {
   }
 
   /**
-   * CAM-9932
+   * spin Value XML and JSON lose transient flag when built from UntypedValue
    */
   @Test
   void testKeepTransientIfUntypedValueIsAccessed() {

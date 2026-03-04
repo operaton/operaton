@@ -82,7 +82,7 @@ alter table ACT_HI_DEC_OUT
 alter table ACT_HI_DEC_IN
   modify ( CLAUSE_ID_ null );
 
--- CAM-5914
+-- add indices to act_ru_job
 create index ACT_IDX_JOB_EXECUTION_ID on ACT_RU_JOB(EXECUTION_ID_);
 create index ACT_IDX_JOB_HANDLER on ACT_RU_JOB(HANDLER_TYPE_,HANDLER_CFG_);
 
@@ -100,7 +100,7 @@ ALTER TABLE ACT_HI_PROCINST
 update ACT_HI_PROCINST set STATE_ = 'ACTIVE' where END_TIME_ is null;
 update ACT_HI_PROCINST set STATE_ = 'COMPLETED' where END_TIME_ is not null;
 
--- add indexes on PROC_DEF_KEY_ columns in history tables CAM-6679
+-- add indexes on PROC_DEF_KEY_ columns in history tables add indexes on PROC_DEF_KEY_ columns in history tables
 create index ACT_IDX_HI_ACT_INST_PROC_KEY on ACT_HI_ACTINST(PROC_DEF_KEY_);
 create index ACT_IDX_HI_DETAIL_PROC_KEY on ACT_HI_DETAIL(PROC_DEF_KEY_);
 create index ACT_IDX_HI_IDENT_LNK_PROC_KEY on ACT_HI_IDENTITYLINK(PROC_DEF_KEY_);
@@ -110,7 +110,7 @@ create index ACT_IDX_HI_PRO_INST_PROC_KEY on ACT_HI_PROCINST(PROC_DEF_KEY_);
 create index ACT_IDX_HI_TASK_INST_PROC_KEY on ACT_HI_TASKINST(PROC_DEF_KEY_);
 create index ACT_IDX_HI_VAR_INST_PROC_KEY on ACT_HI_VARINST(PROC_DEF_KEY_);
 
--- update the oracle indexes to prevent NULL queries CAM-6680
+-- update the oracle indexes to prevent NULL queries tenant ID indexes are not used on Oracle for WHERE TENANT_ID_ IS NULL queries
 
 drop index ACT_IDX_CASE_DEF_TENANT_ID;
 drop index ACT_IDX_CASE_EXEC_TENANT_ID;
@@ -175,7 +175,7 @@ create index ACT_IDX_HI_VAR_INST_TENANT_ID on ACT_HI_VARINST(TENANT_ID_, 0);
 create index ACT_IDX_HI_INCIDENT_TENANT_ID on ACT_HI_INCIDENT(TENANT_ID_, 0);
 create index ACT_IDX_HI_JOB_LOG_TENANT_ID on ACT_HI_JOB_LOG(TENANT_ID_, 0);
 
--- CAM-6725
+-- add new column for metric utc timestamp to ACT_RU_METER_LOG table
 ALTER TABLE ACT_RU_METER_LOG
  ADD MILLISECONDS_ NUMBER(19,0) DEFAULT 0;
 

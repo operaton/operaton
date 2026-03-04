@@ -88,7 +88,7 @@ class EnginesFilterTest {
   @Test
   void getDefaultProcessEngine() {
 
-    // see https://app.camunda.com/jira/browse/CAM-2126
+    // cockpit crashes before login if no default process engine is present
 
     // runtime delegate returns single, non-default-named process engine engine
 

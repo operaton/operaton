@@ -133,7 +133,7 @@ public class NonInterruptingEventSubProcessCompensationSenarioTest {
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         .activity("outerTask")
         // - the eventSubProcess instance is missing because we wrongly assume that there is no
-        //   execution for it (see CAM-4914)
+        //   execution for it (migrating and continuing a process instance that throws compensation in the context of an)
         // - the undoTask instance is a child of the throwCompensate instance for the same reason;
         //   the throwCompensate instance wrongly receives the eventSubProcess instance id
         //   and undoTask is a child of it

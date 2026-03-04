@@ -33,7 +33,7 @@ import org.operaton.bpm.util.SeleniumScreenshotExtension;
 /**
  * NOTE: copied from
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/test/java/org/operaton/bpm/AbstractWebappUiIntegrationTest.java">platform</a>,
- * might be removed with https://jira.camunda.com/browse/CAM-11379
+ * can be removed once the shared webapp integration tests run directly against Operaton (standalone).
  */
 public abstract class AbstractWebappUiIT extends AbstractWebIT {
 

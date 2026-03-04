@@ -116,7 +116,7 @@ public class InterruptingEventSubProcessCompensationSenarioTest {
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         // - the eventSubprocess instance is missing, because we wrongly assume that the event
-        //   sub process scope execution is missing (see CAM-4914)
+        //   sub process scope execution is missing (migrating and continuing a process instance that throws compensation in the context of an)
         // - undoTask is a child of throwCompensate for the same reason; due to the wrong assumption,
         //   throwCompensate receives the event subprocess' activity instance id which is the parent
         //   id for undoTask

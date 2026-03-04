@@ -47,7 +47,7 @@ public class MscRuntimeContainerJobExecutor extends RuntimeContainerJobExecutor 
   public void start(StartContext arg0) throws StartException {
     // no-op:
     // job executor is lazy-started when first process engine is registered and jobExecutorActivate = true
-    // See: #CAM-4817
+    // shared engine startup must work with the Job Executor turned off
     provider.accept(this);
   }
 

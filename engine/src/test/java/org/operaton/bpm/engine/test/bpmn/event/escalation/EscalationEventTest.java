@@ -172,7 +172,7 @@ class EscalationEventTest {
    * current bug: default value of 'cancelActivity' is 'true'
    */
   @Deployment
-  @Disabled("CAM-4403")
+  @Disabled("escalation Boundary Event not cancel activity by default")
   @Test
   void testImplicitNonInterruptingEscalationBoundaryEvent() {
     runtimeService.startProcessInstanceByKey("escalationProcess");

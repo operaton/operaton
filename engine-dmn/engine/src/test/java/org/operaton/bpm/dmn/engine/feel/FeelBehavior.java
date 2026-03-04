@@ -129,7 +129,7 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
-  @Disabled("CAM-11319")
+  @Disabled("FEEL Scala engine does not support comparing POJOs with >, <, or = operators")
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
   public void shouldCompareJodaLocalDateTimes() {
@@ -141,7 +141,7 @@ public abstract class FeelBehavior extends DmnEngineTest {
     .hasSingleEntryTyped(Variables.stringValue("foo"));
   }
 
-  @Disabled("CAM-11319")
+  @Disabled("FEEL Scala engine does not support comparing POJOs with >, <, or = operators")
   @Test
   @DecisionResource(resource = "compare_dates_non_typed.dmn")
   public void shouldCompareJodaDateTimes() {

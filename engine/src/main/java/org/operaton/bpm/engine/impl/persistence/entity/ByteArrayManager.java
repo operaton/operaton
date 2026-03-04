@@ -65,7 +65,7 @@ public class ByteArrayManager extends AbstractManager {
 
     // Make individual statements for each entity type that references byte arrays.
     // This can lead to query plans that involve less aggressive locking by databases (e.g. DB2).
-    // See CAM-10360 for reference.
+    // deadlock exception when set removal time batch is executed for reference.
     List<DbOperation> operations = new ArrayList<>();
     operations.add(getDbEntityManager()
       .updatePreserveOrder(ByteArrayEntity.class, "updateVariableByteArraysByProcessInstanceId", parameters));

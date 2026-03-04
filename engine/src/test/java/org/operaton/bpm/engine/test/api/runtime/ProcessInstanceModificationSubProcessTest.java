@@ -59,7 +59,7 @@ class ProcessInstanceModificationSubProcessTest {
   TaskService taskService;
   HistoryService historyService;
 
-  @Disabled("CAM-9354")
+  @Disabled("parent activity instance id of historic activity instance of subprocess is null after modification")
   @Test
   void shouldHaveEqualParentActivityInstanceId() {
     // given

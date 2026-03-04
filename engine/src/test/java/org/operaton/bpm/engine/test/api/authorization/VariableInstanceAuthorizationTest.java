@@ -187,7 +187,7 @@ class VariableInstanceAuthorizationTest extends AuthorizationTest {
     assertThat(variable.getProcessInstanceId()).isEqualTo(processInstanceId);
   }
 
-  // CAM-9888
+  // hard-coded authorization checks in some queries
   public void failingTestProcessVariableQueryWithReadVariablePermission() {
     // given
     setReadVariableAsDefaultReadVariablePermission();
@@ -472,7 +472,7 @@ class VariableInstanceAuthorizationTest extends AuthorizationTest {
   }
 
   /*
-   * CAM-10864: Tests that the query itself works if authorization is used and a value matcher
+   * variable instance query fails when matching a variable value: Tests that the query itself works if authorization is used and a value matcher
    */
   @Test
   void testQueryWithVariableValueFilter() {

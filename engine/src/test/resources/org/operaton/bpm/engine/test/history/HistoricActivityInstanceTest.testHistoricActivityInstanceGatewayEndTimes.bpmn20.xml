@@ -3,7 +3,7 @@
     xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
     targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL">
 
-  <!-- CAM-1537 -->
+  <!-- closing parallel gateway - no endtime in act_hi_actinst table -->
 
   <process id="gatewayEndTimes" name="gatewayEndTimes" isExecutable="true">
 

@@ -957,7 +957,7 @@ class ProcessDataLoggingContextTest {
       RuntimeService runtimeService = execution.getProcessEngineServices().getRuntimeService();
 
       LOGGER.info("Before API call");
-      // to reproduce CAM-12272, it is important to make an API call between the logging statements
+      // to reproduce angular Components are destroyed before they are bootstrapped, it is important to make an API call between the logging statements
       // (regardless if the call is meaningful)
       runtimeService.createProcessInstanceQuery().list();
       LOGGER.info("After API call");

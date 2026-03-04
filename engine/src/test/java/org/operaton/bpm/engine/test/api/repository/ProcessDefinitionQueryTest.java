@@ -263,7 +263,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   }
 
   /**
-   * CAM-8014
+   * case-insensitive process-start search
    *
    * <p>
    * Verify that search by name like returns results with case-insensitive

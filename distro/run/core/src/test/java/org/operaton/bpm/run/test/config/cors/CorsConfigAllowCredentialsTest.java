@@ -36,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * {@code sun.net.http.allowRestrictedHeaders} to {@code true}.
  * (e.g. System.setProperty("sun.net.http.allowRestrictedHeaders", "true");)
  *
- * @see <a href="https://jira.camunda.com/browse/CAM-11290">CAM-11290</a>
+ * CORS support
  */
 @ActiveProfiles(profiles = {"test-cors-enabled"})
 @TestPropertySource(properties = {

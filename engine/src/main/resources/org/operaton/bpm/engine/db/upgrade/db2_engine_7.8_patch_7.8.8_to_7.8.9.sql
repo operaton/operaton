@@ -15,5 +15,5 @@
 -- limitations under the License.
 --
 
--- Related to https://app.camunda.com/jira/browse/CAM-7676
+-- Related to index ACT_IDX_JOB_HANDLER too long for DB2
 drop index ACT_IDX_JOB_HANDLER;

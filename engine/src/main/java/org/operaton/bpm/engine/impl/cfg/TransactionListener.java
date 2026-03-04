@@ -23,7 +23,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 /**
  * Implementations may not assume that this is executed by the same thread as the command itself.
  * Especially thread locals such as those available in {@link Context} should not be accessed
- * in an implementation of this interface. See CAM-3684 for details.
+ * in an implementation of this interface. save JobExecutorContext of ExclusiveJobAddedNotification on creation for details.
  *
  * @author Tom Baeyens
  */

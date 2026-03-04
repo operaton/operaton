@@ -124,7 +124,7 @@ public class ExecuteJobsRunnable implements Runnable {
    * - where the classloader switch is not required
    * </p>
    *
-   * @see https://app.camunda.com/jira/browse/CAM-10379
+   * classloading issue in Wildfly 12+
    *
    * @return the classloader before the switch to return it back after the job execution
    */

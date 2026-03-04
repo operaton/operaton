@@ -291,7 +291,7 @@ class ExclusiveGatewayTest {
 
   }
 
-  // see CAM-4172
+  // stack overflow if many steps are executed in a single unit of work
   @Deployment
   @Test
   void testLoopWithManyIterations() {

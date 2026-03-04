@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- CAM-8442
+-- add login-attempt throttling
 
 ALTER TABLE ACT_ID_USER
   ADD LOCK_EXP_TIME_ timestamp(3) NULL;

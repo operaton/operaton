@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
- * Requires fix for CAM-3163
+ * Covers a regression where CDI beans cannot be resolved during process application deployment.
  *
  * @author Thorben Lindhauer
  */

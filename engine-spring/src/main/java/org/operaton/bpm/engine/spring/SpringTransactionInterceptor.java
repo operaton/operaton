@@ -60,7 +60,7 @@ public class SpringTransactionInterceptor extends CommandInterceptor {
     TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
     transactionTemplate.setPropagationBehavior(transactionPropagation);
     try {
-      // don't use lambdas here => CAM-12810
+      // don't use lambdas here => linkageError when starting spring process application on WAS 8.5
       return (T) transactionTemplate.execute((TransactionCallback) status -> next.execute(command));
     } catch (TransactionSystemException ex) {
       throw ExceptionUtil.wrapPersistenceException(ex);

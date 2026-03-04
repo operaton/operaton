@@ -326,7 +326,7 @@ class HistoricActivityInstanceStateTest {
     assertIsCanceledActivityInstances(allInstances, "userTask", 1);
     assertNonCompletingActivityInstance(allInstances, "userTask");
 
-    // fails due to CAM-4527: end execution listeners are executed twice for the signal end event
+    // fails due to synchronous interruption of active event-throwing activities does not cancel their execution: end execution listeners are executed twice for the signal end event
     assertIsCanceledActivityInstances(allInstances, "signalEnd", 1);
     assertNonCompletingActivityInstance(allInstances, "signalEnd");
 

@@ -15,5 +15,5 @@
 -- limitations under the License.
 --
 
--- https://app.camunda.com/jira/browse/CAM-9006
+-- add index for TASK_ID on ACT_HI_OP_LOG table
 create index ACT_IDX_HI_OP_LOG_TASK on ACT_HI_OP_LOG(TASK_ID_);

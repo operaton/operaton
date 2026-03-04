@@ -37,7 +37,8 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Assert that we can deploy a WAR with a process engine plugin
  * which ships and requires groovy as a dependency for scripting purposes.
  * <p>
- * Does not work on JBoss, see <a href="https://app.camunda.com/jira/browse/CAM-1778">CAM-1778</a>
+ * Disabled on JBoss because WAR deployment with a process engine plugin is still broken there.
+ * Keep this test to document the expected behavior on supported runtimes.
  * </p>
  */
 @ExtendWith(ArquillianExtension.class)

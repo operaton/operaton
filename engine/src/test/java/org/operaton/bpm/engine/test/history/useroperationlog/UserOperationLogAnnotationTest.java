@@ -105,7 +105,7 @@ class UserOperationLogAnnotationTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-10664
+   * introduce extra update statement to prevent updating the timestamp with mysql
    */
   @Test
   void shouldSetAnnotation_WithPreservedTimeStamp() {

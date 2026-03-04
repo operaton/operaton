@@ -245,7 +245,7 @@ public class HistoricProcessInstanceStateTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/history/CAM-9934.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/process status after interruptive event subprocess.bpmn"})
   void shouldSetCorrectInstanceStateOnInterruption() {
     // given
     processEngineRule.getRuntimeService().startProcessInstanceByKey("Process_1");
@@ -264,7 +264,7 @@ public class HistoricProcessInstanceStateTest {
   }
 
   @Test
-  @Deployment(resources = {"org/operaton/bpm/engine/test/history/CAM-9934.bpmn"})
+  @Deployment(resources = {"org/operaton/bpm/engine/test/history/process status after interruptive event subprocess.bpmn"})
   void shouldSetRemovalTimeOnHistoricActivityInstances() {
     // given
     processEngineRule.getProcessEngineConfiguration()

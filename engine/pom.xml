@@ -93,7 +93,7 @@
       <artifactId>operaton-engine-dmn</artifactId>
       <exclusions>
         <!-- these exclusions are needed when building with Maven >= 3.3
-          see CAM-11822 for details -->
+          make codebase ready for latest Maven version for details -->
         <exclusion>
           <groupId>com.lihaoyi</groupId>
           <artifactId>fastparse_2.13</artifactId>

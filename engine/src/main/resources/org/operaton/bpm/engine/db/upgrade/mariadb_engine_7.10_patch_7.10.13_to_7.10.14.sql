@@ -15,6 +15,6 @@
 -- limitations under the License.
 --
 
--- https://app.camunda.com/jira/browse/CAM-11117
+-- slow Historic Activity Instance query
 drop index ACT_IDX_HI_ACT_INST_START on ACT_HI_ACTINST;
 create index ACT_IDX_HI_ACT_INST_START_END on ACT_HI_ACTINST(START_TIME_, END_TIME_);

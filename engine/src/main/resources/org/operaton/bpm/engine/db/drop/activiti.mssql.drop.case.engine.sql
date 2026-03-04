@@ -19,7 +19,7 @@ drop index ACT_RU_CASE_EXECUTION.ACT_IDX_CASE_EXEC_BUSKEY;
 drop index ACT_RE_CASE_DEF.ACT_IDX_CASE_DEF_TENANT_ID;
 drop index ACT_RU_CASE_EXECUTION.ACT_IDX_CASE_EXEC_TENANT_ID;
 
--- indexes for concurrency problems - https://app.camunda.com/jira/browse/CAM-1646 --
+-- indexes for concurrency problems - process Engine deadlocks in Mssql / DB2 --
 drop index ACT_RU_CASE_EXECUTION.ACT_IDX_CASE_EXEC_CASE;
 drop index ACT_RU_CASE_EXECUTION.ACT_IDX_CASE_EXEC_PARENT;
 drop index ACT_RU_VARIABLE.ACT_IDX_VARIABLE_CASE_EXEC;
@@ -56,7 +56,7 @@ alter table ACT_RU_CASE_SENTRY_PART
 alter table ACT_RU_CASE_SENTRY_PART
     drop constraint ACT_FK_CASE_SENTRY_CASE_EXEC;
 
--- https://app.camunda.com/jira/browse/CAM-9165
+-- add index for CASE_INST_ID_ on ACT_RU_CASE_EXECUTION table
 drop index ACT_RU_CASE_EXECUTION.ACT_IDX_CASE_EXE_CASE_INST;
 
 if exists (select TABLE_NAME from INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'ACT_RE_CASE_DEF') drop table ACT_RE_CASE_DEF;

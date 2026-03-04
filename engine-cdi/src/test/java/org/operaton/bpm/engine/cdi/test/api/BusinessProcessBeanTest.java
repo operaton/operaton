@@ -335,7 +335,7 @@ class BusinessProcessBeanTest extends CdiProcessEngineTestCase {
 
     businessProcess.setVariableLocal("aVariableName", "aVariableValue");
 
-    // Flushing and re-getting should retain the value (CAM-1806):
+    // Flushing and re-getting should retain the value (scopedAssociation.getVariable() cannot handle local variables):
     businessProcess.flushVariableCache();
     assertThat(businessProcess.getCachedLocalVariableMap()).isEmpty();
     assertThat((String)businessProcess.getVariableLocal("aVariableName")).isEqualTo("aVariableValue");

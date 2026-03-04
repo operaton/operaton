@@ -79,7 +79,7 @@ public class MultiInstanceReceiveTaskScenarioTest {
   }
 
   @Test
-  @Ignore("CAM-6408")
+  @Ignore("migration of a Process waiting in a Multi Instance Activity fails if the Process")
   @ScenarioUnderTest("initParallel.4")
   public void testInitParallelMigration() {
     // given
@@ -142,7 +142,7 @@ public class MultiInstanceReceiveTaskScenarioTest {
   }
 
   @Test
-  @Ignore("CAM-6408")
+  @Ignore("migration of a Process waiting in a Multi Instance Activity fails if the Process")
   @ScenarioUnderTest("initSequential.4")
   public void testInitSequentialMigration() {
     // given

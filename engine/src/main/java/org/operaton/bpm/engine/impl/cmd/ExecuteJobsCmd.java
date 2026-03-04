@@ -63,7 +63,7 @@ public class ExecuteJobsCmd implements Command<Void> {
 
     if (job == null) {
       if (jobExecutorContext != null) {
-        // CAM-1842
+        // engine should not throw exception when Acquired Job does not exist anymore
         // Job was acquired but does not exist anymore. This is not a problem.
         // It usually means that the job has been deleted after it was acquired which can happen if the
         // the activity instance corresponding to the job is cancelled.

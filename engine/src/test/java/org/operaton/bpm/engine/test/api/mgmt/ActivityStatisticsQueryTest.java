@@ -644,7 +644,7 @@ class ActivityStatisticsQueryTest {
     assertThat(incidentStatistic.getIncidentType()).isEqualTo(Incident.FAILED_JOB_HANDLER_TYPE);
   }
 
-  @Disabled("CAM-126")
+  @Disabled("ManagementService RuntimeStatisticsQuery behavior is not covered yet")
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/api/mgmt/StatisticsTest.testStatisticsQuery.bpmn20.xml")
   void testActivityStatisticsQueryWithNoInstances() {

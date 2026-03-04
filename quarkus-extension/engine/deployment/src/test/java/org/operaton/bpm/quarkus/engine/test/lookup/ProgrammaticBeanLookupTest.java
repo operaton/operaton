@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test is copied and adjusted from the engine-cdi module to work with Quarkus.
- * See https://jira.camunda.com/browse/CAM-13747 for the reasoning.
+ * cDI: Investigate behavior of @Alternative annotation in conjunction with @Priority(1) for the reasoning.
  * Not testing @{@link jakarta.enterprise.inject.Specializes}
  * becaues it is not supported in Quarkus
  */

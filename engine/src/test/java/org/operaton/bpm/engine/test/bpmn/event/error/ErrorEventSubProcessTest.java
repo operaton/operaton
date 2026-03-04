@@ -427,7 +427,7 @@ class ErrorEventSubProcessTest {
     taskService.complete(task.getId());
 
     // TODO: Loop exists when error thrown from call activity to event sub process
-    // as they both have different process definition - CAM-6212
+    // as they both have different process definition - endless loop of error re-throwing When the error is thrown from call activity to
     assertThat(taskService.createTaskQuery().singleResult().getName()).isEqualTo("BoundaryEventTask");
   }
 

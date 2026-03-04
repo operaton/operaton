@@ -1678,7 +1678,7 @@ public class BpmnParse extends Parse {
     } else if (messageEventDefinitionElement != null) {
       if (isServiceTaskLike) {
 
-        // CAM-436 same behavior as service task
+        // throwing message events should follow service-task behavior
         nestedActivityImpl.getProperties().set(BpmnProperties.TYPE, ActivityTypes.INTERMEDIATE_EVENT_MESSAGE_THROW);
         parseServiceTaskLike(
             nestedActivityImpl,
@@ -2518,7 +2518,7 @@ public class BpmnParse extends Parse {
     ActivityImpl activity = createActivityOnScope(sendTaskElement, scope);
 
     if (isServiceTaskLike(sendTaskElement)) {
-      // CAM-942: If expression or class is set on a SendTask it behaves like a service task
+      // send tasks should follow service-task behavior when an expression or class implementation is configured
       // to allow implementing the send handling yourself
       String elementName = "sendTask";
       parseAsynchronousContinuationForActivity(sendTaskElement, activity);
@@ -2761,7 +2761,7 @@ public class BpmnParse extends Parse {
 
     parseExecutionListenersOnScope(receiveTaskElement, activity);
 
-    // please check https://app.camunda.com/jira/browse/CAM-10989
+    // please check receive task without messageRef can be deployed
     if (receiveTaskElement.attribute("messageRef") != null) {
       activity.setScope(true);
       activity.setEventScope(activity);
@@ -3187,7 +3187,7 @@ public class BpmnParse extends Parse {
       } else if (messageEventDefinitionElement != null) {
         if (isServiceTaskLike) {
 
-          // CAM-436 same behaviour as service task
+          // throwing message events should follow service-task behavior
           parseServiceTaskLike(
               activity,
               ActivityTypes.END_EVENT_MESSAGE,

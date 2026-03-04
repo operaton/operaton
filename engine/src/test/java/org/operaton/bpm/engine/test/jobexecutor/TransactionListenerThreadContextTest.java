@@ -33,7 +33,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
  * executed in a different thread than the Thread which executed the job, the notification still works.
  *
  * <p>
- * See: https://app.camunda.com/jira/browse/CAM-3684
+ * save JobExecutorContext of ExclusiveJobAddedNotification on creation
  * </p>
  *
  * @author Daniel Meyer

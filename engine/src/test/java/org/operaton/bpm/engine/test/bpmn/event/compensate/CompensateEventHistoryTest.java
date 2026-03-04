@@ -83,7 +83,7 @@ class CompensateEventHistoryTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testBoundaryCompensationHandlerHistory.bpmn20.xml")
-  @Disabled("Fix CAM-4351")
+  @Disabled("Fix historic variable instance activity instance IDs not correct when set in a compensating execution")
   @Test
   void testBoundaryCompensationHandlerHistoryVariableInstance() {
     // given a process instance
@@ -147,7 +147,7 @@ class CompensateEventHistoryTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventHistoryTest.testDefaultCompensationHandlerHistory.bpmn20.xml")
-  @Disabled("Fix CAM-4351")
+  @Disabled("Fix historic variable instance activity instance IDs not correct when set in a compensating execution")
   @Test
   void testDefaultCompensationHandlerHistoryVariableInstance() {
     // given a process instance

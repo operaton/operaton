@@ -247,7 +247,7 @@ class TaskQueryTest {
 
 
   /**
-   * CAM-6363
+   * case-insensitive task-name search
    * <p>
    * Verify that search by name returns case-insensitive results
    * </p>
@@ -273,7 +273,7 @@ class TaskQueryTest {
   }
 
   /**
-   * CAM-6165
+   * case-insensitive task-name LIKE search
    * <p>
    * Verify that search by name like returns case-insensitive results
    * </p>

@@ -119,7 +119,7 @@ public class OperatonBpmConfiguration {
     return new DefaultMetricsConfiguration(operatonBpmProperties);
   }
 
-  //TODO to be removed within CAM-8108
+  //TODO to be removed within clean up auto history level in spring-boot
   @Bean(name = "historyLevelAutoConfiguration")
   @ConditionalOnMissingBean(OperatonHistoryLevelAutoHandlingConfiguration.class)
   @ConditionalOnProperty(prefix = "operaton.bpm", name = "history-level", havingValue = "auto", matchIfMissing = false)
@@ -130,7 +130,7 @@ public class OperatonBpmConfiguration {
     return new DefaultHistoryLevelAutoHandlingConfiguration(operatonBpmProperties, historyLevelDeterminator);
   }
 
-  //TODO to be removed within CAM-8108
+  //TODO to be removed within clean up auto history level in spring-boot
   @Bean(name = "historyLevelDeterminator")
   @ConditionalOnMissingBean(name = { "operatonBpmJdbcTemplate", "historyLevelDeterminator" })
   @ConditionalOnBean(name = "historyLevelAutoConfiguration")
@@ -139,7 +139,7 @@ public class OperatonBpmConfiguration {
     return createHistoryLevelDeterminator(operatonBpmProperties, jdbcTemplate);
   }
 
-  //TODO to be removed within CAM-8108
+  //TODO to be removed within clean up auto history level in spring-boot
   @Bean(name = "historyLevelDeterminator")
   @ConditionalOnBean(name = { "operatonBpmJdbcTemplate", "historyLevelAutoConfiguration", "historyLevelDeterminator" })
   @ConditionalOnMissingBean(name = "historyLevelDeterminator")

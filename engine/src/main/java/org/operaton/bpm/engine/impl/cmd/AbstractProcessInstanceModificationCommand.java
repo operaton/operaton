@@ -104,7 +104,7 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
 
     // check if the execution queried for has been replaced by the given instance
     // => if yes, given instance is matched
-    // this is a fix for CAM-4090 to tolerate inconsistent transition instance ids as described in CAM-4143
+    // this is a fix because cannot cancel transition instances when execution tree is expanded/compacted in same transaction to tolerate inconsistent transition instance ids as described in transition instance IDs are not consistent due to execution tree compaction/expansion
     if (!match) {
       // note: execution id = transition instance id
       ExecutionEntity cachedExecution = Context.getCommandContext()

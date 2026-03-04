@@ -52,7 +52,7 @@ public class LoginIT extends AbstractWebappUiIntegrationTest {
   }
 
   public void sendKeys(WebElement element, String keys)  {
-    // fix for CAM-13548
+    // Work around unstable key input in the webapps integration login test.
     Arrays.stream(keys.split("")).forEach(element::sendKeys);
   }
 

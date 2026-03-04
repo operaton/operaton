@@ -305,7 +305,7 @@ class ProcessInstanceModificationTest {
   }
 
   /**
-   * CAM-3718
+   * using process instance modification, a process instance may end between instructions
    */
   @Deployment(resources = EXCLUSIVE_GATEWAY_PROCESS)
   @Test

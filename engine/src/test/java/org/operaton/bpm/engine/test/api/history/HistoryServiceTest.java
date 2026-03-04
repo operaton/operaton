@@ -145,7 +145,7 @@ public class HistoryServiceTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskName("my task").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case-insensitive
+    // taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskName("My task").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -165,7 +165,7 @@ public class HistoryServiceTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskNameLike("my task").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case-insensitive
+    // taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskNameLike("My task").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -185,7 +185,7 @@ public class HistoryServiceTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskDescription("my description").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case-insensitive
+    // taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskDescription("My description").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }
@@ -205,7 +205,7 @@ public class HistoryServiceTest {
     List<HistoricTaskInstance> historicTasks = historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("my description").list();
     assertThat(historicTasks).hasSize(1);
 
-    // CAM-12186: check that query is case-insensitive
+    // taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive: check that query is case-insensitive
     List<HistoricTaskInstance> historicTasksUcFirst = historyService.createHistoricTaskInstanceQuery().taskDescriptionLike("My description").list();
     assertThat(historicTasksUcFirst).hasSize(1);
   }

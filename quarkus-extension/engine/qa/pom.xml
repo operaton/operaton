@@ -45,7 +45,7 @@
             <dependency>org.operaton.bpm:operaton-engine-cdi</dependency>
           </dependenciesToScan>
           <excludes>
-            <!-- See https://jira.camunda.com/browse/CAM-13751 -->
+            <!-- cDI: Investigate fix for missing BeanManager#getELResolver support -->
             <exclude>**/BeanPropertyElTest.java</exclude>
             <!-- See ProgrammaticBeanLookupTest in quarkus-extension/engine/deployment module -->
             <exclude>**/ProgrammaticBeanLookupTest.java</exclude>

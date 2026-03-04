@@ -340,7 +340,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
 
   /**
    * Test excluded on MariaDB and MySQL for now since it is failing randomly there.
-   * See CAM-13291 for details.
+   * investigate flaky concurrent removal time test for details.
    */
   @Test
   @RequiredDatabase(excludes = {DbSqlSessionFactory.MARIADB, DbSqlSessionFactory.MYSQL})
@@ -947,7 +947,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldResolveIncidentWithPreservedCreateTime() {
@@ -1060,7 +1060,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldResolveExternalTaskLogWithTimestampPreserved() {
@@ -1139,7 +1139,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldResolveJobLogWithTimestampPreserved() {
@@ -1338,7 +1338,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldResolveUserOperationLogWithTimestampPreserved() {
@@ -1407,7 +1407,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldResolveIdentityLinkWithTimePreserved() {
@@ -2234,7 +2234,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldResolveBatchJobLogWithTimestampPreserved() {
@@ -2405,7 +2405,7 @@ class RemovalTimeStrategyEndTest extends AbstractRemovalTimeTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Test
   void shouldNotUpdateCreateTimeForIncidentRelatedToBatch() {

@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- increase the field length https://app.camunda.com/jira/browse/CAM-8177 --
+-- increase the field length field ACT_RU_AUTHORIZATION.RESOURCE_ID_ does not have enough length --
 DROP INDEX ACT_UNIQ_AUTH_USER;
 DROP INDEX ACT_UNIQ_AUTH_GROUP;
 

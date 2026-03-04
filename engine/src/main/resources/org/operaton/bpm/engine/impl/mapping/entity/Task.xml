@@ -355,21 +355,21 @@
               </foreach>
             </if>
             <if test="query.name != null">
-              <!-- based on CAM-6363 compare name case insensitive -->
+              <!-- Case-insensitive task-name filter: compare both sides with UPPER(...) -->
               ${queryType} UPPER(RES.NAME_) = UPPER(#{query.name})
             </if>
             <if test="query.nameNotEqual != null">
               ${queryType} UPPER(RES.NAME_) != UPPER(#{query.nameNotEqual})
             </if>
             <if test="query.nameLike != null">
-              <!-- based on CAM-6165 compare name like case insensitive -->
+              <!-- Case-insensitive task-name LIKE filter: compare both sides with UPPER(...) -->
               ${queryType} UPPER(RES.NAME_) like UPPER(#{query.nameLike}) ESCAPE ${escapeChar}
             </if>
             <if test="query.nameNotLike != null">
               ${queryType} UPPER(RES.NAME_) not like UPPER(#{query.nameNotLike}) ESCAPE ${escapeChar}
             </if>
             <if test="query.description != null">
-              <!-- based on CAM-12186 description case insensitive -->
+              <!-- based on taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive description case insensitive -->
               ${queryType} UPPER(RES.DESCRIPTION_) = UPPER(#{query.description})
             </if>
             <if test="query.descriptionLike != null">

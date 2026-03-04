@@ -30,6 +30,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 
 class InitialUserSetupLoginIT extends AbstractWebappUiIntegrationTest {
 
+  private static final String SETUP_ADMIN = "setupadmin";
+
   protected WebDriverWait wait;
 
   @Test
@@ -39,9 +41,9 @@ class InitialUserSetupLoginIT extends AbstractWebappUiIntegrationTest {
 
     wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    sendKeys(wait.until(visibilityOfElementLocated(By.id("inputUserId"))), "setupadmin");
-    sendKeys(wait.until(visibilityOfElementLocated(By.id("inputPassword"))), "setupadmin");
-    sendKeys(wait.until(visibilityOfElementLocated(By.id("inputPasswordRepeat"))), "setupadmin");
+    sendKeys(wait.until(visibilityOfElementLocated(By.id("inputUserId"))), SETUP_ADMIN);
+    sendKeys(wait.until(visibilityOfElementLocated(By.id("inputPassword"))), SETUP_ADMIN);
+    sendKeys(wait.until(visibilityOfElementLocated(By.id("inputPasswordRepeat"))), SETUP_ADMIN);
     sendKeys(wait.until(visibilityOfElementLocated(By.id("inputFirstname"))), "Setup");
     sendKeys(wait.until(visibilityOfElementLocated(By.id("inputLastname"))), "Admin");
     sendKeys(wait.until(visibilityOfElementLocated(By.id("inputEmail"))), "setup.admin@example.com");
@@ -50,8 +52,8 @@ class InitialUserSetupLoginIT extends AbstractWebappUiIntegrationTest {
     wait.until(visibilityOfElementLocated(By.cssSelector(".alert.alert-success")));
     wait.until(elementToBeClickable(By.cssSelector("a[href=\"./#/login\"]"))).click();
 
-    sendKeys(wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"text\"]"))), "setupadmin");
-    sendKeys(wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]"))), "setupadmin");
+    sendKeys(wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"text\"]"))), SETUP_ADMIN);
+    sendKeys(wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"password\"]"))), SETUP_ADMIN);
     wait.until(elementToBeClickable(By.cssSelector("button[type=\"submit\"]"))).click();
 
     wait.until(textToBePresentInElementLocated(

@@ -78,6 +78,7 @@ auto-merge-rules:
       - 'version.spring-boot'
       - 'version.undertow'
       # Maven plugins
+      - 'org.apache.felix:maven-bundle-plugin'
       - 'org.apache.maven.plugins'
       - 'org.codehaus.cargo:cargo-maven3-plugin'
       - 'org.codehaus.mojo:*'

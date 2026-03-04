@@ -15,5 +15,5 @@
 -- limitations under the License.
 --
 
--- https://app.camunda.com/jira/browse/CAM-5364 --
+-- queries get slow if a user is a member of many of groups and --
 create index ACT_IDX_AUTH_GROUP_ID on ACT_RU_AUTHORIZATION(GROUP_ID_);

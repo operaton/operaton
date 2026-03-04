@@ -254,7 +254,7 @@ class MigrationCompensationAddSubProcessTest {
     assertThat(testHelper.snapshotAfterMigration.getVariables()).isEmpty();
   }
 
-  @Disabled("CAM-6035")
+  @Disabled("executing a compensation handler can access camunda:input variables that are not part of the")
   @Test
   void testNoInputMappingExecuted() {
     // given

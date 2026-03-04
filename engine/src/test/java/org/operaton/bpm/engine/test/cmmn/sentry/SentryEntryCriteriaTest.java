@@ -831,7 +831,7 @@ class SentryEntryCriteriaTest extends CmmnTest {
   }
 
   /**
-   * CAM-3226
+   * sentry ifPart evaluation may fail when containing stage completes before
    */
   @Deployment
   @Test

@@ -93,7 +93,7 @@ var convertToType = function (value, type) {
  * This reformates the date into a ISO8601 conform string which will mirror the selected date in local format.
  * TODO: Remove this when it is fixed by angularjs
  *
- * @see https://app.camunda.com/jira/browse/CAM-4746
+ * datepicker-Textfield does not validate selected date correctly in embedded form
  *
  */
 var pad = function (number) {

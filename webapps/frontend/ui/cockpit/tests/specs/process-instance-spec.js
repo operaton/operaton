@@ -421,7 +421,7 @@ describe.skip('Cockpit Process Instance Spec', function() {
     });
   });
 
-  // CAM-5846
+  // Cockpit users can set retries for external tasks
   describe('Retry external task incident', function() {
     before(function(done) {
       return testHelper(setupFile.setup4, function() {

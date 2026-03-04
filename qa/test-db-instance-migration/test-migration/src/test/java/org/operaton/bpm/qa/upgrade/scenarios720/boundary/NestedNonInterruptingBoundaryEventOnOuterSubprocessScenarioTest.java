@@ -138,7 +138,7 @@ public class NestedNonInterruptingBoundaryEventOnOuterSubprocessScenarioTest {
     rule.messageCorrelation("ReceiveTaskMessage").correlate();
 
     // then
-    // there is only one task since the task after the message boundary event has been cancelled due to bug CAM-3727 in 7.2.0
+    // there is only one task since the task after the message boundary event has been cancelled due to bug execution tree is not expanded correctly in 7.2.0
     Assert.assertEquals(1, rule.taskQuery().count());
 
     Task afterErrorTask = rule.taskQuery().taskDefinitionKey("escalatedTask").singleResult();
@@ -259,7 +259,7 @@ public class NestedNonInterruptingBoundaryEventOnOuterSubprocessScenarioTest {
     rule.messageCorrelation("ReceiveTaskMessage").correlate();
 
     // then
-    // there is only one task since the task after the message boundary event has been cancelled due to bug CAM-3727 in 7.2.0
+    // there is only one task since the task after the message boundary event has been cancelled due to bug execution tree is not expanded correctly in 7.2.0
     Assert.assertEquals(1, rule.taskQuery().count());
 
     Task afterErrorTask = rule.taskQuery().taskDefinitionKey("escalatedTask").singleResult();

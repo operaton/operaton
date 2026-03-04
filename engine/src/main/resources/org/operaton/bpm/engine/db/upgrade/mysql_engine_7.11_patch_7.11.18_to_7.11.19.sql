@@ -18,10 +18,10 @@
 insert into ACT_GE_SCHEMA_LOG
 values ('3', CURRENT_TIMESTAMP, '7.11.19');
 
--- insert telemetry.lock in property table - https://jira.camunda.com/browse/CAM-12023  --
+-- insert telemetry.lock in property table to support enabling telemetry via process engine configuration --
 insert into ACT_GE_PROPERTY
 values ('telemetry.lock', '0', 1);
 
--- insert installationId.lock in property table - https://jira.camunda.com/browse/CAM-12031  --
+-- insert installationId.lock in property table - an installation id is stored in the database for each engine  --
 insert into ACT_GE_PROPERTY
 values ('installationId.lock', '0', 1);

@@ -38,7 +38,7 @@ module.exports = [
 
         // ... and fetch its process definition
         ProcessDefinitionResource.get({
-          // TODO: CAM-2017 API definition cleanup
+          // TODO: align Runtime / History API API definition cleanup
           id:
             superProcessInstance.processDefinitionId ||
             superProcessInstance.definitionId,

@@ -88,7 +88,7 @@ public class CommandContextInterceptor extends CommandInterceptor {
       }
     }
 
-    // only create a new command context on the current command level (CAM-10002)
+    // only create a new command context on the current command level (using the Spring integration, the data of a nested transaction is flushed even if)
     boolean isNew = ProcessEngineContextImpl.consume();
     boolean isOuterCommand = context == null;
     boolean openNew = isOuterCommand || isNew;

@@ -556,7 +556,7 @@ class SignalEventTest {
   }
 
   /**
-   * CAM-4527
+   * synchronous interruption of active event-throwing activities does not cancel their execution
    */
   @Deployment
   @Test
@@ -616,13 +616,13 @@ class SignalEventTest {
   }
 
   /**
-   * CAM-6807
+   * signal boundary events cannot be triggered asynchronously
    */
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.catchAlertSignalBoundary.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/signal/SignalEventTests.throwAlertSignalAsync.bpmn20.xml"})
   @Test
-  @Disabled("CAM-6807")
+  @Disabled("signal boundary events cannot be triggered asynchronously")
   void testAsyncSignalBoundary() {
     runtimeService.startProcessInstanceByKey("catchSignal");
 

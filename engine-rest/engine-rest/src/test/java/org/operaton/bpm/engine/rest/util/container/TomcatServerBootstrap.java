@@ -181,8 +181,8 @@ public abstract class TomcatServerBootstrap extends AbstractServerBootstrap {
    * - By enabling remote fetching in Shrinkwrap, a remote snapshot BOM will be fetched in this case
    * - While counter-intuitive, we consider this an ok solution; other solution options were disallowing
    *   "mvn clean verify" in these circumstances (and changing CI builds accordingly), or reverting the
-   *   changes made in CAM-11345.
+   *   changes made in remove BOM from platform parent hierarchy.
    *
-   * This change was made with CAM-11345. See the discussion there for more details.
+   * This change was made because remove BOM from platform parent hierarchy. The upstream discussion contains additional details.
    */
 }

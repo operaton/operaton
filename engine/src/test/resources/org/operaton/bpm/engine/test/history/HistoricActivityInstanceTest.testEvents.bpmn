@@ -192,7 +192,7 @@
   <bpmn2:error id="Error_1" errorCode="100" name="testError"/>
   <bpmn2:signal id="Signal_2" name="testSignal2"/>
   <bpmn2:signal id="Signal_3" name="testSignal3"/>
-  <bpmn2:message id="Message_2" name="CAM-2365"/>
+  <bpmn2:message id="Message_2" name="history service distinguishes event definitions"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="testEvents">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_6" bpmnElement="timerStartEvent">

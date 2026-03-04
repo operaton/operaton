@@ -511,7 +511,7 @@ class InputOutputTest {
     assertThat(variable.getExecutionId()).isEqualTo(pi.getId());
   }
 
-  // related to CAM-8072
+  // because exposing local variable via output mapping fails on parallel gateway with async after
   @Test
   void testOutputParameterAvailableAfterParallelGateway() {
     // given

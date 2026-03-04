@@ -74,7 +74,7 @@ class DomXmlDataFormatWriterTest {
 
   /**
    * IBM JDK does not generate a new line character at the end
-   * of an XSLT-transformed XML document. See CAM-14806.
+   * of an XSLT-transformed XML document. test failues in Spin with IBM JDK 8.
    */
   private String getExpectedFormattedXML(boolean withWhitespaceInElement) {
     if (JdkUtil.runsOnIbmJDK()) {
@@ -114,7 +114,7 @@ class DomXmlDataFormatWriterTest {
   }
 
   /**
-   * behaviour fixed by CAM-13699: an already formatted XML will be formatted stored into a SPIN variable and also
+   * behaviour fixed by spin XML adds blank lines if input is already pretty printed: an already formatted XML will be formatted stored into a SPIN variable and also
    * returned formatted but no additional blank lines are inserted into the XML.
    */
   @Test
@@ -140,7 +140,7 @@ class DomXmlDataFormatWriterTest {
   }
 
   /**
-   * new feature provided by CAM-13699 - pretty print feature disabled. The XML is stored and returned as is.
+   * new feature provided by spin XML adds blank lines if input is already pretty printed - pretty print feature disabled. The XML is stored and returned as is.
    */
   @Test
   void disabledPrettyPrintUnformatted() {
@@ -166,7 +166,7 @@ class DomXmlDataFormatWriterTest {
   }
 
   /**
-   * new feature provided by CAM-13699 - pretty print feature disabled. The XML is stored and returned as is.
+   * new feature provided by spin XML adds blank lines if input is already pretty printed - pretty print feature disabled. The XML is stored and returned as is.
    */
   @Test
   void disabledPrettyPrintFormatted() {

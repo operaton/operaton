@@ -213,7 +213,7 @@ class CompensateEventTest {
 
   }
 
-  // See: https://app.camunda.com/jira/browse/CAM-1410
+  // intermediate throwing compensation with activityRef does not work for task activities
   @Deployment
   @Test
   void testCompensateActivityRef() {
@@ -229,7 +229,7 @@ class CompensateEventTest {
   }
 
   /**
-   * CAM-3628
+   * subprocess compensation with compensation boundary event is not triggered
    */
   @Deployment
   @Test
@@ -432,7 +432,7 @@ class CompensateEventTest {
   }
 
   @Deployment
-  @Disabled("Fix CAM-4268")
+  @Disabled("Fix compensation of multi instance subprocess can not access element variable")
   @Test
   void testCompensateMiSubprocessVariableSnapshotOfElementVariable() {
     Map<String, Object> variables = new HashMap<>();
@@ -519,7 +519,7 @@ class CompensateEventTest {
   /**
    * enable test case when bug is fixed
    *
-   * @see <a href="https://app.camunda.com/jira/browse/CAM-4304">https://app.camunda.com/jira/browse/CAM-4304</a>
+   * intermediate throw compensation event do not wait for compensation of subprocess on different scope
    */
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testCompensationInEventSubProcess.bpmn20.xml"})
   @Test
@@ -742,7 +742,7 @@ class CompensateEventTest {
   }
 
   @Deployment
-  @Disabled("CAM-4903")
+  @Disabled("incorrect activity instance trees and history for active subprocess compensation handlers")
   @Test
   void testActivityInstanceTreeForMiSubProcessDefaultHandler() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("compensateProcess");
@@ -1021,7 +1021,7 @@ class CompensateEventTest {
   }
 
   @Deployment
-  @Disabled("CAM-4387")
+  @Disabled("a compensation handler cannot define events")
   @Test
   void testSubprocessCompensationHandlerWithEventSubprocess() {
     // given a process instance in compensation
@@ -1039,10 +1039,10 @@ class CompensateEventTest {
   }
 
   /**
-   * CAM-4387
+   * a compensation handler cannot define events
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/compensate/CompensateEventTest.testSubprocessCompensationHandlerWithEventSubprocess.bpmn20.xml")
-  @Disabled("CAM-4387")
+  @Disabled("a compensation handler cannot define events")
   @Test
   void testSubprocessCompensationHandlerWithEventSubprocessActivityInstanceTree() {
     // given a process instance in compensation
@@ -1065,7 +1065,7 @@ class CompensateEventTest {
   }
 
   @Deployment
-  @Disabled("CAM-4387")
+  @Disabled("a compensation handler cannot define events")
   @Test
   void testReceiveTaskCompensationHandler() {
     // given a process instance

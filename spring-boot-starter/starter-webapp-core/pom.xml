@@ -80,7 +80,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <configuration>
-            <!-- See CAM-11901 -->
+            <!-- webjar resources in surefire tests only available with useManifestOnlyJar disabled -->
             <useManifestOnlyJar>false</useManifestOnlyJar>
           </configuration>
         </plugin>

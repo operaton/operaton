@@ -45,7 +45,7 @@ class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
     return configuration;
   }
 
-  // https://jira.camunda.com/browse/CAM-11304
+  // in Scala FEEL Engine, number comparison does not work for type short
   @Test
   @DecisionResource(resource = "breaking_unary_test_compare_short_untyped.dmn")
   void shouldCompareShortUntyped() {
@@ -109,7 +109,7 @@ class BreakingScalaFeelBehaviorTest extends DmnEngineTest {
           + "Expected (start-of-input | negation | positiveUnaryTests | anyInput):1:1, found \"'Hello Wor\"");
   }
 
-  @Disabled("CAM-11319")
+  @Disabled("FEEL Scala engine does not support comparing POJOs with >, <, or = operators")
   @Test
   @DecisionResource(resource = "breaking_pojo_comparison.dmn")
   void shouldComparePojo() {

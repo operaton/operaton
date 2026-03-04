@@ -50,7 +50,7 @@ DROP INDEX ACT_RU_METER_LOG.ACT_IDX_METER_LOG;
 drop index ACT_RU_TASK_METER_LOG.ACT_IDX_TASK_METER_LOG_TIME;
 
 
--- indexes for concurrency problems - https://app.camunda.com/jira/browse/CAM-1646 --
+-- indexes for concurrency problems - process Engine deadlocks in Mssql / DB2 --
 drop index ACT_RU_EXECUTION.ACT_IDX_EXECUTION_PROC;
 drop index ACT_RU_EXECUTION.ACT_IDX_EXECUTION_PARENT;
 drop index ACT_RU_EXECUTION.ACT_IDX_EXECUTION_SUPER;

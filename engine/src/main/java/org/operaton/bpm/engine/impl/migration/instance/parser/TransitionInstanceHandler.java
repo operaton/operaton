@@ -77,7 +77,7 @@ public class TransitionInstanceHandler implements MigratingInstanceParseHandler<
   }
 
   /**
-   * Workaround for CAM-5609: In general, only async continuations should be represented as TransitionInstances, but
+   * Workaround because completed inner instances of multi-instances are represented as transition instances: In general, only async continuations should be represented as TransitionInstances, but
    * due to this bug, completed multi-instances are represented like that as well. We tolerate the second case.
    */
   protected boolean isAsyncTransitionInstance(TransitionInstance transitionInstance) {

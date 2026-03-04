@@ -454,7 +454,7 @@ class HistoricActivityInstanceTest {
   }
 
   /**
-   * <a href="https://app.camunda.com/jira/browse/CAM-1537">CAM-1537</a>
+   * closing parallel gateway - no endtime in act_hi_actinst table
    */
   @Deployment
   @Test
@@ -902,7 +902,7 @@ class HistoricActivityInstanceTest {
     assertThat(query.count()).isOne();
     assertThat(query.singleResult().getActivityType()).isEqualTo("startEvent");
 
-    query = startEventTestProcess("CAM-2365");
+    query = startEventTestProcess("history service distinguishes event definitions");
     query.activityId("messageStartEvent");
     assertThat(query.count()).isOne();
     assertThat(query.singleResult().getActivityType()).isEqualTo("messageStartEvent");
@@ -942,7 +942,7 @@ class HistoricActivityInstanceTest {
     if(message.isEmpty()) {
       runtimeService.startProcessInstanceByKey("testEvents");
     } else {
-      runtimeService.startProcessInstanceByMessage("CAM-2365");
+      runtimeService.startProcessInstanceByMessage("history service distinguishes event definitions");
     }
 
     return historyService.createHistoricActivityInstanceQuery();

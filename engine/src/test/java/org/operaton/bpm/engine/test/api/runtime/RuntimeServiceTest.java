@@ -442,7 +442,7 @@ public class RuntimeServiceTest {
   }
 
   /**
-   * CAM-8005 - StackOverflowError must not happen.
+   * stackOverflowError when canceling process with big amount of subprocesses - StackOverflowError must not happen.
    * Note: debug at CommandContextInterceptor -> context.close()
    */
   @Test
@@ -1623,7 +1623,7 @@ public class RuntimeServiceTest {
   }
 
   /**
-   * Test for CAM-3572
+   * Test because arrayIndexOutOfBoundsException in GetActivityInstanceCmd.initActivityInstanceTree
    */
   @Deployment
   @Test

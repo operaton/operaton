@@ -46,7 +46,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/LoginIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
  * and <code>@Parameters</code> for different setups, might be removed with
- * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
+ * run integration test suite against Operaton (standalone)
  */
 @Disabled("Fix Chrome driver download: Chrome driver is outdated and must be downloaded in the version installed on the local machine")
 class LoginIT extends AbstractWebappUiIT {
@@ -107,7 +107,7 @@ class LoginIT extends AbstractWebappUiIT {
   }
 
   void sendKeys(WebElement element, String keys)  {
-    // fix for CAM-13548
+    // Work around unstable key input in the webapps integration login test.
     Arrays.stream(keys.split("")).forEach(element::sendKeys);
   }
 

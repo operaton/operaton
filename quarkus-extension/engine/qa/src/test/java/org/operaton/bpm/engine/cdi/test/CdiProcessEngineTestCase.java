@@ -159,7 +159,7 @@ public abstract class CdiProcessEngineTestCase {
         bean.destroy();
       } catch (UnsupportedOperationException ignored) {
         // Eagerly destroying InjectableBusinessProcessContext is unsupported
-        // See https://jira.camunda.com/browse/CAM-13755
+        // in Quarkus, @BusinessProcessScoped beans can be destroyed programmatically
       }
     });
 

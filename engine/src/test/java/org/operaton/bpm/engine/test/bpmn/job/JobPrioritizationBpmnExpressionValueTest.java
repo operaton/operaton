@@ -120,10 +120,10 @@ class JobPrioritizationBpmnExpressionValueTest {
   }
 
   /**
-   * Can't distinguish this case from the cases we have to tolerate due to CAM-4207
+   * Can't distinguish this case from the cases we have to tolerate due to tolerate non-resolving job priority expressions
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/job/jobPrioExpressionProcess.bpmn20.xml")
-  @Disabled("CAM-4207")
+  @Disabled("tolerate non-resolving job priority expressions")
   @Test
   void testVariableValueExpressionPrioritizationFailsWhenVariableMisses() {
     // given

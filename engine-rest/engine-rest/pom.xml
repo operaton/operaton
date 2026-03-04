@@ -432,7 +432,7 @@
                   <goal>test</goal>
                 </goals>
                 <configuration>
-                  <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
+                  <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. international symbols in labels for form fields are not handled correctly) -->
                   <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
                   <includes>
                     <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>
@@ -519,7 +519,7 @@
                   <goal>test</goal>
                 </goals>
                 <configuration>
-                  <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. CAM-6983) -->
+                  <!-- Ensures that endpoints work with other encodings than UTF-8 (cf. international symbols in labels for form fields are not handled correctly) -->
                   <argLine>${surefire.argLine} -Dfile.encoding=ISO-8859-1</argLine>
                   <includes>
                     <include>**/ProcessDefinitionRestServiceInteractionTest.java</include>

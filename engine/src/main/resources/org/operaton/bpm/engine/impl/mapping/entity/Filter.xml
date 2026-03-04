@@ -111,7 +111,7 @@
 
   <select id="selectFilterByQueryCriteria_oracleDb2" parameterType="org.operaton.bpm.engine.impl.filter.FilterQueryImpl" resultMap="filterResultMap">
     <!--
-    SEE: https://app.camunda.com/jira/browse/CAM-6014
+    cannot use distinct with CLOB typed columns in Oracle and DB2
      -->
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
     SELECT RES.*, J.QUERY_, J.PROPERTIES_ FROM (

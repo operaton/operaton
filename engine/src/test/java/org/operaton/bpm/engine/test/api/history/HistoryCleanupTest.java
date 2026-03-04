@@ -1106,7 +1106,7 @@ class HistoryCleanupTest {
     assertResult(0);
   }
 
-  /*I can't find the corresponding ticket. On my local machine (Windows) it works, but not in github actions
+  /*No corresponding issue reference was found. This works locally on Windows but fails in GitHub Actions
   It fails because in line 1135 the timestamps are different:
   Locally the results of both are:
   Tue May 28 2019 21:00:00 GMT+0000
@@ -1118,7 +1118,7 @@ class HistoryCleanupTest {
    */
 
   @Test
-  @Disabled("CAM-10055")
+  @Disabled("calculation of history cleanup batch window does not respect daylight saving time changes")
   void testLessThanThresholdOutsideBatchWindowAfterMidnightDaylightSaving() {
     //given
     prepareData(5);
@@ -1151,7 +1151,7 @@ class HistoryCleanupTest {
   }
 
   @Test
-  @Disabled("CAM-10055")
+  @Disabled("calculation of history cleanup batch window does not respect daylight saving time changes")
   void testLessThanThresholdWithinBatchWindowAfterMidnightDaylightSaving() {
     //given
     prepareData(5);

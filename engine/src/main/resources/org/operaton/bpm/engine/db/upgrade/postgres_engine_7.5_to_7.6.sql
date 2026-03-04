@@ -80,7 +80,7 @@ alter table ACT_HI_DEC_OUT
 alter table ACT_HI_DEC_IN
   alter column CLAUSE_ID_ drop not null;
 
--- CAM-5914
+-- add indices to act_ru_job
 create index ACT_IDX_JOB_EXECUTION_ID on ACT_RU_JOB(EXECUTION_ID_);
 create index ACT_IDX_JOB_HANDLER on ACT_RU_JOB(HANDLER_TYPE_,HANDLER_CFG_);
 
@@ -98,7 +98,7 @@ ALTER TABLE ACT_HI_PROCINST
 update ACT_HI_PROCINST set STATE_ = 'ACTIVE' where END_TIME_ is null;
 update ACT_HI_PROCINST set STATE_ = 'COMPLETED' where END_TIME_ is not null;
 
--- add indexes on PROC_DEF_KEY_ columns in history tables CAM-6679
+-- add indexes on PROC_DEF_KEY_ columns in history tables add indexes on PROC_DEF_KEY_ columns in history tables
 create index ACT_IDX_HI_ACT_INST_PROC_DEF_KEY on ACT_HI_ACTINST(PROC_DEF_KEY_);
 create index ACT_IDX_HI_DETAIL_PROC_DEF_KEY on ACT_HI_DETAIL(PROC_DEF_KEY_);
 create index ACT_IDX_HI_IDENT_LNK_PROC_DEF_KEY on ACT_HI_IDENTITYLINK(PROC_DEF_KEY_);
@@ -108,7 +108,7 @@ create index ACT_IDX_HI_PRO_INST_PROC_DEF_KEY on ACT_HI_PROCINST(PROC_DEF_KEY_);
 create index ACT_IDX_HI_TASK_INST_PROC_DEF_KEY on ACT_HI_TASKINST(PROC_DEF_KEY_);
 create index ACT_IDX_HI_VAR_INST_PROC_DEF_KEY on ACT_HI_VARINST(PROC_DEF_KEY_);
 
--- CAM-6725
+-- add new column for metric utc timestamp to ACT_RU_METER_LOG table
 ALTER TABLE ACT_RU_METER_LOG
  ADD MILLISECONDS_ bigint DEFAULT 0;
 

@@ -61,7 +61,7 @@ public class BootstrapEngineCommand implements ProcessEngineBootstrapCommand {
 
   protected void createHistoryCleanupJob(CommandContext commandContext) {
     if (Context.getProcessEngineConfiguration().getManagementService().getTableMetaData("ACT_RU_JOB") != null) {
-      // CAM-9671: avoid transaction rollback due to the OLE being caught in CommandContext#close
+      // weblogic: Platform startup fails if history cleanup job cannot be re-configured: avoid transaction rollback due to the OLE being caught in CommandContext#close
       commandContext.getDbEntityManager().registerOptimisticLockingListener(new OptimisticLockingListener() {
 
         @Override

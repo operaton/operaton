@@ -41,7 +41,7 @@ class SpinJRubyScriptTaskTest {
   RepositoryService repositoryService;
 
   @Test
-  @Disabled("CAM-11114")
+  @Disabled("ruby scripting integration is not thread-safe and leaks process variables")
   void shouldNotLeakVariables() {
     // given
     String varName = "var";

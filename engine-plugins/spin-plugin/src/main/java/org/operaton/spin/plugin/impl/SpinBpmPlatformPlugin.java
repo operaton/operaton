@@ -63,8 +63,8 @@ public class SpinBpmPlatformPlugin implements BpmPlatformPlugin {
     DataFormats paDataFormats = new DataFormats();
     paDataFormats.registerDataFormats(classLoader);
 
-    // does not create PA-local serializers for native Spin values;
-    // this is still an open feature CAM-5246
+    // This does not create process-application-local serializers for native Spin values.
+    // Process-application-specific data formats for native JSON/XML values are not yet supported.
     return SpinVariableSerializers.createObjectValueSerializers(paDataFormats);
   }
 

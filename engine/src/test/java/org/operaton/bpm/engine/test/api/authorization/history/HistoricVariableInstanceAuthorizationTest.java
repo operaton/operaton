@@ -569,7 +569,7 @@ class HistoricVariableInstanceAuthorizationTest extends AuthorizationTest {
     verifyVariablesDeleted();
     deleteTask(taskId, true);
 
-    // XXX if CAM-6570 is implemented, there should be a check for variables of standalone tasks here as well
+    // XXX if no authorization checks for reading/deleting historic task instances of standalone tasks is implemented, there should be a check for variables of standalone tasks here as well
   }
 
   // delete historic variable instances (process variables) /////////////////////////////////////////////

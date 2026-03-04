@@ -36,7 +36,7 @@ public class JobExecutionHandlerActivationSpec implements ActivationSpec, Serial
   @Serial private static final long serialVersionUID = 1L;
 
   private transient ResourceAdapter ra;
-  /** Please check #CAM-9811  */
+  /** Please check engine fails on WebSphere 8.5/9 with certain log levels  */
   private String dummyPojo;
 
   @Override

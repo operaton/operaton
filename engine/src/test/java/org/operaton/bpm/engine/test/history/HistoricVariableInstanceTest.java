@@ -897,7 +897,7 @@ class HistoricVariableInstanceTest {
   }
 
   /**
-   * CAM-3442
+   * implicit variable updates are not reflected in history
    */
   @Deployment
   @SuppressWarnings("unchecked")
@@ -2188,7 +2188,7 @@ class HistoricVariableInstanceTest {
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/async/AsyncStartEventTest.testAsyncStartEvent.bpmn20.xml")
-  @Disabled("CAM-2828")
+  @Disabled("activity instance id missing for historic form property updates with async start event")
   @Test
   void testSubmitFormHistoricUpdates() {
 

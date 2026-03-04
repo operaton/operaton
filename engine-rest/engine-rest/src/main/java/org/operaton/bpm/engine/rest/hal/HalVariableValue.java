@@ -34,7 +34,7 @@ import org.operaton.bpm.engine.runtime.VariableInstance;
  */
 public class HalVariableValue extends HalResource<HalVariableValue> {
 
-  // add leading / by hand because otherwise it will be encoded as %2F (see CAM-3091)
+  // add leading / by hand because otherwise it will be encoded as %2F (rEST filter task query returns %2F instead of / on resteasy-3.0.8.Final)
   public static final HalRelation REL_SELF = HalRelation.build("self", VariableResource.class, UriBuilder.fromPath("/{scopeResourcePath}").path("{scopeId}").path("{variablesName}").path("{variableName}"));
   private static final String VARIABLES_PATH_LOCAL_VARIABLES = "localVariables";
   private static final String VARIABLES_PATH_VARIABLES = "variables";
@@ -92,7 +92,7 @@ public class HalVariableValue extends HalResource<HalVariableValue> {
 
   private HalVariableValue link(HalRelation relation, String resourcePath, String resourceId, String variablesPath) {
     if (resourcePath.startsWith("/")) {
-      // trim leading / because otherwise it will be encode as %2F (see CAM-3091)
+      // trim leading / because otherwise it will be encode as %2F (rEST filter task query returns %2F instead of / on resteasy-3.0.8.Final)
       resourcePath = resourcePath.substring(1);
     }
     this.linker.createLink(relation, resourcePath, resourceId, variablesPath, this.name);

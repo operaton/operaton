@@ -15,5 +15,5 @@
 -- limitations under the License.
 --
 
---https://app.camunda.com/jira/browse/CAM-7442
+--when creating index ACT_IDX_JOB_HANDLER a warning is emitted on sqlserver
 drop index ACT_IDX_JOB_HANDLER on ACT_RU_JOB;

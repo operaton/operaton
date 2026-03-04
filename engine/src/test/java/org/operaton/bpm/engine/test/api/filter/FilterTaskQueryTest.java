@@ -1176,7 +1176,7 @@ class FilterTaskQueryTest {
   }
 
   /**
-   * CAM-6363
+   * case-insensitive task-name search
    * <p>
    * Verify that search by name returns case-insensitive results
    * </p>
@@ -1203,7 +1203,7 @@ class FilterTaskQueryTest {
   }
 
   /**
-   * CAM-12186
+   * taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive
    * <p>
    * Verify that search by description returns case-insensitive results
    * </p>
@@ -1230,7 +1230,7 @@ class FilterTaskQueryTest {
   }
 
   /**
-   * CAM-6165
+   * case-insensitive task-name LIKE search
    * <p>
    * Verify that search by name like returns case-insensitive results
    * </p>
@@ -2348,7 +2348,7 @@ class FilterTaskQueryTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Disabled("CAM-9613")
+  @Disabled("variable filter in Task Query Filter for certain value types cannot be applied")
   @Test
   void testDateVariable() {
     // given
@@ -2370,7 +2370,7 @@ class FilterTaskQueryTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Disabled("CAM-9613")
+  @Disabled("variable filter in Task Query Filter for certain value types cannot be applied")
   @Test
   void testByteArrayVariable() {
     // given
@@ -2391,7 +2391,7 @@ class FilterTaskQueryTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Disabled("CAM-9613")
+  @Disabled("variable filter in Task Query Filter for certain value types cannot be applied")
   @Test
   void testLongVariable() {
     // given
@@ -2412,7 +2412,7 @@ class FilterTaskQueryTest {
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
-  @Disabled("CAM-9613")
+  @Disabled("variable filter in Task Query Filter for certain value types cannot be applied")
   @Test
   void testShortVariable() {
     // given

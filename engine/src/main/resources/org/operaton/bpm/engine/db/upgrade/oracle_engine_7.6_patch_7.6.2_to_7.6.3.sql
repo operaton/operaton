@@ -15,5 +15,5 @@
 -- limitations under the License.
 --
 
--- index to prevent deadlock on fk constraint - https://app.camunda.com/jira/browse/CAM-7263 --
+-- index to prevent deadlock on fk constraint - missing Index on Foreign Key ERROR_DETAILS_ID_ in External Task --
 create index ACT_IDX_EXT_TASK_ERR_DETAILS ON ACT_RU_EXT_TASK(ERROR_DETAILS_ID_);

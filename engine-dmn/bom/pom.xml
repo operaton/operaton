@@ -34,7 +34,7 @@
         <artifactId>operaton-engine-feel-scala</artifactId>
         <version>${project.version}</version>
       </dependency>
-      <!-- See CAM-11346
+      <!-- migrate feel spin to java
       <dependency>
         <groupId>org.operaton.bpm.dmn</groupId>
         <artifactId>operaton-engine-feel-spin</artifactId>

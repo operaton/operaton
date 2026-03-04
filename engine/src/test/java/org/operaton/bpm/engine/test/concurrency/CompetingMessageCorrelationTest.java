@@ -310,12 +310,12 @@ class CompetingMessageCorrelationTest extends ConcurrencyTestCase {
    * <p>
    *   At least on MySQL, this test case fails with deadlock exceptions.
    *   The reason is the combination of our flush with the locking of the event
-   *   subscription documented in the ticket CAM-3636.
+   *   subscription documented in the ticket exclusive message correlation under contention.
    * </p>
    * @throws InterruptedException
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/concurrency/CompetingMessageCorrelationTest.catchMessageProcess.bpmn20.xml")
-  @Ignore("CAM-3636")
+  @Ignore("exclusive message correlation under contention")
   @Test
   void testConcurrentMixedCorrelationCase2() throws Exception {
     InvocationLogListener.reset();

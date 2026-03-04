@@ -764,7 +764,7 @@ class ProcessInstanceModificationAsyncTest {
 
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_ASYNC_BEFORE_TASK_PROCESS)
   @Test
@@ -805,7 +805,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_ASYNC_BEFORE_TASK_PROCESS)
   @Test
@@ -839,7 +839,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_ASYNC_BEFORE_TASK_PROCESS)
   @Test
@@ -876,7 +876,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_PARALLEL_ASYNC_BEFORE_SCOPE_TASK_PROCESS)
   @Test
@@ -923,7 +923,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_PARALLEL_ASYNC_BEFORE_SCOPE_TASK_PROCESS)
   @Test
@@ -962,7 +962,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_PARALLEL_ASYNC_BEFORE_SCOPE_TASK_PROCESS)
   @Test
@@ -992,7 +992,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_PARALLEL_ASYNC_BEFORE_SCOPE_TASK_PROCESS)
   @Test
@@ -1038,7 +1038,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_PARALLEL_ASYNC_BEFORE_SCOPE_TASK_PROCESS)
   @Test
@@ -1078,7 +1078,7 @@ class ProcessInstanceModificationAsyncTest {
   }
 
   /**
-   * CAM-4090
+   * cannot cancel transition instances when execution tree is expanded/compacted in same transaction
    */
   @Deployment(resources = NESTED_PARALLEL_ASYNC_BEFORE_SCOPE_TASK_PROCESS)
   @Test

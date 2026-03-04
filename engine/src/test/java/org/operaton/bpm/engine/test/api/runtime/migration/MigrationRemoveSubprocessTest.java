@@ -308,7 +308,7 @@ class MigrationRemoveSubprocessTest {
   }
 
   @Test
-  @Disabled("Missing feature CAM-5407")
+  @Disabled("Missing feature: migrate an activity instance into an ancestor scope without cancelling intermediate scopes")
   void testRemoveScopeAndMoveToConcurrentActivity() {
 
     // given
@@ -356,7 +356,7 @@ class MigrationRemoveSubprocessTest {
   }
 
   /**
-   * Remove when implementing CAM-5407
+   * Remove when migration into an ancestor scope without cancelling intermediate scopes is implemented
    */
   @Test
   void testCannotRemoveScopeAndMoveToConcurrentActivity() {

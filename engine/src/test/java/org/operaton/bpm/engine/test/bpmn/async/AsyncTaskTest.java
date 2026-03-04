@@ -683,7 +683,7 @@ public class AsyncTaskTest {
   }
 
   /**
-   * CAM-3707
+   * deleting a process instance with an async task should not invoke the tasks end
    */
   @Deployment
   @Test
@@ -706,7 +706,7 @@ public class AsyncTaskTest {
   }
 
   /**
-   * CAM-3707
+   * deleting a process instance with an async task should not invoke the tasks end
    */
   @Deployment
   @Test
@@ -733,7 +733,7 @@ public class AsyncTaskTest {
   }
 
   /**
-   * CAM-3708
+   * deleting a process instance with an async task should not invoke the tasks output
    */
   @Deployment
   @Test
@@ -754,7 +754,7 @@ public class AsyncTaskTest {
   }
 
   /**
-   * CAM-3708
+   * deleting a process instance with an async task should not invoke the tasks output
    */
   @Deployment
   @Test

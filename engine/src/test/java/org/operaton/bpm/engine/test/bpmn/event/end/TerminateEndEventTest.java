@@ -139,7 +139,7 @@ public class TerminateEndEventTest {
   }
 
   /**
-   * CAM-4067
+   * terminate End Event in any Subprocess invokes process instance end listeners
    */
   @Deployment
   @Test
@@ -160,7 +160,7 @@ public class TerminateEndEventTest {
   }
 
   /**
-   * CAM-4067
+   * terminate End Event in any Subprocess invokes process instance end listeners
    */
   @Deployment
   @Test
@@ -181,7 +181,7 @@ public class TerminateEndEventTest {
   }
 
   /**
-   * CAM-4067
+   * terminate End Event in any Subprocess invokes process instance end listeners
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInSubProcess.bpmn")
   @Test
@@ -217,7 +217,7 @@ public class TerminateEndEventTest {
   }
 
   /**
-   * CAM-4067
+   * terminate End Event in any Subprocess invokes process instance end listeners
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/event/end/TerminateEndEventTest.testTerminateInSubProcessConcurrent.bpmn")
   @Test

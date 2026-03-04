@@ -37,7 +37,7 @@ import org.joda.time.format.ISODateTimeFormat;
  *
  * @author Nico Rehwaldt
  *
- * @see CAM-1170
+ * use JVM default time zone consistently throughout the engine
  */
 public final class DateTimeUtil {
 

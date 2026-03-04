@@ -39,6 +39,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptValueProvider;
 import org.operaton.bpm.engine.impl.util.ScriptUtil;
 import org.operaton.bpm.engine.impl.util.xml.Element;
+import org.operaton.bpm.engine.impl.util.xml.Namespace;
 
 /**
  * Helper methods to reused for common parsing tasks.
@@ -57,9 +58,21 @@ public final class BpmnParseUtil {
    * @return the extension element or null if not found
    */
   public static Element findOperatonExtensionElement(Element element, String extensionElementName) {
+    return findExtensionElement(element, BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
+  }
+
+  /**
+   * Returns the extension element with the given name in the given namespace.
+   *
+   * @param element the parent element of the extension element
+   * @param namespace the namespace of the extension element
+   * @param extensionElementName the name of the extension element to find
+   * @return the extension element or null if not found
+   */
+  public static Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
     Element extensionElements = element.element("extensionElements");
-    if(extensionElements != null) {
-      return extensionElements.elementNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
+    if (extensionElements != null) {
+      return extensionElements.elementNS(namespace, extensionElementName);
     } else {
       return null;
     }

@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.xml.Element;
+import org.operaton.connect.Connectors;
 
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;
@@ -69,7 +70,7 @@ public class ConnectorParseListener implements BpmnParseListener {
       Element connectorIdElement = connectorDefinition.element("connectorId");
 
       String connectorId = null;
-      if (connectorIdElement != null)  {
+      if (connectorIdElement != null) {
         connectorId = connectorIdElement.getText().trim();
       }
       if (connectorIdElement == null || connectorId.isEmpty()) {

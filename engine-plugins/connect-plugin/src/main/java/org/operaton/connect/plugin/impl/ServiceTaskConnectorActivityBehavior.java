@@ -35,8 +35,10 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   /** the id of the connector */
   protected String connectorId;
 
-  /** cached connector instance for this activity.
-   * Will be initialized after the first execution of this activity. */
+  /**
+   * cached connector instance for this activity.
+   * Will be initialized after the first execution of this activity.
+   */
   protected Connector<?> connectorInstance;
 
   /** the local ioMapping for this connector. */
@@ -64,9 +66,10 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected void applyInputParameters(ActivityExecution execution, ConnectorRequest<?> request) {
-    if(ioMapping != null) {
+    if (ioMapping != null) {
       // create variable scope for input parameters
-      ConnectorVariableScope connectorInputVariableScope = new ConnectorVariableScope((AbstractVariableScope) execution);
+      ConnectorVariableScope connectorInputVariableScope = new ConnectorVariableScope(
+          (AbstractVariableScope) execution);
       // execute the connector input parameters
       ioMapping.executeInputParameters(connectorInputVariableScope);
       // write the local variables to the request.
@@ -75,9 +78,10 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected void applyOutputParameters(ActivityExecution execution, ConnectorResponse response) {
-    if(ioMapping != null) {
+    if (ioMapping != null) {
       // create variable scope for output parameters
-      ConnectorVariableScope connectorOutputVariableScope = new ConnectorVariableScope((AbstractVariableScope) execution);
+      ConnectorVariableScope connectorOutputVariableScope = new ConnectorVariableScope(
+          (AbstractVariableScope) execution);
       // read parameters from response
       connectorOutputVariableScope.readFromResponse(response);
       // map variables to parent scope.
@@ -86,8 +90,8 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected synchronized void ensureConnectorInitialized() {
-    if(connectorInstance == null) {
-      var connector = Connectors.getConnector(connectorId);
+    if (connectorInstance == null) {
+      var connector = Connectors.getConnectorById(connectorId);
       if (connector == null) {
         throw new ConnectorException("No connector found for connector id '%s'".formatted(connectorId));
       }

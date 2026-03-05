@@ -38,7 +38,7 @@ public class ConnectProcessEnginePlugin extends AbstractProcessEnginePlugin {
 
   private void addConnectorParseListener(ProcessEngineConfigurationImpl processEngineConfiguration) {
     List<BpmnParseListener> preParseListeners = processEngineConfiguration.getCustomPreBPMNParseListeners();
-    if(preParseListeners == null) {
+    if (preParseListeners == null) {
       preParseListeners = new ArrayList<>();
       processEngineConfiguration.setCustomPreBPMNParseListeners(preParseListeners);
     }

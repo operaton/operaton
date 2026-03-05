@@ -73,14 +73,15 @@ public class EventSubscriptionDeclaration {
   }
 
   /**
-   * Returns the name of the event without evaluating the possible expression that it might contain.
+   * Returns the name of the event without evaluating the possible expression that
+   * it might contain.
    */
   public String getUnresolvedEventName() {
-      return eventName.getExpressionText();
+    return eventName.getExpressionText();
   }
 
   public boolean hasEventName() {
-    return !( eventName == null || "".equalsIgnoreCase(getUnresolvedEventName().trim()) );
+    return !(eventName == null || "".equalsIgnoreCase(getUnresolvedEventName().trim()));
   }
 
   public boolean isEventNameLiteralText() {
@@ -134,7 +135,7 @@ public class EventSubscriptionDeclaration {
   public EventSubscriptionEntity createSubscriptionForStartEvent(ProcessDefinitionEntity processDefinition) {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(eventType);
 
-    VariableScope scopeForExpression = StartProcessVariableScope.getSharedInstance();
+    VariableScope scopeForExpression = new StartProcessVariableScope();
     String event = resolveExpressionOfEventName(scopeForExpression);
     eventSubscriptionEntity.setEventName(event);
     eventSubscriptionEntity.setActivityId(activityId);
@@ -144,7 +145,8 @@ public class EventSubscriptionDeclaration {
   }
 
   /**
-   * Creates and inserts a subscription entity depending on the message type of this declaration.
+   * Creates and inserts a subscription entity depending on the message type of
+   * this declaration.
    */
   public EventSubscriptionEntity createSubscriptionForExecution(ExecutionEntity execution) {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(execution, eventType);
@@ -167,9 +169,10 @@ public class EventSubscriptionDeclaration {
    */
   public String resolveExpressionOfEventName(VariableScope scope) {
     if (isExpressionAvailable()) {
-      if(scope instanceof BaseDelegateExecution execution) {
+      if (scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution
-        // during expression evaluation the current context is updated with the scope execution
+        // during expression evaluation the current context is updated with the scope
+        // execution
         return (String) eventName.getValue(scope, execution);
       } else {
         return (String) eventName.getValue(scope);

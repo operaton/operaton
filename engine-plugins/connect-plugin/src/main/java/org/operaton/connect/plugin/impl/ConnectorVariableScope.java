@@ -59,7 +59,7 @@ public class ConnectorVariableScope extends AbstractVariableScope {
 
   @Override
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return (VariableInstanceFactory) new SimpleVariableInstanceFactory();
   }
 
   @Override

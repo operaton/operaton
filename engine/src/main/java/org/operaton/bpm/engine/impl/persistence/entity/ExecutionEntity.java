@@ -164,7 +164,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   @SuppressWarnings("unchecked")
   protected transient VariableStore<VariableInstanceEntity> variableStore =
-    new VariableStore<>(this, new ExecutionEntityReferencer(this));
+      new VariableStore<>(this, new ExecutionEntityReferencer(this));
 
   // replaced by //////////////////////////////////////////////////////////////
 
@@ -379,15 +379,15 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // scopes ///////////////////////////////////////////////////////////////////
 
   @Override
-  @SuppressWarnings({"unchecked", "deprecation" })
+  @SuppressWarnings({ "unchecked", "deprecation" })
   public void initialize() {
     LOG.initializeExecution(this);
 
     ScopeImpl scope = getScopeActivity();
     ensureParentInitialized();
 
-    List<VariableDeclaration> variableDeclarations = (List<VariableDeclaration>)
-      scope.getProperty(BpmnParse.PROPERTYNAME_VARIABLE_DECLARATIONS);
+    List<VariableDeclaration> variableDeclarations = (List<VariableDeclaration>) scope
+        .getProperty(BpmnParse.PROPERTYNAME_VARIABLE_DECLARATIONS);
     if (variableDeclarations != null) {
       for (var variableDeclaration : variableDeclarations) {
         variableDeclaration.initialize(this, parent);
@@ -491,7 +491,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public void fireHistoricProcessStartEvent() {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
-    if(configuration == null) {
+    if (configuration == null) {
       return;
     }
 
@@ -1652,9 +1652,9 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
 
   public IncidentEntity getIncidentByCauseIncidentId(String causeIncidentId) {
     return getIncidents().stream()
-      .filter(incidentEntity -> Objects.equals(incidentEntity.getCauseIncidentId(), causeIncidentId))
-      .findAny()
-      .orElse(null);
+        .filter(incidentEntity -> Objects.equals(incidentEntity.getCauseIncidentId(), causeIncidentId))
+        .findAny()
+        .orElse(null);
   }
 
   // referenced task entities
@@ -1722,7 +1722,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) VariableInstanceEntityFactory.INSTANCE;
+    return (VariableInstanceFactory) new VariableInstanceEntityFactory();
   }
 
   @Override
@@ -1976,7 +1976,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       } catch (ClassCastException e) {
         ModelElementType elementType = modelElementInstance.getElementType();
         throw LOG.castModelInstanceException(modelElementInstance, "FlowElement", elementType.getTypeName(),
-          elementType.getTypeNamespace(), e);
+            elementType.getTypeNamespace(), e);
       }
 
     } else {

@@ -45,8 +45,9 @@ public class TestVariableScope extends AbstractVariableScope {
   }
 
   @Override
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return (VariableInstanceFactory) new SimpleVariableInstanceFactory();
   }
 
   @Override

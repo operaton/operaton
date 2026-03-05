@@ -27,9 +27,10 @@ import jakarta.ws.rs.ext.Provider;
  */
 @Provider
 public class ExceptionHandler implements ExceptionMapper<Throwable> {
+  private final ExceptionHandlerHelper exceptionHandlerHelper = new ExceptionHandlerHelper();
 
   @Override
   public Response toResponse(Throwable throwable) {
-    return ExceptionHandlerHelper.getInstance().getResponse(throwable);
+    return exceptionHandlerHelper.getResponse(throwable);
   }
 }

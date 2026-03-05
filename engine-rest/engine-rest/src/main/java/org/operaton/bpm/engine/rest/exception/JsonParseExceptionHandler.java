@@ -29,11 +29,12 @@ import com.fasterxml.jackson.core.JsonParseException;
  */
 @Provider
 public class JsonParseExceptionHandler implements ExceptionMapper<JsonParseException> {
+  private final ExceptionHandlerHelper exceptionHandlerHelper = new ExceptionHandlerHelper();
 
   @Override
   public Response toResponse(JsonParseException exception) {
     InvalidRequestException badRequestException = new InvalidRequestException(Status.BAD_REQUEST,
-                                                                              exception, "");
-    return ExceptionHandlerHelper.getInstance().getResponse(badRequestException);
+        exception, "");
+    return exceptionHandlerHelper.getResponse(badRequestException);
   }
 }

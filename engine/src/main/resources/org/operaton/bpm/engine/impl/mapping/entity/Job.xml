@@ -218,7 +218,7 @@
         and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
       </if>
 
-      and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+      <include refid="jobTypeFilter"/>
 
       <if test="!parameter.historyCleanupEnabled">
         and HANDLER_TYPE_ != 'history-cleanup'
@@ -280,7 +280,7 @@
         and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
       </if>
 
-      and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+      <include refid="jobTypeFilter"/>
 
       <if test="!parameter.historyCleanupEnabled">
         and HANDLER_TYPE_ != 'history-cleanup'
@@ -336,7 +336,7 @@
         and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
       </if>
 
-      and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+      <include refid="jobTypeFilter"/>
 
       <if test="!parameter.historyCleanupEnabled">
         and HANDLER_TYPE_ != 'history-cleanup'
@@ -351,7 +351,7 @@
     </if>
   </select>
 
-  <!-- Oracle specific version using OFFSET FETCH instead of ROWNUM wrapping for FOR UPDATE SKIP LOCKED compatibility (ORA-02014) -->
+  <!-- Oracle specific version using ROWNUM in WHERE clause instead of ROWNUM wrapping for FOR UPDATE SKIP LOCKED compatibility (ORA-02014) -->
   <select id="selectNextJobsToExecute_oracle" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="acquirableJobResultMap">
     <bind name="orderingProperties" value="parameter.orderingProperties" />
     <include refid="org.operaton.bpm.engine.impl.persistence.entity.Commons.bindOrderBy"/>
@@ -397,10 +397,14 @@
         and RES.PRIORITY_ &lt;= #{parameter.jobPriorityMax}
       </if>
 
-      and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+      <include refid="jobTypeFilter"/>
 
       <if test="!parameter.historyCleanupEnabled">
         and HANDLER_TYPE_ != 'history-cleanup'
+      </if>
+
+      <if test="parameter.skipLocked">
+        and ROWNUM &lt;= #{maxResults}
       </if>
 
     <if test="parameter.applyOrdering">
@@ -410,7 +414,6 @@
       ${limitAfter}
     </if>
     <if test="parameter.skipLocked">
-      OFFSET #{firstResult} ROWS FETCH NEXT #{maxResults} ROWS ONLY
       FOR UPDATE SKIP LOCKED
     </if>
   </select>
@@ -443,6 +446,20 @@
 
   <sql id="NonExclusiveJobs">
     RES.EXCLUSIVE_ = ${falseConstant}
+  </sql>
+
+  <sql id="jobTypeFilter">
+    <choose>
+      <when test="parameter.exclusiveOnly">
+        and (<include refid="AtomicExclusiveJobs"/>)
+      </when>
+      <when test="parameter.nonExclusiveOnly">
+        and <include refid="NonExclusiveJobs"/>
+      </when>
+      <otherwise>
+        and (<include refid="AtomicExclusiveOrNonExclusiveJobs"/>)
+      </otherwise>
+    </choose>
   </sql>
 
   <select id="selectJobsByConfiguration" parameterType="org.operaton.bpm.engine.impl.db.ListQueryParameterObject" resultMap="jobResultMap">

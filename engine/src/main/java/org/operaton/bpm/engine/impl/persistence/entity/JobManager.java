@@ -252,10 +252,45 @@ public class JobManager extends AbstractManager {
     params.put("orderingProperties", orderingProperties);
     // don't apply default sorting
     params.put("applyOrdering", !orderingProperties.isEmpty());
-    params.put("skipLocked", engineConfiguration.isJobExecutorAcquireWithSkipLocked());
+    boolean skipLocked = engineConfiguration.isJobExecutorAcquireWithSkipLocked();
+    params.put("skipLocked", skipLocked);
     params.put("applyExclusiveOverProcessHierarchies", engineConfiguration.isJobExecutorAcquireExclusiveOverProcessHierarchies());
 
-    return getDbEntityManager().selectList("selectNextJobsToExecute", params, page);
+    if (skipLocked) {
+      return findNextJobsToExecuteWithSkipLocked(params, page);
+    } else {
+      return getDbEntityManager().selectList("selectNextJobsToExecute", params, page);
+    }
+  }
+
+  /**
+   * When skipLocked is enabled, exclusive and non-exclusive jobs are acquired separately.
+   * Exclusive jobs are acquired without SKIP LOCKED to preserve contention-based serialization
+   * that prevents two threads from grabbing different exclusive jobs for the same process instance.
+   * Non-exclusive jobs are acquired with SKIP LOCKED for the concurrency benefit.
+   */
+  protected List<AcquirableJobEntity> findNextJobsToExecuteWithSkipLocked(Map<String, Object> params, Page page) {
+    // 1. Exclusive jobs WITHOUT SKIP LOCKED
+    Map<String, Object> exclusiveParams = new HashMap<>(params);
+    exclusiveParams.put("skipLocked", false);
+    exclusiveParams.put("exclusiveOnly", true);
+    List<AcquirableJobEntity> exclusiveJobs = getDbEntityManager()
+        .selectList("selectNextJobsToExecute", exclusiveParams, page);
+
+    int remaining = page.getMaxResults() - exclusiveJobs.size();
+    List<AcquirableJobEntity> result = new ArrayList<>(exclusiveJobs);
+
+    // 2. Non-exclusive jobs WITH SKIP LOCKED
+    if (remaining > 0) {
+      Map<String, Object> nonExclusiveParams = new HashMap<>(params);
+      nonExclusiveParams.put("skipLocked", true);
+      nonExclusiveParams.put("nonExclusiveOnly", true);
+      List<AcquirableJobEntity> nonExclusiveJobs = getDbEntityManager()
+          .selectList("selectNextJobsToExecute", nonExclusiveParams, new Page(0, remaining));
+      result.addAll(nonExclusiveJobs);
+    }
+
+    return result;
   }
 
   @SuppressWarnings("unchecked")

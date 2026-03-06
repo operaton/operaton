@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:516157b9-8f63-4682-831e-76de81d07a89",
+  "serialNumber": "urn:uuid:5cdd886c-a429-4b3d-bdd1-f9950c7fc1f1",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-03-04T04:51:41Z",
+    "timestamp": "2026-03-06T21:00:25Z",
     "tools": {
       "components": [
         {
@@ -17165,45 +17165,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
+      "bom-ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.2?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.httpcomponents.core5",
       "name": "httpcore5",
-      "version": "5.4.1",
+      "version": "5.4.2",
       "description": "Apache HttpComponents HTTP/1.1 core components",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "26f2b862d917aa5ce27d48d6027285d7"
+          "content": "506da0e7a05db5486d386feecf16c1e7"
         },
         {
           "alg": "SHA-1",
-          "content": "2d3bcd267ddfff652d093c0f9a743e08c6b014cb"
+          "content": "346d5f65ff819510666541ba94b3abf747454916"
         },
         {
           "alg": "SHA-256",
-          "content": "d9dca31ae1ee4e03c760596ac3f57b1d46f405376d68da6aff40eaca3bb4e2d8"
+          "content": "7c34a25506e7207b6748cef9e91163ed03081bee805cef930d82e1d8761d62f1"
         },
         {
           "alg": "SHA-512",
-          "content": "221125a005ce1a6c4ed813c268adc32a29c5e02eb48faad7cf7afa28d90dae838a642f0975f926d82660994192995f4bab98d280ca7193b5ad91b163eff4c696"
+          "content": "39624b9fd91e80db3b75145cffd94c3b835ad3a553f3ba755dd43f97481ad76bee332b1c375a32fe01a99994867c9bfc5cd14d8c44132e9e1262097d468a9156"
         },
         {
           "alg": "SHA-384",
-          "content": "2b9927cc87b5a1ed0eed5ba6797a7848b326fd4c0310d333e2f7b4cde5adb41c1571a7cce0fdcd5d033e88025214e9db"
+          "content": "c80163a898e2502dace33de039ca9d94bdcd690372f16d3955d46e747e848a411d466d0233724a8ad3980c11b46b8d50"
         },
         {
           "alg": "SHA3-384",
-          "content": "4e33ac768f95512c671681acc7c955f5715c222c1648769c6ac4e25aa1521688388651f100dad1004a13dfee73087670"
+          "content": "4f607577fc46bc7e79f5aad8c104a35a49973151e445dc4b5dc00c80f25337d9372360dd12daa1f78151e16eafb80469"
         },
         {
           "alg": "SHA3-256",
-          "content": "85ec40f71f8d0928953beb4965580d049d41c716a778e4354f879f93a72115c6"
+          "content": "9905b1042469925f609211256b995965a565ccccf5bcb8dc2e30af3cb8810c1a"
         },
         {
           "alg": "SHA3-512",
-          "content": "8ef1e10a32dd2801f3788774ffb8cd0ad8da8a9a2cd43ec4e3e6ca90c6b32d05541fed6f87fd9fa1c58e3668f7ae1b5641ec5e7bb770ba0dc3e6ce7f26acaf70"
+          "content": "0081f592efee3058be62b6152ba315ea674b62e419faeb2186ab1ed7d72020765b7a827abc733e3381aab022450025452379dc037b4e3ea727b8140dc5bc710c"
         }
       ],
       "licenses": [
@@ -17213,10 +17213,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
+      "purl": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.2?type=jar",
       "externalReferences": [
         {
-          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.1/httpcore5/",
+          "url": "https://hc.apache.org/httpcomponents-core-5.4.x/5.4.2/httpcore5/",
           "type": "website"
         },
         {
@@ -17232,7 +17232,7 @@
           "type": "mailing-list"
         },
         {
-          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.1/httpcore5",
+          "url": "https://github.com/apache/httpcomponents-core/tree/5.4.2/httpcore5",
           "type": "vcs"
         }
       ]
@@ -23359,7 +23359,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2dfa4a03-e998-4bc3-93de-69b523c3cabb",
+      "bom-ref": "00781901-2562-4e30-b39b-50473c59e2f4",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27826,7 +27826,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5f2e3e2c-82c5-4f36-b94c-38d0def4042c",
+      "bom-ref": "f8680d2d-c0dd-40a6-9481-7bd72a7183f9",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -29284,19 +29284,19 @@
     {
       "ref": "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.2?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar",
+      "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.2?type=jar",
       "dependsOn": []
     },
     {
       "ref": "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.1?type=jar"
+        "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.2?type=jar"
       ]
     },
     {
@@ -30668,7 +30668,7 @@
       "dependsOn": []
     },
     {
-      "ref": "2dfa4a03-e998-4bc3-93de-69b523c3cabb",
+      "ref": "00781901-2562-4e30-b39b-50473c59e2f4",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.19.0",
@@ -30719,9 +30719,9 @@
       ]
     },
     {
-      "ref": "5f2e3e2c-82c5-4f36-b94c-38d0def4042c",
+      "ref": "f8680d2d-c0dd-40a6-9481-7bd72a7183f9",
       "dependsOn": [
-        "2dfa4a03-e998-4bc3-93de-69b523c3cabb"
+        "00781901-2562-4e30-b39b-50473c59e2f4"
       ]
     },
     {
@@ -33115,6 +33115,77 @@
       ]
     },
     {
+      "id": "CVE-2026-0540",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        },
+        {
+          "source": {
+            "name": "redhat"
+          },
+          "score": 6.1,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N"
+        }
+      ],
+      "cwes": [
+        79
+      ],
+      "description": "DOMPurify 3.1.3 through 3.3.1 and 2.5.3 through 2.5.8, fixed in commit 729097f, contain a cross-site scripting vulnerability that allows attackers to bypass attribute sanitization by exploiting five missing rawtext elements (noscript, xmp, noembed, noframes, iframe) in the SAFE_FOR_XML regex. Attackers can include payloads like \u003C/noscript\u003E\u003Cimg src=x onerror=alert(1)\u003E in attribute values to execute JavaScript when sanitized output is placed inside these unprotected rawtext contexts.",
+      "recommendation": "Upgrade dompurify to version 3.3.2, 2.5.9",
+      "advisories": [
+        {
+          "url": "https://avd.aquasec.com/nvd/cve-2026-0540"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2026-0540"
+        },
+        {
+          "url": "https://github.com/cure53/DOMPurify"
+        },
+        {
+          "url": "https://github.com/cure53/DOMPurify/commit/fca0a938b4261ddc9c0293a289935a9029c049f5"
+        },
+        {
+          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-0540"
+        },
+        {
+          "url": "https://www.cve.org/CVERecord?id=CVE-2026-0540"
+        },
+        {
+          "url": "https://www.vulncheck.com/advisories/dompurify-xss-via-missing-rawtext-elements-in-safe-for-xml"
+        },
+        {
+          "url": "https://www.vulncheck.com/advisories/dompurify-xss-via-missing-rawtext-elements-in-safeforxml"
+        }
+      ],
+      "published": "2026-03-03T18:16:24Z",
+      "updated": "2026-03-05T00:03:46Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/dompurify@3.3.1",
+          "versions": [
+            {
+              "version": "3.3.1",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "CVE-2026-2391",
       "source": {
         "name": "ghsa",
@@ -33221,7 +33292,7 @@
         120
       ],
       "description": "fast-xml-parser allows users to validate XML, parse XML to JS object, or build XML from JS object without C/C\u002B\u002B based libraries and no callback. Prior to version 5.3.8, the application crashes with stack overflow when user use XML builder with \u0060preserveOrder:true\u0060. Version 5.3.8 fixes the issue. As a workaround, use XML builder with \u0060preserveOrder:false\u0060 or check the input data before passing to builder.",
-      "recommendation": "Upgrade fast-xml-parser to version 5.3.8",
+      "recommendation": "Upgrade fast-xml-parser to version 5.3.8, 4.5.4",
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2026-27942"

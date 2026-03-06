@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl.annotation;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 
@@ -27,6 +28,7 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
  *
  * @author Daniel Meyer
  */
+@Dependent
 public class BusinessKeyProducer {
 
   @Produces

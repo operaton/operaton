@@ -158,18 +158,6 @@ jobs:
           echo "PR Labels: $PR_LABELS"
           echo "PR Author: $PR_AUTHOR"
 
-          # Define whitelisted authors (core team members who don't need full integration tests)
-          WHITELISTED_AUTHORS="kthoms,javahippie"
-
-          # Check if author is whitelisted
-          if echo "$WHITELISTED_AUTHORS" | grep -q "$PR_AUTHOR"; then
-            echo "ℹ️ PR author $PR_AUTHOR is whitelisted"
-            AUTHOR_WHITELISTED=true
-          else
-            echo "ℹ️ PR author $PR_AUTHOR is NOT whitelisted"
-            AUTHOR_WHITELISTED=false
-          fi
-
           # Check if PR is from Dependabot
           if [[ "$PR_AUTHOR" == "dependabot"* ]]; then
             echo "🤖 PR is from Dependabot"
@@ -185,10 +173,6 @@ jobs:
           # Check if PR has database: labels
           elif echo "$PR_LABELS" | grep -q '"database:'; then
             echo "🗄️ PR has database labels"
-            NEEDS_BUILD=true
-          # Check if author is not whitelisted
-          elif [[ "$AUTHOR_WHITELISTED" == "false" ]]; then
-            echo "👤 PR author is not whitelisted, requiring integration build"
             NEEDS_BUILD=true
           else
             echo "✅ PR doesn't require integration build"
@@ -253,7 +237,7 @@ jobs:
       - name: Cancel workflow
         run: |
           echo "🚫 Integration build not needed for this PR"
-          echo "✅ PR author is whitelisted and no dependency/distro/database labels found"
+          echo "✅ No dependency/distro/database labels found"
           echo "Workflow will be cancelled gracefully"
           exit 0
 

@@ -249,7 +249,7 @@
     ${limitBetweenAcquisition}
     from ${prefix}ACT_RU_JOB RES
     <if test="parameter.skipLocked">
-      with (ROWLOCK, READPAST)
+      with (UPDLOCK, ROWLOCK, READPAST)
     </if>
 
     where (RES.RETRIES_ &gt; 0)

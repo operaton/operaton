@@ -324,8 +324,9 @@
           <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-netty4</artifactId>
+          <groupId>dev.resteasy.netty</groupId>
+          <artifactId>resteasy-embedded-server</artifactId>
+          <version>1.0.0.Final</version>
           <scope>test</scope>
         </dependency>
         <dependency>

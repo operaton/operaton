@@ -27,6 +27,17 @@ auto-merge-rules:
     excludes:
       - '*bootstrap*'
 
+  # NPM security update PRs - Dependabot security alerts bypass dependabot.yml
+  # label configuration and instead apply GitHub's default labels:
+  # 'dependencies' + the language label (e.g. 'javascript').
+  # These PRs must be treated as eligible just like regular npm updates.
+  - author: 'dependabot[bot]'
+    labels: ['dependencies', 'javascript']
+    includes:
+      - '*'
+    excludes:
+      - '*bootstrap*'
+
   # Additional Maven dependencies that are safe to auto-merge
   # Note: DB drivers are NOT included as they require integration tests
   - author: 'dependabot[bot]'

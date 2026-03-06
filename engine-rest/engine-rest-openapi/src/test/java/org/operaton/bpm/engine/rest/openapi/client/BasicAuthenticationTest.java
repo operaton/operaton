@@ -30,43 +30,43 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BasicAuthenticationTest {
 
-        private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
+  private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
 
-        private static final String USERNAME = "mike";
-        private static final String PASSWORD = "secret";
+  private static final String USERNAME = "mike";
+  private static final String PASSWORD = "secret";
 
-        ProcessInstanceApi api;
+  ProcessInstanceApi api;
 
-        @RegisterExtension
-        WireMockExtension wireMock = WireMockExtension.newInstance()
-                        .options(WireMockConfiguration.options().dynamicPort())
-                        .build();
+  @RegisterExtension
+  static WireMockExtension wireMock = WireMockExtension.newInstance()
+          .options(WireMockConfiguration.options().dynamicPort())
+          .build();
 
-        @BeforeEach
-        void clientWithValidCredentials() {
-                ApiClient apiClient = new ApiClient();
+  @BeforeEach
+  void clientWithValidCredentials() {
+    ApiClient apiClient = new ApiClient();
 
-                apiClient.setUsername(USERNAME);
-                apiClient.setPassword(PASSWORD);
-                apiClient.setBasePath(apiClient.getBasePath()
-                                .replace("8080", String.valueOf(wireMock.getPort())));
+    apiClient.setUsername(USERNAME);
+    apiClient.setPassword(PASSWORD);
+    apiClient.setBasePath(apiClient.getBasePath()
+            .replace("8080", String.valueOf(wireMock.getPort())));
 
-                api = new ProcessInstanceApi(apiClient);
-        }
+    api = new ProcessInstanceApi(apiClient);
+  }
 
-        @Test
-        void shouldUseBasicAuth() throws Exception {
-                // given
-                wireMock.stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
-                                200).withBody("{ \"id\": 1 }")));
+  @Test
+  void shouldUseBasicAuth() throws Exception {
+    // given
+    wireMock.stubFor(get(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).willReturn(aResponse().withStatus(
+            200).withBody("{ \"id\": 1 }")));
 
-                // when
-                ProcessInstanceDto processInstance = api.getProcessInstance("1");
+    // when
+    ProcessInstanceDto processInstance = api.getProcessInstance("1");
 
-                // then
-                assertThat(processInstance.getId()).isEqualTo("1");
-                wireMock.verify(getRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).withHeader(
-                                "Authorization",
-                                equalTo("Basic bWlrZTpzZWNyZXQ=")));
-        }
+    // then
+    assertThat(processInstance.getId()).isEqualTo("1");
+    wireMock.verify(getRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/1")).withHeader("Authorization",
+            equalTo("Basic bWlrZTpzZWNyZXQ=")
+    ));
+  }
 }

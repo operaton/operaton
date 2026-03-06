@@ -32,104 +32,102 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class DeploymentTest {
 
-        private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
+  private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
 
-        // DeploymentApi with new ApiClient. The new ApiClient is required or all Api
-        // share the same default
-        private DeploymentApi api;
+  //DeploymentApi with new ApiClient. The new ApiClient is required or all Api share the same default
+  private DeploymentApi api = new DeploymentApi(new ApiClient());
 
-        @RegisterExtension
-        WireMockExtension wireMock = WireMockExtension.newInstance()
-                        .options(WireMockConfiguration.options().dynamicPort())
-                        .build();
+  @RegisterExtension
+  static WireMockExtension wireMock = WireMockExtension.newInstance()
+          .options(WireMockConfiguration.options().dynamicPort())
+          .build();
 
-        @BeforeEach
-        void setUp() {
-                api = new DeploymentApi(new ApiClient());
-                api.setCustomBaseUrl(api.getApiClient()
-                                .getBasePath()
-                                .replace("8080", String.valueOf(wireMock.getPort())));
-        }
+  @BeforeEach
+  void setUp() {
+    api = new DeploymentApi(new ApiClient());
+    api.setCustomBaseUrl(api.getApiClient()
+            .getBasePath()
+            .replace("8080", String.valueOf(wireMock.getPort())));
+  }
 
-        @Test
-        void shouldCreateDeployment() throws Exception {
-                // given
-                String deploymentSource = "test-source";
-                String deploymentName = "deployment-test-name";
-                wireMock.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
-                                aResponse().withStatus(200)
-                                                .withBody("""
-                                                                    {
-                                                                    "links": [
-                                                                        {
-                                                                            "method": "GET",
-                                                                            "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
-                                                                            "rel": "self"
-                                                                        }
-                                                                    ],
-                                                                    "id": "aDeploymentId",
-                                                                    "name": "%s",
-                                                                    "source": "%s",
-                                                                    "deploymentTime": "2013-01-23T13:59:43.000+0200",
-                                                                    "tenantId": null,
-                                                                    "deployedProcessDefinitions": {
-                                                                        "aProcDefId": {
-                                                                            "id": "aProcDefId",
-                                                                            "key": "aKey",
-                                                                            "category": "aCategory",
-                                                                            "description": "aDescription",
-                                                                            "name": "aName",
-                                                                            "version": 42,
-                                                                            "resource": "aResourceName",
-                                                                            "deploymentId": "aDeploymentId",
-                                                                            "diagram": "aResourceName.png",
-                                                                            "suspended": true,
-                                                                            "tenantId": null,
-                                                                            "versionTag": null
-                                                                        }
-                                                                    },
-                                                                    "deployedCaseDefinitions": null,
-                                                                    "deployedDecisionDefinitions": null,
-                                                                    "deployedDecisionRequirementsDefinitions": null
-                                                                }"""
-                                                                .formatted(
-                                                                                wireMock.getPort(),
-                                                                                deploymentName,
-                                                                                deploymentSource))));
+  @Test
+  void shouldCreateDeployment() throws Exception {
+    // given
+    String deploymentSource = "test-source";
+    String deploymentName = "deployment-test-name";
+    wireMock.stubFor(post(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).willReturn(
+            aResponse().withStatus(200).withBody("""
+                        {
+                        "links": [
+                            {
+                                "method": "GET",
+                                "href": "http://localhost:%d/rest-test/deployment/aDeploymentId",
+                                "rel": "self"
+                            }
+                        ],
+                        "id": "aDeploymentId",
+                        "name": "%s",
+                        "source": "%s",
+                        "deploymentTime": "2013-01-23T13:59:43.000+0200",
+                        "tenantId": null,
+                        "deployedProcessDefinitions": {
+                            "aProcDefId": {
+                                "id": "aProcDefId",
+                                "key": "aKey",
+                                "category": "aCategory",
+                                "description": "aDescription",
+                                "name": "aName",
+                                "version": 42,
+                                "resource": "aResourceName",
+                                "deploymentId": "aDeploymentId",
+                                "diagram": "aResourceName.png",
+                                "suspended": true,
+                                "tenantId": null,
+                                "versionTag": null
+                            }
+                        },
+                        "deployedCaseDefinitions": null,
+                        "deployedDecisionDefinitions": null,
+                        "deployedDecisionRequirementsDefinitions": null
+                    }""".formatted(
+                    wireMock.getPort(),
+                    deploymentName,
+                    deploymentSource
+            ))));
 
-                DeploymentWithDefinitionsDto deployment;
+    DeploymentWithDefinitionsDto deployment;
 
-                // when
-                deployment = api.createDeployment(null,
-                                deploymentSource,
-                                false,
-                                false,
-                                deploymentName,
-                                null,
-                                new File("src/test/resources/one.bpmn"));
+    // when
+    deployment = api.createDeployment(null,
+            deploymentSource,
+            false,
+            false,
+            deploymentName,
+            null,
+            new File("src/test/resources/one.bpmn")
+    );
 
-                // then
-                assertThat(deployment.getId()).isEqualTo("aDeploymentId");
-                assertThat(deployment.getName()).isEqualTo(deploymentName);
-                assertThat(deployment.getSource()).isEqualTo(deploymentSource);
-                assertThat(deployment.getDeployedProcessDefinitions()).containsKey("aProcDefId");
-                assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getId()).isEqualTo(
-                                "aProcDefId");
-                assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getKey()).isEqualTo(
-                                "aKey");
-                assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getName()).isEqualTo(
-                                "aName");
+    // then
+    assertThat(deployment.getId()).isEqualTo("aDeploymentId");
+    assertThat(deployment.getName()).isEqualTo(deploymentName);
+    assertThat(deployment.getSource()).isEqualTo(deploymentSource);
+    assertThat(deployment.getDeployedProcessDefinitions()).containsKey("aProcDefId");
+    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getId()).isEqualTo(
+            "aProcDefId");
+    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getKey()).isEqualTo(
+            "aKey");
+    assertThat(deployment.getDeployedProcessDefinitions().get("aProcDefId").getName()).isEqualTo(
+            "aName");
 
-                wireMock.verify(postRequestedFor(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).withRequestBody(
-                                containing("Content-Disposition: form-data; name=\"deployment-name\""))
-                                .withRequestBody(containing("deployment-test-name"))
-                                .withRequestBody(containing(
-                                                "Content-Disposition: form-data; name=\"deployment-source\""))
-                                .withRequestBody(containing("test-source"))
-                                .withRequestBody(containing(
-                                                "Content-Disposition: form-data; name=\"data\"; filename=\"one.bpmn\""))
-                                .withRequestBody(containing("Content-Type: application/octet-stream"))
-                                .withHeader("Content-Type", containing("multipart/form-data")));
+    wireMock.verify(postRequestedFor(urlEqualTo(ENGINE_REST_DEPLOYMENT + "/create")).withRequestBody(
+                    containing("Content-Disposition: form-data; name=\"deployment-name\""))
+            .withRequestBody(containing("deployment-test-name"))
+            .withRequestBody(containing("Content-Disposition: form-data; name=\"deployment-source\""))
+            .withRequestBody(containing("test-source"))
+            .withRequestBody(containing(
+                    "Content-Disposition: form-data; name=\"data\"; filename=\"one.bpmn\""))
+            .withRequestBody(containing("Content-Type: application/octet-stream"))
+            .withHeader("Content-Type", containing("multipart/form-data")));
 
         }
 }

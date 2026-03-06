@@ -35,66 +35,65 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ProcessInstanceTest {
 
-        private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
+  private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
 
-        // Create new ApiClient for ProcessInstanceApi to avoid the default client.
-        // ProcessInstanceApi to be initialized in setUp()
-        private ProcessInstanceApi api;
+  // Create new ApiClient for ProcessInstanceApi to avoid the default client.
+  private ProcessInstanceApi api = new ProcessInstanceApi(new ApiClient());
 
-        @RegisterExtension
-        WireMockExtension wireMock = WireMockExtension.newInstance()
-                        .options(WireMockConfiguration.options().dynamicPort())
-                        .build();
+  @RegisterExtension
+  static WireMockExtension wireMock = WireMockExtension.newInstance()
+          .options(WireMockConfiguration.options().dynamicPort())
+          .build();
 
-        @BeforeEach
-        void setUp() {
-                api = new ProcessInstanceApi(new ApiClient());
-                api.setCustomBaseUrl(api.getApiClient()
-                                .getBasePath()
-                                .replace("8080", String.valueOf(wireMock.getPort())));
-                // Dynamically set the basePath for the API to match WireMock's port
-                var basePath = URI.create(api.getApiClient().getBasePath());
-                String newBasePath = "%s://%s:%d%s".formatted(
-                                basePath.getScheme(), basePath.getHost(), wireMock.getPort(), basePath.getPath());
-                api.getApiClient().setBasePath(newBasePath);
+  @BeforeEach
+  void setUp() {
+    api = new ProcessInstanceApi(new ApiClient());
+    api.setCustomBaseUrl(api.getApiClient()
+            .getBasePath()
+            .replace("8080", String.valueOf(wireMock.getPort())));
+    // Dynamically set the basePath for the API to match WireMock's port
+    var basePath = URI.create(api.getApiClient().getBasePath());
+    String newBasePath = "%s://%s:%d%s".formatted(
+      basePath.getScheme(), basePath.getHost(), wireMock.getPort(), basePath.getPath());
+    api.getApiClient().setBasePath(newBasePath);
 
-                WireMock.configureFor(wireMock.getPort());
-        }
+    WireMock.configureFor(wireMock.getPort());
+  }
 
-        @Test
-        void shouldQueryProcessInstancesCount() throws Exception {
-                // given
-                stubFor(post(urlEqualTo(
-                                ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
-                                                .withBody("{ \"count\": 3 }")));
+  @Test
+  void shouldQueryProcessInstancesCount() throws Exception {
+    // given
+    stubFor(post(urlEqualTo(
+            ENGINE_REST_PROCESS_INSTANCE + "/count")).willReturn(aResponse().withStatus(200)
+            .withBody("{ \"count\": 3 }")));
 
-                // when
-                ProcessInstanceQueryDto processInstanceQueryDto = new ProcessInstanceQueryDto();
-                processInstanceQueryDto.setActive(true);
-                CountResultDto count = api.queryProcessInstancesCount(processInstanceQueryDto);
+    // when
+    ProcessInstanceQueryDto processInstanceQueryDto = new ProcessInstanceQueryDto();
+    processInstanceQueryDto.setActive(true);
+    CountResultDto count = api.queryProcessInstancesCount(processInstanceQueryDto);
 
-                // then
-                assertThat(count.getCount()).isEqualTo(3);
-                verify(postRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/count")).withRequestBody(
-                                equalToJson("{ \"active\": true }"))
-                                .withHeader("Content-Type", equalTo("application/json; charset=UTF-8")));
-        }
+    // then
+    assertThat(count.getCount()).isEqualTo(3);
+    verify(postRequestedFor(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/count")).withRequestBody(
+                    equalToJson("{ \"active\": true }"))
+            .withHeader("Content-Type", equalTo("application/json; charset=UTF-8")));
+  }
 
-        @Test
-        void shouldUpdateSuspensionStateById() throws Exception {
-                // given
-                String id = "anProcessInstanceId";
-                stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(
-                                aResponse().withStatus(204)));
+  @Test
+  void shouldUpdateSuspensionStateById() throws Exception {
+    // given
+    String id = "anProcessInstanceId";
+    stubFor(put(urlEqualTo(ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).willReturn(
+            aResponse().withStatus(204)));
 
-                // when
-                SuspensionStateDto dto = new SuspensionStateDto();
-                dto.setSuspended(true);
-                api.updateSuspensionStateById(id, dto);
+    // when
+    SuspensionStateDto dto = new SuspensionStateDto();
+    dto.setSuspended(true);
+    api.updateSuspensionStateById(id, dto);
 
-                // then no error
-                verify(putRequestedFor(urlEqualTo(
-                                ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).withRequestBody(equalToJson(
-                                                "{ \"suspended\": true }")));
-        }
+    // then no error
+    verify(putRequestedFor(urlEqualTo(
+            ENGINE_REST_PROCESS_INSTANCE + "/" + id + "/suspended")).withRequestBody(equalToJson(
+            "{ \"suspended\": true }")));
+  }
 }

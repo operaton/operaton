@@ -41,7 +41,7 @@ public class Connectors {
 
   /**
    * @return the connector for the default http connector id or null if
-   *         no connector is registered for this id
+   * no connector is registered for this id
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C http() {
@@ -50,7 +50,7 @@ public class Connectors {
 
   /**
    * @return the connector for the default soap http connector id or null
-   *         if no connector is registered for this id
+   * if no connector is registered for this id
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C soap() {
@@ -59,7 +59,7 @@ public class Connectors {
 
   /**
    * @return the connector for the given id or null if no connector is
-   *         registered for this id
+   * registered for this id
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C getConnector(String connectorId) {
@@ -77,7 +77,7 @@ public class Connectors {
    * Load all available connectors.
    */
   public static void loadConnectors() {
-    initializeConnectors(null);
+    loadConnectors(null);
   }
 
   /**
@@ -121,7 +121,7 @@ public class Connectors {
 
   /**
    * @return the connector for the given id or null if no connector is
-   *         registered for this id
+   * registered for this id
    */
   @SuppressWarnings("unchecked")
   public static <C extends Connector<? extends ConnectorRequest<?>>> C getConnectorById(String connectorId) {
@@ -132,8 +132,7 @@ public class Connectors {
   }
 
   /**
-   * Detect all available connectors in the classpath using a
-   * {@link ServiceLoader}.
+   * Detect all available connectors in the classpath using a {@link ServiceLoader}.
    */
   protected static void ensureConnectorProvidersInitialized() {
     if (availableConnectors == null) {

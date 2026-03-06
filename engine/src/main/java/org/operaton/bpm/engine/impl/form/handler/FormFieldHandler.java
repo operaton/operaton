@@ -92,8 +92,7 @@ public class FormFieldHandler {
       }
       formField.setValue(formValue);
     } else {
-      // first, need to convert to model value since the default value may be a String
-      // Constant specified in the model xml.
+      // first, need to convert to model value since the default value may be a String Constant specified in the model xml.
       TypedValue typedDefaultValue = type.convertToModelValue(Variables.untypedValue(defaultValue));
       // now convert to form value
       formField.setValue(type.convertToFormValue(typedDefaultValue));
@@ -140,8 +139,7 @@ public class FormFieldHandler {
     } else if (defaultValueExpression != null) {
       final TypedValue expressionValue = Variables.untypedValue(defaultValueExpression.getValue(variableScope));
       if (type != null) {
-        // first, need to convert to model value since the default value may be a String
-        // Constant specified in the model xml.
+        // first, need to convert to model value since the default value may be a String Constant specified in the model xml.
         modelValue = type.convertToModelValue(Variables.untypedValue(expressionValue));
       } else if (expressionValue != null) {
         modelValue = Variables.stringValue(expressionValue.getValue().toString());

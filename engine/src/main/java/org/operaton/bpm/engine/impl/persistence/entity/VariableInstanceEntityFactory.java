@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  * @author Thorben Lindhauer
  *
  */
-
 public class VariableInstanceEntityFactory implements VariableInstanceFactory<VariableInstanceEntity> {
 
   @Override

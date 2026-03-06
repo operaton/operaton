@@ -344,9 +344,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       // delete the task
       // this method call doesn't invoke additional task listeners
       Context
-          .getCommandContext()
-          .getTaskManager()
-          .deleteTask(this, TaskEntity.DELETE_REASON_COMPLETED, false, skipCustomListeners);
+      .getCommandContext()
+      .getTaskManager()
+      .deleteTask(this, TaskEntity.DELETE_REASON_COMPLETED, false, skipCustomListeners);
 
       // if the task is associated with a
       // execution (and not a case execution)
@@ -370,9 +370,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     // delete the task
     Context
-        .getCommandContext()
-        .getTaskManager()
-        .deleteTask(this, TaskEntity.DELETE_REASON_COMPLETED, false, false);
+    .getCommandContext()
+    .getTaskManager()
+    .deleteTask(this, TaskEntity.DELETE_REASON_COMPLETED, false, false);
   }
 
   public void delete(String deleteReason, boolean cascade) {
@@ -385,9 +385,9 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     }
 
     Context
-        .getCommandContext()
-        .getTaskManager()
-        .deleteTask(this, deleteReason, cascade, skipCustomListeners);
+    .getCommandContext()
+    .getTaskManager()
+    .deleteTask(this, deleteReason, cascade, skipCustomListeners);
 
     if (executionId != null) {
       getExecution().removeTask(this);
@@ -1117,8 +1117,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
     try {
       Context.getProcessEngineConfiguration()
-          .getDelegateInterceptor()
-          .handleInvocation(listenerInvocation);
+      .getDelegateInterceptor()
+      .handleInvocation(listenerInvocation);
     } catch (Exception ex) {
       // exceptions on delete events are never handled as BPMN errors
       if (isBpmnTask && !EVENTNAME_DELETE.equals(eventName)) {
@@ -1188,22 +1188,22 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.taskState = this.lifecycleState.name;
 
     switch (state) {
-      case STATE_CREATED:
-        CommandContext commandContext = Context.getCommandContext();
-        if (commandContext != null) {
-          commandContext.getHistoricTaskInstanceManager().createHistoricTask(this);
-        }
-        return fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
+    case STATE_CREATED:
+      CommandContext commandContext = Context.getCommandContext();
+      if (commandContext != null) {
+        commandContext.getHistoricTaskInstanceManager().createHistoricTask(this);
+      }
+      return fireEvent(TaskListener.EVENTNAME_CREATE) && fireAssignmentEvent();
 
-      case STATE_COMPLETED:
-        return fireEvent(TaskListener.EVENTNAME_COMPLETE) && TaskState.STATE_COMPLETED.equals(this.lifecycleState);
+    case STATE_COMPLETED:
+      return fireEvent(TaskListener.EVENTNAME_COMPLETE) && TaskState.STATE_COMPLETED.equals(this.lifecycleState);
 
-      case STATE_DELETED:
-        return fireEvent(EVENTNAME_DELETE);
+    case STATE_DELETED:
+      return fireEvent(EVENTNAME_DELETE);
 
-      case STATE_INIT:
-      default:
-        throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
+    case STATE_INIT:
+    default:
+      throw new ProcessEngineException("Task %s cannot transition into state %s.".formatted(id, state));
     }
   }
 

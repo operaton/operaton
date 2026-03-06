@@ -73,8 +73,7 @@ public class EventSubscriptionDeclaration {
   }
 
   /**
-   * Returns the name of the event without evaluating the possible expression that
-   * it might contain.
+   * Returns the name of the event without evaluating the possible expression that it might contain.
    */
   public String getUnresolvedEventName() {
     return eventName.getExpressionText();
@@ -145,8 +144,7 @@ public class EventSubscriptionDeclaration {
   }
 
   /**
-   * Creates and inserts a subscription entity depending on the message type of
-   * this declaration.
+   * Creates and inserts a subscription entity depending on the message type of this declaration.
    */
   public EventSubscriptionEntity createSubscriptionForExecution(ExecutionEntity execution) {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(execution, eventType);
@@ -171,8 +169,7 @@ public class EventSubscriptionDeclaration {
     if (isExpressionAvailable()) {
       if (scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution
-        // during expression evaluation the current context is updated with the scope
-        // execution
+        // during expression evaluation the current context is updated with the scope execution
         return (String) eventName.getValue(scope, execution);
       } else {
         return (String) eventName.getValue(scope);

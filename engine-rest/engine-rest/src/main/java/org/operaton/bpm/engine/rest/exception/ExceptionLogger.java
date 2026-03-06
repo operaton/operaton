@@ -33,7 +33,8 @@ public class ExceptionLogger extends BaseLogger {
   public static final ExceptionLogger REST_LOGGER = BaseLogger.createLogger(ExceptionLogger.class,
       PROJECT_CODE,
       REST_API,
-      "HTTP");
+      "HTTP"
+  );
 
   private final ExceptionHandlerHelper exceptionHandlerHelper = new ExceptionHandlerHelper();
 

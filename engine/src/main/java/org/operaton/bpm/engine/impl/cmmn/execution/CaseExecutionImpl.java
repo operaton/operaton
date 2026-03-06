@@ -236,8 +236,8 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
     for (CaseSentryPartImpl sentryPart : getCaseSentryParts()) {
       String sentryId = sentryPart.getSentryId();
       sentries
-          .computeIfAbsent(sentryId, k -> new ArrayList<>())
-          .add(sentryPart);
+        .computeIfAbsent(sentryId, k -> new ArrayList<>())
+        .add(sentryPart);
     }
 
     return sentries;

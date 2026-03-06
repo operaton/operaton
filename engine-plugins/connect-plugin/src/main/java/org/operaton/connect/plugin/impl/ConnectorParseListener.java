@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.impl.core.variable.mapping.IoMapping;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import org.operaton.bpm.engine.impl.pvm.process.ScopeImpl;
 import org.operaton.bpm.engine.impl.util.xml.Element;
-import org.operaton.connect.Connectors;
 
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.findOperatonExtensionElement;
 import static org.operaton.bpm.engine.impl.bpmn.parser.BpmnParseUtil.parseInputOutput;

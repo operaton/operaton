@@ -87,7 +87,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
 
   protected synchronized void ensureConnectorInitialized() {
     if (connectorInstance == null) {
-      var connector = Connectors.getConnectorById(connectorId);
+      var connector = Connectors.getConnector(connectorId);
       if (connector == null) {
         throw new ConnectorException("No connector found for connector id '%s'".formatted(connectorId));
       }

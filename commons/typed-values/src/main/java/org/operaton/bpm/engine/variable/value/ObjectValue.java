@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.variable.value;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * <p>A typed value representing a Java Object.</p>
  *
@@ -43,7 +45,7 @@ public interface ObjectValue extends SerializableValue {
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
    */
   @Override
-  Object getValue();
+  @Nullable Object getValue();
 
   /**
    * Returns the object provided by this VariableValue. Allows type-safe access to objects
@@ -53,15 +55,15 @@ public interface ObjectValue extends SerializableValue {
    * @return the object represented by this TypedValue.
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
    */
-  <T> T getValue(Class<T> type);
+  @Nullable <T> T getValue(Class<T> type);
 
   /**
    * Returns the Class this object is an instance of.
    *
-   * @return the Class this object is an instance of
+   * @return the Class this object is an instance of or null when the value itself is null
    * @throws IllegalStateException in case the object is not deserialized. See {@link #isDeserialized()}.
    */
-  Class<?> getObjectType();
+  @Nullable Class<?> getObjectType();
 
   /**
    * A String representation of the Object's type name.
@@ -70,6 +72,6 @@ public interface ObjectValue extends SerializableValue {
    *
    * @return the Object's type name.
    */
-  String getObjectTypeName();
+  @Nullable String getObjectTypeName();
 
 }

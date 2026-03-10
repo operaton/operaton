@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.variable.value;
 
+import org.jspecify.annotations.Nullable;
 import org.operaton.bpm.engine.variable.type.SerializableValueType;
 
 /**
@@ -41,7 +42,7 @@ public interface SerializableValue extends TypedValue {
    * @throws IllegalStateException in case the value is not deserialized. See {@link #isDeserialized()}.
    */
   @Override
-  Object getValue();
+  @Nullable Object getValue();
 
   /**
    * Returns the serialized value. In case the serializaton data format
@@ -53,14 +54,14 @@ public interface SerializableValue extends TypedValue {
    * serialized to the process engine database.
    * </p>
    */
-  String getValueSerialized();
+  @Nullable String getValueSerialized();
 
   /**
    * The serialization format used to serialize this value.
    *
    * @return the serialization format used to serialize this variable.
    */
-  String getSerializationDataFormat();
+  @Nullable String getSerializationDataFormat();
 
   @Override
   SerializableValueType getType();

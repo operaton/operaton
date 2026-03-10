@@ -35,6 +35,9 @@ updates:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"
           - "org.jboss.weld:weld-core-bom"
+      openrwrite:
+        patterns:
+          - "org.openrewrite.recipe:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -138,6 +141,9 @@ updates:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"
           - "org.jboss.weld:weld-core-bom"
+      openrwrite:
+        patterns:
+        - "org.openrewrite.recipe:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:

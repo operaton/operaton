@@ -28,6 +28,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.delegate.ExpressionGetInvocation;
 import org.operaton.bpm.engine.impl.delegate.ExpressionSetInvocation;
+import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 
 
 /**
@@ -50,6 +51,9 @@ public class JuelExpression implements Expression {
 
   @Override
   public Object getValue(VariableScope variableScope) {
+    if (variableScope instanceof ExecutionEntity contextExecution) {
+      return getValue(variableScope, contextExecution);
+    }
     return getValue(variableScope, null);
   }
 

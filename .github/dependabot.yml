@@ -35,7 +35,7 @@ updates:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"
           - "org.jboss.weld:weld-core-bom"
-      openrwrite:
+      openrewrite:
         patterns:
           - "org.openrewrite.recipe:*"
   - package-ecosystem: "npm"
@@ -141,7 +141,7 @@ updates:
         patterns:
           - "org.jboss.weld.servlet:weld-servlet-shaded"
           - "org.jboss.weld:weld-core-bom"
-      openrwrite:
+      openrewrite:
         patterns:
         - "org.openrewrite.recipe:*"
   - package-ecosystem: "npm"

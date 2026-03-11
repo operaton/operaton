@@ -427,7 +427,7 @@ class HistoricIdentityLinkLogTest {
     taskService.deleteTask(taskAssigneeId, true);
   }
 
-  //CAM-7456
+  //avoid firing of historic identity link log event when the user task is completed
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
   @Test
   void testShouldNotDeleteIdentityLinkForTaskCompletion() {

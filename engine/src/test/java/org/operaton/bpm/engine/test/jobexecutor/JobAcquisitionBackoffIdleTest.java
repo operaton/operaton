@@ -71,7 +71,7 @@ public class JobAcquisitionBackoffIdleTest {
   }
 
   /**
-   * CAM-5073
+   * job acquisition thread does not become idle when no jobs are there
    */
   @Test
   @Deployment(resources = "org/operaton/bpm/engine/test/jobexecutor/simpleAsyncProcess.bpmn20.xml")

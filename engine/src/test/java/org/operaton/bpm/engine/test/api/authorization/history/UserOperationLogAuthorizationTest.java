@@ -127,7 +127,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     deleteTask(taskId, true);
   }
 
-  // CAM-9888
+  // hard-coded authorization checks in some queries
   public void failing_testQueryCreateStandaloneTaskUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     String taskId = "myTask";
@@ -196,7 +196,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     deleteTask(taskId, true);
   }
 
-  // CAM-9888
+  // hard-coded authorization checks in some queries
   public void failing_testQueryCreateStandaloneTaskUserOperationLogWithReadPermissionOnAnyCategoryAndRevokeReadHistoryOnAnyProcessDefinition() {
     // given
     String taskId = "myTask";
@@ -249,7 +249,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     deleteTask(taskId, true);
   }
 
-  // CAM-9888
+  // hard-coded authorization checks in some queries
   public void failing_testQuerySetAssigneeStandaloneTaskUserOperationLogWithReadPermissionOnAnyProcessDefinition() {
     // given
     String taskId = "myTask";
@@ -877,7 +877,7 @@ class UserOperationLogAuthorizationTest extends AuthorizationTest {
     verifyQueryResults(query, 0);
   }
 
-  // CAM-9888
+  // hard-coded authorization checks in some queries
   public void failing_testQuerySetAssigneeHumanTaskUserOperationLogWithReadHistoryPermissionOnAnyProcessDefinition() {
     // given
     testRule.createCaseInstanceByKey(ONE_TASK_CASE_KEY);

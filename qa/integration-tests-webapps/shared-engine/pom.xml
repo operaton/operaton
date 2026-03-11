@@ -132,7 +132,7 @@
             <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <excludes>
-                <!-- CAM-14109 -->
+                <!-- Excluded until SameSite session cookie handling is aligned in this shared-engine profile. -->
                 <exclude>**/SessionCookieSameSiteIT.java</exclude>
               </excludes>
             </configuration>

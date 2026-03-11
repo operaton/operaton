@@ -18,7 +18,7 @@
 insert into ACT_GE_SCHEMA_LOG
 values ('600', CURRENT_TIMESTAMP, '7.17.0');
 
--- https://jira.camunda.com/browse/CAM-14006 --
+-- query for retrieving last failure log id performs poorly --
 ALTER TABLE ACT_RU_JOB
   ADD LAST_FAILURE_LOG_ID_ nvarchar(64);
 

@@ -73,7 +73,7 @@ class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
 
   static Stream<Arguments> dataForSpinInternalVariablesTests() {
     return Stream.of(
-      // Arguments.of("javascript", "var XML = org.operaton.spin.Spin.XML;\n", "var JSON = org.operaton.spin.Spin.JSON;\n"), // @Disabled("https://jira.camunda.com/browse/CAM-5869")
+      // Arguments.of("javascript", "var XML = org.operaton.spin.Spin.XML;\n", "var JSON = org.operaton.spin.Spin.JSON;\n"), // @Disabled("nashorn (jdk8) is exporting not serializable variables with autoStoreScriptVariables set to true")
       Arguments.of("groovy", "XML = org.operaton.spin.Spin.&XML\n", "JSON = org.operaton.spin.Spin.&JSON\n"),
       Arguments.of("python", "import org.operaton.spin.Spin.XML as XML;\n", "import org.operaton.spin.Spin.JSON as JSON;\n")
     );
@@ -130,7 +130,7 @@ class SpinScriptTaskSupportWithAutoStoreScriptVariablesTest {
     Map<String, Object> variables = runtimeService.getVariables(processInstance.getId());
     checkVariablesValues(expectedVariables, variables);
 
-    // do not assert number of actual variables here, because JRuby leaks variables (see CAM-11114)
+    // do not assert number of actual variables here, because JRuby leaks variables (ruby scripting integration is not thread-safe and leaks process variables)
   }
 
   protected void checkVariablesValues(String[] expectedVariables, Map<String, Object> actualVariables) {

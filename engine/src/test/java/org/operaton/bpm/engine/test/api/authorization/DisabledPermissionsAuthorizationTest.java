@@ -286,7 +286,7 @@ class DisabledPermissionsAuthorizationTest {
   }
 
   @Test
-  @Disabled("CAM-9888")
+  @Disabled("hard-coded authorization checks in some queries")
   @Deployment(resources = "org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml")
   void testFetchAndLockIgnoreRead() {
     // given

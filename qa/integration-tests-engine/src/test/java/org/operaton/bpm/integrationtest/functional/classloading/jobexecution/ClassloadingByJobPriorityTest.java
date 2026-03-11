@@ -38,7 +38,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /*
-  See https://jira.camunda.com/browse/CAM-9913
+  engine doesnt work with jobExecutorAcquireByPriority enabled and Wildfly > 11
  */
 @ExtendWith(ArquillianExtension.class)
 public class ClassloadingByJobPriorityTest extends AbstractFoxPlatformIntegrationTest {

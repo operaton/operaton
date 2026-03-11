@@ -721,7 +721,7 @@ class MessageEventSubprocessTest {
   }
 
   /**
-   * CAM-3655
+   * with a compacted execution tree and an async task, triggering a non-interrupting event subprocess
    */
   @Deployment
   @Test

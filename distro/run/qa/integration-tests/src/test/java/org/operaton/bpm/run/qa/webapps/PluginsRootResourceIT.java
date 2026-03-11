@@ -35,7 +35,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/main/java/org/operaton/bpm/PluginsRootResourceIT.java">platform</a>
  * then added <code>@BeforeParam</code> and <code>@AfterParam</code> methods for container setup
  * and changed  <code>appBasePath</code> to <code>APP_BASE_PATH</code>, might be removed with
- * <a href="https://jira.camunda.com/browse/CAM-11379">CAM-11379</a>
+ * run integration test suite against Operaton (standalone)
  */
 class PluginsRootResourceIT extends AbstractWebIT {
   String assetName;

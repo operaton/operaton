@@ -37,7 +37,7 @@ class SpringTransactionIntegrationDeploymentFailTest extends SpringProcessEngine
   @Override
   @AfterEach
   protected void tearDown(TestInfo testInfo) throws Exception {
-    //must not be needed after CAM-4250 is fixed
+    //must not be needed once failed deployment are still added to the deployment cache is fixed
     processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
     super.tearDown(testInfo);
   }

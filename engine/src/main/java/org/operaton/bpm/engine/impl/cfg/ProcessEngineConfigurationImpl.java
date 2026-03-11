@@ -1779,7 +1779,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected void initSqlSessionFactory() {
 
-    // to protect access to cachedSqlSessionFactory see CAM-6682
+    // to protect access to cachedSqlSessionFactory use of shared Mybatis SqlSessionFactory does not work if engines are created concurrently
     synchronized (ProcessEngineConfigurationImpl.class) {
 
       if (isUseSharedSqlSessionFactory) {

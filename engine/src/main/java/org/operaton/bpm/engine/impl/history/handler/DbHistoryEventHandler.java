@@ -120,7 +120,7 @@ public class DbHistoryEventHandler implements HistoryEventHandler {
         historicVariableInstanceEntity.setState(HistoricVariableInstance.STATE_CREATED);
 
       } else {
-        // #CAM-1344 / #SUPPORT-688
+        // nPE upon HistoricVariableInstance update for process instances migrated from fox 6.1 / #SUPPORT-688
         // this is a FIX for process instances which were started in operaton fox 6.1 and migrated to Operaton.0.
         // in fox 6.1 the HistoricVariable instances were flushed to the DB when the process instance completed.
         // Since fox 6.2 we populate the HistoricVariable table as we go.

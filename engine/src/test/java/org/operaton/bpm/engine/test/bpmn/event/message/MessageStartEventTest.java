@@ -93,13 +93,13 @@ class MessageStartEventTest {
       for (org.operaton.bpm.engine.repository.Deployment deployment : deployments) {
         repositoryService.deleteDeployment(deployment.getId(), true);
       }
-      // Workaround for #CAM-4250: remove process definition of failed
+      // Workaround because failed deployment are still added to the deployment cache: remove process definition of failed
       // deployment from deployment cache
       processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache().clear();
     }
   }
 
-  // SEE: https://app.camunda.com/jira/browse/CAM-1448
+  // deployment accepted a message event with an empty message name
   @Test
   void testEmptyMessageNameFails() {
     // given
@@ -299,7 +299,7 @@ class MessageStartEventTest {
       for (org.operaton.bpm.engine.repository.Deployment d : deployments) {
         repositoryService.deleteDeployment(d.getId(), true);
       }
-      // Workaround for #CAM-4250: remove process definition of failed
+      // Workaround because failed deployment are still added to the deployment cache: remove process definition of failed
       // deployment from deployment cache
 
       processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache().clear();
@@ -328,7 +328,7 @@ class MessageStartEventTest {
       for (org.operaton.bpm.engine.repository.Deployment d : deployments) {
         repositoryService.deleteDeployment(d.getId(), true);
       }
-      // Workaround for #CAM-4250: remove process definition of failed
+      // Workaround because failed deployment are still added to the deployment cache: remove process definition of failed
       // deployment from deployment cache
 
       processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache().clear();
@@ -357,7 +357,7 @@ class MessageStartEventTest {
       for (org.operaton.bpm.engine.repository.Deployment d : deployments) {
         repositoryService.deleteDeployment(d.getId(), true);
       }
-      // Workaround for #CAM-4250: remove process definition of failed
+      // Workaround because failed deployment are still added to the deployment cache: remove process definition of failed
       // deployment from deployment cache
 
       processEngineConfiguration.getDeploymentCache().getProcessDefinitionCache().clear();
@@ -404,7 +404,7 @@ class MessageStartEventTest {
       .hasMessageContaining("expressions in the message start event name are not allowed!");
   }
 
-  //test fix CAM-10819
+  //test fix message Correlation throws an exception Cannot add TRANSIENT with localVariables
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testMessageStartEventUsingCorrelationEngine.bpmn"})
   @Test
   void testMessageStartEventUsingCorrelationEngineAndLocalVariable() {

@@ -47,7 +47,7 @@ class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
     return List.of(new AttributeAssumption(OPERATON_NS, "name", false, true));
   }
 
-  @Disabled("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. cant add child elements to CamundaInputParameter/CamundaOutputParameter: Bug fix needed")
   @Test
   void testOutputParameterScriptChildAssignment() {
     assertThatCode(() -> {
@@ -63,7 +63,7 @@ class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
       .doesNotThrowAnyException();
   }
 
-  @Disabled("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. cant add child elements to CamundaInputParameter/CamundaOutputParameter: Bug fix needed")
   @Test
   void testOutputParameterListChildAssignment() {
     assertThatCode(() -> {
@@ -77,7 +77,7 @@ class OperatonOutputParameterTest extends BpmnModelElementInstanceTest {
       .doesNotThrowAnyException();
   }
 
-  @Disabled("Test ignored. CAM-9441: Bug fix needed")
+  @Disabled("Test ignored. cant add child elements to CamundaInputParameter/CamundaOutputParameter: Bug fix needed")
   @Test
   void testOutputParameterMapChildAssignment() {
     assertThatCode(() -> {

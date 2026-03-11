@@ -776,7 +776,7 @@ class BatchSetRemovalTimeInChunksTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-10172
+   * introduce extra mysql queries for setting removal time async without respecting hierarchies
    */
   @Test
   void shouldSetRemovalTime_ExternalTaskLog_WithPreservedCreateTime() {
@@ -870,7 +870,7 @@ class BatchSetRemovalTimeInChunksTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-10172
+   * introduce extra mysql queries for setting removal time async without respecting hierarchies
    */
   @Test
   void shouldSetRemovalTime_Incident_WithPreservedCreateTime() {
@@ -937,7 +937,7 @@ class BatchSetRemovalTimeInChunksTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-10172
+   * introduce extra mysql queries for setting removal time async without respecting hierarchies
    */
   @Test
   void shouldSetRemovalTime_OperationLog_WithPreservedTimestamp() {
@@ -1000,7 +1000,7 @@ class BatchSetRemovalTimeInChunksTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-10172
+   * introduce extra mysql queries for setting removal time async without respecting hierarchies
    */
   @Test
   void shouldSetRemovalTime_IdentityLinkLog_WithPreservedTime() {

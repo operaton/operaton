@@ -44,7 +44,7 @@ alter table ACT_RU_CASE_SENTRY_PART
 alter table ACT_RU_CASE_SENTRY_PART
     drop foreign key ACT_FK_CASE_SENTRY_CASE_EXEC;
 
--- indexes for concurrency problems - https://app.camunda.com/jira/browse/CAM-1646 --
+-- indexes for concurrency problems - process Engine deadlocks in Mssql / DB2 --
 drop index ACT_IDX_CASE_EXEC_CASE;
 drop index ACT_IDX_CASE_EXEC_PARENT;
 drop index ACT_IDX_VARIABLE_CASE_EXEC;
@@ -57,7 +57,7 @@ drop index ACT_IDX_CASE_SENTRY_CASE_EXEC;
 drop index ACT_IDX_CASE_DEF_TENANT_ID;
 drop index ACT_IDX_CASE_EXEC_TENANT_ID;
 
--- https://app.camunda.com/jira/browse/CAM-9165
+-- add index for CASE_INST_ID_ on ACT_RU_CASE_EXECUTION table
 drop index ACT_IDX_CASE_EXE_CASE_INST;
 
 drop table ACT_RE_CASE_DEF;

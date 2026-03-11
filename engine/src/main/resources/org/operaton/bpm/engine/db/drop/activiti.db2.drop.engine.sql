@@ -119,7 +119,7 @@ alter table ACT_RU_VARIABLE
 drop index ACT_IDX_EVENT_SUBSCR_CONFIG_;
 drop index ACT_IDX_ATHRZ_PROCEDEF;
 
--- indexes for concurrency problems - https://app.camunda.com/jira/browse/CAM-1646 --
+-- indexes for concurrency problems - process Engine deadlocks in Mssql / DB2 --
 drop index ACT_IDX_EXECUTION_PROC;
 drop index ACT_IDX_EXECUTION_PARENT;
 drop index ACT_IDX_EXECUTION_SUPER;

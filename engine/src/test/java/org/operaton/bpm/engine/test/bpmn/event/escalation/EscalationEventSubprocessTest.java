@@ -61,7 +61,7 @@ class EscalationEventSubprocessTest {
     assertThat(taskService.createTaskQuery().taskName("task in subprocess").count()).isOne();
   }
 
-  /** CAM-9220 (https://app.camunda.com/jira/browse/CAM-9220) */
+  /** throwing end event in a event subprocess does not end the event subprocess as (throwing end event in a event subprocess does not end the event subprocess as) */
   @Deployment
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
   @Test

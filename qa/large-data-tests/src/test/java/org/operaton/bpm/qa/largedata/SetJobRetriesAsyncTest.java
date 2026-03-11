@@ -65,7 +65,7 @@ class SetJobRetriesAsyncTest {
     helper.removeAllRunningAndHistoricBatches();
   }
 
-  /* See https://jira.camunda.com/browse/CAM-12852 for more details */
+  /* unable to set retries using the batch operation when more than 2100 instances selected for more details */
   @Test
   void shouldModifyJobRetriesAsync() {
     // given

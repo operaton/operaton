@@ -63,7 +63,7 @@ public class InterruptingEventSubProcessNestedCompensationSenarioTest {
 
   /**
    * Fails because wrongly destroy the sub process scope execution when completing the
-   * compensation throw event. See CAM-4914
+   * compensation throw event. migrating and continuing a process instance that throws compensation in the context of an
    */
   @Ignore
   @Test
@@ -114,7 +114,7 @@ public class InterruptingEventSubProcessNestedCompensationSenarioTest {
     assertThat(tree).hasStructure(
       describeActivityInstanceTree(processInstance.getProcessDefinitionId())
         // - the eventSubprocess instance is missing, because we wrongly assume that the event
-        //   sub process scope execution is missing (see CAM-4914)
+        //   sub process scope execution is missing (migrating and continuing a process instance that throws compensation in the context of an)
         // - undoTask is a child of throwCompensate for the same reason; due to the wrong assumption,
         //   innerSubProcess receives the eventSubProcess id, throwCompensate receives the innerSubProcess id.
         //   The latter is the parent id for the undoTask instance.

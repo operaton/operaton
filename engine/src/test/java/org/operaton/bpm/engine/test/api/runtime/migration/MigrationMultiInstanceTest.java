@@ -180,7 +180,7 @@ public class MigrationMultiInstanceTest {
           .beginMiBody("userTask", testHelper.getSingleActivityInstanceBeforeMigration(miBodyOf("userTask")).getId())
             .activity("userTask", userTaskInstances[0].getId())
             .activity("userTask", userTaskInstances[1].getId())
-            .transition("userTask") // bug CAM-5609
+            .transition("userTask") // bug completed inner instances of multi-instances are represented as transition instances
         .done());
 
     List<Task> migratedTasks = testHelper.snapshotAfterMigration.getTasks();

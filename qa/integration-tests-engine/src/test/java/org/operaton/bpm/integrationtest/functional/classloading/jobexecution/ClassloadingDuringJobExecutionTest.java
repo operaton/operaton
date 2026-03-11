@@ -34,7 +34,7 @@ import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * See CAM-10258
+ * resource deployment can be customized programmatically
  */
 @ExtendWith(ArquillianExtension.class)
 public class ClassloadingDuringJobExecutionTest extends AbstractFoxPlatformIntegrationTest {

@@ -444,7 +444,7 @@
          where
           E.PROC_DEF_ID_ = #{processDefinitionId}
           and E.IS_ACTIVE_ = ${trueConstant}
-          <!-- CAM-5252: tolerate inconsistent execution trees where IS_ACTIVE_ is
+          <!-- nPE on opening Process Definition view after triggering non-interrupting boundary event: tolerate inconsistent execution trees where IS_ACTIVE_ is
             true but no current activity is set -->
           and E.ACT_ID_ is not null
 
@@ -504,7 +504,7 @@
                   where
                       E.PROC_DEF_ID_ = #{processDefinitionId}
                       and E.IS_ACTIVE_ = ${trueConstant}
-                      <!-- CAM-5252: tolerate inconsistent execution trees where IS_ACTIVE_ is
+                      <!-- nPE on opening Process Definition view after triggering non-interrupting boundary event: tolerate inconsistent execution trees where IS_ACTIVE_ is
                         true but no current activity is set -->
                       and E.ACT_ID_ is not null
 

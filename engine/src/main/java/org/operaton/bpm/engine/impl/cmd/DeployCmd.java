@@ -188,7 +188,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions> {
       // Acquire global exclusive lock: this ensures that there can be only one
       // transaction in the cluster which is allowed to perform deployments.
       // This is important to ensure that duplicate filtering works correctly
-      // in a multi-node cluster. See also https://app.camunda.com/jira/browse/CAM-2128
+      // in a multi-node cluster. Additional context: concurrent Deployment causes Version Problems
 
       // It is also important to ensure the uniqueness of a process definition key,
       // version and tenant-id since there is no database constraint to check it.

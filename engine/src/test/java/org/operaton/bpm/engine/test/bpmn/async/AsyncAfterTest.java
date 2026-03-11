@@ -544,7 +544,7 @@ class AsyncAfterTest {
   }
 
   /**
-   * Test for CAM-2518: Fixes an issue that creates an infinite loop when using
+   * Test because asyncAfter with execution listeners creates infinite loop: Fixes an issue that creates an infinite loop when using
    * asyncAfter together with an execution listener on sequence flow event "take".
    * So the only required assertion here is that the process executes successfully.
    */

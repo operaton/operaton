@@ -873,7 +873,7 @@ class CallActivityTest {
    * This testcase verifies that <operaton:out variables="all" /> works also in
    * case super process has no variables
    *
-   * @see <a href="https://app.camunda.com/jira/browse/CAM-1617">CAM-1617</a>
+   * call activity out variables=all does not work if super process has no variables
    *
    */
   @Deployment(resources = {

@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ManualActivationRuleTest extends CmmnTest {
 
   /**
-   * CAM-3170
+   * manual activation rules cannot be used for plan items
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testVariableBasedRule.cmmn")
   @Test
@@ -47,7 +47,7 @@ class ManualActivationRuleTest extends CmmnTest {
   }
 
   /**
-   * CAM-3170
+   * manual activation rules cannot be used for plan items
    */
   @Deployment(resources = "org/operaton/bpm/engine/test/cmmn/activation/ManualActivationRuleTest.testVariableBasedRule.cmmn")
   @Test

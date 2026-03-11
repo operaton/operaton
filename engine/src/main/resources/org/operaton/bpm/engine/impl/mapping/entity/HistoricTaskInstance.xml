@@ -531,7 +531,7 @@
               ${queryType} RES.CASE_EXECUTION_ID_ = #{query.caseExecutionId}
             </if>
             <if test="query.taskName != null">
-              <!-- CAM-12186 case insensitive task name and description queries -->
+              <!-- taskNameLike and taskDescriptionLike queries (for Historical Tasks) and descriptionLike (for Tasks) are case sensitive case insensitive task name and description queries -->
               ${queryType} UPPER(RES.NAME_) = UPPER(#{query.taskName})
             </if>
             <if test="query.taskNameLike != null">

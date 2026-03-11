@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
---https://app.camunda.com/jira/browse/CAM-8485
+--historic activity statistics query takes too long for large datasets
 drop index ACT_HI_ACTINST.ACT_IDX_HI_ACT_INST_STATS;
 create index ACT_IDX_HI_ACT_INST_STATS on ACT_HI_ACTINST(PROC_DEF_ID_, PROC_INST_ID_, ACT_ID_, END_TIME_, ACT_INST_STATE_);
 create index ACT_IDX_HI_PRO_INST_PROC_TIME on ACT_HI_PROCINST(START_TIME_, END_TIME_);

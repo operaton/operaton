@@ -146,7 +146,7 @@ class XmlValueTest {
       .isInstanceOf(ProcessEngineException.class)
       .hasMessageContaining(SPIN_DOM_XML_01009);
 
-    // However, I can access the serialized value
+    // However, the serialized value remains accessible
     XmlValue xmlValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
     assertThat(xmlValue.isDeserialized()).isFalse();
     assertThat(xmlValue.getValueSerialized()).isEqualTo(brokenXmlString);
@@ -221,7 +221,7 @@ class XmlValueTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9932
+   * spin Value XML and JSON lose transient flag when built from UntypedValue
    */
   @Test
   void transientXmlSpinVariables() {

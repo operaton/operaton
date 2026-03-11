@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- insert indices for history cleanup - https://app.camunda.com/jira/browse/CAM-8184 --
+-- insert indices for history cleanup - missing indices for history cleanup of process instances --
 create index ACT_IDX_HI_JOB_LOG_EX_STACK on ACT_HI_JOB_LOG(JOB_EXCEPTION_STACK_ID_);
 create index ACT_IDX_HI_VARINST_BYTEAR on ACT_HI_VARINST(BYTEARRAY_ID_);
 create index ACT_IDX_HI_DETAIL_BYTEAR on ACT_HI_DETAIL(BYTEARRAY_ID_);

@@ -356,7 +356,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   }
 
   /**
-   * CAM-1930: add assertions for additional op log entries here
+   * Covers suspend/activate operations on process definitions in history; add assertions for additional operation-log entries here
    */
   @Deployment(resources = {ONE_TASK_PROCESS})
   @Test
@@ -410,7 +410,7 @@ class UserOperationLogQueryTest extends AbstractUserOperationLogTest {
   }
 
   /**
-   * CAM-1930: add assertions for additional op log entries here
+   * Covers suspend/activate operations on process definitions in history; add assertions for additional operation-log entries here
    */
   @Deployment(resources = {ONE_TASK_PROCESS})
   @Test

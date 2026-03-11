@@ -36,7 +36,7 @@ public class JmxManagedJobExecutor implements PlatformService<JobExecutor>, JmxM
   public void start(PlatformServiceContainer mBeanServiceContainer) {
     // no-op:
     // job executor is lazy-started when first process engine is registered and jobExecutorActivate = true
-    // See: #CAM-4817
+    // shared engine startup must work with the Job Executor turned off
   }
 
   @Override

@@ -53,7 +53,7 @@ class SignalEventPayloadTest {
   TaskService taskService;
 
   /**
-   * Test case for CAM-8820 with a catching Start Signal event.
+   * Verifies payload propagation from a throwing signal event with a catching Start Signal event.
    * Using Source and Target Variable name mapping attributes.
    */
   @Test
@@ -87,7 +87,7 @@ class SignalEventPayloadTest {
   }
 
   /**
-   * Test case for CAM-8820 with a catching Intermediate Signal event.
+   * Verifies payload propagation from a throwing signal event with a catching Intermediate Signal event.
    * Using Source and Target Variable name mapping attributes.
    */
   @Test
@@ -121,7 +121,7 @@ class SignalEventPayloadTest {
   }
 
   /**
-   * Test case for CAM-8820 with an expression as a source.
+   * Verifies payload propagation from a throwing signal event with an expression as a source.
    */
   @Test
   @Deployment(resources = {
@@ -148,7 +148,7 @@ class SignalEventPayloadTest {
   }
 
   /**
-   * Test case for CAM-8820 with all the (global) source variables
+   * Verifies payload propagation from a throwing signal event with all the (global) source variables
    * as the signal payload.
    */
   @Test
@@ -182,7 +182,7 @@ class SignalEventPayloadTest {
   }
 
   /**
-   * Test case for CAM-8820 with all the (local) source variables
+   * Verifies payload propagation from a throwing signal event with all the (local) source variables
    * as the signal payload.
    */
   @Test
@@ -218,7 +218,7 @@ class SignalEventPayloadTest {
   }
 
   /**
-   * Test case for CAM-8820 with a Business Key
+   * Verifies payload propagation from a throwing signal event with a Business Key
    * as signal payload.
    */
   @Test
@@ -238,7 +238,7 @@ class SignalEventPayloadTest {
   }
 
   /**
-   * Test case for CAM-8820 with all possible options for a signal payload.
+   * Verifies payload propagation from a throwing signal event with all possible options for a signal payload.
    */
   @Test
   @Deployment(resources = {

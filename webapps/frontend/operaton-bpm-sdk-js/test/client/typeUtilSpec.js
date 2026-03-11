@@ -83,7 +83,7 @@ describe('The type-util', function() {
 
   it('does convert Date', function() {
 
-    // https://app.camunda.com/jira/browse/CAM-4746
+    // datepicker-Textfield does not validate selected date correctly in embedded form
     var date = new Date('2016-05-09T08:56:00');
     expect(typeof convertToType(date, 'Date')).to.eql('string');
 

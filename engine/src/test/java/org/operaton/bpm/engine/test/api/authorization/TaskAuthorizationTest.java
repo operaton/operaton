@@ -367,7 +367,7 @@ class TaskAuthorizationTest extends AuthorizationTest {
   }
 
   /**
-   * CAM-12410 implements a single join for the process definition query filters
+   * avoid duplicate joining of ACT_RE_PROCDEF in task query implements a single join for the process definition query filters
    * and the authorization check. This test assures that the query works when
    * both are used.
    */

@@ -282,7 +282,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
       createdExecution.setTenantId(tenantId);
     }
 
-    // with the fix of CAM-9249 we presume that the parent and the child have the same startContext
+    // with the fix of under circumstances history for Variables is on process start not created we presume that the parent and the child have the same startContext
     createdExecution.setStartContext(scopeInstantiationContext);
 
     createdExecution.skipCustomListeners = this.skipCustomListeners;

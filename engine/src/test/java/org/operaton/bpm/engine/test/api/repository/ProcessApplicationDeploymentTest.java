@@ -1110,7 +1110,7 @@ class ProcessApplicationDeploymentTest {
 
   /*
    * A delay is introduced between the two deployments so the test is valid when MySQL
-   * is used. See https://jira.camunda.com/browse/CAM-11893 for more details.
+   * is used. latest Deployment cant be determined with concurrent deployments for more details.
    */
   @Test
   void shouldRegisterExistingDeploymentsOnLatestProcessDefinitionRemoval() {

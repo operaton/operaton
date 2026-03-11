@@ -852,7 +852,7 @@ public class AuthorizationCommandChecker implements CommandChecker {
     if (variable != null && variable.getProcessDefinitionKey() != null) {
       getAuthorizationManager().checkAuthorization(DELETE_HISTORY, PROCESS_DEFINITION, variable.getProcessDefinitionKey());
     }
-    // XXX if CAM-6570 is implemented, there should be a check for variables of standalone tasks here as well
+    // XXX if no authorization checks for reading/deleting historic task instances of standalone tasks is implemented, there should be a check for variables of standalone tasks here as well
   }
 
   @Override

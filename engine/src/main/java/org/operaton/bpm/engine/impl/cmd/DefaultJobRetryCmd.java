@@ -201,7 +201,7 @@ public class DefaultJobRetryCmd extends JobRetryCmd {
     // this because no exception is set. Only the first
     // execution can be without exception - because if
     // no exception occurred the job would have been completed)
-    // see https://app.camunda.com/jira/browse/CAM-1039
+    // retry Time Cycle does not always work
     return job.getExceptionByteArrayId() == null && job.getExceptionMessage() == null;
   }
 

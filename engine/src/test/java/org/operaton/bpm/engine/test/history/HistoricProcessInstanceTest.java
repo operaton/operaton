@@ -360,7 +360,7 @@ class HistoricProcessInstanceTest {
     assertThat(historicProcessInstance.getEndTime()).isNotNull();
   }
 
-  /** See: <a href="https://app.camunda.com/jira/browse/CAM-1324">CAM-1324</a> */
+  /** history end time and delete reason is not set when deleting an instance with */
   @Test
   @Deployment
   void testHistoricProcessInstanceDeleteAsync() {

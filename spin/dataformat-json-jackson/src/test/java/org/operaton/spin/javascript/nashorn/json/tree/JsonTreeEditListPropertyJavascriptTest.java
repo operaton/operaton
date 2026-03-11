@@ -26,28 +26,28 @@ import org.operaton.spin.json.tree.JsonTreeEditListPropertyScriptTest;
 class JsonTreeEditListPropertyJavascriptTest extends JsonTreeEditListPropertyScriptTest {
 
   @Test
-  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
+  @Disabled("Ignored since javascript implementation changed. spin test suite fails with latest jdk 8u40")
   @Override
   public void shouldFailInsertAtWithWrongObject() {
     super.shouldFailInsertAtWithWrongObject();
   }
 
   @Test
-  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
+  @Disabled("Ignored since javascript implementation changed. spin test suite fails with latest jdk 8u40")
   @Override
   public void shouldFailInsertWrongObjectAfterSearchObject() {
     super.shouldFailInsertWrongObjectAfterSearchObject();
   }
 
   @Test
-  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
+  @Disabled("Ignored since javascript implementation changed. spin test suite fails with latest jdk 8u40")
   @Override
   public void shouldFailAppendWrongNode() {
     super.shouldFailAppendWrongNode();
   }
 
   @Test
-  @Disabled("Ignored since javascript implementation changed, see: https://app.camunda.com/jira/browse/CAM-3612")
+  @Disabled("Ignored since javascript implementation changed. spin test suite fails with latest jdk 8u40")
   @Override
   public void shouldFailInsertWrongObjectBeforeSearchObject() {
     super.shouldFailInsertWrongObjectBeforeSearchObject();

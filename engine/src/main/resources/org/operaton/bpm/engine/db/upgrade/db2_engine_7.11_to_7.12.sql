@@ -18,17 +18,17 @@
 insert into ACT_GE_SCHEMA_LOG
 values ('100', CURRENT_TIMESTAMP, '7.12.0');
 
--- https://app.camunda.com/jira/browse/CAM-10665
+-- allow setting operation-log annotations through the Java API
 ALTER TABLE ACT_HI_OP_LOG
   ADD ANNOTATION_ varchar(4000);
 
--- https://app.camunda.com/jira/browse/CAM-9855
+-- recurring Timer Job DueDates do not depend on first job start date
 ALTER TABLE ACT_RU_JOB
   ADD REPEAT_OFFSET_ bigint default 0;
 
--- https://app.camunda.com/jira/browse/CAM-10672
+-- link historic incidents to the specific stacktrace source
 ALTER TABLE ACT_HI_INCIDENT
   ADD HISTORY_CONFIGURATION_ varchar(255);
 
--- https://app.camunda.com/jira/browse/CAM-10600
+-- add an index for all historic details of a variable instance
 create index ACT_IDX_HI_DETAIL_VAR_INST_ID on ACT_HI_DETAIL(VAR_INST_ID_);

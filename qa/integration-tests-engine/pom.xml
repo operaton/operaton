@@ -517,7 +517,7 @@
                 <exclude>**/SpringPAExpressionResolvingTest.java</exclude>
                 <exclude>**/SpringServletPALifecycleTest.java</exclude>
                 <exclude>**/TestManagedDomain_JBOSS.java</exclude>
-                <!-- CAM-1778 -->
+                <!-- Excluded because this scenario still fails on JBoss/WildFly in this profile. -->
                 <exclude>**/TestWarDeploymentWithProcessEnginePlugin.java</exclude>
                 <exclude>**/TestWarDeploymentWithProcessEnginePlugin.exclude</exclude>
                 <exclude>**/SpringServletPATimerStartEventExpressionTest.java</exclude>
@@ -641,7 +641,7 @@
                 <excludes>**/SpringPAExpressionResolvingTest.java</excludes>
                 <excludes>**/SpringServletPALifecycleTest.java</excludes>
                 <exclude>**/BusinessRuleTaskVersionTagTest.java</exclude>
-                <!-- CAM-1778 -->
+                <!-- Excluded because this scenario still fails on JBoss/WildFly in this profile. -->
                 <exludes>**/TestWarDeploymentWithProcessEnginePlugin.java</exludes>
                 <exclude>**/SpringServletPATimerStartEventExpressionTest.java</exclude>
                 <!-- https://github.com/camunda/camunda-bpm-platform/issues/5037-->

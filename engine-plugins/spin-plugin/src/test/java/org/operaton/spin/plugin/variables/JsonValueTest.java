@@ -156,7 +156,7 @@ class JsonValueTest {
     assertThatThrownBy(() -> runtimeService.getVariableTyped(processInstanceId, variableName))
             .isInstanceOf(ProcessEngineException.class);
 
-    // However, I can access the serialized value
+    // However, the serialized value remains accessible
     JsonValue jsonValue = runtimeService.getVariableTyped(processInstanceId, variableName, false);
     assertThat(jsonValue.isDeserialized()).isFalse();
     assertThat(jsonValue.getValueSerialized()).isEqualTo(brokenJsonString);
@@ -245,7 +245,7 @@ class JsonValueTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9932
+   * spin Value XML and JSON lose transient flag when built from UntypedValue
    */
   @Test
   void transientJsonSpinVariables() {

@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- CAM-7737
+-- expose removed-variable queries through the REST API
 
 ALTER TABLE ACT_HI_VARINST
   ADD STATE_ nvarchar(20);

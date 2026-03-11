@@ -340,7 +340,7 @@ class FilterAuthorizationsTest {
       .hasMessageContaining("Cannot create default authorization for filter owner *: id cannot be *. * is a reserved identifier.");
   }
 
-  @Disabled("CAM-4889")
+  @Disabled("setting a new filter owner does not create a default authorization")
   @Test
   void testUpdateFilterGenericOwnerId() {
     grantCreateFilter();

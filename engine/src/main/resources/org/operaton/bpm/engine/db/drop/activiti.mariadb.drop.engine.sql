@@ -131,7 +131,7 @@ alter table ACT_RU_VARIABLE
 drop index ACT_IDX_ATHRZ_PROCEDEF on ACT_RU_IDENTITYLINK;
 drop index ACT_IDX_EVENT_SUBSCR_CONFIG_ on ACT_RU_EVENT_SUBSCR;
 
--- indexes for deadlock problems - https://app.camunda.com/jira/browse/CAM-2567
+-- indexes for deadlock problems - deadlocks caused by missing index on foreign key in INCIDENT table
 drop index ACT_IDX_INC_CAUSEINCID on ACT_RU_INCIDENT;
 drop index ACT_IDX_INC_EXID on ACT_RU_INCIDENT;
 drop index ACT_IDX_INC_PROCDEFID on ACT_RU_INCIDENT;

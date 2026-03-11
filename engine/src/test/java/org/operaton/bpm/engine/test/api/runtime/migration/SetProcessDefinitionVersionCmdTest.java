@@ -564,7 +564,7 @@ class SetProcessDefinitionVersionCmdTest {
   }
 
   /**
-   * See https://app.camunda.com/jira/browse/CAM-9505
+   * on MariaDB and MySQL an update operation leads to an update of date fields
    */
   @Deployment(resources = TEST_PROCESS_ONE_JOB)
   @Test

@@ -15,5 +15,5 @@
 -- limitations under the License.
 --
 
--- https://app.camunda.com/jira/browse/CAM-10275
+-- add index for TIMESTAMP_ on ACT_HI_IDENTITYLINK table
 create index ACT_IDX_HI_IDENT_LNK_TIMESTAMP on ACT_HI_IDENTITYLINK(TIMESTAMP_);

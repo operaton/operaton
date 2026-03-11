@@ -249,7 +249,7 @@ public class GroupAuthorizationTest extends AuthorizationTest {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_GROUP_IDS.get(0));
 
     // a user authorization (i.e. no group id set)
-    // this authorization is important to reproduce the bug in CAM-14306
+    // this authorization is important to reproduce the bug in authenticationManager
     createGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_USER_ID, Permissions.READ);
 
     List<String> groupIds = new NullHostileList<>(TEST_GROUP_IDS);

@@ -154,7 +154,7 @@ class JsonSerializationTest {
     assertThatThrownBy(() -> runtimeService.getVariableTyped(instanceId, "simpleBean"))
             .isInstanceOf(ProcessEngineException.class);
 
-    // However, I can access the serialized value
+    // However, the serialized value remains accessible
     ObjectValue objectValue = runtimeService.getVariableTyped(instanceId, "simpleBean", false);
     assertThat(objectValue.isDeserialized()).isFalse();
     assertThat(objectValue.getObjectTypeName()).isNotNull();
@@ -492,7 +492,7 @@ class JsonSerializationTest {
   }
 
   /**
-   * CAM-3222
+   * cannot implicitly update empty list variable with Json variables
    */
   @Test
   @Deployment(resources = SERVICE_TASK_PROCESS)

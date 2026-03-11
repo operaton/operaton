@@ -77,7 +77,7 @@ describe('cockpit.repository.deployment.action deleteDeployment modal controller
     });
   }));
 
-  // For now only new features added as part of CAM-7534
+  // This currently covers only skipping I/O mappings when deleting a deployment in Cockpit
   // will be tested for lack of time. Rest is assumed to be tested as part of
   // some broken e2e tests (at time of writing this comment that is 20.04.2017).
   // There is possiblity open for writing more unit tests if needed though.

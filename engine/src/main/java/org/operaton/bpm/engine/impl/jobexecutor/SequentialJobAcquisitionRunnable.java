@@ -67,7 +67,7 @@ public class SequentialJobAcquisitionRunnable extends AcquireJobsRunnable {
 
       Iterator<ProcessEngineImpl> engineIterator = jobExecutor.engineIterator();
 
-      // See https://jira.camunda.com/browse/CAM-9913
+      // engine doesnt work with jobExecutorAcquireByPriority enabled and Wildfly > 11
       ClassLoader classLoaderBeforeExecution = ClassLoaderUtil.switchToProcessEngineClassloader();
       try {
         while (engineIterator.hasNext()) {

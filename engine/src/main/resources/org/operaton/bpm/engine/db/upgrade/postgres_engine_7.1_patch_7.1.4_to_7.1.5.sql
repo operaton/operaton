@@ -15,7 +15,7 @@
 -- limitations under the License.
 --
 
--- indexes for deadlock problems - https://app.camunda.com/jira/browse/CAM-2567 --
+-- indexes for deadlock problems - deadlocks caused by missing index on foreign key in INCIDENT table --
 create index ACT_IDX_INC_CAUSEINCID on ACT_RU_INCIDENT(CAUSE_INCIDENT_ID_);
 create index ACT_IDX_INC_EXID on ACT_RU_INCIDENT(EXECUTION_ID_);
 create index ACT_IDX_INC_PROCDEFID on ACT_RU_INCIDENT(PROC_DEF_ID_);

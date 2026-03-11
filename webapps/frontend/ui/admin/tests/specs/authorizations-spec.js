@@ -699,7 +699,7 @@ describe('Admin Authorizations Spec', function() {
       ).to.eventually.eql(0);
     });
 
-    // skiped due to #CAM-6037
+    // skiped due to cannot create new authorization in empty list after removing authorizations
     it.skip('can be created in an empty list', function() {
       // when
       authorizationsPage

@@ -362,7 +362,7 @@ public final class LegacyBehavior {
   }
 
   /**
-   * Tolerates the broken execution trees fixed with CAM-3727 where there may be more
+   * Tolerates the broken execution trees fixed because execution tree is not expanded correctly where there may be more
    * ancestor scope executions than ancestor flow scopes;
    *
    * <p>
@@ -635,7 +635,7 @@ public final class LegacyBehavior {
   }
 
   /**
-   * See #CAM-10978
+   * history should contain the process variables after error in Async-Before at the start event
    * Use case process instance with <code>asyncBefore</code> startEvent
    * After unifying the history variable's creation<br>
    * The following changed:<br>

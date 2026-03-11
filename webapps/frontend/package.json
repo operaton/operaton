@@ -94,7 +94,7 @@
     "sass": "1.98.0",
     "sass-loader": "16.0.7",
     "svg-inline-loader": "0.8.2",
-    "terser-webpack-plugin": "5.3.17",
+    "terser-webpack-plugin": "5.4.0",
     "ui-bootstrap4": "^3.0.7",
     "webpack": "5.105.4",
     "webpack-bundle-analyzer": "5.2.0",

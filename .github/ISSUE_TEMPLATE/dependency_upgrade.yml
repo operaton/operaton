@@ -1,0 +1,43 @@
+name:  📦 Dependency Upgrade
+title: 'Upgrade <DEP_NAME> to x.y.z'
+description: 'Request to upgrade a project dependency to a new version.'
+labels: ["dependencies"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Dependency Type
+      description: Select the dependency type
+      options:
+        - Java Library (Maven dependency)
+        - Maven Plugin
+        - NPM Package
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: current_version
+    attributes:
+      label: Current version
+      description: Enter the current version of the dependency
+    validations:
+      required: true
+  - type: input
+    id: new_version
+    attributes:
+      label: New version
+      description: Enter the new version to upgrade to
+    validations:
+      required: true
+  - type: input
+    id: url_release_notes
+    attributes:
+      label: Release Notes
+      description: Enter the URL to the release notes or changelog of the new version
+      placeholder: https://github.com/[org]/[name]/releases/tag/[new_version]
+  - type: input
+    id: url_change_log
+    attributes:
+      label: Change Log
+      description: Change Log URL for commits between the current and new version
+      placeholder: https://github.com/[org]/[name]/compare/[current_version]...[new_version]

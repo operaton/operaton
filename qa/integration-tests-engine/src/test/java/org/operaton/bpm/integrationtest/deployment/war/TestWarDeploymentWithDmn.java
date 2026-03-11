@@ -44,7 +44,7 @@ public class TestWarDeploymentWithDmn extends AbstractFoxPlatformIntegrationTest
       .decisionDefinitionKey("testDeployProcessArchiveWithDmn")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

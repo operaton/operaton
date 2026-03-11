@@ -21,23 +21,23 @@ var template = require('./cam-widget-selection-type.html?raw');
 
 module.exports = [
   '$location',
-  function($location) {
+  function ($location) {
     return {
       template: template,
       scope: {
         selectedInstancesCount: '@',
         totalInstancesCount: '@',
         toggleState: '@',
-        pageSize: '@'
+        pageSize: '@',
       },
-      link: function(scope) {
+      link: function (scope) {
         scope.selectionType = 'INSTANCE';
         scope.isBatchOperationPage = $location
           .path()
           .includes('batch/operation');
 
-        const updateSelectionType = (scope.updateSelectionType = function(
-          selectionType = scope.selectionType
+        const updateSelectionType = (scope.updateSelectionType = function (
+          selectionType = scope.selectionType,
         ) {
           // This check succeeds when clicking on the links to switch between selection types. In this instance, scope.selectionType will be different from the selectionType argument passed from the UI.
           if (selectionType !== scope.selectionType) {
@@ -48,7 +48,7 @@ module.exports = [
         });
 
         scope.$watch('selectionType', updateSelectionType);
-      }
+      },
     };
-  }
+  },
 ];

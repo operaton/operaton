@@ -209,7 +209,7 @@ class MultiTenancyJobCmdsTenantCheckTest {
 
     // then
     assertThat(managementService.createJobQuery()
-        .duedateLowerThan(new Date()).count()).isEqualTo(1);
+      .duedateLowerThan(new Date()).count()).isOne();
   }
 
   @Test
@@ -242,7 +242,7 @@ class MultiTenancyJobCmdsTenantCheckTest {
     managementService.setJobDuedate(timerJob.getId(), cal.getTime());
     // then
     assertThat(managementService.createJobQuery()
-        .duedateLowerThan(new Date()).count()).isEqualTo(1);
+      .duedateLowerThan(new Date()).count()).isOne();
 
   }
 
@@ -255,7 +255,7 @@ class MultiTenancyJobCmdsTenantCheckTest {
     managementService.setJobPriority(timerJob.getId(), 5);
 
     // then
-    assertThat(managementService.createJobQuery().priorityHigherThanOrEquals(5).count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().priorityHigherThanOrEquals(5).count()).isOne();
   }
 
   @Test
@@ -281,7 +281,7 @@ class MultiTenancyJobCmdsTenantCheckTest {
 
     managementService.setJobPriority(timerJob.getId(), 5);
     // then
-    assertThat(managementService.createJobQuery().priorityHigherThanOrEquals(5).count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().priorityHigherThanOrEquals(5).count()).isOne();
   }
 
   // setOverridingJobPriorityForJobDefinition without cascade

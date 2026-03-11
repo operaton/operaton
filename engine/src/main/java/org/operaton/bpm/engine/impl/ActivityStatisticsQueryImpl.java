@@ -38,9 +38,9 @@ public class ActivityStatisticsQueryImpl extends
   protected String includeIncidentsForType;
 
   // for internal use
-  protected List<PermissionCheck> processInstancePermissionChecks = new ArrayList<>();
-  protected List<PermissionCheck> jobPermissionChecks = new ArrayList<>();
-  protected List<PermissionCheck> incidentPermissionChecks = new ArrayList<>();
+  private transient List<PermissionCheck> processInstancePermissionChecks = new ArrayList<>();
+  private transient List<PermissionCheck> jobPermissionChecks = new ArrayList<>();
+  private transient List<PermissionCheck> incidentPermissionChecks = new ArrayList<>();
 
   public ActivityStatisticsQueryImpl(String processDefinitionId, CommandExecutor executor) {
     super(executor);

@@ -17,7 +17,6 @@
 package org.operaton.bpm;
 
 import java.util.List;
-import java.util.logging.Logger;
 import jakarta.ws.rs.core.MediaType;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,6 +26,8 @@ import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
 
@@ -36,7 +37,7 @@ import static jakarta.ws.rs.core.HttpHeaders.SET_COOKIE;
  */
 public abstract class AbstractWebIntegrationTest {
 
-  private static final Logger LOGGER = Logger.getLogger(AbstractWebIntegrationTest.class.getName());
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractWebIntegrationTest.class);
 
   protected static final String TASKLIST_PATH = "app/tasklist/default/";
 
@@ -89,7 +90,7 @@ public abstract class AbstractWebIntegrationTest {
     testProperties = new TestProperties();
 
     appBasePath = testProperties.getApplicationPath("/" + ctxPath);
-    LOGGER.info("Connecting to application " + appBasePath);
+    LOGGER.info("Connecting to application {}", appBasePath);
   }
 
   protected void getTokens() {

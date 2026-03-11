@@ -21,11 +21,15 @@ import org.operaton.bpm.engine.ManagementService;
 /**
  * The engine collects information about multiple aspects of the installation.
  *
+ * <p>
  * If telemetry is enabled this information is sent to Operaton. If telemetry is
  * disabled, the engine still collects this information and provides it through
  * {@link ManagementService#getTelemetryData()}.
+ * </p>
  *
+ * <p>
  * This class represents the data structure used to collect telemetry data.
+ * </p>
  *
  * @see <a href=
  *      "https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton

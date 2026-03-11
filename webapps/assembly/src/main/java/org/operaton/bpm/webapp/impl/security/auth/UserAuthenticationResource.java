@@ -119,9 +119,7 @@ public class UserAuthenticationResource {
       return forbidden();
     }
 
-    if (request != null) {
-      AuthenticationUtil.revalidateSession(request, authentication);
-    }
+    AuthenticationUtil.revalidateSession(request, authentication);
 
     if(isWebappsAuthenticationLoggingEnabled(processEngine)) {
       LOGGER.infoWebappSuccessfulLogin(username.replaceAll("[\n\r]", "_"));

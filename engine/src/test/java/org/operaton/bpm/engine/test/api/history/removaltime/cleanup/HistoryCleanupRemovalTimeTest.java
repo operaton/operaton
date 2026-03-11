@@ -1202,7 +1202,7 @@ class HistoryCleanupRemovalTimeTest {
       .sum();
 
     // then
-    assertThat(removedBatchesSum).isEqualTo(1L);
+    assertThat(removedBatchesSum).isOne();
   }
 
   @Test
@@ -1225,7 +1225,7 @@ class HistoryCleanupRemovalTimeTest {
     ClockUtil.setCurrentTime(addDays(END_DATE, 5));
 
     // assume
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
 
     // when
     runHistoryCleanup();
@@ -1254,7 +1254,7 @@ class HistoryCleanupRemovalTimeTest {
     ClockUtil.setCurrentTime(addDays(END_DATE, 5));
 
     // assume
-    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isEqualTo(1L);
+    assertThat(managementService.getUniqueTaskWorkerCount(null, null)).isOne();
 
     // when
     runHistoryCleanup();
@@ -1265,7 +1265,7 @@ class HistoryCleanupRemovalTimeTest {
       .sum();
 
     // then
-    assertThat(removedMetricsSum).isEqualTo(1L);
+    assertThat(removedMetricsSum).isOne();
   }
 
   // parallelism test cases ////////////////////////////////////////////////////////////////////////////////////////////
@@ -2110,7 +2110,7 @@ class HistoryCleanupRemovalTimeTest {
     CleanableHistoricBatchReportResult report = historyService.createCleanableHistoricBatchReport().singleResult();
 
     // then
-    assertThat(report.getCleanableBatchesCount()).isEqualTo(1L);
+    assertThat(report.getCleanableBatchesCount()).isOne();
     assertThat(report.getFinishedBatchesCount()).isZero();
 
     // cleanup

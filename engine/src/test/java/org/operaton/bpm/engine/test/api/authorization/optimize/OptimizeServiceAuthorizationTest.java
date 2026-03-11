@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.authorization.optimize;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -67,7 +66,7 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.authorization.Resources.TENANT;
 import static org.operaton.bpm.engine.authorization.Resources.USER;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @Parameterized
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -95,7 +94,7 @@ public class OptimizeServiceAuthorizationTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
       {(Function<OptimizeService, List<?>>) optimizeService ->
         optimizeService.getCompletedHistoricActivityInstances(new Date(0L), null, 10)},
       {(Function<OptimizeService, List<?>>) optimizeService ->
@@ -189,17 +188,12 @@ public class OptimizeServiceAuthorizationTest {
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
     authRule.createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
 
-    try {
-      // when
-      methodToTest.apply(optimizeService);
-      fail("Exception expected: It should not be possible to retrieve the data");
-    } catch (AuthorizationException e) {
-      // then
-      String exceptionMessage = e.getMessage();
-      testRule.assertTextPresent(userId, exceptionMessage);
-      testRule.assertTextPresent(READ.getName(), exceptionMessage);
-      testRule.assertTextPresent(TENANT.resourceName(), exceptionMessage);
-    }
+    // when/then
+    assertThatThrownBy(() -> methodToTest.apply(optimizeService))
+      .isInstanceOf(AuthorizationException.class)
+      .extracting(Throwable::getMessage)
+      .asString()
+      .contains(userId, READ.getName(), TENANT.resourceName());
   }
 
   @TestTemplate
@@ -209,17 +203,12 @@ public class OptimizeServiceAuthorizationTest {
     authRule.createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
     authRule.createGrantAuthorization(TENANT, ANY, userId, READ);
 
-    try {
-      // when
-      methodToTest.apply(optimizeService);
-      fail("Exception expected: It should not be possible to retrieve the data");
-    } catch (AuthorizationException e) {
-      // then
-      String exceptionMessage = e.getMessage();
-      testRule.assertTextPresent(userId, exceptionMessage);
-      testRule.assertTextPresent(READ_HISTORY.getName(), exceptionMessage);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), exceptionMessage);
-    }
+    // when/then
+    assertThatThrownBy(() -> methodToTest.apply(optimizeService))
+      .isInstanceOf(AuthorizationException.class)
+      .extracting(Throwable::getMessage)
+      .asString()
+      .contains(userId, READ_HISTORY.getName(), PROCESS_DEFINITION.resourceName());
   }
 
   @TestTemplate
@@ -230,17 +219,12 @@ public class OptimizeServiceAuthorizationTest {
     authRule.createGrantAuthorization(DECISION_DEFINITION, ANY, userId, READ_HISTORY);
     authRule.createGrantAuthorization(TENANT, ANY, userId, READ);
 
-    try {
-      // when
-      methodToTest.apply(optimizeService);
-      fail("Exception expected: It should not be possible to retrieve the data");
-    } catch (AuthorizationException e) {
-      // then
-      String exceptionMessage = e.getMessage();
-      testRule.assertTextPresent(userId, exceptionMessage);
-      testRule.assertTextPresent(READ_HISTORY.getName(), exceptionMessage);
-      testRule.assertTextPresent(PROCESS_DEFINITION.resourceName(), exceptionMessage);
-    }
+    // when/then
+    assertThatThrownBy(() -> methodToTest.apply(optimizeService))
+      .isInstanceOf(AuthorizationException.class)
+      .extracting(Throwable::getMessage)
+      .asString()
+      .contains(userId, READ_HISTORY.getName(), PROCESS_DEFINITION.resourceName());
   }
 
   @TestTemplate
@@ -250,17 +234,12 @@ public class OptimizeServiceAuthorizationTest {
     authRule.createGrantAuthorization(PROCESS_DEFINITION, ANY, userId, READ_HISTORY);
     authRule.createGrantAuthorization(TENANT, ANY, userId, READ);
 
-    try {
-      // when
-      methodToTest.apply(optimizeService);
-      fail("Exception expected: It should not be possible to retrieve the data");
-    } catch (AuthorizationException e) {
-      // then
-      String exceptionMessage = e.getMessage();
-      testRule.assertTextPresent(userId, exceptionMessage);
-      testRule.assertTextPresent(READ_HISTORY.getName(), exceptionMessage);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), exceptionMessage);
-    }
+    // when/then
+    assertThatThrownBy(() -> methodToTest.apply(optimizeService))
+      .isInstanceOf(AuthorizationException.class)
+      .extracting(Throwable::getMessage)
+      .asString()
+      .contains(userId, READ_HISTORY.getName(), DECISION_DEFINITION.resourceName());
   }
 
   @TestTemplate
@@ -271,17 +250,12 @@ public class OptimizeServiceAuthorizationTest {
     authRule.createGrantAuthorization(DECISION_DEFINITION, TEST_DECISION, userId, READ_HISTORY);
     authRule.createGrantAuthorization(TENANT, ANY, userId, READ);
 
-    try {
-      // when
-      methodToTest.apply(optimizeService);
-      fail("Exception expected: It should not be possible to retrieve the data");
-    } catch (AuthorizationException e) {
-      // then
-      String exceptionMessage = e.getMessage();
-      testRule.assertTextPresent(userId, exceptionMessage);
-      testRule.assertTextPresent(READ_HISTORY.getName(), exceptionMessage);
-      testRule.assertTextPresent(DECISION_DEFINITION.resourceName(), exceptionMessage);
-    }
+    // when/then
+    assertThatThrownBy(() -> methodToTest.apply(optimizeService))
+      .isInstanceOf(AuthorizationException.class)
+      .extracting(Throwable::getMessage)
+      .asString()
+      .contains(userId, READ_HISTORY.getName(), DECISION_DEFINITION.resourceName());
   }
 
   @TestTemplate

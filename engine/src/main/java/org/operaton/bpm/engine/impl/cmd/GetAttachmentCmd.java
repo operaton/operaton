@@ -16,21 +16,15 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.AttachmentEntity;
 import org.operaton.bpm.engine.task.Attachment;
 
-
 /**
  * @author Tom Baeyens
  */
-public class GetAttachmentCmd implements Command<Attachment>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetAttachmentCmd implements Command<Attachment> {
   protected String attachmentId;
 
   public GetAttachmentCmd(String attachmentId) {

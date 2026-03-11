@@ -58,7 +58,7 @@ class HistoricTaskInstanceUpdateTest {
     taskService.saveTask(task);
 
     taskService.complete(task.getId());
-    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricTaskInstanceQuery().count()).isOne();
 
     HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().singleResult();
     assertThat(historicTaskInstance.getName()).isEqualTo("Updated name");

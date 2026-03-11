@@ -31,7 +31,7 @@ var pagesModule = angular.module('cam.cockpit.pages', [
   processDefinitionModule.name,
   processInstanceModule.name,
   decisionDefinitionModule.name,
-  decisionInstanceModule.name
+  decisionInstanceModule.name,
 ]);
 
 pagesModule.config(dashboard);

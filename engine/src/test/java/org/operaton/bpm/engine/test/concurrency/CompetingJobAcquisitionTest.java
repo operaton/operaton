@@ -38,6 +38,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * This test covers the behavior of two competing JobAcquisition threads.
  *
+ * <p>
  * In the test:
  * 1. The first JobAcquisition thread is started.
  * 1.1. The first JobAcquisition thread attempts to acquire the job, and blocks.
@@ -48,6 +49,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * 5.1. The OptimisticLockingListener on the second JobAcquisition thread handles
  *      the OptimisticLockingException by excluding the failed jobs.
  * 6. The second JobAcquisition thread acquires no jobs, but finishes without failing.
+ * </p>
  *
  * @author Tom Baeyens
  */

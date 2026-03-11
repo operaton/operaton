@@ -51,6 +51,9 @@ public class CaseImpl extends CmmnElementImpl implements Case {
   protected static ChildElementCollection<OutputCaseParameter> outputCollection;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use caseRolesChild instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<CaseRole> caseRolesCollection;
 
@@ -72,6 +75,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Collection<CaseRole> getCaseRoles() {
     return caseRolesCollection.get(this);
   }
@@ -116,20 +120,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
     caseFileModelChild.setChild(this, caseFileModel);
   }
 
-  @Override
-  public Integer getOperatonHistoryTimeToLive() {
-    String ttl = getOperatonHistoryTimeToLiveString();
-    if (ttl != null) {
-      return Integer.parseInt(ttl);
-    }
-    return null;
-  }
-
-  @Override
-  public void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
-    setOperatonHistoryTimeToLiveString(String.valueOf(historyTimeToLive));
-  }
-
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Case.class, CMMN_ELEMENT_CASE)
         .extendsType(CmmnElement.class)
@@ -140,7 +131,7 @@ public class CaseImpl extends CmmnElementImpl implements Case {
         .build();
 
     operatonHistoryTimeToLive = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE)
-        .namespace(CAMUNDA_NS)
+        .namespace(OPERATON_NS)
         .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

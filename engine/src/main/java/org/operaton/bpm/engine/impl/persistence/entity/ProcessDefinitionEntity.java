@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
 import java.util.*;
 
 import org.operaton.bpm.engine.delegate.Expression;
@@ -39,14 +38,11 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.task.IdentityLinkType;
 
-
 /**
  * @author Tom Baeyens
  * @author Daniel Meyer
  */
 public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements ProcessDefinition, ResourceDefinitionEntity<ProcessDefinitionEntity>, DbEntity, HasDbRevision {
-
-  @Serial private static final long serialVersionUID = 1L;
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   protected String key;
@@ -56,20 +52,20 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   protected String deploymentId;
   protected String resourceName;
   protected Integer historyLevel;
-  protected StartFormHandler startFormHandler;
-  protected FormDefinition startFormDefinition;
+  protected transient StartFormHandler startFormHandler;
+  protected transient FormDefinition startFormDefinition;
   protected String diagramResourceName;
   protected boolean isGraphicalNotationDefined;
-  protected Map<String, TaskDefinition> taskDefinitions;
+  protected transient Map<String, TaskDefinition> taskDefinitions;
   protected boolean hasStartFormKey;
   protected int suspensionState = SuspensionState.ACTIVE.getStateCode();
   protected String tenantId;
   protected String versionTag;
   protected Integer historyTimeToLive;
   protected boolean isIdentityLinksInitialized;
-  protected List<IdentityLinkEntity> definitionIdentityLinkEntities = new ArrayList<>();
-  protected Set<Expression> candidateStarterUserIdExpressions = new HashSet<>();
-  protected Set<Expression> candidateStarterGroupIdExpressions = new HashSet<>();
+  protected transient List<IdentityLinkEntity> definitionIdentityLinkEntities = new ArrayList<>();
+  protected transient Set<Expression> candidateStarterUserIdExpressions = new HashSet<>();
+  protected transient Set<Expression> candidateStarterGroupIdExpressions = new HashSet<>();
   protected boolean isStartableInTasklist;
 
   // firstVersion is true, when version == 1 or when
@@ -123,9 +119,6 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
     ensureNotSuspended();
 
     ExecutionEntity processInstance = (ExecutionEntity) createProcessInstanceForInitial(initial);
-
-    // do not reset executions (CAM-2557)!
-    // processInstance.setExecutions(new ArrayList<ExecutionEntity>());
 
     processInstance.setProcessDefinition(processDefinition);
 
@@ -188,7 +181,7 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
 
   @Override
   public String toString() {
-    return "ProcessDefinitionEntity["+id+"]";
+    return "ProcessDefinitionEntity[%s]".formatted(id);
   }
 
   /**
@@ -198,7 +191,6 @@ public class ProcessDefinitionEntity extends ProcessDefinitionImpl implements Pr
   @Override
   public void updateModifiableFieldsFromEntity(ProcessDefinitionEntity updatingProcessDefinition) {
     if (this.key.equals(updatingProcessDefinition.key) && this.deploymentId.equals(updatingProcessDefinition.deploymentId)) {
-      // TODO: add a guard once the mismatch between revisions in deployment cache and database has been resolved
       this.revision = updatingProcessDefinition.revision;
       this.suspensionState = updatingProcessDefinition.suspensionState;
       this.historyTimeToLive = updatingProcessDefinition.historyTimeToLive;

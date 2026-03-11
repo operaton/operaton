@@ -84,11 +84,11 @@ public class SignallableActivityBehaviorResolutionTest extends AbstractFoxPlatfo
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("testResolveClassFromJobExecutor");
 
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId()).count()).isOne();
 
     runtimeService.signal(processInstance.getId());
 

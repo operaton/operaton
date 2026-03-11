@@ -17,19 +17,20 @@
 
 'use strict';
 
-var callActivityInstanceOverlay = require('../../../../../../client/scripts/components/callActivityOverlays/instance')(
-  'runtime'
-);
+var callActivityInstanceOverlay =
+  require('../../../../../../client/scripts/components/callActivityOverlays/instance')(
+    'runtime',
+  );
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView(
       'cockpit.processInstance.diagram.plugin',
       {
         id: 'activity-instance-call-activity-overlay',
-        overlay: callActivityInstanceOverlay
-      }
+        overlay: callActivityInstanceOverlay,
+      },
     );
-  }
+  },
 ];

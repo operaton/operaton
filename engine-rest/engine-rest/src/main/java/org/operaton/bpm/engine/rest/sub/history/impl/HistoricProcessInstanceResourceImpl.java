@@ -43,7 +43,7 @@ public class HistoricProcessInstanceResourceImpl implements HistoricProcessInsta
     HistoricProcessInstance instance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
 
     if (instance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic process instance with id " + processInstanceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic process instance with id %s does not exist".formatted(processInstanceId));
     }
 
     return HistoricProcessInstanceDto.fromHistoricProcessInstance(instance);
@@ -61,7 +61,7 @@ public class HistoricProcessInstanceResourceImpl implements HistoricProcessInsta
     } catch (AuthorizationException e) {
       throw e;
     } catch (ProcessEngineException e) {
-      throw new InvalidRequestException(Status.NOT_FOUND, e, "Historic process instance with id " + processInstanceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, e, "Historic process instance with id %s does not exist".formatted(processInstanceId));
     }
   }
 

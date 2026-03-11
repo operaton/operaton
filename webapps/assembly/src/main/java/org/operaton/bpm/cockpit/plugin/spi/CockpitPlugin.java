@@ -24,10 +24,14 @@ import org.operaton.bpm.webapp.plugin.spi.AppPlugin;
  * The service provider interface (SPI) that must be provided by
  * a cockpit plugin.
  *
+ * <p>
  * A cockpit plugin may provide additional MyBatis mapping files, see {@link #getMappingFiles()}.
+ * </p>
  *
+ * <p>
  * Plugin developers should not use this interface directly but use
  * {@link org.operaton.bpm.cockpit.plugin.spi.impl.AbstractCockpitPlugin} as a base class.
+ * </p>
  *
  * @author nico.rehwaldt
  *

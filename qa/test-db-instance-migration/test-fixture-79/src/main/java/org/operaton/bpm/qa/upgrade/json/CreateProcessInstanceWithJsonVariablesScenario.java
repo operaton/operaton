@@ -47,18 +47,16 @@ public final class CreateProcessInstanceWithJsonVariablesScenario {
 
   @DescribesScenario("initProcessInstanceWithDifferentVariables")
   public static ScenarioSetup initProcessInstance() {
-    return new ScenarioSetup() {
-      public void execute(ProcessEngine engine, String scenarioName) {
-        // given
-        ProcessInstance processInstance = engine.getRuntimeService().startProcessInstanceByKey("Process", "processWithJsonVariables79");
-        // when
-        Execution execution = engine.getRuntimeService().createExecutionQuery().processInstanceId(processInstance.getId()).singleResult();
-        engine.getRuntimeService().setVariable(execution.getId(), "objectVariable", createObjectVariable());
-        engine.getRuntimeService().setVariable(execution.getId(), "plainTypeArrayVariable", createPlainTypeArray());
-        engine.getRuntimeService().setVariable(execution.getId(), "notGenericObjectListVariable", createNotGenericObjectList());
-        engine.getRuntimeService().setVariable(execution.getId(), "serializedMapVariable", createSerializedMap());
+    return (engine, scenarioName) -> {
+      // given
+      ProcessInstance processInstance = engine.getRuntimeService().startProcessInstanceByKey("Process", "processWithJsonVariables79");
+      // when
+      Execution execution = engine.getRuntimeService().createExecutionQuery().processInstanceId(processInstance.getId()).singleResult();
+      engine.getRuntimeService().setVariable(execution.getId(), "objectVariable", createObjectVariable());
+      engine.getRuntimeService().setVariable(execution.getId(), "plainTypeArrayVariable", createPlainTypeArray());
+      engine.getRuntimeService().setVariable(execution.getId(), "notGenericObjectListVariable", createNotGenericObjectList());
+      engine.getRuntimeService().setVariable(execution.getId(), "serializedMapVariable", createSerializedMap());
 
-      }
     };
   }
 
@@ -74,14 +72,14 @@ public final class CreateProcessInstanceWithJsonVariablesScenario {
     orderDetails.setPrice(32000.45);
     orderDetails.setRoundedPrice(32000);
 
-    List<String> currencies = new ArrayList<String>();
+    List<String> currencies = new ArrayList<>();
     currencies.add("euro");
     currencies.add("dollar");
     orderDetails.setCurrencies(currencies);
 
     order.setOrderDetails(orderDetails);
 
-    List<RegularCustomer> customers = new ArrayList<RegularCustomer>();
+    List<RegularCustomer> customers = new ArrayList<>();
 
     customers.add(new RegularCustomer("Kermit", 1354539722));
     customers.add(new RegularCustomer("Waldo", 1320325322));

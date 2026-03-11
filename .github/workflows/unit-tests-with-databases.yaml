@@ -1,0 +1,90 @@
+name: Unit Tests with Databases
+
+on:
+  workflow_dispatch:
+    inputs:
+      database:
+        description: 'Database to test against'
+        type: choice
+        required: true
+        default: '["h2-in-memory"]'
+        options:
+          - '["h2-in-memory"]'
+          - '["postgresql"]'
+          - '["postgresql-xa"]'
+          - '["mysql"]'
+          - '["mariadb"]'
+          - '["oracle"]'
+          - '["db2"]'
+          - '["db2-115"]'
+          - '["sqlserver"]'
+          - '["h2-in-memory", "postgresql", "mysql", "mariadb", "oracle", "db2", "sqlserver"]'
+      java_version:
+        description: 'Java version to use'
+        type: choice
+        required: true
+        default: '17'
+        options:
+          - '17'
+          - '21'
+          - '25'
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}-${{ github.event.inputs.database }}"
+  cancel-in-progress: true
+
+jobs:
+  unit-tests:
+    name: Unit Tests (${{ matrix.database }})
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      checks: write
+    strategy:
+      fail-fast: false
+      matrix:
+        database: ${{ fromJson(github.event.inputs.database) }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Cache Maven packages
+        uses: actions/cache@v5
+        with:
+          path: ~/.m2
+          key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        env:
+          JAVA_VERSION: ${{ github.event.inputs.java_version }}
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Run Unit Tests
+        id: maven-unit-tests
+        shell: bash
+        run: |
+          .devenv/scripts/build/build-and-run-unit-tests.sh --db=${{ matrix.database }}
+
+      - name: Publish Test Report
+        if: always()
+        uses: mikepenz/action-junit-report@49b2ca06f62aa7ef83ae6769a2179271e160d8e4 #v6.3.1
+        with:
+          report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
+          require_passed_tests: true
+          check_name: Test Report (${{ matrix.database }})
+
+      - name: Upload Test Reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-reports-${{ matrix.database }}
+          path: |
+            ${{ github.workspace }}/**/target/surefire-reports/**
+            ${{ github.workspace }}/**/target/failsafe-reports/**
+          retention-days: 30

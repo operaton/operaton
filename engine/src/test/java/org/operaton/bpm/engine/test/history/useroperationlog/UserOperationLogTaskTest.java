@@ -61,13 +61,13 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // expect: one entry for process instance creation,
     //         no entry for the task creation by process engine
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     completeTestProcess();
 
     // expect: one entry for the task completion
     query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     UserOperationLogEntry complete = query.singleResult();
     assertThat(complete.getProperty()).isEqualTo(DELETE);
     assertThat(Boolean.parseBoolean(complete.getNewValue())).isTrue();
@@ -84,7 +84,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the task assignment
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_ASSIGN);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry assign = query.singleResult();
@@ -105,7 +105,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the owner change
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_SET_OWNER);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry change = query.singleResult();
@@ -126,7 +126,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the priority update
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_SET_PRIORITY);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: correct priority set
     UserOperationLogEntry userOperationLogEntry = query.singleResult();
@@ -168,7 +168,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetName");
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -192,7 +192,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetDescription");
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -218,7 +218,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetDueDate");
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -243,7 +243,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails("SetFollowUpDate");
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry result = query.singleResult();
 
@@ -265,7 +265,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the claim
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_CLAIM);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry claim = query.singleResult();
@@ -308,7 +308,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the resolving
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_RESOLVE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry log = query.singleResult();
@@ -327,7 +327,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // expect: one entry for the completion
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: delete
     UserOperationLogEntry log = query.property("delete").singleResult();
@@ -377,7 +377,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_DELETE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry log = query.singleResult();
@@ -400,7 +400,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
 
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry log = query.singleResult();
@@ -437,7 +437,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_COMPLETE);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry entry = query.singleResult();
     assertThat(entry).isNotNull();
@@ -473,10 +473,10 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
     // then
     UserOperationLogQuery query = historyService.createUserOperationLogQuery();
     assertThat(query.count()).isEqualTo(4);
-    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count()).isEqualTo(1);
-    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_SUSPEND).count()).isEqualTo(1);
-    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_RESOLVE).count()).isEqualTo(1);
-    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_DELETE).count()).isEqualTo(1);
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count()).isOne();
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_SUSPEND).count()).isOne();
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_RESOLVE).count()).isOne();
+    assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_DELETE).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/history/oneTaskProcess.bpmn20.xml"})
@@ -553,7 +553,7 @@ class UserOperationLogTaskTest extends AbstractUserOperationLogTest {
             .createUserOperationLogQuery()
             .entityType(EntityTypes.TASK);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry log = query.singleResult();
     assertThat(log.getProcessDefinitionKey()).isEqualTo("process");

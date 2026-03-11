@@ -38,7 +38,7 @@ import org.operaton.bpm.engine.management.JobDefinition;
  */
 public class EntityTypeComparatorForModifications implements Comparator<Class<?>> {
 
-  public static final Map<Class<?>, Integer> TYPE_ORDER = new HashMap<>();
+  private static final Map<Class<?>, Integer> TYPE_ORDER = new HashMap<>();
 
   static {
 

@@ -52,10 +52,6 @@ public class SessionCookieFilter implements Filter {
     }
   }
 
-  @Override
-  public void destroy() {
-  }
-
   protected class SameSiteResponseProxy extends HttpServletResponseWrapper {
 
     protected HttpServletResponse response;

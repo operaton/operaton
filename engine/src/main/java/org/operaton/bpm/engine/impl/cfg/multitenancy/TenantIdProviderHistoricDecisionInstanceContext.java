@@ -24,7 +24,6 @@ import org.operaton.bpm.engine.repository.DecisionDefinition;
  * Provides information about a historic decision instance to a {@link TenantIdProvider} implementation.
  *
  * @author Kristin Polenz
- * @since 7.5
  */
 public class TenantIdProviderHistoricDecisionInstanceContext {
 

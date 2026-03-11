@@ -64,10 +64,10 @@ class DefaultDatasourceConfigurationTest {
   @Test
   void operatonTransactionManagerTest() {
     defaultDatasourceConfiguration.dataSource = mock(DataSource.class);
-    PlatformTransactionManager operatonTransactionManager = mock(PlatformTransactionManager.class);
-    defaultDatasourceConfiguration.operatonTransactionManager = operatonTransactionManager;
+    PlatformTransactionManager transactionManager = mock(PlatformTransactionManager.class);
+    defaultDatasourceConfiguration.operatonTransactionManager = transactionManager;
     defaultDatasourceConfiguration.preInit(configuration);
-    assertThat(configuration.getTransactionManager()).isSameAs(operatonTransactionManager);
+    assertThat(configuration.getTransactionManager()).isSameAs(transactionManager);
   }
 
   @Test

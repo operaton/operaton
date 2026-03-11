@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -47,9 +47,9 @@ public class DeployProcessArchivesStep extends DeploymentOperationStep {
   @Override
   public void performOperationStep(DeploymentOperation operationContext) {
 
-    Map<URL, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
+    Map<URI, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
 
-    for (Entry<URL, ProcessesXml> processesXml : processesXmls.entrySet()) {
+    for (Entry<URI, ProcessesXml> processesXml : processesXmls.entrySet()) {
       for (ProcessArchiveXml processArchive : processesXml.getValue().getProcessArchives()) {
         // for each process archive add an individual operation step
         operationContext.addStep(createDeployProcessArchiveStep(processArchive, processesXml.getKey()));
@@ -57,7 +57,7 @@ public class DeployProcessArchivesStep extends DeploymentOperationStep {
     }
   }
 
-  protected DeployProcessArchiveStep createDeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URL url) {
-    return new DeployProcessArchiveStep(parsedProcessArchive, url);
+  protected DeployProcessArchiveStep createDeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URI uri) {
+    return new DeployProcessArchiveStep(parsedProcessArchive, uri);
   }
 }

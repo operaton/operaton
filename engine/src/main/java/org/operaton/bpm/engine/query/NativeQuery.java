@@ -31,8 +31,10 @@ public interface NativeQuery<T extends NativeQuery< ? , ? >, U extends Object> {
    * Hand in the SQL statement you want to execute. BEWARE: if you need a count you have to hand in a count() statement
    * yourself, otherwise the result will be treated as lost of Activiti entities.
    *
+   * <p>
    * If you need paging you have to insert the pagination code yourself. We skipped doing this for you
    * as this is done really different on some databases (especially MS-SQL / DB2)
+   * </p>
    */
   T sql(String selectClause);
 

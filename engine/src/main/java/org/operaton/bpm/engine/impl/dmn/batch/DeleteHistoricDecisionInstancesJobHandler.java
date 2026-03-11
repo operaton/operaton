@@ -32,6 +32,8 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 public class DeleteHistoricDecisionInstancesJobHandler extends AbstractBatchJobHandler<BatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_HISTORIC_DECISION_INSTANCE_DELETION);
+  private static final DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter JSON_CONVERTER =
+      new DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -39,7 +41,7 @@ public class DeleteHistoricDecisionInstancesJobHandler extends AbstractBatchJobH
   }
 
   protected DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return DeleteHistoricDecisionInstanceBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

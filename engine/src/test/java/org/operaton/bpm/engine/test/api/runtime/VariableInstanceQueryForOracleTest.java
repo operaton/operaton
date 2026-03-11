@@ -18,8 +18,9 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -30,7 +31,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.assertj.core.api.Assumptions.assumeThat;
 
 class VariableInstanceQueryForOracleTest {
 
@@ -39,97 +40,27 @@ class VariableInstanceQueryForOracleTest {
   @RegisterExtension
   ProcessEngineTestExtension testRule = new ProcessEngineTestExtension(engineRule);
 
-  @Test
-  void testQueryWhen0InstancesActive() {
+  @ParameterizedTest
+  @ValueSource(ints = {0, 1, 1000, 1001, 2001})
+  void queryGivenNumberOfInstancesActive(int numberOfActiveInstances) {
     // given
-    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-
-    // then
-    List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery().list();
-    assertThat(variables).isEmpty();
-  }
-
-  @Test
-  void testQueryWhen1InstanceActive() {
-    // given
-    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
+    assumeThat("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()))
+      .isTrue();
     RuntimeService runtimeService = engineRule.getRuntimeService();
     testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
+    String[] ids = new String[numberOfActiveInstances];
 
     // when
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
+    for (int i = 0; i < numberOfActiveInstances; i++) {
+      ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
         Variables.createVariables().putValue("foo", "bar"));
-    String activityInstanceId = runtimeService.getActivityInstance(processInstance.getId()).getId();
-
-    // then
-    List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
-        .activityInstanceIdIn(activityInstanceId).list();
-    assertThat(variables).hasSize(1);
-  }
-
-  @Test
-  void testQueryWhen1000InstancesActive() {
-    // given
-    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-    testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
-    String[] ids = new String[1000];
-
-    // when
-    for (int i = 0; i < 1000; i++) {
-      ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
-          Variables.createVariables().putValue("foo", "bar"));
       String activityInstanceId = runtimeService.getActivityInstance(processInstance.getId()).getId();
       ids[i] = activityInstanceId;
     }
 
     // then
     List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
-        .activityInstanceIdIn(ids).list();
-    assertThat(variables).hasSize(1000);
-  }
-
-  @Test
-  void testQueryWhen1001InstancesActive() {
-    // given
-    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-    testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
-    String[] ids = new String[1001];
-
-    // when
-    for (int i = 0; i < 1001; i++) {
-      ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
-          Variables.createVariables().putValue("foo", "bar"));
-      String activityInstanceId = runtimeService.getActivityInstance(processInstance.getId()).getId();
-      ids[i] = activityInstanceId;
-    }
-
-    // then
-    List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
-        .activityInstanceIdIn(ids).list();
-    assertThat(variables).hasSize(1001);
-  }
-
-  @Test
-  void testQueryWhen2001InstancesActive() {
-    // given
-    assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    RuntimeService runtimeService = engineRule.getRuntimeService();
-    testRule.deploy(ProcessModels.TWO_TASKS_PROCESS);
-    String[] ids = new String[2001];
-
-    // when
-    for (int i = 0; i < 2001; i++) {
-      ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("Process",
-          Variables.createVariables().putValue("foo", "bar"));
-      String activityInstanceId = runtimeService.getActivityInstance(processInstance.getId()).getId();
-      ids[i] = activityInstanceId;
-    }
-
-    // then
-    List<VariableInstance> variables = engineRule.getRuntimeService().createVariableInstanceQuery()
-        .activityInstanceIdIn(ids).list();
-    assertThat(variables).hasSize(2001);
+      .activityInstanceIdIn(ids).list();
+    assertThat(variables).hasSize(numberOfActiveInstances);
   }
 }

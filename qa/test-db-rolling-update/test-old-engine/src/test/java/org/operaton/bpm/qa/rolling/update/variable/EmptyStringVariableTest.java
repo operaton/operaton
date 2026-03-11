@@ -16,11 +16,10 @@
  */
 package org.operaton.bpm.qa.rolling.update.variable;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.runtime.VariableInstance;
 import org.operaton.bpm.engine.runtime.VariableInstanceQuery;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -33,11 +32,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
  *
  */
 @ScenarioUnderTest("EmptyStringVariableScenario")
-public class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
+class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void shouldFindEmptyStringVariableWithValue() {
+  void shouldFindEmptyStringVariableWithValue() {
     //given
     VariableInstance variableInstance = rule.getRuntimeService().createVariableInstanceQuery()
         .variableName("myStringVar")
@@ -47,9 +46,9 @@ public class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
     assertThat(variableInstance.getValue(), is(""));
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void shouldQueryEmptyStringVariableWithValueEquals() {
+  void shouldQueryEmptyStringVariableWithValueEquals() {
     //given
     VariableInstanceQuery variableInstanceQuery = rule.getRuntimeService().createVariableInstanceQuery()
         .variableValueEquals("myStringVar", "");
@@ -58,9 +57,9 @@ public class EmptyStringVariableTest extends AbstractRollingUpdateTestCase {
     assertThat(variableInstanceQuery.count(), is(1L));
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void shouldQueryEmptyStringVariableWithValueNotEquals() {
+  void shouldQueryEmptyStringVariableWithValueNotEquals() {
     //given
     VariableInstanceQuery variableInstanceQuery = rule.getRuntimeService().createVariableInstanceQuery()
         .variableValueNotEquals("myStringVar", "");

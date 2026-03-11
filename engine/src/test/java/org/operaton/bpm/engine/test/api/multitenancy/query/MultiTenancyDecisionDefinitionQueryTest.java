@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,13 +74,13 @@ class MultiTenancyDecisionDefinitionQueryTest {
         .createDecisionDefinitionQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = repositoryService.
         createDecisionDefinitionQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -99,7 +98,7 @@ class MultiTenancyDecisionDefinitionQueryTest {
         .createDecisionDefinitionQuery()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -139,14 +138,14 @@ class MultiTenancyDecisionDefinitionQueryTest {
         .decisionDefinitionKey(DECISION_DEFINITION_KEY)
         .withoutTenantId();
     // one definition without tenant id
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = repositoryService
         .createDecisionDefinitionQuery()
         .decisionDefinitionKey(DECISION_DEFINITION_KEY)
         .tenantIdIn(TENANT_ONE);
     // one definition for tenant one
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -178,7 +177,7 @@ class MultiTenancyDecisionDefinitionQueryTest {
         .latestVersion()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
     assertThat(decisionDefinition.getTenantId()).isEqualTo(TENANT_ONE);
@@ -190,7 +189,7 @@ class MultiTenancyDecisionDefinitionQueryTest {
         .latestVersion()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     decisionDefinition = query.singleResult();
     assertThat(decisionDefinition.getTenantId()).isEqualTo(TENANT_TWO);
@@ -228,7 +227,7 @@ class MultiTenancyDecisionDefinitionQueryTest {
         .latestVersion()
         .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
     assertThat(decisionDefinition.getTenantId()).isNull();
@@ -311,31 +310,31 @@ class MultiTenancyDecisionDefinitionQueryTest {
     identityService.setAuthentication("user", null, null);
 
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
   void testQueryAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).includeDecisionDefinitionsWithoutTenantId().count()).isEqualTo(2L);
   }
 
   @Test
   void testQueryAuthenticatedTenants() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test

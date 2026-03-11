@@ -30,7 +30,7 @@ var Controller = [
   'dataDepend',
   '$location',
   'search',
-  function($scope, $modal, $q, camAPI, dataDepend, $location, search) {
+  function ($scope, $modal, $q, camAPI, dataDepend, $location, search) {
     var ProcessDefinition = camAPI.resource('process-definition');
 
     var processData = ($scope.processData = dataDepend.create($scope));
@@ -41,20 +41,20 @@ var Controller = [
       startableInTasklist: true,
       startablePermissionCheck: true,
       firstResult: 0,
-      maxResults: 15
+      maxResults: 15,
     };
 
     processData.provide(
       'processDefinitionQuery',
-      DEFAULT_PROCESS_DEFINITION_QUERY
+      DEFAULT_PROCESS_DEFINITION_QUERY,
     );
 
     processData.provide('processDefinitions', [
       'processDefinitionQuery',
-      function(processDefinitionQuery) {
+      function (processDefinitionQuery) {
         var deferred = $q.defer();
 
-        ProcessDefinition.list(processDefinitionQuery, function(err, res) {
+        ProcessDefinition.list(processDefinitionQuery, function (err, res) {
           if (err) {
             deferred.reject(err);
           } else {
@@ -63,38 +63,38 @@ var Controller = [
         });
 
         return deferred.promise;
-      }
+      },
     ]);
 
     processData.provide('currentProcessDefinitionId', {id: null});
 
     processData.provide('startForm', [
       'currentProcessDefinitionId',
-      function(currentProcessDefinitionId) {
+      function (currentProcessDefinitionId) {
         var deferred = $q.defer();
 
         if (!currentProcessDefinitionId.id) {
           deferred.resolve(null);
         } else {
-          ProcessDefinition.startForm(currentProcessDefinitionId, function(
-            err,
-            res
-          ) {
-            if (err) {
-              deferred.reject(err);
-            } else {
-              deferred.resolve(res);
-            }
-          });
+          ProcessDefinition.startForm(
+            currentProcessDefinitionId,
+            function (err, res) {
+              if (err) {
+                deferred.reject(err);
+              } else {
+                deferred.resolve(res);
+              }
+            },
+          );
         }
 
         return deferred.promise;
-      }
+      },
     ]);
 
     var modalResolved = true;
 
-    $scope.open = function(ignoreSearch) {
+    $scope.open = function (ignoreSearch) {
       if (!modalResolved) {
         return;
       }
@@ -105,7 +105,7 @@ var Controller = [
 
       processData.set(
         'processDefinitionQuery',
-        angular.copy(DEFAULT_PROCESS_DEFINITION_QUERY)
+        angular.copy(DEFAULT_PROCESS_DEFINITION_QUERY),
       );
       modalResolved = false;
       var modalInstance = $modal.open({
@@ -113,29 +113,29 @@ var Controller = [
         controller: 'camProcessStartModalCtrl',
         template: template,
         resolve: {
-          processData: function() {
+          processData: function () {
             return processData;
-          }
-        }
+          },
+        },
       });
 
       modalInstance.result.then(
-        function() {
+        function () {
           search.updateSilently({processStart: null, processTenant: null});
           modalResolved = true;
           $scope.$root.$broadcast('refresh');
           document.querySelector('.start-process-action a').focus();
         },
-        function() {
+        function () {
           search.updateSilently({processStart: null, processTenant: null});
           modalResolved = true;
           document.querySelector('.start-process-action a').focus();
-        }
+        },
       );
     };
 
     //open if deep-linked
-    var openFromUri = function() {
+    var openFromUri = function () {
       if (modalResolved && $location.search()['processStart']) {
         $scope.open(true);
       }
@@ -145,7 +145,7 @@ var Controller = [
     $scope.$on('shortcut:startProcess', $scope.open);
 
     openFromUri();
-  }
+  },
 ];
 
 var Configuration = function PluginConfiguration(ViewsProvider) {
@@ -153,7 +153,7 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
     id: 'start-process-action',
     template: startProcessActionTemplate,
     controller: Controller,
-    priority: 100
+    priority: 100,
   });
 };
 

@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -72,6 +72,7 @@ class MessageStartEventTest {
 
   @Test
   void testSameMessageNameFails() {
+    // given
     repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testSingleMessageStartEvent.bpmn20.xml")
@@ -80,11 +81,12 @@ class MessageStartEventTest {
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/otherProcessWithNewInvoiceMessage.bpmn20.xml");
+
     try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("there already is a message event subscription for the message with name");
+      // when/then
+      assertThatThrownBy(deploymentBuilder::deploy)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("there already is a message event subscription for the message with name");
     } finally {
       // clean db:
       List<org.operaton.bpm.engine.repository.Deployment> deployments = repositoryService.createDeploymentQuery().list();
@@ -100,29 +102,32 @@ class MessageStartEventTest {
   // SEE: https://app.camunda.com/jira/browse/CAM-1448
   @Test
   void testEmptyMessageNameFails() {
+    // given
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/MessageStartEventTest.testEmptyMessageNameFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Cannot have a message event subscription with an empty or missing name");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theStart");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Cannot have a message event subscription with an empty or missing name")
+      .satisfies(e -> {
+        ParseException pe = (ParseException) e;
+        assertThat(pe.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("theStart");
+      });
   }
 
   @Test
   void testSameMessageNameInSameProcessFails() {
+    // given
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource("org/operaton/bpm/engine/test/bpmn/event/message/testSameMessageNameInSameProcessFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot have more than one message event subscription with name 'newInvoiceMessage' for scope");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot have more than one message event subscription with name 'newInvoiceMessage' for scope");
   }
 
   @Test
@@ -264,13 +269,11 @@ class MessageStartEventTest {
 
     testRule.assertProcessEnded(processInstance.getId());
 
+    // when/then
     // starting the process using startProcessInstanceByKey is not possible:
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("has no default start activity");
-    }
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("has no default start activity");
 
   }
 
@@ -364,43 +367,41 @@ class MessageStartEventTest {
   @Test
   void testUsingExpressionWithDollarTagInMessageStartEventNameThrowsException() {
 
-    // given a process definition with a start message event that has a message name which contains an expression
+    // given
+    // a process definition with a start message event that has a message name which contains an expression
     String processDefinition =
         "org/operaton/bpm/engine/test/bpmn/event/message/" +
             "MessageStartEventTest.testUsingExpressionWithDollarTagInMessageStartEventNameThrowsException.bpmn20.xml";
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource(processDefinition);
-    try {
-      // when deploying the process
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // then a process engine exception should be thrown with a certain message
-      assertThat(e.getMessage()).contains("Invalid message name");
-      assertThat(e.getMessage()).contains("expressions in the message start event name are not allowed!");
-    }
+
+    // when/then
+    // deploying the process should throw a process engine exception with a certain message
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid message name")
+      .hasMessageContaining("expressions in the message start event name are not allowed!");
   }
 
   @Test
   void testUsingExpressionWithHashTagInMessageStartEventNameThrowsException() {
 
-    // given a process definition with a start message event that has a message name which contains an expression
+    // given
+    // a process definition with a start message event that has a message name which contains an expression
     String processDefinition =
         "org/operaton/bpm/engine/test/bpmn/event/message/" +
             "MessageStartEventTest.testUsingExpressionWithHashTagInMessageStartEventNameThrowsException.bpmn20.xml";
     var deploymentBuilder = repositoryService
           .createDeployment()
           .addClasspathResource(processDefinition);
-    try {
-      // when deploying the process
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      // then a process engine exception should be thrown with a certain message
-      assertThat(e.getMessage()).contains("Invalid message name");
-      assertThat(e.getMessage()).contains("expressions in the message start event name are not allowed!");
-    }
+
+    // when/then
+    // deploying the process should throw a process engine exception with a certain message
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid message name")
+      .hasMessageContaining("expressions in the message start event name are not allowed!");
   }
 
   //test fix CAM-10819

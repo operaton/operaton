@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.compensate;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,6 +37,7 @@ import org.operaton.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.event.EventType;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.bpm.engine.repository.DeploymentBuilder;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -62,6 +62,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer
@@ -87,20 +88,14 @@ class CompensateEventTest {
     final String PROCESS_MODEL_WITH_REF_AFTER = "org/operaton/bpm/engine/test/bpmn/event/compensate/compensation_reference-after.bpmn";
 
     //when model with ref before is deployed
-    org.operaton.bpm.engine.repository.Deployment deployment1 = repositoryService.createDeployment()
-            .addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE)
-            .deploy();
+    DeploymentBuilder deploymentBuilder1 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_BEFORE);
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder1.deploy())).doesNotThrowAnyException();
     //then no problem will occur
 
     //when model with ref after is deployed
-    org.operaton.bpm.engine.repository.Deployment deployment2 = repositoryService.createDeployment()
-            .addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER)
-            .deploy();
+    DeploymentBuilder deploymentBuilder2 = repositoryService.createDeployment().addClasspathResource(PROCESS_MODEL_WITH_REF_AFTER);
+    assertThatCode(() -> engineRule.manageDeployment(deploymentBuilder2.deploy())).doesNotThrowAnyException();
     //then also no problem should occur
-
-    //clean up
-    repositoryService.deleteDeployment(deployment1.getId());
-    repositoryService.deleteDeployment(deployment2.getId());
   }
 
   @Deployment
@@ -399,7 +394,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessVariableSnapshots() {
     // see referenced java delegates in the process definition.
 
-    List<String> hotels = Arrays.asList("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
+    List<String> hotels = List.of("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
 
     SetVariablesDelegate.setValues(hotels);
 
@@ -420,7 +415,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessWithCompensationEventSubprocessVariableSnapshots() {
     // see referenced java delegates in the process definition.
 
-    List<String> hotels = Arrays.asList("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
+    List<String> hotels = List.of("Rupert", "Vogsphere", "Milliways", "Taunton", "Ysolldins");
 
     SetVariablesDelegate.setValues(hotels);
 
@@ -442,7 +437,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessVariableSnapshotOfElementVariable() {
     Map<String, Object> variables = new HashMap<>();
     // multi instance collection
-    List<String> flights = Arrays.asList("STS-14", "STS-28");
+    List<String> flights = List.of("STS-14", "STS-28");
     variables.put("flights", flights);
 
     // see referenced java delegates in the process definition
@@ -473,7 +468,7 @@ class CompensateEventTest {
         .processInstanceId(processInstance.getId()).variableName("undoBookHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
@@ -493,7 +488,7 @@ class CompensateEventTest {
         .processInstanceId(processInstance.getId()).variableName("undoBookHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
@@ -511,7 +506,7 @@ class CompensateEventTest {
     HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookSecondHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
@@ -536,18 +531,18 @@ class CompensateEventTest {
     HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookSecondHotel");
 
     if (processEngineConfiguration.getHistoryLevel().getId() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_AUDIT) {
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getVariableName()).isEqualTo("undoBookSecondHotel");
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
       historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookFlight");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
 
       historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery().variableName("undoBookHotel");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(5);
     }
   }
@@ -803,10 +798,10 @@ class CompensateEventTest {
     completeTaskWithVariable("Validate Booking", "valid", false);
 
     // first - compensate book flight
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     completeTask("Cancel Flight");
     // second - compensate book hotel
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     completeTask("Cancel Hotel");
     // third - additional compensation handler
     completeTask("Update Customer Record");
@@ -826,7 +821,7 @@ class CompensateEventTest {
     completeTaskWithVariable("Validate Booking", "valid", false);
 
     // compensate the activity within this scope
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     completeTask("Cancel Hotel");
 
     testRule.assertProcessEnded(processInstanceId);
@@ -859,7 +854,7 @@ class CompensateEventTest {
   void testCompensateMiSubprocessWithCompensationEventSubProcess() {
     Map<String, Object> variables = new HashMap<>();
     // multi instance collection
-    variables.put("flights", Arrays.asList("STS-14", "STS-28"));
+    variables.put("flights", List.of("STS-14", "STS-28"));
 
     String processInstanceId = runtimeService.startProcessInstanceByKey("bookingProcess", variables).getId();
 
@@ -885,7 +880,7 @@ class CompensateEventTest {
   void testCompensateParallelMiSubprocessWithCompensationEventSubProcess() {
     Map<String, Object> variables = new HashMap<>();
     // multi instance collection
-    variables.put("flights", Arrays.asList("STS-14", "STS-28"));
+    variables.put("flights", List.of("STS-14", "STS-28"));
 
     String processInstanceId = runtimeService.startProcessInstanceByKey("bookingProcess", variables).getId();
 
@@ -1115,13 +1110,13 @@ class CompensateEventTest {
       HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService
           .createHistoricVariableInstanceQuery().variableName("compensateScope1Task");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(1);
 
       historicVariableInstanceQuery = historyService
           .createHistoricVariableInstanceQuery().variableName("compensateScope2Task");
 
-      assertThat(historicVariableInstanceQuery.count()).isEqualTo(1);
+      assertThat(historicVariableInstanceQuery.count()).isOne();
       assertThat(historicVariableInstanceQuery.list().get(0).getValue()).isEqualTo(1);
     }
 
@@ -1158,7 +1153,7 @@ class CompensateEventTest {
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_ACTIVITY)
-  @Disabled
+  @Disabled("Activity id at index 2 is 'subProcess' instead of 'subProcessEnd' - investigate")
   @Test
   void testDeleteInstanceWithEventScopeExecution()
   {
@@ -1223,7 +1218,7 @@ class CompensateEventTest {
     List<Task> tasks = taskService.createTaskQuery().taskName(taskName).list();
 
     assertThat(times)
-      .as("Actual there are " + tasks.size() + " open tasks with name '" + taskName + "'. Expected at least " + times)
+      .as("Actual there are %d open tasks with name '%s'. Expected at least %d".formatted(tasks.size(), taskName, times))
       .isLessThanOrEqualTo(tasks.size());
 
     Iterator<Task> taskIterator = tasks.iterator();
@@ -1235,7 +1230,7 @@ class CompensateEventTest {
 
   private void completeTaskWithVariable(String taskName, String variable, Object value) {
     Task task = taskService.createTaskQuery().taskName(taskName).singleResult();
-    assertThat(task).as("No open task with name '" + taskName + "'").isNotNull();
+    assertThat(task).as("No open task with name '%s'".formatted(taskName)).isNotNull();
 
     Map<String, Object> variables = new HashMap<>();
     if (variable != null) {

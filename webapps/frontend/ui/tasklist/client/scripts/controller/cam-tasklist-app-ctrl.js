@@ -17,7 +17,7 @@
 
 'use strict';
 
-var TasklistApp = (function() {
+var TasklistApp = (function () {
   function TasklistApp() {
     this.refreshProvider = null;
   }
@@ -31,7 +31,7 @@ module.exports = [
   '$window',
   '$interval',
   '$scope',
-  function(camAPI, configuration, $window, $interval, $scope) {
+  function (camAPI, configuration, $window, $interval, $scope) {
     // create a new tasklistApp
     $scope.tasklistApp = new TasklistApp();
     $scope.appVendor = configuration.getAppVendor();
@@ -49,7 +49,7 @@ module.exports = [
       }
 
       var userService = camAPI.resource('user');
-      userService.profile(auth.name, function(err, info) {
+      userService.profile(auth.name, function (err, info) {
         if (err) {
           $scope.userFullName = null;
           throw err;
@@ -58,19 +58,19 @@ module.exports = [
       });
     }
 
-    $scope.$on('authentication.changed', function(ev, auth) {
+    $scope.$on('authentication.changed', function (ev, auth) {
       getUserProfile(auth);
     });
 
     getUserProfile($scope.authentication);
 
     // app wide refresh event triggering
-    var refreshInterval = $interval(function() {
+    var refreshInterval = $interval(function () {
       $scope.$root.$broadcast('refresh');
     }, 10000);
 
-    $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function () {
       $interval.cancel(refreshInterval);
     });
-  }
+  },
 ];

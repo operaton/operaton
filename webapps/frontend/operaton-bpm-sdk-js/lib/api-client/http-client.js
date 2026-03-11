@@ -35,7 +35,7 @@ function noop() {}
  * @class
  * @memberof CamSDK.client
  */
-var HttpClient = function(config) {
+var HttpClient = function (config) {
   config = config || {};
 
   config.headers = config.headers || {};
@@ -54,7 +54,7 @@ var HttpClient = function(config) {
 
 function end(self, done, deferred) {
   done = done || noop;
-  return function(err, response) {
+  return function (err, response) {
     // TODO: investigate the possible problems related to response without content
     if (err || (!response.ok && !response.noContent)) {
       err =
@@ -65,7 +65,7 @@ function end(self, done, deferred) {
             response.req.method +
             ' request on ' +
             response.req.url +
-            ' failed'
+            ' failed',
         );
       if (response && response.body) {
         if (response.body.message) {
@@ -94,13 +94,13 @@ function end(self, done, deferred) {
 
     if (deferred) {
       deferred.resolve(
-        response.body ? response.body : response.text ? response.text : ''
+        response.body ? response.body : response.text ? response.text : '',
       );
     }
     done(
       null,
       response.body ? response.body : response.text ? response.text : '',
-      response.headers
+      response.headers,
     );
   };
 }
@@ -108,7 +108,7 @@ function end(self, done, deferred) {
 /**
  * Performs a POST HTTP request
  */
-HttpClient.prototype.post = function(path, options) {
+HttpClient.prototype.post = function (path, options) {
   options = options || {};
   var done = options.done || noop;
   var self = this;
@@ -122,17 +122,17 @@ HttpClient.prototype.post = function(path, options) {
   var isFieldOrAttach = false;
   // Buffer object is only available in node.js environement
   if (typeof Buffer !== 'undefined') {
-    Object.keys(options.fields || {}).forEach(function(field) {
+    Object.keys(options.fields || {}).forEach(function (field) {
       req.field(field, options.fields[field]);
       isFieldOrAttach = true;
     });
-    (options.attachments || []).forEach(function(file, idx) {
+    (options.attachments || []).forEach(function (file, idx) {
       req.attach('data_' + idx, new Buffer(file.content), file.name);
       isFieldOrAttach = true;
     });
   } else if (!!options.fields || !!options.attachments) {
     var err = new Error(
-      'Multipart request is only supported in node.js environement.'
+      'Multipart request is only supported in node.js environement.',
     );
     done(err);
     return deferred.reject(err);
@@ -151,7 +151,7 @@ HttpClient.prototype.post = function(path, options) {
 /**
  * Performs a GET HTTP request
  */
-HttpClient.prototype.get = function(path, options) {
+HttpClient.prototype.get = function (path, options) {
   var url = this.config.baseUrl + (path ? '/' + path : '');
   return this.load(url, options);
 };
@@ -159,7 +159,7 @@ HttpClient.prototype.get = function(path, options) {
 /**
  * Loads a resource using http GET
  */
-HttpClient.prototype.load = function(url, options) {
+HttpClient.prototype.load = function (url, options) {
   options = options || {};
   var done = options.done || noop;
   var self = this;
@@ -181,7 +181,7 @@ HttpClient.prototype.load = function(url, options) {
 /**
  * Performs a PUT HTTP request
  */
-HttpClient.prototype.put = function(path, options) {
+HttpClient.prototype.put = function (path, options) {
   options = options || {};
   var done = options.done || noop;
   var self = this;
@@ -203,7 +203,7 @@ HttpClient.prototype.put = function(path, options) {
 /**
  * Performs a DELETE HTTP request
  */
-HttpClient.prototype.del = function(path, options) {
+HttpClient.prototype.del = function (path, options) {
   options = options || {};
   var done = options.done || noop;
   var self = this;
@@ -225,7 +225,7 @@ HttpClient.prototype.del = function(path, options) {
 /**
  * Performs a OPTIONS HTTP request
  */
-HttpClient.prototype.options = function(path, options) {
+HttpClient.prototype.options = function (path, options) {
   options = options || {};
   var done = options.done || noop;
   var self = this;

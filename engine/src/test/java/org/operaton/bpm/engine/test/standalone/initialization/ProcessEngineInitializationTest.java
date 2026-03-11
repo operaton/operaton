@@ -22,7 +22,7 @@ import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Tom Baeyens
@@ -33,19 +33,18 @@ class ProcessEngineInitializationTest {
 
   @Test
   void testNoTables() {
+    // given
     var processEngineConfiguration = ProcessEngineConfiguration
       .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/notables.operaton.cfg.xml");
     processEngineConfiguration.setProcessEngineName("testProcessEngine");
-    try {
-      processEngineConfiguration.buildProcessEngine();
-      fail("expected exception");
-    } catch (Exception e) {
-      // OK
-      assertThat(e.getMessage()).contains("ENGINE-03057 There are no Operaton tables in the database. " +
+
+    // when/then
+    assertThatThrownBy(processEngineConfiguration::buildProcessEngine)
+      .isInstanceOf(Exception.class)
+      .hasMessageContaining("ENGINE-03057 There are no Operaton tables in the database. " +
         "Hint: Set <property name=\"databaseSchemaUpdate\" to value=\"true\" or value=\"create-drop\" " +
         "(use create-drop for testing only!) in bean processEngineConfiguration " +
         "in operaton.cfg.xml for automatic schema creation");
-    }
   }
 
   @Test

@@ -79,9 +79,8 @@ public abstract class AbstractTransactionContext implements TransactionContext {
     }
 
     public void afterCompletion(int status) {
-      if(isRolledBack(status) && TransactionState.ROLLED_BACK.equals(transactionState)) {
-        transactionListener.execute(commandContext);
-      } else if(isCommitted(status) && TransactionState.COMMITTED.equals(transactionState)) {
+      if ((isRolledBack(status) && TransactionState.ROLLED_BACK.equals(transactionState)) ||
+          (isCommitted(status) && TransactionState.COMMITTED.equals(transactionState))) {
         transactionListener.execute(commandContext);
       }
     }

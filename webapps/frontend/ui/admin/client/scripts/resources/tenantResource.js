@@ -20,7 +20,7 @@
 module.exports = [
   '$resource',
   'Uri',
-  function($resource, Uri) {
+  function ($resource, Uri) {
     return $resource(
       Uri.appUri('engine://engine/:engine/tenant/:tenantId/:action'),
       {tenantId: '@id'},
@@ -28,8 +28,8 @@ module.exports = [
         createTenant: {method: 'POST', params: {tenantId: 'create'}},
         update: {method: 'PUT'},
         OPTIONS: {method: 'OPTIONS', params: {}},
-        count: {method: 'GET', params: {tenantId: 'count'}}
-      }
+        count: {method: 'GET', params: {tenantId: 'count'}},
+      },
     );
-  }
+  },
 ];

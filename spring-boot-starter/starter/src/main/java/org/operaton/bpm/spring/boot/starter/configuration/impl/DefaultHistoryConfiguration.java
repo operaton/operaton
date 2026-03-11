@@ -38,7 +38,7 @@ public class DefaultHistoryConfiguration extends AbstractOperatonConfiguration i
       configuration.setHistory(historyLevel);
     }
     if (historyEventHandler != null) {
-      logger.debug("registered history event handler: {}", historyEventHandler.getClass());
+      LOG.registerCustomHistoryEventHandler(historyEventHandler.getClass());
       configuration.getCustomHistoryEventHandlers().add(historyEventHandler);
     }
   }

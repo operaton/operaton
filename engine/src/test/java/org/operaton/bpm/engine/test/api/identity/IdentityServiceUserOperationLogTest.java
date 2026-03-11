@@ -576,7 +576,7 @@ class IdentityServiceUserOperationLogTest {
   }
 
   protected void assertLog(String operation, String entity, String orgValue, String newValue) {
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     UserOperationLogEntry entry = query.singleResult();
     assertThat(entry.getOperationType()).isEqualTo(operation);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);

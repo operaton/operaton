@@ -23,15 +23,17 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 /**
  * A receive task is a wait state that waits for the receival of some message.
  *
+ * <p>
  * Currently, the only message that is supported is the external trigger,
  * given by calling the {@link RuntimeService#signal(String)} operation.
+ * </p>
  *
  * @author Joram Barrez
  */
 public class ReceiveTaskActivityBehavior extends TaskActivityBehavior {
 
   @Override
-  public void performExecution(ActivityExecution execution) throws Exception {
+  public void performExecution(ActivityExecution execution) {
     // Do nothing: waitstate behavior
   }
 

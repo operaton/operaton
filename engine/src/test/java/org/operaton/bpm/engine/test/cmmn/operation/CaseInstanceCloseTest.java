@@ -234,12 +234,9 @@ class CaseInstanceCloseTest {
 
     assertThat(caseInstance.isActive()).isTrue();
 
-    try {
-      // when
-      caseInstance.close();
-    } catch (CaseIllegalStateTransitionException e) {
-
-    }
+    assertThatThrownBy(caseInstance::close)
+      .isInstanceOf(CaseIllegalStateTransitionException.class)
+      .hasMessageContaining("The case instance must be in state '[completed|terminated|suspended]' to close it, but the state is 'active'.");
 
     // then
     assertThat(stateTransitionCollector.stateTransitions).isEmpty();

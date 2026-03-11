@@ -123,9 +123,8 @@ public class StrictTransportSecurityProvider extends HeaderSecurityProvider {
   }
 
   protected ProcessEngineException exceptionParametersCannotBeSet(String className) {
-    return new ProcessEngineException(className + ": cannot set " + VALUE.getName() +
-      " in conjunction with " + MAX_AGE.getName() + " or " +
-      INCLUDE_SUBDOMAINS_DISABLED.getName() + ".");
+    return new ProcessEngineException("%s: cannot set %s in conjunction with %s or %s.".formatted(
+        className, VALUE.getName(), MAX_AGE.getName(), INCLUDE_SUBDOMAINS_DISABLED.getName()));
   }
 
   protected String getParameterValue(Parameters parameter) {

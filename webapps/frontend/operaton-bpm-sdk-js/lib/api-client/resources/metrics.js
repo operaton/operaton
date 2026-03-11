@@ -41,7 +41,7 @@ Metrics.path = 'metrics';
  * @param  {String}   [params.endDate]
  * @param  {Function} done
  */
-Metrics.sum = function(params, done) {
+Metrics.sum = function (params, done) {
   var path = this.path + '/' + params.name + '/sum';
   delete params.name;
 
@@ -60,7 +60,7 @@ Metrics.sum = function(params, done) {
  * @param  {Integer}  [params.interval]    The interval for which the metrics should be aggregated. Time unit is seconds. Default: The interval is set to 15 minutes (900 seconds).
  * @param  {Function} done
  */
-Metrics.byInterval = function(params, done) {
+Metrics.byInterval = function (params, done) {
   return this.http.get(this.path, {data: params, done: done});
 };
 

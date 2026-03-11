@@ -27,6 +27,7 @@ import org.operaton.bpm.integrationtest.functional.ejb.beans.SingletonBeanClient
 import org.operaton.bpm.integrationtest.functional.ejb.beans.SingletonBeanDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -56,7 +57,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolution");
 
-    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), SingletonBeanDelegate.class.getName(), false);
 
@@ -64,7 +65,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -78,7 +79,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient");
 
-    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), SingletonBeanDelegate.class.getName(), false);
 
@@ -86,7 +87,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SingletonBeanDelegate.class.getName())).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -100,7 +101,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient").getId();
-      assertThat(runtimeService.getVariable(ids[i], SingletonBeanDelegate.class.getName())).as("Incovation=" + i).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], SingletonBeanDelegate.class.getName())).as("Incovation=" + i).isEqualTo(TRUE);
       runtimeService.setVariable(ids[i], SingletonBeanDelegate.class.getName(), false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -108,7 +109,7 @@ public class SingletonBeanDelegateTest extends AbstractFoxPlatformIntegrationTes
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      assertThat(runtimeService.getVariable(ids[i], SingletonBeanDelegate.class.getName())).as("Incovation=" + i).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], SingletonBeanDelegate.class.getName())).as("Incovation=" + i).isEqualTo(TRUE);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

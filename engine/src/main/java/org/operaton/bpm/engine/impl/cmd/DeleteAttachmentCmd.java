@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -28,14 +25,11 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
-public class DeleteAttachmentCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeleteAttachmentCmd implements Command<Object> {
   protected String attachmentId;
   protected String taskId;
 
@@ -55,12 +49,12 @@ public class DeleteAttachmentCmd implements Command<Object>, Serializable {
       attachment = (AttachmentEntity) commandContext
           .getAttachmentManager()
           .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);
-      ensureNotNull("No attachment exist for task id '" + taskId + " and attachmentId '" + attachmentId + "'.", "attachment", attachment);
+      ensureNotNull("No attachment exist for task id '%s' and attachmentId '%s'.".formatted(taskId, attachmentId), "attachment", attachment);
     } else {
       attachment = commandContext
           .getDbEntityManager()
           .selectById(AttachmentEntity.class, attachmentId);
-      ensureNotNull("No attachment exist with attachmentId '" + attachmentId + "'.", "attachment", attachment);
+      ensureNotNull("No attachment exist with attachmentId '%s'.".formatted(attachmentId), "attachment", attachment);
     }
 
     commandContext

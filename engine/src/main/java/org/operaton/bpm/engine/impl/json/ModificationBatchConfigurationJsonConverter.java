@@ -29,8 +29,8 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 public class ModificationBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<ModificationBatchConfiguration> {
+  private static final ModificationCmdJsonConverter MODIFICATION_CMD_CONVERTER = new ModificationCmdJsonConverter();
 
-  public static final ModificationBatchConfigurationJsonConverter INSTANCE = new ModificationBatchConfigurationJsonConverter();
   public static final String INSTRUCTIONS = "instructions";
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";
@@ -42,7 +42,7 @@ public class ModificationBatchConfigurationJsonConverter
   public JsonObject writeConfiguration(ModificationBatchConfiguration configuration) {
     JsonObject json = JsonUtil.createObject();
 
-    JsonUtil.addListField(json, INSTRUCTIONS, ModificationCmdJsonConverter.INSTANCE, configuration.getInstructions());
+    JsonUtil.addListField(json, INSTRUCTIONS, MODIFICATION_CMD_CONVERTER, configuration.getInstructions());
     JsonUtil.addListField(json, PROCESS_INSTANCE_IDS, configuration.getIds());
     JsonUtil.addListField(json, PROCESS_INSTANCE_ID_MAPPINGS, DeploymentMappingJsonConverter.INSTANCE, configuration.getIdMappings());
     JsonUtil.addField(json, PROCESS_DEFINITION_ID, configuration.getProcessDefinitionId());
@@ -59,7 +59,7 @@ public class ModificationBatchConfigurationJsonConverter
     DeploymentMappings mappings = readIdMappings(json);
     String processDefinitionId = JsonUtil.getString(json, PROCESS_DEFINITION_ID);
     List<AbstractProcessInstanceModificationCommand> instructions = JsonUtil.asList(JsonUtil.getArray(json, INSTRUCTIONS),
-        ModificationCmdJsonConverter.INSTANCE);
+        MODIFICATION_CMD_CONVERTER);
     boolean skipCustomListeners = JsonUtil.getBoolean(json, SKIP_LISTENERS);
     boolean skipIoMappings = JsonUtil.getBoolean(json, SKIP_IO_MAPPINGS);
 

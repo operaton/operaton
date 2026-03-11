@@ -32,7 +32,7 @@ public final class ProcessEngineAssert {
       .singleResult();
 
     if (processInstance!=null) {
-      throw new AssertionError("expected finished process instance '"+processInstanceId+"' but it was still in the db");
+      throw new AssertionError("expected finished process instance '%s' but it was still in the db".formatted(processInstanceId));
     }
   }
 }

@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.xmlunit.assertj.XmlAssert;
 
 import org.operaton.spin.SpinList;
 import org.operaton.spin.xml.SpinXmlAttribute;
@@ -676,7 +677,7 @@ class XmlDomElementTest {
 
   @Test
   void canWriteToString() {
-    assertThat(element.toString()).isXmlEqualTo(EXAMPLE_XML);
+    XmlAssert.assertThat(element.toString()).and(EXAMPLE_XML).ignoreWhitespace().areIdentical();
   }
 
   @Test
@@ -684,7 +685,7 @@ class XmlDomElementTest {
     StringWriter writer = new StringWriter();
     element.writeToWriter(writer);
     String value = writer.toString();
-    assertThat(value).isXmlEqualTo(EXAMPLE_XML);
+    XmlAssert.assertThat(value).and(EXAMPLE_XML).ignoreWhitespace().areIdentical();
   }
 
   // text content

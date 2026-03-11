@@ -75,15 +75,15 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
 
     // then
     MetricsQuery query = managementService.createMetricsQuery();
-    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isEqualTo(1l);
+    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isOne();
+    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isOne();
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
     // still 1
-    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isEqualTo(1l);
+    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isOne();
+    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isOne();
   }
 
   @Test
@@ -97,15 +97,15 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
 
     // then
     MetricsQuery query = managementService.createMetricsQuery();
-    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isEqualTo(1l);
+    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isOne();
+    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isOne();
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
     // still 1
-    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isEqualTo(1l);
+    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isOne();
+    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isOne();
   }
 
   @Test
@@ -122,17 +122,17 @@ public class RootProcessInstanceMetricsTest extends AbstractMetricsTest {
 
     // then
     MetricsQuery query = managementService.createMetricsQuery();
-    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.EXECUTED_DECISION_INSTANCES).sum()).isEqualTo(1l);
+    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isOne();
+    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isOne();
+    assertThat(query.name(Metrics.EXECUTED_DECISION_INSTANCES).sum()).isOne();
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
     // still 1
-    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isEqualTo(1l);
-    assertThat(query.name(Metrics.EXECUTED_DECISION_INSTANCES).sum()).isEqualTo(1l);
+    assertThat(query.name(Metrics.ROOT_PROCESS_INSTANCE_START).sum()).isOne();
+    assertThat(query.name(Metrics.PROCESS_INSTANCES).sum()).isOne();
+    assertThat(query.name(Metrics.EXECUTED_DECISION_INSTANCES).sum()).isOne();
   }
 
   protected BpmnModelInstance getCallingInstance(String calledInstanceKey, Map variables) {

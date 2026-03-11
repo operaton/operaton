@@ -18,8 +18,6 @@ package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.Serial;
-import java.io.Serializable;
 
 import org.operaton.bpm.engine.exception.DeploymentResourceNotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,13 +27,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ResourceEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Joram Barrez
  */
-public class GetDeploymentResourceCmd implements Command<InputStream>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetDeploymentResourceCmd implements Command<InputStream> {
   protected String deploymentId;
   protected String resourceName;
 
@@ -56,7 +51,7 @@ public class GetDeploymentResourceCmd implements Command<InputStream>, Serializa
     ResourceEntity resource = commandContext
       .getResourceManager()
       .findResourceByDeploymentIdAndResourceName(deploymentId, resourceName);
-    ensureNotNull(DeploymentResourceNotFoundException.class, "no resource found with name '" + resourceName + "' in deployment '" + deploymentId + "'", "resource", resource);
+    ensureNotNull(DeploymentResourceNotFoundException.class, "no resource found with name '%s' in deployment '%s'".formatted(resourceName, deploymentId), "resource", resource);
     return new ByteArrayInputStream(resource.getBytes());
   }
 

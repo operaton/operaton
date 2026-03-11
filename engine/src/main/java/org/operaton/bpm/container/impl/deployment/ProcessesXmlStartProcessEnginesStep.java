@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.container.impl.deployment;
 
-import java.net.URL;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ import org.operaton.bpm.container.impl.spi.DeploymentOperation;
 import static org.operaton.bpm.container.impl.deployment.Attachments.PROCESSES_XML_RESOURCES;
 
 /**
- * <p> Retrieves the List of ProcessEngines from an attached {@link ProcessesXml}.</p>
+ * <p>Retrieves the List of ProcessEngines from an attached {@link ProcessesXml}.</p>
  *
  * @see AbstractParseBpmPlatformXmlStep
  *
@@ -38,7 +38,7 @@ public class ProcessesXmlStartProcessEnginesStep extends AbstractStartProcessEng
   @Override
   protected List<ProcessEngineXml> getProcessEnginesXmls(DeploymentOperation operationContext) {
 
-    final Map<URL, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
+    final Map<URI, ProcessesXml> processesXmls = operationContext.getAttachment(PROCESSES_XML_RESOURCES);
 
     List<ProcessEngineXml> processEngines = new ArrayList<>();
 

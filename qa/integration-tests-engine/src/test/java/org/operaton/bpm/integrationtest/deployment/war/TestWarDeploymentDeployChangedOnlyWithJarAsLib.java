@@ -120,7 +120,7 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
       .processDefinitionKey("testDeployProcessArchiveUnchanged")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

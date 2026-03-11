@@ -34,6 +34,9 @@
     <module name="org.jboss.as.web-common" />
     <module name="org.jboss.invocation" />
 
+    <module name="org.slf4j" />
+
+    <module name="org.operaton.commons.operaton-commons-utils" />
     <module name="org.operaton.bpm.operaton-engine" />
     <module name="org.operaton.bpm.identity.operaton-identity-ldap" />
     <module name="org.operaton.bpm.operaton-engine-plugin-spin" services="import" />

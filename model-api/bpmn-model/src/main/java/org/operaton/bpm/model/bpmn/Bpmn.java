@@ -17,6 +17,7 @@
 package org.operaton.bpm.model.bpmn;
 
 import java.io.*;
+import java.util.ServiceLoader;
 
 import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 import org.operaton.bpm.model.bpmn.impl.BpmnParser;
@@ -222,6 +223,7 @@ import org.operaton.bpm.model.xml.ModelParseException;
 import org.operaton.bpm.model.xml.ModelValidationException;
 import org.operaton.bpm.model.xml.impl.instance.ModelElementInstanceImpl;
 import org.operaton.bpm.model.xml.impl.util.IoUtil;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.BPMN20_NS;
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.CAMUNDA_NS;
@@ -236,12 +238,24 @@ import static org.operaton.bpm.model.bpmn.impl.instance.ProcessImpl.DEFAULT_HIST
  */
 public class Bpmn {
 
-  /** the singleton instance of {@link Bpmn}. If you want to customize the behavior of Bpmn,
-   * replace this instance with an instance of a custom subclass of {@link Bpmn}. */
-  public static final Bpmn INSTANCE = new Bpmn();
+  /** The singleton instance of {@link Bpmn} created by the first {@link BpmnFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior of Bpmn, add the fully qualified class name of the custom implementation to the file:
+   * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnFactory}</p>. */
+  public static final Bpmn INSTANCE;
+  /** {@link BpmnParser} created by the first {@link BpmnParserFactory} found via the {@link ServiceLoader}.
+   * <p>To customize the behavior, provide a custom {@link BpmnParserFactory} implementation and declare it in:
+   * {@code META-INF/services/org.operaton.bpm.model.bpmn.BpmnParserFactory}.</p>
+   */
+  private static final BpmnParser BPMN_PARSER;
 
-  /** the parser used by the Bpmn implementation. */
-  private final BpmnParser bpmnParser = new BpmnParser();
+  static {
+    BpmnFactory bpmnFactory = ServiceLoaderUtil.loadSingleService(BpmnFactory.class);
+    BpmnParserFactory bpmnParserFactory = ServiceLoaderUtil.loadSingleService(BpmnParserFactory.class);
+
+    INSTANCE = bpmnFactory.newInstance();
+    BPMN_PARSER = bpmnParserFactory.newInstance();
+  }
+
   private final ModelBuilder bpmnModelBuilder;
 
   /** The {@link Model}
@@ -362,7 +376,7 @@ public class Bpmn {
   /**
    * Register known types of the BPMN model
    */
-  protected Bpmn() {
+  public Bpmn() {
     bpmnModelBuilder = ModelBuilder.createInstance("BPMN Model");
     bpmnModelBuilder.alternativeNamespace(CAMUNDA_NS, OPERATON_NS);
     doRegisterTypes(bpmnModelBuilder);
@@ -374,7 +388,7 @@ public class Bpmn {
     try (InputStream is = new FileInputStream(file)) {
       result =  doReadModelFromInputStream(is);
     } catch (FileNotFoundException e) {
-      throw new BpmnModelException("Cannot read model from file " + file + ": file does not exist.");
+      throw new BpmnModelException("Cannot read model from file %s: file does not exist.".formatted(file));
     } catch(IOException e) {
       throw new BpmnModelException("Cannot read model from file " + file, e);
     }
@@ -382,14 +396,14 @@ public class Bpmn {
   }
 
   protected BpmnModelInstance doReadModelFromInputStream(InputStream is) {
-    return bpmnParser.parseModelFromStream(is);
+    return BPMN_PARSER.parseModelFromStream(is);
   }
 
   protected void doWriteModelToFile(File file, BpmnModelInstance modelInstance) {
     try (OutputStream os = new FileOutputStream(file)) {
       doWriteModelToOutputStream(os, modelInstance);
     } catch (FileNotFoundException e) {
-      throw new BpmnModelException("Cannot write model to file " + file + ": file does not exist.");
+      throw new BpmnModelException("Cannot write model to file %s: file does not exist.".formatted(file));
     } catch (IOException e) {
       throw new BpmnModelException("Cannot write model to file " + file, e);
     }
@@ -410,11 +424,11 @@ public class Bpmn {
   }
 
   protected void doValidateModel(BpmnModelInstance modelInstance) {
-    bpmnParser.validateModel(modelInstance.getDocument());
+    BPMN_PARSER.validateModel(modelInstance.getDocument());
   }
 
   protected BpmnModelInstance doCreateEmptyModel() {
-    return bpmnParser.getEmptyModel();
+    return BPMN_PARSER.getEmptyModel();
   }
 
   protected void doRegisterTypes(ModelBuilder bpmnModelBuilder) {

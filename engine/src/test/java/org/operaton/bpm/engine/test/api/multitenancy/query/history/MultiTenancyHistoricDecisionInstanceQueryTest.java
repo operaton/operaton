@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -88,13 +87,13 @@ class MultiTenancyHistoricDecisionInstanceQueryTest {
         .createHistoricDecisionInstanceQuery()
         .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = historyService
         .createHistoricDecisionInstanceQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -162,38 +161,38 @@ class MultiTenancyHistoricDecisionInstanceQueryTest {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     // then
-    assertThat(query.count()).isEqualTo(1L); // null-tenant instances are still visible
+    assertThat(query.count()).isOne(); // null-tenant instances are still visible
   }
 
   @Test
   void shouldQueryAuthenticatedTenant() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     // then
     assertThat(query.count()).isEqualTo(2L); // null-tenant instances are also visible
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isOne();
   }
 
   @Test
   void shouldQueryAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // when
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     // then
     assertThat(query.count()).isEqualTo(3L); // null-tenant instances are also visible
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -217,7 +216,7 @@ class MultiTenancyHistoricDecisionInstanceQueryTest {
         .withoutTenantId();
 
     //then
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   protected void evaluateDecisionInstanceForTenant(String tenant) {

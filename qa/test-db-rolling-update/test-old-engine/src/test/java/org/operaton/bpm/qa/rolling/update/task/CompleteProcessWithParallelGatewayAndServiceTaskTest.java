@@ -18,14 +18,13 @@ package org.operaton.bpm.qa.rolling.update.task;
 
 import java.util.List;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.operaton.bpm.engine.history.HistoricTaskInstanceQuery;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,11 +36,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithParallelGatewayAndServiceTaskScenario")
-public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithParallelGatewayAndServiceTaskTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.none.1")
-  public void testCompleteProcessWithParallelGateway() {
+  void testCompleteProcessWithParallelGateway() {
     //given an already started process instance with one user task
     ProcessInstance oldInstance = rule.processInstance();
     assertThat(oldInstance).isNotNull();
@@ -65,9 +64,9 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
   }
 
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.async.1")
-  public void testCompleteProcessWithParallelGatewayAndSingleUserTask() {
+  void testCompleteProcessWithParallelGatewayAndSingleUserTask() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
     assertThat(oldInstance).isNotNull();
@@ -89,9 +88,9 @@ public class CompleteProcessWithParallelGatewayAndServiceTaskTest extends Abstra
     rule.assertScenarioEnded();
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.async.complete.1")
-  public void testQueryHistoricProcessWithParallelGateway() {
+  void testQueryHistoricProcessWithParallelGateway() {
     //given an already started process instance
     ProcessInstance oldInstance = rule.processInstance();
     assertThat(oldInstance).isNotNull();

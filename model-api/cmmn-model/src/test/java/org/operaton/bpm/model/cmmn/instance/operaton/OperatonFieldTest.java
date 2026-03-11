@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance.operaton;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.cmmn.instance.CmmnModelElementInstanceTest;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -31,23 +30,23 @@ public class OperatonFieldTest extends CmmnModelElementInstanceTest {
 
   @Override
   public TypeAssumption getTypeAssumption() {
-    return new TypeAssumption(CAMUNDA_NS, false);
+    return new TypeAssumption(OPERATON_NS, false);
   }
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
-        new ChildElementAssumption(CAMUNDA_NS, OperatonExpression.class, 0, 1),
-        new ChildElementAssumption(CAMUNDA_NS, OperatonString.class, 0, 1)
+    return List.of(
+        new ChildElementAssumption(OPERATON_NS, OperatonExpression.class, 0, 1),
+        new ChildElementAssumption(OPERATON_NS, OperatonString.class, 0, 1)
     );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
-      new AttributeAssumption(CAMUNDA_NS, "name"),
-      new AttributeAssumption(CAMUNDA_NS, "expression"),
-      new AttributeAssumption(CAMUNDA_NS, "stringValue")
+    return List.of(
+      new AttributeAssumption(OPERATON_NS, "name"),
+      new AttributeAssumption(OPERATON_NS, "expression"),
+      new AttributeAssumption(OPERATON_NS, "stringValue")
     );
   }
 

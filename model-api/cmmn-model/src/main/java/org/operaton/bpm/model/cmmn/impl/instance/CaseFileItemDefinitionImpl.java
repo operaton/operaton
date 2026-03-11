@@ -47,8 +47,6 @@ public class CaseFileItemDefinitionImpl extends CmmnElementImpl implements CaseF
   // that's why we use a simple String
   protected static Attribute<String> structureAttribute;
 
-  // TODO: The Import does not have an id attribute!
-//  protected static AttributeReference<Import> importRefAttribute;
   protected static ChildElementCollection<Property> propertyCollection;
 
   public CaseFileItemDefinitionImpl(ModelTypeInstanceContext instanceContext) {
@@ -85,14 +83,6 @@ public class CaseFileItemDefinitionImpl extends CmmnElementImpl implements CaseF
     structureAttribute.setValue(this, structureRef);
   }
 
-//  public Import getImport() {
-//    return importRefAttribute.getReferenceTargetElement(this);
-//  }
-//
-//  public void setImport(Import importRef) {
-//    importRefAttribute.setReferenceTargetElement(this, importRef);
-//  }
-
   @Override
   public Collection<Property> getProperties() {
     return propertyCollection.get(this);
@@ -113,11 +103,6 @@ public class CaseFileItemDefinitionImpl extends CmmnElementImpl implements CaseF
 
     structureAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_STRUCTURE_REF)
         .build();
-
-    // TODO: The Import does not have an id attribute!
-    // importRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_IMPORT_REF)
-    //    .qNameAttributeReference(Import.class)
-    //    .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();
 

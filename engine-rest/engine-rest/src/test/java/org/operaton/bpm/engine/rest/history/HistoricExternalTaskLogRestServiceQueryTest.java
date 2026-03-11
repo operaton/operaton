@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -620,9 +619,9 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
     String anotherExecutionId = "anotherExecutionId";
 
     Map<String, List<String>> json = new HashMap<>();
-    json.put("activityIdIn", Arrays.asList(anActId, anotherActId));
-    json.put("activityInstanceIdIn", Arrays.asList(anActInstId, anotherActInstId));
-    json.put("executionIdIn", Arrays.asList(anExecutionId, anotherExecutionId));
+    json.put("activityIdIn", List.of(anActId, anotherActId));
+    json.put("activityInstanceIdIn", List.of(anActInstId, anotherActInstId));
+    json.put("executionIdIn", List.of(anExecutionId, anotherExecutionId));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -848,7 +847,7 @@ public class HistoricExternalTaskLogRestServiceQueryTest extends AbstractRestSer
   }
 
   private List<HistoricExternalTaskLog> createMockHistoricExternalTaskLogsTwoTenants() {
-    return Arrays.asList(
+    return List.of(
       MockProvider.createMockHistoricExternalTaskLog(MockProvider.EXAMPLE_TENANT_ID),
       MockProvider.createMockHistoricExternalTaskLog(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

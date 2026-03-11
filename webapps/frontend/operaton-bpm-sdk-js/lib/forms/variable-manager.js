@@ -42,54 +42,54 @@ function VariableManager() {
   this.isVariablesFetched = false;
 }
 
-VariableManager.prototype.fetchVariable = function(variable) {
+VariableManager.prototype.fetchVariable = function (variable) {
   if (this.isVariablesFetched) {
     throw new Error(
-      'Illegal State: cannot call fetchVariable(), variables already fetched.'
+      'Illegal State: cannot call fetchVariable(), variables already fetched.',
     );
   }
   this.createVariable({name: variable});
 };
 
-VariableManager.prototype.createVariable = function(variable) {
+VariableManager.prototype.createVariable = function (variable) {
   if (!this.variables[variable.name]) {
     this.variables[variable.name] = variable;
   } else {
     throw new Error(
-      'Cannot add variable with name ' + variable.name + ': already exists.'
+      'Cannot add variable with name ' + variable.name + ': already exists.',
     );
   }
 };
 
-VariableManager.prototype.destroyVariable = function(variableName) {
+VariableManager.prototype.destroyVariable = function (variableName) {
   if (this.variables[variableName]) {
     delete this.variables[variableName];
   } else {
     throw new Error(
       'Cannot remove variable with name ' +
         variableName +
-        ': variable does not exist.'
+        ': variable does not exist.',
     );
   }
 };
 
-VariableManager.prototype.setOriginalValue = function(variableName, value) {
+VariableManager.prototype.setOriginalValue = function (variableName, value) {
   if (this.variables[variableName]) {
     this.variables[variableName].originalValue = value;
   } else {
     throw new Error(
       'Cannot set original value of variable with name ' +
         variableName +
-        ': variable does not exist.'
+        ': variable does not exist.',
     );
   }
 };
 
-VariableManager.prototype.variable = function(variableName) {
+VariableManager.prototype.variable = function (variableName) {
   return this.variables[variableName];
 };
 
-VariableManager.prototype.variableValue = function(variableName, value) {
+VariableManager.prototype.variableValue = function (variableName, value) {
   var variable = this.variable(variableName);
 
   if (typeof value === 'undefined' || value === null) {
@@ -109,7 +109,7 @@ VariableManager.prototype.variableValue = function(variableName, value) {
   return variable.value;
 };
 
-VariableManager.prototype.isDirty = function(name) {
+VariableManager.prototype.isDirty = function (name) {
   var variable = this.variable(name);
   if (this.isJsonVariable(name)) {
     return variable.originalValue !== JSON.stringify(variable.value);
@@ -120,7 +120,7 @@ VariableManager.prototype.isDirty = function(name) {
   ) {
     // check, if it is the same moment
     return !moment(variable.originalValue, moment.ISO_8601).isSame(
-      variable.value
+      variable.value,
     );
   } else {
     return (
@@ -129,7 +129,7 @@ VariableManager.prototype.isDirty = function(name) {
   }
 };
 
-VariableManager.prototype.isJsonVariable = function(name) {
+VariableManager.prototype.isJsonVariable = function (name) {
   var variable = this.variable(name);
   var type = variable.type;
 
@@ -146,12 +146,12 @@ VariableManager.prototype.isJsonVariable = function(name) {
   return idx !== -1;
 };
 
-VariableManager.prototype.isDateVariable = function(name) {
+VariableManager.prototype.isDateVariable = function (name) {
   var variable = this.variable(name);
   return variable.type === 'Date';
 };
 
-VariableManager.prototype.variableNames = function() {
+VariableManager.prototype.variableNames = function () {
   // since we support IE 8+ (http://kangax.github.io/compat-table/es5/)
   return Object.keys(this.variables);
 };

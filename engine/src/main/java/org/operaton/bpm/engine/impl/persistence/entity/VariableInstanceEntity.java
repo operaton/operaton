@@ -16,12 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.application.InvocationContext;
 import org.operaton.bpm.application.ProcessApplicationReference;
@@ -55,11 +51,9 @@ import static org.operaton.bpm.engine.impl.persistence.entity.util.TypedValueFie
  * @author Tom Baeyens
  */
 public class VariableInstanceEntity implements VariableInstance, CoreVariableInstance, ValueFields, DbEntity, DbEntityLifecycleAware, TypedValueUpdateListener, HasDbRevision,
-  HasDbReferences, Serializable {
+  HasDbReferences {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision;
@@ -540,7 +534,6 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
       setCaseExecution(null);
     }
 
-
   }
 
   @Override
@@ -619,7 +612,6 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
    public void incrementSequenceCounter() {
     sequenceCounter++;
   }
-
 
   public boolean isConcurrentLocal() {
     return isConcurrentLocal;
@@ -745,13 +737,8 @@ public class VariableInstanceEntity implements VariableInstance, CoreVariableIns
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (processInstanceId != null){
       referenceIdAndClass.put(processInstanceId, ExecutionEntity.class);

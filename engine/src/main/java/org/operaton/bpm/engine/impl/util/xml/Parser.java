@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.util.xml;
 
 import javax.xml.XMLConstants;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -24,7 +25,7 @@ import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
-
+import org.xml.sax.SAXException;
 
 /**
  * @author Tom Baeyens
@@ -43,7 +44,7 @@ public abstract class Parser {
 
   public abstract Parse createParse();
 
-  protected SAXParser getSaxParser() throws Exception {
+  protected SAXParser getSaxParser() throws ParserConfigurationException, SAXException {
     SAXParserFactory saxParserFactory = getSaxParserFactoryLazily();
     setXxeProcessing(saxParserFactory);
     return saxParserFactory.newSAXParser();

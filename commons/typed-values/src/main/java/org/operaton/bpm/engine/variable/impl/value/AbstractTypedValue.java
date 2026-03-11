@@ -29,6 +29,7 @@ public class AbstractTypedValue<T> implements TypedValue {
 
   @Serial private static final long serialVersionUID = 1L;
 
+  @SuppressWarnings("java:S1948") // ObjectValueImpl overrides serialization handling
   protected T value;
 
   protected ValueType type;
@@ -52,7 +53,7 @@ public class AbstractTypedValue<T> implements TypedValue {
 
   @Override
   public String toString() {
-    return "Value '" + value + "' of type '" + type + "', isTransient=" + isTransient;
+    return "Value '%s' of type '%s', isTransient=%s".formatted(value, type, isTransient);
   }
 
   @Override

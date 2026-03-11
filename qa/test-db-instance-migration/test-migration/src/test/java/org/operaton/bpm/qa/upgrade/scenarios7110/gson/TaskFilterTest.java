@@ -201,8 +201,7 @@ public class TaskFilterTest {
           assertEquals(expectedFilteringProperty.getScalarValue(), expectedFilteringProperty.getScalarValue());
         }
       } else if (expectedRelationConditions != null || actualRelationConditions != null) {
-        fail("Expected filtering properties: " + expectedRelationConditions + ". "
-          + "Actual filtering properties: " + actualRelationConditions);
+        fail("Expected filtering properties: %s. Actual filtering properties: %s".formatted(expectedRelationConditions, actualRelationConditions));
       }
     }
   }

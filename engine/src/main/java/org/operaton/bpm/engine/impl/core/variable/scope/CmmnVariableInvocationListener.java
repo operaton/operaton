@@ -26,8 +26,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
  */
 public class CmmnVariableInvocationListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
-  public static final CmmnVariableInvocationListener INSTANCE = new CmmnVariableInvocationListener();
-
   @Override
   public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
     sourceScope.dispatchEvent(new VariableEvent(variable, VariableListener.CREATE, sourceScope));

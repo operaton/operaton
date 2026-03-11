@@ -1,14 +1,14 @@
 <div ng-form class="form-horizontal" role="form" name="filterGeneralForm">
 
   <div class="row">
-    <div class="col-xs-8">
-      <div class="form-group">
+    <div class="col-8">
+      <div class="row form-group">
 
         <label for="filterName"
-               class="col-xs-3 control-label"
+               class="col-3 control-label text-right"
                translate="FILTER_NAME_LABEL">Name</label>
 
-        <div class="col-xs-9">
+        <div class="col-9">
           <input class="form-control"
                  name="filterName"
                  ng-model="filter.name"
@@ -30,15 +30,15 @@
       </div>
     </div>
 
-    <div class="col-xs-4">
+    <div class="col-4">
 
-      <div class="form-group">
+      <div class="row form-group">
 
         <label for="filter-form-color"
-               class="col-xs-6 control-label"
+               class="col-6 control-label text-right"
                translate="FILTER_COLOR_LABEL">Color</label>
 
-        <div class="col-xs-6">
+        <div class="col-6">
 
           <input class="form-control"
                  name="filterColor"
@@ -62,15 +62,15 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-8">
-      <div class="form-group">
+    <div class="col-8">
+      <div class="row form-group">
 
         <label for="filter-form-description"
-               class="col-xs-3 control-label"
+               class="col-3 control-label text-right"
                translate="FILTER_DESCRIPTION_LABEL">Description</label>
 
-        <div class="col-xs-9">
-          <input class="col-xs-9 form-control"
+        <div class="col-9">
+          <input class="col-12 form-control"
                  name="filterDescription"
                  ng-model="filter.properties.description"
                  type="text"
@@ -82,14 +82,14 @@
       </div>
     </div>
 
-    <div class="col-xs-4">
-      <div class="form-group">
+    <div class="col-4">
+      <div class="row form-group">
 
         <label for="filter-form-priority"
-               class="col-xs-6 control-label"
+               class="col-6 control-label text-right"
                translate="FILTER_PRIORITY_LABEL">Priority</label>
 
-        <div class="col-xs-6">
+        <div class="col-6">
           <input class="form-control"
                  name="filterPriority"
                  ng-model="filter.properties.priority"
@@ -112,18 +112,21 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-xs-offset-2 col-md-offset-10 col-xs-4 col-md-2 checkbox">
-      <label>
-        <input class="form-control"
+  <div class="row text-right">
+    <div class="col-12 form-group">
+      <div class="form-check d-inline-flex align-items-center">
+        <input class="form-check-input"
                name="filterRefresh"
                ng-model="filter.properties.refresh"
                type="checkbox"
                tooltip-append-to-body="false"
                uib-tooltip="{{ 'FILTER_REFRESH_TOOLTIP' | translate }}"
                ng-disabled="filter.id && !accesses.update" />
-        {{ 'FILTER_REFRESH_LABEL' | translate }}
-      </label>
+
+        <label class="form-check-label mt-1">
+          {{ 'FILTER_REFRESH_LABEL' | translate }}
+        </label>
+      </div>
     </div>
   </div>
 

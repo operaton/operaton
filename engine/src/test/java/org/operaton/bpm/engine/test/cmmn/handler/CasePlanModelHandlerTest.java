@@ -71,6 +71,7 @@ class CasePlanModelHandlerTest extends CmmnElementHandlerTest {
   }
 
   @Test
+  @SuppressWarnings("deprecation")
   void testCasePlanModelDescription() {
     // given
     String description = "This is a casePlanModal";

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.qa.rolling.update;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -28,11 +26,11 @@ import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("DeploymentWhichShouldBeDeletedScenario")
-public class DeleteDeploymentTest extends AbstractRollingUpdateTestCase {
+class DeleteDeploymentTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithUserTask() {
+  void testCompleteProcessWithUserTask() {
     //given deployed process with process instance
     String processDefinitionId = rule.processInstance().getProcessDefinitionId();
     ProcessDefinition procDef = rule.getRepositoryService()
@@ -41,7 +39,7 @@ public class DeleteDeploymentTest extends AbstractRollingUpdateTestCase {
                                     .singleResult();
 
     //when deployment is deleted
-    rule.getRepositoryService().deleteDeployment(procDef.getDeploymentId(),true);
+    rule.getRepositoryService().deleteDeployment(procDef.getDeploymentId(), true);
     //then process instance is ended
     rule.assertScenarioEnded();
   }

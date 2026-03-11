@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -45,21 +45,21 @@ class MigrationAddMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures("userTask",
-          "Target activity 'userTask' is a descendant of multi-instance body 'userTask#multiInstanceBody' "
-          + "that is not mapped from the source process definition."
-        );
-    }
+    // when/then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("userTask",
+            "Target activity 'userTask' is a descendant of multi-instance body 'userTask#multiInstanceBody' "
+            + "that is not mapped from the source process definition."
+          );
+      });
   }
 
   @Test
@@ -67,21 +67,21 @@ class MigrationAddMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures("userTask",
-          "Target activity 'userTask' is a descendant of multi-instance body 'userTask#multiInstanceBody' "
-          + "that is not mapped from the source process definition."
-        );
-    }
+    // when/then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("userTask",
+            "Target activity 'userTask' is a descendant of multi-instance body 'userTask#multiInstanceBody' "
+            + "that is not mapped from the source process definition."
+          );
+      });
   }
 
   @Test
@@ -89,22 +89,21 @@ class MigrationAddMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(ProcessModels.ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationInstructionBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      e.printStackTrace();
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures("userTask",
-          "Target activity 'userTask' is a descendant of multi-instance body 'subProcess#multiInstanceBody' "
-          + "that is not mapped from the source process definition."
-        );
-    }
+    // when/then
+    assertThatThrownBy(migrationInstructionBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        var exception = (MigrationPlanValidationException) e;
+        assertThat(exception.getValidationReport())
+          .hasInstructionFailures("userTask",
+            "Target activity 'userTask' is a descendant of multi-instance body 'subProcess#multiInstanceBody' "
+            + "that is not mapped from the source process definition."
+          );
+      });
   }
 
 

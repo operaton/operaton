@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
 import java.util.Map;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -29,17 +28,12 @@ import org.operaton.bpm.engine.impl.persistence.entity.VariableInstanceEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  */
 public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   protected boolean taskLocalVariablesUpdated;
-
 
   public SetTaskVariablesCmd(String taskId, Map<String, ? extends Object> variables, boolean isLocal) {
     super(taskId, variables, isLocal);
@@ -53,7 +47,7 @@ public class SetTaskVariablesCmd extends AbstractSetVariableCmd implements Varia
       .getTaskManager()
       .findTaskById(entityId);
 
-    ensureNotNull("task " + entityId + " doesn't exist", "task", task);
+    ensureNotNull("task %s doesn't exist".formatted(entityId), "task", task);
 
     checkSetTaskVariables(task);
 

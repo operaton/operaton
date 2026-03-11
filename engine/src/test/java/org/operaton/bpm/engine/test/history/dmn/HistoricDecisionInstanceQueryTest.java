@@ -53,7 +53,8 @@ import org.operaton.bpm.engine.variable.Variables;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.propertyComparator;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Philipp Ossler
@@ -227,8 +228,8 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.decisionInstanceId(decisionInstanceId1).count()).isEqualTo(1L);
-    assertThat(query.decisionInstanceId(decisionInstanceId2).count()).isEqualTo(1L);
+    assertThat(query.decisionInstanceId(decisionInstanceId1).count()).isOne();
+    assertThat(query.decisionInstanceId(decisionInstanceId2).count()).isOne();
     assertThat(query.decisionInstanceId("unknown").count()).isZero();
   }
 
@@ -243,8 +244,8 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.decisionInstanceIdIn(decisionInstanceId1).count()).isEqualTo(1L);
-    assertThat(query.decisionInstanceIdIn(decisionInstanceId2).count()).isEqualTo(1L);
+    assertThat(query.decisionInstanceIdIn(decisionInstanceId1).count()).isOne();
+    assertThat(query.decisionInstanceIdIn(decisionInstanceId2).count()).isOne();
     assertThat(query.decisionInstanceIdIn(decisionInstanceId1, decisionInstanceId2).count()).isEqualTo(2L);
   }
 
@@ -258,7 +259,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.decisionDefinitionId(decisionDefinitionId).count()).isEqualTo(1L);
+    assertThat(query.decisionDefinitionId(decisionDefinitionId).count()).isOne();
     assertThat(query.decisionDefinitionId("other id").count()).isZero();
   }
 
@@ -286,13 +287,13 @@ class HistoricDecisionInstanceQueryTest {
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
   void testQueryByInvalidDecisionDefinitionIdIn() {
-    HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    try {
-      query.decisionDefinitionIdIn("aFake", null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("decisionDefinitionIdIn contains null value");
-    }
+    // given
+    var query = historyService.createHistoricDecisionInstanceQuery();
+
+    // when/then
+    assertThatThrownBy(() -> query.decisionDefinitionIdIn("aFake", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("decisionDefinitionIdIn contains null value");
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
@@ -315,13 +316,13 @@ class HistoricDecisionInstanceQueryTest {
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN, DRG_DMN})
   @Test
   void testQueryByInvalidDecisionDefinitionKeyIn() {
-    HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    try {
-      query.decisionDefinitionKeyIn("aFake", null);
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).isEqualTo("decisionDefinitionKeyIn contains null value");
-    }
+    // given
+    var query = historyService.createHistoricDecisionInstanceQuery();
+
+    // when/then
+    assertThatThrownBy(() -> query.decisionDefinitionKeyIn("aFake", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessage("decisionDefinitionKeyIn contains null value");
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
@@ -332,7 +333,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.decisionDefinitionKey(DECISION_DEFINITION_KEY).count()).isEqualTo(1L);
+    assertThat(query.decisionDefinitionKey(DECISION_DEFINITION_KEY).count()).isOne();
     assertThat(query.decisionDefinitionKey("other key").count()).isZero();
   }
 
@@ -344,7 +345,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.decisionDefinitionName("sample decision").count()).isEqualTo(1L);
+    assertThat(query.decisionDefinitionName("sample decision").count()).isOne();
     assertThat(query.decisionDefinitionName("other name").count()).isZero();
   }
 
@@ -357,8 +358,8 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.decisionDefinitionNameLike("%ample dec%").count()).isEqualTo(1L);
-    assertThat(query.decisionDefinitionNameLike("%ample\\_%").count()).isEqualTo(1L);
+    assertThat(query.decisionDefinitionNameLike("%ample dec%").count()).isOne();
+    assertThat(query.decisionDefinitionNameLike("%ample\\_%").count()).isOne();
 
   }
 
@@ -384,7 +385,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.processDefinitionKey(processDefinitionKey).count()).isEqualTo(1L);
+    assertThat(query.processDefinitionKey(processDefinitionKey).count()).isOne();
     assertThat(query.processDefinitionKey("other process").count()).isZero();
   }
 
@@ -397,7 +398,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.processDefinitionId(processDefinitionId).count()).isEqualTo(1L);
+    assertThat(query.processDefinitionId(processDefinitionId).count()).isOne();
     assertThat(query.processDefinitionId("other process").count()).isZero();
   }
 
@@ -411,7 +412,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.processInstanceId(processInstanceId).count()).isEqualTo(1L);
+    assertThat(query.processInstanceId(processInstanceId).count()).isOne();
     assertThat(query.processInstanceId("other process").count()).isZero();
   }
 
@@ -423,9 +424,9 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.activityIdIn("task").count()).isEqualTo(1L);
+    assertThat(query.activityIdIn("task").count()).isOne();
     assertThat(query.activityIdIn("other activity").count()).isZero();
-    assertThat(query.activityIdIn("task", "other activity").count()).isEqualTo(1L);
+    assertThat(query.activityIdIn("task", "other activity").count()).isOne();
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
@@ -437,9 +438,9 @@ class HistoricDecisionInstanceQueryTest {
     String activityInstanceId = historyService.createHistoricActivityInstanceQuery().activityId("task").singleResult().getId();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    assertThat(query.activityInstanceIdIn(activityInstanceId).count()).isEqualTo(1L);
+    assertThat(query.activityInstanceIdIn(activityInstanceId).count()).isOne();
     assertThat(query.activityInstanceIdIn("other activity").count()).isZero();
-    assertThat(query.activityInstanceIdIn(activityInstanceId, "other activity").count()).isEqualTo(1L);
+    assertThat(query.activityInstanceIdIn(activityInstanceId, "other activity").count()).isOne();
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})
@@ -453,8 +454,8 @@ class HistoricDecisionInstanceQueryTest {
     startProcessInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    assertThat(query.evaluatedBefore(afterEvaluated).count()).isEqualTo(1L);
-    assertThat(query.evaluatedBefore(evaluated).count()).isEqualTo(1L);
+    assertThat(query.evaluatedBefore(afterEvaluated).count()).isOne();
+    assertThat(query.evaluatedBefore(evaluated).count()).isOne();
     assertThat(query.evaluatedBefore(beforeEvaluated).count()).isZero();
 
     ClockUtil.reset();
@@ -471,8 +472,8 @@ class HistoricDecisionInstanceQueryTest {
     startProcessInstanceAndEvaluateDecision();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    assertThat(query.evaluatedAfter(beforeEvaluated).count()).isEqualTo(1L);
-    assertThat(query.evaluatedAfter(evaluated).count()).isEqualTo(1L);
+    assertThat(query.evaluatedAfter(beforeEvaluated).count()).isOne();
+    assertThat(query.evaluatedAfter(evaluated).count()).isOne();
     assertThat(query.evaluatedAfter(afterEvaluated).count()).isZero();
 
     ClockUtil.reset();
@@ -485,7 +486,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.caseDefinitionKey("case").count()).isEqualTo(1L);
+    assertThat(query.caseDefinitionKey("case").count()).isOne();
   }
 
   @Test
@@ -504,7 +505,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.caseDefinitionId(caseInstance.getCaseDefinitionId()).count()).isEqualTo(1L);
+    assertThat(query.caseDefinitionId(caseInstance.getCaseDefinitionId()).count()).isOne();
   }
 
   @Test
@@ -523,7 +524,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.caseInstanceId(caseInstance.getId()).count()).isEqualTo(1L);
+    assertThat(query.caseInstanceId(caseInstance.getId()).count()).isOne();
   }
 
   @Test
@@ -542,7 +543,7 @@ class HistoricDecisionInstanceQueryTest {
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
-    assertThat(query.userId("demo").count()).isEqualTo(1L);
+    assertThat(query.userId("demo").count()).isOne();
   }
 
   @Deployment(resources = {DECISION_SINGLE_OUTPUT_DMN})
@@ -587,7 +588,7 @@ class HistoricDecisionInstanceQueryTest {
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.rootDecisionInstancesOnly().count()).isEqualTo(1L);
+    assertThat(query.rootDecisionInstancesOnly().count()).isOne();
     assertThat(query.rootDecisionInstancesOnly().singleResult().getDecisionDefinitionKey()).isEqualTo(DISH_DECISION);
   }
 
@@ -651,7 +652,7 @@ class HistoricDecisionInstanceQueryTest {
     NativeHistoricDecisionInstanceQuery nativeQuery = historyService
         .createNativeHistoricDecisionInstanceQuery().sql("SELECT count(*) FROM " + tablePrefix + "ACT_HI_DECINST");
 
-    assertThat(nativeQuery.count()).isEqualTo(1L);
+    assertThat(nativeQuery.count()).isOne();
   }
 
   @Deployment(resources = {DECISION_PROCESS, DECISION_SINGLE_OUTPUT_DMN})

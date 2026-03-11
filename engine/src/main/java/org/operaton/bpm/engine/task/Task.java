@@ -176,7 +176,6 @@ public interface Task {
    *
    * @return the task's tenant id or null
    *
-   * @since 7.5
    */
   String getTenantId();
 
@@ -185,7 +184,6 @@ public interface Task {
    *
    * @param tenantId the tenant id to set
    *
-   * @since 7.5
    */
   void setTenantId(String tenantId);
 

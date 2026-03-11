@@ -1,6 +1,6 @@
 <module xmlns="urn:jboss:module:1.1" name="com.oracle.database.jdbc.ojdbc11">
   <resources>
-    <resource-root path="ojdbc11-23.9.0.25.07.jar"/>
+    <resource-root path="ojdbc11-@version.oracle@.jar"/>
   </resources>
 
   <dependencies>

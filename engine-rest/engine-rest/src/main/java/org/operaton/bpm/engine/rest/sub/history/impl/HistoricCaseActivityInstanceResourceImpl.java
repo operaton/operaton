@@ -42,7 +42,7 @@ public class HistoricCaseActivityInstanceResourceImpl implements HistoricCaseAct
       .caseActivityInstanceId(caseActivityInstanceId).singleResult();
 
     if (instance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic case activity instance with id '" + caseActivityInstanceId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic case activity instance with id '%s' does not exist".formatted(caseActivityInstanceId));
     }
 
     return HistoricCaseActivityInstanceDto.fromHistoricCaseActivityInstance(instance);

@@ -80,7 +80,7 @@ public final class OperatonBpmRunProcessEnginePluginHelper {
     try {
       SpringBootStarterPropertyHelper.applyProperties(plugin, properties, false);
     } catch (SpringBootStarterException e) {
-      throw LOG.pluginPropertyNotFound(plugin.getClass().getCanonicalName(), "", e);
+      throw LOG.pluginPropertyNotFound(plugin.getClass().getCanonicalName(), e);
     }
   }
 

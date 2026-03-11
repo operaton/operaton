@@ -49,11 +49,11 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
   protected boolean isSubProcessScope;
 
   /** The activities for which the flow scope is this scope  */
-  protected List<ActivityImpl> flowActivities = new ArrayList<>();
-  protected Map<String, ActivityImpl> namedFlowActivities = new HashMap<>();
+  private final List<ActivityImpl> flowActivities = new ArrayList<>();
+  private final Map<String, ActivityImpl> namedFlowActivities = new HashMap<>();
 
   /** activities for which this is the event scope **/
-  protected Set<ActivityImpl> eventActivities = new HashSet<>();
+  private final Set<ActivityImpl> eventActivities = new HashSet<>();
 
   protected ProcessDefinitionImpl processDefinition;
 
@@ -160,7 +160,7 @@ public abstract class ScopeImpl extends CoreActivity implements PvmScope {
     ActivityImpl activity = new ActivityImpl(activityId, processDefinition);
     if (activityId!=null) {
       if (processDefinition.findActivity(activityId) != null) {
-        throw new PvmException("duplicate activity id '" + activityId + "'");
+        throw new PvmException("duplicate activity id '%s'".formatted(activityId));
       }
       if (backlog.containsKey(activityId)) {
         backlog.remove(activityId);

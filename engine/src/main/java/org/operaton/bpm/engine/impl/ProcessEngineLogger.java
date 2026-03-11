@@ -16,7 +16,7 @@
  */
 package org.operaton.bpm.engine.impl;
 
-import java.net.URL;
+import java.net.URI;
 
 import org.operaton.bpm.application.impl.ProcessApplicationLogger;
 import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
@@ -154,9 +154,9 @@ public class ProcessEngineLogger extends BaseLogger {
     logInfo("002", "Process engine already initialized");
   }
 
-  public void initializingProcessEngineForResource(URL resourceUrl) {
+  public void initializingProcessEngineForResource(URI resourceUri) {
     logInfo(
-        "003", "Initializing process engine for resource {}", resourceUrl);
+        "003", "Initializing process engine for resource {}", resourceUri);
   }
 
   public void initializingProcessEngine(String name) {

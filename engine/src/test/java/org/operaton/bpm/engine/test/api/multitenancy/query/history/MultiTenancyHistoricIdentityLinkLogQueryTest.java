@@ -113,7 +113,7 @@ class MultiTenancyHistoricIdentityLinkLogQueryTest {
         .withoutTenantId();
 
     // then
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -128,8 +128,8 @@ class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
     // then
     assertThat(query.list()).hasSize(2);
-    assertThat(query.tenantIdIn(TENANT_1).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_2).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_1).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_2).count()).isOne();
   }
 
   @Test
@@ -215,7 +215,7 @@ class MultiTenancyHistoricIdentityLinkLogQueryTest {
 
     // then
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.withoutTenantId().count()).isEqualTo(1);
+    assertThat(query.withoutTenantId().count()).isOne();
     assertThat(query.tenantIdIn(TENANT_1, TENANT_2).count()).isEqualTo(2);
     assertThat(query.tenantIdIn(TENANT_2, TENANT_3).count()).isEqualTo(2);
     assertThat(query.tenantIdIn(TENANT_1, TENANT_2, TENANT_3).count()).isEqualTo(3);

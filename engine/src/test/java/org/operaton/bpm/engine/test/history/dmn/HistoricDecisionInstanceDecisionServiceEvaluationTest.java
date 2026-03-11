@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.history.dmn;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -61,7 +60,7 @@ public class HistoricDecisionInstanceDecisionServiceEvaluationTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { DECISION_PROCESS_WITH_DECISION_SERVICE, "task" },
       { DECISION_PROCESS_WITH_START_LISTENER, "task" },
       { DECISION_PROCESS_WITH_END_LISTENER, "task" },

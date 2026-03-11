@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.bpmn.authorization;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -35,7 +36,6 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
 
 
 /**
@@ -205,17 +205,10 @@ class StartAuthorizationTest {
   }
 
   private boolean containsUserOrGroup(String userId, String groupId, List<IdentityLink> links) {
-    boolean found = false;
-    for (IdentityLink identityLink : links) {
-      if(userId != null && userId.equals(identityLink.getUserId())) {
-        found = true;
-        break;
-      } else if(groupId != null && groupId.equals(identityLink.getGroupId())) {
-        found = true;
-        break;
-      }
-    }
-    return found;
+    return links.stream().anyMatch(identityLink ->
+      Objects.equals(userId, identityLink.getUserId()) ||
+      Objects.equals(groupId, identityLink.getGroupId())
+    );
   }
 
   @Deployment
@@ -229,12 +222,7 @@ class StartAuthorizationTest {
 
 	    // Authentication should not be done. So an unidentified user should also be able to start the process
 	    identityService.setAuthenticatedUserId("unauthorizedUser");
-	    try {
-	      runtimeService.startProcessInstanceByKey("potentialStarter");
-
-	    }  catch (Exception e) {
-        fail("No StartAuthorizationException expected, " + e.getClass().getName() + " caught.");
-	    }
+      runtimeService.startProcessInstanceByKey("potentialStarter");
 
 	    // check with an authorized user obviously it should be no problem starting the process
 	    identityService.setAuthenticatedUserId("user1");

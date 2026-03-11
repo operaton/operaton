@@ -56,7 +56,7 @@ public class TransactionIsolationLevelTest extends AbstractFoxPlatformIntegratio
         .openSession();
     try {
       int transactionIsolation = sqlSession.getConnection().getTransactionIsolation();
-      assertThat(transactionIsolation).as("TransactionIsolationLevel for connection is " + transactionIsolation + " instead of " + Connection.TRANSACTION_READ_COMMITTED).isEqualTo(Connection.TRANSACTION_READ_COMMITTED);
+      assertThat(transactionIsolation).as("TransactionIsolationLevel for connection is %d instead of %d".formatted(transactionIsolation, Connection.TRANSACTION_READ_COMMITTED)).isEqualTo(Connection.TRANSACTION_READ_COMMITTED);
     } catch (SQLException e) {
       e.printStackTrace();
     }

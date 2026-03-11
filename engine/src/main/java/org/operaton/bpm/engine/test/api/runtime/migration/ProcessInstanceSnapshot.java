@@ -21,8 +21,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.EnsureUtil;
 import org.operaton.bpm.engine.management.JobDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -139,7 +141,7 @@ public class ProcessInstanceSnapshot {
       return collectedEventsubscriptions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one event subscription for activity " + activityId + " and event " + eventName);
+      throw new ProcessEngineException("There is more than one event subscription for activity %s and event %s".formatted(activityId, eventName));
     }
   }
 
@@ -148,10 +150,7 @@ public class ProcessInstanceSnapshot {
     List<EventSubscription> collectedEventsubscriptions = new ArrayList<>();
 
     for (EventSubscription eventSubscription : getEventSubscriptions()) {
-      if (activityId.equals(eventSubscription.getActivityId())
-              && ((eventName == null && eventSubscription.getEventName() == null)
-              || eventName != null && eventName.equals(eventSubscription.getEventName()))
-      ) {
+      if (activityId.equals(eventSubscription.getActivityId()) && Objects.equals(eventName, eventSubscription.getEventName())) {
         collectedEventsubscriptions.add(eventSubscription);
       }
     }
@@ -184,7 +183,7 @@ public class ProcessInstanceSnapshot {
       return collectedJobs.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job for job definition " + jobDefinitionId);
+      throw new ProcessEngineException("There is more than one job for job definition %s".formatted(jobDefinitionId));
     }
   }
 
@@ -218,7 +217,7 @@ public class ProcessInstanceSnapshot {
       return collectedDefinitions.get(0);
     }
     else {
-      throw new RuntimeException("There is more than one job definition for activity " + activityId + " and job handler type " + jobHandlerType);
+      throw new ProcessEngineException("There is more than one job definition for activity %s and job handler type %s".formatted(activityId, jobHandlerType));
     }
   }
 
@@ -277,7 +276,7 @@ public class ProcessInstanceSnapshot {
       return null;
     }
     else {
-      throw new RuntimeException("There is more than one variable that matches the given condition");
+      throw new ProcessEngineException("There is more than one variable that matches the given condition");
     }
   }
 
@@ -286,7 +285,7 @@ public class ProcessInstanceSnapshot {
   }
 
   protected void ensurePropertySaved(String name, Object property) {
-    EnsureUtil.ensureNotNull(BadUserRequestException.class, "The snapshot has not saved the " + name + " of the process instance", name, property);
+    EnsureUtil.ensureNotNull(BadUserRequestException.class, "The snapshot has not saved the %s of the process instance".formatted(name), name, property);
   }
 
   protected interface Condition<T> {

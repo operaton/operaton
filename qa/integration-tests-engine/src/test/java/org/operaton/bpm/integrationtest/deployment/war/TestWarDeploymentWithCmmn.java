@@ -44,7 +44,7 @@ public class TestWarDeploymentWithCmmn extends AbstractFoxPlatformIntegrationTes
         .caseDefinitionKey("testDeployProcessArchiveWithCmmn")
         .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

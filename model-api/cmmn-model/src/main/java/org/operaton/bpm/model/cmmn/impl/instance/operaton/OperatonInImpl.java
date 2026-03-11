@@ -41,31 +41,31 @@ public class OperatonInImpl extends CmmnModelElementInstanceImpl implements Oper
 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonIn.class, OPERATON_ELEMENT_IN)
-      .namespaceUri(CAMUNDA_NS)
+      .namespaceUri(OPERATON_NS)
       .instanceProvider(OperatonInImpl::new);
 
     operatonSourceAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonSourceExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_SOURCE_EXPRESSION)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonVariablesAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLES)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonTargetAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_TARGET)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonBusinessKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_BUSINESS_KEY)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonLocalAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_LOCAL)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     typeBuilder.build();

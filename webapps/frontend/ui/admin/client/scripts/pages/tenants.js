@@ -35,14 +35,14 @@ var Controller = [
   'camAPI',
   'page',
   '$translate',
-  function(
+  function (
     $scope,
     $location,
     search,
     TenantResource,
     camAPI,
     pageService,
-    $translate
+    $translate,
   ) {
     $scope.searchConfig = angular.copy(searchConfig);
 
@@ -52,12 +52,12 @@ var Controller = [
     $scope.query = $scope.pages = null;
     var sorting;
 
-    $scope.onSortInitialized = function(_sorting) {
+    $scope.onSortInitialized = function (_sorting) {
       sorting = _sorting;
       $scope.blocked = false;
     };
 
-    $scope.onSortChanged = function(_sorting) {
+    $scope.onSortChanged = function (_sorting) {
       sorting = _sorting;
       updateView();
     };
@@ -76,23 +76,23 @@ var Controller = [
         firstResult: firstResult,
         maxResults: count,
         sortBy: sorting.sortBy,
-        sortOrder: sorting.sortOrder
+        sortOrder: sorting.sortOrder,
       };
 
       $scope.tenantList = null;
       $scope.loadingState = 'LOADING';
 
       return debounceCount(
-        TenantResource.count(angular.extend({}, $scope.query)).$promise
+        TenantResource.count(angular.extend({}, $scope.query)).$promise,
       )
-        .then(function(data) {
+        .then(function (data) {
           var total = data.count;
 
           return debounceQuery(
             TenantResource.query(angular.extend({}, $scope.query, queryParams))
-              .$promise
+              .$promise,
           )
-            .then(function(data) {
+            .then(function (data) {
               $scope.tenantList = data;
               $scope.loadingState = data.length ? 'LOADED' : 'EMPTY';
 
@@ -101,7 +101,7 @@ var Controller = [
             .catch(angular.noop);
         })
         .catch(angular.noop)
-        .finally(function() {
+        .finally(function () {
           setTimeout(() => {
             $scope.$apply();
           }, 0);
@@ -116,19 +116,19 @@ var Controller = [
 
     pageService.breadcrumbsAdd({
       label: $translate.instant('TENANTS_TENANTS'),
-      href: '#/tenants/'
+      href: '#/tenants/',
     });
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/tenants', {
       template: template,
       controller: Controller,
       authentication: 'required',
-      reloadOnSearch: false
+      reloadOnSearch: false,
     });
-  }
+  },
 ];

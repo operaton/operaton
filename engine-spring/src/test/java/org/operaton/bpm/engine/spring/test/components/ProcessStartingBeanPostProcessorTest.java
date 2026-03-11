@@ -16,12 +16,14 @@
  */
 package org.operaton.bpm.engine.spring.test.components;
 
-import java.util.logging.Logger;
+import java.util.concurrent.Future;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -40,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration("classpath:org/operaton/bpm/engine/spring/test/components/ProcessStartingBeanPostProcessorTest-context.xml")
 class ProcessStartingBeanPostProcessorTest {
 
-	private static final Logger LOG = Logger.getLogger(ProcessStartingBeanPostProcessorTest.class.getName());
+	private static final Logger LOG = LoggerFactory.getLogger(ProcessStartingBeanPostProcessorTest.class);
 
 	@Autowired
 	private ProcessEngine processEngine;
@@ -101,12 +103,24 @@ class ProcessStartingBeanPostProcessorTest {
 
   @Test
   void launchingProcessInstance() {
-		long id = 343;
-		String processInstance = processInitiatingPojo.startProcessA(id);
-		Long customerId = (Long) processEngine.getRuntimeService().getVariable(processInstance, "customerId");
+    long id = 343;
+    String processInstance = processInitiatingPojo.startProcessA(id);
+    Long customerId = (Long) processEngine.getRuntimeService().getVariable(processInstance, "customerId");
     assertThat((Long) id).as("the process variable should both exist and be equal to the value given, " + id).isEqualTo(customerId);
-		LOG.info("the customerId from the ProcessInstance is " + customerId);
+    LOG.info("the customerId from the ProcessInstance is {}", customerId);
     assertThat(processInstance).as("processInstance can't be null").isNotNull();
     assertThat(customerId).as("the variable should be non-null").isNotNull();
-	}
+  }
+
+  @Test
+  void launchingAsyncProcessInstance() throws Exception {
+    long id = 343;
+    Future<ProcessInstance> fpi = processInitiatingPojo.startAsyncProcess(id);
+    assertThat(fpi).as("the future should not be null").isNotNull();
+    ProcessInstance pi = fpi.get();
+    assertThat(pi).as("the process instance should not be null").isNotNull();
+    Long customerId = (Long) processEngine.getRuntimeService().getVariable(pi.getId(), "customerId");
+    assertThat(customerId).isEqualTo(id);
+  }
 }
+		

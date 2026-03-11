@@ -16,21 +16,14 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.GroupQuery;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
-
 /**
  * @author Tom Baeyens
  */
-public class CreateGroupQueryCmd implements Command<GroupQuery>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CreateGroupQueryCmd implements Command<GroupQuery> {
   @Override
   public GroupQuery execute(CommandContext commandContext) {
     return commandContext

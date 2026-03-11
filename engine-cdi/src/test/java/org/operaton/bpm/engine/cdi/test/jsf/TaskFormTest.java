@@ -17,12 +17,10 @@
 package org.operaton.bpm.engine.cdi.test.jsf;
 
 import java.util.Set;
-import jakarta.enterprise.inject.AmbiguousResolutionException;
 import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.compat.FoxTaskForm;
 import org.operaton.bpm.engine.cdi.compat.OperatonTaskForm;
@@ -30,40 +28,40 @@ import org.operaton.bpm.engine.cdi.jsf.TaskForm;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class TaskFormTest extends CdiProcessEngineTestCase {
+class TaskFormTest extends CdiProcessEngineTestCase {
 
   @Test
-  public void testTaskFormInjectable() {
-
+  void testTaskFormInjectable() {
+    BeanManager beanManager = getBeanManager();
     Set<Bean<?>> taskForm = beanManager.getBeans(TaskForm.class);
-    try {
+
+    assertThatCode(() -> {
       Bean<? extends Object> bean = beanManager.resolve(taskForm);
       assertThat(bean).isNotNull();
-    }catch(AmbiguousResolutionException e) {
-      fail("Injection of TaskForm is ambiguous.");
-    }
+    })
+      .withFailMessage("Injection of TaskForm is ambiguous.")
+      .doesNotThrowAnyException();
 
     Set<Bean<?>> foxTaskForm = beanManager.getBeans(FoxTaskForm.class);
-    try {
+    assertThatCode(() -> {
       Bean<? extends Object> bean = beanManager.resolve(foxTaskForm);
       assertThat(bean).isNotNull();
-    }catch(AmbiguousResolutionException e) {
-      fail("Injection of FoxTaskForm is ambiguous.");
-    }
+    })
+      .withFailMessage("Injection of FoxTaskForm is ambiguous.")
+      .doesNotThrowAnyException();
 
     Set<Bean<?>> operatonTaskForm = beanManager.getBeans(OperatonTaskForm.class);
-    try {
+    assertThatCode(() -> {
       Bean<? extends Object> bean = beanManager.resolve(operatonTaskForm);
       assertThat(bean).isNotNull();
-    }catch(AmbiguousResolutionException e) {
-      fail("Injection of OperatonTaskForm is ambiguous.");
-    }
+    })
+      .withFailMessage("Injection of OperatonTaskForm is ambiguous.")
+      .doesNotThrowAnyException();
 
   }
 

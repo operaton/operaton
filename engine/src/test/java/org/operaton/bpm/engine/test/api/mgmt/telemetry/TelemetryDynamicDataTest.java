@@ -95,7 +95,7 @@ class TelemetryDynamicDataTest {
         "HistoryLevelSetupCommand",
         "BootstrapEngineCommand");
     for (String commandName : entries.keySet()) {
-      assertThat(entries.get(commandName).get()).isEqualTo(1);
+      assertThat(entries.get(commandName).get()).isOne();
     }
 
     ProcessEngines.unregister(processEngineInMem);
@@ -123,7 +123,7 @@ class TelemetryDynamicDataTest {
                                          "CompleteTaskCmd"};
     assertThat(entries).containsOnlyKeys(expectedExecutedCommands);
     for (String commandName : expectedExecutedCommands) {
-      assertThat(entries.get(commandName).get()).isEqualTo(1);
+      assertThat(entries.get(commandName).get()).isOne();
     }
   }
 

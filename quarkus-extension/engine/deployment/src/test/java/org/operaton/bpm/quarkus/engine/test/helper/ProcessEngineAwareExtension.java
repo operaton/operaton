@@ -83,7 +83,7 @@ public class ProcessEngineAwareExtension extends QuarkusUnitTest {
     JavaArchive javaArchive = archiveProducer.get();
     javaArchive.addClass(ProcessEngineAwareExtension.class);
 
-    Method[] testMethods = context.getTestClass().get().getMethods();
+    Method[] testMethods = context.getTestClass().get().getDeclaredMethods();
     Arrays.stream(testMethods).forEach(method -> {
       if (method.getAnnotation(Test.class) != null) {
         Deployment annotation = method.getAnnotation(Deployment.class);

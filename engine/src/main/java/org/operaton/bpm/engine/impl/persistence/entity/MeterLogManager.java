@@ -28,14 +28,18 @@ import java.util.Set;
 import org.operaton.bpm.engine.impl.Direction;
 import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 import org.operaton.bpm.engine.impl.QueryPropertyImpl;
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.ListQueryParameterObject;
+import org.operaton.bpm.engine.impl.db.entitymanager.DbEntityManager;
 import org.operaton.bpm.engine.impl.db.entitymanager.operation.DbOperation;
 import org.operaton.bpm.engine.impl.metrics.Meter;
 import org.operaton.bpm.engine.impl.metrics.MetricsQueryImpl;
 import org.operaton.bpm.engine.impl.persistence.AbstractManager;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.management.MetricIntervalValue;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * @author Daniel Meyer
@@ -81,31 +85,35 @@ public class MeterLogManager extends AbstractManager {
   }
 
   public List<MetricIntervalValue> executeSelectInterval(MetricsQueryImpl query) {
-    List<MetricIntervalValue> intervalResult = getDbEntityManager().selectList(SELECT_METER_INTERVAL, query);
-    intervalResult = intervalResult != null ? intervalResult : new ArrayList<>();
+    DbEntityManager dbEntityManager = requireNonNull(getDbEntityManager());
+    ProcessEngineConfigurationImpl processEngineConfiguration = requireNonNull(Context.getProcessEngineConfiguration());
+    List<MetricIntervalValue> intervalResult = dbEntityManager.selectList(SELECT_METER_INTERVAL, query);
 
-    String reporterId = Context.getProcessEngineConfiguration().getDbMetricsReporter().getMetricsCollectionTask().getReporter();
-    if (!intervalResult.isEmpty() && isEndTimeAfterLastReportInterval(query) && reporterId != null) {
-      Map<String, Meter> metrics = Context.getProcessEngineConfiguration().getMetricsRegistry().getDbMeters();
-      String queryName = query.getName();
-      //we have to add all unlogged metrics to last interval
-      if (queryName != null) {
-        MetricIntervalEntity intervalEntity = (MetricIntervalEntity) intervalResult.get(0);
-        long entityValue = intervalEntity.getValue();
-        if (metrics.get(queryName) != null) {
-          entityValue += metrics.get(queryName).get();
-        }
-        intervalEntity.setValue(entityValue);
-      } else {
-        Set<String> metricNames = metrics.keySet();
-        Date lastIntervalTimestamp = intervalResult.get(0).getTimestamp();
-        for (String metricName : metricNames) {
-          MetricIntervalEntity entity = new MetricIntervalEntity(lastIntervalTimestamp, metricName, reporterId);
-          int idx = intervalResult.indexOf(entity);
-          if (idx >= 0) {
-            MetricIntervalEntity intervalValue = (MetricIntervalEntity) intervalResult.get(idx);
-            intervalValue.setValue(intervalValue.getValue() + metrics.get(metricName).get());
-          }
+    intervalResult = intervalResult != null ? intervalResult : new ArrayList<>();
+    String reporterId = processEngineConfiguration.getDbMetricsReporter().getMetricsCollectionTask().getReporter();
+    if (intervalResult.isEmpty() || !isEndTimeAfterLastReportInterval(query) || reporterId == null) {
+      return intervalResult;
+    }
+
+    Map<String, Meter> metrics = processEngineConfiguration.getMetricsRegistry().getDbMeters();
+    String queryName = query.getName();
+    //we have to add all unlogged metrics to last interval
+    if (queryName != null) {
+      MetricIntervalEntity intervalEntity = (MetricIntervalEntity) intervalResult.get(0);
+      long entityValue = intervalEntity.getValue();
+      if (metrics.get(queryName) != null) {
+        entityValue += metrics.get(queryName).get();
+      }
+      intervalEntity.setValue(entityValue);
+    } else {
+      Set<String> metricNames = metrics.keySet();
+      Date lastIntervalTimestamp = intervalResult.get(0).getTimestamp();
+      for (String metricName : metricNames) {
+        MetricIntervalEntity entity = new MetricIntervalEntity(lastIntervalTimestamp, metricName, reporterId);
+        int idx = intervalResult.indexOf(entity);
+        if (idx >= 0) {
+          MetricIntervalEntity intervalValue = (MetricIntervalEntity) intervalResult.get(idx);
+          intervalValue.setValue(intervalValue.getValue() + metrics.get(metricName).get());
         }
       }
     }

@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.bpmn.event.conditional;
+import java.util.List;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.jupiter.api.TestTemplate;
@@ -52,7 +52,7 @@ public class TriggerConditionalEventFromDelegationCodeTest extends AbstractCondi
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
       {new ConditionalEventProcessSpecifier() {
         @Override
         public Class getDelegateClass() {

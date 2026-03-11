@@ -212,7 +212,7 @@ public class Parser {
 	 * throw exception
 	 */
 	protected void fail(String expected) throws ParseException {
-		throw new ParseException(position, "'" + token.getImage() + "'", expected);
+		throw new ParseException(position, "'%s'".formatted(token.getImage()), expected);
 	}
 
 	/**
@@ -334,13 +334,13 @@ public class Parser {
 	 */
 	protected AstEval eval(boolean required, boolean deferred) throws Scanner.ScanException, ParseException {
 		AstEval v = null;
-		Scanner.Symbol start_eval = deferred ? Scanner.Symbol.START_EVAL_DEFERRED : Scanner.Symbol.START_EVAL_DYNAMIC;
-		if (token.getSymbol() == start_eval) {
+		Scanner.Symbol startEval = deferred ? Scanner.Symbol.START_EVAL_DEFERRED : Scanner.Symbol.START_EVAL_DYNAMIC;
+		if (token.getSymbol() == startEval) {
 			consumeToken();
 			v = new AstEval(expr(true), deferred);
 			consumeToken(Scanner.Symbol.END_EVAL);
 		} else if (required) {
-			fail(start_eval);
+			fail(startEval);
 		}
 		return v;
 	}
@@ -604,31 +604,42 @@ public class Parser {
 		while (true) {
 			switch (token.getSymbol()) {
 				case DOT:
-					consumeToken();
-					String name = consumeToken(Scanner.Symbol.IDENTIFIER).getImage();
-					AstDot dot = createAstDot(v, name, lvalue);
-					if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
-						v = createAstMethod(dot, params());
-					} else {
-						v = dot;
-					}
+					v = parseDotToken(v, lvalue);
 					break;
 				case LBRACK:
-					consumeToken();
-					AstNode property = expr(true);
-					boolean strict = !context.isEnabled(Builder.Feature.NULL_PROPERTIES);
-					consumeToken(Scanner.Symbol.RBRACK);
-					AstBracket bracket = createAstBracket(v, property, lvalue, strict);
-					if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
-						v = createAstMethod(bracket, params());
-					} else {
-						v = bracket;
-					}
+					v = parseLBrackToken(v, lvalue);
 					break;
 				default:
 					return v;
 			}
 		}
+	}
+
+	private AstNode parseDotToken(AstNode v, boolean lvalue) throws Scanner.ScanException, ParseException {
+		consumeToken();
+		String name = consumeToken(Scanner.Symbol.IDENTIFIER).getImage();
+		AstDot dot = createAstDot(v, name, lvalue);
+		if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
+			v = createAstMethod(dot, params());
+		} else {
+			v = dot;
+		}
+		return v;
+	}
+
+
+	private AstNode parseLBrackToken(AstNode v, boolean lvalue) throws Scanner.ScanException, ParseException {
+		consumeToken();
+		AstNode property = expr(true);
+		boolean strict = !context.isEnabled(Builder.Feature.NULL_PROPERTIES);
+		consumeToken(Scanner.Symbol.RBRACK);
+		AstBracket bracket = createAstBracket(v, property, lvalue, strict);
+		if (token.getSymbol() == Scanner.Symbol.LPAREN && context.isEnabled(Builder.Feature.METHOD_INVOCATIONS)) {
+			v = createAstMethod(bracket, params());
+		} else {
+			v = bracket;
+		}
+		return v;
 	}
 
 	/**
@@ -710,8 +721,10 @@ public class Parser {
 			case EXTENSION:
 				if (getExtensionHandler(token).getExtensionPoint() == ExtensionPoint.LITERAL) {
 					v = getExtensionHandler(consumeToken()).createAstNode();
-					break;
 				}
+				break;
+			default:
+				break;
 		}
 		return v;
 	}

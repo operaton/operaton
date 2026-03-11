@@ -27,6 +27,7 @@ import org.operaton.bpm.integrationtest.functional.ejb.beans.SLSBClientDelegate;
 import org.operaton.bpm.integrationtest.functional.ejb.beans.SLSBDelegate;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -56,7 +57,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolution");
 
-    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), SLSBDelegate.class.getName(), false);
 
@@ -64,7 +65,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
@@ -77,7 +78,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient");
 
-    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), SLSBDelegate.class.getName(), false);
 
@@ -85,7 +86,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), SLSBDelegate.class.getName())).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -99,7 +100,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testBeanResolutionfromClient").getId();
-      assertThat(runtimeService.getVariable(ids[i], SLSBDelegate.class.getName())).as("Incovation=" + i).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], SLSBDelegate.class.getName())).as("Incovation=" + i).isEqualTo(TRUE);
       runtimeService.setVariable(ids[i], SLSBDelegate.class.getName(), false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -107,7 +108,7 @@ public class SLSBDelegateTest extends AbstractFoxPlatformIntegrationTest {
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      assertThat(runtimeService.getVariable(ids[i], SLSBDelegate.class.getName())).as("Incovation=" + i).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], SLSBDelegate.class.getName())).as("Incovation=" + i).isEqualTo(TRUE);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

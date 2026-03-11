@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.impl.context;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -27,12 +25,11 @@ import org.operaton.bpm.engine.test.Deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(Arquillian.class)
-public class BusinessProcessContextConversationScopeTest extends CdiProcessEngineTestCase {
+class BusinessProcessContextConversationScopeTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testConversationalBeanStoreFlush() {
+  void testConversationalBeanStoreFlush() {
 
     getBeanInstance(BusinessProcess.class).setVariable("testVariable", "testValue");
     String pid =  getBeanInstance(BusinessProcess.class).startProcessByKey("testConversationalBeanStoreFlush").getId();

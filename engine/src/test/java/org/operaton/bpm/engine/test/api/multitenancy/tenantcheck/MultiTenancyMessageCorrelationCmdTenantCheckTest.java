@@ -81,8 +81,8 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -98,7 +98,7 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
@@ -115,7 +115,7 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
       .correlateStartMessage();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
@@ -139,7 +139,7 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     TaskQuery query = taskService.createTaskQuery();
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -158,7 +158,7 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
@@ -180,7 +180,7 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
   }
 
@@ -278,8 +278,8 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -316,8 +316,8 @@ class MultiTenancyMessageCorrelationCmdTenantCheckTest {
     identityService.clearAuthentication();
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
 }

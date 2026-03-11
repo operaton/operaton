@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.history.HistoricVariableInstance;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -55,7 +56,7 @@ public class OperatonScriptResourceTest extends AbstractFoxPlatformIntegrationTe
 
     assertThat(variable).isNotNull();
     assertThat(variable.getName()).isEqualTo("executed");
-    assertThat(variable.getValue()).isEqualTo(true);
+    assertThat(variable.getValue()).isEqualTo(TRUE);
   }
 
 }

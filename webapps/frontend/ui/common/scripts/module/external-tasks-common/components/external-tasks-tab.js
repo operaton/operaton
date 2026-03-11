@@ -19,7 +19,7 @@
 
 var template = require('./external-tasks-tab.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     template: template,
@@ -27,7 +27,7 @@ module.exports = function() {
     controller: 'ExternalTasksTabController as TasksTab',
     scope: {
       onLoad: '&externalTasksTab',
-      processData: '='
-    }
+      processData: '=',
+    },
   };
 };

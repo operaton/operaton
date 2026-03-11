@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.container.impl.jboss.util;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-
 /**
  * Utility methods to manipulate the Current Thread Context Classloader
  *
@@ -33,18 +30,7 @@ public final class Tccl {
   }
 
   public static <T> T runUnderClassloader(final Operation<T> operation, final ClassLoader classLoader) {
-    SecurityManager sm = System.getSecurityManager();
-    if (sm != null) {
-      return AccessController.doPrivileged((PrivilegedAction<T>) () -> {
-        try {
-          return runWithTccl(operation, classLoader);
-        } catch (Exception e) {
-          throw new RuntimeException(e);
-        }
-      });
-    } else {
-      return runWithTccl(operation, classLoader);
-    }
+    return runWithTccl(operation, classLoader);
   }
 
   private static <T> T runWithTccl(Operation<T> operation, ClassLoader classLoader) {

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.authorization.task.updatevariable;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -268,7 +267,7 @@ public class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    taskService.removeVariables(taskId, Arrays.asList(VARIABLE_NAME));
+    taskService.removeVariables(taskId, List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -291,7 +290,7 @@ public class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    taskService.removeVariablesLocal(taskId, Arrays.asList(VARIABLE_NAME));
+    taskService.removeVariablesLocal(taskId, List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -334,7 +333,7 @@ public class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    ((TaskServiceImpl) taskService).updateVariables(taskId, null, Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariables(taskId, null, List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -355,7 +354,7 @@ public class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    ((TaskServiceImpl) taskService).updateVariables(taskId, getVariables(), Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariables(taskId, getVariables(), List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -398,7 +397,7 @@ public class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, null, Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, null, List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {
@@ -419,7 +418,7 @@ public class StandaloneTaskAuthorizationTest {
         .bindResource("taskId", taskId)
         .start();
 
-    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, getVariables(), Arrays.asList(VARIABLE_NAME));
+    ((TaskServiceImpl) taskService).updateVariablesLocal(taskId, getVariables(), List.of(VARIABLE_NAME));
 
     // then
     if (authRule.assertScenario(scenario)) {

@@ -19,13 +19,11 @@ package org.operaton.bpm.quarkus.engine.test.lookup;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Alternative;
-import jakarta.enterprise.inject.Specializes;
 import jakarta.inject.Named;
 
 import io.quarkus.test.QuarkusUnitTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -37,6 +35,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * This test is copied and adjusted from the engine-cdi module to work with Quarkus.
  * See https://jira.camunda.com/browse/CAM-13747 for the reasoning.
+ * Not testing @{@link jakarta.enterprise.inject.Specializes}
+ * becaues it is not supported in Quarkus
  */
 class ProgrammaticBeanLookupTest {
 
@@ -47,7 +47,6 @@ class ProgrammaticBeanLookupTest {
           .addClass(TestBean.class)
           .addClass(OtherTestBean.class)
           .addClass(AlternativeTestBean.class)
-          .addClass(SpecializedTestBean.class)
           .addClass(BeanWithProducerMethods.class));
 
   @Test
@@ -60,13 +59,6 @@ class ProgrammaticBeanLookupTest {
   void shouldFindAlternative() {
     Object lookup = ProgrammaticBeanLookup.lookup("otherTestBean");
     assertThat(lookup).isInstanceOf(AlternativeTestBean.class);
-  }
-
-  @Test
-  @Disabled("specialization not supported")
-  void shouldFindSpecialization() {
-    Object lookup = ProgrammaticBeanLookup.lookup("specializedTestBean");
-    assertThat(lookup).isInstanceOf(SpecializedTestBean.class);
   }
 
   @Test
@@ -89,11 +81,6 @@ class ProgrammaticBeanLookupTest {
   @Named("otherTestBean")
   @Dependent
   public static class AlternativeTestBean extends OtherTestBean {
-  }
-
-  @Dependent
-  @Specializes
-  public static class SpecializedTestBean extends TestBean {
   }
 
 }

@@ -49,7 +49,7 @@ class SyncApiUserOperationLogLimitConfigurationTest {
     startEngineManaged(processEngineConfiguration);
 
     // then
-    assertThat(processEngineConfiguration.getLogEntriesPerSyncOperationLimit()).isEqualTo(1L);
+    assertThat(processEngineConfiguration.getLogEntriesPerSyncOperationLimit()).isOne();
   }
 
   @Test

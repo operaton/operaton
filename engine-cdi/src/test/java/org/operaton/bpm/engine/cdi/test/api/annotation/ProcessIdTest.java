@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -30,12 +28,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class ProcessIdTest extends CdiProcessEngineTestCase {
+class ProcessIdTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testProcessIdInjectable() {
+  void testProcessIdInjectable() {
     getBeanInstance(BusinessProcess.class).startProcessByKey("keyOfTheProcess");
     assertThat(getBeanInstance("processInstanceId")).isNotNull();
   }

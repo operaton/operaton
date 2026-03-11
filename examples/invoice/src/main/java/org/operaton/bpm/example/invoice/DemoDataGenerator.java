@@ -17,7 +17,6 @@
 package org.operaton.bpm.example.invoice;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +63,12 @@ public class DemoDataGenerator {
   private static final String RESOURCE_ID_DEMO = "demo";
   private static final String RESOURCE_ID_INVOICE = "invoice";
   private static final String RESOURCE_ID_TASKLIST = "tasklist";
+  private static final String FILTER_PROPERTY_DESCRIPTION = "description";
+  private static final String FILTER_PROPERTY_PRIORITY = "priority";
 
   private static final Logger LOGGER = Logger.getLogger(DemoDataGenerator.class.getName());
 
-  public void createUsers(ProcessEngine engine) {
+    public void createUsers(ProcessEngine engine) {
 
       final IdentityServiceImpl identityService = (IdentityServiceImpl) engine.getIdentityService();
 
@@ -263,8 +264,8 @@ public class DemoDataGenerator {
       FilterService filterService = engine.getFilterService();
 
       Map<String, Object> filterProperties = new HashMap<>();
-      filterProperties.put("description", "Tasks assigned to me");
-      filterProperties.put("priority", -10);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "Tasks assigned to me");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, -10);
       addVariables(filterProperties);
       TaskService taskService = engine.getTaskService();
       TaskQuery query = taskService.createTaskQuery().taskAssigneeExpression("${currentUser()}");
@@ -273,8 +274,8 @@ public class DemoDataGenerator {
       filterService.saveFilter(myTasksFilter);
 
       filterProperties.clear();
-      filterProperties.put("description", "Tasks assigned to my Groups");
-      filterProperties.put("priority", -5);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "Tasks assigned to my Groups");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, -5);
       addVariables(filterProperties);
       query = taskService.createTaskQuery().taskCandidateGroupInExpression("${currentUserGroups()}").taskUnassigned();
       Filter groupTasksFilter = filterService.newTaskFilter().setName("My Group Tasks").setProperties(filterProperties).setOwner(
@@ -298,10 +299,10 @@ public class DemoDataGenerator {
       // management filter
 
       filterProperties.clear();
-      filterProperties.put("description", "Tasks for Group Accounting");
-      filterProperties.put("priority", -3);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "Tasks for Group Accounting");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, -3);
       addVariables(filterProperties);
-      query = taskService.createTaskQuery().taskCandidateGroupIn(Arrays.asList(GROUP_ACCOUNTING)).taskUnassigned();
+      query = taskService.createTaskQuery().taskCandidateGroupIn(List.of(GROUP_ACCOUNTING)).taskUnassigned();
       Filter candidateGroupTasksFilter = filterService.newTaskFilter().setName("Accounting").setProperties(filterProperties).setOwner(
         RESOURCE_ID_DEMO).setQuery(query);
       filterService.saveFilter(candidateGroupTasksFilter);
@@ -316,8 +317,8 @@ public class DemoDataGenerator {
       // john's tasks
 
       filterProperties.clear();
-      filterProperties.put("description", "Tasks assigned to John");
-      filterProperties.put("priority", -1);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "Tasks assigned to John");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, -1);
       addVariables(filterProperties);
       query = taskService.createTaskQuery().taskAssignee("john");
       Filter johnsTasksFilter = filterService.newTaskFilter().setName("John's Tasks").setProperties(filterProperties).setOwner(
@@ -327,8 +328,8 @@ public class DemoDataGenerator {
       // mary's tasks
 
       filterProperties.clear();
-      filterProperties.put("description", "Tasks assigned to Mary");
-      filterProperties.put("priority", -1);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "Tasks assigned to Mary");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, -1);
       addVariables(filterProperties);
       query = taskService.createTaskQuery().taskAssignee("mary");
       Filter marysTasksFilter = filterService.newTaskFilter().setName("Mary's Tasks").setProperties(filterProperties).setOwner(
@@ -338,8 +339,8 @@ public class DemoDataGenerator {
       // peter's tasks
 
       filterProperties.clear();
-      filterProperties.put("description", "Tasks assigned to Peter");
-      filterProperties.put("priority", -1);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "Tasks assigned to Peter");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, -1);
       addVariables(filterProperties);
       query = taskService.createTaskQuery().taskAssignee("peter");
       Filter petersTasksFilter = filterService.newTaskFilter().setName("Peter's Tasks").setProperties(filterProperties).setOwner(
@@ -349,8 +350,8 @@ public class DemoDataGenerator {
       // all tasks
 
       filterProperties.clear();
-      filterProperties.put("description", "All Tasks - Not recommended to be used in production :)");
-      filterProperties.put("priority", 10);
+      filterProperties.put(FILTER_PROPERTY_DESCRIPTION, "All Tasks - Not recommended to be used in production :)");
+      filterProperties.put(FILTER_PROPERTY_PRIORITY, 10);
       addVariables(filterProperties);
       query = taskService.createTaskQuery();
       Filter allTasksFilter = filterService.newTaskFilter().setName("All Tasks").setProperties(filterProperties).setOwner(

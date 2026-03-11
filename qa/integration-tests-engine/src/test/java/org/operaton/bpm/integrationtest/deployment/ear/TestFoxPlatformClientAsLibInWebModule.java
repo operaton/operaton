@@ -78,7 +78,7 @@ public class TestFoxPlatformClientAsLibInWebModule extends AbstractFoxPlatformIn
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

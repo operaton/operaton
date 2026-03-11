@@ -16,13 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
-
 
 /**
  * NOTE: instances of Message Entity should be created via {@link MessageJobDeclaration}.
@@ -32,8 +31,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.MessageJobDeclaration;
 public class MessageEntity extends JobEntity {
 
   public static final String TYPE = "message";
-
-  @Serial private static final long serialVersionUID = 1L;
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
@@ -66,6 +63,20 @@ public class MessageEntity extends JobEntity {
   public void init(CommandContext commandContext, boolean shouldResetLock, boolean shouldCallDeleteHandler) {
     super.init(commandContext, shouldResetLock, shouldCallDeleteHandler);
     repeat = null;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {return true;}
+    if (o == null || getClass() != o.getClass()) {return false;}
+    if (!super.equals(o)) {return false;}
+    MessageEntity that = (MessageEntity) o;
+    return Objects.equals(repeat, that.repeat);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(super.hashCode(), repeat);
   }
 
   @Override

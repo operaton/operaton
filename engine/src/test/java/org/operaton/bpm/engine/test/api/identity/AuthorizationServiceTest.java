@@ -60,7 +60,6 @@ import static org.operaton.bpm.engine.authorization.Resources.DASHBOARD;
 import static org.operaton.bpm.engine.authorization.Resources.REPORT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Daniel Meyer
@@ -88,33 +87,25 @@ class AuthorizationServiceTest {
 
   @Test
   void testGlobalAuthorizationType() {
+    // given
     Authorization globalAuthorization = authorizationService.createNewAuthorization(AUTH_TYPE_GLOBAL);
     // I can set userId = null
     globalAuthorization.setUserId(null);
     // I can set userId = ANY
     globalAuthorization.setUserId(ANY);
 
-    try {
-      // I cannot set anything else:
-      globalAuthorization.setUserId("something");
-      fail("exception expected");
-
-    } catch (Exception e) {
-      testRule.assertTextPresent("ENGINE-03028 Illegal value 'something' for userId for GLOBAL authorization. Must be '*'", e.getMessage());
-
-    }
+    // when/then - I cannot set anything else for userId:
+    assertThatThrownBy(() -> globalAuthorization.setUserId("something"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-03028 Illegal value 'something' for userId for GLOBAL authorization. Must be '*'");
 
     // I can set groupId = null
     globalAuthorization.setGroupId(null);
 
-    try {
-      // I cannot set anything else:
-      globalAuthorization.setGroupId("something");
-      fail("exception expected");
-
-    } catch (Exception e) {
-      testRule.assertTextPresent("ENGINE-03027 Cannot use 'groupId' for GLOBAL authorization", e.getMessage());
-    }
+    // when/then - I cannot set anything else for groupId:
+    assertThatThrownBy(() -> globalAuthorization.setGroupId("something"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("ENGINE-03027 Cannot use 'groupId' for GLOBAL authorization");
   }
 
   @Test
@@ -159,14 +150,13 @@ class AuthorizationServiceTest {
 
   @Test
   void testDeleteNonExistingAuthorization() {
+    // given
+    String nonExistingId = "nonExisting";
 
-    try {
-      authorizationService.deleteAuthorization("nonExisting");
-      fail("");
-    } catch (Exception e) {
-      testRule.assertTextPresent("Authorization for Id 'nonExisting' does not exist: authorization is null", e.getMessage());
-    }
-
+    // when/then
+    assertThatThrownBy(() -> authorizationService.deleteAuthorization(nonExistingId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Authorization for Id 'nonExisting' does not exist: authorization is null");
   }
 
   @Test
@@ -185,7 +175,7 @@ class AuthorizationServiceTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
@@ -209,7 +199,7 @@ class AuthorizationServiceTest {
     // save the authorization
     authorizationService.saveAuthorization(authorization);
     // authorization exists
-    assertThat(authorizationService.createAuthorizationQuery().count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().count()).isOne();
     // delete the authorization
     authorizationService.deleteAuthorization(authorization.getId());
     // it's gone
@@ -219,58 +209,46 @@ class AuthorizationServiceTest {
 
   @Test
   void testInvalidCreateAuthorization() {
-
+    // given
     Resource resource1 = TestResource.RESOURCE1;
 
     // case 1: no user id & no group id ////////////
+    Authorization authorization1 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization1.setResource(resource1);
 
-    Authorization authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setResource(resource1);
-
-    try {
-      authorizationService.saveAuthorization(authorization);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Authorization must either have a 'userId' or a 'groupId'.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization1))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Authorization must either have a 'userId' or a 'groupId'.");
 
     // case 2: both user id & group id ////////////
+    Authorization authorization2 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization2.setGroupId("someId");
+    authorization2.setUserId("someOtherId");
+    authorization2.setResource(resource1);
 
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setGroupId("someId");
-    authorization.setUserId("someOtherId");
-    authorization.setResource(resource1);
-
-    try {
-      authorizationService.saveAuthorization(authorization);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Authorization must either have a 'userId' or a 'groupId'.", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization2))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Authorization must either have a 'userId' or a 'groupId'.");
 
     // case 3: no resourceType ////////////
+    Authorization authorization3 = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
+    authorization3.setUserId("someId");
 
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_GRANT);
-    authorization.setUserId("someId");
-
-    try {
-      authorizationService.saveAuthorization(authorization);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Authorization 'resourceType' cannot be null.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization3))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Authorization 'resourceType' cannot be null.");
 
     // case 4: no permissions /////////////////
+    Authorization authorization4 = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
+    authorization4.setUserId("someId");
 
-    authorization = authorizationService.createNewAuthorization(AUTH_TYPE_REVOKE);
-    authorization.setUserId("someId");
-
-    try {
-      authorizationService.saveAuthorization(authorization);
-      fail("exception expected");
-    } catch(ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Authorization 'resourceType' cannot be null.");
-    }
+    // when/then
+    assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization4))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Authorization 'resourceType' cannot be null.");
   }
 
   @Test
@@ -543,19 +521,17 @@ class AuthorizationServiceTest {
     assertThat(authorization.isPermissionGranted(READ)).isTrue();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue(); // (none is always granted => you are always authorized to do nothing)
 
-    try {
-      authorization.isPermissionRevoked(READ);
-      fail("Exception expected");
-    } catch (IllegalStateException e) {
-      testRule.assertTextPresent("ENGINE-03026 Method 'isPermissionRevoked' cannot be used for authorization with type 'GRANT'.", e.getMessage());
-    }
-
+    // when/then
+    AuthorizationEntity finalAuthorization = authorization;
+    assertThatThrownBy(() -> finalAuthorization.isPermissionRevoked(READ))
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessageContaining("ENGINE-03026 Method 'isPermissionRevoked' cannot be used for authorization with type 'GRANT'.");
   }
 
   @Test
   void testGlobalAuthPermissions() {
 
-    AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GRANT);
+    AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GLOBAL);
     authorization.setResource(Resources.DEPLOYMENT);
 
     assertThat(authorization.isPermissionGranted(ALL)).isFalse();
@@ -574,13 +550,7 @@ class AuthorizationServiceTest {
     assertThat(authorization.isPermissionGranted(READ)).isTrue();
     assertThat(authorization.isPermissionGranted(NONE)).isTrue(); // (none is always granted => you are always authorized to do nothing)
 
-    try {
-      authorization.isPermissionRevoked(READ);
-      fail("Exception expected");
-    } catch (IllegalStateException e) {
-      testRule.assertTextPresent("ENGINE-03026 Method 'isPermissionRevoked' cannot be used for authorization with type 'GRANT'.", e.getMessage());
-    }
-
+    assertThat(authorization.isPermissionRevoked(READ)).isFalse();
   }
 
   @Test
@@ -600,13 +570,11 @@ class AuthorizationServiceTest {
             .contains(ALL)
             .hasSize(2);
 
-    try {
-      authorization.isPermissionGranted(READ);
-      fail("Exception expected");
-    } catch (IllegalStateException e) {
-      testRule.assertTextPresent("ENGINE-03026 Method 'isPermissionGranted' cannot be used for authorization with type 'REVOKE'.", e.getMessage());
-    }
-
+    // when/then
+    AuthorizationEntity finalAuthorization = authorization;
+    assertThatThrownBy(() -> finalAuthorization.isPermissionGranted(READ))
+      .isInstanceOf(IllegalStateException.class)
+      .hasMessageContaining("ENGINE-03026 Method 'isPermissionGranted' cannot be used for authorization with type 'REVOKE'.");
   }
 
   @Test
@@ -674,9 +642,9 @@ class AuthorizationServiceTest {
 
       for (Future<Exception> future : futures) {
         Exception exception = future.get();
-        if (exception != null) {
-          fail("No exception expected: " + exception.getMessage());
-        }
+        assertThat(exception)
+          .withFailMessage(() -> "No exception expected: " + (exception != null ? exception.getMessage() : ""))
+          .isNull();
       }
 
     }
@@ -890,7 +858,7 @@ class AuthorizationServiceTest {
     // when attempt to save, expect BadUserRequest
     assertThatThrownBy(() -> authorizationService.saveAuthorization(authorization))
       .isInstanceOf(BadUserRequestException.class)
-      .hasMessage("ENGINE-03087 The resource type with id:'" + Resources.TASK.resourceType() + "' is not valid for '" + TestPermissions.RANDOM.getName() + "' permission." );
+      .hasMessage("ENGINE-03087 The resource type with id:'%s' is not valid for '%s' permission.".formatted(Resources.TASK.resourceType(), TestPermissions.RANDOM.getName()));
   }
 
   protected void cleanupAfterTest() {

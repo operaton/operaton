@@ -42,6 +42,11 @@ public class DmnModelInstanceImpl extends ModelInstanceImpl implements DmnModelI
 
   @Override
   public DmnModelInstance clone() {
+    return copy();
+  }
+
+  @Override
+  public DmnModelInstance copy() {
     return new DmnModelInstanceImpl(model, modelBuilder, document.clone());
   }
 

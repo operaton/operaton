@@ -27,9 +27,13 @@ import static org.operaton.bpm.engine.impl.util.DecisionEvaluationUtil.evaluateD
 /**
  * Implementation of a Bpmn BusinessRuleTask executing a DMN Decision.
  *
+ * <p>
  * The decision is resolved as a {@link BaseCallableElement}.
+ * </p>
  *
+ * <p>
  * The decision is executed in the context of the current {@link VariableScope}.
+ * </p>
  *
  * @author Daniel Meyer
  *

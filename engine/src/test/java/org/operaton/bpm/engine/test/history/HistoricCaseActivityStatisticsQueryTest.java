@@ -87,7 +87,7 @@ class HistoricCaseActivityStatisticsQueryTest {
     // then
     List<HistoricCaseActivityStatistics> statistics = query.list();
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     assertThat(statistics).hasSize(1);
     assertStatisitcs(statistics.get(0), "PI_HumanTask_1", 5, 0, 0, 0, 0, 0);
   }

@@ -1,0 +1,29 @@
+<differences>
+  <difference>
+    <!-- It is okay to add classes to the set of superclasses -->
+    <differenceType>5000</differenceType>
+    <className>**</className>
+    <to>**</to>
+  </difference>
+  <difference>
+    <!-- It is okay to add methods to an interface-->
+    <differenceType>7012</differenceType>
+    <className>**</className>
+    <method>*</method>
+  </difference>
+
+
+  <!-- Operaton 1.0 -->
+  <!-- 6006: String constants and Logger made final -->
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/connect/Connectors</className>
+    <field>*_CONNECTOR_ID</field>
+  </difference>
+  <difference>
+    <differenceType>6006</differenceType>
+    <className>org/operaton/connect/Connectors</className>
+    <field>LOG</field>
+  </difference>
+
+</differences>

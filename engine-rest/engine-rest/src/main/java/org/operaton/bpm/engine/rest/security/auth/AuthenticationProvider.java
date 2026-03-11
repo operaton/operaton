@@ -35,10 +35,12 @@ public interface AuthenticationProvider {
    * {@link AuthenticationResult} that indicates, whether authentication was
    * successful, and, if true, always provides the authenticated user.
    *
+   * <p>
    * The result can only be successful if a valid user id was provided in the
    * request. It is not required to provide the group or tenant id, as they will
    * be resolved via the {@link IdentityService} (e.g.
    * {@link ProcessEngineAuthenticationFilter#setAuthenticatedUser}).
+   * </p>
    *
    * @param request
    *          the request to authenticate

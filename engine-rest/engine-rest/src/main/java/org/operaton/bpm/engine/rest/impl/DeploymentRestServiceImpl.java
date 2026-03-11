@@ -131,7 +131,7 @@ public class DeploymentRestServiceImpl extends AbstractRestProcessEngineAware im
         if (fileName != null) {
           deploymentBuilder.addInputStream(part.getFileName(), new ByteArrayInputStream(part.getBinaryContent()));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "No file name found in the deployment resource described by form parameter '" + fileName + "'.");
+          throw new InvalidRequestException(Status.BAD_REQUEST, "No file name found in the deployment resource described by form parameter '%s'.".formatted(fileName));
         }
       }
     }

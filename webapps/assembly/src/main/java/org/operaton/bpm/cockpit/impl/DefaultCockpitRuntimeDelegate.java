@@ -45,7 +45,7 @@ import org.operaton.bpm.webapp.impl.AbstractAppRuntimeDelegate;
  */
 public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<CockpitPlugin> implements CockpitRuntimeDelegate {
 
-  private final  Map<String, CommandExecutor> commandExecutors;
+  private final Map<String, CommandExecutor> commandExecutors;
 
   public DefaultCockpitRuntimeDelegate() {
     super(CockpitPlugin.class);
@@ -60,7 +60,9 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
   @Override
   public CommandExecutor getCommandExecutor(String processEngineName) {
-    return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
+    synchronized (commandExecutors) {
+      return commandExecutors.computeIfAbsent(processEngineName, this::createCommandExecutor);
+    }
   }
 
   /**
@@ -99,7 +101,7 @@ public class DefaultCockpitRuntimeDelegate extends AbstractAppRuntimeDelegate<Co
 
     ProcessEngine processEngine = getProcessEngine(processEngineName);
     if (processEngine == null) {
-      throw new ProcessEngineException("No process engine with name " + processEngineName + " found.");
+      throw new ProcessEngineException("No process engine with name %s found.".formatted(processEngineName));
     }
 
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl)processEngine).getProcessEngineConfiguration();

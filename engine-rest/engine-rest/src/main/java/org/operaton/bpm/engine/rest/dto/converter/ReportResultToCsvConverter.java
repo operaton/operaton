@@ -47,7 +47,7 @@ public final class ReportResultToCsvConverter {
       return convertDurationReportResult(reports);
     }
 
-    throw new InvalidRequestException(Status.BAD_REQUEST, "Unkown report type " + reportType);
+    throw new InvalidRequestException(Status.BAD_REQUEST, "Unkown report type %s".formatted(reportType));
   }
 
   protected static String convertDurationReportResult(List<ReportResult> reports) {

@@ -22,7 +22,7 @@ var angular = require('operaton-commons-ui/vendor/angular');
 var DEFAULT_PAGES = {size: 50, total: 0, current: 1};
 
 module.exports = {
-  initializePaginationInController: initializePaginationInController
+  initializePaginationInController: initializePaginationInController,
 };
 
 /**
@@ -38,7 +38,7 @@ function initializePaginationInController($scope, search, updateCallback) {
   var pages = ($scope.pages = angular.copy(DEFAULT_PAGES));
   pages.current = getCurrentPageFromSearch(search);
 
-  $scope.$watch('pages.current', function(newValue, oldValue) {
+  $scope.$watch('pages.current', function (newValue, oldValue) {
     // Used for checking if current page change is due to $locationChangeSuccess event
     // If so this change was already passed to updateCallback, so it can be ignored
     var searchCurrentPage = getCurrentPageFromSearch(search);
@@ -52,7 +52,7 @@ function initializePaginationInController($scope, search, updateCallback) {
     updateCallback(newValue, oldValue);
   });
 
-  $scope.$on('$locationChangeSuccess', function() {
+  $scope.$on('$locationChangeSuccess', function () {
     var currentPage = getCurrentPageFromSearch(search);
 
     if (+pages.current !== +currentPage) {
@@ -64,7 +64,7 @@ function initializePaginationInController($scope, search, updateCallback) {
     }
   });
 
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', function () {
     search('page', null);
   });
 

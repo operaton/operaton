@@ -22,9 +22,9 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 /**
  * @author Sebastian Menski
  */
-public class QNameElementReferenceCollectionBuilderImpl<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceCollectionBuilderImpl<Target, Source> {
+public class QNameElementReferenceCollectionBuilderImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceCollectionBuilderImpl<TARGET, SOURCE> {
 
-  public QNameElementReferenceCollectionBuilderImpl(Class<Source> childElementType, Class<Target> referenceTargetClass, ChildElementCollectionImpl<Source> collection) {
+  public QNameElementReferenceCollectionBuilderImpl(Class<SOURCE> childElementType, Class<TARGET> referenceTargetClass, ChildElementCollectionImpl<SOURCE> collection) {
     super(childElementType, referenceTargetClass, collection);
     this.elementReferenceCollectionImpl = new QNameElementReferenceCollectionImpl<>(collection);
   }

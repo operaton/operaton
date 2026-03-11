@@ -44,7 +44,7 @@ public class AttributeReferenceCollectionBuilderImpl<T extends ModelElementInsta
       this.attributeReferenceCollection = attributeReferenceCollection.getConstructor(AttributeImpl.class)
         .newInstance(referenceSourceAttribute);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      throw new ModelException(e);
     }
   }
 
@@ -69,7 +69,8 @@ public class AttributeReferenceCollectionBuilderImpl<T extends ModelElementInsta
       idAttribute.registerIncoming(attributeReferenceCollection);
       attributeReferenceCollection.setReferenceTargetAttribute(idAttribute);
     } else {
-      throw new ModelException("Element type " + referenceTargetType.getTypeNamespace() + ":" + referenceTargetType.getTypeName() + " has no id attribute");
+      throw new ModelException("Element type %s:%s has no id attribute".formatted(
+          referenceTargetType.getTypeNamespace(), referenceTargetType.getTypeName()));
     }
   }
 

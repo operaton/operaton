@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class CategoryTest extends BpmnModelElementInstanceTest {
 
@@ -28,11 +27,11 @@ public class CategoryTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(new ChildElementAssumption(CategoryValue.class));
+    return List.of(new ChildElementAssumption(CategoryValue.class));
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(new AttributeAssumption("name", false, true));
+    return List.of(new AttributeAssumption("name", false, true));
   }
 }

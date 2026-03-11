@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.quarkus.engine.test.persistence.conf;
 
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
+
 import io.quarkus.test.QuarkusUnitTest;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
@@ -33,8 +35,8 @@ class ChooseNotExistingDatasourceConfigurationTest {
       .withConfigurationResource("org/operaton/bpm/quarkus/engine/test/persistence/conf/multiple-datasources-application.properties")
       .overrideConfigKey("quarkus.operaton.datasource", "quaternary")
       .assertException(throwable -> assertThat(throwable)
-          .hasMessage("No datasource named 'quaternary' exists")
-          .isInstanceOf(IllegalArgumentException.class))
+          .hasMessageContaining("quaternary")
+          .isInstanceOf(UnsatisfiedResolutionException.class))
       .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class));
 
   @Test

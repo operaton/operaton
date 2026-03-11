@@ -131,7 +131,7 @@ public class ProcessInstanceCommentResourceImpl implements ProcessInstanceCommen
     HistoricProcessInstance historicProcessInstance = engine.getHistoryService().createHistoricProcessInstanceQuery()
         .processInstanceId(processInstanceId).singleResult();
     if (historicProcessInstance == null) {
-      throw new InvalidRequestException(status, "No process instance found for id " + processInstanceId);
+      throw new InvalidRequestException(status, "No process instance found for id %s".formatted(processInstanceId));
     }
   }
 

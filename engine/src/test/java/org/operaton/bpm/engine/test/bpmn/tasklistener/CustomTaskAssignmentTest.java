@@ -73,8 +73,8 @@ class CustomTaskAssignmentTest {
   @Test
   void testCandidateGroupAssignment() {
     runtimeService.startProcessInstanceByKey("customTaskAssignment");
-    assertThat(taskService.createTaskQuery().taskCandidateGroup("management").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateGroup("management").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isOne();
     assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isZero();
   }
 
@@ -82,8 +82,8 @@ class CustomTaskAssignmentTest {
   @Test
   void testCandidateUserAssignment() {
     runtimeService.startProcessInstanceByKey("customTaskAssignment");
-    assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskCandidateUser("kermit").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskCandidateUser("fozzie").count()).isOne();
     assertThat(taskService.createTaskQuery().taskCandidateUser("gonzo").count()).isZero();
   }
 

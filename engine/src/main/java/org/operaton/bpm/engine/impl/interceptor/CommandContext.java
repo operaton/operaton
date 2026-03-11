@@ -56,6 +56,7 @@ import org.operaton.bpm.engine.impl.optimize.OptimizeManager;
 import org.operaton.bpm.engine.impl.persistence.entity.*;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static java.util.Collections.emptyList;
 
 /**
  * @author Tom Baeyens
@@ -131,60 +132,63 @@ public class CommandContext {
 
   public void close(CommandInvocationContext commandInvocationContext) {
     // the intention of this method is that all resources are closed properly,
-    // even
-    // if exceptions occur in close or flush methods of the sessions or the
+    // even if exceptions occur in close or flush methods of the sessions or the
     // transaction context.
-
     try {
-      try {
-        try {
-
-          if (commandInvocationContext.getThrowable() == null) {
-            fireCommandContextClose();
-            flushSessions();
-          }
-
-        } catch (Throwable exception) {
-          commandInvocationContext.trySetThrowable(exception);
-        } finally {
-
-          try {
-            if (commandInvocationContext.getThrowable() == null) {
-              transactionContext.commit();
-            }
-          } catch (Throwable exception) {
-            commandInvocationContext.trySetThrowable(exception);
-          }
-
-          if (commandInvocationContext.getThrowable() != null) {
-            // fire command failed (must not fail itself)
-            fireCommandFailed(commandInvocationContext.getThrowable());
-
-            if(shouldLogCmdException()) {
-              if (shouldLogInfo(commandInvocationContext.getThrowable())) {
-                LOG.infoException(commandInvocationContext.getThrowable());
-              }
-              else if (shouldLogFine(commandInvocationContext.getThrowable())) {
-                LOG.debugException(commandInvocationContext.getThrowable());
-              }
-              else {
-                  LOG.errorException(commandInvocationContext.getThrowable());
-              }
-            }
-            transactionContext.rollback();
-          }
-        }
-      } catch (Throwable exception) {
-        commandInvocationContext.trySetThrowable(exception);
-      } finally {
-        closeSessions(commandInvocationContext);
-      }
-    } catch (Throwable exception) {
+      tryCloseInternal(commandInvocationContext);
+    } catch (Exception exception) {
       commandInvocationContext.trySetThrowable(exception);
     }
 
     // rethrow the original exception if there was one
     commandInvocationContext.rethrow();
+  }
+
+  private void tryCloseInternal(CommandInvocationContext commandInvocationContext) {
+    try {
+      try {
+        if (commandInvocationContext.getThrowable() == null) {
+          fireCommandContextClose();
+          flushSessions();
+        }
+      } catch (Exception exception) {
+        commandInvocationContext.trySetThrowable(exception);
+      } finally {
+        tryCommit(commandInvocationContext);
+
+        if (commandInvocationContext.getThrowable() != null) {
+          // fire command failed (must not fail itself)
+          fireCommandFailed(commandInvocationContext.getThrowable());
+
+          if (shouldLogCmdException()) {
+            if (shouldLogInfo(commandInvocationContext.getThrowable())) {
+              LOG.infoException(commandInvocationContext.getThrowable());
+            }
+            else if (shouldLogFine(commandInvocationContext.getThrowable())) {
+              LOG.debugException(commandInvocationContext.getThrowable());
+            }
+            else {
+                LOG.errorException(commandInvocationContext.getThrowable());
+            }
+          }
+          transactionContext.rollback();
+        }
+      }
+    } catch (Exception exception) {
+      commandInvocationContext.trySetThrowable(exception);
+    } finally {
+      closeSessions(commandInvocationContext);
+    }
+  }
+
+  private void tryCommit(CommandInvocationContext commandInvocationContext) {
+    try {
+      if (commandInvocationContext.getThrowable() == null) {
+        transactionContext.commit();
+      }
+    } catch (Exception exception) {
+      commandInvocationContext.trySetThrowable(exception);
+    }
   }
 
   protected boolean shouldLogInfo(Throwable exception) {
@@ -212,7 +216,7 @@ public class CommandContext {
       try {
         listener.onCommandFailed(this, t);
       }
-      catch(Throwable ex) {
+      catch(Exception ex) {
         LOG.exceptionWhileInvokingOnCommandFailed(t);
       }
     }
@@ -228,7 +232,7 @@ public class CommandContext {
     for (Session session : sessionList) {
       try {
         session.close();
-      } catch (Throwable exception) {
+      } catch (Exception exception) {
         commandInvocationContext.trySetThrowable(exception);
       }
     }
@@ -239,7 +243,7 @@ public class CommandContext {
     Session session = sessions.get(sessionClass);
     if (session == null) {
       SessionFactory sessionFactory = sessionFactories.get(sessionClass);
-      ensureNotNull("no session factory configured for " + sessionClass.getName(), "sessionFactory", sessionFactory);
+      ensureNotNull("no session factory configured for %s".formatted(sessionClass.getName()), "sessionFactory", sessionFactory);
       session = sessionFactory.openSession();
       sessions.put(sessionClass, session);
       sessionList.add(0, session);
@@ -533,7 +537,7 @@ public class CommandContext {
     IdentityService identityService = processEngineConfiguration.getIdentityService();
     Authentication currentAuthentication = identityService.getCurrentAuthentication();
     if(currentAuthentication == null) {
-      return null;
+      return emptyList();
     } else {
       return currentAuthentication.getGroupIds();
     }

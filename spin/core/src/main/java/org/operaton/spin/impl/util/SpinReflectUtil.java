@@ -16,7 +16,6 @@
  */
 package org.operaton.spin.impl.util;
 
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 import org.operaton.spin.spi.DataFormat;
 
@@ -26,7 +25,7 @@ import org.operaton.spin.spi.DataFormat;
  */
 public final class SpinReflectUtil {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   private SpinReflectUtil() {
   }

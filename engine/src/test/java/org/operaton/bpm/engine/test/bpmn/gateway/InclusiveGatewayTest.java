@@ -23,6 +23,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -45,7 +47,6 @@ import org.operaton.commons.utils.CollectionUtil;
 
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author Joram Barrez
@@ -107,7 +108,7 @@ class InclusiveGatewayTest {
   @Test
   void testMergingInclusiveGateway() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("inclusiveGwMerging", CollectionUtil.singletonMap("input", 2));
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
   }
@@ -120,7 +121,7 @@ class InclusiveGatewayTest {
     for (Job job : list) {
       managementService.executeJob(job.getId());
     }
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     runtimeService.deleteProcessInstance(pi.getId(), "testing deletion");
   }
@@ -143,13 +144,13 @@ class InclusiveGatewayTest {
   @Deployment
   @Test
   void testNoSequenceFlowSelected() {
+    // given
     var variables = CollectionUtil.singletonMap("input", 4);
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveGwNoSeqFlowSelected", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-       testRule.assertTextPresent("ENGINE-02004 No outgoing sequence flow for the element with id 'inclusiveGw' could be selected for continuing the process.", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveGwNoSeqFlowSelected", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ENGINE-02004 No outgoing sequence flow for the element with id 'inclusiveGw' could be selected for continuing the process.");
   }
 
   /**
@@ -207,21 +208,23 @@ class InclusiveGatewayTest {
   void testWhitespaceInExpression() {
     // Starting a process instance will lead to an exception if whitespace are
     // incorrectly handled
-    assertDoesNotThrow(() -> runtimeService.startProcessInstanceByKey("inclusiveWhiteSpaceInExpression", CollectionUtil.singletonMap("input", 1)));
+    var variables = CollectionUtil.singletonMap("input", 1);
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("inclusiveWhiteSpaceInExpression", variables))
+      .doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testDivergingInclusiveGateway.bpmn20.xml"})
   @Test
   void testUnknownVariableInExpression() {
+    // given
     var variables = CollectionUtil.singletonMap("iinput", 1);
     // Instead of 'input' we're starting a process instance with the name
     // 'iinput' (i.e. a typo)
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveGwDiverging", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-       testRule.assertTextPresent("Unknown property used in expression", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveGwDiverging", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Unknown property used in expression");
   }
 
   @Deployment
@@ -318,13 +321,13 @@ class InclusiveGatewayTest {
   @Deployment
   @Test
   void testInvalidMethodExpression() {
+    // given
     var variables = CollectionUtil.singletonMap("order", new InclusiveGatewayTestOrder(50));
-    try {
-      runtimeService.startProcessInstanceByKey("inclusiveInvalidMethodExpression", variables);
-      fail("");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Unknown method used in expression", e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("inclusiveInvalidMethodExpression", variables))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Unknown method used in expression");
   }
 
   @Deployment
@@ -455,7 +458,7 @@ class InclusiveGatewayTest {
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
 
     taskService.complete(tasks.get(0).getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     taskService.complete(tasks.get(1).getId());
 
@@ -473,7 +476,7 @@ class InclusiveGatewayTest {
     assertThat(processInstance.getId()).isNotNull();
 
     tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     task = tasks.get(0);
     assertThat(task.getAssignee()).isEqualTo("a");
@@ -518,13 +521,13 @@ class InclusiveGatewayTest {
     Task taskB = taskService.createTaskQuery().taskName("Task B").singleResult();
     assertThat(taskB).isNotNull();
     taskService.complete(taskB.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     // now complete task C. Gateway activates and "Task C" remains
     Task taskC = taskService.createTaskQuery().taskName("Task C").singleResult();
     assertThat(taskC).isNotNull();
     taskService.complete(taskC.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
 
     // check that remaining task is in fact task D
     Task taskD = taskService.createTaskQuery().taskName("Task D").singleResult();
@@ -591,46 +594,15 @@ class InclusiveGatewayTest {
 
   }
 
-  @Deployment
-  @Test
-  void testJoinAfterSequentialMultiInstanceSubProcess() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterSequentialMultiInstanceSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterParallelMultiInstanceSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterNestedScopes.bpmn20.xml"
+  })
+  void testJoin(String bpmnResource) {
     // given
-    runtimeService.startProcessInstanceByKey("process");
-
-    TaskQuery query = taskService.createTaskQuery();
-
-    // when
-    Task task = query
-        .taskDefinitionKey("task")
-        .singleResult();
-    taskService.complete(task.getId());
-
-    // then
-    assertThat(query.taskDefinitionKey("taskAfterJoin").singleResult()).isNull();
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterParallelMultiInstanceSubProcess() {
-    // given
-    runtimeService.startProcessInstanceByKey("process");
-
-    TaskQuery query = taskService.createTaskQuery();
-
-    // when
-    Task task = query
-        .taskDefinitionKey("task")
-        .singleResult();
-    taskService.complete(task.getId());
-
-    // then
-    assertThat(query.taskDefinitionKey("taskAfterJoin").singleResult()).isNull();
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterNestedScopes() {
-    // given
+    testRule.deploy(bpmnResource);
     runtimeService.startProcessInstanceByKey("process");
 
     TaskQuery query = taskService.createTaskQuery();
@@ -724,54 +696,15 @@ class InclusiveGatewayTest {
     assertThat(runtimeService.createVariableInstanceQuery().count()).isZero();
   }
 
-  @Deployment
-  @Test
-  void testJoinAfterEventBasedGateway() {
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterEventBasedGateway.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterEventBasedGatewayInSubProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/gateway/InclusiveGatewayTest.testJoinAfterEventBasedGatewayContainedInSubProcess.bpmn20.xml"
+  })
+  void testJoinAfterEventBasedGateway(String resource) {
     // given
-    TaskQuery taskQuery = taskService.createTaskQuery();
-
-    runtimeService.startProcessInstanceByKey("process");
-    Task task = taskQuery.singleResult();
-    taskService.complete(task.getId());
-
-    // assume
-    assertThat(taskQuery.singleResult()).isNull();
-
-    // when
-    runtimeService.correlateMessage("foo");
-
-    // then
-    task = taskQuery.singleResult();
-    assertThat(task).isNotNull();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterJoin");
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterEventBasedGatewayInSubProcess() {
-    // given
-    TaskQuery taskQuery = taskService.createTaskQuery();
-
-    runtimeService.startProcessInstanceByKey("process");
-    Task task = taskQuery.singleResult();
-    taskService.complete(task.getId());
-
-    // assume
-    assertThat(taskQuery.singleResult()).isNull();
-
-    // when
-    runtimeService.correlateMessage("foo");
-
-    // then
-    task = taskQuery.singleResult();
-    assertThat(task).isNotNull();
-    assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterJoin");
-  }
-
-  @Deployment
-  @Test
-  void testJoinAfterEventBasedGatewayContainedInSubProcess() {
-    // given
+    testRule.deploy(resource);
     TaskQuery taskQuery = taskService.createTaskQuery();
 
     runtimeService.startProcessInstanceByKey("process");

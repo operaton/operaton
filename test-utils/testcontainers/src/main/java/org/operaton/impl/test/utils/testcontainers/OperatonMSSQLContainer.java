@@ -18,7 +18,7 @@ package org.operaton.impl.test.utils.testcontainers;
 import java.io.IOException;
 
 import com.github.dockerjava.api.command.InspectContainerResponse;
-import org.testcontainers.containers.MSSQLServerContainer;
+import org.testcontainers.mssqlserver.MSSQLServerContainer;
 import org.testcontainers.utility.DockerImageName;
 
 
@@ -26,7 +26,9 @@ import org.testcontainers.utility.DockerImageName;
  * Class for setting up a MSSQLServer database and managing its lifecycle within the test environment. This class is a custom extension of Testcontainers' {@code MSSQLServerContainer
  * }, providing additional functionality for the Operaton project.
  */
-public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> extends MSSQLServerContainer<SELF> {
+public class OperatonMSSQLContainer extends MSSQLServerContainer {
+
+    private static final String DATABASE_NAME = "operaton_test";
 
     public OperatonMSSQLContainer(DockerImageName dockerImageName) {
         super(dockerImageName);
@@ -37,18 +39,32 @@ public class OperatonMSSQLContainer<SELF extends MSSQLServerContainer<SELF>> ext
     }
 
     /**
-     * Hook to set up a database with correct transaction isolation after starting the container and setting it as a default.
+     * Hook to set up a database with correct transaction isolation after starting the container.
+     * We override the parent's database creation to ensure READ_COMMITTED_SNAPSHOT is enabled.
      * Necessary, because the master DB of SQL server has some constraints and cannot be configured to enable {@code READ_COMMITTED_SNAPSHOT}.
-     * Cannot be put into `OperatonMSSQLContainerProvider`, as this has no influence over the container after it was started
      *
      * @param containerResponse Metadata of the started container
      */
     @Override
     protected void containerIsStarted(InspectContainerResponse containerResponse) {
-        super.containerIsStarted(containerResponse);
+        // Do NOT call super.containerIsStarted() because it creates the database without READ_COMMITTED_SNAPSHOT
+        // Instead, we create the database ourselves with the correct settings
         try {
-            this.execInContainer("bash", "-c", "echo \"create database operaton_test collate SQL_Latin1_General_CP1_CS_AS; alter database operaton_test set READ_COMMITTED_SNAPSHOT ON; alter login sa WITH DEFAULT_DATABASE = operaton_test\" | /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P A_Str0ng_Required_Password -i /dev/stdin");
-        } catch (IOException | InterruptedException e) {
+            String dbName = DATABASE_NAME;
+            String password = getPassword();
+            this.execInContainer("bash", "-c",
+                ("echo \"IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = '%s') " +
+                "BEGIN " +
+                "  CREATE DATABASE %s COLLATE SQL_Latin1_General_CP1_CS_AS; " +
+                "END; " +
+                "ALTER DATABASE %s SET READ_COMMITTED_SNAPSHOT ON; " +
+                "ALTER LOGIN sa WITH DEFAULT_DATABASE = %s\" | " +
+                "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P %s -i /dev/stdin").formatted(
+                    dbName, dbName, dbName, dbName, password));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

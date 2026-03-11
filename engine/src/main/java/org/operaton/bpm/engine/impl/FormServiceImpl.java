@@ -39,7 +39,7 @@ import org.operaton.bpm.engine.variable.VariableMap;
 
 /**
  * @author Tom Baeyens
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 public class FormServiceImpl extends ServiceImpl implements FormService {
 

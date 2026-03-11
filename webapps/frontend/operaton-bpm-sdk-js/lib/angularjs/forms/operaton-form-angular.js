@@ -25,7 +25,7 @@ var $ = OperatonForm.$;
 var constants = require('./../../forms/constants');
 
 var OperatonFormAngular = OperatonForm.extend({
-  renderForm: function() {
+  renderForm: function () {
     var self = this;
 
     this.formElement = angular.element(this.formElement);
@@ -60,14 +60,14 @@ var OperatonFormAngular = OperatonForm.extend({
     var scope = self.formElement.scope();
     injector.invoke([
       '$compile',
-      function($compile) {
+      function ($compile) {
         $compile(self.formElement)(scope);
-      }
+      },
     ]);
     scope.camForm = this;
   },
 
-  executeFormScript: function(script) {
+  executeFormScript: function (script) {
     // overrides executeFormScript to make sure the following variables / functions are available to script implementations:
 
     // * $scope
@@ -100,7 +100,7 @@ var OperatonFormAngular = OperatonForm.extend({
       /*eslint-enable */
   },
 
-  fireEvent: function() {
+  fireEvent: function () {
     // overrides fireEvent to make sure event listener is invoked in an apply phase
     this.formElement = angular.element(this.formElement);
 
@@ -108,7 +108,7 @@ var OperatonFormAngular = OperatonForm.extend({
     var args = arguments;
     var scope = this.formElement.scope();
 
-    var doFireEvent = function() {
+    var doFireEvent = function () {
       OperatonForm.prototype.fireEvent.apply(self, args);
     };
 
@@ -119,19 +119,19 @@ var OperatonFormAngular = OperatonForm.extend({
 
     injector.invoke([
       '$rootScope',
-      function($rootScope) {
+      function ($rootScope) {
         var phase = $rootScope.$$phase;
         // only apply if not already in digest / apply
         if (phase !== '$apply' && phase !== '$digest') {
-          scope.$apply(function() {
+          scope.$apply(function () {
             doFireEvent();
           });
         } else {
           doFireEvent();
         }
-      }
+      },
     ]);
-  }
+  },
 });
 
 module.exports = OperatonFormAngular;

@@ -31,25 +31,25 @@ var ErrorButtonHandler = AbstractFormField.extend(
     /**
      * Prepares an instance
      */
-    initialize: function() {
+    initialize: function () {
       this.escalationCode = this.element.attr(
-        constants.DIRECTIVE_CAM_ESCALATION_CODE
+        constants.DIRECTIVE_CAM_ESCALATION_CODE,
       );
     },
 
-    applyValue: function() {
+    applyValue: function () {
       var self = this;
-      this.element.on('click', function() {
+      this.element.on('click', function () {
         self.form.escalate(self.escalationCode);
       });
 
       return this;
-    }
+    },
   },
 
   {
-    selector: 'button[' + constants.DIRECTIVE_CAM_ESCALATION_CODE + ']'
-  }
+    selector: 'button[' + constants.DIRECTIVE_CAM_ESCALATION_CODE + ']',
+  },
 );
 
 module.exports = ErrorButtonHandler;

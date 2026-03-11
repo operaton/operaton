@@ -27,35 +27,35 @@ import org.operaton.bpm.model.xml.type.reference.ElementReference;
 /**
  * @author Sebastian Menski
  */
-public class ElementReferenceImpl<Target extends ModelElementInstance, Source extends ModelElementInstance>  extends ElementReferenceCollectionImpl<Target,Source> implements ElementReference<Target, Source> {
+public class ElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance>  extends ElementReferenceCollectionImpl<TARGET, SOURCE> implements ElementReference<TARGET, SOURCE> {
 
 
-  public ElementReferenceImpl(ChildElement<Source> referenceSourceCollection) {
+  public ElementReferenceImpl(ChildElement<SOURCE> referenceSourceCollection) {
     super(referenceSourceCollection);
   }
 
-  private ChildElement<Source> getReferenceSourceChild() {
-    return (ChildElement<Source>) getReferenceSourceCollection();
+  private ChildElement<SOURCE> getReferenceSourceChild() {
+    return (ChildElement<SOURCE>) getReferenceSourceCollection();
   }
 
   @Override
-  public Source getReferenceSource(ModelElementInstance referenceSourceParent) {
+  public SOURCE getReferenceSource(ModelElementInstance referenceSourceParent) {
     return getReferenceSourceChild().getChild(referenceSourceParent);
   }
 
-  private void setReferenceSource(ModelElementInstance referenceSourceParent, Source referenceSource) {
+  private void setReferenceSource(ModelElementInstance referenceSourceParent, SOURCE referenceSource) {
     getReferenceSourceChild().setChild(referenceSourceParent, referenceSource);
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public Target getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement) {
-    Source referenceSource = getReferenceSource(referenceSourceParentElement);
+  public TARGET getReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement) {
+    SOURCE referenceSource = getReferenceSource(referenceSourceParentElement);
     if (referenceSource != null) {
       String identifier = getReferenceIdentifier(referenceSource);
       ModelElementInstance referenceTargetElement = referenceSourceParentElement.getModelInstance().getModelElementById(identifier);
       if (referenceTargetElement != null) {
-        return (Target) referenceTargetElement;
+        return (TARGET) referenceTargetElement;
       }
       else {
         throw new ModelException("Unable to find a model element instance for id " + identifier);
@@ -67,7 +67,7 @@ public class ElementReferenceImpl<Target extends ModelElementInstance, Source ex
   }
 
   @Override
-  public void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, Target referenceTargetElement) {
+  public void setReferenceTargetElement(ModelElementInstanceImpl referenceSourceParentElement, TARGET referenceTargetElement) {
     ModelInstanceImpl modelInstance = referenceSourceParentElement.getModelInstance();
     String identifier = referenceTargetAttribute.getValue(referenceTargetElement);
     ModelElementInstance existingElement = modelInstance.getModelElementById(identifier);
@@ -77,7 +77,7 @@ public class ElementReferenceImpl<Target extends ModelElementInstance, Source ex
         +": element is not part of model. Please connect element to the model first.");
     }
     else {
-      Source referenceSourceElement = modelInstance.newInstance(getReferenceSourceElementType());
+      SOURCE referenceSourceElement = modelInstance.newInstance(getReferenceSourceElementType());
       setReferenceSource(referenceSourceParentElement, referenceSourceElement);
       setReferenceIdentifier(referenceSourceElement, identifier);
     }

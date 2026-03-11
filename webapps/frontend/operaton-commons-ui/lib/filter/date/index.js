@@ -22,23 +22,23 @@ var moment = require('operaton-bpm-sdk-js/vendor/moment');
 require('angular-translate');
 
 var filtersModule = angular.module('cam.commons.filter.date', [
-  'pascalprecht.translate'
+  'pascalprecht.translate',
 ]);
 
-filtersModule.provider('camDateFormat', function() {
+filtersModule.provider('camDateFormat', function () {
   var variants = {
     normal: 'LLL',
     short: 'LL',
-    long: 'LLLL'
+    long: 'LLLL',
   };
 
-  this.setDateFormat = function(newFormat, variant) {
+  this.setDateFormat = function (newFormat, variant) {
     variant = variant || 'normal';
     variants[variant] = newFormat;
   };
 
-  this.$get = function() {
-    return function(variant) {
+  this.$get = function () {
+    return function (variant) {
       variant = variant || 'normal';
       return variants[variant];
     };
@@ -47,12 +47,12 @@ filtersModule.provider('camDateFormat', function() {
 
 filtersModule.config([
   '$filterProvider',
-  function($filterProvider) {
+  function ($filterProvider) {
     $filterProvider.register('camDate', [
       '$translate',
       'camDateFormat',
-      function($translate, camDateFormat) {
-        return function(date, variant) {
+      function ($translate, camDateFormat) {
+        return function (date, variant) {
           if (!date) {
             return '';
           }
@@ -63,9 +63,9 @@ filtersModule.config([
 
           return moment(date, moment.ISO_8601).format(camDateFormat(variant));
         };
-      }
+      },
     ]);
-  }
+  },
 ]);
 
 module.exports = filtersModule;

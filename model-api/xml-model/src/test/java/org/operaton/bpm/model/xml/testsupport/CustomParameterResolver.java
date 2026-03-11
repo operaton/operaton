@@ -58,12 +58,6 @@ public class CustomParameterResolver implements BeforeEachMethodAdapter, Paramet
       ExtensionContext extensionContext) throws ParameterResolutionException {
     if (isExecutedOnAfterOrBeforeMethod(parameterContext)) {
       return getMappedContext(parameterContext).isPresent();
-      /*
-      return getMappedContext(parameterContext, extensionContext).map(pContext -> {
-        return parameterisedTestParameterResolver.supportsParameter(pContext, extensionContext);
-      }).orElse(false);
-
-       */
     }
     return false;
   }

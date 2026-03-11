@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -88,7 +87,7 @@ public class BatchHistoricDecisionInstanceDeletionTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { false, null },
       { true, TEST_DATE }
     });

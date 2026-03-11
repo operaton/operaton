@@ -21,21 +21,21 @@ var template = require('./diagram-statistics-loader.html?raw');
 
 module.exports = [
   'Loaders',
-  function(Loaders) {
+  function (Loaders) {
     return {
       restrict: 'A',
       template: template,
       scope: true,
       controller: [
         '$scope',
-        function($scope) {
+        function ($scope) {
           $scope.loadingStatus = 'INITIAL';
 
-          Loaders.addStatusListener($scope, function(status) {
+          Loaders.addStatusListener($scope, function (status) {
             $scope.loadingStatus = status;
           });
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

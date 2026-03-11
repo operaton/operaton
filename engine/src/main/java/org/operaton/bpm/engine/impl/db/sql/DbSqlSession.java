@@ -72,8 +72,8 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-  public static final String[] JDBC_METADATA_TABLE_TYPES = { "TABLE" };
-  public static final String[] PG_JDBC_METADATA_TABLE_TYPES = { "TABLE", "PARTITIONED TABLE" };
+  private static final String[] JDBC_METADATA_TABLE_TYPES = { "TABLE" };
+  private static final String[] PG_JDBC_METADATA_TABLE_TYPES = { "TABLE", "PARTITIONED TABLE" };
 
   private static final String COMPONENT_CASE_ENGINE = "case.engine";
   private static final String COMPONENT_DECISION_ENGINE = "decision.engine";
@@ -125,7 +125,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
   public <T extends DbEntity> T selectById(Class<T> type, String id) {
     String selectStatement = dbSqlSessionFactory.getSelectStatement(type);
     String mappedSelectStatement = dbSqlSessionFactory.mapStatement(selectStatement);
-    ensureNotNull("no select statement for " + type + " in the ibatis mapping files", "selectStatement", selectStatement);
+    ensureNotNull("no select statement for %s in the ibatis mapping files".formatted(type), "selectStatement", selectStatement);
 
     Object result = ExceptionUtil.doWithExceptionWrapper(() -> sqlSession.selectOne(mappedSelectStatement, id));
     fireEntityLoaded(result);
@@ -274,8 +274,9 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
       if (DatabaseUtil.checkDatabaseRollsBackTransactionOnError()) {
         return Context.getCommandContext().getProcessEngineConfiguration().isEnableOptimisticLockingOnForeignKeyViolation();
       }
-      for (Map.Entry<String, Class> reference : hasDbReferences.getReferencedEntitiesIdAndClass().entrySet()) {
-        DbEntity referencedEntity = selectById(reference.getValue(), reference.getKey());
+      for (Map.Entry<String, Class<?>> reference : hasDbReferences.getReferencedEntitiesIdAndClass().entrySet()) {
+        Class<? extends DbEntity> referencedEntityClass = (Class<? extends DbEntity>) reference.getValue();
+        DbEntity referencedEntity = selectById(referencedEntityClass, reference.getKey());
         if (referencedEntity == null) {
           return true;
         }
@@ -295,7 +296,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
     // get statement
     String insertStatement = dbSqlSessionFactory.getInsertStatement(dbEntity);
     insertStatement = dbSqlSessionFactory.mapStatement(insertStatement);
-    ensureNotNull("no insert statement for " + dbEntity.getClass() + " in the ibatis mapping files", "insertStatement", insertStatement);
+    ensureNotNull("no insert statement for %s in the ibatis mapping files".formatted(dbEntity.getClass()), "insertStatement", insertStatement);
 
     // execute the insert
     executeInsertEntity(insertStatement, dbEntity);
@@ -681,7 +682,7 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   public String getResourceForDbOperation(String directory, String operation, String component) {
     String databaseType = dbSqlSessionFactory.getDatabaseType();
-    return "org/operaton/bpm/engine/db/" + directory + "/activiti." + databaseType + "." + operation + "."+component+".sql";
+    return "org/operaton/bpm/engine/db/%s/activiti.%s.%s.%s.sql".formatted(directory, databaseType, operation, component);
   }
 
   public void executeSchemaResource(String operation, String component, String resourceName, boolean isOptional) {

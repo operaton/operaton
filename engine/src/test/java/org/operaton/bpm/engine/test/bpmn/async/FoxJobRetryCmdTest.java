@@ -194,7 +194,7 @@ class FoxJobRetryCmdTest {
     waitForExecutedJobWithRetriesLeft(0, job.getId());
     job = refreshJob(job.getId());
     assertThat(job.getRetries()).isZero();
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedStartTimerEvent.bpmn20.xml"})
@@ -202,7 +202,7 @@ class FoxJobRetryCmdTest {
   void testFailedTimerStartEvent() {
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job job = managementService.createJobQuery().list().get(0);
     assertThat(job).isNotNull();
@@ -239,15 +239,15 @@ class FoxJobRetryCmdTest {
 
     job = refreshJob(jobId);
     assertThat(job.getRetries()).isZero();
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
     assertThat(managementService.createJobQuery().jobId(jobId).withRetriesLeft().count()).isZero();
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isOne();
   }
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedIntermediateThrowingSignalEvent.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.failingSignalStart.bpmn20.xml" })
   @Test
-  @Disabled
+  @Disabled("Runs into endless loop - investigate why")
   void testFailedIntermediateThrowingSignalEvent() {
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("failedIntermediateThrowingSignalEvent");
 
@@ -304,7 +304,7 @@ class FoxJobRetryCmdTest {
 
   @Deployment(resources = { "org/operaton/bpm/engine/test/bpmn/async/FoxJobRetryCmdTest.testFailedServiceTask.bpmn20.xml" })
   @Test
-  @Disabled
+  @Disabled("job.getLockExpirationTime is null")
   void testFailedRetryWithTimeShift() throws Exception {
     // set date to hour before time shift (2015-10-25T03:00:00 CEST =>
     // 2015-10-25T02:00:00 CET)
@@ -839,9 +839,9 @@ class FoxJobRetryCmdTest {
 
     job = refreshJob(job.getId());
     assertThat(job.getRetries()).isZero();
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isZero();
-    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().noRetriesLeft().count()).isOne();
 
     execution = refreshExecutionEntity(execution.getId());
     assertThat(execution.getActivityId()).isEqualTo(activityId);
@@ -887,13 +887,13 @@ class FoxJobRetryCmdTest {
   }
 
   protected void stillOneJobWithExceptionAndRetriesLeft(String jobId) {
-    assertThat(managementService.createJobQuery().jobId(jobId).withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().jobId(jobId).withRetriesLeft().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().jobId(jobId).withException().count()).isOne();
+    assertThat(managementService.createJobQuery().jobId(jobId).withRetriesLeft().count()).isOne();
   }
 
   protected void stillOneJobWithExceptionAndRetriesLeft() {
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
+    assertThat(managementService.createJobQuery().withRetriesLeft().count()).isOne();
   }
 
   protected Date createDateFromLocalString(String dateString) throws ParseException {

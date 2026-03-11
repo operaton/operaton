@@ -46,7 +46,7 @@ public class SetJobPriorityCmd implements Command<Void> {
     EnsureUtil.ensureNotNull("job id must not be null", "jobId", jobId);
 
     JobEntity job = commandContext.getJobManager().findJobById(jobId);
-    EnsureUtil.ensureNotNull(NotFoundException.class, "No job found with id '" + jobId + "'", "job", job);
+    EnsureUtil.ensureNotNull(NotFoundException.class, "No job found with id '%s'".formatted(jobId), "job", job);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkUpdateJob(job);

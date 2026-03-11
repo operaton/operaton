@@ -37,6 +37,10 @@ public class ExpressionEvaluationHandler {
   protected final ElProvider elProvider;
   protected final FeelEngine feelEngine;
 
+  // Lock objects for thread-safe caching
+  private final Object compiledScriptLock = new Object();
+  private final Object expressionLock = new Object();
+
   public ExpressionEvaluationHandler(DefaultDmnEngineConfiguration configuration) {
     this.scriptEngineResolver = configuration.getScriptEngineResolver();
     this.elProvider = configuration.getElProvider();
@@ -73,7 +77,7 @@ public class ExpressionEvaluationHandler {
 
         CompiledScript compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
         if (compiledScript == null) {
-          synchronized (cachedCompiledScriptSupport) {
+          synchronized (compiledScriptLock) {
             compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
 
             if (compiledScript == null) {
@@ -100,7 +104,7 @@ public class ExpressionEvaluationHandler {
       ElExpression elExpression = cachedExpressionSupport.getCachedExpression();
 
       if (elExpression == null) {
-        synchronized (cachedExpressionSupport) {
+        synchronized (expressionLock) {
           elExpression = cachedExpressionSupport.getCachedExpression();
           if(elExpression == null) {
             elExpression = elProvider.createExpression(expressionText);
@@ -127,7 +131,7 @@ public class ExpressionEvaluationHandler {
     String expressionText = expression.getExpression();
     if (expressionText != null) {
       if (isJuelExpression(expressionLanguage) && !StringUtil.isExpression(expressionText)) {
-        return "${" + expressionText + "}";
+        return "${%s}".formatted(expressionText);
       } else {
         return expressionText;
       }

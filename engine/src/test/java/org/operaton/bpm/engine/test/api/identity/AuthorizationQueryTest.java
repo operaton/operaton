@@ -26,13 +26,14 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.authorization.Authorization;
+import org.operaton.bpm.engine.authorization.AuthorizationQuery;
 import org.operaton.bpm.engine.authorization.Permission;
 import org.operaton.bpm.engine.authorization.Resource;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Daniel Meyer
@@ -99,15 +100,15 @@ class AuthorizationQueryTest {
 
     // query by user id
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").count()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user2").count()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user3").count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user2").count()).isOne();
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user3").count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1", "user2").count()).isEqualTo(3);
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("non-existing").count()).isZero();
 
     // query by group id
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").count()).isEqualTo(2);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").count()).isEqualTo(1);
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group3").count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").count()).isOne();
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group3").count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1", "group2").count()).isEqualTo(3);
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("non-existing").count()).isZero();
 
@@ -122,7 +123,7 @@ class AuthorizationQueryTest {
     assertThat(authorizationService.createAuthorizationQuery().resourceId("non-existing").count()).isZero();
 
     // query by permission
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.ACCESS).count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.ACCESS).count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.DELETE).count()).isEqualTo(2);
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).count()).isEqualTo(2);
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.UPDATE).count()).isEqualTo(3);
@@ -132,11 +133,11 @@ class AuthorizationQueryTest {
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(TestPermissions.READ).hasPermission(TestPermissions.ACCESS).count()).isZero();
 
     // user id & resource type
-    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(resource1).count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(resource1).count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery().userIdIn("user1").resourceType(nonExisting).count()).isZero();
 
     // group id & resource type
-    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").resourceType(resource2).count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group2").resourceType(resource2).count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery().groupIdIn("group1").resourceType(nonExisting).count()).isZero();
   }
 
@@ -238,53 +239,41 @@ class AuthorizationQueryTest {
 
   @Test
   void testInvalidOrderByQueries() {
+    // given
     var authorizationQuery = authorizationService.createAuthorizationQuery().orderByResourceType().orderByResourceId();
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
 
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(authorizationQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    assertThatThrownBy(authorizationQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
 
-    try {
-      authorizationQuery.list();
-      fail("Exception expected");
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Invalid query: call asc() or desc() after using orderByXX()", e.getMessage());
-    }
+    assertThatThrownBy(authorizationQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
+
+    assertThatThrownBy(authorizationQuery::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Invalid query: call asc() or desc() after using orderByXX()");
   }
 
   @Test
   void testInvalidQueries() {
-
     // cannot query for user id and group id at the same time
 
-    try {
-      authorizationService.createAuthorizationQuery().groupIdIn("a").userIdIn("b").count();
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot query for user and group authorizations at the same time.", e.getMessage());
-    }
+    // when/then
+    var authorizationQuery = authorizationService.createAuthorizationQuery().groupIdIn("a");
+    assertThatThrownBy(() -> authorizationQuery.userIdIn("b"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
 
-    try {
-      authorizationService.createAuthorizationQuery().userIdIn("b").groupIdIn("a").count();
-    } catch(ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot query for user and group authorizations at the same time.", e.getMessage());
-    }
-
+    AuthorizationQuery authorizationQuery1 = authorizationService.createAuthorizationQuery().userIdIn("b");
+    assertThatThrownBy(() -> authorizationQuery1.groupIdIn("a"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot query for user and group authorizations at the same time.");
   }
 
   class NonExistingResource implements Resource {

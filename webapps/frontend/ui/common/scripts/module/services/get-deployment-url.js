@@ -20,8 +20,8 @@
 module.exports = [
   '$location',
   'routeUtil',
-  function($location, routeUtil) {
-    return function(deployment, resource) {
+  function ($location, routeUtil) {
+    return function (deployment, resource) {
       var path = '#/repository';
 
       var searches = {
@@ -30,9 +30,9 @@ module.exports = [
           {
             type: 'id',
             operator: 'eq',
-            value: deployment.id
-          }
-        ])
+            value: deployment.id,
+          },
+        ]),
       };
 
       if (resource) {
@@ -53,8 +53,8 @@ module.exports = [
         'resourceName',
         'deploymentsQuery',
         'deploymentsSortOrder',
-        'deploymentsSortBy'
+        'deploymentsSortBy',
       ]);
     };
-  }
+  },
 ];

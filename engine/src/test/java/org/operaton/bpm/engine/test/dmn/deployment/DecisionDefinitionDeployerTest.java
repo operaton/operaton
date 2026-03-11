@@ -49,7 +49,6 @@ import org.operaton.bpm.model.dmn.instance.Text;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 class DecisionDefinitionDeployerTest {
 
@@ -79,11 +78,11 @@ class DecisionDefinitionDeployerTest {
     // there should be decision deployment
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one decision definition
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
@@ -104,11 +103,11 @@ class DecisionDefinitionDeployerTest {
     // there should be one deployment
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one case definition
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
@@ -128,11 +127,11 @@ class DecisionDefinitionDeployerTest {
 
     // there should be decision deployment
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
 
     // there should be one decision definition
     DecisionDefinitionQuery query = repositoryService.createDecisionDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = query.singleResult();
 
@@ -222,7 +221,7 @@ class DecisionDefinitionDeployerTest {
 
     // there should be one decision requirements definition
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
 
@@ -254,7 +253,7 @@ class DecisionDefinitionDeployerTest {
   @Test
   void noDrdForSingleDecisionDeployment() {
     // when the DMN file contains only a single decision definition
-    assertThat(repositoryService.createDecisionDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDecisionDefinitionQuery().count()).isOne();
 
     // then no decision requirements definition should be created
     assertThat(repositoryService.createDecisionRequirementsDefinitionQuery().count()).isZero();
@@ -319,7 +318,7 @@ class DecisionDefinitionDeployerTest {
 
     // there should be one decision requirements definition
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     DecisionRequirementsDefinition decisionRequirementsDefinition = query.singleResult();
     assertThat(decisionRequirementsDefinition.getVersion()).isEqualTo(1);
@@ -362,12 +361,10 @@ class DecisionDefinitionDeployerTest {
     DmnModelInstance dmnModelInstance = createDmnModelInstanceNegativeHistoryTimeToLive();
     var deploymentBuilder = repositoryService.createDeployment().addModelInstance("foo.dmn", dmnModelInstance);
 
-    try {
-      testRule.deploy(deploymentBuilder);
-      fail("Exception for negative time to live value is expected.");
-    } catch (ProcessEngineException ex) {
-      assertThat(ex.getCause().getMessage()).contains("negative value is not allowed");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(deploymentBuilder))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(ex -> assertThat(ex.getCause().getMessage()).contains("negative value is not allowed"));
   }
 
   @SuppressWarnings("deprecation")
@@ -382,7 +379,7 @@ class DecisionDefinitionDeployerTest {
     Decision decision = modelInstance.newInstance(Decision.class);
     decision.setId("Decision-1");
     decision.setName("foo");
-    decision.setOperatonHistoryTimeToLive(-5);
+    decision.setOperatonHistoryTimeToLiveString("-5");
     modelInstance.getDefinitions().addChildElement(decision);
 
     return modelInstance;
@@ -400,7 +397,7 @@ class DecisionDefinitionDeployerTest {
     Decision decision = modelInstance.newInstance(Decision.class);
     decision.setId("Decision-1");
     decision.setName("foo");
-    decision.setOperatonHistoryTimeToLive(5);
+    decision.setOperatonHistoryTimeToLiveString("5");
     modelInstance.getDefinitions().addChildElement(decision);
 
     DecisionTable decisionTable = modelInstance.newInstance(DecisionTable.class);
@@ -531,12 +528,10 @@ class DecisionDefinitionDeployerTest {
 
   @Test
   void testDeployDecisionDefinitionWithMalformedStringHistoryTimeToLive() {
-    try {
-      testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithMalformedHistoryTimeToLive.dmn11.xml");
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive");
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy("org/operaton/bpm/engine/test/dmn/deployment/DecisionDefinitionDeployerTest.testDecisionDefinitionWithMalformedHistoryTimeToLive.dmn11.xml"))
+      .isInstanceOf(ProcessEngineException.class)
+      .satisfies(e -> assertThat(e.getCause().getMessage()).contains("Cannot parse historyTimeToLive"));
   }
 
   @Test

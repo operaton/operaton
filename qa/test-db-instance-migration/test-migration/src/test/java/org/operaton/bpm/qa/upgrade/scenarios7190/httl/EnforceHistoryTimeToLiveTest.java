@@ -29,9 +29,8 @@ import org.operaton.bpm.engine.repository.CaseDefinition;
 import org.operaton.bpm.engine.repository.DecisionDefinition;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 
-import static org.operaton.bpm.qa.upgrade.scenarios7190.httl.EnforceHistoryTimeToLiveTest.Assert.assertDoesNotThrow;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ScenarioUnderTest("EnforceHistoryTimeToLiveScenario")
 @Origin("7.19.0")
@@ -67,7 +66,7 @@ public class EnforceHistoryTimeToLiveTest {
     // given a new deployment (clean cache) of 7.20 & the already deployed process 'processWithoutHTTL' by 7.19
 
     // then enforceHistoryTimeToLive=true should be ignored and not throw exception
-    assertDoesNotThrow(() -> {
+    assertThatCode(() -> {
       String id = repositoryService.createProcessDefinitionQuery()
           .processDefinitionKey(SCENARIO_PROCESS)
           .singleResult()
@@ -76,7 +75,7 @@ public class EnforceHistoryTimeToLiveTest {
       // when re-parsing of process definition is triggered due to getProcessDefinition and fresh cache
       ProcessDefinition result = repositoryService.getProcessDefinition(id);
       assertThat(result).isNotNull();
-    });
+    }).doesNotThrowAnyException();
   }
 
   @Test
@@ -85,7 +84,7 @@ public class EnforceHistoryTimeToLiveTest {
     // given a new deployment (clean cache) of 7.20 & the already deployed decision 'decisionWithoutHTTL' by 7.19
 
     // then enforceHistoryTimeToLive=true should be ignored and not throw exception
-    assertDoesNotThrow(() -> {
+    assertThatCode(() -> {
       String id = repositoryService.createDecisionDefinitionQuery()
           .decisionDefinitionKey(SCENARIO_DECISION)
           .singleResult()
@@ -94,7 +93,7 @@ public class EnforceHistoryTimeToLiveTest {
       // when re-parsing of process definition is triggered due to getDecisionDefinition and fresh cache
       DecisionDefinition result = repositoryService.getDecisionDefinition(id);
       assertThat(result).isNotNull();
-    });
+    }).doesNotThrowAnyException();
   }
 
   @Test
@@ -103,7 +102,7 @@ public class EnforceHistoryTimeToLiveTest {
     // given a new deployment (clean cache) of 7.20 & the already deployed case 'caseWithoutHTTL' by 7.19
 
     // then enforceHistoryTimeToLive=true should be ignored and not throw exception
-    assertDoesNotThrow(() -> {
+    assertThatCode(() -> {
       String id = repositoryService.createCaseDefinitionQuery()
           .caseDefinitionKey(SCENARIO_CASE)
           .singleResult()
@@ -112,26 +111,6 @@ public class EnforceHistoryTimeToLiveTest {
       // when re-parsing of process definition is triggered due to getCaseDefinition and fresh cache
       CaseDefinition result = repositoryService.getCaseDefinition(id);
       assertThat(result).isNotNull();
-    });
+    }).doesNotThrowAnyException();
   }
-
-  static final class Assert {
-    private Assert() {
-    }
-
-    @FunctionalInterface
-    interface FailingRunnable {
-      void run() throws Exception;
-
-    }
-
-    static void assertDoesNotThrow(FailingRunnable runnable) {
-      try {
-        runnable.run();
-      } catch (Exception ex) {
-        fail("Expected No Exceptions but threw " + ex);
-      }
-    }
-  }
-
 }

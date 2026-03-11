@@ -73,7 +73,7 @@ public abstract class AbstractContextCacheTest {
     // then
     assertThat(processInstance).isNotNull();
     long numInstances = runtimeService.createProcessInstanceQuery().count();
-    assertThat(numInstances).isEqualTo(1);
+    assertThat(numInstances).isOne();
   }
 
   @Test

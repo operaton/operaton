@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.di;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 import org.operaton.bpm.model.bpmn.instance.dc.Bounds;
@@ -37,7 +36,7 @@ public class LabelTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(DC_NS, Bounds.class, 0, 1)
     );
   }

@@ -31,9 +31,10 @@ import java.util.concurrent.TimeUnit;
 import org.joda.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.ManagementService;
 import org.operaton.bpm.engine.RepositoryService;
@@ -63,12 +64,14 @@ import org.operaton.bpm.model.bpmn.builder.ProcessBuilder;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobExpectingException;
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
+import static org.operaton.bpm.engine.test.util.JobExecutorWaitUtils.waitForJobExecutorToProcessAllJobs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 
 /**
  * @author Joram Barrez
  */
+@SuppressWarnings({"java:S4144"})
 class StartTimerEventTest {
 
   protected static final long TWO_HOURS = TimeUnit.HOURS.toMillis(2L);
@@ -106,15 +109,13 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // After setting the clock to time '50minutes and 5 seconds', the second
     // timer should fire
     ClockUtil.setCurrentTime(new Date(startTime.getTime() + ((50 * 60 * 1000) + 5000)));
 
-    executeAllJobs();
-
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -130,10 +131,10 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     ClockUtil.setCurrentTime(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("15/11/2036 11:12:30"));
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -142,35 +143,28 @@ class StartTimerEventTest {
 
   }
 
-  // FIXME: This test likes to run in an endless loop when invoking the
-  // waitForJobExecutorOnCondition method
   @Deployment
-  @Disabled
   @Test
   void testCycleDateStartTimerEvent() {
     ClockUtil.setCurrentTime(new Date());
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     final ProcessInstanceQuery piq = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
 
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
-    assertThat(piq.count()).isEqualTo(1);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
+    assertThat(piq.count()).isOne();
+    assertThat(jobQuery.count()).isOne();
 
-    moveByMinutes(5);
-    executeAllJobs();
-    assertThat(piq.count()).isEqualTo(1);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
+    assertThat(piq.count()).isOne();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
-    // have to manually delete pending timer
-//    cleanDB();
-
+    assertThat(jobQuery.count()).isOne();
   }
 
   private void moveByMinutes(int minutes) {
@@ -184,7 +178,7 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // ensure that the deployment Id is set on the new job
     Job job = jobQuery.singleResult();
@@ -195,16 +189,16 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
-    assertThat(piq.count()).isEqualTo(1);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
+    assertThat(piq.count()).isOne();
+    assertThat(jobQuery.count()).isOne();
 
     // ensure that the deployment Id is set on the new job
     job = jobQuery.singleResult();
     assertThat(job.getDeploymentId()).isNotNull();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     assertThat(piq.count()).isEqualTo(2);
     assertThat(jobQuery.count()).isZero();
 
@@ -217,7 +211,7 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // ensure that the deployment Id is set on the new job
     Job job = jobQuery.singleResult();
@@ -230,9 +224,9 @@ class StartTimerEventTest {
     assertThat(piq.count()).isZero();
 
     moveByMinutes(5);
-    executeAllJobs();
-    assertThat(piq.count()).isEqualTo(1);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
+    assertThat(piq.count()).isOne();
+    assertThat(jobQuery.count()).isOne();
 
     // ensure that the deployment Id is set on the new job
     job = jobQuery.singleResult();
@@ -247,10 +241,10 @@ class StartTimerEventTest {
   void testExpressionStartTimerEvent() throws Exception {
     // ACT-1415: fixed start-date is an expression
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     ClockUtil.setCurrentTime(new SimpleDateFormat("dd/MM/yyyy hh:mm:ss").parse("15/11/2036 11:12:30"));
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").list();
     assertThat(pi).hasSize(1);
@@ -264,7 +258,7 @@ class StartTimerEventTest {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     assertThat(processInstanceQuery.count()).isZero();
 
     Job job = jobQuery.singleResult();
@@ -276,7 +270,7 @@ class StartTimerEventTest {
     managementService.recalculateJobDuedate(job.getId(), false);
 
     // then
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     assertThat(processInstanceQuery.count()).isZero();
 
     Date newDate = jobQuery.singleResult().getDuedate();
@@ -287,7 +281,7 @@ class StartTimerEventTest {
 
     // move the clock forward 2 hours and 2 min
     moveByMinutes(122);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
@@ -301,7 +295,7 @@ class StartTimerEventTest {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample");
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     assertThat(processInstanceQuery.count()).isZero();
 
     // when
@@ -309,7 +303,7 @@ class StartTimerEventTest {
     managementService.recalculateJobDuedate(jobQuery.singleResult().getId(), true);
 
     // then due date should be based on the creation time
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     assertThat(processInstanceQuery.count()).isZero();
 
     Job jobUpdated = jobQuery.singleResult();
@@ -318,7 +312,7 @@ class StartTimerEventTest {
 
     // move the clock forward 2 hours and 1 minute
     moveByMinutes(121);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
 
     List<ProcessInstance> pi = processInstanceQuery.list();
     assertThat(pi).hasSize(1);
@@ -333,7 +327,7 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // we deploy new process version, with some small change
     InputStream in = getClass().getResourceAsStream("StartTimerEventTest.testVersionUpgradeShouldCancelJobs.bpmn20.xml");
@@ -343,17 +337,16 @@ class StartTimerEventTest {
     String id = repositoryService.createDeployment().addInputStream("StartTimerEventTest.testVersionUpgradeShouldCancelJobs.bpmn20.xml", in).deploy().getId();
     IoUtil.closeSilently(in);
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     moveByMinutes(5);
-    executeAllJobs();
+    waitForJobExecutorToProcessAllJobs(processEngineConfiguration, 200L);
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processDefinitionKey("startTimerEventExample").singleResult();
     String pi = processInstance.getProcessInstanceId();
     assertThat(runtimeService.getActiveActivityIds(pi).get(0)).isEqualTo("changed");
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
-//    cleanDB();
     repositoryService.deleteDeployment(id, true);
   }
 
@@ -367,7 +360,7 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // Reset deployment cache
     processEngineConfiguration.getDeploymentCache().discardProcessDefinitionCache();
@@ -377,7 +370,7 @@ class StartTimerEventTest {
     runtimeService.startProcessInstanceByKey("startTimer");
 
     // No new jobs should have been created
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
   }
 
   // Test for ACT-1533
@@ -395,7 +388,7 @@ class StartTimerEventTest {
 
     // After process start, there should be timer created
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // we deploy new process version, with some small change
     String processChanged = process.replace("beforeChange", "changed");
@@ -403,14 +396,14 @@ class StartTimerEventTest {
     String secondDeploymentId = repositoryService.createDeployment().addInputStream("StartTimerEventTest.testVersionUpgradeShouldCancelJobs.bpmn20.xml", in)
         .deploy().getId();
     IoUtil.closeSilently(in);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // Remove the first deployment
     repositoryService.deleteDeployment(firstDeploymentId, true);
 
     // The removal of an old version should not affect timer deletion
     // ACT-1533: this was a bug, and the timer was deleted!
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     // Cleanup
     cleanDB();
@@ -427,14 +420,14 @@ class StartTimerEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     // execute existing timer job
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
@@ -480,14 +473,14 @@ class StartTimerEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     // execute existing job timer
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
@@ -496,14 +489,14 @@ class StartTimerEventTest {
 
     // check if user task still exists because timer start event is non
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if execution still exists because timer start event is non
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
   }
 
   @Deployment
@@ -520,10 +513,10 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     // execute existing timer job
     managementService.executeJob(managementService.createJobQuery().list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
@@ -557,10 +550,10 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     // execute existing timer job
     managementService.executeJob(jobQuery.list().get(0).getId());
     assertThat(jobQuery.count()).isZero();
@@ -569,14 +562,14 @@ class StartTimerEventTest {
 
     // check if user task still exists because timer start event is non
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if execution still exists because timer start event is non
     // interrupting
     assertThat(executionQuery.count()).isEqualTo(2);
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -588,11 +581,11 @@ class StartTimerEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(2);
@@ -627,11 +620,11 @@ class StartTimerEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(2);
@@ -639,7 +632,7 @@ class StartTimerEventTest {
     List<Job> orderedJobList = jobQuery.orderByJobDuedate().asc().list();
     // execute first timer job
     managementService.executeJob(orderedJobList.get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     assertThat(DummyServiceTask.wasExecuted).isTrue();
 
@@ -647,11 +640,11 @@ class StartTimerEventTest {
 
     // check if user task still exists because timer start event is non
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if execution still exists because timer start event is non
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // execute second timer job
     managementService.executeJob(orderedJobList.get(1).getId());
@@ -661,13 +654,13 @@ class StartTimerEventTest {
 
     // check if user task still exists because timer start event is non
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if execution still exists because timer event is non interrupting
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -679,7 +672,7 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(2);
@@ -690,13 +683,13 @@ class StartTimerEventTest {
     assertThat(jobQuery.count()).isZero();
 
     // check if user task of event subprocess named "subProcess" exists
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     assertThat(taskQuery.list().get(0).getTaskDefinitionKey()).isEqualTo("subprocessUserTask");
 
     // check if process instance exists because subprocess named "subProcess" is
     // already running
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -715,7 +708,7 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(2);
@@ -751,11 +744,11 @@ class StartTimerEventTest {
 
     // check if execution exists
     ExecutionQuery executionQuery = runtimeService.createExecutionQuery().processInstanceId(processInstance.getId());
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(processInstance.getId());
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.count()).isEqualTo(2);
@@ -763,7 +756,7 @@ class StartTimerEventTest {
     List<Job> orderedJobList = jobQuery.orderByJobDuedate().asc().list();
     // execute first timer job
     managementService.executeJob(orderedJobList.get(0).getId());
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     assertThat(DummyServiceTask.wasExecuted).isTrue();
 
@@ -771,11 +764,11 @@ class StartTimerEventTest {
 
     // check if user task still exists because timer start event is non
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if execution still exists because timer start event is non
     // interrupting
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     // execute second timer job
     managementService.executeJob(orderedJobList.get(1).getId());
@@ -785,13 +778,13 @@ class StartTimerEventTest {
 
     // check if user task still exists because timer start event is non
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if execution still exists because timer event is non interrupting
-    assertThat(executionQuery.count()).isEqualTo(1);
+    assertThat(executionQuery.count()).isOne();
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -805,10 +798,10 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     String jobIdFirstLoop = jobQuery.list().get(0).getId();
     // execute timer job
     managementService.executeJob(jobIdFirstLoop);
@@ -817,8 +810,8 @@ class StartTimerEventTest {
     DummyServiceTask.wasExecuted = false;
 
     // execute multiInstance loop number 2
-    assertThat(taskQuery.count()).isEqualTo(1);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
+    assertThat(jobQuery.count()).isOne();
     String jobIdSecondLoop = jobQuery.list().get(0).getId();
     assertThat(jobIdSecondLoop).isNotSameAs(jobIdFirstLoop);
     // execute timer job
@@ -850,10 +843,10 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     String jobIdFirstLoop = jobQuery.list().get(0).getId();
     // execute timer job
     managementService.executeJob(jobIdFirstLoop);
@@ -861,14 +854,14 @@ class StartTimerEventTest {
     assertThat(DummyServiceTask.wasExecuted).isTrue();
     DummyServiceTask.wasExecuted = false;
 
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     // complete existing task to start new execution for multi instance loop
     // number 2
     taskService.complete(taskQuery.list().get(0).getId());
 
     // execute multiInstance loop number 2
-    assertThat(taskQuery.count()).isEqualTo(1);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
+    assertThat(jobQuery.count()).isOne();
     String jobIdSecondLoop = jobQuery.list().get(0).getId();
     assertThat(jobIdSecondLoop).isNotSameAs(jobIdFirstLoop);
     // execute timer job
@@ -881,12 +874,12 @@ class StartTimerEventTest {
 
     // check if user task doesn't exist because timer start event is
     // interrupting
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // check if process instance doesn't exist because timer start event is
     // interrupting
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -970,7 +963,7 @@ class StartTimerEventTest {
     // check if process instance doesn't exist because timer start event is
     // interrupting
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -989,7 +982,7 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     // 1 start timer job and 1 boundary timer job
@@ -1001,17 +994,17 @@ class StartTimerEventTest {
 
     // after first interrupting start timer event sub process execution
     // multiInstance loop number 2
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     assertThat(jobQuery.count()).isEqualTo(2);
 
     // execute non interrupting boundary timer job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(0).getId());
 
     // after non interrupting boundary timer job execution
-    assertThat(jobQuery.count()).isEqualTo(1);
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
+    assertThat(taskQuery.count()).isOne();
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -1033,7 +1026,7 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     // 1 start timer job and 1 boundary timer job
@@ -1045,7 +1038,7 @@ class StartTimerEventTest {
 
     // after first interrupting start timer event sub process execution
     // multiInstance loop number 2
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     assertThat(jobQuery.count()).isEqualTo(2);
 
     // execute interrupting boundary timer job
@@ -1074,7 +1067,7 @@ class StartTimerEventTest {
 
     // check if user task exists
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     JobQuery jobQuery = managementService.createJobQuery();
     // 1 start timer job and 1 boundary timer job
@@ -1085,12 +1078,12 @@ class StartTimerEventTest {
     assertThat(DummyServiceTask.wasExecuted).isTrue();
 
     // complete user task to finish execution of first multiInstance loop
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     taskService.complete(taskQuery.list().get(0).getId());
 
     // after first non interrupting start timer event sub process execution
     // multiInstance loop number 2
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     assertThat(jobQuery.count()).isEqualTo(2);
 
     // execute interrupting boundary timer job
@@ -1137,19 +1130,19 @@ class StartTimerEventTest {
 
     // after interrupting timer job execution
     assertThat(jobQuery.count()).isEqualTo(2);
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     assertThat(executionQuery.count()).isEqualTo(5);
 
     // execute non interrupting boundary timer job
     managementService.executeJob(jobQuery.orderByJobDuedate().asc().list().get(0).getId());
 
     // after non interrupting boundary timer job execution
-    assertThat(jobQuery.count()).isEqualTo(1);
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
+    assertThat(taskQuery.count()).isOne();
     assertThat(executionQuery.count()).isEqualTo(5);
 
     ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstance.getId());
-    assertThat(processInstanceQuery.count()).isEqualTo(1);
+    assertThat(processInstanceQuery.count()).isOne();
 
   }
 
@@ -1181,7 +1174,7 @@ class StartTimerEventTest {
 
     // after interrupting timer job execution
     assertThat(jobQuery.count()).isEqualTo(2);
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
     assertThat(executionQuery.count()).isEqualTo(5);
 
     // execute interrupting boundary timer job
@@ -1266,7 +1259,7 @@ class StartTimerEventTest {
   void testTimeCycle() {
     // given
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     String jobId = jobQuery.singleResult().getId();
 
@@ -1274,7 +1267,7 @@ class StartTimerEventTest {
     managementService.executeJob(jobId);
 
     // then
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     String anotherJobId = jobQuery.singleResult().getId();
     assertThat(anotherJobId).isNotEqualTo(jobId);
@@ -1297,7 +1290,7 @@ class StartTimerEventTest {
       .addModelInstance("process.bpmn", modelInstance));
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job job = jobQuery.singleResult();
     String jobId = job.getId();
@@ -1343,7 +1336,7 @@ class StartTimerEventTest {
       .addModelInstance("process.bpmn", modelInstance));
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job job = jobQuery.singleResult();
     String jobId = job.getId();
@@ -1382,7 +1375,7 @@ class StartTimerEventTest {
     JobQuery failedJobQuery = managementService.createJobQuery();
 
     // a job to start a process instance
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     String jobId = query.singleResult().getId();
     failedJobQuery.jobId(jobId);
@@ -1399,7 +1392,7 @@ class StartTimerEventTest {
     // a new timer job has been created
     assertThat(query.count()).isEqualTo(2);
 
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
@@ -1413,7 +1406,7 @@ class StartTimerEventTest {
     // there are still two jobs
     assertThat(query.count()).isEqualTo(2);
 
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
   }
@@ -1425,7 +1418,7 @@ class StartTimerEventTest {
     runtimeService.startProcessInstanceByKey("process");
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     String jobId = jobQuery.singleResult().getId();
 
@@ -1433,7 +1426,7 @@ class StartTimerEventTest {
     managementService.executeJob(jobId);
 
     // then
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     String anotherJobId = jobQuery.singleResult().getId();
     assertThat(anotherJobId).isNotEqualTo(jobId);
@@ -1568,7 +1561,7 @@ class StartTimerEventTest {
     managementService.recalculateJobDuedate(jobId, false);
 
     // then
-    assertThat(jobQuery.count()).isEqualTo(1L);
+    assertThat(jobQuery.count()).isOne();
     Date newDuedate = jobQuery.singleResult().getDuedate();
     assertThat(newDuedate).isNotEqualTo(oldDueDate);
     assertThat(oldDueDate.before(newDuedate)).isTrue();
@@ -1610,7 +1603,7 @@ class StartTimerEventTest {
     managementService.recalculateJobDuedate(jobId, true);
 
     // then
-    assertThat(jobQuery.count()).isEqualTo(1L);
+    assertThat(jobQuery.count()).isOne();
     Date newDuedate = jobQuery.singleResult().getDuedate();
     Date expectedDate = LocalDateTime.fromDateFields(jobQuery.singleResult().getCreateTime()).plusMinutes(2).toDate();
     assertThat(oldDueDate.before(newDuedate)).isTrue();
@@ -1629,7 +1622,7 @@ class StartTimerEventTest {
     JobQuery failedJobQuery = managementService.createJobQuery();
     JobQuery jobQuery = managementService.createJobQuery();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     String jobId = jobQuery.singleResult().getId();
 
     failedJobQuery.jobId(jobId);
@@ -1644,7 +1637,7 @@ class StartTimerEventTest {
     // a new timer job has been created
     assertThat(jobQuery.count()).isEqualTo(2);
 
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
 
@@ -1658,7 +1651,7 @@ class StartTimerEventTest {
     // there are still two jobs
     assertThat(jobQuery.count()).isEqualTo(2);
 
-    assertThat(managementService.createJobQuery().withException().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().withException().count()).isOne();
     assertThat(managementService.createJobQuery().noRetriesLeft().count()).isZero();
     assertThat(managementService.createJobQuery().withRetriesLeft().count()).isEqualTo(2);
   }
@@ -1713,7 +1706,7 @@ class StartTimerEventTest {
     TaskQuery taskQuery = taskService.createTaskQuery().taskDefinitionKey("aTaskName");
     assertThat(taskQuery.count()).isZero();
     moveByHours(1); // execute first job
-    assertThat(taskQuery.count()).isEqualTo(1);
+    assertThat(taskQuery.count()).isOne();
 
     // when bean changed and job is due
     myCycleTimerBean.setCycle("R2/PT2H");
@@ -1767,46 +1760,17 @@ class StartTimerEventTest {
             .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
   }
 
-  @Test
-  void shouldReevaluateCronToRepeatingTimerCycle() {
+  @ParameterizedTest
+  @CsvSource({
+    "0 0 * ? * *, R2/PT2H, 120, 2, 120, 2",
+    "0 0 * ? * *, R2/2023-08-18T14:00/PT30M, 240, 4, 30, 1",
+    "R3/2023-08-18T8:00/PT1H, R2/PT2H, 120, 2, 120, 2",
+    "R3/PT1H, R2/2023-08-18T10:00/PT2H, 120, 2, 120, 2"
+  })
+  void shouldReevaluateCronToRepeatingTimerCycle2(String cycle, String changedCycle, long expectedDueDateMinutes1, int moveByHours1, long expectedDueDateMinutes2, int moveByHours2) {
     // given
     ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * *"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/PT2H");
-    moveByHours(1); // execute second job
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-        .isNull();
-  }
-
-  @Test
-  void shouldReevaluateCronToRepeatingTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("0 0 * ? * *"); // every hour
+    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean(cycle); // every hour
     processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
     processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
 
@@ -1814,99 +1778,30 @@ class StartTimerEventTest {
     moveByHours(1); // execute first job, "2023/8/18 9:00:00"
 
     // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/2023-08-18T14:00/PT30M");
+    myCycleTimerBean.setCycle(changedCycle);
     moveByHours(1); // execute second job, "2023/8/18 10:00:00"
     JobQuery jobQuery = managementService.createJobQuery();
 
-    // then one more job is left due in 4 hours
+    // then one more job is left due in <moveByHours1> hours
     Date duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.HOURS.toMillis(4L)).toInstant(), within(59, ChronoUnit.MINUTES));
+      .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes1)).toInstant(), within(59, ChronoUnit.MINUTES));
 
-    moveByHours(4); // execute first job from new cycle, "2023/8/18 14:00:00"
+    moveByHours(moveByHours1); // execute first job from new cycle
 
-    // one more job is left due in 30 minutes
+    // one more job is left due before <moveByHours2>
     duedate = jobQuery.singleResult().getDuedate();
     assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(30L)).toInstant(), within(59, ChronoUnit.MINUTES));
+      .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TimeUnit.MINUTES.toMillis(expectedDueDateMinutes2)).toInstant(), within(59, ChronoUnit.MINUTES));
 
-    moveByHours(1); // execute second job from new cycle
+    moveByHours(moveByHours2); // execute second job from new cycle
 
     // then no more jobs left
     assertThat(jobQuery.singleResult())
-        .isNull();
+      .isNull();
+
+
   }
-
-  @Test
-  void shouldReevaluateRepeatingTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/2023-08-18T8:00/PT1H"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job, "2023/8/18 9:00:00"
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/PT2H");
-    moveByHours(1); // execute second job, "2023/8/18 10:00:00"
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-        .isNull();
-  }
-
-  @Test
-  void shouldReevaluateRepeatingTimerCycleToTimerCycleWithDate() {
-    // given
-    ClockUtil.setCurrentTime(START_DATE);
-    MyCycleTimerBean myCycleTimerBean = new MyCycleTimerBean("R3/PT1H"); // every hour
-    processEngineConfiguration.getBeans().put("myCycleTimerBean", myCycleTimerBean);
-    processEngineConfiguration.setReevaluateTimeCycleWhenDue(true);
-
-    createAndDeployProcessWithStartTimer();
-    moveByHours(1); // execute first job, "2023/8/18 9:00:00"
-
-    // when bean changed and job is due
-    myCycleTimerBean.setCycle("R2/2023-08-18T10:00/PT2H");
-    moveByHours(1); // execute second job, "2023/8/18 10:00:00"
-    JobQuery jobQuery = managementService.createJobQuery();
-
-    // then one more job is left due in 2 hours
-    Date duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute first job from new cycle, "2023/8/18 12:00:00"
-
-    // one more job is left due in 2 hours
-    duedate = jobQuery.singleResult().getDuedate();
-    assertThat(duedate.toInstant())
-            .isCloseTo(new Date(ClockUtil.getCurrentTime().getTime() + TWO_HOURS).toInstant(), within(59, ChronoUnit.MINUTES));
-
-    moveByHours(2); // execute second job from new cycle
-
-    // then no more jobs left
-    assertThat(jobQuery.singleResult())
-    .isNull();
-  }
-
 
   // util methods ////////////////////////////////////////
 

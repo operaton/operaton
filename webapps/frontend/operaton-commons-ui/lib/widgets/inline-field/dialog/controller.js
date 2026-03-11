@@ -24,15 +24,15 @@ module.exports = [
   ($scope, $location, formData) => {
     $scope.formData = {
       ...formData,
-      editValue: formData.editValue.replace(/,/g, '\n')
+      editValue: formData.editValue.replace(/,/g, '\n'),
     }; // don't bind textarea to model of text input field
     $scope.changeValue = () => {
       formData.editValue = $scope.formData.editValue
         .split('\n')
         // trim whitespace and remove ',' at the start and end of lines
-        .map(line => line.replace(/^\s*,+\s*|\s*,+\s*$/g, ''))
+        .map((line) => line.replace(/^\s*,+\s*|\s*,+\s*$/g, ''))
         .join(','); // allow line break as separator
       $scope.$dismiss();
     };
-  }
+  },
 ];

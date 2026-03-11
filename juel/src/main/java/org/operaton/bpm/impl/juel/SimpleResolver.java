@@ -58,7 +58,8 @@ public class SimpleResolver extends ELResolver {
 	 */
 	public SimpleResolver(ELResolver resolver, boolean readOnly) {
 		delegate = new CompositeELResolver();
-		delegate.add(root = new RootPropertyResolver(readOnly));
+		root = new RootPropertyResolver(readOnly);
+		delegate.add(root);
 		delegate.add(resolver);
 	}
 

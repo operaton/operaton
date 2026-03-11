@@ -159,7 +159,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
   protected void ensureVariableShouldNotBeRemoved(String variableName) {
     if ((variableDeletions != null && variableDeletions.contains(variableName))
         || (variableLocalDeletions != null && variableLocalDeletions.contains(variableName))) {
-      throw new NotValidException("Cannot set and remove a variable with the same variable name: '"+variableName+"' within a command.");
+      throw new NotValidException("Cannot set and remove a variable with the same variable name: '%s' within a command.".formatted(variableName));
     }
   }
 
@@ -172,7 +172,7 @@ public class CaseExecutionCommandBuilderImpl implements CaseExecutionCommandBuil
   protected void ensureVariableShouldNotBeSet(String variableName) {
     if ((variables != null && variables.keySet().contains(variableName))
         || (variablesLocal != null && variablesLocal.keySet().contains(variableName))) {
-      throw new NotValidException("Cannot set and remove a variable with the same variable name: '"+variableName+"' within a command.");
+      throw new NotValidException("Cannot set and remove a variable with the same variable name: '%s' within a command.".formatted(variableName));
     }
   }
 

@@ -84,7 +84,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     taskService.saveTask(task);
     // then
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isOne();
 
     taskService.deleteTask(task.getId(), true);
   }
@@ -116,7 +116,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     taskService.saveTask(task);
     // then
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isOne();
     taskService.deleteTask(task.getId(), true);
   }
 
@@ -129,7 +129,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
     taskService.saveTask(task);
 
     // then
-    assertThat(taskService.createTaskQuery().taskAssignee("aUser").count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskAssignee("aUser").count()).isOne();
   }
 
   @Test
@@ -155,7 +155,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.saveTask(task);
-    assertThat(taskService.createTaskQuery().taskAssignee("aUser").count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskAssignee("aUser").count()).isOne();
 
   }
 
@@ -167,7 +167,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.claim(task.getId(), "bUser");
-    assertThat(taskService.createTaskQuery().taskAssignee("bUser").count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskAssignee("bUser").count()).isOne();
   }
 
   @Test
@@ -192,7 +192,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.claim(task.getId(), "bUser");
-    assertThat(taskService.createTaskQuery().taskAssignee("bUser").count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskAssignee("bUser").count()).isOne();
 
   }
 
@@ -238,7 +238,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     taskService.delegateTask(task.getId(), "demo");
 
-    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isOne();
   }
 
   @Test
@@ -263,7 +263,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.delegateTask(task.getId(), "demo");
-    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskAssignee("demo").count()).isOne();
   }
 
   // resolve task test
@@ -274,7 +274,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     taskService.resolveTask(task.getId());
 
-    assertThat(taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED).taskId(task.getId()).count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED).taskId(task.getId()).count()).isOne();
   }
 
   @Test
@@ -299,7 +299,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     // then
     taskService.resolveTask(task.getId());
-    assertThat(taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED).taskId(task.getId()).count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskDelegationState(DelegationState.RESOLVED).taskId(task.getId()).count()).isOne();
   }
 
   // delete task test
@@ -308,7 +308,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
     task = createTaskForTenant();
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isOne();
 
     // then
     taskService.deleteTask(task.getId(), true);
@@ -345,7 +345,7 @@ class MultiTenancyTaskServiceCmdsTenantCheckTest {
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
 
     task = createTaskForTenant();
-    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isEqualTo(1L);
+    assertThat(taskService.createTaskQuery().taskId(task.getId()).count()).isOne();
 
     // then
     taskService.deleteTask(task.getId(), true);

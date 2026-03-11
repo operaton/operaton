@@ -51,8 +51,7 @@ public class ScenarioRunner {
         try {
           deploymentResource = method.invoke(null, new Object[0]);
         } catch (Exception e) {
-          throw new RuntimeException("Could not invoke method " + clazz.getName() + "#" + method.getName()
-              + " specifying a deployment", e);
+          throw new RuntimeException("Could not invoke method %s#%s specifying a deployment".formatted(clazz.getName(), method.getName()), e);
         }
 
         if (String.class.isAssignableFrom(method.getReturnType())) {
@@ -66,7 +65,7 @@ public class ScenarioRunner {
           if (deploymentResource != null) {
             BpmnModelInstance instance = (BpmnModelInstance) deploymentResource;
             engine.getRepositoryService().createDeployment()
-            .addModelInstance(clazz.getSimpleName() + "." + method.getName() + ".bpmn20.xml", instance)
+            .addModelInstance("%s.%s.bpmn20.xml".formatted(clazz.getSimpleName(), method.getName()), instance)
             .deploy();
           }
         }
@@ -95,8 +94,7 @@ public class ScenarioRunner {
           ScenarioSetup setup = (ScenarioSetup) method.invoke(null, new Object[0]);
           scenario.setSetup(setup);
         } catch (Exception e) {
-          throw new RuntimeException("Could not invoke method " + clazz.getName() + "#" + method.getName()
-              + " specifying scenarios " + scenario.getName(), e);
+          throw new RuntimeException("Could not invoke method %s#%s specifying scenarios %s".formatted(clazz.getName(), method.getName(), scenario.getName()), e);
         }
 
         Times timesAnnotation = method.getAnnotation(Times.class);

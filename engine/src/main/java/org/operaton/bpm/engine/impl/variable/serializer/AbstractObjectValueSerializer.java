@@ -52,7 +52,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
     String objectTypeName = value.getObjectTypeName();
 
     if (objectTypeName == null && !value.isDeserialized() && value.getValueSerialized() != null) {
-      throw new ProcessEngineException("Cannot write serialized value for variable '" + valueFields.getName() + "': no 'objectTypeName' provided for non-null value.");
+      throw new ProcessEngineException("Cannot write serialized value for variable '%s': no 'objectTypeName' provided for non-null value.".formatted(valueFields.getName()));
     }
 
     // update type name if the object is deserialized
@@ -133,7 +133,7 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
    * @param object the object to deserialize
    * @param objectTypeName the type name of the object to deserialize
    * @return the deserialized object
-   * @throws exception in case the object cannot be deserialized
+   * @throws Exception in case the object cannot be deserialized
    */
   protected abstract Object deserializeFromByteArray(byte[] object, String objectTypeName) throws Exception;
 

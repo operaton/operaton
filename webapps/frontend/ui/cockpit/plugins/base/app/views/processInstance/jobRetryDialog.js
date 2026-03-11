@@ -28,7 +28,7 @@ module.exports = [
   'incident',
   '$translate',
   'fixDate',
-  function(
+  function (
     $scope,
     $location,
     Notifications,
@@ -36,7 +36,7 @@ module.exports = [
     $modalInstance,
     incident,
     $translate,
-    fixDate
+    fixDate,
   ) {
     var FINISHED = 'finished',
       PERFORM = 'performing',
@@ -47,7 +47,7 @@ module.exports = [
 
     const checkDateFormat = ($scope.checkDateFormat = () =>
       /(\d\d\d\d)-(\d\d)-(\d\d)T(\d\d):(\d\d):(\d\d)(?:.(\d\d\d)| )?$/.test(
-        $scope.dueDate
+        $scope.dueDate,
       ));
 
     $scope.checkRetryDisabled = () =>
@@ -55,19 +55,19 @@ module.exports = [
       ($scope.radio.value === 'dueDate' &&
         (!$scope.dueDate || ($scope.dueDate && !checkDateFormat())));
 
-    $scope.changeDueDate = dueDate => {
+    $scope.changeDueDate = (dueDate) => {
       $scope.dueDate = dueDate;
     };
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
-    $scope.incrementRetry = function() {
+    $scope.incrementRetry = function () {
       $scope.status = PERFORM;
 
       let payload = {
-        retries: 1
+        retries: 1,
       };
 
       if ($scope.radio.value === 'dueDate') {
@@ -76,33 +76,33 @@ module.exports = [
 
       JobResource.setRetries(
         {
-          id: incident.configuration
+          id: incident.configuration,
         },
         payload,
-        function() {
+        function () {
           $scope.status = FINISHED;
 
           Notifications.addMessage({
             status: $translate.instant('PLUGIN_JOB_RETRY_STATUS_FINISHED'),
             message: $translate.instant('PLUGIN_JOB_RETRY_MESSAGE_1'),
-            exclusive: true
+            exclusive: true,
           });
         },
-        function(error) {
+        function (error) {
           $scope.status = FAILED;
           Notifications.addError({
             status: $translate.instant('PLUGIN_JOB_RETRY_STATUS_FINISHED'),
             message: $translate.instant('PLUGIN_JOB_RETRY_ERROR_1', {
-              message: error.data.message
+              message: error.data.message,
             }),
-            exclusive: true
+            exclusive: true,
           });
-        }
+        },
       );
     };
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       $modalInstance.close(status);
     };
-  }
+  },
 ];

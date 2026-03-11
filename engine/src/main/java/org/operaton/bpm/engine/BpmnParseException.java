@@ -27,7 +27,7 @@ import org.operaton.bpm.engine.impl.util.xml.Element;
 public class BpmnParseException extends ProcessEngineException {
 
   @Serial private static final long serialVersionUID = 1L;
-  protected final Element element;
+  protected final transient Element element;
 
   public BpmnParseException(String message, Element element) {
     super(message);

@@ -23,6 +23,8 @@ import org.operaton.bpm.engine.impl.pvm.runtime.operation.PvmAtomicOperation;
 
 
 /**
+ * @deprecated since 1.0, this interface is deprecated. Use {@link PvmAtomicOperation} directly instead.
+ * 
  * @author Tom Baeyens
  * @author Daniel Meyer
  * @author Thorben Lindhauer

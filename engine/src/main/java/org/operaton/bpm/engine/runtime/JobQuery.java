@@ -114,14 +114,12 @@ public interface JobQuery extends Query<JobQuery, Job> {
   /**
    * Only select jobs with a priority that is higher than or equal to the given priority.
    *
-   * @since 7.4
    */
   JobQuery priorityHigherThanOrEquals(long priority);
 
   /**
    * Only select jobs with a priority that is lower than or equal to the given priority.
    *
-   * @since 7.4
    */
   JobQuery priorityLowerThanOrEquals(long priority);
 
@@ -169,7 +167,6 @@ public interface JobQuery extends Query<JobQuery, Job> {
   /**
    * Order by priority for execution (needs to be followed by {@link #asc()} or {@link #desc()}).
    *
-   * @since 7.4
    */
   JobQuery orderByJobPriority();
 

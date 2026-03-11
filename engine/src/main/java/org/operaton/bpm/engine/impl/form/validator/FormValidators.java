@@ -79,7 +79,7 @@ public class FormValidators {
         return createValidatorInstance(validator);
 
       } else {
-        bpmnParse.addError("Cannot find validator implementation for name '"+name+"'.", constraint);
+        bpmnParse.addError("Cannot find validator implementation for name '%s'.".formatted(name), constraint);
 
       }
 

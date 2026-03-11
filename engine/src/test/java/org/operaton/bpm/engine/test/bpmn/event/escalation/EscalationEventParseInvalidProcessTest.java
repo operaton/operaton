@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.escalation;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,7 +32,7 @@ import org.operaton.bpm.engine.test.junit5.ParameterizedTestExtension.Parameters
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Parse an invalid process definition and assert the error message.
@@ -48,7 +47,7 @@ public class EscalationEventParseInvalidProcessTest {
 
   @Parameters(name = "process definition = {0}, expected error message = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { "EscalationEventParseInvalidProcessTest.missingIdOnEscalation.bpmn20.xml", "escalation must have an id", new String[] {} },
         { "EscalationEventParseInvalidProcessTest.invalidAttachement.bpmn20.xml", "An escalation boundary event should only be attached to a subprocess, a call activity or an user task", new String[] { "escalationBoundaryEvent" } },
         { "EscalationEventParseInvalidProcessTest.invalidEscalationRefOnBoundaryEvent.bpmn20.xml", "could not find escalation with id 'invalid-escalation'", new String[] { "escalationBoundaryEvent" } },
@@ -82,25 +81,27 @@ public class EscalationEventParseInvalidProcessTest {
 
   @TestTemplate
   void testParseInvalidProcessDefinition() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource(PROCESS_DEFINITION_DIRECTORY + processDefinitionResource);
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected: " + expectedErrorMessage);
-    } catch (ParseException e) {
-      assertExceptionMessageContainsText(e, expectedErrorMessage);
-      List<Problem> errors = e.getResourceReports().get(0).getErrors();
-      for (int i = 0; i < bpmnElementIds.length; i++) {
-        assertThat(errors.get(i).getMainElementId()).isEqualTo(bpmnElementIds[i]);
-      }
-    }
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .satisfies(e -> {
+        ParseException pe = (ParseException) e;
+        assertExceptionMessageContainsText(pe, expectedErrorMessage);
+        List<Problem> errors = pe.getResourceReports().get(0).getErrors();
+        for (int i = 0; i < bpmnElementIds.length; i++) {
+          assertThat(errors.get(i).getMainElementId()).isEqualTo(bpmnElementIds[i]);
+        }
+      });
   }
 
   public void assertExceptionMessageContainsText(Exception e, String expectedMessage) {
     String actualMessage = e.getMessage();
     if (actualMessage == null || !actualMessage.contains(expectedMessage)) {
-      throw new AssertionFailedError("expected presence of [" + expectedMessage + "], but was [" + actualMessage + "]");
+      throw new AssertionFailedError("expected presence of [%s], but was [%s]".formatted(expectedMessage, actualMessage));
     }
   }
 }

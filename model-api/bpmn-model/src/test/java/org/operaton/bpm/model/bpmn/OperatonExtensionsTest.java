@@ -17,7 +17,6 @@
 package org.operaton.bpm.model.bpmn;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -59,7 +58,7 @@ public class OperatonExtensionsTest {
   private Error error;
 
   public static Collection<Object[]> parameters(){
-    return Arrays.asList(new Object[][]{
+    return List.of(new Object[][]{
         {OPERATON_NS, Bpmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsTest.xml"))},
         //for compatability reasons we gotta check the old namespace, too
         {CAMUNDA_NS, Bpmn.readModelFromStream(OperatonExtensionsTest.class.getResourceAsStream("OperatonExtensionsCompatabilityTest.xml"))}
@@ -72,7 +71,7 @@ public class OperatonExtensionsTest {
   }
 
   private void initModelElements() {
-    modelInstance = originalModelInstance.clone();
+    modelInstance = originalModelInstance.copy();
     process = modelInstance.getModelElementById(PROCESS_ID);
     startEvent = modelInstance.getModelElementById(START_EVENT_ID);
     sequenceFlow = modelInstance.getModelElementById(SEQUENCE_FLOW_ID);
@@ -182,7 +181,7 @@ public class OperatonExtensionsTest {
   @ParameterizedTest(name = "Namespace: {0}")
   void testHistoryTimeToLive(String namespace, BpmnModelInstance modelInstance) {
     initOperatonExtensionsTest(modelInstance);
-    assertThat(process.getOperatonHistoryTimeToLive()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE);
+    assertThat(process.getOperatonHistoryTimeToLiveString()).isEqualTo(TEST_HISTORY_TIME_TO_LIVE.toString());
   }
 
   @MethodSource("parameters")
@@ -1052,7 +1051,7 @@ public class OperatonExtensionsTest {
       value.setTextContent("test");
       list.getValues().add(value);
     }
-    Collection<OperatonValue> testValues = Arrays.asList(this.modelInstance.newInstance(OperatonValue.class), this.modelInstance.newInstance(OperatonValue.class));
+    Collection<OperatonValue> testValues = List.of(this.modelInstance.newInstance(OperatonValue.class), this.modelInstance.newInstance(OperatonValue.class));
     list.getValues().addAll(testValues);
     inputParameter.setValue(list);
 
@@ -1068,7 +1067,7 @@ public class OperatonExtensionsTest {
     list.getValues().remove(operatonValues.get(1));
     assertThat(list.getValues()).hasSize(3);
 
-    list.getValues().removeAll(Arrays.asList(operatonValues.get(0), operatonValues.get(3)));
+    list.getValues().removeAll(List.of(operatonValues.get(0), operatonValues.get(3)));
     assertThat(list.getValues()).hasSize(1);
 
     list.getValues().clear();
@@ -1088,7 +1087,7 @@ public class OperatonExtensionsTest {
     assertThat(elements)
       .hasSize(3)
       .doesNotContain(this.modelInstance.newInstance(OperatonValue.class));
-    assertThat(elements.containsAll(Arrays.asList(this.modelInstance.newInstance(OperatonValue.class)))).isFalse();
+    assertThat(elements.containsAll(List.of(this.modelInstance.newInstance(OperatonValue.class)))).isFalse();
 
     assertThat(elements.remove(this.modelInstance.newInstance(OperatonValue.class))).isFalse();
     assertThat(elements).hasSize(3);
@@ -1233,7 +1232,7 @@ public class OperatonExtensionsTest {
         return operatonInputParameter;
       }
     }
-    throw new BpmnModelException("Unable to find operaton:inputParameter with name '" + name + "' for element with id '" + baseElement.getId() + "'");
+    throw new BpmnModelException("Unable to find operaton:inputParameter with name '%s' for element with id '%s'".formatted(name, baseElement.getId()));
   }
 
   @AfterEach

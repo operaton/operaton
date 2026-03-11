@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
@@ -29,9 +27,6 @@ import org.operaton.bpm.engine.impl.persistence.entity.UserOperationLogManager;
  *
  */
 public class AddUserIdentityLinkCmd extends AbstractAddIdentityLinkCmd {
-
-  @Serial private static final long serialVersionUID = 1L;
-
   public AddUserIdentityLinkCmd(String taskId, String userId, String type) {
     super(taskId, userId, null, type);
   }

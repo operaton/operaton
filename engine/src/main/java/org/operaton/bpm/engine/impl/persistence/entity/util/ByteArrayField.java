@@ -76,10 +76,11 @@ public class ByteArrayField {
 
     // no lazy fetching outside of command context
     if (byteArrayValue == null && byteArrayId != null && Context.getCommandContext() != null) {
-        return byteArrayValue = Context
+        byteArrayValue = Context
             .getCommandContext()
             .getDbEntityManager()
             .selectById(ByteArrayEntity.class, byteArrayId);
+        return byteArrayValue;
     }
 
     return byteArrayValue;

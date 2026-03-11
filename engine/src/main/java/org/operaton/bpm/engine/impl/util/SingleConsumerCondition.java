@@ -49,7 +49,7 @@ public class SingleConsumerCondition {
 
   public void await(long millis) {
     if (Thread.currentThread() != consumer) {
-      throw new RuntimeException("Wrong usage of SingleConsumerCondition: can only await in consumer thread.");
+      throw new IllegalStateException("Wrong usage of SingleConsumerCondition: can only await in consumer thread.");
     }
 
     // NOTE: may spuriously return before deadline

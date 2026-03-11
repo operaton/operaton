@@ -53,6 +53,9 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
   protected static ChildElementCollection<PlanItemDefinition> planItemDefinitionCollection;
 
   // cmmn 1.0
+  /**
+   * @deprecated cmmn 1.0 is deprecated
+   */
   @Deprecated(since = "1.0")
   protected static AttributeReferenceCollection<Sentry> exitCriteriaRefCollection;
 
@@ -74,6 +77,7 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Collection<Sentry> getExitCriterias() {
     return exitCriteriaRefCollection.getReferenceTargetElements(this);
   }
@@ -116,6 +120,7 @@ public class StageImpl extends PlanFragmentImpl implements Stage {
     return planItemDefinitionCollection.get(this);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(Stage.class, CMMN_ELEMENT_STAGE)
         .namespaceUri(CMMN11_NS)

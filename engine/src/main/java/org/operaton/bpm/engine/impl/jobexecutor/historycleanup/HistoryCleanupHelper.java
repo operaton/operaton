@@ -17,7 +17,12 @@
 package org.operaton.bpm.engine.impl.jobexecutor.historycleanup;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,11 +37,11 @@ import org.operaton.bpm.engine.impl.util.ClockUtil;
  */
 public final class HistoryCleanupHelper {
 
-  private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS = new SimpleDateFormat("yyyy-MM-ddHH:mm");
+  private static final DateTimeFormatter TIME_FORMAT_WITHOUT_SECONDS = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mm");
 
-  private static final SimpleDateFormat TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE = new SimpleDateFormat("yyyy-MM-ddHH:mmZ");
+  private static final DateTimeFormatter TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE = DateTimeFormatter.ofPattern("yyyy-MM-ddHH:mmZ");
 
-  private static final SimpleDateFormat DATE_FORMAT_WITHOUT_TIME = new SimpleDateFormat("yyyy-MM-dd");
+  private static final DateTimeFormatter DATE_FORMAT_WITHOUT_TIME = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
   private HistoryCleanupHelper () {
   }
@@ -75,12 +80,21 @@ public final class HistoryCleanupHelper {
     }
   }
 
-  public static synchronized Date parseTimeConfiguration(String time) throws ParseException {
-    String today = DATE_FORMAT_WITHOUT_TIME.format(ClockUtil.getCurrentTime());
+  public static Date parseTimeConfiguration(String time) throws ParseException {
+    LocalDate today = ClockUtil.getCurrentTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    String todayString = DATE_FORMAT_WITHOUT_TIME.format(today);
     try {
-      return TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE.parse(today+time);
-    } catch (ParseException ex) {
-      return TIME_FORMAT_WITHOUT_SECONDS.parse(today+time);
+      ZonedDateTime parsedDateTime = ZonedDateTime.parse(todayString + time, TIME_FORMAT_WITHOUT_SECONDS_WITH_TIMEZONE);
+      return Date.from(parsedDateTime.toInstant());
+    } catch (DateTimeParseException ex) {
+      try {
+        LocalDateTime parsedDateTime = LocalDateTime.parse(todayString + time, TIME_FORMAT_WITHOUT_SECONDS);
+        return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+      } catch (DateTimeParseException e) {
+        // getErrorIndex() may return -1 if the error position is unknown, use 0 as fallback
+        int errorIndex = e.getErrorIndex() >= 0 ? e.getErrorIndex() : 0;
+        throw new ParseException(e.getMessage(), errorIndex);
+      }
     }
   }
 
@@ -99,16 +113,36 @@ public final class HistoryCleanupHelper {
   public static void prepareNextBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext) {
     final HistoryCleanupJobHandlerConfiguration configuration = historyCleanupBatch.getConfiguration();
     final Integer batchSize = getHistoryCleanupBatchSize(commandContext);
-    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
 
     //add process instance ids
+    addProcessInstanceIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add decision instance ids
+    addDecisionInstanceIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add case instance ids
+    addCaseInstanceIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add batch ids
+    addBatchIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+
+    //if batch is not full, add task metric ids
+    addTaskMetricIdsToBatch(historyCleanupBatch, commandContext, batchSize, configuration);
+  }
+
+
+  private static void addProcessInstanceIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext, Integer batchSize,
+      HistoryCleanupJobHandlerConfiguration configuration) {
     final List<String> historicProcessInstanceIds = commandContext.getHistoricProcessInstanceManager()
         .findHistoricProcessInstanceIdsForCleanup(batchSize, configuration.getMinuteFrom(), configuration.getMinuteTo());
     if (!historicProcessInstanceIds.isEmpty()) {
       historyCleanupBatch.setHistoricProcessInstanceIds(historicProcessInstanceIds);
     }
+  }
 
-    //if batch is not full, add decision instance ids
+  private static void addDecisionInstanceIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     if (historyCleanupBatch.size() < batchSize && processEngineConfiguration.isDmnEnabled()) {
       final List<String> historicDecisionInstanceIds = commandContext.getHistoricDecisionInstanceManager()
           .findHistoricDecisionInstanceIdsForCleanup(batchSize - historyCleanupBatch.size(), configuration.getMinuteFrom(), configuration.getMinuteTo());
@@ -116,8 +150,11 @@ public final class HistoryCleanupHelper {
         historyCleanupBatch.setHistoricDecisionInstanceIds(historicDecisionInstanceIds);
       }
     }
+  }
 
-    //if batch is not full, add case instance ids
+  private static void addCaseInstanceIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     if (historyCleanupBatch.size() < batchSize && processEngineConfiguration.isCmmnEnabled()) {
       final List<String> historicCaseInstanceIds = commandContext.getHistoricCaseInstanceManager()
           .findHistoricCaseInstanceIdsForCleanup(batchSize - historyCleanupBatch.size(), configuration.getMinuteFrom(), configuration.getMinuteTo());
@@ -125,8 +162,11 @@ public final class HistoryCleanupHelper {
         historyCleanupBatch.setHistoricCaseInstanceIds(historicCaseInstanceIds);
       }
     }
+  }
 
-    //if batch is not full, add batch ids
+  private static void addBatchIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     Map<String, Integer> batchOperationsForHistoryCleanup = processEngineConfiguration.getParsedBatchOperationsForHistoryCleanup();
     if (historyCleanupBatch.size() < batchSize && batchOperationsForHistoryCleanup != null && !batchOperationsForHistoryCleanup.isEmpty()) {
       List<String> historicBatchIds = commandContext
@@ -136,8 +176,11 @@ public final class HistoryCleanupHelper {
         historyCleanupBatch.setHistoricBatchIds(historicBatchIds);
       }
     }
+  }
 
-    //if batch is not full, add task metric ids
+  private static void addTaskMetricIdsToBatch(HistoryCleanupBatch historyCleanupBatch, CommandContext commandContext,
+      Integer batchSize, HistoryCleanupJobHandlerConfiguration configuration) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = commandContext.getProcessEngineConfiguration();
     Integer parsedTaskMetricsTimeToLive = processEngineConfiguration.getParsedTaskMetricsTimeToLive();
     if (parsedTaskMetricsTimeToLive != null && historyCleanupBatch.size() < batchSize) {
       final List<String> taskMetricIds = commandContext.getMeterLogManager()
@@ -150,7 +193,7 @@ public final class HistoryCleanupHelper {
 
   public static int[][] listMinuteChunks(int numberOfChunks) throws IllegalArgumentException {
     if(numberOfChunks <= 0 || numberOfChunks > 60){
-      throw new IllegalArgumentException("Number of chunks must be greater than 0, but is " + numberOfChunks);
+      throw new IllegalArgumentException("Number of chunks must be greater than 0, but is %s".formatted(numberOfChunks));
     }
     final int[][] minuteChunks = new int[numberOfChunks][2];
     int chunkLength = 60 / numberOfChunks;

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -125,7 +124,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogUserOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     String taskId = taskService.createTaskQuery().singleResult().getId();
@@ -153,7 +152,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogIncidentOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     Incident incident = runtimeService.createIncident("foo", processInstance.getId(), TASK_ID, "bar");
 
@@ -180,7 +179,7 @@ class MultiTenancyUserOperationLogTest {
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     String processTaskId = taskService.createTaskQuery().singleResult().getId();
 
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when create and remove some links
     taskService.addCandidateUser(processTaskId, "they");
@@ -206,7 +205,7 @@ class MultiTenancyUserOperationLogTest {
     ProcessInstance process = runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     String processTaskId = taskService.createTaskQuery().singleResult().getId();
 
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when add and delete an attachment
     Attachment attachment = taskService.createAttachment("image/ico", processTaskId, process.getId(), "favicon.ico", "favicon", "http://operaton.com/favicon.ico");
@@ -231,7 +230,7 @@ class MultiTenancyUserOperationLogTest {
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
     String processTaskId = taskService.createTaskQuery().singleResult().getId();
 
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // assign and reassign the userTask
     ClockUtil.setCurrentTime(today);
@@ -259,7 +258,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogStandaloneTaskOperationsWithTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     // create a standalone userTask
     userTask = taskService.newTask();
     userTask.setName("to do");
@@ -296,7 +295,7 @@ class MultiTenancyUserOperationLogTest {
     JobDefinition jobDefinition = managementService.createJobDefinitionQuery().singleResult();
 
     // when set a job priority
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     managementService.setOverridingJobPriorityForJobDefinition(jobDefinition.getId(), 42);
 
     UserOperationLogEntry singleResult = historyService.createUserOperationLogQuery()
@@ -316,7 +315,7 @@ class MultiTenancyUserOperationLogTest {
     Job job = managementService.createJobQuery().singleResult();
 
     // I set a job priority
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     managementService.setJobRetries(job.getId(), 4);
 
     // when
@@ -333,7 +332,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogProcessInstanceOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     ProcessInstance process = runtimeService.startProcessInstanceByKey(PROCESS_NAME);
 
     // when
@@ -357,7 +356,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogProcessDefinitionOperationsWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     ProcessDefinition definition = repositoryService.createProcessDefinitionQuery().singleResult();
 
     // when
@@ -379,7 +378,7 @@ class MultiTenancyUserOperationLogTest {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
     ProcessInstance process = runtimeService.startProcessInstanceByKey(PROCESS_NAME);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     runtimeService.setVariable(process.getId(), "myVariable", 10);
@@ -397,7 +396,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogDeployOperationWithTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     String deploymentId = testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml").getId();
 
     // when
@@ -422,7 +421,7 @@ class MultiTenancyUserOperationLogTest {
         testRule.deployForTenantAndGetDefinition(TENANT_ONE, ProcessModels.ONE_TASK_PROCESS));
 
     // when
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     managementService.suspendBatchById(batch.getId());
     managementService.deleteBatch(batch.getId(), true);
     List<UserOperationLogEntry> list = historyService.createUserOperationLogQuery()
@@ -440,7 +439,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogExternalTaskOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/externaltask/externalTaskPriorityExpression.bpmn20.xml");
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     runtimeService.startProcessInstanceByKey("twoExternalTaskWithPriorityProcess", Collections.<String, Object>singletonMap("priority", 14));
     ExternalTaskService externalTaskService = engineRule.getExternalTaskService();
     ExternalTask externalTask = externalTaskService.createExternalTaskQuery().priorityHigherThanOrEquals(1).singleResult();
@@ -460,7 +459,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogDecisionDefinitionOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
 
     // when
@@ -481,7 +480,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogDecisionInstanceOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     engineRule.getDecisionService().evaluateDecisionByKey("decision")
     .variables(
         Variables.createVariables()
@@ -507,7 +506,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogDecisionInstancesOperationWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/dmn/Example.dmn");
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     engineRule.getDecisionService().evaluateDecisionByKey("decision")
       .variables(
         Variables.createVariables()
@@ -537,7 +536,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogCaseDefinitionOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
 
     // when
@@ -558,7 +557,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogCaseInstanceOperationWithTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, "org/operaton/bpm/engine/test/api/cmmn/oneTaskCase.cmmn");
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     CaseDefinition caseDefinition = repositoryService.createCaseDefinitionQuery().singleResult();
     CaseService caseService = engineRule.getCaseService();
     String caseInstanceId = caseService.withCaseDefinition(caseDefinition.getId()).create().getId();
@@ -592,7 +591,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogMetricsOperationWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
 
     // when
@@ -611,7 +610,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogTaskMetricsOperationWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     runtimeService.startProcessInstanceByKey(PROCESS_NAME);
 
     // when
@@ -628,7 +627,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogFilterOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     FilterService filterService = engineRule.getFilterService();
     Filter filter = filterService.newTaskFilter()
         .setName("name")
@@ -655,7 +654,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogUserOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     User newUser = identityService.newUser("test");
@@ -678,7 +677,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogGroupOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     Group newGroup = identityService.newGroup("test");
@@ -701,7 +700,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogTenantOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     Tenant newTenant = identityService.newTenant("test");
@@ -725,7 +724,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogGroupMemebershipOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     identityService.saveUser(identityService.newUser("testUser"));
@@ -751,7 +750,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogTenantMemebershipOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     identityService.saveUser(identityService.newUser("testUser"));
@@ -778,7 +777,7 @@ class MultiTenancyUserOperationLogTest {
   void shouldLogAuthorizationOperationsWithoutTenant() {
     // given
     testRule.deployForTenant(TENANT_ONE, MODEL);
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
     String processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_NAME).getId();
 
     // when
@@ -808,7 +807,7 @@ class MultiTenancyUserOperationLogTest {
   @Test
   void shouldLogPropertyOperationsWithoutTenant() {
     // given
-    identityService.setAuthentication(USER_ID, null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication(USER_ID, null, List.of(TENANT_ONE));
 
     // when
     managementService.setProperty("testProperty", "testValue");

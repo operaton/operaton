@@ -25,7 +25,7 @@ require('operaton-commons-ui/lib/util/index');
 
 var navigationModule = angular.module('cam.tasklist.navigation', [
   require('operaton-commons-ui/lib/util/index').name,
-  'ui.bootstrap'
+  'ui.bootstrap',
 ]);
 
 navigationModule.controller('camHeaderViewsCtrl', camHeaderViewsCtrl);

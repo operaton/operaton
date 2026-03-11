@@ -24,7 +24,6 @@ import jakarta.ws.rs.core.MediaType;
 import org.operaton.bpm.engine.rest.dto.history.HistoricExternalTaskLogDto;
 
 /**
- * @since 7.7
  */
 public interface HistoricExternalTaskLogResource {
 

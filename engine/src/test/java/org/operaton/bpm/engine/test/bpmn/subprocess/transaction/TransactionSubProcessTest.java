@@ -45,7 +45,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeActivityInstanceTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -72,7 +72,7 @@ class TransactionSubProcessTest {
 
     // after the process is started, we have compensate event subscriptions:
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookHotel").count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isOne();
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
@@ -104,8 +104,8 @@ class TransactionSubProcessTest {
 
     // we still have compensate event subscriptions for the compensation handlers, only now they are part of the event scope
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookHotel").executionId(miBodyEventScopeExecutionId).count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").executionId(eventScopeExecution.getId()).count()).isEqualTo(1);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoChargeCard").executionId(eventScopeExecution.getId()).count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").executionId(eventScopeExecution.getId()).count()).isOne();
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoChargeCard").executionId(eventScopeExecution.getId()).count()).isOne();
 
     // assert that the compensation handlers have not been invoked:
     assertThat(runtimeService.getVariable(processInstance.getId(), "undoBookHotel")).isNull();
@@ -148,7 +148,7 @@ class TransactionSubProcessTest {
 
     // after the process is started, we have compensate event subscriptions:
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookHotel").count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isOne();
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
@@ -212,7 +212,7 @@ class TransactionSubProcessTest {
 
     // after the process is started, we have compensate event subscriptions:
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookHotel").count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isOne();
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
@@ -244,16 +244,16 @@ class TransactionSubProcessTest {
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
     if(!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery()
-          .activityId("undoBookFlight")
-          .count()).isEqualTo(1);
+        .activityId("undoBookFlight")
+        .count()).isOne();
 
       assertThat(historyService.createHistoricActivityInstanceQuery()
           .activityId("undoBookHotel")
           .count()).isEqualTo(5);
 
       assertThat(historyService.createHistoricActivityInstanceQuery()
-          .activityId("undoChargeCard")
-          .count()).isEqualTo(1);
+        .activityId("undoChargeCard")
+        .count()).isOne();
     }
 
     // end the process instance
@@ -271,7 +271,7 @@ class TransactionSubProcessTest {
 
     // after the process is started, we have compensate event subscriptions:
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookHotel").count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isOne();
 
     // the task is present:
     Task task = taskService.createTaskQuery().singleResult();
@@ -302,8 +302,8 @@ class TransactionSubProcessTest {
     // if we have history, we check that the invocation of the compensation handlers is recorded in history.
     if(!ProcessEngineConfiguration.HISTORY_NONE.equals(processEngineConfiguration.getHistory())) {
       assertThat(historyService.createHistoricActivityInstanceQuery()
-          .activityId("undoBookFlight")
-          .count()).isEqualTo(1);
+        .activityId("undoBookFlight")
+        .count()).isOne();
 
       assertThat(historyService.createHistoricActivityInstanceQuery()
           .activityId("undoBookHotel")
@@ -325,7 +325,7 @@ class TransactionSubProcessTest {
     // after the process is started, we have compensate event subscriptions:
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isZero();
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookHotel").count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookFlight").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookFlight").count()).isOne();
 
     // the tasks are present:
     Task taskInner = taskService.createTaskQuery().taskDefinitionKey("innerTxaskCustomer").singleResult();
@@ -366,8 +366,8 @@ class TransactionSubProcessTest {
           .count()).isEqualTo(5);
 
       assertThat(historyService.createHistoricActivityInstanceQuery()
-          .activityId("innerTxundoBookFlight")
-          .count()).isEqualTo(1);
+        .activityId("innerTxundoBookFlight")
+        .count()).isOne();
     }
 
     // complete the task in the outer tx
@@ -389,7 +389,7 @@ class TransactionSubProcessTest {
     // after the process is started, we have compensate event subscriptions:
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("undoBookFlight").count()).isZero();
     assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookHotel").count()).isEqualTo(5);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookFlight").count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("compensate").activityId("innerTxundoBookFlight").count()).isOne();
 
     // the tasks are present:
     Task taskInner = taskService.createTaskQuery().taskDefinitionKey("innerTxaskCustomer").singleResult();
@@ -645,41 +645,50 @@ class TransactionSubProcessTest {
 
   @Test
   void testMultipleCancelBoundaryFails() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testMultipleCancelBoundaryFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("multiple boundary events with cancelEventDefinition not supported on same transaction");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx2");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("multiple boundary events with cancelEventDefinition not supported on same transaction")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx2");
+      });
   }
 
   @Test
   void testCancelBoundaryNoTransactionFails() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelBoundaryNoTransactionFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("boundary event with cancelEventDefinition only supported on transaction subprocesses");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("boundary event with cancelEventDefinition only supported on transaction subprocesses")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("catchCancelTx");
+      });
   }
 
   @Test
   void testCancelEndNoTransactionFails() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/subprocess/transaction/TransactionSubProcessTest.testCancelEndNoTransactionFails.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("end event with cancelEventDefinition only supported inside transaction subprocess");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("failure");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("end event with cancelEventDefinition only supported inside transaction subprocess")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("failure");
+      });
   }
 
   @Deployment

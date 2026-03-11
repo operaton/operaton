@@ -1,0 +1,11 @@
+// loads the Operaton variables
+@import "../../../../operaton-commons-ui/resources/scss/shared/_variables.scss";
+
+// overrides some of the variables for this app secifically
+
+$state-ok-color: #468847;
+$state-error-color: #b94a48;
+$state-circle-size: 20px;
+
+$filters-bg: #f5f5f5;
+$filters-color: darken($filters-bg, 15%);

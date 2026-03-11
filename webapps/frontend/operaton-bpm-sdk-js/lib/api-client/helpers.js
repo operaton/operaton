@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-exports.createSimpleGetQueryFunction = function(urlSuffix) {
-  return function(params, done) {
+exports.createSimpleGetQueryFunction = function (urlSuffix) {
+  return function (params, done) {
     var url = this.path + urlSuffix;
 
     if (typeof params === 'function') {
@@ -26,7 +26,7 @@ exports.createSimpleGetQueryFunction = function(urlSuffix) {
 
     return this.http.get(url, {
       data: params,
-      done: done
+      done: done,
     });
   };
 };

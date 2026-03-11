@@ -34,8 +34,10 @@ import org.operaton.bpm.impl.juel.SimpleResolver;
 /**
  * ScriptEngine that used JUEL for script evaluation and compilation (JSR-223).
  *
+ * <p>
  * Uses EL 1.1 if available, to resolve expressions. Otherwise it reverts to EL
  * 1.0, using {@link ExpressionFactoryResolver}.
+ * </p>
  *
  * @author Frederik Heremans
  */
@@ -131,11 +133,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
     // Built-in function are added to ScriptCtx
     scriptCtx.setAttribute("out:print", getPrintMethod(), ScriptContext.ENGINE_SCOPE);
-
-    SecurityManager securityManager = System.getSecurityManager();
-    if (securityManager == null) {
-      scriptCtx.setAttribute("lang:import", getImportMethod(), ScriptContext.ENGINE_SCOPE);
-    }
+    scriptCtx.setAttribute("lang:import", getImportMethod(), ScriptContext.ENGINE_SCOPE);
 
     ELContext elContext = new ELContext() {
 
@@ -165,7 +163,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
   private static Method getPrintMethod() {
     try {
-      return JuelScriptEngine.class.getMethod("print", new Class[] { Object.class });
+      return JuelScriptEngine.class.getMethod("print", Object.class);
     } catch (Exception exp) {
       // Will never occur
       return null;
@@ -174,7 +172,7 @@ public class JuelScriptEngine extends AbstractScriptEngine {
 
   private static Method getImportMethod() {
     try {
-      return JuelScriptEngine.class.getMethod("importFunctions", new Class[] { ScriptContext.class, String.class, Object.class });
+      return JuelScriptEngine.class.getMethod("importFunctions", ScriptContext.class, String.class, Object.class);
     } catch (Exception exp) {
       // Will never occur
       return null;

@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,9 +32,7 @@ import static org.operaton.bpm.engine.impl.util.EncryptionUtil.saltPassword;
 /**
  * @author Tom Baeyens
  */
-public class UserEntity implements User, Serializable, DbEntity, HasDbRevision {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class UserEntity implements User, DbEntity, HasDbRevision {
 
   protected String id;
   protected int revision;

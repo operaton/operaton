@@ -59,17 +59,17 @@ public class FailingJobBoundaryTimerWithDelegateVariablesTest extends AbstractFo
     assertThat(jobs).hasSize(1);
     assertThat(jobs.get(0).getRetries()).isEqualTo(3);
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isOne();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(2);
 
-    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 
     assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).executable().count()).isZero(); // should be 0, because it has failed 3 times
-    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).withException().count()).isEqualTo(1); // should be 1, because job failed!
+    assertThat(managementService.createJobQuery().processInstanceId(pi.getProcessInstanceId()).withException().count()).isOne(); // should be 1, because job failed!
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).activityId("usertask1").count()).isOne();
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getProcessInstanceId()).count()).isEqualTo(2);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId()); // complete task with failed job => complete process

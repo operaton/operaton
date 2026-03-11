@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -34,7 +33,7 @@ public class DecisionTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(ParameterMapping.class),
           new ChildElementAssumption(DecisionRefExpression.class, 0, 1)
         );
@@ -42,13 +41,13 @@ public class DecisionTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new AttributeAssumption("decisionRef"),
-        new AttributeAssumption(CAMUNDA_NS, "resultVariable"),
-        new AttributeAssumption(CAMUNDA_NS, "decisionBinding"),
-        new AttributeAssumption(CAMUNDA_NS, "decisionVersion"),
-        new AttributeAssumption(CAMUNDA_NS, "mapDecisionResult"),
-        new AttributeAssumption(CAMUNDA_NS, "decisionTenantId")
+        new AttributeAssumption(OPERATON_NS, "resultVariable"),
+        new AttributeAssumption(OPERATON_NS, "decisionBinding"),
+        new AttributeAssumption(OPERATON_NS, "decisionVersion"),
+        new AttributeAssumption(OPERATON_NS, "mapDecisionResult"),
+        new AttributeAssumption(OPERATON_NS, "decisionTenantId")
       );
   }
 

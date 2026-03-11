@@ -34,7 +34,9 @@ import org.operaton.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
  * Convenience class to access operaton *BPMN* and *CMMN*
  * related Assertions PLUS helper methods. Use it with a static import:
  *
+ * <p>
  * import static org.operaton.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
+ * </p>
  *
  */
 public class CmmnAwareTests extends BpmnAwareTests {

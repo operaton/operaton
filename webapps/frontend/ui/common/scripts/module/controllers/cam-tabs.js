@@ -32,9 +32,9 @@ function CamTabs($scope, search, Views) {
   this.onLocationChange();
 }
 
-CamTabs.prototype.initializeVars = function($scope) {
+CamTabs.prototype.initializeVars = function ($scope) {
   this.vars = $scope.vars || {
-    read: ['tabsApi']
+    read: ['tabsApi'],
   };
 
   if ($scope.varsValues) {
@@ -42,7 +42,7 @@ CamTabs.prototype.initializeVars = function($scope) {
   }
 };
 
-CamTabs.prototype.getProviders = function(Views, $scope) {
+CamTabs.prototype.getProviders = function (Views, $scope) {
   return Views.getProviders($scope.providerParams).sort(compareProviders);
 };
 
@@ -50,11 +50,11 @@ function compareProviders(providerA, providerB) {
   return (providerB.priority || 0) - (providerA.priority || 0);
 }
 
-CamTabs.prototype.onLocationChange = function() {
+CamTabs.prototype.onLocationChange = function () {
   var params = this.search();
 
   if (this.isTabSelectionChangedInUrl(params)) {
-    this.selected = this.providers.filter(function(provider) {
+    this.selected = this.providers.filter(function (provider) {
       return provider.id === params.tab;
     })[0];
   } else if (!params.tab) {
@@ -62,17 +62,17 @@ CamTabs.prototype.onLocationChange = function() {
   }
 };
 
-CamTabs.prototype.isTabSelectionChangedInUrl = function(params) {
+CamTabs.prototype.isTabSelectionChangedInUrl = function (params) {
   return (
     angular.isString(params.tab) &&
     (!this.selected || params.tab !== this.selected.id)
   );
 };
 
-CamTabs.prototype.selectTab = function(tabProvider) {
+CamTabs.prototype.selectTab = function (tabProvider) {
   var params = this.search();
   var tabParams = {
-    tab: tabProvider.id
+    tab: tabProvider.id,
   };
 
   this.selected = tabProvider;
@@ -80,6 +80,6 @@ CamTabs.prototype.selectTab = function(tabProvider) {
   this.search.updateSilently(angular.extend(params, tabParams));
 };
 
-CamTabs.prototype.isSelected = function(tabProvider) {
+CamTabs.prototype.isSelected = function (tabProvider) {
   return this.selected === tabProvider;
 };

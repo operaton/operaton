@@ -30,12 +30,12 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 import org.operaton.bpm.model.xml.type.child.ChildElementCollection;
 import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_CLASS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_DELEGATE_EXPRESSION;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_EVENT;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ATTRIBUTE_EXPRESSION;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_CASE_EXECUTION_LISTENER;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -52,23 +52,23 @@ public class OperatonCaseExecutionListenerImpl extends CmmnModelElementInstanceI
 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonCaseExecutionListener.class, OPERATON_ELEMENT_CASE_EXECUTION_LISTENER)
-      .namespaceUri(CAMUNDA_NS)
+      .namespaceUri(OPERATON_NS)
       .instanceProvider(OperatonCaseExecutionListenerImpl::new);
 
     operatonEventAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EVENT)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CLASS)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_EXPRESSION)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonDelegateExpressionAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DELEGATE_EXPRESSION)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

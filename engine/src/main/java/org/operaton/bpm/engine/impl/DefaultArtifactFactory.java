@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
  * This is the default behaviour like has been in old
  * operaton/activity versions.
  *
- * @since 7.2.0
  * @author <a href="mailto:struberg@yahoo.de">Mark Struberg</a>
  */
 public class DefaultArtifactFactory implements ArtifactFactory {
@@ -35,7 +34,7 @@ public class DefaultArtifactFactory implements ArtifactFactory {
     try {
       return clazz.getDeclaredConstructor().newInstance();
     } catch (Exception e) {
-      throw new ProcessEngineException("couldn't instantiate class " + clazz.getName(), e);
+      throw new ProcessEngineException("couldn't instantiate class %s".formatted(clazz.getName()), e);
     }
   }
 }

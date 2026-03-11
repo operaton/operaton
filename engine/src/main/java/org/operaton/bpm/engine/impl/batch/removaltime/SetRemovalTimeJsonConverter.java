@@ -35,8 +35,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class SetRemovalTimeJsonConverter
   extends AbstractBatchConfigurationObjectConverter<SetRemovalTimeBatchConfiguration> {
 
-  public static final SetRemovalTimeJsonConverter INSTANCE = new SetRemovalTimeJsonConverter();
-
   protected static final String IDS = "ids";
   protected static final String ID_MAPPINGS = "idMappings";
   protected static final String REMOVAL_TIME = "removalTime";

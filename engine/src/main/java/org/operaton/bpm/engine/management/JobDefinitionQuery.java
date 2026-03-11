@@ -52,7 +52,6 @@ public interface JobDefinitionQuery extends Query<JobDefinitionQuery, JobDefinit
   /**
    * Only selects job definitions which have a job priority defined.
    *
-   * @since 7.4
    */
   JobDefinitionQuery withOverridingJobPriority();
 

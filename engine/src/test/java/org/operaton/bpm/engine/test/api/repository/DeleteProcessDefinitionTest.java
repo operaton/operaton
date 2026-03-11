@@ -48,7 +48,6 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.cache.Cache;
 
 import static org.operaton.bpm.engine.test.api.repository.RedeploymentTest.DEPLOYMENT_NAME;
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -116,7 +115,7 @@ class DeleteProcessDefinitionTest {
     repositoryService.deleteProcessDefinition(processDefinitions.get(0).getId());
 
     //then only one process definition should remain
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
@@ -131,15 +130,16 @@ class DeleteProcessDefinitionTest {
     var processDefinitionId = processDefinition.getId();
 
     //when the corresponding process definition is deleted from the deployment
-    try {
-      repositoryService.deleteProcessDefinition(processDefinitionId);
-      fail("Should fail, since there exists a process instance");
-    } catch (ProcessEngineException pex) {
-      // then Exception is expected, the deletion should fail since there exist a process instance
-      // and the cascade flag is per default false
-      assertThat(pex.getMessage()).contains("Deletion of process definition without cascading failed.");
-    }
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThatThrownBy(() -> repositoryService.deleteProcessDefinition(processDefinitionId))
+        .as("""
+            then Exception is expected, the deletion should fail since there exist a process instance
+            and the cascade flag is per default false
+            """
+        )
+        .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Deletion of process definition without cascading failed.");
+
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   @Test
@@ -271,7 +271,7 @@ class DeleteProcessDefinitionTest {
     //then
     long timerDefinitions = managementService.createJobQuery().processDefinitionKey("one").count();
 
-    assertThat(timerDefinitions).isEqualTo(1);
+    assertThat(timerDefinitions).isOne();
   }
 
   @Test

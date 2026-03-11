@@ -49,7 +49,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.assertThat;
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -279,16 +279,15 @@ class ProcessInstanceModificationAsyncTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
+    // given
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId())
         .cancelActivityInstance(getChildTransitionInstanceForTargetActivity(tree, "innerTask").getId());
 
-    // the the async task is not an activity instance so it cannot be cancelled as follows
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("should not succeed");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("activityInstance is null", e.getMessage());
-    }
+    // when/then
+    // the async task is not an activity instance so it cannot be cancelled as follows
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("activityInstance is null");
   }
 
   @Deployment(resources = NESTED_ASYNC_BEFORE_TASK_PROCESS)
@@ -299,7 +298,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -512,7 +511,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -540,7 +539,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -577,7 +576,7 @@ class ProcessInstanceModificationAsyncTest {
 
     ActivityInstance tree = runtimeService.getActivityInstance(processInstance.getId());
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelTransitionInstance
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -654,7 +653,7 @@ class ProcessInstanceModificationAsyncTest {
     // given a process instance with an async task in a subprocess
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedOneTaskProcess");
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when the async task is cancelled via cancelAll
     runtimeService.createProcessInstanceModification(processInstance.getId())
@@ -826,17 +825,17 @@ class ProcessInstanceModificationAsyncTest {
     // this test ensures that the replacedBy link of executions is not followed
     // in case the original execution was actually removed/cancelled
     String transitionInstanceId = transitionInstances[0].getId();
+
+    // given
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId())
         .cancelTransitionInstance(transitionInstanceId)
         .cancelTransitionInstance(transitionInstanceId);
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("should not be possible to cancel the first instance twice");
-    } catch (NotValidException e) {
-      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '" + transitionInstanceId
-          + "'; Transition instance '" + transitionInstanceId + "' does not exist: transitionInstance is null",
-          e.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+        .isInstanceOf(NotValidException.class)
+        .message()
+        .containsIgnoringCase("Cannot perform instruction: Cancel transition instance '%s'; Transition instance '%s' does not exist: transitionInstance is null".formatted(transitionInstanceId, transitionInstanceId));
   }
 
   /**
@@ -856,6 +855,7 @@ class ProcessInstanceModificationAsyncTest {
 
     // when i cancel both transition instances
     TransitionInstance[] transitionInstances = tree.getTransitionInstances("innerTask");
+    String transitionInstanceId = transitionInstances[1].getId();
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(instance.getId())
         .cancelTransitionInstance(transitionInstances[0].getId()) // compacts the tree;
                                                                   // => execution for transitionInstances[1] is replaced by scope execution
@@ -868,15 +868,11 @@ class ProcessInstanceModificationAsyncTest {
     // this test ensures that the replacedBy link of executions is not followed
     // in case the original execution was actually removed/cancelled
 
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("should not be possible to cancel the first instance twice");
-    } catch (NotValidException e) {
-      String transitionInstanceId = transitionInstances[1].getId();
-      testRule.assertTextPresentIgnoreCase("Cannot perform instruction: Cancel transition instance '" + transitionInstanceId
-          + "'; Transition instance '" + transitionInstanceId + "' does not exist: transitionInstance is null",
-          e.getMessage());
-    }
+    // then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+        .isInstanceOf(NotValidException.class)
+        .message()
+        .containsIgnoringCase("Cannot perform instruction: Cancel transition instance '%s'; Transition instance '%s' does not exist: transitionInstance is null".formatted(transitionInstanceId, transitionInstanceId));
   }
 
   /**
@@ -1192,7 +1188,7 @@ class ProcessInstanceModificationAsyncTest {
     for (String taskName : taskNames) {
       // complete any task with that name
       List<Task> tasks = taskService.createTaskQuery().taskDefinitionKey(taskName).listPage(0, 1);
-      assertThat(!tasks.isEmpty()).as("task for activity " + taskName + " does not exist").isTrue();
+      assertThat(!tasks.isEmpty()).as("task for activity %s does not exist".formatted(taskName)).isTrue();
       taskService.complete(tasks.get(0).getId());
     }
   }

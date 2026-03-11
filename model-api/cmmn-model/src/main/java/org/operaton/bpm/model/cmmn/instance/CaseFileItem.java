@@ -42,11 +42,29 @@ public interface CaseFileItem extends CmmnElement {
 
   void setDefinitionRef(CaseFileItemDefinition caseFileItemDefinition);
 
+  /**
+   * @deprecated use {@link #getSourceRefs()} instead
+   */
   @Deprecated(since = "1.0")
-  CaseFileItem getSourceRef();
+  default CaseFileItem getSourceRef() {
+    Collection<CaseFileItem> sourceRefs = getSourceRefs();
+    if (sourceRefs.isEmpty()) {
+      return null;
+    }
+    return sourceRefs.iterator().next();
+  }
 
+  /**
+   * @deprecated use {@link #setSourceRefs(Collection)} instead
+   */
   @Deprecated(since = "1.0")
-  void setSourceRef(CaseFileItem sourceRef);
+  default void setSourceRef(CaseFileItem sourceRef) {
+    Collection<CaseFileItem> sourceRefs = getSourceRefs();
+    sourceRefs.clear();
+    if (sourceRef != null) {
+      sourceRefs.add(sourceRef);
+    }
+  }
 
   Collection<CaseFileItem> getSourceRefs();
 

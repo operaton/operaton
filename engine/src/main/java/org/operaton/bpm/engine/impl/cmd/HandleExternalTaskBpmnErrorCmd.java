@@ -54,7 +54,7 @@ public class HandleExternalTaskBpmnErrorCmd extends HandleExternalTaskCmd {
 
   @Override
   public String getErrorMessageOnWrongWorkerAccess() {
-    return "Bpmn error of External Task " + externalTaskId + " cannot be reported by worker '" + workerId;
+    return "Bpmn error of External Task %s cannot be reported by worker '%s'".formatted(externalTaskId, workerId);
   }
 
   @Override

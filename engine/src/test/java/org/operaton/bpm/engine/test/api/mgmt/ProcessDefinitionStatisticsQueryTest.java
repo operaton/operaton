@@ -208,6 +208,7 @@ class ProcessDefinitionStatisticsQueryTest {
 
     statistics =
         managementService.createProcessDefinitionStatisticsQuery().includeIncidents().list();
+    assertThat(statistics).hasSize(1);
 
     assertThat(definitionResult.getIncidentStatistics()).isEmpty();
   }
@@ -226,7 +227,7 @@ class ProcessDefinitionStatisticsQueryTest {
         .includeIncidents()
         .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
   @Test

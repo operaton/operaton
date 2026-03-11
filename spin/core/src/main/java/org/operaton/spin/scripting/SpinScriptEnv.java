@@ -17,14 +17,12 @@
 package org.operaton.spin.scripting;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.script.ScriptEngine;
 
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.spin.SpinScriptException;
-import org.operaton.spin.impl.logging.SpinCoreLogger;
 import org.operaton.spin.impl.logging.SpinLogger;
 
 /**
@@ -37,7 +35,7 @@ import org.operaton.spin.impl.logging.SpinLogger;
  */
 public final class SpinScriptEnv {
 
-  private static final SpinCoreLogger LOG = SpinLogger.CORE_LOGGER;
+  private static final SpinLogger LOG = SpinLogger.CORE_LOGGER;
 
   private static final String ENV_PATH_TEMPLATE = "script/env/%s/spin.%s";
 
@@ -45,13 +43,12 @@ public final class SpinScriptEnv {
    * Mapping of known {@link ScriptEngine} language names and
    * file extensions of corresponding script files.
    */
-  public static final Map<String,String> extensions = new HashMap<>();
-  static {
-    extensions.put("python", "py");
-    extensions.put("javascript", "js");
-    extensions.put("groovy", "groovy");
-    extensions.put("ruby", "rb");
-  }
+  private static final Map<String,String> EXTENSIONS = Map.of(
+    "python", "py",
+    "javascript", "js",
+    "groovy", "groovy",
+    "ruby", "rb"
+  );
 
   private SpinScriptEnv() {
   }
@@ -67,7 +64,7 @@ public final class SpinScriptEnv {
     if("ecmascript".equals(language)) {
       language = "javascript";
     }
-    return extensions.get(language);
+    return EXTENSIONS.get(language);
   }
 
   /**
@@ -83,7 +80,7 @@ public final class SpinScriptEnv {
       language = "javascript";
     }
 
-    String extension = extensions.get(language);
+    String extension = EXTENSIONS.get(language);
     if(extension == null) {
       return null;
 

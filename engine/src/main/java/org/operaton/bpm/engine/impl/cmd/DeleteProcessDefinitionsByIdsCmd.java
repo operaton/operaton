@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,10 +47,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  *
  * @author Tassilo Weidner
  */
-public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class DeleteProcessDefinitionsByIdsCmd implements Command<Void> {
   protected final Set<String> processDefinitionIds;
   protected boolean cascadeToHistory;
   protected boolean cascadeToInstances;
@@ -109,7 +104,7 @@ public class DeleteProcessDefinitionsByIdsCmd implements Command<Void>, Serializ
     String processDefinitionId = processDefinitionIds.iterator().next();
     ensureNotNull("processDefinitionId", processDefinitionId);
     ProcessDefinition processDefinition = commandContext.getProcessDefinitionManager().findLatestProcessDefinitionById(processDefinitionId);
-    ensureNotNull(NotFoundException.class, "No process definition found with id '" + processDefinitionId + "'", "processDefinition", processDefinition);
+    ensureNotNull(NotFoundException.class, "No process definition found with id '%s'".formatted(processDefinitionId), "processDefinition", processDefinition);
 
     return processDefinition;
   }

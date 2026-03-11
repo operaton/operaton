@@ -46,6 +46,9 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
   protected static ChildElement<ExtensionElements> extensionElementsChild;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use documentationCollection instead.
+   */
   @Deprecated(since = "1.0")
   protected static Attribute<String> descriptionAttribute;
 
@@ -67,11 +70,13 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public String getDescription() {
     return descriptionAttribute.getValue(this);
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public void setDescription(String description) {
     descriptionAttribute.setValue(this, description);
   }
@@ -95,6 +100,7 @@ public abstract class CmmnElementImpl extends CmmnModelElementInstanceImpl imple
     return CmmnModelConstants.CMMN11_NS.equals(getDomElement().getNamespaceURI());
   }
 
+  @SuppressWarnings("deprecation")
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(CmmnElement.class, CMMN_ELEMENT)
         .abstractType()

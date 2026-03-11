@@ -188,7 +188,7 @@ class PasswordHashingTest {
     user = identityService.createUserQuery().userId(USER_NAME).singleResult();
 
     // then
-    assertThat(user.getPassword()).isEqualTo("{" + ALGORITHM_NAME + "}xxx");
+    assertThat(user.getPassword()).isEqualTo("{%s}xxx".formatted(ALGORITHM_NAME));
   }
 
   @Test
@@ -219,8 +219,8 @@ class PasswordHashingTest {
     User user3 = identityService.createUserQuery().userId(userName3).singleResult();
 
     // then
-    assertThat(user1.getPassword()).isEqualTo("{" + ALGORITHM_NAME + "}xxx");
-    assertThat(user2.getPassword()).isEqualTo("{" + anotherAlgorithmName + "}xxx");
+    assertThat(user1.getPassword()).isEqualTo("{%s}xxx".formatted(ALGORITHM_NAME));
+    assertThat(user2.getPassword()).isEqualTo("{%s}xxx".formatted(anotherAlgorithmName));
     assertThat(user3.getPassword()).isEqualTo("{SHA}n3fE9/7XOmgD3BkeJlC+JLyb/Qg=");
   }
 

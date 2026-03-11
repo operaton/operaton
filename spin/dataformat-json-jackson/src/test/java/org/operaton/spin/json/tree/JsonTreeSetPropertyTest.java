@@ -362,8 +362,7 @@ class JsonTreeSetPropertyTest {
   @Test
   void failWhileSettingObjectWithList() {
     Date date = new Date();
-    ArrayList<Object> list = new ArrayList<>();
-    list.add(date);
+    List<Object> list = List.of(date);
 
     assertThatExceptionOfType(SpinJsonPropertyException.class).isThrownBy(() -> jsonNode.prop("test", list));
   }

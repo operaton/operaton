@@ -20,6 +20,8 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.impl.MessageCorrelationBuilderImpl;
 
+import static java.util.Collections.emptyMap;
+
 public class CorrelationSet {
 
   protected final String businessKey;
@@ -47,11 +49,11 @@ public class CorrelationSet {
   }
 
   public Map<String, Object> getCorrelationKeys() {
-    return correlationKeys;
+    return correlationKeys != null ? correlationKeys : emptyMap();
   }
 
   public Map<String, Object> getLocalCorrelationKeys() {
-    return localCorrelationKeys;
+    return localCorrelationKeys != null ? localCorrelationKeys : emptyMap();
   }
 
   public String getProcessInstanceId() {

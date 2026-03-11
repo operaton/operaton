@@ -41,7 +41,7 @@ public class CaseHandler extends CmmnElementHandler<Case, CmmnCaseDefinition> {
 
   @Override
   public CmmnCaseDefinition handleElement(Case element, CmmnHandlerContext context) {
-    CaseDefinitionEntity definition = createActivity(element, context);
+    CaseDefinitionEntity definition = createActivity(element);
 
     initializeActivity(element, definition, context);
 
@@ -74,7 +74,15 @@ public class CaseHandler extends CmmnElementHandler<Case, CmmnCaseDefinition> {
     definition.setHistoryTimeToLive(historyTimeToLive);
   }
 
+  /**
+   * @deprecated use {@link #createActivity(CmmnElement)} instead
+   */
+  @Deprecated(since = "1.1", forRemoval = true)
   protected CaseDefinitionEntity createActivity(CmmnElement element, CmmnHandlerContext context) {
+    return createActivity(element);
+  }
+
+  protected CaseDefinitionEntity createActivity(CmmnElement element) {
     CaseDefinitionEntity definition = new CaseDefinitionEntity();
 
     definition.setCmmnElement(element);

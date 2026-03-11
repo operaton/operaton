@@ -25,6 +25,8 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 /**
  * @author Frederik Heremans
  */
@@ -42,7 +44,6 @@ class BoundaryTimerEventFullHistoryTest {
   @Test
   void testSetProcessVariablesFromTaskWhenTimerOnTask() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("timerVariablesProcess");
-    runtimeService.setVariable(processInstance.getId(), "myVar", 123456L);
+    assertThatCode(() -> runtimeService.setVariable(processInstance.getId(), "myVar", 123456L)).doesNotThrowAnyException();
   }
-
 }

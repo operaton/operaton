@@ -115,7 +115,7 @@ public class FontImpl extends BpmnModelElementInstanceImpl implements Font {
   }
 
   @Override
-  public void SetUnderline(boolean isUnderline) {
+  public void setUnderline(boolean isUnderline) {
     isUnderlineAttribute.setValue(this, isUnderline);
   }
 

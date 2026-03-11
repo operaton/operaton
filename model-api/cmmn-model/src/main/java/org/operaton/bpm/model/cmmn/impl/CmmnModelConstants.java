@@ -42,8 +42,11 @@ public final class CmmnModelConstants {
   /** The XPath namespace */
   public static final String XPATH_NS = "http://www.w3.org/1999/XPath";
 
+  /** Backwards compatibility with Camunda CMMN files */
+  public static final String CAMUNDA_NS = "http://camunda.org/schema/1.0/cmmn";
+
   /** Operaton namespace */
-  public static final String CAMUNDA_NS = "http://operaton.org/schema/1.0/cmmn";
+  public static final String OPERATON_NS = "http://operaton.org/schema/1.0/cmmn";
 
   // elements ///////////////////////////////////////////////////////////////////////////
 

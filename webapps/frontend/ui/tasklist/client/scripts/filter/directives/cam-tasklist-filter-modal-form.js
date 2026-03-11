@@ -23,7 +23,7 @@ var angular = require('operaton-commons-ui/vendor/angular');
 
 var isArray = angular.isArray;
 
-var noop = function() {};
+var noop = function () {};
 
 var GENERAL_ACCORDION = 'general',
   PERMISSION_ACCORDION = 'permission',
@@ -31,26 +31,25 @@ var GENERAL_ACCORDION = 'general',
   VARIABLE_ACCORDION = 'variable';
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       scope: {
         filter: '=',
         filterModalData: '=',
         registerIsValidProvider: '&',
-        registerPostFilterSavedProvider: '&'
+        registerPostFilterSavedProvider: '&',
       },
 
       template: template,
 
       controller: [
         '$scope',
-        function($scope) {
+        function ($scope) {
           // init ////////////////////////////////////////////////////////////////////////
 
-          var filterModalFormData = ($scope.filterModalFormData = $scope.filterModalData.newChild(
-            $scope
-          ));
+          var filterModalFormData = ($scope.filterModalFormData =
+            $scope.filterModalData.newChild($scope));
 
           $scope.registerIsValidProvider =
             $scope.registerIsValidProvider() || noop;
@@ -62,18 +61,18 @@ module.exports = [
             general: opened === GENERAL_ACCORDION,
             permission: opened === PERMISSION_ACCORDION,
             criteria: opened === CRITERIA_ACCORDION,
-            variable: opened === VARIABLE_ACCORDION
+            variable: opened === VARIABLE_ACCORDION,
           };
 
           // observe //////////////////////////////////////////////////////////////////////
 
-          filterModalFormData.observe('accesses', function(accesses) {
+          filterModalFormData.observe('accesses', function (accesses) {
             $scope.accesses = accesses;
           });
 
           // init isValidProvider ////////////////////////////////////////////////////////
 
-          var isValidProvider = function() {
+          var isValidProvider = function () {
             return $scope.filterForm.$valid;
           };
 
@@ -82,12 +81,12 @@ module.exports = [
           // handle hints ////////////////////////////////////////////////////////////////
 
           var hintProvider = {};
-          this.registerHintProvider = function(formName, fn) {
+          this.registerHintProvider = function (formName, fn) {
             fn = fn || noop;
             hintProvider[formName] = fn;
           };
 
-          $scope.showHint = function(formName) {
+          $scope.showHint = function (formName) {
             var provider = hintProvider[formName];
             return provider && provider();
           };
@@ -95,16 +94,16 @@ module.exports = [
           // handle submit after filter has been saved succesfully //////////////////////
 
           var postFilterSavedProviders = [];
-          this.registerPostFilterSavedProvider = function(provider) {
+          this.registerPostFilterSavedProvider = function (provider) {
             postFilterSavedProviders.push(
               provider ||
-                function(filter, callback) {
+                function (filter, callback) {
                   return callback();
-                }
+                },
             );
           };
 
-          var postFilterSavedProvider = function(filter, callback) {
+          var postFilterSavedProvider = function (filter, callback) {
             var count = postFilterSavedProviders.length;
 
             if (count === 0) {
@@ -112,7 +111,7 @@ module.exports = [
             }
 
             var errors = [];
-            var localCallback = function(err) {
+            var localCallback = function (err) {
               count = count - 1;
 
               if (err) {
@@ -149,7 +148,7 @@ module.exports = [
 
           // helper ///////////////////////////////////////////////////////////////////////
 
-          this.removeArrayItem = function(arr, delta) {
+          this.removeArrayItem = function (arr, delta) {
             var newArr = [];
             for (var key in arr) {
               if (key != delta) {
@@ -158,8 +157,8 @@ module.exports = [
             }
             return newArr;
           };
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

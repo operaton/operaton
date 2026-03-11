@@ -91,16 +91,16 @@ class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     // then
     // the increased count is immediately visible
     assertThat(managementService.createMetricsQuery()
-        .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(1L);
+      .name(Metrics.ACTIVTY_INSTANCE_START)
+      .sum()).isOne();
 
     // and force the db metrics reporter to report
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
     // still 1
     assertThat(managementService.createMetricsQuery()
-        .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(1L);
+      .name(Metrics.ACTIVTY_INSTANCE_START)
+      .sum()).isOne();
 
     taskService.deleteTask(task.getId());
 
@@ -123,8 +123,8 @@ class ActivityInstanceCountMetricsTest extends AbstractMetricsTest {
     caseService.createCaseInstanceByKey("case");
 
     assertThat(managementService.createMetricsQuery()
-        .name(Metrics.ACTIVTY_INSTANCE_START)
-        .sum()).isEqualTo(1L);
+      .name(Metrics.ACTIVTY_INSTANCE_START)
+      .sum()).isOne();
 
     // start PI_HumanTask_1 and PI_Milestone_1
     List<CaseExecution> list = caseService.createCaseExecutionQuery().enabled().list();

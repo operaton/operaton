@@ -87,7 +87,9 @@ class ModelValidationTest {
     StringWriter stringWriter = new StringWriter();
     results.write(stringWriter, new TestResultFormatter());
 
-    assertThat(stringWriter).hasToString("tweety\n\tERROR (20): Bird tweety is illegal\n");
+    // Use platform-independent comparison by normalizing newlines
+    assertThat(stringWriter.toString())
+        .isEqualToNormalizingNewlines("tweety\n\tERROR (20): Bird tweety is illegal\n");
   }
 
   @Test

@@ -29,14 +29,14 @@ var Controller = [
   'Views',
   '$translate',
   '$injector',
-  function(
+  function (
     $scope,
     page,
     $location,
     $routeParams,
     Views,
     $translate,
-    $injector
+    $injector,
   ) {
     $scope.$root.showBreadcrumbs = true;
 
@@ -47,17 +47,17 @@ var Controller = [
     page.breadcrumbsAdd([
       {
         label: $translate.instant('SYSTEM_SYSTEM_SETTINGS'),
-        href: '#/system'
-      }
+        href: '#/system',
+      },
     ]);
 
     $scope.systemSettingsProviders = Views.getProviders({
-      component: 'admin.system'
-    }).map(function(plugin) {
+      component: 'admin.system',
+    }).map(function (plugin) {
       if (angular.isArray(plugin.access)) {
         var fn = $injector.invoke(plugin.access);
 
-        fn(function(err, access) {
+        fn(function (err, access) {
           if (err) {
             throw err;
           }
@@ -75,24 +75,24 @@ var Controller = [
     if (selectedProviderId) {
       $scope.activeSettingsProvier = Views.getProviders({
         component: 'admin.system',
-        id: $routeParams.section
+        id: $routeParams.section,
       })[0];
     }
 
-    $scope.activeClass = function(link) {
+    $scope.activeClass = function (link) {
       var path = $location.absUrl();
       return path.indexOf(link) != -1 ? 'active' : '';
     };
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/system', {
       template: template,
       controller: Controller,
-      authentication: 'required'
+      authentication: 'required',
     });
-  }
+  },
 ];

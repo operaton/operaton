@@ -1,0 +1,28 @@
+# This is an EXAMPLE security.txt file for your Operaton instance.
+# 
+# The security.txt file is a web standard (RFC 9116) that provides security
+# researchers with a way to contact you about security vulnerabilities.
+# 
+# IMPORTANT: This file should be customized for YOUR organization and served
+# at: https://your-domain/.well-known/security.txt
+#
+# To use this file:
+# 1. Copy this file and rename it to 'security.txt' (remove .example)
+# 2. Replace ALL placeholder values with your actual information
+# 3. Sign the file with your PGP key (recommended)
+# 4. Serve it at https://your-domain/.well-known/security.txt
+# 5. Update the file at least once per year before the expiration date
+#
+# For more information about security.txt, visit: https://securitytxt.org/
+# To validate your security.txt, use: https://securitytxt.org/validator/
+
+Contact: mailto:security@example.com
+Expires: 2026-12-31T23:59:59.000Z
+Canonical: https://example.com/.well-known/security.txt
+Encryption: https://example.com/pgp-key.asc
+Preferred-Languages: en
+Acknowledgments: https://example.com/security/hall-of-fame
+
+# Optional fields you may want to add:
+# Policy: https://example.com/security-policy
+# Hiring: https://example.com/careers/security

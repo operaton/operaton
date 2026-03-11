@@ -46,8 +46,8 @@ public class AsyncIntermediateThrowSignalEventTest extends AbstractFoxPlatformIn
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piCatchSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(piThrowSignal.getProcessInstanceId()).activityId("receiveTask").count()).isOne();
 
     // clean up
     runtimeService.signal(piCatchSignal.getId());

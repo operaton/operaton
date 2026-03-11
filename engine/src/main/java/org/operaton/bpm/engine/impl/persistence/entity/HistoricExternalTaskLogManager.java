@@ -43,8 +43,8 @@ public class HistoricExternalTaskLogManager extends AbstractManager {
 
   // select /////////////////////////////////////////////////////////////////
 
-  public HistoricExternalTaskLogEntity findHistoricExternalTaskLogById(String HistoricExternalTaskLogId) {
-    return (HistoricExternalTaskLogEntity) getDbEntityManager().selectOne("selectHistoricExternalTaskLog", HistoricExternalTaskLogId);
+  public HistoricExternalTaskLogEntity findHistoricExternalTaskLogById(String historicExternalTaskLogId) {
+    return (HistoricExternalTaskLogEntity) getDbEntityManager().selectOne("selectHistoricExternalTaskLog", historicExternalTaskLogId);
   }
 
   @SuppressWarnings("unchecked")

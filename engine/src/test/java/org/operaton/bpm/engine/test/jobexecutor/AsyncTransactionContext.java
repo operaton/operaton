@@ -45,6 +45,7 @@ public class AsyncTransactionContext extends StandaloneTransactionContext {
     try {
       thread.join();
     } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
       throw new ProcessEngineException(e);
     }
   }

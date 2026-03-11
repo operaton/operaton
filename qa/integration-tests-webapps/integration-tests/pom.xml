@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-qa-integration-tests-webapps</artifactId>
   <name>Operaton - QA Integration Tests - Webapps ITs</name>
@@ -39,12 +39,7 @@
     <dependency>
       <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine</artifactId>
-      <classifier>junit5</classifier>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-bpm-junit5</artifactId>
+      <classifier>junit6</classifier>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -70,6 +65,11 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>

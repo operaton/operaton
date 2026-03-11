@@ -51,11 +51,11 @@ export function init(pluginDependencies) {
     pagesModule.name,
     directivesModule.name,
     servicesModule.name,
-    pluginsModule.name
+    pluginsModule.name,
   ].concat(
-    pluginDependencies.map(function(el) {
+    pluginDependencies.map(function (el) {
       return el.ngModuleName;
-    })
+    }),
   );
 
   var appNgModule = angular.module(APP_NAME, ngDependencies);
@@ -75,12 +75,12 @@ export function init(pluginDependencies) {
     '$animateProvider',
     '$qProvider',
     '$provide',
-    function(
+    function (
       $routeProvider,
       UriProvider,
       $animateProvider,
       $qProvider,
-      $provide
+      $provide,
     ) {
       translatePaginationCtrls($provide);
       $routeProvider.otherwise({redirectTo: '/welcome'});
@@ -96,7 +96,7 @@ export function init(pluginDependencies) {
 
       UriProvider.replace(':engine', [
         '$window',
-        function($window) {
+        function ($window) {
           var uri = $window.location.href;
 
           var match = uri.match(/\/app\/welcome\/([\w-]+)(|\/)/);
@@ -105,21 +105,21 @@ export function init(pluginDependencies) {
           } else {
             throw new Error('no process engine selected');
           }
-        }
+        },
       ]);
 
       $animateProvider.classNameFilter(/angular-animate/);
 
       $qProvider.errorOnUnhandledRejections(DEV_MODE); // eslint-disable-line
-    }
+    },
   ];
 
   appNgModule.provider(
     'configuration',
     require('./../../../common/scripts/services/cam-configuration')(
       window.camWelcomeConf,
-      'Welcome'
-    )
+      'Welcome',
+    ),
   );
   appNgModule.controller('WelcomePage', require('./controllers/welcome-page'));
 
@@ -128,17 +128,17 @@ export function init(pluginDependencies) {
   require('./../../../common/scripts/services/locales')(
     appNgModule,
     getUri('app-root'),
-    'welcome'
+    'welcome',
   );
 
   require('../../../common/scripts/services/plugins/addPlugins')(
     window.camWelcomeConf,
     appNgModule,
-    'welcome'
+    'welcome',
   ).then(() => {
     angular.bootstrap(document.documentElement, [
       appNgModule.name,
-      'cam.welcome.custom'
+      'cam.welcome.custom',
     ]);
 
     if (top !== window) {

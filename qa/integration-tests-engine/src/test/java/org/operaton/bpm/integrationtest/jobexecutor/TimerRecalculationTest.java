@@ -60,8 +60,8 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
 
     ProcessInstanceQuery instancesQuery = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId);
     JobQuery jobQuery = managementService.createJobQuery().processInstanceId(processInstanceId);
-    assertThat(instancesQuery.count()).isEqualTo(1);
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(instancesQuery.count()).isOne();
+    assertThat(jobQuery.count()).isOne();
 
     Job job = jobQuery.singleResult();
     Date oldDueDate = job.getDuedate();
@@ -71,7 +71,7 @@ public class TimerRecalculationTest extends AbstractFoxPlatformIntegrationTest {
     managementService.recalculateJobDuedate(job.getId(), true);
 
     // then
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
     Job jobRecalculated = jobQuery.singleResult();
     assertThat(jobRecalculated.getDuedate()).isNotEqualTo(oldDueDate);
 

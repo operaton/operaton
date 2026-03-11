@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.application.impl.deployment;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -86,7 +85,7 @@ public class RedeploymentRegistrationTest {
 
   @Parameters
   public static Collection<Object[]> scenarios() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { BPMN_RESOURCE_1, BPMN_RESOURCE_2, "processOne", "processTwo", processDefinitionTestProvider() },
       { CMMN_RESOURCE_1, CMMN_RESOURCE_2, "oneTaskCase", "twoTaskCase", caseDefinitionTestProvider() },
       { DMN_RESOURCE_1, DMN_RESOURCE_2, "decision", "score-decision", decisionDefinitionTestProvider() },

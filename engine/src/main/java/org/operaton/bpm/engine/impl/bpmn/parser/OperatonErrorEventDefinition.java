@@ -18,11 +18,9 @@ package org.operaton.bpm.engine.impl.bpmn.parser;
 
 import org.operaton.bpm.engine.impl.el.Expression;
 
-public class OperatonErrorEventDefinition extends ErrorEventDefinition{
+public class OperatonErrorEventDefinition extends ErrorEventDefinition {
 
-  static final long serialVersionUID = 1L;
-
-  Expression expression;
+  private Expression expression;
 
   public OperatonErrorEventDefinition(String handlerActivityId, Expression expression) {
     super(handlerActivityId);

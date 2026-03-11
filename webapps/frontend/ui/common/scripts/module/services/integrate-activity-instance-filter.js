@@ -23,8 +23,8 @@ module.exports = [
   'search',
   '$location',
   'searchWidgetUtils',
-  function(search, $location, searchWidgetUtils) {
-    return function($scope, setDefaultTab, options) {
+  function (search, $location, searchWidgetUtils) {
+    return function ($scope, setDefaultTab, options) {
       var processData = $scope.processData;
       var processInstance = $scope.processInstance;
 
@@ -36,10 +36,10 @@ module.exports = [
 
       processData.observe(
         ['filter', 'instanceIdToInstanceMap', 'activityIdToInstancesMap'],
-        autoCompleteFilter
+        autoCompleteFilter,
       );
 
-      $scope.$on('$locationChangeSuccess', function() {
+      $scope.$on('$locationChangeSuccess', function () {
         var newFilter = parseFilterFromUri($scope.filter);
 
         if ($location.path().indexOf(processInstance.id) > -1) {
@@ -47,7 +47,7 @@ module.exports = [
             searchWidgetUtils.shouldUpdateFilter(newFilter, $scope.filter, [
               'activityIds',
               'activityInstanceIds',
-              'page'
+              'page',
             ])
           ) {
             processData.set('filter', newFilter);
@@ -61,7 +61,7 @@ module.exports = [
         var params = search();
         var activityInstanceIds = searchWidgetUtils.getActivityIdsFromUrlParams(
           'activityInstanceIdIn',
-          params
+          params,
         );
         var activityIds = params.activityIds
           ? params.activityIds.split(',')
@@ -69,7 +69,7 @@ module.exports = [
         var ignoreActivityIds = shouldActivityIdsBeIgnored(
           lastFilter,
           activityIds,
-          activityInstanceIds
+          activityInstanceIds,
         );
 
         // if activity ids haven't changed but instance ids have changed
@@ -83,14 +83,14 @@ module.exports = [
           activityIds: activityIds,
           activityInstanceIds: activityInstanceIds,
           page: parseInt(params.page, 10) || undefined,
-          replace: ignoreActivityIds || !lastFilter
+          replace: ignoreActivityIds || !lastFilter,
         };
       }
 
       function shouldActivityIdsBeIgnored(
         lastFilter,
         activityIds,
-        activityInstanceIds
+        activityInstanceIds,
       ) {
         return (
           lastFilter &&
@@ -120,16 +120,16 @@ module.exports = [
           searches = searchWidgetUtils.replaceActivitiesInSearchQuery(
             searches,
             'activityInstanceIdIn',
-            activityInstanceIds
+            activityInstanceIds,
           );
         }
 
         search.updateSilently(
           {
             searchQuery: searches ? JSON.stringify(searches) : null,
-            activityIds: activityIds.length ? activityIds.join(',') : null
+            activityIds: activityIds.length ? activityIds.join(',') : null,
           },
-          replace
+          replace,
         );
 
         $scope.filter = newFilter;
@@ -150,7 +150,7 @@ module.exports = [
       function autoCompleteFilter(
         newFilter,
         instanceIdToInstanceMap,
-        activityIdToInstancesMap
+        activityIdToInstancesMap,
       ) {
         var activityIds = newFilter.activityIds || [],
           activityInstanceIds = newFilter.activityInstanceIds || [],
@@ -164,7 +164,7 @@ module.exports = [
 
         delete newFilter.replace;
 
-        angular.forEach(activityInstanceIds, function(instanceId) {
+        angular.forEach(activityInstanceIds, function (instanceId) {
           var instance = instanceIdToInstanceMap[instanceId] || {},
             activityId = instance.activityId || instance.targetActivityId,
             idx = activityIds.indexOf(activityId);
@@ -174,7 +174,7 @@ module.exports = [
           }
         });
 
-        angular.forEach(activityIds, function(activityId) {
+        angular.forEach(activityIds, function (activityId) {
           var instanceList = activityIdToInstancesMap[activityId],
             foundOne = false,
             instanceIds = [];
@@ -225,7 +225,7 @@ module.exports = [
           activityIds: activityIds,
           activityInstanceIds: activityInstanceIds,
           scrollToBpmnElement: scrollToBpmnElement,
-          page: page
+          page: page,
         };
 
         // update filter only if actual changes happened above
@@ -246,5 +246,5 @@ module.exports = [
         }
       }
     };
-  }
+  },
 ];

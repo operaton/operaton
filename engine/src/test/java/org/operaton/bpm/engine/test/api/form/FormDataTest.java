@@ -272,17 +272,15 @@ class FormDataTest {
     TaskFormData taskFormData = formService.getTaskFormData(task.getId());
     assertThat(taskFormData).isNotNull();
     assertThat(taskFormData.getFormFields()).hasSize(5);
-    for (FormField field : taskFormData.getFormFields()) {
+
+    assertThat(taskFormData.getFormFields()).allSatisfy(field -> {
       assertThat(field).isNotNull();
-
       if (field.getType() instanceof DateFormType) {
-        assertThat(field.getValue().getValue()).isEqualTo("");
-
+        assertThat(field.getValue().getValue()).isNotNull().hasToString("");
       } else {
         assertThat(field.getValue().getValue()).isNull();
-
       }
-    }
+    });
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/form/FormDataTest.testDoubleQuotesAreEscapedInGeneratedTaskForms.bpmn20.xml")

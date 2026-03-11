@@ -68,7 +68,7 @@ public class CaseExecutionManager extends AbstractManager {
     CaseExecutionEntity execution = findCaseExecutionById(caseInstanceId);
 
     if(execution == null) {
-      throw new BadUserRequestException("No case instance found for id '" + caseInstanceId + "'");
+      throw new BadUserRequestException("No case instance found for id '%s'".formatted(caseInstanceId));
     }
 
     CommandContext commandContext = Context.getCommandContext();

@@ -18,12 +18,12 @@
 'use strict';
 
 module.exports = [
-  function() {
+  function () {
     return {
       require: 'ngModel',
 
-      link: function($scope, $element, $attrs, ctrl) {
-        var validate = function(viewValue) {
+      link: function ($scope, $element, $attrs, ctrl) {
+        var validate = function (viewValue) {
           var names = JSON.parse($attrs.camUniqueValue);
 
           ctrl.$setValidity('camUniqueValue', true);
@@ -53,10 +53,10 @@ module.exports = [
         ctrl.$parsers.unshift(validate);
         ctrl.$formatters.push(validate);
 
-        $attrs.$observe('camUniqueValue', function() {
+        $attrs.$observe('camUniqueValue', function () {
           return validate(ctrl.$viewValue);
         });
-      }
+      },
     };
-  }
+  },
 ];

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.variable.serializer;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import org.operaton.bpm.engine.variable.type.ValueType;
@@ -28,11 +27,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public abstract class AbstractTypedValueSerializer<T extends TypedValue> implements TypedValueSerializer<T> {
 
-  public static final Set<String> BINARY_VALUE_TYPES = new HashSet<>();
-  static {
-    BINARY_VALUE_TYPES.add(ValueType.BYTES.getName());
-    BINARY_VALUE_TYPES.add(ValueType.FILE.getName());
-  }
+  public static final Set<String> BINARY_VALUE_TYPES = Set.of(ValueType.BYTES.getName(),ValueType.FILE.getName());
 
   protected ValueType valueType;
 

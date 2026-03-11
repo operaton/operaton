@@ -76,7 +76,7 @@ class HistoricIdentityLinkLogByXmlTest {
 
     // query Test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.userId(XML_USER).count()).isEqualTo(1);
+    assertThat(query.userId(XML_USER).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithTaskAssignee.bpmn20.xml"})
@@ -94,7 +94,7 @@ class HistoricIdentityLinkLogByXmlTest {
 
     // query Test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.userId(XML_ASSIGNEE).count()).isEqualTo(1);
+    assertThat(query.userId(XML_ASSIGNEE).count()).isOne();
 
 
   }
@@ -114,7 +114,7 @@ class HistoricIdentityLinkLogByXmlTest {
 
     // query Test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.groupId(XML_GROUP).count()).isEqualTo(1);
+    assertThat(query.groupId(XML_GROUP).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateStarterUsers.bpmn20.xml"})
@@ -138,7 +138,7 @@ class HistoricIdentityLinkLogByXmlTest {
 
     // query Test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.userId(XML_USER).count()).isEqualTo(1);
+    assertThat(query.userId(XML_USER).count()).isOne();
   }
   @Deployment(resources = { "org/operaton/bpm/engine/test/api/runtime/OneTaskProcessWithCandidateStarterGroups.bpmn20.xml" })
   public void testShouldAddProcessCandidateStarterGroupforAddIdentityLinkUsingXml() {
@@ -160,7 +160,7 @@ class HistoricIdentityLinkLogByXmlTest {
 
     // query Test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.groupId(XML_GROUP).count()).isEqualTo(1);
+    assertThat(query.groupId(XML_GROUP).count()).isOne();
   }
 
   @Test

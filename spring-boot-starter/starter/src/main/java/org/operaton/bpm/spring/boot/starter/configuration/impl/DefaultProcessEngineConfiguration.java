@@ -55,7 +55,7 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
     if (StringUtils.hasText(defaultSerializationFormat)) {
       configuration.setDefaultSerializationFormat(defaultSerializationFormat);
     } else {
-      logger.warn("Ignoring invalid defaultSerializationFormat='{}'", defaultSerializationFormat);
+      LOG.ignoringInvalidDefaultSerializationFormat(defaultSerializationFormat);
     }
   }
 
@@ -66,25 +66,24 @@ public class DefaultProcessEngineConfiguration extends AbstractOperatonConfigura
       if (Boolean.TRUE.equals(operatonBpmProperties.getGenerateUniqueProcessEngineName())) {
         if (!ProcessEngines.NAME_DEFAULT.equals(processEngineName)) {
           throw new RuntimeException(("A unique processEngineName cannot be generated "
-              + "if a custom processEngineName is already set: %s").formatted(processEngineName));
+                  + "if a custom processEngineName is already set: %s").formatted(processEngineName));
         }
         processEngineName = OperatonBpmProperties.getUniqueName(OperatonBpmProperties.UNIQUE_ENGINE_NAME_PREFIX);
       }
 
       configuration.setProcessEngineName(processEngineName);
     } else {
-      logger.warn("Ignoring invalid processEngineName='{}' - must not be null, blank or contain hyphen",
-          operatonBpmProperties.getProcessEngineName());
+      LOG.ignoringInvalidProcessEngineName(operatonBpmProperties.getProcessEngineName());
     }
   }
 
   private void setJobExecutorAcquireByPriority(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getJobExecutorAcquireByPriority())
-        .ifPresent(configuration::setJobExecutorAcquireByPriority);
+            .ifPresent(configuration::setJobExecutorAcquireByPriority);
   }
 
   private void setDefaultNumberOfRetries(SpringProcessEngineConfiguration configuration) {
     Optional.ofNullable(operatonBpmProperties.getDefaultNumberOfRetries())
-        .ifPresent(configuration::setDefaultNumberOfRetries);
+            .ifPresent(configuration::setDefaultNumberOfRetries);
   }
 }

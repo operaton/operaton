@@ -32,42 +32,42 @@ import org.operaton.commons.utils.cache.Cache;
 /**
  * @author: Johannes Heinemann
  */
-public abstract class ModelInstanceCache<InstanceType extends ModelInstance, DefinitionType extends ResourceDefinitionEntity> {
+public abstract class ModelInstanceCache<INSTANCE_TYPE extends ModelInstance, DEFINITION_TYPE extends ResourceDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
-  protected Cache<String, InstanceType> instanceCache;
-  protected ResourceDefinitionCache<DefinitionType> definitionCache;
+  protected Cache<String, INSTANCE_TYPE> instanceCache;
+  protected ResourceDefinitionCache<DEFINITION_TYPE> definitionCache;
 
-  protected ModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<DefinitionType> definitionCache) {
+  protected ModelInstanceCache(CacheFactory factory, int cacheCapacity, ResourceDefinitionCache<DEFINITION_TYPE> definitionCache) {
     this.instanceCache = factory.createCache(cacheCapacity);
     this.definitionCache = definitionCache;
   }
 
-  public InstanceType findBpmnModelInstanceForDefinition(DefinitionType definitionEntity) {
-    InstanceType bpmnModelInstance = instanceCache.get(definitionEntity.getId());
+  public INSTANCE_TYPE findBpmnModelInstanceForDefinition(DEFINITION_TYPE definitionEntity) {
+    INSTANCE_TYPE bpmnModelInstance = instanceCache.get(definitionEntity.getId());
     if (bpmnModelInstance == null) {
       bpmnModelInstance = loadAndCacheBpmnModelInstance(definitionEntity);
     }
     return bpmnModelInstance;
   }
 
-  public InstanceType findBpmnModelInstanceForDefinition(String definitionId) {
-    InstanceType bpmnModelInstance = instanceCache.get(definitionId);
+  public INSTANCE_TYPE findBpmnModelInstanceForDefinition(String definitionId) {
+    INSTANCE_TYPE bpmnModelInstance = instanceCache.get(definitionId);
     if (bpmnModelInstance == null) {
-      DefinitionType definition = definitionCache.findDeployedDefinitionById(definitionId);
+      DEFINITION_TYPE definition = definitionCache.findDeployedDefinitionById(definitionId);
       bpmnModelInstance = loadAndCacheBpmnModelInstance(definition);
     }
     return bpmnModelInstance;
   }
 
-  protected InstanceType loadAndCacheBpmnModelInstance(final DefinitionType definitionEntity) {
+  protected INSTANCE_TYPE loadAndCacheBpmnModelInstance(final DEFINITION_TYPE definitionEntity) {
     final CommandContext commandContext = Context.getCommandContext();
     InputStream bpmnResourceInputStream = commandContext.runWithoutAuthorization(
         new GetDeploymentResourceCmd(definitionEntity.getDeploymentId(), definitionEntity.getResourceName()));
 
     try {
-      InstanceType bpmnModelInstance = readModelFromStream(bpmnResourceInputStream);
+      INSTANCE_TYPE bpmnModelInstance = readModelFromStream(bpmnResourceInputStream);
       instanceCache.put(definitionEntity.getId(), bpmnModelInstance);
       return bpmnModelInstance;
     } catch (Exception e) {
@@ -98,7 +98,7 @@ public abstract class ModelInstanceCache<InstanceType extends ModelInstance, Def
     instanceCache.clear();
   }
 
-  public Cache<String, InstanceType> getCache() {
+  public Cache<String, INSTANCE_TYPE> getCache() {
     return instanceCache;
   }
 
@@ -106,7 +106,7 @@ public abstract class ModelInstanceCache<InstanceType extends ModelInstance, Def
 
   protected abstract void logRemoveEntryFromDeploymentCacheFailure(String definitionId, Exception e);
 
-  protected abstract InstanceType readModelFromStream(InputStream stream);
+  protected abstract INSTANCE_TYPE readModelFromStream(InputStream stream);
 
   protected abstract List<? extends ResourceDefinition> getAllDefinitionsForDeployment(String deploymentId);
 }

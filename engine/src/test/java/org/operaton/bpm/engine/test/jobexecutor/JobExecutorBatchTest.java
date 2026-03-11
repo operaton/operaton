@@ -90,7 +90,7 @@ class JobExecutorBatchTest {
     helper.migrateProcessInstancesAsync(2);
 
     // then the job executor is hinted for the seed job
-    assertThat(jobExecutor.getJobsAdded()).isEqualTo(1);
+    assertThat(jobExecutor.getJobsAdded()).isOne();
   }
 
   @Test

@@ -16,7 +16,10 @@
  */
 package org.operaton.bpm.engine.spring.test.components;
 
-import java.util.logging.Logger;
+import java.util.concurrent.Future;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.spring.annotations.BusinessKey;
@@ -32,7 +35,7 @@ import org.operaton.bpm.engine.spring.annotations.StartProcess;
 @SuppressWarnings("unused")
 public class ProcessInitiatingPojo {
 
-    private final Logger log = Logger.getLogger(getClass().getName());
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private int methodState;
 
@@ -52,9 +55,9 @@ public class ProcessInitiatingPojo {
 
     @StartProcess(processKey = "b")
     public void startProcess(@ProcessVariable("customerId") long customerId) {
-        log.info("starting 'b' with customerId # " + customerId);
+        log.info("starting 'b' with customerId # {}", customerId);
         this.methodState += 1;
-        log.info("up'd the method state");
+        log.info("incremented the method state");
     }
 
     public int getMethodState() {
@@ -68,6 +71,11 @@ public class ProcessInitiatingPojo {
 
     @StartProcess(processKey = "waiter")
     public ProcessInstance enrollCustomer(@BusinessKey String key, @ProcessVariable("customerId") long customerId) {
+        return null;
+    }
+
+    @StartProcess(processKey = "waiter")
+    public Future<ProcessInstance> startAsyncProcess(@ProcessVariable("customerId") long customerId) {
         return null;
     }
 

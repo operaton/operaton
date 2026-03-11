@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -29,14 +27,10 @@ import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 
-
 /**
  * @author Joram Barrez
  */
-public class DeleteTaskCmd implements Command<Void>, Serializable {
-
-  @Serial
-  private static final long serialVersionUID = 1L;
+public class DeleteTaskCmd implements Command<Void> {
   protected String taskId;
   protected Collection<String> taskIds;
   protected boolean cascade;
@@ -63,7 +57,6 @@ public class DeleteTaskCmd implements Command<Void>, Serializable {
     } else {
       throw new ProcessEngineException("taskId and taskIds are null");
     }
-
 
     return null;
   }

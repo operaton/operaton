@@ -224,9 +224,7 @@ public class MockHistoricVariableInstanceBuilder {
     HistoricVariableInstance mockVariable = mock(HistoricVariableInstance.class);
     when(mockVariable.getId()).thenReturn(id);
     when(mockVariable.getName()).thenReturn(name);
-    when(mockVariable.getVariableName()).thenReturn(name);
     when(mockVariable.getTypeName()).thenReturn(value.getType().getName());
-    when(mockVariable.getVariableTypeName()).thenReturn(value.getType().getName());
 
     if (ObjectValue.class.isAssignableFrom(value.getClass())) {
       ObjectValue objectValue = (ObjectValue) value;
@@ -245,7 +243,6 @@ public class MockHistoricVariableInstanceBuilder {
     when(mockVariable.getProcessInstanceId()).thenReturn(processInstanceId);
     when(mockVariable.getExecutionId()).thenReturn(executionId);
     when(mockVariable.getErrorMessage()).thenReturn(errorMessage);
-    when(mockVariable.getActivtyInstanceId()).thenReturn(activityInstanceId);
     when(mockVariable.getActivityInstanceId()).thenReturn(activityInstanceId);
     when(mockVariable.getCaseDefinitionKey()).thenReturn(caseDefinitionKey);
     when(mockVariable.getCaseDefinitionId()).thenReturn(caseDefinitionId);

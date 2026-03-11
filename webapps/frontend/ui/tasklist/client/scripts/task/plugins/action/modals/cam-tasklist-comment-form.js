@@ -24,29 +24,29 @@ module.exports = [
   'camAPI',
   'task',
   'configuration',
-  function($scope, $translate, Notifications, camAPI, task, configuration) {
+  function ($scope, $translate, Notifications, camAPI, task, configuration) {
     var Task = camAPI.resource('task');
 
     $scope.comment = {message: ''};
 
-    $scope.$on('$locationChangeSuccess', function() {
+    $scope.$on('$locationChangeSuccess', function () {
       $scope.$dismiss();
     });
 
     function errorNotification(src, err) {
       $translate(src)
-        .then(function(translated) {
+        .then(function (translated) {
           Notifications.addError({
             status: translated,
             message: err ? err.message : '',
             exclusive: true,
-            scope: $scope
+            scope: $scope,
           });
         })
-        .catch(function() {});
+        .catch(function () {});
     }
 
-    $scope.submit = function() {
+    $scope.submit = function () {
       let data = {message: $scope.comment.message};
       if (
         configuration.getAssignProcessInstanceIdToTaskComment() &&
@@ -55,7 +55,7 @@ module.exports = [
         data = {...data, processInstanceId: task.processInstanceId};
       }
 
-      Task.createComment(task.id, data, function(err) {
+      Task.createComment(task.id, data, function (err) {
         if (err) {
           return errorNotification('COMMENT_SAVE_ERROR', err);
         }
@@ -63,5 +63,5 @@ module.exports = [
         $scope.$close();
       });
     };
-  }
+  },
 ];

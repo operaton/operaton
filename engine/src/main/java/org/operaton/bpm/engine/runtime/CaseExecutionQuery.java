@@ -119,8 +119,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * of variable is determined based on the value, using types configured in
    * {@link ProcessEngineConfigurationImpl#getVariableSerializers()}.
    *
+   * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable
@@ -134,8 +136,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which have a local variable with the given name, but
    * with a different value than the passed value.
    *
+   * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable
@@ -149,8 +153,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
   /**
    * Only select case executions which have a variable value greater than the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -164,8 +170,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which have a local variable value greater than or equal to
    * the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -178,8 +186,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
   /**
    * Only select case executions which have a local variable value less than the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -192,8 +202,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
   /**
    * Only select case executions which have a local variable value less than or equal to the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -206,7 +218,9 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
   /**
    * Only select case executions which have a local variable value like the given value.
    *
+   * <p>
    * This can be used on string variables only.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null. The string can include the
@@ -223,8 +237,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * with the given name set to the given value. The type of variable is determined based
    * on the value, using types configured in {@link ProcessEngineConfiguration#getVariableSerializers()}.
    *
+   * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable
@@ -238,8 +254,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which are part of a case instance that have a variable
    * with the given name, but with a different value than the passed value.
    *
+   * <p>
    * Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable
@@ -254,8 +272,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which are part of a case instance that have a variable
    * with the given name and a variable value greater than the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -269,8 +289,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which are part of a case instance that have a
    * variable value greater than or equal to the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which
    * are not primitive type wrappers) are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -284,8 +306,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which are part of a case instance that have a variable
    * value less than the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -299,8 +323,10 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which are part of a case instance that have a variable
    * value less than or equal to the passed value.
    *
+   * <p>
    * Booleans, Byte-arrays and {@link Serializable} objects (which are not primitive type wrappers)
    * are not supported.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null
@@ -314,7 +340,9 @@ public interface CaseExecutionQuery extends Query<CaseExecutionQuery, CaseExecut
    * Only select case executions which are part of a case instance that have a variable value
    * like the given value.
    *
+   * <p>
    * This can be used on string variables only.
+   * </p>
    *
    * @param name the name of the variable, cannot be null
    * @param value the value of the variable, cannot be null. The string can include the

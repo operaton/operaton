@@ -26,13 +26,13 @@ var Controller = [
   'Notifications',
   '$location',
   '$translate',
-  function(
+  function (
     $scope,
     pageService,
     GroupResource,
     Notifications,
     $location,
-    $translate
+    $translate,
   ) {
     $scope.$root.showBreadcrumbs = true;
 
@@ -43,56 +43,56 @@ var Controller = [
     pageService.breadcrumbsAdd([
       {
         label: $translate.instant('GROUP_CREATE_LABEL_GROUP'),
-        href: '#/groups'
+        href: '#/groups',
       },
       {
         label: $translate.instant('GROUP_CREATE_LABEL_NEW_GROUP'),
-        href: '#/group-create'
-      }
+        href: '#/group-create',
+      },
     ]);
 
     // data model for new group
     $scope.group = {
       id: '',
       name: '',
-      type: ''
+      type: '',
     };
 
-    $scope.createGroup = function() {
+    $scope.createGroup = function () {
       var group = $scope.group;
       GroupResource.createGroup(group).$promise.then(
-        function() {
+        function () {
           Notifications.addMessage({
             type: 'success',
             status: $translate.instant('NOTIFICATIONS_STATUS_SUCCESS'),
             message: $translate.instant('GROUP_CREATE_MESSAGE_SUCCESS', {
-              group: group.id
-            })
+              group: group.id,
+            }),
           });
           $location.path('/groups');
         },
-        function({data: {message}}) {
+        function ({data: {message}}) {
           Notifications.addError({
             status: $translate.instant('NOTIFICATIONS_STATUS_FAILED'),
             message: $translate.instant('GROUP_CREATE_MESSAGE_ERROR', {
               group: group.id,
-              message
+              message,
             }),
-            exclusive: true
+            exclusive: true,
           });
-        }
+        },
       );
     };
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/group-create', {
       template: template,
       controller: Controller,
-      authentication: 'required'
+      authentication: 'required',
     });
-  }
+  },
 ];

@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.impl.el;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.core.variable.CoreVariableInstance;
@@ -122,16 +121,6 @@ public class StartProcessVariableScope implements VariableScope {
 
   @Override
   public <T extends TypedValue> T getVariableLocalTyped(String variableName, boolean deserializeObjectValue) {
-    return null;
-  }
-
-  @Override
-  public Set<String> getVariableNames() {
-    return Collections.emptySet();
-  }
-
-  @Override
-  public Set<String> getVariableNamesLocal() {
     return null;
   }
 

@@ -152,7 +152,7 @@ class ProcessApplicationContextTest {
 
       assertThatThrownBy(this::getCurrentContextApplication)
           .isInstanceOf(ProcessEngineException.class)
-          .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
+          .hasMessageContaining("A process application with name '%s' is not registered".formatted(nonExistingName));
 
     } finally {
       ProcessApplicationContext.clear();
@@ -169,7 +169,7 @@ class ProcessApplicationContextTest {
 
     assertThatThrownBy(() -> withProcessApplicationContext(callable, nonExistingName))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("A process application with name '" + nonExistingName + "' is not registered");
+      .hasMessageContaining("A process application with name '%s' is not registered".formatted(nonExistingName));
   }
 
   @SuppressWarnings("unchecked")

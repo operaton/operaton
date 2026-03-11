@@ -21,7 +21,6 @@ import java.util.List;
 
 /**
  * @author Daniel Meyer
- * @since 7.3
  */
 public interface MetricsQuery {
 

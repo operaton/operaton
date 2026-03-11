@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.database;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +44,7 @@ import static org.assertj.core.api.Assertions.fail;
 @ExtendWith(ArquillianExtension.class)
 public class PurgeDatabaseTest extends AbstractFoxPlatformIntegrationTest {
 
-  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = Arrays.asList(
+  public static final List<String> TABLENAMES_EXCLUDED_FROM_DB_CLEAN_CHECK = List.of(
     "ACT_GE_PROPERTY",
     "ACT_GE_SCHEMA_LOG"
   );

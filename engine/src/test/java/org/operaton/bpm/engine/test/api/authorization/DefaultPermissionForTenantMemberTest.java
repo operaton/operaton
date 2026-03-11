@@ -85,10 +85,10 @@ class DefaultPermissionForTenantMemberTest {
     identityService.createTenantUserMembership(TENANT_ONE, USER_ID);
 
     assertThat(authorizationService.createAuthorizationQuery()
-        .userIdIn(USER_ID)
-        .resourceType(Resources.TENANT)
-        .resourceId(TENANT_ONE)
-        .hasPermission(Permissions.READ).count()).isEqualTo(1);
+      .userIdIn(USER_ID)
+      .resourceType(Resources.TENANT)
+      .resourceId(TENANT_ONE)
+      .hasPermission(Permissions.READ).count()).isOne();
 
     identityService.setAuthenticatedUserId(USER_ID);
 
@@ -131,9 +131,9 @@ class DefaultPermissionForTenantMemberTest {
     identityService.deleteTenantUserMembership(TENANT_ONE, USER_ID);
 
     assertThat(authorizationService.createAuthorizationQuery()
-        .userIdIn(USER_ID)
-        .resourceType(Resources.TENANT)
-        .hasPermission(Permissions.READ).count()).isEqualTo(1);
+      .userIdIn(USER_ID)
+      .resourceType(Resources.TENANT)
+      .hasPermission(Permissions.READ).count()).isOne();
   }
 
   @Test
@@ -142,10 +142,10 @@ class DefaultPermissionForTenantMemberTest {
     identityService.createTenantGroupMembership(TENANT_ONE, GROUP_ID);
 
     assertThat(authorizationService.createAuthorizationQuery()
-        .groupIdIn(GROUP_ID)
-        .resourceType(Resources.TENANT)
-        .resourceId(TENANT_ONE)
-        .hasPermission(Permissions.READ).count()).isEqualTo(1);
+      .groupIdIn(GROUP_ID)
+      .resourceType(Resources.TENANT)
+      .resourceId(TENANT_ONE)
+      .hasPermission(Permissions.READ).count()).isOne();
 
     identityService.setAuthentication(USER_ID, Collections.singletonList(GROUP_ID));
 
@@ -188,9 +188,9 @@ class DefaultPermissionForTenantMemberTest {
     identityService.deleteTenantGroupMembership(TENANT_ONE, GROUP_ID);
 
     assertThat(authorizationService.createAuthorizationQuery()
-        .groupIdIn(GROUP_ID)
-        .resourceType(Resources.TENANT)
-        .hasPermission(Permissions.READ).count()).isEqualTo(1);
+      .groupIdIn(GROUP_ID)
+      .resourceType(Resources.TENANT)
+      .hasPermission(Permissions.READ).count()).isOne();
   }
 
   protected Tenant createTenant(String tenantId) {

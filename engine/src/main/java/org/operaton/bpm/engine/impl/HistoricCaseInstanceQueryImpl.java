@@ -42,7 +42,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Serial private static final long serialVersionUID = 1L;
   protected String caseInstanceId;
-  protected Set<String> caseInstanceIds;
+  private Set<String> caseInstanceIds;
   protected String caseDefinitionId;
   protected String caseDefinitionName;
   protected String caseDefinitionNameLike;
@@ -55,7 +55,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
   protected String subCaseInstanceId;
   protected String superProcessInstanceId;
   protected String subProcessInstanceId;
-  protected List<String> caseKeyNotIn;
+  private List<String> caseKeyNotIn;
   protected Date createdBefore;
   protected Date createdAfter;
   protected Date closedBefore;
@@ -157,10 +157,7 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Override
   public HistoricCaseInstanceQuery closedAfter(Date date) {
-    if (state!= null && (!state.equals(CaseExecutionState.CLOSED.getStateCode()))) {
-      throw new NotValidException("Already querying for case instance state '" + state + "'");
-    }
-
+    ensureStateClosedWhenSet();
     closedAfter = date;
     state = CaseExecutionState.CLOSED.getStateCode();
     return this;
@@ -168,13 +165,16 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Override
   public HistoricCaseInstanceQuery closedBefore(Date date) {
-    if (state!= null && (!state.equals(CaseExecutionState.CLOSED.getStateCode()))) {
-      throw new NotValidException("Already querying for case instance state '" + state + "'");
-    }
-
+    ensureStateClosedWhenSet();
     closedBefore = date;
     state = CaseExecutionState.CLOSED.getStateCode();
     return this;
+  }
+
+  private void ensureStateClosedWhenSet() {
+    if (state != null && (!state.equals(CaseExecutionState.CLOSED.getStateCode()))) {
+      throw new NotValidException("Already querying for case instance state '%s'".formatted(state));
+    }
   }
 
   @Override
@@ -218,40 +218,40 @@ public class HistoricCaseInstanceQueryImpl extends AbstractVariableQueryImpl<His
 
   @Override
   public HistoricCaseInstanceQuery active() {
-    ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
+    ensureNull(NotValidException.class, "Already querying for case instance state '%s'".formatted(state), "state", state);
     this.state = CaseExecutionState.ACTIVE.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseInstanceQuery completed() {
-    ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
+    ensureNull(NotValidException.class, "Already querying for case instance state '%s'".formatted(state), "state", state);
     this.state = CaseExecutionState.COMPLETED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseInstanceQuery terminated() {
-    ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
+    ensureNull(NotValidException.class, "Already querying for case instance state '%s'".formatted(state), "state", state);
     this.state = CaseExecutionState.TERMINATED.getStateCode();
     return this;
   }
 
   public HistoricCaseInstanceQuery failed() {
-    ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
+    ensureNull(NotValidException.class, "Already querying for case instance state '%s'".formatted(state), "state", state);
     this.state = CaseExecutionState.FAILED.getStateCode();
     return this;
   }
 
   public HistoricCaseInstanceQuery suspended() {
-    ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
+    ensureNull(NotValidException.class, "Already querying for case instance state '%s'".formatted(state), "state", state);
     this.state = CaseExecutionState.SUSPENDED.getStateCode();
     return this;
   }
 
   @Override
   public HistoricCaseInstanceQuery closed() {
-    ensureNull(NotValidException.class, "Already querying for case instance state '" + state + "'", "state", state);
+    ensureNull(NotValidException.class, "Already querying for case instance state '%s'".formatted(state), "state", state);
     this.state = CaseExecutionState.CLOSED.getStateCode();
     return this;
   }

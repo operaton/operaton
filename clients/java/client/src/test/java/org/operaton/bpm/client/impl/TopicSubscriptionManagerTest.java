@@ -37,8 +37,8 @@ import org.operaton.bpm.client.variable.impl.TypedValues;
 import org.operaton.bpm.engine.variable.value.PrimitiveValue;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.awaitility.Awaitility.await;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -84,10 +84,10 @@ class TopicSubscriptionManagerTest {
 
 	@Test
 	void startStopFinishes() {
-		assertDoesNotThrow(() -> {
+		assertThatCode(() -> {
 			topicSubscriptionManager.start();
 			topicSubscriptionManager.stop();
-		});
+		}).doesNotThrowAnyException();
 	}
 
 	@Test
@@ -220,9 +220,8 @@ class TopicSubscriptionManagerTest {
 	}
 
 	private void waitForTopicSubscriptionManagerToFinish() {
-    assertDoesNotThrow(() -> {
-      topicSubscriptionManager.getThread().join();
-    });
+    assertThatCode(() -> topicSubscriptionManager.getThread().join())
+				.doesNotThrowAnyException();
 	}
 
 	private void subscribeTopicT0() {

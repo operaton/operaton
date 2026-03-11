@@ -47,7 +47,7 @@ public class BooleanFormType extends SimpleFormFieldType {
         return Variables.booleanValue(Boolean.valueOf(value.toString()), propertyValue.isTransient());
       }
       else {
-        throw new ProcessEngineException("Value '"+value+"' is not of type Boolean.");
+        throw new ProcessEngineException("Value '%s' is not of type Boolean.".formatted(value));
       }
     }
   }
@@ -73,7 +73,7 @@ public class BooleanFormType extends SimpleFormFieldType {
             || boolean.class.isAssignableFrom(modelValue.getClass())) {
       return modelValue.toString();
     }
-    throw new ProcessEngineException("Model value is not of type boolean, but of type " + modelValue.getClass().getName());
+    throw new ProcessEngineException("Model value is not of type boolean, but of type %s".formatted(modelValue.getClass().getName()));
   }
 
 }

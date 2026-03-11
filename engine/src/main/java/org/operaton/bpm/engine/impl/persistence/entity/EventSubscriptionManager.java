@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.operaton.bpm.engine.impl.EventSubscriptionQueryImpl;
@@ -339,8 +340,7 @@ public class EventSubscriptionManager extends AbstractManager {
     EnsureUtil.ensureNotNull("event type", type);
     String subscriptionEventName = subscription.getEventName();
 
-    return type.equals(subscription.getEventType()) &&
-          ((eventName == null && subscriptionEventName == null) || (eventName != null && eventName.equals(subscriptionEventName)));
+    return type.equals(subscription.getEventType()) && Objects.equals(eventName, subscriptionEventName);
   }
 
 }

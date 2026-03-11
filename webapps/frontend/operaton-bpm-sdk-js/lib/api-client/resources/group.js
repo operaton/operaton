@@ -45,7 +45,7 @@ Group.path = 'group';
  * @param  {String}   options.id
  * @param  {Function} done
  */
-Group.options = function(options, done) {
+Group.options = function (options, done) {
   var id;
 
   if (typeof options === 'function') {
@@ -61,8 +61,8 @@ Group.options = function(options, done) {
   return this.http.options(this.path + '/' + utils.escapeUrl(id), {
     done: done || noop,
     headers: {
-      Accept: 'application/json'
-    }
+      Accept: 'application/json',
+    },
   });
 };
 
@@ -75,10 +75,10 @@ Group.options = function(options, done) {
  * @param  {String}   group.type
  * @param  {Function} done
  */
-Group.create = function(options, done) {
+Group.create = function (options, done) {
   return this.http.post(this.path + '/create', {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -92,7 +92,7 @@ Group.create = function(options, done) {
  * @param {String} [options.member]    Only retrieve groups where the given user id is a member of.
  * @param  {Function} done
  */
-Group.count = function(options, done) {
+Group.count = function (options, done) {
   if (typeof options === 'function') {
     done = options;
     options = {};
@@ -102,7 +102,7 @@ Group.count = function(options, done) {
 
   return this.http.get(this.path + '/count', {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -112,12 +112,12 @@ Group.count = function(options, done) {
  * @param  {String} [options.id]    The id of the group, can be a property (id) of an object
  * @param  {Function} done
  */
-Group.get = function(options, done) {
+Group.get = function (options, done) {
   var id = typeof options === 'string' ? options : options.id;
 
   return this.http.get(this.path + '/' + utils.escapeUrl(id), {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -145,7 +145,7 @@ Group.get = function(options, done) {
  *
  * @param  {Function} done
  */
-Group.list = function(options, done) {
+Group.list = function (options, done) {
   if (typeof options === 'function') {
     done = options;
     options = {};
@@ -163,7 +163,7 @@ Group.list = function(options, done) {
   return this.http.post(this.path, {
     data: options,
     query: query,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -174,7 +174,7 @@ Group.list = function(options, done) {
  * @param {String} [options.userId]   The id of user to add to the group
  * @param  {Function} done
  */
-Group.createMember = function(options, done) {
+Group.createMember = function (options, done) {
   return this.http.put(
     this.path +
       '/' +
@@ -183,8 +183,8 @@ Group.createMember = function(options, done) {
       utils.escapeUrl(options.userId),
     {
       data: options,
-      done: done || noop
-    }
+      done: done || noop,
+    },
   );
 };
 
@@ -195,7 +195,7 @@ Group.createMember = function(options, done) {
  * @param {String} [options.userId]   The id of user to add to the group
  * @param  {Function} done
  */
-Group.deleteMember = function(options, done) {
+Group.deleteMember = function (options, done) {
   return this.http.del(
     this.path +
       '/' +
@@ -204,8 +204,8 @@ Group.deleteMember = function(options, done) {
       utils.escapeUrl(options.userId),
     {
       data: options,
-      done: done || noop
-    }
+      done: done || noop,
+    },
   );
 };
 
@@ -215,10 +215,10 @@ Group.deleteMember = function(options, done) {
  * @param  {Object}   group   is an object representation of a group
  * @param  {Function} done
  */
-Group.update = function(options, done) {
+Group.update = function (options, done) {
   return this.http.put(this.path + '/' + utils.escapeUrl(options.id), {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 
@@ -228,10 +228,10 @@ Group.update = function(options, done) {
  * @param  {Object}   group   is an object representation of a group
  * @param  {Function} done
  */
-Group.delete = function(options, done) {
+Group.delete = function (options, done) {
   return this.http.del(this.path + '/' + utils.escapeUrl(options.id), {
     data: options,
-    done: done || noop
+    done: done || noop,
   });
 };
 

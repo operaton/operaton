@@ -67,7 +67,7 @@ class AuthorizationQueryAuthorizationsTest {
     assertThat(authResult).isNotNull();
 
     // then
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.READ).count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.READ).count()).isOne();
   }
 
   @Test
@@ -119,7 +119,7 @@ class AuthorizationQueryAuthorizationsTest {
 
     // then
     assertThat(accessResult).isNotNull();
-    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.ACCESS).count()).isEqualTo(1);
+    assertThat(authorizationService.createAuthorizationQuery().hasPermission(Permissions.ACCESS).count()).isOne();
     assertThat(retryJobPDResult).isEmpty();
     assertThat(authorizationService.createAuthorizationQuery().hasPermission(ProcessDefinitionPermissions.RETRY_JOB).count()).isZero();
     assertThat(retryJobPIResult).isEmpty();
@@ -166,14 +166,14 @@ class AuthorizationQueryAuthorizationsTest {
     Authorization authResult = authorizationService.createAuthorizationQuery().userIdIn("userId").resourceType(Resources.PROCESS_DEFINITION).singleResult();
     assertThat(authResult).isNotNull();
     assertThat(authorizationService.createAuthorizationQuery()
-        .resourceType(Resources.PROCESS_DEFINITION)
-        .hasPermission(ProcessDefinitionPermissions.READ)
-        .hasPermission(ProcessDefinitionPermissions.RETRY_JOB)
-        .count()).isEqualTo(1);
+      .resourceType(Resources.PROCESS_DEFINITION)
+      .hasPermission(ProcessDefinitionPermissions.READ)
+      .hasPermission(ProcessDefinitionPermissions.RETRY_JOB)
+      .count()).isOne();
     assertThat(authorizationService.createAuthorizationQuery()
-        .resourceType(Resources.PROCESS_DEFINITION)
-        .hasPermission(ProcessDefinitionPermissions.READ)
-        .count()).isEqualTo(1);
+      .resourceType(Resources.PROCESS_DEFINITION)
+      .hasPermission(ProcessDefinitionPermissions.READ)
+      .count()).isOne();
 
     // then
     assertThat(authorizationService.createAuthorizationQuery()

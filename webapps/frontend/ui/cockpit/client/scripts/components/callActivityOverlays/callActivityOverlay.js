@@ -21,7 +21,7 @@ const template = require('./template.html?raw');
 
 module.exports = {
   getCallActivityFlowNodes: getCallActivityFlowNodes,
-  addOverlayForSingleElement: addOverlayForSingleElement
+  addOverlayForSingleElement: addOverlayForSingleElement,
 };
 
 /**
@@ -32,7 +32,7 @@ module.exports = {
 function getCallActivityFlowNodes(elementRegistry) {
   const nodes = [];
 
-  elementRegistry.forEach(function(shape) {
+  elementRegistry.forEach(function (shape) {
     const bo = shape.businessObject;
     if (bo.$instanceOf('bpmn:CallActivity')) {
       nodes.push(bo.id);
@@ -58,7 +58,7 @@ function addOverlayForSingleElement({
   overlays,
   clickListener,
   tooltipTitle,
-  $scope
+  $scope,
 }) {
   if (!overlaysNodes[activityId]) {
     const wrapper = angular.element(template);
@@ -69,19 +69,19 @@ function addOverlayForSingleElement({
       container: 'body',
       title: tooltipTitle,
       placement: 'top',
-      animation: false
+      animation: false,
     });
 
     overlays.add(activityId, {
       position: {
         bottom: -7,
-        right: -8
+        right: -8,
       },
       show: {
         minZoom: -Infinity,
-        maxZoom: +Infinity
+        maxZoom: +Infinity,
       },
-      html: wrapper
+      html: wrapper,
     });
 
     addInteractions(
@@ -90,7 +90,7 @@ function addOverlayForSingleElement({
       activityId,
       redirectionTarget,
       clickListener,
-      $scope
+      $scope,
     );
   }
 }
@@ -111,7 +111,7 @@ function addInteractions(
   id,
   redirectionTarget,
   clickListener,
-  $scope
+  $scope,
 ) {
   const diagramNode = angular.element('[data-element-id="' + id + '"]');
 
@@ -125,7 +125,7 @@ function addInteractions(
     buttonOverlay.css('cursor', 'not-allowed');
   }
 
-  $scope.$on('$destroy', function() {
+  $scope.$on('$destroy', function () {
     // as these buttons happen outside of angular,
     // we need to clean up listeners and tooltip once we leave to avoid memory leaks
     button.off('click');

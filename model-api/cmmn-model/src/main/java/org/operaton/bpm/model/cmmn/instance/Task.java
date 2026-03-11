@@ -28,9 +28,15 @@ public interface Task extends PlanItemDefinition {
 
   void setIsBlocking(boolean isBlocking);
 
+  /**
+   * @deprecated since 1.0, use {@link #getInputParameters()} instead for consistency with parameter naming.
+   */
   @Deprecated(since = "1.0")
   Collection<InputsCaseParameter> getInputs();
 
+  /**
+   * @deprecated since 1.0, use {@link #getOutputParameters()} instead for consistency with parameter naming.
+   */
   @Deprecated(since = "1.0")
   Collection<OutputsCaseParameter> getOutputs();
 

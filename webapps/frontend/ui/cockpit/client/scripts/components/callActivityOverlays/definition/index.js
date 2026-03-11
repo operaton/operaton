@@ -19,11 +19,11 @@
 
 const {
   getCallActivityFlowNodes,
-  addOverlayForSingleElement
+  addOverlayForSingleElement,
 } = require('../callActivityOverlay');
 const angular = require('angular');
 
-module.exports = function(viewContext) {
+module.exports = function (viewContext) {
   return [
     '$scope',
     '$timeout',
@@ -33,7 +33,7 @@ module.exports = function(viewContext) {
     'control',
     'processData',
     'PluginProcessDefinitionResource',
-    function(
+    function (
       $scope,
       $timeout,
       $location,
@@ -41,9 +41,9 @@ module.exports = function(viewContext) {
       search,
       control,
       processData,
-      PluginProcessDefinitionResource
+      PluginProcessDefinitionResource,
     ) {
-      const redirectToCalledDefinition = function(calledProcessId) {
+      const redirectToCalledDefinition = function (calledProcessId) {
         return $scope.$apply(() => {
           const url = `/process-definition/${calledProcessId}/${viewContext}?parentProcessDefinitionId=${$scope.key}`;
           $location.url(url);
@@ -55,13 +55,13 @@ module.exports = function(viewContext) {
        * calls different process definitions.
        * @param activityId
        */
-      const showCalledDefinitionsInTable = function(activityId) {
+      const showCalledDefinitionsInTable = function (activityId) {
         return $scope.$apply(() => {
           const params = angular.copy(search());
           params.detailsTab = 'call-process-definitions-table';
           search.updateSilently(params);
           $scope.processData.set('filter', {
-            activityIds: [activityId]
+            activityIds: [activityId],
           });
         });
       };
@@ -71,45 +71,45 @@ module.exports = function(viewContext) {
       const elementRegistry = control.getViewer().get('elementRegistry');
       const callActivityFlowNodes = getCallActivityFlowNodes(elementRegistry);
       const resolvableTooltip = $translate.instant(
-        'PLUGIN_ACTIVITY_DEFINITION_SHOW_CALLED_PROCESS_DEFINITION'
+        'PLUGIN_ACTIVITY_DEFINITION_SHOW_CALLED_PROCESS_DEFINITION',
       );
       const notResolvableTooltip = $translate.instant(
-        'PLUGIN_ACTIVITY_DEFINITION_CALLED_NOT_RESOLVABLE'
+        'PLUGIN_ACTIVITY_DEFINITION_CALLED_NOT_RESOLVABLE',
       );
       const dynamicResolveTooltip = $translate.instant(
-        'PLUGIN_ACTIVITY_DEFINITION_CALLED_DYNAMIC_RESOLVABLE'
+        'PLUGIN_ACTIVITY_DEFINITION_CALLED_DYNAMIC_RESOLVABLE',
       );
       const dynamicMultipleResolveTooltip = $translate.instant(
-        'PLUGIN_ACTIVITY_DEFINITION_CALLED_DYNAMIC_MULTI_RESOLVABLE'
+        'PLUGIN_ACTIVITY_DEFINITION_CALLED_DYNAMIC_MULTI_RESOLVABLE',
       );
 
       if (callActivityFlowNodes.length) {
         processData.observe(
           ['processDefinition', 'staticCalledProcessDefinitions'],
-          function(processDefinition, staticCalledProcessDefinitions) {
+          function (processDefinition, staticCalledProcessDefinitions) {
             PluginProcessDefinitionResource.getCalledProcessDefinitions({
-              id: processDefinition.id
+              id: processDefinition.id,
             })
-              .$promise.then(dynamicCalledProcessDefinitions =>
+              .$promise.then((dynamicCalledProcessDefinitions) =>
                 drawLinks(
                   staticCalledProcessDefinitions,
-                  dynamicCalledProcessDefinitions
-                )
+                  dynamicCalledProcessDefinitions,
+                ),
               )
               .catch(angular.noop);
-          }
+          },
         );
       }
-      const drawLinks = function(staticProcDefs, dynamicProcDefs) {
+      const drawLinks = function (staticProcDefs, dynamicProcDefs) {
         const callActivityToProcessMap = {};
         for (const dto of staticProcDefs) {
           dto.calledFromActivityIds.forEach(
-            callerId => (callActivityToProcessMap[callerId] = dto)
+            (callerId) => (callActivityToProcessMap[callerId] = dto),
           );
         }
         const dynamicCallActivityToProcessesMap = {};
         for (const dto of dynamicProcDefs) {
-          dto.calledFromActivityIds.forEach(callerId => {
+          dto.calledFromActivityIds.forEach((callerId) => {
             if (dynamicCallActivityToProcessesMap[callerId]) {
               dynamicCallActivityToProcessesMap[callerId].push(dto);
             } else {
@@ -127,14 +127,14 @@ module.exports = function(viewContext) {
             activityId,
             overlays,
             $scope,
-            $timeout
+            $timeout,
           };
           if (callActivityProcess) {
             addOverlayForSingleElement({
               redirectionTarget: callActivityProcess.id,
               clickListener: redirectToCalledDefinition,
               tooltipTitle: resolvableTooltip,
-              ...overlayProps
+              ...overlayProps,
             });
           } else if (
             !callActivityProcess &&
@@ -146,24 +146,24 @@ module.exports = function(viewContext) {
                 redirectionTarget: activityId,
                 clickListener: showCalledDefinitionsInTable,
                 tooltipTitle: dynamicMultipleResolveTooltip,
-                ...overlayProps
+                ...overlayProps,
               });
             } else {
               addOverlayForSingleElement({
                 redirectionTarget: dynamicCallActivityProcess[0].id,
                 clickListener: redirectToCalledDefinition,
                 tooltipTitle: dynamicResolveTooltip,
-                ...overlayProps
+                ...overlayProps,
               });
             }
           } else {
             addOverlayForSingleElement({
               tooltipTitle: notResolvableTooltip,
-              ...overlayProps
+              ...overlayProps,
             });
           }
         }
       };
-    }
+    },
   ];
 };

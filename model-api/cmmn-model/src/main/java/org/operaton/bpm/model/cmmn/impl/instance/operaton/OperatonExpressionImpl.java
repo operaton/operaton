@@ -22,8 +22,8 @@ import org.operaton.bpm.model.xml.ModelBuilder;
 import org.operaton.bpm.model.xml.impl.instance.ModelTypeInstanceContext;
 import org.operaton.bpm.model.xml.type.ModelElementTypeBuilder;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
 import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_ELEMENT_EXPRESSION;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -33,7 +33,7 @@ public class OperatonExpressionImpl extends CmmnModelElementInstanceImpl impleme
 
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(OperatonExpression.class, OPERATON_ELEMENT_EXPRESSION)
-      .namespaceUri(CAMUNDA_NS)
+      .namespaceUri(OPERATON_NS)
       .instanceProvider(OperatonExpressionImpl::new);
 
     typeBuilder.build();

@@ -62,7 +62,7 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
     ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery()
       .processDefinitionKey("invoice-it");
 
-    assertThat(processDefinitionQuery.count()).isEqualTo(1);
+    assertThat(processDefinitionQuery.count()).isOne();
     ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
 
     String deploymentId = repositoryService.createDeploymentQuery()

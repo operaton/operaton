@@ -38,7 +38,7 @@ public final class JobAcquisitionTestHelper {
     List<ProcessInstance> instancesToSuspend = processEngine.getRuntimeService().createProcessInstanceQuery()
         .active().listPage(0, numInstances);
     if (instancesToSuspend.size() < numInstances) {
-      throw new ProcessEngineException("Cannot suspend " + numInstances + " process instances");
+      throw new ProcessEngineException("Cannot suspend %d process instances".formatted(numInstances));
     }
 
     for (ProcessInstance activeInstance : instancesToSuspend) {
@@ -53,7 +53,7 @@ public final class JobAcquisitionTestHelper {
     List<ProcessInstance> instancesToActivate = processEngine.getRuntimeService().createProcessInstanceQuery()
         .suspended().listPage(0, numInstances);
     if (instancesToActivate.size() < numInstances) {
-      throw new ProcessEngineException("Cannot activate " + numInstances + " process instances");
+      throw new ProcessEngineException("Cannot activate %d process instances".formatted(numInstances));
     }
 
     for (ProcessInstance suspendedInstance : instancesToActivate) {
@@ -62,7 +62,7 @@ public final class JobAcquisitionTestHelper {
   }
 
   public static void assertInBetween(long minimum, long maximum, long actualValue) {
-    assertThat(actualValue >= minimum && actualValue <= maximum).as("Expected '" + actualValue + "' to be between '" + minimum + "' and '" + maximum + "'").isTrue();
+    assertThat(actualValue >= minimum && actualValue <= maximum).as("Expected '%d' to be between '%d' and '%d'".formatted(actualValue, minimum, maximum)).isTrue();
   }
 
   private JobAcquisitionTestHelper() {

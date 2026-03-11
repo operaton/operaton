@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -396,7 +395,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
 
   @Test
   void testCaseDefinitionTenantIdList() {
-    List<CaseDefinition> caseDefinitions = Arrays.asList(
+    List<CaseDefinition> caseDefinitions = List.of(
         MockProvider.mockCaseDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockCaseDefinition().id(MockProvider.ANOTHER_EXAMPLE_CASE_DEFINITION_ID).tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
     mockedQuery = createMockCaseDefinitionQuery(caseDefinitions);
@@ -444,7 +443,7 @@ public class CaseDefinitionRestServiceQueryTest extends AbstractRestServiceTest 
 
   @Test
   void testCaseDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
-    List<CaseDefinition> caseDefinitions = Arrays.asList(
+    List<CaseDefinition> caseDefinitions = List.of(
         MockProvider.mockCaseDefinition().tenantId(null).build(),
         MockProvider.mockCaseDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockedQuery = createMockCaseDefinitionQuery(caseDefinitions);

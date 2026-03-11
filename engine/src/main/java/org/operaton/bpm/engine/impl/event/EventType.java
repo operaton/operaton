@@ -19,9 +19,11 @@ package org.operaton.bpm.engine.impl.event;
 /**
  * Defines the existing event types, on which the subscription can be done.
  *
+ * <p>
  * Since the the event type for message and signal are historically lower case
  * the enum variant can't be used, so we have to reimplement an enum like class.
  * That is done so we can restrict the event types to only the defined ones.
+ * </p>
  *
  * @author Christopher Zell <christopher.zell@camunda.com>
  */

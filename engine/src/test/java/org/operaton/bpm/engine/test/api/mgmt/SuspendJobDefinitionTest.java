@@ -114,7 +114,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -127,7 +127,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     JobQuery jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -160,7 +160,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -170,7 +170,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     JobQuery jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -204,7 +204,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition...
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -214,7 +214,7 @@ class SuspendJobDefinitionTest {
     // ...and a suspended job of the provided job definition
     JobQuery jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -244,7 +244,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -254,7 +254,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     JobQuery jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -288,7 +288,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition...
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -298,7 +298,7 @@ class SuspendJobDefinitionTest {
     // ...and a suspended job of the provided job definition
     JobQuery jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -327,7 +327,7 @@ class SuspendJobDefinitionTest {
     // then
     // the job definition is still active
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -344,7 +344,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -354,7 +354,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -386,7 +386,7 @@ class SuspendJobDefinitionTest {
     // then
     // the job definition is still active
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -403,7 +403,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -413,7 +413,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still suspended
     jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -475,7 +475,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -488,7 +488,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     JobQuery jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -522,7 +522,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -532,7 +532,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     JobQuery jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -567,7 +567,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition...
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -577,7 +577,7 @@ class SuspendJobDefinitionTest {
     // ...and a suspended job of the provided job definition
     JobQuery jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -608,7 +608,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -619,7 +619,7 @@ class SuspendJobDefinitionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job activeJob = jobQuery.active().singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -650,7 +650,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition...
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -660,7 +660,7 @@ class SuspendJobDefinitionTest {
     // ...and a suspended job of the provided job definition
     JobQuery jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -690,7 +690,7 @@ class SuspendJobDefinitionTest {
     // then
     // the job definition is still active
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -705,7 +705,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -715,7 +715,7 @@ class SuspendJobDefinitionTest {
     // the corresponding job is still active
     jobQuery = managementService.createJobQuery().active();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job activeJob = jobQuery.singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -748,7 +748,7 @@ class SuspendJobDefinitionTest {
     // then
     // the job definition is still active
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -763,7 +763,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -774,7 +774,7 @@ class SuspendJobDefinitionTest {
     jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
@@ -832,7 +832,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -846,7 +846,7 @@ class SuspendJobDefinitionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job activeJob = jobQuery.active().singleResult();
 
@@ -877,7 +877,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -888,7 +888,7 @@ class SuspendJobDefinitionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job activeJob = jobQuery.active().singleResult();
     assertThat(activeJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -919,7 +919,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition...
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -929,7 +929,7 @@ class SuspendJobDefinitionTest {
     // ...and a suspended job of the provided job definition
     JobQuery jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -959,7 +959,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -970,7 +970,7 @@ class SuspendJobDefinitionTest {
     JobQuery jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job activeJob = jobQuery.active().singleResult();
 
@@ -1001,7 +1001,7 @@ class SuspendJobDefinitionTest {
     // there exists a suspended job definition...
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery().suspended();
 
-    assertThat(jobDefinitionQuery.count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.singleResult();
 
@@ -1011,7 +1011,7 @@ class SuspendJobDefinitionTest {
     // ...and a suspended job of the provided job definition
     JobQuery jobQuery = managementService.createJobQuery().suspended();
 
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     Job suspendedJob = jobQuery.singleResult();
     assertThat(suspendedJob.getJobDefinitionId()).isEqualTo(jobDefinition.getId());
@@ -1040,7 +1040,7 @@ class SuspendJobDefinitionTest {
     // then
     // the job definition is still active
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -1055,7 +1055,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1066,7 +1066,7 @@ class SuspendJobDefinitionTest {
     jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
     Job activeJob = jobQuery.active().singleResult();
 
@@ -1096,7 +1096,7 @@ class SuspendJobDefinitionTest {
     // then
     // the job definition is still active
     JobDefinitionQuery jobDefinitionQuery = managementService.createJobDefinitionQuery();
-    assertThat(jobDefinitionQuery.active().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.active().count()).isOne();
     assertThat(jobDefinitionQuery.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -1111,7 +1111,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(jobDefinitionQuery.active().count()).isZero();
-    assertThat(jobDefinitionQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobDefinitionQuery.suspended().count()).isOne();
 
     JobDefinition suspendedJobDefinition = jobDefinitionQuery.suspended().singleResult();
 
@@ -1122,7 +1122,7 @@ class SuspendJobDefinitionTest {
     jobQuery = managementService.createJobQuery();
 
     assertThat(jobQuery.active().count()).isZero();
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
 
     Job suspendedJob = jobQuery.suspended().singleResult();
 
@@ -1463,7 +1463,7 @@ class SuspendJobDefinitionTest {
 
     // then
     // there exists a suspended job definition
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -1492,7 +1492,7 @@ class SuspendJobDefinitionTest {
 
     // then
     // there exists a suspended job definition
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -1519,7 +1519,7 @@ class SuspendJobDefinitionTest {
 
     // then
     // there exists a suspended job definition
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/mgmt/SuspensionTest.testBase.bpmn"})
@@ -1539,7 +1539,7 @@ class SuspendJobDefinitionTest {
 
     JobQuery jobQuery = managementService.createJobQuery();
     assertThat(jobQuery.suspended().count()).isZero();
-    assertThat(jobQuery.active().count()).isEqualTo(1);
+    assertThat(jobQuery.active().count()).isOne();
 
 
     // when
@@ -1552,9 +1552,9 @@ class SuspendJobDefinitionTest {
 
     // then
     // there exists a suspended job definition and job
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
-    assertThat(jobQuery.suspended().count()).isEqualTo(1);
+    assertThat(jobQuery.suspended().count()).isOne();
     assertThat(jobQuery.active().count()).isZero();
   }
 
@@ -1582,7 +1582,7 @@ class SuspendJobDefinitionTest {
 
     // then
     // the job definition is still active
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
 
     // there exists a job for the delayed suspension execution
@@ -1597,7 +1597,7 @@ class SuspendJobDefinitionTest {
 
     // the job definition should be suspended
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
   }
 
   protected Date oneWeekLater() {

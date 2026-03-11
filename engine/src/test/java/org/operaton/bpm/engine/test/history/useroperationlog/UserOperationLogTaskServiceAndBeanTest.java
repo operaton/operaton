@@ -155,7 +155,7 @@ class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperationLogTes
 
     // expect: one entry for the deletion
     UserOperationLogQuery query = queryOperationDetails(OPERATION_TYPE_DELETE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert: details
     UserOperationLogEntry delete = query.singleResult();
@@ -283,7 +283,7 @@ class UserOperationLogTaskServiceAndBeanTest extends AbstractUserOperationLogTes
     task.setCaseInstanceId("aCaseInstanceId");
     taskService.saveTask(task);
 
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry entry = query.singleResult();
     assertThat(entry).isNotNull();

@@ -139,7 +139,7 @@ public class ScriptingEngines implements DmnScriptEngineResolver {
 
     ScriptEngine scriptEngine = scriptEngineResolver.getScriptEngine(language, enableScriptEngineCaching);
 
-    ensureNotNull("Can't find scripting engine for '" + language + "'", "scriptEngine", scriptEngine);
+    ensureNotNull("Can't find scripting engine for '%s'".formatted(language), "scriptEngine", scriptEngine);
 
     return scriptEngine;
   }

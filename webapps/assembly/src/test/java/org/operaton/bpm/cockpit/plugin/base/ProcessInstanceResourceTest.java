@@ -33,8 +33,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.test.Deployment;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.fail;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * @author roman.smirnov
@@ -146,7 +146,7 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
       } else if ("secondCallActivity".equals(child.getActivityId())) {
         secondActivityInstanceId = child.getId();
       } else {
-        fail("Unexpected activity instance with activity id: " + child.getActivityId() + " and instance id: " + child.getId());
+        fail("Unexpected activity instance with activity id: %s and instance id: %s".formatted(child.getActivityId(), child.getId()));
       }
     }
 
@@ -252,7 +252,8 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
     var calledProcessInstanceQueryDto = new CalledProcessInstanceQueryDto();
 
     // when + then
-    assertDoesNotThrow(() -> resource.queryCalledProcessInstances(calledProcessInstanceQueryDto), "No exception expected");
+    assertThatCode(() -> resource.queryCalledProcessInstances(calledProcessInstanceQueryDto))
+      .doesNotThrowAnyException();
   }
 
 }

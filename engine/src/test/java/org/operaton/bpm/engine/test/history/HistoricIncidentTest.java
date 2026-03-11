@@ -111,11 +111,11 @@ class HistoricIncidentTest {
     assertThat(query.count()).isEqualTo(2);
 
     // the first historic incident has been resolved
-    assertThat(query.resolved().count()).isEqualTo(1);
+    assertThat(query.resolved().count()).isOne();
 
     query = historyService.createHistoricIncidentQuery();
     // a new historic incident exists which is open
-    assertThat(query.open().count()).isEqualTo(1);
+    assertThat(query.open().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneFailingServiceProcess.bpmn20.xml"})
@@ -376,7 +376,7 @@ class HistoricIncidentTest {
 
     // the incident still exists and there
     // should be not a new incident
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     tmp = query.singleResult();
     assertThat(tmp.getId()).isEqualTo(incident.getId());
     assertThat(tmp.getEndTime()).isNull();
@@ -404,7 +404,7 @@ class HistoricIncidentTest {
     testRule.executeAvailableJobs(false);
 
     // the incident still exists, there is no new incident, the incident still references the old log entry
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     HistoricIncident incidentNew = query.singleResult();
     List<HistoricJobLog> logsNew = getHistoricJobLogOrdered(jobId);
     assertThat(incidentNew.getId()).isEqualTo(incident.getId());
@@ -415,7 +415,7 @@ class HistoricIncidentTest {
     testRule.executeAvailableJobs(false);
 
     // the incident still exists, there is no new incident, the incident references the new latest log entry
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     incidentNew = query.singleResult();
     logsNew = getHistoricJobLogOrdered(jobId);
     assertThat(logsNew).hasSizeGreaterThan(logs.size());
@@ -443,7 +443,7 @@ class HistoricIncidentTest {
     managementService.setJobRetries(job.getId(), 0);
 
     // an incident is created, it references the latest log entry
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     HistoricIncident incident = query.singleResult();
     assertThat(incident.getHistoryConfiguration()).isEqualTo(logs.get(0).getId());
   }
@@ -476,7 +476,7 @@ class HistoricIncidentTest {
     testRule.executeAvailableJobs();
 
     // the incident still exists and is resolved
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
     tmp = query.singleResult();
     assertThat(tmp.getId()).isEqualTo(incident.getId());
     assertThat(tmp.getEndTime()).isNotNull();

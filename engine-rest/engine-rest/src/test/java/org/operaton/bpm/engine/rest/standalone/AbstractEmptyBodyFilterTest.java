@@ -127,7 +127,7 @@ public abstract class AbstractEmptyBodyFilterTest extends AbstractRestServiceTes
   }
 
   private void evaluatePostRequest(HttpEntity reqBody, String reqContentType, int expectedStatusCode, boolean assertResponseBody) throws IOException {
-    HttpPost post = new HttpPost("http://localhost:" + PORT + START_PROCESS_INSTANCE_BY_KEY_URL);
+    HttpPost post = new HttpPost("http://localhost:" + port + START_PROCESS_INSTANCE_BY_KEY_URL);
     post.setConfig(reqConfig);
 
     if(reqContentType != null) {

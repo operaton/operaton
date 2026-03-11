@@ -25,8 +25,8 @@ module.exports = [
   '$rootScope',
   '$cookies',
   '$http',
-  function($window, $q, $rootScope, $cookies, $http) {
-    return function(url, files, fields) {
+  function ($window, $q, $rootScope, $cookies, $http) {
+    return function (url, files, fields) {
       var deferred = $q.defer();
 
       if (!angular.isArray(files)) {
@@ -35,7 +35,7 @@ module.exports = [
 
       fields = fields || {};
 
-      var segments = files.map(function(entry, index) {
+      var segments = files.map(function (entry, index) {
         return (
           'Content-Disposition: form-data; name="data' +
           index +
@@ -48,7 +48,7 @@ module.exports = [
       });
 
       segments = segments.concat(
-        Object.keys(fields).map(function(name) {
+        Object.keys(fields).map(function (name) {
           var value = fields[name];
 
           return (
@@ -58,7 +58,7 @@ module.exports = [
             value +
             '\r\n'
           );
-        })
+        }),
       );
 
       var sBoundary = '---------------------------' + Date.now().toString(16);
@@ -76,13 +76,13 @@ module.exports = [
         .post(url, sData, {
           transformRequest: angular.identity,
           headers: {
-            'Content-Type': 'multipart/form-data; boundary=' + sBoundary
-          }
+            'Content-Type': 'multipart/form-data; boundary=' + sBoundary,
+          },
         })
-        .then(function(res) {
+        .then(function (res) {
           deferred.resolve(res.data);
         })
-        .catch(function(err) {
+        .catch(function (err) {
           if (err.status === 401) {
             // broadcast that the authentication changed
             $rootScope.$broadcast('authentication.changed', null);
@@ -97,5 +97,5 @@ module.exports = [
 
       return deferred.promise;
     };
-  }
+  },
 ];

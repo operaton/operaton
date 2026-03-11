@@ -20,15 +20,15 @@
 var template = require('./cam-widget-footer.html?raw');
 
 module.exports = [
-  function() {
+  function () {
     return {
       template: template,
       scope: {
-        version: '@'
+        version: '@',
       },
-      link: function($scope) {
+      link: function ($scope) {
         $scope.timezoneName = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      }
+      },
     };
-  }
+  },
 ];

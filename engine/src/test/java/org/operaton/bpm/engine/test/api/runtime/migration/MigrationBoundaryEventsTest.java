@@ -488,7 +488,7 @@ public class MigrationBoundaryEventsTest {
     // and no event subscription for the new message name exists
     EventSubscription eventSubscription = rule.getRuntimeService().createEventSubscriptionQuery().eventName("new" + SIGNAL_NAME).singleResult();
     assertThat(eventSubscription).isNull();
-    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isOne();
 
     // and it is possible to trigger the event with the old message name and successfully complete the migrated instance
     rule.getProcessEngine().getRuntimeService().signalEventReceived(SIGNAL_NAME);
@@ -534,7 +534,7 @@ public class MigrationBoundaryEventsTest {
     // and no event subscription for the new message name exists
     EventSubscription eventSubscription = rule.getRuntimeService().createEventSubscriptionQuery().eventName("new" + MESSAGE_NAME).singleResult();
     assertThat(eventSubscription).isNull();
-    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(rule.getRuntimeService().createEventSubscriptionQuery().count()).isOne();
 
     // and it is possible to trigger the event with the old message name and successfully complete the migrated instance
     rule.getProcessEngine().getRuntimeService().correlateMessage(MESSAGE_NAME);

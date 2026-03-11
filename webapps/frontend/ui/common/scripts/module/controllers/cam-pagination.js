@@ -22,11 +22,11 @@ module.exports = [
   'search',
   'paginationUtils',
   'exposeScopeProperties',
-  CamPagination
+  CamPagination,
 ];
 
 function CamPagination($scope, search, paginationUtils, exposeScopeProperties) {
-  paginationUtils.initializePaginationInController($scope, search, function() {
+  paginationUtils.initializePaginationInController($scope, search, function () {
     $scope.onPaginationChange({pages: $scope.pages});
   });
 

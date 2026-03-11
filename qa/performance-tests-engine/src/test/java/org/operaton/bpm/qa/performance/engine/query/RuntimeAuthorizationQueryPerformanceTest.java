@@ -17,7 +17,6 @@
 package org.operaton.bpm.qa.performance.engine.query;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -62,7 +61,7 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
     RuntimeService runtimeService = processEngine.getRuntimeService();
     TaskService taskService = processEngine.getTaskService();
 
-    queryResourcesAndPermissions = Arrays.asList(
+    queryResourcesAndPermissions = List.of(
         new Object[] {
             "ProcessInstanceQuery",
             runtimeService.createProcessInstanceQuery(),
@@ -83,7 +82,7 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
         }
     );
 
-    authentications = Arrays.asList(
+    authentications = List.of(
         new Authentication(null, emptyList()){
           @Override
           public String toString() {
@@ -96,13 +95,13 @@ public class RuntimeAuthorizationQueryPerformanceTest extends AuthorizationPerfo
             return "with authenticated user without groups";
           }
         },
-        new Authentication("test", Arrays.asList("g0", "g1")) {
+        new Authentication("test", List.of("g0", "g1")) {
           @Override
           public String toString() {
             return "with authenticated user and 2 groups";
           }
         },
-        new Authentication("test", Arrays.asList("g0", "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9")) {
+        new Authentication("test", List.of("g0", "g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g9")) {
           @Override
           public String toString() {
             return "with authenticated user and 10 groups";

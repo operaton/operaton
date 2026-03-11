@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -78,12 +77,12 @@ class MultiTenancyTaskQueryTest {
     TaskQuery query = taskService.createTaskQuery()
       .tenantIdIn(TENANT_ONE);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     query = taskService.createTaskQuery()
         .tenantIdIn(TENANT_TWO);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -96,7 +95,7 @@ class MultiTenancyTaskQueryTest {
     query = taskService.createTaskQuery()
         .tenantIdIn(TENANT_ONE, TENANT_NON_EXISTING);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -104,7 +103,7 @@ class MultiTenancyTaskQueryTest {
     TaskQuery query = taskService.createTaskQuery()
       .withoutTenantId();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -167,31 +166,31 @@ class MultiTenancyTaskQueryTest {
     identityService.setAuthentication("user", null, null);
 
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
   void testQueryAuthenticatedTenant() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     TaskQuery query = taskService.createTaskQuery();
 
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
     assertThat(query.tenantIdIn(TENANT_TWO).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE, TENANT_TWO).count()).isOne();
   }
 
   @Test
   void testQueryAuthenticatedTenants() {
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     TaskQuery query = taskService.createTaskQuery();
 
     assertThat(query.count()).isEqualTo(3L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(taskService.createTaskQuery().withoutTenantId().count()).isOne();
   }
 
   @Test

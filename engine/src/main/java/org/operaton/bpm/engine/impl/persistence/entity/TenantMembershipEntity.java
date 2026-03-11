@@ -16,17 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.db.DbEntity;
 
 /**
  * A relationship between a tenant and an user or a group.
  */
-public class TenantMembershipEntity implements Serializable, DbEntity {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class TenantMembershipEntity implements DbEntity {
 
   protected TenantEntity tenant;
   protected UserEntity user;
@@ -96,7 +91,7 @@ public class TenantMembershipEntity implements Serializable, DbEntity {
 
   @Override
   public String toString() {
-    return "TenantMembershipEntity [id=" + id + ", tenant=" + tenant + ", user=" + user + ", group=" + group + "]";
+    return "TenantMembershipEntity [id=%s, tenant=%s, user=%s, group=%s]".formatted(id, tenant, user, group);
   }
 
 }

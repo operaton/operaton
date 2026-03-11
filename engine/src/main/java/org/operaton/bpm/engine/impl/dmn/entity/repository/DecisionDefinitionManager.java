@@ -34,6 +34,7 @@ import org.operaton.bpm.engine.repository.DecisionDefinition;
 public class DecisionDefinitionManager extends AbstractManager implements AbstractResourceDefinitionManager<DecisionDefinitionEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
+  private static final String DECISION_DEFINITION_KEY = "decisionDefinitionKey";
 
   public void insertDecisionDefinition(DecisionDefinitionEntity decisionDefinition) {
     getDbEntityManager().insert(decisionDefinition);
@@ -77,8 +78,8 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
    */
   public DecisionDefinitionEntity findLatestDecisionDefinitionByKeyAndTenantId(String decisionDefinitionKey, String tenantId) {
     Map<String, String> parameters = new HashMap<>();
-    parameters.put("decisionDefinitionKey", decisionDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
+    parameters.put(TENANT_ID, tenantId);
 
     if (tenantId == null) {
       return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectLatestDecisionDefinitionByKeyWithoutTenantId", parameters);
@@ -90,15 +91,15 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   public DecisionDefinitionEntity findDecisionDefinitionByKeyAndVersion(String decisionDefinitionKey, Integer decisionDefinitionVersion) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
-    parameters.put("decisionDefinitionKey", decisionDefinitionKey);
+    parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyAndVersion", configureParameterizedQuery(parameters));
   }
 
   public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionAndTenantId(String decisionDefinitionKey, Integer decisionDefinitionVersion, String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersion", decisionDefinitionVersion);
-    parameters.put("decisionDefinitionKey", decisionDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
+    parameters.put(TENANT_ID, tenantId);
     if (tenantId == null) {
       return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByKeyVersionWithoutTenantId", parameters);
     } else {
@@ -110,8 +111,8 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   public DecisionDefinitionEntity findDecisionDefinitionByKeyVersionTagAndTenantId(String decisionDefinitionKey, String decisionDefinitionVersionTag, String tenantId) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("decisionDefinitionVersionTag", decisionDefinitionVersionTag);
-    parameters.put("decisionDefinitionKey", decisionDefinitionKey);
-    parameters.put("tenantId", tenantId);
+    parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
+    parameters.put(TENANT_ID, tenantId);
 
     ListQueryParameterObject parameterObject = new ListQueryParameterObject();
     parameterObject.setParameter(parameters);
@@ -130,7 +131,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
   public DecisionDefinitionEntity findDecisionDefinitionByDeploymentAndKey(String deploymentId, String decisionDefinitionKey) {
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("deploymentId", deploymentId);
-    parameters.put("decisionDefinitionKey", decisionDefinitionKey);
+    parameters.put(DECISION_DEFINITION_KEY, decisionDefinitionKey);
     return (DecisionDefinitionEntity) getDbEntityManager().selectOne("selectDecisionDefinitionByDeploymentAndKey", parameters);
   }
 
@@ -149,7 +150,7 @@ public class DecisionDefinitionManager extends AbstractManager implements Abstra
     Map<String, Object> params = new HashMap<>();
     params.put("key", decisionDefinitionKey);
     params.put("version", version);
-    params.put("tenantId", tenantId);
+    params.put(TENANT_ID, tenantId);
     return (String) getDbEntityManager().selectOne("selectPreviousDecisionDefinitionId", params);
   }
 

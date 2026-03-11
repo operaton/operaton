@@ -131,7 +131,7 @@ class MultiTenancyRepositoryServiceTest {
       .deploy();
 
     // then it does not create a new deployment
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1L);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
   }
 
   @Test

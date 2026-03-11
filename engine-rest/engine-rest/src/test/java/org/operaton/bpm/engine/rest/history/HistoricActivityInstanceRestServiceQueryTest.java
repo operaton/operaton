@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -881,7 +880,7 @@ public class HistoricActivityInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private List<HistoricActivityInstance> createMockHistoricActivityInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricActivityInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricActivityInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

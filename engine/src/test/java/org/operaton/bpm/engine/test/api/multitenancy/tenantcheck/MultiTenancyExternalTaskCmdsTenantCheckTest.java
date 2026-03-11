@@ -210,7 +210,7 @@ class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isOne();
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 
@@ -229,7 +229,7 @@ class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isOne();
 
     identityService.setAuthentication("aUserId", null);
 
@@ -250,7 +250,7 @@ class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isEqualTo(1);
+    assertThat(externalTaskService.createExternalTaskQuery().active().count()).isOne();
 
     identityService.setAuthentication("aUserId", null);
     engineRule.getProcessEngineConfiguration().setTenantCheckEnabled(false);
@@ -504,7 +504,7 @@ class MultiTenancyExternalTaskCmdsTenantCheckTest {
       .get(0)
       .getId();
 
-    assertThat(externalTaskService.createExternalTaskQuery().locked().count()).isEqualTo(1L);
+    assertThat(externalTaskService.createExternalTaskQuery().locked().count()).isOne();
 
     identityService.setAuthentication("aUserId", null, List.of(TENANT_ONE));
 

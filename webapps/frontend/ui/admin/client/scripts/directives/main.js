@@ -23,7 +23,7 @@ var angular = require('operaton-commons-ui/vendor/angular'),
 
 var directivesModule = (module.exports = angular.module(
   'cam.admin.directives',
-  []
+  [],
 ));
 directivesModule.directive('camBreadcrumbsPanel', breadcrumbs);
 directivesModule.directive('date', date);

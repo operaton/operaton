@@ -207,7 +207,7 @@ class JobExecutorFollowUpTest {
 
     // and there is a transition instance for the service task
     ActivityInstance activityInstance = engineRule.getRuntimeService().getActivityInstance(calledInstance.getId());
-    assertThat(activityInstance.getTransitionInstances("serviceTask")).hasSize(1);
+    assertThat(activityInstance.getTransitionInstances("serviceTask")).isNotEmpty().hasSize(1);
 
     // but the corresponding job is not locked
     JobEntity followUpJob = (JobEntity) engineRule.getManagementService().createJobQuery().singleResult();

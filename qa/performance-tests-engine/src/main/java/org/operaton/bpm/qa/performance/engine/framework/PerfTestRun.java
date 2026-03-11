@@ -38,7 +38,7 @@ public class PerfTestRun implements PerfTestRunContext, Runnable {
   protected long stepStartTime;
   protected long stepEndTime;
 
-  protected volatile PerfTestStep currentStep;
+  protected PerfTestStep currentStep;
   protected final AtomicInteger state = new AtomicInteger();
 
   protected final PerfTestRunner runner;

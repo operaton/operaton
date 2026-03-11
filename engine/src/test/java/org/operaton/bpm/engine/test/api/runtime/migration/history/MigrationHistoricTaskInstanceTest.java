@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
-
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -82,7 +81,7 @@ class MigrationHistoricTaskInstanceTest {
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
     //when
-    assertThat(sourceHistoryTaskInstanceQuery.count()).isEqualTo(1);
+    assertThat(sourceHistoryTaskInstanceQuery.count()).isOne();
     assertThat(targetHistoryTaskInstanceQuery.count()).isZero();
     ProcessInstanceQuery sourceProcessInstanceQuery = runtimeService.createProcessInstanceQuery().processDefinitionId(sourceProcessDefinition.getId());
     runtimeService.newMigration(migrationPlan)
@@ -91,7 +90,7 @@ class MigrationHistoricTaskInstanceTest {
 
     //then
     assertThat(sourceHistoryTaskInstanceQuery.count()).isZero();
-    assertThat(targetHistoryTaskInstanceQuery.count()).isEqualTo(1);
+    assertThat(targetHistoryTaskInstanceQuery.count()).isOne();
 
     HistoricTaskInstance instance = targetHistoryTaskInstanceQuery.singleResult();
     assertThat(instance.getProcessDefinitionKey()).isEqualTo(targetProcessDefinition.getKey());
@@ -120,7 +119,7 @@ class MigrationHistoricTaskInstanceTest {
 
     // when
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then the historic sub task instance is still the same

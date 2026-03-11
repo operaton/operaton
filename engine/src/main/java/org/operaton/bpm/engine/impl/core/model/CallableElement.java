@@ -57,7 +57,7 @@ public class CallableElement extends BaseCallableElement {
     Object result = businessKeyValueProvider.getValue(variableScope);
 
     if (result != null && !(result instanceof String)) {
-      throw new ClassCastException("Cannot cast '"+result+"' to String");
+      throw new ClassCastException("Cannot cast '%s' to String".formatted(result));
     }
 
     return (String) result;

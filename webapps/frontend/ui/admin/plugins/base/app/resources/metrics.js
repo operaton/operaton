@@ -20,7 +20,7 @@
 module.exports = [
   '$resource',
   'Uri',
-  function($resource, Uri) {
+  function ($resource, Uri) {
     return $resource(
       Uri.appUri('plugin://adminPlugins/:engine/metrics/:action'),
       {id: '@id'},
@@ -28,9 +28,9 @@ module.exports = [
         getAggregated: {
           method: 'GET',
           isArray: true,
-          params: {action: 'aggregated'}
-        }
-      }
+          params: {action: 'aggregated'},
+        },
+      },
     );
-  }
+  },
 ];

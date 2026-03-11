@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query.history;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +111,7 @@ class MultiTenancyHistoricDetailFormPropertyQueryTest {
         .formFields();
 
     // then
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -129,8 +128,8 @@ class MultiTenancyHistoricDetailFormPropertyQueryTest {
         .tenantIdIn(TENANT_TWO);
 
     // then
-    assertThat(queryTenantOne.count()).isEqualTo(1L);
-    assertThat(queryTenantTwo.count()).isEqualTo(1L);
+    assertThat(queryTenantOne.count()).isOne();
+    assertThat(queryTenantTwo.count()).isOne();
   }
 
   @Test
@@ -210,7 +209,7 @@ class MultiTenancyHistoricDetailFormPropertyQueryTest {
   @Test
   void shouldQueryAuthenticatedTenant() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     // when
     HistoricDetailQuery query = historyService.createHistoricDetailQuery();
@@ -226,7 +225,7 @@ class MultiTenancyHistoricDetailFormPropertyQueryTest {
   @Test
   void shouldQueryAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // when
     HistoricDetailQuery query = historyService.createHistoricDetailQuery();

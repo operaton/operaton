@@ -17,8 +17,9 @@
 package org.operaton.bpm.engine.spring.test.components.scope;
 
 import java.util.UUID;
-import java.util.logging.Logger;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SuppressWarnings("unused")
 public class Delegate1 implements JavaDelegate, InitializingBean {
 
-    private static final Logger LOG = Logger.getLogger(Delegate1.class.getName());
+    private static final Logger LOG = LoggerFactory.getLogger(Delegate1.class);
 
     @Autowired
     private ProcessInstance processInstance;
@@ -49,12 +50,12 @@ public class Delegate1 implements JavaDelegate, InitializingBean {
 
         String pid = this.processInstance.getId();
 
-        LOG.info("the processInstance#id is " + pid);
+        LOG.info("the processInstance#id is {}", pid);
 
     assertThat(statefulObject).as("the 'scopedCustomer' reference can't be null").isNotNull();
         String uuid = UUID.randomUUID().toString();
         statefulObject.setName(uuid);
-        LOG.info("the 'uuid' value given to the ScopedCustomer#name property is '" + uuid + "' in " + getClass().getName());
+        LOG.info("the 'uuid' value given to the ScopedCustomer#name property is '{}' in {}", uuid, getClass().getName());
 
         this.statefulObject.increment();
     }

@@ -34,6 +34,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNull;
  * @author Tassilo Weidner
  */
 public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTimeSelectModeForHistoricBatchesBuilder {
+  private static final String MSG_REMOVAL_TIME_MODES_MUTUALLY_EXCLUSIVE = "The removal time modes are mutually exclusive";
 
   protected HistoricBatchQuery query;
   protected List<String> ids;
@@ -61,7 +62,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
 
   @Override
   public SetRemovalTimeToHistoricBatchesBuilder absoluteRemovalTime(Date removalTime) {
-    ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
+    ensureNull(BadUserRequestException.class, MSG_REMOVAL_TIME_MODES_MUTUALLY_EXCLUSIVE,"mode", mode);
 
     this.mode = Mode.ABSOLUTE_REMOVAL_TIME;
     this.removalTime = removalTime;
@@ -70,7 +71,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
 
   @Override
   public SetRemovalTimeToHistoricBatchesBuilder calculatedRemovalTime() {
-    ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
+    ensureNull(BadUserRequestException.class, MSG_REMOVAL_TIME_MODES_MUTUALLY_EXCLUSIVE,"mode", mode);
 
     this.mode = Mode.CALCULATED_REMOVAL_TIME;
     return this;
@@ -78,7 +79,7 @@ public class SetRemovalTimeToHistoricBatchesBuilderImpl implements SetRemovalTim
 
   @Override
   public SetRemovalTimeToHistoricBatchesBuilder clearedRemovalTime() {
-    ensureNull(BadUserRequestException.class, "The removal time modes are mutually exclusive","mode", mode);
+    ensureNull(BadUserRequestException.class, MSG_REMOVAL_TIME_MODES_MUTUALLY_EXCLUSIVE,"mode", mode);
 
     mode = Mode.CLEARED_REMOVAL_TIME;
     return this;

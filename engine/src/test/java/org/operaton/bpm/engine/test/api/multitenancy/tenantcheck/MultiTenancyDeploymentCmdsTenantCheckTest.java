@@ -69,8 +69,8 @@ class MultiTenancyDeploymentCmdsTenantCheckTest {
     identityService.clearAuthentication();
 
     DeploymentQuery query = repositoryService.createDeploymentQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -83,8 +83,8 @@ class MultiTenancyDeploymentCmdsTenantCheckTest {
     identityService.clearAuthentication();
 
     DeploymentQuery query = repositoryService.createDeploymentQuery();
-    assertThat(query.count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -97,8 +97,8 @@ class MultiTenancyDeploymentCmdsTenantCheckTest {
 
     DeploymentQuery query = repositoryService.createDeploymentQuery();
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -372,8 +372,8 @@ class MultiTenancyDeploymentCmdsTenantCheckTest {
 
     DeploymentQuery query = repositoryService.createDeploymentQuery();
     assertThat(query.count()).isEqualTo(2L);
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @AfterEach

@@ -68,7 +68,7 @@ class CustomPasswordPolicyTest {
     User user = identityService.newUser("user");
     user.setPassword("this-is-1-STRONG-password");
     identityService.saveUser(user);
-    assertThat(identityService.createUserQuery().userId(user.getId()).count()).isEqualTo(1L);
+    assertThat(identityService.createUserQuery().userId(user.getId()).count()).isOne();
   }
 
   @Test

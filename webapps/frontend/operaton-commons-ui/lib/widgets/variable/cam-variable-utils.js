@@ -37,9 +37,9 @@ varUtils.modalCtrl = [
   '$scope',
   'variable',
   'readonly',
-  function($dialogScope, variable, readonly) {
+  function ($dialogScope, variable, readonly) {
     $dialogScope.hovered = false;
-    $dialogScope.toggleHover = function(which) {
+    $dialogScope.toggleHover = function (which) {
       $dialogScope.hovered = which;
     };
 
@@ -47,7 +47,7 @@ varUtils.modalCtrl = [
     $dialogScope.readonly = readonly;
     var original = angular.copy(variable);
 
-    $dialogScope.hasChanged = function() {
+    $dialogScope.hasChanged = function () {
       original.valueInfo = original.valueInfo || {};
       variable.valueInfo = variable.valueInfo || {};
 
@@ -58,7 +58,7 @@ varUtils.modalCtrl = [
         original.valueInfo.objectTypeName !== variable.valueInfo.objectTypeName
       );
     };
-  }
+  },
 ];
 
 varUtils.typeUtils = typeUtils;
@@ -76,7 +76,7 @@ varUtils.types = [
   'Short',
   'String',
   'Json',
-  'Xml'
+  'Xml',
 ];
 
 varUtils.defaultValues = {
@@ -92,11 +92,11 @@ varUtils.defaultValues = {
   String: '',
   Object: {},
   Json: '',
-  Xml: ''
+  Xml: '',
 };
 
-varUtils.isPrimitive = function($scope) {
-  return function(type) {
+varUtils.isPrimitive = function ($scope) {
+  return function (type) {
     if (!type && !$scope.variable) {
       return true;
     }
@@ -113,14 +113,14 @@ varUtils.isPrimitive = function($scope) {
         'Integer',
         'Long',
         'Short',
-        'String'
+        'String',
       ].indexOf(type) >= 0
     );
   };
 };
 
-varUtils.isBinary = function($scope) {
-  return function(type) {
+varUtils.isBinary = function ($scope) {
+  return function (type) {
     if (!type && !$scope.variable) {
       return false;
     }
@@ -133,8 +133,8 @@ varUtils.isBinary = function($scope) {
   };
 };
 
-varUtils.useCheckbox = function($scope) {
-  return function(type) {
+varUtils.useCheckbox = function ($scope) {
+  return function (type) {
     if (!type && !$scope.variable) {
       return false;
     }
@@ -143,8 +143,8 @@ varUtils.useCheckbox = function($scope) {
   };
 };
 
-varUtils.validate = function($scope) {
-  return function() {
+varUtils.validate = function ($scope) {
+  return function () {
     if (!$scope.variable.name || !$scope.variable.type) {
       $scope.valid = false;
     } else if (
@@ -155,7 +155,7 @@ varUtils.validate = function($scope) {
     } else {
       $scope.valid = typeUtils.isType(
         $scope.variable.value,
-        $scope.variable.type
+        $scope.variable.type,
       );
     }
 
@@ -171,7 +171,7 @@ varUtils.validate = function($scope) {
         if ($scope.variable.type !== 'Boolean') {
           newTyped = typeUtils.convertToType(
             $scope.variable.value,
-            $scope.variable.type
+            $scope.variable.type,
           );
         } else {
           newTyped = $scope.variable.value

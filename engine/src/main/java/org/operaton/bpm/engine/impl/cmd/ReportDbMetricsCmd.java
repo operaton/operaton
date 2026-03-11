@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
@@ -30,10 +27,7 @@ import org.operaton.bpm.engine.impl.metrics.reporter.DbMetricsReporter;
  * @author Thorben Lindhauer
  *
  */
-public class ReportDbMetricsCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class ReportDbMetricsCmd implements Command<Void> {
   @Override
   public Void execute(CommandContext commandContext) {
     ProcessEngineConfigurationImpl engineConfiguration = Context.getProcessEngineConfiguration();

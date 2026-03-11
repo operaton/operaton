@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Sebastian Menski
@@ -31,7 +30,7 @@ public class CollaborationTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Participant.class),
       new ChildElementAssumption(MessageFlow.class),
       new ChildElementAssumption(Artifact.class),
@@ -40,14 +39,13 @@ public class CollaborationTest extends BpmnModelElementInstanceTest {
       new ChildElementAssumption(ParticipantAssociation.class),
       new ChildElementAssumption(MessageFlowAssociation.class),
       new ChildElementAssumption(CorrelationKey.class),
-      /** TODO: choreographyRef */
       new ChildElementAssumption(ConversationLink.class)
     );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("name"),
       new AttributeAssumption("isClosed", false, false, false)
     );

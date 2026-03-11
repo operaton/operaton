@@ -16,18 +16,23 @@
  */
 package org.operaton.bpm.container.impl.deployment.scanning;
 
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 
 import org.operaton.bpm.application.impl.metadata.spi.ProcessArchiveXml;
+import org.operaton.bpm.container.impl.ContainerIntegrationLogger;
 import org.operaton.bpm.container.impl.deployment.scanning.spi.ProcessApplicationScanner;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
-import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
-import org.operaton.bpm.engine.impl.dmn.deployer.DecisionDefinitionDeployer;
+import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 
-import static org.operaton.bpm.engine.impl.AbstractDefinitionDeployer.DIAGRAM_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DIAGRAM_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.DMN_RESOURCE_SUFFIXES;
 
 public final class ProcessApplicationScanningUtil {
+  private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   private ProcessApplicationScanningUtil() {
   }
@@ -38,12 +43,12 @@ public final class ProcessApplicationScanningUtil {
    *          the classloader to scan
    * @param paResourceRootPath
    *          see {@link ProcessArchiveXml#PROP_RESOURCE_ROOT_PATH}
-   * @param metaFileUrl
-   *          the URL to the META-INF/processes.xml file
+   * @param metaFileUri
+   *          the URI to the META-INF/processes.xml file
    * @return a Map of process definitions
    */
-  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl) {
-    return findResources(classLoader, paResourceRootPath, metaFileUrl, null);
+  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URI metaFileUri) {
+    return findResources(classLoader, paResourceRootPath, metaFileUri, null);
   }
 
   /**
@@ -52,32 +57,38 @@ public final class ProcessApplicationScanningUtil {
    *          the classloader to scan
    * @param paResourceRootPath
    *          see {@link ProcessArchiveXml#PROP_RESOURCE_ROOT_PATH}
-   * @param metaFileUrl
-   *          the URL to the META-INF/processes.xml file
+   * @param metaFileUri
+   *          the URI to the META-INF/processes.xml file
    * @param additionalResourceSuffixes
    *          a list of additional suffixes for resources
    * @return a Map of process definitions
    */
-  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URL metaFileUrl, String[] additionalResourceSuffixes) {
-    ProcessApplicationScanner scanner = null;
+  public static Map<String, byte[]> findResources(ClassLoader classLoader, String paResourceRootPath, URI metaFileUri, String[] additionalResourceSuffixes) {
+    ProcessApplicationScanner scanner;
 
     try {
       // check if we must use JBoss VFS
       classLoader.loadClass("org.jboss.vfs.VFS");
       scanner = new VfsProcessApplicationScanner();
     }
-    catch (Throwable t) {
+    catch (Exception t) {
       scanner = new ClassPathProcessApplicationScanner();
     }
 
-    return scanner.findResources(classLoader, paResourceRootPath, metaFileUrl, additionalResourceSuffixes);
+    URL metaFileUrl;
+     try {
+       metaFileUrl = metaFileUri != null ? metaFileUri.toURL() : null;
+     } catch (MalformedURLException e) {
+       throw LOG.invalidDeploymentDescriptorLocation(metaFileUri.getPath(), e);
+     }
 
+    return scanner.findResources(classLoader, paResourceRootPath, metaFileUrl, additionalResourceSuffixes);
   }
 
   public static boolean isDeployable(String filename) {
-    return hasSuffix(filename, BpmnDeployer.BPMN_RESOURCE_SUFFIXES)
-      || hasSuffix(filename, CmmnDeployer.CMMN_RESOURCE_SUFFIXES)
-      || hasSuffix(filename, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
+    return hasSuffix(filename, BPMN_RESOURCE_SUFFIXES)
+      || hasSuffix(filename, CMMN_RESOURCE_SUFFIXES)
+      || hasSuffix(filename, DMN_RESOURCE_SUFFIXES);
   }
 
   public static boolean isDeployable(String filename, String[] additionalResourceSuffixes) {
@@ -99,11 +110,11 @@ public final class ProcessApplicationScanningUtil {
 
   public static boolean isDiagram(String fileName, String modelFileName) {
     // process resources
-    boolean isBpmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_SUFFIXES, BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    boolean isBpmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_RESOURCE_SUFFIXES, BPMN_RESOURCE_SUFFIXES);
     // case resources
-    boolean isCmmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_SUFFIXES, CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
+    boolean isCmmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_RESOURCE_SUFFIXES, CMMN_RESOURCE_SUFFIXES);
     // decision resources
-    boolean isDmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_SUFFIXES, DecisionDefinitionDeployer.DMN_RESOURCE_SUFFIXES);
+    boolean isDmnDiagram = checkDiagram(fileName, modelFileName, DIAGRAM_RESOURCE_SUFFIXES, DMN_RESOURCE_SUFFIXES);
 
     return isBpmnDiagram || isCmmnDiagram || isDmnDiagram;
   }

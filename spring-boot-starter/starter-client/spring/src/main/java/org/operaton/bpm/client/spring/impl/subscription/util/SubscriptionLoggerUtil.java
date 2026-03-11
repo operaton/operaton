@@ -21,10 +21,10 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.operaton.bpm.client.spring.annotation.ExternalTaskSubscription;
 import org.operaton.bpm.client.spring.exception.NotInitializedException;
 import org.operaton.bpm.client.spring.exception.NotOpenedException;
-import org.operaton.bpm.client.spring.impl.util.LoggerUtil;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
+import org.operaton.commons.logging.BaseLogger;
 
-public class SubscriptionLoggerUtil extends LoggerUtil {
+public final class SubscriptionLoggerUtil extends BaseLogger {
 
   public void handlerBeansFound(Class<ExternalTaskHandler> externalTaskHandlerClass,
                                 String[] beanNamesForType) {

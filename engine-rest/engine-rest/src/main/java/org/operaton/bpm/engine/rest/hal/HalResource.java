@@ -39,16 +39,32 @@ public abstract class HalResource<T extends HalResource<?>> {
   protected Map<String, Object> embedded;
 
   // the linker used by this resource
-  protected transient HalLinker linker;
+  protected HalLinker linker;
 
   protected HalResource() {
     this.linker = Hal.getInstance().createLinker(this);
   }
 
+  public Map<String, HalLink> getLinks() {
+    return links;
+  }
+
+  /**
+   * @deprecated use {@link #getLinks()} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, HalLink> get_links() {
     return links;
   }
 
+  public Map<String, Object> getEmbedded() {
+    return embedded;
+  }
+
+  /**
+   * @deprecated use {@link #getLinks()} instead.
+   */
+  @Deprecated(forRemoval = true, since = "1.0")
   public Map<String, Object> get_embedded() {
     return embedded;
   }

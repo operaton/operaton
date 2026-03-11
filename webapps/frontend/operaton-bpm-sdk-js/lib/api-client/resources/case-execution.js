@@ -39,46 +39,46 @@ var CaseExecution = AbstractClientResource.extend();
  */
 CaseExecution.path = 'case-execution';
 
-CaseExecution.list = function(params, done) {
+CaseExecution.list = function (params, done) {
   done = done || noop;
   return this.http.get(this.path, {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-CaseExecution.disable = function(executionId, params, done) {
+CaseExecution.disable = function (executionId, params, done) {
   return this.http.post(this.path + '/' + executionId + '/disable', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-CaseExecution.reenable = function(executionId, params, done) {
+CaseExecution.reenable = function (executionId, params, done) {
   return this.http.post(this.path + '/' + executionId + '/reenable', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-CaseExecution.manualStart = function(executionId, params, done) {
+CaseExecution.manualStart = function (executionId, params, done) {
   return this.http.post(this.path + '/' + executionId + '/manual-start', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
-CaseExecution.complete = function(executionId, params, done) {
+CaseExecution.complete = function (executionId, params, done) {
   return this.http.post(this.path + '/' + executionId + '/complete', {
     data: params,
-    done: done
+    done: done,
   });
 };
 
 /**
  * Deletes a variable in the context of a given case execution. Deletion does not propagate upwards in the case execution hierarchy.
  */
-CaseExecution.deleteVariable = function(data, done) {
+CaseExecution.deleteVariable = function (data, done) {
   return this.http.del(
     this.path +
       '/' +
@@ -86,8 +86,8 @@ CaseExecution.deleteVariable = function(data, done) {
       '/localVariables/' +
       utils.escapeUrl(data.varId),
     {
-      done: done
-    }
+      done: done,
+    },
   );
 };
 
@@ -97,10 +97,10 @@ CaseExecution.deleteVariable = function(data, done) {
  * Deletion precede updates.
  * So, if a variable is updated AND deleted, the updates overrides the deletion.
  */
-CaseExecution.modifyVariables = function(data, done) {
+CaseExecution.modifyVariables = function (data, done) {
   return this.http.post(this.path + '/' + data.id + '/localVariables', {
     data: data,
-    done: done
+    done: done,
   });
 };
 

@@ -46,7 +46,10 @@ public final class JsonUtil {
       if (resultFile.exists()) {
         Files.delete(resultFile.toPath());
       }
-      resultFile.createNewFile();
+      boolean created = resultFile.createNewFile();
+      if (!created) {
+        throw new PerfTestException("Cannot create file " + filename);
+      }
 
       mapper.writerWithDefaultPrettyPrinter().writeValue(resultFile, object);
 
@@ -73,7 +76,7 @@ public final class JsonUtil {
   public static ObjectMapper getMapper() {
     if (mapper == null) {
       mapper = new ObjectMapper();
-      mapper.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+      mapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY);
       mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
     return mapper;

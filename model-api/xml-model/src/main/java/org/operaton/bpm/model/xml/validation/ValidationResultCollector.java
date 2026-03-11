@@ -20,7 +20,6 @@ package org.operaton.bpm.model.xml.validation;
  * Object passed to the {@link ModelElementValidator} to collect validation results.
  *
  * @author Daniel Meyer
- * @since 7.6
  */
 public interface ValidationResultCollector {
 

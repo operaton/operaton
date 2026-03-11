@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEntity;
 
@@ -27,7 +25,5 @@ import org.operaton.bpm.engine.impl.history.event.HistoricProcessInstanceEventEn
  * @author Christian Stettler
  */
 public class HistoricProcessInstanceEntity extends HistoricProcessInstanceEventEntity implements HistoricProcessInstance {
-
-  @Serial private static final long serialVersionUID = 1L;
 
 }

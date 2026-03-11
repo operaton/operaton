@@ -50,7 +50,7 @@ public class ReusableSubProcess implements SubProcessActivityBehavior {
   }
 
   @Override
-  public void completed(ActivityExecution execution) throws Exception {
+  public void completed(ActivityExecution execution) {
     List<PvmTransition> outgoingTransitions = execution.getActivity().getOutgoingTransitions();
     execution.leaveActivityViaTransitions(outgoingTransitions, null);
   }

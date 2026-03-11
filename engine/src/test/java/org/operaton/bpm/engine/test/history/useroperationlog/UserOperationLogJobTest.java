@@ -324,7 +324,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
     UserOperationLogQuery query = historyService
             .createUserOperationLogQuery()
             .operationType(UserOperationLogEntry.OPERATION_TYPE_SET_DUEDATE);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // assert details
     UserOperationLogEntry entry = query.singleResult();
@@ -451,7 +451,7 @@ class UserOperationLogJobTest extends AbstractUserOperationLogTest {
   void testExecuteByJobExecutor() {
     // given a job
     runtimeService.startProcessInstanceByKey("asyncTaskProcess");
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1L);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when a job is executed by the job executor
     testRule.waitForJobExecutorToProcessAllJobs(TimeUnit.MILLISECONDS.convert(5L, TimeUnit.SECONDS));

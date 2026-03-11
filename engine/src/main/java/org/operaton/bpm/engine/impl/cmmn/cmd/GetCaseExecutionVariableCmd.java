@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.exception.cmmn.CaseExecutionNotFoundException;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
@@ -31,10 +28,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class GetCaseExecutionVariableCmd implements Command<Object>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetCaseExecutionVariableCmd implements Command<Object> {
   protected String caseExecutionId;
   protected String variableName;
   protected boolean isLocal;
@@ -54,7 +48,7 @@ public class GetCaseExecutionVariableCmd implements Command<Object>, Serializabl
       .getCaseExecutionManager()
       .findCaseExecutionById(caseExecutionId);
 
-    ensureNotNull(CaseExecutionNotFoundException.class, "case execution " + caseExecutionId + " doesn't exist", "caseExecution", caseExecution);
+    ensureNotNull(CaseExecutionNotFoundException.class, "case execution %s doesn't exist".formatted(caseExecutionId), "caseExecution", caseExecution);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkReadCaseInstance(caseExecution);

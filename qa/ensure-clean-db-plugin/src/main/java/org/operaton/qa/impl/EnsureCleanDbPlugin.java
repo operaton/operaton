@@ -78,7 +78,7 @@ public class EnsureCleanDbPlugin implements BpmPlatformPlugin {
           logger.info(builder::toString);
         }
       }
-      catch(Throwable e) {
+      catch(Exception e) {
         logger.log(Level.SEVERE, "Could not clean DB:", e);
       }
     }

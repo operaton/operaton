@@ -45,7 +45,6 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
       .namespaceUri(BPMN20_NS)
       .instanceProvider(ExtensionImpl::new);
 
-    // TODO: qname reference extension definition
     definitionAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_DEFINITION)
       .build();
 
@@ -71,8 +70,8 @@ public class ExtensionImpl extends BpmnModelElementInstanceImpl implements Exten
   }
 
   @Override
-  public void setDefinition(String Definition) {
-    definitionAttribute.setValue(this, Definition);
+  public void setDefinition(String definition) {
+    definitionAttribute.setValue(this, definition);
   }
 
   @Override

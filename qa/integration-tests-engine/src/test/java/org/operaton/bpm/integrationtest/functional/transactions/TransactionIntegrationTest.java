@@ -31,7 +31,7 @@ import org.operaton.bpm.integrationtest.functional.transactions.beans.FailingDel
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -69,17 +69,9 @@ public class TransactionIntegrationTest extends AbstractFoxPlatformIntegrationTe
     try {
       utx.begin();
 
-      try {
-        runtimeService.startProcessInstanceByKey("testProcessFailure");
-        fail("Exception expected");
-      }catch (Exception ex) {
-        if(!(ex instanceof RuntimeException)) {
-          fail("Wrong exception of type " + ex + " RuntimeException expected!");
-        }
-        if(!ex.getMessage().contains("I'm a complete failure!")) {
-          fail("Different message expected");
-        }
-      }
+      assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcessFailure"))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("I'm a complete failure!");
 
       // assert that now our transaction is marked rollback-only:
       assertThat(utx.getStatus()).isEqualTo(Status.STATUS_MARKED_ROLLBACK);

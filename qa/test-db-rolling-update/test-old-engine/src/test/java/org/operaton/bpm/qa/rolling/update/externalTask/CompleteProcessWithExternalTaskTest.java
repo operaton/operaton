@@ -18,11 +18,10 @@ package org.operaton.bpm.qa.rolling.update.externalTask;
 
 import java.util.List;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,15 +31,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithExternalTaskScenario")
-public class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTestCase {
 
   public static final long LOCK_TIME = 5 * 60 * 1000;
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithExternalTask() {
+  void testCompleteProcessWithExternalTask() {
     //given process with external task
-    String buisnessKey = rule.getBuisnessKey();
+    String buisnessKey = rule.getBusinessKey();
     List<LockedExternalTask> externalTasks = rule.getExternalTaskService().fetchAndLock(1, buisnessKey)
       .topic(buisnessKey, LOCK_TIME)
       .execute();
@@ -53,11 +52,11 @@ public class CompleteProcessWithExternalTaskTest extends AbstractRollingUpdateTe
     rule.assertScenarioEnded();
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.fetch.1")
-  public void testCompleteProcessWithFetchedExternalTask() {
+  void testCompleteProcessWithFetchedExternalTask() {
     //given process with locked external task
-    String buisnessKey = rule.getBuisnessKey();
+    String buisnessKey = rule.getBusinessKey();
     ExternalTask task = rule.getExternalTaskService()
                             .createExternalTaskQuery()
                             .locked()

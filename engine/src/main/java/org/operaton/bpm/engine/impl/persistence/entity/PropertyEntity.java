@@ -16,22 +16,17 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.db.EnginePersistenceLogger;
 import org.operaton.bpm.engine.impl.db.HasDbRevision;
 
-
 /**
  * @author Tom Baeyens
  */
-public class PropertyEntity implements DbEntity, HasDbRevision, Serializable {
+public class PropertyEntity implements DbEntity, HasDbRevision {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
-  @Serial private static final long serialVersionUID = 1L;
 
   String name;
   int revision;
@@ -96,9 +91,6 @@ public class PropertyEntity implements DbEntity, HasDbRevision, Serializable {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[name=" + name
-           + ", revision=" + revision
-           + ", value=" + value
-           + "]";
+           + "[name=%s, revision=%s, value=%s]".formatted(name, revision, value);
   }
 }

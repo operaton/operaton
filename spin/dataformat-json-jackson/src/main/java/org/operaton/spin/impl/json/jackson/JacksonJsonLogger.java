@@ -32,7 +32,7 @@ import org.operaton.spin.json.SpinJsonPropertyException;
  * @author Thorben Lindhauer
  * @author Stefan Hentschel
  */
-public class JacksonJsonLogger extends SpinLogger {
+public class JacksonJsonLogger extends BaseLogger {
 
   public static final String PROJECT_CODE = SpinLogger.PROJECT_CODE + "/JACKSON-JSON";
   public static final JacksonJsonLogger JSON_TREE_LOGGER = BaseLogger.createLogger(JacksonJsonLogger.class, PROJECT_CODE, "org.operaton.spin.json", "01");

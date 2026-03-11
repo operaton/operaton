@@ -111,7 +111,7 @@ class IncidentUserOperationLogTest {
     doAuthenticated(() -> runtimeService.resolveIncident(incident.getId()));
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_RESOLVE);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROCESS_INSTANCE);
@@ -152,7 +152,7 @@ class IncidentUserOperationLogTest {
     doAuthenticated(() -> runtimeService.setAnnotationForIncidentById(incident.getId(), annotation));
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_SET_ANNOTATION);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.INCIDENT);
@@ -176,7 +176,7 @@ class IncidentUserOperationLogTest {
     doAuthenticated(() -> runtimeService.clearAnnotationForIncidentById(incident.getId()));
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(entry.getOperationType()).isEqualTo(UserOperationLogEntry.OPERATION_TYPE_CLEAR_ANNOTATION);
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.INCIDENT);

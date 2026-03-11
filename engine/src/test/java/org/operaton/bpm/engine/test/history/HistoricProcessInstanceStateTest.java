@@ -181,7 +181,7 @@ public class HistoricProcessInstanceStateTest {
     processEngineRule.getRuntimeService().deleteProcessInstance(processInstance.getId(), REASON, false, true);
     entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_EXTERNALLY_TERMINATED);
-    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().externallyTerminated().count()).isEqualTo(1);
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().externallyTerminated().count()).isOne();
   }
 
   @Test
@@ -206,7 +206,7 @@ public class HistoricProcessInstanceStateTest {
     assertThat(processEngineRule.getRuntimeService().createProcessInstanceQuery().active().list()).hasSize(1);
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_ACTIVE);
-    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count()).isEqualTo(1);
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().active().count()).isOne();
   }
 
   @Test
@@ -221,7 +221,7 @@ public class HistoricProcessInstanceStateTest {
     processEngineRule.getRuntimeService().startProcessInstanceById(processDefinition.getId());
     HistoricProcessInstance entity = getHistoricProcessInstanceWithAssertion(processDefinition);
     assertThat(entity.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
-    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count()).isEqualTo(1);
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count()).isOne();
   }
 
   @Test
@@ -239,9 +239,9 @@ public class HistoricProcessInstanceStateTest {
     assertThat(entity1).isNotNull();
     assertThat(entity2).isNotNull();
     assertThat(entity1.getState()).isEqualTo(HistoricProcessInstance.STATE_COMPLETED);
-    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count()).isEqualTo(1);
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().completed().count()).isOne();
     assertThat(entity2.getState()).isEqualTo(HistoricProcessInstance.STATE_INTERNALLY_TERMINATED);
-    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().internallyTerminated().count()).isEqualTo(1);
+    assertThat(processEngineRule.getHistoryService().createHistoricProcessInstanceQuery().internallyTerminated().count()).isOne();
   }
 
   @Test

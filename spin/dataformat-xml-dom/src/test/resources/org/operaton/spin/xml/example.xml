@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<customers xmlns="http://operaton.org/example" xmlns:ex="http://operaton.org/example" order="order1" ex:dueUntil="20150112">
-  <date name="20140512" />
+<?xml version="1.0" encoding="UTF-8"?><customers xmlns="http://operaton.org/example" xmlns:ex="http://operaton.org/example" ex:dueUntil="20150112" order="order1">
+  <date name="20140512"/>
   <file xmlns=""/>
   <customer id="customer1">
     <name>Kermit</name>

@@ -58,7 +58,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
     ProcessInstance instance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
 
     if (instance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Process instance with id " + processInstanceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Process instance with id %s does not exist".formatted(processInstanceId));
     }
 
     return ProcessInstanceDto.fromProcessInstance(instance);
@@ -99,7 +99,7 @@ public class ProcessInstanceResourceImpl implements ProcessInstanceResource {
     }
 
     if (activityInstance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Process instance with id " + processInstanceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Process instance with id %s does not exist".formatted(processInstanceId));
     }
 
     return ActivityInstanceDto.fromActivityInstance(activityInstance);

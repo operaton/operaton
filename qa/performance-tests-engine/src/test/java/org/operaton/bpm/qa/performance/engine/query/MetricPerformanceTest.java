@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.qa.performance.engine.query;
-
-import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -38,7 +37,7 @@ public class MetricPerformanceTest extends ProcessEnginePerformanceTestCase {
   public Date endDate;
 
   public static Iterable<Object[]> params() {
-    return Arrays.asList(new Object[][]
+    return List.of(new Object[][]
     {
       {null,null,null},
       {Metrics.ACTIVTY_INSTANCE_START, null, null},

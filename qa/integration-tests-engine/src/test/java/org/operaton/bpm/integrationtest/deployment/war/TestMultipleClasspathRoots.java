@@ -65,8 +65,10 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
    *                   |-- directory/processes/process.bpmn     (2)
    * </pre>
    *
+   * <p>
    * Processes (1) + (2) will have the same resource name (= "processes/process.bpmn"),
    * so that only one process should be deployed.
+   * </p>
    *
    */
   @Deployment
@@ -75,7 +77,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     Asset paProcessesXml = TestHelper.getStringAsAssetWithReplacements(
             PROCESSES_XML,
             new String[][]{new String[]{"PA_NAME","PA0"}});
-
+    assertThat(paProcessesXml).isNotNull();
 
     Asset[] processAssets = TestHelper.generateProcessAssets(2);
 
@@ -98,7 +100,7 @@ public class TestMultipleClasspathRoots extends AbstractFoxPlatformIntegrationTe
     ProcessDefinitionQuery query = repositoryService.createProcessDefinitionQuery();
 
     long count = query.count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

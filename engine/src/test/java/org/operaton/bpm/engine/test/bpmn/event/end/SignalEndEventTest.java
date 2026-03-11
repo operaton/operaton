@@ -76,7 +76,7 @@ class SignalEndEventTest {
     assertThat(processInstanceCatchEvent).isNotNull();
 
     // now we have a subscription for the signal event:
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(runtimeService.createEventSubscriptionQuery().singleResult().getEventName()).isEqualTo("alert");
 
     // start process which throw the signal end event
@@ -85,7 +85,7 @@ class SignalEndEventTest {
     testRule.assertProcessEnded(processInstanceEndEvent.getId());
 
     // user task of process catchSignalEndEvent
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskAfterSignalCatch");
 
@@ -130,7 +130,7 @@ class SignalEndEventTest {
   }
 
   protected void checkOutput(String processInstanceId) {
-    assertThat(taskService.createTaskQuery().taskName("task after catched signal").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskName("task after catched signal").count()).isOne();
     // and set the output variable of the called process to the process
     assertThat(runtimeService.getVariable(processInstanceId, "cancelReason")).isNotNull();
     assertThat(runtimeService.getVariable(processInstanceId, "input")).isEqualTo(42);

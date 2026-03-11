@@ -110,7 +110,7 @@ public class SetJobDefinitionPriorityCascadeAuthorizationTest {
     // given
     JobDefinition jobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();
     ProcessInstance instance = engineRule.getRuntimeService().startProcessInstanceByKey("process");
-    Job job = engineRule.getManagementService().createJobQuery().singleResult();
+    
 
     // when
     authRule
@@ -127,7 +127,7 @@ public class SetJobDefinitionPriorityCascadeAuthorizationTest {
       jobDefinition = engineRule.getManagementService().createJobDefinitionQuery().singleResult();
       assertThat((long) jobDefinition.getOverridingJobPriority()).isEqualTo(42L);
 
-      job = engineRule.getManagementService().createJobQuery().singleResult();
+      Job job = engineRule.getManagementService().createJobQuery().singleResult();
       assertThat(job.getPriority()).isEqualTo(42L);
     }
 

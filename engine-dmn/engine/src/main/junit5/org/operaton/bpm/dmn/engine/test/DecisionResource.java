@@ -27,8 +27,10 @@ public @interface DecisionResource {
    * can be given with a path or only the filename. For the latter
    * the test class location will be used to load the resource.
    *
+   * <p>
    * If omitted the test class and method name will be used
    * to load the DMN the resource.
+   * </p>
    */
   String resource() default "";
 

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Roman Smirnov
@@ -37,7 +36,7 @@ public class AssociationTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
         new AttributeAssumption("sourceRef"),
         new AttributeAssumption("targetRef"),
         new AttributeAssumption("associationDirection")

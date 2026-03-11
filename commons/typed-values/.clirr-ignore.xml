@@ -1,0 +1,31 @@
+<differences>
+  <difference>
+    <!-- It is okay to add classes to the set of superclasses -->
+    <className>**</className>
+    <differenceType>5000</differenceType>
+    <to>**</to>
+  </difference>
+  <difference>
+    <!-- It is okay to add methods to an interface-->
+    <className>**</className>
+    <differenceType>7012</differenceType>
+    <method>*</method>
+  </difference>
+  <difference>
+    <differenceType>8001</differenceType>
+    <className>operatonjar/com/sun/activation/**/*</className>
+  </difference>
+  <difference>
+    <differenceType>8001</differenceType>
+    <className>operatonjar/jakarta/activation/**/*</className>
+  </difference>
+
+  <!-- Operaton 1/0 -->
+  <!-- Reduction of field visibility OK -->
+  <difference>
+    <differenceType>6010</differenceType>
+    <className>org/operaton/bpm/engine/variable/impl/VariableMapImpl</className>
+    <field>variables</field>
+  </difference>
+
+</differences>

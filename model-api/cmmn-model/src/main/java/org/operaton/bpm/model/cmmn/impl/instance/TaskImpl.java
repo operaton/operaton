@@ -39,13 +39,20 @@ import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CMMN_ELEMENT_T
  * @author Roman Smirnov
  *
  */
+@SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
 public class TaskImpl extends PlanItemDefinitionImpl implements Task {
 
   protected static Attribute<Boolean> isBlockingAttribute;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use inputParameterCollection instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<InputsCaseParameter> inputsCollection;
+  /**
+   * @deprecated since 1.0, use outputParameterCollection instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<OutputsCaseParameter> outputsCollection;
 

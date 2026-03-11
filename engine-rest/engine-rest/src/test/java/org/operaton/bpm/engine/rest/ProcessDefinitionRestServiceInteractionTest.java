@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
@@ -36,6 +35,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
@@ -87,6 +88,7 @@ import org.operaton.bpm.engine.variable.type.ValueType;
 
 import static org.operaton.bpm.engine.rest.helper.MockProvider.createMockSerializedVariables;
 import static io.restassured.RestAssured.given;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.containsString;
@@ -232,7 +234,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   @Test
   void testInstanceResourceLinkResult() {
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -246,7 +248,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   void testInstanceResourceLinkWithEnginePrefix() {
     String startInstanceOnExplicitEngineUrl = TEST_RESOURCE_ROOT_PATH + "/engine/default/process-definition/{id}/start";
 
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("id", MockProvider.EXAMPLE_PROCESS_DEFINITION_ID)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -554,7 +556,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
     .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, emptyMap());
   }
 
   @Test
@@ -664,7 +666,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .when().post(SUBMIT_FORM_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", emptyMap());
   }
 
   @Test
@@ -895,7 +897,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
     .when().get(START_FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, Arrays.asList("a", "b", "c"), true);
+    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, List.of("a", "b", "c"), true);
   }
 
   @Test
@@ -927,7 +929,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .statusCode(Status.OK.getStatusCode()).contentType(ContentType.JSON)
     .when().get(START_FORM_VARIABLES_URL);
 
-    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, Arrays.asList("a", "b", "c"), false);
+    verify(formServiceMock, times(1)).getStartFormVariables(EXAMPLE_PROCESS_DEFINITION_ID, List.of("a", "b", "c"), false);
   }
 
   @Test
@@ -2668,23 +2670,28 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .put(PROCESS_DEFINITION_SUSPENDED_URL);
   }
 
-  @Test
-  void testActivateProcessDefinitionByNothing() {
+  @ParameterizedTest
+  @ValueSource(strings = {"true", "false", "null"})
+  void putProcessDefinitionSuspended_shouldReturnBadRequest_givenInvalidRequest(String suspendedValue) {
     Map<String, Object> params = new HashMap<>();
-    params.put("suspended", false);
+    // invalid because 'processDefinitionId' and 'processDefinitionKey' are both missing
+    // only 'suspended' is provided, or not provided at all
+    if (!"null".equals(suspendedValue)) {
+      params.put("suspended", Boolean.parseBoolean(suspendedValue));
+    }
 
     String message = "Either processDefinitionId or processDefinitionKey should be set to update the suspension state.";
 
     given()
-      .contentType(ContentType.JSON)
-      .body(params)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", is(InvalidRequestException.class.getSimpleName()))
-        .body("message", is(message))
-      .when()
-        .put(PROCESS_DEFINITION_SUSPENDED_URL);
+            .contentType(ContentType.JSON)
+            .body(params)
+            .then()
+            .expect()
+            .statusCode(Status.BAD_REQUEST.getStatusCode())
+            .body("type", is(InvalidRequestException.class.getSimpleName()))
+            .body("message", is(message))
+            .when()
+            .put(PROCESS_DEFINITION_SUSPENDED_URL);
   }
 
   @Test
@@ -2707,44 +2714,6 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .put(PROCESS_DEFINITION_SUSPENDED_URL);
   }
 
-  @Test
-  void testSuspendProcessDefinitionByNothing() {
-    Map<String, Object> params = new HashMap<>();
-    params.put("suspended", true);
-
-    String message = "Either processDefinitionId or processDefinitionKey should be set to update the suspension state.";
-
-    given()
-      .contentType(ContentType.JSON)
-      .body(params)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", is(InvalidRequestException.class.getSimpleName()))
-        .body("message", is(message))
-      .when()
-        .put(PROCESS_DEFINITION_SUSPENDED_URL);
-  }
-
-  @Test
-  void testSuspendProcessDefinitionThrowsInvalidRequestException() {
-    Map<String, Object> params = new HashMap<>();
-    params.put("suspended", true);
-
-    String message = "Either processDefinitionId or processDefinitionKey should be set to update the suspension state.";
-
-    given()
-      .contentType(ContentType.JSON)
-      .body(params)
-    .then()
-      .expect()
-        .statusCode(Status.BAD_REQUEST.getStatusCode())
-        .body("type", is(InvalidRequestException.class.getSimpleName()))
-        .body("message", is(message))
-      .when()
-        .put(PROCESS_DEFINITION_SUSPENDED_URL);
-  }
-
   /**
    *
    ********************************* test cases for operations of the latest process definition ********************************
@@ -2754,7 +2723,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
 
   @Test
   void testInstanceResourceLinkResult_ByKey() {
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -2768,7 +2737,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   void testInstanceResourceLinkWithEnginePrefix_ByKey() {
     String startInstanceOnExplicitEngineUrl = TEST_RESOURCE_ROOT_PATH + "/engine/default/process-definition/key/{key}/start";
 
-    String fullInstanceUrl = "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
+    String fullInstanceUrl = "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + "/engine/default/process-instance/" + MockProvider.EXAMPLE_PROCESS_INSTANCE_ID;
 
     given().pathParam("key", MockProvider.EXAMPLE_PROCESS_DEFINITION_KEY)
       .contentType(POST_JSON_CONTENT_TYPE).body(EMPTY_JSON_OBJECT)
@@ -2909,7 +2878,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
       .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
     .when().post(SUBMIT_FORM_BY_KEY_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, emptyMap());
   }
 
   @Test
@@ -2957,7 +2926,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
         .body("suspended", equalTo(MockProvider.EXAMPLE_PROCESS_INSTANCE_IS_SUSPENDED))
       .when().post(SUBMIT_FORM_BY_KEY_URL);
 
-    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", null);
+    verify(formServiceMock).submitStartForm(MockProvider.EXAMPLE_PROCESS_DEFINITION_ID, "myBusinessKey", emptyMap());
   }
 
   @Test
@@ -4071,7 +4040,7 @@ public class ProcessDefinitionRestServiceInteractionTest extends AbstractRestSer
   @Test
   void testGetStaticCalledProcessDefinitions() {
     CalledProcessDefinition mock = mock(CalledProcessDefinitionImpl.class);
-    when(mock.getCalledFromActivityIds()).thenReturn(Arrays.asList("anActivity", "anotherActivity"));
+    when(mock.getCalledFromActivityIds()).thenReturn(List.of("anActivity", "anotherActivity"));
     when(mock.getId()).thenReturn("aKey:1:123");
     when(mock.getCallingProcessDefinitionId()).thenReturn("aCallingId");
     when(mock.getName()).thenReturn("a Name");

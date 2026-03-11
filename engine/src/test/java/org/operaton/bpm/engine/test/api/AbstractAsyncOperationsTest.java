@@ -154,7 +154,7 @@ public abstract class AbstractAsyncOperationsTest {
 
   protected void assertHistoricBatchExists(ProcessEngineTestExtension testRule) {
     if (testRule.isHistoryLevelFull()) {
-      assertThat(historyService.createHistoricBatchQuery().count()).isEqualTo(1L);
+      assertThat(historyService.createHistoricBatchQuery().count()).isOne();
     }
   }
 

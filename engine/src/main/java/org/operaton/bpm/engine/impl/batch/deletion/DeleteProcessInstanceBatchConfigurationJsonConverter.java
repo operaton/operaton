@@ -33,8 +33,6 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 public class DeleteProcessInstanceBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<DeleteProcessInstanceBatchConfiguration> {
 
-  public static final DeleteProcessInstanceBatchConfigurationJsonConverter INSTANCE = new DeleteProcessInstanceBatchConfigurationJsonConverter();
-
   public static final String DELETE_REASON = "deleteReason";
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
   public static final String PROCESS_INSTANCE_ID_MAPPINGS = "processInstanceIdMappings";

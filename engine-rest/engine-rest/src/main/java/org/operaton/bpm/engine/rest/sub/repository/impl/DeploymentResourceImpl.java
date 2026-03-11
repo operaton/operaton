@@ -57,7 +57,7 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
     Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
 
     if (deployment == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Deployment with id '" + deploymentId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Deployment with id '%s' does not exist".formatted(deploymentId));
     }
 
     return DeploymentDto.fromDeployment(deployment);
@@ -144,7 +144,7 @@ public class DeploymentResourceImpl extends AbstractRestProcessEngineAware imple
     Deployment deployment = repositoryService.createDeploymentQuery().deploymentId(deploymentId).singleResult();
 
     if (deployment == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Deployment with id '" + deploymentId + "' do not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Deployment with id '%s' do not exist".formatted(deploymentId));
     }
 
     boolean cascade = isQueryPropertyEnabled(uriInfo, CASCADE);

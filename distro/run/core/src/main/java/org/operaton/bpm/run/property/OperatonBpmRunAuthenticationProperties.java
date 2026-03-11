@@ -20,10 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OperatonBpmRunAuthenticationProperties {
-
   public static final String PREFIX = OperatonBpmRunProperties.PREFIX + ".auth";
   public static final String DEFAULT_AUTH = "basic";
-  public static final List<String> AUTH_METHODS = Arrays.asList(DEFAULT_AUTH);
+  private static final List<String> AUTH_METHODS = Arrays.asList(DEFAULT_AUTH);
 
   boolean enabled;
   String authentication = DEFAULT_AUTH;
@@ -42,13 +41,13 @@ public class OperatonBpmRunAuthenticationProperties {
 
   public void setAuthentication(String authentication) {
     if (authentication != null && !AUTH_METHODS.contains(authentication)) {
-      throw new RuntimeException("Please provide a valid authentication method. The available ones are: " + AUTH_METHODS.toString());
+      throw new IllegalArgumentException("Please provide a valid authentication method. The available ones are: " + AUTH_METHODS.toString());
     }
     this.authentication = authentication;
   }
 
   @Override
   public String toString() {
-    return "OperatonBpmRunAuthenticationProperties [enabled=" + enabled + ", authentication=" + authentication + "]";
+    return "OperatonBpmRunAuthenticationProperties [enabled=%s, authentication=%s]".formatted(enabled, authentication);
   }
 }

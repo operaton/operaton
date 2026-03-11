@@ -98,7 +98,7 @@ class DatabaseTablePrefixTest {
         .addClasspathResource("org/operaton/bpm/engine/test/api/cfg/oneJobProcess.bpmn20.xml")
         .deploy();
 
-      assertThat(engine1.getRepositoryService().createDeploymentQuery().count()).isEqualTo(1);
+      assertThat(engine1.getRepositoryService().createDeploymentQuery().count()).isOne();
       assertThat(engine2.getRepositoryService().createDeploymentQuery().count()).isZero();
 
     } finally {

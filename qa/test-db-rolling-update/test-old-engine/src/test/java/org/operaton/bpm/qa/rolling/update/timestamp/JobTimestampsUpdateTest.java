@@ -18,10 +18,9 @@ package org.operaton.bpm.qa.rolling.update.timestamp;
 
 import java.util.Date;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.runtime.Job;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.Origin;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -33,14 +32,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 @ScenarioUnderTest("JobTimestampsUpdateScenario")
 @Origin("7.11.0")
-public class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
+class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
 
   protected static final long LOCK_DURATION = 300000L;
   protected static final Date LOCK_EXP_TIME = new Date(TIME + LOCK_DURATION);
 
   @ScenarioUnderTest("initJobTimestamps.1")
-  @Test
-  public void testDueDateConversion() {
+  @RollingUpdateTest
+  void testDueDateConversion() {
 
     Job job = rule.jobQuery().singleResult();
 
@@ -52,8 +51,8 @@ public class JobTimestampsUpdateTest extends AbstractTimestampUpdateTest {
   }
 
   @ScenarioUnderTest("initJobTimestamps.1")
-  @Test
-  public void testLockExpirationTimeConversion() {
+  @RollingUpdateTest
+  void testLockExpirationTimeConversion() {
 
     JobEntity job = (JobEntity) rule.jobQuery().singleResult();
 

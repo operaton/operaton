@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -119,7 +120,9 @@ class BpmnDeploymentTest {
     return new String(bytes);
   }
 
-  void FAILING_testViolateProcessDefinitionIdMaximumLength() {
+  @Test
+  @Disabled("Expected exception not thrown")
+  void testViolateProcessDefinitionIdMaximumLength() {
     // given
     DeploymentBuilder deployment = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/deployment/processWithLongId.bpmn20.xml");
@@ -149,7 +152,7 @@ class BpmnDeploymentTest {
         .enableDuplicateFiltering(false)
         .addClasspathResource(bpmnResourceName)
         .name("twice"));
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
   }
 
   @Test
@@ -331,7 +334,7 @@ class BpmnDeploymentTest {
         .name("thrice"));
 
     // there should still be one version of process 1
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process1").count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process1").count()).isOne();
 
     // there should be three versions of process 2
     assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("process2").count()).isEqualTo(3);

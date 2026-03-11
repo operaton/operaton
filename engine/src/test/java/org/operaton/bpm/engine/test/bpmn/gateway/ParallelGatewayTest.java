@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import org.operaton.bpm.engine.HistoryService;
 import org.operaton.bpm.engine.ManagementService;
@@ -59,46 +61,27 @@ class ParallelGatewayTest {
   HistoryService historyService;
 
   /**
+   * testSplitMergeNoWaitstates.bpmn:
    * Case where there is a parallel gateway that splits into 3 paths of
    * execution, that are immediately joined, without any wait states in between.
    * In the end, no executions should be in the database.
    */
-  @Deployment
-  @Test
-  void testSplitMergeNoWaitstates() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkJoinNoWaitStates");
+  @ParameterizedTest
+  @CsvSource({
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testSplitMergeNoWaitstates.bpmn, forkJoinNoWaitStates",
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testUnstructuredConcurrencyTwoForks.bpmn, unstructuredConcurrencyTwoForks",
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testUnstructuredConcurrencyTwoJoins.bpmn, unstructuredConcurrencyTwoJoins",
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testForkFollowedByOnlyEndEvents.bpmn, forkFollowedByEndEvents",
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testNestedForksFollowedByEndEvents.bpmn, nestedForksFollowedByEndEvents",
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testCompletingJoin.bpmn, process",
+    "org/operaton/bpm/engine/test/bpmn/gateway/ParallelGatewayTest.testCompletingJoinInSubProcess.bpmn, process"
+  })
+  void processShouldEndWithoutInteraction(String resource,  String processDefinitionKey) {
+    testRule.deploy(resource);
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey);
     assertThat(processInstance.isEnded()).isTrue();
   }
 
-  @Deployment
-  @Test
-  void testUnstructuredConcurrencyTwoForks() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoForks");
-    assertThat(processInstance.isEnded()).isTrue();
-  }
-
-  @Deployment
-  @Test
-  void testUnstructuredConcurrencyTwoJoins() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("unstructuredConcurrencyTwoJoins");
-    assertThat(processInstance.isEnded()).isTrue();
-  }
-
-  @Deployment
-  @Test
-  void testForkFollowedByOnlyEndEvents() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("forkFollowedByEndEvents");
-    assertThat(processInstance.isEnded()).isTrue();
-  }
-
-  @Deployment
-  @Test
-  void testNestedForksFollowedByEndEvents() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("nestedForksFollowedByEndEvents");
-    assertThat(processInstance.isEnded()).isTrue();
-  }
-
-  // ACT-482
   @Deployment
   @Test
   void testNestedForkJoin() {
@@ -148,8 +131,8 @@ class ParallelGatewayTest {
    */
   @Deployment
   @Test
-  void testReceyclingExecutionWithCallActivity() {
-    runtimeService.startProcessInstanceByKey("parent-process").getId();
+  void testRecyclingExecutionWithCallActivity() {
+    String processInstanceId = runtimeService.startProcessInstanceByKey("parent-process").getId();
 
     // After process start we have two tasks, one from the parent and one from
     // the sub process
@@ -171,17 +154,7 @@ class ParallelGatewayTest {
     taskService.complete(tasks.get(0).getId());
     assertThat(taskService.createTaskQuery().count()).isZero();
 
-    // There is a QA config without history, so we cannot work with this:
-    // assertEquals(1,
-    // historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).finished().count());
-  }
-
-  @Deployment
-  @Test
-  void testCompletingJoin() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-
-    assertThat(processInstance.isEnded()).isTrue();
+    assertThat(historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).finished().count()).isOne();
   }
 
   @Deployment
@@ -223,14 +196,6 @@ class ParallelGatewayTest {
     managementService.executeJob(list.get(1).getId());
 
     assertThat(runtimeService.createProcessInstanceQuery().singleResult()).isNull();
-  }
-
-  @Deployment
-  @Test
-  void testCompletingJoinInSubProcess() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-
-    assertThat(processInstance.isEnded()).isTrue();
   }
 
   @Deployment

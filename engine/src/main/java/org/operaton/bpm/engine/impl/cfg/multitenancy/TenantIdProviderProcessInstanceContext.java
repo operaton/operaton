@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * Provides information about a starting process instance to a {@link TenantIdProvider} implementation.
  *
  * @author Daniel Meyer
- * @since 7.5
  */
 public class TenantIdProviderProcessInstanceContext {
 

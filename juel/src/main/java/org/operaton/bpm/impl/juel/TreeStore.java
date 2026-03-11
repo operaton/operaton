@@ -58,7 +58,8 @@ public class TreeStore {
 		}
 		Tree tree = cache.get(expression);
 		if (tree == null) {
-			cache.put(expression, tree = builder.build(expression));
+			tree = builder.build(expression);
+			cache.put(expression, tree);
 		}
 		return tree;
 	}

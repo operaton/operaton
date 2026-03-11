@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.spring.test;
 
-import java.util.ServiceLoader;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,6 +38,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.diagnostics.PlatformDiagnosticsRegistry;
 import org.operaton.bpm.engine.impl.test.TestHelper;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
+import org.operaton.commons.utils.ServiceLoaderUtil;
 
 
 /**
@@ -69,8 +68,7 @@ public abstract class SpringProcessEngineTestCase implements ApplicationContextA
 
   protected SpringTestHelper lookupTestHelper()
   {
-    ServiceLoader<SpringTestHelper> serviceLoader = ServiceLoader.load(SpringTestHelper.class);
-    return serviceLoader.iterator().next();
+    return ServiceLoaderUtil.loadSingleService(SpringTestHelper.class);
   }
 
   @BeforeEach

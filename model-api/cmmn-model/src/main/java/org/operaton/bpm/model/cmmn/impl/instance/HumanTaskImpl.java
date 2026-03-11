@@ -44,6 +44,9 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   protected static AttributeReference<Role> performerRefAttribute;
 
   // cmmn 1.0
+  /**
+   * @deprecated since 1.0, use planningTableChild instead.
+   */
   @Deprecated(since = "1.0")
   protected static ChildElementCollection<PlanningTable> planningTableCollection;
 
@@ -74,6 +77,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
   }
 
   @Override
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public Collection<PlanningTable> getPlanningTables() {
     return planningTableCollection.get(this);
   }
@@ -184,6 +188,7 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     operatonPriorityAttribute.setValue(this, operatonPriority);
   }
 
+  @SuppressWarnings("java:S1874") // Use of cmmn1.0 deprecated field
   public static void registerType(ModelBuilder modelBuilder) {
     ModelElementTypeBuilder typeBuilder = modelBuilder.defineType(HumanTask.class, CMMN_ELEMENT_HUMAN_TASK)
         .namespaceUri(CMMN11_NS)
@@ -197,31 +202,31 @@ public class HumanTaskImpl extends TaskImpl implements HumanTask {
     /** operaton extensions */
 
     operatonAssigneeAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_ASSIGNEE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonCandidateGroupsAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_GROUPS)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonCandidateUsersAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_USERS)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonDueDateAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_DUE_DATE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonFollowUpDateAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FOLLOW_UP_DATE)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonFormKeyAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_FORM_KEY)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     operatonPriorityAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PRIORITY)
-      .namespace(CAMUNDA_NS)
+      .namespace(OPERATON_NS)
       .build();
 
     SequenceBuilder sequenceBuilder = typeBuilder.sequence();

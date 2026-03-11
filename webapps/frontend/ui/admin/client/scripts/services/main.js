@@ -25,7 +25,7 @@ var angular = require('operaton-commons-ui/vendor/angular'),
 
 var servicesModule = (module.exports = angular.module(
   'cam.admin.services',
-  []
+  [],
 ));
 
 servicesModule.service('page', page);

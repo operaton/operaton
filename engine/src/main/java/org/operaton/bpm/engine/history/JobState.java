@@ -16,12 +16,13 @@
  */
 package org.operaton.bpm.engine.history;
 
+import java.io.Serializable;
 
 /**
  * @author Roman Smirnov
  *
  */
-public interface JobState {
+public interface JobState extends Serializable {
 
   JobState CREATED = new JobStateImpl(0, "created");
   JobState FAILED = new JobStateImpl(1, "failed");

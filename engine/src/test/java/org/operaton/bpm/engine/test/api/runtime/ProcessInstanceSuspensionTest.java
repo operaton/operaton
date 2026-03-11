@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +27,6 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.operaton.bpm.engine.ExternalTaskService;
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.SuspendedEntityInteractionException;
@@ -154,32 +152,26 @@ class ProcessInstanceSuspensionTest {
     ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().singleResult();
     assertThat(processInstance.isSuspended()).isFalse();
 
-    try {
+    assertThatCode(() -> {
       //activate
       runtimeService.activateProcessInstanceById(processInstance.getId());
-      processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isFalse();
-    } catch (ProcessEngineException e) {
-      fail("Should not fail");
-    }
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isFalse();
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       //activate
       runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-      processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isFalse();
-    } catch (ProcessEngineException e) {
-      fail("Should not fail");
-    }
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isFalse();
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       //activate
       runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-      processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isFalse();
-    } catch (ProcessEngineException e) {
-      fail("Should not fail");
-    }
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isFalse();
+    }).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -193,29 +185,23 @@ class ProcessInstanceSuspensionTest {
 
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
-    try {
+    assertThatCode(() -> {
       runtimeService.suspendProcessInstanceById(processInstance.getId());
-      processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isTrue();
-    } catch (ProcessEngineException e) {
-      fail("Should not fail");
-    }
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isTrue();
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-      processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isTrue();
-    } catch (ProcessEngineException e) {
-      fail("Should not fail");
-    }
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isTrue();
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-      processInstance = runtimeService.createProcessInstanceQuery().singleResult();
-      assertThat(processInstance.isSuspended()).isTrue();
-    } catch (ProcessEngineException e) {
-      fail("Should not fail");
-    }
+      var updatedProcessInstance = runtimeService.createProcessInstanceQuery().singleResult();
+      assertThat(updatedProcessInstance.isSuspended()).isTrue();
+    }).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {
@@ -238,7 +224,7 @@ class ProcessInstanceSuspensionTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
@@ -268,7 +254,7 @@ class ProcessInstanceSuspensionTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
@@ -298,7 +284,7 @@ class ProcessInstanceSuspensionTest {
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(5);
     assertThat(runtimeService.createProcessInstanceQuery().active().count()).isEqualTo(4);
-    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().suspended().count()).isOne();
 
     assertThat(runtimeService.createProcessInstanceQuery().suspended().singleResult().getId()).isEqualTo(piToSuspend.getId());
   }
@@ -421,15 +407,15 @@ class ProcessInstanceSuspensionTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().suspended().count()).isOne();
     assertThat(taskService.createTaskQuery().active().count()).isZero();
 
     // Activate
     runtimeService.activateProcessInstanceById(processInstance.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
-    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isOne();
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
@@ -451,15 +437,15 @@ class ProcessInstanceSuspensionTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().suspended().count()).isOne();
     assertThat(taskService.createTaskQuery().active().count()).isZero();
 
     // Activate
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
-    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isOne();
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
@@ -481,15 +467,15 @@ class ProcessInstanceSuspensionTest {
 
     // Suspend
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().suspended().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
+    assertThat(taskService.createTaskQuery().suspended().count()).isOne();
     assertThat(taskService.createTaskQuery().active().count()).isZero();
 
     // Activate
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(taskService.createTaskQuery().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().suspended().count()).isZero();
-    assertThat(taskService.createTaskQuery().active().count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().active().count()).isOne();
 
     // Completing should end the process instance
     task = taskService.createTaskQuery().singleResult();
@@ -585,54 +571,22 @@ class ProcessInstanceSuspensionTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceById(processInstance.getId());
 
-    try {
-      runtimeService.removeVariable(processInstance.getId(), "someVariable");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariable(processInstance.getId(), "someVariable")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariableLocal(processInstance.getId(), "someVariable");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariableLocal(processInstance.getId(), "someVariable")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariables(processInstance.getId(), Arrays.asList("one", "two", "three"));
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariables(processInstance.getId(), List.of("one", "two", "three"))).doesNotThrowAnyException();
 
 
-    try {
-      runtimeService.removeVariablesLocal(processInstance.getId(), Arrays.asList("one", "two", "three"));
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariablesLocal(processInstance.getId(), List.of("one", "two", "three"))).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariable(processInstance.getId(), "someVariable", "someValue");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariable(processInstance.getId(), "someVariable", "someValue")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariableLocal(processInstance.getId(), "someVariable", "someValue");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariableLocal(processInstance.getId(), "someVariable", "someValue")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariables(processInstance.getId(), new HashMap<>());
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariables(processInstance.getId(), new HashMap<>())).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>());
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>())).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -642,54 +596,22 @@ class ProcessInstanceSuspensionTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
 
-    try {
-      runtimeService.removeVariable(processInstance.getId(), "someVariable");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariable(processInstance.getId(), "someVariable")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariableLocal(processInstance.getId(), "someVariable");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariableLocal(processInstance.getId(), "someVariable")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariables(processInstance.getId(), Arrays.asList("one", "two", "three"));
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariables(processInstance.getId(), List.of("one", "two", "three"))).doesNotThrowAnyException();
 
 
-    try {
-      runtimeService.removeVariablesLocal(processInstance.getId(), Arrays.asList("one", "two", "three"));
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariablesLocal(processInstance.getId(), List.of("one", "two", "three"))).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariable(processInstance.getId(), "someVariable", "someValue");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariable(processInstance.getId(), "someVariable", "someValue")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariableLocal(processInstance.getId(), "someVariable", "someValue");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariableLocal(processInstance.getId(), "someVariable", "someValue")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariables(processInstance.getId(), new HashMap<>());
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariables(processInstance.getId(), new HashMap<>())).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>());
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>())).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -699,53 +621,21 @@ class ProcessInstanceSuspensionTest {
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
-    try {
-      runtimeService.removeVariable(processInstance.getId(), "someVariable");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariable(processInstance.getId(), "someVariable")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariableLocal(processInstance.getId(), "someVariable");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariableLocal(processInstance.getId(), "someVariable")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariables(processInstance.getId(), Arrays.asList("one", "two", "three"));
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariables(processInstance.getId(), List.of("one", "two", "three"))).doesNotThrowAnyException();
 
-    try {
-      runtimeService.removeVariablesLocal(processInstance.getId(), Arrays.asList("one", "two", "three"));
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.removeVariablesLocal(processInstance.getId(), List.of("one", "two", "three"))).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariable(processInstance.getId(), "someVariable", "someValue");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariable(processInstance.getId(), "someVariable", "someValue")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariableLocal(processInstance.getId(), "someVariable", "someValue");
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariableLocal(processInstance.getId(), "someVariable", "someValue")).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariables(processInstance.getId(), new HashMap<>());
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariables(processInstance.getId(), new HashMap<>())).doesNotThrowAnyException();
 
-    try {
-      runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>());
-    } catch (ProcessEngineException e) {
-      fail("This should be possible");
-    }
+    assertThatCode(() -> runtimeService.setVariablesLocal(processInstance.getId(), new HashMap<>())).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -791,21 +681,14 @@ class ProcessInstanceSuspensionTest {
     var processInstanceId = processInstance.getId();
     runtimeService.suspendProcessInstanceById(processInstanceId);
 
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -818,21 +701,14 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
     String processInstanceId = processInstance.getId();
 
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -845,21 +721,14 @@ class ProcessInstanceSuspensionTest {
     var processInstanceId = processInstance.getId();
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
 
-    try {
-      runtimeService.signal(processInstanceId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.signal(processInstanceId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.signal(processInstanceId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment
@@ -871,21 +740,14 @@ class ProcessInstanceSuspensionTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testMessageEventReceiveFailAfterSuspend.bpmn20.xml"})
@@ -897,21 +759,14 @@ class ProcessInstanceSuspensionTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.testMessageEventReceiveFailAfterSuspend.bpmn20.xml"})
@@ -923,21 +778,14 @@ class ProcessInstanceSuspensionTest {
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
-    try {
-      runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    assertThatThrownBy(() -> runtimeService.messageEventReceived("someMessage", executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment
@@ -948,6 +796,7 @@ class ProcessInstanceSuspensionTest {
 
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
+    assertThat(processInstance).isNotNull();
     runtimeService.signalEventReceived(signal);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
@@ -955,28 +804,22 @@ class ProcessInstanceSuspensionTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     runtimeService.signalEventReceived(signal);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
-    try {
-      runtimeService.signalEventReceived(signal, executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
 
-    try {
-      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
+
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -992,6 +835,7 @@ class ProcessInstanceSuspensionTest {
 
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
+    assertThat(processInstance).isNotNull();
     runtimeService.signalEventReceived(signal);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
@@ -999,28 +843,22 @@ class ProcessInstanceSuspensionTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
     runtimeService.signalEventReceived(signal);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
-    try {
-      runtimeService.signalEventReceived(signal, executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
 
-    try {
-      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
+
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -1036,6 +874,7 @@ class ProcessInstanceSuspensionTest {
 
     // Test if process instance can be completed using the signal
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
+    assertThat(processInstance).isNotNull();
     runtimeService.signalEventReceived(signal);
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
 
@@ -1048,28 +887,22 @@ class ProcessInstanceSuspensionTest {
     processInstance = runtimeService.startProcessInstanceByKey("signalSuspendedProcessInstance");
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     runtimeService.signalEventReceived(signal);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     runtimeService.signalEventReceived(signal, new HashMap<>());
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     EventSubscription subscription = runtimeService.createEventSubscriptionQuery().singleResult();
     var executionId = subscription.getExecutionId();
-    try {
-      runtimeService.signalEventReceived(signal, executionId);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
 
-    try {
-      runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables);
-      fail("");
-    } catch (SuspendedEntityInteractionException e) {
-      // This is expected
-      testRule.assertTextPresent("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
+
+    assertThatThrownBy(() -> runtimeService.signalEventReceived(signal, executionId, emptyProcessVariables))
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
 
     // Activate and try again
     runtimeService.activateProcessInstanceById(processInstance.getId());
@@ -1291,82 +1124,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceById(processInstance.getId());
     assertThat(task).isNotNull();
 
-    try {
-      taskService.setVariable(task.getId(), "someVar", "someValue");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setVariable(task.getId(), "someVar", "someValue")).doesNotThrowAnyException();
 
-    try {
-      taskService.setVariableLocal(task.getId(), "someVar", "someValue");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setVariableLocal(task.getId(), "someVar", "someValue")).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariables(task.getId(), variables);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariablesLocal(task.getId(), variables);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    }).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariable(task.getId(), "someVar");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariable(task.getId(), "someVar")).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariableLocal(task.getId(), "someVar");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariableLocal(task.getId(), "someVar")).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariables(task.getId(), Arrays.asList("one", "two"));
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariables(task.getId(), List.of("one", "two"))).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariablesLocal(task.getId(), Arrays.asList("one", "two"));
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariablesLocal(task.getId(), List.of("one", "two"))).doesNotThrowAnyException();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
 
-      try {
-        taskService.createComment(task.getId(), processInstance.getId(), "test comment");
-      } catch (SuspendedEntityInteractionException e) {
-        fail("should be allowed");
-      }
+      assertThatCode(() -> taskService.createComment(task.getId(), processInstance.getId(), "test comment")).doesNotThrowAnyException();
 
-      try {
-        taskService.createAttachment("text", task.getId(), processInstance.getId(), "tesTastName", "testDescription", "http://test.com");
-      } catch (SuspendedEntityInteractionException e) {
-        fail("should be allowed");
-      }
+      assertThatCode(() -> taskService.createAttachment("text", task.getId(), processInstance.getId(), "tesTastName", "testDescription", "http://test.com")).doesNotThrowAnyException();
 
     }
 
 
-    try {
-      taskService.setPriority(task.getId(), 99);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setPriority(task.getId(), 99)).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1380,82 +1173,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processInstance.getProcessDefinitionId());
     assertThat(task).isNotNull();
 
-    try {
-      taskService.setVariable(task.getId(), "someVar", "someValue");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setVariable(task.getId(), "someVar", "someValue")).doesNotThrowAnyException();
 
-    try {
-      taskService.setVariableLocal(task.getId(), "someVar", "someValue");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setVariableLocal(task.getId(), "someVar", "someValue")).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariables(task.getId(), variables);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariablesLocal(task.getId(), variables);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    }).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariable(task.getId(), "someVar");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariable(task.getId(), "someVar")).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariableLocal(task.getId(), "someVar");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariableLocal(task.getId(), "someVar")).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariables(task.getId(), Arrays.asList("one", "two"));
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariables(task.getId(), List.of("one", "two"))).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariablesLocal(task.getId(), Arrays.asList("one", "two"));
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariablesLocal(task.getId(), List.of("one", "two"))).doesNotThrowAnyException();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
 
-      try {
-        taskService.createComment(task.getId(), processInstance.getId(), "test comment");
-      } catch (SuspendedEntityInteractionException e) {
-        fail("should be allowed");
-      }
+      assertThatCode(() -> taskService.createComment(task.getId(), processInstance.getId(), "test comment")).doesNotThrowAnyException();
 
-      try {
-        taskService.createAttachment("text", task.getId(), processInstance.getId(), "tesTastName", "testDescription", "http://test.com");
-      } catch (SuspendedEntityInteractionException e) {
-        fail("should be allowed");
-      }
+      assertThatCode(() -> taskService.createAttachment("text", task.getId(), processInstance.getId(), "tesTastName", "testDescription", "http://test.com")).doesNotThrowAnyException();
 
     }
 
 
-    try {
-      taskService.setPriority(task.getId(), 99);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setPriority(task.getId(), 99)).doesNotThrowAnyException();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
@@ -1469,82 +1222,42 @@ class ProcessInstanceSuspensionTest {
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     assertThat(task).isNotNull();
 
-    try {
-      taskService.setVariable(task.getId(), "someVar", "someValue");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setVariable(task.getId(), "someVar", "someValue")).doesNotThrowAnyException();
 
-    try {
-      taskService.setVariableLocal(task.getId(), "someVar", "someValue");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setVariableLocal(task.getId(), "someVar", "someValue")).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariables(task.getId(), variables);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    }).doesNotThrowAnyException();
 
-    try {
+    assertThatCode(() -> {
       HashMap<String, String> variables = new HashMap<>();
       variables.put("varOne", "one");
       variables.put("varTwo", "two");
       taskService.setVariablesLocal(task.getId(), variables);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    }).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariable(task.getId(), "someVar");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariable(task.getId(), "someVar")).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariableLocal(task.getId(), "someVar");
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariableLocal(task.getId(), "someVar")).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariables(task.getId(), Arrays.asList("one", "two"));
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariables(task.getId(), List.of("one", "two"))).doesNotThrowAnyException();
 
-    try {
-      taskService.removeVariablesLocal(task.getId(), Arrays.asList("one", "two"));
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.removeVariablesLocal(task.getId(), List.of("one", "two"))).doesNotThrowAnyException();
 
     if(processEngineConfiguration.getHistoryLevel().getId() > HistoryLevel.HISTORY_LEVEL_ACTIVITY.getId()) {
 
-      try {
-        taskService.createComment(task.getId(), processInstance.getId(), "test comment");
-      } catch (SuspendedEntityInteractionException e) {
-        fail("should be allowed");
-      }
+      assertThatCode(() -> taskService.createComment(task.getId(), processInstance.getId(), "test comment")).doesNotThrowAnyException();
 
-      try {
-        taskService.createAttachment("text", task.getId(), processInstance.getId(), "tesTastName", "testDescription", "http://test.com");
-      } catch (SuspendedEntityInteractionException e) {
-        fail("should be allowed");
-      }
+      assertThatCode(() -> taskService.createAttachment("text", task.getId(), processInstance.getId(), "tesTastName", "testDescription", "http://test.com")).doesNotThrowAnyException();
 
     }
 
 
-    try {
-      taskService.setPriority(task.getId(), 99);
-    } catch (SuspendedEntityInteractionException e) {
-      fail("should be allowed");
-    }
+    assertThatCode(() -> taskService.setPriority(task.getId(), 99)).doesNotThrowAnyException();
   }
 
   @Deployment
@@ -1557,9 +1270,9 @@ class ProcessInstanceSuspensionTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     runtimeService.suspendProcessInstanceById(processInstance.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
@@ -1567,7 +1280,7 @@ class ProcessInstanceSuspensionTest {
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceById(processInstance.getId());
-    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().executable().count()).isOne();
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
     assertThat(managementService.createJobQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -1583,9 +1296,9 @@ class ProcessInstanceSuspensionTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     runtimeService.suspendProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
@@ -1593,7 +1306,7 @@ class ProcessInstanceSuspensionTest {
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceByProcessDefinitionId(processDefinition.getId());
-    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().executable().count()).isOne();
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
     assertThat(managementService.createJobQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -1609,9 +1322,9 @@ class ProcessInstanceSuspensionTest {
     // Suspending the process instance should also stop the execution of jobs for that process instance
     ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().singleResult();
     runtimeService.startProcessInstanceById(processDefinition.getId());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     runtimeService.suspendProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // The jobs should not be executed now
     ClockUtil.setCurrentTime(new Date(now.getTime() + (60 * 60 * 1000))); // Timer is set to fire on 5 minutes
@@ -1619,7 +1332,7 @@ class ProcessInstanceSuspensionTest {
 
     // Activation of the process instance should now allow for job execution
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
-    assertThat(managementService.createJobQuery().executable().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().executable().count()).isOne();
     managementService.executeJob(managementService.createJobQuery().singleResult().getId());
     assertThat(managementService.createJobQuery().count()).isZero();
     assertThat(runtimeService.createProcessInstanceQuery().count()).isZero();
@@ -1641,7 +1354,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.activateProcessInstanceById(instance.getId());
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1660,7 +1373,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.activateProcessInstanceByProcessDefinitionId(instance.getProcessDefinitionId());
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callSimpleProcess.bpmn20.xml",
@@ -1684,7 +1397,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.activateProcessInstanceByProcessDefinitionKey(processDefinition.getKey());
     taskService.complete(task.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/ProcessInstanceSuspensionTest.callMISimpleProcess.bpmn20.xml",
@@ -1780,12 +1493,10 @@ class ProcessInstanceSuspensionTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startBeforeActivity("theTask");
 
     // try to start before activity for suspended processDefinition
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -1802,12 +1513,10 @@ class ProcessInstanceSuspensionTest {
     var processInstanceModificationBuilder = runtimeService.createProcessInstanceModification(processInstance.getId()).startAfterActivity("theTask");
 
     // try to start after activity for suspended processDefinition
-    try {
-      processInstanceModificationBuilder.execute();
-      fail("Exception is expected but not thrown");
-    } catch(SuspendedEntityInteractionException e) {
-      testRule.assertTextPresentIgnoreCase("is suspended", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(processInstanceModificationBuilder::execute)
+      .isInstanceOf(SuspendedEntityInteractionException.class)
+      .hasMessageContaining("is suspended");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/externaltask/oneExternalTaskProcess.bpmn20.xml",
@@ -1928,7 +1637,7 @@ class ProcessInstanceSuspensionTest {
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
     //activate
     runtimeService
@@ -1936,7 +1645,7 @@ class ProcessInstanceSuspensionTest {
       .byProcessInstanceId(processInstance.getId())
       .activate();
 
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
   }
 
@@ -1947,7 +1656,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
 
     //suspend
@@ -1957,7 +1666,7 @@ class ProcessInstanceSuspensionTest {
       .suspend();
 
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
     //activate
     runtimeService
@@ -1965,7 +1674,7 @@ class ProcessInstanceSuspensionTest {
       .byProcessDefinitionId(processDefinition.getId())
       .activate();
 
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
   }
 
@@ -1975,7 +1684,7 @@ class ProcessInstanceSuspensionTest {
     runtimeService.startProcessInstanceByKey("oneTaskProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery();
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
 
     //suspend
@@ -1985,7 +1694,7 @@ class ProcessInstanceSuspensionTest {
       .suspend();
 
     assertThat(query.active().count()).isZero();
-    assertThat(query.suspended().count()).isEqualTo(1);
+    assertThat(query.suspended().count()).isOne();
 
     //activate
     runtimeService
@@ -1993,7 +1702,7 @@ class ProcessInstanceSuspensionTest {
       .byProcessDefinitionKey("oneTaskProcess")
       .activate();
 
-    assertThat(query.active().count()).isEqualTo(1);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isZero();
   }
 

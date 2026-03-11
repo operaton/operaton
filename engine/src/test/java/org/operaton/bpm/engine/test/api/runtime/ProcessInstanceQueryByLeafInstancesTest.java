@@ -50,9 +50,9 @@ class ProcessInstanceQueryByLeafInstancesTest {
     ProcessInstanceQuery simpleSubProcessQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("simpleSubProcess");
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(3L);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("nestedSubProcessQueryTest").count()).isEqualTo(1L);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("nestedSimpleSubProcess").count()).isEqualTo(1L);
-    assertThat(simpleSubProcessQuery.count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("nestedSubProcessQueryTest").count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("nestedSimpleSubProcess").count()).isOne();
+    assertThat(simpleSubProcessQuery.count()).isOne();
 
     ProcessInstance instance = runtimeService.createProcessInstanceQuery().leafProcessInstances().singleResult();
     assertThat(instance.getRootProcessInstanceId()).isEqualTo(threeLayerProcess.getId());
@@ -72,8 +72,8 @@ class ProcessInstanceQueryByLeafInstancesTest {
     ProcessInstanceQuery simpleSubProcessQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("simpleSubProcess");
 
     assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(2L);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("nestedSimpleSubProcess").count()).isEqualTo(1L);
-    assertThat(simpleSubProcessQuery.count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("nestedSimpleSubProcess").count()).isOne();
+    assertThat(simpleSubProcessQuery.count()).isOne();
 
     ProcessInstance instance = runtimeService.createProcessInstanceQuery().leafProcessInstances().singleResult();
     assertThat(instance.getRootProcessInstanceId()).isEqualTo(twoLayerProcess.getId());
@@ -86,8 +86,8 @@ class ProcessInstanceQueryByLeafInstancesTest {
     ProcessInstance process = runtimeService.startProcessInstanceByKey("simpleSubProcess");
     ProcessInstanceQuery simpleSubProcessQuery = runtimeService.createProcessInstanceQuery().processDefinitionKey("simpleSubProcess");
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
-    assertThat(simpleSubProcessQuery.count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(simpleSubProcessQuery.count()).isOne();
 
     ProcessInstance instance = runtimeService.createProcessInstanceQuery().leafProcessInstances().singleResult();
     assertThat(instance.getRootProcessInstanceId()).isEqualTo(process.getId());

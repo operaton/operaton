@@ -23,7 +23,9 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 /**
  * Parent class for all BPMN 2.0 task types such as ServiceTask, ScriptTask, UserTask, etc.
  *
+ * <p>
  * When used on its own, it behaves just as a pass-through activity.
+ * </p>
  *
  * @author Joram Barrez
  */
@@ -38,9 +40,8 @@ public class TaskActivityBehavior extends AbstractBpmnActivityBehavior {
    * The method which will be called before the execution is performed.
    *
    * @param execution the execution which is used during execution
-   * @throws Exception
    */
-  protected void preExecution(ActivityExecution execution) throws Exception {
+  protected void preExecution(ActivityExecution execution) {
     activityInstanceId = execution.getActivityInstanceId();
   }
 
@@ -58,9 +59,8 @@ public class TaskActivityBehavior extends AbstractBpmnActivityBehavior {
    * The method which will be called after performing the execution.
    *
    * @param execution the execution
-   * @throws Exception
    */
-  protected void postExecution(ActivityExecution execution) throws Exception {
+  protected void postExecution(ActivityExecution execution) {
     // nothing to do
   }
 

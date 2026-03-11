@@ -18,6 +18,8 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -88,7 +90,7 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
       }
     }
     catch (MalformedURLException e) {
-      throw new ProcessEngineException("'" + url + "' is not a valid Operaton configuration resource location.", e);
+      throw new ProcessEngineException("'%s' is not a valid Operaton configuration resource location.".formatted(url), e);
     }
 
     return fileLocation;
@@ -127,7 +129,13 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
     Pattern urlPattern = Pattern.compile("^(https?://).*/bpm-platform\\.xml$", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
     Matcher urlMatcher = urlPattern.matcher(url);
     if (urlMatcher.matches()) {
-      return new URL(url);
+      try {
+        return new URI(url).toURL();
+      } catch (URISyntaxException e) {
+        MalformedURLException malformedURLException = new MalformedURLException("Invalid URI syntax: " + url);
+        malformedURLException.initCause(e);
+        throw malformedURLException;
+      }
     }
 
     return null;
@@ -173,11 +181,11 @@ public abstract class AbstractParseBpmPlatformXmlStep extends DeploymentOperatio
 
   public URL lookupBpmPlatformXmlLocationFromEnvironmentVariable() {
     String bpmPlatformXmlLocation = System.getenv(BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE);
-    String logStatement = "environment variable [" + BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE + "]";
+    String logStatement = "environment variable [%s]".formatted(BPM_PLATFORM_XML_ENVIRONMENT_VARIABLE);
 
     if (bpmPlatformXmlLocation == null) {
       bpmPlatformXmlLocation = System.getProperty(BPM_PLATFORM_XML_SYSTEM_PROPERTY);
-      logStatement = "system property [" + BPM_PLATFORM_XML_SYSTEM_PROPERTY + "]";
+      logStatement = "system property [%s]".formatted(BPM_PLATFORM_XML_SYSTEM_PROPERTY);
     }
 
     URL fileLocation = checkValidBpmPlatformXmlResourceLocation(bpmPlatformXmlLocation);

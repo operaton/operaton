@@ -55,7 +55,9 @@ public class ScriptBindings implements Bindings {
    * The script engine implementations put some key/value pairs into the binding.
    * This list contains those keys, such that they wouldn't be stored as process variable.
    *
+   * <p>
    * This list contains the keywords for JUEL, Javascript and Groovy.
+   * </p>
    */
   protected static final Set<String> UNSTORED_KEYS =
     new HashSet<>(Arrays.asList(

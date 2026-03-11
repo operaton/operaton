@@ -22,11 +22,11 @@ var template = require('./cam-tasklist-task.html?raw');
 var angular = require('operaton-commons-ui/vendor/angular');
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       scope: {
-        tasklistData: '='
+        tasklistData: '=',
       },
 
       template: template,
@@ -44,7 +44,7 @@ module.exports = [
         'Views',
         'search',
         'Uri',
-        function(
+        function (
           $scope,
           $q,
           $location,
@@ -54,13 +54,12 @@ module.exports = [
           Notifications,
           Views,
           search,
-          Uri
+          Uri,
         ) {
           // setup /////////////////////////////////////////////////////////////////////
 
-          var taskData = ($scope.taskData = $scope.tasklistData.newChild(
-            $scope
-          ));
+          var taskData = ($scope.taskData =
+            $scope.tasklistData.newChild($scope));
 
           function setLink(task) {
             if (!task) {
@@ -85,7 +84,7 @@ module.exports = [
             }
 
             var link = Uri.appUri(
-              'cockpitbase://:engine/#/' + resource + '/' + resourceId
+              'cockpitbase://:engine/#/' + resource + '/' + resourceId,
             );
 
             if (rootElement) {
@@ -99,18 +98,18 @@ module.exports = [
 
           function errorNotification(src, err) {
             $translate(src)
-              .then(function(translated) {
+              .then(function (translated) {
                 Notifications.addError({
                   status: translated,
                   message: err ? err.message : '',
                   exclusive: true,
-                  scope: $scope
+                  scope: $scope,
                 });
               })
               .catch(angular.noop);
           }
 
-          $scope.errorHandler = function(status, err) {
+          $scope.errorHandler = function (status, err) {
             var _status = enhanceErrorMessage(err.message);
 
             if (
@@ -118,7 +117,7 @@ module.exports = [
               _status === 'INSTANCE_SUSPENDED'
             ) {
               return $translate(_status)
-                .then(function(translated) {
+                .then(function (translated) {
                   err.message = translated;
                   errorNotification(status, err);
                   clearTask(true);
@@ -174,7 +173,7 @@ module.exports = [
             taskData.changed('taskList');
           }
 
-          $scope.$watch('taskState.$error', function(err) {
+          $scope.$watch('taskState.$error', function (err) {
             if (err) {
               var src = enhanceErrorMessage(err.message);
               errorNotification(src, err);
@@ -188,7 +187,7 @@ module.exports = [
 
           taskData.provide('assignee', [
             'task',
-            function(task) {
+            function (task) {
               if (task && task._embedded) {
                 if (task._embedded.identityLink) {
                   for (var i = 0; i < task._embedded.identityLink.length; i++) {
@@ -203,12 +202,12 @@ module.exports = [
                 }
               }
               return null;
-            }
+            },
           ]);
 
           taskData.provide('groups', [
             'task',
-            function(task) {
+            function (task) {
               var groups = [];
               if (task && task._embedded) {
                 if (task._embedded.identityLink) {
@@ -219,11 +218,11 @@ module.exports = [
                     ) {
                       if (task._embedded.identityLink[i]._embedded.group) {
                         groups.push(
-                          task._embedded.identityLink[i]._embedded.group[0]
+                          task._embedded.identityLink[i]._embedded.group[0],
                         );
                       } else {
                         groups.push({
-                          id: task._embedded.identityLink[i].groupId
+                          id: task._embedded.identityLink[i].groupId,
                         });
                       }
                     }
@@ -231,21 +230,21 @@ module.exports = [
                 }
               }
               return groups;
-            }
+            },
           ]);
 
           taskData.provide('isAssignee', [
             'assignee',
-            function(assignee) {
+            function (assignee) {
               return (
                 !!assignee && assignee.id === $scope.$root.authentication.name
               );
-            }
+            },
           ]);
 
           taskData.provide('processDefinition', [
             'task',
-            function(task) {
+            function (task) {
               if (
                 !task ||
                 !task._embedded ||
@@ -254,17 +253,17 @@ module.exports = [
                 return null;
               }
               return task._embedded.processDefinition[0];
-            }
+            },
           ]);
 
           taskData.provide('caseDefinition', [
             'task',
-            function(task) {
+            function (task) {
               if (!task || !task._embedded || !task._embedded.caseDefinition) {
                 return null;
               }
               return task._embedded.caseDefinition[0];
-            }
+            },
           ]);
 
           // observer ////////////////////////////////////////////////////////////////////////
@@ -272,7 +271,7 @@ module.exports = [
           /**
            * expose current task as scope variable
            */
-          $scope.taskState = taskData.observe('task', function(task) {
+          $scope.taskState = taskData.observe('task', function (task) {
             const oldTask = $scope.task;
             $scope.task = task;
             task && setLink(task);
@@ -285,12 +284,12 @@ module.exports = [
             }
           });
 
-          $scope.$on('$locationChangeSuccess', function() {
+          $scope.$on('$locationChangeSuccess', function () {
             // update link on plane load or change
             setLink($scope.task);
           });
 
-          taskData.observe('isAssignee', function(isAssignee) {
+          taskData.observe('isAssignee', function (isAssignee) {
             $scope.isAssignee = isAssignee;
           });
 
@@ -298,17 +297,17 @@ module.exports = [
 
           $scope.taskVars = {read: ['task', 'taskData', 'errorHandler']};
           $scope.taskDetailTabs = Views.getProviders({
-            component: 'tasklist.task.detail'
+            component: 'tasklist.task.detail',
           });
 
           $scope.selectedTaskDetailTab = $scope.taskDetailTabs[0];
 
-          $scope.selectTaskDetailTab = function(tab) {
+          $scope.selectTaskDetailTab = function (tab) {
             if (!$scope.taskExists) return;
             $scope.selectedTaskDetailTab = tab;
 
             search.updateSilently({
-              detailsTab: tab.id
+              detailsTab: tab.id,
             });
           };
 
@@ -322,7 +321,7 @@ module.exports = [
             if (selectedTabId) {
               var provider = Views.getProvider({
                 component: 'tasklist.task.detail',
-                id: selectedTabId
+                id: selectedTabId,
               });
               if (provider && tabs.indexOf(provider) != -1) {
                 $scope.selectedTaskDetailTab = provider;
@@ -331,7 +330,7 @@ module.exports = [
             }
 
             search.updateSilently({
-              detailsTab: null
+              detailsTab: null,
             });
 
             $scope.selectedTaskDetailTab = tabs[0];
@@ -339,7 +338,7 @@ module.exports = [
 
           setDefaultTaskDetailTab($scope.taskDetailTabs);
 
-          $scope.$on('$routeChanged', function() {
+          $scope.$on('$routeChanged', function () {
             setDefaultTaskDetailTab($scope.taskDetailTabs);
           });
 
@@ -348,26 +347,26 @@ module.exports = [
           var taskResource = camAPI.resource('task');
 
           $scope.taskExists = false;
-          $scope.$watch('task.id', function(newVal) {
+          $scope.$watch('task.id', function (newVal) {
             $scope.taskExists = !!newVal;
           });
 
-          $scope.dismissTask = function() {
+          $scope.dismissTask = function () {
             clearTask(true);
           };
 
-          $scope.$on('refresh', function() {
+          $scope.$on('refresh', function () {
             if (!$scope.task || !$scope.taskExists) return;
 
-            taskResource.get($scope.task.id, function(err) {
+            taskResource.get($scope.task.id, function (err) {
               if (err && err.status === 404) {
                 $scope.taskExists = false;
                 $scope.$broadcast('taskremoved');
               }
             });
           });
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

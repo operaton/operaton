@@ -174,7 +174,7 @@ class ProcessDefinitionRestServiceTenantCheckTest extends AbstractCockpitPluginT
     CountResultDto actual = resource.getStatisticsCount(uriInfo);
 
     // then
-    assertThat(actual.getCount()).isEqualTo(1);
+    assertThat(actual.getCount()).isOne();
   }
 
   @Test

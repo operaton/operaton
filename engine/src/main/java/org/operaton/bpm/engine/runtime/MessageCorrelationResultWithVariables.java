@@ -23,7 +23,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
  * containing the process variables</p>
  *
  * @author Yana.Vasileva
- * @since 7.11
  *
  */
 public interface MessageCorrelationResultWithVariables extends MessageCorrelationResult {

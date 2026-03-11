@@ -30,6 +30,6 @@ public class DateConverter extends JacksonAwareStringToTypeConverter<Date> {
         .formatted(value,
           java.util.Date.class.getName()));
     }
-    return mapToType("\"" + value + "\"", Date.class);
+    return mapToType("\"%s\"".formatted(value), Date.class);
   }
 }

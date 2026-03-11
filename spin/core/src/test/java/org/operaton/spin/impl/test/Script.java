@@ -28,11 +28,16 @@ import java.lang.annotation.Target;
  * variables can be defined and the execute flag decides whether the script is execute
  * before the test function is called.
  *
+ * <p>
  * The script variables can be accessed trough the {@link ScriptExtension#variables}
  * field.
+ * </p>
  *
+ * <p>
  * Example usage:
+ * </p>
  *
+ * <p>
  * <pre>
  *   {@literal @}Test
  *   {@literal @}Script
@@ -69,6 +74,7 @@ import java.lang.annotation.Target;
  *       assertEquals("b", script.variables.get("a"))
  *   }
  * </pre>
+ * </p>
  *
  *
  * @author Sebastian Menski

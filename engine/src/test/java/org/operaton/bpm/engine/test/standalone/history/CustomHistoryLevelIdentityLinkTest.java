@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.standalone.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -50,9 +49,9 @@ public class CustomHistoryLevelIdentityLinkTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
-      new Object[]{ Arrays.asList(HistoryEventTypes.IDENTITY_LINK_ADD) },
-      new Object[]{ Arrays.asList(HistoryEventTypes.IDENTITY_LINK_DELETE, HistoryEventTypes.IDENTITY_LINK_ADD) }
+    return List.of(new Object[][] {
+      new Object[]{ List.of(HistoryEventTypes.IDENTITY_LINK_ADD) },
+      new Object[]{ List.of(HistoryEventTypes.IDENTITY_LINK_DELETE, HistoryEventTypes.IDENTITY_LINK_ADD) }
     });
   }
 

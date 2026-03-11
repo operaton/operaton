@@ -17,7 +17,7 @@
 
 'use strict';
 
-import 'ui/tasklist/plugins/styles.less';
+import 'ui/tasklist/plugins/styles.scss';
 
 var angular = require('angular'),
   standaloneTask = require('./standaloneTask/app/plugin'),
@@ -27,5 +27,5 @@ var angular = require('angular'),
 export default angular.module('tasklist.plugin.tasklistPlugins', [
   standaloneTask.name,
   tasklistCard.name,
-  tasklistSorting.name
+  tasklistSorting.name,
 ]);

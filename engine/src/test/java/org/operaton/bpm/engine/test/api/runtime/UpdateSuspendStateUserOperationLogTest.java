@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +68,7 @@ class UpdateSuspendStateUserOperationLogTest {
     rule.getIdentityService().setAuthenticatedUserId("userId");
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspendAsync();
     rule.getIdentityService().clearAuthentication();
     helper.completeSeedJobs(suspendprocess);
     helper.executeJobs(suspendprocess);
@@ -116,7 +115,7 @@ class UpdateSuspendStateUserOperationLogTest {
 
 
     // when
-    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(Arrays.asList(processInstance1.getId(), processInstance2.getId())).suspendAsync();
+    Batch suspendprocess = runtimeService.updateProcessInstanceSuspensionState().byProcessInstanceIds(List.of(processInstance1.getId(), processInstance2.getId())).suspendAsync();
     helper.completeSeedJobs(suspendprocess);
 
     // when

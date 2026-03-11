@@ -57,7 +57,7 @@ public class HistoricDecisionInstanceResourceImpl implements HistoricDecisionIns
     HistoricDecisionInstance instance = query.singleResult();
 
     if (instance == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic decision instance with id '" + decisionInstanceId + "' does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic decision instance with id '%s' does not exist".formatted(decisionInstanceId));
     }
 
     return HistoricDecisionInstanceDto.fromHistoricDecisionInstance(instance);

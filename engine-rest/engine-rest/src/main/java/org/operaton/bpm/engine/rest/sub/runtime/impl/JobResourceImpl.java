@@ -51,7 +51,7 @@ public class JobResourceImpl implements JobResource {
     Job job = managementService.createJobQuery().jobId(jobId).singleResult();
 
     if (job == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Job with id " + jobId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Job with id %s does not exist".formatted(jobId));
     }
 
     return JobDto.fromJob(job);
@@ -136,7 +136,7 @@ public class JobResourceImpl implements JobResource {
   @Override
   public void setJobPriority(PriorityDto dto) {
     if (dto.getPriority() == null) {
-      throw new RestException(Status.BAD_REQUEST, "Priority for job '" + jobId + "' cannot be null.");
+      throw new RestException(Status.BAD_REQUEST, "Priority for job '%s' cannot be null.".formatted(jobId));
     }
 
     try {

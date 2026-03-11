@@ -15,11 +15,10 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
-import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.CAMUNDA_NS;
+import static org.operaton.bpm.model.cmmn.impl.CmmnModelConstants.OPERATON_NS;
 
 /**
  * @author Roman Smirnov
@@ -34,7 +33,7 @@ public class CaseTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(ParameterMapping.class),
           new ChildElementAssumption(CaseRefExpression.class, 0, 1)
         );
@@ -42,11 +41,11 @@ public class CaseTaskTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("caseRef"),
-          new AttributeAssumption(CAMUNDA_NS, "caseBinding"),
-          new AttributeAssumption(CAMUNDA_NS, "caseVersion"),
-          new AttributeAssumption(CAMUNDA_NS, "caseTenantId")
+          new AttributeAssumption(OPERATON_NS, "caseBinding"),
+          new AttributeAssumption(OPERATON_NS, "caseVersion"),
+          new AttributeAssumption(OPERATON_NS, "caseTenantId")
         );
   }
 }

@@ -19,5 +19,5 @@
 
 module.exports = {
   Client: require('./api-client'),
-  utils: require('./utils')
+  utils: require('./utils'),
 };

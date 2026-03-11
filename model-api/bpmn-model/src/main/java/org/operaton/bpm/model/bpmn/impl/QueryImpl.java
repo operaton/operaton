@@ -71,7 +71,7 @@ public class QueryImpl<T extends ModelElementInstance> implements Query<T> {
       return collection.iterator().next();
     }
     else {
-      throw new BpmnModelException("Collection expected to have <1> entry but has <" + collection.size() + ">");
+      throw new BpmnModelException("Collection expected to have <1> entry but has <%d>".formatted(collection.size()));
     }
   }
 }

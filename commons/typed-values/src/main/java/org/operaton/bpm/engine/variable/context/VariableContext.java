@@ -23,9 +23,11 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
 /**
  * A context for variables. Allows resolving variables.
  *
+ * <p>
  * An API may choose to accept a VariableContext instead of a map of concrete values
  * in situations where passing all available variables would be expensive and
  * lazy-loading is a desirable optimization.
+ * </p>
  *
  * @author Daniel Meyer
  *

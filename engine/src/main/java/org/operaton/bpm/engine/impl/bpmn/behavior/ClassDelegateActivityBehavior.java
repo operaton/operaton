@@ -36,7 +36,9 @@ import static org.operaton.bpm.engine.impl.util.ClassDelegateUtil.instantiateDel
 /**
  * Helper class for bpmn constructs that allow class delegation.
  *
+ * <p>
  * This class will lazily instantiate the referenced classes when needed at runtime.
+ * </p>
  *
  * @author Joram Barrez
  * @author Falko Menge

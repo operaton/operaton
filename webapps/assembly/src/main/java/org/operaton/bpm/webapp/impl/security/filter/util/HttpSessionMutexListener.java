@@ -27,15 +27,17 @@ import jakarta.servlet.http.HttpSessionListener;
  * 100% guaranteed across all possible servlet containers when using
  * the HttpSession reference itself.
  *
+ * <p>
  * The session mutex can be accessed under the {@link CsrfConstants#CSRF_SESSION_MUTEX}
  * session attribute and the {@link HttpSessionMutexListener} needs
  * to be registered as a listener in {@code web.xml}.
+ * </p>
  *
  * @author Nikola Koevski
  */
 public class HttpSessionMutexListener implements HttpSessionListener {
 
-  public static final String AUTH_TIME_SESSION_MUTEX = "CAMUNDA_AUTH_TIME_SESSION_MUTEX";
+  public static final String AUTH_TIME_SESSION_MUTEX = "OPERATON_AUTH_TIME_SESSION_MUTEX";
 
   @Override
   public void sessionCreated(HttpSessionEvent event) {

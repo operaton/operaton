@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.impl.instance.SupportedInterfaceRef;
 
@@ -33,7 +32,7 @@ public class CallableElementTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(SupportedInterfaceRef.class),
       new ChildElementAssumption(IoSpecification.class, 0, 1),
       new ChildElementAssumption(IoBinding.class)
@@ -42,7 +41,7 @@ public class CallableElementTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("name")
     );
   }

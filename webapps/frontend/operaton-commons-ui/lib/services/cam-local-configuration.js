@@ -18,21 +18,21 @@
 'use strict';
 module.exports = [
   '$window',
-  function($window) {
+  function ($window) {
     var storage = $window.localStorage;
     var values = JSON.parse(storage.getItem('operaton') || '{}');
     return {
-      get: function(key, defaultValue) {
+      get: function (key, defaultValue) {
         return typeof values[key] !== 'undefined' ? values[key] : defaultValue;
       },
-      set: function(key, value) {
+      set: function (key, value) {
         values[key] = value;
         storage.setItem('operaton', JSON.stringify(values));
       },
-      remove: function(key) {
+      remove: function (key) {
         delete values[key];
         storage.setItem('operaton', JSON.stringify(values));
-      }
+      },
     };
-  }
+  },
 ];

@@ -37,7 +37,7 @@ public class TaskReportImpl implements Serializable, TaskReport {
 
   protected transient CommandExecutor commandExecutor;
 
-  protected TenantCheck tenantCheck = new TenantCheck();
+  protected transient TenantCheck tenantCheck = new TenantCheck();
 
   public TaskReportImpl(CommandExecutor commandExecutor) {
     this.commandExecutor = commandExecutor;

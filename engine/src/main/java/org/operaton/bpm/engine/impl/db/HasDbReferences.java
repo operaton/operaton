@@ -24,6 +24,7 @@ import java.util.Set;
  * @author Daniel Meyer
  *
  */
+@SuppressWarnings("java:S1452")
 public interface HasDbReferences {
 
   /**
@@ -32,7 +33,9 @@ public interface HasDbReferences {
    * @return the ids of the entities that this entity references. Should
    *   only return ids for entities of the same type
    */
-  Set<String> getReferencedEntityIds();
+  default Set<String> getReferencedEntityIds() {
+    return Collections.emptySet();
+  }
 
   /**
    * <p>Scope: IN-MEMORY references
@@ -42,12 +45,14 @@ public interface HasDbReferences {
    * was an Optimistic Locking occurrence on an INSERT or UPDATE of
    * an object of this type.
    */
-  Map<String, Class> getReferencedEntitiesIdAndClass();
+  default Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    return Collections.emptyMap();
+  }
 
   /**
    * <p>Scope: PERSISTED references
    */
-  default Map<String, Class> getDependentEntities() {
+  default Map<String, Class<?>> getDependentEntities() {
     return Collections.emptyMap();
   }
 

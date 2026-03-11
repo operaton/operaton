@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy.suspensionstate;
-
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -100,8 +99,8 @@ class MultiTenancyJobSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -118,8 +117,8 @@ class MultiTenancyJobSuspensionStateTest {
       .suspend();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -141,8 +140,8 @@ class MultiTenancyJobSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -164,8 +163,8 @@ class MultiTenancyJobSuspensionStateTest {
       .activate();
 
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().count()).isEqualTo(1L);
-    assertThat(query.active().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
+    assertThat(query.active().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -185,8 +184,8 @@ class MultiTenancyJobSuspensionStateTest {
     engineRule.getIdentityService().clearAuthentication();
 
     assertThat(query.active().count()).isEqualTo(2L);
-    assertThat(query.suspended().count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
+    assertThat(query.suspended().count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
   }
 
   @Test
@@ -196,7 +195,7 @@ class MultiTenancyJobSuspensionStateTest {
     assertThat(query.active().count()).isEqualTo(3L);
     assertThat(query.suspended().count()).isZero();
 
-    engineRule.getIdentityService().setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    engineRule.getIdentityService().setAuthentication("user", null, List.of(TENANT_ONE));
 
     engineRule.getManagementService()
       .updateJobSuspensionState()
@@ -205,11 +204,11 @@ class MultiTenancyJobSuspensionStateTest {
 
     engineRule.getIdentityService().clearAuthentication();
 
-    assertThat(query.active().count()).isEqualTo(1L);
+    assertThat(query.active().count()).isOne();
     assertThat(query.suspended().count()).isEqualTo(2L);
-    assertThat(query.active().tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
-    assertThat(query.suspended().withoutTenantId().count()).isEqualTo(1L);
-    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.active().tenantIdIn(TENANT_TWO).count()).isOne();
+    assertThat(query.suspended().withoutTenantId().count()).isOne();
+    assertThat(query.suspended().tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test

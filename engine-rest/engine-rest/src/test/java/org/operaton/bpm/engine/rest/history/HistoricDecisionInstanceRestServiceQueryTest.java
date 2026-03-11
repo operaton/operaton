@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest.history;
 
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
@@ -537,7 +536,7 @@ public class HistoricDecisionInstanceRestServiceQueryTest extends AbstractRestSe
   }
 
   private List<HistoricDecisionInstance> createMockHistoricDecisionInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricDecisionInstanceBase(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricDecisionInstanceBase(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }

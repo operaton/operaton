@@ -154,7 +154,7 @@ class MessageStartEventSubscriptionTest {
         .singleResult();
 
     if (completedInstance != null) {
-      throw new AssertionFailedError("Expected finished process instance '" + completedInstance + "' but it was still in the db");
+      throw new AssertionFailedError("Expected finished process instance '%s' but it was still in the db".formatted(completedInstance));
     }
   }
 
@@ -185,7 +185,7 @@ class MessageStartEventSubscriptionTest {
         .singleResult();
 
     if (completedInstance != null) {
-      throw new AssertionFailedError("Expected finished process instance '" + completedInstance + "' but it was still in the db");
+      throw new AssertionFailedError("Expected finished process instance '%s' but it was still in the db".formatted(completedInstance));
     }
   }
 
@@ -242,7 +242,7 @@ class MessageStartEventSubscriptionTest {
     String processDefId32 = deployProcess(ONE_TASK_PROCESS);
 
     // assume
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -256,7 +256,7 @@ class MessageStartEventSubscriptionTest {
     for (EventSubscription eventSubscription : list) {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId11) && !eventSubscriptionEntity.getConfiguration().equals(processDefId22)) {
-        fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
+        fail("This process definition '%s' and the respective event subscription should not exist.".formatted(eventSubscriptionEntity.getConfiguration()));
       }
     }
   }
@@ -371,7 +371,7 @@ class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
@@ -388,7 +388,7 @@ class MessageStartEventSubscriptionTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
@@ -408,7 +408,7 @@ class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId3);
   }
 
@@ -428,7 +428,7 @@ class MessageStartEventSubscriptionTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 

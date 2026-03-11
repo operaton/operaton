@@ -914,7 +914,7 @@ public class TenantRestServiceInteractionTest extends AbstractRestServiceTest {
   }
 
   protected String getFullAuthorizationUrl() {
-    return "http://localhost:" + PORT + TEST_RESOURCE_ROOT_PATH + TenantRestService.PATH;
+    return "http://localhost:" + port + TEST_RESOURCE_ROOT_PATH + TenantRestService.PATH;
   }
 
   protected String getFullAuthorizationTenantUrl() {

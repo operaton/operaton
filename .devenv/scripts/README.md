@@ -72,6 +72,48 @@ Example:
 ./build/build-and-run-database-update-tests.sh --db=h2
 ```
 
+## `check-api-compatibility.sh`
+
+This script checks the API compatibility of the main Java modules against a previous version using the Maven Clirr plugin.
+
+**Usage:**
+```bash
+.devenv/scripts/build/check-api-compatibility.sh [--comparison-version <version>] [--help]
+```
+
+**Options:** 
+- `--comparison-version <version>` Sets the Clirr comparison version (overrides the default).</version>
+- `--help` Shows help and exits.
+
+
+**Example:**
+```bash
+.devenv/scripts/build/check-api-compatibility.sh --comparison-version 7.24.0
+``` 
+
+Results are available under `target/reports/clirr/` and in the `target/reports/clirr/clirr.md` file.
+
+## `rest-api-doc.sh`
+
+This script prepares REST API documentation from the OpenAPI specification using [redocly](https://redocly.com/).
+The output is an HTML file and the OpenAPI specification located at `target/rest-api/<VERSION>`.
+
+The version is extracted from the OpenAPI specification file.
+
+The script checks if the OpenAPI specification exists and generates it using Maven if necessary.
+
+**Usage:**
+```bash
+.devenv/scripts/build/rest-api-doc.sh
+```
+
+**Options:** 
+none
+
+**Requirements:**
+
+`jq` must be installed.  
+
 # Directory `maintenance`
 
 ## `code-cleanup.sh`

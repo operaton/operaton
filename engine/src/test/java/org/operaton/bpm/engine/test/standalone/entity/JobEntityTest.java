@@ -30,7 +30,7 @@ import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 /**
  *
@@ -58,7 +58,8 @@ class JobEntityTest {
     threeByteJobEntity.setExceptionMessage(fittingThreeByteMessage);
 
     // should not fail
-    assertDoesNotThrow(() -> insertJob(threeByteJobEntity));
+    assertThatCode(() -> insertJob(threeByteJobEntity))
+        .doesNotThrowAnyException();
 
     deleteJob(threeByteJobEntity);
   }

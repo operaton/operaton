@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.xml.type.reference;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.params.ParameterizedTest;
@@ -35,7 +35,7 @@ import org.operaton.bpm.model.xml.type.ModelElementType;
 import org.operaton.bpm.model.xml.type.attribute.Attribute;
 
 import static org.operaton.bpm.model.xml.test.assertions.ModelAssertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
@@ -171,7 +171,7 @@ public class ReferenceTest extends TestModelTest {
   void testTargetElementsCollection(TestModelArgs args) {
     init(args);
     Collection<FlyingAnimal> referenceTargetElements = flightPartnerRefsColl.getReferenceTargetElements(tweety);
-    Collection<FlyingAnimal> flightPartners = Arrays.asList(birdo, daffy, daisy, plucky);
+    Collection<FlyingAnimal> flightPartners = List.of(birdo, daffy, daisy, plucky);
 
     // directly test collection methods and not use the	appropriate assertion methods
     assertThat(referenceTargetElements)
@@ -200,13 +200,8 @@ public class ReferenceTest extends TestModelTest {
     assertThat(referenceTargetElements.removeAll(flightPartners)).isTrue();
     assertThat(referenceTargetElements).isEmpty();
 
-    try {
-      referenceTargetElements.retainAll(flightPartners);
-      fail("retainAll method is not implemented");
-    }
-    catch (Exception e) {
-      assertThat(e).isInstanceOf(UnsupportedModelOperationException.class);
-    }
+    assertThatThrownBy(() -> referenceTargetElements.retainAll(flightPartners))
+      .isInstanceOf(UnsupportedModelOperationException.class);
 
     referenceTargetElements.addAll(flightPartners);
     assertThat(referenceTargetElements).isNotEmpty();

@@ -85,7 +85,7 @@ public abstract class AbstractProcessBuilder<B extends AbstractProcessBuilder<B>
    * @return the builder object
    */
   public B operatonHistoryTimeToLive(Integer historyTimeToLive) {
-    element.setOperatonHistoryTimeToLive(historyTimeToLive);
+    element.setOperatonHistoryTimeToLiveString(historyTimeToLive != null ? historyTimeToLive.toString() : null);
     return myself;
   }
 

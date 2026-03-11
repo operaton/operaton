@@ -18,17 +18,10 @@ package org.operaton.bpm.qa.rolling.update.timestamp;
 
 import java.util.Date;
 
-import org.junit.Before;
-import org.junit.Rule;
+import org.junit.jupiter.api.BeforeEach;
 
-import org.operaton.bpm.engine.ExternalTaskService;
-import org.operaton.bpm.engine.HistoryService;
-import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ManagementService;
-import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
-import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.test.ProcessEngineRule;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -46,8 +39,8 @@ public abstract class AbstractTimestampUpdateTest extends AbstractRollingUpdateT
   protected RuntimeService runtimeService;
   protected ManagementService managementService;
 
-  @Before
-  public void setUp() {
+  @BeforeEach
+  void setUp() {
     runtimeService = rule.getRuntimeService();
     managementService = rule.getManagementService();
   }

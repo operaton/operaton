@@ -33,9 +33,9 @@ public class DmnDecisionResultImpl implements DmnDecisionResult {
 
   @Serial private static final long serialVersionUID = 1L;
 
-  public static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
+  private static final DmnEngineLogger LOG = DmnLogger.ENGINE_LOGGER;
 
-  protected final List<DmnDecisionResultEntries> ruleResults;
+  private final List<DmnDecisionResultEntries> ruleResults;
 
   public DmnDecisionResultImpl(List<DmnDecisionResultEntries> ruleResults) {
     this.ruleResults = ruleResults;

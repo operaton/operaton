@@ -2,7 +2,7 @@
 <module xmlns="urn:jboss:module:1.1" name="com.mysql.mysql-connector-j">
 
     <resources>
-        <resource-root path="mysql-connector-j-9.4.0.jar"/>
+        <resource-root path="mysql-connector-j-@version.mysql@.jar"/>
     </resources>
 
     <dependencies>

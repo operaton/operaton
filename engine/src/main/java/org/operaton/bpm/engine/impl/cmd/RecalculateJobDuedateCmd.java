@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,14 +47,10 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotEmpty;
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tobias Metzke
  */
-public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class RecalculateJobDuedateCmd implements Command<Void> {
   private final String jobId;
   private final boolean creationDateBased;
 
@@ -69,7 +63,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
   @Override
   public Void execute(final CommandContext commandContext) {
     final JobEntity job = commandContext.getJobManager().findJobById(jobId);
-    ensureNotNull(NotFoundException.class, "No job found with id '" + jobId + "'", "job", job);
+    ensureNotNull(NotFoundException.class, "No job found with id '%s'".formatted(jobId), "job", job);
 
     // allow timer jobs only
     checkJobType(job);
@@ -111,7 +105,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
         TimerStartEventSubprocessJobHandler.TYPE.equals(type) ||
         TimerTaskListenerJobHandler.TYPE.equals(type)) ||
         !(job instanceof TimerEntity)) {
-      throw new ProcessEngineException("Only timer jobs can be recalculated, but the job with id '" + jobId + "' is of type '" + type + "'.");
+      throw new ProcessEngineException("Only timer jobs can be recalculated, but the job with id '%s' is of type '%s'.".formatted(jobId, type));
     }
   }
 
@@ -126,7 +120,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
     }
 
     if (timerDeclaration == null) {
-      throw new ProcessEngineException("No timer declaration found for job id '" + jobId + "'.");
+      throw new ProcessEngineException("No timer declaration found for job id '%s'.".formatted(jobId));
     }
     return timerDeclaration;
   }
@@ -134,7 +128,7 @@ public class RecalculateJobDuedateCmd implements Command<Void>, Serializable {
   protected TimerDeclarationImpl findTimerDeclarationForActivity(CommandContext commandContext, JobEntity job) {
     ExecutionEntity execution = commandContext.getExecutionManager().findExecutionById(job.getExecutionId());
     if (execution == null) {
-      throw new ProcessEngineException("No execution found with id '" + job.getExecutionId() + "' for job id '" + jobId + "'.");
+      throw new ProcessEngineException("No execution found with id '%s' for job id '%s'".formatted(job.getExecutionId(), jobId));
     }
     ActivityImpl activity = execution.getProcessDefinition().findActivity(job.getActivityId());
     if (activity != null) {

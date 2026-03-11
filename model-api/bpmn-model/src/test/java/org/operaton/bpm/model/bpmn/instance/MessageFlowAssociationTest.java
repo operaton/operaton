@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Sebastian Menski
@@ -36,7 +35,7 @@ public class MessageFlowAssociationTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("innerMessageFlowRef", false, true),
       new AttributeAssumption("outerMessageFlowRef", false, true)
     );

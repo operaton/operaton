@@ -43,7 +43,7 @@ export default class Viewer extends Manager {
             is(element, 'dmn:Decision') &&
             is(element.decisionLogic, 'dmn:LiteralExpression')
           );
-        }
+        },
       },
       {
         id: 'decisionTable',
@@ -53,8 +53,8 @@ export default class Viewer extends Manager {
             is(element, 'dmn:Decision') &&
             is(element.decisionLogic, 'dmn:DecisionTable')
           );
-        }
-      }
+        },
+      },
     ];
 
     const {tableViewOnly} = this.options;
@@ -64,7 +64,7 @@ export default class Viewer extends Manager {
         constructor: DrdViewer,
         opens(element) {
           return is(element, 'dmn:Definitions') && containsDi(element);
-        }
+        },
       });
     }
 

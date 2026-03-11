@@ -88,8 +88,8 @@ class MultiTenancyTimerStartEventTest {
     assertThat(jobForTenantTwo).isNotNull();
     managementService.executeJob(jobForTenantTwo.getId());
 
-    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -98,13 +98,13 @@ class MultiTenancyTimerStartEventTest {
     Deployment deploymentForTenantTwo = testRule.deployForTenant(TENANT_TWO, PROCESS);
 
     JobQuery query = managementService.createJobQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
 
     repositoryService.deleteDeployment(deploymentForTenantOne.getId(), true);
 
     assertThat(query.tenantIdIn(TENANT_ONE).count()).isZero();
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
 
     repositoryService.deleteDeployment(deploymentForTenantTwo.getId(), true);
 
@@ -119,8 +119,8 @@ class MultiTenancyTimerStartEventTest {
     testRule.deployForTenant(TENANT_ONE, PROCESS);
 
     JobQuery query = managementService.createJobQuery();
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test

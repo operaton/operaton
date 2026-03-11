@@ -46,8 +46,6 @@ public interface Process extends CallableElement {
 
   void setExecutable(boolean executable);
 
-  // TODO: collaboration ref
-
   Auditing getAuditing();
 
   void setAuditing(Auditing auditing);
@@ -96,11 +94,25 @@ public interface Process extends CallableElement {
 
   void setOperatonTaskPriority(String taskPriority);
 
-  @Deprecated(since = "1.0")
-  Integer getOperatonHistoryTimeToLive();
+  /**
+   * @deprecated since 1.0, use {@link #getOperatonHistoryTimeToLiveString()} instead
+   */
+  @Deprecated(since = "1.0", forRemoval = true)
+  default Integer getOperatonHistoryTimeToLive() {
+    String ttl = getOperatonHistoryTimeToLiveString();
+    if (ttl != null) {
+      return Integer.valueOf(ttl);
+    }
+    return null;
+  }
 
-  @Deprecated(since = "1.0")
-  void setOperatonHistoryTimeToLive(Integer historyTimeToLive);
+  /**
+   * @deprecated since 1.0, use {@link #setOperatonHistoryTimeToLiveString(String)} instead
+   */
+  @Deprecated(since = "1.0", forRemoval = true)
+  default void setOperatonHistoryTimeToLive(Integer historyTimeToLive) {
+    setOperatonHistoryTimeToLiveString(historyTimeToLive != null ? String.valueOf(historyTimeToLive) : null);
+  }
 
   String getOperatonHistoryTimeToLiveString();
 

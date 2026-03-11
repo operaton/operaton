@@ -16,11 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.calendar.BusinessCalendar;
@@ -37,7 +38,6 @@ import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.TimerEventJobHandler.TimerJobConfiguration;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 
-
 /**
  * @author Tom Baeyens
  */
@@ -45,11 +45,9 @@ public class TimerEntity extends JobEntity {
 
   protected static final String CYCLE_EXPRESSION_START_TYPE_1 = TimerDeclarationType.CYCLE + ": #";
   protected static final String CYCLE_EXPRESSION_START_TYPE_2 = TimerDeclarationType.CYCLE + ": $";
-  public static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  private static final DateTimeFormatter ISO_LOCAL_DATE_TIME_WITHOUT_NANOS = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
   public static final String TYPE = "timer";
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String repeat;
 
@@ -105,9 +103,7 @@ public class TimerEntity extends JobEntity {
           CommandExecutor commandExecutor = processEngineConfiguration.getCommandExecutorTxRequiresNew();
           RepeatingFailedJobListener listener = createRepeatingFailedJobListener(commandExecutor);
 
-          commandContext.getTransactionContext().addTransactionListener(
-              TransactionState.ROLLED_BACK,
-              listener);
+          commandContext.getTransactionContext().addTransactionListener(TransactionState.ROLLED_BACK, listener);
 
           // create a new timer job
           createNewTimerJob(newDueDate);
@@ -144,7 +140,7 @@ public class TimerEntity extends JobEntity {
   protected String adjustRepeatBasedOnNewExpression(String expressionValue) {
     String changedRepeat;
     if (expressionValue.startsWith("R")) { // changed to a repeatable interval
-      if (repeat.startsWith("R") ) {
+      if (repeat.startsWith("R")) {
         if (isSameRepeatCycle(expressionValue)) {
           // the same repeatable interval => keep the start date
           changedRepeat = repeat;
@@ -178,7 +174,10 @@ public class TimerEntity extends JobEntity {
 
   public static String replaceRepeatCycleAndDate(String repeatExpression) {
     if (repeatExpression.split("/").length == 2) {
-      return repeatExpression.replace("/", "/" + SIMPLE_DATE_FORMAT.format(ClockUtil.getCurrentTime()) + "/");
+      String formattedDate = ClockUtil.getCurrentTime().toInstant()
+          .atZone(ZoneId.systemDefault())
+          .format(ISO_LOCAL_DATE_TIME_WITHOUT_NANOS);
+      return repeatExpression.replace("/", "/%s/".formatted(formattedDate));
     }
     return repeatExpression; // expression include start date
   }
@@ -191,10 +190,7 @@ public class TimerEntity extends JobEntity {
     // create new timer job
     TimerEntity newTimer = new TimerEntity(this);
     newTimer.setDuedate(dueDate);
-    Context
-      .getCommandContext()
-      .getJobManager()
-      .schedule(newTimer);
+    Context.getCommandContext().getJobManager().schedule(newTimer);
   }
 
   public Date calculateNewDueDate() {
@@ -237,24 +233,46 @@ public class TimerEntity extends JobEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[repeat=" + repeat
-           + ", id=" + id
-           + ", revision=" + revision
-           + ", duedate=" + duedate
-           + ", repeatOffset=" + repeatOffset
-           + ", lockOwner=" + lockOwner
-           + ", lockExpirationTime=" + lockExpirationTime
-           + ", executionId=" + executionId
-           + ", processInstanceId=" + processInstanceId
-           + ", isExclusive=" + isExclusive
-           + ", retries=" + retries
-           + ", jobHandlerType=" + jobHandlerType
-           + ", jobHandlerConfiguration=" + jobHandlerConfiguration
-           + ", exceptionByteArray=" + exceptionByteArray
-           + ", exceptionByteArrayId=" + exceptionByteArrayId
-           + ", exceptionMessage=" + exceptionMessage
-           + ", deploymentId=" + deploymentId
-           + "]";
+      + "[repeat=" + repeat
+      + ", id=" + id
+      + ", revision=" + revision
+      + ", duedate=" + duedate
+      + ", repeatOffset=" + repeatOffset
+      + ", lockOwner=" + lockOwner
+      + ", lockExpirationTime=" + lockExpirationTime
+      + ", executionId=" + executionId
+      + ", processInstanceId=" + processInstanceId
+      + ", isExclusive=" + isExclusive
+      + ", retries=" + retries
+      + ", jobHandlerType=" + jobHandlerType
+      + ", jobHandlerConfiguration=" + jobHandlerConfiguration
+      + ", exceptionByteArray=" + exceptionByteArray
+      + ", exceptionByteArrayId=" + exceptionByteArrayId
+      + ", exceptionMessage=" + exceptionMessage
+      + ", deploymentId=" + deploymentId
+      + "]";
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = super.hashCode();
+    return prime * result + Objects.hash(repeat, repeatOffset);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!super.equals(obj)) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    TimerEntity other = (TimerEntity) obj;
+    return Objects.equals(repeat, other.repeat) && repeatOffset == other.repeatOffset;
   }
 
 }

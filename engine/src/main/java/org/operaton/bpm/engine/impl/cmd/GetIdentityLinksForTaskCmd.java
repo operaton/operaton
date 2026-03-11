@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +30,11 @@ import org.operaton.bpm.engine.task.IdentityLinkType;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Joram Barrez
  * @author Falko Menge
  */
-public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>> {
   protected String taskId;
 
   public GetIdentityLinksForTaskCmd(String taskId) {
@@ -52,7 +47,7 @@ public class GetIdentityLinksForTaskCmd implements Command<List<IdentityLink>>, 
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkGetIdentityLink(task, commandContext);
 

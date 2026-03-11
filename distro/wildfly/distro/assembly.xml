@@ -71,6 +71,19 @@
       <source>src/EMPTY_FILE</source>
       <outputDirectory>server/wildfly-${version.wildfly}/standalone/deployments/</outputDirectory>
       <destName>operaton-welcome.war.dodeploy</destName>
+    </file>
+
+    <file>
+      <source>src/security.txt.example</source>
+      <filtered>true</filtered>
+      <lineEnding>crlf</lineEnding>
+      <outputDirectory />
+    </file>
+    <file>
+      <source>src/SECURITY-BEST-PRACTICES.md</source>
+      <filtered>true</filtered>
+      <lineEnding>crlf</lineEnding>
+      <outputDirectory />
     </file>  
   </files>
   

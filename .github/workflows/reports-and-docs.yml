@@ -6,12 +6,6 @@ on:
   schedule:
     - cron: "30 1 * * *"     # Runs at 2:00 AM UTC daily
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
@@ -21,13 +15,15 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Cache Maven packages
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: "${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}"
@@ -50,29 +46,37 @@ jobs:
           #./mvnw -Psonatype-oss-release install javadoc:javadoc versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report -Dsave=true -Ddisplay=false io.github.orhankupusoglu:sloc-maven-plugin:sloc -Dbuildplan.appendOutput=true -Dbuildplan.outputFile=/workspaces/operaton/target/reports/buildplan.txt fr.jcgay.maven.plugins:buildplan-maven-plugin:list -DskipTests
           ./mvnw versions:dependency-updates-aggregate-report versions:plugin-updates-aggregate-report
           .devenv/scripts/build/javadoc.sh
+          .devenv/scripts/build/check-api-compatibility.sh
+          .devenv/scripts/build/rest-api-doc.sh
       - name: Cache build artifacts
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v5
         with:
           path: |
             **/target/reports/**
             **/target/javadoc/**
+            **/target/rest-api/**
           key: ${{ github.run_id }}-build-artifacts
 
   deploy:
     # allowed to deploy only from 'main' to github-pages due to environment protection rules
     if: github.ref == 'refs/heads/main'
     needs: build
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Restore build artifacts cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             **/target/reports/**
             **/target/javadoc/**
+            **/target/rest-api/**
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
       - name: Setup Pages

@@ -16,12 +16,11 @@
  */
 package org.operaton.bpm.qa.rolling.update.multiInstance;
 
-import org.junit.Test;
-
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.task.TaskQuery;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,11 +30,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("ProcessWithMultiInstanceCallActivityScenario")
-public class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRollingUpdateTestCase {
+class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRollingUpdateTestCase {
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.1")
-  public void testCompleteProcessWithCallActivity() {
+  void testCompleteProcessWithCallActivity() {
     //given process with user task before multi-instance call activity
     ProcessInstance processInstance = rule.processInstance();
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery().processInstanceId(processInstance.getId());
@@ -53,9 +52,9 @@ public class CompleteProcessWithMultiInstanceCallActivityTest extends AbstractRo
     rule.assertScenarioEnded();
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("init.complete.one.1")
-  public void testCompleteProcessWithCallActivityAndOneCompletedTask() {
+  void testCompleteProcessWithCallActivityAndOneCompletedTask() {
     //given process after multi-instance callactivity
     ProcessInstance processInstance = rule.processInstance();
     TaskQuery taskQuery = rule.getTaskService().createTaskQuery().processInstanceId(processInstance.getId());

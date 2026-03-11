@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.jobexecutor;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -73,7 +72,7 @@ class AcquireJobCmdUnitTest {
     AcquirableJobEntity job2 = createNonExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_1);
 
     // when the job executor acquire new jobs
-    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(Arrays.asList(job1, job2));
+    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(List.of(job1, job2));
 
     // then the job executor should acquire job1 and job 2 in different batches
     checkThatAcquiredJobsInDifferentBatches();
@@ -86,7 +85,7 @@ class AcquireJobCmdUnitTest {
     AcquirableJobEntity job2 = createNonExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_2);
 
     // when the job executor acquire new jobs
-    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(Arrays.asList(job1, job2));
+    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(List.of(job1, job2));
 
     // then the job executor should acquire job1 and job 2 in different batches
     checkThatAcquiredJobsInDifferentBatches();
@@ -99,7 +98,7 @@ class AcquireJobCmdUnitTest {
     AcquirableJobEntity job2 = createExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_1);
 
     // when the job executor acquire new jobs
-    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(Arrays.asList(job1, job2));
+    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(List.of(job1, job2));
 
     // then the job executor should acquire job1 and job 2 in one batch
     AcquiredJobs acquiredJobs = acquireJobsCmd.execute(commandContext);
@@ -117,7 +116,7 @@ class AcquireJobCmdUnitTest {
     AcquirableJobEntity job2 = createExclusiveJob(JOB_ID_2, PROCESS_INSTANCE_ID_2);
 
     // when the job executor acquire new jobs
-    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(Arrays.asList(job1, job2));
+    when(jobManager.findNextJobsToExecute(any(Page.class))).thenReturn(List.of(job1, job2));
 
     // then the job executor should acquire job1 and job 2 in different batches
     checkThatAcquiredJobsInDifferentBatches();

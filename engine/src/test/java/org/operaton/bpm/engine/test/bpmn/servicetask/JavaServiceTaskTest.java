@@ -138,7 +138,7 @@ class JavaServiceTaskTest {
   @Test
   void testGetBusinessKeyFromDelegateExecution() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("businessKeyProcess", "1234567890");
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("businessKeyProcess").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("businessKeyProcess").count()).isOne();
 
     // Check if business-key was available from the process
     String key = (String) runtimeService.getVariable(processInstance.getId(), "businessKeySetOnExecution");

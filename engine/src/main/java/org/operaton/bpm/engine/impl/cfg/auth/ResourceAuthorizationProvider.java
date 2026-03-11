@@ -49,7 +49,7 @@ public interface ResourceAuthorizationProvider {
    * @param user
    *          a newly created user
    * @return a list of authorizations to be automatically added when a new user
-   *         is created.
+   *         is created. Never {@code null}.
    */
   AuthorizationEntity[] newUser(User user);
 
@@ -59,7 +59,7 @@ public interface ResourceAuthorizationProvider {
    * @param group
    *          a newly created {@link Group}
    * @return a list of authorizations to be automatically added when a new
-   *         {@link Group} is created.
+   *         {@link Group} is created. Never {@code null}.
    */
   AuthorizationEntity[] newGroup(Group group);
 
@@ -71,7 +71,7 @@ public interface ResourceAuthorizationProvider {
    * @param tenant
    *          a newly created {@link Tenant}
    * @return a list of authorizations to be automatically added when a new
-   *         {@link Tenant} is created.
+   *         {@link Tenant} is created. Never {@code null}.
    */
   AuthorizationEntity[] newTenant(Tenant tenant);
 
@@ -84,7 +84,7 @@ public interface ResourceAuthorizationProvider {
    * @param groupId
    *          the id of the group to which the user is added
    * @return a list of authorizations to be automatically added when a new
-   *         {@link User} is created.
+   *         {@link User} is created. Never {@code null}.
    */
   AuthorizationEntity[] groupMembershipCreated(String groupId, String userId);
 
@@ -96,7 +96,7 @@ public interface ResourceAuthorizationProvider {
    * @param userId
    *          the id of the user
    * @return a list of authorizations to be automatically added when a new
-   *         membership is created.
+   *         membership is created. Never {@code null}.
    */
   AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, User user);
 
@@ -108,7 +108,7 @@ public interface ResourceAuthorizationProvider {
    * @param groupId
    *          the id of the group
    * @return a list of authorizations to be automatically added when a new
-   *         membership is created.
+   *         membership is created. Never {@code null}.
    */
   AuthorizationEntity[] tenantMembershipCreated(Tenant tenant, Group group);
 
@@ -119,7 +119,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param filter the newly created filter
    * @return a list of authorizations to be automatically added when a new
-   *         {@link Filter} is created.
+   *         {@link Filter} is created. Never {@code null}.
    */
   AuthorizationEntity[] newFilter(Filter filter);
 
@@ -130,7 +130,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param deployment the newly created deployment
    * @return a list of authorizations to be automatically added when a new
-   *         {@link Deployment} is created.
+   *         {@link Deployment} is created. Never {@code null}.
    */
   AuthorizationEntity[] newDeployment(Deployment deployment);
 
@@ -141,7 +141,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param processDefinition the newly created process definition
    * @return a list of authorizations to be automatically added when a new
-   *         {@link ProcessDefinition} is created.
+   *         {@link ProcessDefinition} is created. Never {@code null}.
    */
   AuthorizationEntity[] newProcessDefinition(ProcessDefinition processDefinition);
 
@@ -152,7 +152,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param processInstance the newly started process instance
    * @return a list of authorizations to be automatically added when a new
-   *         {@link ProcessInstance} is started.
+   *         {@link ProcessInstance} is started. Never {@code null}.
    */
   AuthorizationEntity[] newProcessInstance(ProcessInstance processInstance);
 
@@ -163,7 +163,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param task the newly created task
    * @return a list of authorizations to be automatically added when a new
-   *         {@link Task} is created.
+   *         {@link Task} is created. Never {@code null}.
    */
   AuthorizationEntity[] newTask(Task task);
 
@@ -175,7 +175,7 @@ public interface ResourceAuthorizationProvider {
    * @param newAssignee the new assignee of the task
    *
    * @return a list of authorizations to be automatically added when an
-   *          assignee of a task changes.
+   *          assignee of a task changes. Never {@code null}.
    */
   AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee);
 
@@ -187,7 +187,7 @@ public interface ResourceAuthorizationProvider {
    * @param newOwner the new owner of the task
    *
    * @return a list of authorizations to be automatically added when the
-   *          owner of a task changes.
+   *          owner of a task changes. Never {@code null}.
    */
   AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner);
 
@@ -199,7 +199,7 @@ public interface ResourceAuthorizationProvider {
    * @param type the type of the identity link (e.g. {@link IdentityLinkType#CANDIDATE})
    *
    * @return a list of authorizations to be automatically added when
-   *          a new user identity link has been added.
+   *          a new user identity link has been added. Never {@code null}.
    */
   AuthorizationEntity[] newTaskUserIdentityLink(Task task, String userId, String type);
 
@@ -211,7 +211,7 @@ public interface ResourceAuthorizationProvider {
    * @param type the type of the identity link (e.g. {@link IdentityLinkType#CANDIDATE})
    *
    * @return a list of authorizations to be automatically added when
-   *          a new group identity link has been added.
+   *          a new group identity link has been added. Never {@code null}.
    */
   AuthorizationEntity[] newTaskGroupIdentityLink(Task task, String groupId, String type);
 
@@ -223,7 +223,7 @@ public interface ResourceAuthorizationProvider {
    * @param type the type of the identity link (e.g. {@link IdentityLinkType#CANDIDATE})
    *
    * @return a list of authorizations to be automatically deleted when
-   *          a user identity link has been deleted.
+   *          a user identity link has been deleted. Never {@code null}.
    */
   AuthorizationEntity[] deleteTaskUserIdentityLink(Task task, String userId, String type);
 
@@ -235,7 +235,7 @@ public interface ResourceAuthorizationProvider {
    * @param type the type of the identity link (e.g. {@link IdentityLinkType#CANDIDATE})
    *
    * @return a list of authorizations to be automatically deleted when
-   *          a group identity link has been deleted.
+   *          a group identity link has been deleted. Never {@code null}.
    */
   AuthorizationEntity[] deleteTaskGroupIdentityLink(Task task, String groupId, String type);
 
@@ -244,7 +244,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param decisionDefinition the newly created decision definition
    * @return a list of authorizations to be automatically added when a new
-   *         {@link DecisionDefinition} is created.
+   *         {@link DecisionDefinition} is created. Never {@code null}.
    */
   AuthorizationEntity[] newDecisionDefinition(DecisionDefinition decisionDefinition);
 
@@ -253,7 +253,7 @@ public interface ResourceAuthorizationProvider {
    *
    * @param decisionRequirementsDefinition the newly created decision requirements definition
    * @return a list of authorizations to be automatically added when a new
-   *         {@link DecisionRequirementsDefinition} is created.
+   *         {@link DecisionRequirementsDefinition} is created. Never {@code null}.
    */
   AuthorizationEntity[] newDecisionRequirementsDefinition(DecisionRequirementsDefinition decisionRequirementsDefinition);
 

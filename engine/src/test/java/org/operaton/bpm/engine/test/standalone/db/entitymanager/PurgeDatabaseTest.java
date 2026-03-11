@@ -191,25 +191,25 @@ class PurgeDatabaseTest {
 
     DatabasePurgeReport databasePurgeReport = purge.getDatabasePurgeReport();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_TENANT_MEMBER")).isEqualTo(2);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_EVENT_SUBSCR")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_EXT_TASK")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_MEMBERSHIP")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_TASK")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_JOB")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_GE_BYTEARRAY")).isEqualTo(1);
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_EVENT_SUBSCR")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_EXT_TASK")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_MEMBERSHIP")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_TASK")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_JOB")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_GE_BYTEARRAY")).isOne();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_JOBDEF")).isEqualTo(2);
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_USER")).isEqualTo(2);
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_EXECUTION")).isEqualTo(5);
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_METER_LOG")).isEqualTo(12);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_VARIABLE")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_PROCDEF")).isEqualTo(1);
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_VARIABLE")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_PROCDEF")).isOne();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_TENANT")).isEqualTo(2);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_GROUP")).isEqualTo(1);
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_ID_GROUP")).isOne();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_AUTHORIZATION")).isEqualTo(2);
 
     if (processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_INCIDENT")).isEqualTo(1);
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_INCIDENT")).isOne();
       assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_ACTINST")).isEqualTo(9);
       assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_PROCINST")).isEqualTo(2);
       assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DETAIL")).isEqualTo(2);
@@ -308,19 +308,19 @@ class PurgeDatabaseTest {
     assertThat(cachePurgeReport.getReportValue(CachePurgeReport.CASE_DEF_CACHE)).hasSize(1);
 
     DatabasePurgeReport databasePurgeReport = purge.getDatabasePurgeReport();
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_TASK")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_GE_BYTEARRAY")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_CASE_DEF")).isEqualTo(1);
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_TASK")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_GE_BYTEARRAY")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_CASE_DEF")).isOne();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_CASE_EXECUTION")).isEqualTo(3);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_VARIABLE")).isEqualTo(1);
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_VARIABLE")).isOne();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RU_CASE_SENTRY_PART")).isEqualTo(2);
 
     if (processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DETAIL")).isEqualTo(1);
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_TASKINST")).isEqualTo(1);
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_VARINST")).isEqualTo(1);
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_CASEINST")).isEqualTo(1);
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DETAIL")).isOne();
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_TASKINST")).isOne();
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_VARINST")).isOne();
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_CASEINST")).isOne();
       assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_CASEACTINST")).isEqualTo(2);
     }
   }
@@ -353,15 +353,15 @@ class PurgeDatabaseTest {
     assertThat(cachePurgeReport.getReportValue(CachePurgeReport.DMN_REQ_DEF_CACHE)).hasSize(1);
 
     DatabasePurgeReport databasePurgeReport = purge.getDatabasePurgeReport();
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_GE_BYTEARRAY")).isEqualTo(1);
-    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DECISION_REQ_DEF")).isEqualTo(1);
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DEPLOYMENT")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_GE_BYTEARRAY")).isOne();
+    assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DECISION_REQ_DEF")).isOne();
     assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_RE_DECISION_DEF")).isEqualTo(2);
 
     if (processEngineConfiguration.getHistoryLevel().equals(HistoryLevel.HISTORY_LEVEL_FULL)) {
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DECINST")).isEqualTo(1);
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DEC_IN")).isEqualTo(1);
-      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DEC_OUT")).isEqualTo(1);
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DECINST")).isOne();
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DEC_IN")).isOne();
+      assertThat((long) databasePurgeReport.getReportValue(databaseTablePrefix + "ACT_HI_DEC_OUT")).isOne();
     }
   }
 }

@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.runtime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -55,7 +54,8 @@ import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.executio
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.hierarchical;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.inverted;
 import static org.operaton.bpm.engine.test.api.runtime.TestOrderingUtil.verifySorting;
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -286,8 +286,8 @@ class ExecutionQueryTest {
     // Test LESS_THAN, should return 2 results
     executions = runtimeService.createExecutionQuery().variableValueLessThan("stringVar", "abcdeg").list();
     assertThat(executions).hasSize(2);
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -297,8 +297,8 @@ class ExecutionQueryTest {
     // Test LESS_THAN_OR_EQUAL
     executions = runtimeService.createExecutionQuery().variableValueLessThanOrEqual("stringVar", "abcdef").list();
     assertThat(executions).hasSize(2);
-    expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -388,8 +388,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("longVar", 55555L).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -469,8 +469,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("doubleVar", 55555.5555).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -550,8 +550,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("integerVar", 55555).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -634,8 +634,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("shortVar", (short)5555).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -730,8 +730,8 @@ class ExecutionQueryTest {
     executions = runtimeService.createExecutionQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
     assertThat(executions).hasSize(2);
 
-    List<String> expectedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(executions.get(0).getId(), executions.get(1).getId()));
+    List<String> expectedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(executions.get(0).getId(), executions.get(1).getId()));
     ids.removeAll(expectedIds);
     assertThat(ids).isEmpty();
 
@@ -791,36 +791,26 @@ class ExecutionQueryTest {
             .isNotNull()
             .hasSize(1);
     assertThat(instances.get(0).getId()).isEqualTo(processInstance1.getId());
+
+    // given
     var processInstanceQuery = runtimeService.createProcessInstanceQuery();
 
-    // Test unsupported operations
-    try {
-      processInstanceQuery.variableValueGreaterThan("booleanVar", true);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'greater than' condition", ae.getMessage());
-    }
+    // then - Test unsupported operations
+    assertThatThrownBy(() -> processInstanceQuery.variableValueGreaterThan("booleanVar", true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'greater than' condition");
 
-    try {
-      processInstanceQuery.variableValueGreaterThanOrEqual("booleanVar", true);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'greater than or equal' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> processInstanceQuery.variableValueGreaterThanOrEqual("booleanVar", true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'greater than or equal' condition");
 
-    try {
-      processInstanceQuery.variableValueLessThan("booleanVar", true);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'less than' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> processInstanceQuery.variableValueLessThan("booleanVar", true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than' condition");
 
-    try {
-      processInstanceQuery.variableValueLessThanOrEqual("booleanVar", true);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'less than or equal' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> processInstanceQuery.variableValueLessThanOrEqual("booleanVar", true))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than or equal' condition");
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -908,48 +898,35 @@ class ExecutionQueryTest {
     assertThat(executions.get(0).getId()).isEqualTo(processInstance1.getId());
 
     // Test NOT_EQUALS null
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVar", null).count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarLong", null).count()).isEqualTo(1);
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarDouble", null).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVar", null).count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarLong", null).count()).isOne();
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarDouble", null).count()).isOne();
     // When a byte-array reference is present, the variable is not considered null
-    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarByte", null).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueNotEquals("nullVarByte", null).count()).isOne();
+
+    // given
     var executionQuery = runtimeService.createExecutionQuery();
 
-    // All other variable queries with null should throw exception
-    try {
-      executionQuery.variableValueGreaterThan("nullVar", null);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'greater than' condition", ae.getMessage());
-    }
+    // then - All other variable queries with null should throw exception
+    assertThatThrownBy(() -> executionQuery.variableValueGreaterThan("nullVar", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'greater than' condition");
 
-    try {
-      executionQuery.variableValueGreaterThanOrEqual("nullVar", null);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'greater than or equal' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> executionQuery.variableValueGreaterThanOrEqual("nullVar", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'greater than or equal' condition");
 
-    try {
-      executionQuery.variableValueLessThan("nullVar", null);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'less than' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> executionQuery.variableValueLessThan("nullVar", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than' condition");
 
-    try {
-      executionQuery.variableValueLessThanOrEqual("nullVar", null);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'less than or equal' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> executionQuery.variableValueLessThanOrEqual("nullVar", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'less than or equal' condition");
 
-    try {
-      executionQuery.variableValueLike("nullVar", null);
-      fail("Exception expected");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Booleans and null cannot be used in 'like' condition", ae.getMessage());
-    }
+    assertThatThrownBy(() -> executionQuery.variableValueLike("nullVar", null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Booleans and null cannot be used in 'like' condition");
 
     runtimeService.deleteProcessInstance(processInstance1.getId(), "test");
     runtimeService.deleteProcessInstance(processInstance2.getId(), "test");
@@ -969,71 +946,56 @@ class ExecutionQueryTest {
     vars.put("serializableVar", dummySerializable);
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess", vars);
+
+    // given
     ExecutionQuery executionQuery1 = runtimeService.createExecutionQuery().variableValueEquals("bytesVar", "test".getBytes());
     ExecutionQuery executionQuery2 = runtimeService.createExecutionQuery().variableValueEquals("serializableVar", new DummySerializable());
 
-    try {
-      executionQuery1.list();
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Variables of type ByteArray cannot be used to query", ae.getMessage());
-    }
+    // then
+    assertThatThrownBy(executionQuery1::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Variables of type ByteArray cannot be used to query");
 
-    try {
-      executionQuery2.list();
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("Object values cannot be used to query", ae.getMessage());
-    }
+    assertThatThrownBy(executionQuery2::list)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Object values cannot be used to query");
 
     runtimeService.deleteProcessInstance(processInstance.getId(), "test");
   }
 
   @Test
   void testQueryVariablesNullNameArgument() {
+    // given
     var executionQuery = runtimeService.createExecutionQuery();
-    try {
-      executionQuery.variableValueEquals(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
-    try {
-      executionQuery.variableValueNotEquals(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
-    try {
-      executionQuery.variableValueGreaterThan(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
-    try {
-      executionQuery.variableValueGreaterThanOrEqual(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
-    try {
-      executionQuery.variableValueLessThan(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
-    try {
-      executionQuery.variableValueLessThanOrEqual(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
-    try {
-      executionQuery.variableValueLike(null, "value");
-      fail("Expected exception");
-    } catch(ProcessEngineException ae) {
-      testRule.assertTextPresent("name is null", ae.getMessage());
-    }
+
+    // then
+    assertThatThrownBy(() -> executionQuery.variableValueEquals(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
+
+    assertThatThrownBy(() -> executionQuery.variableValueNotEquals(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
+
+    assertThatThrownBy(() -> executionQuery.variableValueGreaterThan(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
+
+    assertThatThrownBy(() -> executionQuery.variableValueGreaterThanOrEqual(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
+
+    assertThatThrownBy(() -> executionQuery.variableValueLessThan(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
+
+    assertThatThrownBy(() -> executionQuery.variableValueLessThanOrEqual(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
+
+    assertThatThrownBy(() -> executionQuery.variableValueLike(null, "value"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("name is null");
   }
 
   @Deployment(resources = {
@@ -1176,7 +1138,7 @@ class ExecutionQueryTest {
     }
 
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "child").count()).isEqualTo(2);
-    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "parent").count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).variableValueEquals("x", "parent").count()).isOne();
 
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueEquals("x", "parent").count()).isEqualTo(3);
     assertThat(runtimeService.createExecutionQuery().processInstanceId(pi.getId()).processVariableValueNotEquals("x", "xxx").count()).isEqualTo(3);
@@ -1543,14 +1505,14 @@ class ExecutionQueryTest {
     assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().processVariableValueEquals("var", Variables.numberValue(null)).count()).isOne();
 
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123L)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(runtimeService.createExecutionQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml")

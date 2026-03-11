@@ -16,9 +16,8 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,9 +35,7 @@ import org.operaton.bpm.engine.repository.*;
 /**
  * @author Tom Baeyens
  */
-public class DeploymentEntity implements Serializable, DeploymentWithDefinitions, DbEntity {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeploymentEntity implements DeploymentWithDefinitions, DbEntity {
 
   protected String id;
   protected String name;
@@ -116,7 +113,7 @@ public class DeploymentEntity implements Serializable, DeploymentWithDefinitions
   @SuppressWarnings("unchecked")
   public <T> List<T> getDeployedArtifacts(Class<T> clazz) {
     if(deployedArtifacts == null) {
-      return null;
+      return Collections.emptyList();
     } else {
       return deployedArtifacts.get(clazz);
     }

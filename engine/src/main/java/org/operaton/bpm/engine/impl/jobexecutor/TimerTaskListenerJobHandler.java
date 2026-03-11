@@ -24,7 +24,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 /**
  * {@link JobHandler} implementation for timer task listeners which can be defined for user tasks.
  *
+ * <p>
  * The configuration contains the id of the activity as well as the id of the task listener.
+ * </p>
  *
  */
 public class TimerTaskListenerJobHandler extends TimerEventJobHandler {
@@ -49,8 +51,7 @@ public class TimerTaskListenerJobHandler extends TimerEventJobHandler {
     if (targetTask != null) {
       targetTask.triggerTimeoutEvent(configuration.getTimerElementSecondaryKey());
     } else {
-      throw new ProcessEngineException("Error while triggering timeout task listener '" + configuration.getTimerElementSecondaryKey()
-          + "': cannot find task for activity id '" + configuration.getTimerElementKey() + "'.");
+      throw new ProcessEngineException("Error while triggering timeout task listener '%s': cannot find task for activity id '%s'.".formatted(configuration.getTimerElementSecondaryKey(), configuration.getTimerElementKey()));
     }
 
   }

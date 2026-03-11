@@ -179,9 +179,9 @@ class MultiTenancyMigrationExecuteTenantCheckTest {
 
   protected void assertMigratedTo(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
     assertThat(engineRule.getRuntimeService()
-        .createProcessInstanceQuery()
-        .processInstanceId(processInstance.getId())
-        .processDefinitionId(targetDefinition.getId())
-        .count()).isEqualTo(1);
+      .createProcessInstanceQuery()
+      .processInstanceId(processInstance.getId())
+      .processDefinitionId(targetDefinition.getId())
+      .count()).isOne();
   }
 }

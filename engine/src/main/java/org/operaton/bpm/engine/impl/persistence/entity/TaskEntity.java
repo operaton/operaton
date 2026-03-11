@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -92,21 +90,23 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Falko Menge
  * @author Deivarayan Azhagappan
  */
-public class TaskEntity extends AbstractVariableScope implements Task, DelegateTask, Serializable, DbEntity, HasDbRevision, HasDbReferences, CommandContextListener, VariablesProvider<VariableInstanceEntity> {
+public class TaskEntity extends AbstractVariableScope implements Task, DelegateTask, DbEntity, HasDbRevision, HasDbReferences, CommandContextListener, VariablesProvider<VariableInstanceEntity> {
 
   protected static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
+  private static final VariableInstanceEntityPersistenceListener VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER = new VariableInstanceEntityPersistenceListener();
+  private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
+  private static final VariableInstanceSequenceCounterListener VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER = new VariableInstanceSequenceCounterListener();
+
   protected static final List<VariableInstanceLifecycleListener<CoreVariableInstance>> DEFAULT_VARIABLE_LIFECYCLE_LISTENERS =
       Arrays.asList(
-          (VariableInstanceLifecycleListener) VariableInstanceEntityPersistenceListener.INSTANCE,
-          (VariableInstanceLifecycleListener) VariableInstanceSequenceCounterListener.INSTANCE,
-          (VariableInstanceLifecycleListener) VariableInstanceHistoryListener.INSTANCE
+          (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_ENTITY_PERSISTENCE_LISTENER,
+          (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER,
+          (VariableInstanceLifecycleListener) VARIABLE_INSTANCE_HISTORY_LISTENER
           );
 
   public static final String DELETE_REASON_COMPLETED = "completed";
   public static final String DELETE_REASON_DELETED   = "deleted";
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String id;
   protected int revision;
@@ -169,7 +169,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   @SuppressWarnings({ "unchecked" })
   protected transient VariableStore<VariableInstanceEntity> variableStore
   = new VariableStore<>(this, new TaskEntityReferencer(this));
-
 
   protected transient boolean skipCustomListeners;
 
@@ -483,7 +482,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
           .getTaskManager()
           .findTaskById(parentTaskId);
 
-      ensureNotNull(NullValueException.class, "Parent task with id '"+parentTaskId+"' does not exist", PARENT_TASK, parentTaskEntity);
+      ensureNotNull(NullValueException.class, "Parent task with id '%s' does not exist".formatted(parentTaskId), PARENT_TASK, parentTaskEntity);
 
       if (parentTaskEntity.suspensionState == SuspensionState.SUSPENDED.getStateCode()) {
         throw LOG.suspendedEntityException("parent task", id);
@@ -888,7 +887,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
 
   @Override
   public String toString() {
-    return "Task["+id+"]";
+    return "Task[%s]".formatted(id);
   }
 
   // special setters //////////////////////////////////////////////////////////
@@ -1075,7 +1074,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
       }
     }
     else {
-      return null;
+      return Collections.emptyList();
     }
   }
 
@@ -1235,8 +1234,7 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   public boolean triggerTimeoutEvent(String timeoutId) {
     TaskListener taskListener = getTimeoutListener(timeoutId);
     if (taskListener == null) {
-      throw LOG.invokeTaskListenerException(new NotFoundException("Cannot find timeout taskListener with id '"
-          + timeoutId + "' for task " + this.id));
+      throw LOG.invokeTaskListenerException(new NotFoundException("Cannot find timeout taskListener with id '%s' for task %s".formatted(timeoutId, this.id)));
     }
     return invokeListener(TaskListener.EVENTNAME_TIMEOUT, taskListener);
   }
@@ -1632,7 +1630,6 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
     this.taskState = taskState;
   }
 
-
   @Override
   public void setFollowUpDate(Date followUpDate) {
     registerCommandContextCloseListener();
@@ -1760,13 +1757,8 @@ public class TaskEntity extends AbstractVariableScope implements Task, DelegateT
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (processDefinitionId != null) {
       referenceIdAndClass.put(processDefinitionId, ProcessDefinitionEntity.class);

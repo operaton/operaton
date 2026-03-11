@@ -34,9 +34,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test verifies that if the same @RequestScoped SFSB Bean is invoked multiple times
  * in the context of the same job, we get the same instance.
  *
+ * <p>
  * NOTE:
  * - works on Jboss AS
  * - broken on Glassfish, see HEMERA-2454
+ * </p>
  *
  * @author Daniel Meyer
  *

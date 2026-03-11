@@ -47,7 +47,6 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 public class MigrationEventSubProcessTest {
 
@@ -315,7 +314,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().correlateMessage(EventSubProcessModels.MESSAGE_NAME);
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -344,7 +343,7 @@ public class MigrationEventSubProcessTest {
     // and it is possible to trigger the event subprocess
     Job timerJob = testHelper.snapshotAfterMigration.getJobs().get(0);
     rule.getManagementService().executeJob(timerJob.getId());
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -372,7 +371,7 @@ public class MigrationEventSubProcessTest {
 
     // and it is possible to trigger the event subprocess
     rule.getRuntimeService().signalEventReceived(EventSubProcessModels.SIGNAL_NAME);
-    assertThat(rule.getTaskService().createTaskQuery().count()).isEqualTo(1);
+    assertThat(rule.getTaskService().createTaskQuery().count()).isOne();
 
     // and complete the process instance
     testHelper.completeTask(EVENT_SUB_PROCESS_TASK_ID);
@@ -403,22 +402,21 @@ public class MigrationEventSubProcessTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.SIGNAL_EVENT_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(EventSubProcessModels.TIMER_EVENT_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
         .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
         .mapActivities(USER_TASK_ID, USER_TASK_ID)
         .mapActivities(EVENT_SUB_PROCESS_START_ID, EVENT_SUB_PROCESS_START_ID);
 
-    try {
-      // when
-      runtimeService.build();
-      fail("exception expected");
-    } catch (MigrationPlanValidationException e) {
-      // then
-      MigrationPlanValidationReportAssert.assertThat(e.getValidationReport())
-      .hasInstructionFailures(EVENT_SUB_PROCESS_START_ID,
-        "Events are not of the same type (signalStartEvent != startTimerEvent)"
-      );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        MigrationPlanValidationReportAssert.assertThat(ex.getValidationReport())
+          .hasInstructionFailures(EVENT_SUB_PROCESS_START_ID,
+            "Events are not of the same type (signalStartEvent != startTimerEvent)"
+          );
+      });
   }
 
   @Test

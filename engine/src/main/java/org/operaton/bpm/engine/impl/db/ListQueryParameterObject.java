@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.db;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +24,7 @@ import org.operaton.bpm.engine.impl.QueryOrderingProperty;
 /**
  * @author Daniel Meyer
  */
-public class ListQueryParameterObject implements Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class ListQueryParameterObject {
 
   protected AuthorizationCheck authCheck = new AuthorizationCheck();
 

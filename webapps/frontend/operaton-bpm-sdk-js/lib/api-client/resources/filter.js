@@ -39,9 +39,9 @@ Filter.path = 'filter';
  * @param  {uuid}     filterId   of the filter to be requested
  * @param  {Function} done
  */
-Filter.get = function(filterId, done) {
+Filter.get = function (filterId, done) {
   return this.http.get(this.path + '/' + filterId, {
-    done: done
+    done: done,
   });
 };
 
@@ -56,10 +56,10 @@ Filter.get = function(filterId, done) {
  * @param  {Bool}     [data.itemCount]
  * @param  {Function} done
  */
-Filter.list = function(data, done) {
+Filter.list = function (data, done) {
   return this.http.get(this.path, {
     data: data,
-    done: done
+    done: done,
   });
 };
 
@@ -74,7 +74,7 @@ Filter.list = function(data, done) {
  * @param  {String}   [data.sortOrder]
  * @param  {Function} done
  */
-Filter.getTasks = function(data, done) {
+Filter.getTasks = function (data, done) {
   var path = this.path + '/';
 
   if (typeof data === 'string') {
@@ -91,7 +91,7 @@ Filter.getTasks = function(data, done) {
 
   return this.http.post(path, {
     data: data,
-    done: done
+    done: done,
   });
 };
 
@@ -101,10 +101,10 @@ Filter.getTasks = function(data, done) {
  * @param  {Object}   filter   is an object representation of a filter
  * @param  {Function} done
  */
-Filter.create = function(filter, done) {
+Filter.create = function (filter, done) {
   return this.http.post(this.path + '/create', {
     data: filter,
-    done: done
+    done: done,
   });
 };
 
@@ -114,10 +114,10 @@ Filter.create = function(filter, done) {
  * @param  {Object}   filter   is an object representation of a filter
  * @param  {Function} done
  */
-Filter.update = function(filter, done) {
+Filter.update = function (filter, done) {
   return this.http.put(this.path + '/' + filter.id, {
     data: filter,
-    done: done
+    done: done,
   });
 };
 
@@ -131,7 +131,7 @@ Filter.update = function(filter, done) {
  *                             an id property, the filter will be updated, otherwise created
  * @param  {Function} done
  */
-Filter.save = function(filter, done) {
+Filter.save = function (filter, done) {
   return Filter[filter.id ? 'update' : 'create'](filter, done);
 };
 
@@ -141,9 +141,9 @@ Filter.save = function(filter, done) {
  * @param  {uuid}     id   of the filter to delete
  * @param  {Function} done
  */
-Filter.delete = function(id, done) {
+Filter.delete = function (id, done) {
   return this.http.del(this.path + '/' + id, {
-    done: done
+    done: done,
   });
 };
 
@@ -153,21 +153,21 @@ Filter.delete = function(id, done) {
  * @param  {uuid}     [id]   of the filter to get authorizations for
  * @param  {Function} done
  */
-Filter.authorizations = function(id, done) {
+Filter.authorizations = function (id, done) {
   if (typeof id === 'function') {
     return this.http.options(this.path, {
       done: id,
       headers: {
-        Accept: 'application/json'
-      }
+        Accept: 'application/json',
+      },
     });
   }
 
   return this.http.options(this.path + '/' + id, {
     done: done,
     headers: {
-      Accept: 'application/json'
-    }
+      Accept: 'application/json',
+    },
   });
 };
 

@@ -62,7 +62,7 @@ class PropertyUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROPERTY);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
@@ -84,7 +84,7 @@ class PropertyUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROPERTY);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);
@@ -106,7 +106,7 @@ class PropertyUserOperationLogTest {
     identityService.clearAuthentication();
 
     // then
-    assertThat(historyService.createUserOperationLogQuery().count()).isEqualTo(1L);
+    assertThat(historyService.createUserOperationLogQuery().count()).isOne();
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery().singleResult();
     assertThat(entry.getEntityType()).isEqualTo(EntityTypes.PROPERTY);
     assertThat(entry.getCategory()).isEqualTo(UserOperationLogEntry.CATEGORY_ADMIN);

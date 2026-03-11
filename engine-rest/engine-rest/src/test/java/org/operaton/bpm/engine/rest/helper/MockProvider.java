@@ -150,6 +150,7 @@ import static org.mockito.Mockito.when;
  * @author Thorben Lindhauer
  *
  */
+@SuppressWarnings("deprecation")
 public abstract class MockProvider {
 
   public static final String FORMAT_APPLICATION_JSON = "application/json";
@@ -851,8 +852,8 @@ public abstract class MockProvider {
   // historic job log
 
   public static final String EXAMPLE_HISTORIC_JOB_LOG_ID = "aHistoricJobLogId";
-  public static final String EXAMPLE_HISTORIC_JOB_LOG_TIMESTAMP = withTimezone(withTimezone("2015-01-01T00:00:00"));
-  public static final String EXAMPLE_HISTORIC_JOB_LOG_REMOVAL_TIME = withTimezone(withTimezone("2018-01-01T00:00:00"));
+  public static final String EXAMPLE_HISTORIC_JOB_LOG_TIMESTAMP = withTimezone("2015-01-01T00:00:00");
+  public static final String EXAMPLE_HISTORIC_JOB_LOG_REMOVAL_TIME = withTimezone("2018-01-01T00:00:00");
 
   public static final String EXAMPLE_HISTORIC_JOB_LOG_JOB_ID = "aJobId";
   public static final String EXAMPLE_HISTORIC_JOB_LOG_JOB_DUE_DATE = withTimezone("2015-10-01T00:00:00");

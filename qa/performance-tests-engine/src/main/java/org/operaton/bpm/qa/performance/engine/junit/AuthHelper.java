@@ -38,7 +38,7 @@ public final class AuthHelper {
       return callable.call();
 
     }
-    catch (Throwable t) {
+    catch (Exception t) {
 
       if (t instanceof RuntimeException runtimeException) {
         throw runtimeException;

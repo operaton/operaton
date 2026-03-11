@@ -40,7 +40,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {Object.<String, *>} [params]
      * @param  {requestCallback}    [done]
      */
-    suspend: function(params, done) {
+    suspend: function (params, done) {
       // allows to pass only a callback
       if (typeof params === 'function') {
         done = params;
@@ -50,7 +50,7 @@ var ProcessDefinition = AbstractClientResource.extend(
       done = done || noop;
 
       return this.http.post(this.path, {
-        done: done
+        done: done,
       });
     },
 
@@ -59,9 +59,9 @@ var ProcessDefinition = AbstractClientResource.extend(
      *
      * @param  {Function} [done]
      */
-    stats: function(done) {
+    stats: function (done) {
       return this.http.post(this.path, {
-        done: done || noop
+        done: done || noop,
       });
     },
 
@@ -82,12 +82,12 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {Object} [varname]
      * @param  {Function} [done]
      */
-    start: function(done) {
+    start: function (done) {
       return this.http.post(this.path, {
         data: {},
-        done: done
+        done: done,
       });
-    }
+    },
   },
   /** @lends  CamSDK.client.resource.ProcessDefinition */
   {
@@ -102,7 +102,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {uuid}     id    of the process definition to be requested
      * @param  {Function} done
      */
-    get: function(id, done) {
+    get: function (id, done) {
       // var pointer = '';
       // if (data.key) {
       //   pointer = 'key/'+ data.key;
@@ -112,7 +112,7 @@ var ProcessDefinition = AbstractClientResource.extend(
       // }
 
       return this.http.get(this.path + '/' + id, {
-        done: done
+        done: done,
       });
     },
 
@@ -122,9 +122,9 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {String}   key    of the process definition to be requested
      * @param  {Function} done
      */
-    getByKey: function(key, done) {
+    getByKey: function (key, done) {
       return this.http.get(this.path + '/key/' + key, {
-        done: done
+        done: done,
       });
     },
 
@@ -174,7 +174,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      *   //
      * });
      */
-    list: function() {
+    list: function () {
       return AbstractClientResource.list.apply(this, arguments);
     },
 
@@ -182,7 +182,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * Get a count of process definitions
      * Same parameters as list
      */
-    count: function() {
+    count: function () {
       return AbstractClientResource.count.apply(this, arguments);
     },
 
@@ -194,7 +194,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {Array}              [data.names]  of variables to be fetched
      * @param  {Function}           [done]
      */
-    formVariables: function(data, done) {
+    formVariables: function (data, done) {
       var pointer = '';
       done = done || noop;
       if (data.key) {
@@ -203,14 +203,14 @@ var ProcessDefinition = AbstractClientResource.extend(
         pointer = data.id;
       } else {
         var err = new Error(
-          'Process definition task variables needs either a key or an id.'
+          'Process definition task variables needs either a key or an id.',
         );
         done(err);
         return Q.reject(err);
       }
 
       var queryData = {
-        deserializeValues: data.deserializeValues
+        deserializeValues: data.deserializeValues,
       };
 
       if (data.names) {
@@ -219,7 +219,7 @@ var ProcessDefinition = AbstractClientResource.extend(
 
       return this.http.get(this.path + '/' + pointer + '/form-variables', {
         data: queryData,
-        done: done
+        done: done,
       });
     },
 
@@ -234,7 +234,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {Array}              [data.variables]      variables to be set
      * @param  {Function}           [done]
      */
-    submitForm: function(data, done) {
+    submitForm: function (data, done) {
       var pointer = '';
       done = done || noop;
       if (data.key) {
@@ -247,17 +247,17 @@ var ProcessDefinition = AbstractClientResource.extend(
       } else {
         return done(
           new Error(
-            'Process definition task variables needs either a key or an id.'
-          )
+            'Process definition task variables needs either a key or an id.',
+          ),
         );
       }
 
       return this.http.post(this.path + '/' + pointer + '/submit-form', {
         data: {
           businessKey: data.businessKey,
-          variables: data.variables
+          variables: data.variables,
         },
-        done: done
+        done: done,
       });
     },
 
@@ -275,7 +275,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      *                                                                as part of this request.
      * @param  {Function}           [done]
      */
-    delete: function(data, done) {
+    delete: function (data, done) {
       done = done || noop;
 
       var pointer = '';
@@ -289,7 +289,7 @@ var ProcessDefinition = AbstractClientResource.extend(
         pointer = data.id;
       } else {
         return done(
-          new Error('Process definition deletion needs either a key or an id.')
+          new Error('Process definition deletion needs either a key or an id.'),
         );
       }
 
@@ -318,7 +318,7 @@ var ProcessDefinition = AbstractClientResource.extend(
       }
 
       return this.http.del(this.path + '/' + pointer + queryParams, {
-        done: done
+        done: done,
       });
     },
 
@@ -326,14 +326,14 @@ var ProcessDefinition = AbstractClientResource.extend(
      * Retrieves the form of a process definition.
      * @param  {Function} [done]
      */
-    startForm: function(data, done) {
+    startForm: function (data, done) {
       var path =
         this.path +
         '/' +
         (data.key ? 'key/' + data.key : data.id) +
         '/startForm';
       return this.http.get(path, {
-        done: done || noop
+        done: done || noop,
       });
     },
 
@@ -341,11 +341,11 @@ var ProcessDefinition = AbstractClientResource.extend(
      * Retrieves the form of a process definition.
      * @param  {Function} [done]
      */
-    xml: function(data, done) {
+    xml: function (data, done) {
       var path =
         this.path + '/' + (data.id ? data.id : 'key/' + data.key) + '/xml';
       return this.http.get(path, {
-        done: done || noop
+        done: done || noop,
       });
     },
 
@@ -353,7 +353,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * Retrieves runtime statistics of a given process definition grouped by activities
      * @param  {Function} [done]
      */
-    statistics: function(data, done) {
+    statistics: function (data, done) {
       var path = this.path;
 
       if (data.id) {
@@ -366,7 +366,7 @@ var ProcessDefinition = AbstractClientResource.extend(
 
       return this.http.get(path, {
         data: data,
-        done: done || noop
+        done: done || noop,
       });
     },
 
@@ -376,7 +376,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {Object} [data]
      * @param  {Function} [done]
      */
-    submit: function(data, done) {
+    submit: function (data, done) {
       var path = this.path;
       if (data.key) {
         path += '/key/' + data.key;
@@ -387,7 +387,7 @@ var ProcessDefinition = AbstractClientResource.extend(
 
       return this.http.post(path, {
         data: data,
-        done: done
+        done: done,
       });
     },
 
@@ -398,7 +398,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {Object.<String, *>} [params]
      * @param  {requestCallback}    [done]
      */
-    suspend: function(ids, params, done) {
+    suspend: function (ids, params, done) {
       // allows to pass only a callback
       if (typeof params === 'function') {
         done = params;
@@ -410,7 +410,7 @@ var ProcessDefinition = AbstractClientResource.extend(
       ids = Array.isArray(ids) ? ids : [ids];
 
       return this.http.post(this.path, {
-        done: done
+        done: done,
       });
     },
 
@@ -425,7 +425,7 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param {String} [params.businessKey]     The business key the process instance is to be initialized with. The business key uniquely identifies the process instance in the context of the given process definition.
      * @param {String} [params.caseInstanceId]  The case instance id the process instance is to be initialized with.
      */
-    start: function(params, done) {
+    start: function (params, done) {
       var url = this.path + '/';
 
       if (params.id) {
@@ -440,7 +440,7 @@ var ProcessDefinition = AbstractClientResource.extend(
 
       return this.http.post(url + '/start', {
         data: params,
-        done: done
+        done: done,
       });
     },
 
@@ -451,30 +451,30 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param {Object} [params]
      * @param {Number} [params.historyTimeToLive]  New value for historyTimeToLive field of process definition. Can be null.
      */
-    updateHistoryTimeToLive: function(id, params, done) {
+    updateHistoryTimeToLive: function (id, params, done) {
       var url = this.path + '/' + id + '/history-time-to-live';
 
       return this.http.put(url, {
         data: params,
-        done: done
+        done: done,
       });
     },
 
-    restart: function(id, params, done) {
+    restart: function (id, params, done) {
       var url = this.path + '/' + id + '/restart';
 
       return this.http.post(url, {
         data: params,
-        done: done
+        done: done,
       });
     },
 
-    restartAsync: function(id, params, done) {
+    restartAsync: function (id, params, done) {
       var url = this.path + '/' + id + '/restart-async';
 
       return this.http.post(url, {
         data: params,
-        done: done
+        done: done,
       });
     },
 
@@ -483,14 +483,14 @@ var ProcessDefinition = AbstractClientResource.extend(
      * @param  {uuid} id of the process definition to be requested
      * @param  {requestCallback} [done]
      */
-    staticCalledProcessDefinitions: function(id, done) {
+    staticCalledProcessDefinitions: function (id, done) {
       const path = `${this.path}/${id}/static-called-process-definitions`;
 
       return this.http.get(path, {
-        done: done
+        done: done,
       });
-    }
-  }
+    },
+  },
 );
 
 module.exports = ProcessDefinition;

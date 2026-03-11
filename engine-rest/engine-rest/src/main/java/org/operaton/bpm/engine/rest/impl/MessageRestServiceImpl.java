@@ -19,7 +19,6 @@ package org.operaton.bpm.engine.rest.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -128,34 +127,22 @@ public class MessageRestServiceImpl extends AbstractRestProcessEngineAware imple
     MessageCorrelationBuilder builder = runtimeService
         .createMessageCorrelation(messageDto.getMessageName());
 
-    if (processVariables != null) {
+    if (!processVariables.isEmpty()) {
       builder.setVariables(processVariables);
     }
-    if (processVariablesLocal != null) {
+    if (!processVariablesLocal.isEmpty()) {
       builder.setVariablesLocal(processVariablesLocal);
     }
-    if (processVariablesToTriggeredScope != null) {
+    if (!processVariablesToTriggeredScope.isEmpty()) {
       builder.setVariablesToTriggeredScope(processVariablesToTriggeredScope);
     }
     if (messageDto.getBusinessKey() != null) {
       builder.processInstanceBusinessKey(messageDto.getBusinessKey());
     }
 
-    if (correlationKeys != null && !correlationKeys.isEmpty()) {
-      for (Entry<String, Object> correlationKey  : correlationKeys.entrySet()) {
-        String name = correlationKey.getKey();
-        Object value = correlationKey.getValue();
-        builder.processInstanceVariableEquals(name, value);
-      }
-    }
+    correlationKeys.entrySet().stream().forEach(entry -> builder.processInstanceVariableEquals(entry.getKey(), entry.getValue()));
 
-    if (localCorrelationKeys != null && !localCorrelationKeys.isEmpty()) {
-      for (Entry<String, Object> correlationKey  : localCorrelationKeys.entrySet()) {
-        String name = correlationKey.getKey();
-        Object value = correlationKey.getValue();
-        builder.localVariableEquals(name, value);
-      }
-    }
+    localCorrelationKeys.entrySet().stream().forEach(entry -> builder.localVariableEquals(entry.getKey(), entry.getValue()));
 
     if (messageDto.getTenantId() != null) {
       builder.tenantId(messageDto.getTenantId());

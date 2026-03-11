@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.history;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -65,7 +64,6 @@ import org.operaton.commons.utils.CollectionUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Frederik Heremans
@@ -75,7 +73,7 @@ import static org.assertj.core.api.Assertions.fail;
 public class HistoryServiceTest {
 
   public static final String ONE_TASK_PROCESS = "oneTaskProcess";
-  protected static Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
+  private static final Logger LOG = ProcessEngineLogger.TEST_LOGGER.getLogger();
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -95,13 +93,13 @@ public class HistoryServiceTest {
     // With a clean ProcessEngine, no instances should be available
     assertThat(historyService.createHistoricProcessInstanceQuery().count()).isZero();
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isOne();
 
     // Complete the task and check if the size is count 1
     List<Task> tasks = taskService.createTaskQuery().processInstanceId(processInstance.getId()).list();
     assertThat(tasks).hasSize(1);
     taskService.complete(tasks.get(0).getId());
-    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().count()).isOne();
   }
 
   @Test
@@ -313,25 +311,25 @@ public class HistoryServiceTest {
 
   @Test
   void testHistoricProcessInstanceQueryByProcessInstanceIdsEmpty() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
     var processInstanceIds = new HashSet<String>();
-    try {
-      historicProcessInstanceQuery.processInstanceIds(processInstanceIds);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("Set of process instance ids is empty", re.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processInstanceIds(processInstanceIds))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Set of process instance ids is empty");
   }
 
   @Test
   void testHistoricProcessInstanceQueryByProcessInstanceIdsNull() {
+    // given
     var historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-    try {
-      historicProcessInstanceQuery.processInstanceIds(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException re) {
-      testRule.assertTextPresent("Set of process instance ids is null", re.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery.processInstanceIds(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Set of process instance ids is null");
   }
 
   @Test
@@ -368,30 +366,23 @@ public class HistoryServiceTest {
 
   @Test
   void testQueryByRootProcessInstancesAndSuperProcess() {
+    // given
     var historicProcessInstanceQuery1 = historyService.createHistoricProcessInstanceQuery()
       .rootProcessInstances();
 
-    // when
-    try {
-      historicProcessInstanceQuery1.superProcessInstanceId("processInstanceId");
+    // when/then
+    assertThatThrownBy(() -> historicProcessInstanceQuery1.superProcessInstanceId("processInstanceId"))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
-    }
-
+    // given
     var historicProcessInstanceQuery2 = historyService.createHistoricProcessInstanceQuery()
       .superProcessInstanceId("processInstanceId");
-    // when
-    try {
-      historicProcessInstanceQuery2.rootProcessInstances();
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      // then
-      assertThat(e.getMessage()).contains("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
-    }
+    // when/then
+    assertThatThrownBy(historicProcessInstanceQuery2::rootProcessInstances)
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Invalid query usage: cannot set both rootProcessInstances and superProcessInstanceId");
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/concurrentExecution.bpmn20.xml"})
@@ -412,11 +403,11 @@ public class HistoryServiceTest {
     }
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("rootValue", "test").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("rootValue", "test").count()).isOne();
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("parallelValue1", "Receive Payment").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("parallelValue1", "Ship Order").count()).isEqualTo(1);
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("parallelValue2", "test").count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("parallelValue1", "Receive Payment").count()).isOne();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("parallelValue1", "Ship Order").count()).isOne();
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("parallelValue2", "test").count()).isOne();
   }
 
   /**
@@ -586,8 +577,8 @@ public class HistoryServiceTest {
     processInstances = historyService.createHistoricProcessInstanceQuery().variableValueLessThan("dateVar", nextYear.getTime()).list();
     assertThat(processInstances).hasSize(2);
 
-    List<String> expecedIds = Arrays.asList(processInstance1.getId(), processInstance2.getId());
-    List<String> ids = new ArrayList<>(Arrays.asList(processInstances.get(0).getId(), processInstances.get(1).getId()));
+    List<String> expecedIds = List.of(processInstance1.getId(), processInstance2.getId());
+    List<String> ids = new ArrayList<>(List.of(processInstances.get(0).getId(), processInstances.get(1).getId()));
     ids.removeAll(expecedIds);
     assertThat(ids).isEmpty();
 
@@ -668,16 +659,16 @@ public class HistoryServiceTest {
   void testNativeHistoricProcessInstanceTest() {
     // just test that the query will be constructed and executed, details are tested in the TaskQueryTest
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isOne();
     assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
-//  assertEquals(1, historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1).size());
+    assertThat(historyService.createNativeHistoricProcessInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1)).hasSize(1);
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testNativeHistoricTaskInstanceTest() {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isOne();
     assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
     assertThat(historyService.createNativeHistoricTaskInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1)).hasSize(1);
   }
@@ -686,7 +677,7 @@ public class HistoryServiceTest {
   @Test
   void testNativeHistoricActivityInstanceTest() {
     runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isEqualTo(1);
+    assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT count(*) FROM " + managementService.getTableName(HistoricProcessInstance.class)).count()).isOne();
     assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).list()).hasSize(1);
     assertThat(historyService.createNativeHistoricActivityInstanceQuery().sql("SELECT * FROM " + managementService.getTableName(HistoricProcessInstance.class)).listPage(0, 1)).hasSize(1);
   }
@@ -751,7 +742,7 @@ public class HistoryServiceTest {
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(123.0d)).count()).isEqualTo(4);
     assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("var", Variables.numberValue((short) 123)).count()).isEqualTo(4);
 
-    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().variableValueEquals("var", Variables.numberValue(null)).count()).isOne();
   }
 
   @Deployment(resources = {
@@ -759,11 +750,11 @@ public class HistoryServiceTest {
   @Test
   void testDeleteProcessInstance() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
 
     runtimeService.deleteProcessInstance(processInstance.getId(), null);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
 
     historyService.deleteHistoricProcessInstance(processInstance.getId());
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
@@ -773,25 +764,23 @@ public class HistoryServiceTest {
       "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
   @Test
   void testDeleteRunningProcessInstance() {
+    // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
     var processInstanceId = processInstance.getId();
-    try {
-      historyService.deleteHistoricProcessInstance(processInstanceId);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("Process instance is still running, cannot delete historic process instance", ae.getMessage());
-    }
+
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance(processInstanceId))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Process instance is still running, cannot delete historic process instance");
   }
 
   @Test
   void testDeleteProcessInstanceWithFake() {
-    try {
-      historyService.deleteHistoricProcessInstance("aFake");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("No historic process instance found with id", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance("aFake"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic process instance found with id");
   }
 
   @Test
@@ -801,12 +790,10 @@ public class HistoryServiceTest {
 
   @Test
   void testDeleteProcessInstanceNullId() {
-    try {
-      historyService.deleteHistoricProcessInstance(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricProcessInstance(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   @Deployment(resources = {
@@ -867,7 +854,7 @@ public class HistoryServiceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
     runtimeService.setVariable(executionId, "myVariable", "testValue1");
     runtimeService.setVariable(executionId, "myVariable", "testValue2");
     runtimeService.setVariable(executionId, "myVariable", "testValue3");
@@ -875,7 +862,7 @@ public class HistoryServiceTest {
 
     runtimeService.deleteProcessInstance(executionId, null);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery()
         .processInstanceId(executionId)
@@ -883,8 +870,8 @@ public class HistoryServiceTest {
     HistoricVariableInstanceQuery secondHistVariableQuery = historyService.createHistoricVariableInstanceQuery()
         .processInstanceId(executionId)
         .variableName("mySecondVariable");
-    assertThat(histVariableQuery.count()).isEqualTo(1);
-    assertThat(secondHistVariableQuery.count()).isEqualTo(1);
+    assertThat(histVariableQuery.count()).isOne();
+    assertThat(secondHistVariableQuery.count()).isOne();
 
     String variableInstanceId = histVariableQuery.singleResult().getId();
     String secondVariableInstanceId = secondHistVariableQuery.singleResult().getId();
@@ -895,16 +882,16 @@ public class HistoryServiceTest {
         .processInstanceId(executionId)
         .variableInstanceId(secondVariableInstanceId);
     assertThat(detailsQuery.count()).isEqualTo(3);
-    assertThat(secondDetailsQuery.count()).isEqualTo(1);
+    assertThat(secondDetailsQuery.count()).isOne();
 
     // when
     historyService.deleteHistoricVariableInstance(variableInstanceId);
 
     // then
     assertThat(histVariableQuery.count()).isZero();
-    assertThat(secondHistVariableQuery.count()).isEqualTo(1);
+    assertThat(secondHistVariableQuery.count()).isOne();
     assertThat(detailsQuery.count()).isZero();
-    assertThat(secondDetailsQuery.count()).isEqualTo(1);
+    assertThat(secondDetailsQuery.count()).isOne();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -914,7 +901,7 @@ public class HistoryServiceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
     runtimeService.setVariable(executionId, "myVariable", "testValue1");
     runtimeService.setVariable(executionId, "myVariable", "testValue2");
     runtimeService.setVariable(executionId, "myVariable", "testValue3");
@@ -922,13 +909,13 @@ public class HistoryServiceTest {
     VariableInstanceQuery variableQuery = runtimeService.createVariableInstanceQuery()
         .processInstanceIdIn(executionId)
         .variableName("myVariable");
-    assertThat(variableQuery.count()).isEqualTo(1);
+    assertThat(variableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery()
         .processInstanceId(executionId)
         .variableName("myVariable");
-    assertThat(histVariableQuery.count()).isEqualTo(1);
+    assertThat(histVariableQuery.count()).isOne();
 
     String variableInstanceId = histVariableQuery.singleResult().getId();
     HistoricDetailQuery detailsQuery = historyService.createHistoricDetailQuery()
@@ -942,7 +929,7 @@ public class HistoryServiceTest {
     // then
     assertThat(histVariableQuery.count()).isZero();
     assertThat(detailsQuery.count()).isZero();
-    assertThat(variableQuery.count()).isEqualTo(1);
+    assertThat(variableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
   }
 
@@ -975,16 +962,16 @@ public class HistoryServiceTest {
 
     assertThat(histVariableQuery.count()).isZero();
     assertThat(detailsQuery.count()).isZero();
-    assertThat(variableQuery.count()).isEqualTo(1);
+    assertThat(variableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
 
     // when
     runtimeService.setVariable(executionId, "myVariable", "testValue4");
 
     // then
-    assertThat(histVariableQuery.count()).isEqualTo(1);
-    assertThat(detailsQuery.count()).isEqualTo(1);
-    assertThat(variableQuery.count()).isEqualTo(1);
+    assertThat(histVariableQuery.count()).isOne();
+    assertThat(detailsQuery.count()).isOne();
+    assertThat(variableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue4");
   }
 
@@ -1002,7 +989,7 @@ public class HistoryServiceTest {
     HistoricDetailQuery detailsQuery = historyService.createHistoricDetailQuery()
         .caseInstanceId(caseInstanceId)
         .variableInstanceId(variableInstance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
     assertThat(detailsQuery.count()).isEqualTo(3);
 
     // when
@@ -1035,8 +1022,8 @@ public class HistoryServiceTest {
     caseService.setVariable(caseInstanceId, "myVariable", 4);
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
-    assertThat(detailsQuery.count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
+    assertThat(detailsQuery.count()).isOne();
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1051,7 +1038,7 @@ public class HistoryServiceTest {
     HistoricDetailQuery detailsQuery = historyService.createHistoricDetailQuery()
         .taskId(task.getId())
         .variableInstanceId(variableInstance.getId());
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
     assertThat(detailsQuery.count()).isEqualTo(2);
 
     // when
@@ -1086,34 +1073,26 @@ public class HistoryServiceTest {
     taskService.setVariable(task.getId(), "testVariable", "testValue3");
 
     // then
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
-    assertThat(detailsQuery.count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
+    assertThat(detailsQuery.count()).isOne();
 
     taskService.deleteTask(task.getId(), true);
   }
 
   @Test
   void testDeleteUnknownHistoricVariable() {
-    try {
-      // when
-      historyService.deleteHistoricVariableInstance("fakeID");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("No historic variable instance found with id: fakeID", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance("fakeID"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic variable instance found with id: fakeID");
   }
 
   @Test
   void testDeleteHistoricVariableWithNull() {
-    try{
-      // when
-      historyService.deleteHistoricVariableInstance(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("variableInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstance(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("variableInstanceId is null");
   }
 
   @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
@@ -1123,7 +1102,7 @@ public class HistoryServiceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
     runtimeService.setVariable(executionId, "myVariable", "testValue1");
     runtimeService.setVariable(executionId, "myVariable", "testValue2");
     runtimeService.setVariable(executionId, "myVariable", "testValue3");
@@ -1132,14 +1111,14 @@ public class HistoryServiceTest {
 
     runtimeService.deleteProcessInstance(executionId, null);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId)
         .variableName("myVariable");
     HistoricVariableInstanceQuery secondHistVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId)
         .variableName("mySecondVariable");
-    assertThat(histVariableQuery.count()).isEqualTo(1);
-    assertThat(secondHistVariableQuery.count()).isEqualTo(1);
+    assertThat(histVariableQuery.count()).isOne();
+    assertThat(secondHistVariableQuery.count()).isOne();
 
     String variableInstanceId = histVariableQuery.singleResult().getId();
     String secondVariableInstanceId = secondHistVariableQuery.singleResult().getId();
@@ -1166,7 +1145,7 @@ public class HistoryServiceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
     runtimeService.setVariable(executionId, "myVariable", "testValue1");
     runtimeService.setVariable(executionId, "myVariable", "testValue2");
     runtimeService.setVariable(executionId, "myVariable", "testValue3");
@@ -1175,8 +1154,8 @@ public class HistoryServiceTest {
 
     VariableInstanceQuery variableQuery = runtimeService.createVariableInstanceQuery().processInstanceIdIn(executionId).variableName("myVariable");
     VariableInstanceQuery secondVariableQuery = runtimeService.createVariableInstanceQuery().processInstanceIdIn(executionId).variableName("mySecondVariable");
-    assertThat(variableQuery.count()).isEqualTo(1L);
-    assertThat(secondVariableQuery.count()).isEqualTo(1L);
+    assertThat(variableQuery.count()).isOne();
+    assertThat(secondVariableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
     assertThat(secondVariableQuery.singleResult().getValue()).isEqualTo("testValue2");
 
@@ -1184,8 +1163,8 @@ public class HistoryServiceTest {
         .variableName("myVariable");
     HistoricVariableInstanceQuery secondHistVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId)
         .variableName("mySecondVariable");
-    assertThat(histVariableQuery.count()).isEqualTo(1L);
-    assertThat(secondHistVariableQuery.count()).isEqualTo(1L);
+    assertThat(histVariableQuery.count()).isOne();
+    assertThat(secondHistVariableQuery.count()).isOne();
 
     String variableInstanceId = histVariableQuery.singleResult().getId();
     String secondVariableInstanceId = secondHistVariableQuery.singleResult().getId();
@@ -1206,7 +1185,7 @@ public class HistoryServiceTest {
     assertThat(detailsQuery.count()).isZero();
     assertThat(secondDetailsQuery.count()).isZero();
     assertThat(allDetailsQuery.count()).isZero();
-    assertThat(variableQuery.count()).isEqualTo(1L);
+    assertThat(variableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
     assertThat(secondVariableQuery.singleResult().getValue()).isEqualTo("testValue2");
   }
@@ -1231,8 +1210,8 @@ public class HistoryServiceTest {
     HistoricDetailQuery allDetailsQuery = historyService.createHistoricDetailQuery().processInstanceId(executionId);
     assertThat(allHistVariableQuery.count()).isZero();
     assertThat(allDetailsQuery.count()).isZero();
-    assertThat(variableQuery.count()).isEqualTo(1L);
-    assertThat(secondVariableQuery.count()).isEqualTo(1L);
+    assertThat(variableQuery.count()).isOne();
+    assertThat(secondVariableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue2");
     assertThat(secondVariableQuery.singleResult().getValue()).isEqualTo("testValue2");
 
@@ -1245,14 +1224,14 @@ public class HistoryServiceTest {
     HistoricVariableInstanceQuery secondHistVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId).variableName("mySecondVariable");
     HistoricDetailQuery detailsQuery = historyService.createHistoricDetailQuery().processInstanceId(executionId).variableInstanceId(histVariableQuery.singleResult().getId());
     HistoricDetailQuery secondDetailsQuery = historyService.createHistoricDetailQuery().processInstanceId(executionId).variableInstanceId(secondHistVariableQuery.singleResult().getId());
-    assertThat(histVariableQuery.count()).isEqualTo(1L);
-    assertThat(secondHistVariableQuery.count()).isEqualTo(1L);
+    assertThat(histVariableQuery.count()).isOne();
+    assertThat(secondHistVariableQuery.count()).isOne();
     assertThat(allHistVariableQuery.count()).isEqualTo(2L);
-    assertThat(detailsQuery.count()).isEqualTo(1L);
-    assertThat(secondDetailsQuery.count()).isEqualTo(1L);
+    assertThat(detailsQuery.count()).isOne();
+    assertThat(secondDetailsQuery.count()).isOne();
     assertThat(allDetailsQuery.count()).isEqualTo(2L);
-    assertThat(variableQuery.count()).isEqualTo(1L);
-    assertThat(secondVariableQuery.count()).isEqualTo(1L);
+    assertThat(variableQuery.count()).isOne();
+    assertThat(secondVariableQuery.count()).isOne();
     assertThat(variableQuery.singleResult().getValue()).isEqualTo("testValue3");
     assertThat(secondVariableQuery.singleResult().getValue()).isEqualTo("testValue3");
   }
@@ -1264,11 +1243,11 @@ public class HistoryServiceTest {
     // given
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     String executionId = processInstance.getId();
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
 
     runtimeService.deleteProcessInstance(executionId, null);
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isZero();
-    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isEqualTo(1L);
+    assertThat(historyService.createHistoricProcessInstanceQuery().processDefinitionKey(ONE_TASK_PROCESS).count()).isOne();
 
     HistoricVariableInstanceQuery histVariableQuery = historyService.createHistoricVariableInstanceQuery().processInstanceId(executionId);
     assertThat(histVariableQuery.count()).isZero();
@@ -1286,33 +1265,25 @@ public class HistoryServiceTest {
 
   @Test
   void testDeleteAllHistoricVariablesOnUnkownProcessInstance() {
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId("fakeID");
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("No historic process instance found with id: fakeID", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId("fakeID"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("No historic process instance found with id: fakeID");
   }
 
   @Test
   void testDeleteAllHistoricVariablesWithNull() {
-    try {
-      // when
-      historyService.deleteHistoricVariableInstancesByProcessInstanceId(null);
-      fail("ProcessEngineException expected");
-    } catch (ProcessEngineException ae) {
-      // then
-      testRule.assertTextPresent("processInstanceId is null", ae.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> historyService.deleteHistoricVariableInstancesByProcessInstanceId(null))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("processInstanceId is null");
   }
 
   protected List<String> prepareHistoricProcesses() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
     ProcessInstance processInstance2 = runtimeService.startProcessInstanceByKey(ONE_TASK_PROCESS);
 
-    List<String> processInstanceIds = new ArrayList<>(Arrays.asList(processInstance.getId(), processInstance2.getId()));
+    List<String> processInstanceIds = new ArrayList<>(List.of(processInstance.getId(), processInstance2.getId()));
     runtimeService.deleteProcessInstances(processInstanceIds, null, true, true);
 
     return processInstanceIds;

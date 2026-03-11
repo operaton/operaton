@@ -1,5 +1,0 @@
-<module xmlns="urn:jboss:module:1.0" name="org.assertj.assertj-core">
-  <resources>
-    <resource-root path="assertj-core-@version.assertj@.jar" />
-  </resources>
-</module>

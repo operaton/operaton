@@ -33,6 +33,7 @@ import org.operaton.bpm.integrationtest.functional.ejb.local.bean.StartProcessSL
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -42,13 +43,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * - LocalSLSBInvocationTest.testStartProcess.bpmn20.xml  (1)
  * - LocalSLSBInvocationTest.callbackProcess.bpmn20.xml (2)
  *
+ * <p>
  * Two applications are deployed:
  * <ul>
  * <li>test.war - Process Application providing Processes (1+2)</li>
  * <li>service.war - application providing a Local SLSB starting Process (2)</li>
  * </ul>
+ * </p>
  *
- *
+ * <p>
  * Expected Control flow:
  *
  * <pre>
@@ -65,6 +68,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *                                                  V
  *       CallbackBean         <-----------  Process Engine
  *  </pre>
+ * </p>
  *
  *
  *
@@ -104,7 +108,7 @@ public class LocalSLSBInvocationWithCallbackTest extends AbstractFoxPlatformInte
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }

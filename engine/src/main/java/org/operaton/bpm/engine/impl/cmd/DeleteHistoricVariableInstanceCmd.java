@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -36,9 +33,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Tobias Metzke
  *
  */
-public class DeleteHistoricVariableInstanceCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeleteHistoricVariableInstanceCmd implements Command<Void> {
   private final String variableInstanceId;
 
   public DeleteHistoricVariableInstanceCmd(String variableInstanceId) {
@@ -50,7 +45,7 @@ public class DeleteHistoricVariableInstanceCmd implements Command<Void>, Seriali
     ensureNotEmpty(BadUserRequestException.class,"variableInstanceId", variableInstanceId);
 
     HistoricVariableInstanceEntity variable = commandContext.getHistoricVariableInstanceManager().findHistoricVariableInstanceByVariableInstanceId(variableInstanceId);
-    ensureNotNull(NotFoundException.class, "No historic variable instance found with id: " + variableInstanceId, "variable", variable);
+    ensureNotNull(NotFoundException.class, "No historic variable instance found with id: %s".formatted(variableInstanceId), "variable", variable);
 
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       checker.checkDeleteHistoricVariableInstance(variable);

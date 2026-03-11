@@ -30,18 +30,18 @@ import org.operaton.bpm.qa.performance.engine.framework.activitylog.ActivityPerf
  */
 public class PerfTestRunner {
 
-  protected ExecutorService executor;
-  protected final PerfTest test;
-  protected final PerfTestConfiguration configuration;
+  private ExecutorService executor;
+  private final PerfTest test;
+  private final PerfTestConfiguration configuration;
 
   // global state
-  public static PerfTestPass currentPass;
-  protected PerfTestResults results;
-  protected Object passMonitor;
-  protected Object doneMonitor;
-  protected boolean isDone;
-  protected Throwable exception;
-  protected List<PerfTestWatcher> watchers;
+  private static PerfTestPass currentPass;
+  private PerfTestResults results;
+  private Object passMonitor;
+  private Object doneMonitor;
+  private boolean isDone;
+  private Throwable exception;
+  private List<PerfTestWatcher> watchers;
 
   public PerfTestRunner(PerfTest test, PerfTestConfiguration configuration) {
     this.test = test;
@@ -49,7 +49,7 @@ public class PerfTestRunner {
     init();
   }
 
-  protected void init() {
+  private void init() {
 
     results = new PerfTestResults(configuration);
 
@@ -149,7 +149,7 @@ public class PerfTestRunner {
   }
 
   @SuppressWarnings("java:S1215")
-  protected void runPassWithThreadCount(int passNumberOfThreads) {
+  private void runPassWithThreadCount(int passNumberOfThreads) {
 
     currentPass = new PerfTestPass(passNumberOfThreads);
     executor = Executors.newFixedThreadPool(passNumberOfThreads);
@@ -196,7 +196,7 @@ public class PerfTestRunner {
     }
   }
 
-  protected void notifyWatchersBeforePass() {
+  private void notifyWatchersBeforePass() {
     if (watchers != null) {
       for (PerfTestWatcher perfTestWatcher : watchers) {
         perfTestWatcher.beforePass(currentPass);
@@ -204,7 +204,7 @@ public class PerfTestRunner {
     }
   }
 
-  protected void notifyWatchersAfterPass() {
+  private void notifyWatchersAfterPass() {
     if (watchers != null) {
       for (PerfTestWatcher perfTestWatcher : watchers) {
         perfTestWatcher.afterPass(currentPass);

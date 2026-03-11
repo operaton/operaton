@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.api.runtime;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -232,7 +231,7 @@ class TransientVariableTest {
           .intermediateCatchEvent()
           .conditionalEventDefinition()
           .condition(VAR_CONDITION)
-          .operatonVariableEvents(Arrays.asList("create", "update"))
+          .operatonVariableEvents(List.of("create", "update"))
           .conditionalEventDefinitionDone()
           .userTask()
           .name("taskAfter")
@@ -661,8 +660,7 @@ class TransientVariableTest {
         Variables.putValue("transient1", false).putValue("transient2", false));
 
     // then
-    assertThat(runtimeService.createVariableInstanceQuery().variableName(VARIABLE_NAME).count())
-      .isEqualTo(1L);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName(VARIABLE_NAME).count()).isOne();
   }
 
   @Test
@@ -761,7 +759,7 @@ class TransientVariableTest {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
       for (char i = 'a'; i < 'm'; i++) {
-        Object value = execution.getVariable("" + i);
+        Object value = execution.getVariable(String.valueOf(i));
         // variable 'j' is a transient null
         if (i != 'j' ) {
           assertThat(value).isNotNull();

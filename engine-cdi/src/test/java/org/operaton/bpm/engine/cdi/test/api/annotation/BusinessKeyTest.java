@@ -16,9 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.test.api.annotation;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
@@ -31,12 +29,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class BusinessKeyTest extends CdiProcessEngineTestCase {
+class BusinessKeyTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testBusinessKeyInjectable() {
+  void testBusinessKeyInjectable() {
     String businessKey = "Activiti";
     String pid = runtimeService.startProcessInstanceByKey("keyOfTheProcess", businessKey).getId();
     getBeanInstance(BusinessProcess.class).associateExecutionById(pid);

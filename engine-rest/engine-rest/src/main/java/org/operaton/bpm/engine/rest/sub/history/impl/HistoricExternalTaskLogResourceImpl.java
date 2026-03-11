@@ -46,7 +46,7 @@ public class HistoricExternalTaskLogResourceImpl implements HistoricExternalTask
       .singleResult();
 
     if (historicExternalTaskLog == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Historic external task log with id " + id + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Historic external task log with id %s does not exist".formatted(id));
     }
 
     return HistoricExternalTaskLogDto.fromHistoricExternalTaskLog(historicExternalTaskLog);

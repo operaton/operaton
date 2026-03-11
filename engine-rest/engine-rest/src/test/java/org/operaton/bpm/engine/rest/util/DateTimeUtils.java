@@ -17,14 +17,58 @@
 package org.operaton.bpm.engine.rest.util;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 
 public abstract class DateTimeUtils {
+  public static final DateFormat DATE_FORMAT_WITHOUT_TIMEZONE = new DateFormat("yyyy-MM-dd'T'HH:mm:ss");
+  public static final DateFormat DATE_FORMAT_WITH_TIMEZONE = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
-  public static final SimpleDateFormat DATE_FORMAT_WITHOUT_TIMEZONE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-  public static final SimpleDateFormat DATE_FORMAT_WITH_TIMEZONE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+  /**
+   * A thread-safe wrapper around DateTimeFormatter that provides a SimpleDateFormat-like API
+   * for formatting and parsing dates.
+   */
+  public static class DateFormat {
+    private final DateTimeFormatter formatter;
+    private final boolean hasTimezone;
+
+    public DateFormat(String pattern) {
+      this.formatter = DateTimeFormatter.ofPattern(pattern);
+      this.hasTimezone = pattern.contains("Z");
+    }
+
+    public String format(Date date) {
+      if (hasTimezone) {
+        return date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .format(formatter);
+      } else {
+        return date.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
+            .format(formatter);
+      }
+    }
+
+    public Date parse(String dateString) throws ParseException {
+      try {
+        if (hasTimezone) {
+          ZonedDateTime parsedDateTime = ZonedDateTime.parse(dateString, formatter);
+          return Date.from(parsedDateTime.toInstant());
+        } else {
+          LocalDateTime parsedDateTime = LocalDateTime.parse(dateString, formatter);
+          return Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        }
+      } catch (DateTimeParseException e) {
+        throw new ParseException(e.getMessage(), e.getErrorIndex());
+      }
+    }
+  }
 
   /**
    * Converts date string without timezone to the one with timezone.
@@ -32,17 +76,21 @@ public abstract class DateTimeUtils {
    * @return
    */
   public static String withTimezone(String dateString) {
-    final Date parse;
     try {
-      parse = DATE_FORMAT_WITHOUT_TIMEZONE.parse(dateString);
-      return withTimezone(parse);
+      Date date = DATE_FORMAT_WITHOUT_TIMEZONE.parse(dateString);
+      return withTimezone(date);
     } catch (ParseException e) {
       throw new RuntimeException(e);
     }
   }
 
+  /**
+   * Formats a date with timezone information using the system default timezone.
+   * @param date the date to format
+   * @return formatted date string with timezone
+   */
   public static String withTimezone(Date date) {
-      return DATE_FORMAT_WITH_TIMEZONE.format(date);
+    return DATE_FORMAT_WITH_TIMEZONE.format(date);
   }
 
   public static Date updateTime(Date now, Date newTime) {

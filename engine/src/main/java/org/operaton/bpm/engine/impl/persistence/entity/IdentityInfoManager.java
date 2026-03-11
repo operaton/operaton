@@ -135,13 +135,11 @@ public class IdentityInfoManager extends AbstractManager {
   }
 
   public byte[] encryptPassword(String accountPassword) {
-    // TODO
     return accountPassword.getBytes();
   }
 
   public String decryptPassword(byte[] storedPassword) {
-    // TODO
-    return new String(storedPassword);
+      return new String(storedPassword);
   }
 
   public IdentityInfoEntity findUserInfoByUserIdAndKey(String userId, String key) {

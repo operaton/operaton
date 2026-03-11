@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.operaton.bpm.engine.ProcessEngineException;
@@ -69,52 +70,47 @@ public final class ReflectUtil {
   }
 
   public static Class<?> loadClass(String className) {
-   Class<?> clazz = null;
-   ClassLoader classLoader = getCustomClassLoader();
+    Class<?> clazz = null;
+    Throwable throwable = null;
 
-   // First exception in chain of classloaders will be used as cause when no class is found in any of them
-   Throwable throwable = null;
+    try {
+      clazz = loadClassFromClassLoader(className, getCustomClassLoader(), "custom classloader");
+    } catch (Throwable t) {
+      throwable = t;
+    }
 
-   if(classLoader != null) {
-     try {
-       LOG.debugClassLoading(className, "custom classloader", classLoader);
-       clazz = Class.forName(className, true, classLoader);
-     }
-     catch(Throwable t) {
-       throwable = t;
-     }
-   }
-   if(clazz == null) {
-     try {
-       ClassLoader contextClassloader = ClassLoaderUtil.getContextClassloader();
-       if(contextClassloader != null) {
-         LOG.debugClassLoading(className, "current thread context classloader", contextClassloader);
-         clazz = Class.forName(className, true, contextClassloader);
-       }
-     }
-     catch(Throwable t) {
-       if(throwable == null) {
-         throwable = t;
-       }
-     }
-     if(clazz == null) {
-       try {
-         ClassLoader localClassloader = ClassLoaderUtil.getClassloader(ReflectUtil.class);
-         LOG.debugClassLoading(className, "local classloader", localClassloader);
-         clazz = Class.forName(className, true, localClassloader);
-       }
-       catch(Throwable t) {
-         if(throwable == null) {
-           throwable = t;
-         }
-       }
-     }
-   }
+    if (clazz == null) {
+      try {
+        clazz = loadClassFromClassLoader(className, ClassLoaderUtil.getContextClassloader(), "current thread context classloader");
+      } catch (Throwable t) {
+        if (throwable == null) {
+          throwable = t;
+        }
+      }
+    }
 
-   if(clazz == null) {
-     throw LOG.classLoadingException(className, throwable);
-   }
-   return clazz;
+    if (clazz == null) {
+      try {
+        clazz = loadClassFromClassLoader(className, ClassLoaderUtil.getClassloader(ReflectUtil.class), "local classloader");
+      } catch (Throwable t) {
+        if (throwable == null) {
+          throwable = t;
+        }
+      }
+    }
+
+    if (clazz == null) {
+      throw LOG.classLoadingException(className, throwable);
+    }
+    return clazz;
+  }
+
+  private static Class<?> loadClassFromClassLoader(String className, ClassLoader classLoader, String description) throws ClassNotFoundException {
+    if (classLoader == null) {
+      return null;
+    }
+    LOG.debugClassLoading(className, description, classLoader);
+    return Class.forName(className, true, classLoader);
   }
 
   public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
@@ -254,6 +250,39 @@ public final class ReflectUtil {
     return field;
   }
 
+  /**
+   * Returns the value of the given field on the given object.
+   * If the field is not accessible, it will be made accessible
+   * for the duration of the call.
+   * @param field the field to get the value from
+   * @param object the object to get the field value from
+   * @return the field value wrapped in an Optional, or an empty Optional if the field value is {@code null}
+   * @since 1.1
+   */
+  public static Optional<Object> getFieldValue(Field field, Object object) {
+    // Store original accessibility and restore to that state afterwards.
+    boolean originalAccessible = field.canAccess(object);
+    try {
+      if (!originalAccessible) {
+        // trySetAccessible returns true if it actually made the field accessible
+        field.trySetAccessible();
+      }
+      return Optional.ofNullable(field.get(object));
+    }
+    catch (IllegalAccessException e) {
+      throw LOG.unableToAccessFieldValue(field, object, e);
+    }
+    finally {
+      if (!originalAccessible) {
+        try {
+          field.setAccessible(false);
+        } catch (SecurityException ignore) {
+          // ignore: best-effort restore, but do not hide original exception
+        }
+      }
+    }
+  }
+
   public static void setField(Field field, Object object, Object value) {
     try {
       field.setAccessible(true);
@@ -333,7 +362,6 @@ public final class ReflectUtil {
 
   private static Method findMethod(Class< ? extends Object> clazz, String methodName, Class< ? >[] args) {
     for (Method method : clazz.getDeclaredMethods()) {
-      // TODO add parameter matching
       if ( method.getName().equals(methodName)
            && matches(method.getParameterTypes(), args)
          ) {
@@ -350,7 +378,7 @@ public final class ReflectUtil {
   public static Object instantiate(String className, Object[] args) {
     Class<?> clazz = loadClass(className);
     Constructor<?> constructor = findMatchingConstructor(clazz, args);
-    ensureNotNull("couldn't find constructor for " + className + " with args " + Arrays.asList(args), "constructor", constructor);
+    ensureNotNull("couldn't find constructor for '%s' with args %s".formatted(className, Arrays.asList(args)), "constructor", constructor);
     try {
       return constructor.newInstance(args);
     } catch (Exception e) {

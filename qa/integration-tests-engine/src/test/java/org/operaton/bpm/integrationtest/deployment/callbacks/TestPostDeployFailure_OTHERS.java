@@ -56,7 +56,7 @@ public class TestPostDeployFailure_OTHERS extends AbstractFoxPlatformIntegration
       .createDeploymentQuery()
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
   }
 

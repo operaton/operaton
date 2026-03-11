@@ -113,7 +113,7 @@ public abstract class AbstractEventAtomicOperation<T extends CoreExecution> impl
     if (exception instanceof RuntimeException runtimeException) {
       throw runtimeException;
     } else {
-      throw new PvmException("couldn't execute event listener : " + exception.getMessage(), exception);
+      throw new PvmException("couldn't execute event listener : %s".formatted(exception.getMessage()), exception);
     }
   }
 }

@@ -37,7 +37,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 
 /**
@@ -63,14 +63,14 @@ class EventBasedGatewayTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     runtimeService.startProcessInstanceByKey("throwSignal");
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     assertThat(managementService.createJobQuery().count()).isZero();
 
     Task task = taskService.createTaskQuery()
@@ -91,9 +91,9 @@ class EventBasedGatewayTest {
 
     runtimeService.startProcessInstanceByKey("catchSignal");
 
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     ClockUtil.setCurrentTime(new Date(ClockUtil.getCurrentTime().getTime() +10000));
     try {
@@ -101,7 +101,7 @@ class EventBasedGatewayTest {
       testRule.waitForJobExecutorToProcessAllJobs(10000);
 
       assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
-      assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
       assertThat(managementService.createJobQuery().count()).isZero();
 
       Task task = taskService.createTaskQuery()
@@ -124,10 +124,10 @@ class EventBasedGatewayTest {
 
     assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(2);
     EventSubscriptionQuery messageEventSubscriptionQuery = runtimeService.createEventSubscriptionQuery().eventType("message");
-    assertThat(messageEventSubscriptionQuery.count()).isEqualTo(1);
-    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isEqualTo(1);
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(messageEventSubscriptionQuery.count()).isOne();
+    assertThat(runtimeService.createEventSubscriptionQuery().eventType("signal").count()).isOne();
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // we can query for an execution with has both a signal AND message subscription
     Execution execution = runtimeService.createExecutionQuery()
@@ -143,7 +143,7 @@ class EventBasedGatewayTest {
       runtimeService.messageEventReceived(messageEventSubscription.getEventName(), messageEventSubscription.getExecutionId());
 
       assertThat(runtimeService.createEventSubscriptionQuery().count()).isZero();
-      assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1);
+      assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
       assertThat(managementService.createJobQuery().count()).isZero();
 
       Task task = taskService.createTaskQuery()
@@ -160,32 +160,34 @@ class EventBasedGatewayTest {
 
   @Test
   void testConnectedToActitity() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testConnectedToActivity.bpmn20.xml");
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Event based gateway can only be connected to elements of type intermediateCatchEvent");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
-    }
-
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Event based gateway can only be connected to elements of type intermediateCatchEvent")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("gw1");
+      });
   }
 
   @Test
   void testInvalidSequenceFlow() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/gateway/EventBasedGatewayTest.testEventInvalidSequenceFlow.bpmn20.xml");
 
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      assertThat(e.getMessage()).contains("Invalid incoming sequenceflow for intermediateCatchEvent");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
-    }
-
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Invalid incoming sequenceflow for intermediateCatchEvent")
+      .satisfies(e -> {
+        var exception = (ParseException) e;
+        assertThat(exception.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("invalidFlow");
+      });
   }
 
   @Deployment
@@ -194,7 +196,7 @@ class EventBasedGatewayTest {
     String processInstanceId = runtimeService.startProcessInstanceByKey("process").getId();
 
     JobQuery jobQuery = managementService.createJobQuery();
-    assertThat(jobQuery.count()).isEqualTo(1);
+    assertThat(jobQuery.count()).isOne();
 
     String jobId = jobQuery.singleResult().getId();
     managementService.executeJob(jobId);

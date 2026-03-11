@@ -28,9 +28,15 @@ public interface CmmnElement extends CmmnModelElementInstance {
 
   void setId(String id);
 
+  /**
+   * @deprecated since 1.0, use {@link #getDocumentations()} instead, which provides structured documentation.
+   */
   @Deprecated(since = "1.0")
   String getDescription();
 
+  /**
+   * @deprecated since 1.0, use {@link #getDocumentations()} instead, which provides structured documentation.
+   */
   @Deprecated(since = "1.0")
   void setDescription(String description);
 

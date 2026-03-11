@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -65,8 +64,6 @@ import static org.operaton.bpm.engine.authorization.Permissions.DELETE;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
 import static org.operaton.bpm.engine.authorization.Resources.FILTER;
-import static org.operaton.bpm.engine.rest.dto.AbstractQueryDto.SORT_ORDER_ASC_VALUE;
-import static org.operaton.bpm.engine.rest.dto.AbstractQueryDto.SORT_ORDER_DESC_VALUE;
 import static org.operaton.bpm.engine.rest.dto.task.TaskQueryDto.*;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.EXAMPLE_FILTER_ID;
 import static org.operaton.bpm.engine.rest.helper.MockProvider.mockFilter;
@@ -101,6 +98,9 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @RegisterExtension
   public static TestContainerExtension rule = new TestContainerExtension();
+
+  private static final String SORT_ORDER_ASC_VALUE = "asc";
+  private static final String SORT_ORDER_DESC_VALUE = "desc";
 
   public static final String FILTER_URL = TEST_RESOURCE_ROOT_PATH + FilterRestService.PATH;
   public static final String SINGLE_FILTER_URL = FILTER_URL + "/{id}";
@@ -1213,7 +1213,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testAnonymousFilterOptions() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL;
 
     // anonymity means the identityService returns a null authentication, so no need to mock here
 
@@ -1246,7 +1246,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testRestrictedFilterOptions() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -1278,7 +1278,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testFilterOptionsWithDisabledAuthorization() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -1308,7 +1308,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testAnonymousFilterResourceOptions() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
 
     // anonymity means the identityService returns a null authentication, so no need to mock here
 
@@ -1394,7 +1394,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testFilterResourceOptionsUpdateUnauthorized() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
 
     Authentication authentication = new Authentication(MockProvider.EXAMPLE_USER_ID, null);
     when(identityServiceMock.getCurrentAuthentication()).thenReturn(authentication);
@@ -1455,7 +1455,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
   @Test
   void testFilterResourceOptionsWithAuthorizationDisabled() {
-    String fullFilterUrl = "http://localhost:" + PORT + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
+    String fullFilterUrl = "http://localhost:" + port + FILTER_URL + "/" + EXAMPLE_FILTER_ID;
 
     when(processEngineConfigurationMock.isAuthorizationEnabled()).thenReturn(false);
 
@@ -1564,7 +1564,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID), any())).thenReturn(task);
 
     // mock variable instances
-    List<VariableInstance> variableInstances = Arrays.asList(
+    List<VariableInstance> variableInstances = List.of(
       createExecutionVariableInstanceMock("foo", stringValue("execution"), EXECUTION_B_ID),
       createExecutionVariableInstanceMock("execution", stringValue("bar"), EXECUTION_B_ID),
       createTaskVariableInstanceMock("foo", stringValue("task"), TASK_B_ID),
@@ -1600,7 +1600,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.singleResult(eq(EXAMPLE_FILTER_ID), any())).thenReturn(task);
 
     // mock variable instances
-    List<VariableInstance> variableInstances = Arrays.asList(
+    List<VariableInstance> variableInstances = List.of(
       createProcessInstanceVariableInstanceMock("foo", stringValue("processInstance"), PROCESS_INSTANCE_A_ID),
       createProcessInstanceVariableInstanceMock("processInstance", stringValue("bar"), PROCESS_INSTANCE_A_ID),
       createExecutionVariableInstanceMock("foo", stringValue("execution"), EXECUTION_A_ID),
@@ -1656,7 +1656,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     mockFilterWithVariableNames();
 
     // mock resulting task
-    List<Task> tasks = Arrays.asList(
+    List<Task> tasks = List.of(
       createTaskMock(TASK_A_ID, PROCESS_INSTANCE_A_ID, EXECUTION_A_ID, null, null),
       createTaskMock(TASK_B_ID, PROCESS_INSTANCE_A_ID, EXECUTION_B_ID, null, null),
       createTaskMock(TASK_C_ID, null, null, CASE_INSTANCE_A_ID, CASE_EXECUTION_A_ID)
@@ -1664,7 +1664,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
     when(filterServiceMock.list(eq(EXAMPLE_FILTER_ID), Mockito.<Query<?, Task>>any())).thenReturn(tasks);
 
     // mock variable instances
-    List<VariableInstance> variableInstances = Arrays.asList(
+    List<VariableInstance> variableInstances = List.of(
       createProcessInstanceVariableInstanceMock("foo", stringValue(PROCESS_INSTANCE_A_ID), PROCESS_INSTANCE_A_ID),
       createProcessInstanceVariableInstanceMock(PROCESS_INSTANCE_A_ID, stringValue("bar"), PROCESS_INSTANCE_A_ID),
       createExecutionVariableInstanceMock("foo", stringValue(EXECUTION_A_ID), EXECUTION_A_ID),
@@ -1748,7 +1748,7 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
   @Test
   void testHalTaskListCount() {
     // mock resulting task
-    List<Task> tasks = Arrays.asList(
+    List<Task> tasks = List.of(
       createTaskMock(TASK_A_ID, PROCESS_INSTANCE_A_ID, EXECUTION_A_ID, null, null),
       createTaskMock(TASK_B_ID, PROCESS_INSTANCE_A_ID, EXECUTION_A_ID, null, null),
       createTaskMock(TASK_C_ID, PROCESS_INSTANCE_A_ID, EXECUTION_B_ID, null, null)

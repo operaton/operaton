@@ -15,8 +15,7 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.multitenancy;
-
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -71,7 +70,7 @@ class MultiTenancyMigrationAsyncTest {
 
     Batch batch = defaultEngineRule.getRuntimeService()
       .newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .executeAsync();
 
     batchHelper.completeSeedJobs(batch);
@@ -96,7 +95,7 @@ class MultiTenancyMigrationAsyncTest {
 
     Batch batch = defaultEngineRule.getRuntimeService()
         .newMigration(migrationPlan)
-        .processInstanceIds(Arrays.asList(processInstance.getId()))
+        .processInstanceIds(List.of(processInstance.getId()))
         .executeAsync();
 
     batchHelper.completeSeedJobs(batch);
@@ -113,9 +112,9 @@ class MultiTenancyMigrationAsyncTest {
 
   protected void assertMigratedTo(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
     assertThat(defaultEngineRule.getRuntimeService()
-        .createProcessInstanceQuery()
-        .processInstanceId(processInstance.getId())
-        .processDefinitionId(targetDefinition.getId())
-        .count()).isEqualTo(1);
+      .createProcessInstanceQuery()
+      .processInstanceId(processInstance.getId())
+      .processDefinitionId(targetDefinition.getId())
+      .count()).isOne();
   }
 }

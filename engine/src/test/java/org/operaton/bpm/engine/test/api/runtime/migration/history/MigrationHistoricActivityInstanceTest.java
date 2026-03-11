@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -87,8 +86,8 @@ class MigrationHistoricActivityInstanceTest {
 
     // then one instance of the start event still belongs to the source process
     // and one active user task instances is now migrated to the target process
-    assertThat(sourceHistoryActivityInstanceQuery.count()).isEqualTo(1);
-    assertThat(targetHistoryActivityInstanceQuery.count()).isEqualTo(1);
+    assertThat(sourceHistoryActivityInstanceQuery.count()).isOne();
+    assertThat(targetHistoryActivityInstanceQuery.count()).isOne();
 
     HistoricActivityInstance instance = targetHistoryActivityInstanceQuery.singleResult();
     assertMigratedTo(instance, targetProcessDefinition, "userTask2");
@@ -112,7 +111,7 @@ class MigrationHistoricActivityInstanceTest {
 
     // when
     rule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -150,7 +149,7 @@ class MigrationHistoricActivityInstanceTest {
 
     // when
     rule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -186,7 +185,7 @@ class MigrationHistoricActivityInstanceTest {
 
     // when
     rule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then
@@ -220,7 +219,7 @@ class MigrationHistoricActivityInstanceTest {
 
     // when
     rule.getRuntimeService().newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then

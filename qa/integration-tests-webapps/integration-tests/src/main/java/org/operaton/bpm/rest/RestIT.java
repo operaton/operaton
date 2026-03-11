@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.JsonNode;
@@ -30,6 +29,8 @@ import kong.unirest.json.JSONArray;
 import kong.unirest.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.AbstractWebIntegrationTest;
 import org.operaton.bpm.engine.rest.hal.Hal;
@@ -59,7 +60,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   private static final String SCHEMA_LOG_PATH = ENGINE_DEFAULT_PATH + "/schema/log";
 
-  private static final Logger log = Logger.getLogger(RestIT.class.getName());
+  private static final Logger log = LoggerFactory.getLogger(RestIT.class);
 
   @BeforeEach
   void createClient() {
@@ -70,7 +71,7 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testScenario() throws Exception {
     // get process definitions for default engine
-    log.info("Checking " + appBasePath + PROCESS_DEFINITION_PATH);
+    log.info("Checking {}{}", appBasePath, PROCESS_DEFINITION_PATH);
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -103,7 +104,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void assertJodaTimePresent() {
-    log.info("Checking " + appBasePath + TASK_PATH);
+    log.info("Checking {}{}", appBasePath, TASK_PATH);
 
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
             .queryString("dueAfter", "2000-01-01T00:00:00.000+0200")
@@ -118,7 +119,7 @@ class RestIT extends AbstractWebIntegrationTest {
 
   @Test
   void testDelayedJobDefinitionSuspension() {
-    log.info("Checking " + appBasePath + JOB_DEFINITION_PATH + "/suspended");
+    log.info("Checking {}{}/suspended", appBasePath, JOB_DEFINITION_PATH);
 
     // Create request body as a Map (or you can use a custom DTO if required)
     Map<String, Object> requestBody = new HashMap<>();
@@ -139,22 +140,22 @@ class RestIT extends AbstractWebIntegrationTest {
   @Test
   void testTaskQueryContentType() {
     String resourcePath = appBasePath + TASK_PATH;
-    log.info("Checking " + resourcePath);
+    log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
   @Test
-  void testSingleTaskContentType() throws Exception {
+  void testSingleTaskContentType() {
     // get id of first task
     String taskId = getFirstTask().getString("id");
 
     String resourcePath = appBasePath + TASK_PATH + "/" + taskId;
-    log.info(() -> "Checking {}" + resourcePath);
+    log.info("Checking {}", resourcePath);
     assertMediaTypesOfResource(resourcePath, false);
   }
 
   @Test
-  void testTaskFilterResultContentType() throws Exception {
+  void testTaskFilterResultContentType() {
     // create filter for first task, so single result will not throw an exception
     JSONObject firstTask = getFirstTask();
     Map<String, Object> query = new HashMap<>();
@@ -176,14 +177,14 @@ class RestIT extends AbstractWebIntegrationTest {
     String filterId = response.getBody().getObject().getString("id");
 
     // Check the filter resource (list)
-    String resourcePathList = appBasePath + FILTER_PATH + "/" + filterId + "/list";
-    log.info(() -> "Checking " + resourcePathList);
+    String resourcePathList = "%s%s/%s/list".formatted(appBasePath, FILTER_PATH, filterId);
+    log.info("Checking {}", resourcePathList);
     assertMediaTypesOfResource(resourcePathList, true);
 
 
     // Check the filter resource (singleResult)
-    String resourcePathSingleResult = appBasePath + FILTER_PATH + "/" + filterId + "/singleResult";
-    log.info(() -> "Checking " + resourcePathSingleResult);
+    String resourcePathSingleResult = "%s%s/%s/singleResult".formatted(appBasePath, FILTER_PATH, filterId);
+    log.info("Checking {}", resourcePathSingleResult);
     assertMediaTypesOfResource(resourcePathSingleResult, true);
 
     // delete test filter
@@ -193,7 +194,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void shouldSerializeDateWithDefinedFormat() throws Exception {
+  void shouldSerializeDateWithDefinedFormat() {
     // when
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + SCHEMA_LOG_PATH)
             .header(ACCEPT, APPLICATION_JSON)
@@ -216,7 +217,7 @@ class RestIT extends AbstractWebIntegrationTest {
    * polymorphic serialization of historic details
    */
   @Test
-  void testPolymorphicSerialization() throws Exception {
+  void testPolymorphicSerialization() {
     JSONObject historicVariableUpdate = getFirstHistoricVariableUpdates();
 
     // variable update specific property
@@ -244,7 +245,7 @@ class RestIT extends AbstractWebIntegrationTest {
   }
 
   @Test
-  void testComplexObjectJacksonSerialization() throws Exception {
+  void testComplexObjectJacksonSerialization() {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + PROCESS_DEFINITION_PATH + "/statistics")
             .queryString("incidents", "true")
             .header(ACCEPT, APPLICATION_JSON)
@@ -282,7 +283,7 @@ class RestIT extends AbstractWebIntegrationTest {
   void testOptionsRequest() {
     // Given
     String resourcePath = appBasePath + FILTER_PATH;
-    log.info("Send OPTIONS request to " + resourcePath);
+    log.info("Send OPTIONS request to {}", resourcePath);
 
     // Send OPTIONS request
     HttpResponse<JsonNode> response = Unirest.options(resourcePath).asJson();
@@ -306,7 +307,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(400);
   }
 
-  protected JSONObject getFirstTask() throws Exception {
+  protected JSONObject getFirstTask() {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + TASK_PATH)
             .header(ACCEPT, APPLICATION_JSON)
             .asJson();
@@ -315,7 +316,7 @@ class RestIT extends AbstractWebIntegrationTest {
     return tasks.getJSONObject(0);
   }
 
-  protected JSONObject getFirstHistoricVariableUpdates() throws Exception {
+  protected JSONObject getFirstHistoricVariableUpdates() {
     HttpResponse<JsonNode> response = Unirest.get(appBasePath + HISTORIC_DETAIL_PATH)
             .queryString("variableUpdates", "true")
             .header(ACCEPT, APPLICATION_JSON)
@@ -363,7 +364,7 @@ class RestIT extends AbstractWebIntegrationTest {
     assertThat(response.getStatus()).isEqualTo(200);
     // use startsWith cause sometimes server also returns quality parameters
     assertThat(actual)
-            .as("Expected: " + expected + " Actual: " + actual)
+            .as("Expected: %s Actual: %s".formatted(expected, actual))
             .startsWith(expected);
   }
 }

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class KnowledgeSourceTest extends DmnModelElementInstanceTest {
 
@@ -28,7 +27,7 @@ public class KnowledgeSourceTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(AuthorityRequirement.class),
       new ChildElementAssumption(Type.class, 0, 1),
       new ChildElementAssumption(OwnerReference.class, 0, 1)
@@ -37,7 +36,7 @@ public class KnowledgeSourceTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("locationURI")
     );
   }

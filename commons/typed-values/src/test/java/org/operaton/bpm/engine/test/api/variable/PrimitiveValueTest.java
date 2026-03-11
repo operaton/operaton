@@ -15,10 +15,9 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.variable;
-
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -44,7 +43,7 @@ public class PrimitiveValueTest {
   protected static final byte[] BYTES_VALUE = "a".getBytes();
 
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         { STRING, "someString", stringValue("someString"), stringValue(null) },
         { INTEGER, 1, integerValue(1), integerValue(null) },
         { BOOLEAN, true, booleanValue(true), booleanValue(null) },

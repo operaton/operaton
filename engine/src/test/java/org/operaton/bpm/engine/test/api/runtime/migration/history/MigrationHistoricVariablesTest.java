@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration.history;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -115,10 +114,10 @@ class MigrationHistoricVariablesTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then there is still one historic variable instance
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
 
     // and no additional historic details
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
   }
 
   @Test
@@ -149,10 +148,10 @@ class MigrationHistoricVariablesTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then there is still one historic variable instance
-    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricVariableInstanceQuery().count()).isOne();
 
     // and no additional historic details
-    assertThat(historyService.createHistoricDetailQuery().count()).isEqualTo(1);
+    assertThat(historyService.createHistoricDetailQuery().count()).isOne();
   }
 
   @Test
@@ -175,7 +174,7 @@ class MigrationHistoricVariablesTest {
 
     //when
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     //then
@@ -202,7 +201,7 @@ class MigrationHistoricVariablesTest {
 
     //when
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     //then
@@ -298,7 +297,7 @@ class MigrationHistoricVariablesTest {
 
     // when migrate
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     // then the failed job is also migrated
@@ -352,7 +351,7 @@ class MigrationHistoricVariablesTest {
 
     //when
     runtimeService.newMigration(migrationPlan)
-      .processInstanceIds(Arrays.asList(processInstance.getId()))
+      .processInstanceIds(List.of(processInstance.getId()))
       .execute();
 
     //then

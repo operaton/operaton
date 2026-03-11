@@ -18,7 +18,6 @@ package org.operaton.bpm.integrationtest.functional.scriptengine;
 
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -59,10 +58,6 @@ public abstract class AbstractScriptEngineSupportTest extends AbstractFoxPlatfor
   @Test
   public void shouldSetVariable() {
     processInstanceId = runtimeService.startProcessInstanceByKey(PROCESS_ID).getId();
-  }
-
-  @AfterEach
-  public void variableFooShouldBeBar() {
     Object foo = runtimeService.getVariable(processInstanceId, "foo");
     Object bar = runtimeService.getVariable(processInstanceId, "bar");
     assertThat(foo).isNotNull();

@@ -17,8 +17,8 @@
 
 'use strict';
 
-var AbbreviateNumberFilter = function() {
-  return function(number, decimal) {
+var AbbreviateNumberFilter = function () {
+  return function (number, decimal) {
     if (!number) {
       return;
     }

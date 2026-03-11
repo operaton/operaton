@@ -94,7 +94,7 @@ public class TestFoxPlatformClientAsEjbModule_onePaAsLib extends AbstractFoxPlat
       .processDefinitionKey("testDeployProcessArchive")
       .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 }

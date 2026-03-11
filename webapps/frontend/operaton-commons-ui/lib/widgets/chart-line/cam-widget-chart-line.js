@@ -24,7 +24,7 @@ var abbreviateNumber = require('./../../filter/abbreviateNumber')();
 
 module.exports = [
   '$window',
-  function($window) {
+  function ($window) {
     return {
       restrict: 'A',
 
@@ -49,10 +49,10 @@ module.exports = [
         valueLabelsCount: '=?',
         values: '=',
         disableSelection: '=',
-        isLogScale: '='
+        isLogScale: '=',
       },
 
-      link: function($scope, $element) {
+      link: function ($scope, $element) {
         var container = $element[0];
         var computedStyles = $window.getComputedStyle(container);
 
@@ -68,9 +68,9 @@ module.exports = [
           abbreviateNumber: abbreviateNumber,
 
           onselection: function onselection(info) {
-            $scope.$apply(function() {
+            $scope.$apply(function () {
               $scope.selection({
-                info: info
+                info: info,
               });
             });
           },
@@ -94,10 +94,10 @@ module.exports = [
           unselectedColor: $scope.unselectedColor,
           valueLabelsCount: $scope.valueLabelsCount,
           disableSelection: $scope.disableSelection,
-          isLogScale: $scope.isLogScale
+          isLogScale: $scope.isLogScale,
         }));
 
-        $scope.$watch('values', function() {
+        $scope.$watch('values', function () {
           var cn = container.className.replace('no-data', '');
           if (
             !$scope.values ||
@@ -115,18 +115,18 @@ module.exports = [
 
         container.appendChild(chart.canvas);
 
-        var resize = throttle(function() {
+        var resize = throttle(function () {
           chart.resize(container.clientWidth, height()).draw();
         }, 100);
 
         $window.addEventListener('resize', resize);
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
           $window.removeEventListener('resize', resize);
         });
       },
 
-      template: '<!-- keule!! pech jehabt! -->'
+      template: '<!-- keule!! pech jehabt! -->',
     };
-  }
+  },
 ];

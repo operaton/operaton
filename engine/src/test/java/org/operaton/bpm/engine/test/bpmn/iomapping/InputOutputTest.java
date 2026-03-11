@@ -49,7 +49,8 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 /**
  * Testcase for operaton input / output in BPMN
@@ -444,12 +445,10 @@ class InputOutputTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInputMapElKey.bpmn")
   @Test
   void testInputMapElUndefinedKey() {
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Unknown property used in expression: ${varExpr1}", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Unknown property used in expression: ${varExpr1}");
   }
 
   // output parameter ///////////////////////////////////////////////////////
@@ -840,29 +839,28 @@ class InputOutputTest {
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testOutputMapElKey.bpmn")
   @Test
   void testOutputMapElUndefinedKey() {
-    try {
-      runtimeService.startProcessInstanceByKey("testProcess");
-      fail("Exception expected");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Unknown property used in expression: ${varExpr1}", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("testProcess"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Unknown property used in expression: ${varExpr1}");
   }
 
   // ensure Io supported on event subprocess /////////////////////////////////
 
   @Test
   void testInterruptingEventSubprocessIoSupport() {
+    // given
     var deploymentBuilder = repositoryService
         .createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testInterruptingEventSubprocessIoSupport.bpmn");
-    try {
-      deploymentBuilder.deploy();
-      fail("exception expected");
-    } catch (ParseException e) {
-      // happy path
-      testRule.assertTextPresent("operaton:inputOutput mapping unsupported for element type 'subProcess' with attribute 'triggeredByEvent = true'", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("SubProcess_1");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("operaton:inputOutput mapping unsupported for element type 'subProcess' with attribute 'triggeredByEvent = true'")
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getMainElementId())
+      .isEqualTo("SubProcess_1");
   }
 
   @Deployment
@@ -902,7 +900,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue")).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -915,7 +913,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miExecution.getId(), "loopCounter")).isEqualTo(1);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miExecution.getId(), "miCounterValue")).isEqualTo(2);
 
     task = taskService.createTaskQuery().singleResult();
@@ -939,7 +937,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(0);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue")).isEqualTo(1);
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -952,7 +950,7 @@ class InputOutputTest {
     assertThat(runtimeService.getVariable(miScopeExecution.getId(), "loopCounter")).isEqualTo(1);
 
     // input mapping
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("miCounterValue").count()).isOne();
     assertThat(runtimeService.getVariableLocal(miScopeExecution.getId(), "miCounterValue")).isEqualTo(2);
 
     task = taskService.createTaskQuery().singleResult();
@@ -1035,15 +1033,17 @@ class InputOutputTest {
 
   @Test
   void testMIOutputMappingDisallowed() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
       .addClasspathResource("org/operaton/bpm/engine/test/bpmn/iomapping/InputOutputTest.testMIOutputMappingDisallowed.bpmn20.xml");
-    try {
-      deploymentBuilder.deploy();
-      fail("Exception expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("operaton:outputParameter not allowed for multi-instance constructs", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("miTask");
-    }
+
+    // when/then
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("operaton:outputParameter not allowed for multi-instance constructs")
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getMainElementId())
+      .isEqualTo("miTask");
 
   }
 
@@ -1117,7 +1117,7 @@ class InputOutputTest {
     // then: variable mapped exists
     assertThat(runtimeService.createVariableInstanceQuery().variableName("localNotMapped").count()).isZero();
     assertThat(runtimeService.createVariableInstanceQuery().variableName("localMapped").count()).isZero();
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isOne();
 
     taskService.complete(task.getId());
 
@@ -1161,7 +1161,7 @@ class InputOutputTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isOne();
 
     taskService.complete(task.getId());
 
@@ -1210,7 +1210,7 @@ class InputOutputTest {
     assertThat(task.getTaskDefinitionKey()).isEqualTo("taskOk");
 
     // then: variable mapped exists
-    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().variableName("mapped").count()).isOne();
 
     taskService.complete(task.getId());
 

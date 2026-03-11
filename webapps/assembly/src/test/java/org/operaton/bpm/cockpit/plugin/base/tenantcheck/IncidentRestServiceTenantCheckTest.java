@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.tenantcheck;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -88,7 +87,7 @@ class IncidentRestServiceTenantCheckTest extends AbstractCockpitPluginTest {
   @Test
   void queryIncidentsByProcessInstanceIdsWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<IncidentDto> result = resource.queryIncidents(queryParameter, null, null);
     assertThat(result).isNotEmpty().hasSize(1);

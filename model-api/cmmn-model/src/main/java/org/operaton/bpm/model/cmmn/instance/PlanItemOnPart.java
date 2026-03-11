@@ -24,9 +24,15 @@ import org.operaton.bpm.model.cmmn.PlanItemTransition;
  */
 public interface PlanItemOnPart extends OnPart {
 
+  /**
+   * @deprecated since 1.0, use {@link #getExitCriterion()} instead to access the parent exit criterion.
+   */
   @Deprecated(since = "1.0")
   Sentry getSentry();
 
+  /**
+   * @deprecated since 1.0, use {@link #setExitCriterion(ExitCriterion)} instead to set the parent exit criterion.
+   */
   @Deprecated(since = "1.0")
   void setSentry(Sentry sentry);
 

@@ -48,8 +48,10 @@ public interface SerializableValue extends TypedValue {
    * (as returned by {@link #getSerializationDataFormat()}) is not text based,
    * a base 64 encoded representation of the value is returned
    *
+   * <p>
    * The serialized value is a snapshot of the state of the value as it is
    * serialized to the process engine database.
+   * </p>
    */
   String getValueSerialized();
 

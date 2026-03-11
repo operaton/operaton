@@ -20,29 +20,28 @@
 var template = require('./reports-plugin.html?raw');
 
 module.exports = [
-  function() {
+  function () {
     return {
       restrict: 'A',
       scope: {
-        reportData: '='
+        reportData: '=',
       },
 
       template: template,
 
       controller: [
         '$scope',
-        function($scope) {
-          var reportPluginData = ($scope.reportPluginData = $scope.reportData.newChild(
-            $scope
-          ));
+        function ($scope) {
+          var reportPluginData = ($scope.reportPluginData =
+            $scope.reportData.newChild($scope));
 
-          reportPluginData.observe('plugin', function(plugin) {
+          reportPluginData.observe('plugin', function (plugin) {
             $scope.plugin = plugin;
           });
 
           $scope.reportPluginVars = {read: ['reportPluginData']};
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

@@ -46,6 +46,8 @@ import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_PROCESS_INSTANCE_MIGRATION);
+  private static final MigrationBatchConfigurationJsonConverter JSON_CONVERTER =
+      new MigrationBatchConfigurationJsonConverter();
 
   @Override
   public String getType() {
@@ -58,7 +60,7 @@ public class MigrationBatchJobHandler extends AbstractBatchJobHandler<MigrationB
   }
 
   protected MigrationBatchConfigurationJsonConverter getJsonConverterInstance() {
-    return MigrationBatchConfigurationJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

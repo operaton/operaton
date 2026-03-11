@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.identity.impl.ldap;
 
-import java.io.Serial;
 import java.util.List;
 
 import org.operaton.bpm.engine.identity.User;
@@ -32,8 +31,7 @@ import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
  */
 public class LdapUserQueryImpl extends UserQueryImpl {
 
-  @Serial private static final long serialVersionUID = 1L;
-  private final LdapConfiguration ldapConfiguration;
+  private final transient LdapConfiguration ldapConfiguration;
 
   public LdapUserQueryImpl(LdapConfiguration ldapConfiguration) {
     super();

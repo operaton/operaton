@@ -217,7 +217,9 @@ public interface ExternalTask {
    * {@link TopicSubscriptionBuilder#includeExtensionProperties(boolean)}) to be
    * available.
    *
+   * <p>
    * If no extension properties are available the returned map will be empty.
+   * </p>
    *
    * @return a map of available extension properties, never <code>null</code>
    */

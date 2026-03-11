@@ -30,42 +30,42 @@ var Configuration = function PluginConfiguration(ViewsProvider) {
       '$scope',
       '$rootScope',
       '$uibModal',
-      function($scope, $rootScope, $modal) {
-        $scope.openDialog = function() {
+      function ($scope, $rootScope, $modal) {
+        $scope.openDialog = function () {
           var dialog = $modal.open({
             resolve: {
-              processData: function() {
+              processData: function () {
                 return $scope.processData;
               },
-              processInstance: function() {
+              processInstance: function () {
                 return $scope.processInstance;
-              }
+              },
             },
             controller: 'UpdateProcessInstanceSuspensionStateController',
-            template: dialogTemplate
+            template: dialogTemplate,
           });
 
           dialog.result
-            .then(function(result) {
+            .then(function (result) {
               // dialog closed. YEA!
               if (result.status === 'SUCCESS') {
                 $scope.processInstance.suspended = result.suspended;
                 $rootScope.$broadcast(
                   '$processInstance.suspensionState.changed',
-                  $scope.processInstance
+                  $scope.processInstance,
                 );
 
                 $scope.processData.set(
                   'filter',
-                  angular.extend({}, $scope.filter)
+                  angular.extend({}, $scope.filter),
                 );
               }
             })
             .catch(angular.noop);
         };
-      }
+      },
     ],
-    priority: 5
+    priority: 5,
   });
 };
 

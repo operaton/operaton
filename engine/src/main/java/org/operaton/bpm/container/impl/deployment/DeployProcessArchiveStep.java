@@ -18,7 +18,7 @@ package org.operaton.bpm.container.impl.deployment;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -60,12 +60,12 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
   private static final ContainerIntegrationLogger LOG = ProcessEngineLogger.CONTAINER_INTEGRATION_LOGGER;
 
   protected final ProcessArchiveXml processArchive;
-  protected URL metaFileUrl;
+  protected URI metaFileUri;
   protected ProcessApplicationDeployment deployment;
 
-  public DeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URL url) {
+  public DeployProcessArchiveStep(ProcessArchiveXml parsedProcessArchive, URI uri) {
     processArchive = parsedProcessArchive;
-    this.metaFileUrl = url;
+    this.metaFileUri = uri;
   }
 
   @Override
@@ -181,7 +181,7 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
   }
 
   protected Map<String, byte[]> findResources(final ClassLoader processApplicationClassloader, String paResourceRoot, String[] additionalResourceSuffixes) {
-    return ProcessApplicationScanningUtil.findResources(processApplicationClassloader, paResourceRoot, metaFileUrl, additionalResourceSuffixes);
+    return ProcessApplicationScanningUtil.findResources(processApplicationClassloader, paResourceRoot, metaFileUri, additionalResourceSuffixes);
   }
 
   @Override
@@ -215,13 +215,12 @@ public class DeployProcessArchiveStep extends DeploymentOperationStep {
     String processEngineName = processArchive.getProcessEngineName();
     if (processEngineName != null) {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, processEngineName);
-      ensureNotNull("Cannot deploy process archive '" + processArchive.getName() + "' to process engine '" + processEngineName
-          + "' no such process engine exists", "processEngine", processEngine);
+      ensureNotNull("Cannot deploy process archive '%s' to process engine '%s': no such process engine exists".formatted(processArchive.getName(), processEngineName), "processEngine", processEngine);
       return processEngine;
 
     } else {
       ProcessEngine processEngine = serviceContainer.getServiceValue(ServiceTypes.PROCESS_ENGINE, defaultDeployToProcessEngineName);
-      ensureNotNull("Cannot deploy process archive '" + processArchive.getName() + "' to default process: no such process engine exists", "processEngine",
+      ensureNotNull("Cannot deploy process archive '%s' to default process: no such process engine exists".formatted(processArchive.getName()), "processEngine",
           processEngine);
       return processEngine;
     }

@@ -21,7 +21,7 @@ var constants = require('./../constants'),
   AbstractFormField = require('./abstract-form-field'),
   convertToType = require('../type-util').convertToType;
 
-var isBooleanCheckbox = function(element) {
+var isBooleanCheckbox = function (element) {
   return (
     element.attr('type') === 'checkbox' &&
     element.attr(constants.DIRECTIVE_CAM_VARIABLE_TYPE) === 'Boolean'
@@ -40,19 +40,19 @@ var InputFieldHandler = AbstractFormField.extend(
     /**
      * Prepares an instance
      */
-    initialize: function() {
+    initialize: function () {
       // read variable definitions from markup
       var variableName = this.element.attr(
-        constants.DIRECTIVE_CAM_VARIABLE_NAME
+        constants.DIRECTIVE_CAM_VARIABLE_NAME,
       );
       var variableType = this.element.attr(
-        constants.DIRECTIVE_CAM_VARIABLE_TYPE
+        constants.DIRECTIVE_CAM_VARIABLE_TYPE,
       );
 
       // crate variable
       this.variableManager.createVariable({
         name: variableName,
-        type: variableType
+        type: variableType,
       });
 
       // remember the original value found in the element for later checks
@@ -73,7 +73,7 @@ var InputFieldHandler = AbstractFormField.extend(
      *
      * @return {CamSDK.form.InputFieldHandler} Chainable method
      */
-    applyValue: function() {
+    applyValue: function () {
       this.previousValue = this.getValueFromHtmlControl() || '';
 
       var variableValue = this.variableManager.variableValue(this.variableName);
@@ -101,7 +101,7 @@ var InputFieldHandler = AbstractFormField.extend(
      *
      * @return {*}
      */
-    getValue: function() {
+    getValue: function () {
       var value = this.getValueFromHtmlControl();
 
       // write value to variable
@@ -110,7 +110,7 @@ var InputFieldHandler = AbstractFormField.extend(
       return value;
     },
 
-    getValueFromHtmlControl: function() {
+    getValueFromHtmlControl: function () {
       if (isBooleanCheckbox(this.element)) {
         return this.element.prop('checked');
       } else {
@@ -118,13 +118,13 @@ var InputFieldHandler = AbstractFormField.extend(
       }
     },
 
-    applyValueToHtmlControl: function(variableValue) {
+    applyValueToHtmlControl: function (variableValue) {
       if (isBooleanCheckbox(this.element)) {
         this.element.prop('checked', variableValue);
       } else if (this.element[0].type !== 'file') {
         this.element.val(variableValue);
       }
-    }
+    },
   },
   /** @lends CamSDK.form.InputFieldHandler */
   {
@@ -134,8 +134,8 @@ var InputFieldHandler = AbstractFormField.extend(
       ']' +
       ',textarea[' +
       constants.DIRECTIVE_CAM_VARIABLE_NAME +
-      ']'
-  }
+      ']',
+  },
 );
 
 module.exports = InputFieldHandler;

@@ -62,11 +62,11 @@ public class TestWarDeploymentResumePreviousOnDeploymentName extends AbstractFox
     //since we have two processes deployed for PA2 we got to check that both are present
     long count = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testDeployProcessArchive").count();
 
-    assertThat(count).isEqualTo(1L);
+    assertThat(count).isOne();
 
     count = repositoryService.createProcessDefinitionQuery().processDefinitionKey("testProcess").count();
 
-    assertThat(count).isEqualTo(1L);
+    assertThat(count).isOne();
 
     // validate registrations:
     ProcessApplicationService processApplicationService = BpmPlatform.getProcessApplicationService();

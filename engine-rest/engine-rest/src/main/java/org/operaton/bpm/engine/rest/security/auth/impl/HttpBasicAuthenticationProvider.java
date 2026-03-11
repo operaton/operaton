@@ -117,6 +117,6 @@ public class HttpBasicAuthenticationProvider implements AuthenticationProvider {
   @Override
   public void augmentResponseByAuthenticationChallenge(
       HttpServletResponse response, ProcessEngine engine) {
-    response.setHeader(HttpHeaders.WWW_AUTHENTICATE, BASIC_AUTH_HEADER_PREFIX + "realm=\"" + engine.getName() + "\"");
+    response.setHeader(HttpHeaders.WWW_AUTHENTICATE, "%srealm=\"%s\"".formatted(BASIC_AUTH_HEADER_PREFIX, engine.getName()));
   }
 }

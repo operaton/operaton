@@ -326,24 +326,20 @@ class RemovalTimeStrategyStartTest extends AbstractRemovalTimeTest {
   void shouldResolveStandaloneHistoricDecisionOutputInstance() {
     // given
     ClockUtil.setCurrentTime(START_DATE);
-
-    testRule.deploy(Bpmn.createExecutableProcess(CALLING_PROCESS_KEY)
-      .operatonHistoryTimeToLive(5)
-      .startEvent()
-      .businessRuleTask()
-      .operatonDecisionRef("dish-decision")
-      .endEvent().done());
+    DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery()
+        .decisionDefinitionKey("dish-decision")
+        .singleResult();
+    repositoryService.updateDecisionDefinitionHistoryTimeToLive(decisionDefinition.getId(), 5);
 
     // when
-    runtimeService.startProcessInstanceByKey(CALLING_PROCESS_KEY,
-      Variables.createVariables()
+    decisionService.evaluateDecisionTableByKey("dish-decision", Variables.createVariables()
         .putValue("temperature", 32)
         .putValue("dayType", "Weekend"));
 
     HistoricDecisionInstance historicDecisionInstance = historyService.createHistoricDecisionInstanceQuery()
-      .rootDecisionInstancesOnly()
-      .includeOutputs()
-      .singleResult();
+        .rootDecisionInstancesOnly()
+        .includeOutputs()
+        .singleResult();
 
     // assume
     assertThat(historicDecisionInstance).isNotNull();

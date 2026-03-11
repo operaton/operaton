@@ -37,9 +37,11 @@ public enum Permissions implements Permission {
    * is revoked. This does not implicate that all individual
    * permissions are revoked.
    *
+   * <p>
    * Example: If the UPDATE permission is revoked then the ALL
    * permission is revoked as well, because the user is not authorized
    * to execute all actions anymore.
+   * </p>
    */
   ALL("ALL", Integer.MAX_VALUE, EnumSet.allOf(Resources.class)),
 
@@ -107,10 +109,8 @@ public enum Permissions implements Permission {
   MIGRATE_INSTANCE("MIGRATE_INSTANCE", 65536, EnumSet.of(Resources.PROCESS_DEFINITION));
 
   // NOTE: Please use XxxPermissions for new permissions
-  // Keep in mind to use unique permissions' ids for the same Resource
-  // TODO in case a new XxxPermissions enum is created:
-  // please adjust ResourceTypeUtil#PERMISSION_ENUMS accordingly
-
+  // - Keep in mind to use unique permissions' ids for the same Resource
+  // - In case a new XxxPermissions enum is created: Please adjust ResourceTypeUtil#PERMISSION_ENUMS accordingly
 
   // implementation //////////////////////////
 

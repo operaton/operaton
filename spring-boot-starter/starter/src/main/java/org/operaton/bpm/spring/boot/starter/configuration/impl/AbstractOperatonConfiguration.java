@@ -20,15 +20,12 @@ import java.util.Map;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 
-import org.slf4j.Logger;
 import org.springframework.core.annotation.Order;
 
 import org.operaton.bpm.spring.boot.starter.configuration.Ordering;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEngineLogger;
 import org.operaton.bpm.spring.boot.starter.util.SpringBootProcessEnginePlugin;
-
-import static org.slf4j.LoggerFactory.getLogger;
 
 @Order(Ordering.DEFAULT_ORDER)
 public abstract class AbstractOperatonConfiguration extends SpringBootProcessEnginePlugin {
@@ -45,12 +42,6 @@ public abstract class AbstractOperatonConfiguration extends SpringBootProcessEng
 
     return joiner.toString();
   }
-
-  /**
-   * @deprecated Use {@link SpringBootProcessEngineLogger} instead.
-   */
-  @Deprecated(forRemoval = true, since = "1.0")
-  protected final Logger logger = getLogger(this.getClass());
 
   protected OperatonBpmProperties operatonBpmProperties;
 

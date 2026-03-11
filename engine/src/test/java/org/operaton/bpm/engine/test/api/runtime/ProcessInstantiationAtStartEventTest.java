@@ -33,7 +33,7 @@ import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.model.bpmn.Bpmn;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ProcessInstantiationAtStartEventTest {
 
@@ -62,7 +62,7 @@ class ProcessInstantiationAtStartEventTest {
 
     runtimeService.createProcessInstanceById(processDefinition.getId()).execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Test
@@ -70,7 +70,7 @@ class ProcessInstantiationAtStartEventTest {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute();
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Test
@@ -116,31 +116,29 @@ class ProcessInstantiationAtStartEventTest {
 
     runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY).execute(false, false);
 
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
   }
 
   @Test
   void testFailToStartProcessInstanceSkipListeners() {
+    // given
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-    try {
-      processInstantiationBuilder.execute(true, false);
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot skip");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute(true, false))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot skip");
   }
 
   @Test
   void testFailToStartProcessInstanceSkipInputOutputMapping() {
+    // given
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey(PROCESS_DEFINITION_KEY);
-    try {
-      processInstantiationBuilder.execute(false, true);
 
-      fail("expected exception");
-    } catch (BadUserRequestException e) {
-      assertThat(e.getMessage()).contains("Cannot skip");
-    }
+    // when/then
+    assertThatThrownBy(() -> processInstantiationBuilder.execute(false, true))
+      .isInstanceOf(BadUserRequestException.class)
+      .hasMessageContaining("Cannot skip");
   }
 
 }

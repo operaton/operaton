@@ -44,9 +44,9 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param  {uuid}     id    of the process instance to be requested
      * @param  {Function} done
      */
-    get: function(id, done) {
+    get: function (id, done) {
       return this.http.get(this.path + '/' + id, {
-        done: done
+        done: done,
       });
     },
 
@@ -59,11 +59,11 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param  {Object.<String, *>} [params.variables]
      * @param  {requestCallback} [done]
      */
-    create: function(params, done) {
+    create: function (params, done) {
       return this.http.post(params, done);
     },
 
-    list: function(params, done) {
+    list: function (params, done) {
       var path = this.path;
 
       // those parameters have to be passed in the query and not body
@@ -72,22 +72,22 @@ var ProcessInstance = AbstractClientResource.extend(
 
       return this.http.post(path, {
         data: params,
-        done: done
+        done: done,
       });
     },
 
-    count: function(params, done) {
+    count: function (params, done) {
       var path = this.path + '/count';
 
       return this.http.post(path, {
         data: params,
-        done: done
+        done: done,
       });
     },
 
-    getActivityInstances: function(id, done) {
+    getActivityInstances: function (id, done) {
       return this.http.get(this.path + '/' + id + '/activity-instances', {
-        done: done
+        done: done,
       });
     },
 
@@ -113,20 +113,20 @@ var ProcessInstance = AbstractClientResource.extend(
      *
      * @param  {requestCallback}  done
      */
-    modify: function(params, done) {
+    modify: function (params, done) {
       return this.http.post(this.path + '/' + params.id + '/modification', {
         data: params,
-        done: done
+        done: done,
       });
     },
 
-    modifyAsync: function(params, done) {
+    modifyAsync: function (params, done) {
       return this.http.post(
         this.path + '/' + params.id + '/modification-async',
         {
           data: params,
-          done: done
-        }
+          done: done,
+        },
       );
     },
 
@@ -139,10 +139,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {requestCallback}   done
      *
      */
-    deleteAsync: function(payload, done) {
+    deleteAsync: function (payload, done) {
       return this.http.post(this.path + '/delete', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -155,10 +155,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {requestCallback}   done
      *
      */
-    deleteAsyncHistoricQueryBased: function(payload, done) {
+    deleteAsyncHistoricQueryBased: function (payload, done) {
       return this.http.post(this.path + '/delete-historic-query-based', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -171,10 +171,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {requestCallback}   done
      *
      */
-    setJobsRetriesAsync: function(payload, done) {
+    setJobsRetriesAsync: function (payload, done) {
       return this.http.post(this.path + '/job-retries', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -187,10 +187,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {requestCallback}   done
      *
      */
-    setJobsRetriesAsyncHistoricQueryBased: function(payload, done) {
+    setJobsRetriesAsyncHistoricQueryBased: function (payload, done) {
       return this.http.post(this.path + '/job-retries-historic-query-based', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -202,10 +202,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {Object}            payload
      * @param   {requestCallback}   done
      */
-    suspendAsync: function(payload, done) {
+    suspendAsync: function (payload, done) {
       return this.http.post(this.path + '/suspended-async', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -217,10 +217,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {Object}            payload
      * @param   {requestCallback}   done
      */
-    setVariablesAsync: function(payload, done) {
+    setVariablesAsync: function (payload, done) {
       return this.http.post(this.path + '/variables-async', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -232,10 +232,10 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {Object}            payload
      * @param   {requestCallback}   done
      */
-    correlateMessageAsync: function(payload, done) {
+    correlateMessageAsync: function (payload, done) {
       return this.http.post(this.path + '/message-async', {
         data: payload,
-        done: done
+        done: done,
       });
     },
 
@@ -248,15 +248,15 @@ var ProcessInstance = AbstractClientResource.extend(
      * @param   {Object}            params
      * @param   {requestCallback}   done
      */
-    setVariable: function(id, params, done) {
+    setVariable: function (id, params, done) {
       var url =
         this.path + '/' + id + '/variables/' + utils.escapeUrl(params.name);
       return this.http.put(url, {
         data: params,
-        done: done
+        done: done,
       });
-    }
-  }
+    },
+  },
 );
 
 module.exports = ProcessInstance;

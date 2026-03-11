@@ -318,9 +318,9 @@ public abstract class AbstractFlowNodeBuilder<B extends AbstractFlowNodeBuilder<
   public AbstractFlowNodeBuilder connectTo(String identifier) {
     ModelElementInstance target = modelInstance.getModelElementById(identifier);
     if (target == null) {
-      throw new BpmnModelException("Unable to connect " + element.getId() + " to element " + identifier + " cause it not exists.");
+      throw new BpmnModelException("Unable to connect %s to element %s cause it not exists.".formatted(element.getId(), identifier));
     } else if (!(target instanceof FlowNode targetNode)) {
-      throw new BpmnModelException("Unable to connect " + element.getId() + " to element " + identifier + " cause its not a flow node.");
+      throw new BpmnModelException("Unable to connect %s to element %s cause its not a flow node.".formatted(element.getId(), identifier));
     } else {
       connectTarget(targetNode);
       return targetNode.builder();

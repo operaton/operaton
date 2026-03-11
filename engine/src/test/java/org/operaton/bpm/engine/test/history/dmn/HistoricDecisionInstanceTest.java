@@ -371,7 +371,7 @@ public class HistoricDecisionInstanceTest {
       .evaluate();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery().includeInputs().includeOutputs();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     HistoricDecisionInstance historicDecisionInstance = query.singleResult();
 
@@ -433,7 +433,7 @@ public class HistoricDecisionInstanceTest {
 
     startProcessInstanceAndEvaluateDecision();
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     DecisionDefinition decisionDefinition = repositoryService.createDecisionDefinitionQuery().singleResult();
     historyService.deleteHistoricDecisionInstanceByDefinitionId(decisionDefinition.getId());
@@ -450,7 +450,7 @@ public class HistoricDecisionInstanceTest {
     HistoricDecisionInstanceQuery query =
         historyService.createHistoricDecisionInstanceQuery().decisionDefinitionKey(DECISION_DEFINITION_KEY);
 
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
     HistoricDecisionInstance historicDecisionInstance = query.includeInputs().includeOutputs().singleResult();
 
     // when
@@ -475,10 +475,10 @@ public class HistoricDecisionInstanceTest {
         .deploy().getId();
 
     HistoricDecisionInstanceQuery query = historyService.createHistoricDecisionInstanceQuery();
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     repositoryService.deleteDeployment(secondDeploymentId, true);
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
 
     repositoryService.deleteDeployment(firstDeploymentId, true);
     assertThat(query.count()).isZero();

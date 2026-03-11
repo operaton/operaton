@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.migration.validation.activity;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.operaton.bpm.engine.ActivityTypes;
@@ -33,9 +32,7 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class SupportedPassiveEventTriggerActivityValidator implements MigrationActivityValidator {
 
-  public static final SupportedPassiveEventTriggerActivityValidator INSTANCE = new SupportedPassiveEventTriggerActivityValidator();
-
-  public static final List<String> SUPPORTED_TYPES = Arrays.asList(
+  private static final List<String> SUPPORTED_TYPES = List.of(
     ActivityTypes.BOUNDARY_MESSAGE,
     ActivityTypes.BOUNDARY_SIGNAL,
     ActivityTypes.BOUNDARY_TIMER,

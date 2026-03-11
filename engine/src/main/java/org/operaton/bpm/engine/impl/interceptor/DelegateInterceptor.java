@@ -32,9 +32,11 @@ import org.operaton.bpm.engine.impl.delegate.DelegateInvocation;
  * <li>{@link DmnDecision}</li>
  * </ul>
  *
+ * <p>
  * The interceptor is passed in an instance of {@link DelegateInvocation}.
  * Implementations are responsible for calling
  * {@link DelegateInvocation#proceed()}.
+ * </p>
  *
  * @author Daniel Meyer
  */

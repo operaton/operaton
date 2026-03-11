@@ -114,7 +114,7 @@ public class FileValueImpl implements FileValue {
 
   @Override
   public String toString() {
-    return "FileValueImpl [mimeType=" + mimeType + ", filename=" + filename + ", type=" + type + ", isTransient=" + isTransient + "]";
+    return "FileValueImpl [mimeType=%s, filename=%s, type=%s, isTransient=%s]".formatted(mimeType, filename, type, isTransient);
   }
 
   @Override

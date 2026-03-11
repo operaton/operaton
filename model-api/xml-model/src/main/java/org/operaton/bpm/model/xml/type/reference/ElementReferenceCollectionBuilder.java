@@ -22,8 +22,8 @@ import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 /**
  * @author Sebastian Menski
  */
-public interface ElementReferenceCollectionBuilder<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ModelBuildOperation {
+public interface ElementReferenceCollectionBuilder<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ModelBuildOperation {
 
-  ElementReferenceCollection<Target, Source> build();
+  ElementReferenceCollection<TARGET, SOURCE> build();
 
 }

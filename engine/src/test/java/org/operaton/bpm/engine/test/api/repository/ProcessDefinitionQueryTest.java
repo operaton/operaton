@@ -265,7 +265,9 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   /**
    * CAM-8014
    *
+   * <p>
    * Verify that search by name like returns results with case-insensitive
+   * </p>
    */
   @Test
   void testQueryByNameLikeCaseInsensitive() {
@@ -289,7 +291,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   void testQueryByKeys() {
 
     // empty list
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKeysIn("a", "b").list()).isEmpty();
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKeyIn("a", "b").list()).isEmpty();
 
 
     // collect all definition keys
@@ -299,7 +301,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       processDefinitionKeys[i] = list.get(i).getKey();
     }
 
-    List<ProcessDefinition> keyInList = repositoryService.createProcessDefinitionQuery().processDefinitionKeysIn(processDefinitionKeys).list();
+    List<ProcessDefinition> keyInList = repositoryService.createProcessDefinitionQuery().processDefinitionKeyIn(processDefinitionKeys).list();
     for (ProcessDefinition processDefinition : keyInList) {
       boolean found = false;
       for (ProcessDefinition otherProcessDefinition : list) {
@@ -310,7 +312,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
       assertThat(found).withFailMessage("Expected to find process definition " + processDefinition).isTrue();
     }
 
-    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeysIn(processDefinitionKeys).count()).isZero();
+    assertThat(repositoryService.createProcessDefinitionQuery().processDefinitionKey("dummyKey").processDefinitionKeyIn(processDefinitionKeys).count()).isZero();
   }
 
   @Test
@@ -503,11 +505,11 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
 
     assertThat(repositoryService.createProcessDefinitionQuery()
       .messageEventSubscriptionName("newInvoiceMessage")
-      .count()).isEqualTo(1);
+      .count()).isOne();
 
     assertThat(repositoryService.createProcessDefinitionQuery()
       .messageEventSubscriptionName("newBookingMessage")
-      .count()).isEqualTo(1);
+      .count()).isOne();
 
     assertThat(repositoryService.createProcessDefinitionQuery()
       .messageEventSubscriptionName("bogus")
@@ -520,8 +522,8 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
   void testQueryByIncidentId() {
     assertThat(repositoryService.createProcessDefinitionQuery()
-        .processDefinitionKey("failingProcess")
-        .count()).isEqualTo(1);
+      .processDefinitionKey("failingProcess")
+      .count()).isOne();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
@@ -554,8 +556,8 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
   void testQueryByIncidentType() {
     assertThat(repositoryService.createProcessDefinitionQuery()
-        .processDefinitionKey("failingProcess")
-        .count()).isEqualTo(1);
+      .processDefinitionKey("failingProcess")
+      .count()).isOne();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
@@ -588,8 +590,8 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
   void testQueryByIncidentMessage() {
     assertThat(repositoryService.createProcessDefinitionQuery()
-        .processDefinitionKey("failingProcess")
-        .count()).isEqualTo(1);
+      .processDefinitionKey("failingProcess")
+      .count()).isOne();
 
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("failingProcess");
 
@@ -622,8 +624,8 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   @org.operaton.bpm.engine.test.Deployment(resources = {"org/operaton/bpm/engine/test/api/repository/failingProcessCreateOneIncident.bpmn20.xml"})
   void testQueryByIncidentMessageLike() {
     assertThat(repositoryService.createProcessDefinitionQuery()
-        .processDefinitionKey("failingProcess")
-        .count()).isEqualTo(1);
+      .processDefinitionKey("failingProcess")
+      .count()).isOne();
 
     runtimeService.startProcessInstanceByKey("failingProcess");
 
@@ -825,7 +827,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   void testQueryByVersionTag() {
     assertThat(repositoryService.createProcessDefinitionQuery()
       .versionTag("ver_tag_2")
-      .count()).isEqualTo(1);
+      .count()).isOne();
   }
 
   @Test
@@ -833,7 +835,7 @@ class ProcessDefinitionQueryTest extends AbstractDefinitionQueryTest {
   void testQueryByVersionTagLike() {
     assertThat(repositoryService.createProcessDefinitionQuery()
       .versionTagLike("ver\\_tag\\_%")
-      .count()).isEqualTo(1);
+      .count()).isOne();
   }
 
   @Test

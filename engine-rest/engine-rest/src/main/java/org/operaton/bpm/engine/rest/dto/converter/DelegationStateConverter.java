@@ -29,7 +29,7 @@ public class DelegationStateConverter extends JacksonAwareStringToTypeConverter<
       return DelegationState.valueOf(value.toUpperCase());
 
     } catch (IllegalArgumentException e) {
-      String message = "Valid values for property 'delegationState' are 'PENDING' or 'RESOLVED', but was '"+value+"'";
+      String message = "Valid values for property 'delegationState' are 'PENDING' or 'RESOLVED', but was '%s'".formatted(value);
       throw new InvalidRequestException(Status.BAD_REQUEST, e, message);
 
     }

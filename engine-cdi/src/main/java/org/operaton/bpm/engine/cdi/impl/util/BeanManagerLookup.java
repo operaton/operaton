@@ -26,12 +26,20 @@ import org.operaton.bpm.engine.ProcessEngineException;
 public final class BeanManagerLookup {
 
   /** holds a local beanManager if no jndi is available */
-  public static BeanManager localInstance;
+  private static BeanManager localInstance;
 
   /** provide a custom jndi lookup name */
-  public static String jndiName;
+  private static String jndiName;
 
   private BeanManagerLookup() {
+  }
+
+  public static void setLocalInstance(BeanManager beanManager) {
+    localInstance = beanManager;
+  }
+
+  public static BeanManager getLocalInstance() {
+    return localInstance;
   }
 
   public static BeanManager getBeanManager() {
@@ -57,7 +65,7 @@ public final class BeanManagerLookup {
       try {
         return (BeanManager) InitialContext.doLookup(jndiName);
       } catch (NamingException e) {
-        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '" + jndiName + "'.", e);
+        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '%s'.".formatted(jndiName), e);
       }
     }
 

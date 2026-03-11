@@ -38,11 +38,11 @@ class TestModelInstanceTest {
     animal.setId("TestId");
     animals.addChildElement(animal);
 
-    ModelInstance cloneInstance = modelInstance.clone();
-    getFirstAnimal(cloneInstance).setId("TestId2");
+    ModelInstance copiedInstance = modelInstance.copy();
+    getFirstAnimal(copiedInstance).setId("TestId2");
 
     assertThat(getFirstAnimal(modelInstance).getId()).isEqualTo("TestId");
-    assertThat(getFirstAnimal(cloneInstance).getId()).isEqualTo("TestId2");
+    assertThat(getFirstAnimal(copiedInstance).getId()).isEqualTo("TestId2");
   }
 
   protected Animal getFirstAnimal(ModelInstance modelInstance) {

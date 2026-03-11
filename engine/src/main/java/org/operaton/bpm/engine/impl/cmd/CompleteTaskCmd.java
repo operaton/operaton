@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
@@ -29,16 +27,15 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionVariableSnapshot
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskManager;
 import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.impl.VariableMapImpl;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
 /**
  * @author Joram Barrez
  */
-public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CompleteTaskCmd implements Command<VariableMap> {
+  private static final VariableMapImpl EMPTY_VARIABLE_MAP = new VariableMapImpl();
   protected String taskId;
   protected Map<String, Object> variables;
 
@@ -65,7 +62,7 @@ public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
 
     TaskManager taskManager = commandContext.getTaskManager();
     TaskEntity task = taskManager.findTaskById(taskId);
-    ensureNotNull("Cannot find task with id " + taskId, "task", task);
+    ensureNotNull("Cannot find task with id %s".formatted(taskId), "task", task);
 
     checkCompleteTask(task, commandContext);
 
@@ -87,12 +84,12 @@ public class CompleteTaskCmd implements Command<VariableMap>, Serializable {
       if (variablesListener != null) {
         return variablesListener.getVariables();
       } else {
-        return task.getCaseDefinitionId() != null ? null : task.getVariablesTyped(false);
+        return task.getCaseDefinitionId() != null ? EMPTY_VARIABLE_MAP : task.getVariablesTyped(false);
       }
     }
     else
     {
-      return null;
+      return EMPTY_VARIABLE_MAP;
     }
 
   }

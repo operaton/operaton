@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -491,7 +490,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testIncludeJobDefinitionsWithoutTenantIdParameter() {
-    List<JobDefinition> jobDefinitions = Arrays.asList(
+    List<JobDefinition> jobDefinitions = List.of(
         MockProvider.mockJobDefinition().tenantId(null).build(),
         MockProvider.mockJobDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockedQuery = setUpMockDefinitionQuery(jobDefinitions);
@@ -574,7 +573,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
 
   @Test
   void testIncludeJobDefinitionsWithoutTenantIdPostParameter() {
-    List<JobDefinition> jobDefinitions = Arrays.asList(
+    List<JobDefinition> jobDefinitions = List.of(
         MockProvider.mockJobDefinition().tenantId(null).build(),
         MockProvider.mockJobDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockedQuery = setUpMockDefinitionQuery(jobDefinitions);
@@ -607,7 +606,7 @@ public class JobDefinitionRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   private List<JobDefinition> createMockJobDefinitionsTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.mockJobDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.mockJobDefinition().tenantId(MockProvider.ANOTHER_EXAMPLE_TENANT_ID).build());
   }

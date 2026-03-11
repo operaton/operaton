@@ -34,6 +34,35 @@ This directory contains the GitHub Actions workflows for the Operaton project. E
 - **Triggers**:
     - Manually triggered via `workflow_dispatch` with a Slack URL input
 
+### Nightly Trigger
+
+- **Filename**: `nightly-trigger.yml`
+- **Description**: This workflow triggers nightly integration builds on all release branches. It detects all branches with `release/` prefix and dispatches the Integration Build workflow for each branch with comprehensive test configurations.
+- **Triggers**:
+    - Scheduled daily at 3:00 AM UTC
+    - Manually triggered via `workflow_dispatch`
+- **Features**:
+    - Automatically detects all release branches
+    - Triggers integration builds with Java 17, 21, and 25
+    - Tests engine and webapps test suites
+    - Tests across operaton, tomcat, and wildfly distributions
+    - Tests with h2 and postgresql databases
+
+### Create Changelog Task for Noteworthy Changes
+
+- **Filename**: `update-changelog-noteworthy.yml`
+- **Description**: This workflow creates a task issue for Copilot when an issue or pull request is closed and labeled with "noteworthy". The task issue contains detailed instructions and context for Copilot to create a comprehensive changelog entry.
+- **Triggers**:
+    - When an issue is closed with the "noteworthy" label
+    - When a pull request is merged with the "noteworthy" label
+- **Features**:
+    - Automatically identifies related PRs for issues
+    - Categorizes changes based on labels (bug fixes, features, documentation, etc.)
+    - Creates a new issue assigned to @copilot with detailed instructions
+    - Includes PR details (files changed, lines added/removed, merge date)
+    - Provides source description and context for creating the changelog entry
+- **Usage**: Simply add the "noteworthy" label to any issue or PR that should be highlighted in the changelog before closing/merging it. A task issue will be automatically created and assigned to Copilot to update the changelog.
+
 ## Actions Used
 
 | Action                                 | Version | Description                                             |

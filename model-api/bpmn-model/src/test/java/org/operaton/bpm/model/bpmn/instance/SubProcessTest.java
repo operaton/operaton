@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.OPERATON_NS;
 
@@ -33,7 +32,7 @@ public class SubProcessTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(LaneSet.class),
       new ChildElementAssumption(FlowElement.class),
       new ChildElementAssumption(Artifact.class)
@@ -42,7 +41,7 @@ public class SubProcessTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("triggeredByEvent", false, false, false),
       /** operaton extensions */
       new AttributeAssumption(OPERATON_NS, "async", false, false, false)

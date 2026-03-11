@@ -29,7 +29,7 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * Tests things that BPMN describes as 'uncontrolled flow':
@@ -60,16 +60,13 @@ class UncontrolledFlowTest {
 
     // then there are two tasks after the sub process
     assertThat(taskService.createTaskQuery().count()).isEqualTo(2);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask1").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask2").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask1").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("outerTask2").count()).isOne();
 
-    // and then the message for the event subprocess cannot be delivered
-    try {
-      runtimeService.correlateMessage("Message1");
-      fail("should not succeed");
-    } catch (ProcessEngineException e) {
-      testRule.assertTextPresent("Cannot correlate message 'Message1'", e.getMessage());
-    }
+    // when/then the message for the event subprocess cannot be delivered
+    assertThatThrownBy(() -> runtimeService.correlateMessage("Message1"))
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot correlate message 'Message1'");
   }
 
   @Deployment

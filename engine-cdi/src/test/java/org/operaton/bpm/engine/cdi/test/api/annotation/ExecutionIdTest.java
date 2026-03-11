@@ -19,10 +19,9 @@ package org.operaton.bpm.engine.cdi.test.api.annotation;
 import java.util.Set;
 import jakarta.enterprise.context.spi.CreationalContext;
 import jakarta.enterprise.inject.spi.Bean;
+import jakarta.enterprise.inject.spi.BeanManager;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.annotation.ExecutionIdLiteral;
@@ -35,12 +34,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Daniel Meyer
  */
-@RunWith(Arquillian.class)
-public class ExecutionIdTest extends CdiProcessEngineTestCase {
+class ExecutionIdTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testExecutionIdInjectableByName() {
+  void testExecutionIdInjectableByName() {
     getBeanInstance(BusinessProcess.class).startProcessByKey("keyOfTheProcess");
     String processInstanceId = (String) getBeanInstance("processInstanceId");
     assertThat(processInstanceId).isNotNull();
@@ -50,8 +48,10 @@ public class ExecutionIdTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testExecutionIdInjectableByQualifier() {
+  void testExecutionIdInjectableByQualifier() {
     getBeanInstance(BusinessProcess.class).startProcessByKey("keyOfTheProcess");
+
+    BeanManager beanManager = getBeanManager();
 
     Set<Bean<?>> beans = beanManager.getBeans(String.class, new ExecutionIdLiteral());
     Bean<String> bean = (Bean<java.lang.String>) beanManager.resolve(beans);

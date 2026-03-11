@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -107,7 +106,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
     
     startProcessInstances(ONE_TASK_PROCESS_DEFINITION_KEY);
     
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
     
     List<ProcessDefinitionStatistics> processDefinitionsStatistics = managementService
       .createProcessDefinitionStatisticsQuery()
@@ -146,7 +145,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     startProcessInstances(ONE_TASK_PROCESS_DEFINITION_KEY);
     
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
     
     List<ProcessDefinitionStatistics> processDefinitionsStatistics = managementService
       .createProcessDefinitionStatisticsQuery()
@@ -215,7 +214,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     testRule.executeAvailableJobs();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<ProcessDefinitionStatistics> processDefinitionsStatistics =
         managementService
@@ -237,7 +236,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     testRule.executeAvailableJobs();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     List<ProcessDefinitionStatistics> processDefinitionsStatistics =
         managementService
@@ -310,7 +309,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     testRule.executeAvailableJobs();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<ProcessDefinitionStatistics> processDefinitionsStatistics =
         managementService
@@ -335,7 +334,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     testRule.executeAvailableJobs();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     List<ProcessDefinitionStatistics> processDefinitionsStatistics =
         managementService
@@ -359,7 +358,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     testRule.executeAvailableJobs();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<ProcessDefinitionStatistics> processDefinitionsStatistics =
         managementService
@@ -384,7 +383,7 @@ class MultiTenancySharedProcessDefinitionStatisticsQueryTest {
 
     testRule.executeAvailableJobs();
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<ProcessDefinitionStatistics> processDefinitionsStatistics =
         managementService

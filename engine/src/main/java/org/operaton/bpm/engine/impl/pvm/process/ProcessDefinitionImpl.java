@@ -42,10 +42,10 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   @Serial private static final long serialVersionUID = 1L;
 
   protected String description;
-  protected ActivityImpl initial;
-  protected Map<ActivityImpl, List<ActivityImpl>> initialActivityStacks = new HashMap<>();
-  protected List<LaneSet> laneSets;
-  protected ParticipantProcess participantProcess;
+  private ActivityImpl initial;
+  private final Map<ActivityImpl, List<ActivityImpl>> initialActivityStacks = new HashMap<>();
+  private transient List<LaneSet> laneSets;
+  private transient ParticipantProcess participantProcess;
 
   public ProcessDefinitionImpl(String id) {
     super(id, null);
@@ -55,7 +55,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
   }
 
   protected void ensureDefaultInitialExists() {
-    ensureNotNull("Process '" + name + "' has no default start activity (e.g. none start event), hence you cannot use 'startProcessInstanceBy...' but have to start it using one of the modeled start events (e.g. message start events)", "initial", initial);
+    ensureNotNull("Process '%s' has no default start activity (e.g. none start event), hence you cannot use 'startProcessInstanceBy...' but have to start it using one of the modeled start events (e.g. message start events)".formatted(name), "initial", initial);
   }
 
   @Override
@@ -177,7 +177,7 @@ public class ProcessDefinitionImpl extends ScopeImpl implements PvmProcessDefini
 
   @Override
   public String toString() {
-    return "ProcessDefinition("+id+")";
+    return "ProcessDefinition(%s)".formatted(id);
   }
 
   @Override

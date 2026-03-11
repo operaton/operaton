@@ -30,5 +30,5 @@ const angular = require('angular'),
 
 module.exports = angular.module('admin.plugin.base', [
   viewsModule.name,
-  resourcesModule.name
+  resourcesModule.name,
 ]);

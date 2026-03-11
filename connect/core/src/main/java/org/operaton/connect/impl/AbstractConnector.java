@@ -28,8 +28,10 @@ import org.operaton.connect.spi.ConnectorResponse;
 /**
  * Abstract implementation of the connector interface.
  *
+ * <p>
  * This implementation provides a linked list of interceptors and related methods for
  * handling interceptor invocation.
+ * </p>
  *
  * @author Daniel Meyer
  *

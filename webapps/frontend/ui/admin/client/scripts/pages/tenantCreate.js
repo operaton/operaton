@@ -26,7 +26,7 @@ var Controller = [
   'Notifications',
   '$location',
   '$translate',
-  function($scope, page, camAPI, Notifications, $location, $translate) {
+  function ($scope, page, camAPI, Notifications, $location, $translate) {
     var TenantResource = camAPI.resource('tenant');
 
     $scope.$root.showBreadcrumbs = true;
@@ -38,58 +38,58 @@ var Controller = [
     page.breadcrumbsAdd([
       {
         label: $translate.instant('TENANTS_TENANTS'),
-        href: '#/tenants/'
+        href: '#/tenants/',
       },
       {
         label: $translate.instant('TENANTS_CREATE_NEW'),
-        href: '#/tenants-create'
-      }
+        href: '#/tenants-create',
+      },
     ]);
 
     // data model for tenant
     $scope.tenant = {
       id: '',
-      name: ''
+      name: '',
     };
 
-    $scope.createTenant = function() {
+    $scope.createTenant = function () {
       var tenant = $scope.tenant;
 
-      TenantResource.create(tenant, function(err) {
+      TenantResource.create(tenant, function (err) {
         if (err === null) {
           Notifications.addMessage({
             type: 'success',
             status: $translate.instant('NOTIFICATIONS_STATUS_SUCCESS'),
             message: $translate.instant('TENANTS_CREATE_TENANT_SUCCESS', {
-              tenant: tenant.id
-            })
+              tenant: tenant.id,
+            }),
           });
           $location.path('/tenants');
         } else {
           const {
             response: {
-              body: {message}
-            }
+              body: {message},
+            },
           } = err;
           Notifications.addError({
             status: $translate.instant('NOTIFICATIONS_STATUS_FAILED'),
             message: $translate.instant('TENANTS_CREATE_TENANT_FAILED', {
-              message
-            })
+              message,
+            }),
           });
         }
       });
     };
-  }
+  },
 ];
 
 module.exports = [
   '$routeProvider',
-  function($routeProvider) {
+  function ($routeProvider) {
     $routeProvider.when('/tenant-create', {
       template: template,
       controller: Controller,
-      authentication: 'required'
+      authentication: 'required',
     });
-  }
+  },
 ];

@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -390,7 +389,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
 
   @Test
   void testDecisionRequirementDefinitionTenantIdList() {
-    List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = Arrays.asList(
+    List<DecisionRequirementsDefinition> decisionRequirementsDefinitions = List.of(
         MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build(),
         MockProvider.createAnotherMockDecisionRequirementsDefinition());
     mockedQuery = createMockQuery(decisionRequirementsDefinitions);
@@ -438,7 +437,7 @@ public class DecisionRequirementsDefinitionRestServiceQueryTest extends Abstract
 
   @Test
   void testDecisionRequirementsDefinitionTenantIdIncludeDefinitionsWithoutTenantid() {
-    List<DecisionRequirementsDefinition> decisionDefinitions = Arrays.asList(
+    List<DecisionRequirementsDefinition> decisionDefinitions = List.of(
         MockProvider.mockDecisionRequirementsDefinition().tenantId(null).build(),
         MockProvider.mockDecisionRequirementsDefinition().tenantId(MockProvider.EXAMPLE_TENANT_ID).build());
     mockedQuery = createMockQuery(decisionDefinitions);

@@ -45,14 +45,14 @@ class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(0).getId(), processDefinitions.get(1).getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().list()).isEmpty();
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
 
     // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
   }
 
   @Test
@@ -64,14 +64,14 @@ class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(0).getId(), processDefinitions.get(1).getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().list()).isEmpty();
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
 
     // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(managementService.createJobQuery().count()).isOne();
   }
 
   @Test
@@ -83,14 +83,14 @@ class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(0).getId(), processDefinitions.get(1).getId());
 
     assertThat(repositoryService.createProcessDefinitionQuery().list()).isEmpty();
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
 
     // then
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
   }
 
   @Test
@@ -105,15 +105,15 @@ class DeleteProcessDefinitionTest extends ConcurrencyTestCase {
 
     deleteProcessDefinitionsSimultaneously(processDefinitions.get(1).getId(), processDefinitions.get(2).getId());
 
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when
     repositoryService.createDeployment().addClasspathResource(resource).deploy();
 
     // then
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(2);
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
   }
 
   @Test

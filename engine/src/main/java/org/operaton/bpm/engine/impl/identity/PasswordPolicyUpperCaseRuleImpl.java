@@ -42,7 +42,7 @@ public class PasswordPolicyUpperCaseRuleImpl implements PasswordPolicyRule {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameter = new HashMap<>();
-    parameter.put("minUpperCase", "" + this.minUpperCase);
+    parameter.put("minUpperCase", String.valueOf(this.minUpperCase));
     return parameter;
   }
 

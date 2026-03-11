@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Tom Baeyens
@@ -32,14 +32,14 @@ class NoDbConnectionTest {
 
   @Test
   void testNoDbConnection() {
+    // given
     var processEngineConfiguration = ProcessEngineConfiguration
         .createProcessEngineConfigurationFromResource("org/operaton/bpm/engine/test/standalone/initialization/nodbconnection.operaton.cfg.xml");
-    try {
-      processEngineConfiguration.buildProcessEngine();
-      fail("expected exception");
-    } catch (RuntimeException e) {
-      assertThat(containsSqlException(e)).isTrue();
-    }
+
+    // when/then
+    assertThatThrownBy(processEngineConfiguration::buildProcessEngine)
+      .isInstanceOf(RuntimeException.class)
+      .satisfies(e -> assertThat(containsSqlException(e)).isTrue());
   }
 
   private boolean containsSqlException(Throwable e) {

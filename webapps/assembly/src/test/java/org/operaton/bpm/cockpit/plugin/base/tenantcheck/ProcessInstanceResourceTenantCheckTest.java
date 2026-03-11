@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.cockpit.plugin.base.tenantcheck;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -79,7 +78,7 @@ class ProcessInstanceResourceTenantCheckTest extends AbstractCockpitPluginTest {
   @Test
   void getCalledProcessInstancesByParentProcessInstanceIdWithAuthenticatedTenant() {
 
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE));
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
     assertThat(result).isNotEmpty().hasSize(1);

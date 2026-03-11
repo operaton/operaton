@@ -21,13 +21,13 @@ var template = require('./cam-share-link.html?raw');
 
 module.exports = [
   '$location',
-  function($location) {
+  function ($location) {
     return {
       restrict: 'A',
       template: template,
-      link: function($scope) {
+      link: function ($scope) {
         $scope.getLink = $location.absUrl.bind($location);
-      }
+      },
     };
-  }
+  },
 ];

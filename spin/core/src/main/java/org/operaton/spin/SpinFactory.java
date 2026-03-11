@@ -16,7 +16,8 @@
  */
 package org.operaton.spin;
 
-import org.operaton.spin.impl.SpinFactoryImpl;
+
+import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.spin.spi.DataFormat;
 
 /**
@@ -24,15 +25,18 @@ import org.operaton.spin.spi.DataFormat;
  * @author Sebastian Menski
  * @author Daniel Meyer
  */
+@SuppressWarnings({"java:S5738", "java:S1133", "java:S1135", "java:S6548"})
 public abstract class SpinFactory {
-
+  // TODO Convert to interface and remove the INSTANCE field. Both are breaking changes.
   /**
    * The singleton instance of the SpinFactory.
+   * @deprecated since 1.1, use {@code ServiceLoaderUtil#loadSingleService(SpinFactory.class)} instead.
    */
+  @Deprecated(since = "1.1", forRemoval = true)
   public static final SpinFactory INSTANCE;
+
   static {
-    // use the default implementation
-    INSTANCE = new SpinFactoryImpl();
+    INSTANCE = ServiceLoaderUtil.loadSingleService(SpinFactory.class);
   }
 
   public abstract <T extends Spin<?>> T createSpin(Object parameter);

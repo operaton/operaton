@@ -35,12 +35,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.engine.variable.Variables;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
  *
  */
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class MultiTenancyMigrationTenantProviderTest {
 
   protected static final String TENANT_ONE = "tenant1";
@@ -65,18 +66,14 @@ class MultiTenancyMigrationTenantProviderTest {
     MigrationPlan migrationPlan = engineRule.getRuntimeService().createMigrationPlan(sharedDefinition.getId(), tenantDefinition.getId())
         .mapEqualActivities()
         .build();
-    var runtimeService = engineRule.getRuntimeService()
+    var migrationBuilder = engineRule.getRuntimeService()
         .newMigration(migrationPlan)
         .processInstanceIds(List.of(processInstance.getId()));
 
-    // when
-    try {
-      runtimeService.execute();
-      fail("exception expected");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("Cannot migrate process instance '" + processInstance.getId() + "' "
-              + "to a process definition of a different tenant ('tenant1' != 'tenant2')");
-    }
+    // when/then
+    assertThatThrownBy(migrationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("Cannot migrate process instance '%s' to a process definition of a different tenant ('tenant1' != 'tenant2')".formatted(processInstance.getId()));
 
     // then
     assertThat(migrationPlan).isNotNull();
@@ -161,10 +158,10 @@ class MultiTenancyMigrationTenantProviderTest {
 
   protected void assertInstanceOfDefinition(ProcessInstance processInstance, ProcessDefinition targetDefinition) {
     assertThat(engineRule.getRuntimeService()
-        .createProcessInstanceQuery()
-        .processInstanceId(processInstance.getId())
-        .processDefinitionId(targetDefinition.getId())
-        .count()).isEqualTo(1);
+      .createProcessInstanceQuery()
+      .processInstanceId(processInstance.getId())
+      .processDefinitionId(targetDefinition.getId())
+      .count()).isOne();
   }
 
   protected ProcessInstance startInstanceForTenant(ProcessDefinition processDefinition, String tenantId) {

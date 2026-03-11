@@ -63,7 +63,7 @@ public class HistoricDetailResourceImpl extends AbstractResourceProvider<Histori
   @Override
   protected TypedValue transformQueryResultIntoTypedValue(HistoricDetail queryResult) {
     if (!(queryResult instanceof HistoricVariableUpdate update)) {
-      throw new InvalidRequestException(Status.BAD_REQUEST, "Historic detail with Id '" + getId() + "' is not a variable update.");
+      throw new InvalidRequestException(Status.BAD_REQUEST, "Historic detail with Id '%s' is not a variable update.".formatted(getId()));
     }
     return update.getTypedValue();
   }

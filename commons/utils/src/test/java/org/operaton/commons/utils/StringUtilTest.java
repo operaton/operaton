@@ -16,7 +16,12 @@
  */
 package org.operaton.commons.utils;
 
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import static org.operaton.commons.utils.StringUtil.defaultString;
 import static org.operaton.commons.utils.StringUtil.getStackTrace;
@@ -24,6 +29,7 @@ import static org.operaton.commons.utils.StringUtil.isExpression;
 import static org.operaton.commons.utils.StringUtil.join;
 import static org.operaton.commons.utils.StringUtil.split;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 /**
  * @author Sebastian Menski
@@ -76,6 +82,24 @@ class StringUtilTest {
     assertThat(defaultString(null)).isEmpty();
     assertThat(defaultString("")).isEmpty();
     assertThat(defaultString("bat")).isEqualTo("bat");
+  }
+
+  @ParameterizedTest
+  @MethodSource("sanitizeString_args")
+  void sanitizeString(String input, String expected) {
+    assertThat(StringUtil.sanitize(input)).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> sanitizeString_args () {
+    return Stream.of(
+      arguments(null, "(null)"),
+      arguments("", ""),
+      arguments("Hello World!", "Hello World!"),
+      arguments("Hello\nWorld!", "Hello\\nWorld!"),
+      arguments("Hello\rWorld!", "Hello\\rWorld!"),
+      arguments("Hello\r\nWorld!", "Hello\\r\\nWorld!"),
+      arguments("Hello\tWorld!", "Hello\\tWorld!")
+    );
   }
 
   @Test

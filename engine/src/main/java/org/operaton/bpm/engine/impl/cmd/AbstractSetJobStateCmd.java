@@ -58,59 +58,66 @@ public abstract class AbstractSetJobStateCmd extends AbstractSetStateCmd {
 
   @Override
   protected void checkAuthorization(CommandContext commandContext) {
-
     for(CommandChecker checker : commandContext.getProcessEngineConfiguration().getCommandCheckers()) {
       if (jobId != null) {
-
-        JobManager jobManager = commandContext.getJobManager();
-        JobEntity job = jobManager.findJobById(jobId);
-
-        if (job != null) {
-
-          String instanceId = job.getProcessInstanceId();
-          if (instanceId != null) {
-            checker.checkUpdateProcessInstanceById(instanceId);
-          }
-          else {
-            // start timer job is not assigned to a specific process
-            // instance, that's why we have to check whether there
-            // exists a UPDATE_INSTANCES permission on process definition or
-            // a UPDATE permission on any process instance
-            String definitionKey = job.getProcessDefinitionKey();
-            if (definitionKey != null) {
-              checker.checkUpdateProcessInstanceByProcessDefinitionKey(definitionKey);
-            }
-          }
-          // if (processInstanceId == null && processDefinitionKey == null):
-          // job is not assigned to any process instance nor process definition
-          // then it is always possible to activate/suspend the corresponding job
-          // -> no authorization check necessary
-        }
-      } else
-
-      if (jobDefinitionId != null) {
-
-        JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
-        JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
-
-        if (jobDefinition != null) {
-          checker.checkUpdateProcessInstanceByProcessDefinitionKey(jobDefinition.getProcessDefinitionKey());
-        }
-
-      } else
-
-      if (processInstanceId != null) {
-        checker.checkUpdateProcessInstanceById(processInstanceId);
-      } else
-
-      if (processDefinitionId != null) {
-        checker.checkUpdateProcessInstanceByProcessDefinitionId(processDefinitionId);
-      } else
-
-      if (processDefinitionKey != null) {
-        checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
+        checkJobIdAuthorization(commandContext, checker);
+      } else if (jobDefinitionId != null) {
+        checkJobDefinitionIdAuthorization(commandContext, checker);
+      } else if (processInstanceId != null) {
+        checkProcessInstanceIdAuthorization(checker);
+      } else if (processDefinitionId != null) {
+        checkProcessDefinitionIdAuthorization(checker);
+      } else if (processDefinitionKey != null) {
+        checkProcessDefinitionKeyAuthorization(checker);
       }
     }
+  }
+
+  protected void checkJobIdAuthorization(CommandContext commandContext, CommandChecker checker) {
+    JobManager jobManager = commandContext.getJobManager();
+    JobEntity job = jobManager.findJobById(jobId);
+
+    if (job != null) {
+
+      String instanceId = job.getProcessInstanceId();
+      if (instanceId != null) {
+        checker.checkUpdateProcessInstanceById(instanceId);
+      }
+      else {
+        // start timer job is not assigned to a specific process
+        // instance, that's why we have to check whether there
+        // exists a UPDATE_INSTANCES permission on process definition or
+        // a UPDATE permission on any process instance
+        String definitionKey = job.getProcessDefinitionKey();
+        if (definitionKey != null) {
+          checker.checkUpdateProcessInstanceByProcessDefinitionKey(definitionKey);
+        }
+      }
+      // when the job is not assigned to any process instance nor process definition
+      // then it is always possible to activate/suspend the corresponding job
+      // -> no authorization check necessary
+    }
+  }
+
+  protected void checkJobDefinitionIdAuthorization(CommandContext commandContext, CommandChecker checker) {
+    JobDefinitionManager jobDefinitionManager = commandContext.getJobDefinitionManager();
+    JobDefinitionEntity jobDefinition = jobDefinitionManager.findById(jobDefinitionId);
+
+    if (jobDefinition != null) {
+      checker.checkUpdateProcessInstanceByProcessDefinitionKey(jobDefinition.getProcessDefinitionKey());
+    }
+  }
+
+  protected void checkProcessInstanceIdAuthorization(CommandChecker checker) {
+    checker.checkUpdateProcessInstanceById(processInstanceId);
+  }
+
+  protected void checkProcessDefinitionIdAuthorization(CommandChecker checker) {
+    checker.checkUpdateProcessInstanceByProcessDefinitionId(processDefinitionId);
+  }
+
+  protected void checkProcessDefinitionKeyAuthorization(CommandChecker checker) {
+    checker.checkUpdateProcessInstanceByProcessDefinitionKey(processDefinitionKey);
   }
 
   @Override

@@ -144,7 +144,7 @@ class HistoricBatchQueryAuthorizationTest {
     authRule.disableAuthorization();
 
     // then
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
   @Test

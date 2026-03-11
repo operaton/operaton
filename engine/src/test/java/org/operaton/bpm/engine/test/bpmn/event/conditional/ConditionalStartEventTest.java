@@ -254,7 +254,7 @@ class ConditionalStartEventTest {
     String processDefId8 = deployProcess(ONE_TASK_PROCESS);
 
     // assume
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
 
     // when
     repositoryService.deleteProcessDefinitions()
@@ -268,7 +268,7 @@ class ConditionalStartEventTest {
       EventSubscriptionEntity eventSubscriptionEntity = (EventSubscriptionEntity) eventSubscription;
       if (!eventSubscriptionEntity.getConfiguration().equals(processDefId1)
        && !eventSubscriptionEntity.getConfiguration().equals(processDefId5)) {
-        fail("This process definition '" + eventSubscriptionEntity.getConfiguration() + "' and the respective event subscription should not exist.");
+        fail("This process definition '%s' and the respective event subscription should not exist.".formatted(eventSubscriptionEntity.getConfiguration()));
       }
     }
   }
@@ -383,7 +383,7 @@ class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
@@ -400,7 +400,7 @@ class ConditionalStartEventTest {
         .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
@@ -420,7 +420,7 @@ class ConditionalStartEventTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId3);
   }
 
@@ -440,23 +440,22 @@ class ConditionalStartEventTest {
       .delete();
 
     // then
-    assertThat(runtimeService.createEventSubscriptionQuery().count()).isEqualTo(1);
+    assertThat(runtimeService.createEventSubscriptionQuery().count()).isOne();
     assertThat(((EventSubscriptionEntity) runtimeService.createEventSubscriptionQuery().singleResult()).getConfiguration()).isEqualTo(definitionId1);
   }
 
   @Test
   void testDeploymentOfTwoEqualConditionalStartEvent() {
-    try {
-      // when
-      testRule.deploy(TWO_EQUAL_CONDITIONAL_START_EVENT_XML);
-      fail("Expected exception");
-    } catch (ParseException e) {
-      // then
-      assertThat(e.getMessage()).contains("Cannot have more than one conditional event subscription with the same condition '${variable == 1}'");
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
-      List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
-      assertThat(eventSubscriptions).isEmpty();
-    }
+    // when/then
+    assertThatThrownBy(() -> testRule.deploy(TWO_EQUAL_CONDITIONAL_START_EVENT_XML))
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Cannot have more than one conditional event subscription with the same condition '${variable == 1}'")
+      .satisfies(e -> {
+        var parseException = (ParseException) e;
+        assertThat(parseException.getResourceReports().get(0).getErrors().get(0).getMainElementId()).isEqualTo("StartEvent_2");
+        List<EventSubscription> eventSubscriptions = runtimeService.createEventSubscriptionQuery().list();
+        assertThat(eventSubscriptions).isEmpty();
+      });
   }
 
   @Test
@@ -712,7 +711,7 @@ class ConditionalStartEventTest {
     // when/then
     assertThatThrownBy(conditionEvaluationBuilder::evaluateStartConditions)
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Process definition with id '" + processDefinitionId + "' does not declare conditional start event");
+      .hasMessageContaining("Process definition with id '%s' does not declare conditional start event".formatted(processDefinitionId));
   }
 
   @Test

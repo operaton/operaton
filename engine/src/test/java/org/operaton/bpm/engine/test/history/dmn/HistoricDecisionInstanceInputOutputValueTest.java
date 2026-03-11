@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.test.history.dmn;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -56,7 +55,7 @@ public class HistoricDecisionInstanceInputOutputValueTest {
 
   @Parameters(name = "input({0}) = {1}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
       { "string", "a" },
       { "long", 1L },
       { "double", 2.5 },

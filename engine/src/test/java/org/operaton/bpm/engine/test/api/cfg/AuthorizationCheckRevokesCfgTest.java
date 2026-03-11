@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.cfg;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,7 +51,7 @@ import static org.mockito.Mockito.when;
  */
 class AuthorizationCheckRevokesCfgTest {
 
-  private static final List<String> AUTHENTICATED_GROUPS = Arrays.asList("aGroup");
+  private static final List<String> AUTHENTICATED_GROUPS = List.of("aGroup");
   private static final String AUTHENTICATED_USER_ID = "userId";
 
   CommandContext mockedCmdContext;

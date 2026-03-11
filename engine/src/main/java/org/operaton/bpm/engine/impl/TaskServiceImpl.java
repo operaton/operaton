@@ -436,6 +436,7 @@ public class TaskServiceImpl extends ServiceImpl implements TaskService {
   }
 
   @Override
+  @SuppressWarnings("java:S5738")
   public List<Event> getTaskEvents(String taskId) {
     return commandExecutor.execute(new GetTaskEventsCmd(taskId));
   }

@@ -29,8 +29,7 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Ronny Bräunlich
@@ -45,23 +44,19 @@ class ServiceTaskExpressionActivityBehaviorTest {
   @Deployment
   @Test
   void testExceptionThrownBySecondScopeServiceTaskIsNotHandled(){
+    // given
     Map<Object, Object> beans = processEngineConfiguration.getBeans();
     beans.put("dummyServiceTask", new DummyServiceTask());
     processEngineConfiguration.setBeans(beans);
     var variables = Collections.<String, Object>singletonMap("count", 0);
 
-    try{
-      runtimeService.startProcessInstanceByKey("process", variables);
-      fail("");
-      // the EL resolver will wrap the actual exception inside a process engine exception
-    }
-    //since the NVE extends the ProcessEngineException we have to handle it separately
-    catch(NullValueException nve){
-      fail("Shouldn't have received NullValueException");
-    }
-    catch(ProcessEngineException e){
-      assertThat(e.getMessage()).contains("Invalid format");
-    }
+    // when/then
+    // the EL resolver will wrap the actual exception inside a process engine exception
+    // since the NVE extends the ProcessEngineException we have to handle it separately
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process", variables))
+      .isInstanceOf(ProcessEngineException.class)
+      .isNotInstanceOf(NullValueException.class)
+      .hasMessageContaining("Invalid format");
   }
 
 }

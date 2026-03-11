@@ -22,11 +22,11 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 @ExtendWith(ArquillianExtension.class)
 public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {
@@ -57,15 +57,10 @@ public class SpinJsonPathTest extends AbstractFoxPlatformIntegrationTest {
         "   ]" +
         "}";
 
-    try {
-      // when
-      runtimeService.startProcessInstanceByKey("jsonpath-process",
-          Variables.createVariables().putValue("data", json));
-
-    } catch (ProcessEngineException e) {
-      fail(e.getMessage());
-
-    } // then: no exception thrown
+    // when/then
+    VariableMap variables = Variables.createVariables().putValue("data", json);
+    assertThatCode(() -> runtimeService.startProcessInstanceByKey("jsonpath-process", variables))
+      .doesNotThrowAnyException();
   }
 
 }

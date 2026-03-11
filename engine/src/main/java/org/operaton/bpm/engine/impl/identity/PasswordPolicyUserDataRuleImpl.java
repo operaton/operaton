@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.identity;
 
-import java.util.Map;
-
 import org.operaton.bpm.engine.identity.PasswordPolicyRule;
 import org.operaton.bpm.engine.identity.User;
 
@@ -28,11 +26,6 @@ public class PasswordPolicyUserDataRuleImpl implements PasswordPolicyRule {
   @Override
   public String getPlaceholder() {
     return PasswordPolicyUserDataRuleImpl.PLACEHOLDER;
-  }
-
-  @Override
-  public Map<String, String> getParameters() {
-    return null;
   }
 
   @Override

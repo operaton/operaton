@@ -50,7 +50,7 @@ class DeploymentAutoHistoryTest {
          .deployWithResult();
 
      long count = engineRule.getRepositoryService().createDeploymentQuery().count();
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
      engineRule.getRepositoryService().deleteDeployment(deployment.getId(), true);
   }
 

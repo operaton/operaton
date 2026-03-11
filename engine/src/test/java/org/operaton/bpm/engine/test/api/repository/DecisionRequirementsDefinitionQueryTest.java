@@ -67,7 +67,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionId("notExisting").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionId(decisionRequirementsDefinitionId).count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionId(decisionRequirementsDefinitionId).count()).isOne();
     assertThat(query.singleResult().getKey()).isEqualTo("score");
   }
 
@@ -77,7 +77,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionIdIn("not", "existing").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionIdIn(decisionRequirementsDefinitionId, "notExisting").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionIdIn(decisionRequirementsDefinitionId, "notExisting").count()).isOne();
     assertThat(query.singleResult().getKey()).isEqualTo("score");
   }
 
@@ -87,7 +87,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionKey("notExisting").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionKey("score").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionKey("score").count()).isOne();
     assertThat(query.singleResult().getKey()).isEqualTo("score");
   }
 
@@ -97,7 +97,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionKeyLike("%notExisting%").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionKeyLike("%sco%").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionKeyLike("%sco%").count()).isOne();
     assertThat(query.decisionRequirementsDefinitionKeyLike("%dis%").count()).isEqualTo(2L);
     assertThat(query.decisionRequirementsDefinitionKeyLike("%s%").count()).isEqualTo(3L);
   }
@@ -108,7 +108,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionName("notExisting").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionName("Score").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionName("Score").count()).isOne();
     assertThat(query.singleResult().getKey()).isEqualTo("score");
   }
 
@@ -118,7 +118,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionNameLike("%notExisting%").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionNameLike("%Sco%").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionNameLike("%Sco%").count()).isOne();
     assertThat(query.decisionRequirementsDefinitionNameLike("%ish%").count()).isEqualTo(2L);
   }
 
@@ -128,7 +128,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionCategory("notExisting").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionCategory("test-drd-1").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionCategory("test-drd-1").count()).isOne();
     assertThat(query.singleResult().getKey()).isEqualTo("score");
   }
 
@@ -140,7 +140,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionCategoryLike("%test%").count()).isEqualTo(3L);
 
-    assertThat(query.decisionRequirementsDefinitionCategoryLike("%z\\_").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionCategoryLike("%z\\_").count()).isOne();
   }
 
   @Test
@@ -149,7 +149,7 @@ class DecisionRequirementsDefinitionQueryTest {
 
     assertThat(query.decisionRequirementsDefinitionResourceName("notExisting").count()).isZero();
 
-    assertThat(query.decisionRequirementsDefinitionResourceName(DRD_SCORE_RESOURCE).count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionResourceName(DRD_SCORE_RESOURCE).count()).isOne();
     assertThat(query.singleResult().getKey()).isEqualTo("score");
   }
 
@@ -166,7 +166,7 @@ class DecisionRequirementsDefinitionQueryTest {
   void queryByResourceNameLikeEscape() {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
-    assertThat(query.decisionRequirementsDefinitionResourceNameLike("%z\\_.%").count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionResourceNameLike("%z\\_.%").count()).isOne();
   }
 
   @Test
@@ -174,7 +174,7 @@ class DecisionRequirementsDefinitionQueryTest {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.decisionRequirementsDefinitionVersion(1).count()).isEqualTo(3L);
-    assertThat(query.decisionRequirementsDefinitionVersion(2).count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionVersion(2).count()).isOne();
     assertThat(query.decisionRequirementsDefinitionVersion(3).count()).isZero();
   }
 
@@ -183,7 +183,7 @@ class DecisionRequirementsDefinitionQueryTest {
     DecisionRequirementsDefinitionQuery query = repositoryService.createDecisionRequirementsDefinitionQuery();
 
     assertThat(query.latestVersion().count()).isEqualTo(3L);
-    assertThat(query.decisionRequirementsDefinitionKey("score").latestVersion().count()).isEqualTo(1L);
+    assertThat(query.decisionRequirementsDefinitionKey("score").latestVersion().count()).isOne();
   }
 
   @Test
@@ -193,7 +193,7 @@ class DecisionRequirementsDefinitionQueryTest {
     assertThat(query.deploymentId("notExisting").count()).isZero();
 
     assertThat(query.deploymentId(firstDeploymentId).count()).isEqualTo(2L);
-    assertThat(query.deploymentId(secondDeploymentId).count()).isEqualTo(1L);
+    assertThat(query.deploymentId(secondDeploymentId).count()).isOne();
   }
 
   @Test

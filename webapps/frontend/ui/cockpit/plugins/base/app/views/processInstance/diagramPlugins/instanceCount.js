@@ -22,7 +22,7 @@ var instanceCount = require('../../common/diagramPlugins/instanceCount');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView(
       'cockpit.processInstance.diagram.plugin',
       {
@@ -36,7 +36,7 @@ module.exports = [
           '$filter',
           '$rootScope',
           '$translate',
-          function(
+          function (
             $scope,
             control,
             processData,
@@ -44,13 +44,13 @@ module.exports = [
             Loaders,
             $filter,
             $rootScope,
-            $translate
+            $translate,
           ) {
             var callbacks = {
               observe: observe,
               getData: getInstancesCountsForElement,
               updateOverlayNodes: updateOverlayNodes,
-              isActive: isActive
+              isActive: isActive,
             };
 
             instanceCount(
@@ -60,7 +60,7 @@ module.exports = [
               processDiagram,
               Loaders,
               $rootScope,
-              callbacks
+              callbacks,
             );
 
             function isActive(data) {
@@ -70,27 +70,27 @@ module.exports = [
             function observe(callback) {
               processData.observe(
                 ['activityIdToInstancesMap', 'activityIdToIncidentIdMap'],
-                function(activityIdToInstancesMap, activityIdToIncidentIdMap) {
+                function (activityIdToInstancesMap, activityIdToIncidentIdMap) {
                   callback([
                     activityIdToInstancesMap,
-                    activityIdToIncidentIdMap
+                    activityIdToIncidentIdMap,
                   ]);
-                }
+                },
               );
             }
 
             function getInstancesCountsForElement(
               element,
               activityIdToInstancesMap,
-              activityIdToIncidentsMap
+              activityIdToIncidentsMap,
             ) {
               var activityId = element.id;
 
               var instances = angular.copy(
-                activityIdToInstancesMap[activityId] || []
+                activityIdToInstancesMap[activityId] || [],
               );
               var incidents = angular.copy(
-                activityIdToIncidentsMap[activityId] || []
+                activityIdToIncidentsMap[activityId] || [],
               );
               var instancesMI =
                 activityIdToInstancesMap[activityId + '#multiInstanceBody'] ||
@@ -104,10 +104,10 @@ module.exports = [
               return {
                 instanceCount: getInstanceCount({
                   instances: instances,
-                  instancesMI: instancesMI
+                  instancesMI: instancesMI,
                 }),
                 incidents: incidents.length || incidentsMI.length,
-                multiInstance: multiInstance
+                multiInstance: multiInstance,
               };
             }
 
@@ -120,7 +120,7 @@ module.exports = [
 
               if (data.instancesMI) {
                 count +=
-                  data.instancesMI.filter(function(instance) {
+                  data.instancesMI.filter(function (instance) {
                     return instance.isTransitionInstance;
                   }).length || 0;
               }
@@ -130,13 +130,13 @@ module.exports = [
 
             function updateOverlayNodes(nodes, data) {
               nodes.instancesNode.text(
-                $filter('abbreviateNumber')(data.instanceCount)
+                $filter('abbreviateNumber')(data.instanceCount),
               );
 
               nodes.incidentsNode.text(
                 $filter('abbreviateNumber')(
-                  data.incidents || data.childIncidents
-                )
+                  data.incidents || data.childIncidents,
+                ),
               );
 
               if (data.instanceCount <= 0) {
@@ -146,10 +146,10 @@ module.exports = [
                 nodes.instancesNode.tooltip({
                   container: 'body',
                   title: $translate.instant(
-                    'PLUGIN_ACTIVITY_INSTANCE_RUNNING_ACTIVITY_INSTANCES'
+                    'PLUGIN_ACTIVITY_INSTANCE_RUNNING_ACTIVITY_INSTANCES',
                   ),
                   placement: 'top',
-                  animation: false
+                  animation: false,
                 });
               }
 
@@ -160,16 +160,16 @@ module.exports = [
                 nodes.incidentsNode.tooltip({
                   container: 'body',
                   title: $translate.instant(
-                    'PLUGIN_ACTIVITY_INSTANCE_OPEN_INCIDENTS'
+                    'PLUGIN_ACTIVITY_INSTANCE_OPEN_INCIDENTS',
                   ),
                   placement: 'top',
-                  animation: false
+                  animation: false,
                 });
               }
             }
-          }
-        ]
-      }
+          },
+        ],
+      },
     );
-  }
+  },
 ];

@@ -47,14 +47,14 @@ public class FailedJobCommandTest extends AbstractFoxPlatformIntegrationTest {
     runtimeService.startProcessInstanceByKey("theProcess");
     Supplier<JobQuery> createQuery = () -> managementService.createJobQuery().processDefinitionKey("theProcess");
 
-    assertThat(createQuery.get().withRetriesLeft().count()).isEqualTo(1);
+    assertThat(createQuery.get().withRetriesLeft().count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 
     // now the retries = 0
 
     assertThat(createQuery.get().withRetriesLeft().count()).isZero();
-    assertThat(createQuery.get().noRetriesLeft().count()).isEqualTo(1);
+    assertThat(createQuery.get().noRetriesLeft().count()).isOne();
 
   }
 

@@ -16,15 +16,10 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -32,7 +27,6 @@ import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
 import org.operaton.bpm.engine.impl.db.DbEntity;
 import org.operaton.bpm.engine.impl.el.ExpressionManager;
-import org.operaton.bpm.engine.runtime.ProcessElementInstance;
 
 /**
  * @author Sebastian Menski
@@ -51,9 +45,10 @@ public final class StringUtil {
 
   /**
    * Checks whether a {@link String} seams to be an expression or not
-   *
+   * <p>
    * Note: In most cases you should check for composite expressions. See
    * {@link #isCompositeExpression(String, ExpressionManager)} for more information.
+   * </p>
    *
    * @param text the text to check
    * @return true if the text seams to be an expression false otherwise
@@ -67,10 +62,10 @@ public final class StringUtil {
    * Checks whether a {@link String} seams to be a composite expression or not. In contrast to an eval expression
    * is the composite expression also allowed to consist of a combination of literal and eval expressions, e.g.,
    * "Welcome ${customer.name} to our site".
-   *
+   * <p>
    * Note: If you just want to allow eval expression, then the expression must always start with "#{" or "${".
    * Use {@link #isExpression(String)} to conduct these kind of checks.
-   *
+   * </p>
    */
   public static boolean isCompositeExpression(String text, ExpressionManager expressionManager) {
     return !expressionManager.createExpression(text).isLiteralText();
@@ -78,7 +73,7 @@ public final class StringUtil {
 
   public static String[] split(String text, String regex) {
     if (text == null) {
-      return null;
+      return new String[0];
     }
     else if (regex == null) {
       return new String[] { text };
@@ -113,7 +108,9 @@ public final class StringUtil {
   public static String fromBytes(byte[] bytes) {
     EnsureUtil.ensureActiveCommandContext("StringUtil.fromBytes");
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    return fromBytes(bytes, processEngineConfiguration.getProcessEngine());
+    ProcessEngineImpl processEngine = processEngineConfiguration.getProcessEngine();
+    Objects.requireNonNull(processEngine);
+    return fromBytes(bytes, processEngine);
   }
 
   /**
@@ -128,24 +125,8 @@ public final class StringUtil {
   public static String fromBytes(byte[] bytes, ProcessEngine processEngine) {
     ProcessEngineConfigurationImpl processEngineConfiguration = ((ProcessEngineImpl) processEngine).getProcessEngineConfiguration();
     Charset charset = processEngineConfiguration.getDefaultCharset();
-    return bytes != null ? new String(bytes, charset) : new String();
+    return bytes != null ? new String(bytes, charset) : "";
   }
-
-  public static Reader readerFromBytes(byte[] bytes) {
-    EnsureUtil.ensureActiveCommandContext("StringUtil.readerFromBytes");
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    ByteArrayInputStream inputStream = new ByteArrayInputStream(bytes);
-
-    return new InputStreamReader(inputStream, processEngineConfiguration.getDefaultCharset());
-  }
-
-  public static Writer writerForStream(OutputStream outStream) {
-    EnsureUtil.ensureActiveCommandContext("StringUtil.readerFromBytes");
-    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-
-    return new OutputStreamWriter(outStream, processEngineConfiguration.getDefaultCharset());
-  }
-
 
   /**
    * Gets the bytes from a string using the current process engine's default charset
@@ -156,7 +137,9 @@ public final class StringUtil {
   public static byte[] toByteArray(String string) {
     EnsureUtil.ensureActiveCommandContext("StringUtil.toByteArray");
     ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
-    return toByteArray(string, processEngineConfiguration.getProcessEngine());
+    ProcessEngineImpl processEngine = processEngineConfiguration.getProcessEngine();
+    Objects.requireNonNull(processEngine);
+    return toByteArray(string, processEngine);
   }
 
   /**
@@ -187,16 +170,6 @@ public final class StringUtil {
 
   public static String joinDbEntityIds(Collection<? extends DbEntity> dbEntities) {
     return join(new StringIterator<DbEntity>(dbEntities.iterator()) {
-      @Override
-      public String next() {
-        return iterator.next().getId();
-      }
-    });
-  }
-
-  public static String joinProcessElementInstanceIds(Collection<? extends ProcessElementInstance> processElementInstances) {
-    final Iterator<? extends ProcessElementInstance> iterator = processElementInstances.iterator();
-    return join(new StringIterator<ProcessElementInstance>(iterator) {
       @Override
       public String next() {
         return iterator.next().getId();

@@ -38,7 +38,7 @@ import static org.operaton.bpm.engine.test.util.ActivityInstanceAssert.describeA
 import static org.operaton.bpm.engine.test.util.ExecutionAssert.describeExecutionTree;
 import static org.operaton.bpm.engine.test.util.MigrationPlanValidationReportAssert.assertThat;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Thorben Lindhauer
@@ -202,21 +202,21 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("subProcess"), miBodyOf("userTask"))
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures(miBodyOf("subProcess"),
-          "Cannot remove the inner activity of a multi-instance body when the body is mapped"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures(miBodyOf("subProcess"),
+            "Cannot remove the inner activity of a multi-instance body when the body is mapped"
+          );
+      });
   }
 
 
@@ -225,21 +225,21 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("userTask"), miBodyOf("subProcess"))
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures(miBodyOf("userTask"),
-          "Must map the inner activity of a multi-instance body when the body is mapped"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures(miBodyOf("userTask"),
+            "Must map the inner activity of a multi-instance body when the body is mapped"
+          );
+      });
   }
 
   @Test
@@ -350,21 +350,21 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_SUBPROCESS_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("subProcess"), miBodyOf("userTask"))
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures(miBodyOf("subProcess"),
-          "Cannot remove the inner activity of a multi-instance body when the body is mapped"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures(miBodyOf("subProcess"),
+            "Cannot remove the inner activity of a multi-instance body when the body is mapped"
+          );
+      });
   }
 
 
@@ -373,21 +373,21 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_SUBPROCESS_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("userTask"), miBodyOf("subProcess"))
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures(miBodyOf("userTask"),
-          "Must map the inner activity of a multi-instance body when the body is mapped"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures(miBodyOf("userTask"),
+            "Must map the inner activity of a multi-instance body when the body is mapped"
+          );
+      });
   }
 
   @Test
@@ -395,22 +395,22 @@ public class MigrationMultiInstanceTest {
     // given
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.PAR_MI_ONE_TASK_PROCESS);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(MultiInstanceProcessModels.SEQ_MI_ONE_TASK_PROCESS);
-    var runtimeService = rule.getRuntimeService()
+    var migrationPlanBuilder = rule.getRuntimeService()
       .createMigrationPlan(sourceProcessDefinition.getId(), targetProcessDefinition.getId())
       .mapActivities(miBodyOf("userTask"), miBodyOf("userTask"))
       .mapActivities("userTask", "userTask");
 
-    try {
-      runtimeService.build();
-      fail("Should not succeed");
-    }
-    catch (MigrationPlanValidationException e) {
-      assertThat(e.getValidationReport())
-        .hasInstructionFailures(miBodyOf("userTask"),
-          "Activities have incompatible types (ParallelMultiInstanceActivityBehavior is not "
-          + "compatible with SequentialMultiInstanceActivityBehavior)"
-        );
-    }
+    // when then
+    assertThatThrownBy(migrationPlanBuilder::build)
+      .isInstanceOf(MigrationPlanValidationException.class)
+      .satisfies(e -> {
+        MigrationPlanValidationException ex = (MigrationPlanValidationException) e;
+        assertThat(ex.getValidationReport())
+          .hasInstructionFailures(miBodyOf("userTask"),
+            "Activities have incompatible types (ParallelMultiInstanceActivityBehavior is not "
+            + "compatible with SequentialMultiInstanceActivityBehavior)"
+          );
+      });
   }
 
   protected String miBodyOf(String activityId) {

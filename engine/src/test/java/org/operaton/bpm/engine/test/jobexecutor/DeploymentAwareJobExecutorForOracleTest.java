@@ -21,12 +21,16 @@ import java.util.List;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.impl.Page;
 import org.operaton.bpm.engine.impl.persistence.entity.AcquirableJobEntity;
 import org.operaton.bpm.engine.test.api.runtime.migration.models.ProcessModels;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class DeploymentAwareJobExecutorForOracleTest {
 
@@ -44,7 +48,7 @@ class DeploymentAwareJobExecutorForOracleTest {
     Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
 
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   @Test
@@ -54,43 +58,20 @@ class DeploymentAwareJobExecutorForOracleTest {
     // when
     testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
-  @Test
-  void testFindAcquirableJobsWhen1000InstancesDeployed() {
+  @ParameterizedTest
+  @ValueSource(ints = {1000, 1001, 2000})
+  void testFindAcquirableJobsWhenNInstancesDeployed(int instanceCount) {
     // given
     Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
     // when
-    for (int i=0; i<1000; i++) {
+    for (int i=0; i<instanceCount; i++) {
       testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
     }
     // then
-    findAcquirableJobs();
-  }
-
-  @Test
-  void testFindAcquirableJobsWhen1001InstancesDeployed() {
-    // given
-    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    // when
-    for (int i=0; i<1001; i++) {
-      testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
-    }
-    // then
-    findAcquirableJobs();
-  }
-
-  @Test
-  void testFindAcquirableJobsWhen2000InstancesDeployed() {
-    // given
-    Assumptions.assumeTrue("oracle".equals(engineRule.getProcessEngineConfiguration().getDatabaseType()));
-    // when
-    for (int i=0; i<2000; i++) {
-      testRule.deploy(ProcessModels.ONE_TASK_PROCESS);
-    }
-    // then
-    findAcquirableJobs();
+    assertThatCode(this::findAcquirableJobs).doesNotThrowAnyException();
   }
 
   protected List<AcquirableJobEntity> findAcquirableJobs() {

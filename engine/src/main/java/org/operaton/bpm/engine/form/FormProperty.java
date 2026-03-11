@@ -22,6 +22,9 @@ import org.operaton.bpm.engine.FormService;
 /**
  * Represents a single property on a form.
  *
+ * @deprecated since 1.0, form properties are deprecated. Use {@link FormField} instead,
+ *             which provides a more flexible and type-safe form field API.
+ *
  * @author Tom Baeyens
  */
 @Deprecated(since = "1.0")

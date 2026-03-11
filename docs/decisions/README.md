@@ -55,7 +55,7 @@ Examples:
 ADRs can have different statuses that indicate their current state:
 
 | Status | Meaning |
-|------------|--------------------------------------------------------|
+| ------------ | -------------------------------------------------------- |
 | Proposed | Under discussion; not yet approved |
 | Accepted | Decision finalized and agreed upon |
 | Rejected | Considered but not adopted |

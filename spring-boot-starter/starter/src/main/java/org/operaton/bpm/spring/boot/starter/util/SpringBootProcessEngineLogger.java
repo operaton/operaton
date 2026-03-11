@@ -24,6 +24,7 @@ import org.springframework.core.io.Resource;
 
 import org.operaton.bpm.engine.filter.Filter;
 import org.operaton.bpm.engine.identity.User;
+import org.operaton.bpm.engine.impl.history.handler.HistoryEventHandler;
 import org.operaton.bpm.spring.boot.starter.property.GenericProperties;
 import org.operaton.commons.logging.BaseLogger;
 
@@ -82,4 +83,19 @@ public class SpringBootProcessEngineLogger extends BaseLogger {
     logDebug("051", "Properties bound to configuration: {}", genericProperties);
   }
 
+  public void ignoringInvalidDefaultSerializationFormat(String defaultSerializationFormat) {
+    logWarn("060", "Ignoring invalid defaultSerializationFormat='{}'", defaultSerializationFormat);
+  }
+
+  public void ignoringInvalidProcessEngineName(String processEngineName) {
+    logWarn("061", "Ignoring invalid processEngineName='{}' - must not be null, blank or contain hyphen", processEngineName);
+  }
+
+  public void registerCustomJobHandler(String type) {
+    logInfo("062", "Registered custom JobHandler: '{}'", type);
+  }
+
+  public void registerCustomHistoryEventHandler(Class<? extends HistoryEventHandler> historyEventHandlerType) {
+    logInfo("063", "Register custom HistoryEventHandler: '{}'", historyEventHandlerType);
+  }
 }

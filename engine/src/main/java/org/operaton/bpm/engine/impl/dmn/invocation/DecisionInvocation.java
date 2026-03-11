@@ -29,11 +29,17 @@ import org.operaton.bpm.engine.variable.context.VariableContext;
  * {@link DelegateInvocation} invoking a {@link DecisionDefinition}
  * in a given {@link VariableContext}.
  *
+ * <p>
  * The DmnEngine instance is resolved from the Context.
+ * </p>
  *
+ * <p>
  * The invocation result is a {@link DmnDecisionResult}.
+ * </p>
  *
+ * <p>
  * The target of the invocation is the {@link DecisionDefinition}.
+ * </p>
  *
  * @author Daniel Meyer
  *

@@ -87,7 +87,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
     String authenticationProviderClassName = filterConfig.getInitParameter(AUTHENTICATION_PROVIDER_PARAM);
 
     if (authenticationProviderClassName == null) {
-      throw new ServletException("Cannot instantiate authentication filter: no authentication provider set. init-param " + AUTHENTICATION_PROVIDER_PARAM + " missing");
+      throw new ServletException("Cannot instantiate authentication filter: no authentication provider set. init-param %s missing".formatted(AUTHENTICATION_PROVIDER_PARAM));
     }
 
     try {
@@ -134,7 +134,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
       resp.setStatus(Status.NOT_FOUND.getStatusCode());
       ExceptionDto exceptionDto = new ExceptionDto();
       exceptionDto.setType(InvalidRequestException.class.getSimpleName());
-      exceptionDto.setMessage("Process engine " + engineName + " not available");
+      exceptionDto.setMessage("Process engine %s not available".formatted(engineName));
       ObjectMapper objectMapper = new ObjectMapper();
 
       resp.setContentType(MediaType.APPLICATION_JSON);

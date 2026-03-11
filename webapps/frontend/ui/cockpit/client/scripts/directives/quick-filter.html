@@ -4,9 +4,9 @@
   <div class="quick-filter name-filter"
        ng-if="showNameFilter">
     <label class="input-group">
-      <span class="input-group-addon"
+      <span class="input-group-prepend" tooltip-placement="right"
             uib-tooltip="{{ 'QUICK_FILTER_TOOLTIP_CLICK_HERE' | translate }}">
-        <span class="glyphicon glyphicon-filter"
+        <span class="input-group-text glyphicon glyphicon-filter"
               ng-click="clearName()"></span>
       </span>
       <input ng-keyup="search()"

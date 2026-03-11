@@ -65,7 +65,7 @@ public class TestWarDeploymentDeployChangedOnly extends AbstractFoxPlatformInteg
         .processDefinitionKey("testDeployProcessArchiveUnchanged")
         .count();
 
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
   }
 
 

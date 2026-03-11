@@ -18,6 +18,7 @@ package org.operaton.spin;
 
 import java.io.Writer;
 
+import org.operaton.commons.utils.ServiceLoaderUtil;
 import org.operaton.spin.json.SpinJsonNode;
 import org.operaton.spin.spi.DataFormat;
 import org.operaton.spin.xml.SpinXmlElement;
@@ -27,8 +28,12 @@ import org.operaton.spin.xml.SpinXmlElement;
  * @author Sebastian Menski
  * @author Daniel Meyer
  */
+@SuppressWarnings({"java:S100", "unused" }) // method name 'S' is acceptable for a factory method
 public abstract class Spin<T extends Spin<?>> {
-
+  private static final SpinFactory SPIN_FACTORY;
+  static {
+    SPIN_FACTORY = ServiceLoaderUtil.loadSingleService(SpinFactory.class);
+  }
   /**
    * Creates a spin wrapper for a data input of a given data format.
    *
@@ -39,7 +44,7 @@ public abstract class Spin<T extends Spin<?>> {
    * @throws IllegalArgumentException in case an argument of illegal type is provided (such as 'null')
    */
   public static <T extends Spin<?>> T S(Object input, DataFormat<T> format) {
-    return SpinFactory.INSTANCE.createSpin(input, format);
+    return SPIN_FACTORY.createSpin(input, format);
   }
 
   /**
@@ -52,7 +57,7 @@ public abstract class Spin<T extends Spin<?>> {
    * @throws IllegalArgumentException in case an argument of illegal type is provided (such as 'null')
    */
  public static <T extends Spin<?>> T S(Object input, String dataFormatName) {
-   return SpinFactory.INSTANCE.createSpin(input, dataFormatName);
+   return SPIN_FACTORY.createSpin(input, dataFormatName);
  }
 
   /**
@@ -65,7 +70,7 @@ public abstract class Spin<T extends Spin<?>> {
    * @throws IllegalArgumentException in case an argument of illegal type is provided (such as 'null')
    */
   public static <T extends Spin<?>> T S(Object input) {
-    return SpinFactory.INSTANCE.createSpin(input);
+    return SPIN_FACTORY.createSpin(input);
   }
 
   /**
@@ -78,7 +83,7 @@ public abstract class Spin<T extends Spin<?>> {
    * @throws IllegalArgumentException in case an argument of illegal type is provided (such as 'null')
    */
   public static SpinXmlElement XML(Object input) {
-    return SpinFactory.INSTANCE.createSpin(input, DataFormats.xml());
+    return SPIN_FACTORY.createSpin(input, DataFormats.xml());
   }
 
   /**
@@ -91,7 +96,7 @@ public abstract class Spin<T extends Spin<?>> {
    * @throws IllegalArgumentException in case an argument of illegal type is provided (such as 'null')
    */
   public static SpinJsonNode JSON(Object input) {
-    return SpinFactory.INSTANCE.createSpin(input, DataFormats.json());
+    return SPIN_FACTORY.createSpin(input, DataFormats.json());
   }
 
   /**

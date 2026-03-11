@@ -22,9 +22,9 @@ import org.operaton.bpm.engine.query.QueryProperty;
 /**
  * Contains the possible properties that can be used by the {@link TenantQuery}.
  */
-final class TenantQueryProperty {
+public final class TenantQueryProperty {
 
-  public static final QueryProperty GROUP_ID = new QueryPropertyImpl("ID_");
+  public static final QueryProperty TENANT_ID = new QueryPropertyImpl("ID_");
   public static final QueryProperty NAME = new QueryPropertyImpl("NAME_");
 
   private TenantQueryProperty() {}

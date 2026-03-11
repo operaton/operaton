@@ -328,7 +328,7 @@ class JobDefinitionQueryTest {
     assertThat((long) queriedDefinition.getOverridingJobPriority()).isEqualTo(42L);
 
     // and
-    assertThat(managementService.createJobDefinitionQuery().withOverridingJobPriority().count()).isEqualTo(1);
+    assertThat(managementService.createJobDefinitionQuery().withOverridingJobPriority().count()).isOne();
   }
 
 }

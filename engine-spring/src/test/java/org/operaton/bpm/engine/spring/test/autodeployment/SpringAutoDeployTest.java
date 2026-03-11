@@ -101,14 +101,14 @@ class SpringAutoDeployTest {
   void noRedeploymentForSpringContainerRestart() {
     createAppContext(CTX_PATH);
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
     ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
     assertThat(processDefinitionQuery.count()).isEqualTo(3);
 
     // Creating a new app context with same resources doesn't lead to more deployments
     applicationContext.close();
     applicationContext = new ClassPathXmlApplicationContext(CTX_PATH);
-    assertThat(deploymentQuery.count()).isEqualTo(1);
+    assertThat(deploymentQuery.count()).isOne();
     assertThat(processDefinitionQuery.count()).isEqualTo(3);
   }
 
@@ -128,7 +128,7 @@ class SpringAutoDeployTest {
     long caseDefs = repositoryService.createCaseDefinitionQuery().count();
     long procDefs = repositoryService.createProcessDefinitionQuery().count();
 
-    assertThat(caseDefs).isEqualTo(1);
+    assertThat(caseDefs).isOne();
     assertThat(procDefs).isEqualTo(3);
   }
 
@@ -146,7 +146,7 @@ class SpringAutoDeployTest {
     createAppContext(CTX_DEPLOY_CHANGE_ONLY_PATH);
 
     // assume
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
 
     // when
     applicationContext.close();
@@ -175,7 +175,7 @@ class SpringAutoDeployTest {
     DynamicResourceProducer.addResource("b.bpmn", model3);
 
     createAppContext(CTX_DYNAMIC_DEPLOY_PATH);
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
     applicationContext.close();
 
     // when
@@ -195,7 +195,7 @@ class SpringAutoDeployTest {
   @Test
   void autoDeployWithCreateDropOnCleanDb() {
     createAppContext(CTX_CREATE_DROP_CLEAN_DB);
-    assertThat(repositoryService.createDeploymentQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createDeploymentQuery().count()).isOne();
     assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(3);
   }
 
@@ -205,7 +205,7 @@ class SpringAutoDeployTest {
 
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.tenantIdIn("tenant1").count()).isEqualTo(1);
+    assertThat(deploymentQuery.tenantIdIn("tenant1").count()).isOne();
   }
 
   @Test
@@ -214,14 +214,14 @@ class SpringAutoDeployTest {
 
     DeploymentQuery deploymentQuery = repositoryService.createDeploymentQuery();
 
-    assertThat(deploymentQuery.withoutTenantId().count()).isEqualTo(1);
+    assertThat(deploymentQuery.withoutTenantId().count()).isOne();
   }
 
   @Test
   void autoDeployCustomName() {
     createAppContext(CTX_CUSTOM_NAME_PATH);
 
-    assertThat(repositoryService.createProcessDefinitionQuery().count()).isEqualTo(1);
+    assertThat(repositoryService.createProcessDefinitionQuery().count()).isOne();
   }
 
   // --Helper methods ----------------------------------------------------------

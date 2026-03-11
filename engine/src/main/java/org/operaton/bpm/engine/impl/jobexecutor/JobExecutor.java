@@ -45,7 +45,7 @@ public abstract class JobExecutor {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
-  protected String name = "JobExecutor["+getClass().getName()+"]";
+  protected String name = "JobExecutor[%s]".formatted(getClass().getName());
   protected List<ProcessEngineImpl> processEngines = new CopyOnWriteArrayList<>();
   protected AcquireJobsCommandFactory acquireJobsCmdFactory;
   protected AcquireJobsRunnable acquireJobsRunnable;
@@ -378,6 +378,7 @@ public abstract class JobExecutor {
 		}
 		catch (InterruptedException e) {
 		  LOG.interruptedWhileShuttingDownjobExecutor(e);
+		  Thread.currentThread().interrupt();
 		}
 		jobAcquisitionThread = null;
 	}

@@ -260,16 +260,7 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
           updateOperations);
     }
 
-    if (batchSize == null || isPerformUpdateOnly(entities, HistoricProcessInstanceEventEntity.class)) {
-      // update process instance last if updated in batches to avoid orphans
-      Map<String, Object> parameters = new HashMap<>();
-      parameters.put(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId);
-      parameters.put(REMOVAL_TIME, removalTime);
-      parameters.put(MAX_RESULTS, batchSize);
-
-      addOperation(getDbEntityManager().updatePreserveOrder(HistoricProcessInstanceEventEntity.class,
-          "updateHistoricProcessInstanceEventsByRootProcessInstanceId", parameters), updateOperations);
-    }
+    updateProcessInstances(ROOT_PROCESS_INSTANCE_ID, rootProcessInstanceId, "updateHistoricProcessInstanceEventsByRootProcessInstanceId", removalTime, batchSize, entities, updateOperations);
 
     return updateOperations;
   }
@@ -360,18 +351,28 @@ public class HistoricProcessInstanceManager extends AbstractHistoricManager {
           updateOperations);
     }
 
+    updateProcessInstances(PROCESS_INSTANCE_ID, processInstanceId, "updateHistoricProcessInstanceByProcessInstanceId", removalTime, batchSize, entities, updateOperations);
+
+    return updateOperations;
+  }
+
+  private void updateProcessInstances(String parameterKey,
+                                        String parameterValue,
+                                        String statement,
+                                        Date removalTime,
+                                        Integer batchSize,
+                                        Set<String> entities,
+                                        Map<Class<? extends DbEntity>, DbOperation> updateOperations) {
     if (batchSize == null || isPerformUpdateOnly(entities, HistoricProcessInstanceEventEntity.class)) {
       // update process instance last if updated in batches to avoid orphans
       Map<String, Object> parameters = new HashMap<>();
-      parameters.put(PROCESS_INSTANCE_ID, processInstanceId);
+      parameters.put(parameterKey, parameterValue);
       parameters.put(REMOVAL_TIME, removalTime);
       parameters.put(MAX_RESULTS, batchSize);
 
       addOperation(getDbEntityManager().updatePreserveOrder(HistoricProcessInstanceEventEntity.class,
-          "updateHistoricProcessInstanceByProcessInstanceId", parameters), updateOperations);
+          statement, parameters), updateOperations);
     }
-
-    return updateOperations;
   }
 
   public Map<Class<? extends DbEntity>, DbOperation> deleteHistoricProcessInstancesByRemovalTime(Date removalTime, int minuteFrom, int minuteTo, int batchSize) {

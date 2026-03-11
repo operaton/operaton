@@ -31,16 +31,16 @@ var InputFieldHandler = AbstractFormField.extend(
     /**
      * Prepares an instance
      */
-    initialize: function() {
+    initialize: function () {
       this.variableName = this.element.attr(
-        constants.DIRECTIVE_CAM_FILE_DOWNLOAD
+        constants.DIRECTIVE_CAM_FILE_DOWNLOAD,
       );
 
       // fetch the variable
       this.variableManager.fetchVariable(this.variableName);
     },
 
-    applyValue: function() {
+    applyValue: function () {
       var variable = this.variableManager.variable(this.variableName);
 
       // set the download url of the link
@@ -52,12 +52,12 @@ var InputFieldHandler = AbstractFormField.extend(
       }
 
       return this;
-    }
+    },
   },
 
   {
-    selector: 'a[' + constants.DIRECTIVE_CAM_FILE_DOWNLOAD + ']'
-  }
+    selector: 'a[' + constants.DIRECTIVE_CAM_FILE_DOWNLOAD + ']',
+  },
 );
 
 module.exports = InputFieldHandler;

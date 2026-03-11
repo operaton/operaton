@@ -24,7 +24,9 @@ import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
  * A batch job handler manages batch jobs based
  * on the configuration {@link T}.
  *
+ * <p>
  * Used by a seed job to manage lifecycle of execution jobs.
+ * </p>
  */
 public interface BatchJobHandler<T> extends JobHandler<BatchJobConfiguration> {
 

@@ -33,6 +33,7 @@ import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -40,9 +41,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * This test verifies that a CDI Java Bean Delegate is able to inject and invoke the
  * remote business interface of a SingletonBean from a different application
  *
+ * <p>
  * Note:
  * - works on Jboss
  * - works on Glassfish
+ * </p>
  *
  * @author Daniel Meyer
  *
@@ -81,7 +84,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
 
     ProcessInstance pi = runtimeService.startProcessInstanceByKey("testInvokeBean");
 
-    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(TRUE);
 
     runtimeService.setVariable(pi.getId(), "result", false);
 
@@ -89,7 +92,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
 
     waitForJobExecutorToProcessAllJobs();
 
-    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(true);
+    assertThat(runtimeService.getVariable(pi.getId(), "result")).isEqualTo(TRUE);
 
     taskService.complete(taskService.createTaskQuery().processInstanceId(pi.getId()).singleResult().getId());
   }
@@ -103,7 +106,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
 
     for(int i=0; i<instances; i++) {
       ids[i] = runtimeService.startProcessInstanceByKey("testInvokeBean").getId();
-      assertThat(runtimeService.getVariable(ids[i], "result")).as("Incovation=" + i).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], "result")).as("Incovation=" + i).isEqualTo(TRUE);
       runtimeService.setVariable(ids[i], "result", false);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
@@ -111,7 +114,7 @@ public class RemoteSingletonBeanInvocationTest extends AbstractFoxPlatformIntegr
     waitForJobExecutorToProcessAllJobs(60*1000);
 
     for(int i=0; i<instances; i++) {
-      assertThat(runtimeService.getVariable(ids[i], "result")).as("Incovation=" + i).isEqualTo(true);
+      assertThat(runtimeService.getVariable(ids[i], "result")).as("Incovation=" + i).isEqualTo(TRUE);
       taskService.complete(taskService.createTaskQuery().processInstanceId(ids[i]).singleResult().getId());
     }
 

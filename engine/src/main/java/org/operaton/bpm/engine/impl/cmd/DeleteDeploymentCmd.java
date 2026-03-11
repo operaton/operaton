@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -42,12 +40,9 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Joram Barrez
  * @author Thorben Lindhauer
  */
-public class DeleteDeploymentCmd implements Command<Void>, Serializable {
+public class DeleteDeploymentCmd implements Command<Void> {
 
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
-
-  @Serial private static final long serialVersionUID = 1L;
-
   protected String deploymentId;
   protected boolean cascade;
 
@@ -99,7 +94,6 @@ public class DeleteDeploymentCmd implements Command<Void>, Serializable {
         listener.execute(commandContext);
       }
     }
-
 
     return null;
   }

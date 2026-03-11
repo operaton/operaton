@@ -23,7 +23,7 @@ const searchConfig = require('./process-definition-search-config.json');
 
 module.exports = [
   'ViewsProvider',
-  function(ViewsProvider) {
+  function (ViewsProvider) {
     ViewsProvider.registerDefaultView('cockpit.processes.dashboard', {
       id: 'process-definition',
       label: 'Deployed Process Definitions',
@@ -37,7 +37,7 @@ module.exports = [
         '$location',
         'search',
         'PluginProcessDefinitionResource',
-        function(
+        function (
           $scope,
           Views,
           camAPI,
@@ -45,7 +45,7 @@ module.exports = [
           $translate,
           $location,
           search,
-          PluginProcessDefinitionResource
+          PluginProcessDefinitionResource,
         ) {
           var processDefinitionService = camAPI.resource('process-definition');
 
@@ -55,20 +55,20 @@ module.exports = [
           $scope.query = null;
           $scope.sortBy = loadLocal({sortBy: 'name', sortOrder: 'asc'});
           $scope.config = searchConfig;
-          $scope.onSearchChange = params =>
+          $scope.onSearchChange = (params) =>
             updateView(params.query, params.pages);
           $scope.onSortChange = updateView;
 
           $scope.processesActions = Views.getProviders({
-            component: 'cockpit.processes.action'
+            component: 'cockpit.processes.action',
           });
           $scope.hasActionPlugin = $scope.processesActions.length > 0;
 
           const processInstancePlugins = Views.getProviders({
-            component: 'cockpit.processInstance.view'
+            component: 'cockpit.processInstance.view',
           });
           $scope.hasHistoryPlugin =
-            processInstancePlugins.filter(function(plugin) {
+            processInstancePlugins.filter(function (plugin) {
               return plugin.id === 'history';
             }).length > 0;
           $scope.hasReportPlugin =
@@ -76,7 +76,7 @@ module.exports = [
           $scope.hasSearchPlugin =
             Views.getProviders({
               component: 'cockpit.processes.dashboard',
-              id: 'search-process-instances'
+              id: 'search-process-instances',
             }).length > 0;
 
           // prettier-ignore
@@ -93,7 +93,7 @@ module.exports = [
           ];
 
           // only get count of process definitions
-          const countProcessDefinitions = function() {
+          const countProcessDefinitions = function () {
             $scope.mainLoadingState = 'LOADING';
             processDefinitionService.count({latest: true}, (err, count) => {
               if (err) $scope.mainLoadingState = 'ERROR';
@@ -111,7 +111,7 @@ module.exports = [
 
             const pagingParams = {
               firstResult: $scope.pages.size * ($scope.pages.current - 1),
-              maxResults: $scope.pages.size
+              maxResults: $scope.pages.size,
             };
             const queryParams = $scope.query;
             const sortParams = $scope.sortBy;
@@ -120,17 +120,17 @@ module.exports = [
               {},
               pagingParams,
               sortParams,
-              queryParams
+              queryParams,
             );
 
             saveLocal(sortParams);
 
             return PluginProcessDefinitionResource.statisticsCount(countParams)
-              .$promise.then(res => {
+              .$promise.then((res) => {
                 $scope.total = res.count;
 
                 PluginProcessDefinitionResource.queryStatistics(params)
-                  .$promise.then(statistics => {
+                  .$promise.then((statistics) => {
                     $scope.processDefinitionData = statistics;
                     $scope.loadingState = res.count ? 'LOADED' : 'EMPTY';
                     return statistics;
@@ -149,14 +149,14 @@ module.exports = [
             () => {
               countProcessDefinitions();
               updateView();
-            }
+            },
           );
 
-          $scope.$on('$destroy', function() {
+          $scope.$on('$destroy', function () {
             removeActionDeleteListener();
           });
 
-          $scope.onIncidentsClick = pdKey => {
+          $scope.onIncidentsClick = (pdKey) => {
             const pdSearchQuery = $location.search().pdSearchQuery;
             const pdPage = $location.search().pdPage;
             const searchQuery = [
@@ -164,20 +164,20 @@ module.exports = [
                 type: 'PIincidentStatus',
                 operator: 'eq',
                 value: 'open',
-                name: ''
+                name: '',
               },
               {
                 type: 'PIprocessDefinitionKey',
                 operator: 'eq',
                 value: pdKey,
-                name: ''
-              }
+                name: '',
+              },
             ];
 
             $location.search({
               searchQuery: JSON.stringify(searchQuery),
               pdSearchQuery,
-              pdPage
+              pdPage,
             });
             $location.hash('search-section');
             $location.replace();
@@ -185,13 +185,13 @@ module.exports = [
 
           $scope.activeTab = 'list';
 
-          $scope.selectTab = function(tab) {
+          $scope.selectTab = function (tab) {
             $scope.activeTab = tab;
           };
 
           $scope.activeSection = localConf.get(
             'processesDashboardActive',
-            true
+            true,
           );
 
           $scope.toggleSection = function toggleSection() {
@@ -209,10 +209,10 @@ module.exports = [
           }
 
           countProcessDefinitions();
-        }
+        },
       ],
 
-      priority: 0
+      priority: 0,
     });
-  }
+  },
 ];

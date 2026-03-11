@@ -40,15 +40,15 @@ import static org.operaton.bpm.client.rule.ClientRule.LOCK_DURATION;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_BAR;
 import static org.operaton.bpm.client.util.ProcessModels.EXTERNAL_TASK_TOPIC_FOO;
 import static org.operaton.bpm.client.util.ProcessModels.TWO_EXTERNAL_TASK_PROCESS;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_NAME;
-import static org.operaton.bpm.client.util.PropertyUtil.CAMUNDA_ENGINE_REST;
 import static org.operaton.bpm.client.util.PropertyUtil.DEFAULT_PROPERTIES_PATH;
+import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_NAME;
+import static org.operaton.bpm.client.util.PropertyUtil.OPERATON_ENGINE_REST;
 import static org.operaton.bpm.client.util.PropertyUtil.loadProperties;
 import static org.operaton.bpm.engine.variable.Variables.SerializationDataFormats.JAVA;
 import static org.operaton.bpm.engine.variable.type.ValueType.OBJECT;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class JavaSerializationIT {
+class JavaSerializationIT {
 
   protected static final String ENGINE_NAME = "/engine/another-engine";
   protected static final String VARIABLE_NAME_JAVA = "javaVariable";
@@ -66,7 +66,7 @@ public class JavaSerializationIT {
   @RegisterExtension
   static ClientRule clientRule = new ClientRule(() -> {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
-    String baseUrl = properties.getProperty(CAMUNDA_ENGINE_REST) + ENGINE_NAME;
+    String baseUrl = properties.getProperty(OPERATON_ENGINE_REST) + ENGINE_NAME;
     return ExternalTaskClient.create()
         .baseUrl(baseUrl)
         .disableAutoFetching()
@@ -76,7 +76,7 @@ public class JavaSerializationIT {
   @RegisterExtension
   static EngineRule engineRule = new EngineRule(() -> {
     Properties properties = loadProperties(DEFAULT_PROPERTIES_PATH);
-    properties.put(CAMUNDA_ENGINE_NAME, ENGINE_NAME);
+    properties.put(OPERATON_ENGINE_NAME, ENGINE_NAME);
     return properties;
   });
 
@@ -89,7 +89,7 @@ public class JavaSerializationIT {
   protected RecordingInvocationHandler invocationHandler = new RecordingInvocationHandler();
 
   @BeforeEach
-  public void setup() {
+  void setup() {
     client = clientRule.client();
     processDefinition = engineRule.deploy(TWO_EXTERNAL_TASK_PROCESS).get(0);
 
@@ -98,7 +98,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldGetDeserializedJava() {
+  void shouldGetDeserializedJava() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JAVA, VARIABLE_VALUE_JAVA_OBJECT_VALUE);
 
@@ -117,7 +117,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedDeserializedJava() {
+  void shouldGetTypedDeserializedJava() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JAVA, VARIABLE_VALUE_JAVA_OBJECT_VALUE);
 
@@ -139,7 +139,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldGetTypedSerializedJava() {
+  void shouldGetTypedSerializedJava() {
     // given
     engineRule.startProcessInstance(processDefinition.getId(), VARIABLE_NAME_JAVA, VARIABLE_VALUE_JAVA_OBJECT_VALUE);
 
@@ -161,7 +161,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNull() {
+  void shouldDeserializeNull() {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JAVA)
@@ -185,7 +185,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullTyped() {
+  void shouldDeserializeNullTyped() {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JAVA)
@@ -212,7 +212,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullWithoutTypeName()  {
+  void shouldDeserializeNullWithoutTypeName()  {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JAVA)
@@ -235,7 +235,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shouldDeserializeNullTypedWithoutTypeName()  {
+  void shouldDeserializeNullTypedWithoutTypeName()  {
     // given
     ObjectValue serializedValue = Variables.serializedObjectValue()
         .serializationDataFormat(JAVA)
@@ -261,7 +261,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTyped() {
+  void shoudSetVariableTyped() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 
@@ -306,7 +306,7 @@ public class JavaSerializationIT {
   }
 
   @Test
-  public void shoudSetVariableTyped_Null() {
+  void shoudSetVariableTyped_Null() {
     // given
     engineRule.startProcessInstance(processDefinition.getId());
 

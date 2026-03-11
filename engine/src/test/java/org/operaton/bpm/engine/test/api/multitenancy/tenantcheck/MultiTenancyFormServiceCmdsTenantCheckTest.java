@@ -252,7 +252,7 @@ class MultiTenancyFormServiceCmdsTenantCheckTest {
     // when/then
     assertThatThrownBy(() -> formService.getStartFormKey(processDefinitionId))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot get the process definition '" + processDefinitionId + "' because it belongs to no authenticated tenant.");
+      .hasMessageContaining("Cannot get the process definition '%s' because it belongs to no authenticated tenant.".formatted(processDefinitionId));
 
   }
 
@@ -304,7 +304,7 @@ class MultiTenancyFormServiceCmdsTenantCheckTest {
     // when/then
     assertThatThrownBy(() -> formService.getTaskFormData(taskId))
       .isInstanceOf(ProcessEngineException.class)
-      .hasMessageContaining("Cannot read the task '" + taskId + "' because it belongs to no authenticated tenant.");
+      .hasMessageContaining("Cannot read the task '%s' because it belongs to no authenticated tenant.".formatted(taskId));
 
   }
 
@@ -340,7 +340,7 @@ class MultiTenancyFormServiceCmdsTenantCheckTest {
 
     runtimeService.startProcessInstanceById(processDefinitionId);
 
-    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().processDefinitionId(processDefinitionId).count()).isOne();
 
     String taskId = taskService.createTaskQuery().processDefinitionId(processDefinitionId).singleResult().getId();
 

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.impl.instance.From;
 import org.operaton.bpm.model.bpmn.impl.instance.To;
@@ -34,7 +33,7 @@ public class AssignmentTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(From.class, 1, 1),
       new ChildElementAssumption(To.class, 1, 1)
     );

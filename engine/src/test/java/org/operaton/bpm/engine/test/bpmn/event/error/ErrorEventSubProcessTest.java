@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.bpmn.event.error;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 
@@ -68,8 +69,8 @@ class ErrorEventSubProcessTest {
     // The process will throw an error event,
     // which is caught and escalated by a User Task
     assertThat(taskService.createTaskQuery()
-        .taskDefinitionKey("taskAfterErrorCatch2") // <!>
-        .count()).as("No tasks found in task list.").isEqualTo(1);
+      .taskDefinitionKey("taskAfterErrorCatch2") // <!>
+      .count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Task");
 
@@ -304,7 +305,7 @@ class ErrorEventSubProcessTest {
   private void assertThatErrorHasBeenCaught(String procId) {
     // The process will throw an error event,
     // which is caught and escalated by a User Task
-    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isEqualTo(1);
+    assertThat(taskService.createTaskQuery().count()).as("No tasks found in task list.").isOne();
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getName()).isEqualTo("Escalated Task");
 
@@ -412,7 +413,9 @@ class ErrorEventSubProcessTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/ErrorEventSubProcessTest.testThrowErrorInLoopFromCallActivityToEventSubProcess.bpmn20.xml",
       "org/operaton/bpm/engine/test/bpmn/event/error/ThrowErrorToCallActivity.bpmn20.xml"
     })
-  public void FAILING_testShouldNotThrowErrorInLoopFromCallActivityToEventSubProcess(){
+  @Test
+  @Disabled("Fixme")
+  void testShouldNotThrowErrorInLoopFromCallActivityToEventSubProcess(){
     runtimeService.startProcessInstanceByKey("Process_1");
 
     Task task = taskService.createTaskQuery().singleResult();

@@ -18,9 +18,12 @@ package org.operaton.bpm.quarkus.engine.extension.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import jakarta.enterprise.inject.UnsatisfiedResolutionException;
 import jakarta.enterprise.inject.spi.BeanManager;
 
-import io.quarkus.agroal.runtime.DataSources;
+import io.agroal.api.AgroalDataSource;
+import io.quarkus.agroal.runtime.AgroalDataSourceUtil;
 import io.quarkus.arc.Arc;
 import io.quarkus.arc.runtime.BeanContainer;
 import io.quarkus.runtime.RuntimeValue;
@@ -47,16 +50,22 @@ import static io.quarkus.datasource.common.runtime.DataSourceUtil.DEFAULT_DATASO
 @Recorder
 public class OperatonEngineRecorder {
 
+  private final RuntimeValue<OperatonEngineConfig> operatonEngineConfig;
+
+  public OperatonEngineRecorder(RuntimeValue<OperatonEngineConfig> operatonEngineConfig) {
+    this.operatonEngineConfig = operatonEngineConfig;
+  }
+
   public void configureProcessEngineCdiBeans(BeanContainer beanContainer) {
 
-    if (BeanManagerLookup.localInstance == null) {
-      BeanManagerLookup.localInstance = getBeanFromContainer(BeanManager.class, beanContainer);
+    if (BeanManagerLookup.getLocalInstance() == null) {
+      BeanManagerLookup.setLocalInstance(getBeanFromContainer(BeanManager.class, beanContainer));
     }
   }
 
-  public RuntimeValue<ProcessEngineConfigurationImpl> createProcessEngineConfiguration(BeanContainer beanContainer,
-                                                                                       OperatonEngineConfig config) {
+  public RuntimeValue<ProcessEngineConfigurationImpl> createProcessEngineConfiguration(BeanContainer beanContainer) {
 
+    OperatonEngineConfig config = operatonEngineConfig.getValue();
     QuarkusProcessEngineConfiguration configuration = getBeanFromContainer(QuarkusProcessEngineConfiguration.class,
         beanContainer);
 
@@ -64,8 +73,10 @@ public class OperatonEngineRecorder {
     PropertyHelper.applyProperties(configuration, config.genericConfig(), PropertyHelper.KEBAB_CASE);
 
     if (configuration.getDataSource() == null) {
-      String datasource = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);
-      configuration.setDataSource(DataSources.fromName(datasource));
+      String datasourceName = config.datasource().orElse(DEFAULT_DATASOURCE_NAME);
+      AgroalDataSource dataSource = Optional.ofNullable(AgroalDataSourceUtil.dataSourceInstance(datasourceName).orNull())
+        .orElseThrow(() -> new UnsatisfiedResolutionException("Agroal datasource '%s' not found".formatted(datasourceName)));
+      configuration.setDataSource(dataSource);
     }
 
     if (configuration.getTransactionManager() == null) {
@@ -75,7 +86,7 @@ public class OperatonEngineRecorder {
     // configure job executor,
     // if not already configured by a custom configuration
     if (configuration.getJobExecutor() == null) {
-      configureJobExecutor(configuration, config);
+      configureJobExecutor(configuration);
     }
 
     configureCdiEventBridge(configuration);
@@ -137,9 +148,9 @@ public class OperatonEngineRecorder {
     });
   }
 
-  protected void configureJobExecutor(ProcessEngineConfigurationImpl configuration,
-                                      OperatonEngineConfig config) {
+  protected void configureJobExecutor(ProcessEngineConfigurationImpl configuration) {
 
+    OperatonEngineConfig config = operatonEngineConfig.getValue();
     int maxPoolSize = config.jobExecutor().threadPool().maxPoolSize();
     int queueSize = config.jobExecutor().threadPool().queueSize();
 

@@ -74,22 +74,22 @@ public abstract class AbstractSendTaskBuilder<B extends AbstractSendTaskBuilder<
     return myself;
   }
 
-  /** operaton extensions */
+  /* operaton extensions */
 
   /**
    * Sets the operaton class attribute.
    *
-   * @param operatonClass  the class name to set
+   * @param delegateClass  the class whose name to set
    * @return the builder object
    */
-  public B operatonClass(Class delegateClass) {
+  public B operatonClass(Class<?> delegateClass) {
     return operatonClass(delegateClass.getName());
   }
 
   /**
    * Sets the operaton class attribute.
    *
-   * @param operatonClass  the class name to set
+   * @param fullQualifiedClassName  the class name to set
    * @return the builder object
    */
   public B operatonClass(String fullQualifiedClassName) {

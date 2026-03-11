@@ -97,18 +97,18 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
 
     runtimeService.startProcessInstanceByKey("testProcess", VARIABLES);
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
-    assertThat(getDecisionInstances()).isEqualTo(1L);
+    assertThat(getExecutedDecisionInstances()).isOne();
+    assertThat(getDecisionInstances()).isOne();
     assertThat(getExecutedDecisionElements()).isEqualTo(16L);
-    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1L);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isOne();
     assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16L);
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
-    assertThat(getDecisionInstances()).isEqualTo(1L);
+    assertThat(getExecutedDecisionInstances()).isOne();
+    assertThat(getDecisionInstances()).isOne();
     assertThat(getExecutedDecisionElements()).isEqualTo(16L);
-    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isEqualTo(1L);
+    assertThat(getExecutedDecisionInstancesFromDmnEngine()).isOne();
     assertThat(getExecutedDecisionElementsFromDmnEngine()).isEqualTo(16L);
   }
 
@@ -124,13 +124,13 @@ public class DecisionMetricsTest extends AbstractMetricsTest {
         .evaluate();
 
     // then
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
-    assertThat(getDecisionInstances()).isEqualTo(1L);
+    assertThat(getExecutedDecisionInstances()).isOne();
+    assertThat(getDecisionInstances()).isOne();
 
     processEngineConfiguration.getDbMetricsReporter().reportNow();
 
-    assertThat(getExecutedDecisionInstances()).isEqualTo(1L);
-    assertThat(getDecisionInstances()).isEqualTo(1L);
+    assertThat(getExecutedDecisionInstances()).isOne();
+    assertThat(getDecisionInstances()).isOne();
   }
 
   @Test

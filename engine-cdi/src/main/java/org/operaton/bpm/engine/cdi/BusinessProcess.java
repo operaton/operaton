@@ -437,7 +437,6 @@ public class BusinessProcess implements Serializable {
    * @return the typed value of the provided process variable or 'null' if no
    *         such variable is set
    *
-   * @since 7.3
    */
   @SuppressWarnings("unchecked")
   public <T extends TypedValue> T getVariableTyped(String variableName) {
@@ -449,9 +448,11 @@ public class BusinessProcess implements Serializable {
    * Set a value for a process variable.
    * <p />
    *
+   * <p>
    * <strong>NOTE:</strong> If no execution is currently associated,
    * the value is temporarily cached and flushed to the process instance
    * at the end of the unit of work
+   * </p>
    *
    * @param variableName
    *          the name of the process variable for which a value is to be set
@@ -468,7 +469,6 @@ public class BusinessProcess implements Serializable {
    *
    * @return the {@link VariableMap} of cached variables
    *
-   * @since 7.3
    */
   public VariableMap getAndClearCachedVariableMap() {
     VariableMap cachedVariables = associationManager.getCachedVariables();
@@ -493,7 +493,6 @@ public class BusinessProcess implements Serializable {
    *
    * @return a copy of the {@link VariableMap} of cached variables.
    *
-   * @since 7.3
    */
   public VariableMap getCachedVariableMap() {
     return new VariableMapImpl(associationManager.getCachedVariables());
@@ -536,7 +535,6 @@ public class BusinessProcess implements Serializable {
    * @return the typed value of the provided local process variable or 'null' if
    *         no such variable is set
    *
-   * @since 7.3
    */
   @SuppressWarnings("unchecked")
   public <T extends TypedValue> T getVariableLocalTyped(String variableName) {
@@ -548,9 +546,11 @@ public class BusinessProcess implements Serializable {
    * Set a value for a local process variable.
    * <p />
    *
+   * <p>
    * <strong>NOTE:</strong> If a task or execution is currently associated,
    * the value is temporarily cached and flushed to the process instance
    * at the end of the unit of work - otherwise an Exception will be thrown
+   * </p>
    *
    * @param variableName
    *          the name of the local process variable for which a value is to be set
@@ -567,7 +567,6 @@ public class BusinessProcess implements Serializable {
    *
    * @return the {@link VariableMap} of cached variables
    *
-   * @since 7.3
    */
   public VariableMap getAndClearCachedLocalVariableMap() {
     VariableMap cachedVariablesLocal = associationManager.getCachedLocalVariables();
@@ -592,7 +591,6 @@ public class BusinessProcess implements Serializable {
    *
    * @return a copy of the {@link VariableMap} of local cached variables.
    *
-   * @since 7.3
    */
   public VariableMap getCachedLocalVariableMap() {
     return new VariableMapImpl(associationManager.getCachedLocalVariables());

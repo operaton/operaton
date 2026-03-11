@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.functional.spin;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -46,7 +45,7 @@ public class FeelEngineTest extends AbstractFoxPlatformIntegrationTest {
   protected static final String FEEL_EXCLUSIVE_GATEWAY_BMPN = "feel-spin-process.bpmn";
   protected static final String FEEL_INPUT_OUTPUT_PROCESS_BPMN = "feel-spin-input-output.bpmn";
 
-  protected static final List<String> TEST_LIST = Arrays.asList("\"foo\"", "\"bar\"");
+  protected static final List<String> TEST_LIST = List.of("\"foo\"", "\"bar\"");
 
   @Deployment(name="feel-deployment")
   public static WebArchive processArchive() {

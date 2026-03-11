@@ -107,42 +107,58 @@ public class Tree {
 			if (fnMapper == null) {
 				throw new ELException(LocalMessages.get("error.function.nomapper"));
 			}
-			methods = new Method[functions.size()];
-			for (FunctionNode node: functions) {
-				String image = node.getName();
-				Method method = null;
-				int colon = image.indexOf(':');
-				if (colon < 0) {
-					method = fnMapper.resolveFunction("", image);
-				} else {
-					method = fnMapper.resolveFunction(image.substring(0, colon), image.substring(colon + 1));
-				}
-				if (method == null) {
-					throw new ELException(LocalMessages.get("error.function.notfound", image));
-				}
-				if (node.isVarArgs() && method.isVarArgs()) {
-					if (method.getParameterTypes().length > node.getParamCount() + 1) {
-						throw new ELException(LocalMessages.get("error.function.params", image));
-					}
-				} else {
-					if (method.getParameterTypes().length != node.getParamCount()) {
-						throw new ELException(LocalMessages.get("error.function.params", image));
-					}
-				}
-				methods[node.getIndex()] = method;
-			}
+			methods = resolveFunctions(fnMapper);
 		}
 		ValueExpression[] expressions = null;
 		if (!identifiers.isEmpty()) {
-			expressions = new ValueExpression[identifiers.size()];
-			for (IdentifierNode node: identifiers) {
-				ValueExpression expression = null;
-				if (varMapper != null) {
-					expression = varMapper.resolveVariable(node.getName());
-				}
-				expressions[node.getIndex()] = expression;
-			}
+			expressions = resolveIdentifiers(varMapper);
 		}
 		return new Bindings(methods, expressions, converter);
+	}
+
+	private ValueExpression[] resolveIdentifiers(VariableMapper varMapper) {
+		ValueExpression[] expressions;
+		expressions = new ValueExpression[identifiers.size()];
+		for (IdentifierNode node: identifiers) {
+			ValueExpression expression = null;
+			if (varMapper != null) {
+				expression = varMapper.resolveVariable(node.getName());
+			}
+			expressions[node.getIndex()] = expression;
+		}
+		return expressions;
+	}
+
+	private Method[] resolveFunctions(FunctionMapper fnMapper) {
+		Method[] methods = new Method[functions.size()];
+		for (FunctionNode node: functions) {
+			Method method = resolveFunction(fnMapper, node);
+			methods[node.getIndex()] = method;
+		}
+		return methods;
+	}
+
+	private static Method resolveFunction(FunctionMapper fnMapper, FunctionNode node) {
+		String image = node.getName();
+		Method method;
+		int colon = image.indexOf(':');
+		if (colon < 0) {
+			method = fnMapper.resolveFunction("", image);
+		} else {
+			method = fnMapper.resolveFunction(image.substring(0, colon), image.substring(colon + 1));
+		}
+		if (method == null) {
+			throw new ELException(LocalMessages.get("error.function.notfound", image));
+		}
+		if (node.isVarArgs() && method.isVarArgs()) {
+			if (method.getParameterTypes().length > node.getParamCount() + 1) {
+				throw new ELException(LocalMessages.get("error.function.params", image));
+			}
+		} else {
+			if (method.getParameterTypes().length != node.getParamCount()) {
+				throw new ELException(LocalMessages.get("error.function.params", image));
+			}
+		}
+		return method;
 	}
 }

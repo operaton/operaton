@@ -22,10 +22,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import jakarta.annotation.Nonnull;
 
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.util.ClockUtil;
 import org.operaton.bpm.engine.impl.util.EngineUtilLogger;
@@ -53,26 +56,52 @@ public class DurationHelper {
 
   DatatypeFactory datatypeFactory;
 
-  public DurationHelper(String expressions) throws Exception {
+  public DurationHelper(String expressions) {
     this(expressions, null);
   }
 
-  public DurationHelper(String expressions, Date startDate) throws Exception {
-    List<String> expression = new ArrayList<>();
-    if(expressions != null) {
-      expression = Arrays.asList(expressions.split("/"));
-    }
-    datatypeFactory = DatatypeFactory.newInstance();
+  public DurationHelper(String expressions, Date startDate) {
+    List<String> expression = initExpressions(expressions);
+    initDatatypeFactory();
+    validateExpressions(expressions, expression);
+    expression = parseRecurrence(expression);
+    parseDurationOrTime(expression);
+    initStart(startDate);
+  }
 
+  @Nonnull
+  private List<String> initExpressions(String inputExpressions) {
+    List<String> expressions = new ArrayList<>();
+    if(inputExpressions != null) {
+      expressions = Arrays.asList(inputExpressions.split("/"));
+    }
+    return expressions;
+  }
+
+  private void validateExpressions(String expressions, List<String> expression) {
     if (expression.size() > 3 || expression.isEmpty()) {
       throw LOG.cannotParseDuration(expressions);
     }
+  }
+
+  private void initDatatypeFactory() {
+    try {
+      datatypeFactory = DatatypeFactory.newInstance();
+    } catch (DatatypeConfigurationException e) {
+      throw new ProcessEngineException(e);
+    }
+  }
+
+  private List<String> parseRecurrence(List<String> expression) {
     if (expression.get(0).startsWith("R")) {
       isRepeat = true;
       times = expression.get(0).length() ==  1 ? Integer.MAX_VALUE : Integer.parseInt(expression.get(0).substring(1));
-      expression = expression.subList(1, expression.size());
+      return expression.subList(1, expression.size());
     }
+    return expression;
+  }
 
+  private void parseDurationOrTime(List<String> expression) {
     if (isDuration(expression.get(0))) {
       period = parsePeriod(expression.get(0));
       end = expression.size() == 1 ? null : DateTimeUtil.parseDate(expression.get(1));
@@ -85,6 +114,9 @@ public class DurationHelper {
         period = datatypeFactory.newDuration(end.getTime()-start.getTime());
       }
     }
+  }
+
+  private void initStart(Date startDate) {
     if (start == null && end == null) {
       start = startDate == null ? ClockUtil.getCurrentTime() : startDate;
     }
@@ -98,10 +130,11 @@ public class DurationHelper {
     if (isRepeat) {
       return getDateAfterRepeat(date == null ? ClockUtil.getCurrentTime() : date);
     }
-    //TODO: is this correct?
+
     if (end != null) {
       return end;
     }
+
     return add(start, period);
   }
 

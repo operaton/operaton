@@ -28,8 +28,7 @@ import org.operaton.bpm.engine.impl.util.JsonUtil;
 
 public class MigrationBatchConfigurationJsonConverter
   extends AbstractBatchConfigurationObjectConverter<MigrationBatchConfiguration> {
-
-  public static final MigrationBatchConfigurationJsonConverter INSTANCE = new MigrationBatchConfigurationJsonConverter();
+  private static final MigrationPlanJsonConverter MIGRATION_PLAN_CONVERTER = new MigrationPlanJsonConverter();
 
   public static final String MIGRATION_PLAN = "migrationPlan";
   public static final String PROCESS_INSTANCE_IDS = "processInstanceIds";
@@ -41,7 +40,7 @@ public class MigrationBatchConfigurationJsonConverter
   public JsonObject writeConfiguration(MigrationBatchConfiguration configuration) {
     JsonObject json = JsonUtil.createObject();
 
-    JsonUtil.addField(json, MIGRATION_PLAN, MigrationPlanJsonConverter.INSTANCE, configuration.getMigrationPlan());
+    JsonUtil.addField(json, MIGRATION_PLAN, MIGRATION_PLAN_CONVERTER, configuration.getMigrationPlan());
     JsonUtil.addListField(json, PROCESS_INSTANCE_IDS, configuration.getIds());
     JsonUtil.addListField(json, PROCESS_INSTANCE_ID_MAPPINGS, DeploymentMappingJsonConverter.INSTANCE, configuration.getIdMappings());
     JsonUtil.addField(json, SKIP_LISTENERS, configuration.isSkipCustomListeners());
@@ -55,7 +54,7 @@ public class MigrationBatchConfigurationJsonConverter
     return new MigrationBatchConfiguration(
         readProcessInstanceIds(json),
         readIdMappings(json),
-        JsonUtil.asJavaObject(JsonUtil.getObject(json, MIGRATION_PLAN), MigrationPlanJsonConverter.INSTANCE),
+        JsonUtil.asJavaObject(JsonUtil.getObject(json, MIGRATION_PLAN), MIGRATION_PLAN_CONVERTER),
         JsonUtil.getBoolean(json, SKIP_LISTENERS),
         JsonUtil.getBoolean(json, SKIP_IO_MAPPINGS));
   }

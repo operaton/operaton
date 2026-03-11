@@ -32,7 +32,7 @@ module.exports = [
   'memberId',
   'idList',
   '$translate',
-  function(
+  function (
     $scope,
     $q,
     $location,
@@ -44,12 +44,12 @@ module.exports = [
     member,
     memberId,
     idList,
-    $translate
+    $translate,
   ) {
     var modalPages = ($scope.modalPages = {
       size: 20,
       total: 0,
-      current: 1
+      current: 1,
     });
 
     var sorting;
@@ -57,20 +57,20 @@ module.exports = [
     var checkedItems = ($scope.checkedItems = []);
     $scope.checkedItemsCount = 0;
 
-    var addItemPage = function(page) {
+    var addItemPage = function (page) {
       if (checkedItems[page] === undefined) {
         checkedItems[page] = [];
       }
     };
 
-    var addItem = function(id, page) {
+    var addItem = function (id, page) {
       if (checkedItems[page].indexOf(id) === -1) {
         checkedItems[page].push(id);
         $scope.checkedItemsCount++;
       }
     };
 
-    var removeItem = function(id, page) {
+    var removeItem = function (id, page) {
       var idx = checkedItems[page].indexOf(id);
       if (idx !== -1) {
         checkedItems[page].splice(idx, 1);
@@ -78,17 +78,17 @@ module.exports = [
       }
     };
 
-    var executeItem = function(id, page, callback) {
+    var executeItem = function (id, page, callback) {
       if (checkedItems[page].indexOf(id) !== -1) {
         callback();
       }
     };
 
     $scope.$watch(
-      function() {
+      function () {
         return parseInt(($location.search() || {}).modalPage || '1');
       },
-      function(newValue) {
+      function (newValue) {
         modalPages.current = newValue;
 
         // Invalidates available tenants when we change the page
@@ -97,15 +97,15 @@ module.exports = [
 
         addItemPage(modalPages.current);
         loadAllTenants();
-      }
+      },
     );
 
-    $scope.onSortChanged = function(_sorting) {
+    $scope.onSortChanged = function (_sorting) {
       sorting = _sorting;
       loadAllTenants();
     };
 
-    $scope.pageChange = function(page) {
+    $scope.pageChange = function (page) {
       search.updateSilently({modalPage: !page || page == 1 ? null : page});
     };
 
@@ -121,7 +121,7 @@ module.exports = [
     $scope.idList = idList;
     $scope.memberId = memberId;
 
-    $scope.$on('$routeChangeStart', function() {
+    $scope.$on('$routeChangeStart', function () {
       $modalInstance.close($scope.status);
     });
 
@@ -134,16 +134,16 @@ module.exports = [
         firstResult: firstResult,
         maxResults: count,
         sortBy: sorting.sortBy,
-        sortOrder: sorting.sortOrder
+        sortOrder: sorting.sortOrder,
       };
 
-      TenantResource.list(pagingParams, function(err, res) {
+      TenantResource.list(pagingParams, function (err, res) {
         if (err === null) {
           $scope.availableTenants = [];
-          angular.forEach(res, function(tenant) {
+          angular.forEach(res, function (tenant) {
             var id = tenant.id;
             if ($scope.idList.indexOf(id) == -1) {
-              executeItem(id, modalPages.current, function() {
+              executeItem(id, modalPages.current, function () {
                 tenant.checked = true;
               });
 
@@ -156,25 +156,25 @@ module.exports = [
           Notifications.addError({
             status: $translate.instant('NOTIFICATIONS_STATUS_FAILED'),
             message: $translate.instant('TENANTS_TENANT_LOAD_FAILED', {
-              message: err.data.message
+              message: err.data.message,
             }),
-            exclusive: ['type']
+            exclusive: ['type'],
           });
         }
       });
 
-      TenantResource.count(function(err, res) {
+      TenantResource.count(function (err, res) {
         if (err === null) {
           modalPages.total = res.count;
         }
       });
     }
 
-    var allTenantsChecked = ($scope.allTenantsChecked = function() {
+    var allTenantsChecked = ($scope.allTenantsChecked = function () {
       if ($scope.availableTenants !== undefined) {
         var counter = 0;
 
-        angular.forEach($scope.availableTenants, function(tenant) {
+        angular.forEach($scope.availableTenants, function (tenant) {
           var id = tenant.id;
           if (tenant.checked) {
             counter++;
@@ -190,24 +190,24 @@ module.exports = [
       return false;
     });
 
-    $scope.checkAllTenants = function() {
+    $scope.checkAllTenants = function () {
       if (allTenantsChecked()) {
-        angular.forEach($scope.availableTenants, function(tenant) {
+        angular.forEach($scope.availableTenants, function (tenant) {
           tenant.checked = false;
         });
       } else {
-        angular.forEach($scope.availableTenants, function(tenant) {
+        angular.forEach($scope.availableTenants, function (tenant) {
           tenant.checked = true;
         });
       }
     };
 
-    var prepareMembership = function() {
+    var prepareMembership = function () {
       $scope.status = PERFORM_CREATE;
 
       var selectedTenantIds = [];
-      angular.forEach(checkedItems, function(item) {
-        angular.forEach(item, function(id) {
+      angular.forEach(checkedItems, function (item) {
+        angular.forEach(item, function (id) {
           if (selectedTenantIds.indexOf(id) === -1) {
             selectedTenantIds.push(id);
           }
@@ -217,31 +217,31 @@ module.exports = [
       return selectedTenantIds;
     };
 
-    var createMembershipNotification = function(deferred) {
+    var createMembershipNotification = function (deferred) {
       deferred.promise.then(
-        function() {
+        function () {
           $scope.status = CREATE_SUCCESS;
         },
-        function(error) {
+        function (error) {
           $scope.status = CREATE_FAILED;
           Notifications.addError({
             status: 'Failed',
             message: $translate.instant('TENANTS_TENANT_CREATE_FAILED', {
-              message: error.message
+              message: error.message,
             }),
-            exclusive: ['type']
+            exclusive: ['type'],
           });
-        }
+        },
       );
     };
 
-    var createTenantMemberships = function(createMembershipObj) {
+    var createTenantMemberships = function (createMembershipObj) {
       var deferred = $q.defer();
 
       var selectedTenantIds = prepareMembership();
 
       var completeCount = 0;
-      var cb = function(err, res) {
+      var cb = function (err, res) {
         completeCount++;
 
         if (err === null) {
@@ -255,7 +255,7 @@ module.exports = [
         }
       };
 
-      angular.forEach(selectedTenantIds, function(tenantId) {
+      angular.forEach(selectedTenantIds, function (tenantId) {
         createMembershipObj.id = tenantId;
 
         if (typeof createMembershipObj.userId === 'string') {
@@ -268,18 +268,18 @@ module.exports = [
       });
     };
 
-    $scope.createUserMemberships = function() {
+    $scope.createUserMemberships = function () {
       var memberObj = {userId: $scope.memberId};
       createTenantMemberships(memberObj);
     };
 
-    $scope.createGroupMemberships = function() {
+    $scope.createGroupMemberships = function () {
       var memberObj = {groupId: $scope.memberId};
       createTenantMemberships(memberObj);
     };
 
-    $scope.close = function(status) {
+    $scope.close = function (status) {
       $modalInstance.close(status);
     };
-  }
+  },
 ];

@@ -46,7 +46,7 @@ public class CaseExecutionQueryImpl extends AbstractVariableQueryImpl<CaseExecut
   protected String caseExecutionId;
   protected String caseInstanceId;
   protected String businessKey;
-  protected CaseExecutionState state;
+  protected transient CaseExecutionState state;
   protected Boolean required = false;
 
   protected boolean isTenantIdSet;

@@ -20,11 +20,11 @@
 var template = require('./cam-cockpit-resource-content.html?raw');
 
 module.exports = [
-  function() {
+  function () {
     return {
       scope: {
         resourceData: '=',
-        control: '='
+        control: '=',
       },
 
       template: template,
@@ -32,7 +32,7 @@ module.exports = [
       controller: [
         '$scope',
         'configuration',
-        function($scope, configuration) {
+        function ($scope, configuration) {
           $scope.bpmnJsConf = configuration.getBpmnJs();
 
           // fields ////////////////////////////////////////////////////
@@ -52,24 +52,25 @@ module.exports = [
 
           // observe //////////////////////////////////////////////////
 
-          resourceContentData.observe('resource', function(_resource) {
+          resourceContentData.observe('resource', function (_resource) {
             if (_resource && resource && _resource.id !== resource.id) {
               $scope.binary = null;
             }
             resource = $scope.resource = _resource;
           });
 
-          resourceContentData.observe('currentDeployment', function(
-            _deployment
-          ) {
-            $scope.deployment = _deployment;
-          });
+          resourceContentData.observe(
+            'currentDeployment',
+            function (_deployment) {
+              $scope.deployment = _deployment;
+            },
+          );
 
-          resourceContentData.observe('binary', function(binary) {
+          resourceContentData.observe('binary', function (binary) {
             $scope.binary = (binary || {}).data;
           });
-        }
-      ]
+        },
+      ],
     };
-  }
+  },
 ];

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.operaton;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 
@@ -35,7 +34,7 @@ public class OperatonFormFieldTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(OPERATON_NS, OperatonProperties.class, 0, 1),
       new ChildElementAssumption(OPERATON_NS, OperatonValidation.class, 0, 1),
       new ChildElementAssumption(OPERATON_NS, OperatonValue.class)
@@ -44,7 +43,7 @@ public class OperatonFormFieldTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption(OPERATON_NS, "id"),
       new AttributeAssumption(OPERATON_NS, "label"),
       new AttributeAssumption(OPERATON_NS, "type"),

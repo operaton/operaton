@@ -76,7 +76,9 @@ public class CompositeProcessEnginePlugin extends AbstractProcessEnginePlugin {
   /**
    * Add collection of plugins.
    *
+   * <p>
    * If collection is not sortable, order of plugin execution can not be guaranteed.
+   * </p>
    *
    * @param plugins plugins to add
    * @return self for fluent usage

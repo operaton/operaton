@@ -17,7 +17,6 @@
 package org.operaton.bpm.engine.rest.history;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -407,8 +406,8 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances).as("There should be one process instance returned.").hasSize(1);
-    assertThat(instances)
+    assertThat(instances).as("There should be one process instance returned.")
+      .hasSize(1)
       .first()
       .as("The returned process instance should not be null.")
       .isNotNull();
@@ -847,8 +846,10 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
 
     String content = response.asString();
     List<Map<String, Object>> instances = from(content).getList("");
-    assertThat(instances).as("There should be one process instance returned.").hasSize(1);
-    assertThat(instances).first().as("The returned process instance should not be null.").isNotNull();
+    assertThat(instances).as("There should be one process instance returned.")
+      .hasSize(1)
+      .first().as("The returned process instance should not be null.")
+      .isNotNull();
 
     String returnedProcessInstanceId = from(content).getString("[0].id");
     String returnedEndTime = from(content).getString("[0].endTime");
@@ -1356,7 +1357,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
     Map<String, List<String>> parameters = getCompleteProcessDefinitionKeyInListQueryParameters();
     List<String> value = parameters.get("processDefinitionKeyIn");
 
-    verify(mockedQuery).processDefinitionKeyIn(value.toArray(new String[value.size()]));
+    verify(mockedQuery).processDefinitionKeyIn(value.toArray(String[]::new));
     verify(mockedQuery).list();
   }
 
@@ -1973,7 +1974,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   }
 
   private List<HistoricProcessInstance> createMockHistoricProcessInstancesTwoTenants() {
-    return Arrays.asList(
+    return List.of(
         MockProvider.createMockHistoricProcessInstance(MockProvider.EXAMPLE_TENANT_ID),
         MockProvider.createMockHistoricProcessInstance(MockProvider.ANOTHER_EXAMPLE_TENANT_ID));
   }
@@ -2125,7 +2126,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testExecutedActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_EXECUTED_ACTIVITY_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_EXECUTED_ACTIVITY_IDS, List.of("1", "2"));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -2154,7 +2155,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testActiveActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_ACTIVE_ACTIVITY_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_ACTIVE_ACTIVITY_IDS, List.of("1", "2"));
 
     given()
       .contentType(POST_JSON_CONTENT_TYPE)
@@ -2471,7 +2472,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testQueryByIncidentIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_INCIDENT_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_INCIDENT_IDS, List.of("1", "2"));
 
     given()
         .contentType(POST_JSON_CONTENT_TYPE)
@@ -2499,7 +2500,7 @@ public class HistoricProcessInstanceRestServiceQueryTest extends AbstractRestSer
   @Test
   void testQueryByActivityIdInAsPost() {
     Map<String, List<String>> parameters = new HashMap<>();
-    parameters.put(QUERY_PARAM_ACTIVE_OR_FAILING_ACTIVITY_IDS, Arrays.asList("1", "2"));
+    parameters.put(QUERY_PARAM_ACTIVE_OR_FAILING_ACTIVITY_IDS, List.of("1", "2"));
 
     given()
         .contentType(POST_JSON_CONTENT_TYPE)

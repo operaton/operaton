@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-module.exports = function(pluginPoint, scope) {
+module.exports = function (pluginPoint, scope) {
   let result = {};
 
   switch (pluginPoint) {
@@ -82,7 +82,7 @@ module.exports = function(pluginPoint, scope) {
 
     case 'cockpit.drd.instance.tab':
       result.rootDecisionInstanceId = scope.tabsApi.processParams(
-        {}
+        {},
       ).rootDecisionInstanceId;
       break;
 

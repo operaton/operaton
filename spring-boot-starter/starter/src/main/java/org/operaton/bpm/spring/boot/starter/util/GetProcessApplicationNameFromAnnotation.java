@@ -101,7 +101,7 @@ public final class GetProcessApplicationNameFromAnnotation implements Supplier<O
 
     @Override
     public String toString() {
-      return "AnnotatedBean [name=" + name + ", annotation=" + annotation + "]";
+      return "AnnotatedBean [name=%s, annotation=%s]".formatted(name, annotation);
     }
 
   }

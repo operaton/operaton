@@ -48,7 +48,7 @@ public class ResourceStreamSource implements StreamSource {
     } else {
       classLoader.getResourceAsStream(resource);
     }
-    ensureNotNull("resource '" + resource + "' doesn't exist", "inputStream", inputStream);
+    ensureNotNull("resource '%s' doesn't exist".formatted(resource), "inputStream", inputStream);
     return inputStream;
   }
 

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance.bpmndi;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.bpmn.instance.BpmnModelElementInstanceTest;
 import org.operaton.bpm.model.bpmn.instance.di.Plane;
@@ -41,7 +40,7 @@ public class BpmnPlaneTest extends BpmnModelElementInstanceTest {
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new AttributeAssumption("bpmnElement")
     );
   }

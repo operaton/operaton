@@ -39,7 +39,7 @@ public class SubProcessActivityBehavior extends AbstractBpmnActivityBehavior imp
     PvmActivity activity = execution.getActivity();
     PvmActivity initialActivity = activity.getProperties().get(BpmnProperties.INITIAL_ACTIVITY);
 
-    ensureNotNull("No initial activity found for subprocess " + execution.getActivity().getId(), "initialActivity", initialActivity);
+    ensureNotNull("No initial activity found for subprocess %s".formatted(execution.getActivity().getId()), "initialActivity", initialActivity);
 
     execution.executeActivity(initialActivity);
   }

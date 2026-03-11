@@ -16,18 +16,12 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.impl.db.DbEntity;
-
 
 /**
  * @author Tom Baeyens
  */
-public class MembershipEntity implements Serializable, DbEntity {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class MembershipEntity implements DbEntity {
 
   protected UserEntity user;
   protected GroupEntity group;
@@ -82,8 +76,6 @@ public class MembershipEntity implements Serializable, DbEntity {
   @Override
   public String toString() {
     return this.getClass().getSimpleName()
-           + "[user=" + user
-           + ", group=" + group
-           + "]";
+           + "[user=%s, group=%s]".formatted(user, group);
   }
 }

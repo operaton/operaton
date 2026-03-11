@@ -123,7 +123,7 @@ class HistoricIdentityLinkLogTest {
 
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isEqualTo(4);
-    assertThat(query.type(IdentityLinkType.OWNER).count()).isEqualTo(1);
+    assertThat(query.type(IdentityLinkType.OWNER).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -145,16 +145,16 @@ class HistoricIdentityLinkLogTest {
 
     //Query test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.userId(A_USER_ID).count()).isEqualTo(1);
+    assertThat(query.userId(A_USER_ID).count()).isOne();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isEqualTo(1);
+    assertThat(query.operationType(IDENTITY_LINK_ADD).count()).isOne();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
     assertThat(query.operationType(IDENTITY_LINK_DELETE).count()).isZero();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isEqualTo(1);
+    assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -200,7 +200,7 @@ class HistoricIdentityLinkLogTest {
     assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isEqualTo(6);
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.type(IdentityLinkType.OWNER).count()).isEqualTo(1);
+    assertThat(query.type(IdentityLinkType.OWNER).count()).isOne();
   }
 
   @Deployment(resources = {"org/operaton/bpm/engine/test/api/runtime/oneTaskProcess.bpmn20.xml"})
@@ -380,12 +380,12 @@ class HistoricIdentityLinkLogTest {
 
     // Basic Query test
     HistoricIdentityLinkLogQuery query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isEqualTo(1);
-    assertThat(query.userId(USER_1).count()).isEqualTo(1);
+    assertThat(query.type(IdentityLinkType.ASSIGNEE).count()).isOne();
+    assertThat(query.userId(USER_1).count()).isOne();
 
     query = historyService.createHistoricIdentityLinkLogQuery();
-    assertThat(query.type(IdentityLinkType.OWNER).count()).isEqualTo(1);
-    assertThat(query.userId(OWNER_1).count()).isEqualTo(1);
+    assertThat(query.type(IdentityLinkType.OWNER).count()).isOne();
+    assertThat(query.userId(OWNER_1).count()).isOne();
 
     taskService.deleteTask(taskAssigneeId,true);
     taskService.deleteTask(taskOwnerId,true);

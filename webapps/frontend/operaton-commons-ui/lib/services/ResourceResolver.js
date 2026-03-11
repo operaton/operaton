@@ -24,7 +24,7 @@ module.exports = [
   '$location',
   'Notifications',
   '$translate',
-  function($route, $q, $location, Notifications, $translate) {
+  function ($route, $q, $location, Notifications, $translate) {
     function getByRouteParam(paramName, options) {
       var deferred = $q.defer();
 
@@ -43,7 +43,7 @@ module.exports = [
         if (errorResponse.status === 404) {
           message = $translate.instant(
             'SERVICES_RESOURCE_RESOLVER_ID_NOT_FOUND',
-            {resourceName: resourceName, id: id}
+            {resourceName: resourceName, id: id},
           );
           replace = true;
 
@@ -58,13 +58,13 @@ module.exports = [
           }
         } else if (errorResponse.status === 401) {
           message = $translate.instant(
-            'SERVICES_RESOURCE_RESOLVER_AUTH_FAILED'
+            'SERVICES_RESOURCE_RESOLVER_AUTH_FAILED',
           );
           redirectTo = '/login';
         } else {
           message = $translate.instant(
             'SERVICES_RESOURCE_RESOLVER_RECEIVED_STATUS',
-            {status: errorResponse.status}
+            {status: errorResponse.status},
           );
           redirectTo = '/dashboard';
         }
@@ -79,11 +79,11 @@ module.exports = [
           Notifications.addError({
             status: $translate.instant(
               'SERVICES_RESOURCE_RESOLVER_DISPLAY_FAILED',
-              {resourceName: resourceName}
+              {resourceName: resourceName},
             ),
             message: message,
             http: true,
-            exclusive: ['http']
+            exclusive: ['http'],
           });
         }
 
@@ -93,14 +93,14 @@ module.exports = [
       // resolve
       var promise = resolve(id);
       if (promise.$promise && promise.$promise.then) {
-        promise = promise.$promise.then(function(response) {
+        promise = promise.$promise.then(function (response) {
           succeed(response);
         }, fail);
       } else if (promise.then) {
         promise = promise.then(succeed, fail);
       } else {
         throw new Error(
-          $translate.instant('SERVICES_RESOURCE_RESOLVER_NO_PROMISE')
+          $translate.instant('SERVICES_RESOURCE_RESOLVER_NO_PROMISE'),
         );
       }
 
@@ -108,7 +108,7 @@ module.exports = [
     }
 
     return {
-      getByRouteParam: getByRouteParam
+      getByRouteParam: getByRouteParam,
     };
-  }
+  },
 ];

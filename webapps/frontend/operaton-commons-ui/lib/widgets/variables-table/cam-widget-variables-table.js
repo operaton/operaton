@@ -29,9 +29,9 @@ var emptyVariable = {
     name: null,
     type: null,
     value: null,
-    valueInfo: {}
+    valueInfo: {},
   },
-  additions: {}
+  additions: {},
 };
 
 function deepCopy(original) {
@@ -40,10 +40,10 @@ function deepCopy(original) {
 
 function noopPromise(info /*, i*/) {
   return {
-    then: function(success /*, error*/) {
+    then: function (success /*, error*/) {
       success(angular.copy(info.variable));
       // error('Not implemented');
-    }
+    },
   };
 }
 
@@ -51,7 +51,7 @@ module.exports = [
   '$uibModal',
   '$translate',
   '$document',
-  function($modal, $translate, $document) {
+  function ($modal, $translate, $document) {
     return {
       template: template,
 
@@ -74,10 +74,10 @@ module.exports = [
         onChangeEnd: '&',
         onToggleEditMode: '=?',
         defaultSort: '=?',
-        ignoreTypes: '=?'
+        ignoreTypes: '=?',
       },
 
-      link: function($scope) {
+      link: function ($scope) {
         /**
          * Starting with clipboard.js 2.0.9 creating a
          * fake textarea for values not of type string is broken.
@@ -85,10 +85,10 @@ module.exports = [
          * @param value the value that is not a string.
          * @returns {string} a string value.
          */
-        $scope.asString = value => value + '';
+        $scope.asString = (value) => value + '';
 
         if ($scope.validatable) {
-          const onHideValidationPopover = e => {
+          const onHideValidationPopover = (e) => {
             const modalWindow = angular.element('.modal');
             const modalBackdrop = angular.element('.modal-backdrop');
             if (
@@ -100,14 +100,14 @@ module.exports = [
             ) {
               $scope.$apply(() => {
                 $scope.variables.forEach(
-                  variable => (variable.showFailures = false)
+                  (variable) => (variable.showFailures = false),
                 );
               });
             }
           };
           $document.on('click', onHideValidationPopover);
           $scope.$on('$destroy', () =>
-            $document.off('click', onHideValidationPopover)
+            $document.off('click', onHideValidationPopover),
           );
         }
 
@@ -143,7 +143,7 @@ module.exports = [
 
         // Array of header classes
         $scope.headerClasses = [];
-        $scope.headers.forEach(function(column) {
+        $scope.headers.forEach(function (column) {
           $scope.headerClasses.push(column.class);
         });
 
@@ -152,7 +152,7 @@ module.exports = [
         $scope.variableTypes = angular.copy(varUtils.types);
         $scope.variableTypes = $scope.ignoreTypes
           ? $scope.variableTypes.filter(
-              types => !$scope.ignoreTypes.includes(types)
+              (types) => !$scope.ignoreTypes.includes(types),
             )
           : $scope.variableTypes;
         $scope.defaultValues = varUtils.defaultValues;
@@ -160,7 +160,7 @@ module.exports = [
         $scope.isBinary = varUtils.isBinary($scope);
         $scope.useCheckbox = varUtils.useCheckbox($scope);
 
-        ['uploadVar', 'deleteVar', 'saveVar'].forEach(function(name) {
+        ['uploadVar', 'deleteVar', 'saveVar'].forEach(function (name) {
           $scope[name] = angular.isFunction($scope[name])
             ? $scope[name]
             : noopPromise;
@@ -170,12 +170,12 @@ module.exports = [
         $scope.sortObj = $scope.defaultSort;
 
         // Order Icons
-        $scope.orderClass = function(forColumn) {
+        $scope.orderClass = function (forColumn) {
           forColumn = forColumn || $scope.sortObj.sortBy;
           var icons = {
             none: 'minus',
             desc: 'chevron-down',
-            asc: 'chevron-up'
+            asc: 'chevron-up',
           };
           return (
             'glyphicon-' +
@@ -188,7 +188,7 @@ module.exports = [
         };
 
         // On-click function to order Columns
-        $scope.changeOrder = function(column) {
+        $scope.changeOrder = function (column) {
           $scope.sortObj.sortBy = column;
           $scope.sortObj.sortOrder =
             $scope.sortObj.sortOrder === 'desc' ? 'asc' : 'desc';
@@ -196,7 +196,7 @@ module.exports = [
           $scope.onSortChange({sortObj: $scope.sortObj});
         };
 
-        var variableModalConfig = function(variable, template, readonly) {
+        var variableModalConfig = function (variable, template, readonly) {
           return {
             template: template,
 
@@ -205,22 +205,22 @@ module.exports = [
             windowClass: 'cam-widget-variable-dialog',
 
             resolve: {
-              variable: function() {
+              variable: function () {
                 return angular.copy(_getVar(variable));
               },
-              readonly: readonly
-            }
+              readonly: readonly,
+            },
           };
         };
 
         $scope.editVar = angular.isFunction($scope.editVar)
           ? $scope.editVar
-          : function(info, v) {
-              var readonly = function() {
+          : function (info, v) {
+              var readonly = function () {
                 return !$scope.isEditable('value', $scope.variables[v]);
               };
               const result = $modal.open(
-                variableModalConfig(v, varUtils.templateDialog, readonly)
+                variableModalConfig(v, varUtils.templateDialog, readonly),
               ).result;
               result.then(() => (info.changed = true)).catch(angular.noop);
               return result;
@@ -228,19 +228,19 @@ module.exports = [
 
         $scope.readStringVar = angular.isFunction($scope.readStringVar)
           ? $scope.readStringVar
-          : function(v) {
-              var readonly = function() {
+          : function (v) {
+              var readonly = function () {
                 return true;
               };
 
               return $modal.open(
-                variableModalConfig(v, varUtils.templateStringDialog, readonly)
+                variableModalConfig(v, varUtils.templateStringDialog, readonly),
               ).result;
             };
 
         $scope.downloadLink = angular.isFunction($scope.downloadVar)
           ? $scope.downloadVar
-          : function(info) {
+          : function (info) {
               return (
                 '/operaton/api/engine/engine/default/variable-instance/' +
                 info.variable.id +
@@ -259,7 +259,7 @@ module.exports = [
           } else {
             info.valid = typeUtils.isType(
               info.variable.value,
-              info.variable.type
+              info.variable.type,
             );
           }
 
@@ -275,7 +275,7 @@ module.exports = [
               if (info.variable.type !== 'Boolean') {
                 newTyped = typeUtils.convertToType(
                   info.variable.value,
-                  info.variable.type
+                  info.variable.type,
                 );
               } else {
                 newTyped = info.variable.value
@@ -294,7 +294,7 @@ module.exports = [
         }
 
         function initVariables() {
-          ($scope.variables || []).forEach(function(info, i) {
+          ($scope.variables || []).forEach(function (info, i) {
             info.valid = true;
 
             var varPath = 'variables[' + i + '].variable';
@@ -307,24 +307,24 @@ module.exports = [
             $scope.$watch(varPath + '.name', wrapedValidate);
             $scope.$watch(varPath + '.type', wrapedValidate);
 
-            $scope.$watch('variables[' + i + '].editMode', function(
-              now,
-              before
-            ) {
-              if (angular.isUndefined(now)) {
-                return;
-              }
+            $scope.$watch(
+              'variables[' + i + '].editMode',
+              function (now, before) {
+                if (angular.isUndefined(now)) {
+                  return;
+                }
 
-              if (now === true) {
-                info._copy = deepCopy(info.variable);
-              } else if (now === false && before === true && info._copy) {
-                info.variable.type = info._copy.type;
-                info.variable.name = info._copy.name;
-                info.variable.value = info._copy.value;
+                if (now === true) {
+                  info._copy = deepCopy(info.variable);
+                } else if (now === false && before === true && info._copy) {
+                  info.variable.type = info._copy.type;
+                  info.variable.name = info._copy.name;
+                  info.variable.value = info._copy.value;
 
-                delete info._copy;
-              }
-            });
+                  delete info._copy;
+                }
+              },
+            );
 
             validate(info, i);
             backups[i] = info.variable.value;
@@ -336,111 +336,111 @@ module.exports = [
 
         $scope.canEditVariable = angular.isFunction($scope.isVariableEditable)
           ? $scope.isVariableEditable
-          : function() {
+          : function () {
               return true;
             };
 
-        $scope.isEditable = function(what, info) {
+        $scope.isEditable = function (what, info) {
           return info.editMode && $scope.editable.indexOf(what) > -1;
         };
 
-        $scope.hasEditDialog = function(type) {
+        $scope.hasEditDialog = function (type) {
           return (
             type &&
             ['object', 'string', 'json', 'xml'].indexOf(type.toLowerCase()) > -1
           );
         };
 
-        $scope.rowClasses = function(info /*, v*/) {
+        $scope.rowClasses = function (info /*, v*/) {
           return [
             info.editMode ? 'editing' : null,
             info.valid ? null : 'ng-invalid',
-            info.valid ? null : 'ng-invalid-cam-variable-validator'
+            info.valid ? null : 'ng-invalid-cam-variable-validator',
           ];
         };
 
-        $scope.colClasses = function(info, headerClass /*, v*/) {
+        $scope.colClasses = function (info, headerClass /*, v*/) {
           return [
             $scope.isEditable(headerClass, info) ? 'editable' : null,
             'type-' + (info.variable.type || '').toLowerCase(),
-            'col-' + headerClass
+            'col-' + headerClass,
           ];
         };
 
-        $scope.isNull = function(v) {
+        $scope.isNull = function (v) {
           return $scope.variables[v].variable.value === null;
         };
 
-        $scope.setNull = function(v) {
+        $scope.setNull = function (v) {
           var variable = _getVar(v);
           backups[v] = variable.value;
           variable.value = null;
         };
 
-        $scope.setNonNull = function(v) {
+        $scope.setNonNull = function (v) {
           var variable = _getVar(v);
           variable.value = backups[v] || $scope.defaultValues[variable.type];
         };
 
-        $scope.editVariableValue = function(v) {
+        $scope.editVariableValue = function (v) {
           var info = $scope.variables[v];
           $scope
             .editVar(info, v)
-            .then(function(result) {
+            .then(function (result) {
               _getVar(v).value = result.value;
               _getVar(v).valueInfo = result.valueInfo;
             })
             .catch(angular.noop);
         };
 
-        $scope.addVariable = function() {
+        $scope.addVariable = function () {
           $scope.variables.push(angular.copy(emptyVariable));
         };
 
-        $scope.deleteVariable = function(v) {
+        $scope.deleteVariable = function (v) {
           var info = $scope.variables[v];
           $modal
             .open({
               controller: [
                 '$scope',
-                function($scope) {
+                function ($scope) {
                   $scope.body = $translate.instant(
                     'CAM_WIDGET_VARIABLES_TABLE_DIALOGUE',
-                    {name: info.variable.name}
+                    {name: info.variable.name},
                   );
-                  $scope.submit = function() {
+                  $scope.submit = function () {
                     $scope.$close();
                     deleteVariable(v);
                   };
 
-                  $scope.dismiss = function() {
+                  $scope.dismiss = function () {
                     $scope.$close();
                   };
-                }
+                },
               ],
-              template: confirmationTemplate
+              template: confirmationTemplate,
             })
             .result.catch(angular.noop);
         };
 
-        var deleteVariable = function(v) {
+        var deleteVariable = function (v) {
           var info = $scope.variables[v];
 
           $scope.deleteVar(info, v).then(
-            function() {
+            function () {
               $scope.variables.splice($scope.variables.indexOf(info), 1);
             },
-            function(/*err*/) {
+            function (/*err*/) {
               // console.error(err);
-            }
+            },
           );
         };
 
-        $scope.saveVariable = function(v) {
+        $scope.saveVariable = function (v) {
           var info = $scope.variables[v];
           $scope.enableEditMode(info, false);
           $scope.saveVar(info, v).then(
-            function(saved) {
+            function (saved) {
               info.variable.name = saved.name;
               var type = (info.variable.type = saved.type);
               info.variable.value = saved.value;
@@ -453,35 +453,35 @@ module.exports = [
               }
               $scope.onSaved && $scope.onSaved(v, info);
             },
-            function(/*err*/) {
+            function (/*err*/) {
               // console.error(err);
               $scope.enableEditMode(info, true);
-            }
+            },
           );
         };
 
-        $scope.uploadVariable = function(v) {
+        $scope.uploadVariable = function (v) {
           var info = $scope.variables[v];
 
           $scope.uploadVar(info, v).then(
-            function(/*saved*/) {
+            function (/*saved*/) {
               delete info._copy;
               $scope.enableEditMode(info, false);
             },
-            function(/*err*/) {
+            function (/*err*/) {
               // console.error(err);
               $scope.enableEditMode(info, false);
-            }
+            },
           );
         };
 
-        $scope.enableEditMode = function(info, enableEditMode) {
+        $scope.enableEditMode = function (info, enableEditMode) {
           $scope.onToggleEditMode &&
             $scope.onToggleEditMode(info, enableEditMode);
           info.editMode = enableEditMode;
           if (enableEditMode) {
             var uncompletedCount = 0;
-            $scope.variables.forEach(function(variable) {
+            $scope.variables.forEach(function (variable) {
               if (variable.editMode) {
                 uncompletedCount++;
               }
@@ -491,7 +491,7 @@ module.exports = [
             }
           } else {
             var completedCount = 0;
-            $scope.variables.forEach(function(variable) {
+            $scope.variables.forEach(function (variable) {
               if (!variable.editMode) {
                 completedCount++;
               }
@@ -501,7 +501,7 @@ module.exports = [
             }
           }
         };
-      }
+      },
     };
-  }
+  },
 ];

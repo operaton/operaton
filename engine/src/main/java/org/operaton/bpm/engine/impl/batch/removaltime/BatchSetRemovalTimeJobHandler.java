@@ -39,6 +39,7 @@ import static org.operaton.bpm.engine.ProcessEngineConfiguration.HISTORY_REMOVAL
 public class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler<SetRemovalTimeBatchConfiguration> {
 
   public static final BatchJobDeclaration JOB_DECLARATION = new BatchJobDeclaration(Batch.TYPE_BATCH_SET_REMOVAL_TIME);
+  private static final SetRemovalTimeJsonConverter JSON_CONVERTER = new SetRemovalTimeJsonConverter();
 
   public void executeHandler(SetRemovalTimeBatchConfiguration batchConfiguration,
                              ExecutionEntity execution,
@@ -131,7 +132,7 @@ public class BatchSetRemovalTimeJobHandler extends AbstractBatchJobHandler<SetRe
   }
 
   protected SetRemovalTimeJsonConverter getJsonConverterInstance() {
-    return SetRemovalTimeJsonConverter.INSTANCE;
+    return JSON_CONVERTER;
   }
 
   @Override

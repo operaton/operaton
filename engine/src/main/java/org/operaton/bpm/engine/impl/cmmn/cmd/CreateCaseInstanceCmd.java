@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Map;
 
 import org.operaton.bpm.engine.exception.cmmn.CaseDefinitionNotFoundException;
@@ -37,9 +35,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class CreateCaseInstanceCmd implements Command<CaseInstance>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class CreateCaseInstanceCmd implements Command<CaseInstance> {
   protected String caseDefinitionKey;
   protected String caseDefinitionId;
   protected Map<String, Object> variables;
@@ -82,12 +78,12 @@ public class CreateCaseInstanceCmd implements Command<CaseInstance>, Serializabl
     if (caseDefinitionId!=null) {
       caseDefinition =  findById(deploymentCache, caseDefinitionId);
 
-      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for id = '" + caseDefinitionId + "'", "caseDefinition", caseDefinition);
+      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for id = '%s'".formatted(caseDefinitionId), "caseDefinition", caseDefinition);
 
     } else {
       caseDefinition = findByKey(deploymentCache, caseDefinitionKey);
 
-      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for key '" + caseDefinitionKey + "'", "caseDefinition", caseDefinition);
+      ensureNotNull(CaseDefinitionNotFoundException.class, "No case definition found for key '%s'".formatted(caseDefinitionKey), "caseDefinition", caseDefinition);
     }
 
     return caseDefinition;

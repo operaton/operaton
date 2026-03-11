@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.impl.cmd;
 
 import java.io.ByteArrayInputStream;
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,11 +34,9 @@ import org.operaton.bpm.engine.exception.NotFoundException;
 import org.operaton.bpm.engine.exception.NotValidException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cfg.TransactionLogger;
 import org.operaton.bpm.engine.impl.cfg.TransactionState;
-import org.operaton.bpm.engine.impl.cmmn.deployer.CmmnDeployer;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 import org.operaton.bpm.engine.impl.persistence.deploy.DeploymentFailListener;
@@ -73,15 +69,16 @@ import org.operaton.bpm.model.cmmn.Cmmn;
 import org.operaton.bpm.model.cmmn.CmmnModelInstance;
 import org.operaton.bpm.model.cmmn.instance.Case;
 
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.CMMN_RESOURCE_SUFFIXES;
+
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  * @author Thorben Lindhauer
  * @author Daniel Meyer
  */
-public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class DeployCmd implements Command<DeploymentWithDefinitions> {
   private static final CommandLogger LOG = ProcessEngineLogger.CMD_LOGGER;
   private static final TransactionLogger TX_LOG = ProcessEngineLogger.TX_LOGGER;
 
@@ -144,7 +141,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       DeploymentEntity deploymentToRegister = initDeployment();
       Map<String, ResourceEntity> resourcesToDeploy =
           resolveResourcesToDeploy(commandContext, deploymentToRegister);
-      Map<String, ResourceEntity> resourcesToIgnore = new HashMap<>(deploymentToRegister.getResources());
+      Map<String, Resource> resourcesToIgnore = new HashMap<>(deploymentToRegister.getResources());
       resourcesToIgnore.keySet().removeAll(resourcesToDeploy.keySet());
 
       // save initial deployment resources before they are replaced with only the deployed ones
@@ -206,51 +203,57 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
       CommandContext commandContext,
       DeploymentEntity candidateDeployment) {
 
-    Map<String, ResourceEntity> resourcesToDeploy = new HashMap<>();
     Map<String, ResourceEntity> candidateResources = candidateDeployment.getResources();
 
     if (deploymentBuilder.isDuplicateFilterEnabled()) {
-
       if (candidateDeployment.getName() == null) {
         LOG.warnFilteringDuplicatesEnabledWithNullDeploymentName();
       }
+      String source = initDeploymentSource(candidateDeployment);
+      Map<String, ResourceEntity> existingResources = resolveLatestResources(commandContext, candidateDeployment, candidateResources, source);
+      return filterResourcesToDeploy(candidateResources, existingResources);
+    } else {
+      return candidateResources;
+    }
+  }
 
-      String source = candidateDeployment.getSource();
-      if (source == null || source.isEmpty()) {
-        source = ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE;
-      }
+  private String initDeploymentSource(DeploymentEntity candidateDeployment) {
+    String source = candidateDeployment.getSource();
+    if (source == null || source.isEmpty()) {
+      source = ProcessApplicationDeployment.PROCESS_APPLICATION_DEPLOYMENT_SOURCE;
+    }
+    return source;
+  }
 
-      Map<String, ResourceEntity> existingResources = commandContext
-          .getResourceManager()
-          .findLatestResourcesByDeploymentName(
-              candidateDeployment.getName(),
-              candidateResources.keySet(),
-              source,
-              candidateDeployment.getTenantId());
+  private Map<String, ResourceEntity> resolveLatestResources(CommandContext commandContext, DeploymentEntity candidateDeployment, Map<String, ResourceEntity> candidateResources, String source) {
+    return commandContext
+        .getResourceManager()
+        .findLatestResourcesByDeploymentName(
+            candidateDeployment.getName(),
+            candidateResources.keySet(),
+            source,
+            candidateDeployment.getTenantId());
+  }
 
-      for (ResourceEntity deployedResource : candidateResources.values()) {
-        String resourceName = deployedResource.getName();
-        ResourceEntity existingResource = existingResources.get(resourceName);
+  private Map<String, ResourceEntity> filterResourcesToDeploy(Map<String, ResourceEntity> candidateResources, Map<String, ResourceEntity> existingResources) {
+    Map<String, ResourceEntity> resourcesToDeploy = new HashMap<>();
+    for (ResourceEntity deployedResource : candidateResources.values()) {
+      String resourceName = deployedResource.getName();
+      ResourceEntity existingResource = existingResources.get(resourceName);
 
-        if (existingResource == null
-            || existingResource.isGenerated()
-            || deploymentHandler.shouldDeployResource(deployedResource, existingResource)) {
+      if (existingResource == null
+          || existingResource.isGenerated()
+          || deploymentHandler.shouldDeployResource(deployedResource, existingResource)) {
 
-          if (deploymentBuilder.isDeployChangedOnly()) {
-            // resource should be deployed
-            resourcesToDeploy.put(resourceName, deployedResource);
-          } else {
-            // all resources should be deployed
-            resourcesToDeploy = candidateResources;
-            break;
-          }
+        if (deploymentBuilder.isDeployChangedOnly()) {
+          // resource should be deployed
+          resourcesToDeploy.put(resourceName, deployedResource);
+        } else {
+          // all resources should be deployed
+          return candidateResources;
         }
       }
-
-    } else {
-      resourcesToDeploy = candidateResources;
     }
-
     return resourcesToDeploy;
   }
 
@@ -286,7 +289,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
   protected ProcessApplicationRegistration registerProcessApplication(CommandContext commandContext,
       DeploymentEntity deploymentToRegister,
-      CandidateDeployment candidateDeployment, Collection ignoredResources) {
+      CandidateDeployment candidateDeployment, Collection<Resource> ignoredResources) {
 
     ProcessApplicationDeploymentBuilderImpl appDeploymentBuilder = (ProcessApplicationDeploymentBuilderImpl) deploymentBuilder;
     final ProcessApplicationReference appReference = appDeploymentBuilder.getProcessApplicationReference();
@@ -480,8 +483,8 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
     return result;
   }
 
-  protected List<? extends ProcessDefinition>   getDeployedProcesses(CommandContext commandContext, DeploymentWithDefinitions deployment) {
-    List<? extends ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
+  protected List<ProcessDefinition> getDeployedProcesses(CommandContext commandContext, DeploymentWithDefinitions deployment) {
+    List<ProcessDefinition> deployedProcessDefinitions = deployment.getDeployedProcessDefinitions();
     if (deployedProcessDefinitions == null) {
       // existing deployment
       ProcessDefinitionManager manager = commandContext.getProcessDefinitionManager();
@@ -493,7 +496,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
 
   protected String[] getProcessDefinitionsFromResources(CommandContext commandContext,
       DeploymentEntity deploymentToRegister,
-      Collection ignoredResources) {
+      Collection<Resource> ignoredResources) {
 
     Set<String> processDefinitionKeys = new HashSet<>();
 
@@ -501,8 +504,7 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
     processDefinitionKeys.addAll(parseProcessDefinitionKeys(ignoredResources));
 
     // get process definition keys for updated process definitions
-    for (ProcessDefinition processDefinition :
-        getDeployedProcesses(commandContext, deploymentToRegister)) {
+    for (ProcessDefinition processDefinition : getDeployedProcesses(commandContext, deploymentToRegister)) {
       if (processDefinition.getVersion() > 1) {
         processDefinitionKeys.add(processDefinition.getKey());
       }
@@ -585,11 +587,11 @@ public class DeployCmd implements Command<DeploymentWithDefinitions>, Serializab
   }
 
   protected boolean isBpmnResource(Resource resourceEntity) {
-    return StringUtil.hasAnySuffix(resourceEntity.getName(), BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    return StringUtil.hasAnySuffix(resourceEntity.getName(), BPMN_RESOURCE_SUFFIXES);
   }
 
   protected boolean isCmmnResource(Resource resourceEntity) {
-    return StringUtil.hasAnySuffix(resourceEntity.getName(), CmmnDeployer.CMMN_RESOURCE_SUFFIXES);
+    return StringUtil.hasAnySuffix(resourceEntity.getName(), CMMN_RESOURCE_SUFFIXES);
   }
 
   // ensures

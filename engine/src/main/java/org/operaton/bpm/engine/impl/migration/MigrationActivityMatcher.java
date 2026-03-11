@@ -22,12 +22,16 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * Check if two activities are equal in the context
  * of the migration of two process definitions.
  *
+ * <p>
  * It is required that the matcher for each activity of the source
  * process definition at most one activity of the target process
  * definition matches.
+ * </p>
  *
+ * <p>
  * For example the matching criterion should not be solely base on
  * the activity name which is a non unique attribute.
+ * </p>
  */
 public interface MigrationActivityMatcher {
 

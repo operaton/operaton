@@ -45,6 +45,11 @@ public class CmmnModelInstanceImpl extends ModelInstanceImpl implements CmmnMode
 
   @Override
   public CmmnModelInstance clone() {
+    return copy();
+  }
+
+  @Override
+  public CmmnModelInstance copy() {
     return new CmmnModelInstanceImpl(model, modelBuilder, document.clone());
   }
 

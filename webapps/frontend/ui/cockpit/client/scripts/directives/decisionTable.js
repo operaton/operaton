@@ -21,24 +21,24 @@ var template = require('./decisionTable.html?raw');
 
 var DirectiveController = [
   '$scope',
-  function($scope) {
+  function ($scope) {
     $scope.control = {};
-  }
+  },
 ];
 
-var Directive = function() {
+var Directive = function () {
   return {
     restrict: 'EAC',
     scope: {
       decisionTable: '=',
       control: '=?',
       table: '@',
-      onLoad: '&'
+      onLoad: '&',
     },
     controller: DirectiveController,
     template: template,
 
-    link: function() {}
+    link: function () {},
   };
 };
 

@@ -32,7 +32,9 @@ public interface SetJobRetriesBuilder {
   /**
    * Specifies a single {@link Job} by it's ID for the set retries action.
    *
+   * <p>
    * <strong>Note:</strong> Only one method of referencing jobs is allowed. If you use jobId, you can not use jobIds or jobDefinitionId.
+   * </p>
    *
    * @param jobId the Id of the job. Must not be null or empty ("").
    *
@@ -45,7 +47,9 @@ public interface SetJobRetriesBuilder {
   /**
    * Specifies a list of {@link Job jobs} by their IDs for the set retries action.
    *
+   * <p>
    * <strong>Note:</strong> Only one method of referencing jobs is allowed. If you use jobIds, you can not use jobId or jobDefinitionId.
+   * </p>
    *
    * @see ManagementService#setJobRetries(List, int)
    *
@@ -58,7 +62,9 @@ public interface SetJobRetriesBuilder {
   /**
    * Specifies a {@link Job} definition id for the set retries action. All <strong>failed</strong> {@link Job jobs} with that definition id will be updated.
    *
+   * <p>
    * <strong>Note:</strong> Only one method of referencing jobs is allowed. If you use jobDefinitionId, you can not use jobId or jobId.
+   * </p>
    *
    * @see ManagementService#setJobRetriesByJobDefinitionId(String, int)
    *
@@ -71,9 +77,11 @@ public interface SetJobRetriesBuilder {
   /**
    * Specifies a due date to be set on the referenced {@link Job jobs}.
    *
+   * <p>
    * When the number of retries of a job are incremented it is not automatically scheduled for immediate execution.
    * When a {@link Job} is executed is determined by the due date. By setting the due date together with the job retries, the scheduled execution date of the
    * job can be adjusted.
+   * </p>
    *
    * @param dueDate The new due date for the updated jobs. If it is null, the due date will be set to null. If
    * {@link ProcessEngineConfiguration#isEnsureJobDueDateNotNull() ensureJobDueDateNotNull} is true, the due date will be set to the current date instead of null.

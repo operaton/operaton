@@ -163,6 +163,7 @@ public class BatchModificationAuthorizationTest {
   }
 
   @TestTemplate
+  @SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
   void executeModification() {
     //given
     ProcessInstance processInstance1 = engineRule.getRuntimeService().startProcessInstanceByKey(ProcessModels.PROCESS_KEY);

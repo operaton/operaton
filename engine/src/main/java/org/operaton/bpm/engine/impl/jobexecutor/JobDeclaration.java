@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.jobexecutor;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Date;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
@@ -49,9 +47,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Daniel Meyer
  *
  */
-public abstract class JobDeclaration<S, T extends JobEntity> implements Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public abstract class JobDeclaration<S, T extends JobEntity> {
 
   /** the id of the associated persistent jobDefinitionId */
   protected String jobDefinitionId;
@@ -91,23 +87,8 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
       job.setBatchId(batchJobContext.getBatch().getId());
     }
 
-    if(jobDefId != null) {
-
-      JobDefinitionEntity jobDefinition = Context.getCommandContext()
-        .getJobDefinitionManager()
-        .findById(jobDefId);
-
-      if(jobDefinition != null) {
-        // if job definition is suspended while creating a job instance,
-        // suspend the job instance right away:
-        if(jobDefinition.isSuspended()) {
-          job.setSuspensionState(jobDefinition.getSuspensionState());
-        }
-        job.setProcessDefinitionKey(jobDefinition.getProcessDefinitionKey());
-        job.setProcessDefinitionId(jobDefinition.getProcessDefinitionId());
-        job.setTenantId(jobDefinition.getTenantId());
-        job.setDeploymentId(jobDefinition.getDeploymentId());
-      }
+    if (jobDefId != null) {
+      setPropertiesFromJobDefinition(job);
 
     }
 
@@ -115,30 +96,8 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     job.setJobHandlerType(resolveJobHandlerType(context));
     job.setExclusive(resolveExclusive(context));
 
-    Integer retries = null;
-    CommandContext commandContext = Context.getCommandContext();
 
-    // use legacy behavior if it is enabled
-    // the legacy behavior sets the retries left value to 3 in the context regardless data in the database
-    if (Context.getProcessEngineConfiguration().isLegacyJobRetryBehaviorEnabled()) {
-      job.setRetries(resolveRetries(context));
-    } else {
-      DefaultJobRetryCmd defaultJobRetryCmd = new DefaultJobRetryCmd(job.getId(), null);
-      ActivityImpl currentActivity = defaultJobRetryCmd.getCurrentActivity(commandContext, job);
-      if (currentActivity != null) {
-        FailedJobRetryConfiguration retryConfiguration =
-            defaultJobRetryCmd.getFailedJobRetryConfiguration(job, currentActivity);
-        if (retryConfiguration != null) {
-          retries = retryConfiguration.getRetries();
-        }
-      }
-      // When expression has 0 retries, set initial retries to 1 to avoid immediately raising an incident
-      if (retries != null && retries == 0) {
-        retries = 1;
-      }
-
-      job.setRetries(retries == null ? resolveRetries(context) : retries);
-    }
+    setRetries(context, job);
 
     job.setDuedate(resolveDueDate(context));
 
@@ -166,6 +125,54 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     postInitialize(context, job);
 
     return job;
+  }
+
+  private static <T extends JobEntity> void setPropertiesFromJobDefinition(T job) {
+    JobDefinitionEntity jobDefinition = Context.getCommandContext()
+      .getJobDefinitionManager()
+      .findById(job.getJobDefinitionId());
+
+    if(jobDefinition == null) {
+      return;
+    }
+
+    // if job definition is suspended while creating a job instance,
+    // suspend the job instance right away:
+    if(jobDefinition.isSuspended()) {
+      job.setSuspensionState(jobDefinition.getSuspensionState());
+    }
+    job.setProcessDefinitionKey(jobDefinition.getProcessDefinitionKey());
+    job.setProcessDefinitionId(jobDefinition.getProcessDefinitionId());
+    job.setTenantId(jobDefinition.getTenantId());
+    job.setDeploymentId(jobDefinition.getDeploymentId());
+  }
+
+  private void setRetries(S context, T job) {
+    // use legacy behavior if it is enabled
+    // the legacy behavior sets the retries left value to 3 in the context regardless data in the database
+    if (Context.getProcessEngineConfiguration().isLegacyJobRetryBehaviorEnabled()) {
+      job.setRetries(resolveRetries(context));
+      return;
+    }
+
+    Integer retries = null;
+    CommandContext commandContext = Context.getCommandContext();
+
+    DefaultJobRetryCmd defaultJobRetryCmd = new DefaultJobRetryCmd(job.getId(), null);
+    ActivityImpl currentActivity = defaultJobRetryCmd.getCurrentActivity(commandContext, job);
+    if (currentActivity != null) {
+      FailedJobRetryConfiguration retryConfiguration =
+          defaultJobRetryCmd.getFailedJobRetryConfiguration(job, currentActivity);
+      if (retryConfiguration != null) {
+        retries = retryConfiguration.getRetries();
+      }
+    }
+    // When expression has 0 retries, set initial retries to 1 to avoid immediately raising an incident
+    if (retries != null && retries == 0) {
+      retries = 1;
+    }
+
+    job.setRetries(retries == null ? resolveRetries(context) : retries);
   }
 
   /**
@@ -208,9 +215,9 @@ public abstract class JobDeclaration<S, T extends JobEntity> implements Serializ
     return jobHandlerType;
   }
 
-  protected JobHandler resolveJobHandler() {
-     JobHandler jobHandler = Context.getProcessEngineConfiguration().getJobHandlers().get(jobHandlerType);
-     ensureNotNull("Cannot find job handler '" + jobHandlerType + "' from job '" + this + "'", "jobHandler", jobHandler);
+  protected JobHandler<?> resolveJobHandler() {
+     JobHandler<?> jobHandler = Context.getProcessEngineConfiguration().getJobHandlers().get(jobHandlerType);
+     ensureNotNull("Cannot find job handler '%s' from job '%s'".formatted(jobHandlerType, this), "jobHandler", jobHandler);
 
      return jobHandler;
   }

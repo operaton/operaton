@@ -41,7 +41,6 @@ public interface SubProcessActivityBehavior extends ActivityBehavior {
    * this activity to perform its outgoing control flow logic.
    *
    * @param execution
-   * @throws java.lang.Exception
    */
-  void completed(ActivityExecution execution) throws Exception;
+  void completed(ActivityExecution execution);
 }

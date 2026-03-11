@@ -60,7 +60,7 @@ class MultiTenancyJobExecutorTest {
     ClockUtil.setCurrentTime(tomorrow());
     testRule.waitForJobExecutorToProcessAllJobs();
 
-    assertThat(engineRule.getTaskService().createTaskQuery().count()).isEqualTo(1L);
+    assertThat(engineRule.getTaskService().createTaskQuery().count()).isOne();
   }
 
   @Test

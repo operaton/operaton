@@ -48,7 +48,7 @@ import org.operaton.bpm.container.impl.threading.ra.inflow.JobExecutionHandlerAc
 )
 public class JcaExecutorServiceConnector implements ResourceAdapter {
 
-  public static final String ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE = "org.operaton.bpm.engine.ProcessEngine";
+  public static final String ORG_OPERATON_BPM_ENGINE_PROCESS_ENGINE = "org.operaton.bpm.engine.ProcessEngine";
 
   /**
    * This class must be free of engine classes to make it possible to install
@@ -113,7 +113,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   public void start(BootstrapContext ctx) throws ResourceAdapterInternalException {
 
     try {
-      Class.forName(ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE);
+      Class.forName(ORG_OPERATON_BPM_ENGINE_PROCESS_ENGINE);
     } catch (Exception e) {
       LOG.info("ProcessEngine classes not found in shared libraries. Not initializing operaton Platform JobExecutor Resource Adapter.");
       return;
@@ -124,7 +124,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
       if(commonJWorkManagerName != null && !commonJWorkManagerName.isEmpty()) {
         executorServiceWrapper.setExecutorService(new CommonJWorkManagerExecutorService(this, commonJWorkManagerName));
       } else {
-        throw new RuntimeException("Resource Adapter configuration property 'isUseCommonJWorkManager' is set to true but 'commonJWorkManagerName' is not provided.");
+        throw new JcaConfigException("Resource Adapter configuration property 'isUseCommonJWorkManager' is set to true but 'commonJWorkManagerName' is not provided.");
       }
 
     } else {
@@ -137,7 +137,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   @Override
   public void stop() {
     try {
-      Class.forName(ORG_CAMUNDA_BPM_ENGINE_PROCESS_ENGINE);
+      Class.forName(ORG_OPERATON_BPM_ENGINE_PROCESS_ENGINE);
     } catch (Exception e) {
       return;
     }
@@ -175,7 +175,7 @@ public class JcaExecutorServiceConnector implements ResourceAdapter {
   @Override
   public XAResource[] getXAResources(ActivationSpec[] specs) {
     LOG.finest("getXAResources()");
-    return null;
+    return new XAResource[0];
   }
 
   // getters ///////////////////////////////////////////////////////////////

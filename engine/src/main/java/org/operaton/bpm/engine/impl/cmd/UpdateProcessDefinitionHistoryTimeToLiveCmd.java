@@ -16,9 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
 import org.operaton.bpm.engine.impl.HistoryTimeToLiveParser;
@@ -34,10 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 /**
  * @author Svetlana Dorokhova
  */
-public class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class UpdateProcessDefinitionHistoryTimeToLiveCmd implements Command<Void> {
   protected String processDefinitionId;
   protected Integer historyTimeToLive;
 

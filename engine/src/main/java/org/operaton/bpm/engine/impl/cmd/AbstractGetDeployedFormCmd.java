@@ -35,9 +35,11 @@ import org.operaton.bpm.engine.repository.OperatonFormDefinition;
 public abstract class AbstractGetDeployedFormCmd implements Command<InputStream> {
 
   protected static final String EMBEDDED_KEY = "embedded:";
-  protected static final String CAMUNDA_FORMS_KEY = "operaton-forms:";
+  protected static final String OPERATON_FORMS_KEY = "operaton-forms:";
+  protected static final String CAMUNDA_FORMS_KEY = "camunda-forms:";
   protected static final int EMBEDDED_KEY_LENGTH = EMBEDDED_KEY.length();
   protected static final int CAMUNDA_FORMS_KEY_LENGTH = CAMUNDA_FORMS_KEY.length();
+  protected static final int OPERATON_FORMS_KEY_LENGTH = OPERATON_FORMS_KEY.length();
 
   protected static final String DEPLOYMENT_KEY = "deployment:";
   protected static final int DEPLOYMENT_KEY_LENGTH = DEPLOYMENT_KEY.length();
@@ -67,12 +69,14 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
 
     if (resourceName.startsWith(EMBEDDED_KEY)) {
       resourceName = resourceName.substring(EMBEDDED_KEY_LENGTH, resourceName.length());
+    } else if (resourceName.startsWith(OPERATON_FORMS_KEY)) {
+      resourceName = resourceName.substring(OPERATON_FORMS_KEY_LENGTH, resourceName.length());
     } else if (resourceName.startsWith(CAMUNDA_FORMS_KEY)) {
       resourceName = resourceName.substring(CAMUNDA_FORMS_KEY_LENGTH, resourceName.length());
     }
 
     if (!resourceName.startsWith(DEPLOYMENT_KEY)) {
-      throw new BadUserRequestException("The form key '" + formKey + "' does not reference a deployed form.");
+      throw new BadUserRequestException("The form key '%s' does not reference a deployed form.".formatted(formKey));
     }
 
     resourceName = resourceName.substring(DEPLOYMENT_KEY_LENGTH, resourceName.length());
@@ -86,7 +90,7 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
         new GetOperatonFormDefinitionCmd(operatonFormRef, deploymentId));
 
     if (definition == null) {
-      throw new NotFoundException("No Operaton Form Definition was found for Operaton Form Ref: " + operatonFormRef);
+      throw new NotFoundException("No Operaton Form Definition was found for Operaton Form Ref: %s".formatted(operatonFormRef));
     }
 
     return getDeploymentResource(definition.getDeploymentId(), definition.getResourceName());
@@ -97,7 +101,7 @@ public abstract class AbstractGetDeployedFormCmd implements Command<InputStream>
     try {
       return commandContext.runWithoutAuthorization(getDeploymentResourceCmd);
     } catch (DeploymentResourceNotFoundException e) {
-      throw new NotFoundException("The form with the resource name '" + resourceName + "' cannot be found in deployment with id " + deploymentId, e);
+      throw new NotFoundException("The form with the resource name '%s' cannot be found in deployment with id %s".formatted(resourceName, deploymentId), e);
     }
   }
 

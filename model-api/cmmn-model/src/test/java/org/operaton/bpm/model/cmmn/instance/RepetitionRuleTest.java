@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.cmmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.operaton.bpm.model.cmmn.impl.CmmnModelConstants;
 
@@ -34,17 +33,17 @@ public class RepetitionRuleTest extends CmmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new ChildElementAssumption(ConditionExpression.class, 0, 1)
         );
   }
 
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
-    return Arrays.asList(
+    return List.of(
           new AttributeAssumption("name"),
           new AttributeAssumption("contextRef"),
-          new AttributeAssumption(CmmnModelConstants.CAMUNDA_NS, "repeatOnStandardEvent")
+          new AttributeAssumption(CmmnModelConstants.OPERATON_NS, "repeatOnStandardEvent")
         );
   }
 

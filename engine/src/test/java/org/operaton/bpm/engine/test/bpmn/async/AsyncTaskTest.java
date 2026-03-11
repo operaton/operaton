@@ -90,7 +90,7 @@ public class AsyncTaskTest {
     assertThat(activityInstance.getChildTransitionInstances()[0]).isNotNull();
 
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the service was not invoked:
     assertThat(invocation).isFalse();
 
@@ -106,7 +106,7 @@ public class AsyncTaskTest {
   @Test
   void testAsyncServiceListeners() {
     String pid = runtimeService.startProcessInstanceByKey("asyncService").getProcessInstanceId();
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not yet invoked:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
 
@@ -122,7 +122,7 @@ public class AsyncTaskTest {
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the service was not invoked:
     assertThat(invocation).isFalse();
 
@@ -184,7 +184,7 @@ public class AsyncTaskTest {
     assertThat(numInvocations).isZero();
 
     // now there should be one job for the first service task wrapped in the multi-instance body:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // execute all jobs - one for each service task:
     testRule.executeAvailableJobs(5);
 
@@ -247,7 +247,7 @@ public class AsyncTaskTest {
     assertThat(numInvocations).isZero();
 
     // now there should be one job for the multi-instance body:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // execute all jobs - one for multi-instance body and one for each service task wrapped in the multi-instance body:
     testRule.executeAvailableJobs(1+5);
 
@@ -274,7 +274,7 @@ public class AsyncTaskTest {
     assertThat(numInvocations).isZero();
 
     // now there should be one job for the multi-instance body:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     assertTransitionInstances(processInstance.getId(), "service" + BpmnParse.MULTI_INSTANCE_BODY_ID_SUFFIX, 1);
 
     // when the mi body before job is executed
@@ -342,7 +342,7 @@ public class AsyncTaskTest {
     // start process
     runtimeService.startProcessInstanceByKey("asyncService");
     // now there should be one job in the database, and it is a message
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     Job job = managementService.createJobQuery().singleResult();
     if(!(job instanceof MessageEntity)) {
       fail("the job must be a message");
@@ -357,7 +357,7 @@ public class AsyncTaskTest {
 
     // there is still a single job because the timer was created in the same transaction as the
     // service was executed (which rolled back)
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     runtimeService.deleteProcessInstance(execution.getId(), "dead");
   }
@@ -420,7 +420,7 @@ public class AsyncTaskTest {
     // start process
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("asyncService");
 
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstance.getId());
 
@@ -442,7 +442,7 @@ public class AsyncTaskTest {
     // start process
     runtimeService.startProcessInstanceByKey("asyncTask");
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     testRule.executeAvailableJobs();
 
@@ -456,7 +456,7 @@ public class AsyncTaskTest {
     // start process
     runtimeService.startProcessInstanceByKey("asyncScript").getProcessInstanceId();
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the script was not invoked:
     String eid = runtimeService.createExecutionQuery().singleResult().getId();
     assertThat(runtimeService.getVariable(eid, "invoked")).isNull();
@@ -479,7 +479,7 @@ public class AsyncTaskTest {
     // start process
     runtimeService.startProcessInstanceByKey("asyncCallactivity");
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     testRule.executeAvailableJobs();
 
@@ -493,7 +493,7 @@ public class AsyncTaskTest {
     // start process
     String pid = runtimeService.startProcessInstanceByKey("asyncUserTask").getProcessInstanceId();
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not yet invoked:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no usertask
@@ -520,7 +520,7 @@ public class AsyncTaskTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncManualTask").getProcessInstanceId();
 
     // now there should be one job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not yet invoked:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no manual Task
@@ -546,7 +546,7 @@ public class AsyncTaskTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncIntermediateCatchEvent").getProcessInstanceId();
 
     // now there is 1 job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not invoked now:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no intermediate catch event:
@@ -574,7 +574,7 @@ public class AsyncTaskTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncIntermediateThrowEvent").getProcessInstanceId();
 
     // now there is 1 job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not invoked now:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no intermediate throw event:
@@ -604,7 +604,7 @@ public class AsyncTaskTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncExclusiveGateway", variables).getProcessInstanceId();
 
     // now there is 1 job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not invoked now:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no gateway:
@@ -630,7 +630,7 @@ public class AsyncTaskTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncInclusiveGateway").getProcessInstanceId();
 
     // now there is 1 job in the database:
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not invoked now:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no gateway:
@@ -659,7 +659,7 @@ public class AsyncTaskTest {
     String pid = runtimeService.startProcessInstanceByKey("asyncEventGateway").getProcessInstanceId();
 
     // now there is a job in the database
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // the listener was not invoked now:
     assertThat(runtimeService.getVariable(pid, "listener")).isNull();
     // there is no task:
@@ -693,7 +693,7 @@ public class AsyncTaskTest {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("asyncListener",
         Variables.createVariables().putValue("listener", new RecorderExecutionListener()));
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when deleting the process instance
     runtimeService.deleteProcessInstance(instance.getId(), "");
@@ -716,7 +716,7 @@ public class AsyncTaskTest {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("asyncListenerSubProcess",
         Variables.createVariables().putValue("listener", new RecorderExecutionListener()));
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when deleting the process instance
     runtimeService.deleteProcessInstance(instance.getId(), "");
@@ -740,7 +740,7 @@ public class AsyncTaskTest {
   void testDeleteShouldNotInvokeOutputMapping() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("asyncOutputMapping");
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when
     runtimeService.deleteProcessInstance(instance.getId(), "");
@@ -761,7 +761,7 @@ public class AsyncTaskTest {
   void testDeleteInScopeShouldNotInvokeOutputMapping() {
     // given
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("asyncOutputMappingSubProcess");
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
 
     // when
     runtimeService.deleteProcessInstance(instance.getId(), "");
@@ -773,7 +773,7 @@ public class AsyncTaskTest {
       assertThat(historyService.createHistoricVariableInstanceQuery().variableName("taskOutputMappingExecuted").count()).isZero();
 
       // but the containing sub process output mapping was executed
-      assertThat(historyService.createHistoricVariableInstanceQuery().variableName("subProcessOutputMappingExecuted").count()).isEqualTo(1);
+      assertThat(historyService.createHistoricVariableInstanceQuery().variableName("subProcessOutputMappingExecuted").count()).isOne();
     }
   }
 

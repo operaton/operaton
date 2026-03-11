@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -38,12 +37,12 @@ import org.operaton.bpm.engine.test.junit5.migration.MigrationTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
+import static org.operaton.bpm.engine.test.util.DateTestUtil.formatDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MigrationTimerBoundryEventTest {
 
   private static final String DUE_DATE_IN_THE_PAST = "2018-02-11T12:13:14Z";
-  protected static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
   @RegisterExtension
   static ProcessEngineExtension rule = ProcessEngineExtension.builder().build();
@@ -87,8 +86,8 @@ class MigrationTimerBoundryEventTest {
     // then
     List<Job> list = managementService.createJobQuery().list();
     assertThat(list).isEmpty();
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
   }
 
   @Test
@@ -114,7 +113,7 @@ class MigrationTimerBoundryEventTest {
     // then
     List<Job> list = managementService.createJobQuery().list();
     assertThat(list).isEmpty();
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isOne();
     assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isZero();
   }
 
@@ -122,7 +121,7 @@ class MigrationTimerBoundryEventTest {
   void testMigrationNonTriggeredInterruptingTimerEvent() {
     // given
     Date futureDueDate = DateUtils.addYears(ClockUtil.getCurrentTime(), 1);
-    BpmnModelInstance model = createModel(true, sdf.format(futureDueDate));
+    BpmnModelInstance model = createModel(true, formatDate(futureDueDate));
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
     ProcessDefinition targetProcessDefinition = testHelper.deployAndGetDefinition(model);
 
@@ -139,7 +138,7 @@ class MigrationTimerBoundryEventTest {
     List<Job> list = managementService.createJobQuery().list();
     assertThat(list).hasSize(1);
     assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isZero();
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
   }
 
   @Test
@@ -156,7 +155,7 @@ class MigrationTimerBoundryEventTest {
         .moveToActivity("userTask")
           .boundaryEvent("timerFuture")
           .cancelActivity(false)
-          .timerWithDate(sdf.format(futureDueDate))
+          .timerWithDate(formatDate(futureDueDate))
         .userTask("future")
         .done();
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(model);
@@ -178,10 +177,10 @@ class MigrationTimerBoundryEventTest {
     // then
     List<Job> list = managementService.createJobQuery().list();
     assertThat(list).hasSize(1);
-    assertThat(managementService.createJobQuery().duedateHigherThan(ClockUtil.getCurrentTime()).count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("past").count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().duedateHigherThan(ClockUtil.getCurrentTime()).count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("past").count()).isOne();
     assertThat(taskService.createTaskQuery().taskDefinitionKey("future").count()).isZero();
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
   }
 
   @Test
@@ -207,9 +206,9 @@ class MigrationTimerBoundryEventTest {
     testHelper.migrateProcessInstance(migrationPlan, processInstance);
 
     // then
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
     assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isZero();
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().count()).isOne();
   }
 
   @Test
@@ -241,8 +240,8 @@ class MigrationTimerBoundryEventTest {
     // then
     List<Job> list = managementService.createJobQuery().list();
     assertThat(list).isEmpty();
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isOne();
   }
 
   @Test
@@ -259,7 +258,7 @@ class MigrationTimerBoundryEventTest {
         .moveToActivity("userTask")
           .boundaryEvent("timerFuture")
           .cancelActivity(false)
-          .timerWithDate(sdf.format(futureDueDate))
+          .timerWithDate(formatDate(futureDueDate))
         .userTask("future")
         .done();
     BpmnModelInstance targetModel = Bpmn.createExecutableProcess()
@@ -267,7 +266,7 @@ class MigrationTimerBoundryEventTest {
         .userTask("userTask").name("User Task")
           .boundaryEvent("timerFuture")
           .cancelActivity(false)
-          .timerWithDate(sdf.format(futureDueDate))
+          .timerWithDate(formatDate(futureDueDate))
         .userTask("future")
         .done();
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceModel);
@@ -291,8 +290,8 @@ class MigrationTimerBoundryEventTest {
     // then
     List<Job> list = managementService.createJobQuery().duedateHigherThan(ClockUtil.getCurrentTime()).list();
     assertThat(list).hasSize(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("future").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("future").count()).isOne();
   }
 
   @Test
@@ -304,7 +303,7 @@ class MigrationTimerBoundryEventTest {
         .userTask("userTask").name("User Task")
           .boundaryEvent("timerFuture")
           .cancelActivity(false)
-          .timerWithDate(sdf.format(futureDueDate))
+          .timerWithDate(formatDate(futureDueDate))
         .userTask("future")
         .done();
     BpmnModelInstance targetModel = Bpmn.createExecutableProcess()
@@ -317,7 +316,7 @@ class MigrationTimerBoundryEventTest {
         .moveToActivity("userTask")
           .boundaryEvent("timerFuture")
           .cancelActivity(false)
-          .timerWithDate(sdf.format(futureDueDate))
+          .timerWithDate(formatDate(futureDueDate))
         .userTask("future")
         .done();
     ProcessDefinition sourceProcessDefinition = testHelper.deployAndGetDefinition(sourceModel);
@@ -372,8 +371,8 @@ class MigrationTimerBoundryEventTest {
     // then
     List<Job> list = managementService.createJobQuery().list();
     assertThat(list).isEmpty();
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isEqualTo(1);
-    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("afterTimer").count()).isOne();
+    assertThat(taskService.createTaskQuery().taskDefinitionKey("userTask").count()).isOne();
   }
 
   protected BpmnModelInstance createModel(boolean isCancelActivity, String date) {

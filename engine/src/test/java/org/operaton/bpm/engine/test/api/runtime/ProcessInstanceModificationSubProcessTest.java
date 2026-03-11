@@ -46,6 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Svetlana Dorokhova.
  */
+@SuppressWarnings("java:S1874") // Use of synchronous execute() method is a acceptable in test code
 class ProcessInstanceModificationSubProcessTest {
 
   @RegisterExtension
@@ -174,7 +175,7 @@ class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getProcessInstanceId()).isEqualTo(parentPI.getId());
@@ -269,7 +270,7 @@ class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getProcessInstanceId()).isEqualTo(parentPI.getId());
@@ -351,7 +352,7 @@ class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getProcessInstanceId()).isEqualTo(parentPI.getId());
@@ -448,7 +449,7 @@ class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getProcessInstanceId()).isEqualTo(parentPI.getId());
@@ -544,7 +545,7 @@ class ProcessInstanceModificationSubProcessTest {
       .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
 
     Task task = taskService.createTaskQuery().singleResult();
     assertThat(task.getProcessInstanceId()).isEqualTo(parentPI.getId());
@@ -734,7 +735,7 @@ class ProcessInstanceModificationSubProcessTest {
                   .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().taskName("escalationTask").singleResult()).isNotNull();
 
     Task task = taskService.createTaskQuery().singleResult();
@@ -781,7 +782,7 @@ class ProcessInstanceModificationSubProcessTest {
                   .execute();
 
     // then the parent process instance is still active
-    assertThat(runtimeService.createProcessInstanceQuery().count()).isEqualTo(1L);
+    assertThat(runtimeService.createProcessInstanceQuery().count()).isOne();
     assertThat(taskService.createTaskQuery().taskName("errorTask").singleResult()).isNotNull();
 
     Task task = taskService.createTaskQuery().singleResult();

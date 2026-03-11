@@ -33,10 +33,10 @@ module.exports = [
   '$rootScope',
   '$location',
   'camAPI',
-  function($rootScope, $location, camAPI) {
+  function ($rootScope, $location, camAPI) {
     var page = {
       title: 'Operaton',
-      breadcrumbs: []
+      breadcrumbs: [],
     };
 
     var headTitle = angular.element(document.querySelector('head title'));
@@ -45,11 +45,11 @@ module.exports = [
     // add a listener to the $rootScope to propagate the changes in the page title
     // sure... we could put that in the titleSet() function
     // or elsewhere but it's almost philosophical
-    $rootScope.$on('page.title.changed', function() {
+    $rootScope.$on('page.title.changed', function () {
       headTitle.text([originalTitle, page.title].join(' | '));
     });
 
-    $rootScope.isActivePage = function(pageName) {
+    $rootScope.isActivePage = function (pageName) {
       return $location.path().indexOf('/' + pageName) === 0 ? 'active' : '';
     };
 
@@ -60,7 +60,7 @@ module.exports = [
       }
 
       var userService = camAPI.resource('user');
-      userService.profile(auth.name, function(err, info) {
+      userService.profile(auth.name, function (err, info) {
         if (err) {
           $rootScope.userFullName = null;
           throw err;
@@ -68,7 +68,7 @@ module.exports = [
         $rootScope.userFullName = info.firstName + ' ' + info.lastName;
       });
     }
-    $rootScope.$on('authentication.changed', function(ev, auth) {
+    $rootScope.$on('authentication.changed', function (ev, auth) {
       getUserProfile(auth);
     });
     getUserProfile($rootScope.authentication);
@@ -81,7 +81,7 @@ module.exports = [
        *
        * @returns {angular.Service} this  - the service
        */
-      titleSet: function(newTitle) {
+      titleSet: function (newTitle) {
         page.title = newTitle;
         $rootScope.$broadcast('page.title.changed', page.title);
         return this;
@@ -92,7 +92,7 @@ module.exports = [
        *
        * @returns {string} - the document/page title
        */
-      titleGet: function() {
+      titleGet: function () {
         return page.title;
       },
 
@@ -103,7 +103,7 @@ module.exports = [
        *
        * @returns {angular.Service} this  - the service
        */
-      breadcrumbsAdd: function(crumb) {
+      breadcrumbsAdd: function (crumb) {
         if (angular.isArray(crumb)) {
           return angular.forEach(crumb, this.breadcrumbsAdd);
         }
@@ -111,7 +111,7 @@ module.exports = [
         if (angular.isFunction(crumb)) {
           var callback = crumb;
           crumb = {
-            callback: callback
+            callback: callback,
           };
         }
 
@@ -133,7 +133,7 @@ module.exports = [
        *
        * @return {angular.Service} this  - the service
        */
-      breadcrumbsInsertAt: function(index, crumb) {
+      breadcrumbsInsertAt: function (index, crumb) {
         page.breadcrumbs = page.breadcrumbs
           .slice(0, index)
           .concat(angular.isArray(crumb) ? crumb : [crumb])
@@ -152,7 +152,7 @@ module.exports = [
        * @returns {(Array|Object)}        - an array of breadcrumb objects
        *                                    or 1 breadcrumb object when the index is given
        */
-      breadcrumbsGet: function(index) {
+      breadcrumbsGet: function (index) {
         if (index) {
           if (index === 'last') {
             index = page.length - 1;
@@ -167,12 +167,12 @@ module.exports = [
        *
        * @returns {angular.Service} this  - the service
        */
-      breadcrumbsClear: function() {
+      breadcrumbsClear: function () {
         page.breadcrumbs = [];
 
         $rootScope.$broadcast('page.breadcrumbs.changed', page.breadcrumbs);
         return this;
-      }
+      },
     };
-  }
+  },
 ];

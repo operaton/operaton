@@ -18,6 +18,7 @@ package org.operaton.bpm.model.bpmn.impl.instance;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.operaton.bpm.model.bpmn.instance.BaseElement;
 import org.operaton.bpm.model.bpmn.instance.Documentation;
@@ -104,7 +105,7 @@ public abstract class BaseElementImpl extends BpmnModelElementInstanceImpl imple
     for (Reference<?> reference : incomingReferences) {
       for (ModelElementInstance sourceElement : reference.findReferenceSourceElements(this)) {
         String referenceIdentifier = reference.getReferenceIdentifier(sourceElement);
-        if (referenceIdentifier != null && referenceIdentifier.equals(getId())) {
+        if (referenceIdentifier != null && Objects.equals(referenceIdentifier, getId())) {
           return (DiagramElement) sourceElement;
         }
       }

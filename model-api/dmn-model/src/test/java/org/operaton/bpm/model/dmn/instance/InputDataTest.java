@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.dmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public class InputDataTest extends DmnModelElementInstanceTest {
 
@@ -28,7 +27,7 @@ public class InputDataTest extends DmnModelElementInstanceTest {
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(InformationItem.class, 0, 1)
     );
   }

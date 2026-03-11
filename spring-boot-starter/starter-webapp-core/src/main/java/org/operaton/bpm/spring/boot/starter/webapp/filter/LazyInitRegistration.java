@@ -76,6 +76,7 @@ public class LazyInitRegistration implements ApplicationContextAware {
   }
 
   @Override
+  @SuppressWarnings({"java:S2696"}) // cannot add static to overridden method
   public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
     LazyInitRegistration.applicationContext = applicationContext;
     for (LazyDelegateFilter<? extends Filter> lazyDelegateFilter : getRegistrations()) {
@@ -84,6 +85,7 @@ public class LazyInitRegistration implements ApplicationContextAware {
   }
 
   @EventListener
+  @SuppressWarnings({"java:S2696"}) // EventListener method cannot be static
   protected void onContextClosed(ContextClosedEvent ev) {
     applicationContext = null;
   }

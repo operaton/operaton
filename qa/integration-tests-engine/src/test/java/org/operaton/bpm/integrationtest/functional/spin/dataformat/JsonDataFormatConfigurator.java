@@ -30,7 +30,13 @@ import org.operaton.spin.spi.DataFormatConfigurator;
  */
 public class JsonDataFormatConfigurator implements DataFormatConfigurator<JacksonJsonDataFormat> {
 
-  public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+  // For test code usage - note: SimpleDateFormat is required by Jackson's ObjectMapper.setDateFormat()
+  // Always use getDateFormat() to create new instances for thread-safety
+  public static final String DATE_FORMAT_PATTERN = "yyyy-MM-dd";
+  
+  public static SimpleDateFormat getDateFormat() {
+    return new SimpleDateFormat(DATE_FORMAT_PATTERN);
+  }
 
   @Override
   public Class<JacksonJsonDataFormat> getDataFormatClass() {
@@ -41,7 +47,7 @@ public class JsonDataFormatConfigurator implements DataFormatConfigurator<Jackso
   public void configure(JacksonJsonDataFormat dataFormat) {
     ObjectMapper objectMapper = dataFormat.getObjectMapper();
     objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-    objectMapper.setDateFormat(DATE_FORMAT);
+    objectMapper.setDateFormat(getDateFormat());
 
   }
 

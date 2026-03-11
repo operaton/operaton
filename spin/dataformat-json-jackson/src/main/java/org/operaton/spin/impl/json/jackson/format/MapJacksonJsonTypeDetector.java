@@ -29,11 +29,6 @@ import static org.operaton.spin.impl.json.jackson.format.TypeHelper.constructTyp
  */
 public class MapJacksonJsonTypeDetector extends AbstractJacksonJsonTypeDetector {
 
-    /**
-     * Object instance to use.
-     */
-    public static final MapJacksonJsonTypeDetector INSTANCE = new MapJacksonJsonTypeDetector();
-
     @Override
     public boolean canHandle(Object value) {
         return value instanceof Map<?, ?>;

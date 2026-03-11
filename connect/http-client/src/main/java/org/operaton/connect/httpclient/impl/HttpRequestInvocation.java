@@ -29,15 +29,17 @@ public class HttpRequestInvocation extends AbstractRequestInvocation<BasicClassi
 
   protected HttpClient client;
 
-  public HttpRequestInvocation(BasicClassicHttpRequest target, ConnectorRequest<?> request, List<ConnectorRequestInterceptor> interceptorChain, HttpClient client) {
+  public HttpRequestInvocation(BasicClassicHttpRequest target,
+                               ConnectorRequest<?> request,
+                               List<ConnectorRequestInterceptor> interceptorChain,
+                               HttpClient client) {
     super(target, request, interceptorChain);
     this.client = client;
   }
 
   @Override
   public Object invokeTarget() throws Exception {
-    // execute the request
-    return client.execute(target);
+    return client.execute(target, response -> response);
   }
 
 }

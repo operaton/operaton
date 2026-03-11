@@ -212,13 +212,13 @@ public class UserOperationLogDeletionTest extends AbstractUserOperationLogTest {
         .createUserOperationLogQuery()
         .caseInstanceId(caseInstanceId)
         .entityType(EntityTypes.TASK);
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     // when
     historyService.deleteHistoricCaseInstance(caseInstanceId);
 
     // then
-    assertThat(query.count()).isEqualTo(1);
+    assertThat(query.count()).isOne();
 
     UserOperationLogEntry entry = historyService.createUserOperationLogQuery()
         .operationType(OPERATION_TYPE_DELETE_HISTORY)

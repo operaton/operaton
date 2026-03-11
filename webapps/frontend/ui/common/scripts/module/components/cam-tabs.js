@@ -19,7 +19,7 @@
 
 var template = require('./cam-tabs.html?raw');
 
-module.exports = function() {
+module.exports = function () {
   return {
     restrict: 'A',
     template: template,
@@ -28,7 +28,7 @@ module.exports = function() {
       providerParams: '=camTabs',
       tabsApi: '=?',
       vars: '=?',
-      varsValues: '=?'
-    }
+      varsValues: '=?',
+    },
   };
 };

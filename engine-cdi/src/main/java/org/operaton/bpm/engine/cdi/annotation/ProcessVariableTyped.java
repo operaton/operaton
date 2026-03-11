@@ -37,7 +37,6 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  * @author Michael Scholz
  *
- * @since 7.3
  */
 @Qualifier
 @Retention(RetentionPolicy.RUNTIME)

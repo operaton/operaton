@@ -37,7 +37,7 @@ var Directive = [
   'localConf',
   '$location',
   'camAPI',
-  function(
+  function (
     $http,
     $q,
     $modal,
@@ -47,7 +47,7 @@ var Directive = [
     $translate,
     localConf,
     $location,
-    camAPI
+    camAPI,
   ) {
     var Link = function linkFunction(scope) {
       // ordered available columns
@@ -78,7 +78,7 @@ var Directive = [
         'cause-root instance-id uuid',
         'type',
         'annotation',
-        'action'
+        'action',
       ];
       var PInstanceClass = scope.processDefinition && 'process-instance';
       if (scope.incidentsContext === 'history') {
@@ -88,16 +88,16 @@ var Directive = [
           'message',
           PInstanceClass,
           'create-time',
-          'end-time'
+          'end-time',
         ].concat(classesToInclude);
       } else {
         scope.localConfKey = 'sortInci';
         classesToInclude = ['message', PInstanceClass, 'timestamp'].concat(
-          classesToInclude
+          classesToInclude,
         );
       }
 
-      scope.headColumns = availableColumns.filter(function(column) {
+      scope.headColumns = availableColumns.filter(function (column) {
         return classesToInclude.indexOf(column.class) !== -1;
       });
 
@@ -108,7 +108,7 @@ var Directive = [
       var pages = (scope.pages = angular.copy({
         size: 50,
         total: 0,
-        current: 1
+        current: 1,
       }));
 
       var baseRuntimeUrl = 'plugin://base/:engine/incident/';
@@ -121,7 +121,7 @@ var Directive = [
         updateView();
       };
 
-      scope.getIncidentState = function(incident) {
+      scope.getIncidentState = function (incident) {
         var result = 'open';
 
         if (incident.resolved) {
@@ -135,13 +135,13 @@ var Directive = [
 
       incidentData.observe(
         ['filter', 'bpmnElements', 'activityIdToInstancesMap'],
-        function(newFilter, bpmnElements, activityIdToInstancesMap) {
+        function (newFilter, bpmnElements, activityIdToInstancesMap) {
           pages.current = newFilter.page || 1;
           scope.filter = newFilter;
           scope.bpmnElements = bpmnElements;
           scope.activityIdToInstancesMap = activityIdToInstancesMap;
           updateView();
-        }
+        },
       );
 
       function updateView(query, pages, sortObj) {
@@ -193,7 +193,7 @@ var Directive = [
 
         var pagingParams = {
           firstResult: firstResult,
-          maxResults: count
+          maxResults: count,
         };
 
         var params = angular.extend({}, filter, defaultParams, queryParams);
@@ -209,7 +209,7 @@ var Directive = [
         // get the 'count' of incidents
         $http
           .post(Uri.appUri(baseUrl + 'count'), params)
-          .then(function(response) {
+          .then(function (response) {
             scope.pages.total = response.data.count;
           })
           .catch(angular.noop);
@@ -217,11 +217,11 @@ var Directive = [
         // get the incidents
         scope.loadingState = 'LOADING';
         return debouncePromise(
-          $http.post(Uri.appUri(baseUrl), params, {params: pagingParams})
+          $http.post(Uri.appUri(baseUrl), params, {params: pagingParams}),
         )
-          .then(function(res) {
+          .then(function (res) {
             var data = res.data;
-            angular.forEach(data, function(incident) {
+            angular.forEach(data, function (incident) {
               var activityId = incident.activityId;
               var bpmnElement = bpmnElements[activityId];
               incident.activityName =
@@ -251,7 +251,7 @@ var Directive = [
           .catch(angular.noop);
       }
 
-      scope.getIncidentType = function(incident) {
+      scope.getIncidentType = function (incident) {
         if (incident.incidentType === 'failedJob') {
           return 'Failed Job';
         }
@@ -259,7 +259,7 @@ var Directive = [
         return incident.incidentType;
       };
 
-      scope.getJobStacktraceUrl = function(incident) {
+      scope.getJobStacktraceUrl = function (incident) {
         var basePath = 'engine://engine/:engine';
         var id = incident.rootCauseIncidentConfiguration;
         var resource = 'job';
@@ -282,7 +282,7 @@ var Directive = [
         return Uri.appUri(`${basePath}/${resource}/${id}/${stacktraceName}`);
       };
 
-      scope.incidentHasActions = function(incident) {
+      scope.incidentHasActions = function (incident) {
         return (
           scope.incidentsContext !== 'history' ||
           (scope.incidentsContext === 'history' &&
@@ -293,7 +293,7 @@ var Directive = [
       };
       scope.incidentVars = {read: ['incident', 'processData', 'filter']};
       scope.incidentActions = Views.getProviders({
-        component: 'cockpit.incident.action'
+        component: 'cockpit.incident.action',
       });
 
       function saveLocal(sortObj) {
@@ -304,58 +304,58 @@ var Directive = [
         return localConf.get(scope.localConfKey, defaultValue);
       }
 
-      scope.viewVariable = function(incident) {
+      scope.viewVariable = function (incident) {
         $location.search(
           'incidentStacktrace',
-          incident.rootCauseIncidentConfiguration
+          incident.rootCauseIncidentConfiguration,
         );
 
         $http({
           method: 'GET',
           url: scope.getJobStacktraceUrl(incident),
-          transformResponse: []
-        }).then(function(res) {
+          transformResponse: [],
+        }).then(function (res) {
           $modal
             .open({
               template: inspectTemplate,
               controller: [
                 '$scope',
                 'variable',
-                function($scope, variable) {
+                function ($scope, variable) {
                   $scope.variable = variable;
                   $scope.readonly = true;
-                }
+                },
               ],
               size: 'lg',
               resolve: {
-                variable: function() {
+                variable: function () {
                   return {
                     value: res.data,
-                    url: scope.getJobStacktraceUrl(incident)
+                    url: scope.getJobStacktraceUrl(incident),
                   };
-                }
-              }
+                },
+              },
             })
             .result.catch(angular.noop)
-            .finally(function() {
+            .finally(function () {
               $location.search('incidentStacktrace', null);
             });
         });
       };
 
       const incidentResource = camAPI.resource('incident');
-      scope.getAnnotationHandler = function(incident) {
-        return function(annotation) {
+      scope.getAnnotationHandler = function (incident) {
+        return function (annotation) {
           return incidentResource.setAnnotation({
             id: incident.id,
-            annotation
+            annotation,
           });
         };
       };
 
       if ($location.search().incidentStacktrace) {
         scope.viewVariable({
-          rootCauseIncidentConfiguration: $location.search().incidentStacktrace
+          rootCauseIncidentConfiguration: $location.search().incidentStacktrace,
         });
       }
     };
@@ -366,12 +366,12 @@ var Directive = [
         processData: '=',
         processDefinition: '=',
         processInstance: '=',
-        incidentsContext: '@'
+        incidentsContext: '@',
       },
       template: template,
-      link: Link
+      link: Link,
     };
-  }
+  },
 ];
 
 module.exports = Directive;

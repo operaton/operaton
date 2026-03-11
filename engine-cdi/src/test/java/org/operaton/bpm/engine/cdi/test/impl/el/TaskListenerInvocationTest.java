@@ -19,9 +19,7 @@ package org.operaton.bpm.engine.cdi.test.impl.el;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
 import org.operaton.bpm.engine.task.Task;
@@ -33,12 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author Sebastian Menski
  */
-@RunWith(Arquillian.class)
-public class TaskListenerInvocationTest extends CdiProcessEngineTestCase {
+class TaskListenerInvocationTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void test() {
+  void test() {
     Map<String, Object> variables = new HashMap<>();
     variables.put(VARIABLE_NAME, INITIAL_VALUE);
 

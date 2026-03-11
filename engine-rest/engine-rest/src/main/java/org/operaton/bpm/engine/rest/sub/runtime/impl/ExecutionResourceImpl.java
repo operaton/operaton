@@ -57,7 +57,7 @@ public class ExecutionResourceImpl implements ExecutionResource {
     Execution execution = runtimeService.createExecutionQuery().executionId(executionId).singleResult();
 
     if (execution == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Execution with id " + executionId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Execution with id %s does not exist".formatted(executionId));
     }
 
     return ExecutionDto.fromExecution(execution);
@@ -78,7 +78,7 @@ public class ExecutionResourceImpl implements ExecutionResource {
       throw e;
 
     } catch (ProcessEngineException e) {
-      throw new RestException(Status.INTERNAL_SERVER_ERROR, e, "Cannot signal execution " + executionId + ": " + e.getMessage());
+      throw new RestException(Status.INTERNAL_SERVER_ERROR, e, "Cannot signal execution %s: %s".formatted(executionId, e.getMessage()));
 
     }
   }

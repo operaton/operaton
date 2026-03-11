@@ -99,7 +99,7 @@ public class SpringPAExpressionResolvingTest extends AbstractFoxPlatformIntegrat
 
     assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isZero();
     runtimeService.startProcessInstanceByKey("testResolveBeanFromJobExecutor");
-    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isEqualTo(1);
+    assertThat(runtimeService.createProcessInstanceQuery().processDefinitionKey("testResolveBeanFromJobExecutor").count()).isOne();
 
     waitForJobExecutorToProcessAllJobs();
 

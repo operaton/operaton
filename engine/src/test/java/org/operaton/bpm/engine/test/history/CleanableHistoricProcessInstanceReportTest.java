@@ -45,8 +45,8 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
-import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_FULL)
 class CleanableHistoricProcessInstanceReportTest {
@@ -166,7 +166,7 @@ class CleanableHistoricProcessInstanceReportTest {
 
     // then
     assertThat(reportResults).hasSize(1);
-    assertThat(count).isEqualTo(1);
+    assertThat(count).isOne();
 
     checkResultNumbers(reportResults.get(0), 10, 10);
   }
@@ -216,40 +216,28 @@ class CleanableHistoricProcessInstanceReportTest {
 
   @Test
   void testReportByInvalidProcessDefinitionId() {
+    // given
     CleanableHistoricProcessInstanceReport report = historyService.createCleanableHistoricProcessInstanceReport();
 
-    try {
-      report.processDefinitionIdIn(null);
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    // when/then
+    assertThatThrownBy(() -> report.processDefinitionIdIn(null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.processDefinitionIdIn("abc", null, "def");
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.processDefinitionIdIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test
   void testReportByInvalidProcessDefinitionKey() {
+    // given
     CleanableHistoricProcessInstanceReport report = historyService.createCleanableHistoricProcessInstanceReport();
 
-    try {
-      report.processDefinitionKeyIn(null);
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    // when/then
+    assertThatThrownBy(() -> report.processDefinitionKeyIn(null))
+      .isInstanceOf(NotValidException.class);
 
-    try {
-      report.processDefinitionKeyIn("abc", null, "def");
-      fail("Expected NotValidException");
-    } catch (NotValidException e) {
-      // expected
-    }
+    assertThatThrownBy(() -> report.processDefinitionKeyIn("abc", null, "def"))
+      .isInstanceOf(NotValidException.class);
   }
 
   @Test

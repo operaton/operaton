@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.persistence.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.*;
 
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -42,6 +40,7 @@ import static org.operaton.bpm.engine.impl.DefaultPriorityProvider.DEFAULT_PRIOR
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 import static org.operaton.bpm.engine.impl.util.ExceptionUtil.createJobExceptionByteArray;
 import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
+import static org.operaton.bpm.engine.runtime.Incident.FAILED_JOB_HANDLER_TYPE;
 
 /**
  * Stub of the common parts of a Job. You will normally work with a subclass of
@@ -53,14 +52,12 @@ import static org.operaton.bpm.engine.impl.util.StringUtil.toByteArray;
  * @author Frederik Heremans
  */
 public abstract class JobEntity extends AcquirableJobEntity
-  implements Serializable, Job, DbEntity,
+  implements Job, DbEntity,
     HasDbRevision, HasDbReferences, DbEntityLifecycleAware {
 
   private static final EnginePersistenceLogger LOG = ProcessEngineLogger.PERSISTENCE_LOGGER;
 
   public static final int DEFAULT_RETRIES = 3;
-
-  @Serial private static final long serialVersionUID = 1L;
 
   protected String executionId;
 
@@ -104,13 +101,13 @@ public abstract class JobEntity extends AcquirableJobEntity
   // last failing activity id ///////////////////////
   protected String failedActivityId;
 
-  protected Map<String, Class> persistedDependentEntities;
+  protected Map<String, Class<?>> persistedDependentEntities;
 
   protected String batchId;
 
   public void execute(CommandContext commandContext) {
     if (executionId != null) {
-      ensureNotNull("Cannot find execution with id '" + executionId + "' referenced from job '" + this + "'", "execution", getExecution());
+      ensureNotNull("Cannot find execution with id '%s' referenced from job '%s'".formatted(executionId, this), "execution", getExecution());
     }
 
     // initialize activity id
@@ -122,7 +119,7 @@ public abstract class JobEntity extends AcquirableJobEntity
     preExecute(commandContext);
     JobHandler jobHandler = getJobHandler();
     JobHandlerConfiguration configuration = getJobHandlerConfiguration();
-    ensureNotNull("Cannot find job handler '" + jobHandlerType + "' from job '" + this + "'", "jobHandler", jobHandler);
+    ensureNotNull("Cannot find job handler '%s' from job '%s'".formatted(jobHandlerType, this), "jobHandler", jobHandler);
     jobHandler.execute(configuration, execution, commandContext, tenantId);
     postExecute(commandContext);
   }
@@ -329,57 +326,56 @@ public abstract class JobEntity extends AcquirableJobEntity
 
   protected void createFailedJobIncident() {
     final ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    if (!processEngineConfiguration.isCreateIncidentOnFailedJobEnabled()) {
+      return;
+    }
 
-    if (processEngineConfiguration
-        .isCreateIncidentOnFailedJobEnabled()) {
+    // make sure job has an ID set:
+    if (id == null) {
+      id = processEngineConfiguration
+          .getIdGenerator()
+          .getNextId();
 
-      String incidentHandlerType = Incident.FAILED_JOB_HANDLER_TYPE;
+    }
 
-      // make sure job has an ID set:
-      if(id == null) {
-        id = processEngineConfiguration
-            .getIdGenerator()
-            .getNextId();
-
-      } else {
-        // check whether there exists already an incident
-        // for this job
-        List<Incident> failedJobIncidents = Context
-            .getCommandContext()
-            .getIncidentManager()
-            .findIncidentByConfigurationAndIncidentType(id, incidentHandlerType);
-
-        if (!failedJobIncidents.isEmpty()) {
-          // update the historic job log id in the historic incidents (if available)
-          for (Incident incident : failedJobIncidents) {
-            HistoricIncidentEntity historicIncidentEvent = Context
-                .getCommandContext()
-                .getHistoricIncidentManager()
-                .findHistoricIncidentById(incident.getId());
-            if (historicIncidentEvent != null) {
-              historicIncidentEvent.setHistoryConfiguration(getLastFailureLogId());
-              Context.getCommandContext().getDbEntityManager().merge(historicIncidentEvent);
-            }
-          }
-          return;
-        }
-
-      }
-
-
+    if (!existsIncidentForJob(FAILED_JOB_HANDLER_TYPE)) {
       IncidentContext incidentContext = createIncidentContext();
       incidentContext.setActivityId(getActivityId());
       incidentContext.setHistoryConfiguration(getLastFailureLogId());
       incidentContext.setFailedActivityId(getFailedActivityId());
 
-      IncidentHandling.createIncident(incidentHandlerType, incidentContext, exceptionMessage);
-
+      IncidentHandling.createIncident(FAILED_JOB_HANDLER_TYPE, incidentContext, exceptionMessage);
     }
+  }
+
+  private boolean existsIncidentForJob(String incidentHandlerType) {
+    // check whether there exists already an incident
+    // for this job
+    List<Incident> failedJobIncidents = Context
+        .getCommandContext()
+        .getIncidentManager()
+        .findIncidentByConfigurationAndIncidentType(id, incidentHandlerType);
+
+    if (!failedJobIncidents.isEmpty()) {
+      // update the historic job log id in the historic incidents (if available)
+      for (Incident incident : failedJobIncidents) {
+        HistoricIncidentEntity historicIncidentEvent = Context
+            .getCommandContext()
+            .getHistoricIncidentManager()
+            .findHistoricIncidentById(incident.getId());
+        if (historicIncidentEvent != null) {
+          historicIncidentEvent.setHistoryConfiguration(getLastFailureLogId());
+          Context.getCommandContext().getDbEntityManager().merge(historicIncidentEvent);
+        }
+      }
+      return true;
+    }
+    return false;
   }
 
   protected void removeFailedJobIncident(boolean incidentResolved) {
     IncidentContext incidentContext = createIncidentContext();
-    IncidentHandling.removeIncidents(Incident.FAILED_JOB_HANDLER_TYPE, incidentContext, incidentResolved);
+    IncidentHandling.removeIncidents(FAILED_JOB_HANDLER_TYPE, incidentContext, incidentResolved);
   }
 
   protected IncidentContext createIncidentContext() {
@@ -444,8 +440,8 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
-  protected JobHandler getJobHandler() {
-    Map<String, JobHandler> jobHandlers = Context.getProcessEngineConfiguration().getJobHandlers();
+  protected JobHandler<?> getJobHandler() {
+    Map<String, JobHandler<?>> jobHandlers = Context.getProcessEngineConfiguration().getJobHandlers();
     return jobHandlers.get(jobHandlerType);
   }
 
@@ -563,11 +559,6 @@ public abstract class JobEntity extends AcquirableJobEntity
         || (retries == 0 && (lockOwner != null || lockExpirationTime != null));
   }
 
-  public void resetLock() {
-    this.lockOwner = null;
-    this.lockExpirationTime = null;
-  }
-
   public String getActivityId() {
     ensureActivityIdInitialized();
     return activityId;
@@ -619,12 +610,15 @@ public abstract class JobEntity extends AcquirableJobEntity
     }
   }
 
+  public void resetLock() {
+    unlock();
+  }
+
   /**
    *
    * Unlock from current lock owner
    *
    */
-
   public void unlock() {
     this.lockOwner = null;
     this.lockExpirationTime = null;
@@ -657,13 +651,8 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public Set<String> getReferencedEntityIds() {
-    return new HashSet<>();
-  }
-
-  @Override
-  public Map<String, Class> getReferencedEntitiesIdAndClass() {
-    Map<String, Class> referenceIdAndClass = new HashMap<>();
+  public Map<String, Class<?>> getReferencedEntitiesIdAndClass() {
+    Map<String, Class<?>> referenceIdAndClass = new HashMap<>();
 
     if (exceptionByteArrayId != null) {
       referenceIdAndClass.put(exceptionByteArrayId, ByteArrayEntity.class);
@@ -673,7 +662,7 @@ public abstract class JobEntity extends AcquirableJobEntity
   }
 
   @Override
-  public Map<String, Class> getDependentEntities() {
+  public Map<String, Class<?>> getDependentEntities() {
     return persistedDependentEntities;
   }
 

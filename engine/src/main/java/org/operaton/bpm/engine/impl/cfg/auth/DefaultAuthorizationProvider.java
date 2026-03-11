@@ -69,13 +69,14 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureValidIndividual
  *
  */
 public class DefaultAuthorizationProvider implements ResourceAuthorizationProvider {
+  private static final AuthorizationEntity[] NO_AUTHORIZATIONS = new AuthorizationEntity[0];
 
   @Override
   public AuthorizationEntity[] newUser(User user) {
     // create an authorization which gives the user all permissions on himself:
     String userId = user.getId();
 
-    ensureValidIndividualResourceId("Cannot create default authorization for user " + userId,
+    ensureValidIndividualResourceId("Cannot create default authorization for user %s".formatted(userId),
         userId);
     AuthorizationEntity resourceOwnerAuthorization = createGrantAuthorization(userId, null, USER, userId, ALL);
 
@@ -90,7 +91,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     // group are granted READ permissions on the group
     String groupId = group.getId();
 
-    ensureValidIndividualResourceId("Cannot create default authorization for group " + groupId,
+    ensureValidIndividualResourceId("Cannot create default authorization for group %s".formatted(groupId),
         groupId);
 
     AuthorizationEntity groupMemberAuthorization = createGrantAuthorization(null, groupId, GROUP, groupId, READ);
@@ -102,15 +103,13 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   @Override
   public AuthorizationEntity[] newTenant(Tenant tenant) {
     // no default authorizations on tenants.
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] groupMembershipCreated(String groupId, String userId) {
-
     // no default authorizations on memberships.
-
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
@@ -130,22 +129,18 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
 
   @Override
   public AuthorizationEntity[] newFilter(Filter filter) {
-
     String owner = filter.getOwner();
     if(owner != null) {
       // create an authorization which gives the owner of the filter all permissions on the filter
       String filterId = filter.getId();
 
-      ensureValidIndividualResourceId("Cannot create default authorization for filter owner " + owner,
-          owner);
+      ensureValidIndividualResourceId("Cannot create default authorization for filter owner %s".formatted(owner), owner);
 
       AuthorizationEntity filterOwnerAuthorization = createGrantAuthorization(owner, null, FILTER, filterId, ALL);
 
       return new AuthorizationEntity[]{ filterOwnerAuthorization };
-
     } else {
-      return null;
-
+      return NO_AUTHORIZATIONS;
     }
   }
 
@@ -164,7 +159,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
       return new AuthorizationEntity[]{ authorization };
     }
 
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   // Process Definition //////////////////////////////////////
@@ -172,7 +167,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   @Override
   public AuthorizationEntity[] newProcessDefinition(ProcessDefinition processDefinition) {
     // no default authorizations on process definitions.
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   // Process Instance ///////////////////////////////////////
@@ -180,7 +175,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   @Override
   public AuthorizationEntity[] newProcessInstance(ProcessInstance processInstance) {
     // no default authorizations on process instances.
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   // Task /////////////////////////////////////////////////
@@ -188,14 +183,14 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   @Override
   public AuthorizationEntity[] newTask(Task task) {
     // no default authorizations on tasks.
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newTaskAssignee(Task task, String oldAssignee, String newAssignee) {
     if (newAssignee != null) {
 
-      ensureValidIndividualResourceId("Cannot create default authorization for assignee " + newAssignee,
+      ensureValidIndividualResourceId("Cannot create default authorization for assignee %s".formatted(newAssignee),
           newAssignee);
 
       // create (or update) an authorization for the new assignee.
@@ -203,14 +198,14 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
       return createOrUpdateAuthorizationsByUserId(task, newAssignee);
     }
 
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newTaskOwner(Task task, String oldOwner, String newOwner) {
     if (newOwner != null) {
 
-      ensureValidIndividualResourceId("Cannot create default authorization for owner " + newOwner,
+      ensureValidIndividualResourceId("Cannot create default authorization for owner %s".formatted(newOwner),
           newOwner);
 
       // create (or update) an authorization for the new owner.
@@ -218,7 +213,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
       return createOrUpdateAuthorizationsByUserId(task, newOwner);
     }
 
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
@@ -226,7 +221,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
     // create (or update) an authorization for the given user
     // whenever a new user identity link will be added
 
-    ensureValidIndividualResourceId("Cannot grant default authorization for identity link to user " + userId,
+    ensureValidIndividualResourceId("Cannot grant default authorization for identity link to user %s".formatted(userId),
         userId);
 
     return createOrUpdateAuthorizationsByUserId(task, userId);
@@ -235,7 +230,7 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   @Override
   public AuthorizationEntity[] newTaskGroupIdentityLink(Task task, String groupId, String type) {
 
-    ensureValidIndividualResourceId("Cannot grant default authorization for identity link to group " + groupId,
+    ensureValidIndividualResourceId("Cannot grant default authorization for identity link to group %s".formatted(groupId),
         groupId);
 
     // create (or update) an authorization for the given group
@@ -247,25 +242,25 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
   @Override
   public AuthorizationEntity[] deleteTaskUserIdentityLink(Task task, String userId, String type) {
     // an existing authorization will not be deleted in such a case
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] deleteTaskGroupIdentityLink(Task task, String groupId, String type) {
     // an existing authorization will not be deleted in such a case
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newDecisionDefinition(DecisionDefinition decisionDefinition) {
     // no default authorizations on decision definitions.
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   @Override
   public AuthorizationEntity[] newDecisionRequirementsDefinition(DecisionRequirementsDefinition decisionRequirementsDefinition) {
     // no default authorizations on decision requirements definitions.
-    return null;
+    return NO_AUTHORIZATIONS;
   }
 
   // helper //////////////////////////////////////////////////////////////
@@ -468,10 +463,10 @@ public class DefaultAuthorizationProvider implements ResourceAuthorizationProvid
                                                          Permission... permissions) {
     // assuming that there are no default authorizations for *
     if (userId != null) {
-      ensureValidIndividualResourceId("Cannot create authorization for user " + userId, userId);
+      ensureValidIndividualResourceId("Cannot create authorization for user %s".formatted(userId), userId);
     }
     if (groupId != null) {
-      ensureValidIndividualResourceId("Cannot create authorization for group " + groupId, groupId);
+      ensureValidIndividualResourceId("Cannot create authorization for group %s".formatted(groupId), groupId);
     }
 
     AuthorizationEntity authorization = new AuthorizationEntity(AUTH_TYPE_GRANT);

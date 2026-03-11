@@ -74,7 +74,6 @@ class HistoricVariableJsonSerializationTest {
       assertThat(historicVariable.getErrorMessage()).isNull();
 
       assertThat(historicVariable.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
-      assertThat(historicVariable.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
       JsonSerializable historyValue = (JsonSerializable) historicVariable.getValue();
       assertThat(historyValue.getStringProperty()).isEqualTo(bean.getStringProperty());
@@ -123,7 +122,6 @@ class HistoricVariableJsonSerializationTest {
       assertThat(historicUpdate.getErrorMessage()).isNull();
 
       assertThat(historicUpdate.getTypeName()).isEqualTo(ValueType.OBJECT.getName());
-      assertThat(historicUpdate.getVariableTypeName()).isEqualTo(ValueType.OBJECT.getName());
 
       JsonSerializable historyValue = (JsonSerializable) historicUpdate.getValue();
       assertThat(historyValue.getStringProperty()).isEqualTo(bean.getStringProperty());

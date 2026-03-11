@@ -17,8 +17,6 @@
 package org.operaton.bpm.engine.impl.cmmn.cmd;
 
 import java.io.InputStream;
-import java.io.Serial;
-import java.io.Serializable;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.cmd.GetDeploymentResourceCmd;
@@ -33,10 +31,7 @@ import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
  * @author Roman Smirnov
  *
  */
-public class GetDeploymentCaseModelCmd implements Command<InputStream>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class GetDeploymentCaseModelCmd implements Command<InputStream> {
   protected String caseDefinitionId;
 
   public GetDeploymentCaseModelCmd(String caseDefinitionId) {

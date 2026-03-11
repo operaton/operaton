@@ -75,7 +75,7 @@ public class FormFieldHandler {
       defaultValue = defaultValueExpression.getValue(variableScope);
 
       if(defaultValue != null) {
-        formField.setDefaultValue(type.convertFormValueToModelValue(defaultValue));
+        formField.setDefaultValue(type.convertToModelValue(Variables.untypedValue(defaultValue)).getValue());
       } else {
         formField.setDefaultValue(null);
       }
@@ -88,7 +88,7 @@ public class FormFieldHandler {
       try {
         formValue = type.convertToFormValue(value);
       } catch (Exception exception) {
-        throw new FormFieldValidationException(id, "failed to convert '" + id + "'", exception);
+        throw new FormFieldValidationException(id, "failed to convert '%s'".formatted(id), exception);
       }
       formField.setValue(formValue);
     }

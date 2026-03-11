@@ -23,9 +23,11 @@ import org.operaton.bpm.engine.identity.UserQuery;
 /**
  * An identity link is used to associate a task with a certain identity.
  *
+ * <p>
  * For example:
  * - a user can be an assignee (= identity link type) for a task
  * - a group can be a candidate-group (= identity link type) for a task
+ * </p>
  *
  * @author Joram Barrez
  */
@@ -66,7 +68,6 @@ public interface IdentityLink {
   /**
    * The id of the tenant associated with this identity link.
    *
-   * @since 7.5
    *
    */
   String getTenantId();

@@ -35,7 +35,8 @@ import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.threads.EnhancedQueueExecutor;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.container.impl.jboss.config.ManagedProcessEngineMetadata;
 import org.operaton.bpm.container.impl.jboss.extension.Attribute;
@@ -159,8 +160,17 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
 
   }
 
+  @BeforeEach
+  void setUp () throws Exception {
+    super.initializeParser();
+  }
+
+  void tearDown () throws Exception {
+    super.cleanup();
+  }
+
   @Test
-  public void testParseSubsystemXml() throws Exception {
+  void testParseSubsystemXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_ELEMENT_ONLY);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -177,7 +187,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemXmlWithEngines() throws Exception {
+  void testParseSubsystemXmlWithEngines() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -185,7 +195,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemXmlWithEnginesAndProperties() throws Exception {
+  void testParseSubsystemXmlWithEnginesAndProperties() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_AND_PROPERTIES);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -193,7 +203,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemXmlWithEnginesPropertiesPlugins() throws Exception {
+  void testParseSubsystemXmlWithEnginesPropertiesPlugins() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_PROPERTIES_PLUGINS);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -201,7 +211,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithEnginesPropertiesPlugins() throws Exception {
+  void testInstallSubsystemWithEnginesPropertiesPlugins() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_PROPERTIES_PLUGINS);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -258,7 +268,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemXml() throws Exception {
+  void testInstallSubsystemXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_ELEMENT_ONLY);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -273,7 +283,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemXmlPlatformPlugins() throws Exception {
+  void testInstallSubsystemXmlPlatformPlugins() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_ELEMENT_ONLY);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -292,7 +302,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithEnginesXml() throws Exception {
+  void testInstallSubsystemWithEnginesXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -309,7 +319,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithEnginesAndPropertiesXml() throws Exception {
+  void testInstallSubsystemWithEnginesAndPropertiesXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ENGINES_AND_PROPERTIES);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -341,7 +351,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithDuplicateEngineNamesXml() throws Exception {
+  void testInstallSubsystemWithDuplicateEngineNamesXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_DUPLICATE_ENGINE_NAMES);
 
     try {
@@ -357,7 +367,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithSingleEngineXml() throws Exception {
+  void testInstallSubsystemWithSingleEngineXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_SINGLE_ENGINE);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -375,7 +385,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemWithJobExecutorXml() throws Exception {
+  void testParseSubsystemWithJobExecutorXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR);
 //    System.out.println(normalizeXML(subsystemXml));
 
@@ -407,7 +417,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithJobExecutorXml() throws Exception {
+  void testInstallSubsystemWithJobExecutorXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR);
     KernelServices services = createKernelServicesBuilder(null)
         .setSubsystemXml(subsystemXml)
@@ -418,7 +428,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemWithJobExecutorAndPropertiesXml() throws Exception {
+  void testParseSubsystemWithJobExecutorAndPropertiesXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR_AND_PROPERTIES);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -472,7 +482,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemWithJobExecutorAndPropertiesXml() throws Exception {
+  void testInstallSubsystemWithJobExecutorAndPropertiesXml() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR_AND_PROPERTIES);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -544,7 +554,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testJobAcquisitionStrategyOptional() throws Exception {
+  void testJobAcquisitionStrategyOptional() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_JOB_EXECUTOR_WITHOUT_ACQUISITION_STRATEGY);
     KernelServices services = createKernelServicesBuilder(null)
         .setSubsystemXml(subsystemXml)
@@ -555,7 +565,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemXmlWithEnginesAndJobExecutor() throws Exception {
+  void testParseSubsystemXmlWithEnginesAndJobExecutor() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_AND_JOB_EXECUTOR);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -564,7 +574,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemXmlWithEnginesAndJobExecutor() throws Exception {
+  void testInstallSubsystemXmlWithEnginesAndJobExecutor() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_PROCESS_ENGINES_AND_JOB_EXECUTOR);
 
     KernelServices services = createKernelServicesBuilder(null)
@@ -581,17 +591,17 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseAndMarshalModelWithAllAvailableOptions() throws Exception {
+  void testParseAndMarshalModelWithAllAvailableOptions() throws Exception {
     parseAndMarshalSubsystemModelFromFile(SUBSYSTEM_WITH_ALL_OPTIONS);
   }
 
   @Test
-  public void testParseAndMarshalModelWithRequiredOptionsOnly() throws Exception {
+  void testParseAndMarshalModelWithRequiredOptionsOnly() throws Exception {
     parseAndMarshalSubsystemModelFromFile(SUBSYSTEM_WITH_REQUIRED_OPTIONS);
   }
 
   @Test
-  public void testParseAndMarshalModelWithAllAvailableOptionsWithExpressions() throws Exception {
+  void testParseAndMarshalModelWithAllAvailableOptionsWithExpressions() throws Exception {
     System.getProperties().putAll(EXPRESSION_PROPERTIES);
     try {
       parseAndMarshalSubsystemModelFromFile(SUBSYSTEM_WITH_ALL_OPTIONS_WITH_EXPRESSIONS);
@@ -603,7 +613,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testParseSubsystemXmlWithAllOptionsWithExpressions() throws Exception {
+  void testParseSubsystemXmlWithAllOptionsWithExpressions() throws Exception {
     String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ALL_OPTIONS_WITH_EXPRESSIONS);
 
     List<ModelNode> operations = parse(subsystemXml);
@@ -623,7 +633,7 @@ public class JBossSubsystemXMLTest extends AbstractSubsystemTest {
   }
 
   @Test
-  public void testInstallSubsystemXmlWithAllOptionsWithExpressions() throws Exception {
+  void testInstallSubsystemXmlWithAllOptionsWithExpressions() throws Exception {
     System.getProperties().putAll(EXPRESSION_PROPERTIES);
     try {
       String subsystemXml = FileUtils.readFile(SUBSYSTEM_WITH_ALL_OPTIONS_WITH_EXPRESSIONS);

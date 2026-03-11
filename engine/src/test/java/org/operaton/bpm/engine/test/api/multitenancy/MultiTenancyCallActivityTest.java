@@ -33,7 +33,7 @@ import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MultiTenancyCallActivityTest {
 
@@ -75,8 +75,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -97,8 +97,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -124,8 +124,8 @@ class MultiTenancyCallActivityTest {
         .tenantIdIn(TENANT_TWO).processDefinitionKey("subProcess").latestVersion().singleResult();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).processDefinitionId(latestSubProcessTenantTwo.getId()).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).processDefinitionId(latestSubProcessTenantTwo.getId()).count()).isOne();
   }
 
   @Test
@@ -147,8 +147,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -167,13 +167,13 @@ class MultiTenancyCallActivityTest {
 
     // then
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.activityIdIn("Task_1").tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.activityIdIn("Task_2").tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.activityIdIn("Task_1").tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.activityIdIn("Task_2").tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithDeploymentBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
       .callActivity()
@@ -187,18 +187,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithLatestBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
       .callActivity()
@@ -212,18 +209,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key 'subProcess'");
   }
 
   @Test
   void testFailStartProcessInstanceFromOtherTenantWithVersionBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
       .startEvent()
       .callActivity()
@@ -240,13 +234,10 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
 
   @Test
@@ -258,14 +249,10 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      // when
-      processInstantiationBuilder.execute();
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      // then
-      assertThat(e.getMessage()).contains("no processes deployed with key = 'subProcess'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no processes deployed with key = 'subProcess'");
   }
 
   @Test
@@ -286,8 +273,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -308,8 +295,8 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
@@ -332,11 +319,11 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
 
     CaseDefinition latestCaseDefinitionTenantTwo = repositoryService.createCaseDefinitionQuery().tenantIdIn(TENANT_TWO).latestVersion().singleResult();
     query = caseService.createCaseInstanceQuery().caseDefinitionId(latestCaseDefinitionTenantTwo.getId());
-    assertThat(query.count()).isEqualTo(1L);
+    assertThat(query.count()).isOne();
   }
 
   @Test
@@ -358,13 +345,13 @@ class MultiTenancyCallActivityTest {
     runtimeService.createProcessInstanceByKey("callingProcess").processDefinitionTenantId(TENANT_TWO).execute();
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
-    assertThat(query.tenantIdIn(TENANT_TWO).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
+    assertThat(query.tenantIdIn(TENANT_TWO).count()).isOne();
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithDeploymentBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
         .callActivity()
@@ -378,18 +365,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key = 'Case_1'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key = 'Case_1'");
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithLatestBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
         .callActivity()
@@ -403,18 +387,15 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key 'Case_1'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key 'Case_1'");
   }
 
   @Test
   void testFailStartCaseInstanceFromOtherTenantWithVersionBinding() {
-
+    // given
     BpmnModelInstance callingProcess = Bpmn.createExecutableProcess("callingProcess")
         .startEvent()
         .callActivity()
@@ -431,13 +412,10 @@ class MultiTenancyCallActivityTest {
     var processInstantiationBuilder = runtimeService.createProcessInstanceByKey("callingProcess")
         .processDefinitionTenantId(TENANT_ONE);
 
-    try {
-      processInstantiationBuilder.execute();
-
-      fail("expected exception");
-    } catch (ProcessEngineException e) {
-      assertThat(e.getMessage()).contains("no case definition deployed with key = 'Case_1'");
-    }
+    // when/then
+    assertThatThrownBy(processInstantiationBuilder::execute)
+      .isInstanceOf(ProcessEngineException.class)
+      .hasMessageContaining("no case definition deployed with key = 'Case_1'");
   }
 
   @Test
@@ -457,7 +435,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -477,7 +455,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     ProcessInstanceQuery query = runtimeService.createProcessInstanceQuery().processDefinitionKey("subProcess");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -497,7 +475,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
 
   }
 
@@ -518,7 +496,7 @@ class MultiTenancyCallActivityTest {
     runtimeService.startProcessInstanceByKey("callingProcess");
 
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   @Test
@@ -540,7 +518,7 @@ class MultiTenancyCallActivityTest {
 
     // then
     CaseInstanceQuery query = caseService.createCaseInstanceQuery().caseDefinitionKey("Case_1");
-    assertThat(query.tenantIdIn(TENANT_ONE).count()).isEqualTo(1L);
+    assertThat(query.tenantIdIn(TENANT_ONE).count()).isOne();
   }
 
   protected BpmnModelInstance createCallingProcess(String processId, String versionTagValue) {

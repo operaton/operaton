@@ -16,8 +16,8 @@
  */
 package org.operaton.bpm;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -49,13 +49,13 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
 
   @Parameters(name = "Asset: {0}, Allowed: {1}")
   public static Collection<Object[]> getAssets() {
-    return Arrays.asList(new Object[][] {
-            { "app/plugin.js", true },
-            { "app/plugin.css", true },
-            { "app/asset.js", false },
-            { "../..", false },
-            { "../../annotations-api.jar", false },
-    });
+    return List.of(
+      new Object[]{ "app/plugin.js", true },
+      new Object[]{ "app/plugin.css", true },
+      new Object[]{ "app/asset.js", false },
+      new Object[]{ "../..", false },
+      new Object[]{ "../../annotations-api.jar", false }
+    );
   }
 
   @Test
@@ -76,7 +76,7 @@ public class PluginsRootResourceIT extends AbstractWebIntegrationTest {
       String responseEntity = response.getBody();
       assertThat(responseEntity)
               .contains("\"type\":\"RestException\"")
-              .contains("\"message\":\"Not allowed to load the following file '" + asset + "'.\"");
+              .contains("\"message\":\"Not allowed to load the following file '%s'.\"".formatted(asset));
     }
   }
 

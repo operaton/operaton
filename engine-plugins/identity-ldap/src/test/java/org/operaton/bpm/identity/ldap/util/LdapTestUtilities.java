@@ -25,7 +25,6 @@ import org.operaton.bpm.engine.identity.Group;
 import org.operaton.bpm.engine.identity.User;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 /**
  * Contains some test utilities to test the Ldap plugin.
@@ -35,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 public final class LdapTestUtilities {
 
   public static void checkPagingResults(Set<String> results, String result1, String result2) {
-    assertNotSame(result1, result2);
+    assertThat(result1).isNotSameAs(result2);
     assertThat(results).doesNotContain(result1);
     results.add(result1);
     assertThat(results).doesNotContain(result2);

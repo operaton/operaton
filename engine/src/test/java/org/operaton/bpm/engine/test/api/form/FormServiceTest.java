@@ -18,7 +18,6 @@ package org.operaton.bpm.engine.test.api.form;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
@@ -80,6 +79,7 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.commons.utils.CollectionUtil;
 import org.operaton.commons.utils.IoUtil;
 
+import static java.lang.Boolean.TRUE;
 import static org.operaton.bpm.engine.test.util.OperatonFormUtils.findAllOperatonFormDefinitionEntities;
 import static org.operaton.bpm.engine.variable.Variables.booleanValue;
 import static org.operaton.bpm.engine.variable.Variables.createVariables;
@@ -94,7 +94,7 @@ import static org.assertj.core.api.Assertions.entry;
  * @author Joram Barrez
  * @author Frederik Heremans
  * @author Tom Baeyens
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 class FormServiceTest {
 
@@ -258,7 +258,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
     assertThat(variables).isEqualTo(expectedVariables);
@@ -315,7 +315,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     variables = runtimeService.getVariables(processInstanceId);
     address = (Address) variables.remove("address");
@@ -340,7 +340,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     Map<String, Object> variables = runtimeService.getVariables(processInstanceId);
     assertThat(variables).isEqualTo(expectedVariables);
@@ -394,7 +394,7 @@ class FormServiceTest {
     expectedVariables.put("room", "5b");
     expectedVariables.put("SpeakerName", "Mike");
     expectedVariables.put("duration", 45L);
-    expectedVariables.put("free", Boolean.TRUE);
+    expectedVariables.put("free", TRUE);
 
     variables = runtimeService.getVariables(processInstanceId);
     address = (Address) variables.remove("address");
@@ -866,7 +866,7 @@ class FormServiceTest {
     processVars.put("someString", "initialValue");
     processVars.put("initialBooleanVariable", true);
     processVars.put("initialLongVariable", 1L);
-    processVars.put("serializable", Arrays.asList("a", "b", "c"));
+    processVars.put("serializable", List.of("a", "b", "c"));
 
     runtimeService.startProcessInstanceByKey("testProcess", processVars);
 
@@ -891,7 +891,7 @@ class FormServiceTest {
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     assertThat(variables).containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(TRUE);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     assertThat(variables).containsEntry("initialLongVariable", 1L);
@@ -923,7 +923,7 @@ class FormServiceTest {
     assertThat(variables)
             .hasSize(1)
             .containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(TRUE);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     // request non-existing variable
@@ -943,7 +943,7 @@ class FormServiceTest {
     processVars.put("someString", "initialValue");
     processVars.put("initialBooleanVariable", true);
     processVars.put("initialLongVariable", 1L);
-    processVars.put("serializable", Arrays.asList("a", "b", "c"));
+    processVars.put("serializable", List.of("a", "b", "c"));
 
     // create new standalone task
     Task standaloneTask = taskService.newTask();
@@ -963,7 +963,7 @@ class FormServiceTest {
     assertThat(variables.getValueTyped("someString").getType()).isEqualTo(ValueType.STRING);
 
     assertThat(variables).containsEntry("initialBooleanVariable", true);
-    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(true);
+    assertThat(variables.getValueTyped("initialBooleanVariable").getValue()).isEqualTo(TRUE);
     assertThat(variables.getValueTyped("initialBooleanVariable").getType()).isEqualTo(ValueType.BOOLEAN);
 
     assertThat(variables).containsEntry("initialLongVariable", 1L);
@@ -1427,6 +1427,24 @@ class FormServiceTest {
       "org/operaton/bpm/engine/test/api/form/task.html"})
   @Test
   void testGetDeployedOperatonStartForm() {
+    // given
+    String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
+
+    // when
+    InputStream deployedStartForm = formService.getDeployedStartForm(procDefId);
+
+    // then
+    assertThat(deployedStartForm).isNotNull();
+    String fileAsString = IoUtil.fileAsString("org/operaton/bpm/engine/test/api/form/start.html");
+    String deployedStartFormAsString = IoUtil.inputStreamAsString(deployedStartForm);
+    assertThat(fileAsString).isEqualTo(deployedStartFormAsString);
+  }
+
+  @Deployment(resources = {"org/operaton/bpm/engine/test/api/form/DeployedCamundaFormsProcess.bpmn20.xml",
+      "org/operaton/bpm/engine/test/api/form/start.html",
+      "org/operaton/bpm/engine/test/api/form/task.html"})
+  @Test
+  void testGetDeployedCamundaStartForm() {
     // given
     String procDefId = repositoryService.createProcessDefinitionQuery().singleResult().getId();
 

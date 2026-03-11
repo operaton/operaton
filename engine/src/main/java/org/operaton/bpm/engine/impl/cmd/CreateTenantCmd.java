@@ -16,19 +16,13 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
-
 import org.operaton.bpm.engine.identity.Tenant;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-public class CreateTenantCmd extends AbstractWritableIdentityServiceCmd<Tenant> implements Command<Tenant>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
-
+public class CreateTenantCmd extends AbstractWritableIdentityServiceCmd<Tenant> implements Command<Tenant> {
   protected final String tenantId;
 
   public CreateTenantCmd(String tenantId) {

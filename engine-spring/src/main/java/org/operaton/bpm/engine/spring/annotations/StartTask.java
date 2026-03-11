@@ -17,7 +17,6 @@ package org.operaton.bpm.engine.spring.annotations;
 
 import java.lang.annotation.*;
 
-//todo
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

@@ -18,9 +18,7 @@ package org.operaton.bpm.engine.cdi.test.impl.context;
 
 import java.util.List;
 
-import org.jboss.arquillian.junit.Arquillian;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.cdi.test.CdiProcessEngineTestCase;
@@ -33,12 +31,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Daniel Meyer
  *
  */
-@RunWith(Arquillian.class)
-public class MultiInstanceTest extends CdiProcessEngineTestCase {
+class MultiInstanceTest extends CdiProcessEngineTestCase {
 
   @Test
   @Deployment
-  public void testParallelMultiInstanceServiceTasks() {
+  void testParallelMultiInstanceServiceTasks() {
     BusinessProcess businessProcess = getBeanInstance(BusinessProcess.class);
     businessProcess.setVariable("list", List.of("1", "2"));
     var process = (ProcessInstanceWithVariablesImpl) businessProcess.startProcessByKey("miParallelScriptTask");

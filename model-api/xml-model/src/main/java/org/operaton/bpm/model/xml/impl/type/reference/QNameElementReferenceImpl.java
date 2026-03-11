@@ -23,9 +23,9 @@ import org.operaton.bpm.model.xml.type.child.ChildElement;
 /**
  * @author Sebastian Menski
  */
-public class QNameElementReferenceImpl<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceImpl<Target,Source> {
+public class QNameElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceImpl<TARGET, SOURCE> {
 
-  public QNameElementReferenceImpl(ChildElement<Source> referenceSourceCollection) {
+  public QNameElementReferenceImpl(ChildElement<SOURCE> referenceSourceCollection) {
     super(referenceSourceCollection);
   }
 

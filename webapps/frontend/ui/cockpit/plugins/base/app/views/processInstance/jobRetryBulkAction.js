@@ -20,29 +20,29 @@
 var dialogTemplate = require('./job-retry-bulk-dialog.html?raw');
 var actionTemplate = require('./job-retry-bulk-action.html?raw');
 
-module.exports = function(ngModule, pluginPoint) {
+module.exports = function (ngModule, pluginPoint) {
   ngModule.controller('JobRetryActionController', [
     '$scope',
     '$uibModal',
-    function($scope, $modal) {
-      $scope.openDialog = function() {
+    function ($scope, $modal) {
+      $scope.openDialog = function () {
         $modal
           .open({
             resolve: {
-              processData: function() {
+              processData: function () {
                 return $scope.processData;
               },
-              processInstance: function() {
+              processInstance: function () {
                 return $scope.processInstance;
-              }
+              },
             },
             size: 'lg',
             controller: 'JobRetriesController',
-            template: dialogTemplate
+            template: dialogTemplate,
           })
-          .result.catch(function() {});
+          .result.catch(function () {});
       };
-    }
+    },
   ]);
 
   var Configuration = function PluginConfiguration(ViewsProvider) {
@@ -51,7 +51,7 @@ module.exports = function(ngModule, pluginPoint) {
       label: 'Job Retry Action',
       template: actionTemplate,
       controller: 'JobRetryActionController',
-      priority: 15
+      priority: 15,
     });
   };
 

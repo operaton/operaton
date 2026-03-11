@@ -38,15 +38,13 @@ public class DbIdGenerator implements IdGenerator {
 
   @Override
   public synchronized String getNextId() {
-    if (lastId<nextId) {
+    if (lastId < nextId) {
       getNewBlock();
     }
-    long _nextId = nextId++;
-    return Long.toString(_nextId);
+    return Long.toString(this.nextId++);
   }
 
   protected synchronized void getNewBlock() {
-    // TODO http://jira.codehaus.org/browse/ACT-45 use a separate 'requiresNew' command executor
     IdBlock idBlock = commandExecutor.execute(new GetNextIdBlockCmd(idBlockSize));
     this.nextId = idBlock.getNextId();
     this.lastId = idBlock.getLastId();

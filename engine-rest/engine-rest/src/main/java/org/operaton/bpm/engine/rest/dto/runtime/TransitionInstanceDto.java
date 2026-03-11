@@ -51,6 +51,9 @@ public class TransitionInstanceDto {
     return processDefinitionId;
   }
 
+  /**
+   * @deprecated since 1.0, use {@link #getActivityId()} instead. The method name has been corrected.
+   */
   @Deprecated(since = "1.0")
   public String getTargetActivityId() {
     return activityId;

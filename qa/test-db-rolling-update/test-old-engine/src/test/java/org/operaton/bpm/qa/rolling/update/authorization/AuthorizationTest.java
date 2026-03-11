@@ -16,12 +16,7 @@
  */
 package org.operaton.bpm.qa.rolling.update.authorization;
 
-import java.util.Arrays;
 import java.util.List;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 import org.operaton.bpm.engine.FormService;
 import org.operaton.bpm.engine.HistoryService;
@@ -37,6 +32,7 @@ import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
+import org.operaton.bpm.qa.rolling.update.RollingUpdateTest;
 import org.operaton.bpm.qa.rolling.update.AbstractRollingUpdateTestCase;
 import org.operaton.bpm.qa.upgrade.ScenarioUnderTest;
 
@@ -47,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Christopher Zell <christopher.zell@camunda.com>
  */
 @ScenarioUnderTest("AuthorizationScenario")
-public class AuthorizationTest extends AbstractRollingUpdateTestCase {
+class AuthorizationTest extends AbstractRollingUpdateTestCase {
 
   public static final String PROCESS_DEF_KEY = "oneTaskProcess";
   protected static final String USER_ID = "user";
@@ -60,45 +56,52 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
   protected HistoryService historyService;
   protected FormService formService;
 
-  @Before
-  public void setUp() {
+  private void initializeServices() {
     identityService = rule.getIdentityService();
     repositoryService = rule.getRepositoryService();
     runtimeService = rule.getRuntimeService();
     taskService = rule.getTaskService();
     historyService = rule.getHistoryService();
     formService = rule.getFormService();
-
-    identityService.clearAuthentication();
-    identityService.setAuthentication(USER_ID + rule.getBuisnessKey(), Arrays.asList(GROUP_ID + rule.getBuisnessKey()));
   }
 
-  @After
-  public void cleanUp() {
+  private void authenticateUser() {
+    identityService.clearAuthentication();
+    identityService.setAuthentication(USER_ID + rule.getBusinessKey(), List.of(GROUP_ID + rule.getBusinessKey()));
+  }
+
+  private void clearAuthentication() {
     identityService.clearAuthentication();
   }
 
-  @Test
+  @RollingUpdateTest
   @ScenarioUnderTest("startProcessInstance.1")
-  public void testAuthorization() {
-    //test access process related
-    testGetDeployment();
-    testGetProcessDefinition();
-    testGetProcessInstance();
-    testGetExecution();
-    testGetTask();
+  void testAuthorization() {
+    initializeServices();
+    authenticateUser();
 
-    //test access historic
-    testGetHistoricProcessInstance();
-    testGetHistoricActivityInstance();
-    testGetHistoricTaskInstance();
+    try {
+      //test access process related
+      testGetDeployment();
+      testGetProcessDefinition();
+      testGetProcessInstance();
+      testGetExecution();
+      testGetTask();
 
-    //test process modification
-    testSetVariable();
-    testSubmitStartForm();
-    testStartProcessInstance();
-    testCompleteTaskInstance();
-    testSubmitTaskForm();
+      //test access historic
+      testGetHistoricProcessInstance();
+      testGetHistoricActivityInstance();
+      testGetHistoricTaskInstance();
+
+      //test process modification
+      testSetVariable();
+      testSubmitStartForm();
+      testStartProcessInstance();
+      testCompleteTaskInstance();
+      testSubmitTaskForm();
+    } finally {
+      clearAuthentication();
+    }
   }
 
 
@@ -118,7 +121,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
   public void testGetProcessInstance() {
     List<ProcessInstance> instances = runtimeService
         .createProcessInstanceQuery()
-        .processInstanceBusinessKey(rule.getBuisnessKey())
+        .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
     assertThat(instances).isNotEmpty();
@@ -127,7 +130,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
   public void testGetExecution() {
     List<Execution> executions = runtimeService
         .createExecutionQuery()
-        .processInstanceBusinessKey(rule.getBuisnessKey())
+        .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
     assertThat(executions).isNotEmpty();
@@ -136,7 +139,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
   public void testGetTask() {
     List<Task> tasks = taskService
         .createTaskQuery()
-        .processInstanceBusinessKey(rule.getBuisnessKey())
+        .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
     assertThat(tasks).isNotEmpty();
@@ -145,7 +148,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
   public void testGetHistoricProcessInstance() {
     List<HistoricProcessInstance> instances= historyService
         .createHistoricProcessInstanceQuery()
-        .processInstanceBusinessKey(rule.getBuisnessKey())
+        .processInstanceBusinessKey(rule.getBusinessKey())
         .processDefinitionKey(PROCESS_DEF_KEY)
         .list();
     assertThat(instances).isNotEmpty();
@@ -167,12 +170,12 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
   }
 
   public void testStartProcessInstance() {
-    ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY, rule.getBuisnessKey());
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS_DEF_KEY, rule.getBusinessKey());
     assertThat(instance).isNotNull();
   }
 
   public void testSubmitStartForm() {
-    ProcessInstance instance = formService.submitStartForm(rule.processInstance().getProcessDefinitionId(), rule.getBuisnessKey(), null);
+    ProcessInstance instance = formService.submitStartForm(rule.processInstance().getProcessDefinitionId(), rule.getBusinessKey(), null);
     assertThat(instance).isNotNull();
   }
 
@@ -180,7 +183,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
     String taskId = taskService
         .createTaskQuery()
         .processDefinitionKey(PROCESS_DEF_KEY)
-        .processInstanceBusinessKey(rule.getBuisnessKey())
+        .processInstanceBusinessKey(rule.getBusinessKey())
         .listPage(0, 1)
         .get(0)
         .getId();
@@ -191,7 +194,7 @@ public class AuthorizationTest extends AbstractRollingUpdateTestCase {
     String taskId = taskService
         .createTaskQuery()
         .processDefinitionKey(PROCESS_DEF_KEY)
-        .processInstanceBusinessKey(rule.getBuisnessKey())
+        .processInstanceBusinessKey(rule.getBusinessKey())
         .listPage(0, 1)
         .get(0)
         .getId();

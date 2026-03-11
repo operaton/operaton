@@ -18,7 +18,7 @@
 'use strict';
 
 module.exports = {
-  load: function() {
+  load: function () {
     return requirejs.s.contexts._.defined;
-  }
+  },
 };

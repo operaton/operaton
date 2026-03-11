@@ -74,7 +74,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   protected int currentState = NEW.getStateCode();
 
-  protected Queue<VariableEvent> variableEventsQueue;
+  protected transient Queue<VariableEvent> variableEventsQueue;
 
   protected transient TaskEntity task;
 
@@ -179,7 +179,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   @Override
   public void createSentryParts() {
     CmmnActivity cmmnActivity = getActivity();
-    ensureNotNull("Case execution '"+id+"': has no current activity", "activity", cmmnActivity);
+    ensureNotNull("Case execution '%s': has no current activity".formatted(id), "activity", cmmnActivity);
 
     List<CmmnSentryDeclaration> sentries = cmmnActivity.getSentries();
 
@@ -219,7 +219,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
     // set source case execution
     CmmnActivity source = onPartDeclaration.getSource();
-    ensureNotNull("The source of sentry '"+sentryDeclaration.getId()+"' is null.", "source", source);
+    ensureNotNull("The source of sentry '%s' is null.".formatted(sentryDeclaration.getId()), "source", source);
 
     String sourceActivityId = source.getId();
     sentryPart.setSource(sourceActivityId);
@@ -550,7 +550,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   protected void checkAndFireExitCriteria(List<String> satisfiedSentries) {
     if (isActive()) {
       CmmnActivity cmmnActivity = getActivity();
-      ensureNotNull(PvmException.class, "Case execution '"+getId()+"': has no current activity.", "activity", cmmnActivity);
+      ensureNotNull(PvmException.class, "Case execution '%s': has no current activity.".formatted(getId()), "activity", cmmnActivity);
 
       // trigger first exitCriteria
       List<CmmnSentryDeclaration> exitCriteria = cmmnActivity.getExitCriteria();
@@ -570,7 +570,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
       // is available
 
       CmmnActivity cmmnActivity = getActivity();
-      ensureNotNull(PvmException.class, "Case execution '"+getId()+"': has no current activity.", "activity", cmmnActivity);
+      ensureNotNull(PvmException.class, "Case execution '%s': has no current activity.".formatted(getId()), "activity", cmmnActivity);
 
       List<CmmnSentryDeclaration> criteria = cmmnActivity.getEntryCriteria();
       for (CmmnSentryDeclaration sentryDeclaration : criteria) {
@@ -611,65 +611,60 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   }
 
   protected boolean isSentryPartsSatisfied(String sentryId, List<? extends CmmnSentryPart> sentryParts) {
-    // if part will be evaluated in the end
-    CmmnSentryPart ifPart = null;
-
-    if (sentryParts != null && !sentryParts.isEmpty()) {
-      for (CmmnSentryPart sentryPart : sentryParts) {
-
-        if (PLAN_ITEM_ON_PART.equals(sentryPart.getType())) {
-
-          if (!sentryPart.isSatisfied()) {
-            return false;
-          }
-
-        } else if (VARIABLE_ON_PART.equals(sentryPart.getType())) {
-          if (!sentryPart.isSatisfied()) {
-            return false;
-          }
-        } else { /* IF_PART.equals(sentryPart.getType) == true */
-
-          ifPart = sentryPart;
-
-          // once the ifPart has been satisfied the whole sentry is satisfied
-          if (ifPart.isSatisfied()) {
-            return true;
-          }
-
-        }
-
-      }
+    if (sentryParts == null || sentryParts.isEmpty()) {
+      return true;
     }
 
-    if (ifPart != null) {
-
-      CmmnExecution execution = ifPart.getCaseExecution();
-      ensureNotNull("Case execution of sentry '"+ifPart.getSentryId() +"': is null", execution);
-
-      CmmnActivity cmmnActivity = ifPart.getCaseExecution().getActivity();
-      ensureNotNull("Case execution '"+id+"': has no current activity", "activity", cmmnActivity);
-
-      CmmnSentryDeclaration sentryDeclaration = cmmnActivity.getSentry(sentryId);
-      ensureNotNull("Case execution '"+id+"': has no declaration for sentry '"+sentryId+"'", "sentryDeclaration", sentryDeclaration);
-
-      CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
-      ensureNotNull("Sentry declaration '"+sentryId+"' has no defined ifPart, but there should be one defined for case execution '"+id+"'.", "ifPartDeclaration", ifPartDeclaration);
-
-      Expression condition = ifPartDeclaration.getCondition();
-      ensureNotNull("A condition was expected for ifPart of Sentry declaration '"+sentryId+"' for case execution '"+id+"'.", "condition", condition);
-
-      Object result = condition.getValue(this);
-      ensureInstanceOf("condition expression returns non-Boolean", "result", result, Boolean.class);
-
-      Boolean booleanResult = (Boolean) result;
-      ifPart.setSatisfied(booleanResult);
-      return booleanResult;
-
+    // if part will be evaluated in the end
+    CmmnSentryPart ifPart = null;
+    for (CmmnSentryPart sentryPart : sentryParts) {
+      if (PLAN_ITEM_ON_PART.equals(sentryPart.getType()) || VARIABLE_ON_PART.equals(sentryPart.getType())) {
+        if (!sentryPart.isSatisfied()) {
+          return false;
+        }
+      } else { /* IF_PART.equals(sentryPart.getType) == true */
+        ifPart = sentryPart;
+        // once the ifPart has been satisfied the whole sentry is satisfied
+        if (ifPart.isSatisfied()) {
+          return true;
+        }
+      }
     }
 
     // if all onParts are satisfied and there is no
     // ifPart then the whole sentry is satisfied.
-    return true;
+    if (ifPart == null) {
+      return true;
+    }
+
+    // therefore evaluate the ifPart
+    Boolean booleanResult = isIfPartSatisfied(sentryId, ifPart);
+    ifPart.setSatisfied(booleanResult);
+    return booleanResult;
+  }
+
+  private Boolean isIfPartSatisfied(String sentryId, CmmnSentryPart ifPart) {
+    CmmnExecution execution = ifPart.getCaseExecution();
+    ensureNotNull("Case execution of sentry '%s': is null".formatted(ifPart.getSentryId()), execution);
+
+    CmmnActivity cmmnActivity = ifPart.getCaseExecution().getActivity();
+    ensureNotNull("Case execution '%s': has no current activity".formatted(id), "activity", cmmnActivity);
+
+    CmmnSentryDeclaration sentryDeclaration = cmmnActivity.getSentry(sentryId);
+    ensureNotNull("Case execution '%s': has no declaration for sentry '%s'".formatted(id, sentryId), "sentryDeclaration", sentryDeclaration);
+
+    CmmnIfPartDeclaration ifPartDeclaration = sentryDeclaration.getIfPart();
+    ensureNotNull("Sentry declaration '%s' has no defined ifPart, but there should be one defined for case execution '%s'.".formatted(
+      sentryId, id), "ifPartDeclaration", ifPartDeclaration);
+
+    Expression condition = ifPartDeclaration.getCondition();
+    ensureNotNull("A condition was expected for ifPart of Sentry declaration '%s' for case execution '%s'.".formatted(
+      sentryId, id), "condition", condition);
+
+    Object result = condition.getValue(this);
+    ensureInstanceOf("condition expression returns non-Boolean", "result", result, Boolean.class);
+
+    return (Boolean) result;
   }
 
   protected boolean containsIfPartAndExecutionActive(String sentryId, Map<String,List<CmmnSentryPart>> sentries) {
@@ -799,7 +794,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   @Override
   public CaseExecutionState getCurrentState() {
-    return CaseExecutionState.CASE_EXECUTION_STATES.get(getState());
+    return CaseExecutionState.forStatusCode(getState());
   }
 
   @Override
@@ -888,7 +883,7 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
   @Override
   public CaseExecutionState getPreviousState() {
-    return CaseExecutionState.CASE_EXECUTION_STATES.get(getPrevious());
+    return CaseExecutionState.forStatusCode(getPrevious());
   }
 
   public int getPrevious() {
@@ -1114,25 +1109,15 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
           sourceExecution.getActivity().getVariableListeners(delegateVariable.getEventName(), includeCustomerListeners);
 
       CmmnExecution currentExecution = sourceExecution;
+
       while (currentExecution != null) {
+        String activityId = currentExecution.getActivityId();
+        List<VariableListener<?>> listeners = activityId != null ? listenersByActivity.get(activityId) : null;
 
-        if (currentExecution.getActivityId() != null) {
-          List<VariableListener<?>> listeners = listenersByActivity.get(currentExecution.getActivityId());
-
-          if (listeners != null) {
-            delegateVariable.setScopeExecution(currentExecution);
-
-            for (VariableListener<?> listener : listeners) {
-              try {
-                CaseVariableListener caseVariableListener = (CaseVariableListener) listener;
-                CaseVariableListenerInvocation invocation = new CaseVariableListenerInvocation(caseVariableListener, delegateVariable, currentExecution);
-                Context.getProcessEngineConfiguration()
-                  .getDelegateInterceptor()
-                  .handleInvocation(invocation);
-              } catch (Exception e) {
-                throw LOG.invokeVariableListenerException(e);
-              }
-            }
+        if (listeners != null) {
+          delegateVariable.setScopeExecution(currentExecution);
+          for (VariableListener<?> listener : listeners) {
+            tryHandleInvocation((CaseVariableListener) listener, delegateVariable, currentExecution);
           }
         }
 
@@ -1141,6 +1126,20 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
 
       // finally remove the event from the queue
       eventQueue.remove();
+    }
+  }
+
+  private static void tryHandleInvocation(CaseVariableListener caseVariableListener,
+                                DelegateCaseVariableInstanceImpl delegateVariable,
+                                CmmnExecution currentExecution) {
+    try {
+      CaseVariableListenerInvocation invocation = new CaseVariableListenerInvocation(caseVariableListener,
+          delegateVariable, currentExecution);
+      Context.getProcessEngineConfiguration()
+        .getDelegateInterceptor()
+        .handleInvocation(invocation);
+    } catch (Exception e) {
+      throw LOG.invokeVariableListenerException(e);
     }
   }
 
@@ -1157,9 +1156,9 @@ public abstract class CmmnExecution extends CoreExecution implements CmmnCaseIns
   @Override
   public String toString() {
     if (isCaseInstanceExecution()) {
-      return "CaseInstance["+getToStringIdentity()+"]";
+      return "CaseInstance[%s]".formatted(getToStringIdentity());
     } else {
-      return "CmmnExecution["+getToStringIdentity() + "]";
+      return "CmmnExecution[%s]".formatted(getToStringIdentity());
     }
   }
 

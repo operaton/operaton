@@ -25,8 +25,6 @@ import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceLifecycl
  */
 public class VariableInstanceEntityPersistenceListener implements VariableInstanceLifecycleListener<VariableInstanceEntity> {
 
-  public static final VariableInstanceEntityPersistenceListener INSTANCE = new VariableInstanceEntityPersistenceListener();
-
   @Override
   public void onCreate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
     VariableInstanceEntity.insert(variable);
@@ -35,10 +33,6 @@ public class VariableInstanceEntityPersistenceListener implements VariableInstan
   @Override
   public void onDelete(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
     variable.delete();
-  }
-
-  @Override
-  public void onUpdate(VariableInstanceEntity variable, AbstractVariableScope sourceScope) {
   }
 
 }

@@ -115,8 +115,8 @@ class CompetingJoinTest {
 
     LOG.debug("test thread notifies thread 2");
     threadTwo.proceedAndWaitTillDone();
-    assertThat(threadTwo.exception).isNotNull();
-    testRule.assertTextPresent("was updated by another transaction concurrently", threadTwo.exception.getMessage());
+    assertThat(threadTwo.exception).isNotNull()
+      .hasMessageContaining("was updated by another transaction concurrently");
   }
 
 }

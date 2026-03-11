@@ -220,13 +220,13 @@ class DbOperationsOrderingTest {
   protected void assertHappensAfter(DbEntity entity1, DbEntity entity2, List<DbOperation> operations) {
     int idx1 = indexOfEntity(entity1, operations);
     int idx2 = indexOfEntity(entity2, operations);
-    assertThat(idx1).as("operation for " + entity1 + " should be executed after operation for " + entity2).isGreaterThan(idx2);
+    assertThat(idx1).as("operation for %s should be executed after operation for %s".formatted(entity1, entity2)).isGreaterThan(idx2);
   }
 
   protected void assertHappensBefore(DbEntity entity1, DbEntity entity2, List<DbOperation> operations) {
     int idx1 = indexOfEntity(entity1, operations);
     int idx2 = indexOfEntity(entity2, operations);
-    assertThat(idx1).as("operation for " + entity1 + " should be executed before operation for " + entity2).isLessThan(idx2);
+    assertThat(idx1).as("operation for %s should be executed before operation for %s".formatted(entity1, entity2)).isLessThan(idx2);
   }
 
   protected int indexOfEntity(DbEntity entity, List<DbOperation> operations) {

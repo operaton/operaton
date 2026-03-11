@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.api.multitenancy.query;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,7 +93,7 @@ class MultiTenancyBatchQueryTest {
     assertThat(batches).hasSize(1);
     assertThat(batches.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(managementService.createBatchQuery().count()).isEqualTo(1);
+    assertThat(managementService.createBatchQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }
@@ -119,7 +118,7 @@ class MultiTenancyBatchQueryTest {
   @Test
   void testBatchQueryAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // when
     List<Batch> batches = managementService.createBatchQuery().list();
@@ -143,7 +142,7 @@ class MultiTenancyBatchQueryTest {
     assertThat(statistics).hasSize(1);
     assertThat(statistics.get(0).getId()).isEqualTo(sharedBatch.getId());
 
-    assertThat(managementService.createBatchStatisticsQuery().count()).isEqualTo(1);
+    assertThat(managementService.createBatchStatisticsQuery().count()).isOne();
 
     identityService.clearAuthentication();
   }
@@ -167,7 +166,7 @@ class MultiTenancyBatchQueryTest {
   @Test
   void testBatchStatisticsAuthenticatedTenants() {
     // given
-    identityService.setAuthentication("user", null, Arrays.asList(TENANT_ONE, TENANT_TWO));
+    identityService.setAuthentication("user", null, List.of(TENANT_ONE, TENANT_TWO));
 
     // then
     List<BatchStatistics> statistics = managementService.createBatchStatisticsQuery().list();

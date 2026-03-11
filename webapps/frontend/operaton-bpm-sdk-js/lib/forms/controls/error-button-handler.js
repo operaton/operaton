@@ -31,26 +31,26 @@ var ErrorButtonHandler = AbstractFormField.extend(
     /**
      * Prepares an instance
      */
-    initialize: function() {
+    initialize: function () {
       this.errorCode = this.element.attr(constants.DIRECTIVE_CAM_ERROR_CODE);
       this.errorMessage = this.element.attr(
-        constants.DIRECTIVE_CAM_ERROR_MESSAGE
+        constants.DIRECTIVE_CAM_ERROR_MESSAGE,
       );
     },
 
-    applyValue: function() {
+    applyValue: function () {
       var self = this;
-      this.element.on('click', function() {
+      this.element.on('click', function () {
         self.form.error(self.errorCode, self.errorMessage);
       });
 
       return this;
-    }
+    },
   },
 
   {
-    selector: 'button[' + constants.DIRECTIVE_CAM_ERROR_CODE + ']'
-  }
+    selector: 'button[' + constants.DIRECTIVE_CAM_ERROR_CODE + ']',
+  },
 );
 
 module.exports = ErrorButtonHandler;

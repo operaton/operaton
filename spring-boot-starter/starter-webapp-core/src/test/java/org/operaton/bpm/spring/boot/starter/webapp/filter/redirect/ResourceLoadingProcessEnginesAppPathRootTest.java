@@ -18,12 +18,12 @@ package org.operaton.bpm.spring.boot.starter.webapp.filter.redirect;
 
 import java.net.HttpURLConnection;
 
-import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.util.StreamUtils;
 
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
@@ -53,7 +53,7 @@ class ResourceLoadingProcessEnginesAppPathRootTest {
 
     // when
     // get content returned by the request
-    String body = IOUtils.toString(con.getInputStream(), UTF_8);
+    String body = StreamUtils.copyToString(con.getInputStream(), UTF_8);
 
     // then
     assertThat(con.getResponseCode()).isEqualTo(200);

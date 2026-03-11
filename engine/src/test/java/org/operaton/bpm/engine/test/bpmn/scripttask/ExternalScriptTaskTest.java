@@ -21,6 +21,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RuntimeService;
@@ -33,12 +35,13 @@ import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Sebastian Menski
  */
 class ExternalScriptTaskTest {
+  private static final String GREETING_PY = "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py";
 
   @RegisterExtension
   static ProcessEngineExtension engineRule = ProcessEngineExtension.builder().build();
@@ -61,7 +64,7 @@ class ExternalScriptTaskTest {
   @Test
   void testDefaultExternalScriptAsVariable() {
     Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptPath", "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py");
+    variables.put("scriptPath", GREETING_PY);
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
@@ -71,30 +74,27 @@ class ExternalScriptTaskTest {
   @Deployment(resources = {"org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsVariable.bpmn20.xml"})
   @Test
   void testDefaultExternalScriptAsNonExistingVariable() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Process variable 'scriptPath' not defined");
-    }
-    catch(ProcessEngineException e) {
-      testRule.assertTextPresentIgnoreCase("Cannot resolve identifier 'scriptPath'", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("Cannot resolve identifier 'scriptPath'");
   }
 
-  @Deployment
-  @Test
-  void testDefaultExternalScriptAsBean() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptResourceBean", new ScriptResourceBean());
+  @ParameterizedTest
+  @ValueSource(strings = {
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testDefaultExternalScriptAsBean.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInClasspath.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInClasspathAsBean.bpmn20.xml",
+      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsBean.bpmn20.xml"
+  })
+  void withScriptResourceBean(String bpmnResource) {
+    // given
+    testRule.deploy(bpmnResource, GREETING_PY);
+
+    // when
+    Map<String, Object> variables = Map.of("scriptResourceBean", new ScriptResourceBean());
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment
-  @Test
-  void testScriptInClasspath() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
 
     String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
     assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
@@ -113,42 +113,16 @@ class ExternalScriptTaskTest {
 
   @Deployment
   @Test
-  void testScriptInClasspathAsBean() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptResourceBean", new ScriptResourceBean());
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment
-  @Test
   void testScriptNotFoundInClasspath() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Resource does not exist in classpath");
-    }
-    catch (NotFoundException e) {
-      testRule.assertTextPresentIgnoreCase("unable to find resource at path classpath://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Unable to find resource at path classpath://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
   }
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
-  })
-  @Test
-  void testScriptInDeployment() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process");
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeployment.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      GREETING_PY
   })
   @Test
   void testScriptInDeploymentAfterCacheWasCleaned() {
@@ -162,7 +136,7 @@ class ExternalScriptTaskTest {
 
   @Deployment(resources = {
       "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsVariable.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
+      GREETING_PY
   })
   @Test
   void testScriptInDeploymentAsVariable() {
@@ -174,42 +148,22 @@ class ExternalScriptTaskTest {
     assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
   }
 
-  @Deployment(resources = {
-      "org/operaton/bpm/engine/test/bpmn/scripttask/ExternalScriptTaskTest.testScriptInDeploymentAsBean.bpmn20.xml",
-      "org/operaton/bpm/engine/test/bpmn/scripttask/greeting.py"
-  })
-  @Test
-  void testScriptInDeploymentAsBean() {
-    Map<String, Object> variables = new HashMap<>();
-    variables.put("scriptResourceBean", new ScriptResourceBean());
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("process", variables);
-
-    String greeting = (String) runtimeService.getVariable(processInstance.getId(), "greeting");
-    assertThat(greeting).isNotNull().isEqualTo("Greetings Operaton speaking");
-  }
-
   @Deployment
   @Test
   void testScriptNotFoundInDeployment() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Resource does not exist in classpath");
-    }
-    catch (NotFoundException e) {
-      testRule.assertTextPresentIgnoreCase("unable to find resource at path deployment://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(NotFoundException.class)
+        .hasMessageContaining("Unable to find resource at path deployment://org/operaton/bpm/engine/test/bpmn/scripttask/notexisting.py");
   }
 
   @Deployment
   @Test
   void testNotExistingImport() {
-    try {
-      runtimeService.startProcessInstanceByKey("process");
-      fail("Should fail during script compilation");
-    }
-    catch (ScriptCompilationException e) {
-      testRule.assertTextPresentIgnoreCase("import unknown", e.getMessage());
-    }
+    // when/then
+    assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("process"))
+        .isInstanceOf(ScriptCompilationException.class)
+        .hasMessageContaining("import unknown");
   }
 
 }

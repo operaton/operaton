@@ -42,7 +42,7 @@ public class PasswordPolicyLowerCaseRuleImpl implements PasswordPolicyRule {
   @Override
   public Map<String, String> getParameters() {
     Map<String, String> parameter = new HashMap<>();
-    parameter.put("minLowerCase", "" + this.minLowerCase);
+    parameter.put("minLowerCase", String.valueOf(this.minLowerCase));
     return parameter;
   }
 

@@ -20,10 +20,10 @@ import java.io.ByteArrayInputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
-import org.operaton.bpm.engine.impl.bpmn.deployer.BpmnDeployer;
 import org.operaton.bpm.engine.impl.util.StringUtil;
 import org.operaton.bpm.engine.repository.CandidateDeployment;
 import org.operaton.bpm.engine.repository.Deployment;
@@ -33,6 +33,9 @@ import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.model.bpmn.Bpmn;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.Process;
+
+import static org.operaton.bpm.engine.impl.ResourceSuffixes.BPMN_RESOURCE_SUFFIXES;
+import static java.util.Collections.emptySet;
 
 public class VersionedDeploymentHandler implements DeploymentHandler {
 
@@ -82,31 +85,33 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
   @Override
   public Set<String> determineDeploymentsToResumeByProcessDefinitionKey(
       String[] processDefinitionKeys) {
-
-    List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery()
-        .processDefinitionKeysIn(processDefinitionKeys).list();
-
-    Set<String> deploymentIds = new HashSet<>();
-    for (ProcessDefinition processDefinition : processDefinitions) {
-      // If all the resources are new, the candidateVersionTag
-      // property will be null since there's nothing to compare it to.
-      if (candidateVersionTag != null && candidateVersionTag.equals(processDefinition.getVersionTag())) {
-        deploymentIds.add(processDefinition.getDeploymentId());
-      }
+    // If all the resources are new, the candidateVersionTag
+    // property will be null since there's nothing to compare it to.
+    if (candidateVersionTag == null) {
+      return emptySet();
     }
 
-    return deploymentIds;
+    return repositoryService.createProcessDefinitionQuery().processDefinitionKeyIn(processDefinitionKeys).list()
+            .stream()
+            .filter(processDefinition -> candidateVersionTag.equals(processDefinition.getVersionTag()))
+            .map(ProcessDefinition::getDeploymentId)
+            .collect(Collectors.toSet());
   }
 
   @Override
   public Set<String> determineDeploymentsToResumeByDeploymentName(CandidateDeployment candidateDeployment) {
+    // If all the resources are new, the candidateVersionTag
+    // property will be null since there's nothing to compare it to.
+    if (candidateVersionTag == null) {
+      return emptySet();
+    }
+
     Set<String> deploymentIds = new HashSet<>();
 
     List<Deployment> previousDeployments = processEngine.getRepositoryService()
         .createDeploymentQuery().deploymentName(candidateDeployment.getName()).list();
 
     for (Deployment deployment : previousDeployments) {
-
       // find the Process Definitions included in this deployment
       List<ProcessDefinition> deploymentPDs = repositoryService.createProcessDefinitionQuery()
           .deploymentId(deployment.getId())
@@ -114,9 +119,8 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
 
       for (ProcessDefinition processDefinition : deploymentPDs) {
         // only deploy Deployments of the same name that contain a Process Definition with the
-        // correct Operaton Version Tag. If all the resources are new, the candidateVersionTag
-        // property will be null since there's nothing to compare it to.
-        if (candidateVersionTag != null && candidateVersionTag.equals(processDefinition.getVersionTag())) {
+        // correct Operaton Version Tag.
+        if (candidateVersionTag.equals(processDefinition.getVersionTag())) {
           deploymentIds.add(deployment.getId());
           break;
         }
@@ -149,6 +153,6 @@ public class VersionedDeploymentHandler implements DeploymentHandler {
   }
 
   protected boolean isBpmnResource(Resource resource) {
-    return StringUtil.hasAnySuffix(resource.getName(), BpmnDeployer.BPMN_RESOURCE_SUFFIXES);
+    return StringUtil.hasAnySuffix(resource.getName(), BPMN_RESOURCE_SUFFIXES);
   }
 }

@@ -509,7 +509,7 @@ public class ProcessInstanceQueryDto extends AbstractQueryDto<ProcessInstanceQue
         } else if (LIKE_OPERATOR_NAME.equals(op)) {
           query.variableValueLike(variableName, String.valueOf(variableValue));
         } else {
-          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: " + op);
+          throw new InvalidRequestException(Status.BAD_REQUEST, "Invalid variable comparator specified: %s".formatted(op));
         }
       }
     }

@@ -89,8 +89,8 @@ public class LegacyUserOperationLogTest {
 
       UserOperationLogQuery query = userOperationLogQuery().userId(USER_ID);
       assertThat(query.count()).isEqualTo(4);
-      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count()).isEqualTo(1);
-      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isEqualTo(1);
+      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE).count()).isOne();
+      assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isOne();
       assertThat(query.operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(2);
 
     } finally {
@@ -114,16 +114,16 @@ public class LegacyUserOperationLogTest {
     assertThat((Boolean) runtimeService.getVariable(processInstanceId, "serviceTaskCalled")).isTrue();
 
     assertThat(userOperationLogQuery().count()).isEqualTo(5);
-    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isEqualTo(1);
+    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_COMPLETE).count()).isOne();
     assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(2);
     assertThat(userOperationLogQuery()
-        .entityType(EntityTypes.DEPLOYMENT)
-        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-        .count()).isEqualTo(1);
+      .entityType(EntityTypes.DEPLOYMENT)
+      .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+      .count()).isOne();
     assertThat(userOperationLogQuery()
-        .entityType(EntityTypes.PROCESS_INSTANCE)
-        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-        .count()).isEqualTo(1);
+      .entityType(EntityTypes.PROCESS_INSTANCE)
+      .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+      .count()).isOne();
   }
 
   @Test
@@ -137,15 +137,15 @@ public class LegacyUserOperationLogTest {
 
     // then
     assertThat(userOperationLogQuery().count()).isEqualTo(3);
-    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isEqualTo(1);
+    assertThat(userOperationLogQuery().operationType(UserOperationLogEntry.OPERATION_TYPE_SET_VARIABLE).count()).isOne();
     assertThat(userOperationLogQuery()
-        .entityType(EntityTypes.DEPLOYMENT)
-        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-        .count()).isEqualTo(1);
+      .entityType(EntityTypes.DEPLOYMENT)
+      .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+      .count()).isOne();
     assertThat(userOperationLogQuery()
-        .entityType(EntityTypes.PROCESS_INSTANCE)
-        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-        .count()).isEqualTo(1);
+      .entityType(EntityTypes.PROCESS_INSTANCE)
+      .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+      .count()).isOne();
   }
 
   @Test
@@ -201,9 +201,9 @@ public class LegacyUserOperationLogTest {
         .entityType(EntityTypes.DEPLOYMENT)
         .count()).isEqualTo(2);
     assertThat(userOperationLogQuery()
-        .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
-        .entityType(EntityTypes.PROCESS_INSTANCE)
-        .count()).isEqualTo(1);
+      .operationType(UserOperationLogEntry.OPERATION_TYPE_CREATE)
+      .entityType(EntityTypes.PROCESS_INSTANCE)
+      .count()).isOne();
     assertThat(userOperationLogQuery()
         .operationType(UserOperationLogEntry.OPERATION_TYPE_MIGRATE)
         .entityType(EntityTypes.PROCESS_INSTANCE)

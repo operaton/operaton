@@ -17,7 +17,6 @@
 
 package org.operaton.bpm.engine.test.api.authorization;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -41,8 +40,8 @@ import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_TASK;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.TASK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.fail;
 
 @Parameterized
 public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
@@ -76,7 +75,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     TriConsumer<TaskService, String, Object> setDueDate = (taskService, taskId, value) -> taskService.setDueDate(taskId, (Date) value);
     TriConsumer<TaskService, String, Object> setFollowUpDate = (taskService, taskId, value) -> taskService.setFollowUpDate(taskId, (Date) value);
 
-    return Arrays.asList(new Object[][] {
+    return List.of(new Object[][] {
         {"setPriority", setPriority, "taskId", 80 },
         {"setName", setName, "taskId", "name" },
         {"setDescription", setDescription, "taskId", "description" },
@@ -98,7 +97,7 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
     createTask(taskId);
     assertThatThrownBy(() -> operation.accept(taskService, taskId, value), "It should not be possible to " + operationName)
         .isInstanceOf(AuthorizationException.class)
-        .hasMessageContaining("The user with id '" + userId + "' does not have one of the following permissions: 'TASK_ASSIGN'");
+        .hasMessageContaining("The user with id '%s' does not have one of the following permissions: 'TASK_ASSIGN'".formatted(userId));
     deleteTask(taskId, true);
   }
 
@@ -142,12 +141,12 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithTaskAssignPermissionOnTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
-    createGrantAuthorization(TASK, taskId, userId, TASK_ASSIGN);
+    createGrantAuthorization(TASK, startedTaskId, userId, TASK_ASSIGN);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -160,15 +159,15 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithoutAuthorization() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
     // when + then
-    assertThatThrownBy(() -> operation.accept(taskService, taskId, value),
+    assertThatThrownBy(() -> operation.accept(taskService, startedTaskId, value),
             "It should not be possible to " + operationName)
         .isInstanceOf(AuthorizationException.class)
         .hasMessageContaining(userId)
         .hasMessageContaining(UPDATE.getName())
-        .hasMessageContaining(taskId)
+        .hasMessageContaining(startedTaskId)
         .hasMessageContaining(TASK.resourceName())
         .hasMessageContaining(UPDATE_TASK.getName())
         .hasMessageContaining(PROCESS_DEFINITION.resourceName());
@@ -178,12 +177,12 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithUpdatePermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
     createGrantAuthorization(TASK, ANY, userId, UPDATE);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -196,12 +195,12 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithTaskAssignPermissionOnAnyTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
     createGrantAuthorization(TASK, ANY, userId, TASK_ASSIGN);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -214,12 +213,12 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithUpdateTasksPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -232,12 +231,12 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithTaskAssignPermissionOnProcessDefinition() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_ASSIGN);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -250,13 +249,13 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessTask() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
-    createGrantAuthorization(TASK, taskId, userId, UPDATE);
+    createGrantAuthorization(TASK, startedTaskId, userId, UPDATE);
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, UPDATE_TASK);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -269,13 +268,13 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   void shouldSetOperationOnProcessWithTaskAssignPermission() {
     // given
     startProcessInstanceByKey(PROCESS_KEY);
-    String taskId = selectSingleTask().getId();
+    String startedTaskId = selectSingleTask().getId();
 
-    createGrantAuthorization(TASK, taskId, userId, TASK_ASSIGN);
+    createGrantAuthorization(TASK, startedTaskId, userId, TASK_ASSIGN);
     createGrantAuthorization(PROCESS_DEFINITION, PROCESS_KEY, userId, TASK_ASSIGN);
 
     // when
-    operation.accept(taskService, taskId, value);
+    operation.accept(taskService, startedTaskId, value);
 
     // then
     Task task = selectSingleTask();
@@ -285,12 +284,11 @@ public class SetTaskPropertyAuthorizationTest extends AuthorizationTest {
   }
 
   private void assertHasPropertyValue(Task task, String operationName, Object expectedValue) {
-    try {
-      Object value = ObjectProperty.ofSetterMethod(task, operationName).getValue();
-
-      assertThat(value).isEqualTo(expectedValue);
-    } catch (Exception e) {
-      fail("Failed to assert property for operationName=" + operationName + " due to : " + e.getMessage());
-    }
+    assertThatCode(() -> {
+      Object actualValue = ObjectProperty.ofSetterMethod(task, operationName).getValue();
+      assertThat(actualValue).isEqualTo(expectedValue);
+    })
+        .withFailMessage("Failed to assert property for operationName=%s".formatted(operationName))
+        .doesNotThrowAnyException();
   }
 }

@@ -114,11 +114,11 @@ class CompetingCompleteTaskSetVariableTest extends ConcurrencyTestCase {
     thread2.waitUntilDone();
 
     //variable was persisted
-    assertThat(runtimeService.createVariableInstanceQuery().taskIdIn(taskId).count()).isEqualTo(1);
+    assertThat(runtimeService.createVariableInstanceQuery().taskIdIn(taskId).count()).isOne();
 
     //task was not removed
     assertThat(thread2.exception).isNotNull();
-    assertThat(taskService.createTaskQuery().taskId(taskId).count()).isEqualTo(1);
+    assertThat(taskService.createTaskQuery().taskId(taskId).count()).isOne();
 
   }
 }

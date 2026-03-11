@@ -46,7 +46,8 @@ import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.InstanceOfAssertFactories.type;
 
 /**
  * @author Daniel Meyer
@@ -67,17 +68,18 @@ class AsyncAfterTest {
 
   @Test
   void testTransitionIdRequired() {
+    // given
     var deploymentBuilder = repositoryService.createDeployment()
         .addClasspathResource("org/operaton/bpm/engine/test/bpmn/async/AsyncAfterTest.testTransitionIdRequired.bpmn20.xml");
 
+    // when/then
     // if an outgoing sequence flow has no id, we cannot use it in asyncAfter
-    try {
-      deploymentBuilder.deploy();
-      fail("Exception expected");
-    } catch (ParseException e) {
-      testRule.assertTextPresent("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.", e.getMessage());
-      assertThat(e.getResourceReports().get(0).getErrors().get(0).getElementIds()).containsExactly("service");
-    }
+    assertThatThrownBy(deploymentBuilder::deploy)
+      .isInstanceOf(ParseException.class)
+      .hasMessageContaining("Sequence flow with sourceRef='service' must have an id, activity with id 'service' uses 'asyncAfter'.")
+      .asInstanceOf(type(ParseException.class))
+      .extracting(e -> e.getResourceReports().get(0).getErrors().get(0).getElementIds())
+      .isEqualTo(List.of("service"));
 
   }
 
@@ -496,13 +498,13 @@ class AsyncAfterTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* the gateway
-    assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().active().count()).isOne();
 
     testRule.executeAvailableJobs();
 
     // if the waiting job is executed there should be 2 user tasks
     TaskQuery taskQuery = taskService.createTaskQuery();
-    assertThat(taskQuery.active().count()).isEqualTo(1);
+    assertThat(taskQuery.active().count()).isOne();
 
     // finish tasks
     List<Task> tasks = taskQuery.active().list();
@@ -538,7 +540,7 @@ class AsyncAfterTest {
     assertListenerEndInvoked(pi);
 
     // and we will wait *after* the gateway:
-    assertThat(managementService.createJobQuery().active().count()).isEqualTo(1);
+    assertThat(managementService.createJobQuery().active().count()).isOne();
   }
 
   /**
@@ -649,7 +651,7 @@ class AsyncAfterTest {
     assertListenerEndInvoked(pi);
 
     // the process should wait *after* execute each service task step-by-step
-    assertThat(managementService.createJobQuery().count()).isEqualTo(1L);
+    assertThat(managementService.createJobQuery().count()).isOne();
     // execute all jobs - one for each service task wrapped in the multi-instance body
     testRule.executeAvailableJobs(5);
 

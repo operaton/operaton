@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.test.history;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,7 +39,7 @@ public class DefaultHistoryEventHandlerTest {
 
   @Parameters
   public static Iterable<Object> parameters() {
-    return Arrays.asList(true, false);
+    return List.of(true, false);
   }
 
   @Parameter
@@ -86,10 +85,12 @@ public class DefaultHistoryEventHandlerTest {
 
     @Override
     public void handleEvent(HistoryEvent historyEvent) {
+      // noop
     }
 
     @Override
     public void handleEvents(List<HistoryEvent> historyEvents) {
+      // noop
     }
   }
 }

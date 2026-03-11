@@ -51,7 +51,7 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
 
     Tenant tenant = findTenantObject();
     if(tenant == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Tenant with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Tenant with id %s does not exist".formatted(resourceId));
     }
 
     return TenantDto.fromTenant(tenant);
@@ -63,7 +63,7 @@ public class TenantResourceImpl extends AbstractIdentityResource implements Tena
 
     Tenant tenant = findTenantObject();
     if(tenant == null) {
-      throw new InvalidRequestException(Status.NOT_FOUND, "Tenant with id " + resourceId + " does not exist");
+      throw new InvalidRequestException(Status.NOT_FOUND, "Tenant with id %s does not exist".formatted(resourceId));
     }
 
     tenantDto.update(tenant);

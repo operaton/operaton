@@ -124,8 +124,8 @@ class TaskAssignmentExtensionsTest {
 
     // Test the task query find-by-candidate-group operation
     TaskQuery query = taskService.createTaskQuery();
-    assertThat(query.taskCandidateGroup("management").count()).isEqualTo(1);
-    assertThat(query.taskCandidateGroup("accountancy").count()).isEqualTo(1);
+    assertThat(query.taskCandidateGroup("management").count()).isOne();
+    assertThat(query.taskCandidateGroup("accountancy").count()).isOne();
   }
 
   // Test where the candidate user extension is used together

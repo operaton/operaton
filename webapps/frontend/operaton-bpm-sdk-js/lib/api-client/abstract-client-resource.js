@@ -92,11 +92,11 @@ var AbstractClientResource = BaseClass.extend(
      *
      * @method initialize
      */
-    initialize: function() {
+    initialize: function () {
       // do something to initialize the instance
       // like copying the Model http property to the "this" (instanciated)
       this.http = this.constructor.http;
-    }
+    },
   },
 
   /** @lends AbstractClientResource */
@@ -126,7 +126,7 @@ var AbstractClientResource = BaseClass.extend(
      * @param  {!Object|Object[]}  attributes
      * @param  {requestCallback} [done]
      */
-    create: function() {},
+    create: function () {},
 
     /**
      * Fetch a list of instances
@@ -139,7 +139,7 @@ var AbstractClientResource = BaseClass.extend(
      * @param  {?Object.<String, String>} params
      * @param  {requestCallback} [done]
      */
-    list: function(params, done) {
+    list: function (params, done) {
       // allows to pass only a callback
       if (typeof params === 'function') {
         done = params;
@@ -152,7 +152,7 @@ var AbstractClientResource = BaseClass.extend(
       var self = this;
       var results = {
         count: 0,
-        items: []
+        items: [],
       };
 
       var combinedPromise = Q.defer();
@@ -160,7 +160,7 @@ var AbstractClientResource = BaseClass.extend(
       var countFinished = false;
       var listFinished = false;
 
-      var checkCompletion = function() {
+      var checkCompletion = function () {
         if (listFinished && countFinished) {
           self.trigger('loaded', results);
           combinedPromise.resolve(results);
@@ -171,7 +171,7 @@ var AbstractClientResource = BaseClass.extend(
       // until a new webservice is made available,
       // we need to perform 2 requests.
       // Since they are independent requests, make them asynchronously
-      self.count(params, function(err, count) {
+      self.count(params, function (err, count) {
         if (err) {
           self.trigger('error', err);
           combinedPromise.reject(err);
@@ -185,7 +185,7 @@ var AbstractClientResource = BaseClass.extend(
 
       self.http.get(self.path, {
         data: params,
-        done: function(err, itemsRes) {
+        done: function (err, itemsRes) {
           if (err) {
             self.trigger('error', err);
             combinedPromise.reject(err);
@@ -199,7 +199,7 @@ var AbstractClientResource = BaseClass.extend(
             listFinished = true;
             checkCompletion();
           }
-        }
+        },
       });
 
       return combinedPromise.promise;
@@ -216,7 +216,7 @@ var AbstractClientResource = BaseClass.extend(
      * @param  {?Object.<String, String>} params
      * @param  {requestCallback} [done]
      */
-    count: function(params, done) {
+    count: function (params, done) {
       // allows to pass only a callback
       if (typeof params === 'function') {
         done = params;
@@ -229,7 +229,7 @@ var AbstractClientResource = BaseClass.extend(
 
       this.http.get(this.path + '/count', {
         data: params,
-        done: function(err, result) {
+        done: function (err, result) {
           if (err) {
             /**
              * @event CamSDK.AbstractClientResource#error
@@ -243,7 +243,7 @@ var AbstractClientResource = BaseClass.extend(
             deferred.resolve(result.count);
             done(null, result.count);
           }
-        }
+        },
       });
 
       return deferred.promise;
@@ -259,7 +259,7 @@ var AbstractClientResource = BaseClass.extend(
      * @param  {Object.<String, *>}   attributes
      * @param  {requestCallback} [done]
      */
-    update: function() {},
+    update: function () {},
 
     /**
      * Delete one or more instances
@@ -270,8 +270,8 @@ var AbstractClientResource = BaseClass.extend(
      * @param  {!String|String[]}  ids
      * @param  {requestCallback} [done]
      */
-    delete: function() {}
-  }
+    delete: function () {},
+  },
 );
 
 Events.attach(AbstractClientResource);

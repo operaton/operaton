@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.bpmn.parser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptValueProvider;
 import org.operaton.bpm.engine.impl.util.ScriptUtil;
 import org.operaton.bpm.engine.impl.util.xml.Element;
+import org.operaton.bpm.engine.impl.util.xml.Namespace;
 
 /**
  * Helper methods to reused for common parsing tasks.
@@ -56,9 +58,21 @@ public final class BpmnParseUtil {
    * @return the extension element or null if not found
    */
   public static Element findOperatonExtensionElement(Element element, String extensionElementName) {
+    return findExtensionElement(element, BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
+  }
+
+  /**
+   * Returns the extension element with the given name in the given namespace.
+   *
+   * @param element the parent element of the extension element
+   * @param namespace the namespace of the extension element
+   * @param extensionElementName the name of the extension element to find
+   * @return the extension element or null if not found
+   */
+  public static Element findExtensionElement(Element element, Namespace namespace, String extensionElementName) {
     Element extensionElements = element.element("extensionElements");
-    if(extensionElements != null) {
-      return extensionElements.elementNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, extensionElementName);
+    if (extensionElements != null) {
+      return extensionElements.elementNS(namespace, extensionElementName);
     } else {
       return null;
     }
@@ -170,52 +184,73 @@ public final class BpmnParseUtil {
    * @throws BpmnParseException if the parameter is invalid
    */
   protected static ParameterValueProvider parseParamValueProvider(Element parameterElement) {
-
     // LIST
-    if("list".equals(parameterElement.getTagName())) {
-      List<ParameterValueProvider> providerList = new ArrayList<>();
-      for (Element element : parameterElement.elements()) {
-        // parse nested provider
-        providerList.add(parseParamValueProvider(element));
-      }
+    if(isTagName(parameterElement, "list")) {
+      List<ParameterValueProvider> providerList = getParameterValueProviders(parameterElement);
       return new ListValueProvider(providerList);
     }
 
     // MAP
-    if("map".equals(parameterElement.getTagName())) {
-      TreeMap<ParameterValueProvider, ParameterValueProvider> providerMap = new TreeMap<>();
-      for (Element entryElement : parameterElement.elements("entry")) {
-        // entry must provide key
-        String keyAttribute = entryElement.attribute("key");
-        if(keyAttribute == null || keyAttribute.isEmpty()) {
-          throw new BpmnParseException("Missing attribute 'key' for 'entry' element", entryElement);
-        }
-        // parse nested provider
-        providerMap.put(new ElValueProvider(getExpressionManager().createExpression(keyAttribute)), parseNestedParamValueProvider(entryElement));
-      }
+    if(isTagName(parameterElement, "map")) {
+      TreeMap<ParameterValueProvider, ParameterValueProvider> providerMap = getElValueProviders(parameterElement);
       return new MapValueProvider(providerMap);
     }
 
     // SCRIPT
-    if("script".equals(parameterElement.getTagName())) {
-      ExecutableScript executableScript = parseOperatonScript(parameterElement);
-      if (executableScript != null) {
-        return new ScriptValueProvider(executableScript);
-      }
-      else {
-        return new NullValueProvider();
-      }
+    if(isTagName(parameterElement, "script")) {
+      return getScriptValueProvider(parameterElement);
     }
 
+    return getElValueProvider(parameterElement);
+  }
+
+  private static ParameterValueProvider getElValueProvider(Element parameterElement) {
     String textContent = parameterElement.getText().trim();
     if(!textContent.isEmpty()) {
         // EL
-        return new ElValueProvider(getExpressionManager().createExpression(textContent));
+      return new ElValueProvider(getExpressionManager().createExpression(textContent));
     } else {
       // NULL value
       return new NullValueProvider();
     }
+  }
 
+  private static ParameterValueProvider getScriptValueProvider(Element parameterElement) {
+    ExecutableScript executableScript = parseOperatonScript(parameterElement);
+    if (executableScript != null) {
+      return new ScriptValueProvider(executableScript);
+    }
+    else {
+      return new NullValueProvider();
+    }
+  }
+
+  private static TreeMap<ParameterValueProvider, ParameterValueProvider> getElValueProviders(
+      Element parameterElement) {
+    TreeMap<ParameterValueProvider, ParameterValueProvider> providerMap = new TreeMap<>();
+    for (Element entryElement : parameterElement.elements("entry")) {
+      // entry must provide key
+      String keyAttribute = entryElement.attribute("key");
+      if(keyAttribute == null || keyAttribute.isEmpty()) {
+        throw new BpmnParseException("Missing attribute 'key' for 'entry' element", entryElement);
+      }
+      // parse nested provider
+      providerMap.put(new ElValueProvider(getExpressionManager().createExpression(keyAttribute)), parseNestedParamValueProvider(entryElement));
+    }
+    return providerMap;
+  }
+
+  private static List<ParameterValueProvider> getParameterValueProviders(Element parameterElement) {
+    List<ParameterValueProvider> providerList = new ArrayList<>();
+    for (Element element : parameterElement.elements()) {
+      // parse nested provider
+      providerList.add(parseParamValueProvider(element));
+    }
+    return providerList;
+  }
+
+  private static boolean isTagName(Element parameterElement, String tagName) {
+    return tagName.equals(parameterElement.getTagName());
   }
 
   /**
@@ -253,7 +288,7 @@ public final class BpmnParseUtil {
       }
       return propertiesMap;
     }
-    return null;
+    return Collections.emptyMap();
   }
 
   protected static ExpressionManager getExpressionManager() {

@@ -19,15 +19,14 @@ package org.operaton.bpm.model.xml.impl.type.reference;
 import org.operaton.bpm.model.xml.instance.ModelElementInstance;
 import org.operaton.bpm.model.xml.type.child.ChildElement;
 
-public class UriElementReferenceImpl<Target extends ModelElementInstance, Source extends ModelElementInstance> extends ElementReferenceImpl<Target, Source> {
+public class UriElementReferenceImpl<TARGET extends ModelElementInstance, SOURCE extends ModelElementInstance> extends ElementReferenceImpl<TARGET, SOURCE> {
 
-  public UriElementReferenceImpl(ChildElement<Source> referenceSourceCollection) {
+  public UriElementReferenceImpl(ChildElement<SOURCE> referenceSourceCollection) {
     super(referenceSourceCollection);
   }
 
   @Override
   public String getReferenceIdentifier(ModelElementInstance referenceSourceElement) {
-    // TODO: implement something more robust (CAM-4028)
     String identifier = referenceSourceElement.getAttributeValue("href");
     if (identifier != null) {
       String[] parts = identifier.split("#");
@@ -45,7 +44,6 @@ public class UriElementReferenceImpl<Target extends ModelElementInstance, Source
 
   @Override
   protected void setReferenceIdentifier(ModelElementInstance referenceSourceElement, String referenceIdentifier) {
-    // TODO: implement something more robust (CAM-4028)
     referenceSourceElement.setAttributeValue("href", "#" + referenceIdentifier);
   }
 

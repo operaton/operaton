@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.rest;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import jakarta.ws.rs.core.MediaType;
@@ -47,10 +46,10 @@ class ExternalTaskTopicNamesRestServiceTest extends AbstractRestServiceTest {
 
   @BeforeEach
   void setupMocks(){
-    when(processEngine.getExternalTaskService().getTopicNames(false,false,false)).thenReturn(Arrays.asList("allTopics"));
-    when(processEngine.getExternalTaskService().getTopicNames(true,false,false)).thenReturn(Arrays.asList("lockedTasks"));
-    when(processEngine.getExternalTaskService().getTopicNames(false,true,false)).thenReturn(Arrays.asList("unlockedTasks"));
-    when(processEngine.getExternalTaskService().getTopicNames(false,false,true)).thenReturn(Arrays.asList("withRetriesLeft"));
+    when(processEngine.getExternalTaskService().getTopicNames(false,false,false)).thenReturn(List.of("allTopics"));
+    when(processEngine.getExternalTaskService().getTopicNames(true,false,false)).thenReturn(List.of("lockedTasks"));
+    when(processEngine.getExternalTaskService().getTopicNames(false,true,false)).thenReturn(List.of("unlockedTasks"));
+    when(processEngine.getExternalTaskService().getTopicNames(false,false,true)).thenReturn(List.of("withRetriesLeft"));
   }
 
   @Test

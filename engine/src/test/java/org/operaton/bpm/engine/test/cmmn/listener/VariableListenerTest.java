@@ -495,9 +495,6 @@ class VariableListenerTest extends CmmnTest {
     ProcessEngineAwareListener.reset();
   }
 
-  /**
-   * TODO: add when history for case execution variables is implemented
-   */
   @Deployment
   @Test
   void testListenerDoesNotInterfereWithHistory() {
@@ -527,6 +524,8 @@ class VariableListenerTest extends CmmnTest {
         } else {
           fail("unexpected variable update");
         }
+
+        assertThat(update1Processed || update2Processed).isTrue();
       }
     }
   }

@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.engine.test.api.runtime.migration;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -65,7 +64,7 @@ public class MigrationBoundaryEventsParameterizedTest {
 
   @Parameters
   public static Collection<Object[]> data() {
-      return Arrays.asList(new Object[][] {
+      return List.of(new Object[][] {
                new Object[]{ new TimerEventFactory() },
                new Object[]{ new MessageEventFactory() },
                new Object[]{ new SignalEventFactory() },
@@ -87,7 +86,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventOnUserTask() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.ONE_TASK_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.ONE_TASK_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -122,7 +121,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventOnUserTaskAndTriggerEvent() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.ONE_TASK_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.ONE_TASK_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -156,7 +155,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventOnConcurrentUserTask() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_GATEWAY_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_GATEWAY_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -195,7 +194,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventOnConcurrentUserTaskAndTriggerEvent() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_GATEWAY_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_GATEWAY_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -232,7 +231,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventOnConcurrentScopeUserTask() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SCOPE_TASKS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SCOPE_TASKS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -271,7 +270,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventOnConcurrentScopeUserTaskAndTriggerEvent() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SCOPE_TASKS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SCOPE_TASKS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -308,7 +307,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventToSubProcess() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.SUBPROCESS_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.SUBPROCESS_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -344,7 +343,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventToSubProcessAndTriggerEvent() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.SUBPROCESS_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.SUBPROCESS_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -378,7 +377,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventToSubProcessWithScopeUserTask() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.SCOPE_TASK_SUBPROCESS_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.SCOPE_TASK_SUBPROCESS_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -414,7 +413,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventToSubProcessWithScopeUserTaskAndTriggerEvent() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.SCOPE_TASK_SUBPROCESS_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.SCOPE_TASK_SUBPROCESS_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -448,7 +447,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventToParallelSubProcess() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SUBPROCESS_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SUBPROCESS_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,
@@ -487,7 +486,7 @@ public class MigrationBoundaryEventsParameterizedTest {
   @TestTemplate
   void testMigrateBoundaryEventToParallelSubProcessAndTriggerEvent() {
     // given
-    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SUBPROCESS_PROCESS.clone();
+    BpmnModelInstance sourceProcess = ProcessModels.PARALLEL_SUBPROCESS_PROCESS.copy();
     MigratingBpmnEventTrigger eventTrigger = eventFactory.addBoundaryEvent(
         rule.getProcessEngine(),
         sourceProcess,

@@ -22,8 +22,10 @@ import org.operaton.bpm.engine.impl.db.IdBlock;
 /**
  * generates {@link IdBlock}s that are used to assign ids to new objects.
  *
+ * <p>
  * The scope of an instance of this class is process engine,
  * which means that there is only one instance in one process engine instance.
+ * </p>
  *
  * @author Tom Baeyens
  * @author Joram Barrez

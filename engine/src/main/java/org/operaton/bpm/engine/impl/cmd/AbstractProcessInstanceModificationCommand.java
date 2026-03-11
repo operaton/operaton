@@ -163,8 +163,6 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     Set<ExecutionEntity> executions = mapping.getExecutions(scope);
     Set<String> activityInstanceExecutions = new HashSet<>(Arrays.asList(activityInstance.getExecutionIds()));
 
-    // TODO: this is a hack around the activity instance tree
-    // remove with fix of CAM-3574
     for (String activityInstanceExecutionId : activityInstance.getExecutionIds()) {
       ExecutionEntity execution = Context.getCommandContext()
           .getExecutionManager()
@@ -185,15 +183,14 @@ public abstract class AbstractProcessInstanceModificationCommand implements Comm
     }
 
     if (retainedExecutionsForInstance.size() != 1) {
-      throw new ProcessEngineException("There are " + retainedExecutionsForInstance.size()
-          + " (!= 1) executions for activity instance " + activityInstance.getId());
+      throw new ProcessEngineException("There are %s (!= 1) executions for activity instance %s".formatted(retainedExecutionsForInstance.size(), activityInstance.getId()));
     }
 
     return retainedExecutionsForInstance.iterator().next();
   }
 
   protected String describeFailure(String detailMessage) {
-    return "Cannot perform instruction: " + describe() + "; " + detailMessage;
+    return "Cannot perform instruction: %s; %s".formatted(describe(), detailMessage);
   }
 
   protected abstract String describe();

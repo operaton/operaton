@@ -15,9 +15,8 @@
  * limitations under the License.
  */
 package org.operaton.bpm.model.bpmn.instance;
-
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Sebastian Menski
@@ -31,7 +30,7 @@ public class ResourceAssignmentExpressionTest extends BpmnModelElementInstanceTe
 
   @Override
   public Collection<ChildElementAssumption> getChildElementAssumptions() {
-    return Arrays.asList(
+    return List.of(
       new ChildElementAssumption(Expression.class, 1, 1)
     );
   }

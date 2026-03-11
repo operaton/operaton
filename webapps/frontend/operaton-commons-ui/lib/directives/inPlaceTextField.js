@@ -31,7 +31,7 @@ var template = require('./inPlaceTextField.html?raw');
  */
 module.exports = [
   '$translate',
-  function($translate) {
+  function ($translate) {
     /**
      * Callback used when initialization of the directive completes.
      * @param {angular.Scope} scope - the directive scope
@@ -39,12 +39,12 @@ module.exports = [
     function initialized(scope) {
       scope.value = scope.context[scope.property] || scope.defaultValue || null;
 
-      scope.enter = function() {
+      scope.enter = function () {
         scope.editing = true;
         scope.value = scope.context[scope.property];
       };
 
-      scope.submit = function() {
+      scope.submit = function () {
         var editForm = this;
 
         // it seems that, because this method
@@ -64,7 +64,7 @@ module.exports = [
         scope.leave();
       };
 
-      scope.leave = function() {
+      scope.leave = function () {
         scope.editing = false;
       };
     }
@@ -87,12 +87,12 @@ module.exports = [
         leaveCallback: '@leave',
         context: '=',
         property: '@',
-        defaultValue: '@default'
+        defaultValue: '@default',
       },
 
       template: template,
 
-      link: function(scope, element, attrs) {
+      link: function (scope, element, attrs) {
         // if the attribute 'required' is present, then
         // then input field is required.
         scope.isRequired =
@@ -100,20 +100,20 @@ module.exports = [
 
         if (!scope.property) {
           throw new Error(
-            $translate.instant('DIRECTIVE_INPLACE_TEXTFIELD_ERROR_MSG')
+            $translate.instant('DIRECTIVE_INPLACE_TEXTFIELD_ERROR_MSG'),
           );
         }
 
         var initialize = scope.initializeCallback
           ? scope.$parent[scope.initializeCallback]
-          : function(scope, cb) {
+          : function (scope, cb) {
               cb();
             };
 
-        initialize(scope, function() {
+        initialize(scope, function () {
           initialized(scope);
         });
-      }
+      },
     };
-  }
+  },
 ];

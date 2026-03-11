@@ -29,8 +29,9 @@ const PRODUCTION_LICENSES = [
   'CC0-1.0',
   'ISC',
   'MIT',
+  'MPL-2.0',
   'WTFPL',
-  'OFL-1.1'
+  'OFL-1.1',
 ];
 
 const DEV_LICENSES = [
@@ -38,16 +39,17 @@ const DEV_LICENSES = [
   'CC-BY-4.0',
   'ODC-By-1.0',
   'Unlicense',
-  'Zlib'
+  'Zlib',
 ];
 
 const ALLOWED_PACKAGES = [
   'argparse@2.0.1',
-  'caniuse-lite@1.0.30001458' // uses CC BY 4.0, permitted as of https://jira.camunda.com/browse/OB-26
+  'sax@1.4.4',
+  'caniuse-lite@1.0.30001458', // uses CC BY 4.0, permitted as of https://jira.camunda.com/browse/OB-26
 ];
 
 const parseResults = (allowedLicenses, resolve, reject) =>
-  function(err, packages) {
+  function (err, packages) {
     if (err) {
       throw err;
     } else {
@@ -75,8 +77,8 @@ const parseResults = (allowedLicenses, resolve, reject) =>
         licenses = typeof licenses === 'object' ? licenses : [licenses];
 
         let approved = hasMultipleLicenses
-          ? licenses.every(license => allowedLicenses.includes(license))
-          : licenses.some(license => allowedLicenses.includes(license));
+          ? licenses.every((license) => allowedLicenses.includes(license))
+          : licenses.some((license) => allowedLicenses.includes(license));
 
         if (!approved) {
           licenseWarning += `${id} uses ${licenses.join(' OR ')}\n`;
@@ -99,32 +101,32 @@ if (require.main === module) {
     {
       start: path.resolve(__dirname, '..'),
       production: true,
-      excludePrivatePackages: true
+      excludePrivatePackages: true,
     },
     parseResults(
       PRODUCTION_LICENSES,
       () => console.log('Production packages license check passed'),// eslint-disable-line
-      warn => {
+      (warn) => {
         console.warn('License check did not pass');// eslint-disable-line
         console.warn(warn);// eslint-disable-line
         process.exit(1);
-      }
-    )
+      },
+    ),
   );
   checker.init(
     {
       start: path.resolve(__dirname, '..'),
       development: true,
-      excludePrivatePackages: true
+      excludePrivatePackages: true,
     },
     parseResults(
       [...PRODUCTION_LICENSES, ...DEV_LICENSES],
       () => console.log('Development packages license check passed'),// eslint-disable-line
-      warn => {
+      (warn) => {
         console.warn('License check did not pass');// eslint-disable-line
         console.warn(warn);// eslint-disable-line
         process.exit(1);
-      }
-    )
+      },
+    ),
   );
 }

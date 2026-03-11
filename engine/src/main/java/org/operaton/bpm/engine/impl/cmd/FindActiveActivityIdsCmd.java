@@ -16,8 +16,6 @@
  */
 package org.operaton.bpm.engine.impl.cmd;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.List;
 
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -28,13 +26,10 @@ import org.operaton.bpm.engine.impl.persistence.entity.ExecutionManager;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
 
-
 /**
  * @author Tom Baeyens
  */
-public class FindActiveActivityIdsCmd implements Command<List<String>>, Serializable {
-
-  @Serial private static final long serialVersionUID = 1L;
+public class FindActiveActivityIdsCmd implements Command<List<String>> {
   protected String executionId;
 
   public FindActiveActivityIdsCmd(String executionId) {
@@ -48,7 +43,7 @@ public class FindActiveActivityIdsCmd implements Command<List<String>>, Serializ
     // fetch execution
     ExecutionManager executionManager = commandContext.getExecutionManager();
     ExecutionEntity execution = executionManager.findExecutionById(executionId);
-    ensureNotNull("execution " + executionId + " doesn't exist", "execution", execution);
+    ensureNotNull("execution %s doesn't exist".formatted(executionId), "execution", execution);
 
     checkGetActivityIds(execution, commandContext);
 

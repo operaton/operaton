@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:28275ca1-3042-4f51-b0e3-3bf504a90049",
+  "serialNumber": "urn:uuid:788b6460-c333-4570-8e11-48cc13e9106b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-03-11T08:52:02Z",
+    "timestamp": "2026-03-11T11:03:16Z",
     "tools": {
       "components": [
         {
@@ -33852,7 +33852,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "b2bd2130-588a-49b4-817d-b2d89879ea59",
+      "bom-ref": "653c1f78-50ca-4fe0-8e1c-e2216046f393",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33982,6 +33982,13 @@
       "group": "@bpmn-io",
       "name": "draggle",
       "version": "4.1.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/%40bpmn-io/draggle@4.1.2",
       "properties": [
         {
@@ -34050,15 +34057,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.19.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.19.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.19.0",
+      "version": "1.20.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.19.0"
+          "value": "@bpmn-io/form-js-carbon-styles@1.20.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34068,15 +34082,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.19.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.19.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.19.0",
+      "version": "1.20.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.19.0"
+          "value": "@bpmn-io/form-js-editor@1.20.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34086,15 +34107,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.19.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.19.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.19.0",
+      "version": "1.20.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.19.0"
+          "value": "@bpmn-io/form-js-playground@1.20.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34104,15 +34132,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.19.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
+      "version": "1.20.0",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.19.0"
+          "value": "@bpmn-io/form-js-viewer@1.20.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34122,15 +34157,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.19.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.20.1",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.19.0",
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.19.0",
+      "version": "1.20.1",
+      "licenses": [
+        {
+          "license": {
+            "name": "SEE-LICENSE-IN-LICENSE"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.20.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.19.0"
+          "value": "@bpmn-io/form-js@1.20.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34176,15 +34218,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
       "group": "@bpmn-io",
       "name": "properties-panel",
-      "version": "3.39.0",
-      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
+      "version": "3.40.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/properties-panel@3.39.0"
+          "value": "@bpmn-io/properties-panel@3.40.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34212,15 +34261,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/grid@11.50.0",
+      "bom-ref": "pkg:npm/%40carbon/grid@11.51.0",
       "group": "@carbon",
       "name": "grid",
-      "version": "11.50.0",
-      "purl": "pkg:npm/%40carbon/grid@11.50.0",
+      "version": "11.51.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40carbon/grid@11.51.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/grid@11.50.0"
+          "value": "@carbon/grid@11.51.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34248,15 +34304,22 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40carbon/layout@11.48.0",
+      "bom-ref": "pkg:npm/%40carbon/layout@11.49.0",
       "group": "@carbon",
       "name": "layout",
-      "version": "11.48.0",
-      "purl": "pkg:npm/%40carbon/layout@11.48.0",
+      "version": "11.49.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40carbon/layout@11.49.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@carbon/layout@11.48.0"
+          "value": "@carbon/layout@11.49.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34306,6 +34369,13 @@
       "group": "@codemirror",
       "name": "lang-json",
       "version": "6.0.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/%40codemirror/lang-json@6.0.2",
       "properties": [
         {
@@ -34360,6 +34430,13 @@
       "group": "@codemirror",
       "name": "search",
       "version": "6.6.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/%40codemirror/search@6.6.0",
       "properties": [
         {
@@ -34525,6 +34602,13 @@
       "group": "@lezer",
       "name": "json",
       "version": "1.0.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/%40lezer/json@1.0.3",
       "properties": [
         {
@@ -34960,6 +35044,13 @@
       "bom-ref": "pkg:npm/array-move@4.0.0",
       "name": "array-move",
       "version": "4.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/array-move@4.0.0",
       "properties": [
         {
@@ -35025,6 +35116,13 @@
       "bom-ref": "pkg:npm/atoa@1.0.0",
       "name": "atoa",
       "version": "1.0.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/atoa@1.0.0",
       "properties": [
         {
@@ -35042,6 +35140,13 @@
       "bom-ref": "pkg:npm/big.js@7.0.1",
       "name": "big.js",
       "version": "7.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/big.js@7.0.1",
       "properties": [
         {
@@ -35422,6 +35527,13 @@
       "bom-ref": "pkg:npm/codemirror@6.0.2",
       "name": "codemirror",
       "version": "6.0.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/codemirror@6.0.2",
       "properties": [
         {
@@ -35538,6 +35650,13 @@
       "bom-ref": "pkg:npm/contra@1.9.4",
       "name": "contra",
       "version": "1.9.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/contra@1.9.4",
       "properties": [
         {
@@ -36167,19 +36286,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.3.2",
+      "bom-ref": "pkg:npm/dompurify@3.3.3",
       "name": "dompurify",
-      "version": "3.3.2",
+      "version": "3.3.3",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.3.2",
+      "purl": "pkg:npm/dompurify@3.3.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.3.2"
+          "value": "dompurify@3.3.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36192,6 +36311,13 @@
       "bom-ref": "pkg:npm/downloadjs@1.4.7",
       "name": "downloadjs",
       "version": "1.4.7",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/downloadjs@1.4.7",
       "properties": [
         {
@@ -36398,14 +36524,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.3.7",
-      "name": "fast-xml-parser",
-      "version": "5.3.7",
-      "purl": "pkg:npm/fast-xml-parser@5.3.7",
+      "bom-ref": "pkg:npm/fast-xml-builder@1.1.0",
+      "name": "fast-xml-builder",
+      "version": "1.1.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/fast-xml-builder@1.1.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.3.7"
+          "value": "fast-xml-builder@1.1.0"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.5.1",
+      "name": "fast-xml-parser",
+      "version": "5.5.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/fast-xml-parser@5.5.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "fast-xml-parser@5.5.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36435,6 +36592,13 @@
       "bom-ref": "pkg:npm/file-drops@0.7.0",
       "name": "file-drops",
       "version": "0.7.0",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/file-drops@0.7.0",
       "properties": [
         {
@@ -36452,6 +36616,13 @@
       "bom-ref": "pkg:npm/flatpickr@4.6.13",
       "name": "flatpickr",
       "version": "4.6.13",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/flatpickr@4.6.13",
       "properties": [
         {
@@ -37041,14 +37212,21 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/marked@17.0.3",
+      "bom-ref": "pkg:npm/marked@17.0.4",
       "name": "marked",
-      "version": "17.0.3",
-      "purl": "pkg:npm/marked@17.0.3",
+      "version": "17.0.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/marked@17.0.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "marked@17.0.3"
+          "value": "marked@17.0.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37614,6 +37792,30 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/path-expression-matcher@1.1.2",
+      "name": "path-expression-matcher",
+      "version": "1.1.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/path-expression-matcher@1.1.2",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "path-expression-matcher@1.1.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/path-intersection@1.1.1",
       "name": "path-intersection",
       "version": "1.1.1",
@@ -37677,6 +37879,30 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "popper.js@1.16.1"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/preact@10.15.1",
+      "name": "preact",
+      "version": "10.15.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/preact@10.15.1",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "preact@10.15.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -38120,6 +38346,13 @@
       "bom-ref": "pkg:npm/ticky@1.0.1",
       "name": "ticky",
       "version": "1.0.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
       "purl": "pkg:npm/ticky@1.0.1",
       "properties": [
         {
@@ -38319,7 +38552,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e45834e6-c9d8-418c-9ff4-6eb4703adefc",
+      "bom-ref": "2177f055-d527-496d-a365-415f167f387f",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -42299,10 +42532,16 @@
       "dependsOn": []
     },
     {
-      "ref": "b2bd2130-588a-49b4-817d-b2d89879ea59",
+      "ref": "2177f055-d527-496d-a365-415f167f387f",
+      "dependsOn": [
+        "653c1f78-50ca-4fe0-8e1c-e2216046f393"
+      ]
+    },
+    {
+      "ref": "653c1f78-50ca-4fe0-8e1c-e2216046f393",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
-        "pkg:npm/%40bpmn-io/form-js@1.19.0",
+        "pkg:npm/%40bpmn-io/form-js@1.20.1",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
@@ -42333,9 +42572,9 @@
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/dmn-js@17.7.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.3.2",
+        "pkg:npm/dompurify@3.3.3",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.3.7",
+        "pkg:npm/fast-xml-parser@5.5.1",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
@@ -42347,12 +42586,6 @@
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0",
         "pkg:npm/ui-bootstrap4@3.0.7"
-      ]
-    },
-    {
-      "ref": "e45834e6-c9d8-418c-9ff4-6eb4703adefc",
-      "dependsOn": [
-        "b2bd2130-588a-49b4-817d-b2d89879ea59"
       ]
     },
     {
@@ -42426,28 +42659,28 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.19.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.19.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
-        "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/ids@3.0.1",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.3.0",
-        "pkg:npm/preact@10.28.2"
+        "pkg:npm/preact@10.15.1"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.19.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-editor@1.19.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/commands@6.10.2",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
@@ -42464,31 +42697,31 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
-        "pkg:npm/%40carbon/grid@11.50.0",
+        "pkg:npm/%40carbon/grid@11.51.0",
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.3.2",
+        "pkg:npm/dompurify@3.3.3",
         "pkg:npm/feelers@1.5.1",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.1",
         "pkg:npm/lodash@4.17.23",
         "pkg:npm/luxon@3.7.2",
-        "pkg:npm/marked@17.0.3",
+        "pkg:npm/marked@17.0.4",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/preact@10.28.2"
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.19.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.20.1",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.19.0",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.19.0",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.19.0",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.19.0"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0"
       ]
     },
     {
@@ -42509,7 +42742,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
+      "ref": "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
         "pkg:npm/%40carbon/icons@11.75.0",
@@ -42526,9 +42759,9 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40carbon/grid@11.50.0",
+      "ref": "pkg:npm/%40carbon/grid@11.51.0",
       "dependsOn": [
-        "pkg:npm/%40carbon/layout@11.48.0",
+        "pkg:npm/%40carbon/layout@11.49.0",
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
     },
@@ -42539,7 +42772,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40carbon/layout@11.48.0",
+      "ref": "pkg:npm/%40carbon/layout@11.49.0",
       "dependsOn": [
         "pkg:npm/%40ibm/telemetry-js@1.10.1"
       ]
@@ -43073,7 +43306,7 @@
     {
       "ref": "pkg:npm/dmn-js-properties-panel@3.10.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/properties-panel@3.39.0",
+        "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
         "pkg:npm/diagram-js@15.9.1",
         "pkg:npm/dmn-js@17.7.0",
         "pkg:npm/min-dash@5.0.0",
@@ -43138,7 +43371,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.3.2",
+      "ref": "pkg:npm/dompurify@3.3.3",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -43191,8 +43424,16 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.3.7",
+      "ref": "pkg:npm/fast-xml-builder@1.1.0",
       "dependsOn": [
+        "pkg:npm/path-expression-matcher@1.1.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/fast-xml-parser@5.5.1",
+      "dependsOn": [
+        "pkg:npm/fast-xml-builder@1.1.0",
+        "pkg:npm/path-expression-matcher@1.1.2",
         "pkg:npm/strnum@2.1.2"
       ]
     },
@@ -43371,7 +43612,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/marked@17.0.3",
+      "ref": "pkg:npm/marked@17.0.4",
       "dependsOn": []
     },
     {
@@ -43505,6 +43746,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:npm/path-expression-matcher@1.1.2",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:npm/path-intersection@1.1.1",
       "dependsOn": []
     },
@@ -43514,6 +43759,10 @@
     },
     {
       "ref": "pkg:npm/popper.js@1.16.1",
+      "dependsOn": []
+    },
+    {
+      "ref": "pkg:npm/preact@10.15.1",
       "dependsOn": []
     },
     {
@@ -44816,77 +45065,6 @@
           "versions": [
             {
               "version": "6.14.1",
-              "status": "affected"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "CVE-2026-27942",
-      "source": {
-        "name": "ghsa",
-        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
-      },
-      "ratings": [
-        {
-          "source": {
-            "name": "nvd"
-          },
-          "score": 7.5,
-          "severity": "high",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        },
-        {
-          "source": {
-            "name": "redhat"
-          },
-          "score": 7.5,
-          "severity": "medium",
-          "method": "CVSSv31",
-          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
-        }
-      ],
-      "cwes": [
-        120
-      ],
-      "description": "fast-xml-parser allows users to validate XML, parse XML to JS object, or build XML from JS object without C/C\u002B\u002B based libraries and no callback. Prior to version 5.3.8, the application crashes with stack overflow when user use XML builder with \u0060preserveOrder:true\u0060. Version 5.3.8 fixes the issue. As a workaround, use XML builder with \u0060preserveOrder:false\u0060 or check the input data before passing to builder.",
-      "recommendation": "Upgrade fast-xml-parser to version 5.3.8, 4.5.4",
-      "advisories": [
-        {
-          "url": "https://avd.aquasec.com/nvd/cve-2026-27942"
-        },
-        {
-          "url": "https://access.redhat.com/security/cve/CVE-2026-27942"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/commit/c13a961910f14986295dd28484eee830fa1a0e8a"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/pull/791"
-        },
-        {
-          "url": "https://github.com/NaturalIntelligence/fast-xml-parser/security/advisories/GHSA-fj3w-jwp8-x2g3"
-        },
-        {
-          "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-27942"
-        },
-        {
-          "url": "https://www.cve.org/CVERecord?id=CVE-2026-27942"
-        }
-      ],
-      "published": "2026-02-26T02:16:22Z",
-      "updated": "2026-03-02T14:54:48Z",
-      "affects": [
-        {
-          "ref": "pkg:npm/fast-xml-parser@5.3.7",
-          "versions": [
-            {
-              "version": "5.3.7",
               "status": "affected"
             }
           ]

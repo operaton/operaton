@@ -191,7 +191,9 @@ class SentryHandlerTest extends CmmnElementHandlerTest {
     Body body = createElement(conditionExpression, null, Body.class);
     body.setTextContent("${test}");
 
-    onPart.setSentry(exitSentry);
+    ExitCriterion exitCriterion = createElement(planItem, "Criterion_1", ExitCriterion.class);
+    exitCriterion.setSentry(exitSentry);
+    onPart.setExitCriterion(exitCriterion);
 
     CmmnActivity casePlanModelActivity = new CasePlanModelHandler().handleElement(casePlanModel, context);
     context.setParent(casePlanModelActivity);

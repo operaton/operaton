@@ -29,10 +29,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import org.awaitility.core.ConditionTimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * Container that handles a managed Spring Boot application that is started by
@@ -68,7 +72,7 @@ public class SpringBootManagedContainer {
     this.commands.add(getScriptPath());
     this.commands.add("start");
     if (commands != null && commands.length > 0) {
-      Arrays.stream(commands).forEach(e -> this.commands.add(e));
+      this.commands.addAll(Arrays.asList(commands));
     }
     InputStream defaultYml = SpringBootManagedContainer.class.getClassLoader().getResourceAsStream(BASE_TEST_APPLICATION_YML);
     createConfigurationYml(APPLICATION_YML_PATH, defaultYml);
@@ -155,24 +159,25 @@ public class SpringBootManagedContainer {
   // determine server status
   // ---------------------------
 
-  protected boolean isStarted(long millisToWait) throws InterruptedException {
+  protected boolean isStarted(long millisToWait) {
     return waitForServerStatus(millisToWait, true);
   }
 
-  protected boolean isShutDown(long millisToWait) throws InterruptedException {
+  protected boolean isShutDown(long millisToWait) {
     return waitForServerStatus(millisToWait, false);
   }
 
-  protected boolean waitForServerStatus(long millisToWait, boolean shouldBeRunning) throws InterruptedException {
-    boolean serverAvailable = !shouldBeRunning;
-    long targetTime = System.currentTimeMillis() + millisToWait;
-    while (System.currentTimeMillis() < targetTime && serverAvailable == !shouldBeRunning) {
-      serverAvailable = isRunning();
-      if (shouldBeRunning ^ serverAvailable) {
-        Thread.sleep(100);
-      }
+  protected boolean waitForServerStatus(long millisToWait, boolean shouldBeRunning) {
+    try {
+      await()
+          .atMost(millisToWait, TimeUnit.MILLISECONDS)
+          .pollInterval(100, TimeUnit.MILLISECONDS)
+          .ignoreExceptions()
+          .until(() -> isRunning() == shouldBeRunning);
+      return true;
+    } catch (ConditionTimeoutException e) {
+      return false;
     }
-    return serverAvailable == shouldBeRunning;
   }
 
   protected boolean isRunning() {

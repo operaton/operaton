@@ -41,7 +41,6 @@ import org.operaton.bpm.engine.cdi.impl.ProcessVariableMap;
 import org.operaton.bpm.engine.cdi.impl.context.DefaultContextAssociationManager;
 import org.operaton.bpm.engine.cdi.impl.context.RequestScopedAssociation;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.quarkus.engine.extension.OperatonEngineConfig;
 import org.operaton.bpm.quarkus.engine.extension.QuarkusProcessEngineConfiguration;
 import org.operaton.bpm.quarkus.engine.extension.impl.InjectableBusinessProcessContext;
 import org.operaton.bpm.quarkus.engine.extension.impl.OperatonEngineRecorder;
@@ -98,13 +97,12 @@ public class OperatonEngineProcessor {
   @Record(RUNTIME_INIT)
   protected void processEngineConfiguration(OperatonEngineRecorder recorder,
                                             BeanContainerBuildItem beanContainerBuildItem,
-                                            OperatonEngineConfig operatonEngineConfig,
                                             BuildProducer<ProcessEngineConfigurationBuildItem> configurationProducer) {
 
     BeanContainer beanContainer = beanContainerBuildItem.getValue();
     recorder.configureProcessEngineCdiBeans(beanContainer);
     RuntimeValue<ProcessEngineConfigurationImpl> processEngineConfiguration =
-        recorder.createProcessEngineConfiguration(beanContainer, operatonEngineConfig);
+        recorder.createProcessEngineConfiguration(beanContainer);
     configurationProducer.produce(new ProcessEngineConfigurationBuildItem(processEngineConfiguration));
   }
 

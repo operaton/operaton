@@ -105,7 +105,7 @@ public final class ReflectUtil {
     return clazz;
   }
 
-  private static Class<?> loadClassFromClassLoader(String className, ClassLoader classLoader, String description) throws Throwable {
+  private static Class<?> loadClassFromClassLoader(String className, ClassLoader classLoader, String description) throws ClassNotFoundException {
     if (classLoader == null) {
       return null;
     }

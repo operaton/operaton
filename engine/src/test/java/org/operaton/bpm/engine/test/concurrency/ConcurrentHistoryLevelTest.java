@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.test.concurrency;
 
 import java.sql.Connection;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ import org.operaton.bpm.engine.test.util.DatabaseHelper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
+import static org.awaitility.Awaitility.await;
 
 /**
  * <p>Tests cluster scenario with two nodes trying to write the history level property in parallel.</p>
@@ -48,7 +50,7 @@ class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
   @Test
   @RequiredDatabase(excludes = {DbSqlSessionFactory.H2, DbSqlSessionFactory.MARIADB})
-  void test() throws Exception {
+  void test() {
     Integer transactionIsolationLevel = DatabaseHelper.getTransactionIsolationLevel(processEngineConfiguration);
     assumeThat(transactionIsolationLevel != null && !transactionIsolationLevel.equals(Connection.TRANSACTION_READ_COMMITTED));
     ThreadControl thread1 = executeControllableCommand(new ControllableUpdateHistoryLevelCommand());
@@ -64,7 +66,8 @@ class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
     thread2.makeContinue();
 
-    Thread.sleep(2000);
+    await().atMost(2, TimeUnit.SECONDS)
+           .until(() -> thread2.syncAvailable || thread2.getException() != null);
 
     thread1.waitUntilDone();
 

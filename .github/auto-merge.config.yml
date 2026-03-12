@@ -27,11 +27,23 @@ auto-merge-rules:
     excludes:
       - '*bootstrap*'
 
+  # NPM security update PRs - Dependabot security alerts bypass dependabot.yml
+  # label configuration and instead apply GitHub's default labels:
+  # 'dependencies' + the language label (e.g. 'javascript').
+  # These PRs must be treated as eligible just like regular npm updates.
+  - author: 'dependabot[bot]'
+    labels: ['dependencies', 'javascript']
+    includes:
+      - '*'
+    excludes:
+      - '*bootstrap*'
+
   # Additional Maven dependencies that are safe to auto-merge
   # Note: DB drivers are NOT included as they require integration tests
   - author: 'dependabot[bot]'
     labels: ['dependencies:maven']
     includes:
+      - 'ch.martinelli.oss:testcontainers-mailpit'
       - 'ch.qos.logback*'
       - 'com.fasterxml.jackson*'
       - 'com.fasterxml.uuid:java-uuid-generator'
@@ -43,6 +55,7 @@ auto-merge-rules:
       - 'com.unboundid:unboundid-ldapsdk'
       - 'commons-codec:commons-codec'
       - 'commons-io:commons-io'
+      - 'commons-logging:commons-logging'
       - 'io.netty:*'
       - 'io.rest-assured:rest-assured'
       - 'io.smallrye:jandex'
@@ -77,6 +90,7 @@ auto-merge-rules:
       - 'version.spring-boot'
       - 'version.undertow'
       # Maven plugins
+      - 'org.apache.felix:maven-bundle-plugin'
       - 'org.apache.maven.plugins'
       - 'org.codehaus.cargo:cargo-maven3-plugin'
       - 'org.codehaus.mojo:*'

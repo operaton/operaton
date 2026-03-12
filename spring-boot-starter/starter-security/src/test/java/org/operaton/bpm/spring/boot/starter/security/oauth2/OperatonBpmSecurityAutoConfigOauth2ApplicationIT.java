@@ -23,8 +23,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -49,6 +49,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.http.HttpHeaders.LOCATION;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 
 @AutoConfigureMockMvc
@@ -71,8 +72,8 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
   private OAuth2AuthorizedClientService authorizedClientService;
 
   @RegisterExtension
-  ProcessEngineLoggingExtension logger = new ProcessEngineLoggingExtension()
-      .watch(AuthorizeTokenFilter.class.getCanonicalName());
+  ProcessEngineLoggingExtension logger = new ProcessEngineLoggingExtension().watch(
+    AuthorizeTokenFilter.class.getCanonicalName());
 
   private OAuth2AuthenticationProvider spiedAuthenticationProvider;
 
@@ -85,8 +86,10 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
   void testSpringSecurityAutoConfigurationCorrectlySet() {
     // given oauth2 client configured
     // when retrieving config beans then only OAuth2AutoConfiguration is present
-    assertThat(getBeanForClass(OperatonSpringSecurityOAuth2AutoConfiguration.class, mockMvc.getDispatcherServlet().getWebApplicationContext())).isNotNull();
-    assertThat(getBeanForClass(OperatonBpmSpringSecurityDisableAutoConfiguration.class, mockMvc.getDispatcherServlet().getWebApplicationContext())).isNull();
+    assertThat(getBeanForClass(OperatonSpringSecurityOAuth2AutoConfiguration.class,
+      mockMvc.getDispatcherServlet().getWebApplicationContext())).isNotNull();
+    assertThat(getBeanForClass(OperatonBpmSpringSecurityDisableAutoConfiguration.class,
+      mockMvc.getDispatcherServlet().getWebApplicationContext())).isNull();
   }
 
   @Test
@@ -95,12 +98,12 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
 
     // when
     mockMvc.perform(MockMvcRequestBuilders.get(baseUrl + "/operaton/api/engine/engine/default/user")
-            .accept(MediaType.APPLICATION_JSON))
-        .andDo(MockMvcResultHandlers.print())
-        // then oauth2 redirection occurs
-        .andExpect(MockMvcResultMatchers.status().isFound())
-        .andExpect(MockMvcResultMatchers.header().exists("Location"))
-        .andExpect(MockMvcResultMatchers.header().string("Location", baseUrl + "/oauth2/authorization/" + PROVIDER));
+        .accept(MediaType.APPLICATION_JSON))
+      .andDo(MockMvcResultHandlers.print())
+      // then oauth2 redirection occurs
+      .andExpect(MockMvcResultMatchers.status().isFound())
+      .andExpect(MockMvcResultMatchers.header().exists(LOCATION))
+      .andExpect(MockMvcResultMatchers.header().string(LOCATION, "/oauth2/authorization/" + PROVIDER));
   }
 
   @Test
@@ -111,12 +114,12 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
 
     // when
     mockMvc.perform(MockMvcRequestBuilders.get(baseUrl + "/operaton/api/engine/engine/default/user")
-            .accept(MediaType.APPLICATION_JSON)
-            .with(authentication(authenticationToken)))
-        // then call is successful
-        .andDo(MockMvcResultHandlers.print())
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json(EXPECTED_NAME_DEFAULT));
+        .accept(MediaType.APPLICATION_JSON)
+        .with(authentication(authenticationToken)))
+      // then call is successful
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(EXPECTED_NAME_DEFAULT));
   }
 
   @Test
@@ -127,18 +130,17 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
 
     // when
     mockMvc.perform(MockMvcRequestBuilders.get(baseUrl + "/operaton/api/engine/engine/default/user")
-            .accept(MediaType.APPLICATION_JSON)
-            .with(authentication(authenticationToken)))
-        // then authorization fails and redirection occurs
-        .andExpect(MockMvcResultMatchers.status().isFound())
-        .andExpect(MockMvcResultMatchers.header().exists("Location"))
-        .andExpect(MockMvcResultMatchers.header().string("Location", baseUrl + "/oauth2/authorization/" + PROVIDER));
+        .accept(MediaType.APPLICATION_JSON)
+        .with(authentication(authenticationToken)))
+      // then authorization fails and redirection occurs
+      .andExpect(MockMvcResultMatchers.status().isFound())
+      .andExpect(MockMvcResultMatchers.header().exists(LOCATION))
+      .andExpect(MockMvcResultMatchers.header().string(LOCATION, "/oauth2/authorization/" + PROVIDER));
 
     String expectedWarn = "Authorize failed for '" + UNAUTHORIZED_USER + "'";
     assertThat(logger.getFilteredLog(expectedWarn)).hasSize(1);
     verifyNoInteractions(spiedAuthenticationProvider);
   }
-
 
   @Test
   void testOauth2AuthenticationProvider() throws Exception {
@@ -150,12 +152,12 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
 
     // when
     mockMvc.perform(MockMvcRequestBuilders.get(baseUrl + "/operaton/api/engine/engine/default/user")
-            .accept(MediaType.APPLICATION_JSON)
-            .with(authentication(authenticationToken)))
-        // then call is successful
-        .andDo(MockMvcResultHandlers.print())
-        .andExpect(MockMvcResultMatchers.status().isOk())
-        .andExpect(MockMvcResultMatchers.content().json(EXPECTED_NAME_DEFAULT));
+        .accept(MediaType.APPLICATION_JSON)
+        .with(authentication(authenticationToken)))
+      // then call is successful
+      .andDo(MockMvcResultHandlers.print())
+      .andExpect(MockMvcResultMatchers.status().isOk())
+      .andExpect(MockMvcResultMatchers.content().json(EXPECTED_NAME_DEFAULT));
 
     // and authentication provider was called and returned expected authentication result
     verify(spiedAuthenticationProvider).extractAuthenticatedUser(any(), any());

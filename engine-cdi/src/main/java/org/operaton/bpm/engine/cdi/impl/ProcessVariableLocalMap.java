@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.engine.cdi.impl;
 
+import jakarta.enterprise.context.Dependent;
+
 import org.operaton.bpm.engine.cdi.BusinessProcess;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
@@ -30,6 +32,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  *
  * @author Michael Scholz
  */
+@Dependent
 public class ProcessVariableLocalMap extends AbstractVariableMap {
 
   @Override

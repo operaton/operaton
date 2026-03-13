@@ -24,6 +24,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.StringAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -83,6 +84,20 @@ public class ProgrammaticBeanLookupTest {
         .addAsManifestResource("org/operaton/bpm/engine/cdi/test/impl/util/beans.xml", "beans.xml");
   }
 
+  @Deployment(name = "annotatedDiscovery", managed = false)
+  public static JavaArchive createDeploymentWithAnnotatedDiscovery() {
+    StringAsset beansXml = new StringAsset(
+      "<beans xmlns=\"https://jakarta.ee/xml/ns/jakartaee\" "
+      + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "
+      + "xsi:schemaLocation=\"https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/beans_4_0.xsd\" "
+      + "version=\"4.0\" bean-discovery-mode=\"annotated\"></beans>");
+
+    return ShrinkWrap.create(JavaArchive.class)
+        .addClass(ProgrammaticBeanLookup.class)
+        .addClass(ProcessEngineServicesProducer.class)
+        .addAsManifestResource(beansXml, "beans.xml");
+  }
+
   @Test
   void testLookupBean() {
     deployer.deploy("normal");
@@ -112,6 +127,13 @@ public class ProgrammaticBeanLookupTest {
     deployer.deploy("withProducerMethod");
     assertThat(ProgrammaticBeanLookup.lookup("producedString")).isEqualTo("exampleString");
     deployer.undeploy("withProducerMethod");
+  }
+
+  @Test
+  void testLookupShouldSupportAnnotatedDiscovery() {
+    deployer.deploy("annotatedDiscovery");
+    assertThat(ProgrammaticBeanLookup.lookup(ProcessEngineServicesProducer.class)).isNotNull();
+    deployer.undeploy("annotatedDiscovery");
   }
 
   @Named("testOnly")

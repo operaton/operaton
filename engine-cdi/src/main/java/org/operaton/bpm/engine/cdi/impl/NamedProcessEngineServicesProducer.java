@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.cdi.impl;
 
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 
@@ -49,6 +50,7 @@ import org.operaton.bpm.engine.cdi.annotation.ProcessEngineName;
  *
  * @author Daniel Meyer
  */
+@Dependent
 public class NamedProcessEngineServicesProducer {
 
   @Produces @ProcessEngineName("")

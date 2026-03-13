@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.cdi.impl;
 
 import java.util.List;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 
@@ -43,6 +44,7 @@ import org.operaton.bpm.engine.TaskService;
  * @author Daniel Meyer
  * @author Falko Menge
  */
+@Dependent
 public class ProcessEngineServicesProducer {
 
   @Produces

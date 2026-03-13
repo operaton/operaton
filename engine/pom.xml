@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine</artifactId>
@@ -386,7 +386,7 @@
 
     <dependency>
       <groupId>org.testcontainers</groupId>
-      <artifactId>junit-jupiter</artifactId>
+      <artifactId>testcontainers-junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -667,20 +667,12 @@
           <createDependencyReducedPom>true</createDependencyReducedPom>
           <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
           <artifactSet>
-            <excludes>
-              <exclude>org.operaton.bpm.model:*</exclude>
-              <exclude>org.operaton.bpm.dmn:*</exclude>
-              <exclude>org.operaton.bpm.juel:*</exclude>
-              <exclude>org.operaton.commons:*</exclude>
-              <exclude>org.operaton.connect:*</exclude>
-              <exclude>org.camunda.feel:*</exclude>
-              <exclude>jakarta.*:*</exclude>
 
-              <exclude>org.springframework:*</exclude>
-              <exclude>org.slf4j:*</exclude>
-              <exclude>org.mybatis:mybatis:*</exclude>
-              <exclude>joda-time:*</exclude>
-            </excludes>
+
+            <includes>
+              <include>com.google.code.gson:gson</include>
+              <include>com.cronutils:cron-utils</include>
+            </includes>
           </artifactSet>
           <relocations>
             <relocation>

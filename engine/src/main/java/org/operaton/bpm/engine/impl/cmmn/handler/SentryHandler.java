@@ -35,6 +35,7 @@ import org.operaton.bpm.model.cmmn.VariableTransition;
 import org.operaton.bpm.model.cmmn.instance.CaseFileItemOnPart;
 import org.operaton.bpm.model.cmmn.instance.CmmnElement;
 import org.operaton.bpm.model.cmmn.instance.ConditionExpression;
+import org.operaton.bpm.model.cmmn.instance.ExitCriterion;
 import org.operaton.bpm.model.cmmn.instance.ExtensionElements;
 import org.operaton.bpm.model.cmmn.instance.IfPart;
 import org.operaton.bpm.model.cmmn.instance.OnPart;
@@ -142,7 +143,12 @@ public class SentryHandler extends CmmnElementHandler<Sentry, CmmnSentryDeclarat
       }
 
       // initialize sentryRef
-      Sentry sentryRef = onPart.getSentry();
+      Sentry sentryRef = null;
+      ExitCriterion exitCriterion = onPart.getExitCriterion();
+      if (exitCriterion != null) {
+        sentryRef = exitCriterion.getSentry();
+      }
+
       if (sentryRef != null) {
         String sentryRefId = sentryRef.getId();
 

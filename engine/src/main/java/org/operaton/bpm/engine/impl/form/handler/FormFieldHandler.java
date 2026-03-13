@@ -75,7 +75,7 @@ public class FormFieldHandler {
       defaultValue = defaultValueExpression.getValue(variableScope);
 
       if(defaultValue != null) {
-        formField.setDefaultValue(type.convertFormValueToModelValue(defaultValue));
+        formField.setDefaultValue(type.convertToModelValue(Variables.untypedValue(defaultValue)).getValue());
       } else {
         formField.setDefaultValue(null);
       }

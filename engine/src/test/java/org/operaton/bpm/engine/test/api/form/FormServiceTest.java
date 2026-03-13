@@ -94,7 +94,7 @@ import static org.assertj.core.api.Assertions.entry;
  * @author Joram Barrez
  * @author Frederik Heremans
  * @author Tom Baeyens
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 class FormServiceTest {
 

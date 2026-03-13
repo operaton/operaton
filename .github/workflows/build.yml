@@ -13,7 +13,7 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
-      - '.github/workflows/auto-merge.yml'
+      - '.github/auto-merge.config.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -32,6 +32,7 @@ on:
       - '.github/ISSUE_TEMPLATE/**'
       - '.github/PULL_REQUEST_TEMPLATE/**'
       - '.github/dependabot.yml'
+      - '.github/auto-merge.config.yml'
       - '**/*.md'
       - 'distro/**'
       - 'settings/**'
@@ -160,14 +161,14 @@ jobs:
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@74626db7353a25a20a72816467ebf035f674c5f8 #v6.2.0
+        uses: mikepenz/action-junit-report@49b2ca06f62aa7ef83ae6769a2179271e160d8e4 #v6.3.1
         continue-on-error: true
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml
           require_passed_tests: true
       - name: Upload Surefire Reports
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: surefire-reports
           path: ${{ github.workspace }}/**/target/surefire-reports/**
@@ -237,7 +238,7 @@ jobs:
       - name: Upload distro Tomcat
         id: upload-distro-tomcat
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Operaton (Tomcat ${{ env.TOMCAT_VERSION }} Bundle)
           path: distro/tomcat/distro/target/operaton-bpm-tomcat-${{ env.PROJECT_VERSION }}.tar.gz
@@ -246,7 +247,7 @@ jobs:
       - name: Upload distro sql-scripts
         id: upload-distro-sql-scripts
         if: steps.restore-build-artifacts.outputs.cache-hit == 'true'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Operaton SQL Scripts
           path: distro/sql-script/target/operaton-sql-scripts-*.tar.gz

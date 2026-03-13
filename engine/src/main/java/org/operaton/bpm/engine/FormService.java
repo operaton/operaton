@@ -21,7 +21,9 @@ import java.util.Collection;
 import java.util.Map;
 
 import org.operaton.bpm.engine.authorization.Permissions;
+import org.operaton.bpm.engine.authorization.ProcessDefinitionPermissions;
 import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.authorization.TaskPermissions;
 import org.operaton.bpm.engine.form.StartFormData;
 import org.operaton.bpm.engine.form.TaskFormData;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -35,7 +37,7 @@ import org.operaton.bpm.engine.variable.value.SerializableValue;
 /** Access to form data and rendered forms for starting new process instances and completing tasks.
  *
  * @author Tom Baeyens
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 public interface FormService {
 

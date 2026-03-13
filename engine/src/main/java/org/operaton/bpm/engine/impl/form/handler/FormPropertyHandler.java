@@ -26,6 +26,7 @@ import org.operaton.bpm.engine.impl.form.FormPropertyImpl;
 import org.operaton.bpm.engine.impl.form.type.AbstractFormFieldType;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.bpm.engine.variable.VariableMap;
+import org.operaton.bpm.engine.variable.Variables;
 
 /**
  * @author Tom Baeyens
@@ -113,7 +114,7 @@ public class FormPropertyHandler {
       Object expressionValue = defaultExpression.getValue(variableScope);
       if (expressionValue != null) {
         if (type != null) {
-          return type.convertFormValueToModelValue(expressionValue.toString());
+          return type.convertToModelValue(Variables.untypedValue(expressionValue.toString())).getValue();
         } else {
           return expressionValue.toString();
         }

@@ -37,7 +37,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Joram Barrez
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 class ConditionalSequenceFlowTest {
 

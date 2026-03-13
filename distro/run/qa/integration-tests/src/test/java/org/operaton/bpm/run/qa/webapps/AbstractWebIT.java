@@ -16,6 +16,8 @@
  */
 package org.operaton.bpm.run.qa.webapps;
 
+import java.util.concurrent.TimeUnit;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import kong.unirest.ObjectMapper;
 import kong.unirest.Unirest;
@@ -26,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.operaton.bpm.TestProperties;
+
+import static org.awaitility.Awaitility.await;
 
 /**
  * NOTE: copied from
@@ -83,12 +87,11 @@ public abstract class AbstractWebIT {
   }
 
   public void preventRaceConditions() {
-    // just wait some seconds before starting because of Wildfly / Cargo race conditions
-    try {
-      Thread.sleep(6 * 1000);
-    } catch (InterruptedException ignored) {
-      Thread.currentThread().interrupt();
-    }
+    // just wait until the application is available before starting because of Wildfly / Cargo race conditions
+    await().atMost(10, TimeUnit.SECONDS)
+      .pollInterval(500, TimeUnit.MILLISECONDS)
+      .ignoreExceptions()
+      .until(() -> appBasePath != null && Unirest.head(appBasePath).asEmpty().isSuccess());
   }
 
   protected String getWebappCtxPath() {

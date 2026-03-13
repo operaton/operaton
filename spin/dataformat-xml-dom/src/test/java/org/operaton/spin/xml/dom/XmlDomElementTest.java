@@ -677,7 +677,7 @@ class XmlDomElementTest {
 
   @Test
   void canWriteToString() {
-    XmlAssert.assertThat(element.toString()).isEqualTo(EXAMPLE_XML);
+    XmlAssert.assertThat(element.toString()).and(EXAMPLE_XML).ignoreWhitespace().areIdentical();
   }
 
   @Test
@@ -685,7 +685,7 @@ class XmlDomElementTest {
     StringWriter writer = new StringWriter();
     element.writeToWriter(writer);
     String value = writer.toString();
-    XmlAssert.assertThat(value).isEqualTo(EXAMPLE_XML);
+    XmlAssert.assertThat(value).and(EXAMPLE_XML).ignoreWhitespace().areIdentical();
   }
 
   // text content

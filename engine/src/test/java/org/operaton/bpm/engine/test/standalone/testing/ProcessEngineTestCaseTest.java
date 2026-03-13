@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Joram Barrez
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 public class ProcessEngineTestCaseTest extends ProcessEngineTestCase {
 

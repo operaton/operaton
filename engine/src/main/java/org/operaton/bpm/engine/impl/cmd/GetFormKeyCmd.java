@@ -32,7 +32,7 @@ import org.operaton.bpm.engine.impl.task.TaskDefinition;
 /**
  * Command for retrieving start or task form keys.
  *
- * @author Falko Menge (operaton)
+ * @author Falko Menge (Camunda)
  */
 public class GetFormKeyCmd implements Command<String> {
 

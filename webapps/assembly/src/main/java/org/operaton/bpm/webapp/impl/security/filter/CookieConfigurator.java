@@ -18,6 +18,8 @@ package org.operaton.bpm.webapp.impl.security.filter;
 
 import java.util.Arrays;
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.SessionCookieConfig;
 
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
@@ -30,6 +32,15 @@ public class CookieConfigurator {
   protected static final String ENABLE_SAME_SITE_PARAM = "enableSameSiteCookie";
   protected static final String SAME_SITE_OPTION_PARAM = "sameSiteCookieOption";
   protected static final String SAME_SITE_VALUE_PARAM = "sameSiteCookieValue";
+
+  /**
+   * Cookie name init parameter.
+   * <p>
+   * If not specified, falls back to the session cookie name configured
+   * in the servlet container's session-config/cookie-config.
+   * Init parameter takes precedence over servlet context configuration.
+   * </p>
+   */
   protected static final String COOKIE_NAME_PARAM = "cookieName";
 
   protected boolean isSecureCookieEnabled;
@@ -47,6 +58,18 @@ public class CookieConfigurator {
     String cookieNameInitParam = filterConfig.getInitParameter(COOKIE_NAME_PARAM);
     if (hasText(cookieNameInitParam)) {
       cookieName = cookieNameInitParam;
+    } else {
+      // Fallback to servlet context session cookie config
+      ServletContext servletContext = filterConfig.getServletContext();
+      if (servletContext != null) {
+        SessionCookieConfig sessionCookieConfig = servletContext.getSessionCookieConfig();
+        if (sessionCookieConfig != null) {
+          String configuredSessionCookieName = sessionCookieConfig.getName();
+          if (hasText(configuredSessionCookieName)) {
+            cookieName = configuredSessionCookieName;
+          }
+        }
+      }
     }
 
     String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);

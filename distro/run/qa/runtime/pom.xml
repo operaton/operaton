@@ -87,6 +87,8 @@
       <groupId>org.operaton.bpm.qa</groupId>
       <artifactId>operaton-qa-integration-tests-webapps</artifactId>
       <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>

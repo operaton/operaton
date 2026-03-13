@@ -24,10 +24,9 @@ import kong.unirest.Unirest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.operaton.bpm.run.qa.util.TestProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.operaton.bpm.TestProperties;
 
 import static org.awaitility.Awaitility.await;
 

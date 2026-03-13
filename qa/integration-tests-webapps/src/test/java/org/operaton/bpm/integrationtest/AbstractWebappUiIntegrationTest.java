@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.operaton.bpm.run.qa.webapps;
+package org.operaton.bpm.integrationtest;
 
 import java.net.URI;
 
@@ -30,31 +30,28 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 
 import org.operaton.bpm.integrationtest.util.SeleniumScreenshotExtension;
 
-/**
- * NOTE: copied from
- * <a href="https://github.com/operaton/operaton/blob/main/qa/integration-tests-webapps/integration-tests/src/test/java/org/operaton/bpm/AbstractWebappUiIntegrationTest.java">platform</a>,
- * might be removed with https://jira.camunda.com/browse/CAM-11379
- */
-public abstract class AbstractWebappUiIT extends AbstractWebIT {
+public class AbstractWebappUiIntegrationTest extends AbstractWebIntegrationTest {
 
   protected static WebDriver driver;
 
   @RegisterExtension
-  @SuppressWarnings("unused")
-  private final SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
+  public SeleniumScreenshotExtension screenshotRule = new SeleniumScreenshotExtension(driver);
 
   @BeforeAll
   static void createDriver() {
+
     ChromeDriverService chromeDriverService = new ChromeDriverService.Builder()
-        .withVerbose(true)
-        .usingAnyFreePort()
-        .build();
+            .withVerbose(true)
+            .usingAnyFreePort()
+            .build();
 
     ChromeOptions chromeOptions = new ChromeOptions()
-        .addArguments("--headless=new")
-        .addArguments("--window-size=1920,1200")
-        .addArguments("--remote-allow-origins=*")
-        .addArguments("--disable-dev-shm-usage");
+            .addArguments("--headless=new")
+            .addArguments("--window-size=1920,1200")
+            .addArguments("--disable-gpu")
+            .addArguments("--no-sandbox")
+            .addArguments("--disable-dev-shm-usage")
+            .addArguments("--remote-allow-origins=*");
 
     driver = new ChromeDriver(chromeDriverService, chromeOptions);
   }
@@ -72,14 +69,14 @@ public abstract class AbstractWebappUiIT extends AbstractWebIT {
   }
 
   public static ExpectedCondition<Boolean> containsCurrentUrl(final String url) {
+
     return webDriver -> webDriver.getCurrentUrl().contains(url);
+
   }
 
   @BeforeEach
   void createClient() {
     preventRaceConditions();
-    createClient(getWebappCtxPath());
-    appUrl = testProperties.getApplicationPath("/" + getWebappCtxPath());
   }
 
   @AfterAll

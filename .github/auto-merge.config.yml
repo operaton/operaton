@@ -96,6 +96,9 @@ auto-merge-rules:
       - 'org.codehaus.mojo:*'
       - 'org.openapitools:openapi-generator-maven-plugin'
       - 'org.sonatype.central:central-publishing-maven-plugin'
+      # Dependency groups
+      - 'openrewrite group'
+      - 'jboss-weld group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

@@ -26,7 +26,6 @@ import org.operaton.bpm.engine.variable.VariableMap;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.value.TypedValue;
 
-
 /**
  * Variable-scope only used to resolve variables when NO execution is active but
  * expression-resolving is needed. This occurs eg. when start-form properties have default's
@@ -37,17 +36,7 @@ import org.operaton.bpm.engine.variable.value.TypedValue;
  */
 public class StartProcessVariableScope implements VariableScope {
 
-  private static final StartProcessVariableScope INSTANCE = new StartProcessVariableScope();
-
   private static final VariableMap EMPTY_VARIABLE_MAP = Variables.fromMap(Collections.emptyMap());
-
-  /**
-   * Since a {@link StartProcessVariableScope} has no state, it's safe to use the same
-   * instance to prevent too many useless instances created.
-   */
-  public static StartProcessVariableScope getSharedInstance()  {
-    return INSTANCE;
-  }
 
   @Override
   public String getVariableScopeKey() {

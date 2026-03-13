@@ -36,8 +36,10 @@ public class ExceptionLogger extends BaseLogger {
       "HTTP"
   );
 
+  private final ExceptionHandlerHelper exceptionHandlerHelper = new ExceptionHandlerHelper();
+
   public void log(Throwable throwable) {
-    Response.Status status = ExceptionHandlerHelper.getInstance().getStatus(throwable);
+    Response.Status status = exceptionHandlerHelper.getStatus(throwable);
     int statusCode = status.getStatusCode();
 
     if (statusCode < 500) {
@@ -85,7 +87,7 @@ public class ExceptionLogger extends BaseLogger {
 
     Throwable cause = e.getCause().getCause();
 
-    return cause instanceof SQLException sqlException? sqlException : null;
+    return cause instanceof SQLException sqlException ? sqlException : null;
   }
 
 }

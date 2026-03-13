@@ -38,13 +38,8 @@ import org.operaton.bpm.engine.rest.dto.migration.MigrationPlanValidationExcepti
 public final class ExceptionHandlerHelper {
 
   protected static final ExceptionLogger LOGGER = ExceptionLogger.REST_LOGGER;
-  protected static final ExceptionHandlerHelper INSTANCE = new ExceptionHandlerHelper();
 
-  private ExceptionHandlerHelper() {
-  }
-
-  public static ExceptionHandlerHelper getInstance(){
-    return INSTANCE;
+  public ExceptionHandlerHelper() {
   }
 
   public Response getResponse(Throwable throwable) {
@@ -91,7 +86,7 @@ public final class ExceptionHandlerHelper {
       exceptionDto = MigrationPlanValidationExceptionDto.from(exception);
     } else if (e instanceof AuthorizationException exception) {
       exceptionDto = AuthorizationExceptionDto.fromException(exception);
-    } else if (e instanceof ParseException exception){
+    } else if (e instanceof ParseException exception) {
       exceptionDto = ParseExceptionDto.fromException(exception);
     } else {
       exceptionDto = ExceptionDto.fromException(e);
@@ -106,12 +101,10 @@ public final class ExceptionHandlerHelper {
 
     if (exception instanceof ProcessEngineException engineException) {
       responseStatus = getStatus(engineException);
-    }
-    else if (exception instanceof RestException restException) {
+    } else if (exception instanceof RestException restException) {
       responseStatus = getStatus(restException);
-    }
-    else if (exception instanceof WebApplicationException applicationException) {
-      //we need to check this, as otherwise the logic for processing WebApplicationException will be overridden
+    } else if (exception instanceof WebApplicationException applicationException) {
+      // we need to check this, as otherwise the logic for processing WebApplicationException will be overridden
       final int statusCode = applicationException.getResponse().getStatus();
       responseStatus = Response.Status.fromStatusCode(statusCode);
     }
@@ -124,11 +117,10 @@ public final class ExceptionHandlerHelper {
     // provide custom handling of authorization exception
     if (exception instanceof AuthorizationException) {
       responseStatus = Response.Status.FORBIDDEN;
-    }
-    else if (exception instanceof MigrationPlanValidationException
-      || exception instanceof MigratingProcessInstanceValidationException
-      || exception instanceof BadUserRequestException
-      || exception instanceof ParseException) {
+    } else if (exception instanceof MigrationPlanValidationException
+        || exception instanceof MigratingProcessInstanceValidationException
+        || exception instanceof BadUserRequestException
+        || exception instanceof ParseException) {
       responseStatus = Response.Status.BAD_REQUEST;
     }
     return responseStatus;

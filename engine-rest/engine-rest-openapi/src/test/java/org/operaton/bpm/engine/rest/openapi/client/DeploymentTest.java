@@ -35,7 +35,7 @@ class DeploymentTest {
   private static final String ENGINE_REST_DEPLOYMENT = "/engine-rest/deployment";
 
   //DeploymentApi with new ApiClient. The new ApiClient is required or all Api share the same default
-  private final DeploymentApi api = new DeploymentApi(new ApiClient());
+  private DeploymentApi api = new DeploymentApi(new ApiClient());
 
   @RegisterExtension
   static WireMockExtension wireMock = WireMockExtension.newInstance()
@@ -44,6 +44,7 @@ class DeploymentTest {
 
   @BeforeEach
   void setUp() {
+    api = new DeploymentApi(new ApiClient());
     api.setCustomBaseUrl(api.getApiClient()
             .getBasePath()
             .replace("8080", String.valueOf(wireMock.getPort())));
@@ -128,5 +129,5 @@ class DeploymentTest {
             .withRequestBody(containing("Content-Type: application/octet-stream"))
             .withHeader("Content-Type", containing("multipart/form-data")));
 
-  }
+        }
 }

@@ -40,19 +40,16 @@ import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.model.bpmn.BpmnModelInstance;
 import org.operaton.bpm.model.bpmn.instance.FlowElement;
 
-
 /**
  * @author Tom Baeyens
  * @author Joram Barrez
  * @author Daniel Meyer
  * @author Falko Menge
  */
-public class ExecutionImpl extends PvmExecutionImpl implements
-        Serializable,
-        ActivityExecution,
-        PvmProcessInstance {
+public class ExecutionImpl extends PvmExecutionImpl implements Serializable, ActivityExecution, PvmProcessInstance {
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   private static final AtomicInteger idGenerator = new AtomicInteger();
 
@@ -115,7 +112,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
     return createdExecution;
   }
 
-  /** instantiates a new execution.  can be overridden by subclasses */
+  /** instantiates a new execution. can be overridden by subclasses */
   @Override
   protected ExecutionImpl newExecution() {
     return new ExecutionImpl();
@@ -154,7 +151,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   /** ensures initialization and returns the non-null executions list */
   @Override
   public List<ExecutionImpl> getExecutions() {
-    if(executions == null) {
+    if (executions == null) {
       executions = new ArrayList<>();
     }
     return executions;
@@ -272,8 +269,8 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   @Override
   protected String generateActivityInstanceId(String activityId) {
     int nextId = idGenerator.incrementAndGet();
-    String compositeId = activityId+":"+nextId;
-    if(compositeId.length()>64) {
+    String compositeId = activityId + ":" + nextId;
+    if (compositeId.length() > 64) {
       return String.valueOf(nextId);
     } else {
       return compositeId;
@@ -310,8 +307,9 @@ public class ExecutionImpl extends PvmExecutionImpl implements
   }
 
   @Override
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return (VariableInstanceFactory) new SimpleVariableInstanceFactory();
   }
 
   @Override

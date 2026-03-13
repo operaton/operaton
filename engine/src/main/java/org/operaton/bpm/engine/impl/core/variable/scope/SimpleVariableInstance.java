@@ -39,6 +39,7 @@ public class SimpleVariableInstance implements CoreVariableInstance {
   public String getName() {
     return name;
   }
+
   public void setName(String name) {
     this.name = name;
   }
@@ -55,13 +56,9 @@ public class SimpleVariableInstance implements CoreVariableInstance {
 
   public static class SimpleVariableInstanceFactory implements VariableInstanceFactory<SimpleVariableInstance> {
 
-    public static final SimpleVariableInstanceFactory INSTANCE = new SimpleVariableInstanceFactory();
-
     @Override
     public SimpleVariableInstance build(String name, TypedValue value, boolean isTransient) {
       return new SimpleVariableInstance(name, value);
     }
-
   }
-
 }

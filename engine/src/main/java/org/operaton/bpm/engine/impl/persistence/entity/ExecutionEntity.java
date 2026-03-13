@@ -379,7 +379,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   // scopes ///////////////////////////////////////////////////////////////////
 
   @Override
-  @SuppressWarnings({"unchecked", "deprecation" })
+  @SuppressWarnings({ "unchecked", "deprecation" })
   public void initialize() {
     LOG.initializeExecution(this);
 
@@ -491,7 +491,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   public void fireHistoricProcessStartEvent() {
     ProcessEngineConfigurationImpl configuration = Context.getProcessEngineConfiguration();
-    if(configuration == null) {
+    if (configuration == null) {
       return;
     }
 
@@ -1722,7 +1722,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) VariableInstanceEntityFactory.INSTANCE;
+    return (VariableInstanceFactory) new VariableInstanceEntityFactory();
   }
 
   @Override

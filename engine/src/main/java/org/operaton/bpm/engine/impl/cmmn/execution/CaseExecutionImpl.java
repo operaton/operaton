@@ -48,7 +48,8 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
 
   protected static final CmmnBehaviorLogger LOG = ProcessEngineLogger.CMNN_BEHAVIOR_LOGGER;
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   // current position /////////////////////////////////////////////////////////
 
@@ -299,8 +300,9 @@ public class CaseExecutionImpl extends CmmnExecution implements Serializable {
   }
 
   @Override
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return (VariableInstanceFactory) new SimpleVariableInstanceFactory();
   }
 
   @Override

@@ -58,11 +58,11 @@ public final class CallableElementUtil {
       String activityId,
       BaseCallableElement callableElement,
       String tenantId) {
-    if(callableElement.hasDynamicReferences()){
+    if (callableElement.hasDynamicReferences()) {
       return null;
     }
 
-    VariableScope emptyVariableScope = StartProcessVariableScope.getSharedInstance();
+    VariableScope emptyVariableScope = new StartProcessVariableScope();
 
     String targetTenantId = callableElement.getDefinitionTenantId(emptyVariableScope, tenantId);
 

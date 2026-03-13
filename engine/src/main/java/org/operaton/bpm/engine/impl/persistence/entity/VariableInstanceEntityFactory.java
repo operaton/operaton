@@ -18,17 +18,15 @@ package org.operaton.bpm.engine.impl.persistence.entity;
 
 import org.operaton.bpm.engine.impl.core.variable.scope.VariableInstanceFactory;
 import org.operaton.bpm.engine.variable.value.TypedValue;
+
 /**
  * @author Thorben Lindhauer
  *
  */
 public class VariableInstanceEntityFactory implements VariableInstanceFactory<VariableInstanceEntity> {
 
-  public static final VariableInstanceEntityFactory INSTANCE = new VariableInstanceEntityFactory();
-
   @Override
   public VariableInstanceEntity build(String name, TypedValue value, boolean isTransient) {
     return VariableInstanceEntity.create(name, value, isTransient);
   }
-
 }

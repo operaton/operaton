@@ -50,7 +50,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
   public TimerDeclarationImpl(Expression expression, TimerDeclarationType type, String jobHandlerType) {
     super(jobHandlerType);
     this.description = expression;
-    this.type= type;
+    this.type = type;
   }
 
   public boolean isInterruptingTimer() {
@@ -111,7 +111,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
         .getBusinessCalendarManager()
         .getBusinessCalendar(type.calendarName);
 
-    if (description==null) {
+    if (description == null) {
       throw new ProcessEngineException("Timer '%s' was not configured with a valid duration/time".formatted(context.getActivityId()));
     }
 
@@ -121,23 +121,21 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
     // ACT-1415: timer-declaration on start-event may contain expressions NOT
     // evaluating variables but other context, evaluating should happen nevertheless
     VariableScope scopeForExpression = context;
-    if(scopeForExpression == null) {
-      scopeForExpression = StartProcessVariableScope.getSharedInstance();
+    if (scopeForExpression == null) {
+      scopeForExpression = new StartProcessVariableScope();
     }
 
     Object dueDateValue = description.getValue(scopeForExpression);
     if (dueDateValue instanceof String string) {
       dueDateString = string;
-    }
-    else if (dueDateValue instanceof Date date) {
+    } else if (dueDateValue instanceof Date date) {
       duedate = date;
-    }
-    else {
+    } else {
       throw new ProcessEngineException("Timer '%s' was not configured with a valid duration/time, either hand in a java.util.Date or a String in format 'yyyy-MM-dd'T'hh:mm:ss'"
           .formatted(context.getActivityId()));
     }
 
-    if (duedate==null) {
+    if (duedate == null) {
       if (creationDateBased) {
         if (job.getCreateTime() == null) {
           throw new ProcessEngineException("Timer '%s' has no creation time and cannot be recalculated based on creation date. Either recalculate on your own or trigger recalculation with creationDateBased set to false."
@@ -214,8 +212,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
     Map<String, TimerDeclarationImpl> result = scope.getProperties().get(BpmnProperties.TIMER_DECLARATIONS);
     if (result != null) {
       return result;
-    }
-    else {
+    } else {
       return Collections.emptyMap();
     }
   }
@@ -231,8 +228,7 @@ public class TimerDeclarationImpl extends JobDeclaration<ExecutionEntity, TimerE
     Map<String, Map<String, TimerDeclarationImpl>> result = scope.getProperties().get(BpmnProperties.TIMEOUT_LISTENER_DECLARATIONS);
     if (result != null) {
       return result;
-    }
-    else {
+    } else {
       return Collections.emptyMap();
     }
   }

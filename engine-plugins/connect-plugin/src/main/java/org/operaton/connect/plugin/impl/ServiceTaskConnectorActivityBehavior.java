@@ -64,7 +64,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected void applyInputParameters(ActivityExecution execution, ConnectorRequest<?> request) {
-    if(ioMapping != null) {
+    if (ioMapping != null) {
       // create variable scope for input parameters
       ConnectorVariableScope connectorInputVariableScope = new ConnectorVariableScope((AbstractVariableScope) execution);
       // execute the connector input parameters
@@ -75,7 +75,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected void applyOutputParameters(ActivityExecution execution, ConnectorResponse response) {
-    if(ioMapping != null) {
+    if (ioMapping != null) {
       // create variable scope for output parameters
       ConnectorVariableScope connectorOutputVariableScope = new ConnectorVariableScope((AbstractVariableScope) execution);
       // read parameters from response
@@ -86,7 +86,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected synchronized void ensureConnectorInitialized() {
-    if(connectorInstance == null) {
+    if (connectorInstance == null) {
       var connector = Connectors.getConnector(connectorId);
       if (connector == null) {
         throw new ConnectorException("No connector found for connector id '%s'".formatted(connectorId));

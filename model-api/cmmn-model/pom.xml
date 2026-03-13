@@ -9,13 +9,6 @@
   <artifactId>operaton-cmmn-model</artifactId>
   <name>Operaton - CMMN Model API</name>
   <description>${project.name}</description>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.model.cmmn</operaton.artifact>
-    <operaton.osgi.export>
-      !org.operaton.bpm.model.cmmn.schema.*,
-      ${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true
-    </operaton.osgi.export>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.operaton.commons</groupId>
@@ -35,25 +28,6 @@
   </dependencies>
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>cleanVersions</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>

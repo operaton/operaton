@@ -11,12 +11,6 @@
   <artifactId>operaton-engine-dmn</artifactId>
   <name>Operaton - DMN - Engine</name>
   <description>${project.name}</description>
-  <properties>
-    <operaton.artifact>org.operaton.bpm.dmn.engine</operaton.artifact>
-    <operaton.osgi.import.additional>
-      org.junit.*;resolution:=optional
-    </operaton.osgi.import.additional>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>org.operaton.commons</groupId>

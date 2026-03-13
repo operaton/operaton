@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:5dd38f41-2801-4985-806e-2075ed763e76",
+  "serialNumber": "urn:uuid:88bf92ff-089f-4113-a464-39cb7edfd8b2",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-03-11T11:03:41Z",
+    "timestamp": "2026-03-13T06:27:31Z",
     "tools": {
       "components": [
         {
@@ -33282,7 +33282,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "a2ac6463-0ac0-4c45-9375-f2a7100606b3",
+      "bom-ref": "0d5d5939-bc9f-4108-b5ea-31cac6da3af0",
       "name": "package-lock.json",
       "properties": [
         {
@@ -38292,7 +38292,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5a440ca7-4e46-4aad-bd0e-da348dadb8fb",
+      "bom-ref": "d1955f70-ef04-44a7-afee-26ec01bf15e9",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -42271,13 +42271,7 @@
       "dependsOn": []
     },
     {
-      "ref": "5a440ca7-4e46-4aad-bd0e-da348dadb8fb",
-      "dependsOn": [
-        "a2ac6463-0ac0-4c45-9375-f2a7100606b3"
-      ]
-    },
-    {
-      "ref": "a2ac6463-0ac0-4c45-9375-f2a7100606b3",
+      "ref": "0d5d5939-bc9f-4108-b5ea-31cac6da3af0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.20.1",
@@ -42324,6 +42318,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "d1955f70-ef04-44a7-afee-26ec01bf15e9",
+      "dependsOn": [
+        "0d5d5939-bc9f-4108-b5ea-31cac6da3af0"
       ]
     },
     {

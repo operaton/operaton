@@ -17,6 +17,8 @@
 package org.operaton.bpm.webapp.impl.security.filter;
 
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.SessionCookieConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +33,8 @@ import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.getSameSiteCookieValueInitValue;
 
@@ -127,5 +131,49 @@ class CookieConfiguratorTest {
 
         // then
         assertThat(result).contains(CookieConstants.SAME_SITE_FIELD_NAME + "Lax");
+    }
+
+    @Test
+    void getCookieName_shouldFallbackToSessionConfig_whenNoInitParam() {
+        // given
+        String sessionConfigCookieName = "SESSION_FROM_CONFIG";
+        ServletContext servletContext = mock(ServletContext.class);
+        SessionCookieConfig sessionCookieConfig = mock(SessionCookieConfig.class);
+
+        when(filterConfig.getInitParameter(CookieConfigurator.COOKIE_NAME_PARAM))
+                .thenReturn(null);
+        when(filterConfig.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getSessionCookieConfig()).thenReturn(sessionCookieConfig);
+        when(sessionCookieConfig.getName()).thenReturn(sessionConfigCookieName);
+
+        // when
+        cookieConfigurator.parseParams(filterConfig);
+
+        // then
+        String actualCookieName = cookieConfigurator.getCookieName(CookieConstants.JSESSION_ID);
+        assertThat(actualCookieName).isEqualTo(sessionConfigCookieName);
+    }
+
+    @Test
+    void getCookieName_shouldPreferInitParam_overSessionConfig() {
+        // given
+        String initParamName = "INIT_PARAM_COOKIE";
+        String sessionConfigName = "SESSION_CONFIG_COOKIE";
+        ServletContext servletContext = mock(ServletContext.class);
+        SessionCookieConfig sessionCookieConfig = mock(SessionCookieConfig.class);
+
+        when(filterConfig.getInitParameter(CookieConfigurator.COOKIE_NAME_PARAM))
+                .thenReturn(initParamName);
+        // Mark these stubs as lenient since they won't be called when init-param is present
+        lenient().when(filterConfig.getServletContext()).thenReturn(servletContext);
+        lenient().when(servletContext.getSessionCookieConfig()).thenReturn(sessionCookieConfig);
+        lenient().when(sessionCookieConfig.getName()).thenReturn(sessionConfigName);
+
+        // when
+        cookieConfigurator.parseParams(filterConfig);
+
+        // then - init-param should take precedence
+        String actualCookieName = cookieConfigurator.getCookieName(CookieConstants.JSESSION_ID);
+        assertThat(actualCookieName).isEqualTo(initParamName);
     }
 }

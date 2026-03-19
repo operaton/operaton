@@ -38,6 +38,9 @@ updates:
       openrewrite:
         patterns:
           - "org.openrewrite.recipe:*"
+      arquillian:
+        patterns:
+          - "org.jboss.arquillian*:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -144,6 +147,9 @@ updates:
       openrewrite:
         patterns:
         - "org.openrewrite.recipe:*"
+      arquillian:
+        patterns:
+          - "org.jboss.arquillian*:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:

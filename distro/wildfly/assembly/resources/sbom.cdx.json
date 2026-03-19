@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:4948c59f-9724-421e-b5ed-9ed1cb34dcf2",
+  "serialNumber": "urn:uuid:c6a3410a-d248-48c9-81e9-23430eccf647",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-03-13T10:02:53Z",
+    "timestamp": "2026-03-17T11:47:37Z",
     "tools": {
       "components": [
         {
@@ -14129,45 +14129,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.junit5",
       "name": "arquillian-junit5-container",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "Arquillian Build Configuration",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "78aac6cd5fffda48418e2a0b88a12399"
+          "content": "275c35d286f8f900229b215c23357c6c"
         },
         {
           "alg": "SHA-1",
-          "content": "b59d9aaaad48ed3f11f5d509de9368cd3a93527d"
+          "content": "a79b17f9cd134913cfd498645a49ec3a9d24ada4"
         },
         {
           "alg": "SHA-256",
-          "content": "ac88fda53d6153c77ae68bb5ea99290e7bfdb55e829716ffe5718fb509a9ab76"
+          "content": "a14349a1d573ca3757c6559ede0dea96df566212b7a30355b927b096182b0ec2"
         },
         {
           "alg": "SHA-512",
-          "content": "e6abd3655c612e1515f14a5878118497c63cb8630154cb7646384654b5b1194529ebf7fe011d45c8ae03198555388d308886ada30261773f81f2f14058c953a2"
+          "content": "83d6cec38fc48fae4c31660f73f1e4e6babdfaddbba57abea5e784e63ee6ed916e3a625ab17d561d1f7b80e765e39388d3576747198f949678d32ead3fd3300a"
         },
         {
           "alg": "SHA-384",
-          "content": "e9d9c6d9a18e8623ee0706903c51e2a465a779f2581921e6d4dc809c4bcfcbbff1a9e2c2bfaaad93fc458e6e41c7251d"
+          "content": "9cc146a96f183573af24837e961376aee27d11f5f743556e088935eaed38c10f664ad09eb37f610aa40a90ebf8804881"
         },
         {
           "alg": "SHA3-384",
-          "content": "bebe0b956153cf2ceb7303ed0ba7602d476627e1157c42bc854a46cb8a610aa86b3fa10b4dfc1af5d44e703a0ebc8389"
+          "content": "ec9d94904c5db5d047ca7d3dcff3f993b180b10a326b727822d8db8f739c9a188ecd6631bd0d55748277cc853aa5ace5"
         },
         {
           "alg": "SHA3-256",
-          "content": "d3a2950058ad0b6ad64b29a3b7617a09682f9e58099e44ab32b3ca3f264affcd"
+          "content": "04cc54c6aa5177879a9f7cff05a8f53de3c537ba87fd442cb5d0ee122f0c610e"
         },
         {
           "alg": "SHA3-512",
-          "content": "3822ec56c206aed7622b8c8b53777b2e53706f13cf574f8d58bf45a617843a492507874a8166b7f4cf329dd1ecc55e036576d961b973fe07587e7e394ef394ba"
+          "content": "469b4162916eb1e5c6bfbbd933b61710d42d267a10111a12174a92dec1fec2c28d27e1415fecd90f70586667b9be8d7d1646f5553b8855bd420090ab86f54a55"
         }
       ],
       "licenses": [
@@ -14177,10 +14177,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14199,45 +14199,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.test",
       "name": "arquillian-test-api",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "API for the Test integration.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "018a968cf39b7941f466be3a01909a84"
+          "content": "8f8230176e888a1ddca4ff6dc566442f"
         },
         {
           "alg": "SHA-1",
-          "content": "a881de9ce8e4bd242202f878f2b4af5c9e474aee"
+          "content": "2a836c09f63719fd739dfe2fda4aceeba2cf081c"
         },
         {
           "alg": "SHA-256",
-          "content": "6ab44708804b9665a18dbdc9328a95f494e1847acc638dab62bbe27165e75bf4"
+          "content": "657eed968b008a2b788b19f6015956d90145bc49965bee5c53d23e4efdbb782b"
         },
         {
           "alg": "SHA-512",
-          "content": "51e12a29e358a005b2a0ef05cf6479db779ceabfff5b29d986061025f6e26e7b601feb05dcb08aefa4d60b542db04f44e62a2fc15a4eef88e04ee52e0e6ca714"
+          "content": "4348b4a4d32fbd6bd05724225ce877f53ea1294493cf3499f3769fe6e70ab66b5289c5174826797deb0b232344e8a06ed5ae0d9a754b91d3a9c080ee1d25bc8b"
         },
         {
           "alg": "SHA-384",
-          "content": "15715d9d7eb6f0d7b97d9a6e7db826e9163a1692821f9beb7c3e9b782d821bb05a375a491b91ce983f1dc60ed5a64505"
+          "content": "b7aee9381451ff5defaefdc36e19ced517c7ee93ac88735d0dd5e00835ac95231b8e062407222a7996d938609b45b836"
         },
         {
           "alg": "SHA3-384",
-          "content": "69fd413fade793f9b69e4368b1444a4f5f91feb1bf5f3404943893fc304b0c248582bec3f09692cf94e0974daedb3cec"
+          "content": "83c43d7c7fd0c78e9dbd53afc5c1267ff2c895c731cf8667532f65d4efd4564cfc39468b8d0b8e8c675cdddf67c64363"
         },
         {
           "alg": "SHA3-256",
-          "content": "571c3b45ea028649e41e67aae238efb9e902474b9b1cc1f453aaeb05e5de02e7"
+          "content": "d09e0d76a7911bc6c9760070a03e35c1c01f3107bc63eeaeb41ffdefeeccef1a"
         },
         {
           "alg": "SHA3-512",
-          "content": "e9bc306295dd93bf50f6df7dd7e90636cd7b04cec6c8b91ec47a93038d0d27ccfe3f21591cba4d4e669b6240b3af7b7b32f90ce311d376f2e9302453a99568d2"
+          "content": "f260afe4e313d00d0c5d56b219b99c4a74ba11f781158f65620f962e33541412b91d52092b7ffdca99beb8c98049f7932cb8ff28addae62c03da9111d1d24c8e"
         }
       ],
       "licenses": [
@@ -14247,10 +14247,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14269,45 +14269,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.core",
       "name": "arquillian-core-api",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "API for the Core.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "9229381fd252571ea1aadaa3e3661e78"
+          "content": "039dbb7c5902a14df9e36ab87cb47944"
         },
         {
           "alg": "SHA-1",
-          "content": "61043d1276d80c60e3aef042922bcf2df44ad04f"
+          "content": "0a114f888990f0126a806a169c968c8754804a9c"
         },
         {
           "alg": "SHA-256",
-          "content": "c3154efcdc562e73700f32c2c3eb07d50146b774421e959d70a5c92fb9b34978"
+          "content": "e25f165c43373ca3a4635dd0e2fda6395ef098e286f441f08b3f01324d86de78"
         },
         {
           "alg": "SHA-512",
-          "content": "77890134ec792013c21b4622387447a2d9ebeb7c5df585b8388871b18b2ccbdd822681a2e65a4f1d989151a6cbb5ee4901b9c749a2e76fd480bfb21ed1cfed8e"
+          "content": "61b5afd08b4c32ea193db93e958eea380d8cb50f9e1f54502b2d70c1e98b4a5ee87dcb0622f58f535bbbb85a8fc974681ed605b6a8f24255c0c36a8660d33fad"
         },
         {
           "alg": "SHA-384",
-          "content": "0b819f69d0406d6508f9a608cb0792cb8557afbbbf2b20b1a449d22bf19e6f9dc45beed1af86577ace2fbca62a3179cb"
+          "content": "af67d2b81600ce2710d76a7d079cda30f4cb6b79dd8975d2e86ed08f0a877f658e9c1842cb942a8efa6a5cc4143e222c"
         },
         {
           "alg": "SHA3-384",
-          "content": "602137b63269d934aa382be7d6fed5647cdac51746447e0fe6c8900a1a9331d1c47f4ad21d7eb16e4e03f3c8b79e2ca2"
+          "content": "20eca0ee562bf9c48586e9cd8dd915593a234886db45538efb89e21c463ae555dc503fcd4364a1b59df6515b7fe70d2b"
         },
         {
           "alg": "SHA3-256",
-          "content": "0e56a45bcbe783600c42aa66fa69016c11edea4e96e41ee772e0c0fb2025a4b4"
+          "content": "b728cf5880e916dbee36029735aceced0397877f9d3b62ffbaf815fb9d183569"
         },
         {
           "alg": "SHA3-512",
-          "content": "c28b310e9b0eb27ac0cb3ea6f3354b5726d74b5c5d3aed53899884b53a01e4a707e5b72a8af67462c34e0394e21a9d911d72119ab8486d9d07ccb94907b419ee"
+          "content": "beee64d4fe67b4d220a6ba349bdd4fe911213a75a8781c9268205a5da54553c4e32a9328a0a896cd60bc0572013b0c386e954053f76c542dd4d79f1c915f02f6"
         }
       ],
       "licenses": [
@@ -14317,10 +14317,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14339,45 +14339,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.test",
       "name": "arquillian-test-spi",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "SPI for the Test integration.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "cccf14e75399df88c1c5b205302c7095"
+          "content": "a01a53701e7842c7e4876e716d8d62f9"
         },
         {
           "alg": "SHA-1",
-          "content": "27e2bdaf378ad6cb94137e2892d824f9f15298ec"
+          "content": "ef50c4796257fb6c60d6d61e5883c16397377ede"
         },
         {
           "alg": "SHA-256",
-          "content": "c5316cb1fee4fb7f90331576a60cf9d3a9c7243257bd04bee4486aef5687cee5"
+          "content": "1af3249ad388b239577276597ed52409c9d1ec1c65d06cabff9746b9f3181019"
         },
         {
           "alg": "SHA-512",
-          "content": "2cad9436b905099377f49022b9f95e58b5a1f6e94475e6cfa8d3df1dba69eb59e388c8b7bb4510fcc96db337966af11ee44694a3ef77d77ad26af42173ec1700"
+          "content": "a49a561995a803fd79782f484e6d526c210bdd854d92a0d41a70c7e4aa65a5a3c8096995e9d6560067e06db72af1c651042e0f7e28973c77db8724c2f4a556df"
         },
         {
           "alg": "SHA-384",
-          "content": "643023658e19d0a7624f6eb6a69fe71bf6e0eb4b39a9f8b5dc5b70e174920838e0c330e2ee09929ab4f1821c8c1c3a58"
+          "content": "d5d344b11138022a06321c5b0c5db0b60c2f2faf16825a2c8cc0a5010dd057917b20f5f603ea754717110016c76bc882"
         },
         {
           "alg": "SHA3-384",
-          "content": "17827070705a288c2091383907858117408b15ae7b0e37051dec7e51bf7397583ff7a70e5677c42d42fd0ab17c266521"
+          "content": "c687da56024eb1115468b487cfeed1a012d28d632d24b447421dc665f5b9b202ac4f85e4256d6f6d8faf254159daf8e4"
         },
         {
           "alg": "SHA3-256",
-          "content": "aeac08ce4565cdc6f07d70f4760239311326c1d8e6a20ae9a062d5a0dc34d17e"
+          "content": "2458c14fdd99d2f9c8620bfff1d446da73c522498b3c287c2727922e8139ed70"
         },
         {
           "alg": "SHA3-512",
-          "content": "472a21dee02d2a665f93c123b3ebd1e584ebdaa0b0833b4560b5b5759fa475c0f4214cf316ced32f3b6d3d104a5ec02f07ed24188b4a3eaae23174f4beb6e575"
+          "content": "1064ba2e2890092e6df35509bf33470a450e8e09d93bda5f51734643227129727d8a0196f03dac9411dea130c0f279a4a65394d8e11537a2a7a2c0122597fa12"
         }
       ],
       "licenses": [
@@ -14387,10 +14387,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14409,45 +14409,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.core",
       "name": "arquillian-core-spi",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "SPI for the Core.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "eb01243348c657430430ad8d43c0b77e"
+          "content": "788c8655a4b08332c01c92e8b93b851a"
         },
         {
           "alg": "SHA-1",
-          "content": "679810110c6e3f170a9f294a325094811410d68a"
+          "content": "97b4aed78ad0112332e4814627eee9447bc700ad"
         },
         {
           "alg": "SHA-256",
-          "content": "847826d445c80880d609f93ad866323608f4a5b0da9eb72c10cf625b6fd7c6fc"
+          "content": "f73930369bf9ca105743fc5cad9879528b15105d9f9a6392067df5c41c088116"
         },
         {
           "alg": "SHA-512",
-          "content": "45a407e9df097b6fa9f59fa968827002a842fd87d4a1e53f0819cd9f4fafa4e927b1bc45b4f2cdbacb8225e61d6b52eaf6527bae4e9a35d0c27a721fb3315442"
+          "content": "f54a13f87d7568961d17d53c1848c336122ebc985443d38c7cbdcef3aec5b24041ea25dc27691f2cdce3a0229cad06770fd28bdd3b33793bd9177aa9f1942ea4"
         },
         {
           "alg": "SHA-384",
-          "content": "c50dcb7dae7fdb03ad1a60a699f8065d58a0271f668c9d11f9714e3cbdaff9975dbac4e3fc58ae911f82de26e0ec6a92"
+          "content": "19ced192b908e58912169d738f0e2665f648d8c700809dc183777f4ed4fe813ce2193a8bb02da49b19adb5a9e3c02a99"
         },
         {
           "alg": "SHA3-384",
-          "content": "28217c4f1059a972b23915843f84831fbc38509ccc713d61be6939e7b55055f006a1e7eac73c938ebac2338abc13db00"
+          "content": "62871bd311d1fe82d55171f5938017cac63ad2be6990c07638658b52acb52f1b059342a61fbf444b6e8d390d02ab2d74"
         },
         {
           "alg": "SHA3-256",
-          "content": "3c506e840458f001cff6cf2aac6949eaa4f1ebec01a241e921412d0524c234be"
+          "content": "14f9501b97d14c7ebc5683a07c47cdd8bf6c04323f371022057dc1eb939cab57"
         },
         {
           "alg": "SHA3-512",
-          "content": "40ed5657aad4c36686d5b44f495cece485d25ff5685f188970d1718d0448e0811f0bced81a1b8d5a2583b74954a2f3ba54038f336ead9f2956045e843e2d4230"
+          "content": "6ed5b992a16453d4864a74c890df854c68f7549bd6fa02b1aa1bae68c8492d16cef466532cd16998704811860ccbe4bb4ea528f13be427dfc532c443513eab3c"
         }
       ],
       "licenses": [
@@ -14457,10 +14457,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14479,45 +14479,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.container",
       "name": "arquillian-container-test-api",
-      "version": "1.10.0.Final",
-      "description": "Integration with the Test extention for the container extension.",
+      "version": "1.10.1.Final",
+      "description": "Integration with the Test extension for the container extension.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4c3c492410decd4889e4fb700a3755ca"
+          "content": "8112ea994f1a277d913ecbef4b7c989e"
         },
         {
           "alg": "SHA-1",
-          "content": "0bafd742248e8861963b94ddf17b64427665d3dc"
+          "content": "111898a1923bc82675b5fee95ae7587793c83e20"
         },
         {
           "alg": "SHA-256",
-          "content": "8dae2edcfc617e907ae4bed5545d728937dcd0a7dd32003a0c03c78983a16bca"
+          "content": "af6410effaa5a5f14ecf590606e3ee1a24673a2a6b0bbdd796860da5089edeb2"
         },
         {
           "alg": "SHA-512",
-          "content": "23b0bc45f617b0bf8ae25c8ac8c228918db0edd04a163715fbdb4a118bcf6ae51c933187e9f3a80d8fc625f42dee6bd4ba2d9db5f0556f6dd764fd97bc326877"
+          "content": "29b3955362ec30b013259bae041bd63086e546b1640e7724e0a44f8596c8f7cd3930415ac19638ed4bf971f2a67a493fd7417471bb7b99ec95a687cb600d8b86"
         },
         {
           "alg": "SHA-384",
-          "content": "314eaa3c0b67cc24834bad707c225aaf549c3f48baf0c8592e129224d41947051dd6db8fd60ae3fb9a0e3c339767ae18"
+          "content": "556d8f10adfefa6520c531948fb756eed94d0ec74138233116cea717c57c3e1c92731723ee815d0c5adb49ca47a0b0ff"
         },
         {
           "alg": "SHA3-384",
-          "content": "4ae9e2a09963b163a4cf19314b2965e68a2c7533c4288fdcd2836c67fd58bc77d1168895156cb8749a782bf92128d31e"
+          "content": "e4cc6cc7154fcde105c631aa7352c5160bcac4a865951c6978e32129201f6e889670fd282d306dfa34b4084f597794f2"
         },
         {
           "alg": "SHA3-256",
-          "content": "37355f4948ee4a3177f7364f9c4950eb8d5dcb15fd92b40aaf4f7dca266c955f"
+          "content": "cd1bf9e942bb6c750ad2b8fb89219a01728637c6566786f2c9f7b8472551fc18"
         },
         {
           "alg": "SHA3-512",
-          "content": "e05151f5c424b8fc58dd85e3a94a12747a14f8912f2a9f41c0e0bb044d89371e4c5cee984a947e502d68c49db222b7eb70d5eb554ac77df5097b30a3eaab7b89"
+          "content": "cd4c218bbb828ff77b71e4d090debd2ec7cf8e95877cf5416a40c48effdea3c47ab3dcb5e0229ad10bc5f3d5f84cf88f9727ea1b8bf797a12cc78095cbdcdd15"
         }
       ],
       "licenses": [
@@ -14527,10 +14527,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14623,45 +14623,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.container",
       "name": "arquillian-container-test-spi",
-      "version": "1.10.0.Final",
-      "description": "Integration with the Test extention for the container extension.",
+      "version": "1.10.1.Final",
+      "description": "Integration with the Test extension for the container extension.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a076e4ba567c9f378ffb98fb92cc4e4c"
+          "content": "9f2858242e7914443743ea5be31ff7ba"
         },
         {
           "alg": "SHA-1",
-          "content": "fd58f008dd0c2378ef9f4e95525e31ea381a0828"
+          "content": "75858e42ca4a36598c0dedbbc206930cfefe0d52"
         },
         {
           "alg": "SHA-256",
-          "content": "e58ace5460f767b215398c3d82a328d7f2be013880cf2bddea4160f69e1b507c"
+          "content": "32fc9611a545fa41bc51af9d0a2e04058e9be2f93291a57ee0592553c753d209"
         },
         {
           "alg": "SHA-512",
-          "content": "053be73f191f2560e91a298823603aa72e53e8f16472d4876292df2bf62aa041a7302a5479637d97928deccc0ab2890f0864be019cc72a18ffbf6eb203a0add6"
+          "content": "5a134b5ffd01bc74f2273ddf20df48b3f335dc33798f11d0ef57bda3c3a3494447dc9499de250695c52f914d901759f4fd31d2fa58e0c84ce679ac4dde554665"
         },
         {
           "alg": "SHA-384",
-          "content": "89c022147b831eea7f838b9cd6dada901091c498ca2249d3715eea91a25bf68cc4631305910a9e0782f1257ac57c5421"
+          "content": "6113a722cd967f021cdc9dad91383e4df433e4be24e3784757a2fa6fd9e7cf0f8f726574c1ab27cd27935f2e76d501b6"
         },
         {
           "alg": "SHA3-384",
-          "content": "3a566ff9efb0f2f236a946842864101c8bfd711e48b34c7ab5e5d6b7c62702a3ea63adfa6b703f0b320e6b5894693603"
+          "content": "df440dd1972a12d1aa5ce37d5155383783eeb9a5456e6efdd0108c518f3224e57d0fa8d8afd933e0972a3cb17405daa6"
         },
         {
           "alg": "SHA3-256",
-          "content": "ce638d2e22ba9d7ffbd00fa23a0ab9d44aa094594eaf046cdb0a51567b55f295"
+          "content": "c74aff06dfce14bb052cba3643c058732ea0a5e72592d1e3559d48a76cd28502"
         },
         {
           "alg": "SHA3-512",
-          "content": "c8a085df65e83b130252e19f2388738d8d3a851ce5347a34488ef44b706d3ab34437541802f684b0c36142f4471a9a05aceb8585f8cb185e34172d6e5f33f594"
+          "content": "ff636d7e7fed0373fdace7ba5179b9629d231aebacfd073aa7579bd5fbf267583edbb7f242165f986b67bf8fa8cc94071f4915da2f5e45dee34eead5a2d49fb5"
         }
       ],
       "licenses": [
@@ -14671,10 +14671,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14693,45 +14693,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.core",
       "name": "arquillian-core-impl-base",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "Impl Base for the Core.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "70d1312c5c13aa5146de41daf5cc3d26"
+          "content": "116437dc2414170555cb6b584c7775ec"
         },
         {
           "alg": "SHA-1",
-          "content": "4f41e873b522c67598c80f342f6822bd3f9edcaa"
+          "content": "ced78d7ab4a0dbeee589c9aa145ca8527abf4c77"
         },
         {
           "alg": "SHA-256",
-          "content": "c1d5e6558a5f8e9c4590dbb85be6bf2d1ae9d768b42dd5eeab843c13e2d7abeb"
+          "content": "0254fd01aa73fc2dcab6473860186210bf9e20c6dada6ad9de2fb838f7b13471"
         },
         {
           "alg": "SHA-512",
-          "content": "f2d67138f54a3c2cc13802c95b9678b2a02d71c4e4f74b36144baef25ee01691c1b6a8733d2ccdc7490ba2c611eff05be906b779a09953ab45c4b5ccbaf12ac9"
+          "content": "f2d0e64cd45406ccd66c2df95f6ee252ee56be463392f9429f783653f0df033bf9db0cce13c4caab53bb2b2d4a1d2f13925b3326d31969099f0ceea653ab7a91"
         },
         {
           "alg": "SHA-384",
-          "content": "4b166f759b06e881b49d315bb20b590980ec980c36bce3e5e5ea7d3858b3775b5d55f2f60ab09af8ec83bfcca60d193b"
+          "content": "42ae539306e7f18c90c48907214b4ee0dece149b844ce515b61ce188dc8afe0d784adc4e4b6b4a02b3cc51393362ca8d"
         },
         {
           "alg": "SHA3-384",
-          "content": "0155ec2d0959e146fd2cda1ed9d21f3b50c370ab4aafbd2dcf64e4697900fd04bcfdb03c799d1b202aaae89f517fee76"
+          "content": "b4ba6b076584f5d96b8dda4e2e7986b71145f89afd8609603e4cd39b92536b120a6738b18af0c7ebc9d5f0880cadafb6"
         },
         {
           "alg": "SHA3-256",
-          "content": "585f4cc3f1807c14e03b773d8af7a1578db0d73ee4a652aeb94fcaba245c48b4"
+          "content": "654c1b6f285e4f1f0399da7ea3fc57b1a6673b58107f2700efaec6f1fd51883e"
         },
         {
           "alg": "SHA3-512",
-          "content": "566cf3cafbec240d863d14f58e925eb5ed3219e8bc710b3befae4cd6444a027f73817691f88e902c780e9938512e33aecaadb22880ec15d003c2f1568453c995"
+          "content": "48d7f128cc3fa71c064097553ddb529b9fd8c4f756e7617f454f2d8f816202f7cd89d25e0dc6d0dd67e68ec4c263cc82a6f52b54b57e9a88f07d9f85c01c744b"
         }
       ],
       "licenses": [
@@ -14741,10 +14741,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14763,45 +14763,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.test",
       "name": "arquillian-test-impl-base",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "Implementation Base for the Test integration.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "10d0709ea4bc0e6f59d714f08ebb97d8"
+          "content": "13267454d1803e29be0b8f858cc28508"
         },
         {
           "alg": "SHA-1",
-          "content": "462ee33a19c9abb56b038bb7427c6c10faf9aa9a"
+          "content": "b15edc86254354594963d9754997c44a6ab84830"
         },
         {
           "alg": "SHA-256",
-          "content": "288d7b5c33a046580d0cb6aae9931c86e450db765ea6a6c0634c778ae9f3c6c3"
+          "content": "89c40eeb6b793207bdd398906cf644f2e26a9349a8bc83e2bc00fe850a938d05"
         },
         {
           "alg": "SHA-512",
-          "content": "bc1004902733ee93b0c777f86caa44535efaa7df5a98f868f77e551152ad4470c702a5abf72eccc95c61abc095370f7c0d18c875d15c9051e0a2573b63c6bae9"
+          "content": "ca51957d2624cac09d33e2ca44c8e4d2e60578589a031fc5154d110f3b3c81036c7e2dd7c51becdda3d45ed9c2e9c9393a172f1dce03d0fa40b375951ed45da1"
         },
         {
           "alg": "SHA-384",
-          "content": "c5e6e79454f75ca15fa798ff7fa8e70cc9d6cdec99a9de88854be9483cbf0940c402d953cf67866731e3e32243b3cc9e"
+          "content": "8e579890dc6a3ce9aa5a4853a8e4135746a0c3f335ec08ca2fb90bcd5fe055245c31aa069e23f44bdda881f7b06f36a3"
         },
         {
           "alg": "SHA3-384",
-          "content": "bc77a803def210300317cc1b02e7ffb5b95774ddfe007eb4ddae3a12080847651987a1cff93f98143d5519c30c1e1613"
+          "content": "8a9a959e5fb5db78999fb3859fea49647685238f3946e6121e41ebe359f26619ebfa28fb6fed91eef895f2b1745381f0"
         },
         {
           "alg": "SHA3-256",
-          "content": "2c69329d6875cb86d9cdea5597d45a97802eb69d01a5dd94ad536f18a32ab750"
+          "content": "cbfc3436202523b09c2b9a96cd963bd315f46295f06d266264c224c000ca9da7"
         },
         {
           "alg": "SHA3-512",
-          "content": "395566a00bbe820849f264d36cb44ff00a6bfca19ce72d1859583c3e59edb21864a15630b72dd60e08ea1b635bddd8d9fe98e6494a02d2362c376b3d63803aae"
+          "content": "2df5aa158dc5aeb5827f244f782c453d92a24336caf0a37155c2ce2f169885f285a88504363b9ff3b57f6125dc3cd56640a6000f3b846bf982aade14c99375cf"
         }
       ],
       "licenses": [
@@ -14811,10 +14811,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14833,45 +14833,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.container",
       "name": "arquillian-container-impl-base",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "Implementation for the container extension.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "84fc7749616f6c1f3d8c6a2d3d325f26"
+          "content": "2fa70aeff9c9bddc730a45e916514c45"
         },
         {
           "alg": "SHA-1",
-          "content": "14f6855576b4eb001ffe9f61bf3e1210e665fda0"
+          "content": "7b36fa6c00e2e03be12fb2232c70fa4f31151c7f"
         },
         {
           "alg": "SHA-256",
-          "content": "e9de5128c3373ccdd3f5e0733244793f99ea3d55782cee199ec0080b9cabce3b"
+          "content": "3ebbe0988ba733bf217fcb20542ba85a68ad5fc1d1165bd828c1b2ab2d8994e0"
         },
         {
           "alg": "SHA-512",
-          "content": "d23f24b18fe93b01123574c3891d993bb2b9622b71f506864e1f47c4baaf7041fc191da50d78ac8e5605319a303ebc7291c3850143a49bfe5260b456cd51ec42"
+          "content": "3b9720b0842deccee2fc0e4cc3cf60fa917f508664521705fe42d55e05c42f64e1d23c3a4232a0a3554c340293470e16888626500ee7038d1adefe9e5e3d70a1"
         },
         {
           "alg": "SHA-384",
-          "content": "b515f93b0c411352582f698130bc1366e5cd5c99e68406e466d8fe1332b6b11fcc84f755e6a227b1192da5dfe8656ad0"
+          "content": "16957a80bd3054ddc49dc4d0ed404c635cb0cfcabb189973502cdb2eed0b45fe9ebd1e6aed568136fb23f87c93cdb7a0"
         },
         {
           "alg": "SHA3-384",
-          "content": "eea81238306d23feaa0cda9d3fe4281f24bfce9ba23f45a9cf912d6ac64c2722e6746b281fde2125eea562d83a2ae5be"
+          "content": "828a1d7cf8fe801f6ae45f9a9a38ec7ab46de9a5b1c2464f5e1cf4ba92b792381ab00ae2e3e643c5f27aa8c091b5270b"
         },
         {
           "alg": "SHA3-256",
-          "content": "10d9ce84b95b43cd4099884f6a153aca5a91eadd5cd4fdab481d103050a10c90"
+          "content": "e0a6809d14780ac8cdca574cd6c426d92fb4841cd7bdf6fa34c265883fedf7d0"
         },
         {
           "alg": "SHA3-512",
-          "content": "5592d98bf8b484c12a0bee5e68936c8b07b0af742fc80315d8f50161530f9acb6b7dd9bd457e8b4f46b68ce6c0b379e0a44ea9c0f8e4c83c0d9da38adf7e9246"
+          "content": "a187a6093fa0080165946ee6d63b123a2ae47d789ee41411f54b5390e42fcae918082a0e9d07c94f6fc3fa55ea7e4c27d4c21f2fcd62ee8aed8314b90ce2b849"
         }
       ],
       "licenses": [
@@ -14881,10 +14881,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14903,45 +14903,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.config",
       "name": "arquillian-config-api",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "API for the Config Module.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "bbc09ec4dd641fad6e90a7ff7fe2cd4f"
+          "content": "b966a3c7ed751cff2f5a157847dd1296"
         },
         {
           "alg": "SHA-1",
-          "content": "34634b4e72b83a951ed84bd360ba25a3c5a38e5c"
+          "content": "db8a728d3c0bf78c35bdd3da06ab62194fa56299"
         },
         {
           "alg": "SHA-256",
-          "content": "00154f1b228e75ad792f4d6dfae5d4c41420c2974a249304f8a87b73675cace6"
+          "content": "577e682e73107ac67f68259f61612bb772efd737b825ca1ca641c4ea1758871c"
         },
         {
           "alg": "SHA-512",
-          "content": "242b8df81838a19cd201ff6ec4e43be74cb66a95246fbdb4548a7696d36472985088251593ef539736db22a3493691f7ec0103b51a900ddbec4b3092aad1bd08"
+          "content": "1b718c1aadd8fda86e98664ddff953beb87e223688cbb5cab449de5f62d7c978d8e2caff20a87ffaab6cd42d0a99dd599ffd68ec84e30aaa485cc34627565cfb"
         },
         {
           "alg": "SHA-384",
-          "content": "218919c786c643d370472265be2d728fc6377340410940abf163135b710865071904eda9972dba0e2b0250b076b44727"
+          "content": "d4d5bc1a931afcd6d1646864c3eea33bb27bb861bc64f140c1af898f958758f0b0b15116f408f4728814c42996279e2c"
         },
         {
           "alg": "SHA3-384",
-          "content": "9dbacd03ff2baa3355847e6ece4e5f4be00ab51fec9817b4339bf32dc23fce3e93d25218acf9518f17a12cb879e872c5"
+          "content": "ec1a767fdb45e85d5733563f25450a58c26565da6159240d7ad342ab622bd03cf338227dd482f3c61a4c0604a61a8e2a"
         },
         {
           "alg": "SHA3-256",
-          "content": "ad9e763e71e74d2d1d2ec2ae8df58f7fd5d1c0bc22429f0df1a3d4b34de513bd"
+          "content": "3fb7d85d9ac50971dc4e4344aa5db170978e5d73428b67c9cb6445857cdc2939"
         },
         {
           "alg": "SHA3-512",
-          "content": "783f4833320ca5275fdfbba498032b393e729fa1c534bce86bc2d7ec534b3800870d7a3432d42452141f98ae761c1440e20f053298eef29f3990df0a52a93dff"
+          "content": "0bc7ca55674fc4f1bfd76e268a75254b282665bd2e6d519083cd30fcc81fae5e5ccf2c6518845b6e409bddc5dc92564cb2785b59ae95db84aef8187d3087042e"
         }
       ],
       "licenses": [
@@ -14951,10 +14951,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -14973,45 +14973,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.config",
       "name": "arquillian-config-impl-base",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "Implementation for the Config module.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "c0a7d047f28dfdbd34b904bd31781457"
+          "content": "268998c06a7b9ab1b005b4d6d187d743"
         },
         {
           "alg": "SHA-1",
-          "content": "ed8af4d7ca651379b71f1af4ae656a5a061a9520"
+          "content": "5eeac045a38f749f3e89b307c798dab7aed07048"
         },
         {
           "alg": "SHA-256",
-          "content": "09fa14cfdec455328f6fefff24487ee73ec2fd9539c109f1f2f431d5adab6b3e"
+          "content": "eb583f21e671922912d75aeed7447b3b2b89c839c897ca125ec206b6a0a5a598"
         },
         {
           "alg": "SHA-512",
-          "content": "34058634316861820f63fd9a9b29b835fc6310ee127165820bbb7ee98c9c8f12035eba09c5ec119d5346ccd958949d1ea9a4b18c3081240fc6c9bf6f71ff4e1d"
+          "content": "286b527cd0a2305468ed23a881a0b3f29a1d78a1cc657c9a7a26b5a35a9e6a4c70fd0a83520e5f068fdb5bb189f39c93887cb6d52ae86f6d609686b957291757"
         },
         {
           "alg": "SHA-384",
-          "content": "4b98c0ff5f9e2b76204eae92b6d880204a882179592ef08523496a57aea85c93c1cab32d8a7f48bccb8a2b83bacfeba9"
+          "content": "99fa73593a8afdac8fbc916728cc0160a5515721b3209cfbf174590c0a6c75d94c97245246407b0a8f783138f747e838"
         },
         {
           "alg": "SHA3-384",
-          "content": "1fba5933e71b05c978578301d460e2e8e412c0a135aa9d9048ae951d4554bbc3170ae92d03d265f3259f70db01c95022"
+          "content": "303c9cbf66599bfac6faf8a31950baa0a2a3b8e8c03c44a011000e9b848d920ae01bd46b96ddd756a3d26e405493f5d0"
         },
         {
           "alg": "SHA3-256",
-          "content": "b95c2105836b4e17b13aafec2f0afed4f8845d4cd4762efe8737b4e0e3550ae6"
+          "content": "1569e465bebd03745efc2e6d261f90c3484879ccdacda6ff83719458b14604b9"
         },
         {
           "alg": "SHA3-512",
-          "content": "5a32a1d40b677376b325db3ba3a3139513946192a9634832a8ef80ffccc3a2d2638e895e3adcad49fd266ac6a05d9feaf19116144f9be0be80cb8618d4c4b8b0"
+          "content": "b7b21d61e87ab2f890052eb713aab6b12474d861d5b047deab529f38cac890cfefd2ae1763ee72e214a6c452a8ef05ffee098202e701db9ebd10145912e9bb21"
         }
       ],
       "licenses": [
@@ -15021,10 +15021,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -15043,45 +15043,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.config",
       "name": "arquillian-config-spi",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "SPI for the Config Module.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "243ad781229ba99da4ae5bb714f69a24"
+          "content": "73f7b6ab955a6e31869dd31d00eeb695"
         },
         {
           "alg": "SHA-1",
-          "content": "c4949eaa0c68ba95e3960df3c22c521889d27682"
+          "content": "2e1211e64be1caa79ae31011904e6cad697f3611"
         },
         {
           "alg": "SHA-256",
-          "content": "27ff8a3bc1a4829d75c4864075b3c2c52470fb8daa16bf321e36031c77bd31f1"
+          "content": "89ac15fd20209bbf93615021510f7450c7460506bc4c3927fd375514cfe9c3a4"
         },
         {
           "alg": "SHA-512",
-          "content": "b4da367cf4e7a93bf4536bed8c5e0868a220c240ee1778d7aaf4943922f141715a6e857813481ab864cb55c252cfbf844bf342bc6be7a9528fa3afc3c92f1ffe"
+          "content": "33f45b9085953a6c4557b92563f9afbd800f2cdc39911d9136684c89beee8ed7617deadfaa7584069e2476c23ce3f3b6fe6fcbb7c05256d31441bfbfa88ef1c8"
         },
         {
           "alg": "SHA-384",
-          "content": "29c54c2f2ccebb00a810d6a47727e4a8def017663931288c64580b0ec9aa12a6f8af92d9e7a928cc71e0bd66c8056cab"
+          "content": "5d2e905faf049e425cae9a1d33e830ef62e31f05a3b50c318e3f63c6720135bda635887195ebba742c95ef5059cdc037"
         },
         {
           "alg": "SHA3-384",
-          "content": "52cedbd7df1542f497d6bca5fc957622f36c6fcd100a879c6005eb7448954dc874afe646d1b32c2c31fb3e012f5765b9"
+          "content": "4cf83d904b183d9c287685cdc24fc06967c36fe5eb20e139cc262af62121652f3db1ffaf5f0adc25606a2a21f38b60a6"
         },
         {
           "alg": "SHA3-256",
-          "content": "cee3cb8918ffd2d50463037c70c722591f92bebf7f2b365cef1cfb9a7c9c958d"
+          "content": "879550f9e083531f0faedf2861acf1c653016795e16a53657c943689a7ffcd4f"
         },
         {
           "alg": "SHA3-512",
-          "content": "6db91e0bccabc48ea7e0f31daa3edb6b8808d914a391cf448274881b5a6fcc10bac26babf55f103e835ebbe80203412add3379ccca02adecbfaa56d47b56edd3"
+          "content": "3084d4a7882518370d1986e51707844beb82546012c0b0d16bcf59a910a5cc8a4dcd90cc53e5acbe8ed9adc57a47a382d01a308adab1d75e5e0bd738bd807abe"
         }
       ],
       "licenses": [
@@ -15091,10 +15091,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -15113,45 +15113,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.container",
       "name": "arquillian-container-test-impl-base",
-      "version": "1.10.0.Final",
-      "description": "Integration with the Test extention for the container extension.",
+      "version": "1.10.1.Final",
+      "description": "Integration with the Test extension for the container extension.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "bf558d5515bbbb73a13d24448b6ca005"
+          "content": "c58f9dea462aeb5239fecc129fd42f46"
         },
         {
           "alg": "SHA-1",
-          "content": "fad1e3bb812f1cae31fdec08c9473d6dda78fe1c"
+          "content": "8b155e00e5e541b10cd8d62a6dcdae1e47c12c34"
         },
         {
           "alg": "SHA-256",
-          "content": "09bdd1554f8e552bb833b8a0dc2693fa2199924ff8cbd13c0168e4d24c798796"
+          "content": "a8aae0823091445907c6c2c6f8d4d5a3faba46e6fc8c630f4155088f08a70f08"
         },
         {
           "alg": "SHA-512",
-          "content": "0114234bfa3519d85221a81ab234e101ec35c0d8595e2d7708063471650c89dd71c4edde09f8d8586096c7862ab51f1c652e8b244bc992ebae5afd400f4f0ad4"
+          "content": "4234282fd32ce4e44d87c815ba962dd92dd59086aafd411fe680a647517a9e4c285bc5d336c5f98e55574d11e882a83dde5043cf650885481b0a4c0a18417155"
         },
         {
           "alg": "SHA-384",
-          "content": "10407f058ca960eca0347c43ee6dc966c576db78f4c590e52f2764b972c60cbc5aba9d059dc358194e7921332ad56f8a"
+          "content": "656b2617804c276bdcd936420e328aecb7171cc7ad2336c4c6c672821ed4c12a46ab4bcc0c6bee24a8ccfd8202c03fd6"
         },
         {
           "alg": "SHA3-384",
-          "content": "e5e0667e2872125d127c4b2584e17cff188e30e6736eb160e4d233f8445346f2887dab0bad67ce441d948be51a7e7927"
+          "content": "93619d85d8bef6324e820e67be1e8e7e85cca6e7a8288dc88599d8d7aec685ede2ae4ed8c49f46bf246f7ee8c8cb0501"
         },
         {
           "alg": "SHA3-256",
-          "content": "1cfbbb1b6c747607ebca152836341c2df1d738a711ad4538f6f2ca2df82ac268"
+          "content": "74b178f01db652670483065917eb8a4b95e81c9e33af54ff5f3eae312896c813"
         },
         {
           "alg": "SHA3-512",
-          "content": "2b4b82fac1ce07c6a115a96225e0b5d6abfd816823799884e652f6c32e0ae5bd5edca2081ad59b181aa4a64360ca7f4b690735b462b265a90f51c17a8a086b71"
+          "content": "4f95f982675b2bc38ce84ef9f619aac5d640fc7d8debecec0967058318293673c44f58ad2e76c7e5ff9f42bb6a6e964bacc734e59fc73c768ffa233b036809e7"
         }
       ],
       "licenses": [
@@ -15161,10 +15161,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -15183,45 +15183,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.junit5",
       "name": "arquillian-junit5-core",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "Arquillian Build Configuration",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "6b41581742cdd897005083c7835fd378"
+          "content": "4328794fbaae19734836f2ef4c2e640c"
         },
         {
           "alg": "SHA-1",
-          "content": "1a539749441915c6ebc703c81d2fe9efc8eb0b32"
+          "content": "a3f60f2b25db8d24fbb398ee6eb096e90249f7dd"
         },
         {
           "alg": "SHA-256",
-          "content": "82a1717436dbcc29dd5616c6fe53b54d7bcb6026cd3f2cfcb46a84295c3e5377"
+          "content": "561e912b71ce69567171021b42778af1e43fe476fd8e75a76a3a098d90fde31f"
         },
         {
           "alg": "SHA-512",
-          "content": "0637c2714c4d6f47c3f854af0e0eedf2a32c9844446611175389c02957a4f96c3b61094d1f4f68dd04ec4ee67da7632d56af59b0e6c2fc1d34f7d3b2ad07c83f"
+          "content": "8e8dfd1b23ba4fa16002a44f8efdc2185eac4d5ff5fc1f1e9d49e662be0e31518c92624a0b4de37a1dc7a1ddb99df9ab397c3f5fe98fc30d06c011443b88d513"
         },
         {
           "alg": "SHA-384",
-          "content": "1eb40933916a81f1e2c0249cb2cf2fb74de250eaa916afae124c7d9c4812c16f41c4a717a3d449ab51ab73d086a0cb5e"
+          "content": "befd8a6264f534928d9e09838553a8792a754a636aff03b8d8cfb7ff3deebe5fcafe15ab1a838d0d275d2d1cd1c16d5a"
         },
         {
           "alg": "SHA3-384",
-          "content": "96dd1b080651bfc8025a3d92de5422a31c54f3c6f4ef595bd549e407adf725dd65d7a7a6706a1a473eb7d49b65e85c85"
+          "content": "5cd01e1e9f95d5f70ab9403d1b3b61ae3535c645272c81f34e71ba0a3bff73d47ddc68da04415d2dd4ec7adfc1b8f992"
         },
         {
           "alg": "SHA3-256",
-          "content": "9110bf95ad8d0f7bab76d5e9222d46a1bb1e61fc83ea5f2877fdf1ff821aa6e8"
+          "content": "48ee629fae501effb1392a3fc39ccaa39717ab6eb2365cee9a1f8613d3e4276f"
         },
         {
           "alg": "SHA3-512",
-          "content": "1515db3debe33f8c698a6e90ef557b562c096bab202854499254cea3fddc5e6d5892e3339f1c06340d8951564a7f5829387640b3c71c84ee6ea74defc3ccf11b"
+          "content": "0fd3ae078ad264cfe204649b11fee089a8099f136e8fc44bf59b12646a0c9854a8c25c8fc05722a15a0595c54810a71502bb5c9b63de07e84df5e80473f5352a"
         }
       ],
       "licenses": [
@@ -15231,10 +15231,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -15253,45 +15253,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
+      "bom-ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar",
+      "publisher": "Arquillian Community",
       "group": "org.jboss.arquillian.container",
       "name": "arquillian-container-spi",
-      "version": "1.10.0.Final",
+      "version": "1.10.1.Final",
       "description": "SPI for the container extension.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "34df1ffb26ca45dc264b5a3dc9b1fefe"
+          "content": "71df82300d11d035066f59c613104605"
         },
         {
           "alg": "SHA-1",
-          "content": "92af207e808b4aed5600e323273ed3a9b085676d"
+          "content": "0643dc2ddc92d7b00cf9c87149951ecdcf608f64"
         },
         {
           "alg": "SHA-256",
-          "content": "00aeafdc380492d99be4196f13ebd4564f4c4ffb55b407df33fbad59eabb33bf"
+          "content": "6a573beedda47b545cea867e465b3471cd986a549f47f6076195b23509ca5997"
         },
         {
           "alg": "SHA-512",
-          "content": "e440388552733186db20326b615e8b630dc532ed276e1406db96aec8806850174797585d9966f9370bffc0293b57206e321fdacf60c250ab16eac133cb5c68a9"
+          "content": "790afeda910a644e050eba511355b80776f226895b6c6286822e32738970a2784320b00600f4ca4a1e39b9a6dfe2105749b4eef1521ee861b95f71669be41a1e"
         },
         {
           "alg": "SHA-384",
-          "content": "c584b53c04aa0713166682faa75ce86f98749095bc54b6106581ced73fa505d9ecf0e96a3063420ee3592b10f9d883cc"
+          "content": "c7a9d1d2a99db34b13cbed907d53a290ac3930a9924e277d73000fe7ed00336c75be57b690b1072a1a8301e6f9b4a2ff"
         },
         {
           "alg": "SHA3-384",
-          "content": "ac6ceffa56a8f44a247c498a1cc0dae5c06d1800f78db09bb156449fb084bd6a8ce19c508437d46d4c0874b20adacd53"
+          "content": "2be4095364532f92695d3e2eb5a9f90d9a083319a1ab466d25a814ee5c4c6dd80a808ca502f9b184728ce4bde027a09f"
         },
         {
           "alg": "SHA3-256",
-          "content": "d7a032aae8f092f89f8ba2036b7c76fb79a86031532a82385576b711c39ed6b2"
+          "content": "968fffc8de10905ac18dd7dc9006cac745c81b339b83dacf1511a106f1264190"
         },
         {
           "alg": "SHA3-512",
-          "content": "6f8a8b7a86481ad3b09dd23ee146dec3603aa3482a1c852e483763efc0c112caca420c950fd8c30b336135c0f3eee793a642675b2c3dd9b6f3dae1f061d06cd8"
+          "content": "d1f392612e6739857e27a605d34311ed95b49fda9799f94c6c7873aef27f0df5c876759d0f3aac1992c8b1f6a3d1350a646e385afba7d2c99c8dc60411902bb9"
         }
       ],
       "licenses": [
@@ -15301,10 +15301,10 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar",
       "externalReferences": [
         {
-          "url": "http://arquillian.org",
+          "url": "https://arquillian.org",
           "type": "website"
         },
         {
@@ -19154,45 +19154,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
+      "bom-ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
       "publisher": "Eclipse Foundation",
       "group": "org.glassfish.jaxb",
       "name": "jaxb-runtime",
-      "version": "4.0.6",
+      "version": "4.0.7",
       "description": "JAXB (JSR 222) Reference Implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "0e600d639f3a09ddd6fa91623a12b634"
+          "content": "f7c3cf716178cdb0e087b12ad273fa9e"
         },
         {
           "alg": "SHA-1",
-          "content": "fb95ebb62564657b2fedfe165b859789ef3a8711"
+          "content": "49a0f8e7e3a40fcf3ba812721f682e12bec1878d"
         },
         {
           "alg": "SHA-256",
-          "content": "1c0d57f8c25f9605d5a2f7ad0a87581893776ac85b00b101b2651258edaa9118"
+          "content": "61a5daf5a1987f7ed7149c5a883ddf220ca9bf714a8d8cffc85fac301e92b5f2"
         },
         {
           "alg": "SHA-512",
-          "content": "e19db2669e916992ea6acc75174070a4b5f04bb7788df03b1ede3340f5d63cf1c5055568ba1d7738e9e018716d10c3f6b26d1951faf8bba75f6ebb6ac6b16314"
+          "content": "1153271be43a17766c831f29f5955464fbb408f32b13db49f8cdf5c2b2e836ab948eb5362922a5ea84d61c35d5c9e35afea95b032500588d99552a74fc286059"
         },
         {
           "alg": "SHA-384",
-          "content": "a3f7264bbb6ea1722d21d12efc651c183b30498542258cf0ea096ce5c7eb17440fe5d3650afc8e976b55c3a3d0952d24"
+          "content": "a66bc39eb25d4c728e9bc3d37d7e6005411a00dde6399d40489ff6999b3c37c80e2c4e0e5ca1cf0292add938d66a82f8"
         },
         {
           "alg": "SHA3-384",
-          "content": "b6686499e954ca7caca8c1dabdffc33c3741b012f4a73b729899ffff67f4cddd5c22e7bcce87bf5337933626a4bda798"
+          "content": "9aad5a1b6a7bd16fd219fef95647d9d2d553c4ab50842454129691fd3ef2e9449083ddf47dcea126f25632258755d075"
         },
         {
           "alg": "SHA3-256",
-          "content": "068377faca7e7c02a5687b7920f0661026dcd51c8b58faaf4de13db1673978be"
+          "content": "85db506758dc998ead4f2286da50d15f22aede1ba380e1f0f60d7d886e834d8b"
         },
         {
           "alg": "SHA3-512",
-          "content": "f3f9a6944a1b547adbcd621fce28aa9ca07d9992e2ce224e4b4b06195205566737676981d9066ad205f8c008a5e8696d4f4895e9725a94c11bc022c525818d8b"
+          "content": "2213b1d79dc8448529b146f44fdd997b40060ee6aed6497b780c2953d9fb026f1975a64b7e42a1df0980be792f2df8eb31900984ce608e5a62299643d8cc9cb8"
         }
       ],
       "licenses": [
@@ -19202,15 +19202,11 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
+      "purl": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
       "externalReferences": [
         {
           "url": "https://eclipse-ee4j.github.io/jaxb-ri/",
           "type": "website"
-        },
-        {
-          "url": "https://jakarta.oss.sonatype.org/service/local/staging/deploy/maven2/",
-          "type": "distribution-intake"
         },
         {
           "url": "https://github.com/eclipse-ee4j/jaxb-ri/issues",
@@ -33409,7 +33405,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "5cdfe01f-8541-4675-b9b3-751c6fb830e3",
+      "bom-ref": "ea586544-fe6d-4d56-8029-e07c56300f7c",
       "name": "package-lock.json",
       "properties": [
         {
@@ -33649,10 +33645,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.0",
       "group": "@bpmn-io",
       "name": "form-js-carbon-styles",
-      "version": "1.20.1",
+      "version": "1.21.0",
       "licenses": [
         {
           "license": {
@@ -33660,11 +33656,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-carbon-styles@1.20.1"
+          "value": "@bpmn-io/form-js-carbon-styles@1.21.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33674,10 +33670,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-editor@1.21.0",
       "group": "@bpmn-io",
       "name": "form-js-editor",
-      "version": "1.20.1",
+      "version": "1.21.0",
       "licenses": [
         {
           "license": {
@@ -33685,11 +33681,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-editor@1.21.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-editor@1.20.1"
+          "value": "@bpmn-io/form-js-editor@1.21.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33699,10 +33695,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-playground@1.21.0",
       "group": "@bpmn-io",
       "name": "form-js-playground",
-      "version": "1.20.1",
+      "version": "1.21.0",
       "licenses": [
         {
           "license": {
@@ -33710,11 +33706,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js-playground@1.21.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-playground@1.20.1"
+          "value": "@bpmn-io/form-js-playground@1.21.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33724,10 +33720,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.21.0",
       "group": "@bpmn-io",
       "name": "form-js-viewer",
-      "version": "1.20.0",
+      "version": "1.21.0",
       "licenses": [
         {
           "license": {
@@ -33735,11 +33731,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
+      "purl": "pkg:npm/%40bpmn-io/form-js-viewer@1.21.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js-viewer@1.20.0"
+          "value": "@bpmn-io/form-js-viewer@1.21.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -33749,10 +33745,10 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.20.1",
+      "bom-ref": "pkg:npm/%40bpmn-io/form-js@1.21.0",
       "group": "@bpmn-io",
       "name": "form-js",
-      "version": "1.20.1",
+      "version": "1.21.0",
       "licenses": [
         {
           "license": {
@@ -33760,11 +33756,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40bpmn-io/form-js@1.20.1",
+      "purl": "pkg:npm/%40bpmn-io/form-js@1.21.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "@bpmn-io/form-js@1.20.1"
+          "value": "@bpmn-io/form-js@1.21.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36323,9 +36319,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-builder@1.1.0",
+      "bom-ref": "pkg:npm/fast-xml-builder@1.1.4",
       "name": "fast-xml-builder",
-      "version": "1.1.0",
+      "version": "1.1.4",
       "licenses": [
         {
           "license": {
@@ -36333,11 +36329,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-builder@1.1.0",
+      "purl": "pkg:npm/fast-xml-builder@1.1.4",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-builder@1.1.0"
+          "value": "fast-xml-builder@1.1.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36347,9 +36343,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.5.1",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.5.6",
       "name": "fast-xml-parser",
-      "version": "5.5.1",
+      "version": "5.5.6",
       "licenses": [
         {
           "license": {
@@ -36357,11 +36353,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.5.1",
+      "purl": "pkg:npm/fast-xml-parser@5.5.6",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.5.1"
+          "value": "fast-xml-parser@5.5.6"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -37634,9 +37630,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/path-expression-matcher@1.1.2",
+      "bom-ref": "pkg:npm/path-expression-matcher@1.1.3",
       "name": "path-expression-matcher",
-      "version": "1.1.2",
+      "version": "1.1.3",
       "licenses": [
         {
           "license": {
@@ -37644,11 +37640,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/path-expression-matcher@1.1.2",
+      "purl": "pkg:npm/path-expression-matcher@1.1.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "path-expression-matcher@1.1.2"
+          "value": "path-expression-matcher@1.1.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -38419,7 +38415,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "803020cd-f4ee-49d7-af7c-3e946ab09c81",
+      "bom-ref": "8a3aadad-6455-48d6-bd94-e4c4dbb320ee",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -39407,7 +39403,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
         "pkg:maven/org.apache.httpcomponents.client5/httpclient5@5.6?type=jar",
-        "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.1.Final?type=jar",
         "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.seleniumhq.selenium/selenium-java@4.41.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
@@ -39922,45 +39918,45 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-container@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.0.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.1.Final?type=jar",
         "pkg:maven/org.jboss.shrinkwrap/shrinkwrap-impl-base@1.2.6?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.1.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.shrinkwrap/shrinkwrap-api@1.2.6?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base@2.0.0?type=jar"
@@ -39971,43 +39967,43 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.0.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.1.Final?type=jar",
         "pkg:maven/org.jboss.shrinkwrap/shrinkwrap-api@1.2.6?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base@2.0.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base@2.0.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi@2.0.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.config/arquillian-config-spi@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar"
       ]
     },
     {
@@ -40017,44 +40013,44 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.core/arquillian-core-impl-base@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.test/arquillian-test-impl-base@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-impl-base@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.config/arquillian-config-impl-base@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar",
         "pkg:maven/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi@2.0.0?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-impl-base@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-api@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-test-spi@1.10.1.Final?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.0.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.arquillian.junit5/arquillian-junit5-core@1.10.1.Final?type=jar",
       "dependsOn": [
-        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.0.Final?type=jar",
-        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.test/arquillian-test-spi@1.10.1.Final?type=jar",
+        "pkg:maven/org.jboss.arquillian.container/arquillian-container-spi@1.10.1.Final?type=jar"
       ]
     },
     {
@@ -40357,7 +40353,7 @@
         "pkg:maven/jakarta.el/jakarta.el-api@6.0.1?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
         "pkg:maven/jakarta.faces/jakarta.faces-api@4.1.2?type=jar",
-        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.0.Final?type=jar"
+        "pkg:maven/org.jboss.arquillian.core/arquillian-core-spi@1.10.1.Final?type=jar"
       ]
     },
     {
@@ -40633,7 +40629,7 @@
         "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.0.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar"
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar"
       ]
     },
     {
@@ -40659,7 +40655,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
+      "ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
       "dependsOn": [
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar"
       ]
@@ -40825,7 +40821,7 @@
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.0.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.13.2?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.0.0-SNAPSHOT?type=jar"
       ]
     },
@@ -40862,7 +40858,7 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.6?type=jar",
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
         "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar"
       ]
     },
@@ -42415,10 +42411,16 @@
       "dependsOn": []
     },
     {
-      "ref": "5cdfe01f-8541-4675-b9b3-751c6fb830e3",
+      "ref": "8a3aadad-6455-48d6-bd94-e4c4dbb320ee",
+      "dependsOn": [
+        "ea586544-fe6d-4d56-8029-e07c56300f7c"
+      ]
+    },
+    {
+      "ref": "ea586544-fe6d-4d56-8029-e07c56300f7c",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
-        "pkg:npm/%40bpmn-io/form-js@1.20.1",
+        "pkg:npm/%40bpmn-io/form-js@1.21.0",
         "pkg:npm/%40ibm/plex@6.4.1",
         "pkg:npm/%40popperjs/core@2.11.8",
         "pkg:npm/angular-animate@1.8.3",
@@ -42451,7 +42453,7 @@
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.3.3",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.5.1",
+        "pkg:npm/fast-xml-parser@5.5.6",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.17.23",
@@ -42462,12 +42464,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "803020cd-f4ee-49d7-af7c-3e946ab09c81",
-      "dependsOn": [
-        "5cdfe01f-8541-4675-b9b3-751c6fb830e3"
       ]
     },
     {
@@ -42541,14 +42537,14 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.0",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-editor@1.21.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/draggle@4.1.2",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.21.0",
         "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
         "pkg:npm/array-move@4.0.0",
         "pkg:npm/big.js@7.0.1",
@@ -42559,10 +42555,10 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js-playground@1.21.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.21.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.21.0",
         "pkg:npm/%40codemirror/autocomplete@6.20.0",
         "pkg:npm/%40codemirror/commands@6.10.2",
         "pkg:npm/%40codemirror/lang-json@6.0.2",
@@ -42579,7 +42575,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0",
+      "ref": "pkg:npm/%40bpmn-io/form-js-viewer@1.21.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feelin@6.1.0",
         "pkg:npm/%40carbon/grid@11.51.0",
@@ -42598,12 +42594,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/%40bpmn-io/form-js@1.20.1",
+      "ref": "pkg:npm/%40bpmn-io/form-js@1.21.0",
       "dependsOn": [
-        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.20.1",
-        "pkg:npm/%40bpmn-io/form-js-editor@1.20.1",
-        "pkg:npm/%40bpmn-io/form-js-playground@1.20.1",
-        "pkg:npm/%40bpmn-io/form-js-viewer@1.20.0"
+        "pkg:npm/%40bpmn-io/form-js-carbon-styles@1.21.0",
+        "pkg:npm/%40bpmn-io/form-js-editor@1.21.0",
+        "pkg:npm/%40bpmn-io/form-js-playground@1.21.0",
+        "pkg:npm/%40bpmn-io/form-js-viewer@1.21.0"
       ]
     },
     {
@@ -43302,16 +43298,16 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-builder@1.1.0",
+      "ref": "pkg:npm/fast-xml-builder@1.1.4",
       "dependsOn": [
-        "pkg:npm/path-expression-matcher@1.1.2"
+        "pkg:npm/path-expression-matcher@1.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.5.1",
+      "ref": "pkg:npm/fast-xml-parser@5.5.6",
       "dependsOn": [
-        "pkg:npm/fast-xml-builder@1.1.0",
-        "pkg:npm/path-expression-matcher@1.1.2",
+        "pkg:npm/fast-xml-builder@1.1.4",
+        "pkg:npm/path-expression-matcher@1.1.3",
         "pkg:npm/strnum@2.1.2"
       ]
     },
@@ -43611,7 +43607,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/path-expression-matcher@1.1.2",
+      "ref": "pkg:npm/path-expression-matcher@1.1.3",
       "dependsOn": []
     },
     {

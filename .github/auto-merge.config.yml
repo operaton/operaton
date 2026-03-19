@@ -97,8 +97,9 @@ auto-merge-rules:
       - 'org.openapitools:openapi-generator-maven-plugin'
       - 'org.sonatype.central:central-publishing-maven-plugin'
       # Dependency groups
-      - 'openrewrite group'
+      - 'arquillian group'
       - 'jboss-weld group'
+      - 'openrewrite group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

@@ -14,7 +14,6 @@
   <description>${project.name}</description>
   <properties>
     <connect.version.old>1.0.0-beta-5</connect.version.old>
-    <maven-bundle-plugin.version>5.1.1</maven-bundle-plugin.version>
     <license.includeTransitiveDependencies>false</license.includeTransitiveDependencies>
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
@@ -38,17 +37,6 @@
   <build>
     <pluginManagement>
       <plugins>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <configuration>
-            <instructions>
-              <Export-Package>
-                org.operaton.connect*
-              </Export-Package>
-            </instructions>
-          </configuration>
-        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>

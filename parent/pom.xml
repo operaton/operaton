@@ -128,7 +128,6 @@
           <configuration>
             <skipIfEmpty>true</skipIfEmpty>
             <archive>
-              <!-- explicitly specify manifestFile because otherwise it overrides the generated one from bundle-plugin -->
               <manifest>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               </manifest>

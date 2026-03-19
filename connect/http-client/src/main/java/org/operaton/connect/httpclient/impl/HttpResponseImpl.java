@@ -18,6 +18,7 @@ package org.operaton.connect.httpclient.impl;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,7 +71,7 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
 
     if (httpResponse.getEntity() != null) {
       try {
-        String response = new String(httpResponse.getEntity().getContent().readAllBytes());
+        String response = new String(httpResponse.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
         responseParameters.put(PARAM_NAME_RESPONSE, response);
       } catch (IOException e) {
         throw LOG.unableToReadResponse(e);

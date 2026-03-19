@@ -109,6 +109,8 @@ public class CsrfPreventionFilter implements Filter {
 
   private int denyStatus = HttpServletResponse.SC_FORBIDDEN;
 
+  private String csrfCookieName = CsrfConstants.CSRF_TOKEN_DEFAULT_COOKIE_NAME;
+
   protected final Set<String> entryPoints = new HashSet<>();
 
   protected CookieConfigurator cookieConfigurator = new CookieConfigurator();
@@ -138,6 +140,11 @@ public class CsrfPreventionFilter implements Filter {
       String customEntryPoints = filterConfig.getInitParameter("entryPoints");
       if (!isBlank(customEntryPoints)) {
         setEntryPoints(customEntryPoints);
+      }
+
+      String customCookieName = filterConfig.getInitParameter("cookieName");
+      if (!isBlank(customCookieName)) {
+        csrfCookieName = customCookieName;
       }
 
       cookieConfigurator.parseParams(filterConfig);
@@ -267,8 +274,7 @@ public class CsrfPreventionFilter implements Filter {
         if (session.getAttribute(CsrfConstants.CSRF_TOKEN_SESSION_ATTR_NAME) == null) {
           String token = generateCSRFToken();
 
-          String cookieName = cookieConfigurator.getCookieName(CsrfConstants.CSRF_TOKEN_DEFAULT_COOKIE_NAME);
-          String csrfCookieValue = cookieName + "=" + token;
+          String csrfCookieValue = csrfCookieName + "=" + token;
 
           String cookiePath = getCookiePath(request);
           csrfCookieValue += CsrfConstants.CSRF_PATH_FIELD_NAME + cookiePath;

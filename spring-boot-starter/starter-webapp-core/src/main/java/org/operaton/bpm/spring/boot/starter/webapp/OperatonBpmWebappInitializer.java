@@ -25,6 +25,7 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.util.StringUtils;
 
 import org.operaton.bpm.admin.impl.web.AdminApplication;
 import org.operaton.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap;
@@ -107,8 +108,13 @@ class OperatonBpmWebappInitializer implements ServletContextInitializer {
     registerFilter("CsrfPreventionFilter", CsrfPreventionFilter.class,
         webapp.getCsrf().getInitParams(),
         applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
+    Map<String, String> sessionCookieParams = new java.util.HashMap<>(webapp.getSessionCookie().getInitParams());
+    String sessionCookieNameAlias = properties.getSession().getCookie().getName();
+    if (!sessionCookieParams.containsKey("cookieName") && StringUtils.hasText(sessionCookieNameAlias)) {
+      sessionCookieParams.put("cookieName", sessionCookieNameAlias);
+    }
     registerFilter("SessionCookieFilter", SessionCookieFilter.class,
-        webapp.getSessionCookie().getInitParams(),
+        sessionCookieParams,
         applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
 
     Map<String, String> headerSecurityProperties = webapp

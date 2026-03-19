@@ -16,12 +16,16 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
+import org.operaton.bpm.spring.boot.starter.webapp.filter.SessionCookiePathFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -72,6 +76,22 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
   @Bean
   FaviconResourceResolver faviconResourceResolver() {
     return new FaviconResourceResolver();
+  }
+
+  @Bean
+  @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "session-cookie-path-enforcement", havingValue = "true")
+  public FilterRegistrationBean<SessionCookiePathFilter> sessionCookiePathFilter(
+          @Value("${server.servlet.session.cookie.name:JSESSIONID}") String sessionCookieName) {
+    String applicationPath = properties.getWebapp().getApplicationPath();
+
+    FilterRegistrationBean<SessionCookiePathFilter> registrationBean = new FilterRegistrationBean<>();
+    registrationBean.setFilter(new SessionCookiePathFilter());
+    registrationBean.setName("Operaton Session Cookie Path Filter");
+    registrationBean.addUrlPatterns(applicationPath + "/*");
+    registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_COOKIE_PATH, applicationPath);
+    registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_SESSION_COOKIE_NAME, sessionCookieName);
+    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return registrationBean;
   }
 
   @Override

@@ -43,7 +43,7 @@ public class SessionCookieFilter implements Filter {
 
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-      throws IOException, ServletException {
+          throws IOException, ServletException {
     if ((servletRequest instanceof HttpServletRequest httpServletRequest) && (servletResponse instanceof HttpServletResponse httpServletResponse)) {
       // create a session if none exists yet
       httpServletRequest.getSession();
@@ -94,10 +94,19 @@ public class SessionCookieFilter implements Filter {
     protected void appendSameSiteIfMissing() {
       Collection<String> cookieHeaders = response.getHeaders(CookieConstants.SET_COOKIE_HEADER_NAME);
       boolean firstHeader = true;
-      String cookieHeaderStart = cookieConfigurator.getCookieName("JSESSIONID") + "=";
+      String configuredCookieHeaderStart = cookieConfigurator.getCookieName(CookieConstants.JSESSION_ID) + "=";
+      String defaultCookieHeaderStart = CookieConstants.JSESSION_ID + "=";
       for (String cookieHeader : cookieHeaders) {
-        if (cookieHeader.startsWith(cookieHeaderStart)) {
+        if (cookieHeader.startsWith(configuredCookieHeaderStart) || cookieHeader.startsWith(defaultCookieHeaderStart)) {
           cookieHeader = cookieConfigurator.getConfig(cookieHeader);
+          String cookiePath = cookieConfigurator.getCookiePath();
+          if (cookiePath != null && !cookiePath.isBlank()) {
+            if (cookieHeader.matches("(?i).*(;\\s*Path=[^;]*).*")) {
+              cookieHeader = cookieHeader.replaceFirst("(?i);\\s*Path=[^;]*", "; Path=" + cookiePath);
+            } else {
+              cookieHeader = cookieHeader + "; Path=" + cookiePath;
+            }
+          }
         }
         if (firstHeader) {
           response.setHeader(CookieConstants.SET_COOKIE_HEADER_NAME, cookieHeader);

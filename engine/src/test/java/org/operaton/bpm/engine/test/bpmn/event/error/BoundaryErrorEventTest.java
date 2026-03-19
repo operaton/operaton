@@ -318,6 +318,8 @@ class BoundaryErrorEventTest {
     assertThatThrownBy(() -> taskService.complete(taskId))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("ENGINE-02042 Execution with id 'theEnd' throws an error event with errorCode 'myError' and errorMessage 'null', but no error handler was defined.");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
 
@@ -341,6 +343,8 @@ class BoundaryErrorEventTest {
     assertThatThrownBy(() -> taskService.complete(taskId))
             .isInstanceOf(ProcessEngineException.class)
             .hasMessageContaining("ENGINE-02042 Execution with id 'theEnd' throws an error event with errorCode 'myError' and errorMessage 'null', but no error handler was defined.");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment(resources = {
@@ -503,10 +507,14 @@ class BoundaryErrorEventTest {
   })
   @Test
   void testUncaughtErrorThrownByJavaDelegateOnServiceTask() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child"))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("ENGINE-02042 Execution with id 'serviceTask' throws an error event with errorCode '23' and errorMessage 'This is a business fault, which can be caught by a BPMN Error Event.', but no error handler was defined. ");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment(resources = {
@@ -720,10 +728,14 @@ class BoundaryErrorEventTest {
   })
   @Test
   void testUncaughtErrorThrownByJavaDelegateOnCallActivity() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent"))
         .isInstanceOf(ProcessEngineException.class)
         .hasMessageContaining("ENGINE-02042 Execution with id 'serviceTask' throws an error event with errorCode '23' and errorMessage 'This is a business fault, which can be caught by a BPMN Error Event.', but no error handler was defined. ");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment

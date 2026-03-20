@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
+import jakarta.servlet.ServletContext;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.SessionCookiePathFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
@@ -81,14 +82,30 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
   @Bean
   @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "session-cookie-path-enforcement", havingValue = "true")
   public FilterRegistrationBean<SessionCookiePathFilter> sessionCookiePathFilter(
-          @Value("${server.servlet.session.cookie.name:JSESSIONID}") String sessionCookieName) {
+          @Value("${server.servlet.session.cookie.name:JSESSIONID}") String sessionCookieName, ServletContext servletContext) {
+    String contextPath = servletContext.getContextPath();
+    if (contextPath == null || contextPath.equals("/")) {
+      contextPath = "";
+    }
+
     String applicationPath = properties.getWebapp().getApplicationPath();
+    if (applicationPath == null) {
+      applicationPath = "";
+    }
+
+    String cookiePath = contextPath + applicationPath;
+    if (cookiePath.trim().isEmpty()) {
+      cookiePath = "/";
+    }
 
     FilterRegistrationBean<SessionCookiePathFilter> registrationBean = new FilterRegistrationBean<>();
     registrationBean.setFilter(new SessionCookiePathFilter());
     registrationBean.setName("Operaton Session Cookie Path Filter");
-    registrationBean.addUrlPatterns(applicationPath + "/*");
-    registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_COOKIE_PATH, applicationPath);
+
+    String urlPattern = applicationPath.isEmpty() ? "/*" : applicationPath + "/*";
+    registrationBean.addUrlPatterns(urlPattern);
+
+    registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_COOKIE_PATH, cookiePath);
     registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_SESSION_COOKIE_NAME, sessionCookieName);
     registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return registrationBean;

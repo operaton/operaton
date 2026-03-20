@@ -21,6 +21,12 @@
       <classifier>scala-shaded</classifier>
     </dependency>
 
+    <!-- Scala library needed for feel-engine due to ScalaSignature annotations -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+    </dependency>
+
     <dependency>
       <groupId>org.operaton.bpm.dmn</groupId>
       <artifactId>operaton-engine-feel-api</artifactId>
@@ -38,27 +44,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>cleanVersions</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

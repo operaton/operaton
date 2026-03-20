@@ -80,13 +80,15 @@
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
       <scope>test</scope>
-      <version>1.3.5</version>
+      <version>1.3.6</version>
     </dependency>
     <!-- Webapps -->
     <dependency>
       <groupId>org.operaton.bpm.qa</groupId>
       <artifactId>operaton-qa-integration-tests-webapps</artifactId>
       <version>${project.version}</version>
+      <classifier>tests</classifier>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm.model</groupId>

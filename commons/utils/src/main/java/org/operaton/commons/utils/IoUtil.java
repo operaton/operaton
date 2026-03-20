@@ -49,7 +49,7 @@ public class IoUtil {
    * @return the input stream as byte[].
    */
   public static byte[] inputStreamAsByteArray(InputStream inputStream) {
-    try {
+    try (inputStream) {
       return inputStream.readAllBytes();
     } catch (IOException e) {
       throw LOG.unableToReadInputStream(e);

@@ -38,6 +38,9 @@
     <tomcat.connector.ajp.redirectPort>48443</tomcat.connector.ajp.redirectPort>
     <tomcat.server.port>48005</tomcat.server.port>
     <tomcat.runtime.location>../tomcat-runtime/target/server/apache-tomcat-${version.tomcat}</tomcat.runtime.location>
+    <!-- Needs to be updated after a new WildFly release -->
+    <wildfly.container.adapter.version>5.1.0.Final</wildfly.container.adapter.version>
+    <version.arquillian>1.9.3.Final</version.arquillian>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -52,6 +55,7 @@
   </dependencyManagement>
   <modules>
     <module>ensure-clean-db-plugin</module>
+    <module>arquillian-extensions</module>
   </modules>
   <profiles>
     <profile>

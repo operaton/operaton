@@ -140,6 +140,11 @@
       <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
     </dependency>
+    <!-- Scala library needed for feel-engine 1.20.0+ due to jackson-module-scala -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <finalName>${project.artifactId}</finalName>
@@ -313,6 +318,9 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.feel-scala@" value="${version.feel-scala}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.scala@" value="${version.scala}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">

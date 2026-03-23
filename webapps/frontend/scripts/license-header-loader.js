@@ -16,6 +16,7 @@
  */
 
 var fs = require('fs');
+var path = require('path');
 
 const addMissingLicenseHeaders = (filePath, source) => {
   // This fix ensures windows compatibility
@@ -29,8 +30,8 @@ const addMissingLicenseHeaders = (filePath, source) => {
     let pkg = null;
     if (rowFile.includes('node_modules')) {
       pkg = rowFile.replace(
-        /^(.*)node_modules\/(@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
-        (match, p1, p2, p3) => p2 || p3,
+        /^(.*)node_modules\/(?:@[a-z-\d.]+\/[a-z-\d.]+)?([a-z-\d.]+)?(.*)$/,
+        (match, p1, p2) => p2 || match.split('/').slice(-2)[0],
       );
     } else if (!rowFile.includes('operaton-bpm-sdk-js')) {
       pkg = rowFile.replace(
@@ -40,29 +41,51 @@ const addMissingLicenseHeaders = (filePath, source) => {
     }
 
     if (pkg) {
-      let packagePath = `${process.cwd()}/node_modules/${pkg}`;
-      if (!fs.existsSync(packagePath)) {
-        packagePath = `${process.cwd()}/node_modules/operaton-bpm-webapp/node_modules/${pkg}`;
+      // attempt to resolve package.json via Node resolution first (handles nested deps)
+      let packageJsonPath = null;
+      try {
+        packageJsonPath = require.resolve(`${pkg}/package.json`);
+      } catch (_err) {
+        // fallback candidates: top-level, nested node_modules based on resource path, and legacy operaton-bpm-webapp path
+        const candidates = [];
+        const topLevel = path.join(process.cwd(), 'node_modules', pkg, 'package.json');
+        candidates.push(topLevel);
+        // find nested node_modules segments in the resource path
+        const parts = rowFile.split('node_modules');
+        for (let i = 0; i < parts.length - 1; i++) {
+          const base = parts.slice(0, i + 1).join('node_modules').replace(/\\/g, '/');
+          const candidate = path.join(process.cwd(), base, 'node_modules', pkg, 'package.json');
+          candidates.push(candidate);
+        }
+        // legacy fallback
+        candidates.push(path.join(process.cwd(), 'node_modules', 'operaton-bpm-webapp', 'node_modules', pkg, 'package.json'));
+        for (let i = 0; i < candidates.length; i++) {
+          if (fs.existsSync(candidates[i])) {
+            packageJsonPath = candidates[i];
+            break;
+          }
+        }
       }
+
+      if (!packageJsonPath) {
+        console.log(`Could not resolve package.json for ${pkg}`); // eslint-disable-line
+        return source;
+      }
+
+      const packageDir = path.dirname(packageJsonPath);
 
       let licenseInfo = null;
       try {
-        licenseInfo = fs.readFileSync(`${packagePath}/LICENSE`, 'utf8');
+        licenseInfo = fs.readFileSync(path.join(packageDir, 'LICENSE'), 'utf8');
       } catch (_e) {
         try {
-          licenseInfo = fs.readFileSync(`${packagePath}/LICENSE.md`, 'utf8');
+          licenseInfo = fs.readFileSync(path.join(packageDir, 'LICENSE.md'), 'utf8');
         } catch (_e) {
           try {
-            licenseInfo = fs.readFileSync(
-              `${packagePath}/LICENSE-MIT.txt`,
-              'utf8',
-            );
+            licenseInfo = fs.readFileSync(path.join(packageDir, 'LICENSE-MIT.txt'), 'utf8');
           } catch (_e) {
             try {
-              licenseInfo = fs.readFileSync(
-                `${packagePath}/LICENSE.txt`,
-                'utf8',
-              );
+              licenseInfo = fs.readFileSync(path.join(packageDir, 'LICENSE.txt'), 'utf8');
             } catch (_e) {
               console.log(`${pkg} has no license file. 🤷‍`); // eslint-disable-line
             }
@@ -70,8 +93,8 @@ const addMissingLicenseHeaders = (filePath, source) => {
         }
       }
 
-      let packageJsonPath = require.resolve(`${packagePath}/package.json`);
-      const {version, license} = require(packageJsonPath);
+      const pkgJson = require(packageJsonPath);
+      const {version, license} = pkgJson;
       if (licenseInfo) {
         return `/*!\n@license ${pkg}@${version}\n${licenseInfo}*/\n${source}`;
       } else if (license) {

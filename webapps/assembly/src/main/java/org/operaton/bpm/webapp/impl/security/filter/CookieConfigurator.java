@@ -35,7 +35,6 @@ public class CookieConfigurator {
   protected boolean isSameSiteCookieEnabled;
   protected String sameSiteCookieValue;
   protected String cookieName;
-  protected String cookiePath;
 
   public void parseParams(FilterConfig filterConfig) {
 

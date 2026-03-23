@@ -273,7 +273,7 @@
       <dependency>
         <groupId>org.scala-lang</groupId>
         <artifactId>scala-library</artifactId>
-        <version>2.13.18</version>
+        <version>${version.scala}</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>

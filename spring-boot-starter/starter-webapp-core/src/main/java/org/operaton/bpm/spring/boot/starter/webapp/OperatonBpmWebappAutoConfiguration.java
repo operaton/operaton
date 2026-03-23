@@ -92,19 +92,31 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
     if (applicationPath == null) {
       applicationPath = "";
     }
-
-    String cookiePath = contextPath + applicationPath;
-    if (cookiePath.trim().isEmpty()) {
-      cookiePath = "/";
+    
+    String rawCookiePath = contextPath + applicationPath;
+    
+    if (rawCookiePath.matches(".*[\\s;].*")) {
+      throw new IllegalArgumentException("Security violation: Configured cookie path contains illegal characters (whitespace or semicolon). Path: " + rawCookiePath);
     }
 
+    String cookiePath = rawCookiePath.replaceAll("/+", "/");
+    
+    if (cookiePath.length() > 1 && cookiePath.endsWith("/")) {
+      cookiePath = cookiePath.substring(0, cookiePath.length() - 1);
+    }
+    
+    if (cookiePath.isEmpty()) {
+      cookiePath = "/";
+    } else if (!cookiePath.startsWith("/")) {
+      cookiePath = "/" + cookiePath;
+    }
+    
     FilterRegistrationBean<SessionCookiePathFilter> registrationBean = new FilterRegistrationBean<>();
     registrationBean.setFilter(new SessionCookiePathFilter());
     registrationBean.setName("Operaton Session Cookie Path Filter");
-
+    
     String urlPattern = applicationPath.isEmpty() ? "/*" : applicationPath + "/*";
-    registrationBean.addUrlPatterns(urlPattern);
-
+    registrationBean.addUrlPatterns(urlPattern.replaceAll("/+", "/"));
     registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_COOKIE_PATH, cookiePath);
     registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_SESSION_COOKIE_NAME, sessionCookieName);
     registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);

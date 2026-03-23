@@ -30,7 +30,6 @@ public class SessionCookieProperties {
   protected String sameSiteCookieOption;
   protected String sameSiteCookieValue;
   protected String cookieName;
-  protected String cookiePath;
 
   public boolean isEnableSecureCookie() {
     return enableSecureCookie;
@@ -72,14 +71,6 @@ public class SessionCookieProperties {
     this.cookieName = cookieName;
   }
 
-  public String getCookiePath() {
-    return cookiePath;
-  }
-
-  public void setCookiePath(String cookiePath) {
-    this.cookiePath = cookiePath;
-  }
-
   public Map<String, String> getInitParams() {
     Map<String, String> initParams = new HashMap<>();
 
@@ -103,10 +94,6 @@ public class SessionCookieProperties {
       initParams.put("cookieName", cookieName);
     }
 
-    if (StringUtils.isNotBlank(cookiePath)) {
-      initParams.put("cookiePath", cookiePath);
-    }
-
     return initParams;
   }
 
@@ -117,7 +104,6 @@ public class SessionCookieProperties {
       .add("enableSameSiteCookie='" + enableSameSiteCookie + '\'')
       .add("sameSiteCookieOption='" + sameSiteCookieOption + '\'')
       .add("sameSiteCookieValue='" + sameSiteCookieValue + '\'')
-      .add("cookiePath='" + cookiePath + '\'')
       .add("cookieName='" + cookieName + '\'')
       .toString();
   }

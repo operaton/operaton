@@ -54,6 +54,7 @@ class SessionCookiePathEnforcementDisabledIT {
     assertThat(rawSetCookie)
         .as("Expected no Path=/operaton enforcement when session-cookie-path-enforcement=false")
         .isNotNull()
+        .isNotEmpty()
         .doesNotContain("Path=/operaton");
   }
 }

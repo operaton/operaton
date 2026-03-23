@@ -47,12 +47,27 @@ public class SessionCookiePathFilter implements Filter {
     if (paramName != null && !paramName.isBlank()) {
       sessionCookieName = paramName;
     }
+
     String paramPath = filterConfig.getInitParameter(PARAM_COOKIE_PATH);
     if (paramPath != null && !paramPath.isBlank()) {
-      cookiePath = paramPath;
+      if (paramPath.matches(".*[\\s;].*")) {
+        throw new IllegalArgumentException("Security violation: Configured cookie path contains illegal characters.");
+      }
+
+      String normalizedPath = paramPath.replaceAll("/+", "/");
+      if (normalizedPath.length() > 1 && normalizedPath.endsWith("/")) {
+        normalizedPath = normalizedPath.substring(0, normalizedPath.length() - 1);
+      }
+      if (normalizedPath.isEmpty()) {
+        normalizedPath = "/";
+      } else if (!normalizedPath.startsWith("/")) {
+        normalizedPath = "/" + normalizedPath;
+      }
+
+      cookiePath = normalizedPath;
     }
 
-    log.debug("SessionCookiePathFilter initialized: sessionCookieName='{}', cookiePath='{}'",
+    log.info("SessionCookiePathFilter initialized: sessionCookieName='{}', cookiePath='{}'",
             sessionCookieName, cookiePath);
   }
 

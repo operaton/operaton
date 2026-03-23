@@ -38,7 +38,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpClientExtension implements AfterEachCallback {
   private static final Logger LOG = LoggerFactory.getLogger(HttpClientExtension.class);
-  private static final String DEFAULT_SESSION_COOKIE_PATH = "operaton";
   public static final String PORT_PLACEHOLDER_WEBAPP_URL = "{PORT}";
   public static final String WEBAPP_URL = "http://localhost:" + PORT_PLACEHOLDER_WEBAPP_URL +
       "/operaton/app/tasklist/default";
@@ -220,15 +219,15 @@ public class HttpClientExtension implements AfterEachCallback {
   }
 
   public String getSessionCookieRegex(String sameSite) {
-    return getSessionCookieRegex(DEFAULT_SESSION_COOKIE_PATH, null, sameSite, false);
+    return getSessionCookieRegex(null, null, sameSite, false);
   }
 
   public String getSessionCookieRegex(String cookieName, String sameSite) {
-    return getSessionCookieRegex(DEFAULT_SESSION_COOKIE_PATH, cookieName, sameSite, false);
+    return getSessionCookieRegex(null, cookieName, sameSite, false);
   }
 
   public String getSessionCookieRegex(String sameSite, boolean secure) {
-    return getSessionCookieRegex(DEFAULT_SESSION_COOKIE_PATH, null, sameSite, secure);
+    return getSessionCookieRegex(null, null, sameSite, secure);
   }
 
   public String getSessionCookieRegex(String path, String cookieNameInput, String sameSite, boolean secure) {

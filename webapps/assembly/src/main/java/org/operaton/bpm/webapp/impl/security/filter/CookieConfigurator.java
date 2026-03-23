@@ -54,11 +54,6 @@ public class CookieConfigurator {
       }
     }
 
-    String cookiePathParam = filterConfig.getInitParameter("cookiePath");
-    if (hasText(cookiePathParam)) {
-      cookiePath = cookiePathParam;
-    }
-
     String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);
     if (hasText(enableSameSiteCookieInitParam)) {
       isSameSiteCookieEnabled = Boolean.parseBoolean(enableSameSiteCookieInitParam);
@@ -96,10 +91,6 @@ public class CookieConfigurator {
 
   public String getCookieName(String defaultName) {
     return hasText(cookieName) ? cookieName : defaultName;
-  }
-
-  public String getCookiePath() {
-    return cookiePath;
   }
 
   static String getSameSiteCookieValueInitValue(String sameSiteCookieValueInitParam, String sameSiteCookieOptionInitParam) {

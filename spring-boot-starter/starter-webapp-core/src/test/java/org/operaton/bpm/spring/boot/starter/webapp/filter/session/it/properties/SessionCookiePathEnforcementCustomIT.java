@@ -52,7 +52,7 @@ class SessionCookiePathEnforcementCustomIT {
     httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
 
     assertThat(httpClientExtension.getCookie("JSESSIONID"))
-        .as("JSESSIONID should not exist when operaton.bpm.session.cookie.name is set alias wiring may be broken")
+        .as("JSESSIONID should not exist when server.servlet.session.cookie.name is set alias wiring may be broken")
         .isEmpty();
 
     String rawSetCookie = httpClientExtension.getCookie("CUSTOM_OPERATON_ID");

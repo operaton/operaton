@@ -35,7 +35,7 @@
     "bootstrap": "4.6.2",
     "bootstrap-icons": "^1.13.1",
     "bpmn-font": "0.12.1",
-    "bpmn-js": "18.13.1",
+    "bpmn-js": "18.13.2",
     "camunda-dmn-js": "3.7.0",
     "chart.js": "^4.5.1",
     "clipboard": "2.0.11",

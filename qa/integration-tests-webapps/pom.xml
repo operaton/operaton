@@ -153,6 +153,14 @@
           <type>pom</type>
         </dependency>
         <dependency>
+          <!-- make sure webapp-tomcat is built before this module -->
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-tomcat</artifactId>
+          <version>${project.version}</version>
+          <scope>provided</scope>
+          <type>war</type>
+        </dependency>
+        <dependency>
           <groupId>org.jboss.arquillian.container</groupId>
           <artifactId>arquillian-tomcat-managed-10</artifactId>
           <version>1.2.4.Final</version>
@@ -259,6 +267,14 @@
             <version>${project.version}</version>
             <scope>provided</scope>
             <type>pom</type>
+          </dependency>
+          <dependency>
+            <!-- make sure webapp-jboss is built before this module -->
+            <groupId>org.operaton.bpm.webapp</groupId>
+            <artifactId>operaton-webapp-jboss</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+            <type>war</type>
           </dependency>
           <dependency>
             <groupId>org.wildfly.arquillian</groupId>

@@ -32,15 +32,13 @@ import static org.assertj.core.api.Assertions.assertThat;
         "operaton.bpm.webapp.session-cookie-path-enforcement=true"
 })
 @DirtiesContext
-class SessionCookiePathEnforcementDefaultIT {
+class SessionCookiePathEnforcementEnabledDefaultIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();
 
   @LocalServerPort
   public int port;
-
-  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SessionCookiePathEnforcementDefaultIT.class);
 
   @BeforeEach
   void assignPort() {

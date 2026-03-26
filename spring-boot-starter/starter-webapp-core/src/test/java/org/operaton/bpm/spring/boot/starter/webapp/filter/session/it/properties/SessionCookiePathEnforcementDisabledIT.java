@@ -28,9 +28,6 @@ import org.springframework.test.context.TestPropertySource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(properties = {
-        "operaton.bpm.webapp.session-cookie-path-enforcement=false"
-})
 @DirtiesContext
 class SessionCookiePathEnforcementDisabledIT {
 

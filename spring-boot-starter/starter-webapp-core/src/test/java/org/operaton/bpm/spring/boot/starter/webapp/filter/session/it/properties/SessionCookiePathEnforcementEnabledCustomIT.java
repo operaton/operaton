@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "server.servlet.session.cookie.secure=true"
 })
 @DirtiesContext
-class SessionCookiePathEnforcementCustomIT {
+class SessionCookiePathEnforcementEnabledCustomIT {
 
   @RegisterExtension
   HttpClientExtension httpClientExtension = new HttpClientExtension();

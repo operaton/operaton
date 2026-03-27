@@ -26,6 +26,9 @@ updates:
       - "dependencies:maven"
     milestone: 14
     groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot:*"
       httpcomponents5:
         patterns:
           - "org.apache.httpcomponents.core5:*"
@@ -43,6 +46,24 @@ updates:
       arquillian:
         patterns:
           - "org.jboss.arquillian*:*"
+  - package-ecosystem: "maven"
+    directory: "/spring-boot-starter/starter"
+    schedule:
+      interval: "daily"
+      time: "00:45"
+    reviewers:
+      - "kthoms"
+    target-branch: "main"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "dependencies:maven"
+    milestone: 14
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -154,6 +175,27 @@ updates:
       arquillian:
         patterns:
           - "org.jboss.arquillian*:*"
+      spring-boot:
+        patterns:
+          - "org.springframework.boot:*"
+  - package-ecosystem: "maven"
+    directory: "/spring-boot-starter/starter"
+    schedule:
+      interval: "daily"
+      time: "00:45"
+    reviewers:
+      - "kthoms"
+    target-branch: "release/1.1.x"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    labels:
+      - "dependencies:maven"
+    milestone: 19
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:

@@ -160,9 +160,6 @@ public class OperatonBpmProperties {
   @NestedConfigurationProperty
   private FilterProperty filter = new FilterProperty();
 
-  @NestedConfigurationProperty
-  private SessionProperties session = new SessionProperties();
-
   public String getProcessEngineName() {
     return processEngineName;
   }
@@ -299,14 +296,6 @@ public class OperatonBpmProperties {
     this.filter = filter;
   }
 
-  public SessionProperties getSession() {
-    return session;
-  }
-
-  public void setSession(SessionProperties session) {
-    this.session = session;
-  }
-
   public String getIdGenerator() {
     return idGenerator;
   }
@@ -376,7 +365,6 @@ public class OperatonBpmProperties {
       .add("authorization=" + authorization)
       .add("genericProperties=" + genericProperties)
       .add("adminUser=" + adminUser)
-      .add("session=" + session)
       .add("filter=" + filter)
       .add("idGenerator=" + idGenerator)
       .add("jobExecutorAcquireByPriority=" + jobExecutorAcquireByPriority)

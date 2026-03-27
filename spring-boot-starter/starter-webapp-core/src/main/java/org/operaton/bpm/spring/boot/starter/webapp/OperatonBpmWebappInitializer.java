@@ -108,11 +108,7 @@ class OperatonBpmWebappInitializer implements ServletContextInitializer {
     registerFilter("CsrfPreventionFilter", CsrfPreventionFilter.class,
         webapp.getCsrf().getInitParams(),
         applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);
-    Map<String, String> sessionCookieParams = new java.util.HashMap<>(webapp.getSessionCookie().getInitParams());
-    String sessionCookieNameAlias = properties.getSession().getCookie().getName();
-    if (!sessionCookieParams.containsKey("cookieName") && StringUtils.hasText(sessionCookieNameAlias)) {
-      sessionCookieParams.put("cookieName", sessionCookieNameAlias);
-    }
+    Map<String, String> sessionCookieParams = webapp.getSessionCookie().getInitParams();
     registerFilter("SessionCookieFilter", SessionCookieFilter.class,
         sessionCookieParams,
         applicationPath + API_WILDCARD_PATH, applicationPath + APP_WILDCARD_PATH);

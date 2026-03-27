@@ -144,6 +144,10 @@ public class CsrfPreventionFilter implements Filter {
 
       String customCookieName = filterConfig.getInitParameter("cookieName");
       if (!isBlank(customCookieName)) {
+        // Rejects whitespace and RFC HTTP separators to ensure token validity.
+        if (customCookieName.matches(".*[\\x00-\\x1F\\x7F\\s;=()\\[\\]<>@,:\\\\\"/?{}].*")) {
+          throw new IllegalArgumentException("cookieName contains forbidden characters (CTLs, whitespace, or separators).");
+        }
         csrfCookieName = customCookieName;
       }
 

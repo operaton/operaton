@@ -87,7 +87,7 @@
     "karma-webpack": "5.0.1",
     "license-checker": "25.0.1",
     "lightningcss": "^1.32.0",
-    "mini-css-extract-plugin": "2.10.1",
+    "mini-css-extract-plugin": "2.10.2",
     "postcss-loader": "8.2.1",
     "prettier": "3.8.1",
     "raw-loader": "4.0.2",

@@ -16,12 +16,17 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp;
 
+import jakarta.servlet.ServletContext;
+import org.operaton.bpm.spring.boot.starter.webapp.filter.SessionCookiePathFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -72,6 +77,50 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
   @Bean
   FaviconResourceResolver faviconResourceResolver() {
     return new FaviconResourceResolver();
+  }
+
+  /**
+   * Registers a {@link SessionCookiePathFilter} that enforces the configured {@code Path}
+   * attribute on the session cookie. Only registered when
+   * {@code operaton.bpm.webapp.session-cookie-path-enforcement=true}.
+   *
+   * <p>The effective cookie path is computed as {@code contextPath + applicationPath}. If the
+   * combined path is blank, {@code "/"} is used.</p>
+   *
+   * @param sessionCookieName the session cookie name, resolved from {@code server.servlet.session.cookie.name}
+   * @param servletContext    the current servlet context, used to determine the context path
+   * @return a configured {@link FilterRegistrationBean}
+   */
+  @Bean
+  @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "session-cookie-path-enforcement", havingValue = "true")
+  public FilterRegistrationBean<SessionCookiePathFilter> sessionCookiePathFilter(
+      @Value("${server.servlet.session.cookie.name:JSESSIONID}") String sessionCookieName,
+      ServletContext servletContext) {
+
+    String contextPath = servletContext.getContextPath();
+    if (contextPath == null || contextPath.equals("/")) {
+      contextPath = "";
+    }
+
+    String applicationPath = properties.getWebapp().getApplicationPath();
+    if (applicationPath == null) {
+      applicationPath = "";
+    }
+
+    String rawCookiePath = contextPath + applicationPath;
+
+    String cookiePath = SessionCookiePathFilter.normalizeCookiePath(rawCookiePath);
+
+    FilterRegistrationBean<SessionCookiePathFilter> registrationBean = new FilterRegistrationBean<>();
+    registrationBean.setFilter(new SessionCookiePathFilter());
+    registrationBean.setName("Operaton Session Cookie Path Filter");
+
+    String urlPattern = applicationPath.isEmpty() ? "/*" : applicationPath + "/*";
+    registrationBean.addUrlPatterns(urlPattern.replaceAll("/+", "/"));
+    registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_COOKIE_PATH, cookiePath);
+    registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_SESSION_COOKIE_NAME, sessionCookieName);
+    registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+    return registrationBean;
   }
 
   @Override

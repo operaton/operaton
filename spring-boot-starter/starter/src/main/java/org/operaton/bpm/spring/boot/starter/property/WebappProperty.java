@@ -34,6 +34,8 @@ public class WebappProperty {
 
   protected String applicationPath = DEFAULT_APP_PATH;
 
+  protected boolean sessionCookiePathEnforcement = false;
+
   @NestedConfigurationProperty
   private CsrfProperties csrf = new CsrfProperties();
 
@@ -94,6 +96,14 @@ public class WebappProperty {
     return applicationPath;
   }
 
+  public boolean isSessionCookiePathEnforcement() {
+    return sessionCookiePathEnforcement;
+  }
+
+  public void setSessionCookiePathEnforcement(boolean sessionCookiePathEnforcement) {
+    this.sessionCookiePathEnforcement = sessionCookiePathEnforcement;
+  }
+
   public CsrfProperties getCsrf() {
     return csrf;
   }
@@ -133,6 +143,7 @@ public class WebappProperty {
       .add("webjarClasspath='" + webjarClasspath + '\'')
       .add("securityConfigFile='" + securityConfigFile + '\'')
       .add("webappPath='" + applicationPath + '\'')
+      .add("sessionCookiePathEnforcement=" + sessionCookiePathEnforcement)
       .add("csrf='" + csrf + '\'')
       .add("headerSecurityProperties='" + headerSecurity + '\'')
       .add("sessionCookie='" + sessionCookie + '\'')

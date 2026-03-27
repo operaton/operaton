@@ -109,6 +109,9 @@ public class CsrfPreventionFilter implements Filter {
 
   private int denyStatus = HttpServletResponse.SC_FORBIDDEN;
 
+  /** Name of the CSRF token cookie; configurable via the {@code cookieName} filter init parameter. */
+  private String csrfCookieName = CsrfConstants.CSRF_TOKEN_DEFAULT_COOKIE_NAME;
+
   protected final Set<String> entryPoints = new HashSet<>();
 
   protected CookieConfigurator cookieConfigurator = new CookieConfigurator();
@@ -138,6 +141,17 @@ public class CsrfPreventionFilter implements Filter {
       String customEntryPoints = filterConfig.getInitParameter("entryPoints");
       if (!isBlank(customEntryPoints)) {
         setEntryPoints(customEntryPoints);
+      }
+
+      String customCookieName = filterConfig.getInitParameter("cookieName");
+      if (!isBlank(customCookieName)) {
+        // Validate the cookie name against RFC 6265: only printable US-ASCII minus separators
+        if (!customCookieName.matches("[!#$%&'*+\\-.^_`|~0-9a-zA-Z]+")) {
+          throw new ServletException(
+              "CSRFPreventionFilter: cookieName '" + customCookieName
+                  + "' contains characters not permitted in an RFC 6265 cookie-name.");
+        }
+        csrfCookieName = customCookieName;
       }
 
       cookieConfigurator.parseParams(filterConfig);
@@ -267,8 +281,7 @@ public class CsrfPreventionFilter implements Filter {
         if (session.getAttribute(CsrfConstants.CSRF_TOKEN_SESSION_ATTR_NAME) == null) {
           String token = generateCSRFToken();
 
-          String cookieName = cookieConfigurator.getCookieName(CsrfConstants.CSRF_TOKEN_DEFAULT_COOKIE_NAME);
-          String csrfCookieValue = cookieName + "=" + token;
+          String csrfCookieValue = csrfCookieName + "=" + token;
 
           String cookiePath = getCookiePath(request);
           csrfCookieValue += CsrfConstants.CSRF_PATH_FIELD_NAME + cookiePath;

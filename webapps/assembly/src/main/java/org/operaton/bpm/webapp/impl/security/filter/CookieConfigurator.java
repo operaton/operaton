@@ -43,9 +43,14 @@ public class CookieConfigurator {
       isSecureCookieEnabled = Boolean.parseBoolean(enableSecureCookieInitParam);
     }
 
-    String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
-    if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
-      cookieName = sessionCookieName;
+    String cookieNameParam = filterConfig.getInitParameter("cookieName");
+    if (hasText(cookieNameParam)) {
+      cookieName = cookieNameParam;
+    } else {
+      String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
+      if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
+        cookieName = sessionCookieName;
+      }
     }
 
     String enableSameSiteCookieInitParam = filterConfig.getInitParameter(ENABLE_SAME_SITE_PARAM);

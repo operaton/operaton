@@ -66,4 +66,13 @@ class SessionCookiePathEnforcementAutoConfigurationTest {
           .doesNotHaveBean("sessionCookiePathFilter");
     });
   }
+
+  @Test
+  void sessionCookiePathEnforcement_absent_should_not_register_filter() {
+    contextRunner.run(context -> {
+      assertThat(context)
+              .hasNotFailed()
+              .doesNotHaveBean("sessionCookiePathFilter");
+    });
+  }
 }

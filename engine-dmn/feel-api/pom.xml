@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.operaton.bpm.dmn</groupId>
     <artifactId>operaton-engine-dmn-root</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine-feel-api</artifactId>
@@ -20,30 +20,6 @@
       <artifactId>operaton-commons-typed-values</artifactId>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>cleanVersions</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
   <profiles>
     <!-- check for api differences between latest minor release -->

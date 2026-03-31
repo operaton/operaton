@@ -38,7 +38,7 @@ class ProcessInstanceTest {
   private static final String ENGINE_REST_PROCESS_INSTANCE = "/engine-rest/process-instance";
 
   // Create new ApiClient for ProcessInstanceApi to avoid the default client.
-  final ProcessInstanceApi api = new ProcessInstanceApi(new ApiClient());
+  private ProcessInstanceApi api = new ProcessInstanceApi(new ApiClient());
 
   @RegisterExtension
   static WireMockExtension wireMock = WireMockExtension.newInstance()
@@ -47,6 +47,7 @@ class ProcessInstanceTest {
 
   @BeforeEach
   void setUp() {
+    api = new ProcessInstanceApi(new ApiClient());
     api.setCustomBaseUrl(api.getApiClient()
             .getBasePath()
             .replace("8080", String.valueOf(wireMock.getPort())));

@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.spin</groupId>
     <artifactId>operaton-spin-root</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-spin-dataformat-all</artifactId>
   <name>Operaton - Spin - All data formats in one</name>
@@ -134,43 +134,6 @@
             </additionalDependency>
           </additionalDependencies>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <configuration>
-          <unpackBundle>false</unpackBundle>
-          <instructions>
-            <Export-Package>
-              ${project.groupId}*
-            </Export-Package>
-            <Import-Package>
-              !spinjar*,
-              !org.junit*,
-              !org.slf4j.impl,
-              !com.fasterxml*,
-              !com.jayway,
-              !net.minidev.json*,
-              !org.codehaus.jackson*,
-              org.slf4j,
-              org.operaton.commons.utils,
-              org.operaton.commons.logging,
-              *
-            </Import-Package>
-            <Bundle-ClassPath>.</Bundle-ClassPath>
-            <Embed-Dependency>*;inline=true</Embed-Dependency>
-            <Embed-Transitive>true</Embed-Transitive>
-          </instructions>
-        </configuration>
-        <executions>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>

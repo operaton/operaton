@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-root</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-parent</artifactId>
   <packaging>pom</packaging>
@@ -20,7 +20,7 @@
     <version.jersey3>4.0.0</version.jersey3>
     <!-- use minimum version of resteasy and jersey -->
     <version.jaxrs.api>2.0.1.Final</version.jaxrs.api>
-    <version.groovy>5.0.4</version.groovy>
+    <version.groovy>5.0.5</version.groovy>
     <version.rest-assured>6.0.0</version.rest-assured>
     <version.jython>2.7.4</version.jython>
     <version.graal.js>25.0.2</version.graal.js>
@@ -33,7 +33,7 @@
     <version.commons-codec>1.21.0</version.commons-codec>
     <version.gson>2.13.2</version.gson>
     <version.hibernate>6.6.10.Final</version.hibernate>
-    <version.jackson>2.21.1</version.jackson>
+    <version.jackson>2.21.2</version.jackson>
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.6</version.httpclient5>
     <version.httpcore5>5.4</version.httpcore5>
@@ -41,15 +41,15 @@
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.junit5>6.0.3</version.junit5>
     <version.assertj>3.27.7</version.assertj>
-    <version.mockito>5.22.0</version.mockito>
+    <version.mockito>5.23.0</version.mockito>
     <version.jna>5.18.1</version.jna>
-    <version.testcontainers>2.0.3</version.testcontainers>
+    <version.testcontainers>2.0.4</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>
     <!-- application servers -->
     <version.wildfly>38.0.1.Final</version.wildfly>
-    <version.tomcat>11.0.18</version.tomcat>
-    <version.arquillian>1.10.0.Final</version.arquillian>
+    <version.tomcat>11.0.20</version.tomcat>
+    <version.arquillian>1.10.1.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.5</version.shrinkwrap.resolvers>
     <version.selenium>4.41.0</version.selenium>
     <version.slf4j>2.0.17</version.slf4j>
@@ -65,42 +65,6 @@
     <!-- profile activation properties -->
     <with-sources>false</with-sources>
     <with-javadocs>false</with-javadocs>
-    <!-- OSGi bundles properties -->
-    <operaton.artifact/>
-    <operaton.osgi.import.operaton.spin.version>version="[$(version;==;${operaton.spin.version.clean}),$(version;=+;${operaton.spin.version.clean}))"</operaton.osgi.import.operaton.spin.version>
-    <operaton.osgi.import.operaton.connect.version>version="[$(version;==;${operaton.connect.version.clean}),$(version;=+;${operaton.connect.version.clean}))"</operaton.osgi.import.operaton.connect.version>
-    <operaton.osgi.import.operaton.commons.version>version="[$(version;==;${operaton.commons.version.clean}),$(version;=+;${operaton.commons.version.clean}))"</operaton.osgi.import.operaton.commons.version>
-    <operaton.osgi.import.operaton.version>version="[$(version;==;${operaton.osgi.version.clean}),$(version;=+;${operaton.osgi.version.clean}))"</operaton.osgi.import.operaton.version>
-    <operaton.osgi.import.strict.version>version="[$(version;===;${operaton.osgi.version.clean}),$(version;==+;${operaton.osgi.version.clean}))"</operaton.osgi.import.strict.version>
-    <operaton.osgi.import.default.version>[$(version;==;$(@)),$(version;+;$(@)))</operaton.osgi.import.default.version>
-    <operaton.osgi.import.defaults>
-    </operaton.osgi.import.defaults>
-    <operaton.osgi.import.before.defaults/>
-    <operaton.osgi.import.additional/>
-    <operaton.osgi.import.pkg>
-      ${operaton.osgi.import.before.defaults},
-      ${operaton.osgi.import.defaults},
-      ${operaton.osgi.import.additional},
-      *
-    </operaton.osgi.import.pkg>
-    <operaton.osgi.activator/>
-    <operaton.osgi.failok>false</operaton.osgi.failok>
-    <operaton.osgi.export>${operaton.osgi.export.pkg};${operaton.osgi.version};-noimport:=true</operaton.osgi.export>
-    <!--
-    <operaton.osgi.export.pkg>!*.impl;${operaton.artifact}*</operaton.osgi.export.pkg>
-    <operaton.osgi.private.pkg>${operaton.artifact}*.impl</operaton.osgi.private.pkg>
-    -->
-    <operaton.osgi.export.pkg>${operaton.artifact}*</operaton.osgi.export.pkg>
-    <operaton.osgi.private.pkg/>
-    <operaton.osgi.version>version=${project.version}</operaton.osgi.version>
-    <operaton.osgi.split.pkg>-split-package:=first</operaton.osgi.split.pkg>
-    <operaton.osgi.import>${operaton.osgi.import.pkg}</operaton.osgi.import>
-    <operaton.osgi.dynamic/>
-    <operaton.osgi.symbolic.name>${operaton.artifact}</operaton.osgi.symbolic.name>
-    <operaton.osgi.exclude.dependencies>false</operaton.osgi.exclude.dependencies>
-    <operaton.osgi.remove.headers>Ignore-Package,Include-Resource,Private-Package,Bundle-DocURL</operaton.osgi.remove.headers>
-    <operaton.osgi.include.resource>{maven-resources}</operaton.osgi.include.resource>
-    <operaton.osgi.embed/>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -164,7 +128,6 @@
           <configuration>
             <skipIfEmpty>true</skipIfEmpty>
             <archive>
-              <!-- explicitly specify manifestFile because otherwise it overrides the generated one from bundle-plugin -->
               <manifest>
                 <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               </manifest>
@@ -230,37 +193,6 @@
               </goals>
             </execution>
           </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.felix</groupId>
-          <artifactId>maven-bundle-plugin</artifactId>
-          <configuration>
-            <excludeDependencies>${operaton.osgi.exclude.dependencies}</excludeDependencies>
-            <instructions>
-              <Bundle-Name>${project.name}</Bundle-Name>
-              <Bundle-SymbolicName>${operaton.osgi.symbolic.name}</Bundle-SymbolicName>
-              <Bundle-Activator>${operaton.osgi.activator}</Bundle-Activator>
-              <Export-Package>${operaton.osgi.export}</Export-Package>
-              <Import-Package>${operaton.osgi.import}</Import-Package>
-              <DynamicImport-Package>${operaton.osgi.dynamic}</DynamicImport-Package>
-              <Private-Package>${operaton.osgi.private.pkg}</Private-Package>
-              <Implementation-Title>operaton</Implementation-Title>
-              <Implementation-Version>${project.version}</Implementation-Version>
-              <Include-Resource>${operaton.osgi.include.resource}</Include-Resource>
-              <_versionpolicy>${operaton.osgi.import.default.version}</_versionpolicy>
-              <_removeheaders>${operaton.osgi.remove.headers}</_removeheaders>
-              <_failok>${operaton.osgi.failok}</_failok>
-              <Export-Service>${operaton.osgi.export.service}</Export-Service>
-              <Import-Service>${operaton.osgi.import.service}</Import-Service>
-              <Embed-Dependency>${operaton.osgi.embed}</Embed-Dependency>
-            </instructions>
-            <versions>
-              <operaton.osgi.version.clean>${project.version}</operaton.osgi.version.clean>
-              <operaton.connect.version.clean>${project.version}</operaton.connect.version.clean>
-              <operaton.spin.version.clean>${project.version}</operaton.spin.version.clean>
-              <operaton.commons.version.clean>${project.version}</operaton.commons.version.clean>
-            </versions>
-          </configuration>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>

@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent/pom.xml</relativePath>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-core-internal-dependencies</artifactId>
@@ -269,6 +269,12 @@
         <version>${version.feel-scala}</version>
         <classifier>scala-shaded</classifier>
       </dependency>
+      <!-- Scala library needed for feel-engine due to ScalaSignature annotations in jackson-module-scala -->
+      <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>${version.scala}</version>
+      </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
@@ -287,7 +293,7 @@
       <dependency>
         <groupId>org.glassfish.jaxb</groupId>
         <artifactId>jaxb-runtime</artifactId>
-        <version>4.0.6</version>
+        <version>4.0.7</version>
       </dependency>
       <dependency>
         <groupId>io.github.frshdn</groupId>

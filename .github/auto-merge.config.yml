@@ -88,6 +88,7 @@ auto-merge-rules:
       - 'version.quarkus'
       - 'version.shrinkwrap.resolvers'
       - 'version.spring-boot'
+      - 'version.testcontainers'
       - 'version.undertow'
       # Maven plugins
       - 'org.apache.felix:maven-bundle-plugin'
@@ -96,6 +97,11 @@ auto-merge-rules:
       - 'org.codehaus.mojo:*'
       - 'org.openapitools:openapi-generator-maven-plugin'
       - 'org.sonatype.central:central-publishing-maven-plugin'
+      # Dependency groups
+      - 'arquillian group'
+      - 'jboss-weld group'
+      - 'openrewrite group'
+      - 'spring-boot group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

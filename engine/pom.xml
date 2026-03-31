@@ -6,7 +6,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-database-settings</artifactId>
     <relativePath>../database</relativePath>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>operaton-engine</artifactId>
@@ -27,35 +27,6 @@
     for the license book -->
     <skip-third-party-bom>false</skip-third-party-bom>
 
-    <operaton.artifact>
-      org.operaton.bpm
-    </operaton.artifact>
-    <operaton.osgi.export.pkg>
-      !${operaton.artifact}.engine.variable.*,
-      ${operaton.artifact},
-      ${operaton.artifact}.application.*,
-      ${operaton.artifact}.container.*,
-      ${operaton.artifact}.engine.*
-    </operaton.osgi.export.pkg>
-    <operaton.osgi.import.additional>
-      !com.google.gson.*,
-      junit*;resolution:=optional,
-      org.junit*;resolution:=optional,
-      com.sun*;resolution:=optional,
-      javax.persistence*;resolution:=optional,
-      javax.servlet*;resolution:=optional,
-      javax.transaction*;resolution:=optional,
-      javax.ejb*;resolution:=optional,
-      javax.xml*;resolution:=optional,
-      javax.mail*;resolution:=optional,
-      org.apache.catalina*;resolution:=optional,
-      org.apache.commons.mail;resolution:=optional,
-      org.apache.tools.ant*;resolution:=optional,
-      org.apache.xerces*;resolution:=optional,
-      org.springframework*;resolution:=optional,
-      com.fasterxml*;resolution:=optional,
-      org.jboss.vfs*;resolution:=optional
-    </operaton.osgi.import.additional>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -221,7 +192,7 @@
     <dependency>
       <groupId>org.jboss.logging</groupId>
       <artifactId>jboss-logging</artifactId>
-      <version>3.6.2.Final</version>
+      <version>3.6.3.Final</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -501,25 +472,6 @@
         </configuration>
         </plugin>
       <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>cleanVersions</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>bundle-manifest</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
@@ -667,20 +619,12 @@
           <createDependencyReducedPom>true</createDependencyReducedPom>
           <keepDependenciesWithProvidedScope>true</keepDependenciesWithProvidedScope>
           <artifactSet>
-            <excludes>
-              <exclude>org.operaton.bpm.model:*</exclude>
-              <exclude>org.operaton.bpm.dmn:*</exclude>
-              <exclude>org.operaton.bpm.juel:*</exclude>
-              <exclude>org.operaton.commons:*</exclude>
-              <exclude>org.operaton.connect:*</exclude>
-              <exclude>org.camunda.feel:*</exclude>
-              <exclude>jakarta.*:*</exclude>
 
-              <exclude>org.springframework:*</exclude>
-              <exclude>org.slf4j:*</exclude>
-              <exclude>org.mybatis:mybatis:*</exclude>
-              <exclude>joda-time:*</exclude>
-            </excludes>
+
+            <includes>
+              <include>com.google.code.gson:gson</include>
+              <include>com.cronutils:cron-utils</include>
+            </includes>
           </artifactSet>
           <relocations>
             <relocation>
@@ -723,40 +667,6 @@
         </executions>
       </plugin>
     </plugins>
-    <pluginManagement>
-      <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        <plugin>
-          <groupId>org.eclipse.m2e</groupId>
-          <artifactId>lifecycle-mapping</artifactId>
-          <version>1.0.0</version>
-          <configuration>
-            <lifecycleMappingMetadata>
-              <pluginExecutions>
-                <pluginExecution>
-                  <pluginExecutionFilter>
-                    <groupId>org.apache.felix</groupId>
-                    <artifactId>
-                      maven-bundle-plugin
-                    </artifactId>
-                    <versionRange>
-                      [2.1.0,)
-                    </versionRange>
-                    <goals>
-                      <goal>cleanVersions</goal>
-                      <goal>manifest</goal>
-                    </goals>
-                  </pluginExecutionFilter>
-                  <action>
-                    <ignore />
-                  </action>
-                </pluginExecution>
-              </pluginExecutions>
-            </lifecycleMappingMetadata>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
   </build>
 
   <profiles>

@@ -80,11 +80,11 @@ jobs:
           key: ${{ github.run_id }}-build-artifacts
           fail-on-cache-miss: true
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           path: 'target'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

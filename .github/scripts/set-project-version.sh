@@ -57,13 +57,19 @@ echo "🔄 Updating version in pom.xml files"
 ./mvnw versions:set -q -DnewVersion=$NEW_VERSION
 
 echo "🔄 Updating version in package.json files"
-PACKAGE_JSON_FILES=(\
-  $(find . -name package.json) \
-  $(find . -name package-lock.json) \
-)
+PACKAGE_JSON_FILES=($(find . -name package.json -not -path "*/node_modules/*"))
 
 for PACKAGE_JSON_FILE in "${PACKAGE_JSON_FILES[@]}"; do
   sed -i '' -e "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$NEW_VERSION\"/" $PACKAGE_JSON_FILE
+done
+
+echo "🔄 Regenerating package-lock.json files via npm install"
+PACKAGE_LOCK_FILES=($(find . -name package-lock.json -not -path "*/node_modules/*"))
+
+for PACKAGE_LOCK_FILE in "${PACKAGE_LOCK_FILES[@]}"; do
+  PACKAGE_LOCK_DIR=$(dirname "$PACKAGE_LOCK_FILE")
+  echo "  Running npm install --package-lock-only in $PACKAGE_LOCK_DIR"
+  (cd "$PACKAGE_LOCK_DIR" && npm install --package-lock-only)
 done
 
 echo "🔄 Updating version in pom.xml files that are not part of the reactor"

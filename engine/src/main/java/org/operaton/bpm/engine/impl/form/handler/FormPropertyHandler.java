@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.variable.Variables;
  * @author Tom Baeyens
  */
 public class FormPropertyHandler {
+  private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
   protected String id;
   protected String name;
@@ -62,7 +63,7 @@ public class FormPropertyHandler {
   }
 
   private Object getModelValue(ExecutionEntity execution, Object modelValue) {
-    if (execution !=null) {
+    if (execution != null) {
       if (variableName != null || variableExpression == null) {
         final String varName = variableName != null ? variableName : id;
         if (execution.hasVariable(varName)) {
@@ -77,7 +78,7 @@ public class FormPropertyHandler {
       // Execution is null, the form-property is used in a start-form. Default value
       // should be available (ACT-1028) even though no execution is available.
       if (defaultExpression != null) {
-        modelValue = defaultExpression.getValue(StartProcessVariableScope.getSharedInstance());
+        modelValue = defaultExpression.getValue(START_PROCESS_VARIABLE_SCOPE);
       }
     }
     return modelValue;

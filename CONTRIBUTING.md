@@ -17,7 +17,7 @@
 
 We would love you to contribute to this project. You can do so in various ways.
 
-If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3q7nbf0pg-OZ3C18RLvcw9ZGogEpvnTg).
+If you are unsure about anything, have a question, or just want to talk about the project, please join our [forum](https://forum.operaton.org/) or [Slack channel](https://join.slack.com/t/operaton/shared_invite/zt-3sui6yak7-T4ByOTYVdlDEHXWi8vuaGA).
 
 ## File bugs or feature requests
 

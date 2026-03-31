@@ -4,21 +4,16 @@
   <parent>
     <groupId>org.operaton.bpm.qa</groupId>
     <artifactId>operaton-qa</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>operaton-qa-integration-tests-webapps-root</artifactId>
-  <packaging>pom</packaging>
-  <name>Operaton - QA Integration Tests - Webapps Root</name>
+  <artifactId>operaton-qa-integration-tests-webapps</artifactId>
+  <name>Operaton - QA Integration Tests - Webapps ITs</name>
   <description>${project.name}</description>
+
   <properties>
-    <cargo.timeout>120000</cargo.timeout>
-    <cargo.deploy.timeout>60000</cargo.deploy.timeout>
-    <!-- Needs to be adjusted with every WildFly update -->
-    <cargo.wildfly.container.id>wildfly37x</cargo.wildfly.container.id>
     <redirect.test.output>true</redirect.test.output>
-    <http.ctx-path.webapp>operaton/</http.ctx-path.webapp>
-    <http.ctx-path.rest>engine-rest/</http.ctx-path.rest>
   </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -42,15 +37,9 @@
         <scope>import</scope>
         <type>pom</type>
       </dependency>
-      <dependency>
-        <groupId>org.seleniumhq.selenium</groupId>
-        <artifactId>selenium-java</artifactId>
-      </dependency>
     </dependencies>
   </dependencyManagement>
-  <modules>
-    <module>integration-tests</module>
-  </modules>
+
   <dependencies>
     <!-- set shrinkwrap artifacts -->
     <dependency>
@@ -63,29 +52,31 @@
           <artifactId>guava</artifactId>
         </exclusion>
       </exclusions>
-      <scope>test</scope>
+      <scope>provided</scope>
       <type>pom</type>
     </dependency>
     <dependency>
-      <groupId>org.jboss.arquillian.junit5</groupId>
-      <artifactId>arquillian-junit5-container</artifactId>
-      <scope>test</scope>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-client</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jboss.arquillian.protocol</groupId>
-      <artifactId>arquillian-protocol-servlet</artifactId>
-      <scope>test</scope>
+      <groupId>com.fasterxml.jackson.jaxrs</groupId>
+      <artifactId>jackson-jaxrs-json-provider</artifactId>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>${version.selenium}</version>
-      <scope>test</scope>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents.client5</groupId>
@@ -98,8 +89,31 @@
       <classifier>standalone</classifier>
     </dependency>
     <dependency>
+      <groupId>org.jboss.arquillian.junit5</groupId>
+      <artifactId>arquillian-junit5-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${version.selenium}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.ws.rs</groupId>
+      <artifactId>jakarta.ws.rs-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-rest</artifactId>
+      <type>jar</type>
+      <classifier>classes</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -108,36 +122,260 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.operaton.bpm.example</groupId>
-      <artifactId>operaton-example-invoice</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine</artifactId>
+      <classifier>junit5</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest</artifactId>
-      <type>jar</type>
-      <classifier>classes</classifier>
+      <artifactId>operaton-test-utils-testcontainers</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm.qa</groupId>
+      <artifactId>operaton-qa-arquillian-extensions</artifactId>
+      <version>${project.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
   <profiles>
     <profile>
-      <!-- build & deploy artifacts -->
-      <id>distro</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>shared-engine</module>
-      </modules>
+      <id>tomcat</id>
+      <dependencies>
+        <dependency>
+          <!-- make sure this comes after runtime in the reactor build -->
+          <groupId>org.operaton.bpm.qa</groupId>
+          <artifactId>operaton-qa-tomcat-runtime</artifactId>
+          <version>${project.version}</version>
+          <scope>provided</scope>
+          <type>pom</type>
+        </dependency>
+        <dependency>
+          <!-- make sure webapp-tomcat is built before this module -->
+          <groupId>org.operaton.bpm.webapp</groupId>
+          <artifactId>operaton-webapp-tomcat</artifactId>
+          <version>${project.version}</version>
+          <scope>provided</scope>
+          <type>war</type>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-tomcat-managed-10</artifactId>
+          <version>1.2.4.Final</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.weld.servlet</groupId>
+          <artifactId>weld-servlet-shaded</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <!-- switch to use Jakarta Servlet 5.0 protocol -->
+        <dependency>
+          <groupId>org.jboss.arquillian.protocol</groupId>
+          <artifactId>arquillian-protocol-servlet-jakarta</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.jboss.arquillian.junit5</groupId>
+          <artifactId>arquillian-junit5-container</artifactId>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>jakarta.xml.bind</groupId>
+          <artifactId>jakarta.xml.bind-api</artifactId>
+        </dependency>
+      </dependencies>
+
+      <build>
+        <plugins>
+          <plugin>
+            <!-- Copy relevant wars to target so that they can be accessed from Unittests directly -->
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>copy-war</id>
+                <phase>process-test-resources</phase>
+                <goals>
+                  <goal>copy</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.operaton.bpm.example</groupId>
+                      <artifactId>operaton-example-invoice</artifactId>
+                      <version>${project.version}</version>
+                      <type>war</type>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                      <destFileName>operaton-example-invoice.war</destFileName>
+                      <overWrite>true</overWrite>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.operaton.bpm.webapp</groupId>
+                      <artifactId>operaton-webapp-tomcat</artifactId>
+                      <version>${project.version}</version>
+                      <type>war</type>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                      <destFileName>operaton-webapp.war</destFileName>
+                      <overWrite>true</overWrite>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>org.operaton.bpm</groupId>
+                      <artifactId>operaton-engine-rest</artifactId>
+                      <version>${project.version}</version>
+                      <classifier>tomcat</classifier>
+                      <type>war</type>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                      <destFileName>operaton-engine-rest.war</destFileName>
+                      <overWrite>true</overWrite>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <includes>
+                <include>**/*IT.java</include>
+              </includes>
+              <parallel>false</parallel>
+              <failIfNoTests>true</failIfNoTests>
+              <systemPropertyVariables>
+                <arquillian.launch>tomcat</arquillian.launch>
+                <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
+                <tomcat.runtime.location>${tomcat.runtime.location}</tomcat.runtime.location>
+              </systemPropertyVariables>
+              <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
     </profile>
     <profile>
-      <id>webapps-integration</id>
-      <modules>
-        <module>shared-engine</module>
-      </modules>
+      <id>wildfly</id>
+        <dependencies>
+          <dependency>
+            <!-- make sure this comes after runtime in the reactor build -->
+            <groupId>org.operaton.bpm.qa</groupId>
+            <artifactId>operaton-qa-wildfly-runtime</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+            <type>pom</type>
+          </dependency>
+          <dependency>
+            <!-- make sure webapp-jboss is built before this module -->
+            <groupId>org.operaton.bpm.webapp</groupId>
+            <artifactId>operaton-webapp-jboss</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+            <type>war</type>
+          </dependency>
+          <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-managed</artifactId>
+            <version>${wildfly.container.adapter.version}</version>
+            <scope>test</scope>
+          </dependency>
+          <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
+            <version>${wildfly.container.adapter.version}</version>
+            <scope>test</scope>
+          </dependency>
+        </dependencies>
+
+        <build>
+          <plugins>
+            <plugin>
+              <!-- Copy relevant wars to target so that they can be accessed from Unittests directly -->
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-dependency-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>copy-war</id>
+                  <phase>process-test-resources</phase>
+                  <goals>
+                    <goal>copy</goal>
+                  </goals>
+                  <configuration>
+                    <artifactItems>
+                      <artifactItem>
+                        <groupId>org.operaton.bpm.example</groupId>
+                        <artifactId>operaton-example-invoice</artifactId>
+                        <version>${project.version}</version>
+                        <type>war</type>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <destFileName>operaton-example-invoice.war</destFileName>
+                        <overWrite>true</overWrite>
+                      </artifactItem>
+                      <artifactItem>
+                        <groupId>org.operaton.bpm.webapp</groupId>
+                        <artifactId>operaton-webapp-jboss</artifactId>
+                        <version>${project.version}</version>
+                        <type>war</type>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <destFileName>operaton-webapp.war</destFileName>
+                        <overWrite>true</overWrite>
+                      </artifactItem>
+                      <artifactItem>
+                        <groupId>org.operaton.bpm</groupId>
+                        <artifactId>operaton-engine-rest</artifactId>
+                        <version>${project.version}</version>
+                        <classifier>wildfly</classifier>
+                        <type>war</type>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <destFileName>operaton-engine-rest.war</destFileName>
+                        <overWrite>true</overWrite>
+                      </artifactItem>
+                    </artifactItems>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <configuration>
+                <includes>
+                  <include>**/*IT.java</include>
+                </includes>
+                <parallel>false</parallel>
+                <failIfNoTests>true</failIfNoTests>
+                <systemPropertyVariables>
+                  <arquillian.launch>wildfly</arquillian.launch>
+                  <selenium.screenshot.directory>${project.build.directory}/selenium-screenshots</selenium.screenshot.directory>
+                  <wildfly.runtime.location>${wildfly.runtime.location}</wildfly.runtime.location>
+                </systemPropertyVariables>
+                <redirectTestOutputToFile>${redirect.test.output}</redirectTestOutputToFile>
+              </configuration>
+            </plugin>
+          </plugins>
+        </build>
     </profile>
   </profiles>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <skipIfEmpty>false</skipIfEmpty>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
 </project>

@@ -48,7 +48,7 @@ Preview must not be used as a substitute for incomplete bug fixes or as a way to
 
 ## Decision Outcome
 
-Chosen option: "Introduce Preview Features", because it enables incremental integration aligned with Operaton’s release cadence while maintaining explicit compatibility expectations via an opt-in mechanism and a time box.
+Chosen option: "Introduce Preview Features", because it enables incremental integration aligned with Operaton's release cadence while maintaining explicit compatibility expectations via an opt-in mechanism and a time box.
 
 ### Consequences
 
@@ -92,7 +92,7 @@ Preview functionality is shipped only in isolated modules or extensions (new art
 
 ### Label-only preview (documentation/release notes only, no opt-in)
 
-Features are announced as “Preview” purely via communication, but are enabled by default and have no technical opt-in.
+Features are announced as "Preview" purely via communication, but are enabled by default and have no technical opt-in.
 
 * Good, because it has minimal implementation overhead.
 * Neutral, because it can still communicate maturity.
@@ -136,7 +136,7 @@ Default expectation: a preview feature is either promoted to stable or removed w
 Each preview feature must define:
 
 * how to opt in,
-* what “done” means for promotion to stable,
+* what "done" means for promotion to stable,
 * what would cause removal, and
 * which observable behaviors are expected to change while in preview.
 
@@ -155,7 +155,7 @@ Requirements:
 * Each preview feature must document whether it changes persistence and what the impact is.
 * There is **no guarantee** that enabling/disabling a preview feature preserves data compatibility, or that upgrades automatically migrate preview data.
 
-This decision should be revisited if Operaton’s release cadence or compatibility guarantees change significantly.
+This decision should be revisited if Operaton's release cadence or compatibility guarantees change significantly.
 
 ## References
 

@@ -25,7 +25,6 @@ import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
-import org.springframework.util.StringUtils;
 
 import org.operaton.bpm.admin.impl.web.AdminApplication;
 import org.operaton.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap;

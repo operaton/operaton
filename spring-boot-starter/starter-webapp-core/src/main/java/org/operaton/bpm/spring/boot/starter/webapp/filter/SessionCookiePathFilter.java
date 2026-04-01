@@ -77,7 +77,7 @@ public class SessionCookiePathFilter implements Filter {
 
   /**
    * Initializes the filter by reading the configuration parameters.
-   * * <p>If the {@value #PARAM_SESSION_COOKIE_NAME} or {@value #PARAM_COOKIE_PATH}
+   * <p>If the {@value #PARAM_SESSION_COOKIE_NAME} or {@value #PARAM_COOKIE_PATH}
    * init parameters are provided, they will override the default values. The parsed
    * cookie path is also validated and normalized.</p>
    *

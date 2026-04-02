@@ -44,12 +44,13 @@ public class CookieConfigurator {
     }
 
     String cookieNameParam = filterConfig.getInitParameter("cookieName");
-    if (hasText(cookieNameParam)) {
-      cookieName = cookieNameParam;
+    if (cookieNameParam != null && !cookieNameParam.isBlank()) {
+      cookieName = cookieNameParam.trim();
     } else {
       String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
-      if (hasText(sessionCookieName) && !CookieConstants.JSESSION_ID.equals(sessionCookieName)) {
-        cookieName = sessionCookieName;
+      if (sessionCookieName != null && !sessionCookieName.isBlank()
+              && !CookieConstants.JSESSION_ID.equals(sessionCookieName.trim())) {
+        cookieName = sessionCookieName.trim();
       }
     }
 

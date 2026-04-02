@@ -83,9 +83,11 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
   @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "session-cookie-path-enforcement", havingValue = "true")
   public FilterRegistrationBean<SessionCookiePathFilter> sessionCookiePathFilter(
           @Value("${server.servlet.session.cookie.name:JSESSIONID}") String sessionCookieName, ServletContext servletContext) {
-    if (servletContext.getSessionCookieConfig() != null &&
-            servletContext.getSessionCookieConfig().getName() != null) {
-      sessionCookieName = servletContext.getSessionCookieConfig().getName();
+    if (servletContext.getSessionCookieConfig() != null) {
+      String containerCookieName = servletContext.getSessionCookieConfig().getName();
+      if (containerCookieName != null && !containerCookieName.isBlank()) {
+        sessionCookieName = containerCookieName;
+      }
     }
 
     String contextPath = servletContext.getContextPath();

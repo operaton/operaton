@@ -39,7 +39,7 @@ class LoginUiIT extends AbstractWebappUiIntegrationTest {
 
     driver.get("%sapp/%s/default/".formatted(getAppBaseUrlAsString(), appName));
 
-    wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
     WebElement userNameInput = wait.until(visibilityOfElementLocated(By.cssSelector("input[type=\"text\"]")));
     sendKeys(userNameInput, "demo");

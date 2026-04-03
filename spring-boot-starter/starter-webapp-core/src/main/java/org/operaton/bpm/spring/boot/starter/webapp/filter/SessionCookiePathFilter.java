@@ -227,13 +227,13 @@ public class SessionCookiePathFilter implements Filter {
         return value;
       }
 
-      log.trace("Rewriting Set-Cookie header for '{}': original='{}'", sessionCookieName, value);
+      log.trace("Rewriting Set-Cookie header for session cookie '{}'", sessionCookieName);
 
       // Remove existing Path attribute and append the new enforced Path
       String rewritten = value.replaceAll("(?i);\\s*Path=[^;]*", "");
       rewritten = rewritten + "; Path=" + cookiePath;
 
-      log.trace("Rewritten Set-Cookie header: '{}'", rewritten);
+      log.trace("Rewrote Path to '{}' for session cookie '{}'", cookiePath, sessionCookieName);
       return rewritten;
     }
   }

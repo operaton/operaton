@@ -36,6 +36,8 @@ public class CookieConfigurator {
   protected String sameSiteCookieValue;
   protected String cookieName;
 
+  private static final String COOKIE_NAME_FORBIDDEN = ".*[\\x00-\\x1F\\x7F\\s;=()\\[\\]<>@,:\\\\\"/?{}].*";
+
   public void parseParams(FilterConfig filterConfig) {
 
     String enableSecureCookieInitParam = filterConfig.getInitParameter(ENABLE_SECURE_PARAM);
@@ -45,12 +47,20 @@ public class CookieConfigurator {
 
     String cookieNameParam = filterConfig.getInitParameter("cookieName");
     if (cookieNameParam != null && !cookieNameParam.isBlank()) {
-      cookieName = cookieNameParam.trim();
+      String trimmed = cookieNameParam.trim();
+      if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {
+        throw new IllegalArgumentException("cookieName contains forbidden characters (CTLs, whitespace, or separators).");
+      }
+      cookieName = trimmed;
     } else {
       String sessionCookieName = filterConfig.getServletContext().getSessionCookieConfig().getName();
       if (sessionCookieName != null && !sessionCookieName.isBlank()
               && !CookieConstants.JSESSION_ID.equals(sessionCookieName.trim())) {
-        cookieName = sessionCookieName.trim();
+        String trimmed = sessionCookieName.trim();
+        if (trimmed.matches(COOKIE_NAME_FORBIDDEN)) {
+          throw new IllegalArgumentException("cookieName from session cookie config contains forbidden characters (CTLs, whitespace, or separators).");
+        }
+        cookieName = trimmed;
       }
     }
 

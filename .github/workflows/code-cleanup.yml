@@ -2,7 +2,7 @@ name: Code Cleanup
 
 on:
   schedule:
-    - cron: "30 1 * * *"     # Runs at 1:30 AM UTC daily
+    - cron: "30 1 * * 5"     # Runs at 1:30 AM UTC Friday
   workflow_dispatch:
   
 jobs:

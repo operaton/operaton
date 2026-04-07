@@ -23,6 +23,7 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 
 import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
+import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.COOKIE_NAME_FORBIDDEN;
 
 public class CookieConfigurator {
 
@@ -35,8 +36,6 @@ public class CookieConfigurator {
   protected boolean isSameSiteCookieEnabled;
   protected String sameSiteCookieValue;
   protected String cookieName;
-
-  private static final String COOKIE_NAME_FORBIDDEN = ".*[\\x00-\\x1F\\x7F\\s;=()\\[\\]<>@,:\\\\\"/?{}].*";
 
   public void parseParams(FilterConfig filterConfig) {
 

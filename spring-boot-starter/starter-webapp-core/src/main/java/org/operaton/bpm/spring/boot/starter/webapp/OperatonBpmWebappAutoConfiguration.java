@@ -39,6 +39,8 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyDelegateFilter.Ini
 import org.operaton.bpm.spring.boot.starter.webapp.filter.LazyInitRegistration;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.ResourceLoaderDependingFilter;
 
+import static org.springframework.util.StringUtils.hasText;
+
 @AutoConfiguration
 @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "enabled", matchIfMissing = true)
 @ConditionalOnBean(OperatonBpmProperties.class)
@@ -85,7 +87,7 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
           @Value("${server.servlet.session.cookie.name:JSESSIONID}") String sessionCookieName, ServletContext servletContext) {
     if (servletContext.getSessionCookieConfig() != null) {
       String containerCookieName = servletContext.getSessionCookieConfig().getName();
-      if (containerCookieName != null && !containerCookieName.isBlank()) {
+      if (hasText(containerCookieName)) {
         sessionCookieName = containerCookieName;
       }
     }

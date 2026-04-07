@@ -41,6 +41,8 @@ import org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants;
 import org.operaton.bpm.webapp.impl.security.filter.util.CsrfConstants;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
 
+import static org.operaton.bpm.webapp.impl.security.filter.util.CookieConstants.COOKIE_NAME_FORBIDDEN;
+
 /**
  * Provides basic CSRF protection implementing a Same Origin Standard Header verification (step 1)
  * and a Synchronization Token with a cookie-stored token on the front-end.
@@ -145,7 +147,7 @@ public class CsrfPreventionFilter implements Filter {
       String customCookieName = filterConfig.getInitParameter("cookieName");
       if (!isBlank(customCookieName)) {
         // Rejects whitespace and RFC HTTP separators to ensure token validity.
-        if (customCookieName.matches(".*[\\x00-\\x1F\\x7F\\s;=()\\[\\]<>@,:\\\\\"/?{}].*")) {
+        if (customCookieName.matches(COOKIE_NAME_FORBIDDEN)) {
           throw new IllegalArgumentException("cookieName contains forbidden characters (CTLs, whitespace, or separators).");
         }
         csrfCookieName = customCookieName;

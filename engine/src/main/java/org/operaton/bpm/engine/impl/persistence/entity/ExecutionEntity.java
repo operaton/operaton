@@ -102,6 +102,7 @@ public class ExecutionEntity extends PvmExecutionImpl implements Execution, Proc
   private static final VariableInstanceEntityPersistenceListener VARIABLE_PERSISTENCE_LISTENER = new VariableInstanceEntityPersistenceListener();
   private static final VariableInstanceHistoryListener VARIABLE_INSTANCE_HISTORY_LISTENER = new VariableInstanceHistoryListener();
   private static final VariableInstanceSequenceCounterListener VARIABLE_INSTANCE_SEQUENCE_COUNTER_LISTENER = new VariableInstanceSequenceCounterListener();
+  @SuppressWarnings("rawtypes")
   private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new VariableInstanceEntityFactory();
 
   // Persistent referenced entities state /////////////////////////////////////

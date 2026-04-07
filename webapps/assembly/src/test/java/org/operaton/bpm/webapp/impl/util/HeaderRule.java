@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.BindException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
-import java.net.URL;
+import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import org.awaitility.core.ConditionTimeoutException;
@@ -95,6 +95,7 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
               try {
                 server.stop();
               } catch (Exception ignored) {
+                // ignored
               }
               return false;
             }
@@ -120,7 +121,7 @@ public class HeaderRule implements BeforeEachCallback, AfterEachCallback {
 
   public void performRequestWithHeader(String name, String value, String path, String method) {
     try {
-      connection = (HttpURLConnection) new URL("http://localhost:" + SERVER_PORT + "/operaton" + path)
+      connection = (HttpURLConnection) URI.create("http://localhost:" + SERVER_PORT + "/operaton" + path).toURL()
         .openConnection();
     } catch (IOException e) {
       throw new RuntimeException(e);

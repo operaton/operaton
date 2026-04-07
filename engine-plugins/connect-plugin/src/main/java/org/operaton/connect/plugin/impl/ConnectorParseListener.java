@@ -69,7 +69,7 @@ public class ConnectorParseListener implements BpmnParseListener {
       Element connectorIdElement = connectorDefinition.element("connectorId");
 
       String connectorId = null;
-      if (connectorIdElement != null)  {
+      if (connectorIdElement != null) {
         connectorId = connectorIdElement.getText().trim();
       }
       if (connectorIdElement == null || connectorId.isEmpty()) {

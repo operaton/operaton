@@ -45,20 +45,20 @@ class JobExecutorExceptionLoggingHandlerTest {
 
   @BeforeEach
   void init() {
-    originalHandler = ExecuteJobHelper.loggingHandler;
+    originalHandler = ExecuteJobHelper.getLoggingHandler();
   }
 
   @AfterEach
   void tearDown() {
     // cleanup
-    ExecuteJobHelper.loggingHandler = originalHandler;
+    ExecuteJobHelper.setLoggingHandler(originalHandler);
   }
 
   @Test
   void shouldBeAbleToReplaceLoggingHandler() {
      // given
     CollectingHandler collectingHandler = new CollectingHandler();
-    ExecuteJobHelper.loggingHandler = collectingHandler;
+    ExecuteJobHelper.setLoggingHandler(collectingHandler);
     BpmnModelInstance modelInstance = Bpmn.createExecutableProcess("failingDelegate")
         .startEvent()
         .serviceTask()

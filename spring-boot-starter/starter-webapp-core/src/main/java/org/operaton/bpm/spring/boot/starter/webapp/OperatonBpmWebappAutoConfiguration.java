@@ -81,6 +81,9 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
     return new FaviconResourceResolver();
   }
 
+  /**
+   * @since 2.1
+   */
   @Bean
   @ConditionalOnProperty(prefix = WebappProperty.PREFIX, name = "session-cookie-path-enforcement", havingValue = "true")
   public FilterRegistrationBean<SessionCookiePathFilter> sessionCookiePathFilter(

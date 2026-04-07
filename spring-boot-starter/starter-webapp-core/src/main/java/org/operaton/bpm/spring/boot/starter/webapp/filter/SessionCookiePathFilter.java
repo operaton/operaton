@@ -52,6 +52,8 @@ import org.slf4j.LoggerFactory;
  * <li>{@value #PARAM_COOKIE_PATH} – {@code Path} value to enforce
  * (defaults to {@value #DEFAULT_COOKIE_PATH})</li>
  * </ul>
+ *
+ * @since 2.1
  */
 public class SessionCookiePathFilter implements Filter {
 

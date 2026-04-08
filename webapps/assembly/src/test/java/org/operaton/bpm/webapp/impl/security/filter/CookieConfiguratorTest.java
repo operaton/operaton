@@ -17,6 +17,8 @@
 package org.operaton.bpm.webapp.impl.security.filter;
 
 import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.SessionCookieConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +39,12 @@ import static org.operaton.bpm.webapp.impl.security.filter.CookieConfigurator.ge
 @ExtendWith(MockitoExtension.class)
 class CookieConfiguratorTest {
     @Mock
+    ServletContext servletContext;
+
+    @Mock
+    SessionCookieConfig sessionCookieConfig;
+
+    @Mock
     FilterConfig filterConfig;
 
     @InjectMocks
@@ -44,6 +52,8 @@ class CookieConfiguratorTest {
 
     @BeforeEach
     void setUp() {
+        when(servletContext.getSessionCookieConfig()).thenReturn(sessionCookieConfig);
+        when(filterConfig.getServletContext()).thenReturn(servletContext);
         when(filterConfig.getInitParameter(anyString())).thenReturn(null);
         when(filterConfig.getInitParameter(CookieConfigurator.SAME_SITE_OPTION_PARAM)).thenReturn("Lax");
 

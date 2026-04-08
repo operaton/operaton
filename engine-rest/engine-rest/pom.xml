@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-engine-rest-root</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-engine-rest-core</artifactId>
   <name>Operaton - Engine - REST</name>
@@ -304,7 +304,7 @@
       </activation>
       <properties>
         <version.netty>4.2.4.Final</version.netty>
-        <version.undertow>2.3.23.Final</version.undertow>
+        <version.undertow>2.3.24.Final</version.undertow>
       </properties>
       <dependencies>
         <dependency>
@@ -484,7 +484,7 @@
              Operaton-supported Wildfly/JBoss EAP version.
              Currently, this is JBoss EAP 7.2. -->
         <version.resteasy>3.15.6.Final</version.resteasy>
-        <version.netty>4.2.10.Final</version.netty>
+        <version.netty>4.2.12.Final</version.netty>
       </properties>
       <dependencies>
         <dependency>

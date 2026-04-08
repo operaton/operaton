@@ -28,7 +28,7 @@ import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 
-import org.operaton.bpm.util.SeleniumScreenshotExtension;
+import org.operaton.bpm.integrationtest.util.SeleniumScreenshotExtension;
 
 /**
  * NOTE: copied from

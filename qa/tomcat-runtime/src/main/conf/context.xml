@@ -23,6 +23,11 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
     <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
 
+    <!--
+        https://stackoverflow.com/questions/46367851/what-causes-filenotfoundexception-pdq-jar-with-db2jcc4
+        Temporary and should be removed later when a proper fix exists
+    -->
+    <JarScanner  scanClassPath="false" />
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
     <Manager pathname="" />

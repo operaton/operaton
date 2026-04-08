@@ -40,6 +40,7 @@ import org.operaton.bpm.engine.impl.pvm.runtime.LegacyBehavior;
  * @author Danny Gräf
  */
 public class EventSubscriptionDeclaration {
+  private static final StartProcessVariableScope START_PROCESS_VARIABLE_SCOPE = new StartProcessVariableScope();
 
   private final EventType eventType;
   private final Expression eventName;
@@ -76,11 +77,11 @@ public class EventSubscriptionDeclaration {
    * Returns the name of the event without evaluating the possible expression that it might contain.
    */
   public String getUnresolvedEventName() {
-      return eventName.getExpressionText();
+    return eventName.getExpressionText();
   }
 
   public boolean hasEventName() {
-    return !( eventName == null || "".equalsIgnoreCase(getUnresolvedEventName().trim()) );
+    return !(eventName == null || "".equalsIgnoreCase(getUnresolvedEventName().trim()));
   }
 
   public boolean isEventNameLiteralText() {
@@ -134,7 +135,7 @@ public class EventSubscriptionDeclaration {
   public EventSubscriptionEntity createSubscriptionForStartEvent(ProcessDefinitionEntity processDefinition) {
     EventSubscriptionEntity eventSubscriptionEntity = new EventSubscriptionEntity(eventType);
 
-    VariableScope scopeForExpression = StartProcessVariableScope.getSharedInstance();
+    VariableScope scopeForExpression = START_PROCESS_VARIABLE_SCOPE;
     String event = resolveExpressionOfEventName(scopeForExpression);
     eventSubscriptionEntity.setEventName(event);
     eventSubscriptionEntity.setActivityId(activityId);
@@ -167,7 +168,7 @@ public class EventSubscriptionDeclaration {
    */
   public String resolveExpressionOfEventName(VariableScope scope) {
     if (isExpressionAvailable()) {
-      if(scope instanceof BaseDelegateExecution execution) {
+      if (scope instanceof BaseDelegateExecution execution) {
         // the variable scope execution is also the current context execution
         // during expression evaluation the current context is updated with the scope execution
         return (String) eventName.getValue(scope, execution);

@@ -28,6 +28,8 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
 import org.operaton.bpm.engine.rest.security.auth.impl.ContainerBasedAuthenticationProvider;
 
+import static org.springframework.util.StringUtils.hasText;
+
 public class OAuth2AuthenticationProvider extends ContainerBasedAuthenticationProvider {
 
   private static final Logger logger = LoggerFactory.getLogger(OAuth2AuthenticationProvider.class);
@@ -47,7 +49,7 @@ public class OAuth2AuthenticationProvider extends ContainerBasedAuthenticationPr
     }
     var oauth2 = (OAuth2AuthenticationToken) authentication;
     String operatonUserId = oauth2.getName();
-    if (operatonUserId == null || operatonUserId.isEmpty()) {
+    if (!hasText(operatonUserId)) {
       logger.debug("UserId is empty");
       return AuthenticationResult.unsuccessful();
     }

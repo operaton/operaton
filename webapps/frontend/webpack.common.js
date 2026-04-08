@@ -139,6 +139,8 @@ module.exports = (_env, argv = {}) => {
                   style: 'expanded',
                   // This tells Sass to look inside the 'frontend' folder automatically
                   includePaths: [path.resolve(__dirname, 'frontend')],
+                  // Suppress deprecation warnings from third-party dependencies (e.g. Bootstrap)
+                  quietDeps: true,
                 },
               },
             },

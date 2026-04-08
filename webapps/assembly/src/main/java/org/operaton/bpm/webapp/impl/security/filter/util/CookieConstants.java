@@ -32,6 +32,7 @@ public final class CookieConstants {
   public static final Pattern SECURE_FLAG_NAME_REGEX = Pattern.compile(";\\w*Secure");
 
   public static final String JSESSION_ID = "JSESSIONID";
+  public static final String COOKIE_NAME_FORBIDDEN = ".*[\\x00-\\x1F\\x7F\\s;=()\\[\\]<>@,:\\\\\"/?{}].*";
 
   private CookieConstants() {
   }

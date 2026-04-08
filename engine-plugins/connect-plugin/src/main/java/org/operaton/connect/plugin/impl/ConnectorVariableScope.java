@@ -38,6 +38,7 @@ import org.operaton.connect.spi.ConnectorResponse;
  *
  */
 public class ConnectorVariableScope extends AbstractVariableScope {
+  private static final VariableInstanceFactory<CoreVariableInstance> VARIABLE_INSTANCE_FACTORY = (VariableInstanceFactory) new SimpleVariableInstanceFactory();
 
   protected AbstractVariableScope parent;
 
@@ -59,7 +60,7 @@ public class ConnectorVariableScope extends AbstractVariableScope {
 
   @Override
   protected VariableInstanceFactory<CoreVariableInstance> getVariableInstanceFactory() {
-    return (VariableInstanceFactory) SimpleVariableInstanceFactory.INSTANCE;
+    return VARIABLE_INSTANCE_FACTORY;
   }
 
   @Override

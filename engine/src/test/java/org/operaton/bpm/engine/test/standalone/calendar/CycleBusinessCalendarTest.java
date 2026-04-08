@@ -109,30 +109,20 @@ class CycleBusinessCalendarTest {
     "'0 0 0 L 12 ?'     , '2010 12 31 00:00'",
     "'0 0 * 1|2 * ?'    , '2010 03 01 00:00'",
     "'0 0 * 1,2 * ?'    , '2010 03 01 00:00'",
-    "'0 0 6,19 * * ?'   , '2010 02 11 19:00'"
+    "'0 0 6,19 * * ?'   , '2010 02 11 19:00'",
+    "'0 0 0 * * THUL'   , '2010 02 25 00:00'",
+    "'0 0 0 * * THU'    , '2010 02 18 00:00'",
+    "'0 0 0 1W * *'     , '2010 03 01 00:00'",
+    "'0 0 0 ? * 5#2'    , '2010 02 12 00:00'",
+    "'@monthly'         , '2010 03 01 00:00'",
+    "'@annually'        , '2011 01 01 00:00'",
+    "'@yearly'          , '2011 01 01 00:00'",
+    "'@weekly'          , '2010 02 14 00:00'",
+    "'@daily'           , '2010 02 12 00:00'",
+    "'@midnight'        , '2010 02 12 00:00'",
+    "'@hourly'          , '2010 02 11 18:00'"
   })
   void testResolveDueDate(String cronExpression, String expectedDueDate) throws Exception {
-    CycleBusinessCalendar cbc = new CycleBusinessCalendar();
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
-    Date startDate = sdf.parse("2010 02 11 17:23");
-    assertThat(sdf.format(cbc.resolveDuedate(cronExpression, startDate))).isEqualTo(expectedDueDate);
-  }
-
-  @ParameterizedTest
-  @CsvSource({
-    "'0 0 0 * * THUL', '2010 02 25 00:00'",
-    "'0 0 0 * * THU' , '2010 02 18 00:00'",
-    "'0 0 0 1W * *'  , '2010 03 01 00:00'",
-    "'0 0 0 ? * 5#2' , '2010 02 12 00:00'",
-    "'@monthly'      , '2010 03 01 00:00'",
-    "'@annually'     , '2011 01 01 00:00'",
-    "'@yearly'       , '2011 01 01 00:00'",
-    "'@weekly'       , '2010 02 14 00:00'",
-    "'@daily'        , '2010 02 12 00:00'",
-    "'@midnight'     , '2010 02 12 00:00'",
-    "'@hourly'       , '2010 02 11 18:00'"
-  })
-  void testSpecialCharactersResolveDueDate(String cronExpression, String expectedDueDate) throws Exception {
     CycleBusinessCalendar cbc = new CycleBusinessCalendar();
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd HH:mm");
     Date startDate = sdf.parse("2010 02 11 17:23");

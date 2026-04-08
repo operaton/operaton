@@ -493,8 +493,12 @@
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <http-invoker http-authentication-factory="application-http-authentication"/>
+                    <filter-ref name="samesite-cookie"/>
                 </host>
             </server>
+            <filters>
+                <expression-filter name="samesite-cookie" expression="samesite-cookie(mode=Lax)"/>
+            </filters>
             <servlet-container name="default">
                 <jsp-config/>
                 <websockets/>

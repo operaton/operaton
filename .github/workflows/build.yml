@@ -87,7 +87,7 @@ jobs:
             docs/decisions
       - name: Lint ADR files
         # version: v20.0.0 - pinned to specific commit for security
-        uses: DavidAnson/markdownlint-cli2-action@07035fd053f7be764496c0f8d8f9f41f98305101
+        uses: DavidAnson/markdownlint-cli2-action@ce4853d43830c74c1753b39f3cf40f71c2031eb9
         with:
           globs: |
             docs/decisions/*.md
@@ -161,7 +161,7 @@ jobs:
           ./mvnw --non-recursive org.jacoco:jacoco-maven-plugin:report-aggregate
       - name: Publish Test Report
         if: always()
-        uses: mikepenz/action-junit-report@49b2ca06f62aa7ef83ae6769a2179271e160d8e4 #v6.3.1
+        uses: mikepenz/action-junit-report@bccf2e31636835cf0874589931c4116687171386 #v6.4.0
         continue-on-error: true
         with:
           report_paths: ${{ github.workspace }}/**/target/surefire-reports/*.xml

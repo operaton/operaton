@@ -19,6 +19,7 @@ package org.operaton.bpm.spring.boot.starter.webapp;
 import jakarta.servlet.ServletContext;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.SessionCookiePathFilter;
 import org.springframework.beans.factory.annotation.Value;
+import org.operaton.bpm.engine.health.FrontendHealthContributor;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -118,6 +119,12 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
     registrationBean.addInitParameter(SessionCookiePathFilter.PARAM_SESSION_COOKIE_NAME, sessionCookieName);
     registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
     return registrationBean;
+  }
+
+  @Bean
+  @ConditionalOnProperty(name = "operaton.bpm.webapp.enabled", matchIfMissing = true)
+  public FrontendHealthContributor webappsFrontendHealthContributor() {
+    return new SpringWebappFrontendHealthContributor(resourceLoader, properties.getWebapp());
   }
 
   @Override

@@ -43,12 +43,7 @@ public class JobExecutorHealthIndicator extends AbstractHealthIndicator {
     } else {
       builder = builder.down();
     }
-    builder.withDetail("name",                   jobExecutor.getName())
-            .withDetail("lockOwner",             jobExecutor.getLockOwner())
-            .withDetail("lockTimeInMillis",      jobExecutor.getLockTimeInMillis())
-            .withDetail("maxJobsPerAcquisition", jobExecutor.getMaxJobsPerAcquisition())
-            .withDetail("waitTimeInMillis",      jobExecutor.getWaitTimeInMillis())
-            .withDetail("engineRegistered",      jobExecutor.engineIterator().hasNext());
+    builder.withDetail("jobExecutor", Details.from(jobExecutor));
   }
 
   public static final class Details {

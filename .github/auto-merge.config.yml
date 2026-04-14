@@ -56,6 +56,7 @@ auto-merge-rules:
       - 'commons-codec:commons-codec'
       - 'commons-io:commons-io'
       - 'commons-logging:commons-logging'
+      - 'dev.resteasy.netty:resteasy-embedded-server'
       - 'io.netty:*'
       - 'io.rest-assured:rest-assured'
       - 'io.smallrye:jandex'

@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright 2026 the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import java.util.Map;
  * Default, runtime-agnostic implementation that inspects JobExecutor and database connectivity.
  *
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
+ * @since 2.1
  */
 public class DefaultHealthService implements HealthService {
 

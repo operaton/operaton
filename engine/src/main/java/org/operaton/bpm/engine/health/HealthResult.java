@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright 2026 the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,12 @@ import java.util.Map;
  * Immutable value object describing Operaton health.
  *
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
- * @since 1.1
+ * @since 2.1
  */
 public record HealthResult(String status, String timestamp, String version, Map<String, Object> details) {
 
   public HealthResult {
     timestamp = timestamp != null ? timestamp : Instant.now().toString();
-    details = details != null ? Collections.unmodifiableMap(new LinkedHashMap<>(details)) : Collections.emptyMap();
+    details = details != null ? Collections.unmodifiableMap(details) : Collections.emptyMap();
   }
 }

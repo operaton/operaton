@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright 2026 the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import java.util.Map;
  * Spring Webapps contributor that reports whether the packaged webapp resources are available.
  *
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
+ * @since 2.1
  */
 class SpringWebappFrontendHealthContributor implements FrontendHealthContributor {
 

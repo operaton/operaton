@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright 2026 the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.Map;
  * SPI to contribute frontend (webapps) related health information.
  *
  * @author <a href="mailto:tomnm77@gmail.com">Tomasz Korcz</a>
- * @since 1.1
+ * @since 2.1
  */
 public interface FrontendHealthContributor {
 

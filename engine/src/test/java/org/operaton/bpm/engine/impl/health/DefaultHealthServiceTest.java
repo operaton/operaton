@@ -63,7 +63,7 @@ class DefaultHealthServiceTest {
     when(conn.isValid(anyInt())).thenReturn(true);
 
     JobExecutor jobExecutor = mock(JobExecutor.class);
-
+    when(jobExecutor.isActive()).thenReturn(true);
     Iterator<?> iterator = Collections.emptyIterator();
     when(jobExecutor.engineIterator()).thenReturn((Iterator<ProcessEngineImpl>) iterator);
 
@@ -88,4 +88,25 @@ class DefaultHealthServiceTest {
     assertThat(db.get("connected")).isEqualTo(false);
     assertThat(db).containsKey("error");
   }
-}
+
+  @Test
+  void shouldBeUpWhenJobExecutorInactive() throws Exception {
+    // Job executor inactivity must not affect overall status; Operaton is still UP
+    // and can serve API calls even without an active job executor.
+    DataSource ds = mock(DataSource.class);
+    Connection conn = mock(Connection.class);
+    when(ds.getConnection()).thenReturn(conn);
+    when(conn.isValid(anyInt())).thenReturn(true);
+
+    JobExecutor jobExecutor = mock(JobExecutor.class);
+    when(jobExecutor.isActive()).thenReturn(false);
+    Iterator<?> iterator = Collections.emptyIterator();
+    when(jobExecutor.engineIterator()).thenReturn((Iterator<ProcessEngineImpl>) iterator);
+
+    DefaultHealthService service = new DefaultHealthService(ds, jobExecutor, null);
+    HealthResult result = service.check();
+
+    assertThat(result.status()).isEqualTo("UP");
+    Map<String, Object> je = (Map<String, Object>) result.details().get("jobExecutor");
+    assertThat(je.get("operational")).isEqualTo(false);
+  }}

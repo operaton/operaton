@@ -61,6 +61,9 @@ public class DefaultHealthService implements HealthService {
     String timestamp = OffsetDateTime.now().toString();
     Map<String, Object> details = new LinkedHashMap<>();
 
+    // Job executor state is reported as informational detail only.
+    // An inactive or absent job executor does not affect the overall UP/DOWN status,
+    // because Operaton can still process API calls and serve tasks without a running job executor.
     boolean jobExecutorActive = jobExecutor != null && jobExecutor.isActive();
     boolean engineRegistered = jobExecutor != null && jobExecutor.engineIterator().hasNext();
     Map<String, Object> je = new LinkedHashMap<>();

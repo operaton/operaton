@@ -18,15 +18,22 @@ package org.operaton.bpm.quarkus.engine.extension;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import javax.sql.DataSource;
+import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.health.HealthService;
+import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.health.DefaultHealthService;
+import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 
 @ApplicationScoped
 public class HealthServiceProducer {
 
   @Produces
   @ApplicationScoped
-  public HealthService healthService(DataSource dataSource) {
-    return new DefaultHealthService(dataSource, null, null);
+  public HealthService healthService(DataSource dataSource, ProcessEngine processEngine) {
+    JobExecutor jobExecutor = null;
+    if (processEngine instanceof ProcessEngineImpl impl) {
+      jobExecutor = impl.getProcessEngineConfiguration().getJobExecutor();
+    }
+    return new DefaultHealthService(dataSource, jobExecutor, null);
   }
 }

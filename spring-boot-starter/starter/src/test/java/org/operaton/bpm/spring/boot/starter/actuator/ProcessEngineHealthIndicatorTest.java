@@ -78,4 +78,25 @@ class ProcessEngineHealthIndicatorTest {
     assertThat(health.getStatus()).isEqualTo(Status.DOWN);
     assertThat(health.getDetails()).containsEntry("name", PROCESS_ENGINE_NAME);
   }
+
+  @Test
+  void unknownStatusTest() {
+    when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
+    when(healthService.check()).thenReturn(new HealthResult("UNKNOWN", null, null, Map.of()));
+
+    Health health = new ProcessEngineHealthIndicator(processEngine, healthService).health();
+
+    assertThat(health.getStatus().getCode()).isEqualTo("UNKNOWN");
+    assertThat(health.getDetails()).containsEntry("name", PROCESS_ENGINE_NAME);
+  }
+
+  @Test
+  void customStatusTest() {
+    when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
+    when(healthService.check()).thenReturn(new HealthResult("DEGRADED", null, null, Map.of()));
+
+    Health health = new ProcessEngineHealthIndicator(processEngine, healthService).health();
+
+    assertThat(health.getStatus().getCode()).isEqualTo("DEGRADED");
+  }
 }

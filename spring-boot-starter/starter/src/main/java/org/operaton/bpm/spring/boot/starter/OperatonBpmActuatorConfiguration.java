@@ -33,6 +33,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnProperty(prefix = "management.health.operaton", name = "enabled", matchIfMissing = true)
 @ConditionalOnClass(HealthIndicator.class)
+// @AutoConfigureAfter ensures the HealthService bean from OperatonBpmHealthServiceConfiguration
+// is registered before this class is processed. The @ConditionalOnBean(ProcessEngine.class) guard
+// on processEngineHealthIndicator provides additional ordering: the health indicator bean is not
+// created until ProcessEngine is present, making an explicit @DependsOn("runtimeService")
+// unnecessary.
 @AutoConfigureAfter(OperatonBpmHealthServiceConfiguration.class)
 public class OperatonBpmActuatorConfiguration {
 

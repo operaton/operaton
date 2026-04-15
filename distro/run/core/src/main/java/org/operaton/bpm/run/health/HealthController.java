@@ -65,7 +65,8 @@ public class HealthController {
       body.put("version", result.version());
     }
     body.put("details", result.details());
-    return ResponseEntity.ok()
+    int httpStatus = "UP".equalsIgnoreCase(result.status()) ? 200 : 503;
+    return ResponseEntity.status(httpStatus)
             .header(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, max-age=0")
             .body(body);
   }

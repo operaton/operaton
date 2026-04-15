@@ -41,8 +41,11 @@ public class ProcessEngineHealthIndicator extends AbstractHealthIndicator {
 
     if ("UP".equalsIgnoreCase(result.status())) {
       builder.up();
-    } else {
+    } else if ("DOWN".equalsIgnoreCase(result.status())) {
       builder.down();
+    } else {
+      // Propagate UNKNOWN and any custom status strings as-is
+      builder.status(result.status());
     }
 
     builder.withDetail("name", processEngine.getName());

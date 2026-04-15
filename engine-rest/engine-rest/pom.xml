@@ -303,7 +303,7 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <version.netty>4.2.4.Final</version.netty>
+        <version.netty>4.2.12.Final</version.netty>
         <version.undertow>2.3.24.Final</version.undertow>
       </properties>
       <dependencies>

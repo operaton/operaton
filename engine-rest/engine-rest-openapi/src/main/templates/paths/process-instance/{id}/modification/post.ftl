@@ -75,8 +75,9 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "The modification cannot be performed, for example because it starts a failing activity."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
    }
 }

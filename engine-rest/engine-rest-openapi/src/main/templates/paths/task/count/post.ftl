@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryTasksCount"
       tag = "Task"
-      summary = "Get List Count (POST)"
+      summary = "Count Tasks"
       desc = "Retrieves the number of tasks that fulfill the given filter. Corresponds to the size
               of the result set of the [Get Tasks (POST)](${docsUrl}/reference/rest/task/post-query/)
               method and takes the same parameters.
@@ -89,10 +89,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

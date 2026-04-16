@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getBatch"
       tag = "Batch"
-      summary = "Get"
+      summary = "Get Batch"
       desc = "Retrieves a batch by id, according to the Batch interface in the engine." />
 
   "parameters" : [
@@ -46,9 +46,10 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Batch with given id does not exist.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

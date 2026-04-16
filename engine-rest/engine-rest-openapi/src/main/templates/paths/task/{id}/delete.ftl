@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "deleteTask"
       tag = "Task"
-      summary = "Delete"
+      summary = "Delete Task"
       desc = "Removes a task by id." />
 
   "parameters" : [
@@ -35,10 +35,11 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "The Task with the given id cannot be deleted because it is part of a running process or case instance.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for
                 the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

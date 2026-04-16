@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "updateTask"
       tag = "Task"
-      summary = "Update"
+      summary = "Update Task"
       desc = "Updates a task." />
 
   "parameters" : [
@@ -55,8 +55,9 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "If the corresponding task cannot be found." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

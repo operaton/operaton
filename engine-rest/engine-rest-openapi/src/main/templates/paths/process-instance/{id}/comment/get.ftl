@@ -66,10 +66,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "No process instance exists for the given process instance id. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

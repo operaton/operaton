@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "clearAnnotationUserOperationLog"
       tag = "Historic User Operation Log"
-      summary = "Clear Annotation of an User Operation Log (Historic)"
+      summary = "Clear User Operation Log Annotation"
       desc = "Clear the annotation which was previously set for auditing reasons."
   />
 
@@ -41,8 +41,9 @@
                 `operationId` path parameter value does not exists. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

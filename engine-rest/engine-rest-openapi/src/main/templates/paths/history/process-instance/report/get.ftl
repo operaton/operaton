@@ -120,9 +120,10 @@
     <@lib.response
         code = "403"
         dto = "ExceptionDto"
-        last = true
         desc = "If the authenticated user is unauthorized to read the history.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

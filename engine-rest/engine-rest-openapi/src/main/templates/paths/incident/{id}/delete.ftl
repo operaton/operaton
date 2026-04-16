@@ -30,10 +30,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if an incident is not related to any execution or an incident is of type `failedJob` or
                `failedExternalTask`. To resolve such an incident, please refer to the
                [Incident Types](${docsUrl}/user-guide/process-engine/incidents/#incident-types) section." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
     }
 }
 

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "cleanupAsync"
       tag = "History Cleanup"
-      summary = "Clean up history (POST)"
+      summary = "Trigger History Cleanup"
       desc = "Schedules asynchronous history cleanup (See
               [History cleanup](${docsUrl}/user-guide/process-engine/history/#history-cleanup)).
 
@@ -61,8 +61,9 @@
         desc = "Returned if some of the query parameters are invalid or the engine
                 does not participate in history cleanup. See
                 [Cleanup Execution Participation per Node](${docsUrl}/user-guide/process-engine/history/#cleanup-execution-participation-per-node)."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

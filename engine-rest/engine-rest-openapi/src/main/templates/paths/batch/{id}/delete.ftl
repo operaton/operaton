@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "deleteBatch"
       tag = "Batch"
-      summary = "Delete"
+      summary = "Delete Batch"
       desc = "Deletes a batch by id, including all related jobs and job definitions.
               Optionally also deletes the batch history." />
 
@@ -34,9 +34,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Batch with given id does not exist.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "getProcessInstances"
       tag = "Process Instance"
-      summary = "Get List"
+      summary = "List Process Instances"
       desc = "Queries for process instances that fulfill given parameters.
               Parameters may be static as well as dynamic runtime properties of process instances.
               The size of the result set can be retrieved by using the Get Instance Count method." />
@@ -47,10 +47,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid,
                 for example if a sortOrder parameter is supplied, but no sortBy, or if an invalid operator for variable comparison is used."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

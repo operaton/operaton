@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "setRetriesByProcess"
       tag = "Process Instance"
-      summary = "Set Job Retries Async (POST)"
+      summary = "Set Job Retries Async"
       desc = "Create a batch to set retries of jobs associated with given processes asynchronously." />
 
   <@lib.requestBody
@@ -50,10 +50,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid, for example if neither processInstanceIds, nor processInstanceQuery is present.
                 Or if the retry count is not specified."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricJobLogs"
       tag = "Historic Job Log"
-      summary = "Get Job Logs (POST)"
+      summary = "List Historic Job Logs"
       desc = "Queries for historic job logs that fulfill the given parameters.
               This method is slightly more powerful than the
               [Get Job Logs](${docsUrl}/reference/rest/history/job-log/get-job-log-query/)
@@ -80,8 +80,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

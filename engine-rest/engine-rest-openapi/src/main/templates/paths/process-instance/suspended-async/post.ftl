@@ -51,10 +51,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the request parameters are invalid,
                 for example if the provided processDefinitionId or processDefinitionKey parameter is null."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

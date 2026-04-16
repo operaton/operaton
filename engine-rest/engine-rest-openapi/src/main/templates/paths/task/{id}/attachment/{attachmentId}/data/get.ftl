@@ -52,11 +52,12 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "The attachment content for the given task id and attachment id does not exist, or the history of the
                 engine is disabled.
 
                 See the [Introduction](/reference/rest/overview/#error-handling) for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

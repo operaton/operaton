@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getProcessDefinitions"
       tag = "Process Definition"
-      summary = "Get List"
+      summary = "List Process Definitions"
       desc = "Queries for process definitions that fulfill given parameters. Parameters may be the properties of 
               process definitions, such as the name, key or version. The size of the result set can be retrieved
               by using the [Get Definition Count](${docsUrl}/reference/rest/process-definition/get-query-count/) method." />
@@ -68,11 +68,12 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid, for example if a `sortOrder` parameter is supplied,
                 but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

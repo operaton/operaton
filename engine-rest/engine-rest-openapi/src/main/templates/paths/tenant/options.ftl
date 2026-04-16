@@ -43,8 +43,9 @@
                          ]
                        }
                      }']
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

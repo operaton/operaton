@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "postQueryGroups"
       tag = "Group"
-      summary = "Get List (POST)"
+      summary = "List Groups"
       desc = "Queries for a list of groups using a list of parameters.
               The size of the result set can be retrieved by using the
               [Get Group Count (POST)](${docsUrl}/reference/rest/group/post-query-count/) method."
@@ -53,8 +53,9 @@
         desc = "Returned if some of the query parameters are invalid, for example if a `sortOrder` parameter is supplied,
                 but no `sortBy` is specified. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "deleteProcessInstancesAsyncOperation"
       tag = "Process Instance"
-      summary = "Delete Async (POST)"
+      summary = "Delete Process Instances Async"
       desc = "Deletes multiple process instances asynchronously (batch)." />
 
   <@lib.requestBody
@@ -50,9 +50,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid, i.e., neither processInstanceIds, nor processInstanceQuery is present"/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

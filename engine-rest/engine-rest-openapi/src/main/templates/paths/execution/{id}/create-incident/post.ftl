@@ -66,8 +66,9 @@
         dto = "ExceptionDto"
         desc = "Returned if the incident type is null, the execution does not exist or the
                 execution is not related to any activity."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

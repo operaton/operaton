@@ -78,9 +78,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Variable with given id does not exist."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

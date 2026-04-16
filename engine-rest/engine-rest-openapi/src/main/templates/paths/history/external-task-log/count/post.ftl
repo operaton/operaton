@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricExternalTaskLogsCount"
       tag = "Historic External Task Log"
-      summary = "Get External Task Log Count (POST)"
+      summary = "Count Historic External Task Logs"
       desc = "Queries for the number of historic external task logs that fulfill the given
               parameters.
               This method takes the same message body as the
@@ -46,8 +46,9 @@
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

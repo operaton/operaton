@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "setRemovalTimeAsyncHistoricDecisionInstance"
       tag = "Historic Decision Instance"
-      summary = "Set Removal Time Async (POST)"
+      summary = "Set Removal Time Async"
       desc = "Sets the removal time to multiple historic decision instances asynchronously
               (batch).
 
@@ -71,8 +71,9 @@
                 See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

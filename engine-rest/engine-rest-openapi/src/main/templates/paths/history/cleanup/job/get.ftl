@@ -5,7 +5,7 @@
       id = "findCleanupJob"
       tag = "History Cleanup"
       deprecated = true
-      summary = "Find clean up history job (GET)"
+      summary = "Get History Cleanup Job"
       desc = "**Deprecated!** Use `GET /history/cleanup/jobs` instead.
 
               Finds history cleanup job (See
@@ -43,8 +43,9 @@
         code = "404"
         dto = "ExceptionDto"
         desc = "History clean up job does not exist."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

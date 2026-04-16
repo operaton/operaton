@@ -63,19 +63,22 @@
     <@lib.property
         name = "caseDefinitionId"
         type = "string"
-        desc = "The id of the case definition that this decision instance belongs to."
+        deprecated = true
+        desc = "The id of the case definition that this decision instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
     
     <@lib.property
         name = "caseDefinitionKey"
         type = "string"
-        desc = "The key of the case definition that this decision instance belongs to."
+        deprecated = true
+        desc = "The key of the case definition that this decision instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
     
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "The id of the case instance that this decision instance belongs to."
+        deprecated = true
+        desc = "The id of the case instance that this decision instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
     
     <@lib.property

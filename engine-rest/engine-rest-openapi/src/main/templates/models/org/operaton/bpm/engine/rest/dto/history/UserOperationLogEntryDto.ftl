@@ -109,22 +109,25 @@
   <@lib.property
       name = "caseDefinitionId"
       type = "string"
+      deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              definition."
+              definition. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
   />
 
   <@lib.property
       name = "caseInstanceId"
       type = "string"
+      deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              instance."
+              instance. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
   />
 
   <@lib.property
       name = "caseExecutionId"
       type = "string"
+      deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              execution."
+              execution. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
   />
 
   <@lib.property

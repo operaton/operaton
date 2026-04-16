@@ -94,12 +94,14 @@
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "Restrict to tasks that belong to case instances with the given id." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to case instances with the given id. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
   
     <@lib.property
         name = "caseInstanceBusinessKey"
         type = "string"
-        desc = "Restrict to tasks that belong to case instances with the given business key." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to case instances with the given business key. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
   
     <@lib.property
         name = "caseInstanceBusinessKeyLike"
@@ -110,12 +112,14 @@
     <@lib.property
         name = "caseDefinitionId"
         type = "string"
-        desc = "Restrict to tasks that belong to a case definition with the given id." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to a case definition with the given id. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
   
     <@lib.property
         name = "caseDefinitionKey"
         type = "string"
-        desc = "Restrict to tasks that belong to a case definition with the given key." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to a case definition with the given key. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
   
     <@lib.property
         name = "caseDefinitionName"
@@ -131,7 +135,8 @@
     <@lib.property
         name = "caseExecutionId"
         type = "string"
-        desc = "Restrict to tasks that belong to a case execution with the given id." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to a case execution with the given id. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
   
     <@lib.property
         name = "activityInstanceIdIn"

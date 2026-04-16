@@ -59,25 +59,29 @@
     <@lib.property
         name = "caseDefinitionKey"
         type = "string"
-        desc = "The key of the case definition that this historic detail belongs to."
+        deprecated = true
+        desc = "The key of the case definition that this historic detail belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property
         name = "caseDefinitionId"
         type = "string"
-        desc = "The id of the case definition that this historic detail belongs to."
+        deprecated = true
+        desc = "The id of the case definition that this historic detail belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "The id of the case instance the historic detail belongs to."
+        deprecated = true
+        desc = "The id of the case instance the historic detail belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property
         name = "caseExecutionId"
         type = "string"
-        desc = "The id of the case execution the historic detail belongs to."
+        deprecated = true
+        desc = "The id of the case execution the historic detail belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property

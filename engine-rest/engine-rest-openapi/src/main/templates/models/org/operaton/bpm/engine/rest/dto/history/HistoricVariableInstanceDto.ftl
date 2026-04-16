@@ -48,25 +48,29 @@
     <@lib.property
         name = "caseDefinitionKey"
         type = "string"
-        desc = "The key of the case definition the variable instance belongs to."
+        deprecated = true
+        desc = "The key of the case definition the variable instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property
         name = "caseDefinitionId"
         type = "string"
-        desc = "The id of the case definition the variable instance belongs to."
+        deprecated = true
+        desc = "The id of the case definition the variable instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "The case instance id the variable instance belongs to."
+        deprecated = true
+        desc = "The case instance id the variable instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property
         name = "caseExecutionId"
         type = "string"
-        desc = "The case execution id the variable instance belongs to."
+        deprecated = true
+        desc = "The case execution id the variable instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
     />
 
     <@lib.property

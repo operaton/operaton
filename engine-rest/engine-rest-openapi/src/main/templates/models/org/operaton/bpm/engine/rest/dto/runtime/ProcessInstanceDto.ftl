@@ -25,7 +25,8 @@
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "The id of the case instance associated with the process instance." />
+        deprecated = true
+        desc = "The id of the case instance associated with the process instance. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
 
     <@lib.property
         name = "ended"

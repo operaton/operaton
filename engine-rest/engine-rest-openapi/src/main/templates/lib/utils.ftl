@@ -1,3 +1,6 @@
+<#-- Reusable text fragments for deprecation notices and error messages -->
+<#assign cmmnDeprecationNotice = "**Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN.">
+
 <#-- Generates a Query Parameter JSON object -->
 <#macro parameter name location type desc
         enumValues=[]

@@ -20,7 +20,7 @@
         name = "caseInstanceId"
         type = "string"
         deprecated = true
-        desc = "The case instance id the process instance is to be initialized with. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN." />
+        desc = "The case instance id the process instance is to be initialized with. ${lib.cmmnDeprecationNotice}" />
 
     <@lib.property
         name = "startInstructions"

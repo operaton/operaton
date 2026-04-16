@@ -111,7 +111,7 @@
       type = "string"
       deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              definition. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
+              definition. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
@@ -119,7 +119,7 @@
       type = "string"
       deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              instance. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
+              instance. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
@@ -127,7 +127,7 @@
       type = "string"
       deprecated = true
       desc = "If not `null`, the operation is restricted to entities in relation to this case
-              execution. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
+              execution. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property

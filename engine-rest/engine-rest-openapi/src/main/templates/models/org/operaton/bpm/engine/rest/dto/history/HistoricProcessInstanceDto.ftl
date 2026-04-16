@@ -26,7 +26,7 @@
       name = "caseInstanceId"
       type = "string"
       deprecated = true
-      desc = "The id of the parent case instance, if it exists. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."/>
+      desc = "The id of the parent case instance, if it exists. ${lib.cmmnDeprecationNotice}"/>
 
   <@lib.property
       name = "processDefinitionName"

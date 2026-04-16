@@ -36,14 +36,14 @@
         name = "caseInstanceId"
         type = "string"
         deprecated = true
-        desc = "The id of the case instance that this variable instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
+        desc = "The id of the case instance that this variable instance belongs to. ${lib.cmmnDeprecationNotice}"
     />
     
     <@lib.property
         name = "caseExecutionId"
         type = "string"
         deprecated = true
-        desc = "The id of the case execution that this variable instance belongs to. **Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN."
+        desc = "The id of the case execution that this variable instance belongs to. ${lib.cmmnDeprecationNotice}"
     />
     
     <@lib.property

@@ -15,7 +15,7 @@
   <properties>
     <operaton.version.old>1.0.0</operaton.version.old>
     <version.jakarta-ee>11.0.0</version.jakarta-ee>
-    <version.resteasy>7.0.1.Final</version.resteasy>
+    <version.resteasy>7.0.2.Final</version.resteasy>
     <!-- must be in sync with transitive version from org.springframework.boot:spring-boot-starter-jersey -->
     <version.jersey3>4.0.0</version.jersey3>
     <version.groovy>5.0.5</version.groovy>

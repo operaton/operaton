@@ -66,31 +66,35 @@ public class HttpResponseImpl extends AbstractCloseableConnectorResponse impleme
   }
 
   protected void collectResponseParameters(Map<String, Object> responseParameters) {
-    responseParameters.put(PARAM_NAME_STATUS_CODE, httpResponse.getCode());
-    collectResponseHeaders();
+    ClassicHttpResponse localResponse = this.httpResponse;
+    try {
+      responseParameters.put(PARAM_NAME_STATUS_CODE, localResponse.getCode());
+      collectResponseHeaders(localResponse);
 
-    if (httpResponse.getEntity() != null) {
-      try {
-        String response = new String(httpResponse.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
-        responseParameters.put(PARAM_NAME_RESPONSE, response);
-      } catch (IOException e) {
-        throw LOG.unableToReadResponse(e);
-      } finally {
-        IoUtil.closeSilently(httpResponse);
+      if (localResponse.getEntity() != null) {
+        try {
+          String response = new String(localResponse.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
+          responseParameters.put(PARAM_NAME_RESPONSE, response);
+        } catch (IOException e) {
+          throw LOG.unableToReadResponse(e);
+        }
       }
+    } finally {
+      IoUtil.closeSilently(localResponse);
+      this.httpResponse = null;
     }
   }
 
-  protected void collectResponseHeaders() {
+  private void collectResponseHeaders(ClassicHttpResponse response) {
     Map<String, String> headers = new HashMap<>();
-    for (Header header : httpResponse.getHeaders()) {
+    for (Header header : response.getHeaders()) {
       headers.put(header.getName(), header.getValue());
     }
     responseParameters.put(PARAM_NAME_RESPONSE_HEADERS, headers);
   }
 
   protected Closeable getClosable() {
-    return httpResponse;
+    return httpResponse != null ? httpResponse : () -> {};
   }
 
 }

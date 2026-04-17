@@ -19,6 +19,7 @@ import org.operaton.bpm.engine.health.HealthResult;
 import org.operaton.bpm.engine.health.HealthService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -65,7 +66,7 @@ public class HealthController {
       body.put("version", result.version());
     }
     body.put("details", result.details());
-    int httpStatus = "UP".equalsIgnoreCase(result.status()) ? 200 : 503;
+    int httpStatus = "UP".equalsIgnoreCase(result.status()) ? HttpStatus.OK.value() : HttpStatus.SERVICE_UNAVAILABLE.value();
     return ResponseEntity.status(httpStatus)
             .header(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, max-age=0")
             .body(body);

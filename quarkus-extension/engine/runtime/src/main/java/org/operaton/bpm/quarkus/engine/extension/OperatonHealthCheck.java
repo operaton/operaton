@@ -39,6 +39,10 @@ public class OperatonHealthCheck implements HealthCheck {
             .named("operaton-engine")
             .status("UP".equalsIgnoreCase(result.status()));
 
+    if (result.status() != null) {
+      builder.withData("status", result.status());
+    }
+
     flattenDetails("", result.details(), builder);
 
     if (result.version() != null) {

@@ -28,6 +28,7 @@ import org.springframework.boot.health.contributor.Status;
 
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -46,14 +47,14 @@ class ProcessEngineHealthIndicatorTest {
 
   @Test
   void nullProcessEngineTest() {
-    assertThatIllegalArgumentException()
+    assertThatNullPointerException()
             .isThrownBy(() -> new ProcessEngineHealthIndicator(null, healthService))
             .withMessage("processEngine must not be null");
   }
 
   @Test
   void nullHealthServiceTest() {
-    assertThatIllegalArgumentException()
+    assertThatNullPointerException()
             .isThrownBy(() -> new ProcessEngineHealthIndicator(processEngine, null))
             .withMessage("healthService must not be null");
   }

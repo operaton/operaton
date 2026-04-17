@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
+import java.util.Objects;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.health.HealthResult;
 import org.operaton.bpm.engine.health.HealthService;
@@ -23,16 +24,16 @@ import org.springframework.boot.health.contributor.AbstractHealthIndicator;
 import org.springframework.boot.health.contributor.Health.Builder;
 import org.springframework.util.Assert;
 
+import static java.util.Objects.requireNonNull;
+
 public class ProcessEngineHealthIndicator extends AbstractHealthIndicator {
 
   private final ProcessEngine processEngine;
   private final HealthService healthService;
 
   public ProcessEngineHealthIndicator(ProcessEngine processEngine, HealthService healthService) {
-    Assert.notNull(processEngine, "processEngine must not be null");
-    Assert.notNull(healthService, "healthService must not be null");
-    this.processEngine = processEngine;
-    this.healthService = healthService;
+    this.processEngine = requireNonNull(processEngine, "processEngine must not be null");
+    this.healthService = requireNonNull(healthService, "healthService must not be null");
   }
 
   @Override
@@ -49,10 +50,8 @@ public class ProcessEngineHealthIndicator extends AbstractHealthIndicator {
     }
 
     builder.withDetail("name", processEngine.getName());
+    builder.withDetail("timestamp", result.timestamp());
 
-    if (result.timestamp() != null) {
-      builder.withDetail("timestamp", result.timestamp());
-    }
     if (result.version() != null) {
       builder.withDetail("version", result.version());
     }

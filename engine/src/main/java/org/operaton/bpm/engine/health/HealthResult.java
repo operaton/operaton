@@ -21,6 +21,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static java.util.Collections.emptyMap;
+import static java.util.Collections.unmodifiableMap;
+import static java.util.Objects.requireNonNull;
+
 /**
  * Immutable value object describing Operaton health.
  *
@@ -30,8 +34,8 @@ import java.util.Objects;
 public record HealthResult(String status, String timestamp, String version, Map<String, Object> details) {
 
   public HealthResult {
-    Objects.requireNonNull(status, "status must not be null");
+    requireNonNull(status, "status must not be null");
     timestamp = timestamp != null ? timestamp : Instant.now().toString();
-    details = details != null ? Collections.unmodifiableMap(details) : Collections.emptyMap();
+    details = details != null ? unmodifiableMap(details) : emptyMap();
   }
 }

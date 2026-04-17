@@ -19,7 +19,7 @@ package org.operaton.bpm.engine.impl.cmd;
 import java.util.List;
 
 import org.operaton.bpm.engine.ProcessEngineException;
-import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
+import org.operaton.bpm.engine.impl.HistoryLevelUtils;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -37,7 +37,7 @@ public class DetermineHistoryLevelCmd implements Command<HistoryLevel> {
 
   @Override
   public HistoryLevel execute(final CommandContext commandContext) {
-    final Integer databaseHistoryLevel = HistoryLevelSetupCommand.databaseHistoryLevel(commandContext);
+    final Integer databaseHistoryLevel = HistoryLevelUtils.databaseHistoryLevel(commandContext);
 
     HistoryLevel result = null;
 

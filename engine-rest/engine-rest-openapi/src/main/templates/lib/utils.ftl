@@ -298,6 +298,9 @@
      Use last=true when these are the final responses in a responses object.
      Pass docsUrl from the calling endpoint_macro to generate correct documentation links. -->
 <#macro errorResponses docsUrl="" last=false >
+    <#if !docsUrl?has_content>
+        <#stop "errorResponses requires a non-empty docsUrl to generate valid documentation links.">
+    </#if>
     <@lib.response
         code = "401"
         dto = "ExceptionDto"

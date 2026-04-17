@@ -46,7 +46,7 @@
                      }'] />
 
     <@lib.response
-        code = "400"
+        code = "404"
         dto = "ExceptionDto"
         desc = "Process definition with given `id` does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)

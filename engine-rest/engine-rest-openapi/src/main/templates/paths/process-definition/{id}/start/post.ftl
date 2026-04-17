@@ -188,13 +188,19 @@
                 for the error response format." />
 
     <@lib.response
-        code = "500"
+        code = "401"
         dto = "ExceptionDto"
-        desc = "The instance could not be created successfully.
+        desc = "The user is not authenticated.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
 
-    <@lib.errorResponses docsUrl=docsUrl last = true />
+    <@lib.response
+        code = "500"
+        dto = "ExceptionDto"
+        last = true
+        desc = "The instance could not be created successfully.
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+                for the error response format." />
 
   }
 }

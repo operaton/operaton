@@ -56,6 +56,7 @@
   <modules>
     <module>ensure-clean-db-plugin</module>
     <module>arquillian-extensions</module>
+    <module>load-test</module>
   </modules>
   <profiles>
     <profile>

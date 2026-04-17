@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  id="Definitions_purejs"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="pure-js-process" name="Pure JS Process" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:startEvent id="start"/>
+    <bpmn:scriptTask id="script1" name="Script 1" scriptFormat="javascript">
+      <bpmn:script>
+        var a = 1 + 2;
+        var b = "hello " + "world";
+        var c = Math.random();
+        execution.setVariable("result", a + c);
+      </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="script2" name="Script 2" scriptFormat="javascript">
+      <bpmn:script>
+        var x = JSON.parse('{"key":"value","num":42}');
+        var y = x.key + "-" + x.num;
+        execution.setVariable("parsed", y);
+      </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="script3" name="Script 3" scriptFormat="javascript">
+      <bpmn:script>
+        var arr = [1,2,3,4,5];
+        var sum = 0;
+        for (var i = 0; i &lt; arr.length; i++) { sum += arr[i]; }
+        execution.setVariable("sum", sum);
+      </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="end"/>
+    <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="script1"/>
+    <bpmn:sequenceFlow id="flow2" sourceRef="script1" targetRef="script2"/>
+    <bpmn:sequenceFlow id="flow3" sourceRef="script2" targetRef="script3"/>
+    <bpmn:sequenceFlow id="flow4" sourceRef="script3" targetRef="end"/>
+  </bpmn:process>
+</bpmn:definitions>

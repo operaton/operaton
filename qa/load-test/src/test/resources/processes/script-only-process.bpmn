@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  id="Definitions_script"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="script-only-process" name="Script Only Process" isExecutable="true" camunda:historyTimeToLive="P180D">
+    <bpmn:startEvent id="start"/>
+    <bpmn:scriptTask id="script1" name="Script 1" scriptFormat="javascript">
+      <bpmn:script>
+        var input = S('{"policy":"ELEGIBILITY","customerId":"123","amount":50,"age":20}');
+        var policy = input.prop("policy").stringValue();
+        var customerId = input.prop("customerId").stringValue();
+        var amount = input.prop("amount").numberValue();
+        execution.setVariable("policy", policy);
+        execution.setVariable("customerId", customerId);
+        execution.setVariable("amount", amount);
+      </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="script2" name="Script 2" scriptFormat="javascript">
+      <bpmn:script>
+        var data = S('{"result":"approved","score":85,"details":{"level":"gold","limit":10000}}');
+        var result = data.prop("result").stringValue();
+        var score = data.prop("score").numberValue();
+        execution.setVariable("result", result);
+        execution.setVariable("score", score);
+      </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="script3" name="Script 3" scriptFormat="javascript">
+      <bpmn:script>
+        var response = S('{"eligible":true,"reason":"all_checks_passed"}');
+        var eligible = response.prop("eligible").boolValue();
+        execution.setVariable("eligible", eligible);
+        execution.setVariable("reason", response.prop("reason").stringValue());
+      </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="end"/>
+    <bpmn:sequenceFlow id="flow1" sourceRef="start" targetRef="script1"/>
+    <bpmn:sequenceFlow id="flow2" sourceRef="script1" targetRef="script2"/>
+    <bpmn:sequenceFlow id="flow3" sourceRef="script2" targetRef="script3"/>
+    <bpmn:sequenceFlow id="flow4" sourceRef="script3" targetRef="end"/>
+  </bpmn:process>
+</bpmn:definitions>

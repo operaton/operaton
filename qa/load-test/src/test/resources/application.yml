@@ -1,0 +1,24 @@
+operaton:
+  bpm:
+    history-level: audit
+    admin-user:
+      id: admin
+      password: admin
+    process-engine-plugins:
+      - plugin-class: org.operaton.connect.plugin.impl.ConnectProcessEnginePlugin
+      - plugin-class: org.operaton.spin.plugin.impl.SpinProcessEnginePlugin
+    auto-deployment-enabled: true
+    generic-properties:
+      properties:
+        historyTimeToLive: P180D
+        enforce-history-time-to-live: false
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:loadtest;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+
+server:
+  tomcat:
+    threads:
+      max: 200

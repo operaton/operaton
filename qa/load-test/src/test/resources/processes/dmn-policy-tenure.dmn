@@ -14,12 +14,12 @@
       </output>
       <output id="OutputClause_1ytzvfg" name="POLICY_NAME" typeRef="string">
         <outputValues id="UnaryTests_0sjqxrq">
-          <text>"POLICY_AGE"</text>
+          <text>"POLICY_TENURE"</text>
         </outputValues>
       </output>
       <output id="OutputClause_0ob0vgh" name="POLICY_REASON" typeRef="string">
         <outputValues id="UnaryTests_1nd4ovd">
-          <text>"UNDER_18", "ABOVE_65", "ACCEPTED_AGE"</text>
+          <text>"TENURE_UNDER_3", "ACCEPTED_TENURE"</text>
         </outputValues>
       </output>
       <rule id="DecisionRule_0r1xulh">

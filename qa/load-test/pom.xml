@@ -16,6 +16,7 @@
   <properties>
     <install.skip>true</install.skip>
     <deploy.skip>true</deploy.skip>
+    <argLine></argLine>
   </properties>
 
   <dependencies>
@@ -104,7 +105,7 @@
           <includes>
             <include>**/*LoadTest.java</include>
           </includes>
-          <argLine>-Xmx1536m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=target/ -Xlog:gc*:file=target/gc.log:time,uptime,level,tags</argLine>
+          <argLine>${argLine} -Xmx1536m -XX:+UseG1GC -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=target/ -Xlog:gc*:file=target/gc.log:time,uptime,level,tags</argLine>
         </configuration>
         <executions>
           <execution>

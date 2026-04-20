@@ -104,7 +104,7 @@
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${S(terminationResponse).prop("hasTermination").boolValue() == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_rescisao_no" name="YES" sourceRef="gtw-termination" targetRef="http-task-leave" />
-    <bpmn:sequenceFlow id="Flow_to_throw_done" sourceRef="task-set-denied-leave" targetRef="Event_0zv3ml6" />
+    <bpmn:sequenceFlow id="Flow_to_throw_denied" sourceRef="task-set-denied-leave" targetRef="Event_0zv3ml6" />
     <bpmn:exclusiveGateway id="ex-gtw-policy" name="Policy?">
       <bpmn:incoming>Flow_01lb6nt</bpmn:incoming>
       <bpmn:outgoing>Flow_1bj01wn</bpmn:outgoing>
@@ -182,12 +182,12 @@ execution.setVariable("POLICY_NAME", "POLICY_TERMINATION");</bpmn:script>
     </bpmn:exclusiveGateway>
     <bpmn:sequenceFlow id="Flow_1bovla4" sourceRef="http-task-leave" targetRef="gtw-leave" />
     <bpmn:endEvent id="Event_0zv3ml6" name="DENIED">
-      <bpmn:incoming>Flow_to_throw_done</bpmn:incoming>
-      <bpmn:errorEventDefinition id="ErrorEventDefinition_throw_DONE" errorRef="POLICY_DENIED" />
+      <bpmn:incoming>Flow_to_throw_denied</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_throw_DENIED" errorRef="POLICY_DENIED" />
     </bpmn:endEvent>
     <bpmn:scriptTask id="task-set-denied-leave" name="Deny: Leave" scriptFormat="javascript" camunda:autoStoreVariables="true">
       <bpmn:incoming>Flow_1gkeza7</bpmn:incoming>
-      <bpmn:outgoing>Flow_to_throw_done</bpmn:outgoing>
+      <bpmn:outgoing>Flow_to_throw_denied</bpmn:outgoing>
       <bpmn:script>execution.setVariable("POLICY_RESULT", "DENIED");
 execution.setVariable("POLICY_REASON", "LEAVE");
 execution.setVariable("POLICY_NAME", "POLICY_LEAVE");</bpmn:script>
@@ -571,7 +571,7 @@ execution.setVariable("OUTPUT", Spin.JSON(mapper.writeValueAsString(output)));</
           <dc:Bounds x="1252" y="235" width="23" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_to_throw_done_di" bpmnElement="Flow_to_throw_done">
+      <bpmndi:BPMNEdge id="Flow_to_throw_denied_di" bpmnElement="Flow_to_throw_denied">
         <di:waypoint x="1560" y="480" />
         <di:waypoint x="1560" y="632" />
       </bpmndi:BPMNEdge>

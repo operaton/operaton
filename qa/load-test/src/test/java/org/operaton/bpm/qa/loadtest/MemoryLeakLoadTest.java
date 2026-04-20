@@ -33,6 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -116,6 +117,10 @@ class MemoryLeakLoadTest {
 
   @Test
   void memoryStaysStableUnderSustainedLoad() throws Exception {
+    assertThat(MEMORY_SAMPLES)
+        .as("loadtest.memory.samples must be at least 1")
+        .isGreaterThanOrEqualTo(1);
+
     MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
 
     // Phase 1: Warmup
@@ -130,7 +135,7 @@ class MemoryLeakLoadTest {
     // Phase 2: Sustained load with memory monitoring
     LOG.info("=== Phase 2: Sustained load ({} seconds) ===", SUSTAINED_SECONDS);
     List<Long> memorySamples = new CopyOnWriteArrayList<>();
-    int sampleIntervalSeconds = SUSTAINED_SECONDS / MEMORY_SAMPLES;
+    int sampleIntervalSeconds = Math.max(1, SUSTAINED_SECONDS / MEMORY_SAMPLES);
 
     Thread sampler = new Thread(() -> {
       try {
@@ -224,7 +229,10 @@ class MemoryLeakLoadTest {
                 LOG.warn("Process start returned HTTP {}", statusCode);
               }
             }
-            Thread.sleep((long) (1000 + Math.random() * 1000));
+            Thread.sleep(ThreadLocalRandom.current().nextLong(1000, 2000));
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
           } catch (Exception e) {
             result.failureCount.incrementAndGet();
             if (result.failureCount.get() <= 5) {
@@ -237,7 +245,15 @@ class MemoryLeakLoadTest {
 
     startGate.countDown();
     executor.shutdown();
-    executor.awaitTermination(durationSeconds + 30, TimeUnit.SECONDS);
+    long shutdownTimeoutSeconds = durationSeconds + 30L;
+    boolean terminated = executor.awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS);
+    if (!terminated) {
+      List<Runnable> queuedTasks = executor.shutdownNow();
+      assertThat(terminated)
+          .as("Load executor did not terminate within %s seconds; cancelled %s queued tasks",
+              shutdownTimeoutSeconds, queuedTasks.size())
+          .isTrue();
+    }
     return result;
   }
 
@@ -332,9 +348,17 @@ class MemoryLeakLoadTest {
 
   private static void forceGc() {
     System.gc();
-    try { Thread.sleep(500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
     System.gc();
-    try { Thread.sleep(500); } catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+    try {
+      Thread.sleep(500);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
   }
 
   private static long averageOf(List<Long> values) {

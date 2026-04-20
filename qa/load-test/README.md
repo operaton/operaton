@@ -34,7 +34,7 @@ System properties can be passed via `-D` flags:
 | `loadtest.warmup.seconds` | 10 | Warmup phase duration |
 | `loadtest.sustained.seconds` | 60 | Sustained load phase duration |
 | `loadtest.memory.samples` | 6 | Number of heap memory samples during sustained phase |
-| `loadtest.processKey` | vale-antecipado-elegibility | Process definition key to test |
+| `loadtest.processKey` | credit-eligibility | Process definition key to test |
 | `loadtest.withVariablesInReturn` | true | Include variables in start response |
 
 Example with custom settings:
@@ -57,10 +57,10 @@ These are set in `pom.xml` via the `maven-failsafe-plugin` configuration.
 
 1. **Spring Boot Application** starts with H2 in-memory database, HTTP connector, and Spin JSON plugins
 2. **WireMock** serves three mock endpoints:
-   - `GET /v1/core-customer/123` — customer data
-   - `GET /srh_api/api/externo/existe-rescisao` — rescisão check
-   - `GET /srh_api/api/externo/existe-afastamento` — afastamento check
-3. **Process variables** `BASE_URL` and `GPS_BASE_URL` point to the WireMock server
+   - `GET /api/customers/123` — customer data
+   - `GET /api/employment/termination` — rescisão check
+   - `GET /api/employment/leave` — afastamento check
+3. **Process variables** `BASE_URL` and `EMPLOYMENT_API_URL` point to the WireMock server
 4. **Concurrent threads** simulate concurrent users calling the REST API to start process instances
 5. **Memory monitoring** samples heap usage at regular intervals
 
@@ -111,7 +111,7 @@ Then analyze with `jfr print target/loadtest.jfr` or JDK Mission Control.
 
 ## BPMN Process
 
-The `vale-antecipado-elegibility` process:
+The `credit-eligibility` process:
 - Starts via REST API with JSON input variable
 - Executes synchronously (no async boundaries)
 - Makes 3 HTTP connector GET calls to external services

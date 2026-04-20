@@ -7,7 +7,7 @@
                   targetNamespace="http://bpmn.io/schema/bpmn">
   <bpmn:process id="http-only-process" name="HTTP Only Process" isExecutable="true" camunda:historyTimeToLive="P180D">
     <bpmn:startEvent id="start"/>
-    <bpmn:serviceTask id="http1" name="HTTP Call 1" camunda:type="external" camunda:topic="http-call">
+    <bpmn:serviceTask id="http1" name="HTTP Call 1">
       <bpmn:extensionElements>
         <camunda:connector>
           <camunda:inputOutput>

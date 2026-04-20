@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:e156c6b8-e879-439a-a405-9cbc1b859558",
+  "serialNumber": "urn:uuid:fad0e74b-331a-4b95-bf76-946244a880bd",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-07T04:52:40Z",
+    "timestamp": "2026-04-14T04:33:45Z",
     "tools": {
       "components": [
         {
@@ -5578,45 +5578,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.ant/ant@1.10.16?type=jar",
+      "bom-ref": "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.ant",
       "name": "ant",
-      "version": "1.10.16",
+      "version": "1.10.17",
       "description": "master POM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b7b72a857d3da0f0f530e4c20b0ed567"
+          "content": "7deb57aad47476c63e707ea57533e43b"
         },
         {
           "alg": "SHA-1",
-          "content": "16be4dd51358ac9f78c5e7d6c62b5fac3c11b4fe"
+          "content": "fa8a13422ac460563171d10a37c3f28340a953f6"
         },
         {
           "alg": "SHA-256",
-          "content": "b2ae7b3f4c132dce0b205b5e17448c4bc72036316ac49b986e66514061cb781f"
+          "content": "8be692e02837f41a47a3d21cde6655792142fdf42fe23bcb16d7129cad9b2284"
         },
         {
           "alg": "SHA-512",
-          "content": "ad95f18517b33bf4676501ef6eb71e5ab68e456d7d4bf72a469f619b1853b45fc7e7814e43227d036e15f6c3639a2ad485ae0812616e714fd91d79a93c01ab36"
+          "content": "f1cc1a82e1abcf613d4ccf080f83fcd51acd7d4a2f1c2841cca90dd1ebaa96fab2df6411abd2cf97e2ec74231b1540a5d15c12117ba777ab1538b61f9f2b5fa9"
         },
         {
           "alg": "SHA-384",
-          "content": "aeb84b755bf641c2925b19ce71abfda8b580acc396ce9f3c26b95bee55e3f06f4d6863a0989888ce207ed0c26fa74cb4"
+          "content": "2af275805479b9cfcfdae25f19cce911922207bc2fb77c2c44caf8633c56cd7d772ab30134bac68aacf0ea6e444fa50c"
         },
         {
           "alg": "SHA3-384",
-          "content": "3079b11140a1ee963b26d068ab3a3e352a5e077fe59423372d685d8a1ba338ded63cd3b120dc926c0c32355316081829"
+          "content": "71205d360f909df37fef5b427538c22977e01801108a1cb37387d1f72e784509796a915c2069a12762a78b990d0aa207"
         },
         {
           "alg": "SHA3-256",
-          "content": "49247e5b0b8f4ebb332a9aadd1ad0040725b8a3816c9f959bb5b5e0af445aa97"
+          "content": "540a9cc40d8c9c4e004b04bd6af4a590e18d2077e93d441a9dcbdf90798b31b6"
         },
         {
           "alg": "SHA3-512",
-          "content": "ac1780adc2ee449ceeace180ba825af1473ed644451fbbb063841e0f88c7d0c1ba686d3e9ee09b59cbb78ad606d153321e41242a0d474363f554d48aea965ede"
+          "content": "7a65837340a624a8f9eb68a56c78b6891ddf95cd617ccbc227e2fe88b53f59c2cea7d856b4d803898f2bb2317dbc8f8124d3c35154e3cee555d97fe064a8739d"
         }
       ],
       "licenses": [
@@ -5626,7 +5626,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.ant/ant@1.10.16?type=jar",
+      "purl": "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
       "externalReferences": [
         {
           "url": "https://ant.apache.org/",
@@ -5656,45 +5656,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.apache.ant/ant-launcher@1.10.16?type=jar",
+      "bom-ref": "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
       "publisher": "The Apache Software Foundation",
       "group": "org.apache.ant",
       "name": "ant-launcher",
-      "version": "1.10.16",
+      "version": "1.10.17",
       "description": "master POM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "023221b94c46674912e673c7979e546f"
+          "content": "6f03c0937a15756fd7bc7bb98d6ee360"
         },
         {
           "alg": "SHA-1",
-          "content": "34e9d3528f0d683cc7488cbb3332c3818d6aac85"
+          "content": "a65884e1ff214f724a6e9c089365c71935c488e4"
         },
         {
           "alg": "SHA-256",
-          "content": "14f979626b6484b9a5f1e14918370e65197df3876da181e1b7d14080ec3dc212"
+          "content": "f6e3de06dc0ea396638004f1a003f55fdbd20c3e7ccfb9b7a524f49fd0ae8568"
         },
         {
           "alg": "SHA-512",
-          "content": "bdc6697671d1118109d9ab5945813b23cf2609e3a88ccec7ce8bdb26f140dc1d467c36b8bdaf6230d4f20042d24608812da8c272fe7740b3eab448debb16e25c"
+          "content": "73fef113f238f6fcfe94e7d58824207ea6557626262f27d3bd20ab3bbba6af848ee5998ad915a7fa3999e0e368bb1f7ae1bf90888295989a15236a73c7d08709"
         },
         {
           "alg": "SHA-384",
-          "content": "fa723b6245893c292560240526d01b429a9459132524e263f403400d56854733ea8355e6fdf8f7ba582a584132ac2de9"
+          "content": "3cfaf78d72581170b94df32d7b069bab2e10fa8ae56d2973de3a750ec45aaeb194d89714dacc77af8f9892802a4a7ec6"
         },
         {
           "alg": "SHA3-384",
-          "content": "125ea26715cf262e057fdd5a8847ebce4ac7726682db21e6c5606fbe000b4cd1b5d306570c00b9f2da1dfeb1ec3bd20c"
+          "content": "447a649c728ffc652a3676904a3001e41cd10387dafe90df97fa121c8e824822a98a00b9a3de3cbd93b19355ad51d7a7"
         },
         {
           "alg": "SHA3-256",
-          "content": "a1afd2767c552bab1ca307cf925e16a1a7e44b32e2239afde3de6cd68d8097b6"
+          "content": "80ef280b77fd566dde6c6438a974f993db7540dc7a99ea89e43557df769a7f17"
         },
         {
           "alg": "SHA3-512",
-          "content": "dd30bdebc3b2ea96a239dd803e7c98b0c62f5041d9b41a4b8c60978e4033cf8314291cac6d9873352a2d885666c98289dad93b39c48593691098a406c74b3b76"
+          "content": "b9700c9f92513d503c806ed1ce2fed1d351a79f609ac8b30d4ec27580b0976d67cbecbe040647c7602f549f18ef8ac4fa37cc54d47a577e5046f0f86ff21de39"
         }
       ],
       "licenses": [
@@ -5704,7 +5704,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.apache.ant/ant-launcher@1.10.16?type=jar",
+      "purl": "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
       "externalReferences": [
         {
           "url": "https://ant.apache.org/",
@@ -13848,45 +13848,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.1.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core",
-      "version": "6.2.15.Final",
+      "version": "7.0.1.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b5231f77e1cd3066ddb7356a2fcdbdd2"
+          "content": "ea8beceb15ccabf3ab078ce03d2b781f"
         },
         {
           "alg": "SHA-1",
-          "content": "263269cff9b5225e32085995a744b1200ba78e98"
+          "content": "60f0dd84e38021d88001283f000201e9b3ba95a1"
         },
         {
           "alg": "SHA-256",
-          "content": "bff53d26ec20bd2039c4832c0937416b62287fb5b8f36e4af02cc21393a531a6"
+          "content": "c94e146d8070a3248e950ec2cde98b3fbd8053ba0abacc5bb9111a93bc4a989e"
         },
         {
           "alg": "SHA-512",
-          "content": "bbd344330e0688221ed2a2a1be36f178122b99aaf6062a2abff49ecd49eadab47db83c6f0444bf1438a097851a64f36bfafa40077c91202983655e4929092436"
+          "content": "42ff4b55de7c602a2aefd8d528ab9f801b659e6b2d5fbe694735f3044913745af4d9d496f5fc6dd89ca60e1af2582a2cf36501660ab12278af9fc0e4d4aa3dee"
         },
         {
           "alg": "SHA-384",
-          "content": "289a4f986c2afc920626ba2248d580f459075608ecf227ae657a02229b1a79ad092efb586b3dc365023eca456be548a3"
+          "content": "c026f2dffe22a27d4b82848dea5f94b41b73ae74724eb7c609f815b9823e078c6ab8d370adfa10cde6eb1d5d94cd28c1"
         },
         {
           "alg": "SHA3-384",
-          "content": "1dec1c3b98bbe58cf43ebbaf499856279b7132cd0e15d0a44591b6e9d25d751c1b8afd92f3c9c2ba22f13bba0b058b97"
+          "content": "2326b148379d529e7cee2cdac24a9c887ecd6a03a2e9ab80b4900adcf07af6003a0e9da73b65545a327eb5652c7d5037"
         },
         {
           "alg": "SHA3-256",
-          "content": "6b3cca3b0c596fa7ba45875f40f6bbbda1cd4f0ae4a4f97fa97d5775fc19a2bb"
+          "content": "39207151abd0bd5f327dc86d18dffc96783145e27225c15d5b84cdd677c26753"
         },
         {
           "alg": "SHA3-512",
-          "content": "897f0e2196676d65edcb538a0cb29474df1c4884e4ffed8facbfc83421e58967ce0a87c2ecbf4ce4d6afc39e80b955b476ed2ff45daeed5ee4cb734177e6ee75"
+          "content": "aa1e0e775df4883331853ea6b72a3fccfef13f9362a62d159f36dbd2b34483bd78d8c31511435fa33874e6c93ac9dc540e7e115020ed146e43efcdf572eb7f43"
         }
       ],
       "licenses": [
@@ -13897,7 +13897,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.1.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -13919,45 +13919,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss/jandex@2.4.5.Final?type=jar",
-      "publisher": "JBoss by Red Hat",
-      "group": "org.jboss",
+      "bom-ref": "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
+      "group": "io.smallrye",
       "name": "jandex",
-      "version": "2.4.5.Final",
-      "description": "Parent POM for JBoss projects. Provides default project build configuration.",
+      "version": "3.4.0",
+      "description": "SmallRye Build Parent POM",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "81ce0b995162eedcd867f10b3914c517"
+          "content": "47d0bc306361751883016f688f4b3591"
         },
         {
           "alg": "SHA-1",
-          "content": "9b4634d1fa28628549eb986b7c0c73f387090fba"
+          "content": "a1cacc78524469b3b5e3b1d0d44d7a5c520a2072"
         },
         {
           "alg": "SHA-256",
-          "content": "70a283bcf11a82b14c20d1a9be731d301aedfd98be1b4c0f5b35fe60b305caff"
+          "content": "6be417290a1d343dd27b45cbd12e273deb4af30a2df5cb9e4bad880fb63945b2"
         },
         {
           "alg": "SHA-512",
-          "content": "0c61240fdf755feaa06399a59568d06eacd449ecf62fd7b1ff3422edd200ef1319484da6cf5ed88eae8763d5e8bce9e2294049a81d7986fe73d3cf795e00ad52"
+          "content": "d4ec018955dacffa6c7f01e5140f60b8cf55629d366c07d944924f75d2957e867393b76ab0e3f4cdf9d8f569fd9d27cd6e0ee6d54ceed4c2af965396fc9b6e0f"
         },
         {
           "alg": "SHA-384",
-          "content": "51f116637291b293d533310f229e09488a808a920a41e9cf6a86065ebfaa20afa5e9719276ff4a8aa13d2ec444c03f05"
+          "content": "4c3572ee8507c03529d2cb6f5c81d4c5640a90aed3e58accf14a8703faacf0807e2112312c9ac909461f07a261b7f2fb"
         },
         {
           "alg": "SHA3-384",
-          "content": "ec42ed2684204f824feecbc85276503fd886620ee73978695e07c718a7103d6a35d2ecbb56540013e3356e70140cf520"
+          "content": "eb2211250a9c38f39781675c9e7f485079e6c4f3af3f6d334ab70bcca28df5febbcb80fc0fc342ed8e45dcc9157f47b5"
         },
         {
           "alg": "SHA3-256",
-          "content": "67201d0ed3995459726de5defd923ecba8956c523d77d8f8bed25eee5f70d08c"
+          "content": "763983b4bbd8a46260db489e848b7ad5e2a172a0cfa3405694669c4bffd6eb78"
         },
         {
           "alg": "SHA3-512",
-          "content": "1e6ae57beea7a3d314943839fc2dc82db5fa34f5ba12701da758e675e24eeb2ce7286befaa634d3b61e707f469fead35c5adb0a6ea4744471b9b582661bdf75d"
+          "content": "85ac5e83b15bdfcf5b988396ee98bb2d6d645d7b44b327b7a35974bbfe5efc68ecca9fc49fb31f5ee783750b1ce5b122280a625acad8cb19c629581e02b4a882"
         }
       ],
       "licenses": [
@@ -13967,71 +13966,67 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss/jandex@2.4.5.Final?type=jar",
+      "purl": "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
       "externalReferences": [
         {
-          "url": "http://www.jboss.org/jandex",
+          "url": "https://smallrye.io",
           "type": "website"
         },
         {
-          "url": "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/",
+          "url": "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/",
           "type": "distribution-intake"
         },
         {
-          "url": "https://issues.jboss.org/",
+          "url": "https://github.com/smallrye/jandex/issues",
           "type": "issue-tracker"
         },
         {
-          "url": "http://lists.jboss.org/pipermail/jboss-user/",
-          "type": "mailing-list"
-        },
-        {
-          "url": "http://github.com/jboss/jboss-parent-pom/jandex",
+          "url": "https://github.com/smallrye/jandex/jandex/",
           "type": "vcs"
         }
       ]
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
+      "bom-ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.1.Final?type=jar",
       "publisher": "RESTEasy Community",
       "group": "org.jboss.resteasy",
       "name": "resteasy-core-spi",
-      "version": "6.2.15.Final",
+      "version": "7.0.1.Final",
       "description": "A Jakarta REST implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3b48167d01c945d8aca6a43a5ea77791"
+          "content": "4ddca5865706d777860f71a5834740eb"
         },
         {
           "alg": "SHA-1",
-          "content": "9a885576f7e79827366a994c5356ee264359bc42"
+          "content": "2c0be5dd8025e912597751480215c4b05b1342ae"
         },
         {
           "alg": "SHA-256",
-          "content": "f173f6fc482f7cf471110ced396869cc43bc90eca36764264d79a88a9747527c"
+          "content": "cd481d9b0c507df7f034cc2d71bfbc549db60f0f1805089b11c8e23bee9d86de"
         },
         {
           "alg": "SHA-512",
-          "content": "9a4d9664608b6a1c9a4594772d0a8803a755ccdc8dec571942ef589aedc843a99de7eb1f365a02515c56ff1948bae01891bcae4b21201a4841ceb50bd1abaeea"
+          "content": "84efd1746861ae89e5779c6994da36307599b5892fdfb8e13abc51a40f301b9356d828df0dc076cc837a93c36c4b97b34e29a63ef308593d69b3860d7f881a85"
         },
         {
           "alg": "SHA-384",
-          "content": "20585a26e7778ccd7c771400fedf2c5275fae9f6640e832bf4fb371f5065bf9c67a37d58f16350a90edcb83bd02411c2"
+          "content": "9aef4917ce83428661ea6b8be8b0e2968f8a0f380188bd24d18970dc230fb942d4b613c6e132dce904a8049f2bc8b502"
         },
         {
           "alg": "SHA3-384",
-          "content": "84fc81ed66b35caad67919064c0a5d08fc7a1e835d7deaffee462b768ddb0444dfd55956f28775fd0cccafa54c949f03"
+          "content": "81be217c5e6812d338a1ca194610b4dc288496b3ee4f86d6994d8c89de157f3b7dda5b339f1b38f68050d15a9fbbeabd"
         },
         {
           "alg": "SHA3-256",
-          "content": "62dba7bc0bb84aa3db64d576e8784839b4dc53bb7923d80d435cd576c4481290"
+          "content": "f70b72c50ee08ffe58b22d6008c1c211a02c34e8502092e873150893109a328c"
         },
         {
           "alg": "SHA3-512",
-          "content": "df6f44834290b550d526299fd23644b4d4e18d3581cf3fc205958f7a7e326e415ddd79eabf8ddf5194c589ea2a572acdae5f6ef5dcf5dea5973b9d7c55b0ded4"
+          "content": "a3a3635141327ef700729c1132163827bc56ff55a82b972a6828f4d15ed3c01381aed690c63d6cd6a00381ded4c10e074c4ceca9565cab43d8d9316d7e1025fd"
         }
       ],
       "licenses": [
@@ -14042,7 +14037,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
+      "purl": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.1.Final?type=jar",
       "externalReferences": [
         {
           "url": "https://resteasy.dev",
@@ -19384,7 +19379,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "9ae91b6b-0ac6-45c7-9537-0b77aa6e745c",
+      "bom-ref": "f189148f-3058-4b1e-a10b-483381da5277",
       "name": "package-lock.json",
       "properties": [
         {
@@ -21875,9 +21870,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dmn-js-properties-panel@3.10.0",
+      "bom-ref": "pkg:npm/dmn-js-properties-panel@3.11.0",
       "name": "dmn-js-properties-panel",
-      "version": "3.10.0",
+      "version": "3.11.0",
       "licenses": [
         {
           "license": {
@@ -21885,11 +21880,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/dmn-js-properties-panel@3.10.0",
+      "purl": "pkg:npm/dmn-js-properties-panel@3.11.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dmn-js-properties-panel@3.10.0"
+          "value": "dmn-js-properties-panel@3.11.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -22322,9 +22317,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.5.10",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.5.11",
       "name": "fast-xml-parser",
-      "version": "5.5.10",
+      "version": "5.5.11",
       "licenses": [
         {
           "license": {
@@ -22332,11 +22327,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.5.10",
+      "purl": "pkg:npm/fast-xml-parser@5.5.11",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.5.10"
+          "value": "fast-xml-parser@5.5.11"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23609,9 +23604,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/path-expression-matcher@1.2.1",
+      "bom-ref": "pkg:npm/path-expression-matcher@1.4.0",
       "name": "path-expression-matcher",
-      "version": "1.2.1",
+      "version": "1.4.0",
       "licenses": [
         {
           "license": {
@@ -23619,11 +23614,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/path-expression-matcher@1.2.1",
+      "purl": "pkg:npm/path-expression-matcher@1.4.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "path-expression-matcher@1.2.1"
+          "value": "path-expression-matcher@1.4.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24082,9 +24077,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/strnum@2.2.2",
+      "bom-ref": "pkg:npm/strnum@2.2.3",
       "name": "strnum",
-      "version": "2.2.2",
+      "version": "2.2.3",
       "licenses": [
         {
           "license": {
@@ -24092,11 +24087,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/strnum@2.2.2",
+      "purl": "pkg:npm/strnum@2.2.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "strnum@2.2.2"
+          "value": "strnum@2.2.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -24394,7 +24389,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "80a45db3-e4dc-46de-b454-3df79b891d8b",
+      "bom-ref": "5023e33a-82f5-4788-ac17-8f48812f4ea7",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24897,7 +24892,7 @@
         "pkg:maven/org.junit.jupiter/junit-jupiter-api@6.0.3?type=jar",
         "pkg:maven/org.junit.jupiter/junit-jupiter-params@6.0.3?type=jar",
         "pkg:maven/org.assertj/assertj-core@3.27.7?type=jar",
-        "pkg:maven/org.apache.ant/ant@1.10.16?type=jar",
+        "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
         "pkg:maven/jakarta.transaction/jakarta.transaction-api@2.0.1?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
@@ -24975,13 +24970,13 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.ant/ant@1.10.16?type=jar",
+      "ref": "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
       "dependsOn": [
-        "pkg:maven/org.apache.ant/ant-launcher@1.10.16?type=jar"
+        "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.apache.ant/ant-launcher@1.10.16?type=jar",
+      "ref": "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
       "dependsOn": []
     },
     {
@@ -25386,7 +25381,7 @@
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.1.0-SNAPSHOT?classifier=tests\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar"
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.1.Final?type=jar"
       ]
     },
     {
@@ -25416,14 +25411,14 @@
       ]
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.1.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
-        "pkg:maven/org.jboss/jandex@2.4.5.Final?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
+        "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
+        "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.1.Final?type=jar",
         "pkg:maven/org.reactivestreams/reactive-streams@1.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.eclipse.angus/angus-activation@2.0.3?type=jar",
@@ -25436,11 +25431,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss/jandex@2.4.5.Final?type=jar",
+      "ref": "pkg:maven/io.smallrye/jandex@3.4.0?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@6.2.15.Final?type=jar",
+      "ref": "pkg:maven/org.jboss.resteasy/resteasy-core-spi@7.0.1.Final?type=jar",
       "dependsOn": [
         "pkg:maven/org.jboss.logging/jboss-logging@3.6.3.Final?type=jar",
         "pkg:maven/jakarta.annotation/jakarta.annotation-api@3.0.0?type=jar",
@@ -26722,7 +26717,7 @@
       "ref": "pkg:maven/org.operaton.bpm.webapp/operaton-webapp-tomcat@2.1.0-SNAPSHOT?type=war",
       "dependsOn": [
         "pkg:maven/org.operaton.bpm.webapp/operaton-webapp@2.1.0-SNAPSHOT?type=war",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@6.2.15.Final?type=jar"
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.1.Final?type=jar"
       ]
     },
     {
@@ -26775,13 +26770,13 @@
       "dependsOn": []
     },
     {
-      "ref": "80a45db3-e4dc-46de-b454-3df79b891d8b",
+      "ref": "5023e33a-82f5-4788-ac17-8f48812f4ea7",
       "dependsOn": [
-        "9ae91b6b-0ac6-45c7-9537-0b77aa6e745c"
+        "f189148f-3058-4b1e-a10b-483381da5277"
       ]
     },
     {
-      "ref": "9ae91b6b-0ac6-45c7-9537-0b77aa6e745c",
+      "ref": "f189148f-3058-4b1e-a10b-483381da5277",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.2",
@@ -26811,13 +26806,13 @@
         "pkg:npm/dmn-js-decision-table@17.7.0",
         "pkg:npm/dmn-js-drd@17.7.0",
         "pkg:npm/dmn-js-literal-expression@17.7.0",
-        "pkg:npm/dmn-js-properties-panel@3.10.0",
+        "pkg:npm/dmn-js-properties-panel@3.11.0",
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/dmn-js@17.7.0",
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.3.3",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.5.10",
+        "pkg:npm/fast-xml-parser@5.5.11",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -27280,7 +27275,7 @@
         "pkg:npm/diagram-js-origin@1.4.0",
         "pkg:npm/diagram-js@15.11.0",
         "pkg:npm/dmn-js-drd@17.7.0",
-        "pkg:npm/dmn-js-properties-panel@3.10.0",
+        "pkg:npm/dmn-js-properties-panel@3.11.0",
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/dmn-js@17.7.0",
         "pkg:npm/inferno@5.6.3",
@@ -27546,7 +27541,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/dmn-js-properties-panel@3.10.0",
+      "ref": "pkg:npm/dmn-js-properties-panel@3.11.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
         "pkg:npm/diagram-js@15.11.0",
@@ -27664,15 +27659,15 @@
     {
       "ref": "pkg:npm/fast-xml-builder@1.1.4",
       "dependsOn": [
-        "pkg:npm/path-expression-matcher@1.2.1"
+        "pkg:npm/path-expression-matcher@1.4.0"
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.5.10",
+      "ref": "pkg:npm/fast-xml-parser@5.5.11",
       "dependsOn": [
         "pkg:npm/fast-xml-builder@1.1.4",
-        "pkg:npm/path-expression-matcher@1.2.1",
-        "pkg:npm/strnum@2.2.2"
+        "pkg:npm/path-expression-matcher@1.4.0",
+        "pkg:npm/strnum@2.2.3"
       ]
     },
     {
@@ -27971,7 +27966,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/path-expression-matcher@1.2.1",
+      "ref": "pkg:npm/path-expression-matcher@1.4.0",
       "dependsOn": []
     },
     {
@@ -28077,7 +28072,7 @@
       ]
     },
     {
-      "ref": "pkg:npm/strnum@2.2.2",
+      "ref": "pkg:npm/strnum@2.2.3",
       "dependsOn": []
     },
     {

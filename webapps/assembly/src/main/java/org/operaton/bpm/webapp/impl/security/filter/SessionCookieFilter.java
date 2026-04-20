@@ -43,7 +43,7 @@ public class SessionCookieFilter implements Filter {
 
   @Override
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-      throws IOException, ServletException {
+          throws IOException, ServletException {
     if ((servletRequest instanceof HttpServletRequest httpServletRequest) && (servletResponse instanceof HttpServletResponse httpServletResponse)) {
       // create a session if none exists yet
       httpServletRequest.getSession();

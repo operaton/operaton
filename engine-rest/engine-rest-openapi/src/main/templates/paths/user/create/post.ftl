@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "createUser"
       tag = "User"
-      summary = "Create"
+      summary = "Create User"
       desc = "Create a new user." />
 
   <@lib.requestBody
@@ -29,8 +29,9 @@
 
     <@lib.response
         code = "204"
-        last = true
         desc = "Request successful." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

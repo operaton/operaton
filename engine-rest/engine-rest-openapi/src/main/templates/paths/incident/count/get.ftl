@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getIncidentsCount"
       tag = "Incident"
-      summary = "Get List Count"
+      summary = "Count Incidents"
       desc = "Queries for the number of incidents that fulfill given parameters. Takes the same parameters as the
       [Get Incidents](${docsUrl}/reference/rest/incident/get-query/) method." />
 
@@ -28,9 +28,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error
                 response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
     }
 }
 

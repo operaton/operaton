@@ -35,13 +35,15 @@
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "The id of the case instance that this variable instance belongs to."
+        deprecated = true
+        desc = "The id of the case instance that this variable instance belongs to. ${lib.cmmnDeprecationNotice}"
     />
     
     <@lib.property
         name = "caseExecutionId"
         type = "string"
-        desc = "The id of the case execution that this variable instance belongs to."
+        deprecated = true
+        desc = "The id of the case execution that this variable instance belongs to. ${lib.cmmnDeprecationNotice}"
     />
     
     <@lib.property

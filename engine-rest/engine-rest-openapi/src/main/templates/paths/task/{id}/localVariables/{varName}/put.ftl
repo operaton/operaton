@@ -68,10 +68,11 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "The variable name is `null`, or the Task id is `null` or does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

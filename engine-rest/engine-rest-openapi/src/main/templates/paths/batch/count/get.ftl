@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getBatchesCount"
       tag = "Batch"
-      summary = "Get List Count"
+      summary = "Count Batches"
       desc = "Requests the number of batches that fulfill the query criteria.
               Takes the same filtering parameters as the [Get Batches](${docsUrl}/reference/rest/batch/get-query/) method." />
 
@@ -36,9 +36,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

@@ -16,24 +16,45 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
+import java.util.Objects;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.health.HealthResult;
+import org.operaton.bpm.engine.health.HealthService;
 import org.springframework.boot.health.contributor.AbstractHealthIndicator;
 import org.springframework.boot.health.contributor.Health.Builder;
 import org.springframework.util.Assert;
 
-import org.operaton.bpm.engine.ProcessEngine;
+import static java.util.Objects.requireNonNull;
 
 public class ProcessEngineHealthIndicator extends AbstractHealthIndicator {
 
   private final ProcessEngine processEngine;
+  private final HealthService healthService;
 
-  public ProcessEngineHealthIndicator(ProcessEngine processEngine) {
-    Assert.notNull(processEngine, "processEngine must not be null");
-    this.processEngine = processEngine;
+  public ProcessEngineHealthIndicator(ProcessEngine processEngine, HealthService healthService) {
+    this.processEngine = requireNonNull(processEngine, "processEngine must not be null");
+    this.healthService = requireNonNull(healthService, "healthService must not be null");
   }
 
   @Override
   protected void doHealthCheck(Builder builder) {
-    builder.up().withDetail("name", processEngine.getName());
-  }
+    HealthResult result = healthService.check();
 
+    if ("UP".equalsIgnoreCase(result.status())) {
+      builder.up();
+    } else if ("DOWN".equalsIgnoreCase(result.status())) {
+      builder.down();
+    } else {
+      // Propagate UNKNOWN and any custom status strings as-is
+      builder.status(result.status());
+    }
+
+    builder.withDetail("name", processEngine.getName());
+    builder.withDetail("timestamp", result.timestamp());
+
+    if (result.version() != null) {
+      builder.withDetail("version", result.version());
+    }
+    result.details().forEach(builder::withDetail);
+  }
 }

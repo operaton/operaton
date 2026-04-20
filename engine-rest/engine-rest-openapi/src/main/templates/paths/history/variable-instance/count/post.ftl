@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricVariableInstancesCount"
       tag = "Historic Variable Instance"
-      summary = "Get Variable Instance Count (POST)"
+      summary = "Count Historic Variable Instances"
       desc = "Queries for historic variable instances that fulfill the given parameters.
               This method takes the same message body as the
               [Get Variable Instances (POST)](${docsUrl}/reference/rest/history/variable-instance/post-variable-instance-query/)
@@ -47,8 +47,9 @@
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

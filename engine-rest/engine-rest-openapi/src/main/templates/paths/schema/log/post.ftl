@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "querySchemaLog"
       tag = "Schema Log"
-      summary = "Get List (POST)"
+      summary = "List Schema Logs"
       desc = "Queries for schema log entries that fulfill given parameters." />
 
   "parameters" : [
@@ -29,7 +29,6 @@
         code = "200"
         dto = "SchemaLogEntryDto"
         array = true
-        last = true
         desc = "Request successful.
                 **Note**: In order to get any results a user of group operaton-admin must be
                 authenticated."
@@ -44,6 +43,8 @@
                          }
                        ]
                      }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

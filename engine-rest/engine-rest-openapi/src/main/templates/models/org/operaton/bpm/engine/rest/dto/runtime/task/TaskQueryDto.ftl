@@ -94,12 +94,14 @@
     <@lib.property
         name = "caseInstanceId"
         type = "string"
-        desc = "Restrict to tasks that belong to case instances with the given id." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to case instances with the given id. ${lib.cmmnDeprecationNotice}" />
   
     <@lib.property
         name = "caseInstanceBusinessKey"
         type = "string"
-        desc = "Restrict to tasks that belong to case instances with the given business key." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to case instances with the given business key. ${lib.cmmnDeprecationNotice}" />
   
     <@lib.property
         name = "caseInstanceBusinessKeyLike"
@@ -110,12 +112,14 @@
     <@lib.property
         name = "caseDefinitionId"
         type = "string"
-        desc = "Restrict to tasks that belong to a case definition with the given id." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to a case definition with the given id. ${lib.cmmnDeprecationNotice}" />
   
     <@lib.property
         name = "caseDefinitionKey"
         type = "string"
-        desc = "Restrict to tasks that belong to a case definition with the given key." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to a case definition with the given key. ${lib.cmmnDeprecationNotice}" />
   
     <@lib.property
         name = "caseDefinitionName"
@@ -131,7 +135,8 @@
     <@lib.property
         name = "caseExecutionId"
         type = "string"
-        desc = "Restrict to tasks that belong to a case execution with the given id." />
+        deprecated = true
+        desc = "Restrict to tasks that belong to a case execution with the given id. ${lib.cmmnDeprecationNotice}" />
   
     <@lib.property
         name = "activityInstanceIdIn"

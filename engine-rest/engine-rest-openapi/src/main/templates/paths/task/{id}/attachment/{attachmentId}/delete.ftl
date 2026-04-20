@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "deleteAttachment"
       tag = "Task Attachment"
-      summary = "Delete"
+      summary = "Delete Task Attachment"
       desc = "Removes an attachment from a task by id." />
 
   "parameters" : [
@@ -41,10 +41,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "A Task Attachment for the given task id and attachment id does not exist. See the
                 [Introduction](/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

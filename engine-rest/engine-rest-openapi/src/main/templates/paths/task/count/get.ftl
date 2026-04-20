@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getTasksCount"
       tag = "Task"
-      summary = "Get List Count"
+      summary = "Count Tasks"
       desc = "Retrieves the number of tasks that fulfill a provided filter. Corresponds to the size
               of the result set when using the [Get Tasks](${docsUrl}/reference/rest/task/) method.
 
@@ -37,10 +37,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

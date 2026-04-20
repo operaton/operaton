@@ -20,11 +20,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.operaton.bpm.engine.ProcessEngine;
+import org.operaton.bpm.engine.health.HealthResult;
+import org.operaton.bpm.engine.health.HealthService;
 import org.springframework.boot.health.contributor.Health;
 import org.springframework.boot.health.contributor.Status;
 
-import org.operaton.bpm.engine.ProcessEngine;
+import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -38,17 +42,62 @@ class ProcessEngineHealthIndicatorTest {
   @Mock
   private ProcessEngine processEngine;
 
+  @Mock
+  private HealthService healthService;
+
   @Test
-  void nullTest() {
-    assertThatIllegalArgumentException().isThrownBy(() -> new ProcessEngineHealthIndicator(null))
-      .withMessage("processEngine must not be null");
+  void nullProcessEngineTest() {
+    assertThatNullPointerException()
+            .isThrownBy(() -> new ProcessEngineHealthIndicator(null, healthService))
+            .withMessage("processEngine must not be null");
+  }
+
+  @Test
+  void nullHealthServiceTest() {
+    assertThatNullPointerException()
+            .isThrownBy(() -> new ProcessEngineHealthIndicator(processEngine, null))
+            .withMessage("healthService must not be null");
   }
 
   @Test
   void upTest() {
     when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
-    Health health = new ProcessEngineHealthIndicator(processEngine).health();
+    when(healthService.check()).thenReturn(new HealthResult("UP", null, null, Map.of()));
+
+    Health health = new ProcessEngineHealthIndicator(processEngine, healthService).health();
     assertThat(health.getStatus()).isEqualTo(Status.UP);
     assertThat(health.getDetails()).containsEntry("name", PROCESS_ENGINE_NAME);
+  }
+
+  @Test
+  void downTest() {
+    when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
+    when(healthService.check()).thenReturn(new HealthResult("DOWN", null, null, Map.of()));
+
+    Health health = new ProcessEngineHealthIndicator(processEngine, healthService).health();
+
+    assertThat(health.getStatus()).isEqualTo(Status.DOWN);
+    assertThat(health.getDetails()).containsEntry("name", PROCESS_ENGINE_NAME);
+  }
+
+  @Test
+  void unknownStatusTest() {
+    when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
+    when(healthService.check()).thenReturn(new HealthResult("UNKNOWN", null, null, Map.of()));
+
+    Health health = new ProcessEngineHealthIndicator(processEngine, healthService).health();
+
+    assertThat(health.getStatus().getCode()).isEqualTo("UNKNOWN");
+    assertThat(health.getDetails()).containsEntry("name", PROCESS_ENGINE_NAME);
+  }
+
+  @Test
+  void customStatusTest() {
+    when(processEngine.getName()).thenReturn(PROCESS_ENGINE_NAME);
+    when(healthService.check()).thenReturn(new HealthResult("DEGRADED", null, null, Map.of()));
+
+    Health health = new ProcessEngineHealthIndicator(processEngine, healthService).health();
+
+    assertThat(health.getStatus().getCode()).isEqualTo("DEGRADED");
   }
 }

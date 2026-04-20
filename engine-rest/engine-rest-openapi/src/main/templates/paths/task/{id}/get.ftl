@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getTask"
       tag = "Task"
-      summary = "Get"
+      summary = "Get Task"
       desc = "Retrieves a task by id." />
 
   "parameters" : [
@@ -178,10 +178,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Task with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

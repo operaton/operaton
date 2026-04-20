@@ -103,9 +103,10 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 The variable value or type is invalid, for example if no filename is set."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

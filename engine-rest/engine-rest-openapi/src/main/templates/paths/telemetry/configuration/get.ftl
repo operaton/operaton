@@ -26,8 +26,15 @@
     <@lib.response
         code = "401"
         dto = "ExceptionDto"
-        last = true
         desc = "If the user who perform the operation is not a <b>operaton-admin</b> user." />
+
+    <@lib.response
+        code = "500"
+        dto = "ExceptionDto"
+        last = true
+        desc = "An internal server error occurred.
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+                for the error response format." />
 
 
   }

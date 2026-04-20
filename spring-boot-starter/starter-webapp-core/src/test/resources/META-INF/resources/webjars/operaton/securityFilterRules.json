@@ -1,0 +1,10 @@
+{
+  "pathFilter": {
+    "deniedPaths" : [
+      { "path": "/api/.*", "methods" : "*" }
+    ],
+    "allowedPaths" : [
+      { "path": "/api/.*", "methods" : "GET" }
+    ]
+  }
+}

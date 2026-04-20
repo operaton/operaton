@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "setJobRetriesAsyncOperation"
       tag = "Job"
-      summary = "Set Job Retries Async (POST)"
+      summary = "Set Job Retries Async"
       desc = "Create a batch to set retries of jobs asynchronously."
   />
 
@@ -68,8 +68,9 @@
                 retry count is not specified. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

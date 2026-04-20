@@ -17,7 +17,8 @@
       name = "caseInstanceId"
       location = "query"
       type = "string"
-      desc = "Filter by case instance id."/>
+      deprecated = true
+      desc = "Filter by case instance id. ${lib.cmmnDeprecationNotice}"/>
 
   <@lib.parameter name = "processDefinitionId"
       location = "query"

@@ -106,8 +106,15 @@
         desc = "Authorization with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.response
+        code = "500"
+        dto = "ExceptionDto"
+        last = true
+        desc = "An internal server error occurred.
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+                for the error response format." />
 
   }
 

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getProcessDefinitionsCount"
       tag = "Process Definition"
-      summary = "Get List Count"
+      summary = "Count Process Definitions"
       desc = "Requests the number of process definitions that fulfill the query criteria.
               Takes the same filtering parameters as the [Get Definitions](${docsUrl}/reference/rest/process-definition/get-query/) method." />
 
@@ -32,11 +32,12 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid.
                 See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

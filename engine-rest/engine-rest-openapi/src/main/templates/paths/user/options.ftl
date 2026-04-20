@@ -18,7 +18,6 @@
         mediaType = "application/json"
         code = "200"
         dto = "ResourceOptionsDto"
-        last = true
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "GET `/user`",
@@ -42,6 +41,8 @@
                           ]
                         }
                      }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
     }
 }
 </#macro>

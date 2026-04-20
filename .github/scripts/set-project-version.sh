@@ -96,6 +96,14 @@ done
 echo "🔄 Updating version in jreleaser.yml"
 sed -i '' -E "s/previousTagName: v.+/previousTagName: v$CURRENT_VERSION_WITHOUT_SNAPSHOT/" jreleaser.yml
 
+echo "🔄 Updating version in .github/jreleaser/changelog.tpl"
+if [[ $NEW_VERSION_WITHOUT_SNAPSHOT =~ ^([0-9]+)\.([0-9]+)\. ]]; then
+  MAJOR="${BASH_REMATCH[1]}"
+  MINOR="${BASH_REMATCH[2]}"
+  NEW_VERSION_UNDERSCORE="${MAJOR}_${MINOR}"
+  sed -i '' "s|release-notes/[0-9_]*/|release-notes/${NEW_VERSION_UNDERSCORE}/|" .github/jreleaser/changelog.tpl
+fi
+
 MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json  .)
 if [ -n "$MISSED_FILES" ]; then
   echo "⚠️ The following files still contain the old version:"

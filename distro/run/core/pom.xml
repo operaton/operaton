@@ -65,11 +65,15 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- spring-webmvc is not a direct requirement of run-core, but is required by modules/webapps.
-      To avoid having it on the classpath twice, it is included here and becomes part of the uberjar.-->
+    <!-- spring-boot-starter-web is required for two reasons:
+         1. It provides Spring MVC, which is needed by the /health REST endpoint (HealthController)
+            and by the Spring Boot Actuator endpoints exposed in Operaton Run.
+         2. The webapps overlay (modules/webapps) also requires spring-webmvc at runtime. Including
+            spring-boot-starter-web here ensures the dependency appears exactly once on the classpath
+            and becomes part of the uberjar, avoiding duplicate classpath entries. -->
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-webmvc</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
     <!-- Graal.js -->
     <dependency>
@@ -111,6 +115,11 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-resttestclient</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webmvc-test</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

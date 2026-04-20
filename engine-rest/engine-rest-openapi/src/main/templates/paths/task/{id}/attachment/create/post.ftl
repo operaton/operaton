@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "addAttachment"
       tag = "Task Attachment"
-      summary = "Create"
+      summary = "Create Task Attachment"
       desc = "Creates an attachment for a task." />
 
   "parameters" : [
@@ -81,9 +81,10 @@
     <@lib.response
         code = "403"
         dto = "AuthorizationExceptionDto"
-        last = true
         desc = "The history of the engine is disabled. See the [Introduction](/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

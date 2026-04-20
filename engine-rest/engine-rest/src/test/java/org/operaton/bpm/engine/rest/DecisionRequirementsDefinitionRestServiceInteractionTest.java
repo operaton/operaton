@@ -20,6 +20,7 @@ package org.operaton.bpm.engine.rest;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Collections;
@@ -279,7 +280,7 @@ public class DecisionRequirementsDefinitionRestServiceInteractionTest extends Ab
     return new FileInputStream(file);
   }
 
-  protected File getFile() throws URISyntaxException {
+  protected File getFile() throws URISyntaxException, FileNotFoundException {
     return getFile("/decisions/decision-requirements-diagram.png");
   }
 }

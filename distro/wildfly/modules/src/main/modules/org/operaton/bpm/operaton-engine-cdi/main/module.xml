@@ -20,17 +20,23 @@
 
   <dependencies>
 
+    <!-- JDK -->
     <module name="java.base" />
     <module name="java.logging" />
     <module name="java.naming" />
-    <module name="jakarta.transaction.api" />
+
+    <!-- Jakarta CDI core -->
     <module name="jakarta.enterprise.api" />
-    <module name="jakarta.enterprise.concurrent.api" />
     <module name="jakarta.inject.api" />
     <module name="jakarta.interceptor.api" />
     <module name="jakarta.el.api" />
-    <module name="jakarta.faces.api" />
 
+    <!-- optional Jakarta APIs (not all deployments use JSF, managed executors, or JTA) -->
+    <module name="jakarta.faces.api" optional="true" />
+    <module name="jakarta.enterprise.concurrent.api" optional="true" />
+    <module name="jakarta.transaction.api" optional="true" />
+
+    <!-- Operaton engine -->
     <module name="org.operaton.bpm.operaton-engine" />
 
   </dependencies>

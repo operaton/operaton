@@ -16,10 +16,14 @@
  */
 package org.operaton.bpm.engine.cdi.impl.el;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import jakarta.el.ELContext;
 import jakarta.el.ELResolver;
 import jakarta.enterprise.inject.spi.BeanManager;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.cdi.impl.util.BeanManagerLookup;
 import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 
@@ -32,30 +36,46 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
  */
 public class CdiResolver extends ELResolver {
 
+  private static final Logger LOG = Logger.getLogger(CdiResolver.class.getName());
+
   protected BeanManager getBeanManager() {
-    return BeanManagerLookup.getBeanManager();
+    try {
+      return BeanManagerLookup.getBeanManager();
+    } catch (ProcessEngineException e) {
+      LOG.log(Level.FINE, "BeanManager not available, CDI resolution will be skipped", e);
+      return null;
+    }
   }
 
   protected ELResolver getWrappedResolver() {
     BeanManager beanManager = getBeanManager();
+    if (beanManager == null) {
+      return null;
+    }
     return beanManager.getELResolver();
   }
 
   @Override
   public Class< ? > getCommonPropertyType(ELContext context, Object base) {
-    return getWrappedResolver().getCommonPropertyType(context, base);
+    ELResolver resolver = getWrappedResolver();
+    return resolver != null ? resolver.getCommonPropertyType(context, base) : null;
   }
 
   @Override
   public Class< ? > getType(ELContext context, Object base, Object property) {
-    return getWrappedResolver().getType(context, base, property);
+    ELResolver resolver = getWrappedResolver();
+    return resolver != null ? resolver.getType(context, base, property) : null;
   }
 
   @Override
   public Object getValue(ELContext context, Object base, Object property) {
     //we need to resolve a bean only for the first "member" of expression, e.g. bean.property1.property2
     if (base == null) {
-      Object result = ProgrammaticBeanLookup.lookup(property.toString(), getBeanManager());
+      BeanManager beanManager = getBeanManager();
+      if (beanManager == null) {
+        return null;
+      }
+      Object result = ProgrammaticBeanLookup.lookup(property.toString(), beanManager);
       if (result != null) {
         context.setPropertyResolved(true);
       }
@@ -67,17 +87,22 @@ public class CdiResolver extends ELResolver {
 
   @Override
   public boolean isReadOnly(ELContext context, Object base, Object property) {
-    return getWrappedResolver().isReadOnly(context, base, property);
+    ELResolver resolver = getWrappedResolver();
+    return resolver != null ? resolver.isReadOnly(context, base, property) : true;
   }
 
   @Override
   public void setValue(ELContext context, Object base, Object property, Object value) {
-    getWrappedResolver().setValue(context, base, property, value);
+    ELResolver resolver = getWrappedResolver();
+    if (resolver != null) {
+      resolver.setValue(context, base, property, value);
+    }
   }
 
   @Override
   public Object invoke(ELContext context, Object base, Object method, java.lang.Class< ? >[] paramTypes, Object[] params) {
-    return getWrappedResolver().invoke(context, base, method, paramTypes, params);
+    ELResolver resolver = getWrappedResolver();
+    return resolver != null ? resolver.invoke(context, base, method, paramTypes, params) : null;
   }
 
 }

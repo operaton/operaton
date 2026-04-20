@@ -73,8 +73,8 @@ public final class BeanManagerLookup {
     // CDI 1.1+ standard programmatic lookup (Jakarta CDI 4.1)
     try {
       return CDI.current().getBeanManager();
-    } catch (IllegalStateException e) {
-      // no CDI container available
+    } catch (RuntimeException e) {
+      // no CDI container available or accessible from this classloader
     }
 
     // legacy JNDI fallback for application servers

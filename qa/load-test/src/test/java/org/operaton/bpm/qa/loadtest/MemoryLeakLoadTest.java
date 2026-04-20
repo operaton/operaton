@@ -135,7 +135,7 @@ class MemoryLeakLoadTest {
     // Phase 2: Sustained load with memory monitoring
     LOG.info("=== Phase 2: Sustained load ({} seconds) ===", SUSTAINED_SECONDS);
     List<Long> memorySamples = new CopyOnWriteArrayList<>();
-    int sampleIntervalSeconds = Math.max(1, SUSTAINED_SECONDS / MEMORY_SAMPLES);
+    int sampleIntervalSeconds = Math.max(1, (int) Math.ceil((double) SUSTAINED_SECONDS / MEMORY_SAMPLES));
 
     Thread sampler = new Thread(() -> {
       try {

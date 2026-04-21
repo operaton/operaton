@@ -52,6 +52,7 @@ auto-merge-rules:
       - 'com.jayway.jsonpath:json-path'
       - 'com.networknt:json-schema-validator'
       - 'com.nimbusds:nimbus-jose-jwt'
+      - 'com.tngtech.archunit:archunit-junit4'
       - 'com.unboundid:unboundid-ldapsdk'
       - 'commons-codec:commons-codec'
       - 'commons-io:commons-io'

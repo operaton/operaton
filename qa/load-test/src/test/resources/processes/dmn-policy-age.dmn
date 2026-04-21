@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="dmn-policy-age" name="Policy Age" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.45.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.24.0">
+  <decision id="decision-policy-age" name="Policy Age" camunda:historyTimeToLive="30">
+    <decisionTable id="DecisionTable_1o9fhel" hitPolicy="FIRST">
+      <input id="Input_1" label="age" camunda:inputVariable="age">
+        <inputExpression id="InputExpression_1" typeRef="number">
+          <text>age</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="POLICY_RESULT" typeRef="string">
+        <outputValues id="UnaryTests_0khyx5p">
+          <text>"DENIED", "APPROVED"</text>
+        </outputValues>
+      </output>
+      <output id="OutputClause_1ytzvfg" name="POLICY_NAME" typeRef="string">
+        <outputValues id="UnaryTests_0sjqxrq">
+          <text>"POLICY_AGE"</text>
+        </outputValues>
+      </output>
+      <output id="OutputClause_0ob0vgh" name="POLICY_REASON" typeRef="string">
+        <outputValues id="UnaryTests_1nd4ovd">
+          <text>"UNDER_18", "ABOVE_65", "ACCEPTED_AGE"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_0r1xulh">
+        <inputEntry id="UnaryTests_0up38wq">
+          <text>&lt; 18</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00e8vtg">
+          <text>"DENIED"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1xhwbzl">
+          <text>"POLICY_AGE"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1e49d6e">
+          <text>"UNDER_18"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02326vu">
+        <inputEntry id="UnaryTests_1yxk25g">
+          <text>&lt;= 65</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_188znis">
+          <text>"APPROVED"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0q1q4rj">
+          <text>"POLICY_AGE"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0z0n4uq">
+          <text>"ACCEPTED_AGE"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ddjexp">
+        <inputEntry id="UnaryTests_0vsgmd1">
+          <text>&gt; 65</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ecclhw">
+          <text>"DENIED"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_101i57a">
+          <text>"POLICY_AGE"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hmcsra">
+          <text>"ABOVE_65"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="Decision_0fz6ez3_di" dmnElementRef="decision-policy-age">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

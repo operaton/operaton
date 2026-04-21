@@ -1,0 +1,657 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" id="Definitions_1pepogg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.46.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.24.0">
+  <bpmn:error id="POLICY_DENIED" name="DENIED" errorCode="DENIED" />
+  <bpmn:error id="DONE" name="DONE" errorCode="DONE" />
+  <bpmn:collaboration id="Collaboration_08k4efe">
+    <bpmn:participant id="Participant_0l2xv0s" name="Credit Eligibility" processRef="credit-eligibility" />
+  </bpmn:collaboration>
+  <bpmn:process id="credit-eligibility" name="Credit Eligibility" processType="Public" isExecutable="true" camunda:historyTimeToLive="30">
+    <bpmn:documentation id="documentation_WrE1HA" />
+    <bpmn:extensionElements>
+      <open-bpmn:auto-align />
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_0ulq6x1">
+      <bpmn:lane id="Lane_1vy9zwg" name="Employment Service">
+        <bpmn:flowNodeRef>http-task-termination</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gtw-termination</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>http-task-leave</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gtw-leave</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0yamkws" name="Credit Policy">
+        <bpmn:flowNodeRef>decision-task-fee</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>http-task-customer</bpmn:flowNodeRef>
+
+        <bpmn:flowNodeRef>ex-gtw-policy</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>task-script-variables</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>task-set-denied-termination</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1u3rf5o</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0zv3ml6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>task-set-denied-leave</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gtw-category</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>task-set-denied-category</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0jkybwo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>decision-task-age</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ex-gtw-age</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0oxt4lr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_14e2i6h</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>esp-denied</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>esp-done</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>decision-task-tenure</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>gtw-tenure</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1publ79</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:task id="decision-task-fee" name="Fee Policy">
+      <bpmn:incoming>Flow_1bj01wn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0fecb01</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:serviceTask id="http-task-customer" name="Consulta Dados do Cliente">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">${BASE_URL}/api/customers/${INPUT.prop("customerId").stringValue()}</camunda:inputParameter>
+            <camunda:outputParameter name="customerResponse">${response}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0wi7cye</bpmn:incoming>
+      <bpmn:incoming>Flow_0fecb01</bpmn:incoming>
+      <bpmn:outgoing>Flow_0q75ssp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_02pljk9" sourceRef="StartEvent_1" targetRef="task-script-variables">
+      <bpmn:documentation id="documentation_2h5mKA" />
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_01lb6nt" sourceRef="task-script-variables" targetRef="ex-gtw-policy" />
+    <bpmn:sequenceFlow id="Flow_1bj01wn" name="OFFER" sourceRef="ex-gtw-policy" targetRef="decision-task-fee">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${INPUT.prop("policy").stringValue() == "OFFER"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0wi7cye" sourceRef="ex-gtw-policy" targetRef="http-task-customer">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${INPUT.prop("policy").stringValue() == "ELIGIBILITY"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0fecb01" sourceRef="decision-task-fee" targetRef="http-task-customer" />
+
+    <bpmn:sequenceFlow id="Flow_0q75ssp" sourceRef="http-task-customer" targetRef="http-task-termination" />
+    <bpmn:serviceTask id="http-task-termination" name="Check Termination">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">${EMPLOYMENT_API_URL}/api/employment/termination?id=${S(customerResponse).prop("document").stringValue()}</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="API-KEY">${API_KEY}</camunda:entry>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="terminationResponse">${response}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0q75ssp</bpmn:incoming>
+      <bpmn:outgoing>Flow_0j5d7g0</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="gtw-termination" name="Terminated?" default="Flow_rescisao_no">
+      <bpmn:incoming>Flow_0j5d7g0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yhac0c</bpmn:outgoing>
+      <bpmn:outgoing>Flow_rescisao_no</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0j5d7g0" sourceRef="http-task-termination" targetRef="gtw-termination" />
+    <bpmn:sequenceFlow id="Flow_0yhac0c" name="NOT" sourceRef="gtw-termination" targetRef="task-set-denied-termination">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${S(terminationResponse).prop("hasTermination").boolValue() == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_rescisao_no" name="YES" sourceRef="gtw-termination" targetRef="http-task-leave" />
+    <bpmn:sequenceFlow id="Flow_to_throw_denied" sourceRef="task-set-denied-leave" targetRef="Event_0zv3ml6" />
+    <bpmn:exclusiveGateway id="ex-gtw-policy" name="Policy?">
+      <bpmn:incoming>Flow_01lb6nt</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bj01wn</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0wi7cye</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:documentation id="documentation_0aP1hA" />
+      <bpmn:outgoing>Flow_02pljk9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="task-script-variables" name="Variables" scriptFormat="javascript">
+      <bpmn:documentation id="documentation_G6KjwQ" />
+      <bpmn:incoming>Flow_02pljk9</bpmn:incoming>
+      <bpmn:outgoing>Flow_01lb6nt</bpmn:outgoing>
+      <bpmn:script>var Spin = (function () {
+  try { return Java.type("org.operaton.spin.Spin"); } catch (e1) {}
+  return Java.type("org.camunda.spin.Spin");
+})();
+
+execution.setVariable("OUTPUT", Spin.JSON('{"result":"NONE","limit":-1}'));
+
+if (execution.getVariable("BASE_URL") == null) {
+  execution.setVariable("BASE_URL", "http://customer-mock:8080");
+}
+
+if (execution.getVariable("EMPLOYMENT_API_URL") == null) {
+  execution.setVariable("EMPLOYMENT_API_URL", "http://employment-mock:8080");
+}
+
+if (execution.getVariable("API_KEY") == null) {
+  execution.setVariable("API_KEY", "test-api-key");
+}
+
+var Instant = Java.type("java.time.Instant");
+execution.setVariable("START_TIME", Instant.now().toString());</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:scriptTask id="task-set-denied-termination" name="Deny: Termination" scriptFormat="javascript" camunda:autoStoreVariables="true">
+      <bpmn:incoming>Flow_0yhac0c</bpmn:incoming>
+      <bpmn:outgoing>Flow_03zc38p</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("POLICY_RESULT", "DENIED");
+execution.setVariable("POLICY_REASON", "FIRED");
+execution.setVariable("POLICY_NAME", "POLICY_TERMINATION");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1u3rf5o" name="DENIED">
+      <bpmn:incoming>Flow_03zc38p</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_throw_POLICY_DENIED" errorRef="POLICY_DENIED" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_03zc38p" sourceRef="task-set-denied-termination" targetRef="Event_1u3rf5o" />
+    <bpmn:serviceTask id="http-task-leave" name="Check Leave">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">${EMPLOYMENT_API_URL}/api/employment/leave?id=${S(customerResponse).prop("document").stringValue()}</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="API-KEY">${API_KEY}</camunda:entry>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:outputParameter name="leaveResponse">${response}</camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_rescisao_no</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bovla4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1gkeza7" name="NOT" sourceRef="gtw-leave" targetRef="task-set-denied-leave">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${S(leaveResponse).prop("hasLeave").boolValue() == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="gtw-leave" name="On Leave?" default="Flow_0ncwwqi">
+      <bpmn:incoming>Flow_1bovla4</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gkeza7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ncwwqi</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1bovla4" sourceRef="http-task-leave" targetRef="gtw-leave" />
+    <bpmn:endEvent id="Event_0zv3ml6" name="DENIED">
+      <bpmn:incoming>Flow_to_throw_denied</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_throw_DENIED" errorRef="POLICY_DENIED" />
+    </bpmn:endEvent>
+    <bpmn:scriptTask id="task-set-denied-leave" name="Deny: Leave" scriptFormat="javascript" camunda:autoStoreVariables="true">
+      <bpmn:incoming>Flow_1gkeza7</bpmn:incoming>
+      <bpmn:outgoing>Flow_to_throw_denied</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("POLICY_RESULT", "DENIED");
+execution.setVariable("POLICY_REASON", "LEAVE");
+execution.setVariable("POLICY_NAME", "POLICY_LEAVE");</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0ncwwqi" name="YES" sourceRef="gtw-leave" targetRef="gtw-category" />
+    <bpmn:sequenceFlow id="Flow_025w7zm" name="NOT" sourceRef="gtw-category" targetRef="task-set-denied-category">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${S(customerResponse).prop("employmentRelationship").prop("category").numberValue() != 101}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:exclusiveGateway id="gtw-category" name="General Employee?" default="Flow_0ug073x">
+      <bpmn:incoming>Flow_0ncwwqi</bpmn:incoming>
+      <bpmn:outgoing>Flow_025w7zm</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0ug073x</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0ug073x" name="YES" sourceRef="gtw-category" targetRef="decision-task-age" />
+    <bpmn:sequenceFlow id="Flow_1vtp3jb" sourceRef="task-set-denied-category" targetRef="Event_0jkybwo" />
+    <bpmn:scriptTask id="task-set-denied-category" name="Deny: Category" scriptFormat="javascript">
+      <bpmn:incoming>Flow_025w7zm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vtp3jb</bpmn:outgoing>
+      <bpmn:script>execution.setVariable("POLICY_RESULT", "DENIED");
+execution.setVariable("POLICY_REASON", "CATEGORY_NOT_EQUAL_101");
+execution.setVariable("POLICY_NAME", "POLICY_CATEGORY");
+
+var Spin = (function () {
+  try { return Java.type("org.operaton.spin.Spin"); } catch (e1) {}
+  return Java.type("org.camunda.spin.Spin");
+})();
+
+var raw = execution.getVariable("customerResponse");
+// Se vier como String JSON (caso típico após o connector):
+var json = Spin.JSON(raw);
+// Se em algum fluxo já for nó Spin, use em vez disso: var json = Spin.S(raw);
+
+var category = json.prop("employmentRelationship").prop("category").numberValue();
+
+execution.setVariable("category", category);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_0jkybwo" name="DENIED">
+      <bpmn:incoming>Flow_1vtp3jb</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_060dv3b" errorRef="POLICY_DENIED" />
+    </bpmn:endEvent>
+    <bpmn:businessRuleTask id="decision-task-age" name="Age Policy" camunda:resultVariable="POLICY_AGE_RESULT" camunda:decisionRef="decision-policy-age" camunda:mapDecisionResult="singleResult">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="age">${S(INPUT).prop("age").numberValue()}</camunda:inputParameter>
+          <camunda:outputParameter name="POLICY_RESULT">${POLICY_AGE_RESULT.get("POLICY_RESULT")}</camunda:outputParameter>
+          <camunda:outputParameter name="POLICY_NAME">${POLICY_AGE_RESULT.get("POLICY_NAME")}</camunda:outputParameter>
+          <camunda:outputParameter name="POLICY_REASON">${POLICY_AGE_RESULT.get("POLICY_REASON")}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ug073x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bllqfw</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:sequenceFlow id="Flow_1bllqfw" sourceRef="decision-task-age" targetRef="ex-gtw-age" />
+    <bpmn:exclusiveGateway id="ex-gtw-age" name="Age Approved?" default="Flow_0h6onnd">
+      <bpmn:incoming>Flow_1bllqfw</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h6onnd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_10zbgxk</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="Event_0oxt4lr" name="DENIED">
+      <bpmn:incoming>Flow_0h6onnd</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_0lfbfxh" errorRef="POLICY_DENIED" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0h6onnd" name="NOT" sourceRef="ex-gtw-age" targetRef="Event_0oxt4lr" />
+    <bpmn:endEvent id="Event_14e2i6h" name="DONE">
+      <bpmn:incoming>Flow_08gyffq</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_177vdfm" errorRef="DONE" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_10zbgxk" name="YES" sourceRef="ex-gtw-age" targetRef="decision-task-tenure">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${POLICY_RESULT == "APPROVED"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:subProcess id="esp-denied" name="DENIED" triggeredByEvent="true">
+      <bpmn:extensionElements />
+      <bpmn:startEvent id="Event_1ey5upm">
+        <bpmn:outgoing>Flow_0fb2bdq</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0o6qoum" errorRef="POLICY_DENIED" />
+      </bpmn:startEvent>
+      <bpmn:scriptTask id="Activity_0iq40ma" name="DENIED&#10;OUT" scriptFormat="javascript">
+        <bpmn:incoming>Flow_0fb2bdq</bpmn:incoming>
+        <bpmn:outgoing>Flow_0yb5tq0</bpmn:outgoing>
+        <bpmn:script>var ObjectMapper = Java.type("com.fasterxml.jackson.databind.ObjectMapper");
+var Spin = (function () {
+  try { return Java.type("org.operaton.spin.Spin"); } catch (e1) {}
+  return Java.type("org.camunda.spin.Spin");
+})();
+
+var mapper = new ObjectMapper();
+var output = mapper.createObjectNode();
+
+output.put("result", "DENIED");
+output.put("limit", -1);
+
+execution.setVariable("OUTPUT", Spin.JSON(mapper.writeValueAsString(output)));</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_0fb2bdq" sourceRef="Event_1ey5upm" targetRef="Activity_0iq40ma" />
+      <bpmn:endEvent id="Event_0vgu2b9" name="DONE">
+        <bpmn:incoming>Flow_0yb5tq0</bpmn:incoming>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_0kdt3ht" errorRef="DONE" />
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0yb5tq0" sourceRef="Activity_0iq40ma" targetRef="Event_0vgu2b9" />
+    </bpmn:subProcess>
+    <bpmn:subProcess id="esp-done" name="DONE" triggeredByEvent="true">
+      <bpmn:startEvent id="Event_0ohcs35">
+        <bpmn:outgoing>Flow_1dds5uk</bpmn:outgoing>
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_1xzu8nr" errorRef="DONE" />
+      </bpmn:startEvent>
+      <bpmn:endEvent id="Event_1poud80">
+        <bpmn:incoming>Flow_16rstid</bpmn:incoming>
+        <bpmn:terminateEventDefinition id="TerminateEventDefinition_0sff43e" />
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_1dds5uk" sourceRef="Event_0ohcs35" targetRef="Activity_1uahuy0" />
+      <bpmn:scriptTask id="Activity_1uahuy0" name="DONE&#10;OUT" scriptFormat="javascript">
+        <bpmn:incoming>Flow_1dds5uk</bpmn:incoming>
+        <bpmn:outgoing>Flow_16rstid</bpmn:outgoing>
+        <bpmn:script>var ObjectMapper = Java.type("com.fasterxml.jackson.databind.ObjectMapper");
+var Spin = (function () {
+  try { return Java.type("org.operaton.spin.Spin"); } catch (e1) {}
+  return Java.type("org.camunda.spin.Spin");
+})();
+
+var mapper = new ObjectMapper();
+var output = mapper.createObjectNode();
+
+output.put("result", "DENIED");
+output.put("elegible", false);
+output.put("limit", -1);
+
+execution.setVariable("OUTPUT", Spin.JSON(mapper.writeValueAsString(output)));</bpmn:script>
+      </bpmn:scriptTask>
+      <bpmn:sequenceFlow id="Flow_16rstid" sourceRef="Activity_1uahuy0" targetRef="Event_1poud80" />
+    </bpmn:subProcess>
+    <bpmn:businessRuleTask id="decision-task-tenure" name="Tenure Policy" camunda:resultVariable="POLICY_TENURE_RESULT" camunda:decisionRef="decision-policy-tenure" camunda:mapDecisionResult="singleResult">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="tenure">${S(customerResponse).prop("employmentRelationship").prop("toj").numberValue()}</camunda:inputParameter>
+          <camunda:outputParameter name="POLICY_RESULT">${POLICY_TENURE_RESULT.get("POLICY_RESULT")}</camunda:outputParameter>
+          <camunda:outputParameter name="POLICY_NAME">${POLICY_TENURE_RESULT.get("POLICY_NAME")}</camunda:outputParameter>
+          <camunda:outputParameter name="POLICY_REASON">${POLICY_TENURE_RESULT.get("POLICY_REASON")}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_10zbgxk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wh5m6p</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="gtw-tenure" name="Tenure Approved?" default="Flow_1eyz07s">
+      <bpmn:incoming>Flow_1wh5m6p</bpmn:incoming>
+      <bpmn:outgoing>Flow_1eyz07s</bpmn:outgoing>
+      <bpmn:outgoing>Flow_08gyffq</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1wh5m6p" sourceRef="decision-task-tenure" targetRef="gtw-tenure" />
+    <bpmn:endEvent id="Event_1publ79" name="DENIED">
+      <bpmn:incoming>Flow_1eyz07s</bpmn:incoming>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_1kdxqh3" errorRef="POLICY_DENIED" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1eyz07s" name="NOT" sourceRef="gtw-tenure" targetRef="Event_1publ79" />
+    <bpmn:sequenceFlow id="Flow_08gyffq" name="YES" sourceRef="gtw-tenure" targetRef="Event_14e2i6h">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${POLICY_RESULT == "APPROVED"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_08k4efe">
+      <bpmndi:BPMNShape id="Participant_0l2xv0s_di" bpmnElement="Participant_0l2xv0s" isHorizontal="true">
+        <dc:Bounds x="130" y="110" width="3450" height="910" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0yamkws_di" bpmnElement="Lane_0yamkws" isHorizontal="true">
+        <dc:Bounds x="160" y="370" width="3420" height="650" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1vy9zwg_di" bpmnElement="Lane_1vy9zwg" isHorizontal="true">
+        <dc:Bounds x="160" y="110" width="3420" height="260" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0h59z85_di" bpmnElement="decision-task-fee">
+        <dc:Bounds x="620" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1sj7e3i_di" bpmnElement="http-task-customer">
+        <dc:Bounds x="620" y="610" width="100" height="80" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNShape id="BPMNShape_1oq68tc" bpmnElement="http-task-termination">
+        <dc:Bounds x="980" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1cxwfdj_di" bpmnElement="gtw-termination" isMarkerVisible="true">
+        <dc:Bounds x="1155" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1141" y="211" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_16pcj70_di" bpmnElement="ex-gtw-policy" isMarkerVisible="true">
+        <dc:Bounds x="485" y="515" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="545" y="533" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="202" y="522" width="36" height="36" />
+        <bpmndi:BPMNLabel id="BPMNLabel_zKAjmQ">
+          <dc:Bounds x="150" y="141" width="100" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y6b4i7_di" bpmnElement="task-script-variables">
+        <dc:Bounds x="310" y="500" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task-set-denied-termination_di" bpmnElement="task-set-denied-termination">
+        <dc:Bounds x="1130" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1u3rf5o_di" bpmnElement="Event_1u3rf5o">
+        <dc:Bounds x="1162" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1159" y="673" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_150c0ma" bpmnElement="http-task-leave">
+        <dc:Bounds x="1320" y="220" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_052in10_di" bpmnElement="gtw-leave" isMarkerVisible="true">
+        <dc:Bounds x="1535" y="235" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1526" y="211" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zv3ml6_di" bpmnElement="Event_0zv3ml6">
+        <dc:Bounds x="1542" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1540" y="673" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task-set-denied-leave_di" bpmnElement="task-set-denied-leave">
+        <dc:Bounds x="1510" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gtw-category_di" bpmnElement="gtw-category" isMarkerVisible="true">
+        <dc:Bounds x="1755" y="415" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1659" y="420" width="86" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0eadfkh" bpmnElement="task-set-denied-category">
+        <dc:Bounds x="1730" y="500" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1m3h4sk" bpmnElement="Event_0jkybwo">
+        <dc:Bounds x="1762" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1760" y="673" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1po1zid_di" bpmnElement="decision-task-age">
+        <dc:Bounds x="1980" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0n3tcju_di" bpmnElement="ex-gtw-age" isMarkerVisible="true">
+        <dc:Bounds x="2205" y="415" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2192" y="385" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0jvne85" bpmnElement="Event_0oxt4lr">
+        <dc:Bounds x="2212" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2210" y="673" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1abyghb" bpmnElement="Event_14e2i6h">
+        <dc:Bounds x="3372" y="422" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3375" y="463" width="32" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0vzbotu_di" bpmnElement="esp-denied" isExpanded="true">
+        <dc:Bounds x="320" y="760" width="380" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_082bmc4_di" bpmnElement="Event_1ey5upm">
+        <dc:Bounds x="342" y="842" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1swx79l" bpmnElement="Activity_0iq40ma">
+        <dc:Bounds x="470" y="820" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0mtebwk" bpmnElement="Event_0vgu2b9">
+        <dc:Bounds x="632" y="842" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="635" y="883" width="32" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0fb2bdq_di" bpmnElement="Flow_0fb2bdq">
+        <di:waypoint x="378" y="860" />
+        <di:waypoint x="470" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yb5tq0_di" bpmnElement="Flow_0yb5tq0">
+        <di:waypoint x="570" y="860" />
+        <di:waypoint x="632" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_085qdll" bpmnElement="esp-done" isExpanded="true">
+        <dc:Bounds x="800" y="760" width="380" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1a3f5qo" bpmnElement="Event_0ohcs35">
+        <dc:Bounds x="822" y="842" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1yhojt8" bpmnElement="Event_1poud80">
+        <dc:Bounds x="1102" y="842" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1414e09" bpmnElement="Activity_1uahuy0">
+        <dc:Bounds x="930" y="820" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_108o3e0" bpmnElement="Flow_1dds5uk">
+        <di:waypoint x="858" y="860" />
+        <di:waypoint x="930" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16rstid_di" bpmnElement="Flow_16rstid">
+        <di:waypoint x="1030" y="860" />
+        <di:waypoint x="1102" y="860" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_1m6fztk" bpmnElement="decision-task-tenure">
+        <dc:Bounds x="2400" y="400" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="gtw-tenure_di" bpmnElement="gtw-tenure" isMarkerVisible="true">
+        <dc:Bounds x="2645" y="415" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2632" y="385" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_02jt496" bpmnElement="Event_1publ79">
+        <dc:Bounds x="2652" y="632" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2650" y="673" width="42" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02pljk9_di" bpmnElement="Flow_02pljk9">
+        <di:waypoint x="238" y="540" />
+        <di:waypoint x="310" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01lb6nt_di" bpmnElement="Flow_01lb6nt">
+        <di:waypoint x="410" y="540" />
+        <di:waypoint x="485" y="540" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bj01wn_di" bpmnElement="Flow_1bj01wn">
+        <di:waypoint x="510" y="515" />
+        <di:waypoint x="510" y="440" />
+        <di:waypoint x="620" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="480" y="470" width="38" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wi7cye_di" bpmnElement="Flow_0wi7cye">
+        <di:waypoint x="510" y="565" />
+        <di:waypoint x="510" y="650" />
+        <di:waypoint x="620" y="650" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0fecb01_di" bpmnElement="Flow_0fecb01">
+        <di:waypoint x="670" y="480" />
+        <di:waypoint x="670" y="610" />
+      </bpmndi:BPMNEdge>
+
+      <bpmndi:BPMNEdge id="Flow_0q75ssp_di" bpmnElement="Flow_0q75ssp">
+        <di:waypoint x="720" y="650" />
+        <di:waypoint x="980" y="650" />
+        <di:waypoint x="980" y="300" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0j5d7g0_di" bpmnElement="Flow_0j5d7g0">
+        <di:waypoint x="1080" y="260" />
+        <di:waypoint x="1155" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yhac0c_di" bpmnElement="Flow_0yhac0c">
+        <di:waypoint x="1180" y="285" />
+        <di:waypoint x="1180" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1184" y="333" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_rescisao_no_di" bpmnElement="Flow_rescisao_no">
+        <di:waypoint x="1205" y="260" />
+        <di:waypoint x="1320" y="260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1252" y="235" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_to_throw_denied_di" bpmnElement="Flow_to_throw_denied">
+        <di:waypoint x="1560" y="480" />
+        <di:waypoint x="1560" y="632" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03zc38p_di" bpmnElement="Flow_03zc38p">
+        <di:waypoint x="1180" y="480" />
+        <di:waypoint x="1180" y="632" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gkeza7_di" bpmnElement="Flow_1gkeza7">
+        <di:waypoint x="1560" y="285" />
+        <di:waypoint x="1560" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1564" y="339" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bovla4_di" bpmnElement="Flow_1bovla4">
+        <di:waypoint x="1420" y="260" />
+        <di:waypoint x="1535" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ncwwqi_di" bpmnElement="Flow_0ncwwqi">
+        <di:waypoint x="1585" y="260" />
+        <di:waypoint x="1780" y="260" />
+        <di:waypoint x="1780" y="415" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1672" y="242" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_025w7zm_di" bpmnElement="Flow_025w7zm">
+        <di:waypoint x="1780" y="465" />
+        <di:waypoint x="1780" y="500" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1783" y="476" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ug073x_di" bpmnElement="Flow_0ug073x">
+        <di:waypoint x="1805" y="440" />
+        <di:waypoint x="1980" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1881" y="422" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vtp3jb_di" bpmnElement="Flow_1vtp3jb">
+        <di:waypoint x="1780" y="580" />
+        <di:waypoint x="1780" y="632" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bllqfw_di" bpmnElement="Flow_1bllqfw">
+        <di:waypoint x="2080" y="440" />
+        <di:waypoint x="2205" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h6onnd_di" bpmnElement="Flow_0h6onnd">
+        <di:waypoint x="2230" y="465" />
+        <di:waypoint x="2230" y="632" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2233" y="546" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10zbgxk_di" bpmnElement="Flow_10zbgxk">
+        <di:waypoint x="2255" y="440" />
+        <di:waypoint x="2400" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2316" y="422" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wh5m6p_di" bpmnElement="Flow_1wh5m6p">
+        <di:waypoint x="2500" y="440" />
+        <di:waypoint x="2645" y="440" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1eyz07s_di" bpmnElement="Flow_1eyz07s">
+        <di:waypoint x="2670" y="465" />
+        <di:waypoint x="2670" y="632" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2673" y="546" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08gyffq_di" bpmnElement="Flow_08gyffq">
+        <di:waypoint x="2695" y="440" />
+        <di:waypoint x="3372" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3022" y="422" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

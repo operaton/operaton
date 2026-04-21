@@ -1,6 +1,6 @@
 # Load Test Module
 
-This module reproduces the memory leak reported in [#2761](https://github.com/operaton/operaton/issues/2761).
+This module is used to run a load test simulating of process executions.
 
 ## Overview
 
@@ -12,15 +12,16 @@ monitoring JVM heap memory.
 ## Prerequisites
 
 - **JDK 17+**
-- All Operaton modules must be built first (at least `install -DskipTests`)
-
-## Running the Load Test
+- All Operaton modules must be built first.
 
 ```bash
 # Build all modules first (from repository root)
 ./mvnw clean install -DskipTests -Dskip.frontend.build=true
+```
 
-# Run the load test
+## Running the Load Test
+
+```bash
 ./mvnw verify -pl qa/load-test -Pload-test
 ```
 
@@ -28,14 +29,14 @@ monitoring JVM heap memory.
 
 System properties can be passed via `-D` flags:
 
-| Property | Default | Description |
-|----------|---------|-------------|
-| `loadtest.users` | 30 | Number of concurrent threads |
-| `loadtest.warmup.seconds` | 10 | Warmup phase duration |
-| `loadtest.sustained.seconds` | 60 | Sustained load phase duration |
-| `loadtest.memory.samples` | 6 | Number of heap memory samples during sustained phase |
-| `loadtest.processKey` | credit-eligibility | Process definition key to test |
-| `loadtest.withVariablesInReturn` | true | Include variables in start response |
+| Property                         | Default            | Description                                          |
+|----------------------------------|--------------------|------------------------------------------------------|
+| `loadtest.users`                 | 30                 | Number of concurrent threads                         |
+| `loadtest.warmup.seconds`        | 10                 | Warmup phase duration                                |
+| `loadtest.sustained.seconds`     | 60                 | Sustained load phase duration                        |
+| `loadtest.memory.samples`        | 6                  | Number of heap memory samples during sustained phase |
+| `loadtest.processKey`            | credit-eligibility | Process definition key to test                       |
+| `loadtest.withVariablesInReturn` | true               | Include variables in start response                  |
 
 Example with custom settings:
 

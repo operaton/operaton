@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright 2026 the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,8 +51,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
 /**
- * Load test that reproduces the memory leak reported in
- * <a href="https://github.com/operaton/operaton/issues/2761">#2761</a>.
+ * Load test to detect memory leaks.
  *
  * <p>Run with: {@code ./mvnw verify -pl qa/load-test -Pload-test}</p>
  *
@@ -64,12 +63,15 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
  *   <li>{@code loadtest.processKey} - process definition key (default: credit-eligibility)</li>
  *   <li>{@code loadtest.withVariablesInReturn} - include variables in response (default: true)</li>
  * </ul>
+ *
+ * @see <a href="https://github.com/operaton/operaton/issues/2761">#2761</a>
  */
 @SpringBootTest(
     classes = LoadTestApplication.class,
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@SuppressWarnings("java:S2925") // Thread.sleep allowed in this test
 class MemoryLeakLoadTest {
 
   private static final Logger LOG = LoggerFactory.getLogger(MemoryLeakLoadTest.class);

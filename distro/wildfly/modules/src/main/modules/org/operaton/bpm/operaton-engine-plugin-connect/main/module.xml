@@ -7,6 +7,7 @@
 
     <module name="java.base" />
 
+    <module name="org.operaton.commons.operaton-commons-logging" />
     <module name="org.operaton.bpm.operaton-engine" />
 
     <module name="org.operaton.connect.operaton-connect-core" />

@@ -28,6 +28,7 @@ import org.jboss.as.server.deployment.DeploymentUnitProcessingException;
 import org.jboss.as.server.deployment.DeploymentUnitProcessor;
 import org.jboss.as.server.deployment.module.ModuleDependency;
 import org.jboss.as.server.deployment.module.ModuleSpecification;
+import org.jboss.as.server.deployment.module.ResourceRoot;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleIdentifier;
 import org.jboss.modules.ModuleLoader;
@@ -97,7 +98,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
         if (subDeploymentIsProcessApplication) {
           for (DeploymentUnit subDeploymentUnit : subdeployments) {
             final ModuleSpecification moduleSpecification = subDeploymentUnit.getAttachment(Attachments.MODULE_SPECIFICATION);
-            addSystemDependencies(moduleLoader, moduleSpecification);
+            addSystemDependencies(moduleLoader, moduleSpecification, subDeploymentUnit);
           }
           //An ear is not marked as process application but also needs the dependency
           isProcessApplicationWarOrEar = true;
@@ -106,7 +107,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
 
       if (isProcessApplicationWarOrEar) {
         final ModuleSpecification moduleSpecification = deploymentUnit.getAttachment(Attachments.MODULE_SPECIFICATION);
-        addSystemDependencies(moduleLoader, moduleSpecification);
+        addSystemDependencies(moduleLoader, moduleSpecification, deploymentUnit);
       }
     }
 
@@ -142,7 +143,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     }
   }
 
-  private void addSystemDependencies(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification) {
+  private void addSystemDependencies(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification, DeploymentUnit deploymentUnit) {
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_PROCESS_ENGINE);
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_XML_MODEL);
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_BPMN_MODEL);
@@ -155,7 +156,7 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     addSystemDependency(moduleLoader, moduleSpecification, MODULE_IDENTIFIER_JUEL, true);
     // Keep the CDI dependency as the last addition because it is the only module
     // dependency with custom META-INF import filters for Weld bean discovery.
-    addEngineCdiSystemDependency(moduleLoader, moduleSpecification);
+    addEngineCdiSystemDependency(moduleLoader, moduleSpecification, deploymentUnit);
   }
 
   private void addSystemDependency(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification, String identifier) {
@@ -166,21 +167,49 @@ public class ModuleDependencyProcessor implements DeploymentUnitProcessor {
     moduleSpecification.addSystemDependency(new ModuleDependency(moduleLoader, identifier, false, false, importServices, false));
   }
 
-  private void addEngineCdiSystemDependency(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification) {
-    // engine-cdi is a special case: for Weld discovery we need services plus META-INF
-    // from the module (in particular beans.xml), otherwise injections can fail with WELD-001408.
+  private void addEngineCdiSystemDependency(ModuleLoader moduleLoader, final ModuleSpecification moduleSpecification, DeploymentUnit deploymentUnit) {
+    if (isEngineCdiBundledInDeployment(deploymentUnit)) {
+      // engine-cdi is already in WEB-INF/lib of this deployment. Adding the server module
+      // with META-INF import would make Weld scan the same beans.xml from two sources,
+      // causing WELD-001409 ambiguous dependency errors. Skip the module dependency entirely.
+      return;
+    }
+    // engine-cdi is NOT bundled in the deployment; add the server module with META-INF
+    // import so Weld discovers the CDI producers (beans.xml) from the server-provided module.
+    // services="import" alone does not import META-INF/beans.xml and leads to WELD-001408.
+    // These filters are equivalent to jboss-deployment-structure meta-inf="import".
     ModuleDependency dependency = ModuleDependency.Builder.of(moduleLoader, MODULE_IDENTIFIER_ENGINE_CDI)
-      .setOptional(false)
+      .setOptional(true)
       .setExport(false)
       .setImportServices(true)
       .setUserSpecified(false)
       .build();
-    // Required for server-provided CDI producers from operaton-engine-cdi:
-    // services="import" alone does not import META-INF/beans.xml and leads to WELD-001408.
-    // These filters are equivalent to jboss-deployment-structure meta-inf="import".
     dependency.addImportFilter(PathFilters.getMetaInfSubdirectoriesFilter(), true);
     dependency.addImportFilter(PathFilters.getMetaInfFilter(), true);
     moduleSpecification.addSystemDependency(dependency);
+  }
+
+  private boolean isEngineCdiBundledInDeployment(DeploymentUnit deploymentUnit) {
+    if (hasEngineCdiInResourceRoots(deploymentUnit)) {
+      return true;
+    }
+    // Also check the parent EAR's resource roots: engine-cdi in EAR/lib is
+    // accessible to sub-deployments via the EAR classloader hierarchy.
+    DeploymentUnit parent = deploymentUnit.getParent();
+    return parent != null && hasEngineCdiInResourceRoots(parent);
+  }
+
+  private boolean hasEngineCdiInResourceRoots(DeploymentUnit deploymentUnit) {
+    AttachmentList<ResourceRoot> resourceRoots = deploymentUnit.getAttachment(Attachments.RESOURCE_ROOTS);
+    if (resourceRoots == null) {
+      return false;
+    }
+    for (ResourceRoot resourceRoot : resourceRoots) {
+      if (resourceRoot.getRootName().startsWith("operaton-engine-cdi-")) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }

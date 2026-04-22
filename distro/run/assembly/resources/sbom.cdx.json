@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:4f0ab809-eee0-4f9e-baca-f906d05934b4",
+  "serialNumber": "urn:uuid:aa06f20d-073c-48b1-80bc-82de9df74a43",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-20T21:49:09Z",
+    "timestamp": "2026-04-22T02:37:34Z",
     "tools": {
       "components": [
         {
@@ -2672,44 +2672,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.polyglot/js@25.0.2?type=pom",
+      "bom-ref": "pkg:maven/org.graalvm.polyglot/js@25.0.3?type=pom",
       "group": "org.graalvm.polyglot",
       "name": "js",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This POM dependency includes GraalJS dependencies and Truffle.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "d0a08b8e5be908494fb2cc80d2bf12e8"
+          "content": "a3b4b280b450f85e96cab83982f77f62"
         },
         {
           "alg": "SHA-1",
-          "content": "46de15e53908dc38afe110fcb1f2074ab77657cb"
+          "content": "5a283b4798a3aaaf5b911845427b6ac3b1d65b5d"
         },
         {
           "alg": "SHA-256",
-          "content": "5d99747b582604b3ea9a0cc8ada1143fcae843eb7f9a9bf819e162d2fce3b56e"
+          "content": "55324048a2a8f46cc8507586addb774d37cb752accf0d93b29cc2cd83d495d75"
         },
         {
           "alg": "SHA-512",
-          "content": "bb82abab1a5f7ad144bbef21f7a1cc9307c9e9a0d20e68c7b91b83b5735faa5a853e3dc62c04256d9a22d167202fc26a965c61dfce6359a2072aebd0708e98b8"
+          "content": "72cebd51ae5812863a40e97b620fde38a5dd7944e050ffcea2cdf32e855d3cb7b7858cfec3f7b768246674c0af9558f3b66151970cb74158af4aca30f2c28048"
         },
         {
           "alg": "SHA-384",
-          "content": "1a0a70d0ef1206f27671ea0aeff96c5d59027e302812189bc133cf12908a4310316d6ee2dc29fb7d57dab1291e5f0579"
+          "content": "1dbcf7fa9268d47f377468048c019eb07f6dae05c9b5d9dfdc6d19326f6c80b203996550281180bd03c08adbbac8f083"
         },
         {
           "alg": "SHA3-384",
-          "content": "36e8dcc43d8dc7c7100791890acacfeb900a742528d3f94188ee3db54eec83fcf8fc3e0ab568a795ae3877a89ff1ea85"
+          "content": "ef269f353419a0607518d6c9506df6cf3059f7a6ec3e15b507ba09f274c48fd170162785e783c50c18bf27667596dd4c"
         },
         {
           "alg": "SHA3-256",
-          "content": "3fd16c488bda06baa42421ce74ff1aec300b48896807774de2156d6ed3cf954b"
+          "content": "fc8343eb11b944cfd72bd96559f4d53718e180c2489032a33a7193df9e8c5d87"
         },
         {
           "alg": "SHA3-512",
-          "content": "d3a50bdfa4169c0a0cf3e8166c17fd05ecda787cf4c02e79d7763033b71608eee54665d8cb9a98509f8c531e18c837d4cabf72a00c6387b67571e01427ed680e"
+          "content": "83df42be81daab61a9916bda898c7e45d82b93f328834756f47bb4495a903fa0d4979474512afac4c724587adbc537edb733c1523633210c3da4818c95d97cd4"
         }
       ],
       "licenses": [
@@ -2726,7 +2726,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.polyglot/js@25.0.2?type=pom",
+      "purl": "pkg:maven/org.graalvm.polyglot/js@25.0.3?type=pom",
       "externalReferences": [
         {
           "url": "http://www.graalvm.org/",
@@ -2740,44 +2740,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.js/js@25.0.2?type=pom",
+      "bom-ref": "pkg:maven/org.graalvm.js/js@25.0.3?type=pom",
       "group": "org.graalvm.js",
       "name": "js",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This POM dependency includes GraalJS dependencies and Truffle.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4438de1011a2ad2f0cab508d28d86370"
+          "content": "00f93c9421ed330db8b731e5469d49ba"
         },
         {
           "alg": "SHA-1",
-          "content": "ec12bb5a8df20e7159b3239129d666460a89662c"
+          "content": "c7979ead22b71d8ca7188168724606f213668544"
         },
         {
           "alg": "SHA-256",
-          "content": "2ef86af8dc567a585f10f3a73438b1870961b607a8a1ff639a7abd8f0cf7b9e3"
+          "content": "ce34698b55b10a8cf93717ae9d5568fc30d3c59d9ba6ffd6f0e0dbaec1c637d3"
         },
         {
           "alg": "SHA-512",
-          "content": "2e6edd07b6984dd359808ed9b0ac5a1dc35ca7546b01ba136fe85c878b29e998ece1112670c90813f377d2f51b3fd685243e331b41fd10c417f33a95d975a2da"
+          "content": "297594209ed4c96e168fa6c6ce7fd278b8d6169b4f47a6231622b52006cceab832212839a1efc0767c11afba23ae1cb8ad40ae425a85b1798583e63aeb75034f"
         },
         {
           "alg": "SHA-384",
-          "content": "a09f4f7679929aec3fb3bd20465e3e68da1aba92c331134102cc679c97d792d92a7da4fbfbb381e762dfc991a142eb52"
+          "content": "64426a95b8bccbfbba4b81578acb586b33ca52661d1e3b5eea798a31e257c103f6c742e203c47401afac37e4f8a5467f"
         },
         {
           "alg": "SHA3-384",
-          "content": "e5d687feb1c1ace7826d1229b720729953cd23dc9bd13912242991521ad483699ffadcb7de1a7aca927ca544e2daa52c"
+          "content": "26137e464dd41bd89a607a106e75d39d7bd2a2472172bd6776ca32156c8df18b9f4dcf96f8478e0e40dbaac17c7f832a"
         },
         {
           "alg": "SHA3-256",
-          "content": "5fa6d1690ac5d11a2694e9fc9f4a22697642c7a2648a6aee67457d8c42a17878"
+          "content": "de4519e8edcf1c86325f86158c523da6e165ea23cb6994be7e6e11feb4b4aa2b"
         },
         {
           "alg": "SHA3-512",
-          "content": "30fa75d00d3435690458bd637ede8166e60ec6871b4997843979ccad8ae69f36af5a1d8851e46cb268431dc193634d2dd4161e7d263f0f8eae21b59e4c2ef16e"
+          "content": "0ceaa2d36635c5a37890df96718c5a52e7e8d01ce494d04fd80a3a21c13d6ab42642c87e4c0af9db762243afeb41e42787af2bd89c773d2e1402383091d0c7a2"
         }
       ],
       "licenses": [
@@ -2794,7 +2794,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.js/js@25.0.2?type=pom",
+      "purl": "pkg:maven/org.graalvm.js/js@25.0.3?type=pom",
       "externalReferences": [
         {
           "url": "https://www.graalvm.org/javascript",
@@ -2808,44 +2808,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.js/js-language@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.js/js-language@25.0.3?type=jar",
       "group": "org.graalvm.js",
       "name": "js-language",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This artifact includes the core language runtime without standard libraries. It is not recommended to depend on the artifact directly. Instead, use \u0027org.graalvm.polyglot:js\u0027 or \u0027org.graalvm.polyglot:js-community\u0027 to ensure all dependencies are pulled in correctly.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "94db91ee341eef4442d5aab695129401"
+          "content": "8dd12209d4f2dbaf8471b7516e228eca"
         },
         {
           "alg": "SHA-1",
-          "content": "1bab7bfeb0e853b22e01c170c5910ec3fed64bd7"
+          "content": "9e0568c0b1b6b69808040b302a6b5e1fd88a939d"
         },
         {
           "alg": "SHA-256",
-          "content": "ad075526ec2c8e514dab862cf619b3ccc4af40b23f317bc5c177084bab4793cd"
+          "content": "0c4a9d9463b2ca2b26332a8feeb56bce711c9c6d72ecad5d839e29c094178df8"
         },
         {
           "alg": "SHA-512",
-          "content": "1fee71037fbb47631bcf00934b82841aeb93255613a963569f9b925bb5b9752ffc715b5445ea8cf06577fce189d1ac4e765036c345249d0da5ccb3d8a7df4910"
+          "content": "53a29eed8f6dba01743a8aa24eabba55835b7b5bbf7813fd0dc25eb200d9455b1b4ad8b2f563c7454165a9ece5f6ea7215bedee129f12d01b52843977564f89f"
         },
         {
           "alg": "SHA-384",
-          "content": "5d6f8bb6d8627f30237a697dcb0af00f72a3c28a1d3f721939b7ba265deac7cf982910ac88bac65c48f9c8abfe8fb52d"
+          "content": "fde4d2344d45fc864ded3a505bdedec920a4941bb4d99ad21960784d5f7035fe24cc5c2a1f13912f6b16580e274c6d89"
         },
         {
           "alg": "SHA3-384",
-          "content": "a700ab6e72ba326751f461d87435aa6df9c21f01644adac712d4451cff44a839b77a85587d69346eb8c052d449a06899"
+          "content": "f5643a1262fab3a6f0985754d3b3feb07b53a4a6263342ec108a4091b6bc16388ac3e1a42c5f1d3231e61bb4ba1a416b"
         },
         {
           "alg": "SHA3-256",
-          "content": "033ef2bb39789b1e052876021d5ad3337327b6c559376a5035ac760bc6989aa5"
+          "content": "38ee8d336ed102aecd3070ac6048e71d3bd3bfcf100e2cb185841047d9ed3902"
         },
         {
           "alg": "SHA3-512",
-          "content": "a145241f12171e65d6ea92d96c1a1711b208310eef46c99f57f9b7297a5c21a4f30c4054466d8d2a58107900180a79ced0c740664d0abae426bcaab30ba4ddc6"
+          "content": "734175835ac2a5a52443a031f918ac0882ee7039226d0254fa51443ff4d9bc688e990d018927782d3a7af3890c03fc7bf7254ec98861ddfb9e727cb96438352f"
         }
       ],
       "licenses": [
@@ -2862,7 +2862,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.js/js-language@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.js/js-language@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://www.graalvm.org/javascript",
@@ -2876,44 +2876,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.regex/regex@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.regex/regex@25.0.3?type=jar",
       "group": "org.graalvm.regex",
       "name": "regex",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "Truffle regular expressions language.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "c395b789ddac86f1b0e4b5f0767c6900"
+          "content": "00b618b2a8006e87cbf4735bd641c665"
         },
         {
           "alg": "SHA-1",
-          "content": "d9139554e05fbe619028745419850198249d0b24"
+          "content": "2bf70a3c312b7eb3357f9f99b463ff783858450c"
         },
         {
           "alg": "SHA-256",
-          "content": "181f7e2e0487e8167cccf41cad76cd523f6e0538ef1c84da00f5abc6f37e9aa1"
+          "content": "27905fbabcab543d15eca638b198a745a143172696926bc82428e7f70363e9c4"
         },
         {
           "alg": "SHA-512",
-          "content": "069d631f8d6b5ee3f61f948fd07dd7175ba9a9f55e59e84fc9f85bda0d4562c141fdd9fde7321ebf9e4e589da3050ed1e8a10f89e787f6047975e2d8127176a9"
+          "content": "88da17b39fe2b749a1c4edd88f88b374bc54f784dc1554bb0ecea13fccc0fae63b325e3d4563d99397e1cafe1ee8a9489b45cc35e2ebd44dd139d15ec117a00e"
         },
         {
           "alg": "SHA-384",
-          "content": "77db06876840d79e4d54b97f5e4a70a4d84441984d56fecda43d568ad67344d91f7cea91529737bcaa4169bdc353bf0c"
+          "content": "ac0eaf7661f42f0b9fd6a120cdfad8af774c009fc9ab47165f637050c4e3fa876844c56a14a04239ae984d69c6922310"
         },
         {
           "alg": "SHA3-384",
-          "content": "f02aee30c16d3f9bc0aaf57fd98747bdedd44ce2e4b4b9c8e7837927c6d63414365d3de99eaf47cdf24c13aa0aa34385"
+          "content": "27b40f7a81b453680bff1b4a5c690f3d397f49b78278f5d5c74da4d5e3b71144327346d2f30d47245d49832a6b80db55"
         },
         {
           "alg": "SHA3-256",
-          "content": "9857f3ef8fa3e0237b84401f8ecd0ec31ea9aa8b6b49481aa0eddac2b57d0657"
+          "content": "646b9c8d894f584152d3522f476f25f2955a9842bacd93b870715968c442964a"
         },
         {
           "alg": "SHA3-512",
-          "content": "a342c3d9b164d0efa702d8c223f858ed040eb9548d8ef9f205c747b61707aa714109d48c478cb1c6c0098a0e061791ec5c75046d9676ebc45ee324e04e9037ac"
+          "content": "5907d7caf7c7cec47e00158f621d23a872517ee0d5fd33d1df266309132a103894d9fb9e46221e6e4b99e1bcf3c717d5e9beef9af575d0f9d08a0199e66e92cc"
         }
       ],
       "licenses": [
@@ -2924,7 +2924,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.regex/regex@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.regex/regex@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "http://www.graalvm.org/",
@@ -2938,44 +2938,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.truffle/truffle-api@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.truffle/truffle-api@25.0.3?type=jar",
       "group": "org.graalvm.truffle",
       "name": "truffle-api",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "Truffle is a multi-language framework for executing dynamic languages that achieves high performance when combined with Graal.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f4b7afb40465580a6ed9600167167c88"
+          "content": "6a933c0d3a6202bf9ec8d7f5492649de"
         },
         {
           "alg": "SHA-1",
-          "content": "50b987c8860bd113be3c24e0e3e473c41467618f"
+          "content": "6b817d4f979ec3bd6b081101598112dd0dd1b2af"
         },
         {
           "alg": "SHA-256",
-          "content": "d72269d86fffddb09ed62b5659b355a09e876d5b77e0b737a992f2d359cf5acc"
+          "content": "86205c74471d4749cc71b17e3cbdf07ee08b7546755e632e74d9024d1cbd34ec"
         },
         {
           "alg": "SHA-512",
-          "content": "61d2c84a63e3af88fb250a057f3e386f48c37ced0ad50bd156a2fadb84cfaaac14ef51b6c7fbc883a3a39f73048c22d588bab85bdc4c202cc5d83d0f49b64a8f"
+          "content": "47eb3640c45df0b4d406ca17e2a75c4184147163e7ee9e40c6dafde078953ce50e18c6778c014887e997111d731a48a832684e313f930eec0e70a9ada3a8ea94"
         },
         {
           "alg": "SHA-384",
-          "content": "97ca3788c2163dac0d28f438fb8ceb67e4cc35359420a3e94d8ac222b308c05e125c56ecaade9acdd9be9599bde52dce"
+          "content": "f13611d230e1b5c80d34c30e666f73d3ba68f967fad03fa904250dc6e3746396d83c716cb95c65ec89564a5fa407f537"
         },
         {
           "alg": "SHA3-384",
-          "content": "1a83ea7d70d117ff07e61384044c56467be08f65f2f02f24e0e2afe14d31faf7b57ced8b32ff4571df48c228958b8761"
+          "content": "6d31af57997a595ff5aa513f5ecd2e1e3a204265a5fef9885bc24b1b48acdfa63bd4731845a5da98ec4f6cd637873410"
         },
         {
           "alg": "SHA3-256",
-          "content": "4646094c37bfd9b3e8b13398b58851e3783eafd9c97ca4ce834504fee773cafc"
+          "content": "d6a5eabb72e9c80f628c5828e69b755cc0d131d8a04d4f1221dcd76e4587e4da"
         },
         {
           "alg": "SHA3-512",
-          "content": "722fcac5124aec0b2cd8d83109e1f75b55286d66d93f35009e40d946de78bb9822f4f9a08bda4adb719ad1b77f2ada826a5c014145cc4d51671c041c89326aca"
+          "content": "7d34e1c0972c056cb05113e0ac195aa42902576f0b678b455a32142eeb7a3bf304a29a78f6fa840e9b33158e896c769685e47d4938d0eb7c6205812e5a2df603"
         }
       ],
       "licenses": [
@@ -2986,7 +2986,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.truffle/truffle-api@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.truffle/truffle-api@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "http://openjdk.java.net/projects/graal",
@@ -3000,44 +3000,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.shadowed/icu4j@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.shadowed/icu4j@25.0.3?type=jar",
       "group": "org.graalvm.shadowed",
       "name": "icu4j",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "ICU4J shaded module.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "17d122008060fd663816ac7ea00a0c39"
+          "content": "cf82b24ba88c978cb1e1ec84f0300029"
         },
         {
           "alg": "SHA-1",
-          "content": "cadb4d511905a20f2dc0b61320e43736a49e1dfd"
+          "content": "72eac051364ab01dff26732827d9b8184986f6dc"
         },
         {
           "alg": "SHA-256",
-          "content": "e533accc6d68ffb9bfa87aa18702984a51cf6c4d122605ce3c16340205fdcfd6"
+          "content": "81c7eb237511ffc5eebc879461a91fc3032bf6cffad32a06cdf40d4f6e6fc3b9"
         },
         {
           "alg": "SHA-512",
-          "content": "a76340d7f4c11ff3d43f727b4d760e89fd0e42a3058c2cc8db174b99ac3102b8d7e370edd35d45a874d42142d5a00829a1d5de5aec7ef492ff19cd064a69768d"
+          "content": "df7664c70fba071e90d7e3256c8ed2c9dc49b8c5512f13c39f30027cfa7eeb4c6bb9db2c397ae0f8919166e59db1542cf4450f7c64f5925e09f7332883d7c577"
         },
         {
           "alg": "SHA-384",
-          "content": "e0afd155073a357734f934aaace2248b93fa1c7e0aadceaef51a812e6abec4150e98d4e90ed2b94b71d5676f5cadc5c4"
+          "content": "e8e650ab4aa6af0eaf7532bb82a09530627615c5fadf8c2d79814449cfea1beb45324037d5b90f5c0ef14d1e09359e4d"
         },
         {
           "alg": "SHA3-384",
-          "content": "f565d914a8b9e60b5883114a66041103a3059152c950738820712a186d8d982f8a147f6f29e75c4da47d6eae60db19e5"
+          "content": "7ab03791d3984e9246897447c68469bb9b383a3b7a9bafa99389a21109ca166eff536a5cac6d6f12a2be0f90cad610a9"
         },
         {
           "alg": "SHA3-256",
-          "content": "2ccce6439be895665f00fd96a8d51384292c81e422f1a25044e32bdde671a201"
+          "content": "075c9de431721e7c7882f9134499e9d075cc1dca993623962aff95c80af1b959"
         },
         {
           "alg": "SHA3-512",
-          "content": "904841131daff60376d33cfb1f3543f23a757747a9d01240ac8e76570b0f7825aae92cc44060166620bd80cca5582b2f8c905130507a60030847c7317ae22e37"
+          "content": "5ee94ca2ee1a4e5384f1c1dfcb11ff8f8ef1cc74cdf791dd03b1a58f9fc3abc24987d07b56ae9c97fd3c2a2b24f7b35eb79c9125c67f9cbcba4c34fa8d2352d0"
         }
       ],
       "licenses": [
@@ -3048,7 +3048,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.shadowed/icu4j@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.shadowed/icu4j@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "http://openjdk.java.net/projects/graal",
@@ -3062,44 +3062,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.shadowed/xz@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.shadowed/xz@25.0.3?type=jar",
       "group": "org.graalvm.shadowed",
       "name": "xz",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "shaded XZ Java module.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3ac0b6174ace45d436762474106693be"
+          "content": "a41aa41775da493b8f03e253ead790f3"
         },
         {
           "alg": "SHA-1",
-          "content": "3a62dce96f476ff431800ec61d1807fd83c7c77b"
+          "content": "1d8a71f267ee4a4064af965a57eda90897a619d1"
         },
         {
           "alg": "SHA-256",
-          "content": "bdef4af151ad4b0e92dd1337b73372bfa16d87d2ee653cadb962480a03abb4c8"
+          "content": "0dcda79ffaa0165fb5aa92dc5bbfa7043220aebc79e881358c4245e4c91092e3"
         },
         {
           "alg": "SHA-512",
-          "content": "60bceb75ca5a6ade1726610e4282de66ab8fc3933c8aeb048bfe7b5c171ae98f0b1beb6d14b4d7ef5da2ee0b606a10b736801d65976d440df33071810cf482ab"
+          "content": "8d879aefc0b23aaa5abbc7d652a578f9ce1285add1a0e2821d2f808dd7e547720098839d16ac9f86035aa4de997f14331bb1a723e4652fdaf156bdde5a213b28"
         },
         {
           "alg": "SHA-384",
-          "content": "1a00fbc4c9b118576ea4568455c14a55cd95395d92aa139ccb74ad9d232a9d09387cde5f88ecbf2e58452d1122a9ff28"
+          "content": "f438cdbaf6f664c1bb2fca0fd15111a2ece813e023579d212b1e99659fa4fbebd85cb09c8bf258406ffa22a319ecbc5a"
         },
         {
           "alg": "SHA3-384",
-          "content": "34cf29c9bd8a56216ebbc2dabf331970e016f900352362021d22b204bd311bcc2c64c781164ca51dc65cc1e398116385"
+          "content": "677e489003eb5ecf7dafb343afc2472c29aa43361db524c74b73bc2f13e48681b2fff9f071bafd37c027ca88d9f17cea"
         },
         {
           "alg": "SHA3-256",
-          "content": "d97f379cc05de56e3bdbb09a82c242b742de4bef967da1fe33017d7db0d2ea71"
+          "content": "52738ab7b5a70050ed1ddb947a85998c5df1387155d702c5b46db7bacae238b2"
         },
         {
           "alg": "SHA3-512",
-          "content": "bd16ea8ca83fb9959ac4a2df4367090234bae259a4d774a014d8aab70039ebd26745ffb43b90209969d56124836da84c381712bff692618b479cdbe0b8e538e1"
+          "content": "9b562d327a466a03321248e8ada3f1f688a8b25c3bd48387f1db37f9ca2d330799b955d8b54d5570cb97fb8b416d1ef96ec0e172ab19de163a4fbc8a735b59af"
         }
       ],
       "licenses": [
@@ -3110,7 +3110,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.shadowed/xz@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.shadowed/xz@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "http://openjdk.java.net/projects/graal",
@@ -3124,44 +3124,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.3?type=jar",
       "group": "org.graalvm.truffle",
       "name": "truffle-runtime",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "The Truffle runtime for Graal Languages. It is not recommended to depend on this artifact directly. Instead, use a POM dependency of one or more Graal Languages (for example \u0060org.graalvm.polyglot:js\u0060) to ensure all dependencies are pulled in correctly.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "3713c1580e133b1b10e490d8a69af9c7"
+          "content": "55187af3c0fc06523a8886600fca11ce"
         },
         {
           "alg": "SHA-1",
-          "content": "e30b34b7bd3103b7b1b175021ec1ac2aa606d692"
+          "content": "6baf3581cc99dce71f09cdea7e1b97eadf68b3c1"
         },
         {
           "alg": "SHA-256",
-          "content": "61ddeb71a6b54fdf9ba7d20daa994ba5433722ebdaf94919fb853afaab027622"
+          "content": "bd88d1f102b88a41a1ff2191f5d1dd69af532b4ef936f682629903646cd60036"
         },
         {
           "alg": "SHA-512",
-          "content": "f273216a1873ffa695e552cc6ddf3f92322f77589439f2fe3d4367ecbc69d1f1b5c3d5a867138045aa6fdd6650b73ecf2e377c924d5c4fd6121adb12fc0cbc4f"
+          "content": "c98dfc4b1969ea22222c79d9b6b7aeeba921bf1898582e2349ffb25c9ae2d089da68bc967b657d91916133a2c4add6e39b71be75e10a25625bb1302f78888ae2"
         },
         {
           "alg": "SHA-384",
-          "content": "a0f6393722d12bc1d49b109c1ccc736704c29491f9800650984f591483822e3277bbfd85132bafc60f9d1b2df823f951"
+          "content": "da3840a84dfaaa5b07d515448632e6430fcf3a212e918adfab6e3708ff4d6aac0fc459d868df1ccbdea9b36efc8efb91"
         },
         {
           "alg": "SHA3-384",
-          "content": "78d4284e126bd8ccfa4078ec1a0925bf1e38ac2bcf69487a9860e44f622c3ea6529e2970d56c66e46a2ea7a8ba6d1647"
+          "content": "8f3b4213d8d239ca09dc98ebb386e048c2af50e5fb51a81a9770d717cfed345b9888fe780384492dfb448b437b6cf141"
         },
         {
           "alg": "SHA3-256",
-          "content": "b8e673e6c1c61f3693575adf658666a9e3256f9af2851720d2733504f0abcb58"
+          "content": "fd5e82607fa9e79cc324509874113622e88400e8924f0893329394642a22eb9a"
         },
         {
           "alg": "SHA3-512",
-          "content": "e167084a66e97dd56dc4e24426e508d873a18e86e8827696b37d73608eba1c98577eda8d3077b0ba7dc037844a394177f7a8991a9e8228233b9d1e97fe89cc8f"
+          "content": "35c991b396c058fbcc765f1e0c01cdf00520a50fea3bd30de9c1ffd5f743269a2abdb449347cac6a79054e86cc062d746a47707e1632538ccbb2b35fbc85589c"
         }
       ],
       "licenses": [
@@ -3172,7 +3172,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "http://openjdk.java.net/projects/graal",
@@ -3186,44 +3186,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.sdk/jniutils@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.sdk/jniutils@25.0.3?type=jar",
       "group": "org.graalvm.sdk",
       "name": "jniutils",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "Utilities for JNI calls from within native-image.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "62f8de838211b05509451d5c543fc010"
+          "content": "b53acb2b9256ef73a621785cbc43de8c"
         },
         {
           "alg": "SHA-1",
-          "content": "bb775e33e75152b04e4000ecca87ce6341794cf2"
+          "content": "e26025a6f7b17359cba77216863a17497034a311"
         },
         {
           "alg": "SHA-256",
-          "content": "b087d8b0232e2e19a6c3300541ddc45d1e83eb7f2be7820198c4f42ac24b16ce"
+          "content": "41b63dfc5ad0592e625263897373aeba0ea8c7f86806ee5d88fad6482a31e8b0"
         },
         {
           "alg": "SHA-512",
-          "content": "77ded15a22600b1f3ee100bd5552ec401bfceeea080f2fe5f5fff1e977eb3080be6fd4a2249ef0665a55b902d9937a96274802de71677ee14c3d386785757260"
+          "content": "743a7ac34f658cff4840535a60a53825279ef40d3e4964848df802bcaad92aa22c2df2f9f6fdcb66cb3c76777bc303c7ce0b022ffcda08c0e7c4e93e55ee046d"
         },
         {
           "alg": "SHA-384",
-          "content": "c3e2c39918d4a3d155980f2777221ef8935c1e401254298981ff907e995886ba7fd73610df5d37c2114389256e0cb6b3"
+          "content": "083c6667e0f45aa0ef19a84f9febd55371f876edc98b2ae757d38e48d578cb3e74f30cf188d30e8ee65011c1f11a9b4c"
         },
         {
           "alg": "SHA3-384",
-          "content": "25933745bb51694ac87df05b7531e033be677dd23dd702098b57552f44534fa6435e22e636f91574919dd53a600ab979"
+          "content": "f9a0e07c8a57f0f032afee3e7fcfb16607211470f9ed72a43fce2a217135bd6fbd484f132affc40b44cc8137038ac058"
         },
         {
           "alg": "SHA3-256",
-          "content": "91edaed1cab6e9d2422ce4023a5e58cda0326bea987eb58201bc61bebfe04842"
+          "content": "7d96e2cdd76acdd7cb874cdf97733139ab3cecc0c2e242b0fd929401ebc6193b"
         },
         {
           "alg": "SHA3-512",
-          "content": "0bb0d9b8b2c07bc08fd366287954d40f343b60911b00c1a1540a4c77bab75642fae6b32a1ca3fd332c3ba7152df2167a5bc691e3902bb8de00992956f9afdf54"
+          "content": "658dfbd26b47dea115f36e5e885931bb2e2b10a02eba5e510deeedaf479c26ae852925fed2203e65fd4d43f4dc71bb23df8390e56093922eaaa857303d986fa2"
         }
       ],
       "licenses": [
@@ -3234,7 +3234,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.sdk/jniutils@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.sdk/jniutils@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/oracle/graal",
@@ -3248,44 +3248,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.3?type=jar",
       "group": "org.graalvm.truffle",
       "name": "truffle-compiler",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "Truffle compiler API.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "8f1702099f155e210e4f9d7f0ebf2f84"
+          "content": "c40f6b1e72c5ce73856a47a2e5c93ffe"
         },
         {
           "alg": "SHA-1",
-          "content": "4c61dfa49ba0d207f5df1fc410030fa256fee2ff"
+          "content": "3e31ddbe45dfd89fae69c1e21f9735baa2a337ec"
         },
         {
           "alg": "SHA-256",
-          "content": "e74384ef882d7867fe02be57907909cd9137f763b3c8c5242cdd3ea7970b6933"
+          "content": "aa422db2d1e3a59ebb4122f06dfa65a8648c7ec616ad48b64c7574e477469120"
         },
         {
           "alg": "SHA-512",
-          "content": "5c78febca7a7c94806d79d2024f3a0d23ee63254bbd1e0ad03ce7e8774ba8e768920ccfc111a9778aba7c37cd6e25ecc5a60295c0bef5bc3ff28a62ab6143a4b"
+          "content": "f38db5f3a3fabe19e600d4cd8f3bd050a033615d8120a2d3c11ad5d118bd5cc68e444c0f36fabecfe2d66aec3dfc7c471e9163cb29dc37c3dc3869e7836264f2"
         },
         {
           "alg": "SHA-384",
-          "content": "b5dc7476e2991613e7ef73eef6ab05a737b23044460217145b328511d8ec9fdb1c69ddd2a5fb3f552525c22dc3a5fc89"
+          "content": "415a853c933028041e2c31e13dac25e06ded96f675b02f4a61dc9f11f917c87a8ba264952965369276c6c2c21e7daeb0"
         },
         {
           "alg": "SHA3-384",
-          "content": "315ee75b3eff35629cc1ace82c8cee70fe1bd426f0dbd7743da30ac485e61bc46a26aeb72cefe12024b2aa163d53da07"
+          "content": "c79887b686354f368b75cfb6bffd891888e44535fad9aef37e748d97aaff2861976ec2c9ef3083d19186fac6abbfb588"
         },
         {
           "alg": "SHA3-256",
-          "content": "27499d7c5cb5dc2856903ae72c951f7010bea93c4901893c8e97f67232da3f3b"
+          "content": "37210d9c4a6a0e0e8eae7cfaa5462aec4de35fa399a285ec0bb9902a1307df74"
         },
         {
           "alg": "SHA3-512",
-          "content": "24a37676def27b2140a88e9953f7b1803dd108f283f485828eb9b4d738fc23be331353b63e659e420444aa922fbf914c3a61ffd7e1e410f843f7dd418bd58ffd"
+          "content": "e67de89e507387c1f1029fac1a84a1c3f809b96342fe459d3d8f63235324b41b4041ff0b281f4bb95d181fe1e952abc82179a90645fd46e6011eb37f80a156c9"
         }
       ],
       "licenses": [
@@ -3296,7 +3296,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "http://openjdk.java.net/projects/graal",
@@ -3310,44 +3310,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.js/js-scriptengine@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.js/js-scriptengine@25.0.3?type=jar",
       "group": "org.graalvm.js",
       "name": "js-scriptengine",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "GraalJS, a high-performance embeddable JavaScript runtime for Java. This artifact provides an implementation of javax.script.ScriptEngine (JSR-223) based on GraalJS. Note that this is provided for legacy reasons to allow easier migration for implementations currently based on a ScriptEngine. We strongly encourage users to only use \u0027org.graalvm.polyglot:js\u0027 or \u0027org.graalvm.polyglot:js-community\u0027 via org.graalvm.polyglot.Context to control many of the settings directly and benefit from fine-grained security settings in GraalVM.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "89e618460f768a7a344725a52733d374"
+          "content": "bd7d52659eb5543e77debce72beb793b"
         },
         {
           "alg": "SHA-1",
-          "content": "8475698a91b26e5af5a1f8db6c0ee494e0932af2"
+          "content": "57d3ad9594484a3a626c01d4f4e914366aa089a6"
         },
         {
           "alg": "SHA-256",
-          "content": "832d50846a6800b10599620a6ebca922c1002dec88a221ea526736bb96c36341"
+          "content": "82586b827b55d91b8d409e3ec93d8c1f70789687dd544bd2721c71ceb4cdd8ba"
         },
         {
           "alg": "SHA-512",
-          "content": "06be873e71059d4fc98b34e153b2f3612bc043bc4f2a12f7b9ee3fd01488879cb47cdb2f63cae5a19122112bd9ae0187b5fcb1f3c2a76f193eecd9ea77ec69ff"
+          "content": "6513cd7bb57ed2b3d987e17ccc5a45943a1f08918d3428350bb6701c26bcb92ee7978223fab999814d5f2cf5dd09179df01c4a2de04f0eb2a8fdc0a73846052d"
         },
         {
           "alg": "SHA-384",
-          "content": "7d92653c58e44042c76a0a90d0305b785a089dd58b0bc5026075145091bb0ec0e8475f7b517a064bd61113d6dcf3569a"
+          "content": "36f3fa5d398623acf920f72ab4e6ea788727215b9941ea16e76b61c82e875f2c5154ee6d9eabbeb2d25adb1eaa566665"
         },
         {
           "alg": "SHA3-384",
-          "content": "73be0f75cd08677b346d035ae90b252b2f8564fff6af6bc1fc09f3e330777c157cb448bc41d3904537a2c6eabd63faf3"
+          "content": "85c94078966f917dca7f9c3c07425e318f4d7d0de3691c48f15a0e687c07ce685420686a301b3b8ea82ee0e08d30938b"
         },
         {
           "alg": "SHA3-256",
-          "content": "2b61ae446b5359e0741a24179c9d867e5888ff164da2f93738ba328771a4382f"
+          "content": "1593e144754896a78ade1228b4315f045bd18bd63e58c0bd9b9801a7c0e226cc"
         },
         {
           "alg": "SHA3-512",
-          "content": "d6aeb255269c2504099729f9cd8c13d435000bedbc02694f5b5f1b127bdd82f45b49219ad965b5b740d788b2654ce106d4e2be4968c2e8188d3a2ea8d8c93eff"
+          "content": "c76c612529cab5c8965db4194466a89974980ccd8884798bd4a0906a83aec1206901d3f3e7dbd10b26113b6b553f90da493475d35a2e4eedecdf43ffd5924492"
         }
       ],
       "licenses": [
@@ -3358,7 +3358,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.js/js-scriptengine@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.js/js-scriptengine@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://www.graalvm.org/javascript",
@@ -3372,44 +3372,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.polyglot/polyglot@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.polyglot/polyglot@25.0.3?type=jar",
       "group": "org.graalvm.polyglot",
       "name": "polyglot",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "A framework that allows to embed polyglot language implementations in Java.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "9e81199db545dfbe955d96c4fb49adf6"
+          "content": "bcbbfd8c454805722a014f1fffb33136"
         },
         {
           "alg": "SHA-1",
-          "content": "ae7722e14f72efac7172bf66d92c3fd9266ed151"
+          "content": "c9a4851207565224d862720aeb9fcdfd2eeb92f6"
         },
         {
           "alg": "SHA-256",
-          "content": "5e5fbdc88a8d2da04052586a3894baed7f9935b701fd6d0fc7c72282fa272fb7"
+          "content": "9fa2602684d07c4a6aea84c473e3d30fff72ae785bd57a3f7b5e0f9e19fc8efc"
         },
         {
           "alg": "SHA-512",
-          "content": "0600b82cf69375b8b0c584bd1fb46e5b5d17e74ba126056eccabe9fdc08149522865e52d27ff474fbc7ba2589e213f74a252255bc2d9039c1654d2726387f8e3"
+          "content": "0657b3a2a10165ec58f238ff3e3e00c266378151b7bed6d2517be51ab8dbcba6aea6a2f70cb666e71f779c7d8ed54c70869bfeea91eea820abf419a47d854021"
         },
         {
           "alg": "SHA-384",
-          "content": "50a07e53258858046291e9fa06377088e1c273256e36b9456a266ac1713d1934dde52ce346d262a641101e8427c18538"
+          "content": "b0836b833ca75dc45abab6a90b0a272e034252a52ed96dd1b2995415eb298b8040b624514572b0ec52af2adacfe347ce"
         },
         {
           "alg": "SHA3-384",
-          "content": "6e071a6d4035aadd3792ca8dff4b9f44066f2ab5aff6318c89b45d96068bc8b4a2ea9ff5af7844b43365ef76383d3190"
+          "content": "cab14450771ef533a99fd9f2f54b35a433a8ca0c7d7354c7ffaa0d2b2b126b994109e5646cf43e20a104561a95660970"
         },
         {
           "alg": "SHA3-256",
-          "content": "5ee62ba585a9ba9a9730a9d7661d03e7bafd5888c1efcfae752162b9851d03f5"
+          "content": "d296f95b4070d0f5fe34001d496bc9eedfe131bab7efed480ebcd1d8a87ae641"
         },
         {
           "alg": "SHA3-512",
-          "content": "072f1fa2bbdb6cccfd9df2e35d0ff36e5b99a0c02e68dbbc3c6c87485458e095c07dd942f021c2f2adcd9002e6d086492826aee5ea4f2e543c9b9ee0c4a907e7"
+          "content": "cc3f6873458a0201886b0dd95824b732ef7464bec6f44d036214e3ea92002f3a5fa3c2e62215e0eff94287e0bea3c5151e39ecf0cdf07ee001ed1f3359a8cc6c"
         }
       ],
       "licenses": [
@@ -3420,7 +3420,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.polyglot/polyglot@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.polyglot/polyglot@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/oracle/graal",
@@ -3434,44 +3434,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.sdk/collections@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.sdk/collections@25.0.3?type=jar",
       "group": "org.graalvm.sdk",
       "name": "collections",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "A collections framework for GraalVM components.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b3a0fe6360b77a9dd62b4559da90d2fe"
+          "content": "84c4f76823d30ecd44c59ef4e3c15bdd"
         },
         {
           "alg": "SHA-1",
-          "content": "6e921cc0f9986aff40cb6b96f17c669c18d858c7"
+          "content": "4215d26f8d0a56bb5f407f7f4bdbb298f3a8eff7"
         },
         {
           "alg": "SHA-256",
-          "content": "248e08c3ce02e47746f4697d0127f7142add99474ae31e7dea95e7da9823aacf"
+          "content": "619b944dd9751a6b5000ec3e37643925be42e8f7d0e8fc70c8896d0801550639"
         },
         {
           "alg": "SHA-512",
-          "content": "fdeb595284e40979e4800783a35606ef95f820419f4f9952dd6a711166bce5eb263fde2a0f155b81ccdf5de7a9fd9e08b2776a2f5928efef0f5779cd9ae0e0f5"
+          "content": "e5129a0734ea720a031d9b154971d6fc646502c96ec14e5c41dcf898a923aed1df34065d9ff60e44b5d8dc312c9ca5f837e5969fd0743bde59c12ac051ae9ad9"
         },
         {
           "alg": "SHA-384",
-          "content": "1334a5dcafaf28ff5a9847e47436727d576b4e46ca0db980fe1bdc6c84edeef147632902d967417a865299f5b1faee52"
+          "content": "df88ccc0914cce77cf98c9a07ac36bc5ddb67a6cb52106806a9a01e2f5d21dee6d51bbb8d6d2ebb1839871bf2dd931c1"
         },
         {
           "alg": "SHA3-384",
-          "content": "0a0d1bcfdd6ae615f119489aa69a23abd9282a82abfd3e8371b83539f845f1a4b2968cf0ab1de775628aeb63fb833d7c"
+          "content": "105947d546e6f1dee90f21aa15167e0b75966267f068e4dd4adbe0b2cb4fd76652e7ddb2419298187db8fa3939472e52"
         },
         {
           "alg": "SHA3-256",
-          "content": "70a395a8c80b42be9b1bd6b1c63d80cd2637f2a757c007f23d704420e6ddb628"
+          "content": "14b922239f8207880eae3b75970209e59089c81d16fe9cf306d4bcb207fbe1cf"
         },
         {
           "alg": "SHA3-512",
-          "content": "22140da02717e59b2b37aa984d7dd30e201f89a1da4786ba6c93d6ef6e74cbf0ec46db51941768d712557816a1dc2f839766fc5f5ab910152fa12816de028033"
+          "content": "27cb562172b2e5a0112f6750722dd640028034e7821c750844bc8449d370d1dfe35fc05001adcb2cafce5f42aa101425a3c150b38d49e8c2e3598773d2357b1a"
         }
       ],
       "licenses": [
@@ -3482,7 +3482,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.sdk/collections@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.sdk/collections@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/oracle/graal",
@@ -3496,44 +3496,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar",
       "group": "org.graalvm.sdk",
       "name": "nativeimage",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "A framework that allows to customize native image generation.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b67c680b1aaa2155fe34937d08ddaad6"
+          "content": "61970465a113a4b93664bc35f088c9c5"
         },
         {
           "alg": "SHA-1",
-          "content": "51871243791b4ba45af46df4ad5e8a35393d1044"
+          "content": "73acdb910dcdd3ba971b0317a65a07b2566c6a3d"
         },
         {
           "alg": "SHA-256",
-          "content": "ab30dea76d42dd78f1755faa062af0f0b853df2b3aaac92a0f912e7eebec3971"
+          "content": "db57a67697448d3072c1672a1482ccdfce8fb0329d2eac8e9154ee868f0f31a2"
         },
         {
           "alg": "SHA-512",
-          "content": "f4dd0384aa7f041aa87727179627a5f40332ac20982c51a02abb790e749371562ed8e0d57181b8887bf472e2cfe09df882608f970e0f84c41b9fd8f3455f393e"
+          "content": "e79d084c28ec354ef180575d06eaeae1af7a0926adede2fe775c0769ff4b23ca4b6c43d3af3774317c3245e723cec17070b200eb2a4562e7a8d8714266e66382"
         },
         {
           "alg": "SHA-384",
-          "content": "14378c60e3cb3ce4b03b0006e578c7f0e9de656ea854ab658dbda20a0df2b6829bc12d0ac9890520fe8f7b78ff06d89a"
+          "content": "b3fc834052783294688930f207c271ea9e6cb9482dc9e6de9c040f8a74cf5dabd9e36db8668001266c0396fa9545c8ec"
         },
         {
           "alg": "SHA3-384",
-          "content": "eb2bb05ea5af2ab72f578c40af4f28d2479fc0c67c50ed1a17cecedb9b48f12af8954f98de2a431f9d753991638b11c5"
+          "content": "3ae50ee6b31cf112003feb6dc67c279cba898eb48ce55331ba55c53dbaeddf1c06d1b0ccf958d61cda295905516170b1"
         },
         {
           "alg": "SHA3-256",
-          "content": "6d7ab0a70e260db6a2b68e68a92b0b016a13a724ee1ff644658be93513ad55f0"
+          "content": "e69fbfd5de16684275d91dcfe5d5177d6db20c455e832b79b626656e9b212cdf"
         },
         {
           "alg": "SHA3-512",
-          "content": "dbd91d61fdba3e486d9ea21bfdc7dd4fd240a3a054e47e0ba76a2ceb3556f8910b2369448b3f81116b625c1556ddfcc88ea89a4e1f5136046f8eccf01634c42b"
+          "content": "c050a3efab4af532099e0973ad4f25dd0742a58189fb80664e6feb5f14f1c3e2f3af3481beeecc21e780c85348b5071bf36ef56750c8619ce64c593fd7bffc0d"
         }
       ],
       "licenses": [
@@ -3544,7 +3544,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/oracle/graal",
@@ -3558,44 +3558,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.graalvm.sdk/word@25.0.2?type=jar",
+      "bom-ref": "pkg:maven/org.graalvm.sdk/word@25.0.3?type=jar",
       "group": "org.graalvm.sdk",
       "name": "word",
-      "version": "25.0.2",
+      "version": "25.0.3",
       "description": "A low-level framework for machine-word-sized values in Java.",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "29d3d858492fe4fb1d610d8b349fb584"
+          "content": "b58ca0eb5cc2e382baa2acc79764269d"
         },
         {
           "alg": "SHA-1",
-          "content": "2f4e3c92bba118d3adab969956e5ea3d66e96d18"
+          "content": "c7cb321dd1ae011e9f278f19398b5fb6846c94d5"
         },
         {
           "alg": "SHA-256",
-          "content": "1e616c48deed3b5f855227a88ccfe9c5a71f0ead6422f9c41cd853f584abfa88"
+          "content": "f49cae1a36575398800e5ae61f187d2cfd97e225e7b514839ec25b7529357ce9"
         },
         {
           "alg": "SHA-512",
-          "content": "9d591ce308468941753fe9931679996fa33441710e5d1e510a2c44abdb1135a82f327299182bf18087abbb45f156fc669845decf7a320159f0bde3c03281c8f3"
+          "content": "88f35548b691d621d34fffe95d5ef8457149e2ed6abb06fbc0e06610d6f7e4c6eca237e6c1ba934e8b2db2c892e4f13d7b6461f0ade85ab7af3876284889df8b"
         },
         {
           "alg": "SHA-384",
-          "content": "43aa38b205ce70cadc6a93211dfcafe5567f95a306d8ea98519f5298040880bb62bc7334278b4da10f2f68823168a0b1"
+          "content": "f4ea8e088c7d1df3c85e6839c1d623f546bb8bf636e16fa1750f0b1bf9ddae4fda659df91554c8f99b6f5318288e981e"
         },
         {
           "alg": "SHA3-384",
-          "content": "285eaa124bdb99b030a4ba3eb5082d1c9076db1fb594149e9ac4477d1f76945d9d063a27f2f16754afa83d38282ea741"
+          "content": "d55df79156c7a7f83480bae3888fc0abc65eb106d3e966b5a1821f4ca29b9d39f6e66f4456a76e7fee67bb8c1052f124"
         },
         {
           "alg": "SHA3-256",
-          "content": "7742edf22b36423dff42598db775efad4f791957f7b85f9575c1b78187425e18"
+          "content": "444db9651d00ba81fc8b454798e5568462e5b30b6eaf9b2eb5b884d64e6ba9fa"
         },
         {
           "alg": "SHA3-512",
-          "content": "62cf1d7afc6052cdc92a62cb0be66c35d5232e39ced0517d127ac9b98585e6d898c7c8f8179a9117ec627a7c61fab492fea388ae28d785f09916018c8ce6f5b6"
+          "content": "b03b6e37d8fdec22b33c3f08960b06e843f568050d348f568978a6a2c1c1d90bccd722c5d278c9d14f9f5f7ac9bc48ade4062764cc22b673252f3ae28c9d6fe7"
         }
       ],
       "licenses": [
@@ -3606,7 +3606,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.graalvm.sdk/word@25.0.2?type=jar",
+      "purl": "pkg:maven/org.graalvm.sdk/word@25.0.3?type=jar",
       "externalReferences": [
         {
           "url": "https://github.com/oracle/graal",
@@ -3846,44 +3846,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4456e65b29bd16ebb6769fc4688a849c"
+          "content": "90e58568d21a1fa34c662c3720f78371"
         },
         {
           "alg": "SHA-1",
-          "content": "3a981efd18d7e03d9e6cbc4d9a20f703f6975e33"
+          "content": "7e5013c78fd678ba8958db23c6883274019f2f2f"
         },
         {
           "alg": "SHA-256",
-          "content": "d2bfd75024921bf6e0fb4ca2997a8119a3425a0b7017485150b4f5f94e59aec5"
+          "content": "0466f481343d5f350a91274cd7bf984308cbaf90d706247fd1cf4b1a8010c2e1"
         },
         {
           "alg": "SHA-512",
-          "content": "6ed0d9e00b5fb342f42418b2e68c57cfa31dc0e32af0f62503bc9dc34e4973aea4048174a3dd930ac0134259683827d85af1cd69d106c0c488645cb9c89c96ab"
+          "content": "40e9ae3815fd7ea6adbbed0514922ec2768fb35e6aa5406a5ad8a72f569461f634de5aa34d803a5dee07e5a78bf804048d2c38720b0744d4dabd618618d9395e"
         },
         {
           "alg": "SHA-384",
-          "content": "105bc344e2d99a28dc43c049803f0e4be1207cea2e4be53c71f12d26f097b83b8f59ac0d7aebf1d6dae8d11c5afb2c7e"
+          "content": "9c2f59e685e6406a23eac13138014e76fc0e3868b21263cc34dee93827f75c23b2c364bfccaff813de2e60c3553063aa"
         },
         {
           "alg": "SHA3-384",
-          "content": "fa078668ca337d41420a5c717efc06ccd1b9c2d3ca28be91259361d4282109adcc97bb0b5e823daea185af018d866d53"
+          "content": "b877e96cf71d2a261e295e9662544059bb8e481f991f8a8568144668de3f89e933f221c7ae1f7d62ef4fd370ea5554a0"
         },
         {
           "alg": "SHA3-256",
-          "content": "6729f9d63c378346a335d326904767bfa3e6165dd6b75c4c3e41c91f56b87045"
+          "content": "481a516f7ba6c31ccf320d8e9e347cafe025dc7e4fb1c23f7c10165967682831"
         },
         {
           "alg": "SHA3-512",
-          "content": "06b439a888fbee1eeea168213862689ef56eb78e7dc5f36e6eacf58113d8c52275c10c67098107aa5bc1a0be9623fcb42312db88063f85883096336401e8c620"
+          "content": "db12a8e23017ff3660a4b336109888b9b165893a4d8539406fe344357cfc4cff12fa207c978e1960e87f07ab9f72dd18a64ece1b7c08c5e5c145473878cb8bf2"
         }
       ],
       "licenses": [
@@ -3894,7 +3894,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4596,44 +4596,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-mysql",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "85e686de14ac13e361b7165e11e9783b"
+          "content": "7d946bccc37a3318543d95b8693bcc24"
         },
         {
           "alg": "SHA-1",
-          "content": "0403a72f1564c3f881cd6872cb421de2923b2c0d"
+          "content": "9040e9d27b8e0b44955b78f96ddb5c2a77d95ae2"
         },
         {
           "alg": "SHA-256",
-          "content": "218c1e2a3fe08de961b4faa99dc0f2508e9872f509ee74636c3009eaedab28b6"
+          "content": "1fafe80953b9b5ef947035b3ee6ae387466f54c401b6f84c6827a1126746d9b5"
         },
         {
           "alg": "SHA-512",
-          "content": "a385382584fc4e32d1ff7756abdeb10b97d3f8d21b87660779d6743899e52827da391214af142f2b3de445fa3e07daf6b304537d6d9b8a1bea80292db877024f"
+          "content": "0b517cb8480f9d13f1c6f90c444de12ce40bce85fd88885314ca0f982ca464566819ac4af1e2e4c59dd0994271e365202beaec37a33da126802d8dbbe346067d"
         },
         {
           "alg": "SHA-384",
-          "content": "923c086fe6917a40f53bba51598e6d8241ad4cb0f12a350ce19bab1b8346f8947223334ec4e662054840f54de9dbaf26"
+          "content": "0db090513a5d9435d61a97a0e9c4069ff361174d6f771a75cef59c85335cc53653805c1cf47581ebb49c12b82f2569ba"
         },
         {
           "alg": "SHA3-384",
-          "content": "1715d52fb2e215e243aa2068ce24cbcd81734e00812630cd6866215f616da0d616ce1a23d3f9daeba44113132a35b451"
+          "content": "5a15c4fcbcd3e5289753808f31876d995d6153493ce376d90800ef16cc8bc04d175f29f39b57fde6e36754423baf477c"
         },
         {
           "alg": "SHA3-256",
-          "content": "eed2829e834373e2391a457cfab93ac46f081b43616ad5b9dc056b3c3f5972f6"
+          "content": "7d5697b3c98d7ad7749ebc8bff19ddd4ce0fb4a7d67e895c932ba33a56aca30a"
         },
         {
           "alg": "SHA3-512",
-          "content": "15e550b77c46cf03904cdbb1bdb70c5d492b6fb329cad071a0a70874fbe48d1c1ec19d4fd870b00444a4c5557b555d7ba7ff7288961830f5877d8bd5b4f82faf"
+          "content": "5ff2058f2ae593db9e72ad3ec40d18cccdbb10056b0a48070333ec145b5de276c4858cd8251b602abbf990876c80f885f11475bb3cac4175cb79be43bbc5dcf8"
         }
       ],
       "licenses": [
@@ -4644,7 +4644,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4662,44 +4662,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-jdbc",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "cb70d4e1e57d1eca1c9c10217125d5cb"
+          "content": "44d0139a6d63b98645d36ad6521ad682"
         },
         {
           "alg": "SHA-1",
-          "content": "2343ec21238a730ea193e368dd76fae2ff8eee64"
+          "content": "8b93b3febba94df8a3bd67c9fde8f63c8ddf2177"
         },
         {
           "alg": "SHA-256",
-          "content": "28b128314c2b7d0af0e376972cee9414c1967d4d50488383782ddc03b6de9f5e"
+          "content": "0f7fe603a32692c33739cf99d638206f9060ca47615bf0141ca2eb32d33d764a"
         },
         {
           "alg": "SHA-512",
-          "content": "3784ec283ce87a6e2760e0febd28daf17600782b25791430e7ca0aa488a2e13c87e52fb63a3d471427ffb454b3d381668aebd24fc4f30a818030f76a2da07910"
+          "content": "c703a5cde05a1cfd98b6edb2c4247cf80e943a6a62b909707b2afed2b2c54e97ad25da1ef6129a6e60e11eefd337a80e661f66b1658b0a02dd019e795eaf401e"
         },
         {
           "alg": "SHA-384",
-          "content": "3c28dce5e793f38701d4377b47e002b1d539e1b9c8f408978d64086eb4a622ec213bda96277963bea09c7016430f13b6"
+          "content": "0eb2e1e93a74131c1144bde65d254416ebbc9a15925f1799218cfdf344a5b8c4d545b02ad51a531c2a78f493737d1b4b"
         },
         {
           "alg": "SHA3-384",
-          "content": "d3316056f84dd3ead4b8f6f23852221c36097b2333924cea1c91439258cff17f7dcaf774ca0352955676fea9d0e28807"
+          "content": "b7b14b8648c3478614b27452ae1e84d77030e98c5675e392fea7b1ddd8ccebcda553c78a6befe78ebd85722a6a037964"
         },
         {
           "alg": "SHA3-256",
-          "content": "c9cb25d3555950282e4a25af68aa09b5c18e38dcffe26a4b3d694833f59e908d"
+          "content": "e31384afb0be5276ecd2acfdefcc7eda16122ec28a4b1566ae3fc34635dee6c6"
         },
         {
           "alg": "SHA3-512",
-          "content": "e17ab8e002bf22d0165e1000fcec1277546427a39a38b7e834e3012788b3e0857f64e5a161876c393e6fb23f754b047d67ad2f320b044f39785c348d9f493dea"
+          "content": "2698a5b96e735057adf26ad90e49e2b02deb0b3740742ec85c0e9cce7a614d00b9c49dba5de9135c4ca62e40800cdf9e5e8e8848f7c6ab92153df237badc9c5c"
         }
       ],
       "licenses": [
@@ -4710,7 +4710,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4728,44 +4728,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-database-commons",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a17d6153e86049bb3e81bfe1a3022aec"
+          "content": "c972d00439082d9a42a965bcc73935f0"
         },
         {
           "alg": "SHA-1",
-          "content": "7ecfe090ec6d0f81a5891b4e1f8cc58c5e796419"
+          "content": "bc1eeea337c461c108507f596122b3e6fdb62122"
         },
         {
           "alg": "SHA-256",
-          "content": "2571668d24137fc3408d19013e303f358f4ba83cac62eeebe32245e970a21ef2"
+          "content": "0ebbc62bdcfb315cb840a63fbaa148b455927666d9034b5e5c00009d84c755b0"
         },
         {
           "alg": "SHA-512",
-          "content": "bfe209d5f2ebffb55d134fd42e8b621d60594366e1e378baa23831e778e72afa8720608c2de35029d6b53f3583054bd5441688f4e340e44838405b3675b11808"
+          "content": "67da45ad8b1d2f6dcc1384111cd04776b972f62f04e8f41bbf3b2a1db270f70473c4fcb54dd695e1a49ccf8aba948529012ccc2b352f33139c00f514075dd782"
         },
         {
           "alg": "SHA-384",
-          "content": "5d6ee470d8a479d5462e52d4e5a79a065b89486b0e07b82ecd947b65553a53c580e6b8f7bda3f01807be0c3c1f20439f"
+          "content": "14244e7f97ba9363b6acb20e96dd76e0106add0fa57bbc8ebb97c59273f7d844250aac35d673f9036598847d635040b2"
         },
         {
           "alg": "SHA3-384",
-          "content": "db356293ff7e6f621dfd6c502f68c2c2869467de0aebe025f745c88be1462fbd4f3d88ab4d26f12343ada2d6bbbfc2d0"
+          "content": "477c572542d80b2143cb40685a4823d53a80bef2778cce521f4bb148268c41aa410c13d33eb4be814a541eb067ec43b9"
         },
         {
           "alg": "SHA3-256",
-          "content": "e925815dcae6b3af5bb39a0a48e39cde03568aad082f4b4e48db9b2ba40fd69e"
+          "content": "d6a0a4e73c90bce68ca29169f4ae3caacc2c1e71cfbeda992ac75de92281c23d"
         },
         {
           "alg": "SHA3-512",
-          "content": "1c56fb5775776f8c1712cb537599665ba4ea4638d51d5c317281bad324394ba6092ca30d929e031e332bc74274b7c672bbb2f4cc4ddba019a7dcfd50bc6c6a15"
+          "content": "70d85b562ce3ddc43a387c9ea52cee93e8f44851994e994dac7b4740c9e9f47c3999687b4004c8412ddd55035f1b5407ba9f1786229d790bdffbc6cba2de4c0b"
         }
       ],
       "licenses": [
@@ -4776,7 +4776,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4794,44 +4794,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-mariadb",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "e75c03d96cb7567e56d4345f986f40e0"
+          "content": "1cb96fa7daee21c2087e6fa2e8ead62a"
         },
         {
           "alg": "SHA-1",
-          "content": "92f53378d1aa570443621fb7f756590f484f3106"
+          "content": "8625ca1692e936746986db1dafee582a37811ee4"
         },
         {
           "alg": "SHA-256",
-          "content": "bc7343ee94e6f0c1da4a82a5e123f71027050879ce0a05f412ff73fcc8fb6987"
+          "content": "f685b88000643d23f935bc4c90f3cefa254fd55b021cd316127201dc72f3f8c5"
         },
         {
           "alg": "SHA-512",
-          "content": "546875a8f56617da8e7f714c6dec7dec62ea6707bd2e34c25f2eaa034697d062a63a088f09994a4e679ffcc8ff3aa896591e73e21669364d457b5d951dab40c8"
+          "content": "f26dd5d8dd601473b0b74324527c377d7c9fe57366ff9ee6bcf216695a9892587ab8eddd6e01f9b867cb204dff6c02388d2dc3b7563580750ca20dcddfba2e2f"
         },
         {
           "alg": "SHA-384",
-          "content": "fdd4ab8bd8143a002a2cbe638ed61a2e019cfd7df15f77c5c36b02acdcaebd1895a536548c0ac03c3e4e5e2559076422"
+          "content": "4fc3f18f06787d012a16c390c5db17bca2157a3260c89bcfc7a712e4d30ff9f6695aa5aa0c612def43f01d5c325df61e"
         },
         {
           "alg": "SHA3-384",
-          "content": "b092b593838a286f96f8fb2ee80e40e71abe59cd6dbd49f24d6cd4442ffde10fd0eec98db3cff522005b13de29b89905"
+          "content": "997d0e4153c8c3e8f910de9a42645af171e08c47ca6f156e48563167cae47ccefcc9800c1b4d22c00d166f230110cb73"
         },
         {
           "alg": "SHA3-256",
-          "content": "45245ea909113e7b4f541d0724e4ab949fa2174d395f583ad8473c0816fc7d44"
+          "content": "0bc0eaaefd116315ac1e65921a7176005ab12ec297199818518ad4c59e055c8f"
         },
         {
           "alg": "SHA3-512",
-          "content": "cd71c300a0652879c1359d23b8ded45c3d72cae8f2128cf34640fccb66a769725419c0b511d13ae12388a0ec1c2fd683207850b7b20bd6895d901ca76be82fcc"
+          "content": "e8f9bf4e20ae85a8d6d629c87ffff30d116e9d86e25ed0dc4af663b92f000d8030bbbd2e819c029c5520d6fe93c8155df7c1ea6220bbd4e42b23fa0d00b8bb81"
         }
       ],
       "licenses": [
@@ -4842,7 +4842,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4860,44 +4860,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-postgresql",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4231a7ea627ef4e02b70d015758e8d8c"
+          "content": "bef512d37585abd81fc34ce0498eb1b9"
         },
         {
           "alg": "SHA-1",
-          "content": "56f587c02a11539dbd60440d2da43581143defe1"
+          "content": "a7a9f748bb0e043098d3fc36d4929538ee0f6de8"
         },
         {
           "alg": "SHA-256",
-          "content": "814e7dd9c8eecf097c49486198bc1005f01820d6c9de0b3ab80821ed5571c7d1"
+          "content": "8dbfb2fda977eb813ed1188ce02f098b8b634910eeab220568d54d6bd5b7ce9f"
         },
         {
           "alg": "SHA-512",
-          "content": "5a963d2b66c488c8a695530840107c824ef955792e24a8e130c2c2049cb9c068a29b9fe0303ff2083d322827110a9712a141bb00f426a82746bdf60a7218ccff"
+          "content": "b961e475853e3ca5e8de355bf249cb324de4621264ece04f531a62c14a5abf29529e2d84704f4b0de204aef0ba138d414a0afd63c8d73a837f06dc9be4f257a2"
         },
         {
           "alg": "SHA-384",
-          "content": "41cf6451bd24a37a7768b43e5b3bc7b851725c84129759adf3a9b62e9cc985464008e825345c6e51852d6de36088be73"
+          "content": "e67d5f2f2df8006db816e899afd19ce208e0d9a5f91cac991f1c31f14310c2ebfaafffc52e855bb770997cdfc6d289e0"
         },
         {
           "alg": "SHA3-384",
-          "content": "02bc613067c9a2577c88b93931511edfd28846e60afd64487721e26376b604fcdbc0f9adbc6186a6e076a76de0bdb507"
+          "content": "cc4fd9bb57156b5efbea7fec347e719c54a3131a9fbb21815700fd59c8805dd5682d3f48aa72563d0761140d6aed96e4"
         },
         {
           "alg": "SHA3-256",
-          "content": "521ba9e3d418984b3e5703fa6f867214dba0495c5692f0f63052b7f15a1d8556"
+          "content": "9aaeaca0931b5456943561183cf28dd58db0c0001fff18467d5048bdc905e3c0"
         },
         {
           "alg": "SHA3-512",
-          "content": "6b53df38e563b75a45618fc0c7526399035cf90e5f2ba13adeb9be515bc25456677697f5312bd234fbdc0aa74baf9df0c90cc43872a6b44e9ee8fd4283613b10"
+          "content": "bfe9b0f778db1f1f8dc8209ecf181e0ae0408c59166d2c6b69b31273955705f86a71e102fa547b4ae7ea55c57ddcf99c3382838d018be52662e09c6ea5f40cb8"
         }
       ],
       "licenses": [
@@ -4908,7 +4908,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4926,44 +4926,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-mssqlserver",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "565974a24f0e6a801d79e6e908b2c054"
+          "content": "1023cad39d4fb426411a90588f3d4de8"
         },
         {
           "alg": "SHA-1",
-          "content": "e4f5fc23fa3ab61abc5e9ab681160488de3e0fac"
+          "content": "64ca0630d5627402884bcca8b855a6444a27b148"
         },
         {
           "alg": "SHA-256",
-          "content": "c6fe65d1955341db19fcb89245cc891091999acc785ee2993bcaf91ffbdc9851"
+          "content": "323141d0769f8645ce9df5ae21f1ec5ef2cf074b2414b4df16cfe7e1084bcf5d"
         },
         {
           "alg": "SHA-512",
-          "content": "e1faaf246148932cd2048a5352e69d2ee5a191743b0b4ce6c0c0f960e68b9657f456d6338dc7201c70275dace893f9f09fcf5f2dfe83d86e4298a9c1ab0fb31c"
+          "content": "6a3ccbfb29100161e19948068f6de45410b4392f002daeeb298d3816aaf0b1e99dc8f99dd64c29a5d37522feeb264aa4234cac26bd7cfb50755ea7c02629b65f"
         },
         {
           "alg": "SHA-384",
-          "content": "2fa563326cbb0fb0aac1c5ce7c6eeef64576bb8c02a330643963d99bac37e5924f0b3eb563dc59d897b6ca93bb89c05a"
+          "content": "02880a0ceefc5d9cfac146d3ab271987a9cc37df9834a4f4c3bcf0720e66d0f0119b05d25240a921038db5035d1bd1ec"
         },
         {
           "alg": "SHA3-384",
-          "content": "1fb5bbd0097f0b10b505d85d41fc5657b17b004a62b6ddb27994cfe22804dfe54a8cd394e5f1752fc5f0985981f22d96"
+          "content": "4d4f2b34126678ed9cf907441142ca0f8800cbba0882b2e72c83c4e91213fca66776bd548e56c2fc9e3721ef77669baa"
         },
         {
           "alg": "SHA3-256",
-          "content": "df5f7e1692cbab641858a129fdf4e9332b8b0af33846c283d0f69760a9565935"
+          "content": "a6df402ed6516e0954d7420998bcf1f7b9ee09bfe0ff5927df1ebedd06b40c23"
         },
         {
           "alg": "SHA3-512",
-          "content": "e8f6cde0fa1babb6dff0c6e60558ced0fd3285089efa5dd6c7f2ef2d8b5721df3c52a1ffc5f5edbd7e6b68de3b4d79adb44a79ca1aecdb8d2fd9e01b0e308796"
+          "content": "08683941c286082cdaf9a3de8eb1e7b44fadcc4ee5a4c9aaed394e51fb721c046dd30cac641015333244775647569efdf4d65712e46beec0cdde7597a825caeb"
         }
       ],
       "licenses": [
@@ -4974,7 +4974,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -4992,44 +4992,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-oracle-xe",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "64f3b18a3b8c5b21a66212a305080282"
+          "content": "1a20d73d56c918d8bf4a8b3326d3aa40"
         },
         {
           "alg": "SHA-1",
-          "content": "b42d110437b3b3d630bd455765126f5528eef474"
+          "content": "72c777839abc765513eb60426533c4b16a99ae16"
         },
         {
           "alg": "SHA-256",
-          "content": "853ab6dd244c863afa086f4686993e2f67da1fca6e1a7c95157b5871a2f06b0b"
+          "content": "75b7d0f3641c648a38814c63ef0f7d4af946ffb381a9ff2b533c06791d3c65d3"
         },
         {
           "alg": "SHA-512",
-          "content": "92d9bb9788ecaac19881e90f7f44e543f0c8ae19162613a5eabe89f53ae5caa9908e193d594ffb6337982c31b98065578ca1b06bd6718a1da2ba59ffc9d9d12c"
+          "content": "b24c834f5be876757221e5793205f65e9d0f71efee2f34fed861e90e3390d0f41216a1979a61e70976b1cd70c4a077ae05eb684e54e41250420565b66b7d3c4a"
         },
         {
           "alg": "SHA-384",
-          "content": "03e777ad7d84521bcefb56b74ee088867cfd60a15fc208dd7f23326ddd579d4e25723e26fa8aa1929b3292b3785b5775"
+          "content": "40de9f4a2273e895a63b766195510c8c8a8ff2a1bce8fcff08fc706cec23e10a6c26eba89452eb03210fdb0eadc4eaa7"
         },
         {
           "alg": "SHA3-384",
-          "content": "2ea21df03e3dca72d3c77362953dec3efa8b9d798f3963f10052a269ca5e34ea19c07942b44f5b6b2da798cf321d8a1d"
+          "content": "ebf04490d2637ac1c979f8c448ffe40a16b0e732482120127d217b21512fbff648f766a619d5a085b548008a0875b276"
         },
         {
           "alg": "SHA3-256",
-          "content": "78172ed9b507e730bcdee57734d99819b857d5e68b033fd4c8127ac34da229db"
+          "content": "558cf4be70dada18245363d526c0b4a34fb3ff576ac861b6aa13f898e1c2a5a3"
         },
         {
           "alg": "SHA3-512",
-          "content": "164f455020aa0f47cb9d0287e9a60d81549efc8e19b708128d4730108f6640f6b8e548adf5d7d9f53dae29a9b0ef628cc6b2f87542e6b4691d16bf5381a67961"
+          "content": "2a4c1599e558399d4e893145de5f21e58fe63d9b49879800d7e0f4aabb760cfdb14b3ba51c76b506eddf4909c4d773c4d6efed83b0b56aade5a31b521dd9ebaf"
         }
       ],
       "licenses": [
@@ -5040,7 +5040,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -5058,44 +5058,44 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.4?type=jar",
+      "bom-ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.5?type=jar",
       "group": "org.testcontainers",
       "name": "testcontainers-db2",
-      "version": "2.0.4",
+      "version": "2.0.5",
       "description": "Isolated container management for Java code testing",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "69f200f4ca40ab3f34205033e4b3e103"
+          "content": "1c1bbcd9c493ca51c005f4e06e2e1076"
         },
         {
           "alg": "SHA-1",
-          "content": "c254dcdf642e3b5356abcdf90f04cdb7ed580eee"
+          "content": "97ca9b7c23335a5b8b5271614d74aaa1430fef88"
         },
         {
           "alg": "SHA-256",
-          "content": "18bf52bf8a663a259cbd4ff4e6d1bd940b0bcdc5c2ab2683d8fb3be742c36591"
+          "content": "ee17fbca3f5a3b1a6719cbc0f3d400e6e9d1548ce5e3879bfa9999b597807169"
         },
         {
           "alg": "SHA-512",
-          "content": "921ee1e894cf121b7cca5de5587d6d8bc84f8cd40c49a83617e4c426fc6b210ce6eea86b874480a6de8de34db24c3b197d895cc03c27b2ef61670f4ddbb1ed6d"
+          "content": "6f6c61bd263196456712b1747cd5bdd79c544ecee10b9be12f1ba0aeb59bc7d5723deefceda3312241fbdd872734284c834cf764e572bdf04ad07a9ee60ea33a"
         },
         {
           "alg": "SHA-384",
-          "content": "65f4fc28921b769fd7bf51606346cc04eb1dfa883d63b054a67fcadec9e7868d86fa0f760e87e7aa2779a50cf2b71109"
+          "content": "bb982d41a6ceb9026fd0bd4aa5885b02b56c63d551fdb94bb594814999538661bb8ec5918c95ad07946fce3d7633c72f"
         },
         {
           "alg": "SHA3-384",
-          "content": "0fe8d94538fa953c40706ff8205556abee66e4eea327dc092ecdbb36cd106e2dd517e06b78c963646265f31928186450"
+          "content": "4fbd552ef89c3daf0ac2f9007dab0e4e5ce08c01fc76fa07911c8dc43e6527e180c44a48a7f97793c5115c3335d40dab"
         },
         {
           "alg": "SHA3-256",
-          "content": "b7669fd1277279742a18925c800498cd2f160152e76ec45445c0af5c52d76980"
+          "content": "b771ee9477da754ecb344e5b1a46e1583ebd461cc54cafa1ee1dd11df57acb9e"
         },
         {
           "alg": "SHA3-512",
-          "content": "88514459e6ef45f083ea7522cd90fb9a1ab0274f03a40ae5cb6d5ad01328b17a21ddcbb3f536cab1ef32e97e99c63bc5c5284d8a8760e2776b11d882ff2af877"
+          "content": "727d1e98c31fac91ec4ebff2e0f39916bb53b85a33a6a99c367ea0714c2cbce6a81e709694dca486a7fc8b7b4f5d17ee29c6687b5d04bb7d2f3f564d0604fa9d"
         }
       ],
       "licenses": [
@@ -5106,7 +5106,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.4?type=jar",
+      "purl": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.5?type=jar",
       "externalReferences": [
         {
           "url": "https://java.testcontainers.org",
@@ -23347,7 +23347,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "61d44d95-9ea1-4809-9c3c-34d4129f6af6",
+      "bom-ref": "acd3adc3-d844-4e00-98aa-5b6dbb32a55e",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28093,7 +28093,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "c92e3313-95c2-404f-b5a5-7ac6d844fd97",
+      "bom-ref": "0230a697-6998-4bab-bf11-202a34c47b2c",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28426,17 +28426,17 @@
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-test-utils-testcontainers@1.1.2-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers@2.0.4?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.4?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.4?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.4?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.4?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.4?type=jar",
-        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.5?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.5?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.5?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.5?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.5?type=jar",
+        "pkg:maven/org.testcontainers/testcontainers-db2@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
@@ -28498,51 +28498,51 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mysql@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-database-commons@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mariadb@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-postgresql@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-mssqlserver@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-oracle-xe@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.4?type=jar",
+      "ref": "pkg:maven/org.testcontainers/testcontainers-db2@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.4?type=jar"
+        "pkg:maven/org.testcontainers/testcontainers-jdbc@2.0.5?type=jar"
       ]
     },
     {
@@ -30575,8 +30575,8 @@
         "pkg:maven/org.springframework.boot/spring-boot-starter-jdbc@3.5.13?type=jar",
         "pkg:maven/org.apache.tomcat.embed/tomcat-embed-core@10.1.53?type=jar",
         "pkg:maven/org.springframework/spring-webmvc@6.2.18?type=jar",
-        "pkg:maven/org.graalvm.polyglot/js@25.0.2?type=pom",
-        "pkg:maven/org.graalvm.js/js-scriptengine@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.polyglot/js@25.0.3?type=pom",
+        "pkg:maven/org.graalvm.js/js-scriptengine@25.0.3?type=jar"
       ]
     },
     {
@@ -30651,97 +30651,97 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.graalvm.polyglot/js@25.0.2?type=pom",
+      "ref": "pkg:maven/org.graalvm.polyglot/js@25.0.3?type=pom",
       "dependsOn": [
-        "pkg:maven/org.graalvm.js/js@25.0.2?type=pom"
+        "pkg:maven/org.graalvm.js/js@25.0.3?type=pom"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.js/js@25.0.2?type=pom",
+      "ref": "pkg:maven/org.graalvm.js/js@25.0.3?type=pom",
       "dependsOn": [
-        "pkg:maven/org.graalvm.js/js-language@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.js/js-language@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.js/js-language@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.js/js-language@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.regex/regex@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.truffle/truffle-api@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.polyglot/polyglot@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.shadowed/icu4j@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.regex/regex@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.truffle/truffle-api@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.polyglot/polyglot@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.shadowed/icu4j@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.regex/regex@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.regex/regex@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.truffle/truffle-api@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.shadowed/icu4j@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.truffle/truffle-api@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.shadowed/icu4j@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.truffle/truffle-api@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.truffle/truffle-api@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.sdk/collections@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.polyglot/polyglot@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.sdk/collections@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.polyglot/polyglot@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.sdk/collections@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.sdk/collections@25.0.3?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.sdk/word@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.sdk/word@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.sdk/word@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.sdk/word@25.0.3?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.graalvm.polyglot/polyglot@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.polyglot/polyglot@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.sdk/collections@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.sdk/collections@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.shadowed/icu4j@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.shadowed/icu4j@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.shadowed/xz@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.shadowed/xz@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.shadowed/xz@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.shadowed/xz@25.0.3?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.truffle/truffle-runtime@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.sdk/jniutils@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.truffle/truffle-api@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.sdk/jniutils@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.truffle/truffle-api@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.sdk/jniutils@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.sdk/jniutils@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.sdk/collections@25.0.2?type=jar",
-        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.sdk/collections@25.0.3?type=jar",
+        "pkg:maven/org.graalvm.sdk/nativeimage@25.0.3?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.truffle/truffle-compiler@25.0.3?type=jar",
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.graalvm.js/js-scriptengine@25.0.2?type=jar",
+      "ref": "pkg:maven/org.graalvm.js/js-scriptengine@25.0.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.graalvm.polyglot/polyglot@25.0.2?type=jar"
+        "pkg:maven/org.graalvm.polyglot/polyglot@25.0.3?type=jar"
       ]
     },
     {
@@ -30937,7 +30937,13 @@
       "dependsOn": []
     },
     {
-      "ref": "61d44d95-9ea1-4809-9c3c-34d4129f6af6",
+      "ref": "0230a697-6998-4bab-bf11-202a34c47b2c",
+      "dependsOn": [
+        "acd3adc3-d844-4e00-98aa-5b6dbb32a55e"
+      ]
+    },
+    {
+      "ref": "acd3adc3-d844-4e00-98aa-5b6dbb32a55e",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -30985,12 +30991,6 @@
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0",
         "pkg:npm/ui-bootstrap4@3.0.7"
-      ]
-    },
-    {
-      "ref": "c92e3313-95c2-404f-b5a5-7ac6d844fd97",
-      "dependsOn": [
-        "61d44d95-9ea1-4809-9c3c-34d4129f6af6"
       ]
     },
     {

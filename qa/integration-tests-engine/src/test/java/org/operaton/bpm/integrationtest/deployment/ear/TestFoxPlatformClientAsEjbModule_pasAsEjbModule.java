@@ -32,7 +32,6 @@ import org.operaton.bpm.integrationtest.deployment.ear.beans.EeComponent;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -80,11 +79,11 @@ public class TestFoxPlatformClientAsEjbModule_pasAsEjbModule extends AbstractFox
       .addClass(TestFoxPlatformClientAsEjbModule_pasAsEjbModule.class)
       .addAsLibraries(DeploymentHelper.getTestingLibs());
 
-    return TestContainer.addEngineCdiLib(ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
+    return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
       .addAsModule(foxPlatformClientJar)
       .addAsModule(testJar)
-);
+      .addAsLibrary(DeploymentHelper.getEngineCdi());
   }
 
   @Test

@@ -40,11 +40,12 @@ public class TestProcessEnginesXmlInProcessApplication extends AbstractFoxPlatfo
 
   @Deployment
   public static WebArchive processArchive() {
-        WebArchive archive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test.war")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("singleEngine.xml", "META-INF/processes.xml")
-        .addClass(AbstractFoxPlatformIntegrationTest.class));
+        .addClass(AbstractFoxPlatformIntegrationTest.class);
 
       TestContainer.addContainerSpecificResources(archive);
 

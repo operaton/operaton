@@ -44,15 +44,16 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Deployment(name = "mainDeployment")
   public static WebArchive createProcessArchiveDeplyoment() {
-    WebArchive webArchive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "mainDeployment.war")
+    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "mainDeployment.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestConstants.class)
         .addClass(DelegateVarMapping.class)
         .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMapping.bpmn20.xml")
-        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMappingExpression.bpmn20.xml"));
+        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/DelegatedVariableMappingTest.testCallSubProcessWithDelegatedVariableMappingExpression.bpmn20.xml");
 
     TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
 
@@ -61,12 +62,13 @@ public class DelegatedVariableMappingTest extends AbstractFoxPlatformIntegration
 
   @Deployment(name = "calledDeployment")
   public static WebArchive createSecondProcessArchiveDeployment() {
-    WebArchive webArchive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "calledDeployment.war")
+    WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "calledDeployment.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestConstants.class)
-        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/simpleSubProcess.bpmn20.xml"));
+        .addAsResource("org/operaton/bpm/integrationtest/functional/delegation/simpleSubProcess.bpmn20.xml");
 
     TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
 

@@ -80,10 +80,10 @@ public class SpringRetryConfigurationTest extends AbstractFoxPlatformIntegration
 
     // the test is deployed as a seperate deployment
 
-    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-);
+            .addAsLibraries(DeploymentHelper.getEngineCdi());
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
 

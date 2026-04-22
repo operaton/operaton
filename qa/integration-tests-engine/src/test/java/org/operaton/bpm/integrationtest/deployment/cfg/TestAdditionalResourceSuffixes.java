@@ -32,7 +32,6 @@ import org.operaton.bpm.engine.repository.Resource;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -43,15 +42,16 @@ public class TestAdditionalResourceSuffixes extends AbstractFoxPlatformIntegrati
 
   @Deployment
   public static WebArchive processArchive() {
-      return TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class)
+      return ShrinkWrap.create(WebArchive.class)
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(DummyProcessApplication.class)
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes-additional-resource-suffixes.xml", "META-INF/processes.xml")
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml")
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/hello.groovy")
-        .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/hello.py"));
+        .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/hello.py");
   }
 
   @Test

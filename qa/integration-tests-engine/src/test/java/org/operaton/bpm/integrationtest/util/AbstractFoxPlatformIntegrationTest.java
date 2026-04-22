@@ -60,15 +60,13 @@ public abstract class AbstractFoxPlatformIntegrationTest {
   public static WebArchive initWebArchiveDeployment(String name, String processesXmlPath) {
     WebArchive archive = ShrinkWrap.create(WebArchive.class, name)
       .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+      .addAsLibraries(DeploymentHelper.getEngineCdi())
       .addAsLibraries(DeploymentHelper.getTestingLibs())
       .addAsResource(processesXmlPath, "META-INF/processes.xml")
       .addClass(AbstractFoxPlatformIntegrationTest.class)
       .addClass(JobExecutorWaitUtils.class)
       .addClass(TestConstants.class);
 
-    // On containers that provide operaton-engine-cdi as a system module (WildFly)
-    // this is a no-op. On Tomcat, the engine-cdi JAR is embedded into the WAR.
-    TestContainer.addEngineCdiLib(archive);
     TestContainer.addContainerSpecificResources(archive);
 
     return archive;

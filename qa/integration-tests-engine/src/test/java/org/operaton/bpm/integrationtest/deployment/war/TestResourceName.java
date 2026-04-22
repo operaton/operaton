@@ -127,8 +127,9 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
     JavaArchive pa4 = ShrinkWrap.create(JavaArchive.class, "pa3.jar")
             .addAsResource(pa4ProcessesXml, "META-INF/processes.xml");
 
-    WebArchive archive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test.war")
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsLibraries(pa1)
         .addAsLibraries(pa2)
@@ -140,7 +141,7 @@ public class TestResourceName extends AbstractFoxPlatformIntegrationTest {
 
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(TestContainer.class)
-        .addClass(TestResourceName.class));
+        .addClass(TestResourceName.class);
 
     TestContainer.addContainerSpecificResources(archive);
 

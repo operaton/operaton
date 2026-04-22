@@ -31,6 +31,7 @@ import org.operaton.bpm.integrationtest.functional.cdi.beans.DependentScopedBean
 import org.operaton.bpm.integrationtest.functional.cdi.beans.ErrorDelegate;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.RetryConfig;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.operaton.bpm.engine.impl.test.TestHelper.executeJobIgnoringException;
@@ -49,11 +50,11 @@ public class CdiRetryConfigurationTest extends AbstractFoxPlatformIntegrationTes
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
-    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(DependentScopedBean.class)
-);
+            .addAsLibraries(DeploymentHelper.getEngineCdi());
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 

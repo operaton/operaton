@@ -70,25 +70,27 @@ public final class BeanManagerLookup {
       }
     }
 
-    // CDI 1.1+ standard programmatic lookup (Jakarta CDI 4.1)
-    try {
-      return CDI.current().getBeanManager();
-    } catch (RuntimeException e) {
-      // no CDI container available or accessible from this classloader
-    }
-
-    // legacy JNDI fallback for application servers
+    // JNDI lookup for application servers — returns the deployment-local BeanManager
+    // (java:comp is component-scoped and resolves to the correct WAR/EJB BeanManager)
     try {
       return (BeanManager) InitialContext.doLookup("java:comp/BeanManager");
     } catch (NamingException e) {
-      // silently ignore
+      // silently ignore — not available from server module classloader context
     }
 
-    // legacy JNDI fallback for servlet containers
+    // JNDI fallback for servlet containers
     try {
       return (BeanManager) InitialContext.doLookup("java:comp/env/BeanManager");
     } catch (NamingException e) {
       // silently ignore
+    }
+
+    // CDI 4.1 standard programmatic lookup — used when java:comp/BeanManager is
+    // not available (e.g. when engine-cdi is loaded as a WildFly server module)
+    try {
+      return CDI.current().getBeanManager();
+    } catch (RuntimeException e) {
+      // no CDI container available or accessible from this classloader
     }
 
     return null;

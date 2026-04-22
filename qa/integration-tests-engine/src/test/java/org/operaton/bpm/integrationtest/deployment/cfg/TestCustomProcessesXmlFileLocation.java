@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
+import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -41,14 +42,13 @@ public class TestCustomProcessesXmlFileLocation extends AbstractFoxPlatformInteg
   @Deployment
   public static WebArchive processArchive() {
 
-    return ShrinkWrap.create(WebArchive.class, "test.war")
+    return TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/processes.xml", "my/alternate/location/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CustomProcessApplication.class)
-        .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml");
+        .addAsResource("org/operaton/bpm/integrationtest/deployment/cfg/invoice-it.bpmn20.xml"));
 
   }
 

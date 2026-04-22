@@ -43,15 +43,14 @@ public class CdiProcessApplicationEventSupportTest extends AbstractFoxPlatformIn
 
   @Deployment
   public static WebArchive createDeployment() {
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
+    WebArchive archive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
         .addClass(CdiEventSupportProcessApplication.class)
         .addClass(EventObserverCdiBean.class)
-        .addAsResource("org/operaton/bpm/integrationtest/functional/event/ProcessApplicationEventSupportTest.testExecutionListener.bpmn20.xml");
+        .addAsResource("org/operaton/bpm/integrationtest/functional/event/ProcessApplicationEventSupportTest.testExecutionListener.bpmn20.xml"));
 
     TestContainer.addContainerSpecificResourcesForNonPa(archive);
 

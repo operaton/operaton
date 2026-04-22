@@ -58,14 +58,13 @@ public class CdiDelegateBeanResolutionTest extends AbstractFoxPlatformIntegratio
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
-     WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "client.war")
+     WebArchive webArchive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(ProgrammaticBeanLookup.class)
             .addClass(BeanManagerLookup.class)
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(JobExecutorWaitUtils.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getTestingLibs());
+            .addAsLibraries(DeploymentHelper.getTestingLibs()));
 
      TestContainer.addContainerSpecificResourcesEmbedCdiLib(webArchive);
 

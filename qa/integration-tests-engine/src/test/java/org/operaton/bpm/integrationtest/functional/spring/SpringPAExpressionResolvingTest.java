@@ -71,12 +71,11 @@ public class SpringPAExpressionResolvingTest extends AbstractFoxPlatformIntegrat
 
     // the test is deployed as a seperate deployment
 
-    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(JobExecutorWaitUtils.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getTestingLibs());
+            .addAsLibraries(DeploymentHelper.getTestingLibs()));
 
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
 

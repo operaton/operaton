@@ -62,14 +62,13 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
       .addAsResource("org/operaton/bpm/integrationtest/deployment/war/testDeployProcessArchiveUnchanged.bpmn20.xml", "process.bpmn")
       .addAsResource("META-INF/processes.xml");
 
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "pa1.war")
+    WebArchive archive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "pa1.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-        .addAsLibraries(DeploymentHelper.getEngineCdi())
 
         .addAsLibraries(processArchiveJar)
 
         .addClass(AbstractFoxPlatformIntegrationTest.class)
-        .addClass(TestWarDeploymentDeployChangedOnlyWithJarAsLib.class);
+        .addClass(TestWarDeploymentDeployChangedOnlyWithJarAsLib.class));
 
     TestContainer.addContainerSpecificResources(archive);
 
@@ -93,15 +92,14 @@ public class TestWarDeploymentDeployChangedOnlyWithJarAsLib extends AbstractFoxP
       .addAsResource("org/operaton/bpm/integrationtest/deployment/war/testDeployProcessArchiveUnchanged.bpmn20.xml", "process.bpmn")
       .addAsResource("META-INF/processes.xml");
 
-    WebArchive archive = ShrinkWrap.create(WebArchive.class, "pa2.war")
+    WebArchive archive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "pa2.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsLibraries(DeploymentHelper.getTestingLibs())
 
         .addAsLibraries(processArchiveJar)
 
         .addClass(AbstractFoxPlatformIntegrationTest.class)
-        .addClass(TestWarDeploymentDeployChangedOnlyWithJarAsLib.class);
+        .addClass(TestWarDeploymentDeployChangedOnlyWithJarAsLib.class));
 
     TestContainer.addContainerSpecificResources(archive);
 

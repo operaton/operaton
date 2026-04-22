@@ -29,7 +29,6 @@ import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.integrationtest.functional.cdi.beans.CaseVariableBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,10 +55,10 @@ public class CdiBeanCaseTaskResolutionTest extends AbstractFoxPlatformIntegratio
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
-    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+);
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 

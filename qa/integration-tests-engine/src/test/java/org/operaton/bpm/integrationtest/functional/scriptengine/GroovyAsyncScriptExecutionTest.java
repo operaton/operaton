@@ -57,12 +57,11 @@ public class GroovyAsyncScriptExecutionTest extends AbstractFoxPlatformIntegrati
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
-    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(JobExecutorWaitUtils.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi())
-            .addAsLibraries(DeploymentHelper.getTestingLibs());
+            .addAsLibraries(DeploymentHelper.getTestingLibs()));
     TestContainer.addContainerSpecificResourcesForNonPa(deployment);
     return deployment;
   }

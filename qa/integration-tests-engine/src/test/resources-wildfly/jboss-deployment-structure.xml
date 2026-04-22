@@ -3,6 +3,7 @@
   <deployment>
     <dependencies>
       <module name="org.operaton.bpm.operaton-engine" />
+      <module name="org.operaton.bpm.operaton-engine-cdi" services="import" meta-inf="import" />
       <module name="org.mybatis.mybatis"/>
       <module name="org.glassfish.jaxb" services="import"/>
     </dependencies>

@@ -27,7 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.integrationtest.functional.dmn.beans.VersionTagBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,10 +44,10 @@ public class BusinessRuleTaskVersionTagTest extends AbstractFoxPlatformIntegrati
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
-    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+);
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 

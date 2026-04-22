@@ -95,9 +95,8 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment5 extends AbstractFo
             .addAsResource(processAssets[7], "directory/process7.bpmn")
             .addAsResource(processAssets[8], "alternateDirectory/process8.bpmn");
 
-    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "test.war")
+    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-            .addAsLibraries(DeploymentHelper.getEngineCdi())
             .addAsLibraries(DeploymentHelper.getTestingLibs())
 
             .addAsLibraries(pa2)
@@ -108,7 +107,7 @@ public class TestWarDeploymentWithMultiplePasAsSubdeployment5 extends AbstractFo
             .addAsResource(processAssets[1], "directory/process1.bpmn")
             .addAsResource(processAssets[2], "alternateDirectory/process2.bpmn")
 
-            .addClass(AbstractFoxPlatformIntegrationTest.class);
+            .addClass(AbstractFoxPlatformIntegrationTest.class));
 
     TestContainer.addContainerSpecificResources(deployment);
 

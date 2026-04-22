@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
+import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -86,12 +87,12 @@ public class TestFoxPlatformClientAsEjbModule_twoPasAsLib extends AbstractFoxPla
       .addClass(TestFoxPlatformClientAsEjbModule_twoPasAsLib.class)
       .addAsLibraries(DeploymentHelper.getTestingLibs());
 
-    return ShrinkWrap.create(EnterpriseArchive.class, "twoPasAsLib.ear")
+    return TestContainer.addEngineCdiLib(ShrinkWrap.create(EnterpriseArchive.class, "twoPasAsLib.ear")
       .addAsLibrary(processArchive1Jar)
       .addAsLibrary(processArchive2Jar)
       .addAsModule(foxPlatformClientJar)
       .addAsModule(testJar)
-      .addAsLibrary(DeploymentHelper.getEngineCdi());
+);
   }
 
   @Test

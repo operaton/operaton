@@ -28,7 +28,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.integrationtest.functional.cdi.beans.DependentScopedBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
-import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,11 +47,11 @@ public class CdiBeanDependentScopedSyncTest extends AbstractFoxPlatformIntegrati
 
   @Deployment(name="clientDeployment")
   public static WebArchive clientDeployment() {
-    WebArchive deployment = ShrinkWrap.create(WebArchive.class, "client.war")
+    WebArchive deployment = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "client.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
             .addClass(DependentScopedBean.class)
-            .addAsLibraries(DeploymentHelper.getEngineCdi());
+);
 
     TestContainer.addContainerSpecificResourcesForNonPaEmbedCdiLib(deployment);
 

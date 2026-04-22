@@ -30,6 +30,7 @@ import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooDataFormat
 import org.operaton.bpm.integrationtest.functional.spin.dataformat.FooSpin;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
+import org.operaton.bpm.integrationtest.util.TestContainer;
 import org.operaton.bpm.integrationtest.util.TestConstants;
 import org.operaton.spin.spi.DataFormatProvider;
 
@@ -44,9 +45,8 @@ public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegratio
 
   @Deployment
   public static WebArchive createDeployment() {
-    return ShrinkWrap.create(WebArchive.class, "test.war")
+    return TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test.war")
             .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
-            .addAsLibraries(DeploymentHelper.getEngineCdi())
             .addAsLibraries(DeploymentHelper.getTestingLibs())
             .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
             .addClass(AbstractFoxPlatformIntegrationTest.class)
@@ -57,7 +57,7 @@ public class PaDataFormatAndPostDeployTest extends AbstractFoxPlatformIntegratio
             .addClass(FooDataFormat.class)
             .addClass(FooDataFormatProvider.class)
             .addClass(FooSpin.class)
-            .addAsServiceProvider(DataFormatProvider.class, FooDataFormatProvider.class);
+            .addAsServiceProvider(DataFormatProvider.class, FooDataFormatProvider.class));
   }
 
   @Test

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
+import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 
@@ -27,6 +28,22 @@ public final class TestContainer {
 
   public static void addContainerSpecificResourcesEmbedCdiLib(WebArchive webArchive) {
     addContainerSpecificResources(webArchive);
+  }
+
+  /**
+   * On WildFly, operaton-engine-cdi is provided as a system module
+   * (see distro/wildfly/modules/.../operaton-engine-cdi/main/module.xml).
+   * Embedding the JAR into the WAR would cause duplicate bean definitions
+   * and result in WELD-001409 "Ambiguous dependencies".
+   */
+  public static WebArchive addEngineCdiLib(WebArchive webArchive) {
+    // no-op: provided by WildFly system module
+    return webArchive;
+  }
+
+  public static EnterpriseArchive addEngineCdiLib(EnterpriseArchive earArchive) {
+    // no-op: provided by WildFly system module
+    return earArchive;
   }
 
   public static void addContainerSpecificResources(WebArchive archive) {

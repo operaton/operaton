@@ -73,7 +73,7 @@ public class ExpressionEvaluationHandler {
     bindings.put("variableContext", variableContext);
 
     try {
-      if (scriptEngine instanceof Compilable compilableScriptEngine) {
+      if (isCachableEngine(scriptEngine) && scriptEngine instanceof Compilable compilableScriptEngine) {
 
         CompiledScript compiledScript = cachedCompiledScriptSupport.getCachedCompiledScript();
         if (compiledScript == null) {
@@ -96,6 +96,9 @@ public class ExpressionEvaluationHandler {
     }
     catch (ScriptException e) {
       throw LOG.unableToEvaluateExpression(expressionText, scriptEngine.getFactory().getLanguageName(), e);
+    }
+    finally {
+      closeNonCachedEngine(scriptEngine);
     }
   }
 
@@ -167,6 +170,31 @@ public class ExpressionEvaluationHandler {
       DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_DMN13.equals(expressionLanguage) ||
       DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_DMN14.equals(expressionLanguage) ||
       DefaultDmnEngineConfiguration.FEEL_EXPRESSION_LANGUAGE_DMN15.equals(expressionLanguage);
+  }
+
+  /**
+   * Checks whether the given script engine can be cached for reuse.
+   * An engine is cachable if its factory reports a non-null THREADING parameter.
+   * Non-cachable engines like GraalJS require special bindings handling to avoid
+   * creating additional polyglot Contexts per evaluation. They do not support the {@code THREADING} parameter.
+   */
+  private static boolean isCachableEngine(ScriptEngine scriptEngine) {
+    return scriptEngine.getFactory().getParameter("THREADING") != null;
+  }
+
+  /**
+   * Closes a non-cached script engine that implements {@link AutoCloseable}.
+   * Script engines with {@code THREADING=null} (e.g., GraalJS) create a fresh instance
+   * per evaluation and must be explicitly closed to release their internal resources.
+   */
+  private static void closeNonCachedEngine(ScriptEngine scriptEngine) {
+    if (scriptEngine instanceof AutoCloseable closeable && !isCachableEngine(scriptEngine)) {
+      try {
+        closeable.close();
+      } catch (Exception e) {
+        LOG.logClosingScriptEngineFailed(e);
+      }
+    }
   }
 
 }

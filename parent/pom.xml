@@ -17,7 +17,7 @@
     <version.jakarta-ee>11.0.0</version.jakarta-ee>
     <version.resteasy>7.0.2.Final</version.resteasy>
     <!-- must be in sync with transitive version from org.springframework.boot:spring-boot-starter-jersey -->
-    <version.jersey3>4.0.0</version.jersey3>
+    <version.jersey3>4.0.2</version.jersey3>
     <version.groovy>5.0.5</version.groovy>
     <version.rest-assured>6.0.0</version.rest-assured>
     <version.jython>2.7.4</version.jython>

@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.operaton.bpm.integrationtest.deployment.war.apps.CustomServletPA;
+import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 import org.operaton.bpm.integrationtest.util.TestContainer;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -51,10 +52,11 @@ public class TestWarDeploymentWithNonExistingDS_JBOSS {
 
   @Deployment(managed=false, name=DEPLOYMENT_WITH_EJB_PA)
   public static WebArchive createDeployment1() {
-    WebArchive archive = TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test1.war")
+    WebArchive archive = ShrinkWrap.create(WebArchive.class, "test1.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
-        .addAsResource("persistence-nonexisting-ds.xml", "META-INF/persistence.xml"));
+        .addAsResource("persistence-nonexisting-ds.xml", "META-INF/persistence.xml");
 
     TestContainer.addContainerSpecificResources(archive);
 
@@ -63,12 +65,13 @@ public class TestWarDeploymentWithNonExistingDS_JBOSS {
 
   @Deployment(managed=false, name=DEPLOYMENT_WITH_SERVLET_PA)
   public static WebArchive createDeployment2() {
-    return TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "test2.war")
+    return ShrinkWrap.create(WebArchive.class, "test2.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
         .addAsResource("persistence-nonexisting-ds.xml", "META-INF/persistence.xml")
 
-        .addClass(CustomServletPA.class));
+        .addClass(CustomServletPA.class);
   }
 
   @Test

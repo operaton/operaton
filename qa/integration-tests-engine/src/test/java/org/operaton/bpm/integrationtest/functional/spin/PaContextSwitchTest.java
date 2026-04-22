@@ -68,11 +68,12 @@ public class PaContextSwitchTest extends AbstractFoxPlatformIntegrationTest {
 
   @Deployment(name = "pa2")
   public static WebArchive createDeployment2() {
-    return TestContainer.addEngineCdiLib(ShrinkWrap.create(WebArchive.class, "pa2.war")
+    return ShrinkWrap.create(WebArchive.class, "pa2.war")
         .addAsWebInfResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml")
+        .addAsLibraries(DeploymentHelper.getEngineCdi())
         .addAsResource("META-INF/processes.xml")
         .addClass(AbstractFoxPlatformIntegrationTest.class)
-        .addClass(ProcessApplication2.class));
+        .addClass(ProcessApplication2.class);
   }
 
   /**

@@ -21,7 +21,6 @@ import org.jboss.arquillian.junit5.ArquillianExtension;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -33,7 +32,6 @@ import org.operaton.bpm.integrationtest.deployment.ear.beans.NamedCdiBean;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -42,16 +40,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  */
 @ExtendWith(ArquillianExtension.class)
-@Disabled("""
-  Disabled as part of the WildFly 39 / CDI 4.1 / Jakarta EE 11 migration.
-  This test packages a Process Application as a plain EJB JAR inside an EAR
-  (DefaultEjbProcessApplication). This deployment layout is no longer an
-  idiomatic way to ship a Process Application on Jakarta EE 11; PAs are
-  now packaged as WARs (JakartaServletProcessApplication) or directly as
-  EJB modules alongside the engine-cdi system module.
-  The test body is retained for reference. See
-  qa/integration-tests-engine/README.md for background.
-  """)
 public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
 
   /**
@@ -83,9 +71,10 @@ public class TestPaAsEjbJar extends AbstractFoxPlatformIntegrationTest {
       .addAsResource("META-INF/processes.xml", "META-INF/processes.xml")
       .addAsManifestResource("org/operaton/bpm/integrationtest/beans.xml", "beans.xml");
 
-    return TestContainer.addEngineCdiLib(ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
+    return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
-      .addAsLibraries(DeploymentHelper.getTestingLibs()));
+      .addAsLibrary(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
   }
 
   @Test

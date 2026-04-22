@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.integrationtest.util;
 
-import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 
 /**
@@ -36,24 +35,6 @@ public final class TestContainer {
   public static void addContainerSpecificResourcesEmbedCdiLib(WebArchive webArchive) {
     addContainerSpecificResources(webArchive);
     webArchive.addAsLibraries(DeploymentHelper.getWeld());
-  }
-
-  /**
-   * On Tomcat, operaton-engine-cdi is not provided by the container
-   * and therefore must be embedded into the WAR.
-   */
-  public static WebArchive addEngineCdiLib(WebArchive webArchive) {
-    return webArchive.addAsLibraries(DeploymentHelper.getEngineCdi());
-  }
-
-  /**
-   * Tomcat does not run the EAR integration tests (see surefire excludes **\/ear\/**),
-   * so this method should never be called on Tomcat. It is provided only so the
-   * test sources compile when both Tomcat and WildFly use the same
-   * TestContainer API surface.
-   */
-  public static EnterpriseArchive addEngineCdiLib(EnterpriseArchive earArchive) {
-    return earArchive.addAsLibrary(DeploymentHelper.getEngineCdi());
   }
 
   public static void addContainerSpecificResources(WebArchive webArchive) {

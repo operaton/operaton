@@ -3,7 +3,6 @@
   <deployment>
     <dependencies>
       <module name="deployment.service.war" />
-      <module name="org.operaton.bpm.operaton-engine-cdi" services="import" meta-inf="import" />
     </dependencies>
   </deployment>
 </jboss-deployment-structure>

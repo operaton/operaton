@@ -44,7 +44,8 @@ public class CdiBeanResolutionTwoEnginesTest extends AbstractFoxPlatformIntegrat
   @Deployment(name= "engine1", order = 1)
   public static WebArchive createDeployment() {
     final WebArchive webArchive = initWebArchiveDeployment("paEngine1.war", "org/operaton/bpm/integrationtest/paOnEngine1.xml")
-      .addAsResource("org/operaton/bpm/integrationtest/functional/cdi/CdiBeanResolutionTwoEnginesTest.testResolveBean.bpmn20.xml");
+      .addAsResource("org/operaton/bpm/integrationtest/functional/cdi/CdiBeanResolutionTwoEnginesTest.testResolveBean.bpmn20.xml")
+      .addAsLibraries(DeploymentHelper.getEngineCdi());
 
     TestContainer.addContainerSpecificProcessEngineConfigurationClass(webArchive);
     return webArchive;

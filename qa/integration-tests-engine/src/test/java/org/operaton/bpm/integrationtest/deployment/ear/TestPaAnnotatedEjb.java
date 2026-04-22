@@ -30,7 +30,6 @@ import org.operaton.bpm.integrationtest.deployment.ear.beans.AnnotatedEjbPa;
 import org.operaton.bpm.integrationtest.util.AbstractFoxPlatformIntegrationTest;
 import org.operaton.bpm.integrationtest.util.DeploymentHelper;
 
-import org.operaton.bpm.integrationtest.util.TestContainer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -66,9 +65,10 @@ public class TestPaAnnotatedEjb extends AbstractFoxPlatformIntegrationTest {
       .addAsResource("META-INF/processes.xml", "deployment-descriptor-with-custom-filename.xml")
       .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
 
-    return TestContainer.addEngineCdiLib(ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
+    return ShrinkWrap.create(EnterpriseArchive.class, "paAsEjbModule.ear")
       .addAsModule(processArchive1Jar)
-      .addAsLibraries(DeploymentHelper.getTestingLibs()));
+      .addAsLibrary(DeploymentHelper.getEngineCdi())
+      .addAsLibraries(DeploymentHelper.getTestingLibs());
   }
 
   @Test

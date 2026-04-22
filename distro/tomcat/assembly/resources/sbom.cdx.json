@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:68bc8092-ba1b-4a5c-b6db-0a2da6558c57",
+  "serialNumber": "urn:uuid:453f07e4-0139-4a7c-a18d-44648dd41c1a",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-22T02:37:34Z",
+    "timestamp": "2026-04-22T22:12:45Z",
     "tools": {
       "components": [
         {
@@ -21270,7 +21270,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "acd3adc3-d844-4e00-98aa-5b6dbb32a55e",
+      "bom-ref": "f0d7c0ad-a1bc-4a11-bfbf-afde6f2551a2",
       "name": "package-lock.json",
       "properties": [
         {
@@ -22676,9 +22676,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/bpmn-js@18.14.0",
+      "bom-ref": "pkg:npm/bpmn-js@18.15.0",
       "name": "bpmn-js",
-      "version": "18.14.0",
+      "version": "18.15.0",
       "licenses": [
         {
           "license": {
@@ -22686,11 +22686,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/bpmn-js@18.14.0",
+      "purl": "pkg:npm/bpmn-js@18.15.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "bpmn-js@18.14.0"
+          "value": "bpmn-js@18.15.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23388,9 +23388,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/diagram-js@15.11.0",
+      "bom-ref": "pkg:npm/diagram-js@15.13.0",
       "name": "diagram-js",
-      "version": "15.11.0",
+      "version": "15.13.0",
       "licenses": [
         {
           "license": {
@@ -23398,11 +23398,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/diagram-js@15.11.0",
+      "purl": "pkg:npm/diagram-js@15.13.0",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "diagram-js@15.11.0"
+          "value": "diagram-js@15.13.0"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -23743,19 +23743,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.0",
+      "bom-ref": "pkg:npm/dompurify@3.4.1",
       "name": "dompurify",
-      "version": "3.4.0",
+      "version": "3.4.1",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.0",
+      "purl": "pkg:npm/dompurify@3.4.1",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.0"
+          "value": "dompurify@3.4.1"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -26016,7 +26016,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0230a697-6998-4bab-bf11-202a34c47b2c",
+      "bom-ref": "44d45504-2f34-4ff6-a20f-f44c90b43210",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28628,13 +28628,13 @@
       "dependsOn": []
     },
     {
-      "ref": "0230a697-6998-4bab-bf11-202a34c47b2c",
+      "ref": "44d45504-2f34-4ff6-a20f-f44c90b43210",
       "dependsOn": [
-        "acd3adc3-d844-4e00-98aa-5b6dbb32a55e"
+        "f0d7c0ad-a1bc-4a11-bfbf-afde6f2551a2"
       ]
     },
     {
-      "ref": "acd3adc3-d844-4e00-98aa-5b6dbb32a55e",
+      "ref": "f0d7c0ad-a1bc-4a11-bfbf-afde6f2551a2",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -28654,7 +28654,7 @@
         "pkg:npm/bootstrap-icons@1.13.1",
         "pkg:npm/bootstrap@4.6.2",
         "pkg:npm/bpmn-font@0.12.1",
-        "pkg:npm/bpmn-js@18.14.0",
+        "pkg:npm/bpmn-js@18.15.0",
         "pkg:npm/camunda-dmn-js@3.7.0",
         "pkg:npm/chart.js@4.5.1",
         "pkg:npm/clipboard@2.0.11",
@@ -28668,7 +28668,7 @@
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/dmn-js@17.7.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.0",
+        "pkg:npm/dompurify@3.4.1",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.7.1",
         "pkg:npm/jquery-ui@1.14.2",
@@ -28800,7 +28800,7 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.0",
+        "pkg:npm/dompurify@3.4.1",
         "pkg:npm/feelers@1.5.1",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -29095,11 +29095,11 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/bpmn-js@18.14.0",
+      "ref": "pkg:npm/bpmn-js@18.15.0",
       "dependsOn": [
         "pkg:npm/bpmn-moddle@10.0.0",
         "pkg:npm/diagram-js-direct-editing@3.3.0",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
         "pkg:npm/min-dash@5.0.0",
@@ -29136,7 +29136,7 @@
         "pkg:npm/camunda-dmn-moddle@1.3.1",
         "pkg:npm/diagram-js-grid@2.0.1",
         "pkg:npm/diagram-js-origin@1.4.0",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/dmn-js-drd@17.7.0",
         "pkg:npm/dmn-js-properties-panel@3.11.0",
         "pkg:npm/dmn-js-shared@17.7.0",
@@ -29289,7 +29289,7 @@
     {
       "ref": "pkg:npm/diagram-js-direct-editing@3.3.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.2.0"
       ]
@@ -29305,12 +29305,12 @@
     {
       "ref": "pkg:npm/diagram-js-origin@1.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/tiny-svg@3.1.3"
       ]
     },
     {
-      "ref": "pkg:npm/diagram-js@15.11.0",
+      "ref": "pkg:npm/diagram-js@15.13.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/diagram-js-ui@0.2.3",
         "pkg:npm/clsx@2.1.1",
@@ -29353,7 +29353,7 @@
       "ref": "pkg:npm/dmn-js-boxed-expression@17.7.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.0.0",
@@ -29366,7 +29366,7 @@
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
         "pkg:npm/css.escape@1.5.1",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -29380,7 +29380,7 @@
       "ref": "pkg:npm/dmn-js-drd@17.7.0",
       "dependsOn": [
         "pkg:npm/diagram-js-direct-editing@3.3.0",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/ids@3.0.2",
         "pkg:npm/inherits-browser@0.1.0",
@@ -29394,7 +29394,7 @@
       "ref": "pkg:npm/dmn-js-literal-expression@17.7.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-variable-resolver@0.7.0",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/dmn-js-shared@17.7.0",
         "pkg:npm/escape-html@1.0.3",
         "pkg:npm/inferno@5.6.3",
@@ -29407,7 +29407,7 @@
       "ref": "pkg:npm/dmn-js-properties-panel@3.11.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/properties-panel@3.40.3",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/dmn-js@17.7.0",
         "pkg:npm/min-dash@5.0.0",
         "pkg:npm/min-dom@5.3.0"
@@ -29417,7 +29417,7 @@
       "ref": "pkg:npm/dmn-js-shared@17.7.0",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/feel-editor@2.5.0",
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/dmn-moddle@12.0.1",
         "pkg:npm/ids@3.0.2",
@@ -29471,7 +29471,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.0",
+      "ref": "pkg:npm/dompurify@3.4.1",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]
@@ -29981,7 +29981,7 @@
     {
       "ref": "pkg:npm/table-js@9.4.0",
       "dependsOn": [
-        "pkg:npm/diagram-js@15.11.0",
+        "pkg:npm/diagram-js@15.13.0",
         "pkg:npm/didi@11.0.0",
         "pkg:npm/inferno@5.6.3",
         "pkg:npm/min-dash@5.0.0",

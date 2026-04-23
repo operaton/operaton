@@ -52,7 +52,7 @@ public class ArquillianEventObserver {
   private static final String DB2_VERSION = "12.1.2.0";
 
   private static final String MYSQL = "mysql";
-  private static final String MYSQL_VERSION = "9.7";
+  private static final String MYSQL_VERSION = "8.4";
 
   // Initialized with providers, so we do not start all containers at the same time here statically upon initialization
   private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = Map.of(

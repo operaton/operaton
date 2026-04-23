@@ -37,7 +37,7 @@ import java.util.Map;
 public class ArquillianEventObserver {
 
   private static final String POSTGRES = "postgres";
-  private static final String POSTGRES_VERSION = "13.2";
+  private static final String POSTGRES_VERSION = "14.22";
 
   private static final String SQLSERVER = "sqlserver";
   private static final String SQLSERVER_VERSION = "2022-latest";

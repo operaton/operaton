@@ -31,7 +31,7 @@ services:
       - ORACLE_DATABASE=${MT_ORACLE_DATABASE:-SYSTEM}
 
   postgres:
-    image: postgres:17
+    image: postgres:14
     container_name: postgres
     ports:
       - "${MT_POSTGRES_HOST_PORT:-54320}:5432"

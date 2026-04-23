@@ -43,7 +43,7 @@ class DatabaseContainerProviderTest {
    */
   @ParameterizedTest(name = "{3}:{2}")
   @CsvSource({
-    "jdbc:tc:operatonpostgresql:13.2:///process-engine, SELECT version();, 13.2, postgres",
+    "jdbc:tc:operatonpostgresql:14.22:///process-engine, SELECT version();, 14.22, postgres",
     "jdbc:tc:operatonmariadb:10.0://localhost:3306/process-engine, SELECT version();, 10.0, mariadb",
     "jdbc:tc:operatonmysql:5.7://localhost:3306/process-engine, SELECT version();, 5.7, mysql",
     "jdbc:tc:operatonmysql:8.0://localhost:3306/process-engine, SELECT version();, 8.0, mysql",

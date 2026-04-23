@@ -263,7 +263,7 @@
         <database.driver>org.mariadb.jdbc.Driver</database.driver>
         <hibernate.dialect>org.hibernate.dialect.MariaDBDialect</hibernate.dialect>
         <database.datasource.class>org.mariadb.jdbc.MariaDbDataSource</database.datasource.class>
-        <database.tc.url>operatonmariadb:10.6</database.tc.url>
+        <database.tc.url>operatonmariadb:10.11</database.tc.url>
         <jboss.datasource.filename>mariadb-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>
@@ -301,7 +301,7 @@
         <database.type>mysql</database.type>
         <database.driver>com.mysql.cj.jdbc.Driver</database.driver>
         <database.datasource.class>com.mysql.cj.jdbc.MysqlDataSource</database.datasource.class>
-        <database.tc.url>operatonmysql:9.2.0</database.tc.url>
+        <database.tc.url>operatonmysql:9.7</database.tc.url>
         <jboss.datasource.filename>mysql-ds.xml</jboss.datasource.filename>
         <database.tc.params>/${database.name}?sendFractionalSeconds=false&amp;amp;user=${database.username}&amp;amp;password=${database.password}</database.tc.params>
         <database.url>jdbc:tc:${database.tc.url}://localhost:${database.port}${database.tc.params}</database.url>

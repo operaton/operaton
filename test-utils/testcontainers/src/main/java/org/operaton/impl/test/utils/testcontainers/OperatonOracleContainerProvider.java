@@ -17,11 +17,10 @@
 package org.operaton.impl.test.utils.testcontainers;
 
 import org.testcontainers.containers.JdbcDatabaseContainer;
-import org.testcontainers.containers.OracleContainer;
-import org.testcontainers.containers.OracleContainerProvider;
+import org.testcontainers.containers.JdbcDatabaseContainerProvider;
 import org.testcontainers.utility.DockerImageName;
 
-public class OperatonOracleContainerProvider extends OracleContainerProvider {
+public class OperatonOracleContainerProvider extends JdbcDatabaseContainerProvider {
 
   private static final String NAME = "operatonoracle";
 
@@ -32,8 +31,16 @@ public class OperatonOracleContainerProvider extends OracleContainerProvider {
 
   @Override
   public JdbcDatabaseContainer<?> newInstance(String tag) {
-    DockerImageName dockerImageName = TestcontainersHelper
-      .resolveDockerImageName("oracle", tag, "gvenzl/oracle-xe");
-    return new OracleContainer(dockerImageName);
+    if (tag != null && tag.startsWith("21")) {
+      DockerImageName dockerImageName = TestcontainersHelper
+              .resolveDockerImageName("oracle", tag, "gvenzl/oracle-xe");
+      return new org.testcontainers.containers.OracleContainer(dockerImageName);
+    }
+    if (tag != null && tag.startsWith("23")) {
+      DockerImageName dockerImageName = TestcontainersHelper
+              .resolveDockerImageName("oracle", tag, "gvenzl/oracle-free");
+      return new org.testcontainers.oracle.OracleContainer(dockerImageName);
+    }
+    throw new UnsupportedOperationException("Unsupported Oracle Testcontainer version %s".formatted(tag));
   }
 }

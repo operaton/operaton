@@ -237,6 +237,10 @@ updates:
       - dependency-name: "eslint*"
         # Known incompatibility with eslint 10
         update-types: ["version-update:semver-major"]
+      - dependency-name: "bootstrap"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jquery"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -271,3 +275,139 @@ updates:
       - "dependencies:devcontainers"
     milestone: 19
 
+# Release 2.1.x branch - all updates
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "00:45"
+    reviewers:
+    - "kthoms"
+    target-branch: "release/2.1.x"
+    ignore:
+    - dependency-name: "*"
+      update-types: ["version-update:semver-major"]
+    - dependency-name: "org.jruby:*"
+      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    - dependency-name: "io.quarkus:*"
+      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    - dependency-name: "org.camunda.feel:feel-engine"
+      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    labels:
+    - "dependencies:maven"
+    milestone: 14
+    groups:
+      httpcomponents5:
+        patterns:
+        - "org.apache.httpcomponents.core5:httpcore5"
+        - "org.apache.httpcomponents.client5:httpclient5"
+      httpcomponents4:
+        patterns:
+        - "org.apache.httpcomponents:*"
+      jboss-weld:
+        patterns:
+        - "org.jboss.weld.servlet:weld-servlet-shaded"
+        - "org.jboss.weld:weld-core-bom"
+      openrewrite:
+        patterns:
+        - "org.openrewrite.recipe:*"
+        - "org.openrewrite.maven:*"
+      arquillian:
+        patterns:
+        - "org.jboss.arquillian*:*"
+      spring-boot:
+        patterns:
+        - "org.springframework.boot:*"
+  - package-ecosystem: "maven"
+    directory: "/spring-boot-starter/starter"
+    schedule:
+      interval: "daily"
+      time: "00:45"
+    reviewers:
+    - "kthoms"
+    target-branch: "release/2.1.x"
+    ignore:
+    - dependency-name: "*"
+      update-types: ["version-update:semver-major"]
+    labels:
+    - "dependencies:maven"
+    milestone: 14
+    groups:
+      spring-boot:
+        patterns:
+        - "org.springframework.boot:*"
+  - package-ecosystem: "npm"
+    directory: "/webapps/frontend"
+    schedule:
+      interval: "cron"
+      cronjob: "15 2 * * 1,3,5"
+    reviewers:
+    - "kthoms"
+    target-branch: "release/2.1.x"
+    labels:
+    - "dependencies:npm"
+    milestone: 14
+    groups:
+      angular:
+        patterns:
+        - "angular*"
+      babel:
+        patterns:
+        - "@babel/core"
+        - "@babel/preset-env"
+        - "@babel/eslint-parser"
+      Xmn-js:
+        patterns:
+        - "bpmn-js"
+        - "camunda-dmn-js"
+        - "cmmn-js"
+        - "dmn-js"
+        - "dmn-js-*"
+      eslint:
+        patterns:
+        - "eslint*"
+        - "prettier"
+      webpack:
+        patterns:
+        - "webpack*"
+    ignore:
+    - dependency-name: "eslint*"
+      # Known incompatibility with eslint 10
+      update-types: ["version-update:semver-major"]
+    - dependency-name: "bootstrap"
+      update-types: ["version-update:semver-major"]
+    - dependency-name: "jquery"
+      update-types: ["version-update:semver-major"]
+  - package-ecosystem: "npm"
+    directory: "/engine-rest/docs"
+    schedule:
+      interval: "cron"
+      cronjob: "15 2 * * 1,3,5"
+    reviewers:
+    - "kthoms"
+    target-branch: "release/2.1.x"
+    labels:
+    - "dependencies:npm"
+    milestone: 14
+    groups:
+      react:
+        patterns:
+        - "react*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+    - "kthoms"
+    target-branch: "release/2.1.x"
+    labels:
+    - "dependencies:github-action"
+    milestone: 14
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "release/2.1.x"
+    labels:
+    - "dependencies:devcontainers"
+    milestone: 14

@@ -279,10 +279,9 @@ jobs:
 
       - name: Check out the code
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-          clean: true
-
+      - name: Update the release branch
+        run: |
+          git pull
       - name: Delete snapshot release
         if: ${{github.event.inputs.dry_run == 'false' }}
         env:

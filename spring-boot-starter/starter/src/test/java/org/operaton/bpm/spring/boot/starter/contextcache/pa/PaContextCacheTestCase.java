@@ -66,5 +66,5 @@ import org.junit.platform.suite.api.Suite;
   PaContextCacheTest4.class,
   PaContextCacheTest5.class
 })
-class PaContextCacheTestSuite {
+class PaContextCacheTestCase {
 }

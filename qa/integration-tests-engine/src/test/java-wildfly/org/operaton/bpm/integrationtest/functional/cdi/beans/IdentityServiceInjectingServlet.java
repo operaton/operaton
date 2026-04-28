@@ -24,6 +24,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.operaton.bpm.engine.IdentityService;
 
+/**
+ * Used for CdiServletInjectionTest
+ * @since 2.2
+ */
 @WebServlet(urlPatterns = "/identity-service-check")
 public class IdentityServiceInjectingServlet extends HttpServlet {
 

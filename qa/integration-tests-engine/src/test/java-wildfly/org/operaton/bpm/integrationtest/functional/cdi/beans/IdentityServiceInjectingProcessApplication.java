@@ -20,6 +20,10 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.JakartaServletProcessApplication;
 
+/**
+ * Used for CdiServletInjectionTest
+ * @since 2.2
+ */
 @ApplicationScoped
 @ProcessApplication("IdentityServiceInjectingProcessApplication")
 public class IdentityServiceInjectingProcessApplication extends JakartaServletProcessApplication {

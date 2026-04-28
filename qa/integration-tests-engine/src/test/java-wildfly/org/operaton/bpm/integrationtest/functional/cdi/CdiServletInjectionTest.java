@@ -41,6 +41,8 @@ import static org.awaitility.Awaitility.await;
 /**
  * Regression test for WELD-001408 when injecting IdentityService into a Servlet
  * in a Process Application on WildFly.
+ *
+ * @since 2.2
  */
 @ExtendWith(ArquillianExtension.class)
 public class CdiServletInjectionTest {

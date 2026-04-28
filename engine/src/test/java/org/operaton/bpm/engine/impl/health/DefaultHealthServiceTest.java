@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 class DefaultHealthServiceTest {
 
   @Test
-  void shouldBeUpWhenNoDataSourceProvided() throws Exception {
+  void shouldBeUpWhenNoDataSourceProvided() {
     JobExecutor jobExecutor = mock(JobExecutor.class);
     when(jobExecutor.isActive()).thenReturn(true);
     @SuppressWarnings("unchecked")
@@ -50,9 +50,9 @@ class DefaultHealthServiceTest {
     assertThat(result.status()).isEqualTo("UP");
     assertThat(result.details()).containsKey("database");
     Map<String, Object> db = (Map<String, Object>) result.details().get("database");
-    assertThat(db.get("connected")).isEqualTo(false);
+    assertThat(db).containsEntry("connected", false);
     Map<String, Object> frontendDetails = (Map<String, Object>) result.details().get("frontend");
-    assertThat(frontendDetails.get("operational")).isEqualTo(true);
+    assertThat(frontendDetails).containsEntry("operational", true);
   }
 
   @Test
@@ -72,7 +72,7 @@ class DefaultHealthServiceTest {
 
     assertThat(result.status()).isEqualTo("UP");
     Map<String, Object> db = (Map<String, Object>) result.details().get("database");
-    assertThat(db.get("connected")).isEqualTo(true);
+    assertThat(db).containsEntry("connected", true);
   }
 
   @Test
@@ -85,8 +85,9 @@ class DefaultHealthServiceTest {
 
     assertThat(result.status()).isEqualTo("DOWN");
     Map<String, Object> db = (Map<String, Object>) result.details().get("database");
-    assertThat(db.get("connected")).isEqualTo(false);
-    assertThat(db).containsKey("error");
+    assertThat(db)
+            .containsEntry("connected", false)
+            .containsKey("error");
   }
 
   @Test
@@ -108,5 +109,5 @@ class DefaultHealthServiceTest {
 
     assertThat(result.status()).isEqualTo("UP");
     Map<String, Object> je = (Map<String, Object>) result.details().get("jobExecutor");
-    assertThat(je.get("operational")).isEqualTo(false);
+    assertThat(je).containsEntry("operational", false);
   }}

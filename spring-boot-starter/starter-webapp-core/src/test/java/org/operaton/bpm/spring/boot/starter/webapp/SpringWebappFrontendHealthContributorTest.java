@@ -52,13 +52,15 @@ class SpringWebappFrontendHealthContributorTest {
     var contributor = new SpringWebappFrontendHealthContributor(resourceLoader, webappProperty);
     Map<String, Object> details = contributor.frontendDetails();
 
-    assertThat(details.get("operational")).isEqualTo(true);
-    assertThat(details.get("path")).isEqualTo("/operaton");
+    assertThat(details)
+            .containsEntry("operational", true)
+            .containsEntry("path", "/operaton");
     @SuppressWarnings("unchecked")
     Map<String, Object> apps = (Map<String, Object>) details.get("apps");
-    assertThat(apps.get("cockpit")).isEqualTo(true);
-    assertThat(apps.get("tasklist")).isEqualTo(true);
-    assertThat(apps.get("admin")).isEqualTo(true);
+    assertThat(apps)
+            .containsEntry("cockpit", true)
+            .containsEntry("tasklist", true)
+            .containsEntry("admin", true);
   }
 
   @Test
@@ -79,11 +81,12 @@ class SpringWebappFrontendHealthContributorTest {
     var contributor = new SpringWebappFrontendHealthContributor(resourceLoader, webappProperty);
     Map<String, Object> details = contributor.frontendDetails();
 
-    assertThat(details.get("operational")).isEqualTo(false);
+    assertThat(details).containsEntry("operational", false);
     @SuppressWarnings("unchecked")
     Map<String, Object> apps = (Map<String, Object>) details.get("apps");
-    assertThat(apps.get("cockpit")).isEqualTo(true);
-    assertThat(apps.get("tasklist")).isEqualTo(true);
-    assertThat(apps.get("admin")).isEqualTo(false);
+    assertThat(apps)
+            .containsEntry("cockpit", true)
+            .containsEntry("tasklist", true)
+            .containsEntry("admin", false);
   }
 }

@@ -31,7 +31,6 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.operaton.bpm.engine.test.util.ProcessEngineUtils.newRandomProcessEngineName;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

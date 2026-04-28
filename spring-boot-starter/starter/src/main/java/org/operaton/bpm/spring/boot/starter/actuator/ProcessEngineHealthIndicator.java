@@ -16,13 +16,11 @@
  */
 package org.operaton.bpm.spring.boot.starter.actuator;
 
-import java.util.Objects;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.health.HealthResult;
 import org.operaton.bpm.engine.health.HealthService;
 import org.springframework.boot.health.contributor.AbstractHealthIndicator;
 import org.springframework.boot.health.contributor.Health.Builder;
-import org.springframework.util.Assert;
 
 import static java.util.Objects.requireNonNull;
 

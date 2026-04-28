@@ -16,10 +16,7 @@
 package org.operaton.bpm.engine.health;
 
 import java.time.Instant;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableMap;

@@ -17,7 +17,6 @@ package org.operaton.bpm.engine.rest.openapi;
 
 import io.swagger.parser.OpenAPIParser;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
@@ -185,11 +184,9 @@ class OpenApiSpecContentTest {
           }
 
           // A 404 that describes a validation failure (negative value) is always wrong
-          if (r404 != null && r404.getDescription() != null) {
-            if (r404.getDescription().toLowerCase().contains("negative")) {
+          if (r404 != null && r404.getDescription() != null && r404.getDescription().toLowerCase().contains("negative")) {
               violations.add(String.format("[%s %s] 404 description mentions 'negative' — this is a 400 validation condition: %s",
                   method, path, r404.getDescription()));
-            }
           }
         }));
 
@@ -273,7 +270,7 @@ class OpenApiSpecContentTest {
                 });
               }
               if (content.getExample() != null && content.getSchema() != null) {
-                validateExampleAgainstSchema(content.getExample(), content.getSchema(), method, path, "request body inline example", violations);
+                validateExampleAgainstSchema(content.getExample(), method, path, "request body inline example", violations);
               }
             });
           }
@@ -303,7 +300,7 @@ class OpenApiSpecContentTest {
         .isEmpty();
   }
 
-  private void validateExampleAgainstSchema(Object example, Schema<?> schema, String method, String path, String location, List<String> violations) {
+  private void validateExampleAgainstSchema(Object example, String method, String path, String location, List<String> violations) {
     // Null examples are not allowed where an example field is present
     if (example == null) {
       violations.add(String.format("[%s %s] %s: example is null", method, path, location));

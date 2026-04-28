@@ -66,5 +66,6 @@ import org.junit.platform.suite.api.Suite;
   PaContextCacheTest4.class,
   PaContextCacheTest5.class
 })
+@SuppressWarnings("java:S2187") // no test cases in this class, it's just a test suite
 class PaContextCacheTestCase {
 }

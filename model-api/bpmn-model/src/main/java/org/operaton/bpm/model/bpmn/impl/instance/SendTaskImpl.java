@@ -41,7 +41,7 @@ public class SendTaskImpl extends TaskImpl implements SendTask {
   protected static AttributeReference<Message> messageRefAttribute;
   protected static AttributeReference<Operation> operationRefAttribute;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonClassAttribute;
   protected static Attribute<String> operatonDelegateExpressionAttribute;
@@ -69,7 +69,7 @@ public class SendTaskImpl extends TaskImpl implements SendTask {
       .qNameAttributeReference(Operation.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CLASS)
       .namespace(OPERATON_NS)
@@ -141,7 +141,7 @@ public class SendTaskImpl extends TaskImpl implements SendTask {
     operationRefAttribute.setReferenceTargetElement(this, operation);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonClass() {

@@ -39,7 +39,7 @@ public class CallActivityTest extends BpmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("calledElement"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "async", false, false, false),
       new AttributeAssumption(OPERATON_NS, "calledElementBinding"),
       new AttributeAssumption(OPERATON_NS, "calledElementVersion"),

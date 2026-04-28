@@ -57,7 +57,7 @@ public abstract class AbstractScriptTaskBuilder<B extends AbstractScriptTaskBuil
     return myself;
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * Sets the operaton result variable of the build script task.

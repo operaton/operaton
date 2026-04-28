@@ -42,7 +42,7 @@ public class HumanTaskTest extends CmmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
           new AttributeAssumption("performerRef"),
-          /** operaton extensions */
+          // Operaton extensions
           new AttributeAssumption(OPERATON_NS, "assignee"),
           new AttributeAssumption(OPERATON_NS, "candidateGroups"),
           new AttributeAssumption(OPERATON_NS, "candidateUsers"),

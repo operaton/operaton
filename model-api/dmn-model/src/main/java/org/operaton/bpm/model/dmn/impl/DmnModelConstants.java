@@ -173,7 +173,7 @@ public final class DmnModelConstants {
   public static final String DMN_ATTRIBUTE_TYPE_REF = "typeRef";
   public static final String DMN_ATTRIBUTE_URI = "URI";
 
-  /** operaton extensions */
+  // Operaton extensions
 
   public static final String OPERATON_ATTRIBUTE_INPUT_VARIABLE = "inputVariable";
   public static final String OPERATON_ATTRIBUTE_HISTORY_TIME_TO_LIVE = "historyTimeToLive";

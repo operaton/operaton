@@ -27,7 +27,7 @@ public interface ConditionExpression extends FormalExpression {
 
   void setType(String type);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonResource();
 

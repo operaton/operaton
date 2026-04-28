@@ -46,7 +46,7 @@ public abstract class AbstractUserTaskBuilder<B extends AbstractUserTaskBuilder<
     return myself;
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * Sets the operaton attribute assignee.

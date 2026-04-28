@@ -25,7 +25,7 @@ import org.operaton.bpm.model.bpmn.instance.bpmndi.BpmnShape;
  */
 public interface Task extends Activity {
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

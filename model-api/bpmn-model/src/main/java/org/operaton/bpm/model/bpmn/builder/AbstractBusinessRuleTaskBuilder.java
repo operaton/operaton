@@ -39,7 +39,7 @@ public abstract class AbstractBusinessRuleTaskBuilder<B extends AbstractBusiness
     return myself;
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * Sets the operaton class attribute.

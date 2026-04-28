@@ -32,7 +32,7 @@ public interface CallActivity extends Activity {
 
   void setCalledElement(String calledElement);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

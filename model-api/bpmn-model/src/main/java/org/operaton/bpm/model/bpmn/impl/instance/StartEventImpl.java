@@ -36,7 +36,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
 
   protected static Attribute<Boolean> isInterruptingAttribute;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<Boolean> operatonAsyncAttribute;
   protected static Attribute<String> operatonFormHandlerClassAttribute;
@@ -57,7 +57,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
       .defaultValue(true)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
@@ -110,7 +110,7 @@ public class StartEventImpl extends CatchEventImpl implements StartEvent {
     isInterruptingAttribute.setValue(this, isInterrupting);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

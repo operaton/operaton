@@ -39,7 +39,7 @@ public interface HumanTask extends Task {
 
   void setPlanningTable(PlanningTable planningTable);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonAssignee();
 

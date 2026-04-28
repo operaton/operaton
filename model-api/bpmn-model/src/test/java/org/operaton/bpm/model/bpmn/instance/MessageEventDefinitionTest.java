@@ -41,7 +41,7 @@ class MessageEventDefinitionTest extends AbstractEventDefinitionTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("messageRef"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "class"),
       new AttributeAssumption(OPERATON_NS, "delegateExpression"),
       new AttributeAssumption(OPERATON_NS, "expression"),

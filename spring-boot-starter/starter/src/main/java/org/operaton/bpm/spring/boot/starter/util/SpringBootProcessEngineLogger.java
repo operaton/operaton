@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.diagnostics.FailureAnalyzedException;
 import org.springframework.core.io.Resource;
 
 import org.operaton.bpm.engine.filter.Filter;
@@ -74,9 +75,11 @@ public class SpringBootProcessEngineLogger extends BaseLogger {
     logInfo("040", "Setting up jobExecutor with corePoolSize={}, maxPoolSize:{}", corePoolSize, maxPoolSize);
   }
 
-  public SpringBootStarterException exceptionDuringBinding(String message) {
-    return new SpringBootStarterException(exceptionMessage(
-        "050", message));
+  public FailureAnalyzedException exceptionDuringBinding(String message, Throwable cause) {
+    return new FailureAnalyzedException(
+        exceptionMessage("050", message),
+        "Review your operaton.bpm.* configuration and ensure all property values are correctly formatted.",
+        cause);
   }
 
   public void propertiesApplied(GenericProperties genericProperties) {

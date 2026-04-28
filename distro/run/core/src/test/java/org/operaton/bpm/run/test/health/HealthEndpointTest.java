@@ -28,7 +28,7 @@ import tools.jackson.databind.JsonNode;
 @TestPropertySource(properties = {
         "operaton.run.health.rest-endpoint.enabled=true"
 })
-public class HealthEndpointTest extends AbstractRestTest {
+class HealthEndpointTest extends AbstractRestTest {
 
   @Test
   void shouldReturnHealthStatus() {

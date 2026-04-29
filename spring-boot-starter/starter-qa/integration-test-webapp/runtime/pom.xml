@@ -79,6 +79,10 @@
           <type>pom</type>
         </dependency>
         <dependency>
+          <groupId>org.graalvm.js</groupId>
+          <artifactId>js-scriptengine</artifactId>
+        </dependency>
+        <dependency>
           <groupId>com.konghq</groupId>
           <artifactId>unirest-java</artifactId>
           <classifier>standalone</classifier>

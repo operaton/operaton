@@ -20,7 +20,7 @@ TEST_SUITE="engine"
 DATABASE="h2"
 DISTRO="tomcat"
 RUNNER="./mvnw"
-VALID_TEST_SUITES=("engine" "webapps" "db-rolling-update")
+VALID_TEST_SUITES=("engine" "webapps" "db-rolling-update" "spring-boot-starter")
 VALID_DISTROS=("operaton" "tomcat" "wildfly")
 VALID_DATABASES=("h2" "postgresql" "postgresql-xa" "mysql" "mariadb" "oracle" "db2" "sqlserver")
 VALID_RUNNERS=("mvn" "./mvnw" "mvnd")
@@ -79,6 +79,18 @@ parse_args() {
 }
 
 run_build () {
+  if [[ "$TEST_SUITE" == "spring-boot-starter" ]]; then
+    local spring_boot_profiles=(distro distro-webjar)
+    echo "ℹ️ Building upstream dependencies for spring-boot-starter integration tests"
+    echo "$RUNNER -DskipTests -P$(IFS=,; echo "${spring_boot_profiles[*]}") -Dskip.frontend.build=true clean install"
+    if ! $RUNNER -DskipTests -P$(IFS=,; echo "${spring_boot_profiles[*]}") -Dskip.frontend.build=true clean install; then
+      echo "❌ Error: Build failed"
+      popd > /dev/null
+      exit 1
+    fi
+    return
+  fi
+
   PROFILES=(distro distro-webjar h2-in-memory)
 
   if [[ "$DISTRO" == "operaton" ]]; then
@@ -109,6 +121,20 @@ run_build () {
 
 ##########################################################################
 run_tests () {
+  if [[ "$TEST_SUITE" == "spring-boot-starter" ]]; then
+    echo "ℹ️ Running Spring Boot Starter integration tests"
+    echo "$RUNNER -Pintegration-test-spring-boot-starter clean verify -f spring-boot-starter"
+    $RUNNER -Pintegration-test-spring-boot-starter clean verify -f spring-boot-starter
+    if [[ $? -ne 0 ]]; then
+      echo "❌ Error: Tests failed"
+      popd > /dev/null
+      exit 1
+    else
+      echo "✅ Spring Boot Starter integration tests completed successfully"
+    fi
+    return
+  fi
+
   PROFILES=()
   MVN_ARGS+=(clean verify)
 

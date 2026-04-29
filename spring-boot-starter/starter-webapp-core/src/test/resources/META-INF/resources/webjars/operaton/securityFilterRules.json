@@ -4,6 +4,8 @@
       { "path": "/api/.*", "methods" : "*" }
     ],
     "allowedPaths" : [
+      { "path": "/api/engine/engine/{engine}/.*", "methods" : "*", "authorizer" : "org.operaton.bpm.webapp.impl.security.filter.EngineRequestAuthorizer" },
+      { "path": "/api/admin/auth/user/{engine}/login/{app}", "methods" : "POST" },
       { "path": "/api/.*", "methods" : "GET" }
     ]
   }

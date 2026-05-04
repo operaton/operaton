@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b69b85c7-6ce7-4f10-9d38-142e11f012e6",
+  "serialNumber": "urn:uuid:c618ea68-43cf-461d-bc1d-a58d6a968630",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-04-29T06:08:29Z",
+    "timestamp": "2026-05-04T22:02:07Z",
     "tools": {
       "components": [
         {
@@ -31447,7 +31447,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "91ae8d36-07d4-4a88-a0e9-d9da9187b2a8",
+      "bom-ref": "e687d432-ba22-4a53-b7ad-ee7ff32ace58",
       "name": "package-lock.json",
       "properties": [
         {
@@ -34148,19 +34148,19 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/dompurify@3.4.1",
+      "bom-ref": "pkg:npm/dompurify@3.4.2",
       "name": "dompurify",
-      "version": "3.4.1",
+      "version": "3.4.2",
       "licenses": [
         {
           "expression": "MPL-2.0 OR Apache-2.0"
         }
       ],
-      "purl": "pkg:npm/dompurify@3.4.1",
+      "purl": "pkg:npm/dompurify@3.4.2",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "dompurify@3.4.1"
+          "value": "dompurify@3.4.2"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36482,7 +36482,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "29d12f56-7bff-4533-818f-6b8531f3e137",
+      "bom-ref": "0105f754-16bf-41fb-971e-ea58b8ddf743",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -40204,13 +40204,13 @@
       "dependsOn": []
     },
     {
-      "ref": "29d12f56-7bff-4533-818f-6b8531f3e137",
+      "ref": "0105f754-16bf-41fb-971e-ea58b8ddf743",
       "dependsOn": [
-        "91ae8d36-07d4-4a88-a0e9-d9da9187b2a8"
+        "e687d432-ba22-4a53-b7ad-ee7ff32ace58"
       ]
     },
     {
-      "ref": "91ae8d36-07d4-4a88-a0e9-d9da9187b2a8",
+      "ref": "e687d432-ba22-4a53-b7ad-ee7ff32ace58",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -40244,7 +40244,7 @@
         "pkg:npm/dmn-js-shared@17.8.0",
         "pkg:npm/dmn-js@17.8.0",
         "pkg:npm/dom4@2.1.6",
-        "pkg:npm/dompurify@3.4.1",
+        "pkg:npm/dompurify@3.4.2",
         "pkg:npm/events@3.3.0",
         "pkg:npm/fast-xml-parser@5.7.2",
         "pkg:npm/jquery-ui@1.14.2",
@@ -40375,7 +40375,7 @@
         "pkg:npm/big.js@7.0.1",
         "pkg:npm/classnames@2.5.1",
         "pkg:npm/didi@11.0.0",
-        "pkg:npm/dompurify@3.4.1",
+        "pkg:npm/dompurify@3.4.2",
         "pkg:npm/feelers@1.5.1",
         "pkg:npm/flatpickr@4.6.13",
         "pkg:npm/ids@3.0.2",
@@ -41042,7 +41042,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/dompurify@3.4.1",
+      "ref": "pkg:npm/dompurify@3.4.2",
       "dependsOn": [
         "pkg:npm/%40types/trusted-types@2.0.7"
       ]

@@ -1,4 +1,4 @@
-# Operaton - The open source process engine
+Exte# Operaton - The open source process engine
 
 ![build status](https://github.com/operaton/operaton/actions/workflows/build.yml/badge.svg?branch=main)
 [![sonarqube](https://img.shields.io/sonar/tests/operaton_operaton?server=https%3A%2F%2Fsonarcloud.io&logo=sonarcloud)](https://sonarcloud.io/project/overview?id=operaton_operaton)
@@ -85,6 +85,28 @@ Operaton is fully backwards compatible to your existing BPMN-, DMN-models and Fo
 Get the latest release from the [Releases page](https://github.com/operaton/operaton/releases).
 
 To get the latest stable build visit the [Early Access release page]([https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++](https://github.com/operaton/operaton/releases/tag/early-access)), click on _Assets_ and download the desired package.
+
+### Maven Artifacts
+
+Release artifacts are available on [Maven Central](https://central.sonatype.com/search?q=org.operaton&namespace=org.operaton.bpm).
+
+To use snapshot artifacts from the development branch, add the Sonatype Snapshots repository to your Maven `pom.xml`:
+
+```xml
+<repositories>
+  <repository>
+    <id>sonatype-snapshots</id>
+    <name>Sonatype Snapshots</name>
+    <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
+  </repository>
+</repositories>
+```
 
 ## Development
 

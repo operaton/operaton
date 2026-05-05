@@ -98,7 +98,7 @@ public class HalRelationCacheConfiguration {
   protected void parseCacheConfigurations(JsonNode jsonConfiguration) {
     JsonNode jsonNode = jsonConfiguration.get(CONFIG_CACHES);
     if (jsonNode != null) {
-      jsonNode.properties().stream().forEach(entry -> parseCacheConfiguration(entry.getKey(), entry.getValue()));
+      jsonNode.properties().forEach(entry -> parseCacheConfiguration(entry.getKey(), entry.getValue()));
     }
   }
 

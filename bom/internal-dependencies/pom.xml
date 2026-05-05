@@ -268,6 +268,17 @@
         <artifactId>feel-engine</artifactId>
         <version>${version.feel-scala}</version>
         <classifier>scala-shaded</classifier>
+        <!--
+          jackson-module-scala is shaded into feel-engine and could cause NoClassDefFoundError when present
+          in the classpath before feel-engine. Exclude it to avoid such issues.
+          See https://github.com/operaton/operaton/issues/2875
+        -->
+        <exclusions>
+          <exclusion>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-scala_2.13</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <!-- Scala library needed for feel-engine due to ScalaSignature annotations in jackson-module-scala -->
       <dependency>

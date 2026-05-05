@@ -28,8 +28,12 @@ import org.operaton.bpm.engine.health.HealthService;
 @ApplicationScoped
 public class OperatonHealthCheck implements HealthCheck {
 
+  private final HealthService healthService;
+
   @Inject
-  HealthService healthService;
+  public OperatonHealthCheck(HealthService healthService) {
+    this.healthService = healthService;
+  }
 
   @Override
   public HealthCheckResponse call() {

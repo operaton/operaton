@@ -203,7 +203,9 @@
                   <workingDirectory>${maven.multiModuleProjectDirectory}</workingDirectory>
                   <arguments>
                     <argument>install</argument>
-                    <argument>pystache</argument>
+                    <argument>--only-binary</argument>
+                    <argument>:all:</argument>
+                    <argument>pystache==0.6.8</argument>
                   </arguments>
                   <skip>false</skip>
                 </configuration>

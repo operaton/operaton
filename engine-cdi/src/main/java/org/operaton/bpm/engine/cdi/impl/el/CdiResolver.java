@@ -88,7 +88,7 @@ public class CdiResolver extends ELResolver {
   @Override
   public boolean isReadOnly(ELContext context, Object base, Object property) {
     ELResolver resolver = getWrappedResolver();
-    return resolver != null ? resolver.isReadOnly(context, base, property) : true;
+    return resolver == null || resolver.isReadOnly(context, base, property);
   }
 
   @Override

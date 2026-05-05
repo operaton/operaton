@@ -18,7 +18,7 @@
     <version.uuid-generator>5.2.0</version.uuid-generator>
     <version.feel-scala>1.21.0</version.feel-scala>
     <version.scala>2.13.18</version.scala>
-    <version.quarkus>3.33.1</version.quarkus>
+    <version.quarkus>3.33.1.1</version.quarkus>
     <version.java>17</version.java>
     <version.spring>7.0.7</version.spring>
     <version.spring-boot>4.0.6</version.spring-boot>

@@ -65,12 +65,27 @@
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
+          <!-- Always move the security filter rules and clean WEB-INF - not frontend-specific -->
           <execution>
+            <id>restructure-webjar-static</id>
             <phase>generate-resources</phase>
             <configuration>
               <target>
                 <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
                 <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <!-- Only move plugin dir and copy welcome page when the frontend was built -->
+          <execution>
+            <id>restructure-webjar-frontend</id>
+            <phase>generate-resources</phase>
+            <configuration>
+              <skip>${skip.frontend.build}</skip>
+              <target>
                 <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true"/>
                 <!-- add operaton-welcome page -->
                 <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/">

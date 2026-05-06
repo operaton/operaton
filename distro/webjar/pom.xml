@@ -68,7 +68,6 @@
           <execution>
             <phase>generate-resources</phase>
             <configuration>
-              <skip>${skip.frontend.build}</skip>
               <target>
                 <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
                 <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>

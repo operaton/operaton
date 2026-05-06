@@ -90,17 +90,21 @@ This directory contains the GitHub Actions workflows for the Operaton project. E
 
 ## Actions Used
 
-| Action                                  | Version | Description                                             |
-|-----------------------------------------|---------|---------------------------------------------------------|
-| `actions/checkout`                      | v4      | Checks out the repository code.                         |
-| `actions/cache`                         | v4      | Caches dependencies to improve workflow execution time. |
-| `mikepenz/action-junit-report`          | v5.5.1  | Publishes JUnit test reports.                           |
-| `actions/upload-artifact`               | v4      | Uploads build artifacts.                                |
-| `actions/setup-java`                    | v4      | Sets up the Java environment.                           |
-| `stefanzweifel/git-auto-commit-action`  | v5      | Automatically commits changes to the repository.        |
-| `jreleaser/release-action`              | v2      | Releases the project.                                   |
-| `actions/labeler`                       | v5      | Applies and removes PR labels based on changed file paths. |
-| `TimonVS/pr-labeler-action`             | v5      | Applies and removes PR labels based on PR title patterns.  |
-| `crazy-max/ghaction-github-labeler`     | v6      | Syncs label definitions from `.github/labels/labels.yml`.  |
+The versions below are a high-level summary. The authoritative action pins are defined in the individual workflow files and may vary by workflow over time.
+
+| Action                                  | Version used in workflows* | Description                                             |
+|-----------------------------------------|----------------------------|---------------------------------------------------------|
+| `actions/checkout`                      | v6                         | Checks out the repository code.                         |
+| `actions/cache`                         | v5                         | Caches dependencies to improve workflow execution time. |
+| `mikepenz/action-junit-report`          | v5.5.1                     | Publishes JUnit test reports.                           |
+| `actions/upload-artifact`               | v4                         | Uploads build artifacts.                                |
+| `actions/setup-java`                    | v5                         | Sets up the Java environment.                           |
+| `stefanzweifel/git-auto-commit-action`  | v5                         | Automatically commits changes to the repository.        |
+| `jreleaser/release-action`              | v2                         | Releases the project.                                   |
+| `actions/labeler`                       | v5                         | Applies and removes PR labels based on changed file paths. |
+| `TimonVS/pr-labeler-action`             | v5                         | Applies and removes PR labels based on PR title patterns.  |
+| `crazy-max/ghaction-github-labeler`     | v6                         | Syncs label definitions from `.github/labels/labels.yml`.  |
+
+\* See the individual workflow files for the exact pinned version used by each job.
 
 For more details on each workflow, you can view the workflow files in the [.github/workflows](https://github.com/operaton/operaton/tree/main/.github/workflows) directory.

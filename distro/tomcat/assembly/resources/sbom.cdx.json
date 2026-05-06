@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:f46265d7-ab4f-4d5c-a6c1-1ea33bb29a8a",
+  "serialNumber": "urn:uuid:6fac7168-6589-42b2-97c5-fea7ebb5fe30",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-06T06:49:08Z",
+    "timestamp": "2026-05-06T14:35:58Z",
     "tools": {
       "components": [
         {
@@ -9887,45 +9887,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
+      "bom-ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.8?type=jar",
       "publisher": "Eclipse Foundation",
       "group": "org.glassfish.jaxb",
       "name": "jaxb-runtime",
-      "version": "4.0.7",
+      "version": "4.0.8",
       "description": "JAXB (JSR 222) Reference Implementation",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "f7c3cf716178cdb0e087b12ad273fa9e"
+          "content": "7ea851b95417d58b957287c283362812"
         },
         {
           "alg": "SHA-1",
-          "content": "49a0f8e7e3a40fcf3ba812721f682e12bec1878d"
+          "content": "0eab27c9e6a139056470f2f3555e71543c9d567d"
         },
         {
           "alg": "SHA-256",
-          "content": "61a5daf5a1987f7ed7149c5a883ddf220ca9bf714a8d8cffc85fac301e92b5f2"
+          "content": "bd28a86e25faf0e8e5084c7508aa133e04ba63ae1e530e5b658577c8a54cdd94"
         },
         {
           "alg": "SHA-512",
-          "content": "1153271be43a17766c831f29f5955464fbb408f32b13db49f8cdf5c2b2e836ab948eb5362922a5ea84d61c35d5c9e35afea95b032500588d99552a74fc286059"
+          "content": "0373b5a09c4a9449a4ee9af6dabd48eff555253cce6c6bc6587d6a50680cb05beb3b9c685a3114d1469bf7bfcc29bcc87d92b09577ec7587b17dd217bd938967"
         },
         {
           "alg": "SHA-384",
-          "content": "a66bc39eb25d4c728e9bc3d37d7e6005411a00dde6399d40489ff6999b3c37c80e2c4e0e5ca1cf0292add938d66a82f8"
+          "content": "8027edd9623d2fdcd63f530d0bafdbd7f7ad28173e55ba6f4eb241e865864174c0a54d4b7cf2a23a5d22413c6b993f64"
         },
         {
           "alg": "SHA3-384",
-          "content": "9aad5a1b6a7bd16fd219fef95647d9d2d553c4ab50842454129691fd3ef2e9449083ddf47dcea126f25632258755d075"
+          "content": "30b16ffd72a5d3916ee49f5ff6085c417303c6d989c2436dcd7d913e0a0bdd85f22259fddff2f5cab031082abd1410b9"
         },
         {
           "alg": "SHA3-256",
-          "content": "85db506758dc998ead4f2286da50d15f22aede1ba380e1f0f60d7d886e834d8b"
+          "content": "813f1ed06bb2c15fbd7fd40c8aac6c05bdfc87eb87ba463670594f3227c25151"
         },
         {
           "alg": "SHA3-512",
-          "content": "2213b1d79dc8448529b146f44fdd997b40060ee6aed6497b780c2953d9fb026f1975a64b7e42a1df0980be792f2df8eb31900984ce608e5a62299643d8cc9cb8"
+          "content": "ca056399df4514adef8b94762c4fe4f0ec3339d05e95adec778aa3394e010d99df61b216c8efa79384ba3d0761c4d4b12e25c52d1a627c8aa3b0a758f5653221"
         }
       ],
       "licenses": [
@@ -9935,7 +9935,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
+      "purl": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.8?type=jar",
       "externalReferences": [
         {
           "url": "https://eclipse-ee4j.github.io/jaxb-ri/",
@@ -19354,7 +19354,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "43c6d1f6-cc49-4abf-9371-c60285e66f55",
+      "bom-ref": "b9fb2ca9-6690-4f3c-88cd-84bf5e023a31",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24389,7 +24389,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "640d7702-1aa2-4443-8b5f-92d8b96363ae",
+      "bom-ref": "01fc2bf8-84a9-4019-9f7e-c9558a3d7eb5",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -25414,12 +25414,12 @@
         "pkg:maven/org.operaton.bpm.dmn/operaton-engine-feel-scala@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/com.google.code.gson/gson@2.14.0?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.8?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine@2.2.0-SNAPSHOT?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
+      "ref": "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.8?type=jar",
       "dependsOn": [
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar"
       ]
@@ -26345,7 +26345,7 @@
         "pkg:maven/org.operaton.spin/operaton-spin-dataformat-xml-dom@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar"
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.8?type=jar"
       ]
     },
     {
@@ -26689,7 +26689,7 @@
         "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar",
         "pkg:maven/jakarta.activation/jakarta.activation-api@2.1.3?type=jar",
         "pkg:maven/org.glassfish.jaxb/jaxb-core@4.0.6?type=jar",
-        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.7?type=jar",
+        "pkg:maven/org.glassfish.jaxb/jaxb-runtime@4.0.8?type=jar",
         "pkg:maven/com.sun.istack/istack-commons-runtime@4.2.0?type=jar"
       ]
     },
@@ -26770,7 +26770,13 @@
       "dependsOn": []
     },
     {
-      "ref": "43c6d1f6-cc49-4abf-9371-c60285e66f55",
+      "ref": "01fc2bf8-84a9-4019-9f7e-c9558a3d7eb5",
+      "dependsOn": [
+        "b9fb2ca9-6690-4f3c-88cd-84bf5e023a31"
+      ]
+    },
+    {
+      "ref": "b9fb2ca9-6690-4f3c-88cd-84bf5e023a31",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -26817,12 +26823,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "640d7702-1aa2-4443-8b5f-92d8b96363ae",
-      "dependsOn": [
-        "43c6d1f6-cc49-4abf-9371-c60285e66f55"
       ]
     },
     {

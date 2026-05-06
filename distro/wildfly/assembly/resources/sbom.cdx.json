@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:fcf3029a-0ebb-4388-a46f-aaa7f2efafab",
+  "serialNumber": "urn:uuid:4b39ce53-ce12-4c12-a5c9-8d032d95bb28",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-05T06:17:40Z",
+    "timestamp": "2026-05-06T06:45:50Z",
     "tools": {
       "components": [
         {
@@ -31320,7 +31320,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "336e2a93-e359-43d0-ba75-4deba3fbbd57",
+      "bom-ref": "ca070a69-e44e-4eef-89cf-5c66a06fb22a",
       "name": "package-lock.json",
       "properties": [
         {
@@ -34259,9 +34259,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-builder@1.1.5",
+      "bom-ref": "pkg:npm/fast-xml-builder@1.1.9",
       "name": "fast-xml-builder",
-      "version": "1.1.5",
+      "version": "1.1.9",
       "licenses": [
         {
           "license": {
@@ -34269,11 +34269,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-builder@1.1.5",
+      "purl": "pkg:npm/fast-xml-builder@1.1.9",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-builder@1.1.5"
+          "value": "fast-xml-builder@1.1.9"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34283,9 +34283,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/fast-xml-parser@5.7.2",
+      "bom-ref": "pkg:npm/fast-xml-parser@5.7.3",
       "name": "fast-xml-parser",
-      "version": "5.7.2",
+      "version": "5.7.3",
       "licenses": [
         {
           "license": {
@@ -34293,11 +34293,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/fast-xml-parser@5.7.2",
+      "purl": "pkg:npm/fast-xml-parser@5.7.3",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "fast-xml-parser@5.7.2"
+          "value": "fast-xml-parser@5.7.3"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36355,7 +36355,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e9cebf97-da1e-4c9b-9c64-2a8b4933b417",
+      "bom-ref": "a4fe462e-0b4b-49ca-8ac7-381690f5dfbb",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -40062,7 +40062,13 @@
       "dependsOn": []
     },
     {
-      "ref": "336e2a93-e359-43d0-ba75-4deba3fbbd57",
+      "ref": "a4fe462e-0b4b-49ca-8ac7-381690f5dfbb",
+      "dependsOn": [
+        "ca070a69-e44e-4eef-89cf-5c66a06fb22a"
+      ]
+    },
+    {
+      "ref": "ca070a69-e44e-4eef-89cf-5c66a06fb22a",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -40098,7 +40104,7 @@
         "pkg:npm/dom4@2.1.6",
         "pkg:npm/dompurify@3.4.2",
         "pkg:npm/events@3.3.0",
-        "pkg:npm/fast-xml-parser@5.7.2",
+        "pkg:npm/fast-xml-parser@5.7.3",
         "pkg:npm/jquery-ui@1.14.2",
         "pkg:npm/jquery@3.7.1",
         "pkg:npm/lodash@4.18.1",
@@ -40109,12 +40115,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "e9cebf97-da1e-4c9b-9c64-2a8b4933b417",
-      "dependsOn": [
-        "336e2a93-e359-43d0-ba75-4deba3fbbd57"
       ]
     },
     {
@@ -40953,16 +40953,16 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/fast-xml-builder@1.1.5",
+      "ref": "pkg:npm/fast-xml-builder@1.1.9",
       "dependsOn": [
         "pkg:npm/path-expression-matcher@1.5.0"
       ]
     },
     {
-      "ref": "pkg:npm/fast-xml-parser@5.7.2",
+      "ref": "pkg:npm/fast-xml-parser@5.7.3",
       "dependsOn": [
         "pkg:npm/%40nodable/entities@2.1.0",
-        "pkg:npm/fast-xml-builder@1.1.5",
+        "pkg:npm/fast-xml-builder@1.1.9",
         "pkg:npm/path-expression-matcher@1.5.0",
         "pkg:npm/strnum@2.2.3"
       ]

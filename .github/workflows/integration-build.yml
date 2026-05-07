@@ -430,7 +430,7 @@ jobs:
         id: maven-spring-boot-starter-integration-tests
         shell: bash
         run: |
-          .devenv/scripts/build/build-and-run-integration-tests.sh --testsuite=spring-boot-starter
+          .devenv/scripts/build/build-and-run-spring-boot-starter.sh
       - name: Publish Test Report
         if: always()
         uses: mikepenz/action-junit-report@bccf2e31636835cf0874589931c4116687171386 #v6.4.0

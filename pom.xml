@@ -195,12 +195,12 @@
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-testing-frameworks</artifactId>
-            <version>3.35.2</version>
+            <version>3.35.3</version>
           </dependency>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>
             <artifactId>rewrite-logging-frameworks</artifactId>
-            <version>3.27.2</version>
+            <version>3.27.3</version>
           </dependency>
         </dependencies>
       </plugin>

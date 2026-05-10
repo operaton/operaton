@@ -1,4 +1,4 @@
-Exte# Operaton - The open source process engine
+# Operaton - The open source process engine
 
 ![build status](https://github.com/operaton/operaton/actions/workflows/build.yml/badge.svg?branch=main)
 [![sonarqube](https://img.shields.io/sonar/tests/operaton_operaton?server=https%3A%2F%2Fsonarcloud.io&logo=sonarcloud)](https://sonarcloud.io/project/overview?id=operaton_operaton)

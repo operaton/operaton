@@ -17,12 +17,14 @@
 package org.operaton.bpm.webapp.impl.db;
 
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.util.Collections;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.xml.sax.InputSource;
 
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
@@ -69,6 +71,7 @@ class QuerySessionFactoryTest {
     var mappingFiles = List.of("foo/mapping1.xml", "bar/mapping2.xml");
     var documentBuildFactory = DocumentBuilderFactory.newDefaultInstance();
     var builder = documentBuildFactory.newDocumentBuilder();
+    builder.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
 
     // when
     String mappings = querySessionFactory.buildMappings(mappingFiles);

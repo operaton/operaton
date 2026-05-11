@@ -21,38 +21,52 @@ documentation:
       - '**/*.adoc'
       - 'docs/**'
 
+scope:build:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/pom.xml'
+          - '.mvn/**'
+          - 'mvnw'
+          - 'mvnw.cmd'
+          - 'bom/**'
+          - 'parent/**'
+          - '!**/src/test/**'
+
 scope:ci:
   - changed-files:
     - any-glob-to-any-file:
       - '.github/**'
 
-scope:build:
+scope:connect:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/pom.xml'
-      - '.mvn/**'
-      - 'mvnw'
-      - 'mvnw.cmd'
-      - 'bom/**'
-      - 'parent/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'connect/**'
+          - '!**/src/test/**'
 
 scope:core-api:
   - changed-files:
     - any-glob-to-any-file:
       - 'engine/**'
+      - 'engine-dmn/**'
+      - 'engine-spring/**'
       - '!**/src/test/**'
+
+scope:db_schema:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/resources/**/db/**'
+          - '!**/src/test/**'
+
+scope:external-task-client-java:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'clients/**'
+          - '!**/src/test/**'
 
 scope:model-api:
   - changed-files:
     - any-glob-to-any-file:
       - 'model-api/**'
-      - '!**/src/test/**'
-
-scope:dmn:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'engine-dmn/**'
       - '!**/src/test/**'
 
 scope:juel:
@@ -67,17 +81,10 @@ scope:spin:
       - 'spin/**'
       - '!**/src/test/**'
 
-scope:connect:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'connect/**'
-      - '!**/src/test/**'
-
 scope:spring-boot:
   - changed-files:
     - any-glob-to-any-file:
       - 'spring-boot-starter/**'
-      - 'engine-spring/**'
       - '!**/src/test/**'
 
 scope:quarkus:
@@ -90,21 +97,6 @@ scope:webapp:
   - changed-files:
     - any-glob-to-any-file:
       - 'webapps/**'
-
-scope:cockpit:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'webapps/**/cockpit/**'
-
-scope:webapp-tasklist:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'webapps/**/tasklist/**'
-
-scope:webapp-admin:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'webapps/**/admin/**'
 
 scope:ldap:
   - changed-files:
@@ -123,18 +115,6 @@ scope:assert:
   - changed-files:
     - any-glob-to-any-file:
       - 'test-utils/**'
-
-scope:db_schema:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/resources/**/db/**'
-      - '!**/src/test/**'
-
-scope:external-task-client-java:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'clients/**'
-      - '!**/src/test/**'
 
 scope:docker:
   - changed-files:
@@ -161,11 +141,6 @@ database:
       - '**/resources/**/db/**'
       - '!**/src/test/**'
 
-qa:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'qa/**'
-
 distro:wildfly:
   - changed-files:
     - any-glob-to-any-file:
@@ -180,3 +155,9 @@ distro:operaton:
   - changed-files:
     - any-glob-to-any-file:
       - 'distro/run/**'
+
+qa:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'qa/**'
+

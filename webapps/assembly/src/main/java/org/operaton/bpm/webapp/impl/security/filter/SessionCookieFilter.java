@@ -45,11 +45,16 @@ public class SessionCookieFilter implements Filter {
   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
           throws IOException, ServletException {
     if ((servletRequest instanceof HttpServletRequest httpServletRequest) && (servletResponse instanceof HttpServletResponse httpServletResponse)) {
+      // create a session if none exists yet
+      httpServletRequest.getSession();
       SameSiteResponseProxy responseProxy = new SameSiteResponseProxy(httpServletResponse);
       // execute filter chain with a response wrapper that handles sameSite attributes
-      filterChain.doFilter(httpServletRequest, responseProxy);
-      // ensure SameSite is applied even if no output was written
-      responseProxy.ensureSameSiteCookies();
+      try {
+        filterChain.doFilter(httpServletRequest, responseProxy);
+        // ensure SameSite is applied even if no output was written
+      }  finally {
+        responseProxy.flushBuffer();
+      }
     } else {
       filterChain.doFilter(servletRequest, servletResponse);
     }

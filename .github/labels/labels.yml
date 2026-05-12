@@ -1,0 +1,293 @@
+# GitHub Labels for Operaton Project
+# Format: https://github.com/crazy-max/ghaction-github-labeler
+# Labels are synced from the actual labels on operaton/operaton repository
+
+# Issue Type
+- name: "bug"
+  color: "#d73a4a"
+  description: "Something isn't working"
+
+- name: "enhancement"
+  color: "#a2eeef"
+  description: "New feature or request"
+
+- name: "documentation"
+  color: "#0075ca"
+  description: "Improvements or additions to documentation"
+
+- name: "idea"
+  color: "#9BDF57"
+  description: "New feature idea for Operaton"
+
+# Community
+- name: "good first issue"
+  color: "#7057ff"
+  description: "Good for newcomers"
+
+- name: "help wanted"
+  color: "#008672"
+  description: "Extra attention is needed"
+
+- name: "question"
+  color: "#d876e3"
+  description: "Further information is requested"
+
+# Resolution
+- name: "duplicate"
+  color: "#cfd3d7"
+  description: "This issue or pull request already exists"
+
+- name: "invalid"
+  color: "#e4e669"
+  description: "This doesn't seem right"
+
+- name: "wontfix"
+  color: "#ffffff"
+  description: "This will not be worked on"
+
+# Status
+- name: "status:stale"
+  color: "#ededed"
+  description: ""
+
+# Release
+- name: "released"
+  color: "#8ddd84"
+  description: "Issue has been released"
+
+- name: "noteworthy"
+  color: "#1c3fb5"
+  description: "Should be documented in the release notes"
+
+# Breaking Changes & Migration
+- name: "breaking"
+  color: "#D93F0B"
+  description: "A change that is not backward compatible"
+
+- name: "migration"
+  color: "#160653"
+  description: "Changes that should be considered in the migration guide"
+
+- name: "deprecation"
+  color: "#888888"
+  description: "Resolve deprecations or make code deprecation"
+
+# Categories
+- name: "build"
+  color: "#0052CC"
+  description: "Changes related to the build system, including Maven configurations, GitHub Actions workflows"
+
+- name: "qa"
+  color: "#e99695"
+  description: "Tests, quality improvements and assurance"
+
+- name: "refactoring"
+  color: "#006b75"
+  description: "Code enhancement without changing API or behaviour"
+
+# Language Tags
+- name: "lang:java"
+  color: "#ffa221"
+  description: "Pull requests that update Java code"
+
+- name: "lang:javascript"
+  color: "#168700"
+  description: "Pull requests that update Javascript code"
+
+- name: "java"
+  color: "#ffa221"
+  description: "Pull requests that update Java code"
+
+- name: "javascript"
+  color: "#168700"
+  description: "Pull requests that update Javascript code"
+
+# Dependencies
+- name: "dependencies"
+  color: "#0366d6"
+  description: "Changes that update a dependency"
+
+- name: "dependencies:maven"
+  color: "#0366d6"
+  description: "Updates of Maven dependencies"
+
+- name: "dependencies:maven-plugin"
+  color: "#0366d6"
+  description: "Updates to Maven Plugins"
+
+- name: "dependencies:npm"
+  color: "#0366d6"
+  description: "Changed to NPM dependencies"
+
+- name: "dependencies:github-action"
+  color: "#0366d6"
+  description: "Updates of GitHub actions"
+
+- name: "dependencies:testing"
+  color: "#0366d6"
+  description: "Updates of testing libraries"
+
+- name: "dependencies:devcontainers"
+  color: "#0366d6"
+  description: "Updates of devcontainers"
+
+# API
+- name: "api:rest"
+  color: "#1A10FC"
+  description: "Changes affecting the REST API"
+
+# Database
+- name: "database"
+  color: "#E390CA"
+  description: "Features and issues related to the persistence layer"
+
+- name: "database:h2"
+  color: "#E390CA"
+  description: "Issues & changes related to h2 DB"
+
+- name: "database:postgresql"
+  color: "#E390CA"
+  description: "Issues & changes related to Postgres DB"
+
+- name: "database:mysql"
+  color: "#E390CA"
+  description: "Issues & changes related to MySQL DB"
+
+- name: "database:mariadb"
+  color: "#E390CA"
+  description: "Issues & changes related to MariaDB"
+
+- name: "database:oracle"
+  color: "#E390CA"
+  description: "Issues & changes related to Oracle DB"
+
+- name: "database:sqlserver"
+  color: "#E390CA"
+  description: "Issues & changes related to MS SQLServer DB"
+
+- name: "database:db2"
+  color: "#E390CA"
+  description: "Issues & changes related to db2 DB"
+
+# Platform
+- name: "platform:wildfly"
+  color: "#5EFDF1"
+  description: ""
+
+# Distributions
+- name: "distro:wildfly"
+  color: "#7628d5"
+  description: "Issues & changes related to the Wildfly distribution"
+
+- name: "distro:tomcat"
+  color: "#7628d5"
+  description: "Issues & changes related to the Tomcat distribution"
+
+- name: "distro:operaton"
+  color: "#7628d5"
+  description: "Issues & changes related to the Operaton standalone distribution"
+
+# Integrations
+- name: "integration:spring-boot"
+  color: "#ec6de6"
+  description: "Integration with Spring Boot & Spring Framework, spring-boot-starter"
+
+- name: "integration:quarkus"
+  color: "#ec6de6"
+  description: "Quarkus dependencies & quarkus-extension"
+
+- name: "integration:tomcat"
+  color: "#aaaaaa"
+  description: ""
+
+# Scope
+- name: "scope:assert"
+  color: "#FEF1B4"
+  description: "Changes to the Assert library."
+
+- name: "scope:build"
+  color: "#FEF1B4"
+  description: "Changes affecting the build, e.g. Maven configuration, shell scripts."
+
+- name: "scope:ci"
+  color: "#FEF1B4"
+  description: "Changes to the CI, e.g. GitHub workflows"
+
+- name: "scope:connect"
+  color: "#FEF1B4"
+  description: "Issues & changes related to the connect API and connectors"
+
+- name: "scope:core-api"
+  color: "#FEF1B4"
+  description: "Changes to the core API: engine, dmn-engine, feel-engine, REST API, OpenAPI"
+
+- name: "scope:db_schema"
+  color: "#FEF1B4"
+  description: "Issues and changes affecting the database schema."
+
+- name: "scope:dmn"
+  color: "#FEF1B4"
+  description: "Changes related to the DMN model & engine"
+
+- name: "scope:e2e-qa"
+  color: "#FEF1B4"
+  description: "Changes to the E2E tests"
+
+- name: "scope:external-task-client-java"
+  color: "#FEF1B4"
+  description: "Changes to the Java external task client."
+
+- name: "scope:jakarta-ee"
+  color: "#2560D6"
+  description: "JakartaEE specific changes, e.g. CDI, Servlets"
+  from_name: "jakarta-ee"
+
+- name: "scope:juel"
+  color: "#FEF1B4"
+  description: "Changes to the JUEL implementation"
+
+- name: "scope:ldap"
+  color: "#FEF1B4"
+  description: "Changes to the LDAP integration."
+
+- name: "scope:model-api"
+  color: "#FEF1B4"
+  description: "Changes to the BPMN, CMMN, DMN, XML model APIs."
+
+- name: "scope:quarkus"
+  color: "#FEF1B4"
+  description: "Changes to the Quarkus extension."
+
+- name: "scope:spin"
+  color: "#FEF1B4"
+  description: "Changes to the Spin library."
+  from_name: "module:spin"
+
+- name: "scope:spring-boot"
+  color: "#FEF1B4"
+  description: "Changes to the Spring Boot starter."
+
+- name: "scope:tests"
+  color: "#FEF1B4"
+  description: "Changes affecting only test code"
+
+- name: "scope:webapp"
+  color: "#FEF1B4"
+  description: "Changes affecting all the webapps."
+
+# Backporting
+- name: "backport:c7"
+  color: "#57589D"
+  description: "Changes backported from Camunda 7"
+
+- name: "backport:cibseven"
+  color: "#57589D"
+  description: "Changes backported from cibseven"
+
+- name: "backport:fluxnova"
+  color: "#57589D"
+  description: "Changes backported from Fluxnova"
+
+- name: "backport:patch-release"
+  color: "#57589D"
+  description: "Should be ported back to the latest feature release branch."

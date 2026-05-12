@@ -93,6 +93,9 @@ class QuerySessionFactoryTest {
 
     InputStream localDtd = QuerySessionFactoryTest.class.getClassLoader()
       .getResourceAsStream("org/apache/ibatis/builder/xml/mybatis-3-config.dtd");
-    return localDtd == null ? null : new InputSource(localDtd);
+    assertThat(localDtd)
+      .as("MyBatis DTD must be available on the test classpath to avoid external entity resolution")
+      .isNotNull();
+    return new InputSource(localDtd);
   }
 }

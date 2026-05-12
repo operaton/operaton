@@ -52,7 +52,7 @@ public class SessionCookieFilter implements Filter {
       try {
         filterChain.doFilter(httpServletRequest, responseProxy);
         // ensure SameSite is applied even if no output was written
-      }  finally {
+      } finally {
         responseProxy.ensureSameSiteCookies();
       }
     } else {

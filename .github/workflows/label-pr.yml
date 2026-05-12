@@ -16,26 +16,23 @@ concurrency:
 
 jobs:
   path-labels:
-    name: Apply path-based labels
-    runs-on: ubuntu-latest
+    name: Apply labels
+    runs-on: ubuntu-slim
     permissions:
       contents: read
       pull-requests: write
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/labels
       - name: Apply labels based on changed files
         uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9 # v5
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           configuration-path: .github/labels/gh-labeler.yml
           sync-labels: true
-
-  title-labels:
-    name: Apply title-based labels
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
       - name: Apply labels based on PR title
         uses: TimonVS/pr-labeler-action@f9c084306ce8b3f488a8f3ee1ccedc6da131d1af # v5.0.0
         with:

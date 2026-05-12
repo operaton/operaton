@@ -53,7 +53,7 @@ public class SessionCookieFilter implements Filter {
         filterChain.doFilter(httpServletRequest, responseProxy);
         // ensure SameSite is applied even if no output was written
       } finally {
-        responseProxy.ensureSameSiteCookies();
+        responseProxy.appendSameSiteIfMissing();
       }
     } else {
       filterChain.doFilter(servletRequest, servletResponse);
@@ -67,10 +67,6 @@ public class SessionCookieFilter implements Filter {
     public SameSiteResponseProxy(HttpServletResponse resp) {
       super(resp);
       response = resp;
-    }
-
-    public void ensureSameSiteCookies() {
-      appendSameSiteIfMissing();
     }
 
     @Override

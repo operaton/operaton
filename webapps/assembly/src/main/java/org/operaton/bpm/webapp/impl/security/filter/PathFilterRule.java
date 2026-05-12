@@ -51,7 +51,6 @@ public class PathFilterRule implements SecurityFilterRule {
 
     boolean secured = false;
 
-
     for (RequestMatcher pattern : deniedPaths) {
       Match match = pattern.match(requestMethod, requestUri);
 

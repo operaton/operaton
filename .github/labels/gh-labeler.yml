@@ -30,7 +30,6 @@ scope:build:
     - 'mvnw.cmd'
     - 'bom/**'
     - 'parent/**'
-    - '!**/src/test/**'
 
 scope:ci:
 - changed-files:
@@ -38,60 +37,75 @@ scope:ci:
     - '.github/**'
 
 scope:connect:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'connect/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'connect/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:core-api:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'engine/**'
-    - 'engine-dmn/**'
-    - 'engine-spring/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'engine/**'
+      - 'engine-dmn/**'
+      - 'engine-spring/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:db_schema:
 - changed-files:
   - any-glob-to-any-file:
-    - '**/resources/**/db/**'
-    - '!**/src/test/**'
+    - 'engine/src/main/resources/org/operaton/bpm/engine/db/**'
 
 scope:external-task-client-java:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'clients/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'clients/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:model-api:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'model-api/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'model-api/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:juel:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'juel/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'juel/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:spin:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'spin/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'spin/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:spring-boot:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'spring-boot-starter/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'spring-boot-starter/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:quarkus:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'quarkus-extension/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'quarkus-extension/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:webapp:
 - changed-files:
@@ -99,47 +113,36 @@ scope:webapp:
     - 'webapps/**'
 
 scope:ldap:
-- changed-files:
-  - any-glob-to-any-file:
-    - '**/ldap/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - '**/ldap/**'
+    - any-glob-to-any-file:
+      - '!**/src/test/**'
 
 scope:tests:
 - changed-files:
   - any-glob-to-any-file:
     - '**/src/test/**'
-    - 'qa/**'
-    - 'test-utils/**'
 
 scope:assert:
 - changed-files:
   - any-glob-to-any-file:
-    - 'test-utils/**'
-
-scope:docker:
-- changed-files:
-  - any-glob-to-any-file:
-    - '**/Dockerfile*'
-    - '**/.devcontainer/**'
+    - 'test-utils/assert/**'
 
 scope:e2e-qa:
 - changed-files:
   - any-glob-to-any-file:
-    - 'qa/**/e2e/**'
+    - 'qa/integration-tests-*/**'
 
 api:rest:
-- changed-files:
-  - any-glob-to-any-file:
-    - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
-    - 'engine-rest/docs/**'
-    - '!engine-rest/docs/node_modules/**'
-
-# database: topic label — complements scope:db_schema (both intentionally use identical path patterns)
-database:
-- changed-files:
-  - any-glob-to-any-file:
-    - '**/resources/**/db/**'
-    - '!**/src/test/**'
+- all:
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
+      - 'engine-rest/docs/**'
+    - any-glob-to-any-file:
+      - '!engine-rest/docs/node_modules/**'
 
 distro:wildfly:
 - changed-files:

@@ -72,6 +72,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
       - "kthoms"
     target-branch: "main"
@@ -110,6 +112,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
       - "kthoms"
     target-branch: "main"
@@ -125,6 +129,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
       - "kthoms"
     target-branch: "main"
@@ -200,6 +206,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
       - "kthoms"
     target-branch: "release/1.1.x"
@@ -242,6 +250,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
       - "kthoms"
     target-branch: "release/1.1.x"
@@ -256,6 +266,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     reviewers:
       - "kthoms"
     target-branch: "release/1.1.x"
@@ -331,6 +343,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
     - "kthoms"
     target-branch: "release/2.1.x"
@@ -373,6 +387,8 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "15 2 * * 1,3,5"
+    cooldown:
+      default-days: 7
     reviewers:
     - "kthoms"
     target-branch: "release/2.1.x"
@@ -387,6 +403,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 7
     reviewers:
     - "kthoms"
     target-branch: "release/2.1.x"

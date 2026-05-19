@@ -50,7 +50,7 @@
     <version.arquillian>1.10.1.Final</version.arquillian>
     <version.shrinkwrap.resolvers>3.3.6</version.shrinkwrap.resolvers>
     <version.selenium>4.43.0</version.selenium>
-    <version.slf4j>2.0.17</version.slf4j>
+    <version.slf4j>2.0.18</version.slf4j>
     <version.logback>1.5.32</version.logback>
     <version.freemarker>2.3.34</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>

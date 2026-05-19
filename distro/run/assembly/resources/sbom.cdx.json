@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:947c8196-73f7-4aba-b8cc-a0c9c652201c",
+  "serialNumber": "urn:uuid:bc720058-bbf1-4c26-9337-30f8e531ef3b",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-19T21:57:37Z",
+    "timestamp": "2026-05-19T22:23:55Z",
     "tools": {
       "components": [
         {
@@ -188,45 +188,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
       "publisher": "QOS.ch",
       "group": "org.slf4j",
       "name": "slf4j-api",
-      "version": "2.0.17",
+      "version": "2.0.18",
       "description": "The slf4j API",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "b6480d114a23683498ac3f746f959d2f"
+          "content": "fe2837bd49bfb76657419002fed20ca9"
         },
         {
           "alg": "SHA-1",
-          "content": "d9e58ac9c7779ba3bf8142aff6c830617a7fe60f"
+          "content": "78a9e7a37cd6360e0b818e86341b24123d28d4df"
         },
         {
           "alg": "SHA-256",
-          "content": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
+          "content": "44508fd1576500688c790b190acdd16fec4f8c79a3e0b900afd70503cf055f55"
         },
         {
           "alg": "SHA-512",
-          "content": "9a3e79db6666a6096a3021bb2e1d918f30f589d8de51d6b600f8ebd92515a510ae2d8f87919cc2dfa8365d64f10194cac8dfa0fb950160eef0e9da06f6caaeb9"
+          "content": "539288fa0c96cea750d11293dbed4c562630587aa7cd88bbf76ad04390d1c40636506da48faa6453090c7e9baa6b690b9fbded55a7e2b4a91547eeea011f971a"
         },
         {
           "alg": "SHA-384",
-          "content": "6ea24f814a9b6ece428cfd0535e2f3b8927005745ef61006b50fdb5a90126ee5ea05650155382b3b755c5bce38ef3944"
+          "content": "917885c7812289f5178f68e3c421153d55abd7fe5cc9a071ffdc5de48b7afc79c352c667a20a3ad0f3b4660952932513"
         },
         {
           "alg": "SHA3-384",
-          "content": "9b1015052f0ec43f9be09764e131834157599611cb52f6fe591c4ac6a8ab4817518f2a4b8871e5e738c8678e93af5557"
+          "content": "d6898eb5dd2e5caa2185c6cd2804735802b3848a3041b82ef7faa7904b3eaf5ac382d43a70a71e22b77a929e10ae2aaf"
         },
         {
           "alg": "SHA3-256",
-          "content": "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
+          "content": "6bbc9103bec05ef3280dd895d8c6267ccf8b940df03c9f5145cfaa77f6e9a41a"
         },
         {
           "alg": "SHA3-512",
-          "content": "9579c2f7e7516e177c2d493ccc9eb8150978cf19f6f09b28d116f6935239fd56dc6af2b62b3336f79b0b462445550cd1fb5377a07001a6f44aaab6a32fa2fa47"
+          "content": "e2913e96e4b1c94e7cb5c46828d1afe68c5a7248293d5c16aaa9ab462ee8e0ff97dd3d1155d2a64f66ccd9bc1ac0c83476cc886b675004b2f84aaaf50e2b2af2"
         }
       ],
       "licenses": [
@@ -237,7 +237,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
       "externalReferences": [
         {
           "url": "http://www.slf4j.org",
@@ -1195,6 +1195,73 @@
         },
         {
           "url": "https://github.com/TNG/ArchUnit",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+      "publisher": "QOS.ch",
+      "group": "org.slf4j",
+      "name": "slf4j-api",
+      "version": "2.0.17",
+      "description": "The slf4j API",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "MD5",
+          "content": "b6480d114a23683498ac3f746f959d2f"
+        },
+        {
+          "alg": "SHA-1",
+          "content": "d9e58ac9c7779ba3bf8142aff6c830617a7fe60f"
+        },
+        {
+          "alg": "SHA-256",
+          "content": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
+        },
+        {
+          "alg": "SHA-512",
+          "content": "9a3e79db6666a6096a3021bb2e1d918f30f589d8de51d6b600f8ebd92515a510ae2d8f87919cc2dfa8365d64f10194cac8dfa0fb950160eef0e9da06f6caaeb9"
+        },
+        {
+          "alg": "SHA-384",
+          "content": "6ea24f814a9b6ece428cfd0535e2f3b8927005745ef61006b50fdb5a90126ee5ea05650155382b3b755c5bce38ef3944"
+        },
+        {
+          "alg": "SHA3-384",
+          "content": "9b1015052f0ec43f9be09764e131834157599611cb52f6fe591c4ac6a8ab4817518f2a4b8871e5e738c8678e93af5557"
+        },
+        {
+          "alg": "SHA3-256",
+          "content": "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
+        },
+        {
+          "alg": "SHA3-512",
+          "content": "9579c2f7e7516e177c2d493ccc9eb8150978cf19f6f09b28d116f6935239fd56dc6af2b62b3336f79b0b462445550cd1fb5377a07001a6f44aaab6a32fa2fa47"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "url": "https://opensource.org/license/mit/"
+          }
+        }
+      ],
+      "purl": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+      "externalReferences": [
+        {
+          "url": "http://www.slf4j.org",
+          "type": "website"
+        },
+        {
+          "url": "https://oss.sonatype.org/service/local/staging/deploy/maven2/",
+          "type": "distribution-intake"
+        },
+        {
+          "url": "https://github.com/qos-ch/slf4j/slf4j-parent/slf4j-api",
           "type": "vcs"
         }
       ]
@@ -7242,45 +7309,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.17?type=jar",
+      "bom-ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.18?type=jar",
       "publisher": "QOS.ch",
       "group": "org.slf4j",
       "name": "jcl-over-slf4j",
-      "version": "2.0.17",
+      "version": "2.0.18",
       "description": "JCL 1.2 implemented over SLF4J",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "4fcd46ca51e55b9fd9b0db34474927e0"
+          "content": "889b3b36f33843d83ba84f7355c2150d"
         },
         {
           "alg": "SHA-1",
-          "content": "76ea503eb688f06556a9ba69995d7eab63e34531"
+          "content": "fb36c10c70e27bb427bb3cec86ac30bb83f667c7"
         },
         {
           "alg": "SHA-256",
-          "content": "affd06771589ebfe454bb11315a4f466ecaa135b95f3e7939534cf1d2fd7064c"
+          "content": "ec5c36d57d2dbe100f84878f944575cb7871da32c7a115b8d7e0721277045d67"
         },
         {
           "alg": "SHA-512",
-          "content": "7efb2771bad2e643b0e814cd78ab4f9af3ea166643700776618c397e9755ca11f4b7c00030562a619932c9d2ec5114fd253ece3abbc3db2f1a064431d8990733"
+          "content": "6a2d26ab6873b25bab037f5620ce5a4a1c35cf79e89a09ff900d873877231bf117e35e9dfd05912c36be0b4a89a739c84ba20231fd0f74c1fcf14126c8846248"
         },
         {
           "alg": "SHA-384",
-          "content": "96fd8b2732de79c40e5e6613e324d2845dc6e19bf31bc7f3e9fa6730fa527cd16579ba9eb7915481faae1e9a32dc82fd"
+          "content": "6c8413069e3d41c85ff74f94e0ea01553b2edaf8b589b390c6b3d935d4a6e256720ded91d98a5aeadb67920bc8c10f35"
         },
         {
           "alg": "SHA3-384",
-          "content": "252a3e6847dafd84955a71724d71641b5c6508bcbbc1f2457fdb18994b61f6d78b08cbd40d5c430743950e351ec79835"
+          "content": "6fc21de57edba60d2f58e7907e051f70efc9d20729190d2dd0453a6bde313d764a96e1e392fe50042e09c2a1221067fb"
         },
         {
           "alg": "SHA3-256",
-          "content": "4c066cec2c40de9b5743f43d99b629d60de937718f69ffd837bbe5902682ee92"
+          "content": "4c3fbe65804bd4e70d9698c553819bd9866eec21b8ba4a4d01b89f4e8895ff24"
         },
         {
           "alg": "SHA3-512",
-          "content": "3334a1fff0751378abe8e010ca9716a85a15a90450265699c32886d2e8f9ff63df89237667a262350d860dbfb2f20fffff14e9a094f0bd2acf990dd543c2b86f"
+          "content": "d4fa671a7f0365d0dbe49b42fd5f354a6af2d22dbbcc7c1f5afbdba084845ea0aeabc112b89379988c7dcf57ab36350a39e436ddc45895ddf29f48082485c5b3"
         }
       ],
       "licenses": [
@@ -7291,7 +7358,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.17?type=jar",
+      "purl": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.18?type=jar",
       "externalReferences": [
         {
           "url": "http://www.slf4j.org",
@@ -7309,45 +7376,45 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17?type=jar",
+      "bom-ref": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.18?type=jar",
       "publisher": "QOS.ch",
       "group": "org.slf4j",
       "name": "jul-to-slf4j",
-      "version": "2.0.17",
+      "version": "2.0.18",
       "description": "JUL to SLF4J bridge",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "a42936c56611e4794c42908fb3d3a647"
+          "content": "f339bf7648049b2105e180cab6c45c9d"
         },
         {
           "alg": "SHA-1",
-          "content": "524cb6ccc2b68a57604750e1ab8b13b5a786a6aa"
+          "content": "79739c98001d5c9d078d087d5a348ec9e474ec8f"
         },
         {
           "alg": "SHA-256",
-          "content": "a7afcd23b9cfd1475e55c94f943b808c5922035e7e2c2a5c65a487a4106bc538"
+          "content": "cbb7d1aaaa9e871eb1a06594abd911bf97027152976edf1edc315be75239204e"
         },
         {
           "alg": "SHA-512",
-          "content": "623426fb3a0a34c88b1fce686cbfaa8d17bf013f3583886dc94273bf2f767492044b48db6557988d764f0450129c9d496dd3c10ad548099879d80e3945f2f636"
+          "content": "fd6019636513f7b121d0321f0897667713e7d9a0d21f6d15c3b55d2bc804687c1d264ad3d79aa227e9712169e4d6b4d05d5d8746399e900c933ce330f1850569"
         },
         {
           "alg": "SHA-384",
-          "content": "fe66fb82c6f9dca6f8fb1d61e1fc6f4d8bc9b616cf89aa5b54fab933e1a55506a2400e8e9b1c92cb2787ac69731103f4"
+          "content": "0d6d600cab9a960b2b5de8e8591fbba648c155f19c5d10d11eb4eee0572edd9670ed5a63197412bfeb9d58ce4a72259f"
         },
         {
           "alg": "SHA3-384",
-          "content": "6f537049a039795f0f4c0653d2ab959fe0bfeae53f629148773db1a819b2308e16ef6e3f9d49a5741e9adf0ce5c34eda"
+          "content": "cedd50402de6b6f146b3f2b71a253a24a17b17eb7f632d555f287da572d8ee157dfd154169f3b3c9a2b2b917a2001f23"
         },
         {
           "alg": "SHA3-256",
-          "content": "f25e1333214a362f95ef31c8465f6d89b4bb7399638f4c4ad53a6d9f0ecbd649"
+          "content": "0c8f1bf469bbfda88c4a601408e40116eb8a27e89bb77f82f7feeee409d4b12e"
         },
         {
           "alg": "SHA3-512",
-          "content": "a831c814c1064b39ead500e542de1decfe302688936b93c9aa781938bb0ae884907137ea34f18f99436f24fb9ddbbcecaf32df543c691d6311671f7e8b81dbc7"
+          "content": "0b25b9049a933eeadca90876ba1d499bf53779063846367870b5ef69c916b041354c33d256bdba9d4f87143d1e07dad9ec66fe502a9bba0858c23e9fca416066"
         }
       ],
       "licenses": [
@@ -7358,7 +7425,7 @@
           }
         }
       ],
-      "purl": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17?type=jar",
+      "purl": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.18?type=jar",
       "externalReferences": [
         {
           "url": "http://www.slf4j.org",
@@ -23348,7 +23415,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "e4f84574-6808-4b65-9275-689d76908365",
+      "bom-ref": "b1b0ce19-86b8-4ed3-9cbe-640ed55d3c33",
       "name": "package-lock.json",
       "properties": [
         {
@@ -28102,7 +28169,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0cc691b4-0aca-4f64-8762-b7e425efbfe3",
+      "bom-ref": "a14e8de1-9dc1-43e2-aac6-5ced57f085b2",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -28152,11 +28219,11 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-logging@1.1.3-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
       "dependsOn": []
     },
     {
@@ -28183,6 +28250,10 @@
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
       ]
+    },
+    {
+      "ref": "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+      "dependsOn": []
     },
     {
       "ref": "pkg:maven/junit/junit@4.13.2?type=jar",
@@ -28328,7 +28399,7 @@
       "dependsOn": [
         "pkg:maven/org.scala-lang/scala-library@2.13.15?type=jar",
         "pkg:maven/com.lihaoyi/fastparse_2.13@3.1.1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar"
       ]
     },
@@ -28359,7 +28430,7 @@
     {
       "ref": "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -28399,7 +28470,7 @@
     {
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@1.1.3-SNAPSHOT?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
         "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
@@ -28408,7 +28479,7 @@
       "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
       "dependsOn": [
         "pkg:maven/ch.qos.logback/logback-core@1.5.32?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -28447,7 +28518,7 @@
     {
       "ref": "pkg:maven/org.testcontainers/testcontainers@2.0.5?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
         "pkg:maven/org.apache.commons/commons-compress@1.28.0?type=jar",
         "pkg:maven/org.rnorth.duct-tape/duct-tape@1.0.8?type=jar",
         "pkg:maven/com.github.docker-java/docker-java-api@3.7.1?type=jar",
@@ -28488,7 +28559,7 @@
       "ref": "pkg:maven/com.github.docker-java/docker-java-api@3.7.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.21?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -28499,7 +28570,7 @@
       "ref": "pkg:maven/com.github.docker-java/docker-java-transport-zerodep@3.7.1?type=jar",
       "dependsOn": [
         "pkg:maven/com.github.docker-java/docker-java-transport@3.7.1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -28774,7 +28845,7 @@
     {
       "ref": "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29215,13 +29286,13 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-api@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-util@1.9.27?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.apache.maven.resolver/maven-resolver-named-locks@1.9.27?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29231,7 +29302,7 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-named-locks@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-util@1.9.27?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29239,7 +29310,7 @@
       "dependsOn": [
         "pkg:maven/org.apache.maven.resolver/maven-resolver-api@1.9.27?type=jar",
         "pkg:maven/org.apache.maven.resolver/maven-resolver-spi@1.9.27?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29252,14 +29323,14 @@
         "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
         "pkg:maven/org.apache.httpcomponents/httpcore@4.4.16?type=jar",
         "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
-        "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.17?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.18?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.17?type=jar",
+      "ref": "pkg:maven/org.slf4j/jcl-over-slf4j@2.0.18?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29274,7 +29345,7 @@
         "pkg:maven/org.apache.maven.resolver/maven-resolver-transport-http@1.9.27?type=jar",
         "pkg:maven/org.apache.maven/maven-resolver-provider@3.9.15?type=jar",
         "pkg:maven/org.apache.maven/maven-model-builder@3.9.15?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29442,14 +29513,14 @@
       "ref": "pkg:maven/org.codehaus.plexus/plexus-compiler-javac@2.16.2?type=jar",
       "dependsOn": [
         "pkg:maven/javax.inject/javax.inject@1?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
         "pkg:maven/org.codehaus.plexus/plexus-compiler-api@2.16.2?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.codehaus.plexus/plexus-compiler-api@2.16.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -29471,7 +29542,7 @@
     {
       "ref": "pkg:maven/org.apache.maven.shared/maven-shared-utils@3.4.2?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar",
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar"
       ]
     },
@@ -29563,7 +29634,7 @@
       "dependsOn": [
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5@5.4.2?type=jar",
         "pkg:maven/org.apache.httpcomponents.core5/httpcore5-h2@5.3.6?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -30125,7 +30196,7 @@
       "ref": "pkg:maven/com.jayway.jsonpath/json-path@2.10.0?type=jar",
       "dependsOn": [
         "pkg:maven/net.minidev/json-smart@2.5.2?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -30351,7 +30422,7 @@
         "pkg:maven/com.ethlo.time/itu@1.14.0?type=jar",
         "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.3?type=jar",
         "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml@2.21.3?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -30629,14 +30700,14 @@
       "dependsOn": [
         "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
         "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3?type=jar",
-        "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/jul-to-slf4j@2.0.18?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.apache.logging.log4j/log4j-to-slf4j@2.24.3?type=jar",
       "dependsOn": [
         "pkg:maven/org.apache.logging.log4j/log4j-api@2.24.3?type=jar",
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -30644,15 +30715,15 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.17?type=jar",
+      "ref": "pkg:maven/org.slf4j/jul-to-slf4j@2.0.18?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
       "ref": "pkg:maven/com.zaxxer/HikariCP@6.3.3?type=jar",
       "dependsOn": [
-        "pkg:maven/org.slf4j/slf4j-api@2.0.17?type=jar"
+        "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
@@ -30946,13 +31017,13 @@
       "dependsOn": []
     },
     {
-      "ref": "0cc691b4-0aca-4f64-8762-b7e425efbfe3",
+      "ref": "a14e8de1-9dc1-43e2-aac6-5ced57f085b2",
       "dependsOn": [
-        "e4f84574-6808-4b65-9275-689d76908365"
+        "b1b0ce19-86b8-4ed3-9cbe-640ed55d3c33"
       ]
     },
     {
-      "ref": "e4f84574-6808-4b65-9275-689d76908365",
+      "ref": "b1b0ce19-86b8-4ed3-9cbe-640ed55d3c33",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",

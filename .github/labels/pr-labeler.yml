@@ -2,32 +2,18 @@
 # Patterns are regular expressions matched case-insensitively against the PR title.
 # Primarily targets Dependabot bump PRs to assign specific database/integration labels.
 
-"database:postgresql":
-  - title: "org\\.postgresql"
+database:postgresql: ['*postgresql*', '*PostgreSQL*']
 
-"database:mysql":
-  - title: "mysql-connector"
+database:mysql: ['*mysql*', '*MySQL']
 
-"database:mariadb":
-  - title: "mariadb"
+database:oracle: ['*oracle*', '*Oracle*']
 
-"database:oracle":
-  - title: "ojdbc"
-  - title: "com\\.oracle"
+database:sqlserver: ['*sqlserver*', '*mssql*']
 
-"database:sqlserver":
-  - title: "mssql-jdbc"
-  - title: "com\\.microsoft\\.sqlserver"
+database:h2: ['*h2*']
 
-"database:h2":
-  - title: "com\\.h2database"
+database:db2: ['*db2*']
 
-"database:db2":
-  - title: "\\bdb2\\b"
-  - title: "db2jcc"
+integration:spring-boot: ['*spring-boot*', '*Spring Boot*', '*SpringBoot*']
 
-"integration:spring-boot":
-  - title: "org\\.springframework\\.boot"
-
-"integration:quarkus":
-  - title: "io\\.quarkus"
+integration:quarkus: ['*quarkus*', '*Quarkus*']

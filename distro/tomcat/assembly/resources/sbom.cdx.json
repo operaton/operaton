@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:5392ceaf-bb90-4265-b6cd-80ba511735a2",
+  "serialNumber": "urn:uuid:48a7bb76-cc7a-42c6-9a15-f84b2e369cf5",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-08T10:33:58Z",
+    "timestamp": "2026-05-19T21:58:31Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.70.0-SNAPSHOT-99eabdf3a"
+          "version": "0.70.0-SNAPSHOT-a61feac3c"
         }
       ]
     },
@@ -19354,7 +19354,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "657257bc-6c58-4cc3-a5f2-6d92af67e963",
+      "bom-ref": "3a3af334-2c0a-42a3-b98b-ac3c178deb38",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24389,7 +24389,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "03c0939b-7ab8-4b97-bd79-2a91675a39a8",
+      "bom-ref": "bf64f2e3-c392-43e3-9769-2801cec59d7e",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -25538,27 +25538,14 @@
       "dependsOn": [
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?type=jar",
         "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
-        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar",
         "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
         "pkg:maven/jakarta.servlet/jakarta.servlet-api@6.1.0?type=jar",
-        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar"
+        "pkg:maven/org.jboss.resteasy/resteasy-core@7.0.2.Final?type=jar",
+        "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar"
       ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=sources\u0026type=jar",
-      "dependsOn": [
-        "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
-        "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
-        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.2.0-SNAPSHOT?type=jar",
-        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.3?type=jar",
-        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.3?type=jar",
-        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.3?type=jar",
-        "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
-        "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar"
-      ]
-    },
-    {
-      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar",
       "dependsOn": [
         "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
@@ -25617,6 +25604,19 @@
     {
       "ref": "pkg:maven/com.ibm.async/asyncutil@0.1.0?type=jar",
       "dependsOn": []
+    },
+    {
+      "ref": "pkg:maven/org.operaton.bpm/operaton-engine-rest-core@2.2.0-SNAPSHOT?classifier=tests\u0026type=jar",
+      "dependsOn": [
+        "pkg:maven/commons-fileupload/commons-fileupload@1.6.0?type=jar",
+        "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
+        "pkg:maven/org.operaton.commons/operaton-commons-utils@2.2.0-SNAPSHOT?type=jar",
+        "pkg:maven/com.fasterxml.jackson.jakarta.rs/jackson-jakarta-rs-json-provider@2.21.3?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.21.3?type=jar",
+        "pkg:maven/com.fasterxml.jackson.datatype/jackson-datatype-jsr310@2.21.3?type=jar",
+        "pkg:maven/jakarta.ws.rs/jakarta.ws.rs-api@4.0.0?type=jar",
+        "pkg:maven/jakarta.xml.bind/jakarta.xml.bind-api@4.0.4?type=jar"
+      ]
     },
     {
       "ref": "pkg:maven/org.operaton.bpm.qa/operaton-qa-integration-tests-webapps@2.2.0-SNAPSHOT?type=jar",
@@ -26770,13 +26770,7 @@
       "dependsOn": []
     },
     {
-      "ref": "03c0939b-7ab8-4b97-bd79-2a91675a39a8",
-      "dependsOn": [
-        "657257bc-6c58-4cc3-a5f2-6d92af67e963"
-      ]
-    },
-    {
-      "ref": "657257bc-6c58-4cc3-a5f2-6d92af67e963",
+      "ref": "3a3af334-2c0a-42a3-b98b-ac3c178deb38",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -26823,6 +26817,12 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
+      ]
+    },
+    {
+      "ref": "bf64f2e3-c392-43e3-9769-2801cec59d7e",
+      "dependsOn": [
+        "3a3af334-2c0a-42a3-b98b-ac3c178deb38"
       ]
     },
     {

@@ -90,6 +90,7 @@ auto-merge-rules:
       - 'version.mockito'
       - 'version.quarkus'
       - 'version.shrinkwrap.resolvers'
+      - 'version.slf4j'
       - 'version.spring-boot'
       - 'version.testcontainers'
       - 'version.undertow'

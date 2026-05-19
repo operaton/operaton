@@ -11,6 +11,9 @@
   <artifactId>operaton-bpm-spring-boot-starter</artifactId>
   <name>Operaton - Spring Boot Starter</name>
   <description>${project.name}</description>
+  <properties>
+    <tomcat.version>${version.tomcat}</tomcat.version>
+  </properties>
   <dependencyManagement>
     <dependencies>
       <dependency>

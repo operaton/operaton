@@ -129,7 +129,7 @@ jobs:
   relabel-open-prs:
     needs: cleanup
     if: ${{ needs.cleanup.outputs.open_pr_count != '0' }}
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout label configuration
         uses: actions/checkout@v6

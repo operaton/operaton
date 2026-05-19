@@ -1,0 +1,146 @@
+name: Cleanup mislabeled PRs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    outputs:
+      open_pr_count: ${{ steps.cleanup.outputs.open_pr_count }}
+      open_pr_numbers: ${{ steps.cleanup.outputs.open_pr_numbers }}
+    steps:
+      - name: Remove incorrect labels from affected PRs
+        id: cleanup
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const scopePrefix = 'scope:';
+            const extraLabels = new Set(['database', 'api:rest']);
+            const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            const openPrNumbers = [];
+
+            function scopeLabelCount(pr) {
+              return pr.labels.filter(label => label.name.startsWith(scopePrefix)).length;
+            }
+
+            function labelsToRemove(pr) {
+              return pr.labels
+                .map(label => label.name)
+                .filter(name => name.startsWith(scopePrefix) || extraLabels.has(name));
+            }
+
+            async function listClosedPrsUpdatedSince(updatedSince) {
+              const closedPrs = [];
+
+              for (let page = 1; ; page++) {
+                const { data } = await github.rest.pulls.list({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  state: 'closed',
+                  sort: 'updated',
+                  direction: 'desc',
+                  per_page: 100,
+                  page
+                });
+
+                if (data.length === 0) {
+                  break;
+                }
+
+                let reachedOlderPrs = false;
+                for (const pr of data) {
+                  if (new Date(pr.updated_at) < updatedSince) {
+                    reachedOlderPrs = true;
+                    break;
+                  }
+                  closedPrs.push(pr);
+                }
+
+                if (reachedOlderPrs || data.length < 100) {
+                  break;
+                }
+              }
+
+              return closedPrs;
+            }
+
+            async function removeLabels(pr, labelNames) {
+              for (const name of labelNames) {
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: pr.number,
+                    name
+                  });
+                  console.log(`  ➖ Removed "${name}"`);
+                } catch (error) {
+                  if (error.status === 404) {
+                    console.log(`  ℹ️ Label "${name}" was already absent`);
+                    continue;
+                  }
+                  throw error;
+                }
+              }
+            }
+
+            const openPrs = await github.paginate(github.rest.pulls.list, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 100
+            });
+
+            const closedPrs = await listClosedPrsUpdatedSince(since);
+
+            const affectedOpenPrs = openPrs.filter(pr => scopeLabelCount(pr) > 1);
+            const affectedClosedPrs = closedPrs.filter(pr => scopeLabelCount(pr) > 1);
+            const affectedPrs = [...affectedOpenPrs, ...affectedClosedPrs];
+
+            console.log(`Found ${affectedOpenPrs.length} open PR(s) to clean`);
+            console.log(`Found ${affectedClosedPrs.length} recently closed PR(s) to clean`);
+
+            for (const pr of affectedPrs) {
+              const removableLabels = labelsToRemove(pr);
+
+              console.log(`Cleaning PR #${pr.number} (${pr.state})`);
+              console.log(`  Labels to remove: ${removableLabels.join(', ') || 'none'}`);
+
+              if (removableLabels.length > 0) {
+                await removeLabels(pr, removableLabels);
+              }
+
+              if (pr.state === 'open') {
+                openPrNumbers.push(String(pr.number));
+              }
+            }
+
+            console.log(`Open PRs queued for re-labeling: ${openPrNumbers.join(', ') || 'none'}`);
+
+            core.setOutput('open_pr_count', String(openPrNumbers.length));
+            core.setOutput('open_pr_numbers', openPrNumbers.join('\n'));
+
+  relabel-open-prs:
+    needs: cleanup
+    if: ${{ needs.cleanup.outputs.open_pr_count != '0' }}
+    runs-on: ubuntu-slim
+    steps:
+      - name: Checkout label configuration
+        uses: actions/checkout@v6
+        with:
+          sparse-checkout: |
+            .github/labels
+
+      - name: Re-apply labels to cleaned open PRs
+        uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9 # v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labels/gh-labeler.yml
+          sync-labels: true
+          pr-number: ${{ needs.cleanup.outputs.open_pr_numbers }}

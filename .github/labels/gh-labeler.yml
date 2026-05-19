@@ -4,22 +4,22 @@
 
 lang:java:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.java'
+      - any-glob-to-any-file:
+          - '**/*.java'
 
 lang:javascript:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.js'
-      - '**/*.ts'
-      - '**/*.mjs'
+      - any-glob-to-any-file:
+          - '**/*.js'
+          - '**/*.ts'
+          - '**/*.mjs'
 
 documentation:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.md'
-      - '**/*.adoc'
-      - 'docs/**'
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - '**/*.adoc'
+          - 'docs/**'
 
 scope:build:
   - changed-files:
@@ -34,8 +34,8 @@ scope:build:
 
 scope:ci:
   - changed-files:
-    - any-glob-to-any-file:
-      - '.github/**'
+      - any-glob-to-any-file:
+          - '.github/**'
 
 scope:connect:
   - changed-files:
@@ -45,11 +45,11 @@ scope:connect:
 
 scope:core-api:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'engine/**'
-      - 'engine-dmn/**'
-      - 'engine-spring/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'engine/**'
+          - 'engine-dmn/**'
+          - 'engine-spring/**'
+          - '!**/src/test/**'
 
 scope:db_schema:
   - changed-files:
@@ -65,99 +65,98 @@ scope:external-task-client-java:
 
 scope:model-api:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'model-api/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'model-api/**'
+          - '!**/src/test/**'
 
 scope:juel:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'juel/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'juel/**'
+          - '!**/src/test/**'
 
 scope:spin:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'spin/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'spin/**'
+          - '!**/src/test/**'
 
 scope:spring-boot:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'spring-boot-starter/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'spring-boot-starter/**'
+          - '!**/src/test/**'
 
 scope:quarkus:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'quarkus-extension/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - 'quarkus-extension/**'
+          - '!**/src/test/**'
 
 scope:webapp:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'webapps/**'
+      - any-glob-to-any-file:
+          - 'webapps/**'
 
 scope:ldap:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/ldap/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - '**/ldap/**'
+          - '!**/src/test/**'
 
 scope:tests:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/src/test/**'
-      - 'qa/**'
-      - 'test-utils/**'
+      - any-glob-to-any-file:
+          - '**/src/test/**'
+          - 'qa/**'
+          - 'test-utils/**'
 
 scope:assert:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'test-utils/**'
+      - any-glob-to-any-file:
+          - 'test-utils/**'
 
 scope:docker:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/Dockerfile*'
-      - '**/.devcontainer/**'
+      - any-glob-to-any-file:
+          - '**/Dockerfile*'
+          - '**/.devcontainer/**'
 
 scope:e2e-qa:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'qa/**/e2e/**'
+      - any-glob-to-any-file:
+          - 'qa/**/e2e/**'
 
 api:rest:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
-      - 'engine-rest/docs/**'
-      - '!engine-rest/docs/node_modules/**'
+      - any-glob-to-any-file:
+          - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
+          - 'engine-rest/docs/**'
+          - '!engine-rest/docs/node_modules/**'
 
 # database: topic label — complements scope:db_schema (both intentionally use identical path patterns)
 database:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/resources/**/db/**'
-      - '!**/src/test/**'
+      - any-glob-to-any-file:
+          - '**/resources/**/db/**'
+          - '!**/src/test/**'
 
 distro:wildfly:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'distro/wildfly/**'
+      - any-glob-to-any-file:
+          - 'distro/wildfly/**'
 
 distro:tomcat:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'distro/tomcat/**'
+      - any-glob-to-any-file:
+          - 'distro/tomcat/**'
 
 distro:operaton:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'distro/run/**'
+      - any-glob-to-any-file:
+          - 'distro/run/**'
 
 qa:
   - changed-files:
       - any-glob-to-any-file:
           - 'qa/**'
-

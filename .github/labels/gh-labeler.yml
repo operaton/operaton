@@ -3,161 +3,161 @@
 # sync-labels: true in the workflow removes stale labels automatically.
 
 lang:java:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.java'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.java'
 
 lang:javascript:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.js'
-      - '**/*.ts'
-      - '**/*.mjs'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.js'
+    - '**/*.ts'
+    - '**/*.mjs'
 
 documentation:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/*.md'
-      - '**/*.adoc'
-      - 'docs/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*.md'
+    - '**/*.adoc'
+    - 'docs/**'
 
 scope:build:
-  - changed-files:
-      - any-glob-to-any-file:
-          - '**/pom.xml'
-          - '.mvn/**'
-          - 'mvnw'
-          - 'mvnw.cmd'
-          - 'bom/**'
-          - 'parent/**'
-          - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/pom.xml'
+    - '.mvn/**'
+    - 'mvnw'
+    - 'mvnw.cmd'
+    - 'bom/**'
+    - 'parent/**'
+    - '!**/src/test/**'
 
 scope:ci:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '.github/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '.github/**'
 
 scope:connect:
-  - changed-files:
-      - any-glob-to-any-file:
-          - 'connect/**'
-          - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'connect/**'
+    - '!**/src/test/**'
 
 scope:core-api:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'engine/**'
-      - 'engine-dmn/**'
-      - 'engine-spring/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'engine/**'
+    - 'engine-dmn/**'
+    - 'engine-spring/**'
+    - '!**/src/test/**'
 
 scope:db_schema:
-  - changed-files:
-      - any-glob-to-any-file:
-          - '**/resources/**/db/**'
-          - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/resources/**/db/**'
+    - '!**/src/test/**'
 
 scope:external-task-client-java:
-  - changed-files:
-      - any-glob-to-any-file:
-          - 'clients/**'
-          - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'clients/**'
+    - '!**/src/test/**'
 
 scope:model-api:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'model-api/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'model-api/**'
+    - '!**/src/test/**'
 
 scope:juel:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'juel/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'juel/**'
+    - '!**/src/test/**'
 
 scope:spin:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'spin/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'spin/**'
+    - '!**/src/test/**'
 
 scope:spring-boot:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'spring-boot-starter/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'spring-boot-starter/**'
+    - '!**/src/test/**'
 
 scope:quarkus:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'quarkus-extension/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'quarkus-extension/**'
+    - '!**/src/test/**'
 
 scope:webapp:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'webapps/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'webapps/**'
 
 scope:ldap:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/ldap/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/ldap/**'
+    - '!**/src/test/**'
 
 scope:tests:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/src/test/**'
-      - 'qa/**'
-      - 'test-utils/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/src/test/**'
+    - 'qa/**'
+    - 'test-utils/**'
 
 scope:assert:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'test-utils/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'test-utils/**'
 
 scope:docker:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/Dockerfile*'
-      - '**/.devcontainer/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/Dockerfile*'
+    - '**/.devcontainer/**'
 
 scope:e2e-qa:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'qa/**/e2e/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'qa/**/e2e/**'
 
 api:rest:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
-      - 'engine-rest/docs/**'
-      - '!engine-rest/docs/node_modules/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'engine-rest/engine-rest-openapi/src/main/openapi/**'
+    - 'engine-rest/docs/**'
+    - '!engine-rest/docs/node_modules/**'
 
 # database: topic label — complements scope:db_schema (both intentionally use identical path patterns)
 database:
-  - changed-files:
-    - any-glob-to-any-file:
-      - '**/resources/**/db/**'
-      - '!**/src/test/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/resources/**/db/**'
+    - '!**/src/test/**'
 
 distro:wildfly:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'distro/wildfly/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'distro/wildfly/**'
 
 distro:tomcat:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'distro/tomcat/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'distro/tomcat/**'
 
 distro:operaton:
-  - changed-files:
-    - any-glob-to-any-file:
-      - 'distro/run/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'distro/run/**'
 
 qa:
-  - changed-files:
-      - any-glob-to-any-file:
-          - 'qa/**'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'qa/**'
 

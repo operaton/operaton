@@ -8,6 +8,10 @@ on:
       - release/**
       - ci-dev/**
 
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
 jobs:
   update_sbom:
     name: Update SBOMs

@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:d04809e6-372e-4412-9993-1b7178d7cd70",
+  "serialNumber": "urn:uuid:1d781286-b2cf-4f0c-b82b-72932947651e",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-19T23:18:26Z",
+    "timestamp": "2026-05-20T16:56:46Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.70.0-SNAPSHOT-a61feac3c"
+          "version": "0.70.0-SNAPSHOT-451fd996c"
         }
       ]
     },
@@ -19421,7 +19421,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "0115e994-4c33-4b11-856f-6db1cdac5f5f",
+      "bom-ref": "7fdce084-4c1a-43d5-90b1-ceb9cf866cff",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24456,7 +24456,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "bfc261e1-ad99-4c6c-a851-9e5451c137cb",
+      "bom-ref": "5ab4e950-7429-46b8-b7ff-ab372fdffddd",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -26841,7 +26841,13 @@
       "dependsOn": []
     },
     {
-      "ref": "0115e994-4c33-4b11-856f-6db1cdac5f5f",
+      "ref": "5ab4e950-7429-46b8-b7ff-ab372fdffddd",
+      "dependsOn": [
+        "7fdce084-4c1a-43d5-90b1-ceb9cf866cff"
+      ]
+    },
+    {
+      "ref": "7fdce084-4c1a-43d5-90b1-ceb9cf866cff",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -26888,12 +26894,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "bfc261e1-ad99-4c6c-a851-9e5451c137cb",
-      "dependsOn": [
-        "0115e994-4c33-4b11-856f-6db1cdac5f5f"
       ]
     },
     {

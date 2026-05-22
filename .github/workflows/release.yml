@@ -20,6 +20,10 @@ on:
         description: 'The next development version to set (without -SNAPSHOT suffix). Leave empty to auto-compute based on branch.'
         required: false
         default: ''
+      preliminary_release_qualifier:
+        description: 'Optional preliminary release qualifier. Must match M[0-9] or RC[0-9].'
+        required: false
+        default: ''
       dry_run:
         description: 'Dry-Run: Skips remote operations when true'
         type: boolean
@@ -103,6 +107,7 @@ jobs:
       contents: write
     outputs:
       version: ${{steps.version.outputs.version}}
+      base_version: ${{steps.version.outputs.base_version}}
       database_version: ${{steps.version.outputs.database_version}}
       is_prerelease: ${{steps.version.outputs.is_prerelease}}
     steps:
@@ -121,18 +126,30 @@ jobs:
         id: version
         shell: bash
         run: |
-          RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
-          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
-          DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
-          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
-          echo "database_version=$DATABASE_VERSION"
-          if [[ "$RELEASE_VERSION" == *"alpha"* || "$RELEASE_VERSION" == *"beta"* ]]; then
-            echo "⚙ Releasing version '$RELEASE_VERSION' (Pre-Release)"
+          BASE_RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -n 1 | sed -e 's/-SNAPSHOT//')
+          QUALIFIER="${{github.event.inputs.preliminary_release_qualifier}}"
+          if [ -n "$QUALIFIER" ]; then
+            if [[ ! "$QUALIFIER" =~ ^(M[0-9]|RC[0-9])$ ]]; then
+              echo "::error::Preliminary Release Qualifier '$QUALIFIER' must match M[0-9] or RC[0-9]."
+              exit 1
+            fi
+            if [[ ! "$BASE_RELEASE_VERSION" =~ ^[0-9]+\.[0-9]+\.0$ ]]; then
+              echo "::error::Preliminary Release Qualifier can only be used for .0 versions. Current version is '$BASE_RELEASE_VERSION'."
+              exit 1
+            fi
+            RELEASE_VERSION="${BASE_RELEASE_VERSION}-${QUALIFIER}"
+            echo "⚙ Releasing version '$RELEASE_VERSION' (Preliminary Release)"
             echo "is_prerelease=true" >> $GITHUB_OUTPUT
           else
+            RELEASE_VERSION="$BASE_RELEASE_VERSION"
             echo "⚙ Releasing version '$RELEASE_VERSION'"
             echo "is_prerelease=false" >> $GITHUB_OUTPUT
           fi
+          echo "version=$RELEASE_VERSION" >> $GITHUB_OUTPUT
+          echo "base_version=$BASE_RELEASE_VERSION" >> $GITHUB_OUTPUT
+          DATABASE_VERSION=$(grep '<operaton.dbscheme.current.version>' database/pom.xml | sed -e 's/.*<operaton.dbscheme.current.version>\(.*\)<\/operaton.dbscheme.current.version>.*/\1/')
+          echo "database_version=$DATABASE_VERSION" >> $GITHUB_OUTPUT
+          echo "database_version=$DATABASE_VERSION"
           .github/scripts/set-project-version.sh $RELEASE_VERSION
 
       - name: Maven Build
@@ -208,7 +225,7 @@ jobs:
       - name: Modify jreleaser.yml for release
         run: |
           # set prerelease flag
-          perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1false/' -i jreleaser.yml
+          perl -0777 -pe 's/(prerelease:\s*\n\s*enabled:\s*)(true|false)/$1${{ needs.release_build.outputs.is_prerelease }}/' -i jreleaser.yml
 
       - name: Release with JReleaser
         uses: jreleaser/release-action@90ac653bb9c79d11179e65d81499f3f34527dcd5 # v2.5.0
@@ -222,7 +239,7 @@ jobs:
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
         with:
-          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=false
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=${{needs.release_build.outputs.is_prerelease}}
 
       - name: Restore jreleaser.yml after release
         if: always()
@@ -307,7 +324,11 @@ jobs:
       - name: Set next development version
         id: set-next-version
         run: |
-          NEXT_VERSION=${{needs.prepare.outputs.next_version}}-SNAPSHOT
+          if [ -n "${{github.event.inputs.preliminary_release_qualifier}}" ]; then
+            NEXT_VERSION=${{needs.release_build.outputs.base_version}}-SNAPSHOT
+          else
+            NEXT_VERSION=${{needs.prepare.outputs.next_version}}-SNAPSHOT
+          fi
           .github/scripts/set-project-version.sh $NEXT_VERSION
           echo "next_version=$NEXT_VERSION" >> $GITHUB_OUTPUT
 

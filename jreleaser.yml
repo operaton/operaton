@@ -285,7 +285,7 @@ distributions:
 announce:
   slack:
     active: RELEASE
-    token: ${{ secrets.SLACK_BOT_TOKEN }}
-    webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+    token: {{SLACK_BOT_TOKEN}}
+    webhook: {{SLACK_WEBHOOK_URL}}
     channel: '#general'
     message: '🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}'

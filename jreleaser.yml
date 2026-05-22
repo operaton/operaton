@@ -281,3 +281,11 @@ distributions:
       commitAuthor:
         name: GitHub Actions
         email: github-actions[bot]@users.noreply.github.com
+
+announce:
+  slack:
+    active: RELEASE
+    token: ${{ secrets.SLACK_BOT_TOKEN }}
+    webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+    channel: '#general'
+    message: '🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}'

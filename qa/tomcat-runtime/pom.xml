@@ -11,7 +11,7 @@
   <name>Operaton - QA Tomcat Test Runtime</name>
   <description>${project.name}</description>
   <properties>
-    <version.asm>9.10</version.asm>
+    <version.asm>9.10.1</version.asm>
   </properties>
   <dependencyManagement>
     <dependencies>

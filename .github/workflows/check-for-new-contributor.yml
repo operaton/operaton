@@ -1,4 +1,4 @@
-# HEADS-UP: pull_request_target runs a PR against the main branch and has access to secrets.
+# HEADS-UP: pull_request_target runs in the context of the base repository and target branch and has access to secrets.
 name: First-time Contributor Check
 
 on:

@@ -1,3 +1,4 @@
+# HEADS-UP: pull_request_target runs a PR against the main branch and has access to secrets.
 name: First-time Contributor Check
 
 on:
@@ -20,8 +21,10 @@ jobs:
     name: Greet First-Time PR Contributors
     runs-on: ubuntu-slim
     permissions:
-      pull-requests: write
+      contents: read
       issues: write
+    # This job intentionally uses pull_request_target only for metadata reads and comments.
+    # Do not check out or execute PR code here.
     # Only run for PRs from forks (different repository) and not from operaton/operaton
     if: |
       github.event_name == 'pull_request_target' && 
@@ -29,7 +32,7 @@ jobs:
       github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Check for first-time PR contributor
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const author = context.actor;
@@ -38,7 +41,9 @@ jobs:
             const prBody = context.payload.pull_request.body || "";
 
             // Check if author is in the whitelist
-            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            const whitelist = (process.env.CONTRIBUTOR_WHITELIST || '')
+              .split(/\s+/)
+              .filter(Boolean);
             if (whitelist.includes(author)) {
               console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
               return;
@@ -86,14 +91,14 @@ jobs:
     name: Greet First-Time Issue Creators
     runs-on: ubuntu-slim
     permissions:
-      pull-requests: write
+      contents: read
       issues: write
     if: |
       github.event_name == 'issues' && 
       github.event.action == 'opened'
     steps:
       - name: Check for first-time Issue creator
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const author = context.actor;
@@ -101,7 +106,9 @@ jobs:
             const issueTitle = context.payload.issue.title;
 
             // Check if author is in the whitelist
-            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            const whitelist = (process.env.CONTRIBUTOR_WHITELIST || '')
+              .split(/\s+/)
+              .filter(Boolean);
             if (whitelist.includes(author)) {
               console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
               return;
@@ -142,13 +149,13 @@ jobs:
     name: Greet First-Time Issue Commenters
     runs-on: ubuntu-slim
     permissions:
-      pull-requests: write
+      contents: read
       issues: write
     if: |
       github.event_name == 'issue_comment' && 
       github.event.action == 'created'
     steps:
-      - uses: actions/github-script@v9
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
           script: |
             const author = context.actor;
@@ -156,7 +163,9 @@ jobs:
             const commentBody = context.payload.comment.body;
             
             // Check if author is in the whitelist
-            const whitelist = process.env.CONTRIBUTOR_WHITELIST || '';
+            const whitelist = (process.env.CONTRIBUTOR_WHITELIST || '')
+              .split(/\s+/)
+              .filter(Boolean);
             if (whitelist.includes(author)) {
               console.log(`${author} is in the contributor whitelist. Skipping greeting.`);
               return;

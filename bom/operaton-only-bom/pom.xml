@@ -142,11 +142,6 @@
       </dependency>
       <dependency>
         <groupId>org.operaton.bpm.springboot</groupId>
-        <artifactId>operaton-bpm-spring-boot-starter-webapp-ee</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.operaton.bpm.springboot</groupId>
         <artifactId>operaton-bpm-spring-boot-starter-test</artifactId>
         <version>${project.version}</version>
       </dependency>

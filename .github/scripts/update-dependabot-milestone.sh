@@ -84,3 +84,42 @@ else
 fi
 
 echo "🎯 Target branch to update: $TARGET_BRANCH"
+
+# --- Step 3: Compute next version candidates ---
+NEXT_PATCH_VERSION="${MAJOR}.${MINOR}.$((PATCH + 1))"
+NEXT_MINOR_VERSION="${MAJOR}.$((MINOR + 1)).0"
+
+if [[ "$TARGET_BRANCH" == release/* ]]; then
+  VERSION_CANDIDATES=("$NEXT_PATCH_VERSION" "$NEXT_MINOR_VERSION")
+else
+  VERSION_CANDIDATES=("$NEXT_MINOR_VERSION")
+fi
+
+echo "🔍 Milestone candidates: ${VERSION_CANDIDATES[*]}"
+
+# --- Step 4: Milestone lookup via GitHub API ---
+OWNER="${GITHUB_REPOSITORY%%/*}"
+REPO="${GITHUB_REPOSITORY##*/}"
+
+ALL_MILESTONES=$(gh api --paginate "repos/${OWNER}/${REPO}/milestones?state=open&per_page=100") || {
+  echo "::error::GitHub API call failed. Check GITHUB_TOKEN is set and has repo access."
+  exit 1
+}
+
+MILESTONE_NUMBER=""
+MILESTONE_TITLE=""
+
+for CANDIDATE in "${VERSION_CANDIDATES[@]}"; do
+  FOUND_NUMBER=$(echo "$ALL_MILESTONES" | jq -r --arg title "$CANDIDATE" '.[] | select(.title == $title) | .number' | head -1)
+  if [[ -n "$FOUND_NUMBER" ]]; then
+    MILESTONE_NUMBER="$FOUND_NUMBER"
+    MILESTONE_TITLE="$CANDIDATE"
+    echo "✅ Found milestone '$CANDIDATE' (#$MILESTONE_NUMBER)"
+    break
+  fi
+done
+
+if [[ -z "$MILESTONE_NUMBER" ]]; then
+  echo "::error::No open milestone found matching any of: ${VERSION_CANDIDATES[*]}. Please create the milestone before releasing."
+  exit 1
+fi

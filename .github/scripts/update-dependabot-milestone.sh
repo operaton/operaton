@@ -123,3 +123,23 @@ if [[ -z "$MILESTONE_NUMBER" ]]; then
   echo "::error::No open milestone found matching any of: ${VERSION_CANDIDATES[*]}. Please create the milestone before releasing."
   exit 1
 fi
+
+# --- Step 5: Update dependabot.yml ---
+echo "📝 Updating milestone for target-branch '$TARGET_BRANCH' → $MILESTONE_NUMBER ($MILESTONE_TITLE)..."
+
+yq -i '(.updates[] | select(."target-branch" == "'"$TARGET_BRANCH"'") | .milestone) = '"$MILESTONE_NUMBER" "$DEPENDABOT_FILE"
+
+# Verify the update actually changed something
+if git diff --quiet "$DEPENDABOT_FILE"; then
+  echo "::error::yq produced no diff on $DEPENDABOT_FILE. No entries matched target-branch '$TARGET_BRANCH' or milestone was already $MILESTONE_NUMBER."
+  exit 1
+fi
+
+echo "✅ $DEPENDABOT_FILE updated."
+
+# --- Step 6: Export for workflow PR step ---
+export_env "TARGET_BRANCH"    "$TARGET_BRANCH"
+export_env "RELEASE_VERSION"  "$VERSION"
+export_env "MILESTONE_TITLE"  "$MILESTONE_TITLE"
+
+echo "📤 Exported: TARGET_BRANCH=$TARGET_BRANCH, RELEASE_VERSION=$VERSION, MILESTONE_TITLE=$MILESTONE_TITLE"

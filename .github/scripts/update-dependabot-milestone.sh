@@ -52,3 +52,35 @@ PATCH="${BASH_REMATCH[3]}"
 
 echo "📦 Release version: $VERSION (MAJOR=$MAJOR, MINOR=$MINOR, PATCH=$PATCH)"
 echo "🌿 Release source branch: $RELEASE_TARGET_BRANCH"
+
+# --- Step 2: Determine target branch ---
+# COMPUTED_RELEASE_BRANCH is used only when the release comes from main (to find pre-existing entries)
+COMPUTED_RELEASE_BRANCH="release/${MAJOR}.${MINOR}.x"
+
+TARGET_BRANCH=""
+
+if [[ "$RELEASE_TARGET_BRANCH" == release/* ]]; then
+  # Patch release: use the actual source branch directly (not a computed value)
+  HAS_ENTRIES=$(yq '.updates[]."target-branch"' "$DEPENDABOT_FILE" | grep -Fcx "$RELEASE_TARGET_BRANCH" || true)
+  if [[ "$HAS_ENTRIES" -gt 0 ]]; then
+    TARGET_BRANCH="$RELEASE_TARGET_BRANCH"
+  else
+    echo "::error::Release was tagged from '$RELEASE_TARGET_BRANCH' but no entries for '$RELEASE_TARGET_BRANCH' found in $DEPENDABOT_FILE."
+    exit 1
+  fi
+elif [[ "$RELEASE_TARGET_BRANCH" == "main" ]]; then
+  # Minor/major release from main: prefer pre-existing release branch entries
+  HAS_RELEASE_BRANCH_ENTRIES=$(yq '.updates[]."target-branch"' "$DEPENDABOT_FILE" | grep -Fcx "$COMPUTED_RELEASE_BRANCH" || true)
+  if [[ "$HAS_RELEASE_BRANCH_ENTRIES" -gt 0 ]]; then
+    TARGET_BRANCH="$COMPUTED_RELEASE_BRANCH"
+    echo "ℹ️  Release from main — found entries for '$COMPUTED_RELEASE_BRANCH', updating those."
+  else
+    TARGET_BRANCH="main"
+    echo "ℹ️  Release from main — no '$COMPUTED_RELEASE_BRANCH' entries found, updating 'main'."
+  fi
+else
+  echo "::error::Unexpected release source branch: '$RELEASE_TARGET_BRANCH'"
+  exit 1
+fi
+
+echo "🎯 Target branch to update: $TARGET_BRANCH"

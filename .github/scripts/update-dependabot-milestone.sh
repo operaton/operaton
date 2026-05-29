@@ -69,15 +69,9 @@ if [[ "$RELEASE_TARGET_BRANCH" == release/* ]]; then
     exit 1
   fi
 elif [[ "$RELEASE_TARGET_BRANCH" == "main" ]]; then
-  # Minor/major release from main: prefer pre-existing release branch entries
-  HAS_RELEASE_BRANCH_ENTRIES=$(yq '.updates[]."target-branch"' "$DEPENDABOT_FILE" | grep -Fcx "$COMPUTED_RELEASE_BRANCH" || true)
-  if [[ "$HAS_RELEASE_BRANCH_ENTRIES" -gt 0 ]]; then
-    TARGET_BRANCH="$COMPUTED_RELEASE_BRANCH"
-    echo "ℹ️  Release from main — found entries for '$COMPUTED_RELEASE_BRANCH', updating those."
-  else
-    TARGET_BRANCH="main"
-    echo "ℹ️  Release from main — no '$COMPUTED_RELEASE_BRANCH' entries found, updating 'main'."
-  fi
+  # Minor/major release from main: update main entries to the next minor milestone
+  TARGET_BRANCH="main"
+  echo "ℹ️  Release from main — updating 'main'."
 else
   echo "::error::Unexpected release source branch: '$RELEASE_TARGET_BRANCH'"
   exit 1

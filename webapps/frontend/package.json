@@ -96,7 +96,7 @@
     "svg-inline-loader": "0.8.2",
     "terser-webpack-plugin": "5.6.0",
     "ui-bootstrap4": "^3.0.7",
-    "webpack": "5.106.2",
+    "webpack": "5.107.1",
     "webpack-bundle-analyzer": "5.3.0",
     "webpack-cli": "7.0.2",
     "webpack-dev-server": "5.2.4",

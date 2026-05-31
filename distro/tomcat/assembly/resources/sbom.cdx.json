@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:d35e7a7b-dab5-484f-aca6-a8b202fcaf34",
+  "serialNumber": "urn:uuid:a399becb-cd2c-4ef0-8295-8821e6792507",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-27T19:23:24Z",
+    "timestamp": "2026-05-31T14:02:58Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.70.0-SNAPSHOT-f080e1ec0"
+          "version": "0.70.0-SNAPSHOT-8f049df25"
         }
       ]
     },
@@ -255,61 +255,62 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.33?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-classic",
-      "version": "1.5.32",
+      "version": "1.5.33",
       "description": "logback-classic module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "cc1b628dcb1f44089d0decf8a4cf9009"
+          "content": "b2e78ba53fb0172ac1c4f8ed9ed61f16"
         },
         {
           "alg": "SHA-1",
-          "content": "2b1042c50f508f2eb402bd4d22ccbdf94cc37d2e"
+          "content": "72dcaad849d37bf2e3e0b1c986d614c30ac601b1"
         },
         {
           "alg": "SHA-256",
-          "content": "2d4cf592db78be2de4d6140434c2fec170dcb16a09e8c8b7b207dbf5e31b848a"
+          "content": "6d9ab1406e884084105940fe71378b53d2fe3b4806d856945703a27216014c97"
         },
         {
           "alg": "SHA-512",
-          "content": "6f28dbc23ce773773fdd73801aaa9491c3300fa0888efdbc48909a60f191df4536328d2aeb6f0e91f05275bfd55b2b220ed2c30ce5ed4f31012f42eb11d79d7c"
+          "content": "98a50b0223eea782bcc283ebae42089f8043e5b7c90ebfa1f3f7dbc2585f7af3dcd66113453c270e77432315933861222f2c290eec8772cb36f60b91a06dd10b"
         },
         {
           "alg": "SHA-384",
-          "content": "aa437c8f4b8a66d0e072a1c41cd7f747631554b565246b7e250e392984195d2b284307070728b0aef32d9e85736a3508"
+          "content": "fc3729f449c9def60dd5abbb7213af16b3dcf452621659e93a5b50d65acd91e1133296faf061194c78c33daac37959dd"
         },
         {
           "alg": "SHA3-384",
-          "content": "72f659c00d07f50367b08b21cc16679ddd3c8945d3fdab1ccbeeda930cc71d873837e56dcdc4cbf0b3d546a75889c58e"
+          "content": "fc5cf5382096250644fe3363bd8f00e04b6e358db1995ccd1781060510d0d261b9c92bffba407abceae015564396b35e"
         },
         {
           "alg": "SHA3-256",
-          "content": "84cbb3d39ed018e0aeded02e37f4e6d4646aa7555134c7f071e7f2f6457cb35e"
+          "content": "594d6b66d0982e4dba094bde58d854ee70b7515b64d47cf6b81ceb295e35fd86"
         },
         {
           "alg": "SHA3-512",
-          "content": "414f83d924ed37fbd89b1ac08f3357dbfa9ed7051871c427918f7c5c868826e60ff4a27a954554463137d15f8aef7a6d7e142b8b6aedfa4131ce2124dde1bdc7"
+          "content": "d828be7779af91f67f451271b8b95677079e4ac65af4bdbf6a4bbe2357f2c6a45bc1a2871754faf4f11bb43a1052c8d85b65f1d936436184cd8a66310c4c9217"
         }
       ],
       "licenses": [
         {
           "license": {
-            "id": "EPL-2.0"
+            "id": "EPL-2.0",
+            "url": "https://www.eclipse.org/legal/epl-2.0"
           }
         },
         {
           "license": {
-            "name": "GNU Lesser General Public License",
-            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
+            "id": "LGPL-2.1-only",
+            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-classic@1.5.33?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-classic",
@@ -327,61 +328,62 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.32?type=jar",
+      "bom-ref": "pkg:maven/ch.qos.logback/logback-core@1.5.33?type=jar",
       "publisher": "QOS.ch",
       "group": "ch.qos.logback",
       "name": "logback-core",
-      "version": "1.5.32",
+      "version": "1.5.33",
       "description": "logback-core module",
       "scope": "required",
       "hashes": [
         {
           "alg": "MD5",
-          "content": "053d4a28d6ba4c9b6247c6fd859ca64f"
+          "content": "b09630b6c5c07a3427921d6cd5f28fef"
         },
         {
           "alg": "SHA-1",
-          "content": "fdfb3ff9a842303d4a95207294a6c6bc64e2605d"
+          "content": "e61819ff7baad2e37c13b65206b87059c2b18960"
         },
         {
           "alg": "SHA-256",
-          "content": "6a904d5778d0e361a9692f9cbe68b1b0620ae0f3eda2ec2ed09102755bf036c4"
+          "content": "48b106f3abf3498eff7e59406a15226f351cf9c625017652e63c346a07011d81"
         },
         {
           "alg": "SHA-512",
-          "content": "7e118f88ff9f6bdd2854a4218c4d8e2a1a031eb0cbff7eb2b181fc162d5004b6d89e7b4586616fffd922b4b7a432395892b9caa04916b114a87b518a1abd5157"
+          "content": "b1448365023c11a0e613e26c669990f2f8d54bfabce5d2aac822c6a7d0339dad540312be1f2be68c2efc38f0b3962a8938b3ed7ad849160aba821e9efa781faf"
         },
         {
           "alg": "SHA-384",
-          "content": "b6ae51522d03a94d9dd33fdae4dbd81d9567c2e9191d7dafe20bc711148aaf77c0eaaae64bf3c9cf9a33aebf0755644d"
+          "content": "66b6f97463ad45930b4d73c9bcd378aba7b6b8da9ab41d18b9a8d7b25e518b746944a23bf8d405a16c3b45a2d2236882"
         },
         {
           "alg": "SHA3-384",
-          "content": "2c899f38f50f14529a3710c703a430bfaeefdded4acc6d48caa8ee680d2e6f7f1ffae3911f059007fbba4c7ce57748a4"
+          "content": "062b50947889d61ccbe6b7f5555abe3ed5719cc413535c86fa7aaf6b0d937684418a1ec2b93b2ce1206ac808c9a98419"
         },
         {
           "alg": "SHA3-256",
-          "content": "8369c927a69ba6d40db79c3156b17f4a24c31f3ff24c2f67f325e903310fc935"
+          "content": "1376bce2317c848df335c1c61dc874b84a04a043c3212d118b6bbdd62aa975ed"
         },
         {
           "alg": "SHA3-512",
-          "content": "9d952bde380b128f5446eb2d040b73f44f019f50f05d31e08e1aac645c6014067b0787aa3362188a7babf74a976d5e58cd6cfeb3dfc7bdc3259ac50d0e3fcd96"
+          "content": "a8a9529d420568cdf4910b9b686597ca7299cae4dde532ccec53920a1cbd460178cf41a6de82dd8ea524bdcbe06c90a778a79ee14bf389a033380d4923cc4a62"
         }
       ],
       "licenses": [
         {
           "license": {
-            "id": "EPL-2.0"
+            "id": "EPL-2.0",
+            "url": "https://www.eclipse.org/legal/epl-2.0"
           }
         },
         {
           "license": {
-            "name": "GNU Lesser General Public License",
-            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html"
+            "id": "LGPL-2.1-only",
+            "url": "https://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html"
           }
         }
       ],
-      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.32?type=jar",
+      "purl": "pkg:maven/ch.qos.logback/logback-core@1.5.33?type=jar",
       "externalReferences": [
         {
           "url": "http://logback.qos.ch/logback-core",
@@ -19417,7 +19419,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "2c3b3262-dd70-4f81-bfe6-4e35ca12b092",
+      "bom-ref": "459764b2-adf1-4a00-87e3-918f8e02850d",
       "name": "package-lock.json",
       "properties": [
         {
@@ -24476,7 +24478,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "7bbce320-21b9-4e74-8c60-6ffe79407b85",
+      "bom-ref": "2c00e0ef-1dc3-4236-9f7d-77a6b880f50d",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -24786,19 +24788,19 @@
       "ref": "pkg:maven/org.operaton.commons/operaton-commons-testing@2.1.2-SNAPSHOT?type=jar",
       "dependsOn": [
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.33?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-classic@1.5.33?type=jar",
       "dependsOn": [
-        "pkg:maven/ch.qos.logback/logback-core@1.5.32?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.33?type=jar",
         "pkg:maven/org.slf4j/slf4j-api@2.0.18?type=jar"
       ]
     },
     {
-      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.32?type=jar",
+      "ref": "pkg:maven/ch.qos.logback/logback-core@1.5.33?type=jar",
       "dependsOn": []
     },
     {
@@ -24974,8 +24976,8 @@
         "pkg:maven/org.jboss/jboss-vfs@3.3.2.Final?type=jar",
         "pkg:maven/org.apache.commons/commons-email2-jakarta@2.0.0-M1?type=jar",
         "pkg:maven/com.cronutils/cron-utils@9.2.1?type=jar",
-        "pkg:maven/ch.qos.logback/logback-core@1.5.32?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar",
+        "pkg:maven/ch.qos.logback/logback-core@1.5.33?type=jar",
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.33?type=jar",
         "pkg:maven/junit/junit@4.13.2?type=jar",
         "pkg:maven/org.awaitility/awaitility@4.3.0?type=jar"
       ]
@@ -26390,7 +26392,7 @@
         "pkg:maven/org.apache.tomcat/tomcat-jdbc@11.0.22?type=jar",
         "pkg:maven/org.apache.tomcat/tomcat-juli@11.0.22?type=jar",
         "pkg:maven/com.fasterxml.uuid/java-uuid-generator@5.2.0?type=jar",
-        "pkg:maven/ch.qos.logback/logback-classic@1.5.32?type=jar"
+        "pkg:maven/ch.qos.logback/logback-classic@1.5.33?type=jar"
       ]
     },
     {
@@ -26861,7 +26863,13 @@
       "dependsOn": []
     },
     {
-      "ref": "2c3b3262-dd70-4f81-bfe6-4e35ca12b092",
+      "ref": "2c00e0ef-1dc3-4236-9f7d-77a6b880f50d",
+      "dependsOn": [
+        "459764b2-adf1-4a00-87e3-918f8e02850d"
+      ]
+    },
+    {
+      "ref": "459764b2-adf1-4a00-87e3-918f8e02850d",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -26908,12 +26916,6 @@
         "pkg:npm/requirejs-angular-define@1.1.0",
         "pkg:npm/requirejs@2.3.8",
         "pkg:npm/superagent@10.3.0"
-      ]
-    },
-    {
-      "ref": "7bbce320-21b9-4e74-8c60-6ffe79407b85",
-      "dependsOn": [
-        "2c3b3262-dd70-4f81-bfe6-4e35ca12b092"
       ]
     },
     {
@@ -28838,6 +28840,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 7.5,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -28851,6 +28862,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-21490"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-21490"
         },
         {
           "url": "https://github.com/angular/angular.js"
@@ -29004,6 +29018,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 4.3,
+          "severity": "low",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -29017,6 +29040,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-8372"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-8372"
         },
         {
           "url": "https://codepen.io/herodevs/full/xxoQRNL/0072e627abe03e9cda373bc75b4c1017"
@@ -29096,6 +29122,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 4.3,
+          "severity": "low",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -29109,6 +29144,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-8373"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-8373"
         },
         {
           "url": "https://codepen.io/herodevs/full/bGPQgMp/8da9ce87e99403ee13a295c305ebfa0b"
@@ -29179,6 +29217,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 4.8,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -29192,6 +29239,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2025-0716"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2025-0716"
         },
         {
           "url": "https://codepen.io/herodevs/pen/qEWQmpd/a86a0d29310e12c7a3756768e6c7b915"

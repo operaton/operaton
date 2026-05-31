@@ -30,6 +30,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 
@@ -102,6 +103,12 @@ class StringUtilTest {
       arguments("{foo}",      false),
       arguments("",           false)
     );
+  }
+
+  @Test
+  void isExpression_shouldThrowOnNullInput() {
+    assertThatThrownBy(() -> StringUtil.isExpression(null))
+      .isInstanceOf(NullPointerException.class);
   }
 
   @ParameterizedTest

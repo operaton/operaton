@@ -70,6 +70,7 @@ auto-merge-rules:
       - 'org.apache.commons:commons-lang3'
       - 'org.apache.httpcomponents*'
       - 'org.assertj*'
+      - 'org.glassfish.jaxb*'
       - 'org.jboss.logging:jboss-logging'
       - 'org.jboss.weld.servlet:weld-servlet-shaded'
       - 'org.junit*'

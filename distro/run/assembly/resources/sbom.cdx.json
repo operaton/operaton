@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:8f3d6091-329e-4639-a74f-68c7edf90c91",
+  "serialNumber": "urn:uuid:974507f6-1027-4fa3-9890-49fe435b9a93",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-05-29T18:45:02Z",
+    "timestamp": "2026-05-31T13:59:51Z",
     "tools": {
       "components": [
         {
@@ -22740,7 +22740,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "8b7b4b12-8d04-419a-8882-65c4d8dd9ebb",
+      "bom-ref": "2313fb8e-c078-46f2-aa01-6d20d77ec34e",
       "name": "package-lock.json",
       "properties": [
         {
@@ -27799,7 +27799,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "98abb003-1d12-4fcf-b4a5-71364afc38d3",
+      "bom-ref": "70dbbcc7-e947-40f2-b975-27cfb95b7595",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -30572,7 +30572,7 @@
       "dependsOn": []
     },
     {
-      "ref": "8b7b4b12-8d04-419a-8882-65c4d8dd9ebb",
+      "ref": "2313fb8e-c078-46f2-aa01-6d20d77ec34e",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -30622,9 +30622,9 @@
       ]
     },
     {
-      "ref": "98abb003-1d12-4fcf-b4a5-71364afc38d3",
+      "ref": "70dbbcc7-e947-40f2-b975-27cfb95b7595",
       "dependsOn": [
-        "8b7b4b12-8d04-419a-8882-65c4d8dd9ebb"
+        "2313fb8e-c078-46f2-aa01-6d20d77ec34e"
       ]
     },
     {
@@ -32549,6 +32549,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 7.5,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -32562,6 +32571,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-21490"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-21490"
         },
         {
           "url": "https://github.com/angular/angular.js"
@@ -32715,6 +32727,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 4.3,
+          "severity": "low",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -32728,6 +32749,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-8372"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-8372"
         },
         {
           "url": "https://codepen.io/herodevs/full/xxoQRNL/0072e627abe03e9cda373bc75b4c1017"
@@ -32807,6 +32831,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 4.3,
+          "severity": "low",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -32820,6 +32853,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2024-8373"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2024-8373"
         },
         {
           "url": "https://codepen.io/herodevs/full/bGPQgMp/8da9ce87e99403ee13a295c305ebfa0b"
@@ -32890,6 +32926,15 @@
         },
         {
           "source": {
+            "name": "redhat"
+          },
+          "score": 4.8,
+          "severity": "medium",
+          "method": "CVSSv31",
+          "vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L"
+        },
+        {
+          "source": {
             "name": "ubuntu"
           },
           "severity": "medium",
@@ -32903,6 +32948,9 @@
       "advisories": [
         {
           "url": "https://avd.aquasec.com/nvd/cve-2025-0716"
+        },
+        {
+          "url": "https://access.redhat.com/security/cve/CVE-2025-0716"
         },
         {
           "url": "https://codepen.io/herodevs/pen/qEWQmpd/a86a0d29310e12c7a3756768e6c7b915"

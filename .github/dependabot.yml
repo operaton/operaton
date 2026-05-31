@@ -49,6 +49,9 @@ updates:
       arquillian:
         patterns:
           - "org.jboss.arquillian*:*"
+      jaxb:
+        patterns:
+          - "org.glassfish.jaxb:*"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:
@@ -320,9 +323,9 @@ updates:
       arquillian:
         patterns:
           - "org.jboss.arquillian*:*"
-      spring-boot:
+      jaxb:
         patterns:
-          - "org.springframework.boot:*"
+          - "org.glassfish.jaxb:*"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:

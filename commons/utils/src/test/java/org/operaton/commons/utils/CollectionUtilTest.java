@@ -269,5 +269,15 @@ class CollectionUtilTest {
     // then
     assertThat(set).hasSize(2).containsExactlyInAnyOrder("a", "b");
   }
+
+  @Test
+  void toSetWithMapperShouldTransformAndDeduplicateElements() {
+    List<String> list = List.of("a", "bb", "ccc", "bb");
+    Enumeration<String> enumeration = Collections.enumeration(list);
+
+    Set<Integer> result = CollectionUtil.toSet(enumeration, String::length);
+
+    assertThat(result).hasSize(3).containsExactlyInAnyOrder(1, 2, 3);
+  }
 }
 

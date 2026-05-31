@@ -44,8 +44,8 @@ updates:
           - "org.jboss.weld:weld-core-bom"
       openrewrite:
         patterns:
-        - "org.openrewrite.recipe:*"
-        - "org.openrewrite.maven:*"
+          - "org.openrewrite.recipe:*"
+          - "org.openrewrite.maven:*"
       arquillian:
         patterns:
           - "org.jboss.arquillian*:*"
@@ -175,11 +175,14 @@ updates:
           - "org.jboss.weld:weld-core-bom"
       openrewrite:
         patterns:
-        - "org.openrewrite.recipe:*"
-        - "org.openrewrite.maven:*"
+          - "org.openrewrite.recipe:*"
+          - "org.openrewrite.maven:*"
       arquillian:
         patterns:
           - "org.jboss.arquillian*:*"
+      jaxb:
+        patterns:
+          - "org.glassfish.jaxb:*"
       spring-boot:
         patterns:
           - "org.springframework.boot:*"
@@ -290,54 +293,54 @@ updates:
       interval: "daily"
       time: "00:45"
     reviewers:
-    - "kthoms"
+      - "kthoms"
     target-branch: "release/2.1.x"
     ignore:
-    - dependency-name: "*"
-      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
-    - "dependencies:maven"
+      - "dependencies:maven"
     milestone: 22
     groups:
       httpcomponents5:
         patterns:
-        - "org.apache.httpcomponents.core5:httpcore5"
-        - "org.apache.httpcomponents.client5:httpclient5"
+          - "org.apache.httpcomponents.core5:httpcore5"
+          - "org.apache.httpcomponents.client5:httpclient5"
       httpcomponents4:
         patterns:
-        - "org.apache.httpcomponents:*"
+          - "org.apache.httpcomponents:*"
       jboss-weld:
         patterns:
-        - "org.jboss.weld.servlet:weld-servlet-shaded"
-        - "org.jboss.weld:weld-core-bom"
+          - "org.jboss.weld.servlet:weld-servlet-shaded"
+          - "org.jboss.weld:weld-core-bom"
       openrewrite:
         patterns:
-        - "org.openrewrite.recipe:*"
-        - "org.openrewrite.maven:*"
+          - "org.openrewrite.recipe:*"
+          - "org.openrewrite.maven:*"
       arquillian:
         patterns:
-        - "org.jboss.arquillian*:*"
+          - "org.jboss.arquillian*:*"
       spring-boot:
         patterns:
-        - "org.springframework.boot:*"
+          - "org.springframework.boot:*"
   - package-ecosystem: "maven"
     directory: "/spring-boot-starter/starter"
     schedule:
       interval: "daily"
       time: "00:45"
     reviewers:
-    - "kthoms"
+      - "kthoms"
     target-branch: "release/2.1.x"
     ignore:
-    - dependency-name: "*"
-      update-types: ["version-update:semver-major"]
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
-    - "dependencies:maven"
+      - "dependencies:maven"
     milestone: 22
     groups:
       spring-boot:
         patterns:
-        - "org.springframework.boot:*"
+          - "org.springframework.boot:*"
   - package-ecosystem: "npm"
     directory: "/webapps/frontend"
     schedule:
@@ -346,42 +349,42 @@ updates:
     cooldown:
       default-days: 7
     reviewers:
-    - "kthoms"
+      - "kthoms"
     target-branch: "release/2.1.x"
     labels:
-    - "dependencies:npm"
+      - "dependencies:npm"
     milestone: 22
     groups:
       angular:
         patterns:
-        - "angular*"
+          - "angular*"
       babel:
         patterns:
-        - "@babel/core"
-        - "@babel/preset-env"
-        - "@babel/eslint-parser"
+          - "@babel/core"
+          - "@babel/preset-env"
+          - "@babel/eslint-parser"
       Xmn-js:
         patterns:
-        - "bpmn-js"
-        - "camunda-dmn-js"
-        - "cmmn-js"
-        - "dmn-js"
-        - "dmn-js-*"
+          - "bpmn-js"
+          - "camunda-dmn-js"
+          - "cmmn-js"
+          - "dmn-js"
+          - "dmn-js-*"
       eslint:
         patterns:
-        - "eslint*"
-        - "prettier"
+          - "eslint*"
+          - "prettier"
       webpack:
         patterns:
-        - "webpack*"
+          - "webpack*"
     ignore:
-    - dependency-name: "eslint*"
-      # Known incompatibility with eslint 10
-      update-types: ["version-update:semver-major"]
-    - dependency-name: "bootstrap"
-      update-types: ["version-update:semver-major"]
-    - dependency-name: "jquery"
-      update-types: ["version-update:semver-major"]
+      - dependency-name: "eslint*"
+        # Known incompatibility with eslint 10
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "bootstrap"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jquery"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: "npm"
     directory: "/engine-rest/docs"
     schedule:
@@ -390,15 +393,15 @@ updates:
     cooldown:
       default-days: 7
     reviewers:
-    - "kthoms"
+      - "kthoms"
     target-branch: "release/2.1.x"
     labels:
-    - "dependencies:npm"
+      - "dependencies:npm"
     milestone: 22
     groups:
       react:
         patterns:
-        - "react*"
+          - "react*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -406,10 +409,10 @@ updates:
     cooldown:
       default-days: 7
     reviewers:
-    - "kthoms"
+      - "kthoms"
     target-branch: "release/2.1.x"
     labels:
-    - "dependencies:github-action"
+      - "dependencies:github-action"
     milestone: 22
   - package-ecosystem: "devcontainers"
     directory: "/"
@@ -417,5 +420,5 @@ updates:
       interval: "weekly"
     target-branch: "release/2.1.x"
     labels:
-    - "dependencies:devcontainers"
+      - "dependencies:devcontainers"
     milestone: 22

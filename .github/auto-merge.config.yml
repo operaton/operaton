@@ -106,6 +106,7 @@ auto-merge-rules:
       - 'jboss-weld group'
       - 'openrewrite group'
       - 'spring-boot group'
+      - 'jaxb group'
 
   # Devcontainer dependencies can be auto-merged
   - author: 'dependabot[bot]'

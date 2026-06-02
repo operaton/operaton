@@ -1,4 +1,5 @@
 import { useContext } from 'preact/hooks'
+import { useTranslation } from 'react-i18next'
 import { AppState } from '../state.js'
 import { useSignal } from '@preact/signals'
 import engine_rest, { RequestState } from '../api/engine_rest.jsx'
@@ -8,7 +9,8 @@ import { Breadcrumbs } from '../components/Breadcrumbs.jsx'
 const StartProcessList = () => {
   const
     state = useContext(AppState),
-    { params } = useRoute()
+    { params } = useRoute(),
+    [t] = useTranslation()
 
   void engine_rest.process_definition.list_startable(state)
 
@@ -16,26 +18,11 @@ const StartProcessList = () => {
     void engine_rest.process_definition.one(state, params.tab)
   }
 
-  // return <div id="start-task">
-  //   <header>
-  //     <Breadcrumbs paths={[
-  //       { name: 'Tasks', route: '/tasks' },
-  //       { name: 'Start Process' }]} />
-  //   </header>
-  //
-  //   <div class="row">
-  //     <StartableProcessesList />
-  //     {params.id !== undefined
-  //       ? <StartProcessForm />
-  //       : <p>Select a process definition</p>}
-  //   </div>
-  // </main>
-
   return <div>
     <StartableProcessesList />
     {params.tab !== undefined
       ? <StartProcessForm />
-      : <p>Select a process definition</p>}
+      : <p>{t("tasks.start-process.select-definition")}</p>}
   </div>
 }
 
@@ -43,6 +30,7 @@ const StartableProcessesList = () => {
   const
     state = useContext(AppState),
     { params } = useRoute(),
+    [t] = useTranslation(),
     search_term = useSignal('')
 
   if (params.tab !== null && state.api.process.definition.one.value !== null
@@ -54,23 +42,23 @@ const StartableProcessesList = () => {
   return <div>
 
     <div className="row space-between p-1">
-      <h2>Start Task</h2>
+      <h2>{t("tasks.start-process.title")}</h2>
 
       <input
         type="text"
         className="search-input"
         id="process-popup-search-input"
-        placeholder="Search by process name."
+        placeholder={t("tasks.start-process.search-placeholder")}
         value={search_term.value}
         onChange={(e) => (search_term.value = e.target.value)} />
     </div>
     <table>
       <thead>
       <tr>
-        <th>Definition Name</th>
-        <th>Version</th>
-        <th>Description</th>
-        <th>Key</th>
+        <th>{t("tasks.start-process.definition-name")}</th>
+        <th>{t("tasks.start-process.version")}</th>
+        <th>{t("tasks.start-process.description")}</th>
+        <th>{t("common.key")}</th>
       </tr>
       </thead>
       <tbody>
@@ -107,6 +95,7 @@ const StartProcessForm = () => {
   const
     state = useContext(AppState),
     { params } = useRoute(),
+    [t] = useTranslation(),
     form_fields = useSignal([]),
     fr = new FileReader(),
 
@@ -158,22 +147,21 @@ const StartProcessForm = () => {
       button_group = document.createElement('div'),
       submit_button = document.createElement('button')
 
-    inputs.forEach(input =>
-      form_fields.value.push({
+    const fields = [
+      ...Array.from(inputs, input => ({
         variable_name: input.getAttribute('cam-variable-name'),
         type: input.getAttribute('cam-variable-type'),
         input_type: input.getAttribute('type')
-      })
-    )
-    selects.forEach(input =>
-      form_fields.value.push({
+      })),
+      ...Array.from(selects, input => ({
         variable_name: input.getAttribute('cam-variable-name'),
         type: input.getAttribute('cam-variable-type'),
         input_type: 'select'
-      })
-    )
+      })),
+    ]
+    form_fields.value = [...form_fields.peek(), ...fields]
 
-    submit_button.innerText = 'Submit'
+    submit_button.innerText = t("common.submit")
     submit_button.setAttribute('type', 'submit')
     button_group.classList.add('button-group')
     button_group.appendChild(submit_button)
@@ -199,12 +187,12 @@ const StartProcessForm = () => {
   }
 
   return <div>
-    <h2>Form</h2>
+    <h2>{t("tasks.form.form-title")}</h2>
     <RequestState signal={state.api.task.form} on_success={() => <>
       {/*eslint-disable-next-line react/no-danger*/}
       <form onSubmit={handleSubmit} dangerouslySetInnerHTML={{ __html: parse_form(state.api.task.form.value.data) }}>
         <div class="button-group">
-          <button type="submit">Start Process</button>
+          <button type="submit">{t("tasks.start-process.start")}</button>
         </div>
       </form>
     </>

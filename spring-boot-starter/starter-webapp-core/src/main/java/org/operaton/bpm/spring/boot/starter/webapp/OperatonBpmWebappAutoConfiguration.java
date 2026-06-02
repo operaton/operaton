@@ -97,7 +97,11 @@ public class OperatonBpmWebappAutoConfiguration implements WebMvcConfigurer {
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     WebappProperty webapp = properties.getWebapp();
-    if (webapp.isIndexRedirectEnabled()) {
+    // When webapps-neo is enabled it owns the application root ("/"). Relinquish
+    // the legacy root redirect in that case so both can run side by side without
+    // a duplicate "/" mapping; the legacy webapp stays reachable at its
+    // applicationPath (e.g. /operaton/app/).
+    if (webapp.isIndexRedirectEnabled() && !webapp.getNeo().isEnabled()) {
       String applicationPath = webapp.getApplicationPath();
       registry.addRedirectViewController("/", applicationPath + "/app/");
     }

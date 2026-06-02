@@ -29,7 +29,11 @@ env | grep "^${APP_PREFIX}" | while IFS='=' read -r key value; do
     # Display the variable being replaced
     echo "  • Replacing ${key} → ${value}"
 
+    # Escape backslashes and ampersands for sed replacement
+    escaped="${value//\\/\\\\}"
+    escaped="${escaped//&/\\&}"
+
     # Use find and sed to replace the variable in all files within the directory
     find "$ASSET_DIR" -type f \
-        -exec sed -i "s|${key}|${value}|g" {} +
+        -exec sed -i "s|${key}|${escaped}|g" {} +
 done

@@ -19,13 +19,16 @@ package org.operaton.bpm.spring.boot.starter.webapp;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.test.context.runner.WebApplicationContextRunner;
 
 import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
+import org.operaton.bpm.spring.boot.starter.webapp.neo.OperatonBpmWebappAutoConfiguration;
+import org.operaton.bpm.spring.boot.starter.webapp.neo.OperatonBpmWebappNeoInitializer;
+import org.operaton.bpm.spring.boot.starter.webapp.neo.FaviconResourceResolver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,9 +38,11 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
 
   private final String bpmDisabled = OperatonBpmProperties.PREFIX + ".enabled=false";
 
-  private final String webappEnabled = WebappProperty.PREFIX + ".enabled=true";
+  // webapps-neo is gated independently from the legacy webapps and is disabled
+  // by default at the starter level
+  private final String neoEnabled = WebappProperty.PREFIX + ".neo.enabled=true";
 
-  private final String webappDisabled = WebappProperty.PREFIX + ".enabled=false";
+  private final String neoDisabled = WebappProperty.PREFIX + ".neo.enabled=false";
 
   private WebApplicationContextRunner contextRunner;
 
@@ -49,83 +54,56 @@ class OperatonBpmWebappAutoConfigurationIntegrationTest {
   }
 
   @Test
-  void bpm_is_not_disabled_and_webapp_is_not_disabled_should_init_webapp() {
+  void neo_is_disabled_by_default_should_not_init_webapp() {
     contextRunner.run(context ->
       assertThat(context)
         .hasNotFailed()
-        .hasSingleBean(OperatonBpmWebappInitializer.class)
-        .hasSingleBean(FaviconResourceResolver.class));
-  }
-
-  @Test
-  void bpm_is_enabled_and_webapp_is_not_disabled_should_init_webapp() {
-    contextRunner.withPropertyValues(bpmEnabled).run(context ->
-      assertThat(context)
-        .hasNotFailed()
-        .hasSingleBean(OperatonBpmWebappInitializer.class)
-        .hasSingleBean(FaviconResourceResolver.class));
-  }
-
-  @Test
-  void bpm_is_disabled_and_webapp_is_not_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmDisabled).run(context ->
-      assertThat(context)
-        .hasNotFailed()
-        .doesNotHaveBean(OperatonBpmWebappInitializer.class)
+        .doesNotHaveBean(OperatonBpmWebappNeoInitializer.class)
         .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
-  void bpm_is_not_disabled_and_webapp_is_enabled_should_init_webapp() {
-    contextRunner.withPropertyValues(webappEnabled).run(context ->
+  void bpm_is_not_disabled_and_neo_is_enabled_should_init_webapp() {
+    contextRunner.withPropertyValues(neoEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
-        .hasSingleBean(OperatonBpmWebappInitializer.class)
+        .hasSingleBean(OperatonBpmWebappNeoInitializer.class)
         .hasSingleBean(FaviconResourceResolver.class));
   }
 
   @Test
-  void bpm_is_enabled_and_webapp_is_enabled_should_init_webapp() {
-    contextRunner.withPropertyValues(bpmEnabled, webappEnabled).run(context ->
+  void bpm_is_enabled_and_neo_is_enabled_should_init_webapp() {
+    contextRunner.withPropertyValues(bpmEnabled, neoEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
-        .hasSingleBean(OperatonBpmWebappInitializer.class)
+        .hasSingleBean(OperatonBpmWebappNeoInitializer.class)
         .hasSingleBean(FaviconResourceResolver.class));
   }
 
   @Test
-  void bpm_is_disabled_and_webapp_is_enabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmDisabled, webappEnabled).run(context ->
+  void bpm_is_disabled_and_neo_is_enabled_should_not_init_webapp() {
+    contextRunner.withPropertyValues(bpmDisabled, neoEnabled).run(context ->
       assertThat(context)
         .hasNotFailed()
-        .doesNotHaveBean(OperatonBpmWebappInitializer.class)
+        .doesNotHaveBean(OperatonBpmWebappNeoInitializer.class)
         .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
-  void bpm_is_not_disabled_and_webapp_is_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(webappDisabled).run(context ->
+  void neo_is_disabled_should_not_init_webapp() {
+    contextRunner.withPropertyValues(neoDisabled).run(context ->
       assertThat(context)
         .hasNotFailed()
-        .doesNotHaveBean(OperatonBpmWebappInitializer.class)
+        .doesNotHaveBean(OperatonBpmWebappNeoInitializer.class)
         .doesNotHaveBean(FaviconResourceResolver.class));
   }
 
   @Test
-  void bpm_is_enabled_and_webapp_is_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmEnabled, webappDisabled).run(context ->
+  void bpm_is_enabled_and_neo_is_disabled_should_not_init_webapp() {
+    contextRunner.withPropertyValues(bpmEnabled, neoDisabled).run(context ->
       assertThat(context)
         .hasNotFailed()
-        .doesNotHaveBean(OperatonBpmWebappInitializer.class)
-        .doesNotHaveBean(FaviconResourceResolver.class));
-  }
-
-  @Test
-  void bpm_is_disabled_and_webapp_is_disabled_should_not_init_webapp() {
-    contextRunner.withPropertyValues(bpmDisabled, webappDisabled).run(context ->
-      assertThat(context)
-        .hasNotFailed()
-        .doesNotHaveBean(OperatonBpmWebappInitializer.class)
+        .doesNotHaveBean(OperatonBpmWebappNeoInitializer.class)
         .doesNotHaveBean(FaviconResourceResolver.class));
   }
 }

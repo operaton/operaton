@@ -40,7 +40,7 @@ public class HttpClientExtension implements AfterEachCallback {
   private static final Logger LOG = LoggerFactory.getLogger(HttpClientExtension.class);
   public static final String PORT_PLACEHOLDER_WEBAPP_URL = "{PORT}";
   public static final String WEBAPP_URL = "http://localhost:" + PORT_PLACEHOLDER_WEBAPP_URL +
-      "/operaton/app/tasklist/default";
+      "/app-neo/";
 
   protected Integer port;
   protected HttpURLConnection connection;

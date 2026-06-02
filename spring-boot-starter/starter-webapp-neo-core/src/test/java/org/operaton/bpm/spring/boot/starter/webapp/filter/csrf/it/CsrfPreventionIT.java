@@ -26,7 +26,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
@@ -34,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest(classes = {FilterTestApp.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-  properties = {"server.error.include-message=always"})
+  properties = {"spring.web.error.include-message=always"})
 @DirtiesContext
 class CsrfPreventionIT {
 
@@ -51,13 +50,13 @@ class CsrfPreventionIT {
 
   @Test
   void shouldSetCookieWebapp() {
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/");
 
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();
     String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
-        "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
+        "Path=" + "/app-neo" + ";SameSite=Lax");
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");
 
     assertThat(xsrfCookieValue).contains(xsrfTokenHeader);
@@ -65,13 +64,13 @@ class CsrfPreventionIT {
 
   @Test
   void shouldSetCookieWebappRest() {
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/api/engine/engine/");
 
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();
     String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
-        "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
+        "Path=" + "/app-neo" + ";SameSite=Lax");
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");
 
     assertThat(xsrfCookieValue).contains(xsrfTokenHeader);
@@ -80,7 +79,7 @@ class CsrfPreventionIT {
   @Test
   void shouldRejectModifyingRequest() {
     URLConnection urlConnection = httpClientExtension.performPostRequest("http://localhost:" + port +
-            "/operaton/api/admin/auth/user/default/login/welcome", "Content-Type",
+            "/app-neo/api/admin/auth/user/default/login/welcome", "Content-Type",
         "application/x-www-form-urlencoded");
 
     assertThatThrownBy(urlConnection::getContent)

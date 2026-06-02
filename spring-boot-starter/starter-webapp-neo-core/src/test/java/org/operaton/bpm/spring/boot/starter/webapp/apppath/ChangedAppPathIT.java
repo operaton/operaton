@@ -21,11 +21,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,11 +36,18 @@ import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtensi
 import static org.operaton.bpm.webapp.impl.security.filter.headersec.provider.impl.ContentSecurityPolicyProvider.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Verifies that webapps-neo can be served from a configurable sub-path: the
+ * plugin API namespace, the webapp filter chain and the root redirect all move
+ * with the configured {@code operaton.bpm.webapp.neo.application-path}.
+ */
+@AutoConfigureTestRestTemplate
 @SpringBootTest(
   classes = {WebappTestApp.class},
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-  "operaton.bpm.webapp.applicationPath=" + ChangedAppPathIT.MY_APP_PATH
+  "operaton.bpm.webapp.neo.enabled=true",
+  "operaton.bpm.webapp.neo.application-path=" + ChangedAppPathIT.MY_APP_PATH
 })
 class ChangedAppPathIT {
 
@@ -63,11 +69,9 @@ class ChangedAppPathIT {
 
   @Test
   void shouldCheckPresenceOfCsrfPreventionFilter() {
-    // given
-
     // when
     httpClientExtension.performRequest("http://localhost:" + port + MY_APP_PATH +
-        "/app/tasklist/default");
+        "/api/engine/engine/");
 
     // then
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();
@@ -81,24 +85,20 @@ class ChangedAppPathIT {
   }
 
   @Test
-  void shouldCheckPresenceOfRedirection() {
-    // given
-
+  void shouldRedirectRootToAppPath() {
     // when
     httpClientExtension.performRequest("http://localhost:" + port + "/");
 
     // then
     assertThat(httpClientExtension.getHeader("Location")).isEqualTo("http://localhost:" + port +
-        MY_APP_PATH + "/app/");
+        MY_APP_PATH + "/");
   }
 
   @Test
   void shouldCheckPresenceOfHeaderSecurityFilter() {
-    // given
-
     // when
     ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/app/tasklist/default", String.class);
+        "/api/engine/engine/", String.class);
 
     // then
     List<String> contentSecurityPolicyHeaders = response.getHeaders()
@@ -109,24 +109,7 @@ class ChangedAppPathIT {
   }
 
   @Test
-  void shouldCheckPresenceOfCacheControlFilter() {
-    // given
-
-    // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
-        "/app/admin/styles/styles.css", String.class);
-
-    // then
-    List<String> cacheControlHeaders = response.getHeaders()
-        .get("Cache-Control");
-
-    assertThat(cacheControlHeaders).containsExactly("no-cache");
-  }
-
-  @Test
   void shouldCheckPresenceOfRestApi() {
-    // given
-
     // when
     ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
         "/api/engine/engine/", String.class);
@@ -137,29 +120,11 @@ class ChangedAppPathIT {
 
   @Test
   void shouldCheckPresenceOfSecurityFilter() {
-    // given
-
     // when
     ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH +
         "/api/engine/engine/default/group/count", String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
-  }
-
-  @ParameterizedTest(name = "{index} => path={0}")
-  @ValueSource(strings = {
-      "/lib/deps.js",
-      "/app/admin/styles/user-styles.css",
-      "/api/admin/plugin/adminPlugins/static/app/plugin.css"
-  })
-  void shouldCheckPresenceOfResources(String path) {
-    // given
-
-    // when
-    ResponseEntity<String> response = restClient.getForEntity(MY_APP_PATH + path, String.class);
-
-    // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
 }

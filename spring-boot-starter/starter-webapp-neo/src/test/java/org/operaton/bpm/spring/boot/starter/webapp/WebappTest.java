@@ -18,16 +18,15 @@ package org.operaton.bpm.spring.boot.starter.webapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author Svetlana Dorokhova.
- */
+@AutoConfigureTestRestTemplate
 @SpringBootTest(
   classes = WebappExampleApplication.class,
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -39,19 +38,14 @@ class WebappTest {
   private TestRestTemplate testRestTemplate;
 
   @Test
-  void testEeResourceNotAvailable() {
+  void testNeoAppAvailable() {
     ResponseEntity<String> response =
-        testRestTemplate.getForEntity("/operaton/plugin/adminEE/app/plugin.js", String.class);
+        testRestTemplate.getForEntity("/app-neo/", String.class);
 
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-  }
-
-  @Test
-  void testAdminEndpointAvailable() {
-    ResponseEntity<String> response =
-        testRestTemplate.getForEntity("/operaton/app/admin/", String.class);
-
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    // First request gets 302 from CsrfPreventionFilter (sets XSRF-TOKEN cookie)
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FOUND);
+    assertThat(response.getHeaders().getLocation()).isNotNull();
+    assertThat(response.getHeaders().getLocation().getPath()).isEqualTo("/app-neo/");
   }
 
 }

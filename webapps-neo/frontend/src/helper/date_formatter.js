@@ -5,7 +5,8 @@ const formatRelativeDate = (date) => {
 
 // returns date/time relative formatted, e.g. yesterday, 2 hours ago, 3 month ago, tomorrow, in 5 minutes, ...
 const formatRelativeDateTime = (date, ignoreTime) => {
-    const timeFormatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' }); // TODO locale
+    const locale = navigator.language || navigator.languages?.[0] || 'en';
+    const timeFormatter = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
     let relativeDate = new Date(date);
     let nowDate = new Date();
 

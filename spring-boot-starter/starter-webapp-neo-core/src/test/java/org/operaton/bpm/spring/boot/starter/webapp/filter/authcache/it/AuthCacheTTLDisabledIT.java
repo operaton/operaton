@@ -68,7 +68,7 @@ class AuthCacheTTLDisabledIT {
   @Test
   void shouldNotRemoveCache() {
     // given
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/welcome/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/");
 
     Map<String, String> headers = new HashMap<>();
     headers.put("X-XSRF-TOKEN", httpClientExtension.getHeaderXsrfToken());
@@ -76,7 +76,7 @@ class AuthCacheTTLDisabledIT {
     headers.put("Content-Type", "application/x-www-form-urlencoded");
     headers.put("Accept", "application/json");
     httpClientExtension.performPostRequest("http://localhost:" + port +
-        "/operaton/api/admin/auth/user/default/login/welcome", headers, "username=demo&password=demo");
+        "/app-neo/api/admin/auth/user/default/login/welcome", headers, "username=demo&password=demo");
 
     headers = new HashMap<>();
     headers.put("Cookie", httpClientExtension.getSessionCookieValue());
@@ -105,7 +105,7 @@ class AuthCacheTTLDisabledIT {
 
   protected void doGetRequestToProfileEndpoint(Map<String, String> headers) {
     String baseUrl = "http://localhost:" + port;
-    String profileEndpointPath = "/operaton/api/engine/engine/default/user/demo/profile";
+    String profileEndpointPath = "/app-neo/api/engine/engine/default/user/demo/profile";
     httpClientExtension.performRequest( baseUrl + profileEndpointPath, headers);
   }
 

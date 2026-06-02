@@ -18,19 +18,22 @@ package org.operaton.bpm.spring.boot.starter.webapp.apppath.containerbasedauth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@AutoConfigureTestRestTemplate
 @SpringBootTest(
     classes = {ContainerBasedAuthTestApp.class},
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
-    "operaton.bpm.webapp.applicationPath=" + ChangedAppPathContainerBasedAuthIT.MY_APP_PATH
+    "operaton.bpm.webapp.neo.enabled=true",
+    "operaton.bpm.webapp.neo.application-path=" + ChangedAppPathContainerBasedAuthIT.MY_APP_PATH
 })
 class ChangedAppPathContainerBasedAuthIT {
 
@@ -44,8 +47,10 @@ class ChangedAppPathContainerBasedAuthIT {
     // given
 
     // when
+    // a protected engine API under the configured neo app path is guarded by the
+    // (container based) authentication chain and rejects the unauthenticated call
     ResponseEntity<String> response = testRestTemplate.getForEntity(MY_APP_PATH +
-        "/app/welcome/default/", String.class);
+        "/api/engine/engine/default/group/count", String.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);

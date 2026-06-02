@@ -49,7 +49,7 @@ class SecureEnabledIT {
 
   @Test
   void shouldEnableSecureCookie() {
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/");
 
     String sessionCookieValue = httpClientExtension.getSessionCookie();
 

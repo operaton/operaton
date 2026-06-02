@@ -46,7 +46,7 @@ class SessionCookieIT {
 
   @Test
   void shouldSetCookieWebapp() {
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/");
 
     String sessionCookieValue = httpClientExtension.getSessionCookie();
 
@@ -55,7 +55,7 @@ class SessionCookieIT {
 
   @Test
   void shouldSetCookieWebappRest() {
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/api/engine/engine/");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/api/engine/engine/");
 
     String sessionCookieValue = httpClientExtension.getSessionCookie();
 

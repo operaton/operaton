@@ -16,26 +16,35 @@
  */
 package org.operaton.bpm.spring.boot.starter.webapp.apppath;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.resttestclient.TestRestTemplate;
+import org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.TestPropertySource;
 
 import org.operaton.bpm.spring.boot.starter.webapp.WebappTestApp;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * When webapps-neo is served from a sub-path, the bare base path is canonicalized
+ * to the trailing-slash variant so the SPA shell resolves. Both variants must end
+ * up serving the application (HTTP 200) after following the redirect.
+ */
+@AutoConfigureTestRestTemplate
 @SpringBootTest(
   classes = {WebappTestApp.class},
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestPropertySource(properties = {
+  "operaton.bpm.webapp.neo.enabled=true",
+  "operaton.bpm.webapp.neo.application-path=" + RequestTrailingSlashIT.MY_APP_PATH
+})
 class RequestTrailingSlashIT {
 
-  public static final List<String> REDIRECT_PATHS = List.of("/app", "/app/cockpit", "/app/admin", "/app/tasklist", "/app/welcome");
+  protected static final String MY_APP_PATH = "/app-neo";
 
   final TestRestTemplate client = new TestRestTemplate();
 
@@ -43,19 +52,15 @@ class RequestTrailingSlashIT {
   public int port;
 
   @Test
-  void shouldRedirectPathWithMissingTrailingSlash() {
-    // given
-    List<ResponseEntity<String>> responses = new ArrayList<>();
+  void shouldServeAppPathWithAndWithoutTrailingSlash() {
+    // when calling the SPA base path with and without a trailing slash
+    String url = "http://localhost:" + port + MY_APP_PATH;
+    ResponseEntity<String> withoutSlash = client.getForEntity(url, String.class);
+    ResponseEntity<String> withSlash = client.getForEntity(url + "/", String.class);
 
-    // when calling different paths with and without trailing slashes
-    for (String path : REDIRECT_PATHS) {
-      String url = "http://localhost:" + port + "/operaton" + path;
-      responses.add(client.getForEntity(url, String.class));
-      responses.add(client.getForEntity(url + "/", String.class));
-    }
-
-    // then all paths should be found
-    assertThat(responses).extracting("statusCode").containsOnly(HttpStatus.OK);
+    // then both resolve to the SPA shell (the redirect is followed for the bare path)
+    assertThat(withoutSlash.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(withSlash.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
 
 }

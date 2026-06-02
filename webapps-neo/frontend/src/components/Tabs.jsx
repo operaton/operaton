@@ -1,8 +1,10 @@
 import { useLocation, useRoute } from 'preact-iso'
+import { useTranslation } from 'react-i18next'
 
 const Tabs = ({ base_url, tabs, param_name = 'tab', className = '' }) => {
   const { params } = useRoute()
   const { route, path } = useLocation()
+  const [t] = useTranslation()
   const tab = params[param_name]
 
   if (tab === null || tab === undefined && path === base_url) {
@@ -44,7 +46,7 @@ const Tabs = ({ base_url, tabs, param_name = 'tab', className = '' }) => {
                  // title={tab_name.name}
                  onKeyDown={(event) => change_tab(event, tab_name)}
               >
-                {tab_name.name}
+                {tab_name.nameKey ? t(tab_name.nameKey) : tab_name.name}
               </a>)
           }
         )}
@@ -54,7 +56,10 @@ const Tabs = ({ base_url, tabs, param_name = 'tab', className = '' }) => {
            role="tabpanel"
            tabIndex="0"
            aria-labelledby={`${param_name}-${tab}`}>
-        {tabs.find(tab_ => tab === tab_.id)?.target || 'Select a tab'}
+        {(() => {
+          const active = tabs.find(tab_ => tab === tab_.id)
+          return active ? <active.Component /> : t("common.select-page")
+        })()}
       </div>
     </div>
   )

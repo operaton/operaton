@@ -1,13 +1,15 @@
+import { useTranslation } from "react-i18next";
+
 export function NotFound() {
+	const [t] = useTranslation();
+
 	return (
 		<section class="p-3">
-			<h1>404 – Not Found</h1>
-			<p>This page does not exist.</p>
-			<p>Maybe you pasted a URL and missed a part?</p>
+			<h1>{t("not-found.title")}</h1>
+			<p>{t("not-found.text")}</p>
+			<p>{t("not-found.hint")}</p>
 			<p>
-				Using the "Go To" function in the top right or
-				pressing	<code>ALT + S</code> you can quickly navigate to a resource
-				if you know its ID.
+				{t("not-found.goto-hint-prefix")}	<code>ALT + K</code> {t("not-found.goto-hint-suffix")}
 			</p>
 		</section>
 	);

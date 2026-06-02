@@ -1,7 +1,7 @@
 import { GET } from '../helper.jsx'
 
 const get_job_definitions = (state, definition_id) =>
-  GET(`/job-definition?processDefinitionId=${definition_id}`, state, state.api.job_definition.all)
+  GET(`/job-definition?processDefinitionId=${definition_id}`, state, state.api.job_definition.all.by_process_definition)
 
 const job_definition = {
   all: {

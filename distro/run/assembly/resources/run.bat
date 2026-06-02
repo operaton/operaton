@@ -5,6 +5,7 @@ SET BASEDIR=%~dp0
 SET PARENTDIR=%BASEDIR%..\
 SET DEPLOYMENTDIR=%PARENTDIR%configuration/resources
 SET WEBAPPS_PATH=%BASEDIR%webapps
+SET WEBAPPS_NEO_PATH=%BASEDIR%webapps-neo
 SET OAUTH2_PATH=%BASEDIR%oauth2
 SET REST_PATH=%BASEDIR%rest
 SET EXAMPLE_PATH=%BASEDIR%example
@@ -74,10 +75,16 @@ REM inspect arguments
 :Loop
 IF [%~1]==[] GOTO Continue
 
+IF [%~1]==[--webapps-neo] (
+  SET optionalComponentChosen=true
+  SET classPath=%WEBAPPS_NEO_PATH%,%classPath%
+  ECHO WebApps Neo enabled
+)
+
 IF [%~1]==[--webapps] (
   SET optionalComponentChosen=true
   SET classPath=%WEBAPPS_PATH%,%classPath%
-  ECHO WebApps enabled
+  ECHO Legacy WebApps enabled
 )
 
 IF [%~1]==[--oauth2] (
@@ -116,18 +123,19 @@ SHIFT
 GOTO Loop
 :Continue
 
-REM If no optional component is chosen, enable REST and Webapps.
+REM If no optional component is chosen, enable REST and the new Webapps (neo).
+REM The legacy webapps stay available via the --webapps flag.
 REM If production mode is not chosen, also enable the example application.
 setlocal enabledelayedexpansion
 IF [%optionalComponentChosen%]==[false] (
   SET restChosen=true
   ECHO REST API enabled
-  ECHO WebApps enabled
+  ECHO WebApps Neo enabled
   IF [%productionChosen%]==[false] (
     ECHO Invoice Example included - needs to be enabled in application configuration as well
     SET classPath=%EXAMPLE_PATH%,%classPath%
   )
-  SET classPath=%WEBAPPS_PATH%,%REST_PATH%,!classPath!
+  SET classPath=%WEBAPPS_NEO_PATH%,%REST_PATH%,!classPath!
 )
 setlocal disabledelayedexpansion
 
@@ -165,11 +173,12 @@ GOTO End
 ECHO Usage: run.bat [start^|stop] (options...)
 :ArgsHelp
 ECHO Options:
-ECHO   --webapps    - Enables the Operaton Webapps
-ECHO   --oauth2     - Enables the Operaton Platform Spring Security OAuth2 integration
-ECHO   --rest       - Enables the REST API
-ECHO   --example    - Enables the example application
-ECHO   --production - Applies the production.yaml configuration file
-ECHO   --detached   - Starts Operaton as a detached process
+ECHO   --webapps-neo - Enables the new Operaton Webapps (served at the root path)
+ECHO   --webapps     - Enables the legacy Operaton Webapps (served at /operaton/app)
+ECHO   --oauth2      - Enables the Operaton Platform Spring Security OAuth2 integration
+ECHO   --rest        - Enables the REST API
+ECHO   --example     - Enables the example application
+ECHO   --production  - Applies the production.yaml configuration file
+ECHO   --detached    - Starts Operaton as a detached process
 
 :End

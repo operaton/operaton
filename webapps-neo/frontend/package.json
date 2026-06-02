@@ -1,35 +1,49 @@
 {
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build",
-		"preview": "vite preview"
-	},
-	"dependencies": {
-		"@preact/signals": "^1.3.0",
-		"bpmn-js": "^17.11.1",
-		"bpmn-visualization": "^0.46.0",
-		"dmn-js": "^17.3.0",
-		"dompurify": "^3.1.6",
-		"i18next-browser-languagedetector": "^8.2.0",
-		"i18next-http-backend": "^3.0.2",
-		"jsdom": "^25.0.0",
-		"preact": "^10.22.1",
-		"preact-iso": "^2.6.3",
-		"react-bpmn": "^0.2.0",
-		"react-hotkeys-hook": "^4.5.1",
-		"react-i18next": "^15.6.1"
-	},
-	"devDependencies": {
-		"@preact/preset-vite": "^2.9.0",
-		"eslint": "^8.57.0",
-		"eslint-config-preact": "^1.4.0",
-		"jest": "^29.7.0",
-		"prettier": "3.6.2",
-		"vite": "^7.0.0"
-	},
-	"eslintConfig": {
-		"extends": "preact"
-	}
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:embedded": "vite build --mode embedded",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@bpmn-io/feelin": "^6.1.0",
+    "@bpmn-io/form-js-viewer": "^1.21.3",
+    "@preact/signals": "^1.3.0",
+    "bpmn-js": "^17.11.1",
+    "bpmn-js-differ": "^3.1.0",
+    "bpmn-moddle": "^9.0.4",
+    "bpmn-visualization": "^0.45.1",
+    "dmn-js": "^17.3.0",
+    "dompurify": "^3.1.2",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
+    "preact": "^10.22.1",
+    "preact-iso": "^2.6.3",
+    "react-bpmn": "^0.2.0",
+    "react-hotkeys-hook": "^4.5.1",
+    "react-i18next": "^15.6.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@preact/preset-vite": "^2.9.0",
+    "@testing-library/preact": "^3.2.4",
+    "@vitest/ui": "^4.0.7",
+    "eslint": "^8.57.1",
+    "eslint-config-preact": "^1.4.0",
+    "happy-dom": "^20.0.10",
+    "jest": "^29.7.0",
+    "jsdom": "^27.0.1",
+    "vite": "^7.0.0",
+    "vitest": "^4.0.7"
+  },
+  "eslintConfig": {
+    "extends": "preact"
+  }
 }

@@ -66,20 +66,16 @@
   justify-content: space-between;
 }
 
-
 /* logo */
 
 #logo {
   letter-spacing: 0.2rem;
-  font-weight: 500;
+  font-weight: 700;
   text-transform: uppercase;
   font-size: 1em;
   margin: 0;
-
-  a {
-    color: var(--text);
-    text-decoration: none;
-  }
+  color: var(--text);
+  text-decoration: none;
 }
 
 /* icon */
@@ -144,97 +140,413 @@ h1 > span.selected {
   text-decoration: underline dashed;
 }
 
-
-main#processes {
-  max-width: 100vw;
-  overflow: hidden;
-
-  #left-side {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    z-index: 10;
-  }
-
-  #selection {
-    overflow-y: auto;
-    padding: var(--spacing-2);
-    resize: horizontal;
-    min-width: 30ch;
-    max-width: calc(100vw - 30ch - 2 * var(--spacing-2));
-    overflow-x: clip;
-    box-sizing: content-box;
-    flex: 1;
-  }
-
-
-  #history-mode-indicator {
-    padding: var(--spacing-1);
-    text-align: center;
-    font-weight: bold;
-    background: var(--background-2);
-    border-top: var(--border);
-
-    &.on {
-      background: var(--color-primary);
-      border-top: none;
-
-      button {
-        color: white;
-      }
-
-      button:hover {
-        border-color: white;
-      }
-
-    }
-
-    button {
-      background: transparent;
-      margin: 0;
-    }
-  }
-
-  #canvas {
-    /*overflow: scroll;*/
-    /*min-width: 30ch;*/
-    /*width: 100%;*/
-    /*resize: horizontal;*/
-    /*z-index: -10;*/
-    max-width: 100%;
-    position: relative;
-
-    &::before {
-      content: ' ';
-      width: var(--spacing-1);
-      background: linear-gradient(to right, var(--background-1), transparent);
-      height: 100%;
-      display: inline-block;
-      position: fixed;
-      z-index: 999;
-    }
-  }
-}
-
 /* tabs */
 
-.tabs {
-  /*height: 100%;*/
+/* The .task-tabs section is a flex item inside #task-details (column flex).
+   We let it shrink (min-height: 0) AND establish a positioning context for
+   the absolutely-positioned .tabs child below — this is the only reliable
+   way to get the height chain to terminate, given flex-wrap on the page. */
+section.task-tabs {
+  min-height: 0;
   position: relative;
-  overflow-y: scroll;
-  overscroll-behavior: none;
+}
+
+/* TaskList chain: #task-list is flex column; the table wrapper takes
+   remaining space and scrolls; .start-process stays pinned at the bottom. */
+#task-list {
+  min-height: 0;
+}
+
+#task-list #task-actions {
+  flex: none;
+}
+
+#task-list #task-table-wrapper {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+#task-list .start-process {
+  flex: none;
+  margin: var(--spacing-1) auto;
+}
+
+/* When .task-empty wraps richer content (e.g. an error panel with heading,
+   hint and a button), stack vertically and centre. */
+.task-empty {
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+/* .tabs fills its parent absolutely, then arranges nav + content in a
+   flex column. .selected-tab gets the leftover space and scrolls. */
+.tabs {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
 }
 
 .tabs #diagram {
   height: 100%;
 }
 
+/* Generic utilities used across pages */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-2);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: var(--background-2);
+  border-radius: var(--border-radius);
+  text-align: center;
+}
+
+/* Processes page — column layout: top nav · content · diagram pane.
+   Page-specific styling cascades from `#processes`; only genuinely
+   idiosyncratic things (diagram pane, history-mode pill, maximize button)
+   keep their own class. */
+main#processes {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Wrapper that holds the .content + .diagram split panes. */
+#processes > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+#processes .content {
+  flex: 1 1 70%;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: var(--spacing-2);
+}
+
+/* Scroll the table horizontally on its own; header and toolbar stay put. */
+#processes .content div:has(> table) {
+  overflow-x: auto;
+}
+
+#processes .content h1 {
+  font-size: 2em;
+}
+
+#processes .diagram {
+  flex: 0 0 30%;
+  min-height: 0;
+  position: relative;
+  border-top: var(--border);
+  background: var(--background-1);
+  display: flex;
+  flex-direction: column;
+}
+
+#processes .diagram.maximized {
+  flex: 1 1 100%;
+}
+
+#processes .diagram #canvas {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.diagram-maximize-btn {
+  position: absolute;
+  top: var(--spacing-1);
+  left: var(--spacing-1);
+  z-index: 10;
+  background: var(--background-1);
+  color: var(--text);
+  border: var(--border);
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.diagram-maximize-btn:hover {
+  background: var(--background-2);
+}
+
+.diagram-maximize-btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Sub-nav and tertiary nav share an underline-tab pattern. */
+#processes nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  min-height: 2rem;
+  padding: 0 var(--spacing-2);
+  border-bottom: var(--border);
+  background: var(--background-1);
+  font-size: var(--small-font-size);
+  flex-wrap: wrap;
+}
+
+/* The top sub-nav puts the history toggle on the right edge. */
+#processes > nav:first-of-type {
+  justify-content: space-between;
+}
+
+/* The tertiary nav lives inside .content (which has its own padding); the
+   negative side-margins let its bottom border span edge-to-edge. */
+#processes nav.tertiary {
+  margin: 0 calc(-1 * var(--spacing-2)) var(--spacing-1);
+}
+
+#processes nav menu {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#processes nav a,
+#processes nav .disabled {
+  color: var(--text);
+  text-decoration: none;
+  padding: 0;
+  line-height: 2rem;
+  border-bottom: 0.15em solid transparent;
+}
+
+#processes nav a:hover {
+  color: var(--color-primary);
+}
+
+#processes nav a[aria-current] {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  font-weight: 600;
+}
+
+#processes nav .disabled {
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+#processes nav .chevron {
+  color: var(--text-2, var(--muted));
+  font-size: 1.1em;
+  user-select: none;
+}
+
+#processes .history-toggle {
+  background: transparent;
+  color: var(--text);
+  border: var(--border);
+  padding: 0.25em 0.75em;
+  border-radius: 999em;
+  font-size: inherit;
+  cursor: pointer;
+  margin: 0;
+}
+
+#processes .history-toggle.active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* Page header: title (+ optional muted breadcrumb in <small>) on the left,
+   action button on the right. */
+#processes header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
+}
+
+#processes header h1 {
+  margin: 0;
+}
+
+#processes header h1 small {
+  color: var(--text-2, var(--muted));
+  font-weight: 400;
+  font-size: inherit;
+}
+
+/* Tables: only the overrides the global stylesheet doesn't already cover. */
+#processes table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: normal;
+}
+
+#processes th,
+#processes td {
+  padding: 0.4rem 0.6rem;
+  text-align: left;
+  border-bottom: var(--border);
+}
+
+#processes .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#processes tbody tr:hover {
+  background: var(--background-2);
+}
+
+#processes tbody tr[aria-selected="true"] {
+  background: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+#processes input[type="search"] {
+  flex: 0 1 24rem;
+  max-width: 40%;
+}
+
+/* Definition / instance metadata renders as a <dl> grid. */
+#processes dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin-top: var(--spacing-1);
+  margin-bottom: var(--spacing-1);
+}
+
+#processes dl dt {
+  color: var(--text-2, var(--muted));
+  font-size: var(--small-font-size);
+  font-weight: normal;
+  margin: 0;
+}
+
+#processes dl dd {
+  margin: 0;
+}
+
+/* Collapsible meta panel above each tab's table. */
+#processes details {
+  margin: 0 0 var(--spacing-2);
+  font-size: var(--small-font-size);
+}
+
+#processes details > summary {
+  cursor: pointer;
+  color: var(--text-2, var(--muted));
+  user-select: none;
+  padding: 0.15rem 0;
+}
+
+#processes details > summary:hover {
+  color: var(--text);
+}
+
+/* bpmn-js's brand badge defaults to inline-flow at the canvas root, which
+   can push sibling columns sideways. Pin it to the viewport's bottom-right. */
+.bjs-powered-by {
+  position: fixed !important;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  top: auto !important;
+  left: auto !important;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.camunda-task-form {
+  width: 100%;
+  max-width: 720px;
+}
+
+/* Native renderer for Camunda Forms — leans on the global form grid
+   (12em label column + content column) but tweaks alignment for tall
+   inputs (textarea, radio groups) and lets text blocks span full width. */
+form.camunda-form {
+  align-items: start;
+  padding: var(--spacing-1);
+}
+
+.camunda-form .form-fullspan {
+  grid-column: 1 / -1;
+}
+
+.camunda-form .form-input-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  min-width: 0;
+}
+
+.camunda-form .form-input-cell input[type="text"],
+.camunda-form .form-input-cell input[type="number"],
+.camunda-form .form-input-cell input[type="date"],
+.camunda-form .form-input-cell input[type="time"],
+.camunda-form .form-input-cell input[type="datetime-local"],
+.camunda-form .form-input-cell select,
+.camunda-form .form-input-cell textarea {
+  width: 100%;
+}
+
+.camunda-form .form-input-cell input[type="checkbox"] {
+  align-self: start;
+}
+
+.camunda-form .form-radio-group,
+.camunda-form .form-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.camunda-form .form-inline-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: normal;
+}
+
+.camunda-form .form-required-mark {
+  color: var(--err, var(--color-primary));
+  margin-left: 0.15em;
+}
+
+.camunda-form .form-unsupported {
+  color: var(--muted, var(--text-2));
+  font-style: italic;
+}
+
 .tabs > .tab-selection {
   display: flex;
   flex-wrap: wrap;
   padding-top: var(--spacing-1);
-  background: var(--background-2);
-  /*position: sticky;*/
+  background: var(--background-1);
+  position: sticky;
   top: 0;
   z-index: 10;
   gap: var(--spacing-1);
@@ -243,7 +555,9 @@ main#processes {
 .tabs > .tab-selection > a {
   /*border: var(--border);*/
   padding: var(--spacing-1) var(--spacing-2);
-  padding-top: calc(var(--spacing-1) + var(--border-width-3) - var(--border-width));
+  padding-top: calc(
+    var(--spacing-1) + var(--border-width-3) - var(--border-width)
+  );
   border-radius: var(--border-radius) var(--border-radius) 0 0;
   color: var(--text);
   text-decoration: none;
@@ -262,22 +576,24 @@ main#processes {
 }
 
 .tabs > .tab-selection > a[aria-selected="true"] {
-  background: var(--background-1);
   color: var(--color-primary);
   font-weight: bold;
   text-decoration: underline;
-  text-decoration-thickness: .2em;
-  text-underline-offset: .4em;
+  text-decoration-thickness: 0.2em;
+  text-underline-offset: 0.4em;
+}
+
+.tabs > .tab-selection {
+  flex: none;
 }
 
 .tabs > .selected-tab {
-  /*border: var(--border);*/
-  border-radius: 0 var(--border-radius) var(--border-radius) var(--border-radius);
-
+  border-radius: 0 var(--border-radius) var(--border-radius)
+    var(--border-radius);
   padding: var(--spacing-1);
-  overflow-y: auto;
-  /*height: 100%;*/
-  /*position: relative;*/
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 
 .tabs-back {
@@ -296,11 +612,10 @@ main#processes {
     height: 1rem;
     width: 1rem;
     color: var(--text);
-    stroke-width: .1rem;
+    stroke-width: 0.1rem;
     stroke-linecap: round;
   }
 }
-
 
 /* accordion */
 
@@ -337,9 +652,13 @@ div.accordion {
   details[open] {
     background: var(--background-2);
 
-    > summary::before {  transform: rotate(90deg); }
+    > summary::before {
+      transform: rotate(90deg);
+    }
 
-    details[open] { background: var(--background-1); }
+    details[open] {
+      background: var(--background-1);
+    }
   }
 
   details:first-child {
@@ -354,14 +673,327 @@ div.accordion {
   }
 }
 
+/* filter editor */
+
+.filter-editor {
+  padding: var(--spacing-2);
+  max-width: 60em;
+
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-2);
+
+    > h2 {
+      margin: 0;
+    }
+
+    > a {
+      margin: 0;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-2);
+  }
+
+  fieldset {
+    border: var(--border);
+    border-radius: var(--border-radius-2);
+    padding: var(--spacing-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+  }
+
+  legend {
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 0 var(--spacing-half);
+  }
+
+  .filter-fields {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+    gap: var(--spacing-1);
+  }
+
+  .filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-half);
+    flex-direction: row;
+    grid-column: 1 / -1;
+
+    input[type="checkbox"] {
+      width: auto;
+    }
+  }
+
+  fieldset > button {
+    align-self: start;
+  }
+
+  .filter-actions {
+    display: flex;
+    gap: var(--spacing-1);
+    align-items: center;
+  }
+}
+
+/* load more */
+
+.load-more {
+  display: block;
+  margin: var(--spacing-1) auto;
+  background: var(--background-1);
+  color: var(--text);
+  border: var(--border);
+  border-radius: 999em;
+  padding: 0.4em 1.2em;
+  cursor: pointer;
+}
+
+.load-more-end {
+  display: block;
+  text-align: center;
+  margin: var(--spacing-1) auto;
+  color: var(--text-2);
+}
+
+/* task detail cards */
+
+.task-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-1);
+}
+
+.task-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--spacing-1);
+  padding: var(--spacing-1);
+  border-radius: var(--border-radius-2);
+  background: var(--background-1);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  flex: 1;
+  min-width: 10em;
+  position: relative;
+  margin: 0;
+}
+
+.task-card small {
+  color: var(--text-2);
+  font-size: var(--small-font-size);
+}
+
+.task-card span {
+  font-weight: bold;
+}
+
+.task-card > svg {
+  position: absolute;
+  top: var(--spacing-1);
+  right: var(--spacing-1);
+  width: 1em;
+  height: 1em;
+  color: var(--text-2);
+}
 
 /* bpmn diagram */
 
-#processes .react-bpmn-diagram-container { height: 100%; }
+.djs-parent {
+  height: 100%;
+}
 
-.overlay-badge { padding: 2px; }
+.overlay-badge {
+  padding: 2px;
+}
 
-.c-hand { cursor: pointer; }
+.bpmn-badge {
+  padding: 0.15em 0.4em;
+  border-radius: 0.25em;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+}
+
+.bpmn-badge-running {
+  background: #126bbe;
+  cursor: pointer;
+}
+
+.bpmn-badge-running:hover {
+  background: #0e559a;
+}
+
+.bpmn-badge-incident {
+  background: #bb2511;
+}
+
+.c-hand {
+  cursor: pointer;
+}
+
+.bpmn-highlight .djs-visual rect,
+.bpmn-highlight .djs-visual circle,
+.bpmn-highlight .djs-visual polygon {
+  stroke: var(--color-primary) !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 0 6px var(--color-primary, #126bbe));
+}
+
+.bpmn-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2px;
+  z-index: 5;
+}
+
+.bpmn-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 3px;
+  background: var(--color-primary, #126bbe);
+  border: none;
+  border-radius: var(--border-radius-1, 4px);
+  cursor: pointer;
+  color: #fff;
+}
+
+.bpmn-action-btn:hover {
+  background-color: var(--color-primary-dark, #0e559a);
+}
+
+.bpmn-token-handle {
+  background: transparent;
+  cursor: grab;
+}
+
+.bpmn-token-handle:active {
+  cursor: grabbing;
+}
+
+.bpmn-token-handle.dragging {
+  cursor: grabbing;
+}
+
+.bpmn-highlight.dragging .djs-visual {
+  opacity: 0.5;
+}
+
+.bpmn-token-count {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--color-primary, #126bbe);
+  color: #fff;
+  font-size: 0.75em;
+  font-weight: bold;
+  text-align: center;
+  line-height: 18px;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.bpmn-drop-target .djs-visual rect,
+.bpmn-drop-target .djs-visual circle,
+.bpmn-drop-target .djs-visual polygon {
+  stroke: #16a34a !important;
+  stroke-width: 3px !important;
+  stroke-dasharray: 4 2 !important;
+}
+
+.modify-instance-dialog {
+  min-width: 480px;
+  max-width: 640px;
+  padding: var(--spacing-2, 1rem);
+}
+
+.modify-instance-dialog dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+}
+
+.modify-instance-dialog code {
+  font-family: monospace;
+  background: var(--bg-2, #f3f4f6);
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+}
+
+.modify-instance-dialog .modify-payload {
+  background: var(--bg-2, #f3f4f6);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  max-height: 240px;
+  overflow: auto;
+  font-size: 0.85em;
+}
+
+.modify-instance-dialog fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.5rem 0;
+}
+
+.modify-instance-dialog .button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.bpmn-controls {
+  position: absolute;
+  top: var(--spacing-1);
+  right: var(--spacing-1);
+  display: flex;
+  z-index: 5;
+  background: white;
+  border: var(--border);
+  border-radius: var(--border-radius-2);
+  overflow: hidden;
+}
+
+.bpmn-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-1);
+  background: white;
+  border: none;
+  border-right: var(--border);
+  color: black;
+  cursor: pointer;
+  font-size: 1.4em;
+  margin-top: 0;
+  border-radius: 0;
+}
+
+.bpmn-controls button:hover {
+  outline: none;
+  background-color: var(--background-2);
+}
+
+.bpmn-controls button:last-child {
+  border-right: none;
+}
 
 .copy-on-click {
   display: inline-flex;
@@ -384,9 +1016,72 @@ div.accordion {
 
 dialog#global-search {
   height: 80%;
+  overflow: hidden;
 }
-
-
+.goto-search {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: var(--spacing-1);
+}
+.goto-search > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.goto-search > header button {
+  margin: 0;
+  background: var(--background-3);
+  color: var(--text);
+}
+.goto-input {
+  font-size: var(--base-font-size);
+  width: 100%;
+  box-sizing: border-box;
+}
+.goto-results {
+  flex: 1;
+  overflow-y: auto;
+}
+.goto-results h4 {
+  font-size: var(--small-font-size);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-2);
+  margin: var(--spacing-2) 0 var(--spacing-1);
+}
+.goto-results h4:first-child {
+  margin-top: 0;
+}
+.goto-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-1);
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+}
+.goto-item:visited {
+  color: var(--text);
+}
+.goto-item small {
+  color: var(--text-2);
+  font-size: var(--small-font-size);
+}
+.goto-item:hover,
+.goto-selected {
+  background: var(--background-2);
+}
+.goto-hint {
+  color: var(--text-2);
+}
+.goto-empty {
+  color: var(--text-2);
+  text-align: center;
+  margin-top: var(--spacing-3);
+}
 
 /* TODO: needs to be designed */
 /* info box */
@@ -405,14 +1100,14 @@ dialog#global-search {
 
   > * {
     line-height: 1;
-    padding: .3em .5em .3em 0;
+    padding: 0.3em 0.5em 0.3em 0;
     font-size: var(--small-font-size);
     /*text-decoration: none;*/
     color: var(--text-2);
 
     &:not(:first-child)::before {
       content: "/";
-      margin-right: .5em;
+      margin-right: 0.5em;
       color: var(--text-2);
       font-weight: normal;
     }
@@ -432,13 +1127,15 @@ dialog#global-search {
 /* deployments page */
 
 .process-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
   overflow-y: auto;
   padding: var(--spacing-2);
   flex: 1;
 }
 
-.bpmn-viewer .react-bpmn-diagram-container {
-  height: 100%;
+.bpmn-viewer .djs-parent {
   min-height: 40vh;
 }
 
@@ -461,14 +1158,18 @@ dialog#global-search {
 }
 
 #go-to {
-  font-size: .8em;
+  font-size: 0.8em;
   font-weight: normal;
   margin: 0;
-  padding: 0;
-  background: none;
-  padding: 0 .2em;
+  background: var(--background-3);
+  color: var(--text);
+  padding: 0.2em 0.5em;
 }
-
+#go-to kbd {
+  font-size: 0.85em;
+  opacity: 0.6;
+  margin-left: 0.3em;
+}
 
 /* StartProcessList */
 
@@ -490,3 +1191,5 @@ dialog#global-search {
     }
   }
 }
+
+/* migrations page */

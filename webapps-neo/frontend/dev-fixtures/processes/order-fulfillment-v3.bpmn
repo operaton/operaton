@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Definitions_OrderFulfillment_v3"
+                  targetNamespace="http://operaton.org/dev-fixtures">
+  <bpmn:process id="orderFulfillment" name="Order Fulfillment" isExecutable="true" camunda:historyTimeToLive="P30D">
+    <bpmn:startEvent id="StartEvent_OrderReceived" name="Order received">
+      <bpmn:outgoing>Flow_StartToValidate</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:serviceTask id="ServiceTask_Validate" name="Validate order"
+                      camunda:type="external" camunda:topic="validate-order">
+      <bpmn:incoming>Flow_StartToValidate</bpmn:incoming>
+      <bpmn:outgoing>Flow_ValidateToRisk</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="ServiceTask_RiskScore" name="Score risk"
+                      camunda:type="external" camunda:topic="risk-score">
+      <bpmn:incoming>Flow_ValidateToRisk</bpmn:incoming>
+      <bpmn:outgoing>Flow_RiskToReviewGw</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="Gateway_NeedsReview" name="Needs review?" default="Flow_AutoApprove">
+      <bpmn:incoming>Flow_RiskToReviewGw</bpmn:incoming>
+      <bpmn:outgoing>Flow_AutoApprove</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ManualReview</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:userTask id="UserTask_FraudReview" name="Fraud review"
+                   camunda:assignee="demo"
+                   camunda:formKey="camunda-forms:deployment:order-manual-review.form">
+      <bpmn:incoming>Flow_ManualReview</bpmn:incoming>
+      <bpmn:outgoing>Flow_ReviewToCharge</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="Gateway_JoinReview">
+      <bpmn:incoming>Flow_AutoApprove</bpmn:incoming>
+      <bpmn:incoming>Flow_ReviewToCharge</bpmn:incoming>
+      <bpmn:outgoing>Flow_JoinToCharge</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="ServiceTask_Charge" name="Charge payment"
+                      camunda:type="external" camunda:topic="charge-payment">
+      <bpmn:incoming>Flow_JoinToCharge</bpmn:incoming>
+      <bpmn:outgoing>Flow_ChargeToPack</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:userTask id="UserTask_PackOrder" name="Pack order" camunda:assignee="demo">
+      <bpmn:incoming>Flow_ChargeToPack</bpmn:incoming>
+      <bpmn:outgoing>Flow_PackToFanout</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:parallelGateway id="Gateway_Fanout">
+      <bpmn:incoming>Flow_PackToFanout</bpmn:incoming>
+      <bpmn:outgoing>Flow_FanoutToEmail</bpmn:outgoing>
+      <bpmn:outgoing>Flow_FanoutToInventory</bpmn:outgoing>
+    </bpmn:parallelGateway>
+
+    <bpmn:serviceTask id="ServiceTask_SendEmail" name="Send confirmation"
+                      camunda:type="external" camunda:topic="send-email">
+      <bpmn:incoming>Flow_FanoutToEmail</bpmn:incoming>
+      <bpmn:outgoing>Flow_EmailToJoin</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:serviceTask id="ServiceTask_UpdateInventory" name="Update inventory"
+                      camunda:type="external" camunda:topic="update-inventory">
+      <bpmn:incoming>Flow_FanoutToInventory</bpmn:incoming>
+      <bpmn:outgoing>Flow_InventoryToJoin</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:parallelGateway id="Gateway_FanIn">
+      <bpmn:incoming>Flow_EmailToJoin</bpmn:incoming>
+      <bpmn:incoming>Flow_InventoryToJoin</bpmn:incoming>
+      <bpmn:outgoing>Flow_JoinToEnd</bpmn:outgoing>
+    </bpmn:parallelGateway>
+
+    <bpmn:endEvent id="EndEvent_OrderShipped" name="Order shipped">
+      <bpmn:incoming>Flow_JoinToEnd</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_StartToValidate" sourceRef="StartEvent_OrderReceived" targetRef="ServiceTask_Validate" />
+    <bpmn:sequenceFlow id="Flow_ValidateToRisk" sourceRef="ServiceTask_Validate" targetRef="ServiceTask_RiskScore" />
+    <bpmn:sequenceFlow id="Flow_RiskToReviewGw" sourceRef="ServiceTask_RiskScore" targetRef="Gateway_NeedsReview" />
+    <bpmn:sequenceFlow id="Flow_AutoApprove" sourceRef="Gateway_NeedsReview" targetRef="Gateway_JoinReview" />
+    <bpmn:sequenceFlow id="Flow_ManualReview" sourceRef="Gateway_NeedsReview" targetRef="UserTask_FraudReview">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${needsReview == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_ReviewToCharge" sourceRef="UserTask_FraudReview" targetRef="Gateway_JoinReview" />
+    <bpmn:sequenceFlow id="Flow_JoinToCharge" sourceRef="Gateway_JoinReview" targetRef="ServiceTask_Charge" />
+    <bpmn:sequenceFlow id="Flow_ChargeToPack" sourceRef="ServiceTask_Charge" targetRef="UserTask_PackOrder" />
+    <bpmn:sequenceFlow id="Flow_PackToFanout" sourceRef="UserTask_PackOrder" targetRef="Gateway_Fanout" />
+    <bpmn:sequenceFlow id="Flow_FanoutToEmail" sourceRef="Gateway_Fanout" targetRef="ServiceTask_SendEmail" />
+    <bpmn:sequenceFlow id="Flow_FanoutToInventory" sourceRef="Gateway_Fanout" targetRef="ServiceTask_UpdateInventory" />
+    <bpmn:sequenceFlow id="Flow_EmailToJoin" sourceRef="ServiceTask_SendEmail" targetRef="Gateway_FanIn" />
+    <bpmn:sequenceFlow id="Flow_InventoryToJoin" sourceRef="ServiceTask_UpdateInventory" targetRef="Gateway_FanIn" />
+    <bpmn:sequenceFlow id="Flow_JoinToEnd" sourceRef="Gateway_FanIn" targetRef="EndEvent_OrderShipped" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_OrderFulfillment_v3">
+    <bpmndi:BPMNPlane id="BPMNPlane_OrderFulfillment_v3" bpmnElement="orderFulfillment">
+      <bpmndi:BPMNShape id="StartEvent_OrderReceived_di" bpmnElement="StartEvent_OrderReceived">
+        <dc:Bounds x="120" y="180" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="100" y="223" width="80" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_Validate_di" bpmnElement="ServiceTask_Validate">
+        <dc:Bounds x="220" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_RiskScore_di" bpmnElement="ServiceTask_RiskScore">
+        <dc:Bounds x="370" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_NeedsReview_di" bpmnElement="Gateway_NeedsReview" isMarkerVisible="true">
+        <dc:Bounds x="515" y="173" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="508" y="143" width="65" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_FraudReview_di" bpmnElement="UserTask_FraudReview">
+        <dc:Bounds x="620" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_JoinReview_di" bpmnElement="Gateway_JoinReview" isMarkerVisible="true">
+        <dc:Bounds x="775" y="173" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_Charge_di" bpmnElement="ServiceTask_Charge">
+        <dc:Bounds x="880" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_PackOrder_di" bpmnElement="UserTask_PackOrder">
+        <dc:Bounds x="1030" y="158" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Fanout_di" bpmnElement="Gateway_Fanout">
+        <dc:Bounds x="1180" y="173" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_SendEmail_di" bpmnElement="ServiceTask_SendEmail">
+        <dc:Bounds x="1285" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_UpdateInventory_di" bpmnElement="ServiceTask_UpdateInventory">
+        <dc:Bounds x="1285" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_FanIn_di" bpmnElement="Gateway_FanIn">
+        <dc:Bounds x="1440" y="173" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_OrderShipped_di" bpmnElement="EndEvent_OrderShipped">
+        <dc:Bounds x="1547" y="180" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1530" y="223" width="71" height="14" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_StartToValidate_di" bpmnElement="Flow_StartToValidate">
+        <di:waypoint x="156" y="198" /><di:waypoint x="220" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ValidateToRisk_di" bpmnElement="Flow_ValidateToRisk">
+        <di:waypoint x="320" y="198" /><di:waypoint x="370" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_RiskToReviewGw_di" bpmnElement="Flow_RiskToReviewGw">
+        <di:waypoint x="470" y="198" /><di:waypoint x="515" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_AutoApprove_di" bpmnElement="Flow_AutoApprove">
+        <di:waypoint x="565" y="198" /><di:waypoint x="775" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ManualReview_di" bpmnElement="Flow_ManualReview">
+        <di:waypoint x="540" y="173" /><di:waypoint x="540" y="120" /><di:waypoint x="620" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ReviewToCharge_di" bpmnElement="Flow_ReviewToCharge">
+        <di:waypoint x="720" y="120" /><di:waypoint x="800" y="120" /><di:waypoint x="800" y="173" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_JoinToCharge_di" bpmnElement="Flow_JoinToCharge">
+        <di:waypoint x="825" y="198" /><di:waypoint x="880" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_ChargeToPack_di" bpmnElement="Flow_ChargeToPack">
+        <di:waypoint x="980" y="198" /><di:waypoint x="1030" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_PackToFanout_di" bpmnElement="Flow_PackToFanout">
+        <di:waypoint x="1130" y="198" /><di:waypoint x="1180" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_FanoutToEmail_di" bpmnElement="Flow_FanoutToEmail">
+        <di:waypoint x="1205" y="173" /><di:waypoint x="1205" y="120" /><di:waypoint x="1285" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_FanoutToInventory_di" bpmnElement="Flow_FanoutToInventory">
+        <di:waypoint x="1205" y="223" /><di:waypoint x="1205" y="280" /><di:waypoint x="1285" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_EmailToJoin_di" bpmnElement="Flow_EmailToJoin">
+        <di:waypoint x="1385" y="120" /><di:waypoint x="1465" y="120" /><di:waypoint x="1465" y="173" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_InventoryToJoin_di" bpmnElement="Flow_InventoryToJoin">
+        <di:waypoint x="1385" y="280" /><di:waypoint x="1465" y="280" /><di:waypoint x="1465" y="223" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_JoinToEnd_di" bpmnElement="Flow_JoinToEnd">
+        <di:waypoint x="1490" y="198" /><di:waypoint x="1547" y="198" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

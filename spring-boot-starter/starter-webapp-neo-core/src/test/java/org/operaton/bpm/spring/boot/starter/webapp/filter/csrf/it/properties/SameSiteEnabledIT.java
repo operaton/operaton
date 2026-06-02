@@ -24,7 +24,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.TestPropertySource;
 
-import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.FilterTestApp;
 import org.operaton.bpm.spring.boot.starter.webapp.filter.util.HttpClientExtension;
 
@@ -50,13 +49,13 @@ class SameSiteEnabledIT {
 
   @Test
   void shouldEnableSameSiteCookie() {
-    httpClientExtension.performRequest("http://localhost:" + port + "/operaton/app/tasklist/default");
+    httpClientExtension.performRequest("http://localhost:" + port + "/app-neo/");
 
     String xsrfCookieValue = httpClientExtension.getXsrfCookie();
     String xsrfTokenHeader = httpClientExtension.getXsrfTokenHeader();
 
     assertThat(xsrfCookieValue).matches("XSRF-TOKEN=[A-Z0-9]{32};" +
-        "Path=" + WebappProperty.DEFAULT_APP_PATH + ";SameSite=Lax");
+        "Path=" + "/app-neo" + ";SameSite=Lax");
     assertThat(xsrfTokenHeader).matches("[A-Z0-9]{32}");
 
     assertThat(xsrfCookieValue).contains(xsrfTokenHeader);

@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
-    <version>1.0.0-rc-1-SNAPSHOT</version>
+    <version>2.1.0-SNAPSHOT</version>
   </parent>
   <groupId>org.operaton.bpm.webapp-neo</groupId>
   <artifactId>operaton-webapp-neo-webjar</artifactId>
@@ -14,6 +14,13 @@
   <properties>
     <skipTests>true</skipTests>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm.webapp-neo</groupId>
+      <artifactId>operaton-webapp-neo</artifactId>
+      <type>war</type>
+    </dependency>
+  </dependencies>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -45,7 +52,7 @@
                   <version>${project.parent.version}</version>
                   <type>war</type>
                   <overWrite>true</overWrite>
-                  <outputDirectory>${project.build.outputDirectory}/META-INF/resources/webjars/operaton
+                  <outputDirectory>${project.build.outputDirectory}/META-INF/resources/webjars/operaton-neo
                   </outputDirectory>
                   <excludes>META-INF/**</excludes>
                 </artifactItem>
@@ -61,10 +68,9 @@
           <execution>
             <phase>generate-resources</phase>
             <configuration>
-              <skip>${skip.frontend.build}</skip>
               <target>
-                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
-                <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton-neo/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton-neo/" failonerror="false"/>
+                <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton-neo/WEB-INF"/>
                 <!-- <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true"/> -->
                 <!-- add operaton-welcome page -->
                 <!-- <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/"> -->

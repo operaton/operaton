@@ -5,17 +5,19 @@ BASEDIR=$(dirname "$0")
 PARENTDIR=$(builtin cd "$BASEDIR/.."; pwd)
 DEPLOYMENT_DIR=$PARENTDIR/configuration/resources
 WEBAPPS_PATH=$BASEDIR/webapps/
+WEBAPPS_NEO_PATH=$BASEDIR/webapps-neo/
 OAUTH2_PATH=$BASEDIR/oauth2/
 REST_PATH=$BASEDIR/rest/
 EXAMPLE_PATH=$BASEDIR/example
 PID_PATH=$BASEDIR/run.pid
 OPTIONS_HELP="Options:
-  --webapps    - Enables the Operaton Webapps
-  --oauth2     - Enables the Operaton Platform Spring Security OAuth2 integration
-  --rest       - Enables the REST API
-  --example    - Enables the example application
-  --production - Applies the production.yaml configuration file
-  --detached   - Starts Operaton as a detached process
+  --webapps-neo - Enables the new Operaton Webapps (served at the root path)
+  --webapps     - Enables the legacy Operaton Webapps (served at /operaton/app)
+  --oauth2      - Enables the Operaton Platform Spring Security OAuth2 integration
+  --rest        - Enables the REST API
+  --example     - Enables the example application
+  --production  - Applies the production.yaml configuration file
+  --detached    - Starts Operaton as a detached process
 "
 
 # set environment parameters
@@ -55,9 +57,13 @@ if [ "$1" = "start" ] ; then
   # inspect arguments
   while [ "$1" != "" ]; do
     case $1 in
+      --webapps-neo ) optionalComponentChosen=true
+                     classPath=$WEBAPPS_NEO_PATH,$classPath
+                     echo WebApps Neo enabled
+                     ;;
       --webapps )    optionalComponentChosen=true
                      classPath=$WEBAPPS_PATH,$classPath
-                     echo WebApps enabled
+                     echo Legacy WebApps enabled
                      ;;
       --oauth2 )     optionalComponentChosen=true
                      classPath=$OAUTH2_PATH,$classPath
@@ -90,17 +96,18 @@ if [ "$1" = "start" ] ; then
     shift
   done
 
-  # If no optional component is chosen, enable REST and Webapps.
+  # If no optional component is chosen, enable REST and the new Webapps (neo).
+  # The legacy webapps stay available via the --webapps flag.
   # If production mode is not chosen, also enable the example application.
   if [ "$optionalComponentChosen" = "false" ]; then
     restChosen=true
     echo REST API enabled
-    echo WebApps enabled
+    echo WebApps Neo enabled
     if [ "$productionChosen" = "false" ]; then
       echo Invoice Example included - needs to be enabled in application configuration as well
       classPath=$EXAMPLE_PATH,$classPath
     fi
-    classPath=$WEBAPPS_PATH,$REST_PATH,$classPath
+    classPath=$WEBAPPS_NEO_PATH,$REST_PATH,$classPath
   fi
 
   # if Swagger UI is enabled but REST is not, warn the user

@@ -68,13 +68,12 @@
           <execution>
             <phase>generate-resources</phase>
             <configuration>
-              <skip>${skip.frontend.build}</skip>
               <target>
-                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/" failonerror="false"/>
                 <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>
-                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true"/>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true" failonerror="false"/>
                 <!-- add operaton-welcome page -->
-                <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/">
+                <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/" failonerror="false">
                   <fileset dir="../operaton-welcome/"/>
                 </copy>
               </target>

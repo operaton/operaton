@@ -55,6 +55,9 @@ const get_task_rendered_form = (state, task_id) =>
 const get_task_deployed_form = (state, task_id) =>
   GET(`/task/${task_id}/deployed-form`, state, state.api.task.deployed_form);
 
+const get_task_form_variables = (state, task_id) =>
+  GET(`/task/${task_id}/form-variables`, state, state.api.task.form_variables);
+
 const claim_task = (state, task_id) =>
   POST(
     `/task/${task_id}/claim`,
@@ -101,30 +104,46 @@ const delete_group = (state, task_id, groupId) =>
 const tasks_with_process_definitions = async (tasks, state) => {
   const definition_ids = [
     ...new Set(tasks.map((task) => task.processDefinitionId)),
-  ];
+  ].filter(Boolean);
 
-  await get_task_process_definitions(state, definition_ids).then((defList) => {
-    const defMap = new Map(defList.map((def) => [def.id, def]));
+  if (definition_ids.length === 0) return tasks;
 
-    tasks.forEach((task) => {
-      const def = defMap.get(task.processDefinitionId);
-      task.definitionName = def?.name ?? "";
-      task.definitionVersion = def?.version ?? "";
-    });
+  const defList = await get_task_process_definitions(state, definition_ids);
+  if (!Array.isArray(defList)) return tasks;
+
+  const defMap = new Map(defList.map((def) => [def.id, def]));
+  tasks.forEach((task) => {
+    const def = defMap.get(task.processDefinitionId);
+    task.definitionName = def?.name ?? "";
+    task.definitionVersion = def?.version ?? "";
   });
 
   return tasks;
 };
 
-const get_tasks = (state, sort_key = "name", sort_order = "asc") => {
+const get_tasks = (state, sort_key = "name", sort_order = "asc", firstResult = 0, maxResults = 3, filter = {}) => {
+  const prev = state.api.task.list.value;
+  state.api.task.list.value = {
+    status: RESPONSE_STATE.LOADING,
+    data: prev?.data,
+    hasMore: prev?.hasMore,
+  };
   let headers = new Headers();
   headers.set(
     "Authorization",
     `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`,
   );
 
+  const params = new URLSearchParams({
+    sortBy: sort_key,
+    sortOrder: sort_order,
+    firstResult,
+    maxResults,
+    ...filter,
+  });
+
   fetch(
-    `${_url_engine_rest(state)}/task?sortBy=${sort_key}&sortOrder=${sort_order}`,
+    `${_url_engine_rest(state)}/task?${params}`,
     { headers },
   )
     .then((response) =>
@@ -132,11 +151,16 @@ const get_tasks = (state, sort_key = "name", sort_order = "asc") => {
     )
     .then((tasks) => tasks_with_process_definitions(tasks, state))
     .then(
-      (json) =>
-        (state.api.task.list.value = {
+      (json) => {
+        const existing = firstResult > 0 ? (prev?.data ?? []) : [];
+        const existingIds = new Set(existing.map((t) => t.id));
+        const newTasks = json.filter((t) => !existingIds.has(t.id));
+        state.api.task.list.value = {
           status: RESPONSE_STATE.SUCCESS,
-          data: json,
-        }),
+          data: [...existing, ...newTasks],
+          hasMore: json.length === maxResults,
+        };
+      },
     )
     .catch(
       (error) =>
@@ -146,13 +170,24 @@ const get_tasks = (state, sort_key = "name", sort_order = "asc") => {
 
 const get_task_process_definitions = (state, ids) =>
   fetch(
-    `${state.server.value.url}/engine-rest/process-definition?processDefinitionIdIn=${ids}`,
+    `${_url_engine_rest(state)}/process-definition?processDefinitionIdIn=${ids}`,
     {
       headers: new Headers({
-        Authorization: `Basic ${window.btoa("demo:demo")}`,
-      }), // fallback, wenn global fehlt
+        Authorization: `Basic ${window.btoa(unescape(encodeURIComponent(get_credentials(state))))}`,
+      }),
     },
   ).then((r) => r.json());
+
+const get_comments = (state, task_id) =>
+  GET(`/task/${task_id}/comment`, state, state.api.task.comment.list);
+
+const create_comment = (state, task_id, message) =>
+  POST(
+    `/task/${task_id}/comment/create`,
+    { message },
+    state,
+    state.api.task.comment.create,
+  );
 
 const post_task_form = (state, task_id, data) =>
   POST(`/task/${task_id}/submit-form`, { variables: data, withVariablesInReturn: true, }, state, state.api.task.submit_form );
@@ -163,8 +198,10 @@ const task = {
   update_task,
   get_task_form,
   get_process_instance_tasks,
+  get_task_process_definitions,
   get_task_rendered_form,
   get_task_deployed_form,
+  get_task_form_variables,
   claim_task,
   unclaim_task,
   assign_task,
@@ -172,6 +209,8 @@ const task = {
   add_group,
   delete_group,
   get_identity_links,
+  get_comments,
+  create_comment,
 };
 
 export default task;

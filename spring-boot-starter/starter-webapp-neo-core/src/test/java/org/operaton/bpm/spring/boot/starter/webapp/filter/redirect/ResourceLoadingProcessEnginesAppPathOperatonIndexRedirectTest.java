@@ -32,8 +32,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {FilterTestApp.class},
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
   properties = {
-    "operaton.bpm.webapp.application-path=/operaton",
-    "operaton.bpm.webapp.index-redirect-enabled=true",
+    "operaton.bpm.webapp.neo.enabled=true",
+    "operaton.bpm.webapp.neo.application-path=/app-neo",
+    "operaton.bpm.webapp.neo.index-redirect-enabled=true",
     "operaton.bpm.admin-user.id=admin"})
 @DirtiesContext
 class ResourceLoadingProcessEnginesAppPathOperatonIndexRedirectTest {
@@ -45,13 +46,11 @@ class ResourceLoadingProcessEnginesAppPathOperatonIndexRedirectTest {
   public int port;
 
   @Test
-  void shouldRedirectRequestToTasklist_contextRoot() {
+  void shouldRedirectAppNeoToAppNeoSlash() {
     // when
-    // send GET request to /operaton
-    HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/operaton");
+    HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/app-neo");
 
     // then
-    // the request should have been redirected to Tasklist
-    assertThat(con.getURL()).hasToString("http://localhost:" + port + "/operaton/app/tasklist/default/");
+    assertThat(con.getURL()).hasToString("http://localhost:" + port + "/app-neo/");
   }
 }

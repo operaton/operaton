@@ -1,28 +1,11 @@
-/*
- * Copyright 2025 the Operaton contributors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at:
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
- 
- 
- /**
+/**
  * state.js
  *
  * Global app state using Preact signals.
  */
 
-import { signal } from '@preact/signals'
-import { createContext } from 'preact'
+import { signal } from "@preact/signals";
+import { createContext } from "preact";
 
 /**
  * Create the global app state by invoking the function in the root [Tasks.jsx`]
@@ -34,33 +17,37 @@ import { createContext } from 'preact'
  * @returns {Object} exposing all defined signals
  */
 const createAppState = () => {
-  const server = signal(get_stored_server())
+  const server = signal(get_stored_server());
   const auth = {
+    mode: import.meta.env.VITE_AUTH_MODE || "basic",
     logged_in: signal({ data: "unknown" }),
-    credentials: signal({username: null, password: null}),
+    credentials: signal({ username: null, password: null }),
+    token: signal(null),
     user: { id: signal() },
     login_response: signal(null),
     logout_response: signal(null),
-  }
+  };
 
   const deployments_page = {
     selected_resource: signal(null),
     selected_deployment: signal(null),
     selected_process_statistics: signal(null),
-  }
-  const history_mode = signal(false)
-  const user_profile = signal(null)
-  const task_claim_result = signal(null)
-  const task_assign_result = signal(null)
+  };
+  const user_profile = signal(null);
+  const user_profile_edit = signal({});
+  const user_profile_edit_response = signal(undefined);
+  const task_claim_result = signal(null);
+  const task_assign_result = signal(null);
 
   const api = {
     authorization: {
       all: signal(null),
+      create: signal(null),
       update: signal(null),
-      delete: signal(null)
+      delete: signal(null),
     },
     engine: {
-      telemetry: signal(null)
+      telemetry: signal(null),
     },
     user: {
       count: signal(null),
@@ -68,8 +55,10 @@ const createAppState = () => {
       create: signal(null),
       // todo: remove demo user when login is implemented
       profile: signal({ id: "demo" }),
+      update: signal(null),
+      delete: signal(null),
       group: {
-        list: signal(null)
+        list: signal(null),
       },
       credentials: signal(null),
       unlock: signal(null),
@@ -77,13 +66,35 @@ const createAppState = () => {
     group: {
       list: signal(null),
       create: signal(null),
-      add_user: signal(null)
+      update: signal(null),
+      delete: signal(null),
+      members: signal(null),
+      add_user: signal(null),
+      remove_member: signal(null),
+    },
+    migration: {
+      generate: signal(null),
+      validation: signal(null),
+      execution: signal(null),
+    },
+    batch: {
+      list: signal(null),
+      one: signal(null),
+      delete: signal(null),
+      update: signal(null),
     },
     tenant: {
       list: signal(null),
       by_member: signal(null),
       create: signal(null),
-      add_user: signal(null)
+      update: signal(null),
+      delete: signal(null),
+      user_members: signal(null),
+      group_members: signal(null),
+      add_user: signal(null),
+      remove_user: signal(null),
+      add_group: signal(null),
+      remove_group: signal(null),
     },
     process: {
       definition: {
@@ -96,6 +107,9 @@ const createAppState = () => {
         start_form: signal(null),
         deployed_start_form: signal(null),
         rendered_form: signal(null),
+        activity_instance_statistics: signal(null),
+        suspend: signal(null),
+        remove: signal(null),
       },
       instance: {
         called: signal(null),
@@ -103,7 +117,10 @@ const createAppState = () => {
         list: signal(null),
         count: signal(null),
         variables: signal(null),
-      }
+        by_defintion_id: signal(null),
+        activity_instances: signal(null),
+        modification: signal(null),
+      },
     },
     task: {
       list: signal(null),
@@ -112,6 +129,7 @@ const createAppState = () => {
       form: signal(null),
       rendered_form: signal(null),
       deployed_form: signal(null),
+      form_variables: signal(null),
       claim_result: signal(null),
       unclaim_result: signal(null),
       assign_result: signal(null),
@@ -119,13 +137,24 @@ const createAppState = () => {
       add_group: signal(null),
       delete_group: signal(null),
       identity_links: signal(null),
+      comment: {
+        list: signal(null),
+        create: signal(null),
+      },
+    },
+    filter: {
+      list: signal(null),
+      one: signal(null),
+      create: signal(null),
+      update: signal(null),
+      delete: signal(null),
     },
     deployment: {
       one: signal(null),
       all: signal(null),
       resources: signal(null),
       resource: signal(null),
-      delete: signal(null)
+      delete: signal(null),
     },
     decision: {
       definitions: signal(null),
@@ -135,40 +164,44 @@ const createAppState = () => {
     history: {
       incident: {
         by_process_definition: signal(null),
-        by_process_instance: signal(null)
+        by_process_instance: signal(null),
       },
       user_operation: signal(null),
     },
     job_definition: {
       all: {
-        by_process_definition: signal(null)
-      }
-    }
-  }
+        by_process_definition: signal(null),
+      },
+    },
+  };
 
   return {
     server,
     auth,
     api,
     deployments_page,
-    history_mode,
     user_profile,
+    user_profile_edit,
+    user_profile_edit_response,
     task_claim_result,
-    task_assign_result
-  }
-}
+    task_assign_result,
+  };
+};
 
-const AppState = createContext(undefined)
+const AppState = createContext(undefined);
 
 const get_stored_server = () => {
-  if (localStorage.getItem('server')) {
-    return JSON.parse(localStorage.getItem('server'))
+  const servers = JSON.parse(import.meta.env.VITE_BACKEND),
+    stored = localStorage.getItem("server");
+
+  if (stored) {
+    const parsed = JSON.parse(stored);
+    if (servers.some((s) => s.url === parsed.url)) return parsed;
   }
 
-  const stored_server = JSON.parse(import.meta.env.VITE_BACKEND)[0]
-  localStorage.setItem('server', JSON.stringify(stored_server))
+  const server = servers[0];
+  localStorage.setItem("server", JSON.stringify(server));
+  return server;
+};
 
-  return stored_server
-}
-
-export { createAppState, AppState }
+export { createAppState, AppState };

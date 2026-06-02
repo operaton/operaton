@@ -1,0 +1,28 @@
+## Test deployment: Operaton + Web Apps (nginx proxy)
+##
+## Services:
+##   - web-apps:  https://operaton-webapps-test.lambdaschmiede.com  (SPA + API proxy via nginx)
+##   - operaton:  internal only (accessed via nginx proxy)
+
+services:
+  operaton:
+    image: operaton/operaton:latest
+    environment:
+      - OPERATON_BPM_RUN_AUTH_ENABLED=true
+      - LOGGING_LEVEL_ROOT=INFO
+    # No ports exposed — accessed only via nginx proxy in web-apps container
+
+  web-apps:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ASSET_DIR=/var/www/html
+      - APP_PREFIX=DOCKER_RUN_PLACEHOLDER_
+      - DOCKER_RUN_PLACEHOLDER_BACKEND=[{\"name\":\"Operaton\",\"url\":\"https://operaton-webapps-test.lambdaschmiede.com\"}]
+      - DOCKER_RUN_PLACEHOLDER_AUTH_MODE=basic
+      - DOCKER_RUN_PLACEHOLDER_HIDE_RELEASE_WARNING=true
+    ports:
+      - "3000:80"
+    depends_on:
+      - operaton

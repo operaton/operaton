@@ -65,12 +65,16 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
   public static final int OPERATON_OAUTH2_ORDER = Ordered.HIGHEST_PRECEDENCE + 100;
   private final OAuth2Properties oAuth2Properties;
   private final String webappPath;
+  private final boolean neoEnabled;
+  private final String neoPath;
 
   public OperatonSpringSecurityOAuth2AutoConfiguration(OperatonBpmProperties properties,
                                                       OAuth2Properties oAuth2Properties) {
     this.oAuth2Properties = oAuth2Properties;
     WebappProperty webapp = properties.getWebapp();
     this.webappPath = webapp.getApplicationPath();
+    this.neoEnabled = webapp.getNeo().isEnabled();
+    this.neoPath = webapp.getNeo().getApplicationPath();
   }
 
   @Bean
@@ -82,7 +86,12 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
         ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM, OAuth2AuthenticationProvider.class.getName()));
     // make sure the filter is registered after the Spring Security Filter Chain
     filterRegistration.setOrder(SecurityFilterProperties.DEFAULT_FILTER_ORDER + 1);
-    filterRegistration.addUrlPatterns(webappPath + "/app/*", webappPath + "/api/*");
+    if (neoEnabled) {
+      // the webapps-neo plugin APIs live under the neo application path
+      filterRegistration.addUrlPatterns(webappPath + "/app/*", webappPath + "/api/*", neoPath + "/api/*");
+    } else {
+      filterRegistration.addUrlPatterns(webappPath + "/app/*", webappPath + "/api/*");
+    }
     filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
     return filterRegistration;
   }
@@ -122,11 +131,18 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
     logger.info("Enabling Operaton Spring Security oauth2 integration");
 
     // @formatter:off
-    http.authorizeHttpRequests(c -> c
-            .requestMatchers(webappPath + "/app/**").authenticated()
-            .requestMatchers(webappPath + "/api/**").authenticated()
-            .anyRequest().permitAll()
-        )
+    http.authorizeHttpRequests(c -> {
+            c.requestMatchers(webappPath + "/app/**").authenticated()
+             .requestMatchers(webappPath + "/api/**").authenticated();
+            if (neoEnabled) {
+              // protect the public REST API and the webapps-neo plugin APIs so the
+              // SecurityContext is populated for the embedded SPA; the SPA shell
+              // itself (index.html, /assets/**) stays public via permitAll below
+              c.requestMatchers("/engine-rest/**").authenticated()
+               .requestMatchers(neoPath + "/api/**").authenticated();
+            }
+            c.anyRequest().permitAll();
+        })
         .addFilterAfter(authorizeTokenFilter, OAuth2AuthorizationRequestRedirectFilter.class)
         .anonymous(AbstractHttpConfigurer::disable)
         .oidcLogout(c -> c.backChannel(Customizer.withDefaults()))

@@ -20,9 +20,8 @@ const TaskForm = () => {
   const rendered_form = state.api.task.rendered_form.value
   const deployed_form = state.api.task.deployed_form.value
 
-  if (!selectedTask.data?.formKey && !selectedTask[refName] && !rendered_form) {
+  if (!selectedTask.formKey && !selectedTask[refName] && !rendered_form) {
     void engine_rest.task.get_task_rendered_form(state, selectedTask.id)
-    void engine_rest.task.get_task_form(state, selectedTask.formKey.substring(13))
   }
 
   if (!selectedTask.formKey && selectedTask[refName] && !deployed_form) {
@@ -38,6 +37,9 @@ const TaskForm = () => {
   }
 
   if (selectedTask.formKey) {
+    if (!state.api.task.form.value) {
+      void engine_rest.task.get_task_form(state, selectedTask.formKey.substring(13))
+    }
 
     // todo: if a link to a document exists, place this url in the generated html
     //  localhost:8088/engine-rest/task/8c317066-e488-11ef-86ef-0242ac140003/variables/invoiceDocument/data
@@ -112,9 +114,15 @@ const parse_html = (state, html) => {
     if (field.getAttribute('cam-variable-type') === 'Long') field.type = 'number'
     if (disable) field.setAttribute('disabled', 'disabled')
     if (field.hasAttribute('required')) {
-      //TODO: Muss noch gemacht werden
-      if (field.type !== 'date') {
-        field.previousElementSibling.textContent += '*'
+      // Mark required fields with asterisk
+      // Try to find label: either previous sibling or parent label (for nested inputs)
+      const prevElement = field.previousElementSibling
+      const parentLabel = field.closest('label')
+
+      if (prevElement && prevElement.tagName === 'LABEL' && !prevElement.textContent.includes('*')) {
+        prevElement.textContent += '*'
+      } else if (parentLabel && !parentLabel.textContent.includes('*')) {
+        parentLabel.textContent += '*'
       }
     }
 

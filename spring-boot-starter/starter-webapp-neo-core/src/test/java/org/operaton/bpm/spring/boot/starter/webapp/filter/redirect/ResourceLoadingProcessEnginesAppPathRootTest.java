@@ -34,8 +34,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(classes = {FilterTestApp.class},
   webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
   properties = {
-    "operaton.bpm.webapp.application-path=/",
-    "operaton.bpm.webapp.index-redirect-enabled=false"})
+    "operaton.bpm.webapp.neo.enabled=true",
+    "operaton.bpm.webapp.neo.application-path="})
 @DirtiesContext
 class ResourceLoadingProcessEnginesAppPathRootTest {
 
@@ -46,23 +46,19 @@ class ResourceLoadingProcessEnginesAppPathRootTest {
   public int port;
 
   @Test
-  void shouldRedirectToStaticContent() throws Exception {
+  void shouldServeSpaIndexAtRoot() throws Exception {
     // given
+    // webapps-neo is served from the application root
+    // when
     // send GET request to /
     HttpURLConnection con = rule.performRequest("http://localhost:" + port + "/");
-
-    // when
-    // get content returned by the request
     String body = IOUtils.toString(con.getInputStream(), UTF_8);
 
     // then
+    // the SPA shell (index.html) is served at the root, not the static placeholder
     assertThat(con.getResponseCode()).isEqualTo(200);
-    // since index-redirect-enabled=false, Operaton should not redirect to Tasklist
-    assertThat(body).doesNotContain("Tasklist")
-        .doesNotContain("Operaton")
-        // the static index.html from /src/test/resources/static was served instead
-        // this is the default Spring Boot behavior that we document for this case
-        .contains("Hello World!");
+    assertThat(body).contains("<title>Operaton</title>")
+        .doesNotContain("Hello World!");
   }
 
 }

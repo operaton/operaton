@@ -1,10 +1,11 @@
 /*
  * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
- * under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
- * Version 2.0; you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * under one or more contributor license agreements.
+ * Modifications Copyright the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
  *
@@ -20,12 +21,12 @@ import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
 
-import org.operaton.bpm.cockpit.Cockpit;
 import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.webapp.impl.security.auth.Authentication;
 import org.operaton.bpm.webapp.impl.security.auth.Authentications;
 import org.operaton.bpm.webapp.impl.security.auth.UserAuthentication;
+import org.operaton.bpm.webapp.impl.util.ProcessEngineUtil;
 
 /**
  * @author Daniel Meyer
@@ -54,7 +55,7 @@ public final class SecurityActions {
   }
 
   private static void clearAuthentication(Authentication authentication) {
-    ProcessEngine processEngine = Cockpit.getProcessEngine(authentication.getProcessEngineName());
+    ProcessEngine processEngine = ProcessEngineUtil.lookupProcessEngine(authentication.getProcessEngineName());
     if(processEngine != null) {
       processEngine.getIdentityService().clearAuthentication();
     }
@@ -62,7 +63,7 @@ public final class SecurityActions {
 
   private static void authenticateProcessEngine(Authentication authentication) {
 
-    ProcessEngine processEngine = Cockpit.getProcessEngine(authentication.getProcessEngineName());
+    ProcessEngine processEngine = ProcessEngineUtil.lookupProcessEngine(authentication.getProcessEngineName());
     if (processEngine != null) {
 
       String userId = authentication.getIdentityId();

@@ -1,10 +1,11 @@
 /*
  * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
- * under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
- * Version 2.0; you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * under one or more contributor license agreements.
+ * Modifications Copyright the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
  *
@@ -21,36 +22,24 @@ import java.util.EnumSet;
 import java.util.Map;
 import jakarta.servlet.*;
 
-import org.glassfish.jersey.servlet.ServletContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 
-import org.operaton.bpm.admin.impl.web.AdminApplication;
-import org.operaton.bpm.admin.impl.web.bootstrap.AdminContainerBootstrap;
-import org.operaton.bpm.cockpit.impl.web.CockpitApplication;
-import org.operaton.bpm.cockpit.impl.web.bootstrap.CockpitContainerBootstrap;
 import org.operaton.bpm.engine.rest.filter.CacheControlFilter;
 import org.operaton.bpm.engine.rest.filter.EmptyBodyFilter;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.AppendTrailingSlashFilter;
-import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.LazyProcessEnginesFilter;
 import org.operaton.bpm.spring.boot.starter.webapp.neo.filter.LazySecurityFilter;
-import org.operaton.bpm.tasklist.impl.web.TasklistApplication;
-import org.operaton.bpm.tasklist.impl.web.bootstrap.TasklistContainerBootstrap;
-import org.operaton.bpm.webapp.impl.engine.EngineRestApplication;
 import org.operaton.bpm.webapp.impl.security.auth.AuthenticationFilter;
 import org.operaton.bpm.webapp.impl.security.filter.CsrfPreventionFilter;
 import org.operaton.bpm.webapp.impl.security.filter.SessionCookieFilter;
 import org.operaton.bpm.webapp.impl.security.filter.headersec.HttpHeaderSecurityFilter;
 import org.operaton.bpm.webapp.impl.security.filter.util.HttpSessionMutexListener;
 import org.operaton.bpm.webapp.impl.util.ServletContextUtil;
-import org.operaton.bpm.welcome.impl.web.WelcomeApplication;
-import org.operaton.bpm.welcome.impl.web.bootstrap.WelcomeContainerBootstrap;
 
 import static java.util.Collections.singletonMap;
-import static org.glassfish.jersey.servlet.ServletProperties.JAXRS_APPLICATION_CLASS;
 
 public class OperatonBpmWebappNeoInitializer implements ServletContextInitializer {
 
@@ -72,10 +61,6 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
 
     servletContext.setSessionTrackingModes(Collections.singleton(SessionTrackingMode.COOKIE));
 
-    servletContext.addListener(new CockpitContainerBootstrap());
-    servletContext.addListener(new AdminContainerBootstrap());
-    servletContext.addListener(new TasklistContainerBootstrap());
-    servletContext.addListener(new WelcomeContainerBootstrap());
     servletContext.addListener(new HttpSessionMutexListener());
 
     WebappProperty webapp = properties.getWebapp();
@@ -86,7 +71,7 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
 
     ServletContextUtil.setAppPath(basePath, servletContext);
 
-    // The webapp filter chain guards the plugin API namespace and the SPA app
+    // The webapp filter chain guards the API namespace (/api/*) and the SPA app
     // paths. When served from a sub-path we can safely map the app wildcard
     // (basePath + "/*"). At the root we must NOT use "/*": it would wrap the
     // whole server, including /engine-rest/* and the legacy /operaton webapp, so
@@ -122,25 +107,11 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
         headerSecurityProperties,
         webappPaths);
 
-    registerFilter("Neo Engines Filter", LazyProcessEnginesFilter.class,
-        webappPaths);
-
     registerFilter("Neo EmptyBodyFilter", EmptyBodyFilter.class,
         webappPaths);
 
     registerFilter("Neo CacheControlFilter", CacheControlFilter.class,
         apiWildcardPath, basePath + "/assets/*");
-
-    registerServlet("Neo Cockpit Api", CockpitApplication.class,
-        basePath + "/api/cockpit/*");
-    registerServlet("Neo Admin Api", AdminApplication.class,
-        basePath + "/api/admin/*");
-    registerServlet("Neo Tasklist Api", TasklistApplication.class,
-        basePath + "/api/tasklist/*");
-    registerServlet("Neo Engine Api", EngineRestApplication.class,
-        basePath + "/api/engine/*");
-    registerServlet("Neo Welcome Api", WelcomeApplication.class,
-        basePath + "/api/welcome/*");
   }
 
   protected String getAuthCacheTTL(WebappProperty webapp) {
@@ -173,19 +144,5 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
     }
 
     return filterRegistration;
-  }
-
-  private ServletRegistration registerServlet(final String servletName, final Class<?> applicationClass, final String... urlPatterns) {
-    ServletRegistration servletRegistration = servletContext.getServletRegistration(servletName);
-
-    if (servletRegistration == null) {
-      servletRegistration = servletContext.addServlet(servletName, ServletContainer.class);
-      servletRegistration.addMapping(urlPatterns);
-      servletRegistration.setInitParameters(singletonMap(JAXRS_APPLICATION_CLASS, applicationClass.getName()));
-
-      log.debug("Servlet {} for URL {} registered.", servletName, urlPatterns);
-    }
-
-    return servletRegistration;
   }
 }

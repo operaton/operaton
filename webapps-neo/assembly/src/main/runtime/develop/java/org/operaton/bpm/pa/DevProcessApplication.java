@@ -1,10 +1,11 @@
 /*
  * Copyright Camunda Services GmbH and/or licensed to Camunda Services GmbH
- * under one or more contributor license agreements. See the NOTICE file
- * distributed with this work for additional information regarding copyright
- * ownership. Camunda licenses this file to you under the Apache License,
- * Version 2.0; you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * under one or more contributor license agreements.
+ * Modifications Copyright the Operaton contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
  *
  *     https://www.apache.org/licenses/LICENSE-2.0
  *
@@ -30,17 +31,24 @@ import java.util.logging.Logger;
 
 import org.joda.time.DateTime;
 
-import org.operaton.bpm.admin.impl.web.SetupResource;
 import org.operaton.bpm.application.PostDeploy;
 import org.operaton.bpm.application.ProcessApplication;
 import org.operaton.bpm.application.impl.ServletProcessApplication;
+import org.operaton.bpm.engine.AuthorizationService;
 import org.operaton.bpm.engine.CaseService;
 import org.operaton.bpm.engine.ExternalTaskService;
+import org.operaton.bpm.engine.IdentityService;
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
+import org.operaton.bpm.engine.authorization.Authorization;
 import org.operaton.bpm.engine.authorization.Groups;
+import org.operaton.bpm.engine.authorization.Permissions;
+import org.operaton.bpm.engine.authorization.Resource;
+import org.operaton.bpm.engine.authorization.Resources;
+import org.operaton.bpm.engine.identity.Group;
+import org.operaton.bpm.engine.identity.User;
 import org.operaton.bpm.engine.externaltask.ExternalTask;
 import org.operaton.bpm.engine.externaltask.LockedExternalTask;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
@@ -359,7 +367,48 @@ public class DevProcessApplication extends ServletProcessApplication {
     user.setCredentials(credentials);
 
     // manually perform setup
-    new SetupResource().createInitialUser(engine.getName(), user);
+    createInitialUser(engine, user);
+  }
+
+  /**
+   * Creates the initial admin user and grants it full administrator rights.
+   * Replaces the former {@code SetupResource#createInitialUser} from the legacy
+   * admin webapp backend, using only public engine API.
+   */
+  private void createInitialUser(ProcessEngine engine, UserDto user) {
+    IdentityService identityService = engine.getIdentityService();
+    AuthorizationService authorizationService = engine.getAuthorizationService();
+
+    // create the user
+    User newUser = identityService.newUser(user.getProfile().getId());
+    user.getProfile().update(newUser);
+    if (user.getCredentials() != null) {
+      newUser.setPassword(user.getCredentials().getPassword());
+    }
+    identityService.saveUser(newUser);
+
+    // ensure the operaton admin group exists with full authorizations
+    if (identityService.createGroupQuery().groupId(Groups.OPERATON_ADMIN).count() == 0) {
+      Group adminGroup = identityService.newGroup(Groups.OPERATON_ADMIN);
+      adminGroup.setName("operaton BPM Administrators");
+      adminGroup.setType(Groups.GROUP_TYPE_SYSTEM);
+      identityService.saveGroup(adminGroup);
+
+      for (Resource resource : Resources.values()) {
+        if (authorizationService.createAuthorizationQuery().groupIdIn(Groups.OPERATON_ADMIN)
+            .resourceType(resource).resourceId(Authorization.ANY).count() == 0) {
+          Authorization adminAuth = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+          adminAuth.setGroupId(Groups.OPERATON_ADMIN);
+          adminAuth.setResource(resource);
+          adminAuth.setResourceId(Authorization.ANY);
+          adminAuth.addPermission(Permissions.ALL);
+          authorizationService.saveAuthorization(adminAuth);
+        }
+      }
+    }
+
+    // add the user to the admin group
+    identityService.createMembership(user.getProfile().getId(), Groups.OPERATON_ADMIN);
   }
 
   private void createTasklistDemoData(ProcessEngine engine) {

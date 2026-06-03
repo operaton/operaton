@@ -1169,6 +1169,60 @@ public interface RuntimeService {
    */
   void signal(String executionId, Map<String, Object> processVariables);
 
+  /**
+   * Triggers one or more activities contained in an active ad-hoc subprocess execution.
+   *
+   * <p>Per-activity variables can be provided via {@code activityVariables} and will
+   * be set as local variables on the newly created child execution for each activity.
+   *
+   * @param executionId the execution id of the active ad-hoc subprocess scope
+   * @param activityIds the ids of inner activities to trigger
+   * @param activityVariables optional map keyed by activity id containing variables
+   *                          to apply for each started activity
+   *
+   * @throws BadUserRequestException
+   *          when the executionId/activityIds are null or empty, the execution does
+   *          not exist, the execution is not an ad-hoc subprocess scope, one or more
+   *          target activities do not exist or are not startable inside the ad-hoc
+   *          subprocess, or one or more activities are already active.
+   */
+  void triggerAdHocActivities(String executionId,
+                              Collection<String> activityIds,
+                              Map<String, Map<String, Object>> activityVariables);
+
+  /**
+   * Completes an active ad-hoc subprocess execution.
+   *
+   * <p>This operation is intended for manually completing an ad-hoc subprocess
+   * scope when no inner activities are currently active.
+   *
+   * @param executionId the execution id of the active ad-hoc subprocess scope
+   *
+   * @throws BadUserRequestException
+   *          when the executionId is null, the execution does not exist,
+   *          the execution is not an ad-hoc subprocess scope, or one or more
+   *          inner activities are currently active.
+   */
+  void completeAdHocSubProcess(String executionId);
+
+  /**
+   * Completes an active ad-hoc subprocess execution and optionally sets variables
+   * before leaving the ad-hoc scope.
+   *
+   * <p>This operation is intended for manually completing an ad-hoc subprocess
+   * scope when no inner activities are currently active.
+   *
+   * @param executionId the execution id of the active ad-hoc subprocess scope
+   * @param variables optional variables to set on the ad-hoc subprocess execution
+   *                  before completion; may be {@code null}
+   *
+   * @throws BadUserRequestException
+   *          when the executionId is null, the execution does not exist,
+   *          the execution is not an ad-hoc subprocess scope, or one or more
+   *          inner activities are currently active.
+   */
+  void completeAdHocSubProcess(String executionId, Map<String, Object> variables);
+
   // Variables ////////////////////////////////////////////////////////////////////
 
   /**

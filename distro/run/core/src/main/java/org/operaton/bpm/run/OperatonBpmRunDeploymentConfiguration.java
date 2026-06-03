@@ -61,8 +61,10 @@ public class OperatonBpmRunDeploymentConfiguration extends DefaultDeploymentConf
 
   protected String getNormalizedDeploymentDir() {
     String result = deploymentDir;
-
-    if (result != null && "\\".equals(File.separator)) {
+    if (StringUtils.isEmpty(result)) {
+      return result;
+    }
+    if(File.separator.equals("\\")) {
       result = result.replace("\\", "/");
     }
     return result;

@@ -20,6 +20,8 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
 import org.operaton.bpm.engine.rest.dto.CreateIncidentDto;
+import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivitiesTriggerDto;
+import org.operaton.bpm.engine.rest.dto.runtime.AdHocSubProcessCompletionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
 import org.operaton.bpm.engine.rest.dto.runtime.IncidentDto;
@@ -36,6 +38,18 @@ public interface ExecutionResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   void signalExecution(ExecutionTriggerDto triggerDto);
+
+  @POST
+  @Path("/ad-hoc-activities/trigger")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  void triggerAdHocActivities(AdHocActivitiesTriggerDto triggerDto);
+
+  @POST
+  @Path("/ad-hoc-activities/complete")
+  @Produces(MediaType.APPLICATION_JSON)
+  @Consumes(MediaType.APPLICATION_JSON)
+  void completeAdHocSubProcess(AdHocSubProcessCompletionDto completionDto);
 
   @Path("/localVariables")
   VariableResource getLocalVariables();

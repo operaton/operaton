@@ -38,10 +38,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Execution with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

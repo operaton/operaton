@@ -1,9 +1,13 @@
+<#-- Reusable text fragments for deprecation notices and error messages -->
+<#assign cmmnDeprecationNotice = "**Deprecated.** CMMN support is scheduled for removal in a future major release. No replacement is available; remove references to this field when migrating away from CMMN.">
+
 <#-- Generates a Query Parameter JSON object -->
 <#macro parameter name location type desc
         enumValues=[]
         defaultValue="" <#-- it will work for boolean, integer, string -->
         format=""
         required=false
+        deprecated=false
         last=false >
   {
     "name": "${name}",
@@ -33,6 +37,10 @@
 
     <#if required>
       "required": true,
+    </#if>
+
+    <#if deprecated>
+      "deprecated": true,
     </#if>
 
     "description": "${removeIndentation(desc)}"
@@ -286,7 +294,29 @@
     <#if !last> , </#if> <#-- if not a last response, add a comma-->
 </#macro>
 
-<#-- Generates an HTTP multi type Response JSON object -->
+<#-- Emits standard 401 (Unauthorized) and 500 (Server Error) response entries.
+     Use last=true when these are the final responses in a responses object.
+     Pass docsUrl from the calling endpoint_macro to generate correct documentation links. -->
+<#macro errorResponses docsUrl="" last=false >
+    <#if !docsUrl?has_content>
+        <#stop "errorResponses requires a non-empty docsUrl to generate valid documentation links.">
+    </#if>
+    <@lib.response
+        code = "401"
+        dto = "ExceptionDto"
+        desc = "The user is not authenticated.
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+                for the error response format." />
+
+    <@lib.response
+        code = "500"
+        dto = "ExceptionDto"
+        last = last
+        desc = "An internal server error occurred.
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+                for the error response format." />
+</#macro>
+
 <#macro multiTypeResponse 
         code 
         desc

@@ -40,7 +40,7 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
   protected static Attribute<String> scriptFormatAttribute;
   protected static ChildElement<Script> scriptChild;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonResultVariableAttribute;
   protected static Attribute<String> operatonResourceAttribute;
@@ -59,7 +59,7 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
     scriptChild = sequenceBuilder.element(Script.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonResultVariableAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_RESULT_VARIABLE)
       .namespace(OPERATON_NS)
@@ -101,7 +101,7 @@ public class ScriptTaskImpl extends TaskImpl implements ScriptTask {
     scriptChild.setChild(this, script);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonResultVariable() {

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "postExecuteFilterList"
       tag = "Filter"
-      summary = "Execute Filter List (POST)"
+      summary = "Execute Filter List"
       desc = "Executes the saved query of the filter by id and returns the result list. This
               method is slightly more powerful then the 
               [Get Execute FilterList](${docsUrl}/reference/rest/filter/get-execute-list/) method
@@ -107,8 +107,9 @@
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format.
                 "
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

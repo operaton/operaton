@@ -16,7 +16,6 @@
  */
 package org.operaton.bpm.engine.cdi.test;
 
-import java.util.logging.Logger;
 import jakarta.enterprise.inject.spi.BeanManager;
 
 import org.jboss.arquillian.container.test.api.Deployment;

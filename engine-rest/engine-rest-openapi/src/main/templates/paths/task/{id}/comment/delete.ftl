@@ -32,11 +32,12 @@
     <@lib.response
         code = "404"
         dto = "AuthorizationExceptionDto"
-        last = true
         desc = "The authenticated user is unauthorized to delete this resource. See the
                         [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                         for the error response format."
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
     }
   }

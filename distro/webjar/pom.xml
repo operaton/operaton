@@ -5,7 +5,7 @@
     <groupId>org.operaton.bpm</groupId>
     <artifactId>operaton-parent</artifactId>
     <relativePath>../../parent</relativePath>
-    <version>2.1.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
   <groupId>org.operaton.bpm.webapp</groupId>
   <artifactId>operaton-webapp-webjar</artifactId>
@@ -65,12 +65,26 @@
       <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
+          <!-- Always move the security filter rules and clean WEB-INF - not frontend-specific -->
           <execution>
+            <id>restructure-webjar-static</id>
             <phase>generate-resources</phase>
             <configuration>
               <target>
-                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/" failonerror="false"/>
+                <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF/securityFilterRules.json" todir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/"/>
                 <delete dir="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/WEB-INF"/>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+          <!-- Only move plugin dir and copy welcome page when the frontend was built -->
+          <execution>
+            <id>restructure-webjar-frontend</id>
+            <phase>generate-resources</phase>
+            <configuration>
+              <target>
                 <move file="${project.build.outputDirectory}/META-INF/resources/webjars/operaton/plugin" tofile="${project.build.outputDirectory}/META-INF/resources/plugin" verbose="true" failonerror="false"/>
                 <!-- add operaton-welcome page -->
                 <copy todir="${project.build.outputDirectory}/META-INF/resources/operaton-welcome/" failonerror="false">

@@ -29,7 +29,7 @@ import org.slf4j.Logger;
 import org.operaton.bpm.engine.*;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.history.UserOperationLogEntry;
-import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
+import org.operaton.bpm.engine.impl.HistoryLevelUtils;
 import org.operaton.bpm.engine.impl.ManagementServiceImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
@@ -511,7 +511,7 @@ public abstract class TestHelper {
             dbEntityManager.merge(historyLevelProperty);
           }
         } else {
-          HistoryLevelSetupCommand.dbCreateHistoryLevel(commandContext);
+          HistoryLevelUtils.dbCreateHistoryLevel(commandContext);
         }
         return null;
       });

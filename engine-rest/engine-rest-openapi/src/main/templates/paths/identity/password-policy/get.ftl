@@ -66,8 +66,9 @@
         code = "404"
         dto = "ExceptionDto"
         desc = "No password policy was found."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

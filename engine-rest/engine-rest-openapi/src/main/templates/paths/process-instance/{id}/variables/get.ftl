@@ -77,8 +77,9 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "Process instance with given id does not exist."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

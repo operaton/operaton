@@ -58,7 +58,7 @@ class ProcessTest extends BpmnModelElementInstanceTest {
       new AttributeAssumption("processType", false, false, ProcessType.None),
       new AttributeAssumption("isClosed", false, false, false),
       new AttributeAssumption("isExecutable"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "candidateStarterGroups"),
       new AttributeAssumption(OPERATON_NS, "candidateStarterUsers"),
       new AttributeAssumption(OPERATON_NS, "jobPriority"),

@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.scripting.engine;
 
 import javax.script.Bindings;
+import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
@@ -144,11 +145,56 @@ public class ScriptingEngines implements DmnScriptEngineResolver {
     return scriptEngine;
   }
 
-  /** override to build a spring aware ScriptingEngines
-   * @param engineBindin
-   * @param scriptEngine */
+  /**
+   * override to build a Spring-aware Scripting engine
+   */
   public Bindings createBindings(ScriptEngine scriptEngine, VariableScope variableScope) {
+    if (!isCachableEngine(scriptEngine)) {
+      return createBindingsForNonCachableEngine(scriptEngine, variableScope);
+    }
     return scriptBindingsFactory.createBindings(variableScope, scriptEngine.createBindings());
+  }
+
+  /**
+   * Creates bindings for non-cachable script engines (e.g., GraalJS) by using the engine's
+   * default ENGINE_SCOPE bindings directly, populated with resolver values.
+   * <p>
+   * This avoids wrapping the engine's bindings in {@link ScriptBindings}, which would cause
+   * GraalJS to create additional polyglot Contexts during evaluation. GraalJS checks if
+   * ENGINE_SCOPE bindings are {@code GraalJSBindings} and creates a new polyglot Context
+   * when they are not. By using the engine's default bindings (which ARE GraalJSBindings),
+   * the existing polyglot Context is reused, preventing a memory leak under sustained load.
+   * </p>
+   * <p>
+   * <strong>Note:</strong> The {@code autoStoreScriptVariables} feature
+   * ({@link org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl#setAutoStoreScriptVariables})
+   * is not supported for non-cachable engines like GraalJS. GraalJS evaluates scripts inside
+   * a native polyglot Context and does not write script-local variables back to the Java
+   * bindings object.
+   * Use explicit {@code execution.setVariable()} calls inside scripts to persist variables.
+   * </p>
+   */
+  private Bindings createBindingsForNonCachableEngine(ScriptEngine scriptEngine, VariableScope variableScope) {
+    Bindings engineBindings = scriptEngine.getBindings(ScriptContext.ENGINE_SCOPE);
+    for (ResolverFactory resolverFactory : scriptBindingsFactory.getResolverFactories()) {
+      Resolver resolver = resolverFactory.createResolver(variableScope);
+      if (resolver != null) {
+        for (String key : resolver.keySet()) {
+          engineBindings.put(key, resolver.get(key));
+        }
+      }
+    }
+    return engineBindings;
+  }
+
+  /**
+   * Checks if the given script engine is cachable ({@code THREADING} parameter is not null).
+   * Non-cachable engines like GraalJS require special bindings handling to avoid
+   * creating additional polyglot Contexts per evaluation. They do not support the {@code THREADING} parameter.
+   */
+  public static boolean isCachableEngine(ScriptEngine scriptEngine) {
+    Object threading = scriptEngine.getFactory().getParameter("THREADING");
+    return threading != null;
   }
 
   public ScriptBindingsFactory getScriptBindingsFactory() {

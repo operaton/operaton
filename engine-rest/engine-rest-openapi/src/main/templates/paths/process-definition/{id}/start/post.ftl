@@ -188,6 +188,13 @@
                 for the error response format." />
 
     <@lib.response
+        code = "401"
+        dto = "ExceptionDto"
+        desc = "The user is not authenticated.
+                See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
+                for the error response format." />
+
+    <@lib.response
         code = "500"
         dto = "ExceptionDto"
         last = true

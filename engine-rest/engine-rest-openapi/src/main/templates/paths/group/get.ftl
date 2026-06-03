@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getQueryGroups"
       tag = "Group"
-      summary = "Get List"
+      summary = "List Groups"
       desc = "Queries for a list of groups using a list of parameters. The size of the result set can be retrieved
               by using the [Get Group Count](${docsUrl}/reference/rest/group/get-query-count) method." />
 
@@ -46,10 +46,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid, for example if a `sortOrder` parameter is supplied,
                 but no `sortBy` is specified. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

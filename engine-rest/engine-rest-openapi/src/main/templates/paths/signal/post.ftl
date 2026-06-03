@@ -59,12 +59,13 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if a single execution is specified and no such execution exists or has not
                 subscribed to the signal.
 
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the
                 error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

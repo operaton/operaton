@@ -32,7 +32,7 @@ public interface BusinessRuleTask extends Task {
 
   void setImplementation(String implementation);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonClass();
 

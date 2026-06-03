@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getComment"
       tag = "Task Comment"
-      summary = "Get"
+      summary = "Get Task Comment"
       desc = "Retrieves a task comment by task id and comment id." />
 
   "parameters" : [
@@ -50,11 +50,12 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "The task or comment with given task and comment id does not exist, or the history of
                 the engine is disabled. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

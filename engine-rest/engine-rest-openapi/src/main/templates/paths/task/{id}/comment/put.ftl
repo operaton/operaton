@@ -4,7 +4,7 @@
     <@lib.endpointInfo
         id = "updateTaskComment"
         tag = "Task Comment"
-        summary = "Update"
+        summary = "Update Task Comment"
         desc = "Updates a Comment." />
 
   "parameters" : [
@@ -47,10 +47,11 @@
     <@lib.response
         code = "404"
         dto = "AuthorizationExceptionDto"
-        last = true
         desc = "The authenticated user is unauthorized to update this resource. See the
                         [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                         for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
    }
   }

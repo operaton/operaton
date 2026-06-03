@@ -25,9 +25,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
+import org.operaton.connect.spi.CloseableConnectorResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 class HttpResponseTest {
   private static final String EXAMPLE_URL = "https://operaton.org";
@@ -90,6 +92,28 @@ class HttpResponseTest {
     assertThat(response.getHeader("foo")).isEqualTo("bar");
     assertThat(response.getHeader("hello")).isEqualTo("world");
     assertThat(response.getHeader("unknown")).isNull();
+  }
+
+  @Test
+  void responseShouldBeClosableAfterReadingParameters() {
+    testResponse.payload("test body");
+    HttpResponse response = getResponse();
+    // access all parameters to trigger collectResponseParameters
+    assertThat(response.getStatusCode()).isEqualTo(200);
+    assertThat(response.getResponse()).isEqualTo("test body");
+    assertThat(response.getHeaders()).isNotNull();
+    // calling close() after parameters have been collected should not throw
+    assertThat(response).isInstanceOf(CloseableConnectorResponse.class);
+    assertDoesNotThrow(response::close);
+  }
+
+  @Test
+  void responseShouldBeClosableWithoutReadingParameters() {
+    testResponse.payload("test body");
+    HttpResponse response = getResponse();
+    // close without ever reading parameters — should not throw
+    assertThat(response).isInstanceOf(CloseableConnectorResponse.class);
+    assertDoesNotThrow(response::close);
   }
 
   protected HttpResponse getResponse() {

@@ -16,7 +16,6 @@
         code = "200"
         dto = "TelemetryDataDto"
         desc = "Request successful."
-        last = true
         examples = ['"example-1": {
                        "summary": "Status 200 Response",
                        "description": "The Response content of a status 200",
@@ -72,6 +71,8 @@
                            }
                        }
                      }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

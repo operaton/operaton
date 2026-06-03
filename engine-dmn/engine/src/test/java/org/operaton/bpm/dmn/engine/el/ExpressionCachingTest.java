@@ -54,6 +54,11 @@ class ExpressionCachingTest {
     when(scriptEngineSpy.compile(anyString())).thenReturn(mock(CompiledScript.class));
     when(scriptEngineManager.getEngineByName(anyString())).thenReturn(scriptEngineSpy);
 
+    // Stub factory so isCachableEngine() can check THREADING parameter
+    javax.script.ScriptEngineFactory factoryMock = mock(javax.script.ScriptEngineFactory.class);
+    when(factoryMock.getParameter("THREADING")).thenReturn("MULTITHREADED");
+    when(scriptEngineSpy.getFactory()).thenReturn(factoryMock);
+
     DefaultDmnEngineConfiguration configuration = new DefaultDmnEngineConfiguration();
 
     configuration.setScriptEngineResolver(new DefaultScriptEngineResolver(scriptEngineManager));

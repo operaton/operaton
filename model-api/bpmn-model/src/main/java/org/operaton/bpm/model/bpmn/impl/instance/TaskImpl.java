@@ -35,7 +35,7 @@ import static org.operaton.bpm.model.bpmn.impl.BpmnModelConstants.*;
  */
 public class TaskImpl extends ActivityImpl implements Task {
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<Boolean> operatonAsyncAttribute;
 
@@ -46,7 +46,7 @@ public class TaskImpl extends ActivityImpl implements Task {
       .extendsType(Activity.class)
       .instanceProvider(TaskImpl::new);
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)
@@ -66,7 +66,7 @@ public class TaskImpl extends ActivityImpl implements Task {
     throw new ModelTypeException("No builder implemented.");
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

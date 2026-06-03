@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getBatches"
       tag = "Batch"
-      summary = "Get List"
+      summary = "List Batches"
       desc = "Queries for batches that fulfill given parameters. Parameters may be the properties of batches, such as the id or type.
               The size of the result set can be retrieved by using the
               [Get Batch Count](${docsUrl}/reference/rest/batch/get-query-count/) method." />
@@ -53,10 +53,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid,
                 for example if a `sortOrder` parameter is supplied, but no `sortBy`.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

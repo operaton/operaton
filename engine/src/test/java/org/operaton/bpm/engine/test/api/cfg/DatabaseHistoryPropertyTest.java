@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
-import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
+import org.operaton.bpm.engine.impl.DefaultHistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.ProcessEngineImpl;
 import org.operaton.bpm.engine.impl.SchemaOperationsProcessEngineBuild;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -67,7 +67,7 @@ class DatabaseHistoryPropertyTest {
 
     processEngineImpl.getProcessEngineConfiguration()
     .getCommandExecutorSchemaOperations()
-    .execute(new HistoryLevelSetupCommand());
+    .execute(new DefaultHistoryLevelSetupCommand());
 
     assertHistoryLevel();
   }
@@ -85,7 +85,7 @@ class DatabaseHistoryPropertyTest {
 
     processEngineImpl.getProcessEngineConfiguration()
     .getCommandExecutorSchemaOperations()
-    .execute(new HistoryLevelSetupCommand());
+    .execute(new DefaultHistoryLevelSetupCommand());
 
     assertHistoryLevel();
   }

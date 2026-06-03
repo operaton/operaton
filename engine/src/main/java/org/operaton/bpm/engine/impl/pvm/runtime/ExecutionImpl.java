@@ -50,6 +50,7 @@ public class ExecutionImpl extends PvmExecutionImpl implements Serializable, Act
 
   @Serial
   private static final long serialVersionUID = 1L;
+  @SuppressWarnings("rawtypes")
   private static final VariableInstanceFactory VARIABLE_INSTANCE_FACTORY = new SimpleVariableInstanceFactory();
 
   private static final AtomicInteger idGenerator = new AtomicInteger();

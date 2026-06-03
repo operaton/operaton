@@ -71,9 +71,10 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Not Found
                 A Process Variable with the given id does not exist. "/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

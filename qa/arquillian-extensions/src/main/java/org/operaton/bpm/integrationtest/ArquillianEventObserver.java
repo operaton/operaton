@@ -30,20 +30,20 @@ import java.util.Map;
 
 /**
  * {@link org.jboss.arquillian.core.api.annotation.Observer} for Arquillian lifecycle events.
- * Observes {@link ContainerRegistry} event and facilitates ability to start jdbc database
+ * Observes {@link ContainerRegistry} event and facilitates the ability to start jdbc database
  * container before and provide connection information to Arquillian container.
  */
 @SuppressWarnings("rawtypes")
 public class ArquillianEventObserver {
 
   private static final String POSTGRES = "postgres";
-  private static final String POSTGRES_VERSION = "13.2";
+  private static final String POSTGRES_VERSION = "14";
 
   private static final String SQLSERVER = "sqlserver";
   private static final String SQLSERVER_VERSION = "2022-latest";
 
   private static final String MARIADB = "mariadb";
-  private static final String MARIADB_VERSION = "10.0";
+  private static final String MARIADB_VERSION = "10.11";
 
   private static final String ORACLE = "oracle";
   private static final String ORACLE_VERSION = "21-faststart";
@@ -52,7 +52,7 @@ public class ArquillianEventObserver {
   private static final String DB2_VERSION = "12.1.2.0";
 
   private static final String MYSQL = "mysql";
-  private static final String MYSQL_VERSION = "9.2.0";
+  private static final String MYSQL_VERSION = "8.4";
 
   // Initialized with providers, so we do not start all containers at the same time here statically upon initialization
   private static final Map<String, JdbcDatabaseContainer> AVAILABLE_DB_CONTAINERS = Map.of(

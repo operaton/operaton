@@ -68,8 +68,9 @@
         dto = "ExceptionDto"
         desc = "Update or delete could not be executed, for example because the execution does not
                 exist."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

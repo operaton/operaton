@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getProcessDefinitionByKey"
       tag = "Process Definition"
-      summary = "Get"
+      summary = "Get Process Definition by Key"
       desc = "Retrieves the latest version of the process definition which belongs to no tenant according to the `ProcessDefinition` interface in the engine." />
 
   "parameters" : [
@@ -48,10 +48,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Process definition with given `key` does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

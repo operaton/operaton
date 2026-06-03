@@ -45,7 +45,7 @@ class ServiceTaskTest extends BpmnModelElementInstanceTest {
     return List.of(
       new AttributeAssumption("implementation", false, false, "##WebService"),
       new AttributeAssumption("operationRef"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "class"),
       new AttributeAssumption(OPERATON_NS, "delegateExpression"),
       new AttributeAssumption(OPERATON_NS, "expression"),

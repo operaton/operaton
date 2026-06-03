@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.boot.diagnostics.FailureAnalyzedException;
+
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
@@ -79,7 +81,7 @@ public final class OperatonBpmRunProcessEnginePluginHelper {
                                                Map<String, Object> properties) {
     try {
       SpringBootStarterPropertyHelper.applyProperties(plugin, properties, false);
-    } catch (SpringBootStarterException e) {
+    } catch (SpringBootStarterException | FailureAnalyzedException e) {
       throw LOG.pluginPropertyNotFound(plugin.getClass().getCanonicalName(), e);
     }
   }

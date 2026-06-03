@@ -39,7 +39,7 @@ public class BusinessRuleTaskTest extends BpmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("implementation", false, false, "##unspecified"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "class"),
       new AttributeAssumption(OPERATON_NS, "delegateExpression"),
       new AttributeAssumption(OPERATON_NS, "expression"),

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "deleteDeployment"
       tag = "Deployment"
-      summary = "Delete"
+      summary = "Delete Deployment"
       desc = "Deletes a deployment by id." />
 
   "parameters" : [
@@ -50,10 +50,11 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "A Deployment with the provided id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

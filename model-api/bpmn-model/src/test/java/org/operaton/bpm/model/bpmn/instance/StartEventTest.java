@@ -39,7 +39,7 @@ public class StartEventTest extends BpmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("isInterrupting", false, false, true),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "async", false, false, false),
       new AttributeAssumption(OPERATON_NS, "formHandlerClass"),
       new AttributeAssumption(OPERATON_NS, "formKey"),

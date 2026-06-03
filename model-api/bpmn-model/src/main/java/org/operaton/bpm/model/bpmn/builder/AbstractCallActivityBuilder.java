@@ -41,7 +41,7 @@ public class AbstractCallActivityBuilder<B extends AbstractCallActivityBuilder<B
     return myself;
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * Sets the operaton async attribute to true.

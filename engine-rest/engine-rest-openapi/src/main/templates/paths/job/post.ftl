@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryJobs"
       tag = "Job"
-      summary = "Get Jobs (POST)"
+      summary = "List Jobs"
       desc = "Queries for jobs that fulfill given parameters. This method is slightly more
               powerful than the [Get Jobs](${docsUrl}/reference/rest/job/get-query/)
               method because it allows filtering by multiple jobs of types `String`,
@@ -114,8 +114,9 @@
                 for due date comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

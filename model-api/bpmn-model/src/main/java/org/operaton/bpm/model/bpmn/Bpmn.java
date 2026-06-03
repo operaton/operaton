@@ -631,7 +631,7 @@ public class Bpmn {
     BpmnPlaneImpl.registerType(bpmnModelBuilder);
     BpmnShapeImpl.registerType(bpmnModelBuilder);
 
-    /** operaton extensions */
+    // Operaton extensions
     OperatonConnectorImpl.registerType(bpmnModelBuilder);
     OperatonConnectorIdImpl.registerType(bpmnModelBuilder);
     OperatonConstraintImpl.registerType(bpmnModelBuilder);

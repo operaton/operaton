@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "getEventSubscriptions"
       tag = "Event Subscription"
-      summary = "Get List"
+      summary = "List Event Subscriptions"
       desc = "Queries for event subscriptions that fulfill given parameters.
               The size of the result set can be retrieved by using the
               [Get Event Subscriptions count](${docsUrl}/reference/rest/event-subscription/get-query-count/) method." />
@@ -55,12 +55,13 @@
    <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid,
                 for example if a `sortOrder` parameter is supplied, but no `sortBy`.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

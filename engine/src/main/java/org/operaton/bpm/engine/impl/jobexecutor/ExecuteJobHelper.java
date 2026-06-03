@@ -24,14 +24,24 @@ import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandExecutor;
 import org.operaton.bpm.engine.impl.interceptor.ProcessDataContext;
 
+import static java.util.Objects.requireNonNull;
+
 public final class ExecuteJobHelper {
 
   private static final JobExecutorLogger LOG = ProcessEngineLogger.JOB_EXECUTOR_LOGGER;
 
   // Default behavior, just log exception
-  public static ExceptionLoggingHandler loggingHandler = LOG::exceptionWhileExecutingJob;
+  private static ExceptionLoggingHandler loggingHandler = LOG::exceptionWhileExecutingJob;
 
   private ExecuteJobHelper() {
+  }
+
+  public static ExceptionLoggingHandler getLoggingHandler() {
+    return loggingHandler;
+  }
+
+  public static void setLoggingHandler(ExceptionLoggingHandler loggingHandler) {
+    ExecuteJobHelper.loggingHandler = requireNonNull(loggingHandler);
   }
 
   public static void executeJob(String jobId, CommandExecutor commandExecutor) {

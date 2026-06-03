@@ -4,7 +4,7 @@
     <@lib.endpointInfo
         id = "deleteProcessInstanceComment"
         tag = "Process Instance Comment"
-        summary = "Delete"
+        summary = "Delete Process Instance Comment"
         desc = "Removes a comment from a process instance by id." />
 
   "parameters" : [
@@ -41,10 +41,11 @@
     <@lib.response
         code = "404"
         dto = "AuthorizationExceptionDto"
-        last = true
         desc = "The authenticated user is unauthorized to delete this resource. See the
                         [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                         for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
     }
   }

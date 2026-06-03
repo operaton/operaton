@@ -34,10 +34,11 @@ runs:
   using: "composite"
   steps:
     - name: Define mvnd Variables
+      env:
+        MVND_VERSION: ${{ inputs.mvnd-version }}
+        MVND_PLATFORM: ${{ inputs.platform }}
       shell: bash
       run: |
-        MVND_VERSION="${{ inputs.mvnd-version }}"
-        MVND_PLATFORM="${{ inputs.platform }}"
         MVND_DIR="$HOME/mvnd"
         
         echo "MVND_VERSION=$MVND_VERSION" >> $GITHUB_ENV

@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getAttachment"
       tag = "Task Attachment"
-      summary = "Get"
+      summary = "Get Task Attachment"
       desc = "Retrieves a task attachment by task id and attachment id." />
 
   "parameters" : [
@@ -56,11 +56,12 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "The attachment for the given task and attachment id does not exist or the history of the engine is
                 disabled.
 
                 See the [Introduction](/reference/rest/overview/#error-handling) for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

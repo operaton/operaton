@@ -68,8 +68,8 @@ PACKAGE_LOCK_FILES=($(find . -name package-lock.json -not -path "*/node_modules/
 
 for PACKAGE_LOCK_FILE in "${PACKAGE_LOCK_FILES[@]}"; do
   PACKAGE_LOCK_DIR=$(dirname "$PACKAGE_LOCK_FILE")
-  echo "  Running npm install --package-lock-only in $PACKAGE_LOCK_DIR"
-  (cd "$PACKAGE_LOCK_DIR" && npm install --package-lock-only)
+  echo "  Running npm install --package-lock-only --ignore-scripts in $PACKAGE_LOCK_DIR"
+  (cd "$PACKAGE_LOCK_DIR" && npm install --package-lock-only --ignore-scripts)
 done
 
 echo "🔄 Updating version in pom.xml files that are not part of the reactor"
@@ -95,6 +95,14 @@ done
 
 echo "🔄 Updating version in jreleaser.yml"
 sed -i '' -E "s/previousTagName: v.+/previousTagName: v$CURRENT_VERSION_WITHOUT_SNAPSHOT/" jreleaser.yml
+
+echo "🔄 Updating version in .github/jreleaser/changelog.tpl"
+if [[ $NEW_VERSION_WITHOUT_SNAPSHOT =~ ^([0-9]+)\.([0-9]+)\. ]]; then
+  MAJOR="${BASH_REMATCH[1]}"
+  MINOR="${BASH_REMATCH[2]}"
+  NEW_VERSION_UNDERSCORE="${MAJOR}_${MINOR}"
+  sed -i '' "s|release-notes/[0-9_]*/|release-notes/${NEW_VERSION_UNDERSCORE}/|" .github/jreleaser/changelog.tpl
+fi
 
 MISSED_FILES=$(grep -R "$CURRENT_VERSION" --include pom.xml --include package.json  .)
 if [ -n "$MISSED_FILES" ]; then

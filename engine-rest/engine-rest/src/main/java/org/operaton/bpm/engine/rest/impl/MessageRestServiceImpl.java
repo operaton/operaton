@@ -140,9 +140,9 @@ public class MessageRestServiceImpl extends AbstractRestProcessEngineAware imple
       builder.processInstanceBusinessKey(messageDto.getBusinessKey());
     }
 
-    correlationKeys.entrySet().stream().forEach(entry -> builder.processInstanceVariableEquals(entry.getKey(), entry.getValue()));
+    correlationKeys.entrySet().forEach(entry -> builder.processInstanceVariableEquals(entry.getKey(), entry.getValue()));
 
-    localCorrelationKeys.entrySet().stream().forEach(entry -> builder.localVariableEquals(entry.getKey(), entry.getValue()));
+    localCorrelationKeys.entrySet().forEach(entry -> builder.localVariableEquals(entry.getKey(), entry.getValue()));
 
     if (messageDto.getTenantId() != null) {
       builder.tenantId(messageDto.getTenantId());

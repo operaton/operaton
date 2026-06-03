@@ -29,7 +29,7 @@ import static org.operaton.bpm.engine.test.assertions.bpmn.AbstractAssertions.in
  * Tests {@link PaContextCacheTest1}, {@link PaContextCacheTest2}, {@link PaContextCacheTest3}
  * {@link PaContextCacheTest4} and {@link PaContextCacheTest5} are meant to be run together
  * so that ApplicationContext caching is tested.
- * See {@link PaContextCacheTestSuite} for a detailed explanation.
+ * See {@link PaContextCacheTestCase} for a detailed explanation.
  *
  * @author Nikola Koevski
  */

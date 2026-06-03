@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getGroupCount"
       tag = "Group"
-      summary = "Get List Count"
+      summary = "Count Groups"
       desc = "Queries for groups using a list of parameters and retrieves the count."
   />
 
@@ -37,11 +37,12 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response
                 format."
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -36,7 +36,7 @@ class ConditionalEventDefinitionTest extends AbstractEventDefinitionTest {
   @Override
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "variableName"),
       new AttributeAssumption(OPERATON_NS, "variableEvents")
     );

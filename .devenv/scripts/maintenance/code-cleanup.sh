@@ -77,10 +77,9 @@ for cleanup in "${CLEANUPS[@]}"; do
 done
 
 if [[ $RUN_IMPORTS -eq 1 ]]; then
-  echo "ℹ️  Running: ./mvnw -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes=org.openrewrite.java.OrderImports -Drewrite.activeStyles=org.operaton.style.OperatonJavaStyle -Drewrite.exportDatatables=true -Dskip.frontend.build=true -P$PROFILES"
+  echo "ℹ️  Running: ./mvnw -U org.openrewrite.maven:rewrite-maven-plugin:run -Drewrite.activeRecipes=org.operaton.recipe.OperatonJavaFormat -Drewrite.exportDatatables=true -Dskip.frontend.build=true -P$PROFILES"
   ./mvnw -U org.openrewrite.maven:rewrite-maven-plugin:run \
-    -Drewrite.activeRecipes=org.openrewrite.java.OrderImports \
-    -Drewrite.activeStyles=org.operaton.style.OperatonJavaStyle \
+    -Drewrite.activeRecipes=org.operaton.recipe.OperatonJavaFormat \
     -Drewrite.exportDatatables=true \
     -Dskip.frontend.build=true \
     -P$PROFILES

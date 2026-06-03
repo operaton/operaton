@@ -38,25 +38,29 @@
   <@lib.property
       name = "caseDefinitionKey"
       type = "string"
-      desc = "The key of the case definition the task belongs to."
+      deprecated = true
+      desc = "The key of the case definition the task belongs to. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
       name = "caseDefinitionId"
       type = "string"
-      desc = "The id of the case definition the task belongs to."
+      deprecated = true
+      desc = "The id of the case definition the task belongs to. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
       name = "caseInstanceId"
       type = "string"
-      desc = "The id of the case instance the task belongs to."
+      deprecated = true
+      desc = "The id of the case instance the task belongs to. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property
       name = "caseExecutionId"
       type = "string"
-      desc = "The id of the case execution the task belongs to."
+      deprecated = true
+      desc = "The id of the case execution the task belongs to. ${lib.cmmnDeprecationNotice}"
   />
 
   <@lib.property

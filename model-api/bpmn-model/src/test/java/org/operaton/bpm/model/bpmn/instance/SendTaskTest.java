@@ -41,7 +41,7 @@ public class SendTaskTest extends BpmnModelElementInstanceTest {
       new AttributeAssumption("implementation", false, false, "##WebService"),
       new AttributeAssumption("messageRef"),
       new AttributeAssumption("operationRef"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "class"),
       new AttributeAssumption(OPERATON_NS, "delegateExpression"),
       new AttributeAssumption(OPERATON_NS, "expression"),

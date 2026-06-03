@@ -1060,7 +1060,7 @@ class ProcessInstanceModificationTest {
     ProcessInstance instance = runtimeService.startProcessInstanceByKey("transitionListenerProcess",
         Variables.createVariables().putValue("listener", new RecorderExecutionListener()));
 
-    runtimeService.createProcessInstanceModification(instance.getId()).startTransition("flow2").execute();
+    runtimeService.createProcessInstanceModification(instance.getId()).startAfterActivity("task1").execute();
 
     // transition listener should have been invoked
     List<RecordedEvent> events = RecorderExecutionListener.getRecordedEvents();

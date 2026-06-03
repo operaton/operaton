@@ -38,11 +38,12 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if the task does not exist. This could indicate a wrong task id as well as a cancelled task, 
                 e.g., due to a caught BPMN boundary event. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

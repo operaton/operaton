@@ -7,7 +7,7 @@
   <@lib.endpointInfo
       id = "getHistoricTaskInstanceReport"
       tag = "Historic Task Instance"
-      summary = "Get Task Report (Historic)"
+      summary = "Get Historic Task Report"
       desc = "Retrieves a report of completed tasks. When the report type is set to `count`, the
               report contains a list of completed task counts where an entry contains the task name, the
               definition key of the task, the process definition id, the process definition key, the process
@@ -135,8 +135,9 @@
                 parameter is supplied, but the date format is wrong. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

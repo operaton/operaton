@@ -263,7 +263,7 @@ public final class BpmnModelConstants {
   public static final String BPMNDI_ELEMENT_BPMN_LABEL = "BPMNLabel";
   public static final String BPMNDI_ELEMENT_BPMN_EDGE = "BPMNEdge";
 
-  /** operaton extensions */
+  // Operaton extensions
 
   public static final String OPERATON_ELEMENT_CONNECTOR = "connector";
   public static final String OPERATON_ELEMENT_CONNECTOR_ID = "connectorId";
@@ -412,7 +412,7 @@ public final class BpmnModelConstants {
   public static final String BPMNDI_ATTRIBUTE_CHOREOGRAPHY_ACTIVITY_SHAPE = "choreographyActivityShape";
   public static final String BPMNDI_ATTRIBUTE_LABEL_STYLE = "labelStyle";
 
-  /** operaton extensions */
+  // Operaton extensions
 
   public static final String OPERATON_ATTRIBUTE_ASSIGNEE = "assignee";
   public static final String OPERATON_ATTRIBUTE_ASYNC = "async";

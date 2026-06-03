@@ -37,7 +37,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
   protected static Attribute<String> calledElementAttribute;
 
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<Boolean> operatonAsyncAttribute;
   protected static Attribute<String> operatonCalledElementBindingAttribute;
@@ -61,7 +61,7 @@ public class CallActivityImpl extends ActivityImpl implements CallActivity {
     calledElementAttribute = typeBuilder.stringAttribute(BPMN_ATTRIBUTE_CALLED_ELEMENT)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonAsyncAttribute = typeBuilder.booleanAttribute(OPERATON_ATTRIBUTE_ASYNC)
       .namespace(OPERATON_NS)

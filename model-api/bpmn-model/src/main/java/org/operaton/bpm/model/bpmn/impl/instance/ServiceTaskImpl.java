@@ -39,7 +39,7 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
   protected static Attribute<String> implementationAttribute;
   protected static AttributeReference<Operation> operationRefAttribute;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonClassAttribute;
   protected static Attribute<String> operatonDelegateExpressionAttribute;
@@ -63,7 +63,7 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
       .qNameAttributeReference(Operation.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CLASS)
       .namespace(OPERATON_NS)
@@ -125,7 +125,7 @@ public class ServiceTaskImpl extends TaskImpl implements ServiceTask {
     operationRefAttribute.setReferenceTargetElement(this, operation);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonClass() {

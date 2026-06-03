@@ -40,7 +40,7 @@ public interface SubProcess extends Activity {
 
   Collection<Artifact> getArtifacts();
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

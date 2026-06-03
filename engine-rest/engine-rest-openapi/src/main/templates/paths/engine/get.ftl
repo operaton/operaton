@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "getProcessEngineNames"
       tag = "Engine"
-      summary = "Get List"
+      summary = "List Process Engines"
       desc = "Retrieves the names of all process engines available on your platform.
               **Note**: You cannot prepend `/engine/{name}` to this method." />
 
@@ -12,7 +12,6 @@
         code = "200"
         dto = "ProcessEngineDto"
         array = true
-        last=true
         desc = "Request successful."
         examples = ['"example-1": {
                        "value": [
@@ -24,6 +23,8 @@
                          }
                        ]
                      }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

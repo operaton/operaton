@@ -1,27 +1,4 @@
 ---
-type: specs.openrewrite.org/v1beta/style
-name: org.operaton.style.OperatonJavaStyle
-styleConfigs:
-  - org.openrewrite.java.style.ImportLayoutStyle:
-      classCountToUseStarImport: 15
-      nameCountToUseStarImport: 8
-      layout:
-        - import java.*
-        - import jakarta.*
-        - <blank line>
-        - import all other imports
-        - <blank line>
-        - import org.operaton.*
-        - <blank line>
-        - import static org.operaton.*
-        - import static all other imports
-  - org.openrewrite.java.style.TabsAndIndentsStyle:
-      useTabCharacter: false
-      tabSize: 2
-      indentSize: 2
-      continuationIndent: 2
-      indentsRelativeToExpressionStart: false
----
 type: specs.openrewrite.org/v1beta/recipe
 name: org.operaton.AddLicenseHeader
 displayName: Add Operaton ASL2 header
@@ -41,6 +18,37 @@ recipeList:
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
+---
+type: specs.openrewrite.org/v1beta/recipe
+name: org.operaton.recipe.OperatonJavaFormat
+displayName: Operaton Java Style
+description: Order imports and format indentation according to the Operaton style.
+recipeList:
+  - org.openrewrite.java.OrderImports:
+      style: |
+        ---
+        type: specs.openrewrite.org/v1beta/style
+        name: org.operaton.style.OperatonJavaStyle
+        styleConfigs:
+          - org.openrewrite.java.style.ImportLayoutStyle:
+              classCountToUseStarImport: 15
+              nameCountToUseStarImport: 8
+              layout:
+                - import java.*
+                - import jakarta.*
+                - <blank line>
+                - import all other imports
+                - <blank line>
+                - import org.operaton.*
+                - <blank line>
+                - import static org.operaton.*
+                - import static all other imports
+  - org.openrewrite.java.style.TabsAndIndentsStyle:
+      useTabCharacter: false
+      tabSize: 2
+      indentSize: 2
+      continuationIndent: 2
+      indentsRelativeToExpressionStart: false
 ---
 # see https://docs.openrewrite.org/recipes/staticanalysis/codecleanup
 type: specs.openrewrite.org/v1beta/recipe

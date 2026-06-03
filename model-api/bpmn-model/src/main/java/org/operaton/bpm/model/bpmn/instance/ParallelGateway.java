@@ -25,7 +25,7 @@ import org.operaton.bpm.model.bpmn.builder.ParallelGatewayBuilder;
  */
 public interface ParallelGateway extends Gateway {
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

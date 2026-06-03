@@ -114,4 +114,18 @@ class CompareUtilTest {
     assertThat(CompareUtil.elementsAreContainedInArray(null, superset)).isFalse();
     assertThat(CompareUtil.elementsAreContainedInArray(subset, null)).isFalse();
   }
+
+  @Test
+  void min_shouldReturnSmallerValue() {
+    assertThat(CompareUtil.min(1, 2)).isEqualTo(1);
+    assertThat(CompareUtil.min(5, 3)).isEqualTo(3);
+    assertThat(CompareUtil.min(4, 4)).isEqualTo(4);  // equal: returns first
+  }
+
+  @Test
+  void max_shouldReturnLargerValue() {
+    assertThat(CompareUtil.max(1, 2)).isEqualTo(2);
+    assertThat(CompareUtil.max(5, 3)).isEqualTo(5);
+    assertThat(CompareUtil.max(4, 4)).isEqualTo(4);  // equal: returns first
+  }
 }

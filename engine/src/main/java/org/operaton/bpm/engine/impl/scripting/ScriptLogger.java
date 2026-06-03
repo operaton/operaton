@@ -39,4 +39,9 @@ public class ScriptLogger extends ProcessEngineLogger {
         "001", "Evaluating non-compiled script {}", scriptSource);
   }
 
+  public void logClosingScriptEngineFailed(Exception e) {
+    logDebug(
+        "003", "Failed to close script engine: {}", e.getMessage());
+  }
+
 }

@@ -13,7 +13,7 @@ See [ui/README.md](ui/README.md) for details.
 
 ### Going Fast
 
-<!-- `mvnd clean install -DskipTests -PskipFrontendBuild` -->
+`mvnd clean install -DskipTests -PskipFrontendBuild`
 
 - `mvnd`: mvn with parrallel threads
 - `-DskipTests`: Skip tests

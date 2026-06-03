@@ -69,7 +69,18 @@ public class OperatonBpmWebappNeoInitializer implements ServletContextInitialize
     String basePath = webapp.getNeo().getApplicationPath();
     String apiWildcardPath = basePath + "/api/*";
 
-    ServletContextUtil.setAppPath(basePath, servletContext);
+    // ServletContextUtil is a static utility shared with the legacy webapp
+    // (same package, same APP_PATH_ATTR_NAME). ServletContextInitializer
+    // ordering is not deterministic, so an unconditional setAppPath here would
+    // race with OperatonBpmWebappInitializer and overwrite "/operaton" with the
+    // neo basePath (default ""). That breaks legacy's
+    // ResourceLoadingProcessEnginesFilter, whose APP_PREFIX_PATTERN matches
+    // "/app/..." after stripping applicationPath, not "/operaton/app/...".
+    // Only claim the attribute when the legacy webapp is disabled or hasn't
+    // written its own value yet.
+    if (ServletContextUtil.getAppPath(servletContext).isEmpty()) {
+      ServletContextUtil.setAppPath(basePath, servletContext);
+    }
 
     // The webapp filter chain guards the API namespace (/api/*) and the SPA app
     // paths. When served from a sub-path we can safely map the app wildcard

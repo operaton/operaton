@@ -46,7 +46,7 @@ jobs:
         database: ${{ fromJson(github.event.inputs.database) }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
 

@@ -10,7 +10,7 @@ jobs:
     if: github.event.label.name == 'good first issue'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.2
         
       - name: Add template comment to the issue
         uses: actions/github-script@v9

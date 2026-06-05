@@ -89,9 +89,7 @@ updates:
           - "angular*"
       babel:
         patterns:
-          - "@babel/core"
-          - "@babel/preset-env"
-          - "@babel/eslint-parser"
+          - "@babel/*"
       Xmn-js:
         patterns:
           - "bpmn-js"
@@ -226,9 +224,7 @@ updates:
           - "angular*"
       babel:
         patterns:
-          - "@babel/core"
-          - "@babel/preset-env"
-          - "@babel/eslint-parser"
+          - "@babel/*"
       Xmn-js:
         patterns:
           - "bpmn-js"
@@ -363,9 +359,7 @@ updates:
           - "angular*"
       babel:
         patterns:
-          - "@babel/core"
-          - "@babel/preset-env"
-          - "@babel/eslint-parser"
+          - "@babel/*"
       Xmn-js:
         patterns:
           - "bpmn-js"

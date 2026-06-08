@@ -24,6 +24,9 @@ updates:
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
       - dependency-name: "io.quarkus:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # upgrade causes problems with bundled Scala module from feel-engine:scala shaded
+      - dependency-name: "version.jackson"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
     labels:
       - "dependencies:maven"
     milestone: 23

@@ -925,6 +925,21 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
   TaskQuery initializeFormKeys();
 
   /**
+   * If called, the form keys and form references of the fetched tasks are initialized.
+   * When {@code evaluateFormKey} is {@code true}, {@link Task#getFormKey()} and
+   * {@link Task#getOperatonFormRef()} return resolved values. When {@code false},
+   * the form key expression is exposed as stored on the task definition without
+   * evaluating the expression.
+   *
+   * @param evaluateFormKey whether form key expressions should be evaluated
+   * @return the query itself
+   * @throws ProcessEngineException When method has been executed within "or query". Method must be executed on the base query.
+   */
+  default TaskQuery initializeFormKeys(boolean evaluateFormKey) {
+    return initializeFormKeys();
+  }
+
+  /**
    * Only select tasks with one of the given tenant ids.
    *
    * @throws ProcessEngineException <ul>

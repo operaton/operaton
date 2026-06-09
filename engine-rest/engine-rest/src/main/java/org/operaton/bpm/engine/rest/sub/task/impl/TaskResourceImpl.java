@@ -74,6 +74,7 @@ public class TaskResourceImpl implements TaskResource {
   protected boolean withCommentAttachmentInfo;
   protected boolean withTaskVariablesInReturn;
   protected boolean withTaskLocalVariablesInReturn;
+  protected boolean evaluateFormKey;
 
   public TaskResourceImpl(ProcessEngine engine,
                           String taskId,
@@ -81,7 +82,8 @@ public class TaskResourceImpl implements TaskResource {
                           ObjectMapper objectMapper,
                           boolean withCommentAttachmentInfo,
                           boolean withTaskVariablesInReturn,
-                          boolean withTaskLocalVariablesInReturn) {
+                          boolean withTaskLocalVariablesInReturn,
+                          boolean evaluateFormKey) {
     this.engine = engine;
     this.taskId = taskId;
     this.rootResourcePath = rootResourcePath;
@@ -89,6 +91,7 @@ public class TaskResourceImpl implements TaskResource {
     this.withCommentAttachmentInfo = withCommentAttachmentInfo;
     this.withTaskVariablesInReturn = withTaskVariablesInReturn;
     this.withTaskLocalVariablesInReturn = withTaskLocalVariablesInReturn;
+    this.evaluateFormKey = evaluateFormKey;
   }
 
   @Override
@@ -457,10 +460,10 @@ public class TaskResourceImpl implements TaskResource {
 
   protected Task getTaskById(String id, boolean withCommentAttachmentInfo) {
     if (withCommentAttachmentInfo) {
-      return engine.getTaskService().createTaskQuery().taskId(id).withCommentAttachmentInfo().initializeFormKeys().singleResult();
+      return engine.getTaskService().createTaskQuery().taskId(id).withCommentAttachmentInfo().initializeFormKeys(evaluateFormKey).singleResult();
     }
     else{
-      return engine.getTaskService().createTaskQuery().taskId(id).initializeFormKeys().singleResult();
+      return engine.getTaskService().createTaskQuery().taskId(id).initializeFormKeys(evaluateFormKey).singleResult();
     }
   }
 

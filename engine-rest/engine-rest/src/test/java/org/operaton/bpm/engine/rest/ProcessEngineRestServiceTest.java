@@ -108,6 +108,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyBoolean;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -287,6 +288,7 @@ public class ProcessEngineRestServiceTest extends
     TaskQuery mockTaskQuery = mock(TaskQuery.class);
     when(mockTaskQuery.taskId(MockProvider.EXAMPLE_TASK_ID)).thenReturn(mockTaskQuery);
     when(mockTaskQuery.initializeFormKeys()).thenReturn(mockTaskQuery);
+    when(mockTaskQuery.initializeFormKeys(anyBoolean())).thenReturn(mockTaskQuery);
     when(mockTaskQuery.singleResult()).thenReturn(mockTask);
     when(mockTaskService.createTaskQuery()).thenReturn(mockTaskQuery);
   }

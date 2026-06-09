@@ -412,7 +412,20 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     .expect().statusCode(Status.OK.getStatusCode())
     .when().get(TASK_QUERY_URL);
 
-    verify(mockQuery).initializeFormKeys();
+    verify(mockQuery).initializeFormKeys(true);
+    verify(mockQuery).list();
+    verifyNoMoreInteractions(mockQuery);
+  }
+
+  @Test
+  void testEvaluateFormKeyFalseQueryParameter() {
+    given()
+      .queryParam("evaluateFormKey", false)
+      .header("accept", MediaType.APPLICATION_JSON)
+    .expect().statusCode(Status.OK.getStatusCode())
+    .when().get(TASK_QUERY_URL);
+
+    verify(mockQuery).initializeFormKeys(false);
     verify(mockQuery).list();
     verifyNoMoreInteractions(mockQuery);
   }

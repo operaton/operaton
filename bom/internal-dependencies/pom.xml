@@ -415,6 +415,23 @@
         <artifactId>tomcat-catalina</artifactId>
         <version>${version.tomcat}</version>
       </dependency>
+      <!-- Keep embedded Tomcat aligned with the patched standalone Tomcat version.
+           The Spring Boot BOM manages these artifacts independently from version.tomcat. -->
+      <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-core</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-el</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.tomcat.embed</groupId>
+        <artifactId>tomcat-embed-websocket</artifactId>
+        <version>${version.tomcat}</version>
+      </dependency>
 
       <dependency>
         <groupId>org.glassfish.jersey.core</groupId>

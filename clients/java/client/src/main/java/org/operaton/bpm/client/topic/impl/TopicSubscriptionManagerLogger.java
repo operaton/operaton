@@ -78,4 +78,17 @@ public class TopicSubscriptionManagerLogger extends ExternalTaskClientLogger {
       "Timed out after %d ms without a signal.".formatted(waitTime));
   }
 
+  protected void fetchAndLock(List<TopicRequestDto> subscriptions, int maxTasks) {
+    logDebug(
+      "010",
+      "Fetch and lock new external tasks for %d topics with maxTasks %d".formatted(subscriptions.size(), maxTasks));
+  }
+
+  protected void allThreadsAreBusy(int activeCount, int queueSize, String topics) {
+    logDebug(
+      "011",
+      "All threads are busy for topics [%s]. Active threads: %d, queue size: %d"
+          .formatted(topics, activeCount, queueSize));
+  }
+
 }

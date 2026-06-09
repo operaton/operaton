@@ -138,7 +138,7 @@ class ExternalTaskImplTest {
     task.setTopicName("tn");
     task.setWorkerId("wi");
 
-    Map<String, VariableValue> receivedVariables = new LinkedHashMap<>();
+    Map<String, VariableValue<?>> receivedVariables = new LinkedHashMap<>();
     receivedVariables.put("rv1", generateVariableValue(task.getExecutionId(), "variable1", ValueType.STRING.getName(), "value1", 42, "vi2"));
     receivedVariables.put("rv2", generateVariableValue(task.getExecutionId(), "variable2", ValueType.INTEGER.getName(), 99, 42, "vi2", 87L));
     task.setReceivedVariableMap(receivedVariables);

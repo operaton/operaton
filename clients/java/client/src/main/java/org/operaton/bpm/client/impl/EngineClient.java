@@ -115,7 +115,11 @@ public class EngineClient {
   }
 
   public List<ExternalTask> fetchAndLock(List<TopicRequestDto> topics) {
-    FetchAndLockRequestDto payload = new FetchAndLockRequestDto(workerId, maxTasks, asyncResponseTimeout, topics,
+    return fetchAndLock(topics, maxTasks);
+  }
+
+  public List<ExternalTask> fetchAndLock(List<TopicRequestDto> topics, int maxTasks) {
+    FetchAndLockRequestDto payload = new FetchAndLockRequestDto(workerId, Math.min(maxTasks, this.maxTasks), asyncResponseTimeout, topics,
         usePriority, orderingConfig);
 
     String resourceUrl = getBaseUrl() + FETCH_AND_LOCK_RESOURCE_PATH;

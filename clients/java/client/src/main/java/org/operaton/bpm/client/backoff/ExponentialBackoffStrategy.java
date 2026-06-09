@@ -66,4 +66,9 @@ public class ExponentialBackoffStrategy implements BackoffStrategy {
     long backoffTime = (long) (initTime * Math.pow(factor, level - 1d));
     return Math.min(backoffTime, maxTime);
   }
+
+  @Override
+  public BackoffStrategy copy() {
+    return new ExponentialBackoffStrategy(initTime, factor, maxTime);
+  }
 }

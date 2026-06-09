@@ -16,182 +16,166 @@
  */
 package org.operaton.bpm.client.topic.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.operaton.bpm.client.backoff.BackoffStrategy;
-import org.operaton.bpm.client.backoff.ErrorAwareBackoffStrategy;
-import org.operaton.bpm.client.exception.ExternalTaskClientException;
+import org.operaton.bpm.client.backoff.ExponentialBackoffStrategy;
 import org.operaton.bpm.client.impl.EngineClient;
-import org.operaton.bpm.client.impl.EngineClientException;
 import org.operaton.bpm.client.impl.ExternalTaskClientLogger;
-import org.operaton.bpm.client.task.ExternalTask;
 import org.operaton.bpm.client.task.ExternalTaskHandler;
-import org.operaton.bpm.client.task.impl.ExternalTaskImpl;
-import org.operaton.bpm.client.task.impl.ExternalTaskServiceImpl;
+import org.operaton.bpm.client.task.ExternalTaskHandlerWithSpecificExecutor;
 import org.operaton.bpm.client.topic.TopicSubscription;
-import org.operaton.bpm.client.topic.impl.dto.FetchAndLockResponseDto;
-import org.operaton.bpm.client.topic.impl.dto.TopicRequestDto;
-import org.operaton.bpm.client.variable.impl.TypedValueField;
 import org.operaton.bpm.client.variable.impl.TypedValues;
-import org.operaton.bpm.client.variable.impl.VariableValue;
 
 /**
- * @author Tassilo Weidner
+ * Routes topic subscriptions to acquisition runners backed by task execution pools.
+ *
+ * <p>Each distinct {@link ThreadPoolExecutor} gets one {@link ExecutorRunner}. Handlers
+ * may opt into a dedicated executor by implementing {@link ExternalTaskHandlerWithSpecificExecutor};
+ * all other handlers use the client's default executor.
  */
-public class TopicSubscriptionManager implements Runnable {
+public class TopicSubscriptionManager {
 
   protected static final TopicSubscriptionManagerLogger LOG = ExternalTaskClientLogger.TOPIC_SUBSCRIPTION_MANAGER_LOGGER;
 
-  protected ReentrantLock ACQUISITION_MONITOR = new ReentrantLock(false);
-  protected Condition IS_WAITING = ACQUISITION_MONITOR.newCondition();
-  protected AtomicBoolean isRunning = new AtomicBoolean(false);
+  protected final AtomicBoolean isRunning = new AtomicBoolean(false);
+  protected final EngineClient engineClient;
+  protected final TypedValues typedValues;
+  protected final long clientLockDuration;
+  protected final ThreadPoolExecutor defaultThreadPoolExecutor;
+  protected final double maxFetchedTasksMultiplier;
+  protected final Map<ThreadPoolExecutor, ExecutorRunner> runnersByExecutor = new ConcurrentHashMap<>();
+  protected final AtomicBoolean isBackoffStrategyDisabled = new AtomicBoolean(false);
+  protected final ExternalTaskExecutionStats executionStats = new ExternalTaskExecutionStats();
+  protected final boolean statsSchedulerEnabled;
 
-  protected ExternalTaskServiceImpl externalTaskService;
-
-  protected EngineClient engineClient;
-
-  protected CopyOnWriteArrayList<TopicSubscription> subscriptions;
-  protected List<TopicRequestDto> taskTopicRequests;
-  protected Map<String, ExternalTaskHandler> externalTaskHandlers;
-
-  protected Thread thread;
-
-  protected BackoffStrategy backoffStrategy;
-  protected AtomicBoolean isBackoffStrategyDisabled;
-
-  protected TypedValues typedValues;
-
-  protected long clientLockDuration;
+  protected BackoffStrategy backoffStrategy = new ExponentialBackoffStrategy();
+  protected ScheduledExecutorService statsScheduler;
 
   public TopicSubscriptionManager(EngineClient engineClient, TypedValues typedValues, long clientLockDuration) {
+    this(engineClient, typedValues, clientLockDuration, createDefaultExecutor(), 1, true);
+  }
+
+  public TopicSubscriptionManager(EngineClient engineClient, TypedValues typedValues, long clientLockDuration,
+                                  ThreadPoolExecutor defaultThreadPoolExecutor, double maxFetchedTasksMultiplier,
+                                  boolean statsSchedulerEnabled) {
     this.engineClient = engineClient;
-    this.subscriptions = new CopyOnWriteArrayList<>();
-    this.taskTopicRequests = new ArrayList<>();
-    this.externalTaskHandlers = new HashMap<>();
     this.clientLockDuration = clientLockDuration;
     this.typedValues = typedValues;
-    this.externalTaskService = new ExternalTaskServiceImpl(engineClient);
-    this.isBackoffStrategyDisabled = new AtomicBoolean(false);
-  }
-
-  @Override
-  public void run() {
-    while (isRunning.get()) {
-      try {
-        acquire();
-      }
-      catch (Exception e) {
-        LOG.exceptionWhileAcquiringTasks(e);
-      }
+    this.defaultThreadPoolExecutor = Objects.requireNonNull(defaultThreadPoolExecutor, "defaultThreadPoolExecutor");
+    if (maxFetchedTasksMultiplier < 1) {
+      throw new IllegalArgumentException("maxFetchedTasksMultiplier must be >= 1");
     }
+    this.maxFetchedTasksMultiplier = maxFetchedTasksMultiplier;
+    this.statsSchedulerEnabled = statsSchedulerEnabled;
   }
 
-  protected void acquire() {
-    taskTopicRequests.clear();
-    externalTaskHandlers.clear();
-    subscriptions.forEach(this::prepareAcquisition);
+  protected static ThreadPoolExecutor createDefaultExecutor() {
+    ThreadPoolExecutor executor = new ThreadPoolExecutor(1, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+    executor.allowCoreThreadTimeOut(true);
+    return executor;
+  }
 
-    if (!taskTopicRequests.isEmpty()) {
-      FetchAndLockResponseDto fetchAndLockResponse = fetchAndLock(taskTopicRequests);
-
-      fetchAndLockResponse.getExternalTasks().forEach(externalTask -> {
-        String topicName = externalTask.getTopicName();
-        ExternalTaskHandler taskHandler = externalTaskHandlers.get(topicName);
-
-        if (taskHandler != null) {
-          handleExternalTask(externalTask, taskHandler);
-        }
-        else {
-          LOG.taskHandlerIsNull(topicName);
-        }
-      });
-
-      if (!isBackoffStrategyDisabled.get()) {
-        runBackoffStrategy(fetchAndLockResponse);
-      }
+  protected void subscribe(TopicSubscription subscription) {
+    if (getSubscriptions().contains(subscription)) {
+      throw LOG.topicNameAlreadySubscribedException(subscription.getTopicName());
     }
-  }
 
-  protected void prepareAcquisition(TopicSubscription subscription) {
-    TopicRequestDto taskTopicRequest = TopicRequestDto.fromTopicSubscription(subscription, clientLockDuration);
-    taskTopicRequests.add(taskTopicRequest);
-
-    String topicName = subscription.getTopicName();
     ExternalTaskHandler externalTaskHandler = subscription.getExternalTaskHandler();
-    externalTaskHandlers.put(topicName, externalTaskHandler);
+    if (externalTaskHandler instanceof ExternalTaskHandlerWithSpecificExecutor handlerWithSpecificExecutor) {
+      addSubscription(handlerWithSpecificExecutor.getThreadPoolExecutor(), subscription);
+    }
+    else {
+      addSubscription(defaultThreadPoolExecutor, subscription);
+    }
   }
 
-  protected FetchAndLockResponseDto fetchAndLock(List<TopicRequestDto> subscriptions) {
-    List<ExternalTask> externalTasks = null;
-
-    try {
-      LOG.fetchAndLock(subscriptions);
-      externalTasks = engineClient.fetchAndLock(subscriptions);
-
-    } catch (EngineClientException ex) {
-      LOG.exceptionWhilePerformingFetchAndLock(ex);
-      return new FetchAndLockResponseDto(LOG.handledEngineClientException("fetching and locking task", ex));
-    }
-
-    return new FetchAndLockResponseDto(externalTasks);
+  protected void addSubscription(ThreadPoolExecutor executor, TopicSubscription subscription) {
+    Objects.requireNonNull(executor, "executor");
+    runnersByExecutor.computeIfAbsent(executor, this::prepareExecutorRunner)
+        .subscribe(subscription);
   }
 
-  @SuppressWarnings("rawtypes")
-  protected void handleExternalTask(ExternalTask externalTask, ExternalTaskHandler taskHandler) {
-    ExternalTaskImpl task = (ExternalTaskImpl) externalTask;
-
-    Map<String, TypedValueField> variables = task.getVariables();
-    Map<String, VariableValue> wrappedVariables = typedValues.wrapVariables(task, variables);
-    task.setReceivedVariableMap(wrappedVariables);
-
-    try {
-      taskHandler.execute(task, externalTaskService);
-    } catch (ExternalTaskClientException e) {
-      LOG.exceptionOnExternalTaskServiceMethodInvocation(task.getTopicName(), e);
-    } catch (Exception e) {
-      LOG.exceptionWhileExecutingExternalTaskHandler(task.getTopicName(), e);
+  protected ExecutorRunner prepareExecutorRunner(ThreadPoolExecutor executor) {
+    ExecutorRunner executorRunner = new ExecutorRunner(engineClient, typedValues, clientLockDuration, executor,
+        maxFetchedTasksMultiplier, executionStats);
+    executorRunner.setBackoffStrategy(backoffStrategy);
+    if (isBackoffStrategyDisabled.get()) {
+      executorRunner.disableBackoffStrategy();
     }
+    if (isRunning.get()) {
+      executorRunner.start();
+    }
+    return executorRunner;
+  }
+
+  protected void unsubscribe(TopicSubscriptionImpl subscription) {
+    runnersByExecutor.values().forEach(runner -> runner.unsubscribe(subscription));
   }
 
   public synchronized void stop() {
     if (isRunning.compareAndSet(true, false)) {
-      resume();
-
-      try {
-        thread.join();
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-        LOG.exceptionWhileShuttingDown(e);
-      }
+      runnersByExecutor.values().forEach(ExecutorRunner::stop);
+      stopStatsScheduler();
     }
   }
 
   public synchronized void start() {
     if (isRunning.compareAndSet(false, true)) {
-      thread = new Thread(this, TopicSubscriptionManager.class.getSimpleName());
-      thread.start();
+      runnersByExecutor.values().forEach(ExecutorRunner::start);
+      if (statsSchedulerEnabled) {
+        startStatsScheduler();
+      }
     }
   }
 
-  protected void subscribe(TopicSubscription subscription) {
-    if (!subscriptions.addIfAbsent(subscription)) {
-      String topicName = subscription.getTopicName();
-      throw LOG.topicNameAlreadySubscribedException(topicName);
-    }
+  protected void startStatsScheduler() {
+    statsScheduler = java.util.concurrent.Executors.newSingleThreadScheduledExecutor(runnable -> {
+      Thread thread = new Thread(runnable, "ExternalTaskStatsLogger");
+      thread.setDaemon(true);
+      return thread;
+    });
 
-    resume();
+    statsScheduler.scheduleAtFixedRate(() -> {
+      try {
+        ExternalTaskExecutionStatsLogger.logStats(executionStats);
+        executionStats.reset();
+      }
+      catch (Exception e) {
+        LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
+      }
+    }, 5, 5, TimeUnit.MINUTES);
   }
 
-  protected void unsubscribe(TopicSubscriptionImpl subscription) {
-    subscriptions.remove(subscription);
+  protected void stopStatsScheduler() {
+    if (statsScheduler != null) {
+      statsScheduler.shutdown();
+      try {
+        if (!statsScheduler.awaitTermination(5, TimeUnit.SECONDS)) {
+          statsScheduler.shutdownNow();
+        }
+      }
+      catch (InterruptedException e) {
+        statsScheduler.shutdownNow();
+        Thread.currentThread().interrupt();
+      }
+      finally {
+        statsScheduler = null;
+      }
+    }
+  }
+
+  public void disableBackoffStrategy() {
+    this.isBackoffStrategyDisabled.set(true);
+    runnersByExecutor.values().forEach(ExecutorRunner::disableBackoffStrategy);
   }
 
   public EngineClient getEngineClient() {
@@ -199,7 +183,9 @@ public class TopicSubscriptionManager implements Runnable {
   }
 
   public List<TopicSubscription> getSubscriptions() {
-    return subscriptions;
+    return runnersByExecutor.values().stream()
+        .flatMap(runner -> runner.getSubscriptions().stream())
+        .toList();
   }
 
   public boolean isRunning() {
@@ -208,71 +194,14 @@ public class TopicSubscriptionManager implements Runnable {
 
   public void setBackoffStrategy(BackoffStrategy backOffStrategy) {
     this.backoffStrategy = backOffStrategy;
+    runnersByExecutor.values().forEach(runner -> runner.setBackoffStrategy(backOffStrategy));
   }
 
-  protected void runBackoffStrategy(FetchAndLockResponseDto fetchAndLockResponse) {
-    try {
-      List<ExternalTask> externalTasks = fetchAndLockResponse.getExternalTasks();
-      if (backoffStrategy instanceof ErrorAwareBackoffStrategy errorAwareBackoffStrategy) {
-        ExternalTaskClientException exception = fetchAndLockResponse.getError();
-        errorAwareBackoffStrategy.reconfigure(externalTasks, exception);
-      } else {
-        backoffStrategy.reconfigure(externalTasks);
-      }
-
-      long waitTime = backoffStrategy.calculateBackoffTime();
-      suspend(waitTime);
-    } catch (Exception e) {
-      LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
-    }
+  protected void acquire() {
+    runnersByExecutor.values().forEach(ExecutorRunner::acquire);
   }
 
-  @SuppressWarnings("java:S2142") // InterruptedException is intentionally swallowed to wake up early from backoff
-  protected void suspend(long waitTime) {
-    if (waitTime > 0 && isRunning.get()) {
-      ACQUISITION_MONITOR.lock();
-      try {
-        if (isRunning.get()) {
-          long endTime = System.currentTimeMillis() + waitTime;
-          long remainingTime = waitTime;
-          // Loop until either the wait times out or a resume signal is received
-          while (remainingTime > 0 && isRunning.get()) {
-            boolean wasSignaled = IS_WAITING.await(remainingTime, TimeUnit.MILLISECONDS);
-            // If the await was signaled, exit immediately.
-            if (wasSignaled) {
-              break;
-            }
-            // Recalculate the remaining time for the wait.
-            remainingTime = endTime - System.currentTimeMillis();
-          }
-          // Log timeout only if no signal was received and the thread is still running
-          if (remainingTime <= 0 && isRunning.get()) {
-            LOG.timeout(waitTime);
-          }
-        }
-      } catch (InterruptedException e) {
-        // InterruptedException is used as a signal to wake up early from backoff sleep.
-        // The thread should continue processing tasks normally, so we intentionally
-        // do not restore the interrupted status here (Sonar rule java:S2142 suppressed).
-        LOG.exceptionWhileExecutingBackoffStrategyMethod(e);
-      } finally {
-        ACQUISITION_MONITOR.unlock();
-      }
-    }
+  public ExternalTaskExecutionStats getExecutionStats() {
+    return executionStats;
   }
-
-  protected void resume() {
-    ACQUISITION_MONITOR.lock();
-    try {
-      IS_WAITING.signal();
-    }
-    finally {
-      ACQUISITION_MONITOR.unlock();
-    }
-  }
-
-  public void disableBackoffStrategy() {
-    this.isBackoffStrategyDisabled.set(true);
-  }
-
 }

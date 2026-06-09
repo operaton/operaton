@@ -58,8 +58,7 @@ public class ExternalTaskImpl implements ExternalTask {
   protected Map<String, String> extensionProperties;
 
   @JsonIgnore
-  @SuppressWarnings("rawtypes")
-  protected Map<String, VariableValue> receivedVariableMap;
+  protected Map<String, VariableValue<?>> receivedVariableMap;
 
   public void setActivityId(String activityId) {
     this.activityId = activityId;
@@ -142,8 +141,7 @@ public class ExternalTaskImpl implements ExternalTask {
   }
 
   @JsonIgnore
-  @SuppressWarnings("rawtypes")
-  public void setReceivedVariableMap(Map<String, VariableValue> receivedVariableMap) {
+  public void setReceivedVariableMap(Map<String, VariableValue<?>> receivedVariableMap) {
     this.receivedVariableMap = receivedVariableMap;
   }
 

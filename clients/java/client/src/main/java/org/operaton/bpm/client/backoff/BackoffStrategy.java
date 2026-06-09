@@ -46,4 +46,16 @@ public interface BackoffStrategy {
    * @return the back off time between fetch and lock requests in milliseconds
    */
   long calculateBackoffTime();
+
+  /**
+   * Creates a copy of this backoff strategy for an independent acquisition runner.
+   *
+   * <p>The default keeps existing custom strategies source-compatible. Stateful
+   * implementations should override this method and return a new instance.
+   *
+   * @return a strategy instance for one runner
+   */
+  default BackoffStrategy copy() {
+    return this;
+  }
 }

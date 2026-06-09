@@ -89,4 +89,22 @@ class ExponentialBackoffStrategyTest {
     waitingTime = backoffStrategy.calculateBackoffTime();
     assertThat(waitingTime).isEqualTo(60000L);
   }
+
+  @Test
+  void shouldCopyConfigurationWithoutSharingState() {
+    // given
+    backoffStrategy = new ExponentialBackoffStrategy(100L, 2, 1_000L);
+    backoffStrategy.reconfigure(emptyList());
+
+    // when
+    BackoffStrategy copy = backoffStrategy.copy();
+
+    // then
+    assertThat(copy).isNotSameAs(backoffStrategy);
+    assertThat(copy.calculateBackoffTime()).isZero();
+
+    copy.reconfigure(emptyList());
+    assertThat(copy.calculateBackoffTime()).isEqualTo(100L);
+    assertThat(backoffStrategy.calculateBackoffTime()).isEqualTo(100L);
+  }
 }

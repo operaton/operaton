@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
 import java.util.UUID;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -97,6 +100,9 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
   protected BackoffStrategy backoffStrategy;
   protected boolean isBackoffStrategyDisabled;
   protected UrlResolver urlResolver;
+  protected int threadPoolSize;
+  protected double maxFetchedTasksMultiplier;
+  protected boolean statsSchedulerEnabled;
 
   public ExternalTaskClientBuilderImpl() {
     // default values
@@ -110,6 +116,9 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
     this.isBackoffStrategyDisabled = false;
     this.httpClientBuilder = HttpClients.custom().useSystemProperties();
     this.urlResolver = new PermanentUrlResolver(null);
+    this.threadPoolSize = 1;
+    this.maxFetchedTasksMultiplier = 1;
+    this.statsSchedulerEnabled = true;
   }
 
   @Override
@@ -224,6 +233,24 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
   }
 
   @Override
+  public ExternalTaskClientBuilder threadPoolSize(int threadPoolSize) {
+    this.threadPoolSize = threadPoolSize;
+    return this;
+  }
+
+  @Override
+  public ExternalTaskClientBuilder maxFetchedTasksMultiplier(double maxFetchedTasksMultiplier) {
+    this.maxFetchedTasksMultiplier = maxFetchedTasksMultiplier;
+    return this;
+  }
+
+  @Override
+  public ExternalTaskClientBuilder statsSchedulerEnabled(boolean statsSchedulerEnabled) {
+    this.statsSchedulerEnabled = statsSchedulerEnabled;
+    return this;
+  }
+
+  @Override
   public ExternalTaskClient build() {
     if (maxTasks <= 0) {
       throw LOG.maxTasksNotGreaterThanZeroException(maxTasks);
@@ -235,6 +262,14 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
 
     if (lockDuration <= 0L) {
       throw LOG.lockDurationIsNotGreaterThanZeroException(lockDuration);
+    }
+
+    if (threadPoolSize <= 0) {
+      throw LOG.threadPoolSizeNotGreaterThanZeroException(threadPoolSize);
+    }
+
+    if (maxFetchedTasksMultiplier < 1) {
+      throw LOG.maxFetchedTasksMultiplierLessThanOneException(maxFetchedTasksMultiplier);
     }
 
     if (urlResolver == null || getBaseUrl() == null || getBaseUrl().isEmpty()) {
@@ -337,7 +372,11 @@ public class ExternalTaskClientBuilderImpl implements ExternalTaskClientBuilder 
   }
 
   protected void initTopicSubscriptionManager() {
-    topicSubscriptionManager = new TopicSubscriptionManager(engineClient, typedValues, lockDuration);
+    ThreadPoolExecutor taskExecutor = new ThreadPoolExecutor(threadPoolSize, threadPoolSize, 60L,
+        TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+    taskExecutor.allowCoreThreadTimeOut(true);
+    topicSubscriptionManager = new TopicSubscriptionManager(engineClient, typedValues, lockDuration, taskExecutor,
+        maxFetchedTasksMultiplier, statsSchedulerEnabled);
     topicSubscriptionManager.setBackoffStrategy(getBackoffStrategy());
 
     if (isBackoffStrategyDisabled) {

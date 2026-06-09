@@ -94,4 +94,26 @@ class ExponentialErrorBackoffStrategyTest {
     assertThat(waitingTime).isEqualTo(60000L);
   }
 
+  @Test
+  void shouldCopyConfigurationWithoutSharingState() {
+    // given
+    backoffStrategy = new ExponentialErrorBackoffStrategy(100L, 2, 1_000L);
+    List<ExternalTask> tasks = Lists.newArrayList(new ExternalTaskImpl());
+    ExternalTaskClientException error = new ExternalTaskClientException();
+    backoffStrategy.reconfigure(tasks, error);
+
+    // when
+    BackoffStrategy copy = backoffStrategy.copy();
+
+    // then
+    assertThat(copy).isNotSameAs(backoffStrategy);
+    assertThat(copy.calculateBackoffTime()).isZero();
+
+    if (copy instanceof ErrorAwareBackoffStrategy errorAwareCopy) {
+      errorAwareCopy.reconfigure(tasks, error);
+    }
+    assertThat(copy.calculateBackoffTime()).isEqualTo(100L);
+    assertThat(backoffStrategy.calculateBackoffTime()).isEqualTo(100L);
+  }
+
 }

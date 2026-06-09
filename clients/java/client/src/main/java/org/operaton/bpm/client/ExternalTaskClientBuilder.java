@@ -224,6 +224,34 @@ public interface ExternalTaskClientBuilder {
   ExternalTaskClientBuilder customizeHttpClient(Consumer<HttpClientBuilder> httpClientConsumer);
 
   /**
+   * Configures the number of threads used by the client's default external task executor.
+   * This information is optional. Default is 1.
+   *
+   * @param threadPoolSize number of task execution threads
+   * @return the builder
+   */
+  ExternalTaskClientBuilder threadPoolSize(int threadPoolSize);
+
+  /**
+   * Configures how many tasks the client may fetch relative to the executor core pool size.
+   * The effective request value is capped by {@link #maxTasks(int)}.
+   * This information is optional. Default is 1.
+   *
+   * @param maxFetchedTasksMultiplier multiplier applied to the executor core pool size
+   * @return the builder
+   */
+  ExternalTaskClientBuilder maxFetchedTasksMultiplier(double maxFetchedTasksMultiplier);
+
+  /**
+   * Enables or disables periodic logging of external task execution statistics.
+   * This information is optional. Default is enabled.
+   *
+   * @param statsSchedulerEnabled whether execution statistics should be logged periodically
+   * @return the builder
+   */
+  ExternalTaskClientBuilder statsSchedulerEnabled(boolean statsSchedulerEnabled);
+
+  /**
    * Bootstraps the Operaton client
    *
    * @throws ExternalTaskClientException

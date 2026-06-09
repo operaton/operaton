@@ -69,4 +69,9 @@ public class ExponentialErrorBackoffStrategy implements ErrorAwareBackoffStrateg
     long backoffTime = (long) (initTime * Math.pow(factor, level - 1d));
     return Math.min(backoffTime, maxTime);
   }
+
+  @Override
+  public BackoffStrategy copy() {
+    return new ExponentialErrorBackoffStrategy(initTime, factor, maxTime);
+  }
 }

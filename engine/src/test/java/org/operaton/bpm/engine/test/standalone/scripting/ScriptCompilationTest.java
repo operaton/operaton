@@ -16,6 +16,13 @@
  */
 package org.operaton.bpm.engine.test.standalone.scripting;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.script.CompiledScript;
+import javax.script.ScriptEngine;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +32,8 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.SourceExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptingEnvironment;
+import org.operaton.bpm.engine.impl.scripting.preprocessor.ScriptPreprocessor;
+import org.operaton.bpm.engine.impl.scripting.preprocessor.ScriptPreprocessorRequest;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -136,6 +145,103 @@ class ScriptCompilationTest {
     // it is compiled again
     assertThat(script.isShouldBeCompiled()).isFalse();
     assertThat(script.getCompiledScript()).isNotNull();
+  }
+
+  @Test
+  void testRecompileWhenPreprocessedScriptChanges() {
+    boolean preprocessingEnabledBefore = processEngineConfiguration.isEnableScriptPreprocessing();
+    List<ScriptPreprocessor> preprocessorsBefore = processEngineConfiguration.getScriptPreprocessors();
+
+    AtomicInteger preprocessorInvocations = new AtomicInteger();
+    ScriptPreprocessor preprocessor = new ScriptPreprocessor() {
+      @Override
+      public String process(ScriptPreprocessorRequest request) {
+        return preprocessorInvocations.incrementAndGet() == 1 ? "1 + 1" : "1 + 2";
+      }
+
+      @Override
+      public String getName() {
+        return "changing-preprocessor";
+      }
+    };
+    enablePreprocessingWith(preprocessor);
+
+    AtomicInteger compileInvocations = new AtomicInteger();
+    SourceExecutableScript script = createCountingScript(compileInvocations);
+
+    try {
+      Object firstResult = executeScript(script);
+      CompiledScript compiledForFirstPreprocessedOutput = script.getCompiledScript();
+
+      Object secondResult = executeScript(script);
+      CompiledScript compiledForSecondPreprocessedOutput = script.getCompiledScript();
+
+      assertThat(firstResult).isEqualTo(2);
+      assertThat(secondResult).isEqualTo(3);
+      assertThat(compileInvocations).hasValue(2);
+      assertThat(compiledForFirstPreprocessedOutput).isNotNull();
+      assertThat(compiledForSecondPreprocessedOutput).isNotNull();
+      assertThat(compiledForSecondPreprocessedOutput).isNotSameAs(compiledForFirstPreprocessedOutput);
+    } finally {
+      restorePreprocessingConfig(preprocessingEnabledBefore, preprocessorsBefore);
+    }
+  }
+
+  @Test
+  void testCompiledScriptCacheIsReusedWhenPreprocessedScriptIsStable() {
+    boolean preprocessingEnabledBefore = processEngineConfiguration.isEnableScriptPreprocessing();
+    List<ScriptPreprocessor> preprocessorsBefore = processEngineConfiguration.getScriptPreprocessors();
+
+    ScriptPreprocessor preprocessor = new ScriptPreprocessor() {
+      @Override
+      public String process(ScriptPreprocessorRequest request) {
+        return "1 + 1";
+      }
+
+      @Override
+      public String getName() {
+        return "stable-preprocessor";
+      }
+    };
+    enablePreprocessingWith(preprocessor);
+
+    AtomicInteger compileInvocations = new AtomicInteger();
+    SourceExecutableScript script = createCountingScript(compileInvocations);
+
+    try {
+      Object firstResult = executeScript(script);
+      CompiledScript firstCompiledScript = script.getCompiledScript();
+      Object secondResult = executeScript(script);
+      Object thirdResult = executeScript(script);
+
+      assertThat(firstResult).isEqualTo(2);
+      assertThat(secondResult).isEqualTo(2);
+      assertThat(thirdResult).isEqualTo(2);
+      assertThat(script.getCompiledScript()).isSameAs(firstCompiledScript);
+      assertThat(compileInvocations).hasValue(1);
+    } finally {
+      restorePreprocessingConfig(preprocessingEnabledBefore, preprocessorsBefore);
+    }
+  }
+
+  private SourceExecutableScript createCountingScript(AtomicInteger compileInvocations) {
+    return new SourceExecutableScript(SCRIPT_LANGUAGE, "ignored") {
+      @Override
+      public CompiledScript compile(ScriptEngine scriptEngine, String language, String src) {
+        compileInvocations.incrementAndGet();
+        return super.compile(scriptEngine, language, src);
+      }
+    };
+  }
+
+  private void enablePreprocessingWith(ScriptPreprocessor preprocessor) {
+    processEngineConfiguration.setEnableScriptPreprocessing(true);
+    processEngineConfiguration.setScriptPreprocessors(Collections.singletonList(preprocessor));
+  }
+
+  private void restorePreprocessingConfig(boolean enabledBefore, List<ScriptPreprocessor> preprocessorsBefore) {
+    processEngineConfiguration.setEnableScriptPreprocessing(enabledBefore);
+    processEngineConfiguration.setScriptPreprocessors(preprocessorsBefore);
   }
 
   protected Object executeScript(final ExecutableScript script) {

@@ -289,6 +289,8 @@ import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 import org.operaton.bpm.engine.impl.scripting.engine.VariableScopeResolverFactory;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptEnvResolver;
 import org.operaton.bpm.engine.impl.scripting.env.ScriptingEnvironment;
+import org.operaton.bpm.engine.impl.scripting.preprocessor.CompositeScriptPreprocessor;
+import org.operaton.bpm.engine.impl.scripting.preprocessor.ScriptPreprocessor;
 import org.operaton.bpm.engine.impl.telemetry.dto.DatabaseImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.InternalsImpl;
 import org.operaton.bpm.engine.impl.telemetry.dto.JdkImpl;
@@ -539,6 +541,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected boolean enableScriptEngineNashornCompatibility;
   protected boolean configureScriptEngineHostAccess = true;
   protected boolean skipIsolationLevelCheck;
+  protected volatile boolean enableScriptPreprocessing;
+  protected volatile List<ScriptPreprocessor> scriptPreprocessors;
+  protected volatile ScriptPreprocessor effectiveScriptPreprocessor;
+  protected final Object scriptPreprocessorLock = new Object();
 
   /**
    * When set to false, the following behavior changes:
@@ -4233,6 +4239,81 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public void setScriptFactory(ScriptFactory scriptFactory) {
     this.scriptFactory = scriptFactory;
+  }
+
+  public boolean isEnableScriptPreprocessing() {
+    return enableScriptPreprocessing;
+  }
+
+  public void setEnableScriptPreprocessing(boolean enableScriptPreprocessing) {
+    synchronized (scriptPreprocessorLock) {
+      this.enableScriptPreprocessing = enableScriptPreprocessing;
+      this.effectiveScriptPreprocessor = null;
+    }
+  }
+
+  public List<ScriptPreprocessor> getScriptPreprocessors() {
+    synchronized (scriptPreprocessorLock) {
+      if (scriptPreprocessors == null) {
+        return null;
+      }
+      return new ArrayList<>(scriptPreprocessors);
+    }
+  }
+
+  public void setScriptPreprocessors(List<ScriptPreprocessor> scriptPreprocessors) {
+    synchronized (scriptPreprocessorLock) {
+      if (scriptPreprocessors == null) {
+        this.scriptPreprocessors = null;
+      } else {
+        this.scriptPreprocessors = new ArrayList<>(scriptPreprocessors);
+      }
+      this.effectiveScriptPreprocessor = null;
+    }
+  }
+
+  public void addScriptPreprocessor(ScriptPreprocessor scriptPreprocessor) {
+    if (scriptPreprocessor == null) {
+      return;
+    }
+    synchronized (scriptPreprocessorLock) {
+      List<ScriptPreprocessor> updatedScriptPreprocessors = this.scriptPreprocessors == null
+          ? new ArrayList<>()
+          : new ArrayList<>(this.scriptPreprocessors);
+      updatedScriptPreprocessors.add(scriptPreprocessor);
+      this.scriptPreprocessors = updatedScriptPreprocessors;
+      this.effectiveScriptPreprocessor = null;
+    }
+  }
+
+  public ScriptPreprocessor getEffectiveScriptPreprocessor() {
+    if (!enableScriptPreprocessing) {
+      return null;
+    }
+    ScriptPreprocessor cached = effectiveScriptPreprocessor;
+    if (cached != null) {
+      return cached;
+    }
+
+    synchronized (scriptPreprocessorLock) {
+      if (!enableScriptPreprocessing) {
+        return null;
+      }
+
+      if (effectiveScriptPreprocessor == null) {
+        List<ScriptPreprocessor> configuredScriptPreprocessors = scriptPreprocessors;
+        if (configuredScriptPreprocessors == null || configuredScriptPreprocessors.isEmpty()) {
+          return null;
+        }
+
+        if (configuredScriptPreprocessors.size() == 1) {
+          effectiveScriptPreprocessor = configuredScriptPreprocessors.get(0);
+        } else {
+          effectiveScriptPreprocessor = new CompositeScriptPreprocessor(new ArrayList<>(configuredScriptPreprocessors));
+        }
+      }
+      return effectiveScriptPreprocessor;
+    }
   }
 
   public ScriptEngineResolver getScriptEngineResolver() {

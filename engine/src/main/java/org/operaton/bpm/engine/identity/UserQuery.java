@@ -65,6 +65,12 @@ public interface UserQuery extends Query<UserQuery, User> {
   /** Only select {@link User}s that belongs to the given tenant. */
   UserQuery memberOfTenant(String tenantId);
 
+  /**
+   * Makes LIKE comparisons case-insensitive for fields that are case-sensitive by default.
+   * This affects firstNameLike, lastNameLike, and emailLike.
+   */
+  UserQuery likePatternIgnoreCase();
+
   //sorting ////////////////////////////////////////////////////////
 
   /** Order by user id (needs to be followed by {@link #asc()} or {@link #desc()}). */

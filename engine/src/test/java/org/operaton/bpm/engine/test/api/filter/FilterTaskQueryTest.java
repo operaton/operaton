@@ -178,6 +178,7 @@ class FilterTaskQueryTest {
   void testTaskQuery() {
     // create query
     TaskQueryImpl query = new TaskQueryImpl();
+    query.likePatternIgnoreCase();
     query.taskId(testString);
     query.taskName(testString);
     query.taskNameNotEqual(testString);
@@ -285,6 +286,7 @@ class FilterTaskQueryTest {
 
     // test query
     query = testFilter.getQuery();
+    assertThat(query.isLikePatternIgnoreCase()).isTrue();
     assertThat(query.getTaskId()).isEqualTo(testString);
     assertThat(query.getName()).isEqualTo(testString);
     assertThat(query.getNameNotEqual()).isEqualTo(testString);
@@ -1254,6 +1256,35 @@ class FilterTaskQueryTest {
     assertThat(tasks)
             .isNotNull()
             .hasSize(3);
+  }
+
+  @Test
+  void testFilterListWithLikePatternIgnoreCaseInStoredQuery() {
+    TaskQuery query = taskService.createTaskQuery()
+      .likePatternIgnoreCase()
+      .taskAssigneeLike("KERMIT%");
+    saveQuery(query);
+
+    List<Task> tasks = filterService.list(testFilter.getId());
+
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getId()).isEqualTo("task2");
+    assertThat(tasks.get(0).getAssignee()).isEqualTo("kermit");
+  }
+
+  @Test
+  void testFilterListWithLikePatternIgnoreCaseInExtendingQuery() {
+    TaskQuery query = taskService.createTaskQuery().taskAssigneeLike("KERMIT%");
+    saveQuery(query);
+
+    assertThat(filterService.list(testFilter.getId())).isEmpty();
+
+    TaskQuery extendingQuery = taskService.createTaskQuery().likePatternIgnoreCase();
+    List<Task> tasks = filterService.list(testFilter.getId(), extendingQuery);
+
+    assertThat(tasks).hasSize(1);
+    assertThat(tasks.get(0).getId()).isEqualTo("task2");
+    assertThat(tasks.get(0).getAssignee()).isEqualTo("kermit");
   }
 
   @Test

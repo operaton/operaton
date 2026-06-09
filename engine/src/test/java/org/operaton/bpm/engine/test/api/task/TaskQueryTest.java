@@ -388,6 +388,19 @@ class TaskQueryTest {
   }
 
   @Test
+  void testQueryByAssigneeLikeIgnoreCase() {
+    TaskQuery query = taskService.createTaskQuery().taskAssigneeLike("GONZO%");
+    assertThat(query.count()).isZero();
+
+    query = taskService.createTaskQuery().likePatternIgnoreCase().taskAssigneeLike("GONZO%");
+    assertThat(query.count()).isOne();
+    assertThat(query.singleResult().getAssignee()).isEqualTo("gonzo_");
+
+    query = taskService.createTaskQuery().likePatternIgnoreCase().taskAssigneeLike("GoNzO%");
+    assertThat(query.count()).isOne();
+  }
+
+  @Test
   void testQueryByNullAssignee() {
     var taskQuery = taskService.createTaskQuery();
     assertThatThrownBy(() -> taskQuery.taskAssignee(null)).isInstanceOf(ProcessEngineException.class);

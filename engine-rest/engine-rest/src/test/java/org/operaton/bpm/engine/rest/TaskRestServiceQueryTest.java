@@ -553,6 +553,7 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     parameters.put("withoutCandidateUsers", true);
     parameters.put("withoutDueDate", true);
     parameters.put("withCommentAttachmentInfo", true);
+    parameters.put("likePatternIgnoreCase", true);
 
     return parameters;
   }
@@ -621,6 +622,22 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
     verify(mockQuery).withoutCandidateUsers();
     verify(mockQuery).withoutDueDate();
     verify(mockQuery).withCommentAttachmentInfo();
+    verify(mockQuery).likePatternIgnoreCase();
+  }
+
+  @Test
+  void testQueryWithLikePatternIgnoreCaseGetRequest() {
+    String assigneeLike = "testUser%";
+
+    given()
+      .queryParam("assigneeLike", assigneeLike)
+      .queryParam("likePatternIgnoreCase", true)
+      .header("accept", MediaType.APPLICATION_JSON)
+    .expect().statusCode(Status.OK.getStatusCode())
+    .when().get(TASK_QUERY_URL);
+
+    verify(mockQuery).taskAssigneeLike(assigneeLike);
+    verify(mockQuery).likePatternIgnoreCase();
   }
 
   @Test
@@ -1753,6 +1770,23 @@ public class TaskRestServiceQueryTest extends AbstractRestServiceTest {
 
     verify(mockQuery).includeAssignedTasks();
     verify(mockQuery).taskCandidateGroupIn(argThat(new EqualsList(candidateGroups)));
+  }
+
+  @Test
+  void testQueryWithLikePatternIgnoreCasePostRequest() {
+    String assigneeLike = "testUser%";
+    Map<String, Object> queryParameters = new HashMap<>();
+    queryParameters.put("assigneeLike", assigneeLike);
+    queryParameters.put("likePatternIgnoreCase", true);
+
+    given()
+      .contentType(POST_JSON_CONTENT_TYPE)
+      .body(queryParameters)
+    .expect().statusCode(Status.OK.getStatusCode())
+    .when().post(TASK_QUERY_URL);
+
+    verify(mockQuery).taskAssigneeLike(assigneeLike);
+    verify(mockQuery).likePatternIgnoreCase();
   }
 
   @Test

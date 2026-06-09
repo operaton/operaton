@@ -561,6 +561,14 @@ public interface TaskQuery extends Query<TaskQuery, Task> {
   TaskQuery matchVariableValuesIgnoreCase();
 
   /**
+   * Makes LIKE comparisons case-insensitive for fields that are case-sensitive by default.
+   * This affects assigneeLike, processInstanceBusinessKeyLike, caseInstanceBusinessKeyLike,
+   * taskDefinitionKeyLike, processDefinitionNameLike, caseDefinitionNameLike, and candidateGroupLike.
+   * taskNameLike, taskNameNotLike, and taskDescriptionLike are already case-insensitive by default.
+   */
+  TaskQuery likePatternIgnoreCase();
+
+  /**
    * Only select tasks which have a local task variable with the given name
    * set to the given value.
    */

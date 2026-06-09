@@ -129,19 +129,40 @@
         and RES.FIRST_ = #{firstName}
       </if>
       <if test="firstNameLike != null">
-        and RES.FIRST_ like #{firstNameLike} ESCAPE ${escapeChar}
+        <choose>
+          <when test="likePatternIgnoreCase">
+            and UPPER(RES.FIRST_) like UPPER(#{firstNameLike}) ESCAPE ${escapeChar}
+          </when>
+          <otherwise>
+            and RES.FIRST_ like #{firstNameLike} ESCAPE ${escapeChar}
+          </otherwise>
+        </choose>
       </if>
       <if test="lastName != null">
         and RES.LAST_ = #{lastName}
       </if>
       <if test="lastNameLike != null">
-        and RES.LAST_ like #{lastNameLike} ESCAPE ${escapeChar}
+        <choose>
+          <when test="likePatternIgnoreCase">
+            and UPPER(RES.LAST_) like UPPER(#{lastNameLike}) ESCAPE ${escapeChar}
+          </when>
+          <otherwise>
+            and RES.LAST_ like #{lastNameLike} ESCAPE ${escapeChar}
+          </otherwise>
+        </choose>
       </if>
       <if test="email != null">
         and RES.EMAIL_ = #{email}
       </if>
       <if test="emailLike != null">
-        and RES.EMAIL_ like #{emailLike} ESCAPE ${escapeChar}
+        <choose>
+          <when test="likePatternIgnoreCase">
+            and UPPER(RES.EMAIL_) like UPPER(#{emailLike}) ESCAPE ${escapeChar}
+          </when>
+          <otherwise>
+            and RES.EMAIL_ like #{emailLike} ESCAPE ${escapeChar}
+          </otherwise>
+        </choose>
       </if>
       <if test="groupId != null">
         and G.ID_ = #{groupId}

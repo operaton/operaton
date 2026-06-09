@@ -142,6 +142,16 @@ class UserQueryTest {
   }
 
   @Test
+  void testQueryByFirstNameLikeIgnoreCase() {
+    UserQuery query = identityService.createUserQuery().userFirstNameLike("ker%");
+    verifyQueryResults(query, 0);
+
+    query = identityService.createUserQuery().likePatternIgnoreCase().userFirstNameLike("ker%");
+    verifyQueryResults(query, 1);
+    assertThat(query.singleResult().getId()).isEqualTo("kermit");
+  }
+
+  @Test
   void testQueryByInvalidFirstNameLike() {
     UserQuery query = identityService.createUserQuery().userFirstNameLike("%mispiggy%");
     verifyQueryResults(query, 0);

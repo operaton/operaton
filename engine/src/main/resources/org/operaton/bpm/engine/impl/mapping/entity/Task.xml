@@ -388,7 +388,14 @@
               ${queryType} RES.ASSIGNEE_ = #{query.assignee}
             </if>
             <if test="query.assigneeLike != null">
-              ${queryType} RES.ASSIGNEE_ like #{query.assigneeLike} ESCAPE ${escapeChar}
+              <choose>
+                <when test="likePatternIgnoreCase">
+                  ${queryType} UPPER(RES.ASSIGNEE_) like UPPER(#{query.assigneeLike}) ESCAPE ${escapeChar}
+                </when>
+                <otherwise>
+                  ${queryType} RES.ASSIGNEE_ like #{query.assigneeLike} ESCAPE ${escapeChar}
+                </otherwise>
+              </choose>
             </if>
             <if test="query.assigneeIn != null &amp;&amp; query.assigneeIn.size &gt; 0">
               ${queryType} RES.ASSIGNEE_ in
@@ -440,7 +447,14 @@
               </foreach>
             </if>
             <if test="query.processInstanceBusinessKeyLike != null">
-              ${queryType} E.BUSINESS_KEY_ like #{query.processInstanceBusinessKeyLike} ESCAPE ${escapeChar}
+              <choose>
+                <when test="likePatternIgnoreCase">
+                  ${queryType} UPPER(E.BUSINESS_KEY_) like UPPER(#{query.processInstanceBusinessKeyLike}) ESCAPE ${escapeChar}
+                </when>
+                <otherwise>
+                  ${queryType} E.BUSINESS_KEY_ like #{query.processInstanceBusinessKeyLike} ESCAPE ${escapeChar}
+                </otherwise>
+              </choose>
             </if>
             <if test="query.executionId != null">
               ${queryType} RES.EXECUTION_ID_ = #{query.executionId}
@@ -452,7 +466,14 @@
               ${queryType} CE.BUSINESS_KEY_ = #{query.caseInstanceBusinessKey}
             </if>
             <if test="query.caseInstanceBusinessKeyLike != null">
-              ${queryType} CE.BUSINESS_KEY_ like #{query.caseInstanceBusinessKeyLike} ESCAPE ${escapeChar}
+              <choose>
+                <when test="likePatternIgnoreCase">
+                  ${queryType} UPPER(CE.BUSINESS_KEY_) like UPPER(#{query.caseInstanceBusinessKeyLike}) ESCAPE ${escapeChar}
+                </when>
+                <otherwise>
+                  ${queryType} CE.BUSINESS_KEY_ like #{query.caseInstanceBusinessKeyLike} ESCAPE ${escapeChar}
+                </otherwise>
+              </choose>
             </if>
             <if test="query.caseExecutionId != null">
               ${queryType} RES.CASE_EXECUTION_ID_ = #{query.caseExecutionId}
@@ -474,7 +495,14 @@
               ${queryType} RES.TASK_DEF_KEY_ = #{query.key}
             </if>
             <if test="query.keyLike != null">
-              ${queryType} RES.TASK_DEF_KEY_ like #{query.keyLike} ESCAPE ${escapeChar}
+              <choose>
+                <when test="likePatternIgnoreCase">
+                  ${queryType} UPPER(RES.TASK_DEF_KEY_) like UPPER(#{query.keyLike}) ESCAPE ${escapeChar}
+                </when>
+                <otherwise>
+                  ${queryType} RES.TASK_DEF_KEY_ like #{query.keyLike} ESCAPE ${escapeChar}
+                </otherwise>
+              </choose>
             </if>
             <if test="query.parentTaskId != null">
               ${queryType} RES.PARENT_TASK_ID_ = #{query.parentTaskId}
@@ -510,7 +538,14 @@
               ${queryType} D.NAME_ = #{query.processDefinitionName}
             </if>
             <if test="query.processDefinitionNameLike != null">
-              ${queryType} D.NAME_ like #{query.processDefinitionNameLike} ESCAPE ${escapeChar}
+              <choose>
+                <when test="likePatternIgnoreCase">
+                  ${queryType} UPPER(D.NAME_) like UPPER(#{query.processDefinitionNameLike}) ESCAPE ${escapeChar}
+                </when>
+                <otherwise>
+                  ${queryType} D.NAME_ like #{query.processDefinitionNameLike} ESCAPE ${escapeChar}
+                </otherwise>
+              </choose>
             </if>
             <if test="query.caseDefinitionId != null">
               ${queryType} RES.CASE_DEF_ID_ = #{query.caseDefinitionId}
@@ -522,7 +557,14 @@
               ${queryType} CD.NAME_ = #{query.caseDefinitionName}
             </if>
             <if test="query.caseDefinitionNameLike != null">
-              ${queryType} CD.NAME_ like #{query.caseDefinitionNameLike} ESCAPE ${escapeChar}
+              <choose>
+                <when test="likePatternIgnoreCase">
+                  ${queryType} UPPER(CD.NAME_) like UPPER(#{query.caseDefinitionNameLike}) ESCAPE ${escapeChar}
+                </when>
+                <otherwise>
+                  ${queryType} CD.NAME_ like #{query.caseDefinitionNameLike} ESCAPE ${escapeChar}
+                </otherwise>
+              </choose>
             </if>
             <if test="query.dueDate != null || query.dueBefore != null || query.dueAfter != null">
               ${queryType}
@@ -613,7 +655,14 @@
                     or
                   </if>
                   <if test="query.candidateGroupLike != null">
-                    I.GROUP_ID_ LIKE #{query.candidateGroupLike}
+                    <choose>
+                      <when test="likePatternIgnoreCase">
+                        UPPER(I.GROUP_ID_) LIKE UPPER(#{query.candidateGroupLike})
+                      </when>
+                      <otherwise>
+                        I.GROUP_ID_ LIKE #{query.candidateGroupLike}
+                      </otherwise>
+                    </choose>
                   </if>
                   )
                 </if>

@@ -62,5 +62,13 @@
     name = "potentialStarter"
     location = "query"
     type = "string"
-    last = last
     desc = "Only select Users that are potential starter for the given process definition."/>
+
+<@lib.parameter
+    name = "likePatternIgnoreCase"
+    location = "query"
+    type = "boolean"
+    defaultValue = "false"
+    last = last
+    desc = "Makes LIKE comparisons case-insensitive for fields that are case-sensitive by default.
+            This affects: `firstNameLike`, `lastNameLike`, and `emailLike`."/>

@@ -162,6 +162,7 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
 
   protected Boolean variableNamesIgnoreCase;
   protected Boolean variableValuesIgnoreCase;
+  protected Boolean likePatternIgnoreCase;
 
   protected String parentTaskId;
   protected boolean isWithoutTenantId;
@@ -1835,6 +1836,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     return variableValuesIgnoreCase;
   }
 
+  public Boolean isLikePatternIgnoreCase() {
+    return likePatternIgnoreCase;
+  }
+
   public List<TaskQueryImpl> getQueries() {
     return queries;
   }
@@ -2137,6 +2142,10 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
       extendedQuery.taskNameCaseInsensitive();
     }
 
+    if (Boolean.TRUE.equals(extendingQuery.isLikePatternIgnoreCase()) || Boolean.TRUE.equals(this.isLikePatternIgnoreCase())) {
+      extendedQuery.likePatternIgnoreCase();
+    }
+
     if (extendingQuery.getTenantIds() != null) {
       extendedQuery.tenantIdIn(extendingQuery.getTenantIds());
     } else if (this.getTenantIds() != null) {
@@ -2296,6 +2305,12 @@ public class TaskQueryImpl extends AbstractQuery<TaskQuery, Task> implements Tas
     for (TaskQueryVariableValue variable : this.variables) {
       variable.setVariableValueIgnoreCase(true);
     }
+    return this;
+  }
+
+  @Override
+  public TaskQuery likePatternIgnoreCase() {
+    this.likePatternIgnoreCase = true;
     return this;
   }
 }

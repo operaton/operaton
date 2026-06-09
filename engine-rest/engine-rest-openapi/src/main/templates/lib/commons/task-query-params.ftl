@@ -670,6 +670,16 @@
       desc = "Match all variable values in this query case-insensitively. If set
               `variableValue` and `variablevalue` are treated as equal." />
 
+  <@lib.parameter name = "likePatternIgnoreCase"
+      location = "query"
+      type = "boolean"
+      defaultValue = "false"
+      desc = "Makes LIKE comparisons case-insensitive for fields that are case-sensitive by default.
+              This affects: `assigneeLike`, `taskDefinitionKeyLike`, `processInstanceBusinessKeyLike`,
+              `caseInstanceBusinessKeyLike`, `processDefinitionNameLike`, `caseDefinitionNameLike`,
+              and `candidateGroupLike`. Note: `nameLike`, `nameNotLike`, and `descriptionLike`
+              are already case-insensitive by default." />
+
   <@lib.parameter name = "parentTaskId"
       location = "query"
       type = "string"

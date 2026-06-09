@@ -120,6 +120,7 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
   public static final String CASE_INSTANCE_VARIABLES = "caseInstanceVariables";
   public static final String TENANT_IDS = "tenantIds";
   public static final String WITHOUT_TENANT_ID = "withoutTenantId";
+  public static final String LIKE_PATTERN_IGNORE_CASE = "likePatternIgnoreCase";
   public static final String ORDERING_PROPERTIES = "orderingProperties";
   public static final String OR_QUERIES = "orQueries";
 
@@ -225,6 +226,7 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
     JsonUtil.addField(json, CASE_INSTANCE_BUSINESS_KEY_LIKE, query.getCaseInstanceBusinessKeyLike());
     JsonUtil.addField(json, CASE_EXECUTION_ID, query.getCaseExecutionId());
     addTenantIdFields(json, query);
+    JsonUtil.addDefaultField(json, LIKE_PATTERN_IGNORE_CASE, false, Boolean.TRUE.equals(query.isLikePatternIgnoreCase()));
 
     if (query.getQueries().size() > 1 && !isOrQueryActive) {
       JsonArray orQueries = JsonUtil.createArray();
@@ -443,6 +445,11 @@ public class JsonTaskQueryConverter implements JsonObjectConverter<TaskQuery> {
       Map.entry(CASE_EXECUTION_ID, (query, json) -> query.caseExecutionId(JsonUtil.getString(json, CASE_EXECUTION_ID))),
       Map.entry(TENANT_IDS, (query, json) -> query.tenantIdIn(getArray(JsonUtil.getArray(json, TENANT_IDS)))),
       Map.entry(WITHOUT_TENANT_ID, (query, json) -> query.withoutTenantId()),
+      Map.entry(LIKE_PATTERN_IGNORE_CASE, (query, json) -> {
+        if (JsonUtil.getBoolean(json, LIKE_PATTERN_IGNORE_CASE)) {
+          query.likePatternIgnoreCase();
+        }
+      }),
       Map.entry(ORDER_BY, (query, json) -> query.setOrderingProperties(LEGACY_QUERY_ORDERING_PROPERTY_CONVERTER.fromOrderByString(JsonUtil.getString(json, ORDER_BY)))),
       Map.entry(ORDERING_PROPERTIES, (query, json) -> query.setOrderingProperties(JsonQueryOrderingPropertyConverter.ARRAY_CONVERTER.toObject(JsonUtil.getArray(json, ORDERING_PROPERTIES))))
   );

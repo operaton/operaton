@@ -27,6 +27,7 @@ import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.identity.UserQuery;
 import org.operaton.bpm.engine.rest.dto.AbstractQueryDto;
 import org.operaton.bpm.engine.rest.dto.OperatonQueryParam;
+import org.operaton.bpm.engine.rest.dto.converter.BooleanConverter;
 import org.operaton.bpm.engine.rest.dto.converter.StringArrayConverter;
 
 /**
@@ -60,6 +61,7 @@ public class UserQueryDto extends AbstractQueryDto<UserQuery> {
   protected String memberOfGroup;
   protected String potentialStarter;
   protected String tenantId;
+  protected Boolean likePatternIgnoreCase;
 
   public UserQueryDto() {
 
@@ -124,6 +126,15 @@ public class UserQueryDto extends AbstractQueryDto<UserQuery> {
     this.tenantId = tenantId;
   }
 
+  @OperatonQueryParam(value = "likePatternIgnoreCase", converter = BooleanConverter.class)
+  public void setLikePatternIgnoreCase(Boolean likePatternIgnoreCase) {
+    this.likePatternIgnoreCase = likePatternIgnoreCase;
+  }
+
+  public Boolean getLikePatternIgnoreCase() {
+    return likePatternIgnoreCase;
+  }
+
   @Override
   protected boolean isValidSortByValue(String value) {
     return VALID_SORT_BY_VALUES.contains(value);
@@ -168,6 +179,9 @@ public class UserQueryDto extends AbstractQueryDto<UserQuery> {
     }
     if (tenantId != null) {
       query.memberOfTenant(tenantId);
+    }
+    if (Boolean.TRUE.equals(likePatternIgnoreCase)) {
+      query.likePatternIgnoreCase();
     }
   }
 

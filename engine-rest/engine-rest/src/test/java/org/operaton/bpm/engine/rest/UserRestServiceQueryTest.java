@@ -167,6 +167,22 @@ public class UserRestServiceQueryTest extends AbstractRestServiceTest {
   }
 
   @Test
+  void testQueryWithLikePatternIgnoreCaseGetRequest() {
+    String firstNameLike = "first%";
+
+    given()
+      .queryParam("firstNameLike", firstNameLike)
+      .queryParam("likePatternIgnoreCase", true)
+    .then().expect()
+      .statusCode(Status.OK.getStatusCode())
+    .when()
+      .get(USER_QUERY_URL);
+
+    verify(mockQuery).userFirstNameLike(firstNameLike);
+    verify(mockQuery).likePatternIgnoreCase();
+  }
+
+  @Test
   void testLastNameLikeQuery() {
     String[] testQueries = new String[] {"last%", "%Name", "%stNa%"};
 

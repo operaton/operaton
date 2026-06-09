@@ -18,12 +18,13 @@ package org.operaton.bpm.engine.test.concurrency;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
 import org.junit.jupiter.api.Test;
+
+import org.operaton.bpm.engine.impl.cfg.IdGenerator;
+import org.operaton.bpm.engine.impl.persistence.StrongUuidGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,18 +41,27 @@ class UuidGeneratorTest {
   void testMultithreaded() throws Exception {
     final List<Thread> threads = new ArrayList<>();
 
-    final TimeBasedGenerator timeBasedGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
+    final IdGenerator idGenerator = new StrongUuidGenerator();
     final ConcurrentSkipListSet<String> generatedIds = new ConcurrentSkipListSet<>();
     final ConcurrentSkipListSet<String> duplicatedIds = new ConcurrentSkipListSet<>();
+    final ConcurrentSkipListSet<String> nonUuidV4Ids = new ConcurrentSkipListSet<>();
 
     for (int i = 0; i < THREAD_COUNT; i++) {
       Thread thread = new Thread(() -> {
         for (int j = 0;j < LOOP_COUNT;j++) {
 
-          String id = timeBasedGenerator.generate().toString();
+          String id = idGenerator.getNextId();
           boolean wasAdded = generatedIds.add(id);
           if (!wasAdded) {
             duplicatedIds.add(id);
+          }
+
+          try {
+            if (UUID.fromString(id).version() != 4) {
+              nonUuidV4Ids.add(id);
+            }
+          } catch (IllegalArgumentException e) {
+            nonUuidV4Ids.add(id);
           }
         }
       });
@@ -65,5 +75,6 @@ class UuidGeneratorTest {
 
     assertThat(generatedIds).hasSize(THREAD_COUNT * LOOP_COUNT);
     assertThat(duplicatedIds).isEmpty();
+    assertThat(nonUuidV4Ids).isEmpty();
   }
 }

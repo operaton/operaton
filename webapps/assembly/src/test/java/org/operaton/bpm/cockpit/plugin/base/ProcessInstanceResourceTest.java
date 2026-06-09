@@ -119,8 +119,12 @@ class ProcessInstanceResourceTest extends AbstractCockpitPluginTest {
 
     List<CalledProcessInstanceDto> result = resource.queryCalledProcessInstances(queryParameter);
     assertThat(result).hasSize(2);
-    assertThat(result.get(0).getBusinessKey()).isEqualTo("firstCall:myBusinessKey");
-    assertThat(result.get(1).getBusinessKey()).isEqualTo("secondCall:myBusinessKey");
+    assertThat(result)
+        .extracting(CalledProcessInstanceDto::getBusinessKey)
+        .containsExactlyInAnyOrder(
+            "firstCall:myBusinessKey",
+            "secondCall:myBusinessKey"
+        );
   }
 
 

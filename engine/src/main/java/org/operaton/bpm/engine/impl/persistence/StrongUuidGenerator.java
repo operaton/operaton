@@ -16,36 +16,18 @@
  */
 package org.operaton.bpm.engine.impl.persistence;
 
-import com.fasterxml.uuid.EthernetAddress;
-import com.fasterxml.uuid.Generators;
-import com.fasterxml.uuid.impl.TimeBasedGenerator;
+import java.util.UUID;
 
 import org.operaton.bpm.engine.impl.cfg.IdGenerator;
 
 /**
- * {@link IdGenerator} implementation based on the current time and the ethernet
- * address of the machine it is running on.
- *
- * @author Daniel Meyer
+ * Secure random UUID (v4) based {@link IdGenerator}.
  */
 public class StrongUuidGenerator implements IdGenerator {
 
-  // different ProcessEngines on the same classloader share one generator.
-  protected static TimeBasedGenerator timeBasedGenerator;
-
-  public StrongUuidGenerator() {
-    ensureGeneratorInitialized();
-  }
-
-  protected synchronized void ensureGeneratorInitialized() {
-    if (timeBasedGenerator == null) {
-      timeBasedGenerator = Generators.timeBasedGenerator(EthernetAddress.fromInterface());
-    }
-  }
-
   @Override
   public String getNextId() {
-    return timeBasedGenerator.generate().toString();
+    return UUID.randomUUID().toString();
   }
 
 }

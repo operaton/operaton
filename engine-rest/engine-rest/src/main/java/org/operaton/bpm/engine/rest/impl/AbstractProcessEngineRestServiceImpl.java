@@ -262,6 +262,13 @@ public abstract class AbstractProcessEngineRestServiceImpl {
     return subResource;
   }
 
+  public ConfigurationRestService getConfigurationRestService(String engineName) {
+    String rootResourcePath = getRelativeEngineUri(engineName).toASCIIString();
+    ConfigurationRestService subResource = new ConfigurationRestService(engineName, getObjectMapper());
+    subResource.setRelativeRootResourceUri(rootResourcePath);
+    return subResource;
+  }
+
   public SchemaLogRestService getSchemaLogRestService(String engineName) {
     String rootResourcePath = getRelativeEngineUri(engineName).toASCIIString();
     SchemaLogRestServiceImpl subResource = new SchemaLogRestServiceImpl(engineName, getObjectMapper());

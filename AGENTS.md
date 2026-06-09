@@ -249,6 +249,12 @@ public class MyProcessEngineTest {
 - 2 spaces indentation (no tabs)
 - 120 characters line length
 - K&R brace style (opening brace on same line)
+- Keep diffs focused. Avoid indentation, wrapping, import, or formatting-only changes unless required.
+- Prefer established local utility methods and idioms over ad hoc checks. For example, use
+  `org.springframework.util.StringUtils.hasText` for nullable/blank string checks where Spring utilities are already
+  available instead of repeating `value != null && !value.isBlank()`.
+- When changing guard conditions, check related fields and code paths, not only the line that failed.
+- Add focused tests for relevant null, empty, and blank values.
 - Import order (defined in `rewrite.yml`):
   - `java.*`
   - `jakarta.*`
@@ -330,19 +336,26 @@ feat(engine): Support BPEL execution
 related to #123
 ```
 
-### Backporting from Camunda 7
+### Backporting from Camunda 7-compatible Sources
 
-For issues labeled `backport:c7`:
-- Attribute the original commit properly
+For issues labeled `backport:c7`, treat the source as the Camunda 7 compatibility family. The source may be upstream
+Camunda 7 or a Camunda 7-compatible fork.
+
+- Attribute the original commit properly, using the actual source repository and issue/PR URLs.
 - Include backport metadata in commit body:
   ```
-  Related to https://github.com/camunda/camunda-bpm-platform/issues/{ISSUE}
+  Related to {SOURCE_ISSUE_OR_PR_URL}
 
-  Backported commit {HASH} from the camunda-bpm-platform repository.
+  Backported commit {HASH} from {SOURCE_REPOSITORY}.
   Original author: {AUTHOR_NAME} <{AUTHOR_EMAIL}>
   ```
-- Adapt namespace changes: `org.camunda.bpm` → `org.operaton.bpm`
+- Adapt namespace changes from the source project to Operaton packages, for example `org.camunda.bpm` →
+  `org.operaton.bpm`.
 - Migrate JUnit 4 → JUnit 5 and JUnit assertions → AssertJ assertions
+- Preserve the surrounding Operaton style and avoid unrelated indentation or formatting churn while resolving conflicts.
+- Prefer Operaton's current helper APIs and local conventions over copying older source idioms verbatim.
+- When a backport changes null/empty/blank handling, add focused regression tests for the relevant method parameters and
+  persisted entity fields.
 - Verify backport with full build: `./mvnw clean install`
 - Run integration tests if dependencies changed
 

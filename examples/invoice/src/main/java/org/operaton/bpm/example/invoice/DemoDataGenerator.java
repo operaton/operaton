@@ -149,6 +149,13 @@ public class DemoDataGenerator {
         }
       }
 
+      // create GLOBAL READ permission to be able to read OWN authorizations
+      Authorization globalAuthorizationRead = authorizationService.createNewAuthorization(Authorization.AUTH_TYPE_GLOBAL);
+      globalAuthorizationRead.setResource(Resources.AUTHORIZATION);
+      globalAuthorizationRead.setResourceId(ANY);
+      globalAuthorizationRead.addPermission(READ);
+      authorizationService.saveAuthorization(globalAuthorizationRead);
+
       identityService.createMembership(RESOURCE_ID_DEMO, GROUP_SALES);
       identityService.createMembership(RESOURCE_ID_DEMO, GROUP_ACCOUNTING);
       identityService.createMembership(RESOURCE_ID_DEMO, GROUP_MANAGEMENT);

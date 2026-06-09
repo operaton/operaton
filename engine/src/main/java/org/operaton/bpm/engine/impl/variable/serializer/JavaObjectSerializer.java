@@ -24,7 +24,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.ObjectStreamClass;
 import java.io.Serializable;
+import java.lang.reflect.Proxy;
 
+import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.variable.Variables.SerializationDataFormats;
 
@@ -86,6 +88,28 @@ public class JavaObjectSerializer extends AbstractObjectValueSerializer {
     @Override
     protected Class<?> resolveClass(ObjectStreamClass desc) {
       return ReflectUtil.loadClass(desc.getName());
+    }
+
+    @Override
+    protected Class<?> resolveProxyClass(String[] interfaces) throws IOException, ClassNotFoundException {
+      Class<?>[] resolvedInterfaces = new Class<?>[interfaces.length];
+      for (int i = 0; i < interfaces.length; i++) {
+        resolvedInterfaces[i] = loadInterfaceClass(interfaces[i]);
+      }
+
+      try {
+        return Proxy.getProxyClass(ReflectUtil.getClassLoader(), resolvedInterfaces);
+      } catch (IllegalArgumentException e) {
+        throw new ClassNotFoundException(null, e);
+      }
+    }
+
+    protected Class<?> loadInterfaceClass(String interfaceName) throws ClassNotFoundException {
+      try {
+        return ReflectUtil.loadClass(interfaceName);
+      } catch (ProcessEngineException e) {
+        throw new ClassNotFoundException(interfaceName, e);
+      }
     }
 
   }

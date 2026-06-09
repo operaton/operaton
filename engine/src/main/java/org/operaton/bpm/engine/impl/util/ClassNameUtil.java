@@ -32,7 +32,8 @@ public final class ClassNameUtil {
     Map.entry("org.camunda.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
     Map.entry("org.cibseven.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
     Map.entry("org.eximeebpms.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
-    Map.entry("org.finos.fluxnova.bpm", OPERATON_ENGINE_PACKAGE_PREFIX)
+    Map.entry("org.finos.fluxnova.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
+    Map.entry("io.orqueio.bpm", OPERATON_ENGINE_PACKAGE_PREFIX)
   );
 
   protected static final Map<Class<?>, String> cachedNames = new ConcurrentHashMap<>();
@@ -57,6 +58,15 @@ public final class ClassNameUtil {
       return null;
     }
 
+    String componentClassName = getObjectArrayComponentClassName(className);
+    if (componentClassName != null) {
+      String mappedComponentClassName = mapKnownForkClassNameToOperaton(componentClassName);
+      if (!mappedComponentClassName.equals(componentClassName)) {
+        return className.substring(0, className.indexOf('L') + 1) + mappedComponentClassName + ";";
+      }
+      return className;
+    }
+
     for (var mapping : FORK_ENGINE_PACKAGE_PREFIX_MAPPINGS) {
       String sourcePrefix = mapping.getKey();
       if (className.equals(sourcePrefix) || className.startsWith(sourcePrefix + ".")) {
@@ -65,6 +75,22 @@ public final class ClassNameUtil {
     }
 
     return className;
+  }
+
+  protected static String getObjectArrayComponentClassName(String className) {
+    int arrayPrefixLength = 0;
+    while (arrayPrefixLength < className.length() && className.charAt(arrayPrefixLength) == '[') {
+      arrayPrefixLength++;
+    }
+
+    if (arrayPrefixLength == 0
+        || arrayPrefixLength >= className.length()
+        || className.charAt(arrayPrefixLength) != 'L'
+        || !className.endsWith(";")) {
+      return null;
+    }
+
+    return className.substring(arrayPrefixLength + 1, className.length() - 1);
   }
 
   public static String mapKnownForkClassNamesInTextToOperaton(String text) {

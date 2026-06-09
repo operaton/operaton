@@ -67,9 +67,14 @@ class ClassNameUtilTest {
       arguments("org.cibseven.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
       arguments("org.eximeebpms.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
       arguments("org.finos.fluxnova.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("io.orqueio.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("[Lorg.cibseven.bpm.engine.delegate.BpmnError;", "[Lorg.operaton.bpm.engine.delegate.BpmnError;"),
+      arguments("[[Lio.orqueio.bpm.engine.delegate.BpmnError;", "[[Lorg.operaton.bpm.engine.delegate.BpmnError;"),
       arguments("org.operaton.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("[I", "[I"),
       arguments("org.camunda.community.BpmnError", "org.camunda.community.BpmnError"),
       arguments("org.cibsevenx.bpm.engine.delegate.BpmnError", "org.cibsevenx.bpm.engine.delegate.BpmnError"),
+      arguments("io.orqueio.bpmfoo.engine.delegate.BpmnError", "io.orqueio.bpmfoo.engine.delegate.BpmnError"),
       arguments(null, null)
     );
   }
@@ -88,8 +93,12 @@ class ClassNameUtilTest {
       arguments(
         "Java.type('org.finos.fluxnova.bpm.engine.delegate.BpmnError')",
         "Java.type('org.operaton.bpm.engine.delegate.BpmnError')"),
+      arguments(
+        "Java.type('io.orqueio.bpm.engine.delegate.BpmnError')",
+        "Java.type('org.operaton.bpm.engine.delegate.BpmnError')"),
       arguments("org.camunda.community.BpmnError", "org.camunda.community.BpmnError"),
       arguments("org.cibseven.bpmfoo.engine.BpmnError", "org.cibseven.bpmfoo.engine.BpmnError"),
+      arguments("io.orqueio.bpmfoo.engine.BpmnError", "io.orqueio.bpmfoo.engine.BpmnError"),
       arguments(null, null)
     );
   }

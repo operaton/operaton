@@ -945,8 +945,9 @@ public class FilterRestServiceInteractionTest extends AbstractRestServiceTest {
 
     ArgumentCaptor<TaskQueryImpl> argument = ArgumentCaptor.forClass(TaskQueryImpl.class);
     verify(filterServiceMock).singleResult(eq(EXAMPLE_FILTER_ID), argument.capture());
+    assertThat(argument.getValue().getQueries()).hasSize(2);
     assertThat(argument.getValue().getQueries().get(1).getDescription()).isEqualTo(MockProvider.EXAMPLE_TASK_DESCRIPTION);
-    assertThat(argument.getValue().getQueries().get(2).getName()).isEqualTo(MockProvider.EXAMPLE_TASK_NAME);
+    assertThat(argument.getValue().getQueries().get(1).getName()).isEqualTo(MockProvider.EXAMPLE_TASK_NAME);
   }
 
   @Test

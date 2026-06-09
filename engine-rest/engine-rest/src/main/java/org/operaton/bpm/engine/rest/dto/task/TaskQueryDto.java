@@ -1118,14 +1118,8 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
 
   @Override
   protected void applyFilters(TaskQuery query) {
-    if (orQueries != null) {
-      for (TaskQueryDto orQueryDto: orQueries) {
-        TaskQueryImpl orQuery = new TaskQueryImpl();
-        orQuery.setOrQueryActive();
-        orQueryDto.applyFilters(orQuery);
-        ((TaskQueryImpl) query).addOrQuery(orQuery);
-      }
-    }
+    applyOrQueries(query);
+
     if (processInstanceBusinessKey != null) {
       query.processInstanceBusinessKey(processInstanceBusinessKey);
     }
@@ -1489,6 +1483,168 @@ public class TaskQueryDto extends AbstractQueryDto<TaskQuery> {
     if (withCommentAttachmentInfo != null && withCommentAttachmentInfo) {
       query.withCommentAttachmentInfo();
     }
+  }
+
+  private void applyOrQueries(TaskQuery query) {
+    if (orQueries == null) {
+      return;
+    }
+
+    List<TaskQueryDto> nonEmptyOrQueries = orQueries.stream()
+      .filter(Objects::nonNull)
+      .filter(TaskQueryDto::hasFilterCriteria)
+      .toList();
+
+    if (nonEmptyOrQueries.isEmpty()) {
+      return;
+    }
+
+    TaskQuery orQuery = query.or();
+
+    for (TaskQueryDto orQueryDto : nonEmptyOrQueries) {
+      orQueryDto.applyFilters(orQuery);
+    }
+
+    orQuery.endOr();
+  }
+
+  private boolean hasFilterCriteria() {
+    return hasProcessFilters()
+      || hasAssignmentFilters()
+      || hasTaskFilters()
+      || hasCaseFilters()
+      || hasDateFilters()
+      || hasTenantFilters()
+      || hasVariableFilters()
+      || hasOtherFilters();
+  }
+
+  private boolean hasProcessFilters() {
+    return processInstanceBusinessKey != null
+      || processInstanceBusinessKeyExpression != null
+      || !isEmpty(processInstanceBusinessKeyIn)
+      || processInstanceBusinessKeyLike != null
+      || processInstanceBusinessKeyLikeExpression != null
+      || processDefinitionKey != null
+      || !isEmpty(processDefinitionKeyIn)
+      || processDefinitionId != null
+      || executionId != null
+      || !isEmpty(activityInstanceIdIn)
+      || processDefinitionName != null
+      || processDefinitionNameLike != null
+      || processInstanceId != null
+      || !isEmpty(processInstanceIdIn);
+  }
+
+  private boolean hasAssignmentFilters() {
+    return assignee != null
+      || assigneeExpression != null
+      || assigneeLike != null
+      || assigneeLikeExpression != null
+      || !isEmpty(assigneeIn)
+      || !isEmpty(assigneeNotIn)
+      || candidateGroup != null
+      || candidateGroupExpression != null
+      || candidateGroupLike != null
+      || candidateUser != null
+      || candidateUserExpression != null
+      || !isEmpty(candidateGroups)
+      || candidateGroupsExpression != null
+      || TRUE.equals(includeAssignedTasks)
+      || TRUE.equals(assigned)
+      || TRUE.equals(unassigned)
+      || TRUE.equals(withCandidateGroups)
+      || TRUE.equals(withoutCandidateGroups)
+      || TRUE.equals(withCandidateUsers)
+      || TRUE.equals(withoutCandidateUsers);
+  }
+
+  private boolean hasTaskFilters() {
+    return taskDefinitionKey != null
+      || !isEmpty(taskDefinitionKeyIn)
+      || !isEmpty(taskDefinitionKeyNotIn)
+      || taskDefinitionKeyLike != null
+      || taskId != null
+      || !isEmpty(taskIdIn)
+      || description != null
+      || descriptionLike != null
+      || involvedUser != null
+      || involvedUserExpression != null
+      || maxPriority != null
+      || minPriority != null
+      || name != null
+      || nameNotEqual != null
+      || nameLike != null
+      || nameNotLike != null
+      || owner != null
+      || ownerExpression != null
+      || priority != null
+      || parentTaskId != null
+      || TRUE.equals(active)
+      || TRUE.equals(suspended);
+  }
+
+  private boolean hasCaseFilters() {
+    return caseDefinitionKey != null
+      || caseDefinitionId != null
+      || caseDefinitionName != null
+      || caseDefinitionNameLike != null
+      || caseInstanceId != null
+      || caseInstanceBusinessKey != null
+      || caseInstanceBusinessKeyLike != null
+      || caseExecutionId != null;
+  }
+
+  private boolean hasDateFilters() {
+    return dueAfter != null
+      || dueAfterExpression != null
+      || dueBefore != null
+      || dueBeforeExpression != null
+      || dueDate != null
+      || dueDateExpression != null
+      || TRUE.equals(withoutDueDate)
+      || followUpAfter != null
+      || followUpAfterExpression != null
+      || followUpBefore != null
+      || followUpBeforeExpression != null
+      || followUpBeforeOrNotExistent != null
+      || followUpBeforeOrNotExistentExpression != null
+      || followUpDate != null
+      || followUpDateExpression != null
+      || createdAfter != null
+      || createdAfterExpression != null
+      || createdBefore != null
+      || createdBeforeExpression != null
+      || createdOn != null
+      || createdOnExpression != null
+      || updatedAfter != null
+      || updatedAfterExpression != null;
+  }
+
+  private boolean hasTenantFilters() {
+    return !isEmpty(tenantIdIn)
+      || TRUE.equals(withoutTenantId);
+  }
+
+  private boolean hasVariableFilters() {
+    return !isEmpty(taskVariables)
+      || !isEmpty(processVariables)
+      || !isEmpty(caseInstanceVariables)
+      || TRUE.equals(variableNamesIgnoreCase)
+      || TRUE.equals(variableValuesIgnoreCase);
+  }
+
+  private boolean hasOtherFilters() {
+    return delegationState != null
+      || TRUE.equals(withCommentAttachmentInfo);
+  }
+
+  private boolean isEmpty(Object[] values) {
+    return values == null || values.length == 0;
+  }
+
+  private boolean isEmpty(Collection<?> values) {
+    return values == null || values.isEmpty();
   }
 
   @Override

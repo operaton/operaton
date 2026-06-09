@@ -4,8 +4,8 @@
   <@lib.endpointInfo
       id = "deleteGroupMembership"
       tag = "Tenant"
-      summary = "Create Tenant Group Membership"
-      desc = "Creates a membership between a tenant and a group."
+      summary = "Delete Tenant Group Membership"
+      desc = "Deletes a membership between a tenant and a group."
   />
 
   "parameters" : [

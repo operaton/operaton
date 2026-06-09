@@ -109,6 +109,9 @@ public class AuthenticationFilterPathMatchingTest extends AbstractRestServiceTes
         {"", "/process-definition", "default", true},
         {"", "/engine", null, false},
         {"", "/engine/", null, false},
+        {"", "/identity/verify", null, false},
+        {"", "/engine/default/identity/verify", null, false},
+        {"", "/engine/someOther/identity/verify", null, false},
         {"", "/", "default", true},
         {"", "", "default", true},
         {"/someservlet", "/engine/someengine/process-definition", "someengine", true}

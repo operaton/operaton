@@ -28,8 +28,6 @@
     <module name="org.jruby.jruby-complete" services="import"/>
     <module name="org.graalvm.js.js-all" services="import"/>
 
-    <module name="sun.jdk" services="import"/>
-
     <module name="org.operaton.bpm.model.operaton-xml-model" />
     <module name="org.operaton.bpm.model.operaton-bpmn-model" />
     <module name="org.operaton.bpm.model.operaton-cmmn-model" />

@@ -24,7 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
-import static org.springframework.util.StringUtils.hasText;
+import static org.operaton.bpm.engine.impl.util.StringUtil.hasText;
 
 /**
  * @author Tom Baeyens

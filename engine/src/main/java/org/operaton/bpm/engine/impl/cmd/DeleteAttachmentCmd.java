@@ -24,6 +24,7 @@ import org.operaton.bpm.engine.impl.persistence.entity.PropertyChange;
 import org.operaton.bpm.engine.impl.persistence.entity.TaskEntity;
 
 import static org.operaton.bpm.engine.impl.util.EnsureUtil.ensureNotNull;
+import static org.springframework.util.StringUtils.hasText;
 
 /**
  * @author Tom Baeyens
@@ -45,7 +46,7 @@ public class DeleteAttachmentCmd implements Command<Object> {
   @Override
   public Object execute(CommandContext commandContext) {
     AttachmentEntity attachment = null;
-    if (taskId != null && !taskId.isBlank()) {
+    if (hasText(taskId)) {
       attachment = (AttachmentEntity) commandContext
           .getAttachmentManager()
           .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);
@@ -58,16 +59,16 @@ public class DeleteAttachmentCmd implements Command<Object> {
     }
 
     commandContext
-        .getDbEntityManager()
-        .delete(attachment);
+      .getDbEntityManager()
+      .delete(attachment);
 
-    if (attachment.getContentId() != null) {
+    if (hasText(attachment.getContentId())) {
       commandContext
-          .getByteArrayManager()
-          .deleteByteArrayById(attachment.getContentId());
+        .getByteArrayManager()
+        .deleteByteArrayById(attachment.getContentId());
     }
 
-    if (attachment.getTaskId() != null && !attachment.getTaskId().isBlank()) {
+    if (hasText(attachment.getTaskId())) {
       TaskEntity task = commandContext
           .getTaskManager()
           .findTaskById(attachment.getTaskId());

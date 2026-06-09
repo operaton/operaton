@@ -66,13 +66,13 @@ operaton.bpm:
 server:
 # https://docs.operaton.org/manual/latest/user-guide/operaton-bpm-run/#https
 # do not use the provided certificate in production
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-password: operaton
-    key-store-type: pkcs12
-    key-alias: localhost
-    key-password: operaton
-  port: 8443
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: operaton
+#    key-store-type: pkcs12
+#    key-alias: localhost
+#    key-password: operaton
+#  port: 8443
 
 # https://docs.operaton.org/manual/latest/user-guide/security/#http-header-security-in-webapps
 # https://docs.operaton.org/manual/latest/webapps/shared-options/header-security/

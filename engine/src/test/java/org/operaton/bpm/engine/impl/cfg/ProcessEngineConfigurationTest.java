@@ -74,6 +74,16 @@ public class ProcessEngineConfigurationTest {
   }
 
   @Test
+  void shouldDisableVariableTaskIdCheckByDefault() {
+    // when
+    ProcessEngineConfigurationImpl engineCfg = (ProcessEngineConfigurationImpl) ProcessEngineConfiguration
+        .createStandaloneProcessEngineConfiguration();
+
+    // then
+    assertThat(engineCfg.isCheckVariableTaskId()).isFalse();
+  }
+
+  @Test
   void validIsolationLevel() {
     // given
     ((PooledDataSource) engineConfiguration.getDataSource()).setDefaultTransactionIsolationLevel(Connection.TRANSACTION_READ_COMMITTED);

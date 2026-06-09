@@ -22,6 +22,9 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.delegate.BpmnError;
+import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+import org.operaton.bpm.engine.impl.context.Context;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -143,6 +146,42 @@ class ReflectUtilTest {
     Method m = ReflectUtil.getMethod(SetterClass.class, "setName", String.class);
     assertThat(m).isNotNull();
     assertThat(m.getName()).isEqualTo("setName");
+  }
+
+  @Test
+  void shouldNotMapKnownForkClassNameWhenCompatibilityMappingIsDisabled() {
+    assertThatThrownBy(() -> ReflectUtil.loadClass("org.cibseven.bpm.engine.delegate.BpmnError"))
+      .isInstanceOf(ProcessEngineException.class);
+  }
+
+  @Test
+  void shouldMapKnownForkClassNameWhenCompatibilityMappingIsEnabled() {
+    Context.setProcessEngineConfiguration(new StandaloneInMemProcessEngineConfiguration()
+      .setEnableForkClassNameCompatibilityMapping(true));
+
+    try {
+      Class<?> loadedClass = ReflectUtil.loadClass("org.cibseven.bpm.engine.delegate.BpmnError");
+
+      assertThat(loadedClass).isEqualTo(BpmnError.class);
+    } finally {
+      Context.removeProcessEngineConfiguration();
+    }
+  }
+
+  @Test
+  void shouldMapKnownForkClassNameWithCustomClassLoaderWhenCompatibilityMappingIsEnabled() throws Exception {
+    Context.setProcessEngineConfiguration(new StandaloneInMemProcessEngineConfiguration()
+      .setEnableForkClassNameCompatibilityMapping(true));
+
+    try {
+      Class<?> loadedClass = ReflectUtil.loadClass(
+          "org.eximeebpms.bpm.engine.delegate.BpmnError",
+          Thread.currentThread().getContextClassLoader());
+
+      assertThat(loadedClass).isEqualTo(BpmnError.class);
+    } finally {
+      Context.removeProcessEngineConfiguration();
+    }
   }
 
 }

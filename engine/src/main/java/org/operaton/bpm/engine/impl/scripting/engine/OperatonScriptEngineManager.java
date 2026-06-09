@@ -18,9 +18,15 @@ package org.operaton.bpm.engine.impl.scripting.engine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
+import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
+
+import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.util.ForkClassNameMappingClassLoader;
 
 import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.GRAAL_JS_SCRIPT_ENGINE_NAME;
 import static org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines.JYTHON_SCRIPT_ENGINE_NAME;
@@ -47,6 +53,48 @@ public class OperatonScriptEngineManager extends ScriptEngineManager {
   public OperatonScriptEngineManager() {
     super(); // creates engine factories after classpath discovery
     applyConfigOnEnginesAfterClasspathDiscovery();
+  }
+
+  public OperatonScriptEngineManager(ClassLoader classLoader) {
+    super(classLoader); // creates engine factories after classpath discovery
+    applyConfigOnEnginesAfterClasspathDiscovery();
+  }
+
+  @Override
+  public ScriptEngine getEngineByName(String shortName) {
+    return withForkClassNameCompatibilityMapping(() -> super.getEngineByName(shortName));
+  }
+
+  @Override
+  public ScriptEngine getEngineByExtension(String extension) {
+    return withForkClassNameCompatibilityMapping(() -> super.getEngineByExtension(extension));
+  }
+
+  @Override
+  public ScriptEngine getEngineByMimeType(String mimeType) {
+    return withForkClassNameCompatibilityMapping(() -> super.getEngineByMimeType(mimeType));
+  }
+
+  protected ScriptEngine withForkClassNameCompatibilityMapping(Supplier<ScriptEngine> scriptEngineSupplier) {
+    if (!isForkClassNameCompatibilityMappingEnabled()) {
+      return scriptEngineSupplier.get();
+    }
+
+    Thread currentThread = Thread.currentThread();
+    ClassLoader originalClassLoader = currentThread.getContextClassLoader();
+    ClassLoader mappingClassLoader = new ForkClassNameMappingClassLoader(originalClassLoader);
+
+    try {
+      currentThread.setContextClassLoader(mappingClassLoader);
+      return scriptEngineSupplier.get();
+    } finally {
+      currentThread.setContextClassLoader(originalClassLoader);
+    }
+  }
+
+  protected boolean isForkClassNameCompatibilityMappingEnabled() {
+    ProcessEngineConfigurationImpl cfg = Context.getProcessEngineConfiguration();
+    return cfg != null && cfg.isEnableForkClassNameCompatibilityMapping();
   }
 
   protected void applyConfigOnEnginesAfterClasspathDiscovery() {

@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.impl.util;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,6 +25,15 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Tom Baeyens
  */
 public final class ClassNameUtil {
+
+  public static final String OPERATON_ENGINE_PACKAGE_PREFIX = "org.operaton.bpm";
+
+  protected static final List<Map.Entry<String, String>> FORK_ENGINE_PACKAGE_PREFIX_MAPPINGS = List.of(
+    Map.entry("org.camunda.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
+    Map.entry("org.cibseven.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
+    Map.entry("org.eximeebpms.bpm", OPERATON_ENGINE_PACKAGE_PREFIX),
+    Map.entry("org.finos.fluxnova.bpm", OPERATON_ENGINE_PACKAGE_PREFIX)
+  );
 
   protected static final Map<Class<?>, String> cachedNames = new ConcurrentHashMap<>();
 
@@ -40,5 +50,33 @@ public final class ClassNameUtil {
       String fullyQualifiedClassName = key.getName();
       return fullyQualifiedClassName.substring(fullyQualifiedClassName.lastIndexOf('.') + 1);
     });
+  }
+
+  public static String mapKnownForkClassNameToOperaton(String className) {
+    if (className == null) {
+      return null;
+    }
+
+    for (var mapping : FORK_ENGINE_PACKAGE_PREFIX_MAPPINGS) {
+      String sourcePrefix = mapping.getKey();
+      if (className.equals(sourcePrefix) || className.startsWith(sourcePrefix + ".")) {
+        return mapping.getValue() + className.substring(sourcePrefix.length());
+      }
+    }
+
+    return className;
+  }
+
+  public static String mapKnownForkClassNamesInTextToOperaton(String text) {
+    if (text == null) {
+      return null;
+    }
+
+    String mappedText = text;
+    for (var mapping : FORK_ENGINE_PACKAGE_PREFIX_MAPPINGS) {
+      mappedText = mappedText.replace(mapping.getKey() + ".", mapping.getValue() + ".");
+    }
+
+    return mappedText;
   }
 }

@@ -423,6 +423,11 @@ public abstract class ProcessEngineConfiguration {
    */
   protected boolean skipOutputMappingOnCanceledActivities;
 
+  /**
+   * Enables compatibility class name mapping from known Camunda 7 fork package prefixes to the Operaton package prefix.
+   */
+  protected boolean enableForkClassNameCompatibilityMapping;
+
   protected ProcessEngineConfiguration() {
   }
 
@@ -1052,5 +1057,15 @@ public abstract class ProcessEngineConfiguration {
 
   public void setSkipOutputMappingOnCanceledActivities(boolean skipOutputMappingOnCanceledActivities) {
     this.skipOutputMappingOnCanceledActivities = skipOutputMappingOnCanceledActivities;
+  }
+
+  public boolean isEnableForkClassNameCompatibilityMapping() {
+    return enableForkClassNameCompatibilityMapping;
+  }
+
+  public ProcessEngineConfiguration setEnableForkClassNameCompatibilityMapping(
+      boolean enableForkClassNameCompatibilityMapping) {
+    this.enableForkClassNameCompatibilityMapping = enableForkClassNameCompatibilityMapping;
+    return this;
   }
 }

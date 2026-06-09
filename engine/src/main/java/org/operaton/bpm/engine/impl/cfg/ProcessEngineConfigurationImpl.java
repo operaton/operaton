@@ -4480,6 +4480,13 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
+  @Override
+  public ProcessEngineConfigurationImpl setEnableForkClassNameCompatibilityMapping(
+      boolean enableForkClassNameCompatibilityMapping) {
+    super.setEnableForkClassNameCompatibilityMapping(enableForkClassNameCompatibilityMapping);
+    return this;
+  }
+
   public boolean isEnableExpressionsInAdhocQueries() {
     return enableExpressionsInAdhocQueries;
   }

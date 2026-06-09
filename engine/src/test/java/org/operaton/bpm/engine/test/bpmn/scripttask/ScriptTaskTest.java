@@ -25,6 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.ScriptCompilationException;
 import org.operaton.bpm.engine.ScriptEvaluationException;
+import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.exception.NullValueException;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -526,6 +527,33 @@ class ScriptTaskTest extends AbstractScriptTaskTest {
 
     MySerializable myVar = (MySerializable) runtimeService.getVariable(pi.getId(), "myVar");
     assertThat(myVar.getName()).isEqualTo("test");
+  }
+
+  @Test
+  void testGroovyCanUseKnownForkClassNameWhenCompatibilityMappingIsEnabled() {
+    boolean originalCompatibilityMapping = processEngineConfiguration.isEnableForkClassNameCompatibilityMapping();
+    boolean originalScriptEngineCaching = processEngineConfiguration
+      .getScriptingEngines()
+      .isEnableScriptEngineCaching();
+
+    try {
+      processEngineConfiguration.setEnableForkClassNameCompatibilityMapping(true);
+      processEngineConfiguration.getScriptingEngines().setEnableScriptEngineCaching(false);
+
+      deployProcess(GROOVY, """
+        def error = new org.cibseven.bpm.engine.delegate.BpmnError('migration-error')
+        execution.setVariable('errorCode', error.getErrorCode())
+        execution.setVariable('errorClass', error.getClass().getName())
+        """);
+
+      ProcessInstance pi = runtimeService.startProcessInstanceByKey("testProcess");
+
+      assertThat(runtimeService.getVariable(pi.getId(), "errorCode")).isEqualTo("migration-error");
+      assertThat(runtimeService.getVariable(pi.getId(), "errorClass")).isEqualTo(BpmnError.class.getName());
+    } finally {
+      processEngineConfiguration.setEnableForkClassNameCompatibilityMapping(originalCompatibilityMapping);
+      processEngineConfiguration.getScriptingEngines().setEnableScriptEngineCaching(originalScriptEngineCaching);
+    }
   }
 
   @Test

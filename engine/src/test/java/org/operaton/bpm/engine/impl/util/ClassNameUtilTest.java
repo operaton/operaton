@@ -54,4 +54,43 @@ class ClassNameUtilTest {
       arguments(new Object(),     "Object")
     );
   }
+
+  @ParameterizedTest
+  @MethodSource("forkClassNameArgs")
+  void mapKnownForkClassNameToOperaton_shouldOnlyMapKnownEnginePackagePrefixes(String className, String expected) {
+    assertThat(ClassNameUtil.mapKnownForkClassNameToOperaton(className)).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> forkClassNameArgs() {
+    return Stream.of(
+      arguments("org.camunda.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("org.cibseven.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("org.eximeebpms.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("org.finos.fluxnova.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("org.operaton.bpm.engine.delegate.BpmnError", "org.operaton.bpm.engine.delegate.BpmnError"),
+      arguments("org.camunda.community.BpmnError", "org.camunda.community.BpmnError"),
+      arguments("org.cibsevenx.bpm.engine.delegate.BpmnError", "org.cibsevenx.bpm.engine.delegate.BpmnError"),
+      arguments(null, null)
+    );
+  }
+
+  @ParameterizedTest
+  @MethodSource("forkClassNameTextArgs")
+  void mapKnownForkClassNamesInTextToOperaton_shouldOnlyMapKnownEnginePackagePrefixes(String text, String expected) {
+    assertThat(ClassNameUtil.mapKnownForkClassNamesInTextToOperaton(text)).isEqualTo(expected);
+  }
+
+  static Stream<Arguments> forkClassNameTextArgs() {
+    return Stream.of(
+      arguments(
+        "new org.cibseven.bpm.engine.delegate.BpmnError('x')",
+        "new org.operaton.bpm.engine.delegate.BpmnError('x')"),
+      arguments(
+        "Java.type('org.finos.fluxnova.bpm.engine.delegate.BpmnError')",
+        "Java.type('org.operaton.bpm.engine.delegate.BpmnError')"),
+      arguments("org.camunda.community.BpmnError", "org.camunda.community.BpmnError"),
+      arguments("org.cibseven.bpmfoo.engine.BpmnError", "org.cibseven.bpmfoo.engine.BpmnError"),
+      arguments(null, null)
+    );
+  }
 }

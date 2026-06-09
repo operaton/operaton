@@ -100,6 +100,19 @@ public final class ReflectUtil {
     }
 
     if (clazz == null) {
+      String mappedClassName = mapKnownForkClassNameToOperaton(className);
+      if (mappedClassName != null && !mappedClassName.equals(className)) {
+        try {
+          clazz = loadClass(mappedClassName);
+        } catch (Exception | LinkageError err) {
+          if (throwable == null) {
+            throwable = err;
+          }
+        }
+      }
+    }
+
+    if (clazz == null) {
       throw LOG.classLoadingException(className, throwable);
     }
     return clazz;
@@ -115,7 +128,21 @@ public final class ReflectUtil {
 
   public static <T> Class<? extends T> loadClass(String className, ClassLoader customClassloader) throws ClassNotFoundException, ClassCastException {
     if(customClassloader != null) {
-      return (Class<? extends T>) customClassloader.loadClass(className);
+      try {
+        return (Class<? extends T>) customClassloader.loadClass(className);
+      } catch (ClassNotFoundException e) {
+        String mappedClassName = mapKnownForkClassNameToOperaton(className);
+        if (mappedClassName == null || mappedClassName.equals(className)) {
+          throw e;
+        }
+
+        try {
+          return (Class<? extends T>) customClassloader.loadClass(mappedClassName);
+        } catch (ClassNotFoundException mappedException) {
+          mappedException.addSuppressed(e);
+          throw mappedException;
+        }
+      }
     } else {
       return (Class<? extends T>) loadClass(className);
     }
@@ -438,5 +465,13 @@ public final class ReflectUtil {
    */
   public static Method getMethod(Class<?> declaringType, String methodName, Class<?>... parameterTypes) {
     return findMethod(declaringType, methodName, parameterTypes);
+  }
+
+  public static String mapKnownForkClassNameToOperaton(String className) {
+    ProcessEngineConfigurationImpl cfg = Context.getProcessEngineConfiguration();
+    if (cfg != null && cfg.isEnableForkClassNameCompatibilityMapping()) {
+      return ClassNameUtil.mapKnownForkClassNameToOperaton(className);
+    }
+    return className;
   }
 }

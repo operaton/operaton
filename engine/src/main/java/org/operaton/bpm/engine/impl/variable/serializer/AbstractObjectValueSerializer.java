@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.impl.variable.serializer;
 
 import org.operaton.bpm.engine.ProcessEngineException;
+import org.operaton.bpm.engine.impl.util.ReflectUtil;
 import org.operaton.bpm.engine.variable.Variables;
 import org.operaton.bpm.engine.variable.impl.value.ObjectValueImpl;
 import org.operaton.bpm.engine.variable.impl.value.UntypedValueImpl;
@@ -124,7 +125,15 @@ public abstract class AbstractObjectValueSerializer extends AbstractSerializable
   @Override
   protected Object deserializeFromByteArray(byte[] object, ValueFields valueFields) throws Exception {
     String objectTypeName = readObjectNameFromFields(valueFields);
-    return deserializeFromByteArray(object, objectTypeName);
+    try {
+      return deserializeFromByteArray(object, objectTypeName);
+    } catch (Exception e) {
+      String mappedObjectTypeName = ReflectUtil.mapKnownForkClassNameToOperaton(objectTypeName);
+      if (mappedObjectTypeName != null && !mappedObjectTypeName.equals(objectTypeName)) {
+        return deserializeFromByteArray(object, mappedObjectTypeName);
+      }
+      throw e;
+    }
   }
 
   /**

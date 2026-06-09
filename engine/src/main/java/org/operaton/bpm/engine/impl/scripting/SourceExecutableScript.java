@@ -29,6 +29,7 @@ import org.operaton.bpm.engine.delegate.VariableScope;
 import org.operaton.bpm.engine.impl.ProcessEngineLogger;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.context.Context;
+import org.operaton.bpm.engine.impl.util.ClassNameUtil;
 
 /**
  * A script which is provided as source code.
@@ -101,7 +102,7 @@ public class SourceExecutableScript extends CompiledExecutableScript {
   public CompiledScript compile(ScriptEngine scriptEngine, String language, String src) {
     if (scriptEngine instanceof Compilable compilingEngine && !"ecmascript".equalsIgnoreCase(scriptEngine.getFactory().getLanguageName())) {
       try {
-        CompiledScript compiledScript = compilingEngine.compile(src);
+        CompiledScript compiledScript = compilingEngine.compile(mapKnownForkClassNamesToOperaton(src));
 
         LOG.debugCompiledScriptUsing(language);
 
@@ -121,7 +122,15 @@ public class SourceExecutableScript extends CompiledExecutableScript {
 
   protected Object evaluateScript(ScriptEngine engine, Bindings bindings) throws ScriptException {
     LOG.debugEvaluatingNonCompiledScript(scriptSource);
-    return engine.eval(scriptSource, bindings);
+    return engine.eval(mapKnownForkClassNamesToOperaton(scriptSource), bindings);
+  }
+
+  protected String mapKnownForkClassNamesToOperaton(String source) {
+    ProcessEngineConfigurationImpl processEngineConfiguration = Context.getProcessEngineConfiguration();
+    if (processEngineConfiguration != null && processEngineConfiguration.isEnableForkClassNameCompatibilityMapping()) {
+      return ClassNameUtil.mapKnownForkClassNamesInTextToOperaton(source);
+    }
+    return source;
   }
 
   public String getScriptSource() {

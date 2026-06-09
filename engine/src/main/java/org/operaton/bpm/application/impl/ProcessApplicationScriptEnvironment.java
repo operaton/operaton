@@ -21,11 +21,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 
 import org.operaton.bpm.application.ProcessApplicationInterface;
 import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.engine.DefaultScriptEngineResolver;
+import org.operaton.bpm.engine.impl.scripting.engine.OperatonScriptEngineManager;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptEngineResolver;
 
 /**
@@ -57,7 +57,8 @@ public class ProcessApplicationScriptEnvironment {
    */
   public synchronized ScriptEngine getScriptEngineForName(String scriptEngineName, boolean cache) {
     if(processApplicationScriptEngineResolver == null) {
-      processApplicationScriptEngineResolver = new DefaultScriptEngineResolver(new ScriptEngineManager(getProcessApplicationClassloader()));
+      processApplicationScriptEngineResolver = new DefaultScriptEngineResolver(
+          new OperatonScriptEngineManager(getProcessApplicationClassloader()));
     }
     return processApplicationScriptEngineResolver.getScriptEngine(scriptEngineName, cache);
   }

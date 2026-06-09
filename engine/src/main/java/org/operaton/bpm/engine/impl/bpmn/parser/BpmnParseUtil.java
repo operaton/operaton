@@ -135,6 +135,8 @@ public final class BpmnParseUtil {
    */
   public static void parseInputParameterElement(Element inputParameterElement, IoMapping ioMapping) {
     String nameAttribute = inputParameterElement.attribute("name");
+    boolean isTransient = Boolean.parseBoolean(
+        inputParameterElement.attributeNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "isTransient"));
     if(nameAttribute == null || nameAttribute.isEmpty()) {
       throw new BpmnParseException("Missing attribute 'name' for inputParameter", inputParameterElement);
     }
@@ -142,7 +144,7 @@ public final class BpmnParseUtil {
     ParameterValueProvider valueProvider = parseNestedParamValueProvider(inputParameterElement);
 
     // add parameter
-    ioMapping.addInputParameter(new InputParameter(nameAttribute, valueProvider));
+    ioMapping.addInputParameter(new InputParameter(nameAttribute, valueProvider, isTransient));
   }
 
   /**
@@ -154,6 +156,8 @@ public final class BpmnParseUtil {
    */
   public static void parseOutputParameterElement(Element outputParameterElement, IoMapping ioMapping) {
     String nameAttribute = outputParameterElement.attribute("name");
+    boolean isTransient = Boolean.parseBoolean(
+        outputParameterElement.attributeNS(BpmnParse.OPERATON_BPMN_EXTENSIONS_NS, "isTransient"));
     if(nameAttribute == null || nameAttribute.isEmpty()) {
       throw new BpmnParseException("Missing attribute 'name' for outputParameter", outputParameterElement);
     }
@@ -161,7 +165,7 @@ public final class BpmnParseUtil {
     ParameterValueProvider valueProvider = parseNestedParamValueProvider(outputParameterElement);
 
     // add parameter
-    ioMapping.addOutputParameter(new OutputParameter(nameAttribute, valueProvider));
+    ioMapping.addOutputParameter(new OutputParameter(nameAttribute, valueProvider, isTransient));
   }
 
   /**

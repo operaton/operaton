@@ -116,6 +116,7 @@ class ProcessDataLoggingContextTest {
       .setLoggingContextBusinessKey("businessKey")
       .setLoggingContextProcessDefinitionId("processDefinitionId")
       .setLoggingContextProcessInstanceId("processInstanceId")
+      .setLoggingContextRootProcessInstanceId("rootProcessInstanceId")
       .setLoggingContextTenantId("tenantId")
       .setLoggingContextEngineName("engineName");
   }
@@ -162,6 +163,42 @@ class ProcessDataLoggingContextTest {
     assertActivityLogsPresent(instance, List.of("start", "waitState", "end"));
     // other logs do not contain MDC properties
     assertActivityLogsPresentWithoutMdc("ENGINE-130");
+  }
+
+  @Test
+  @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
+  void shouldLogRootProcessInstanceIdInActivityContext() {
+    // given
+    manageDeployment(modelOneTaskProcess());
+
+    // when
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    taskService.complete(taskService.createTaskQuery().singleResult().getId());
+
+    // then
+    assertThat(loggingRule.getFilteredLog("ENGINE-200"))
+        .isNotEmpty()
+        .allSatisfy(logEvent -> assertThat(logEvent.getMDCPropertyMap())
+            .containsEntry("rootProcessInstanceId", instance.getRootProcessInstanceId()));
+  }
+
+  @Test
+  @WatchLogger(loggerNames = PVM_LOGGER, level = "DEBUG")
+  void shouldLogCustomRootProcessInstanceIdMdcProperty() {
+    // given
+    engineRule.getProcessEngineConfiguration().setLoggingContextRootProcessInstanceId("rootInstId");
+    manageDeployment(modelOneTaskProcess());
+
+    // when
+    ProcessInstance instance = runtimeService.startProcessInstanceByKey(PROCESS, B_KEY);
+    taskService.complete(taskService.createTaskQuery().singleResult().getId());
+
+    // then
+    assertThat(loggingRule.getFilteredLog("ENGINE-200"))
+        .isNotEmpty()
+        .allSatisfy(logEvent -> assertThat(logEvent.getMDCPropertyMap())
+            .containsEntry("rootInstId", instance.getRootProcessInstanceId())
+            .doesNotContainKey("rootProcessInstanceId"));
   }
 
   @Test

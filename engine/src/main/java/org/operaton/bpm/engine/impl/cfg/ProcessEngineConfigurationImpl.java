@@ -947,6 +947,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected String loggingContextProcessDefinitionId = "processDefinitionId";
   protected String loggingContextProcessDefinitionKey;// default == null => disabled by default
   protected String loggingContextProcessInstanceId = "processInstanceId";
+  protected String loggingContextRootProcessInstanceId = "rootProcessInstanceId";
   protected String loggingContextTenantId = "tenantId";
   protected String loggingContextEngineName = "engineName";
 
@@ -5163,6 +5164,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public ProcessEngineConfigurationImpl setLoggingContextProcessInstanceId(String loggingContextProcessInstanceId) {
     this.loggingContextProcessInstanceId = loggingContextProcessInstanceId;
+    return this;
+  }
+
+  public String getLoggingContextRootProcessInstanceId() {
+    return loggingContextRootProcessInstanceId;
+  }
+
+  public ProcessEngineConfigurationImpl setLoggingContextRootProcessInstanceId(String loggingContextRootProcessInstanceId) {
+    this.loggingContextRootProcessInstanceId = loggingContextRootProcessInstanceId;
     return this;
   }
 

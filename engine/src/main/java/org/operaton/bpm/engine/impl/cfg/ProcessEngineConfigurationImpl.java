@@ -1000,6 +1000,11 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected boolean legacyJobRetryBehaviorEnabled;
 
   /**
+   * Minimum authenticated group count before authorization checks prefilter the groups against ACT_RU_AUTHORIZATION.
+   */
+  protected int authGroupFilterThreshold;
+
+  /**
    * @return {@code true} if the exception code feature is disabled and vice-versa.
    */
   public boolean isDisableExceptionCode() {
@@ -5278,6 +5283,15 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   
   public ProcessEngineConfiguration setLegacyJobRetryBehaviorEnabled(boolean legacyJobRetryBehaviorEnabled) {
     this.legacyJobRetryBehaviorEnabled = legacyJobRetryBehaviorEnabled;
+    return this;
+  }
+
+  public int getAuthGroupFilterThreshold() {
+    return authGroupFilterThreshold;
+  }
+
+  public ProcessEngineConfigurationImpl setAuthGroupFilterThreshold(int authGroupFilterThreshold) {
+    this.authGroupFilterThreshold = authGroupFilterThreshold;
     return this;
   }
 

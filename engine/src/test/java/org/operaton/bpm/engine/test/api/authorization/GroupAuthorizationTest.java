@@ -85,6 +85,24 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   }
 
   @Test
+  void testTaskQueryWithoutGroupAuthorizationsAndSkippedGroupFiltering() {
+    withSkippedGroupPrefiltering(() -> processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+
+      TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
+      AuthorizationCheck authCheck = spy(new AuthorizationCheck());
+      when(taskQuery.getAuthCheck()).thenReturn(authCheck);
+
+      taskQuery.list();
+
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(TEST_GROUP_IDS);
+      verify(authCheck, atLeastOnce()).setAuthGroupIds(TEST_GROUP_IDS);
+
+      return null;
+    }));
+  }
+
+  @Test
   void testTaskQueryWithOneGroupAuthorization() {
     createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_GROUP_IDS.get(0));
 
@@ -102,6 +120,26 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       return null;
     });
+  }
+
+  @Test
+  void testTaskQueryWithOneGroupAuthorizationAndSkippedGroupFiltering() {
+    createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_GROUP_IDS.get(0));
+
+    withSkippedGroupPrefiltering(() -> processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+
+      TaskQueryImpl taskQuery = (TaskQueryImpl) spy(processEngine.getTaskService().createTaskQuery());
+      AuthorizationCheck authCheck = spy(new AuthorizationCheck());
+      when(taskQuery.getAuthCheck()).thenReturn(authCheck);
+
+      taskQuery.list();
+
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(TEST_GROUP_IDS);
+      verify(authCheck, atLeastOnce()).setAuthGroupIds(TEST_GROUP_IDS);
+
+      return null;
+    }));
   }
 
   @Test
@@ -185,6 +223,28 @@ public class GroupAuthorizationTest extends AuthorizationTest {
 
       return null;
     });
+  }
+
+  @Test
+  void testCheckAuthorizationWithOneGroupAuthorizationAndSkippedGroupFiltering() {
+    createGroupGrantAuthorization(Resources.TASK, Authorization.ANY, TEST_GROUP_IDS.get(0));
+
+    withSkippedGroupPrefiltering(() -> processEngineConfiguration.getCommandExecutorTxRequired().execute(commandContext -> {
+      AuthorizationManager authorizationManager = spyOnSession(commandContext, AuthorizationManager.class);
+      DbEntityManager dbEntityManager = spyOnSession(commandContext, DbEntityManager.class);
+
+      authorizationService.isUserAuthorized(TEST_USER_ID, TEST_GROUP_IDS, Permissions.READ, Resources.TASK);
+
+      verify(authorizationManager, atLeastOnce()).filterAuthenticatedGroupIds(TEST_GROUP_IDS);
+
+      ArgumentCaptor<AuthorizationCheck> authorizationCheckArgument = forClass(AuthorizationCheck.class);
+      verify(dbEntityManager).selectBoolean(eq("isUserAuthorizedForResource"), authorizationCheckArgument.capture());
+
+      AuthorizationCheck authorizationCheck = authorizationCheckArgument.getValue();
+      assertThat(authorizationCheck.getAuthGroupIds()).isEqualTo(TEST_GROUP_IDS);
+
+      return null;
+    }));
   }
 
   @Test
@@ -290,6 +350,16 @@ public class GroupAuthorizationTest extends AuthorizationTest {
   protected void createGroupAndAddUser(String groupId, String userId) {
     createGroup(groupId);
     identityService.createMembership(userId, groupId);
+  }
+
+  protected void withSkippedGroupPrefiltering(Runnable runnable) {
+    int previousThreshold = processEngineConfiguration.getAuthGroupFilterThreshold();
+    processEngineConfiguration.setAuthGroupFilterThreshold(TEST_GROUP_IDS.size() + 1);
+    try {
+      runnable.run();
+    } finally {
+      processEngineConfiguration.setAuthGroupFilterThreshold(previousThreshold);
+    }
   }
 
   protected <T extends Session> T spyOnSession(CommandContext commandContext, Class<T> sessionClass) {

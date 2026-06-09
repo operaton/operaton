@@ -6,7 +6,7 @@
       tag = "Telemetry"
       deprecated = true
       summary = "Configure Telemetry"
-      desc = "Deprecated: The sending telemetry feature is removed. Please remove the endpoint usages as they are no longer needed." />
+      desc = "Deprecated: The sending telemetry feature is removed. This endpoint is retained for backwards compatibility and ignores the requested value." />
 
   "parameters" : [],
 
@@ -17,7 +17,7 @@
                      "summary": "POST /telemetry/configuration",
                      "description": "The content of the Request Body",
                      "value": {
-                         "enableTelemetry": true
+                         "enableTelemetry": false
                        }
                      }'] />
 

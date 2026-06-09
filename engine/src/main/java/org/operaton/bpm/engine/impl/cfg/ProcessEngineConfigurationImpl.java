@@ -956,7 +956,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   // OLEs for foreign key constraint violations on databases that rollback on SQL exceptions, e.g. PostgreSQL
   protected boolean enableOptimisticLockingOnForeignKeyViolation = true;
 
-  protected int telemetryRequestTimeout;
   protected TelemetryDataImpl telemetryData;
   protected DiagnosticsRegistry diagnosticsRegistry;
   protected DiagnosticsCollector diagnosticsCollector;
@@ -5242,15 +5241,6 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public ProcessEngineConfigurationImpl setTelemetryData(TelemetryDataImpl telemetryData) {
     this.telemetryData = telemetryData;
-    return this;
-  }
-
-  public int getTelemetryRequestTimeout() {
-    return telemetryRequestTimeout;
-  }
-
-  public ProcessEngineConfigurationImpl setTelemetryRequestTimeout(int telemetryRequestTimeout) {
-    this.telemetryRequestTimeout = telemetryRequestTimeout;
     return this;
   }
 

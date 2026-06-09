@@ -20,19 +20,18 @@ import org.operaton.bpm.engine.ManagementService;
 
 /**
  * This class represents the data structure used for collecting information
- * about certain internal metrics for telemetry data. A metric is a counter for
+ * about certain internal metrics for diagnostics data. A metric is a counter for
  * a certain action performed by the engine (e.g., start a root
  * process-instance).
  *
  * <p>
- * This information is sent to Operaton when telemetry is enabled.
+ * This information is exposed as local diagnostics data through the legacy
+ * telemetry API.
  * </p>
  *
  * <p>
- * When used for telemetry data collection, all metric counts reset on sending
- * the data. Retrieval through {@link ManagementService#getTelemetryData()} will
- * not reset the counter. Some metrics are used for billing purposes in
- * enterprise setups.
+ * Retrieval through {@link ManagementService#getTelemetryData()} will not reset
+ * the counter.
  * </p>
  *
  * @see <a href=

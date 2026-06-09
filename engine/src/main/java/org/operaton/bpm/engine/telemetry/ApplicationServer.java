@@ -21,7 +21,8 @@ package org.operaton.bpm.engine.telemetry;
  * about the application server.
  *
  * <p>
- * This information is sent to Operaton when telemetry is enabled.
+ * This information is exposed as local diagnostics data through the legacy
+ * telemetry API.
  * </p>
  *
  * @see <a href=

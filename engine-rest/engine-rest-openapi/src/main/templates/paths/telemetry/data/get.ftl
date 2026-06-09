@@ -6,7 +6,7 @@
       tag = "Telemetry"
       deprecated = true
       summary = "Fetch Telemetry Data"
-      desc = "Deprecated: Always returns false. The sending telemetry feature is removed. Please remove the endpoint usages as they are no longer needed." />
+      desc = "Deprecated: The sending telemetry feature is removed. This endpoint is retained for diagnostics and returns the data collected locally by the engine." />
 
   "parameters" : [],
 

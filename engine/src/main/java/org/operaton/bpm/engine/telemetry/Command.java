@@ -20,18 +20,18 @@ import org.operaton.bpm.engine.ManagementService;
 
 /**
  * This class represents the data structure used for collecting information
- * about executed commands for telemetry data. A command is an action usually
+ * about executed commands for diagnostics data. A command is an action usually
  * triggered by a user and performed by the engine. This class counts the number
  * of executions per command.
  *
  * <p>
- * This information is sent to Operaton when telemetry is enabled.
+ * This information is exposed as local diagnostics data through the legacy
+ * telemetry API.
  * </p>
  *
  * <p>
- * When used for telemetry data collection, all command execution counts reset
- * on sending the data. Retrieval through
- * {@link ManagementService#getTelemetryData()} will not reset the counter.
+ * Retrieval through {@link ManagementService#getTelemetryData()} will not reset
+ * the counter.
  * </p>
  *
  * @see <a href=

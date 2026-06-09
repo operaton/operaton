@@ -250,9 +250,11 @@ public class MyProcessEngineTest {
 - 120 characters line length
 - K&R brace style (opening brace on same line)
 - Keep diffs focused. Avoid indentation, wrapping, import, or formatting-only changes unless required.
-- Prefer established local utility methods and idioms over ad hoc checks. For example, use
-  `org.springframework.util.StringUtils.hasText` for nullable/blank string checks where Spring utilities are already
-  available instead of repeating `value != null && !value.isBlank()`.
+- Prefer established local utility methods and idioms over ad hoc checks. In engine core code, do not add Spring
+  Framework imports; use Operaton utilities such as `org.operaton.bpm.engine.impl.util.StringUtil.hasText` for
+  nullable/empty string checks.
+- Check helper semantics before replacing conditions. For example, Operaton's `StringUtil.hasText` rejects null and
+  empty strings, but does not reject whitespace-only strings.
 - When changing guard conditions, check related fields and code paths, not only the line that failed.
 - Add focused tests for relevant null, empty, and blank values.
 - Import order (defined in `rewrite.yml`):

@@ -2616,11 +2616,43 @@ class TaskServiceTest {
   }
 
   @Test
-  void testDeleteTaskAttachmentWithTaskIdNull() {
-    int historyLevel = processEngineConfiguration.getHistoryLevel().getId();
-    if (historyLevel> ProcessEngineConfigurationImpl.HISTORYLEVEL_NONE) {
-      assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, "myAttachmentId")).isInstanceOf(ProcessEngineException.class);
-    }
+  void testDeleteTaskAttachmentThatDoesNotExist() {
+    assertThatThrownBy(() -> taskService.deleteTaskAttachment(null, "attachmentDoesNotExist"))
+        .isInstanceOf(NullValueException.class)
+        .hasMessageContaining("No attachment exists with attachmentId 'attachmentDoesNotExist'");
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
+  void testDeleteTaskAttachmentWithTaskIdEmpty() {
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    Attachment attachment = taskService.createAttachment("web page", "", null, "weatherforcast",
+        "temperatures and more", new ByteArrayInputStream("someContent".getBytes()));
+    String attachmentId = attachment.getId();
+    assertThat(taskService.getAttachment(attachmentId)).isNotNull();
+
+    taskService.deleteTaskAttachment("", attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+      "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml"})
+  @RequiredHistoryLevel(ProcessEngineConfiguration.HISTORY_AUDIT)
+  void testDeleteTaskAttachmentWithTaskIdNoLongerExists() {
+    runtimeService.startProcessInstanceByKey("oneTaskProcess");
+    String taskId = taskService.createTaskQuery().singleResult().getId();
+    Attachment attachment = taskService.createAttachment("web page", taskId, null, "weatherforcast",
+        "temperatures and more", "http://weather.com");
+    taskService.complete(taskId);
+    String attachmentId = attachment.getId();
+
+    taskService.deleteTaskAttachment(taskId, attachmentId);
+
+    assertThat(taskService.getAttachment(attachmentId)).isNull();
   }
 
   @Test

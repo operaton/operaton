@@ -45,39 +45,41 @@ public class DeleteAttachmentCmd implements Command<Object> {
   @Override
   public Object execute(CommandContext commandContext) {
     AttachmentEntity attachment = null;
-    if (taskId != null) {
+    if (taskId != null && !taskId.isBlank()) {
       attachment = (AttachmentEntity) commandContext
           .getAttachmentManager()
           .findAttachmentByTaskIdAndAttachmentId(taskId, attachmentId);
-      ensureNotNull("No attachment exist for task id '%s' and attachmentId '%s'.".formatted(taskId, attachmentId), "attachment", attachment);
+      ensureNotNull("No attachment exists for task id '%s' and attachmentId '%s'.".formatted(taskId, attachmentId), "attachment", attachment);
     } else {
       attachment = commandContext
           .getDbEntityManager()
           .selectById(AttachmentEntity.class, attachmentId);
-      ensureNotNull("No attachment exist with attachmentId '%s'.".formatted(attachmentId), "attachment", attachment);
+      ensureNotNull("No attachment exists with attachmentId '%s'.".formatted(attachmentId), "attachment", attachment);
     }
 
     commandContext
-      .getDbEntityManager()
-      .delete(attachment);
+        .getDbEntityManager()
+        .delete(attachment);
 
     if (attachment.getContentId() != null) {
       commandContext
-        .getByteArrayManager()
-        .deleteByteArrayById(attachment.getContentId());
+          .getByteArrayManager()
+          .deleteByteArrayById(attachment.getContentId());
     }
 
-    if (attachment.getTaskId()!=null) {
+    if (attachment.getTaskId() != null && !attachment.getTaskId().isBlank()) {
       TaskEntity task = commandContext
           .getTaskManager()
           .findTaskById(attachment.getTaskId());
 
-      PropertyChange propertyChange = new PropertyChange("name", null, attachment.getName());
+      if (task != null) {
+        PropertyChange propertyChange = new PropertyChange("name", null, attachment.getName());
 
-      commandContext.getOperationLogManager()
-          .logAttachmentOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE_ATTACHMENT, task, propertyChange);
+        commandContext.getOperationLogManager()
+            .logAttachmentOperation(UserOperationLogEntry.OPERATION_TYPE_DELETE_ATTACHMENT, task, propertyChange);
 
-      task.triggerUpdateEvent();
+        task.triggerUpdateEvent();
+      }
     }
 
     return null;

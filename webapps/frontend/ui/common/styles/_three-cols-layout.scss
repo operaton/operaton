@@ -128,7 +128,7 @@ $active-link-hover-color: $link-hover-color
 
   .page-wrap {
     z-index: 1;
-    top: calc(#{$navbar-height} + #{$ce-banner-height});
+    top: $navbar-height;
     bottom: $footer-height;
   }
 

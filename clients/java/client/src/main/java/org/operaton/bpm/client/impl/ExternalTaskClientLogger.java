@@ -245,4 +245,19 @@ public class ExternalTaskClientLogger extends BaseLogger {
         "030", "Null value is not allowed as '{}'", parameterName));
   }
 
+  public ExternalTaskClientException oauth2TokenUriNullException() {
+    return new ExternalTaskClientException(exceptionMessage(
+        "032", "OAuth2 token URI cannot be null or empty"));
+  }
+
+  public ExternalTaskClientException oauth2ClientIdNullException() {
+    return new ExternalTaskClientException(exceptionMessage(
+        "033", "OAuth2 client ID cannot be null or empty"));
+  }
+
+  public ExternalTaskClientException oauth2TokenAcquisitionFailedException(Throwable cause) {
+    return new ExternalTaskClientException(exceptionMessage(
+        "034", "Failed to acquire OAuth2 access token from token endpoint"), cause);
+  }
+
 }

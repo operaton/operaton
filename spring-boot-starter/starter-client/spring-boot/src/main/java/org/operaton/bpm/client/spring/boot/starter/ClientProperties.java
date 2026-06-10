@@ -34,6 +34,9 @@ public class ClientProperties extends ClientConfiguration {
   @NestedConfigurationProperty
   protected BasicAuthProperties basicAuth;
 
+  @NestedConfigurationProperty
+  protected OAuth2Properties oauth2;
+
   public SubscriptionConfiguration findSubscriptionPropsByTopicName(String topic) {
     return subscriptions.get(topic);
   }
@@ -52,6 +55,14 @@ public class ClientProperties extends ClientConfiguration {
 
   public void setBasicAuth(BasicAuthProperties basicAuth) {
     this.basicAuth = basicAuth;
+  }
+
+  public OAuth2Properties getOauth2() {
+    return oauth2;
+  }
+
+  public void setOauth2(OAuth2Properties oauth2) {
+    this.oauth2 = oauth2;
   }
 
 }

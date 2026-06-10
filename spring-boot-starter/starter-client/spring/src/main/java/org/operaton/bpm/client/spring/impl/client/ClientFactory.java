@@ -16,11 +16,14 @@
  */
 package org.operaton.bpm.client.spring.impl.client;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.PropertyResolver;
@@ -41,7 +44,7 @@ import static java.lang.Boolean.TRUE;
 import static java.util.Optional.ofNullable;
 
 public class ClientFactory
-  implements FactoryBean<ExternalTaskClient>, InitializingBean {
+  implements FactoryBean<ExternalTaskClient>, InitializingBean, DisposableBean {
 
   protected static final ClientLoggerUtil LOG = LoggerUtil.CLIENT_LOGGER;
 
@@ -201,6 +204,20 @@ public class ClientFactory
 
   public List<ClientRequestInterceptor> getRequestInterceptors() {
     return requestInterceptors;
+  }
+
+  @Override
+  public void destroy() {
+    close();
+    for (ClientRequestInterceptor interceptor : requestInterceptors) {
+      if (interceptor instanceof Closeable closeable) {
+        try {
+          closeable.close();
+        } catch (IOException ignored) {
+          // best-effort cleanup during shutdown
+        }
+      }
+    }
   }
 
   protected void close() {

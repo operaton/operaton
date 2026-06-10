@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.operaton.bpm.client.spring.boot.starter.ClientProperties;
+import org.operaton.bpm.client.interceptor.auth.OAuth2ClientCredentialsProvider;
+import org.operaton.bpm.client.spring.boot.starter.OAuth2Properties;
 import org.operaton.bpm.client.spring.exception.SpringExternalTaskClientException;
 import org.operaton.bpm.client.spring.impl.client.ClientConfiguration;
 
@@ -100,5 +102,39 @@ class PropertiesAwareClientFactoryTest {
     assertThatThrownBy(() -> clientFactory.applyPropertiesFrom(clientProperties))
       .isInstanceOf(SpringExternalTaskClientException.class)
       .hasMessageContainingAll("useCreateTime", "orderByCreateTime");
+  }
+
+  @Test
+  void shouldAddOAuth2ClientCredentialsInterceptor() throws Exception {
+    ClientProperties properties = new ClientProperties();
+    OAuth2Properties oauth2 = new OAuth2Properties();
+    oauth2.setTokenUri("https://idp.example.test/token");
+    oauth2.setClientId("external-task-client");
+    oauth2.setClientSecret("secret");
+    oauth2.setScope("engine-rest/.default");
+    properties.setOauth2(oauth2);
+    PropertiesAwareClientFactory factory = new PropertiesAwareClientFactory(properties);
+
+    factory.afterPropertiesSet();
+
+    assertThat(factory.getRequestInterceptors())
+        .singleElement()
+        .isInstanceOf(OAuth2ClientCredentialsProvider.class)
+        .extracting("tokenUri", "clientId", "clientSecret", "scope")
+        .containsExactly("https://idp.example.test/token", "external-task-client", "secret", "engine-rest/.default");
+  }
+
+  @Test
+  void shouldRequireAssertionTypeWhenNoOAuth2ClientSecretIsConfigured() {
+    ClientProperties properties = new ClientProperties();
+    OAuth2Properties oauth2 = new OAuth2Properties();
+    oauth2.setTokenUri("https://idp.example.test/token");
+    oauth2.setClientId("external-task-client");
+    properties.setOauth2(oauth2);
+    PropertiesAwareClientFactory factory = new PropertiesAwareClientFactory(properties);
+
+    assertThatThrownBy(factory::afterPropertiesSet)
+        .isInstanceOf(IllegalStateException.class)
+        .hasMessageContaining("operaton.bpm.client.oauth2.assertion.type");
   }
 }

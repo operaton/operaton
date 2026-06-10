@@ -574,6 +574,8 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   protected BusinessCalendarManager businessCalendarManager;
 
+  protected CronProperty cron = new CronProperty();
+
   protected String wsSyncFactoryClassName = DEFAULT_WS_SYNC_FACTORY;
 
   protected CommandContextFactory commandContextFactory;
@@ -2649,7 +2651,9 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
       MapBusinessCalendarManager mapBusinessCalendarManager = new MapBusinessCalendarManager();
       mapBusinessCalendarManager.addBusinessCalendar(DurationBusinessCalendar.NAME, new DurationBusinessCalendar());
       mapBusinessCalendarManager.addBusinessCalendar(DueDateBusinessCalendar.NAME, new DueDateBusinessCalendar());
-      mapBusinessCalendarManager.addBusinessCalendar(CycleBusinessCalendar.NAME, new CycleBusinessCalendar());
+      mapBusinessCalendarManager.addBusinessCalendar(
+          CycleBusinessCalendar.NAME,
+          new CycleBusinessCalendar(cron.getType(), cron.isSupportLegacyQuartzSyntax()));
 
       businessCalendarManager = mapBusinessCalendarManager;
     }
@@ -3253,6 +3257,30 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   public ProcessEngineConfigurationImpl setBusinessCalendarManager(BusinessCalendarManager businessCalendarManager) {
     this.businessCalendarManager = businessCalendarManager;
     return this;
+  }
+
+  public String getCronType() {
+    return cron.getType();
+  }
+
+  public void setCronType(String cronType) {
+    cron.setType(cronType);
+  }
+
+  public boolean isSupportLegacyQuartzSyntax() {
+    return cron.isSupportLegacyQuartzSyntax();
+  }
+
+  public void setSupportLegacyQuartzSyntax(boolean supportLegacyQuartzSyntax) {
+    cron.setSupportLegacyQuartzSyntax(supportLegacyQuartzSyntax);
+  }
+
+  public CronProperty getCron() {
+    return cron;
+  }
+
+  public void setCron(CronProperty cron) {
+    this.cron = cron == null ? new CronProperty() : cron;
   }
 
   public CommandContextFactory getCommandContextFactory() {

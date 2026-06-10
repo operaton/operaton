@@ -48,5 +48,36 @@ class OperatonBpmPropertiesTest {
     assertThatIllegalArgumentException().isThrownBy(() -> databaseProperty.setSchemaUpdate("foo"));
   }
 
+  @Test
+  void cronType_default_is_spring53() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+    assertThat(properties.getCronType()).isEqualTo("SPRING53");
+  }
+
+  @Test
+  void cronType_can_be_set_to_quartz() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+    properties.setCronType("QUARTZ");
+    assertThat(properties.getCronType()).isEqualTo("QUARTZ");
+  }
+
+  @Test
+  void cronType_rejects_invalid_value() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+    assertThatIllegalArgumentException().isThrownBy(() -> properties.setCronType("foo"));
+  }
+
+  @Test
+  void supportLegacyQuartzSyntax_default_is_true() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+    assertThat(properties.isSupportLegacyQuartzSyntax()).isTrue();
+  }
+
+  @Test
+  void supportLegacyQuartzSyntax_can_be_disabled() {
+    OperatonBpmProperties properties = new OperatonBpmProperties();
+    properties.setSupportLegacyQuartzSyntax(false);
+    assertThat(properties.isSupportLegacyQuartzSyntax()).isFalse();
+  }
 
 }

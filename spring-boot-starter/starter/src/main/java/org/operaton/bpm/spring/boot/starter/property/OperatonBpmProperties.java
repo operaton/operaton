@@ -28,6 +28,7 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
 import org.operaton.bpm.engine.ProcessEngineConfiguration;
 import org.operaton.bpm.engine.ProcessEngines;
+import org.operaton.bpm.engine.impl.cfg.CronProperty;
 import org.operaton.bpm.spring.boot.starter.configuration.id.IdGeneratorConfiguration;
 
 import static org.springframework.core.io.support.ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX;
@@ -106,6 +107,12 @@ public class OperatonBpmProperties {
   private String defaultSerializationFormat = Defaults.INSTANCE.getDefaultSerializationFormat();
 
   private URL licenseFile;
+
+  /**
+   * cron configuration
+   */
+  @NestedConfigurationProperty
+  private CronProperty cron = new CronProperty();
 
   /**
    * deactivate operaton auto configuration
@@ -214,6 +221,30 @@ public class OperatonBpmProperties {
 
   public void setLicenseFile(URL licenseFile) {
     this.licenseFile = licenseFile;
+  }
+
+  public String getCronType() {
+    return cron.getType();
+  }
+
+  public void setCronType(String cronType) {
+    cron.setType(cronType);
+  }
+
+  public boolean isSupportLegacyQuartzSyntax() {
+    return cron.isSupportLegacyQuartzSyntax();
+  }
+
+  public void setSupportLegacyQuartzSyntax(boolean supportLegacyQuartzSyntax) {
+    cron.setSupportLegacyQuartzSyntax(supportLegacyQuartzSyntax);
+  }
+
+  public CronProperty getCron() {
+    return cron;
+  }
+
+  public void setCron(CronProperty cron) {
+    this.cron = cron == null ? new CronProperty() : cron;
   }
 
   public MetricsProperty getMetrics() {
@@ -357,6 +388,7 @@ public class OperatonBpmProperties {
       .add("deploymentResourcePattern=" + Arrays.toString(deploymentResourcePattern))
       .add("defaultSerializationFormat=" + defaultSerializationFormat)
       .add("licenseFile=" + licenseFile)
+      .add("cron=" + cron)
       .add("metrics=" + metrics)
       .add("database=" + database)
       .add("jobExecution=" + jobExecution)

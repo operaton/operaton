@@ -22,7 +22,10 @@ import java.util.List;
 public class OperatonBpmRunAuthenticationProperties {
   public static final String PREFIX = OperatonBpmRunProperties.PREFIX + ".auth";
   public static final String DEFAULT_AUTH = "basic";
-  private static final List<String> AUTH_METHODS = Arrays.asList(DEFAULT_AUTH);
+  public static final String BASIC_AUTH = DEFAULT_AUTH;
+  public static final String COMPOSITE_AUTH = "composite";
+  public static final String PSEUDO_AUTH = "pseudo";
+  public static final List<String> AUTH_METHODS = Arrays.asList(BASIC_AUTH, COMPOSITE_AUTH, PSEUDO_AUTH);
 
   boolean enabled;
   String authentication = DEFAULT_AUTH;

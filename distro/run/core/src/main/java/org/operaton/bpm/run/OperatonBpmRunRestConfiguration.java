@@ -31,6 +31,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
+import org.operaton.bpm.engine.rest.security.auth.impl.CompositeAuthenticationProvider;
+import org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider;
+import org.operaton.bpm.engine.rest.security.auth.impl.PseudoAuthenticationProvider;
 import org.operaton.bpm.run.property.OperatonBpmRunAuthenticationProperties;
 import org.operaton.bpm.run.property.OperatonBpmRunCorsProperty;
 import org.operaton.bpm.run.property.OperatonBpmRunProperties;
@@ -77,11 +80,15 @@ public class OperatonBpmRunRestConfiguration {
 
     String restApiPathPattern = applicationPath.getUrlMapping();
     registration.addUrlPatterns(restApiPathPattern);
+    registration.setAsyncSupported(true);
 
-    // if nothing is set, use Http Basic authentication
     OperatonBpmRunAuthenticationProperties properties = operatonBpmRunProperties.getAuth();
-    if (properties.getAuthentication() == null || OperatonBpmRunAuthenticationProperties.DEFAULT_AUTH.equals(properties.getAuthentication())) {
-      registration.addInitParameter("authentication-provider", "org.operaton.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider");
+    if (properties.getAuthentication() == null || OperatonBpmRunAuthenticationProperties.BASIC_AUTH.equals(properties.getAuthentication())) {
+      registration.addInitParameter(ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM, HttpBasicAuthenticationProvider.class.getName());
+    } else if (OperatonBpmRunAuthenticationProperties.COMPOSITE_AUTH.equals(properties.getAuthentication())) {
+      registration.addInitParameter(ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM, CompositeAuthenticationProvider.class.getName());
+    } else if (OperatonBpmRunAuthenticationProperties.PSEUDO_AUTH.equals(properties.getAuthentication())) {
+      registration.addInitParameter(ProcessEngineAuthenticationFilter.AUTHENTICATION_PROVIDER_PARAM, PseudoAuthenticationProvider.class.getName());
     }
     return registration;
   }

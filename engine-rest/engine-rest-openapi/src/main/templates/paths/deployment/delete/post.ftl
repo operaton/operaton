@@ -57,7 +57,7 @@
                        "value": [
                          {
                            "status": "FAILURE",
-                           "errorMessage": "Deployment with id \u0027aDeploymentId\u0027 does not exist",
+                           "errorMessage": "Deployment with id \'aDeploymentId\' does not exist",
                            "deploymentId": "aDeploymentId"
                          },
                          {

@@ -68,6 +68,11 @@
                              "binding": "version",
                              "version": 2
                            },
+                           "camundaFormRef":{
+                             "key": "aOperatonFormKey",
+                             "binding": "version",
+                             "version": 2
+                           },
                            "tenantId": "aTenantId",
                            "taskState": "aTaskState"
                          }
@@ -100,6 +105,11 @@
                            "suspended": false,
                            "formKey":"aFormKey",
                            "operatonFormRef":{
+                             "key": "aOperatonFormKey",
+                             "binding": "version",
+                             "version": 2
+                           },
+                           "camundaFormRef":{
                              "key": "aOperatonFormKey",
                              "binding": "version",
                              "version": 2
@@ -138,6 +148,11 @@
                            "suspended": false,
                            "formKey":"aFormKey",
                            "operatonFormRef":{
+                             "key": "aOperatonFormKey",
+                             "binding": "version",
+                             "version": 2
+                           },
+                           "camundaFormRef":{
                              "key": "aOperatonFormKey",
                              "binding": "version",
                              "version": 2
@@ -188,6 +203,11 @@
                            "suspended": false,
                            "formKey":"aFormKey",
                            "operatonFormRef":{
+                             "key": "aOperatonFormKey",
+                             "binding": "version",
+                             "version": 2
+                           },
+                           "camundaFormRef":{
                              "key": "aOperatonFormKey",
                              "binding": "version",
                              "version": 2

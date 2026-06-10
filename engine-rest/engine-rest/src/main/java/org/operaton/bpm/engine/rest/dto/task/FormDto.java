@@ -18,6 +18,7 @@ package org.operaton.bpm.engine.rest.dto.task;
 
 import org.operaton.bpm.engine.form.FormData;
 import org.operaton.bpm.engine.form.OperatonFormRef;
+import org.operaton.bpm.engine.rest.dto.CamundaFormRefDto;
 
 /**
  *
@@ -27,6 +28,9 @@ public class FormDto {
 
   private String key;
   private OperatonFormRef operatonFormRef;
+  /** @deprecated Use {@link #operatonFormRef} instead. */
+  @Deprecated
+  private CamundaFormRefDto camundaFormRef;
   private String contextPath;
 
   public void setKey(String form) {
@@ -43,6 +47,13 @@ public class FormDto {
 
   public void setOperatonFormRef(OperatonFormRef operatonFormRef) {
     this.operatonFormRef = operatonFormRef;
+    this.camundaFormRef = CamundaFormRefDto.from(operatonFormRef);
+  }
+
+  /** @deprecated Use {@link #getOperatonFormRef()} instead. */
+  @Deprecated
+  public CamundaFormRefDto getCamundaFormRef() {
+    return camundaFormRef;
   }
 
   public void setContextPath(String contextPath) {
@@ -58,7 +69,7 @@ public class FormDto {
 
     if (formData != null) {
       dto.key = formData.getFormKey();
-      dto.operatonFormRef = formData.getOperatonFormRef();
+      dto.setOperatonFormRef(formData.getOperatonFormRef());
     }
 
     return dto;

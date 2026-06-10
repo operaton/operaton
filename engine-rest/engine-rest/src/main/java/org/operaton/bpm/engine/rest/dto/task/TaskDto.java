@@ -20,6 +20,7 @@ import java.util.Date;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.form.OperatonFormRef;
+import org.operaton.bpm.engine.rest.dto.CamundaFormRefDto;
 import org.operaton.bpm.engine.rest.dto.converter.DelegationStateConverter;
 import org.operaton.bpm.engine.task.DelegationState;
 import org.operaton.bpm.engine.task.Task;
@@ -48,6 +49,9 @@ public class TaskDto {
   private boolean suspended;
   private String formKey;
   private OperatonFormRef operatonFormRef;
+  /** @deprecated Use {@link #operatonFormRef} instead. */
+  @Deprecated
+  private CamundaFormRefDto camundaFormRef;
   private String tenantId;
   /**
    * Returns task State of task
@@ -87,6 +91,7 @@ public class TaskDto {
     try {
       this.formKey = task.getFormKey();
       this.operatonFormRef = task.getOperatonFormRef();
+      this.camundaFormRef = CamundaFormRefDto.from(this.operatonFormRef);
     }
     catch (BadUserRequestException e) {
       // ignore (initializeFormKeys was not called)
@@ -228,6 +233,12 @@ public class TaskDto {
     return operatonFormRef;
   }
 
+  /** @deprecated Use {@link #getOperatonFormRef()} instead. */
+  @Deprecated
+  public CamundaFormRefDto getCamundaFormRef() {
+    return camundaFormRef;
+  }
+
   public String getTenantId() {
     return tenantId;
   }
@@ -275,6 +286,7 @@ public class TaskDto {
     try {
       dto.formKey = task.getFormKey();
       dto.operatonFormRef = task.getOperatonFormRef();
+      dto.camundaFormRef = CamundaFormRefDto.from(dto.operatonFormRef);
     }
     catch (BadUserRequestException e) {
       // ignore (initializeFormKeys was not called)

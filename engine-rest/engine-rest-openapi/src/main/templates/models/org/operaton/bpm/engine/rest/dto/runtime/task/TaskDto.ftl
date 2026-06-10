@@ -130,6 +130,13 @@
         desc = "A reference to a specific version of a Operaton Form."/>
 
     <@lib.property
+        name = "camundaFormRef"
+        type = "ref"
+        dto = "CamundaFormRef"
+        deprecated = true
+        desc = "Deprecated compatibility alias for `operatonFormRef`. Use `operatonFormRef` instead." />
+
+    <@lib.property
         name = "tenantId"
         type = "string"
         desc = "If not `null`, the tenant id of the task." />

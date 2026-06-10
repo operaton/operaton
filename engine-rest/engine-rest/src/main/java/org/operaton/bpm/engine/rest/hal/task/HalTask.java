@@ -31,6 +31,7 @@ import org.operaton.bpm.engine.rest.ProcessDefinitionRestService;
 import org.operaton.bpm.engine.rest.ProcessInstanceRestService;
 import org.operaton.bpm.engine.rest.TaskRestService;
 import org.operaton.bpm.engine.rest.UserRestService;
+import org.operaton.bpm.engine.rest.dto.CamundaFormRefDto;
 import org.operaton.bpm.engine.rest.hal.HalRelation;
 import org.operaton.bpm.engine.rest.hal.HalResource;
 import org.operaton.bpm.engine.rest.hal.identitylink.HalIdentityLink;
@@ -87,6 +88,9 @@ public class HalTask extends HalResource<HalTask> {
   private boolean suspended;
   private String formKey;
   private OperatonFormRef operatonFormRef;
+  /** @deprecated Use {@link #operatonFormRef} instead. */
+  @Deprecated
+  private CamundaFormRefDto camundaFormRef;
   private String tenantId;
 
   public static HalTask generate(Task task, ProcessEngine engine) {
@@ -125,6 +129,7 @@ public class HalTask extends HalResource<HalTask> {
     try {
       dto.formKey = task.getFormKey();
       dto.operatonFormRef = task.getOperatonFormRef();
+      dto.camundaFormRef = CamundaFormRefDto.from(dto.operatonFormRef);
     }
     catch (BadUserRequestException e) {
       // ignore (initializeFormKeys was not called)
@@ -229,6 +234,12 @@ public class HalTask extends HalResource<HalTask> {
 
   public OperatonFormRef getOperatonFormRef() {
     return operatonFormRef;
+  }
+
+  /** @deprecated Use {@link #getOperatonFormRef()} instead. */
+  @Deprecated
+  public CamundaFormRefDto getCamundaFormRef() {
+    return camundaFormRef;
   }
 
   public String getTenantId() {

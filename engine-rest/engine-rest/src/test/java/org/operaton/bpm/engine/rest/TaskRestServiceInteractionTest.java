@@ -733,6 +733,7 @@ public class TaskRestServiceInteractionTest extends
       .then().expect().statusCode(Status.OK.getStatusCode())
       .body("key", equalTo(MockProvider.EXAMPLE_FORM_KEY))
       .body("operatonFormRef", nullValue())
+      .body("camundaFormRef", nullValue())
       .body("contextPath", equalTo(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH))
       .when().get(TASK_FORM_URL);
   }
@@ -746,6 +747,9 @@ public class TaskRestServiceInteractionTest extends
         .body("operatonFormRef.key", equalTo(MockProvider.EXAMPLE_FORM_KEY))
         .body("operatonFormRef.binding", equalTo(MockProvider.EXAMPLE_FORM_REF_BINDING))
         .body("operatonFormRef.version", equalTo(MockProvider.EXAMPLE_FORM_REF_VERSION))
+        .body("camundaFormRef.key", equalTo(MockProvider.EXAMPLE_FORM_KEY))
+        .body("camundaFormRef.binding", equalTo(MockProvider.EXAMPLE_FORM_REF_BINDING))
+        .body("camundaFormRef.version", equalTo(MockProvider.EXAMPLE_FORM_REF_VERSION))
         .body("key", nullValue())
       .when().get(SINGLE_TASK_URL);
   }
@@ -777,6 +781,9 @@ public class TaskRestServiceInteractionTest extends
        .body("operatonFormRef.key", equalTo(MockProvider.EXAMPLE_FORM_KEY))
        .body("operatonFormRef.binding", equalTo(MockProvider.EXAMPLE_FORM_REF_BINDING))
        .body("operatonFormRef.version", equalTo(MockProvider.EXAMPLE_FORM_REF_VERSION))
+       .body("camundaFormRef.key", equalTo(MockProvider.EXAMPLE_FORM_KEY))
+       .body("camundaFormRef.binding", equalTo(MockProvider.EXAMPLE_FORM_REF_BINDING))
+       .body("camundaFormRef.version", equalTo(MockProvider.EXAMPLE_FORM_REF_VERSION))
        .body("key", nullValue())
        .body("contextPath", equalTo(MockProvider.EXAMPLE_PROCESS_APPLICATION_CONTEXT_PATH))
      .when().get(TASK_FORM_URL);

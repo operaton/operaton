@@ -313,13 +313,6 @@
       left join ${prefix}ACT_RU_EXECUTION E1 on RES.EXECUTION_ID_ = E1.ID_
     </if>
 
-    <if test="authCheck.shouldPerformAuthorizatioCheck &amp;&amp; authCheck.authUserId != null">
-      <if test="!authCheck.revokeAuthorizationCheckEnabled">
-        <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.authCheckJoinWithoutOnClause" />
-        AUTH ON (AUTH.RESOURCE_ID_ ${authJoinStart} RES.ID_ ${authJoinSeparator} D.KEY_ ${authJoinSeparator} '*' ${authJoinEnd})
-      </if>
-    </if>
-
     <foreach collection="orderingProperties" item="orderingProperty" index="i">
       <if test="orderingProperty.relation != null">
         <bind name="tableAlias" value="@org.operaton.bpm.engine.impl.db.sql.MybatisJoinHelper@tableAlias(orderingProperty.relation, i)"/>
@@ -720,6 +713,7 @@
 
       <!-- Task query does not use left join if cmmn is disabled,
         so we don't need to account for case tasks in this case. -->
+      <bind name="applyAuthorizationCheckForTaskQueryFast" value="true" />
       <bind name="applyAuthorizationCheckForCaseInstances" value="authCheck.useLeftJoin" />
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.contextualAuthorizationCheck" />
       <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />

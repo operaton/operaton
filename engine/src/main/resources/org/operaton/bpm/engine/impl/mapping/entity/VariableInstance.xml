@@ -463,6 +463,7 @@
             </foreach>
 
             <bind name="applyAuthorizationCheckForCaseInstances" value="true" />
+            <bind name="applyAuthorizationCheckForTaskQueryFast" value="false" />
             <include refid="org.operaton.bpm.engine.impl.persistence.entity.AuthorizationEntity.contextualAuthorizationCheck" />
             <include refid="org.operaton.bpm.engine.impl.persistence.entity.TenantEntity.queryTenantCheck" />
 

@@ -1,2 +1,4 @@
 org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonBpmSpringSecurityDisableAutoConfiguration
-org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonSpringSecurityOAuth2AutoConfiguration
+org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonSpringSecurityOAuth2CommonAutoConfiguration
+org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonSpringSecurityOAuth2EngineAutoConfiguration
+org.operaton.bpm.spring.boot.starter.security.oauth2.OperatonSpringSecurityOAuth2WebappAutoConfiguration

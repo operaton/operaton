@@ -86,8 +86,12 @@ class OperatonBpmSecurityAutoConfigOauth2ApplicationIT extends AbstractSpringSec
   void testSpringSecurityAutoConfigurationCorrectlySet() {
     // given oauth2 client configured
     // when retrieving config beans then only OAuth2AutoConfiguration is present
-    assertThat(getBeanForClass(OperatonSpringSecurityOAuth2AutoConfiguration.class,
+    assertThat(getBeanForClass(OperatonSpringSecurityOAuth2CommonAutoConfiguration.class,
       mockMvc.getDispatcherServlet().getWebApplicationContext())).isNotNull();
+    assertThat(getBeanForClass(OperatonSpringSecurityOAuth2WebappAutoConfiguration.class,
+      mockMvc.getDispatcherServlet().getWebApplicationContext())).isNotNull();
+    assertThat(getBeanForClass(OperatonSpringSecurityOAuth2EngineAutoConfiguration.class,
+      mockMvc.getDispatcherServlet().getWebApplicationContext())).isNull();
     assertThat(getBeanForClass(OperatonBpmSpringSecurityDisableAutoConfiguration.class,
       mockMvc.getDispatcherServlet().getWebApplicationContext())).isNull();
   }

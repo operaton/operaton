@@ -32,7 +32,8 @@ import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilte
 import org.springframework.boot.security.oauth2.client.autoconfigure.ConditionalOnOAuth2ClientRegistrationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.Ordered;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -43,31 +44,28 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequest
 import org.springframework.security.web.SecurityFilterChain;
 
 import org.operaton.bpm.engine.rest.security.auth.ProcessEngineAuthenticationFilter;
-import org.operaton.bpm.engine.spring.SpringProcessEngineServicesConfiguration;
-import org.operaton.bpm.spring.boot.starter.OperatonBpmAutoConfiguration;
 import org.operaton.bpm.spring.boot.starter.property.OperatonBpmProperties;
 import org.operaton.bpm.spring.boot.starter.property.WebappProperty;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.AuthorizeTokenFilter;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2AuthenticationProvider;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2GrantedAuthoritiesMapper;
-import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.OAuth2IdentityProviderPlugin;
 import org.operaton.bpm.spring.boot.starter.security.oauth2.impl.SsoLogoutSuccessHandler;
 import org.operaton.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
 
-@AutoConfigureOrder(OperatonSpringSecurityOAuth2AutoConfiguration.OPERATON_OAUTH2_ORDER)
-@AutoConfigureAfter({OperatonBpmAutoConfiguration.class, SpringProcessEngineServicesConfiguration.class})
+@AutoConfigureOrder(OperatonSpringSecurityOAuth2CommonAutoConfiguration.OPERATON_OAUTH2_ORDER + 2)
+@AutoConfigureAfter(OperatonSpringSecurityOAuth2CommonAutoConfiguration.class)
 @ConditionalOnBean(OperatonBpmProperties.class)
 @ConditionalOnOAuth2ClientRegistrationProperties
 @EnableConfigurationProperties(OAuth2Properties.class)
-public class OperatonSpringSecurityOAuth2AutoConfiguration {
+@Configuration(proxyBeanMethods = false)
+public class OperatonSpringSecurityOAuth2WebappAutoConfiguration {
 
-  private static final Logger logger = LoggerFactory.getLogger(OperatonSpringSecurityOAuth2AutoConfiguration.class);
-  public static final int OPERATON_OAUTH2_ORDER = Ordered.HIGHEST_PRECEDENCE + 100;
+  private static final Logger logger = LoggerFactory.getLogger(OperatonSpringSecurityOAuth2WebappAutoConfiguration.class);
   private final OAuth2Properties oAuth2Properties;
   private final String webappPath;
 
-  public OperatonSpringSecurityOAuth2AutoConfiguration(OperatonBpmProperties properties,
-                                                      OAuth2Properties oAuth2Properties) {
+  public OperatonSpringSecurityOAuth2WebappAutoConfiguration(OperatonBpmProperties properties,
+                                                            OAuth2Properties oAuth2Properties) {
     this.oAuth2Properties = oAuth2Properties;
     WebappProperty webapp = properties.getWebapp();
     this.webappPath = webapp.getApplicationPath();
@@ -85,13 +83,6 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
     filterRegistration.addUrlPatterns(webappPath + "/app/*", webappPath + "/api/*");
     filterRegistration.setDispatcherTypes(DispatcherType.REQUEST);
     return filterRegistration;
-  }
-
-  @Bean
-  @ConditionalOnProperty(name = "identity-provider.enabled", havingValue = "true", prefix = OAuth2Properties.PREFIX, matchIfMissing = true)
-  public OAuth2IdentityProviderPlugin identityProviderPlugin() {
-    logger.debug("Registering OAuth2IdentityProviderPlugin");
-    return new OAuth2IdentityProviderPlugin();
   }
 
   @Bean
@@ -115,14 +106,22 @@ public class OperatonSpringSecurityOAuth2AutoConfiguration {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http,
-                                         AuthorizeTokenFilter authorizeTokenFilter,
-                                         @Nullable SsoLogoutSuccessHandler ssoLogoutSuccessHandler) {
+  @Order(2)
+  public SecurityFilterChain webappSecurityFilterChain(HttpSecurity http,
+                                                       AuthorizeTokenFilter authorizeTokenFilter,
+                                                       @Nullable SsoLogoutSuccessHandler ssoLogoutSuccessHandler) throws Exception {
 
-    logger.info("Enabling Operaton Spring Security oauth2 integration");
+    logger.info("Enabling Operaton Spring Security oauth2 integration for webapps");
 
     // @formatter:off
-    http.authorizeHttpRequests(c -> c
+    http.securityMatcher(request -> {
+          String fullPath = request.getServletPath() + (request.getPathInfo() != null ? request.getPathInfo() : "");
+          return fullPath.startsWith(webappPath)
+              || fullPath.startsWith(OAuth2AuthorizationRequestRedirectFilter.DEFAULT_AUTHORIZATION_REQUEST_BASE_URI)
+              || fullPath.startsWith("/login")
+              || fullPath.startsWith("/logout");
+        })
+        .authorizeHttpRequests(c -> c
             .requestMatchers(webappPath + "/app/**").authenticated()
             .requestMatchers(webappPath + "/api/**").authenticated()
             .anyRequest().permitAll()

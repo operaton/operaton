@@ -25,7 +25,7 @@ import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
 /**
- * Condition that matches if no {@code spring.security.oauth2.client.registration} properties are defined
+ * Condition that matches if no OAuth2 client or resource server properties are defined.
  */
 public class ClientsNotConfiguredCondition extends SpringBootCondition {
 
@@ -33,9 +33,13 @@ public class ClientsNotConfiguredCondition extends SpringBootCondition {
 
   @Override
   public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
-    return hasClientRegistrations(context) ?
-        new ConditionOutcome(false, "OAuth2 client is configured") :
-        new ConditionOutcome(true, "No OAuth2 client is configured");
+    if (hasClientRegistrations(context)) {
+      return new ConditionOutcome(false, "OAuth2 client is configured");
+    }
+    if (ResourceServerConfiguredCondition.isResourceServerConfigured(context)) {
+      return new ConditionOutcome(false, "OAuth2 resource server is configured");
+    }
+    return new ConditionOutcome(true, "No OAuth2 client or resource server is configured");
   }
 
   /**
@@ -43,7 +47,7 @@ public class ClientsNotConfiguredCondition extends SpringBootCondition {
    *
    * @return true if at least one client registration is present and set, false otherwise
    */
-  private boolean hasClientRegistrations(ConditionContext context) {
+  static boolean hasClientRegistrations(ConditionContext context) {
     Binder binder = Binder.get(context.getEnvironment());
     return binder.bind(OAUTH2_CLIENT_REGISTRATION_PROPERTY_PREFIX, Map.class)
         .map(map -> !map.isEmpty())

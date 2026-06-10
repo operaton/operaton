@@ -209,7 +209,7 @@ public class ProcessEngineAuthenticationFilter implements Filter {
     engine.getIdentityService().clearAuthentication();
   }
 
-  protected boolean requiresEngineAuthentication(String requestUrl) {
+  public static boolean requiresEngineAuthentication(String requestUrl) {
     for (Pattern whiteListedUrlPattern : WHITE_LISTED_URL_PATTERNS) {
       Matcher matcher = whiteListedUrlPattern.matcher(requestUrl);
       if (matcher.matches()) {

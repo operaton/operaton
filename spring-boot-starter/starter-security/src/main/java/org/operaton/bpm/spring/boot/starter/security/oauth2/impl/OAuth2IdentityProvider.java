@@ -25,8 +25,10 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.authority.FactorGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import org.operaton.bpm.engine.identity.*;
 import org.operaton.bpm.engine.impl.GroupQueryImpl;
@@ -94,17 +96,23 @@ public class OAuth2IdentityProvider extends DbIdentityServiceProvider {
       user.setFirstName(oidcUser.getGivenName());
       user.setLastName(oidcUser.getFamilyName());
       user.setEmail(oidcUser.getEmail());
+    } else if (principal instanceof Jwt jwt) {
+      user.setFirstName(jwt.getClaimAsString("given_name"));
+      user.setLastName(jwt.getClaimAsString("family_name"));
+      user.setEmail(jwt.getClaimAsString("email"));
     }
     return user;
   }
 
   protected static List<Group> transformGroups() {
-    return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(a -> {
-      var group = new GroupEntity();
-      group.setId(a.getAuthority());
-      group.setName(a.getAuthority());
-      return group;
-    }).collect(Collectors.toList());
+    return SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+        .filter(authority -> !(authority instanceof FactorGrantedAuthority))
+        .map(a -> {
+          var group = new GroupEntity();
+          group.setId(a.getAuthority());
+          group.setName(a.getAuthority());
+          return group;
+        }).collect(Collectors.toList());
   }
 
   public static class OAuth2UserQuery extends UserQueryImpl {

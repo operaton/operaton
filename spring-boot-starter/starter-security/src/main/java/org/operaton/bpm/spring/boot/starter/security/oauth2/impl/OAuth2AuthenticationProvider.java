@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.rest.security.auth.AuthenticationResult;
@@ -43,12 +45,13 @@ public class OAuth2AuthenticationProvider extends ContainerBasedAuthenticationPr
       return AuthenticationResult.unsuccessful();
     }
 
-    if (!(authentication instanceof OAuth2AuthenticationToken)) {
+    if (!(authentication instanceof OAuth2AuthenticationToken) &&
+        !(authentication instanceof JwtAuthenticationToken) &&
+        !(authentication instanceof BearerTokenAuthentication)) {
       logger.debug("Authentication is not OAuth2, it is {}", authentication.getClass());
       return AuthenticationResult.unsuccessful();
     }
-    var oauth2 = (OAuth2AuthenticationToken) authentication;
-    String operatonUserId = oauth2.getName();
+    String operatonUserId = authentication.getName();
     if (!hasText(operatonUserId)) {
       logger.debug("UserId is empty");
       return AuthenticationResult.unsuccessful();

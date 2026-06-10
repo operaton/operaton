@@ -34,6 +34,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
     <!-- override nimbus-jose-jwt version, consider removal when org.springframework.security:spring-security-oauth2-jose uses this or a newer version -->
     <!-- org.springframework.security:spring-security-oauth2-jose 6.5.3 is using 9.37.3 -->
     <dependency>

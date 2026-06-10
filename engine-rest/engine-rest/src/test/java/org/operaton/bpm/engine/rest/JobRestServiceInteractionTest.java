@@ -57,6 +57,7 @@ import org.operaton.bpm.engine.runtime.JobQuery;
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -88,6 +89,7 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
   protected static final String JOB_RESOURCE_RECALC_DUEDATE_URL = JOB_RESOURCE_SET_DUEDATE_URL + "/recalculate";
   protected static final String SINGLE_JOB_SUSPENDED_URL = SINGLE_JOB_RESOURCE_URL + "/suspended";
   protected static final String JOB_SUSPENDED_URL = JOB_RESOURCE_URL + "/suspended";
+  protected static final String JOB_DELETION_URL = JOB_RESOURCE_URL + "/delete";
 
   private ProcessEngine namedProcessEngine;
   private ManagementService mockManagementService;
@@ -1801,6 +1803,92 @@ public class JobRestServiceInteractionTest extends AbstractRestServiceTest {
 
     verify(mockManagementService).recalculateJobDuedate(jobId, true);
     verifyNoMoreInteractions(mockManagementService);
+  }
+
+  @Test
+  void testBulkSuspendJobs() {
+    Map<String, Object> params = new HashMap<>();
+    params.put("jobIds", List.of(MockProvider.EXAMPLE_JOB_ID));
+    params.put("suspended", true);
+
+    given()
+      .contentType(ContentType.JSON)
+      .body(params)
+    .then()
+      .expect()
+        .statusCode(Status.OK.getStatusCode())
+        .body("[0].jobId", is(MockProvider.EXAMPLE_JOB_ID))
+        .body("[0].status", is("SUCCESS"))
+        .body("[0].errorMessage", equalTo(null))
+    .when()
+      .post(JOB_SUSPENDED_URL);
+
+    verify(mockSuspensionStateSelectBuilder).byJobId(MockProvider.EXAMPLE_JOB_ID);
+    verify(mockSuspensionStateBuilder).suspend();
+  }
+
+  @Test
+  void testBulkDeleteJobs() {
+    Map<String, Object> params = new HashMap<>();
+    params.put("jobIds", List.of(MockProvider.EXAMPLE_JOB_ID));
+
+    given()
+      .contentType(ContentType.JSON)
+      .body(params)
+    .then()
+      .expect()
+        .statusCode(Status.OK.getStatusCode())
+        .body("[0].jobId", is(MockProvider.EXAMPLE_JOB_ID))
+        .body("[0].status", is("SUCCESS"))
+        .body("[0].errorMessage", equalTo(null))
+    .when()
+      .post(JOB_DELETION_URL);
+
+    verify(mockManagementService).deleteJob(MockProvider.EXAMPLE_JOB_ID);
+  }
+
+  @Test
+  void testBulkDeleteJobsReturnsMultiStatusForPartialFailure() {
+    String expectedMessage = "expected delete failure";
+    doThrow(new ProcessEngineException(expectedMessage))
+        .when(mockManagementService).deleteJob(MockProvider.NON_EXISTING_JOB_ID);
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("jobIds", List.of(MockProvider.EXAMPLE_JOB_ID, MockProvider.NON_EXISTING_JOB_ID));
+
+    given()
+      .contentType(ContentType.JSON)
+      .body(params)
+    .then()
+      .expect()
+        .statusCode(207)
+        .body("jobId", hasItem(MockProvider.EXAMPLE_JOB_ID))
+        .body("jobId", hasItem(MockProvider.NON_EXISTING_JOB_ID))
+        .body("status", hasItem("SUCCESS"))
+        .body("status", hasItem("FAILURE"))
+        .body("errorMessage", hasItem(expectedMessage))
+    .when()
+      .post(JOB_DELETION_URL);
+
+    verify(mockManagementService).deleteJob(MockProvider.EXAMPLE_JOB_ID);
+    verify(mockManagementService).deleteJob(MockProvider.NON_EXISTING_JOB_ID);
+  }
+
+  @Test
+  void testBulkDeleteJobsRejectsEmptyInput() {
+    Map<String, Object> params = new HashMap<>();
+    params.put("jobIds", List.of());
+
+    given()
+      .contentType(ContentType.JSON)
+      .body(params)
+    .then()
+      .expect()
+        .statusCode(Status.BAD_REQUEST.getStatusCode())
+        .body("type", is(InvalidRequestException.class.getSimpleName()))
+        .body("message", is("Please supply valid job ids as input."))
+    .when()
+      .post(JOB_DELETION_URL);
   }
 
   protected void verifyBatchJson(String batchJson) {

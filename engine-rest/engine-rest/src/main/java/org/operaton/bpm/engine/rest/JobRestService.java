@@ -20,6 +20,7 @@ import java.util.List;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
@@ -28,6 +29,8 @@ import org.operaton.bpm.engine.rest.dto.runtime.JobDto;
 import org.operaton.bpm.engine.rest.dto.runtime.JobQueryDto;
 import org.operaton.bpm.engine.rest.dto.runtime.JobSuspensionStateDto;
 import org.operaton.bpm.engine.rest.dto.runtime.SetJobRetriesDto;
+import org.operaton.bpm.engine.rest.dto.runtime.modification.JobActivateSuspendDto;
+import org.operaton.bpm.engine.rest.dto.runtime.modification.JobDeletionDto;
 import org.operaton.bpm.engine.rest.sub.runtime.JobResource;
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -74,4 +77,16 @@ public interface JobRestService {
   @Path("/suspended")
   @Consumes(MediaType.APPLICATION_JSON)
   void updateSuspensionState(JobSuspensionStateDto dto);
+
+  @POST
+  @Path("/suspended")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  Response updateSuspensionStateForJobs(JobActivateSuspendDto dto);
+
+  @POST
+  @Path("/delete")
+  @Consumes(MediaType.APPLICATION_JSON)
+  @Produces(MediaType.APPLICATION_JSON)
+  Response deleteJobs(JobDeletionDto dto);
 }

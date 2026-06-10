@@ -1,0 +1,94 @@
+<!--
+  Example configuration for SCIM Identity Provider Plugin
+  
+  This file demonstrates different configuration options for integrating
+  Operaton with SCIM 2.0 identity providers.
+-->
+
+<!-- Example 1: Basic configuration with Bearer Token -->
+<plugin>
+  <class>org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin</class>
+  <properties>
+    <property name="serverUrl">https://scim.example.com</property>
+    <property name="authenticationType">bearer</property>
+    <property name="bearerToken">${SCIM_BEARER_TOKEN}</property>
+  </properties>
+</plugin>
+
+<!-- Example 2: Azure AD SCIM Configuration -->
+<!--
+<plugin>
+  <class>org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin</class>
+  <properties>
+    <property name="serverUrl">https://graph.microsoft.com/v1.0</property>
+    <property name="authenticationType">oauth2</property>
+    <property name="oauth2TokenUrl">https://login.microsoftonline.com/{tenant-id}/oauth2/v2.0/token</property>
+    <property name="oauth2ClientId">${AZURE_CLIENT_ID}</property>
+    <property name="oauth2ClientSecret">${AZURE_CLIENT_SECRET}</property>
+    <property name="oauth2Scope">https://graph.microsoft.com/.default</property>
+    
+    <property name="usersEndpoint">/users</property>
+    <property name="groupsEndpoint">/groups</property>
+    
+    <property name="userIdAttribute">userPrincipalName</property>
+    <property name="userFirstnameAttribute">givenName</property>
+    <property name="userLastnameAttribute">surname</property>
+    
+    <property name="groupIdAttribute">id</property>
+    <property name="groupNameAttribute">displayName</property>
+  </properties>
+</plugin>
+-->
+
+<!-- Example 3: Okta SCIM Configuration -->
+<!--
+<plugin>
+  <class>org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin</class>
+  <properties>
+    <property name="serverUrl">https://{your-okta-domain}.okta.com/api/v1/scim/v2</property>
+    <property name="authenticationType">bearer</property>
+    <property name="bearerToken">${OKTA_API_TOKEN}</property>
+    
+    <property name="userIdAttribute">userName</property>
+    <property name="userFirstnameAttribute">name.givenName</property>
+    <property name="userLastnameAttribute">name.familyName</property>
+    
+    <property name="groupIdAttribute">displayName</property>
+    <property name="groupNameAttribute">displayName</property>
+    
+    <property name="pageSize">100</property>
+  </properties>
+</plugin>
+-->
+
+<!-- Example 4: Development configuration with self-signed certificates -->
+<!--
+<plugin>
+  <class>org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin</class>
+  <properties>
+    <property name="serverUrl">https://localhost:8443/scim/v2</property>
+    <property name="authenticationType">basic</property>
+    <property name="username">admin</property>
+    <property name="password">admin123</property>
+    
+    <property name="acceptUntrustedCertificates">true</property>
+    <property name="authorizationCheckEnabled">false</property>
+  </properties>
+</plugin>
+-->
+
+<!-- Example 5: Configuration with response caching -->
+<!--
+<plugin>
+  <class>org.operaton.bpm.identity.impl.scim.plugin.ScimIdentityProviderPlugin</class>
+  <properties>
+    <property name="serverUrl">https://scim.example.com</property>
+    <property name="authenticationType">bearer</property>
+    <property name="bearerToken">${SCIM_BEARER_TOKEN}</property>
+    
+    <property name="cacheEnabled">true</property>
+    <property name="maxCacheSize">200</property>
+    <property name="cacheExpirationTimeoutMin">10</property>
+  </properties>
+</plugin>
+-->

@@ -258,7 +258,12 @@ public abstract class DbSqlSession extends AbstractPersistenceSession {
 
   protected boolean isConcurrentModificationException(DbOperation failedOperation,
                                                       PersistenceException cause) {
-
+    // A database deadlock means two transactions contested the same resources; the victim
+    // transaction was rolled back by the DB. Treat this as a concurrent modification.
+    SQLException sqlException = ExceptionUtil.unwrapException(cause);
+    if (sqlException != null && ExceptionUtil.checkDeadlockException(sqlException)) {
+      return true;
+    }
     boolean isConstraintViolation = ExceptionUtil.checkForeignKeyConstraintViolation(cause);
     boolean isVariableIntegrityViolation = ExceptionUtil.checkVariableIntegrityViolation(cause);
 

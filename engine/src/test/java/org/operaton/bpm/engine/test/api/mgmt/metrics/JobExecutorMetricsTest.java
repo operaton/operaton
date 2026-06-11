@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.mgmt.metrics;
 
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionException;
@@ -32,6 +33,7 @@ import org.operaton.bpm.engine.impl.jobexecutor.CallerRunsRejectedJobsHandler;
 import org.operaton.bpm.engine.impl.jobexecutor.DefaultJobExecutor;
 import org.operaton.bpm.engine.impl.jobexecutor.JobExecutor;
 import org.operaton.bpm.engine.management.Metrics;
+import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.test.Deployment;
 import org.operaton.bpm.engine.test.concurrency.ConcurrencyTestHelper.ThreadControl;
 import org.operaton.bpm.engine.test.jobexecutor.ControllableJobExecutor;
@@ -206,8 +208,16 @@ class JobExecutorMetricsTest extends AbstractMetricsTest {
       runtimeService.startProcessInstanceByKey("asyncServiceTaskProcess");
     }
 
-    // when executing the jobs
-    testRule.waitForJobExecutorToProcessAllJobs(5000L);
+    List<String> jobIds = managementService.createJobQuery()
+        .processDefinitionKey("asyncServiceTaskProcess")
+        .list()
+        .stream()
+        .map(Job::getId)
+        .toList();
+
+    // when executing only the three jobs using the RejectingJobExecutor
+    JobExecutor jobExecutor = processEngineConfiguration.getJobExecutor();
+    jobExecutor.executeJobs(jobIds, (ProcessEngineImpl) processEngine);
 
     // then all of them were rejected by the job executor which is reflected by the metric
     long numRejectedJobs = managementService.createMetricsQuery().name(Metrics.JOB_EXECUTION_REJECTED).sum();

@@ -22,7 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.operaton.bpm.engine.ProcessEngine;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.operaton.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
 import org.operaton.bpm.engine.impl.persistence.entity.ExecutionEntity;
 import org.operaton.commons.logging.MdcAccess;
 
@@ -45,18 +44,11 @@ class ProcessDataContextTest {
 
   @Test
   void pushSectionUsesStoredProcessDefinitionKeyForMdc() {
-    ProcessEngineConfigurationImpl configuration = new StandaloneInMemProcessEngineConfiguration()
-        .setLoggingContextActivityId(null)
-        .setLoggingContextActivityName(null)
-        .setLoggingContextApplicationName(null)
-        .setLoggingContextBusinessKey(null)
-        .setLoggingContextProcessDefinitionId(null)
-        .setLoggingContextProcessDefinitionKey(PROCESS_DEFINITION_KEY_MDC_PROPERTY)
-        .setLoggingContextProcessInstanceId(null)
-        .setLoggingContextTenantId(null)
-        .setLoggingContextEngineName(null);
+    ProcessEngineConfigurationImpl configuration = mock(ProcessEngineConfigurationImpl.class);
     ExecutionEntity execution = mock(ExecutionEntity.class);
     ProcessEngine processEngine = mock(ProcessEngine.class);
+
+    when(configuration.getLoggingContextProcessDefinitionKey()).thenReturn(PROCESS_DEFINITION_KEY_MDC_PROPERTY);
     when(execution.getProcessEngine()).thenReturn(processEngine);
     when(processEngine.getName()).thenReturn("engine");
     when(execution.getProcessDefinitionKey()).thenReturn(PROCESS_DEFINITION_KEY);

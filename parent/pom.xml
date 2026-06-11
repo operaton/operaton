@@ -54,8 +54,8 @@
     <version.logback>1.5.34</version.logback>
     <version.freemarker>2.3.34</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
-    <version.nodejs>22.13.0</version.nodejs>
-    <version.npm>11.0.0</version.npm>
+    <version.nodejs>24.14.0</version.nodejs>
+    <version.npm>11.8.0</version.npm>
     <jacoco.argLine/>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
     <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>

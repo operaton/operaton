@@ -284,7 +284,7 @@ All new files must include the Apache 2.0 license header:
 
 ```java
 /*
- * Copyright 2025 the Operaton contributors.
+ * Copyright ${CURRENT_YEAR} the Operaton contributors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -340,7 +340,7 @@ related to #123
 
 ### Backporting from Camunda 7-compatible Sources
 
-For issues labeled `backport:c7`, treat the source as the Camunda 7 compatibility family. The source may be upstream
+For issues with labels starting with `backport:` (except: `backport:patch-release), treat the source as the Camunda 7 compatibility family. The source may be upstream
 Camunda 7 or a Camunda 7-compatible fork.
 
 - Attribute the original commit properly, using the actual source repository and issue/PR URLs.
@@ -360,6 +360,7 @@ Camunda 7 or a Camunda 7-compatible fork.
   persisted entity fields.
 - Verify backport with full build: `./mvnw clean install`
 - Run integration tests if dependencies changed
+- License headers in new files MUST be preserved from the source commit
 
 ## Common Development Workflows
 

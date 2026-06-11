@@ -24,7 +24,6 @@
                            "product": {
                              "name": "Operaton BPM Runtime",
                              "version": "7.14.0",
-                             "edition": "enterprise",
                              "internals": {
                                "database": {  
                                  "vendor": "h2",
@@ -53,16 +52,6 @@
                                  "spring-boot-starter",
                                  "operaton-bpm-run"
                                ],
-                               "license-key": {
-                                 "customer": "customer name",
-                                 "type": "UNIFIED",
-                                 "valid-until": "2022-09-30",
-                                 "unlimited": false,
-                                 "features": {
-                                   "operatonBPM": "true"
-                                 },
-                                 "raw": "customer=customer name;expiryDate=2022-09-30;operatonBPM=true;optimize=false;cawemo=false"
-                               },
                                "webapps": [
                                  "cockpit",
                                  "admin"

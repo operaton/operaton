@@ -30,7 +30,7 @@
       mediaType = "application/json"
       dto = "VariableValueDto"
       examples = [ '"example-1": {
-                      "summary": "PUT /task/aTaskId/variables/aVarName",
+                      "summary": "PUT /task/aTaskId/localVariables/aVarName",
                       "description": "Status 204. No content.",
                       "value": {
                         "value": "someValue",
@@ -38,7 +38,7 @@
                       }
                     }',
                    '"example-2": {
-                      "summary": "PUT /task/aTaskId/variables/aVarName",
+                      "summary": "PUT /task/aTaskId/localVariables/aVarName",
                       "description": "An Object Variable PUT Request. Status 204. No content.",
                       "value": {
                         "value": "ab",

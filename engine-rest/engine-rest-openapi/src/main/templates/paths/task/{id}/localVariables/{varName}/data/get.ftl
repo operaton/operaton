@@ -42,7 +42,7 @@
           },
           "examples": {
             "example-1": {
-              "summary": "GET /task/aTaskId/variables/aVarName/data",
+              "summary": "GET /task/aTaskId/localVariables/aVarName/data",
               "value": "binary variable: Status 200. Content-Type: application/octet-stream"
             }
           }
@@ -56,7 +56,7 @@
           },
           "examples": {
             "example-1": {
-              "summary": "GET /task/aTaskId/variables/aVarName/data",
+              "summary": "GET /task/aTaskId/localVariables/aVarName/data",
               "value": "file variable: Status 200. Content-Type: text/plain; charset=UTF-8. Content-Disposition: attachment; filename=\"someFile.txt\""
             }
           }

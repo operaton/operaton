@@ -24,7 +24,7 @@
       mediaType = "application/json"
       dto = "PatchVariablesDto"
       examples = ['"example-1": {
-                     "summary": "POST `/task/aTaskId/variables`",
+                     "summary": "POST `/task/aTaskId/localVariables`",
                      "description": "Status 204 Response: No content.",
                      "value": {
                        "modifications": {

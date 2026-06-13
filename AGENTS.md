@@ -361,6 +361,7 @@ Camunda 7 or a Camunda 7-compatible fork.
 - Verify backport with full build: `./mvnw clean install`
 - Run integration tests if dependencies changed
 - License headers in new files MUST be preserved from the source commit
+- New public API classes and methods must be annotated with `@since MAJOR.MINOR`, using MAJOR and MINOR from the version in `/pom.xml`
 
 ## Common Development Workflows
 

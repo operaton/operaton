@@ -96,29 +96,24 @@ class ProcessDataLoggingContextTest {
   }
 
   @AfterEach
-  void resetClock() {
-    ClockUtil.reset();
-    testMDCFacade.clear();
-  }
-
-  @AfterEach
   void tearDown() {
     if (defaultEngineRegistered) {
       runtimeContainerDelegate.unregisterProcessEngine(engineRule.getProcessEngine());
     }
-  }
+    // reset clock
+    ClockUtil.reset();
+    testMDCFacade.clear();
 
-  @AfterEach
-  void resetLogConfiguration() {
+    // resetLogConfiguration
     engineRule.getProcessEngineConfiguration()
-      .setLoggingContextActivityId("activityId")
-      .setLoggingContextApplicationName("applicationName")
-      .setLoggingContextBusinessKey("businessKey")
-      .setLoggingContextProcessDefinitionId("processDefinitionId")
-      .setLoggingContextProcessInstanceId("processInstanceId")
-      .setLoggingContextRootProcessInstanceId("rootProcessInstanceId")
-      .setLoggingContextTenantId("tenantId")
-      .setLoggingContextEngineName("engineName");
+            .setLoggingContextActivityId("activityId")
+            .setLoggingContextApplicationName("applicationName")
+            .setLoggingContextBusinessKey("businessKey")
+            .setLoggingContextProcessDefinitionId("processDefinitionId")
+            .setLoggingContextProcessInstanceId("processInstanceId")
+            .setLoggingContextRootProcessInstanceId("rootProcessInstanceId")
+            .setLoggingContextTenantId("tenantId")
+            .setLoggingContextEngineName("engineName");
   }
 
   @Test

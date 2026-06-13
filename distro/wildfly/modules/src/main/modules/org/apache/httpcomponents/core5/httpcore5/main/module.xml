@@ -1,6 +1,7 @@
 <module xmlns="urn:jboss:module:1.0" name="org.apache.httpcomponents.core5.httpcore5">
   <resources>
     <resource-root path="httpcore5-@version.httpcore5@.jar" />
+    <resource-root path="httpcore5-h2-@version.httpcore5-h2@.jar" />
   </resources>
 
   <dependencies>

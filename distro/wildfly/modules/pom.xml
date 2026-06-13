@@ -77,6 +77,11 @@
       <artifactId>operaton-connect-http-client</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5-h2</artifactId>
+      <version>${version.httpcore5-h2}</version>
+    </dependency>
+    <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-soap-http-client</artifactId>
     </dependency>
@@ -249,6 +254,19 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
+                <!-- Place httpcore5-h2 in the httpcore5 module. -->
+                <copy todir="target/modules" flatten="false">
+                  <fileset dir="target/modules">
+                    <include name="org/apache/httpcomponents/core5/httpcore5-h2/main/*.jar"/>
+                  </fileset>
+                  <chainedmapper>
+                    <regexpmapper
+                      from="^org/apache/httpcomponents/core5/httpcore5-h2/main/(.*)$$"
+                      to="org/apache/httpcomponents/core5/httpcore5/main/\1"
+                      handledirsep="yes"/>
+                  </chainedmapper>
+                </copy>
+                <delete dir="target/modules/org/apache/httpcomponents/core5/httpcore5-h2"/>
                 <!-- copy groovy dependencies to single dir -->
                 <delete dir="target/modules/org/apache/groovy"/>
                 <copy todir="target/modules" flatten="false">
@@ -291,6 +309,9 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.httpcore5@" value="${version.httpcore5}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.httpcore5-h2@" value="${version.httpcore5-h2}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.jackson@" value="${version.jackson}">

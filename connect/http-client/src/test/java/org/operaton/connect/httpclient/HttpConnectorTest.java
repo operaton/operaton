@@ -16,6 +16,9 @@
  */
 package org.operaton.connect.httpclient;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpHead;
@@ -32,6 +35,7 @@ import org.junit.jupiter.api.Test;
 import org.operaton.commons.utils.IoUtil;
 import org.operaton.connect.ConnectorRequestException;
 import org.operaton.connect.Connectors;
+import org.operaton.connect.httpclient.impl.AbstractHttpConnector;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 import org.operaton.connect.impl.DebugRequestInterceptor;
 import org.operaton.connect.spi.Connector;
@@ -163,6 +167,41 @@ public class HttpConnectorTest {
     long contentLength = request.getEntity().getContentLength();
 
     assertThat(contentLength).isEqualTo(EXAMPLE_PAYLOAD.length());
+  }
+
+  @Test
+  void shouldGetDefaultCharset() {
+    // when/then
+    assertThat(((AbstractHttpConnector<?, ?>) connector).getCharset()).isEqualTo(StandardCharsets.UTF_8);
+  }
+
+  @Test
+  void shouldSetCharset() {
+    // given
+    Charset iso = Charset.forName("ISO-8859-1");
+    AbstractHttpConnector<?, ?> abstractConnector = (AbstractHttpConnector<?, ?>) connector;
+
+    // when
+    abstractConnector.setCharset(iso);
+
+    // then
+    assertThat(abstractConnector.getCharset()).isEqualTo(iso);
+  }
+
+  @Test
+  void shouldUseSetCharsetForPayloadEncoding() throws Exception {
+    // given
+    Charset iso = Charset.forName("ISO-8859-1");
+    ((AbstractHttpConnector<?, ?>) connector).setCharset(iso);
+    String payload = "café"; // contains a non-ASCII character
+
+    // when
+    connector.createRequest().url(EXAMPLE_URL).payload(payload).post().execute();
+
+    // then - payload was encoded using ISO-8859-1
+    HttpPost request = interceptor.getTarget();
+    byte[] bytes = request.getEntity().getContent().readAllBytes();
+    assertThat(bytes).isEqualTo(payload.getBytes(iso));
   }
 
   protected void verifyHttpRequest(Class<? extends BasicClassicHttpRequest> requestClass) {

@@ -16,6 +16,8 @@
  */
 package org.operaton.connect.httpclient;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +27,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.connect.httpclient.impl.AbstractHttpConnector;
 import org.operaton.connect.httpclient.impl.HttpConnectorImpl;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -35,6 +38,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 import static org.apache.hc.core5.http.HttpHeaders.USER_AGENT;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Since Apache HTTP client makes it extremely hard to test the proper configuration
@@ -84,5 +88,26 @@ class HttpConnectorSystemPropertiesTest {
     // then
     verify(getRequestedFor(urlEqualTo("/")).withHeader(USER_AGENT, equalTo("foo")));
 
+  }
+
+  @Test
+  void shouldSetCharsetFromSystemProperty() {
+    // given
+    setSystemProperty(AbstractHttpConnector.PROPERTY_CHARSET, "ISO-8859-1");
+
+    // when
+    HttpConnectorImpl connector = new HttpConnectorImpl();
+
+    // then
+    assertThat(connector.getCharset()).isEqualTo(Charset.forName("ISO-8859-1"));
+  }
+
+  @Test
+  void shouldDefaultToUtf8WhenNoSystemPropertySet() {
+    // when
+    HttpConnectorImpl connector = new HttpConnectorImpl();
+
+    // then
+    assertThat(connector.getCharset()).isEqualTo(StandardCharsets.UTF_8);
   }
 }

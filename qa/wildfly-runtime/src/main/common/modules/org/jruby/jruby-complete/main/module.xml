@@ -6,7 +6,7 @@
   <dependencies>
     <module name="java.base" />
     <module name="java.logging" />
-    <module name="sun.jdk" />
+    <module name="jdk.unsupported" />
     <module name="org.operaton.spin.operaton-spin-core" />
   </dependencies>
 </module>

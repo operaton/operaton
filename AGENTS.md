@@ -362,6 +362,9 @@ Camunda 7 or a Camunda 7-compatible fork.
 - Run integration tests if dependencies changed
 - License headers in new files MUST be preserved from the source commit
 - New public API classes and methods must be annotated with `@since MAJOR.MINOR`, using MAJOR and MINOR from the version in `/pom.xml`
+- Evaluate the compatibility of the backported change in regard to semantic versioning.
+  Document when a PR has breaking changes and add label `breaking`. 
+  Document if a change is eligible for patch release backport (add label `backport:patch-release`).
 
 ## Common Development Workflows
 

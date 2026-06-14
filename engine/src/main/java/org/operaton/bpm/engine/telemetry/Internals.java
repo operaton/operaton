@@ -26,11 +26,6 @@ import org.operaton.bpm.engine.ManagementService;
  * This class represents the structure of data describing Operaton internal
  * metrics and the technical environment in which Operaton is set-up.
  *
- * <p>
- * This information is exposed as local diagnostics data through the legacy
- * telemetry API.
- * </p>
- *
  * @see <a href=
  *      "https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton
  *      Documentation: Collected Telemetry Data</a>

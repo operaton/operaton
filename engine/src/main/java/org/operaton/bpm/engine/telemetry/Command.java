@@ -25,11 +25,6 @@ import org.operaton.bpm.engine.ManagementService;
  * of executions per command.
  *
  * <p>
- * This information is exposed as local diagnostics data through the legacy
- * telemetry API.
- * </p>
- *
- * <p>
  * Retrieval through {@link ManagementService#getTelemetryData()} will not reset
  * the counter.
  * </p>

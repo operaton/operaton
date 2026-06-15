@@ -5,7 +5,7 @@
         name = "enableTelemetry"
         type = "boolean"
         last = true
-        desc = "Specifies if the telemetry data should be sent or not."/>
+        desc = "Deprecated. Telemetry sending has been removed; this value is retained only for backwards compatibility and is always false when read."/>
 
 </@lib.dto>
 

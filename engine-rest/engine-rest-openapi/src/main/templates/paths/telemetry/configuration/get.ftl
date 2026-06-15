@@ -4,8 +4,9 @@
   <@lib.endpointInfo
       id = "getTelemetryConfiguration"
       tag = "Telemetry"
+      deprecated = true
       summary = "Fetch Telemetry Configuration"
-      desc = "Fetches Telemetry Configuration." />
+      desc = "Deprecated: The sending telemetry feature is removed. This endpoint is retained for backwards compatibility and always reports telemetry as disabled." />
 
   "parameters" : [],
 
@@ -19,7 +20,7 @@
                        "summary": "Status 200 Response",
                        "description": "The Response content of a status 200",
                        "value": {
-                           "enableTelemetry": true
+                           "enableTelemetry": false
                          }
                      }'] />
 

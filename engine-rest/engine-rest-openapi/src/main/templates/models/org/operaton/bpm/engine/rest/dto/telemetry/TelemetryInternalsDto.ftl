@@ -54,8 +54,7 @@
         format = "date-time"
         nullable = false
         last = true
-        desc = "The date when the engine started to collect dynamic data, such as command executions and metrics. If telemetry sending is enabled, dynamic data resets on sending the data to Operaton.
-                Dynamic data and the date returned by this method are reset in three cases: engine startup, after engine start when sending telemetry data to Operaton is enabled via API, after sending telemetry data to Operaton (only when this was enabled)
+        desc = "The date when the engine started to collect local diagnostics data, such as command executions and metrics. Fetching diagnostics data through the compatibility telemetry endpoint does not reset the counters or this timestamp.
                 The date is in the format <code>YYYY-MM-DD'T'HH:mm:ss.SSSZ</code>."/>
 
 </@lib.dto>

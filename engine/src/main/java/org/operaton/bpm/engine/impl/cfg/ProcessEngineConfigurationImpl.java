@@ -5266,10 +5266,18 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
     return this;
   }
 
+  /**
+   * @deprecated Telemetry sending has been removed and this setting has no effect.
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
   public int getTelemetryRequestTimeout() {
     return telemetryRequestTimeout;
   }
 
+  /**
+   * @deprecated Telemetry sending has been removed and this setting has no effect.
+   */
+  @Deprecated(forRemoval = true, since = "2.2")
   public ProcessEngineConfigurationImpl setTelemetryRequestTimeout(int telemetryRequestTimeout) {
     this.telemetryRequestTimeout = telemetryRequestTimeout;
     return this;

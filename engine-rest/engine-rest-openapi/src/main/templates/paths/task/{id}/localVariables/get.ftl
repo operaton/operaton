@@ -46,7 +46,7 @@
         additionalProperties = true
         desc = "Request successful."
         examples = ['"example-1": {
-                       "summary": "GET `/task/aTaskId/variables`",
+                       "summary": "GET `/task/aTaskId/localVariables`",
                        "value": {
                          "aVariableKey": {
                            "value": {
@@ -62,7 +62,7 @@
                        }
                      }',
                     '"example-2": {
-                       "summary": "GET `/task/aTaskId/variables?deserializeValue=false`",
+                       "summary": "GET `/task/aTaskId/localVariables?deserializeValue=false`",
                        "value": {
                          "aVariableKey": {
                            "value": "ab",

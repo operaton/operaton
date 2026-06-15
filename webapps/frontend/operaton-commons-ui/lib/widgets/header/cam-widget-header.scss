@@ -22,22 +22,6 @@ body {
 [cam-widget-header] {
   @include cam-corporate-header();
 
-  .ce-eol-banner {
-    background-color: $main-color;
-    color: white;
-    text-align: center;
-    height: $ce-banner-height;
-    font-size: 0.9em;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-
-    a {
-      color: white;
-      text-decoration: underline;
-    }
-  }
-
   .navbar-brand {
     display: flex;
     align-items: center;

@@ -152,7 +152,7 @@ describe('Admin Groups Spec', function() {
       // then
       testHelper.expectStringEqual(
         groupsPage.editGroup.pageHeader(),
-        'operaton BPM Administrators'
+        'Operaton BPM Administrators'
       );
       groupsPage.editGroup.isActive({group: 'operaton-admin'});
       expect(
@@ -168,7 +168,7 @@ describe('Admin Groups Spec', function() {
       // then
       testHelper.expectStringEqual(
         groupsPage.editGroup.pageHeader(),
-        'operaton BPM Administratorsi'
+        'Operaton BPM Administratorsi'
       );
     });
 
@@ -200,7 +200,7 @@ describe('Admin Groups Spec', function() {
       // then
       groupsPage.editGroupTenants.isActive({group: 'operaton-admin'});
       expect(groupsPage.editGroupTenants.subHeader()).to.eventually.eql(
-        "operaton BPM Administrators's" + ' ' + 'Tenants'
+        "Operaton BPM Administrators's" + ' ' + 'Tenants'
       );
       expect(
         groupsPage.editGroupTenants.tenantList().count()

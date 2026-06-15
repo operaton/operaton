@@ -947,6 +947,10 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
   protected String loggingContextProcessDefinitionId = "processDefinitionId";
   protected String loggingContextProcessDefinitionKey;// default == null => disabled by default
   protected String loggingContextProcessInstanceId = "processInstanceId";
+  /**
+   * @since 2.2
+   */
+  protected String loggingContextRootProcessInstanceId = "rootProcessInstanceId";
   protected String loggingContextTenantId = "tenantId";
   protected String loggingContextEngineName = "engineName";
 
@@ -1742,6 +1746,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
+      // ignored
     }
 
     try {
@@ -1750,6 +1755,7 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
         return MARIA_DB_PRODUCT_NAME;
       }
     } catch (SQLException ignore) {
+      // ignored
     }
 
     String metaDataClassName = databaseMetaData.getClass().getName();
@@ -5163,6 +5169,21 @@ public abstract class ProcessEngineConfigurationImpl extends ProcessEngineConfig
 
   public ProcessEngineConfigurationImpl setLoggingContextProcessInstanceId(String loggingContextProcessInstanceId) {
     this.loggingContextProcessInstanceId = loggingContextProcessInstanceId;
+    return this;
+  }
+
+  /**
+   * @since 2.2
+   */
+  public String getLoggingContextRootProcessInstanceId() {
+    return loggingContextRootProcessInstanceId;
+  }
+
+  /**
+   * @since 2.2
+   */
+  public ProcessEngineConfigurationImpl setLoggingContextRootProcessInstanceId(String loggingContextRootProcessInstanceId) {
+    this.loggingContextRootProcessInstanceId = loggingContextRootProcessInstanceId;
     return this;
   }
 

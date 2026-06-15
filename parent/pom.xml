@@ -35,12 +35,13 @@
     <version.httpclient>4.5.14</version.httpclient>
     <version.httpclient5>5.6.1</version.httpclient5>
     <version.httpcore5>5.4</version.httpcore5>
+    <version.httpcore5-h2>5.4.2</version.httpcore5-h2>
     <version.cronutils>9.2.1</version.cronutils>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.junit5>6.0.3</version.junit5>
     <version.assertj>3.27.7</version.assertj>
     <version.mockito>5.23.0</version.mockito>
-    <version.jna>5.19.0</version.jna>
+    <version.jna>5.19.1</version.jna>
     <version.testcontainers>2.0.5</version.testcontainers>
     <version.unirest-java>3.14.5</version.unirest-java>
     <version.commonj>1.1.0</version.commonj>
@@ -54,8 +55,8 @@
     <version.logback>1.5.34</version.logback>
     <version.freemarker>2.3.34</version.freemarker>
     <version.jboss-javaee-spec>3.0.2.Final</version.jboss-javaee-spec>
-    <version.nodejs>22.13.0</version.nodejs>
-    <version.npm>11.0.0</version.npm>
+    <version.nodejs>24.14.0</version.nodejs>
+    <version.npm>11.8.0</version.npm>
     <jacoco.argLine/>
     <surefire.memArgs>-Xmx1024m -XX:MetaspaceSize=128m</surefire.memArgs>
     <surefire.argLine>${jacoco.argLine} ${surefire.memArgs} -Duser.language=en -Duser.region=US -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory}/heap_dump.hprof</surefire.argLine>

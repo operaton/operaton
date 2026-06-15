@@ -237,11 +237,9 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{secrets.GPG_PASSPHRASE}}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{secrets.OSSRH_USERNAME}}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{secrets.OSSRH_PASSWORD}}
-          SLACK_BOT_TOKEN: ${{secrets.SLACK_BOT_TOKEN}}
-          SLACK_WEBHOOK_URL: ${{secrets.SLACK_WEBHOOK_URL}}
           JRELEASER_DRY_RUN: ${{github.event.inputs.dry_run}}
         with:
-          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=${{needs.release_build.outputs.is_prerelease}}
+          arguments: full-release -POPERATON_DATABASE_VERSION=${{needs.release_build.outputs.database_version}} -PPRERELEASE_ENABLED=${{needs.release_build.outputs.is_prerelease}} -PSLACK_BOT_TOKEN=${{secrets.SLACK_BOT_TOKEN}} -PSLACK_WEBHOOK_URL= ${{secrets.SLACK_WEBHOOK_URL}}
 
       - name: Restore jreleaser.yml after release
         if: always()

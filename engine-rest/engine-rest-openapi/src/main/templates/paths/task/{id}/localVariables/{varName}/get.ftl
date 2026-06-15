@@ -52,7 +52,7 @@
         dto = "VariableValueDto"
         desc = "Request successful."
         examples = ['"example-1": {
-                       "summary": "GET `/task/aTaskId/variables/myObject123`",
+                       "summary": "GET `/task/aTaskId/localVariables/myObject123`",
                        "value": {
                          "value": {
                            "prop1": "a",
@@ -66,7 +66,7 @@
                        }
                      }',
                     '"example-2": {
-                       "summary": "GET `/task/aTaskId/variables/myObject123?deserializeValue=false`",
+                       "summary": "GET `/task/aTaskId/localVariables/myObject123?deserializeValue=false`",
                        "value": {
                          "value": "ab",
                          "type": "Object",

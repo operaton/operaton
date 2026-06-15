@@ -58,7 +58,7 @@ public class ConditionalEventDefinitionImpl extends EventDefinitionImpl implemen
       .required()
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonVariableName = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_VARIABLE_NAME)
       .namespace(OPERATON_NS)

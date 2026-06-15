@@ -10,7 +10,6 @@
     <@lib.response
         code = "200"
         dto = "VersionDto"
-        last = true
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "Status 200 Response",
@@ -19,6 +18,8 @@
                            "version": "7.13.0"
                          }
                      }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

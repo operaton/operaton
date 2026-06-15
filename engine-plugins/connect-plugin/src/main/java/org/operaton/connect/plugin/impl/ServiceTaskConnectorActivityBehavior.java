@@ -22,6 +22,7 @@ import org.operaton.bpm.engine.impl.core.variable.scope.AbstractVariableScope;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.connect.ConnectorException;
 import org.operaton.connect.Connectors;
+import org.operaton.connect.spi.CloseableConnectorResponse;
 import org.operaton.connect.spi.Connector;
 import org.operaton.connect.spi.ConnectorRequest;
 import org.operaton.connect.spi.ConnectorResponse;
@@ -31,6 +32,8 @@ import org.operaton.connect.spi.ConnectorResponse;
  *
  */
 public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
+
+  private static final ConnectPluginLogger LOG = ConnectPluginLogger.LOG;
 
   /** the id of the connector */
   protected String connectorId;
@@ -56,7 +59,18 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
       applyInputParameters(execution, request);
       // execute the request and obtain a response:
       ConnectorResponse response = request.execute();
-      applyOutputParameters(execution, response);
+      try {
+        applyOutputParameters(execution, response);
+      } finally {
+        if (response instanceof CloseableConnectorResponse closeableResponse) {
+          try {
+            closeableResponse.close();
+          } catch (Exception e) {
+            // log and continue so that leave() is always reached
+            LOG.exceptionWhileClosingConnectorResponse(e);
+          }
+        }
+      }
       leave(execution);
       return null;
     });
@@ -64,7 +78,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected void applyInputParameters(ActivityExecution execution, ConnectorRequest<?> request) {
-    if(ioMapping != null) {
+    if (ioMapping != null) {
       // create variable scope for input parameters
       ConnectorVariableScope connectorInputVariableScope = new ConnectorVariableScope((AbstractVariableScope) execution);
       // execute the connector input parameters
@@ -75,7 +89,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected void applyOutputParameters(ActivityExecution execution, ConnectorResponse response) {
-    if(ioMapping != null) {
+    if (ioMapping != null) {
       // create variable scope for output parameters
       ConnectorVariableScope connectorOutputVariableScope = new ConnectorVariableScope((AbstractVariableScope) execution);
       // read parameters from response
@@ -86,7 +100,7 @@ public class ServiceTaskConnectorActivityBehavior extends TaskActivityBehavior {
   }
 
   protected synchronized void ensureConnectorInitialized() {
-    if(connectorInstance == null) {
+    if (connectorInstance == null) {
       var connector = Connectors.getConnector(connectorId);
       if (connector == null) {
         throw new ConnectorException("No connector found for connector id '%s'".formatted(connectorId));

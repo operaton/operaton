@@ -1,154 +1,327 @@
-# Operaton - The open source process engine
+<p align="center">
+  <a href="https://operaton.org">
+    <img src="https://raw.githubusercontent.com/operaton/branding/main/operaton-logo.svg"
+         alt="Operaton" width="400">
+  </a>
+</p>
 
-![build status](https://github.com/operaton/operaton/actions/workflows/build.yml/badge.svg?branch=main)
-[![sonarqube](https://img.shields.io/sonar/tests/operaton_operaton?server=https%3A%2F%2Fsonarcloud.io&logo=sonarcloud)](https://sonarcloud.io/project/overview?id=operaton_operaton)
-[![Maven Central Version](https://img.shields.io/maven-central/v/org.operaton.bpm/operaton-bom-root?color=blue&logo=apachemaven)](https://central.sonatype.com/search?q=org.operaton)
+<h3 align="center">The open-source BPMN platform for mission-critical process automation</h3>
 
-![](https://tokei.rs/b1/github/operaton/operaton?label=Files&category=files)
-![](https://tokei.rs/b1/github/operaton/operaton?label=LOC&category=code)
+<p align="center">
+  <a href="https://github.com/operaton/operaton/actions/workflows/build.yml"><img src="https://github.com/operaton/operaton/actions/workflows/build.yml/badge.svg?branch=main" alt="Build Status"></a>
+  <a href="https://central.sonatype.com/search?q=org.operaton"><img src="https://img.shields.io/maven-central/v/org.operaton.bpm/operaton-bom-root?color=blue&logo=apachemaven" alt="Maven Central"></a>
+  <a href="https://github.com/operaton/operaton/blob/main/LICENSE"><img src="https://img.shields.io/github/license/operaton/operaton?color=blue&logo=apache" alt="License"></a>
+  <a href="https://github.com/operaton/operaton/stargazers"><img src="https://img.shields.io/github/stars/operaton/operaton?style=flat" alt="GitHub Stars"></a>
+  <a href="https://sonarcloud.io/project/overview?id=operaton_operaton"><img src="https://img.shields.io/sonar/tests/operaton_operaton?server=https%3A%2F%2Fsonarcloud.io&logo=sonarcloud" alt="SonarCloud"></a>
+  <img src="https://img.shields.io/badge/JVM-17--25-brightgreen?logo=openjdk" alt="JVM 17-25">
+</p>
 
-[![operaton manual latest](https://img.shields.io/badge/manual-latest.svg)](https://docs.operaton.org/)
-[![License](https://img.shields.io/github/license/operaton/operaton?color=blue&logo=apache)](https://github.com/operaton/operaton/blob/main/LICENSE)
+<p align="center">
+  <a href="https://forum.operaton.org/">Forum</a> ·
+  <a href="https://join.slack.com/t/operaton/shared_invite/zt-3vvqsr8tv-iOfuTR~dbGLQOv1NCBBYRQ">Slack</a> ·
+  <a href="https://docs.operaton.org/">Documentation</a> ·
+  <a href="https://operaton.org/roadmap">Roadmap</a>
+</p>
 
+---
 
-[![Forum](https://img.shields.io/badge/forum-Operaton-green)](https://forum.operaton.org/)
-[![Slack](https://img.shields.io/badge/chat-Slack-purple)](https://join.slack.com/t/operaton/shared_invite/zt-3q7nbf0pg-OZ3C18RLvcw9ZGogEpvnTg)
+Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. Born from the Camunda 7 community edition, Operaton continues to evolve and modernize the platform as a truly community-driven project.
 
-Operaton is a native BPMN 2.0 process engine that runs inside the Java Virtual Machine. 
-It can be embedded inside any Java application and any runtime container. 
-It integrates with Spring, Spring Boot, Quarkus and is a perfect match for Jakarta EE. 
-On top of the process engine, you can choose from a stack of tools for human workflow management, operations and monitoring.
+- **Proven** — Evolved from the Camunda 7 codebase, with over a decade of production use by thousands of companies worldwide.
+- **Embeddable** — Runs inside any Java application. Integrates with Spring Boot, Quarkus, and Jakarta EE.
+- **Full Stack** — Process engine, REST API, and web apps (Cockpit, Tasklist, Admin) for the complete BPM lifecycle.
+- **Community-Driven Open Source** — Apache License 2.0. No single-vendor control, no open-core model — built collaboratively by contributors from multiple companies.
+- **Compatible** — Fully compatible REST API, database schema, and deployable models. Migrate from Camunda 7 using the OpenRewrite migration tool.
+- **Extensible** — Vital ecosystem of plugins and connectors.
+- **Multi-Database** — Supports H2, PostgreSQL, MySQL, MariaDB, Oracle, SQL Server, and DB2.
+- **AI-Ready** — Integrate with AI assistants and LLMs via the Model Context Protocol (MCP) server.
 
-Operaton is the successor of the Camunda 7 BPM platform that went EoL in October 2025.
-Release 1.0 is feature complete and fully compatible with Camunda 7.24.
+![Operaton Cockpit](docs/assets/operaton-cockpit.png)
 
-![operaton-app](docs/assets/operaton-cockpit.png "Screenshot")
- 
-- Web Site: https://operaton.org/
-- Getting Started: https://docs.operaton.org/docs/get-started/
-- User Forum: https://forum.operaton.org/
-- Issue Tracker: https://github.com/operaton/operaton/issues
-- Project roadmap: https://operaton.org/roadmap
-- Good First Issues: [Issue query](https://github.com/search?q=org%3Aoperaton+is%3Aopen+label%3A%22good+first+issue%22&type=issues&query=org%3Aoperaton+is%3Aopen+is%3Apr)
-- Migration tool: https://github.com/operaton/migrate-from-camunda-recipe
-- REST API: https://docs.operaton.org/reference/latest/rest-api/
-- Javadoc API: https://docs.operaton.org/reference/latest/javadoc/
-- DockerHub: https://hub.docker.com/u/operaton
 
 ## Why Operaton?
 
 - Operaton is a reliable, extensible BPM platform for mission-critical business processes.
-- Operaton is based on the battle-tested Camunda 7 code base, which has been used in production for more than a decade by thousands of companies worldwide.
-- Operaton can be easily embedded inside your Java applications, giving you full control over your BPM platform.
-- Operaton can also be deployed to a cloud provider or on application servers.
-- Migration for Camunda 7 users is easy; Operaton 1.0 is fully compatible with Camunda 7.24.
-- Operaton is a true Open Source project under the Apache License 2.0. There are no commercial editions or closed source components.
-- Operaton is developed and maintained by well-known BPM experts and software engineers from multiple companies world wide.
+- Evolved and modernized by an active community of BPM experts and software engineers from multiple companies worldwide.
+- Easily embeddable inside your Java applications, giving you full control over your BPM platform.
+- Deployable on-premise, on cloud providers, or on application servers.
+- Fully compatible REST API, database schema, and deployable BPMN/DMN models — migrate from Camunda 7 with ease.
+- A truly community-driven Open Source project under the Apache License 2.0 — no open-core model, no commercial editions.
 - Professional support and consulting services are available from [multiple service providers](https://operaton.org/service-providers/).
 
-## About Operaton
+## ⚡ Quick Start
 
-### Components
+Run Operaton with Docker:
 
-Operaton provides a rich set of components centered around the BPM lifecycle.
+```shell
+docker run -d --name operaton -p 8080:8080 operaton/operaton:latest
+```
 
-#### Process Implementation and Execution
+Then open [http://localhost:8080](http://localhost:8080) and log in with `demo` / `demo`.
 
-- Operaton Engine - The core component responsible for executing BPMN 2.0 processes.
-- REST API - The REST API provides remote access to running processes.
-- Spring, CDI Integration - Programming model integration that allows developers to write Java Applications that interact with running processes.
+➜ See the [Getting Started Guide](https://docs.operaton.org/docs/get-started/) for detailed setup instructions.
 
-#### Process Operations
+### Maven
 
-- Operaton Engine - JMX and advanced Runtime Container Integration for process engine monitoring.
-- Operaton Cockpit - Web application tool for process operations.
-- Operaton Admin - Web application for managing users, groups, and their access permissions.
+Choose your integration approach:
 
-#### Human Task Management
+<details open>
+<summary><b>Spring Boot</b></summary>
 
-- Operaton Tasklist - Web application for managing and completing user tasks in the context of processes.
+Add the Operaton BOM & Spring Boot Starter:
 
-### Highly Integrable
+```xml
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bom</artifactId>
+      <version>2.1.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
 
-Out of the box, Operaton provides infrastructure-level integration with Java EE Application Servers and Servlet Containers.
+<dependencies>
+  <dependency>
+    <groupId>org.operaton.bpm.springboot</groupId>
+    <artifactId>operaton-bpm-spring-boot-starter</artifactId>
+  </dependency>
+</dependencies>
+```
 
-### Embeddable
+Then configure in `application.properties`:
 
-Most of the components that make up the platform can even be completely embedded inside an application. For instance, you can add the process engine and the REST API as a library to your application and assemble your custom BPM platform configuration.
+```properties
+operaton.bpm.database.schema-update=true
+operaton.bpm.history-level=auto
+```
 
-### Process modelling
+</details>
 
-Operaton is fully backwards compatible to your existing BPMN-, DMN-models and Forms, which were created in Camunda Modeler for Camunda 7. You can download the Camunda Modeler [here](https://camunda.com/download/modeler/) (MIT Licence).
+<details>
+<summary><b>Quarkus</b></summary>
 
-## Get it!
+Add the Operaton Quarkus Extension:
 
-Get the latest release from the [Releases page](https://github.com/operaton/operaton/releases).
+```xml
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bom</artifactId>
+      <version>2.1.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
 
-To get the latest stable build visit the [Early Access release page]([https://github.com/operaton/operaton/actions/workflows/nighly-build.yml?query=branch%3Amain+event%3Aschedule+is%3Asuccess++](https://github.com/operaton/operaton/releases/tag/early-access)), click on _Assets_ and download the desired package.
+<dependencies>
+  <dependency>
+    <groupId>org.operaton.bpm.quarkus</groupId>
+    <artifactId>operaton-bpm-quarkus-engine</artifactId>
+  </dependency>
+</dependencies>
+```
+
+Configure in `application.properties`:
+
+```properties
+operaton.history.level=activity
+operaton.database.schema-update=true
+```
+
+</details>
+
+<details>
+<summary><b>Embedded Engine</b></summary>
+
+Add the core process engine only:
+
+```xml
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-bom</artifactId>
+      <version>2.1.0</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+
+<dependencies>
+  <dependency>
+    <groupId>org.operaton.bpm</groupId>
+    <artifactId>operaton-engine</artifactId>
+  </dependency>
+</dependencies>
+```
+
+Then create the engine in your application:
+
+```java
+ProcessEngineConfiguration configuration = new StandaloneInMemProcessEngineConfiguration()
+  .setHistory(HistoryLevel.HISTORY_LEVEL_ACTIVITY.getName())
+  .setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
+
+ProcessEngine engine = configuration.buildProcessEngine();
+RuntimeService runtimeService = engine.getRuntimeService();
+```
+
+</details>
+
+Add a database driver dependency for your chosen database (e.g. H2, PostgreSQL, MySQL, Oracle, SQL Server, DB2).
+
+Example with H2:
+
+```xml
+<dependency>
+  <groupId>com.h2database</groupId>
+  <artifactId>h2</artifactId>
+  <scope>runtime</scope>
+</dependency>
+```
+
+### Gradle
+
+Choose your integration approach:
+
+<details open>
+<summary><b>Spring Boot</b></summary>
+
+Add to `build.gradle`:
+
+```gradle
+dependencyManagement {
+    imports {
+        mavenBom 'org.operaton.bpm:operaton-bom:2.1.0'
+    }
+}
+
+dependencies {
+    implementation 'org.operaton.bpm.springboot:operaton-spring-boot-starter'
+}
+```
+
+Configure in `application.yml` or `application.properties` (see Maven > Spring Boot section above).
+
+</details>
+
+<details>
+<summary><b>Quarkus</b></summary>
+
+Add to `build.gradle`:
+
+```gradle
+dependencyManagement {
+    imports {
+        mavenBom 'org.operaton.quarkus:operaton-quarkus-bom:2.1.0'
+    }
+}
+
+dependencies {
+    implementation 'org.operaton.bpm.quarkus:operaton-bpm-quarkus-engine'
+}
+```
+
+Configure in `application.properties` (see Maven > Quarkus section above).
+
+</details>
+
+<details>
+<summary><b>Embedded Engine</b></summary>
+
+Add to `build.gradle`:
+
+```gradle
+dependencyManagement {
+    imports {
+        mavenBom 'org.operaton.bpm:operaton-bom:2.1.0'
+    }
+}
+
+dependencies {
+    implementation 'org.operaton.bpm:operaton-engine'
+}
+```
+
+Then create the engine (see Maven > Embedded Engine section above) and add a database driver.
+
+</details>
+
+For snapshot artifacts from the development branch, add the [Sonatype Snapshots repository](https://s01.oss.sonatype.org/content/repositories/snapshots/).
+
+## Components
+
+### Process Implementation and Execution
+
+- **Operaton Engine** — The core component responsible for executing BPMN 2.0 processes.
+- **REST API** — Remote access to running processes.
+- **Spring, CDI, Quarkus Integration** — Programming model integration for Java applications interacting with running processes.
+
+### Process Operations
+
+- **Operaton Cockpit** — Web application for process operations and monitoring.
+- **Operaton Admin** — Web application for managing users, groups, and access permissions.
+
+### Human Task Management
+
+- **Operaton Tasklist** — Web application for managing and completing user tasks in the context of processes.
+
+### Process Modeling
+
+Operaton is fully compatible with your existing BPMN, DMN models and Forms created for Camunda 7.
+
+## Ecosystem
+
+| Project | Description |
+|---------|-------------|
+| [Web Apps](https://github.com/operaton/web-apps) | Next-generation web applications for Operaton |
+| [Migration Tool](https://github.com/operaton/migrate-from-camunda-recipe) | OpenRewrite recipe to migrate from Camunda 7 |
+| [Docker Images](https://github.com/operaton/operaton-docker) | Official Docker images ([DockerHub](https://hub.docker.com/u/operaton)) |
+| [Helm Charts](https://github.com/operaton/operaton-helm) | Kubernetes deployment via Helm |
+| [MCP Server](https://github.com/operaton/operaton-mcp) | Model Context Protocol server for AI integration |
+| [Keycloak Plugin](https://github.com/operaton/operaton-keycloak) | Keycloak identity provider integration |
+
+## Resources
+
+- 🌐 [Website](https://operaton.org/)
+- 📖 [Documentation](https://docs.operaton.org/)
+- 💡 [Frequently Asked Questions](https://operaton.org/faq/)
+- 🗺️ [Roadmap](https://operaton.org/roadmap)
+- 💬 [Forum](https://forum.operaton.org/)
+- 📡 [Slack](https://join.slack.com/t/operaton/shared_invite/zt-3z4x7flwj-Q3Q2soGX1wNjcsENiL9s_g)
+- 🐛 [Issue Tracker](https://github.com/operaton/operaton/issues)
+- 🏁 [Good First Issues](https://github.com/search?q=org%3Aoperaton+is%3Aopen+label%3A%22good+first+issue%22&type=issues)
+- 📘 [REST API Reference](https://docs.operaton.org/reference/latest/rest-api/)
+- 📗 [Javadoc](https://docs.operaton.org/reference/latest/javadoc/)
 
 ## Development
 
-### Building
+Prerequisites: **JDK 17 or newer** (tested on 17, 21, 25)
 
-Prerequisites: JDK 17 or newer - check `java -version`
-
-Operaton is tested and supported on Java 17, 21, and 25.
-
-You can use the Maven Wrapper script to execute the build. The script downloads and installs (if necessary) the required Maven version to `~/.m2/wrapper` and runs it from there.
-
-On Linux and MacOS, run
 ```shell
-./mvnw
+./mvnw clean install
 ```
 
-On Windows, run
+For a faster build, skip tests and frontend:
+
 ```shell
-mvnw
+./mvnw clean install -DskipTests -Dskip.frontend.build=true
 ```
 
-Alternatively, you can use your own Maven installation (minimal version: 3.9.0) Wrapper and execute
-```shell
-mvn
-```
-
-For a faster build you can add `-DskipTests` to skip test execution and `-Dskip.frontend.build=true` to skip the build of the webapps.
-
-### Contributing
-
-Please see our [contribution guidelines](CONTRIBUTING.md) for how to raise issues and how to contribute code to our project.
-
-### Architectural Decisions
-
-For insights into our architectural decisions and the reasoning behind them, see our [Architectural Decision Records (ADRs)](docs/decisions/). These documents provide context for key technical choices and help contributors understand the project's design principles.
-
-### Tests
-
-To run the tests in this repository, please see our [testing tips and tricks](TESTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines, [TESTING.md](TESTING.md) for testing tips, and [Architectural Decision Records](docs/decisions/) for design context.
 
 ## License
 
 The source files in this repository are made available under the [Apache License Version 2.0](./LICENSE).
 
-Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to our `LICENSE_BOOK.md` in distribution archives for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
+Operaton uses and includes third-party dependencies published under various licenses. By downloading and using Operaton artifacts, you agree to their terms and conditions. Refer to `LICENSE_BOOK.md` in distribution archives for an overview of third-party libraries and particularly important third-party licenses we want to make you aware of.
 
-### Security
+## Security
 
 Please see our [security policy](SECURITY.md) for how to report security vulnerabilities.
-
-### Project documentation & reports
-
-- [REST API](https://operaton.github.io/operaton/rest-api/index.html)
-- [Javadoc API](https://operaton.github.io/javadoc/index.html)
-- [Dependency Update Candidates](https://operaton.github.io/operaton/reports/dependency-updates-aggregate-report.html)
-- [Maven Plugin Update Candidates](https://operaton.github.io/operaton/reports/plugin-updates-aggregate-report.html)
-
-### Contributors
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->

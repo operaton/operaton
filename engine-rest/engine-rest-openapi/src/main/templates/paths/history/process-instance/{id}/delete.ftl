@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "deleteHistoricProcessInstance"
       tag = "Historic Process Instance"
-      summary = "Delete"
+      summary = "Delete Historic Process Instance"
       desc = "Deletes a process instance from the history by id." />
 
   "parameters": [
@@ -32,9 +32,10 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Not found
                 Historic process instance with given id does not exist." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

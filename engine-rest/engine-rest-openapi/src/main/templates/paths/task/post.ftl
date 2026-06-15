@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryTasks"
       tag = "Task"
-      summary = "Get List (POST)"
+      summary = "List Tasks"
       desc = "Queries for tasks that fulfill a given filter. This method is slightly more powerful
               than the [Get Tasks](${docsUrl}/reference/rest/task/get-query/) method because it
               allows filtering by multiple process or task variables of types `String`, `Number`
@@ -283,12 +283,13 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid, for example if a `sortOrder`
                 parameter is supplied, but no `sortBy`, or if an invalid operator for variable
                 comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

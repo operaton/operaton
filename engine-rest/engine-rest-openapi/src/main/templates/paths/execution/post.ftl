@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryExecutions"
       tag = "Execution"
-      summary = "Get Executions (POST)"
+      summary = "List Executions"
       desc = "Queries for executions that fulfill given parameters through a JSON object.
               This method is slightly more powerful than the [Get
               Executions](${docsUrl}/reference/rest/execution/get-query/) method
@@ -82,8 +82,9 @@
                 for variable comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

@@ -39,7 +39,7 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
   protected static Attribute<String> implementationAttribute;
   protected static ChildElementCollection<Rendering> renderingCollection;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonClassAttribute;
   protected static Attribute<String> operatonDelegateExpressionAttribute;
@@ -65,7 +65,7 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
       .defaultValue("##unspecified")
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonClassAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CLASS)
       .namespace(OPERATON_NS)
@@ -141,7 +141,7 @@ public class BusinessRuleTaskImpl extends TaskImpl implements BusinessRuleTask {
     implementationAttribute.setValue(this, implementation);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonClass() {

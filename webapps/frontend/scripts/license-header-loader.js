@@ -45,29 +45,34 @@ const addMissingLicenseHeaders = (filePath, source) => {
         packagePath = `${process.cwd()}/node_modules/operaton-bpm-webapp/node_modules/${pkg}`;
       }
 
+      const licenseFileNames = [
+        'LICENSE',
+        'LICENCE',
+        'license',
+        'LICENSE.md',
+        'LICENCE.md',
+        'LICENSE-MIT',
+        'LICENSE-MIT.txt',
+        'LICENSE.txt',
+      ];
+
       let licenseInfo = null;
-      try {
-        licenseInfo = fs.readFileSync(`${packagePath}/LICENSE`, 'utf8');
-      } catch (_e) {
-        try {
-          licenseInfo = fs.readFileSync(`${packagePath}/LICENSE.md`, 'utf8');
-        } catch (_e) {
+      for (const fileName of licenseFileNames) {
+        const pathName = `${packagePath}/${fileName}`;
+        if (fs.existsSync(pathName)) {
           try {
-            licenseInfo = fs.readFileSync(
-              `${packagePath}/LICENSE-MIT.txt`,
-              'utf8',
-            );
+            licenseInfo = fs.readFileSync(pathName, 'utf8');
           } catch (_e) {
-            try {
-              licenseInfo = fs.readFileSync(
-                `${packagePath}/LICENSE.txt`,
-                'utf8',
-              );
-            } catch (_e) {
-              console.log(`${pkg} has no license file. 🤷‍`); // eslint-disable-line
-            }
+            // Ignore unreadable license files and try the next known filename.
+          }
+          if (licenseInfo) {
+            break;
           }
         }
+      }
+
+      if (!licenseInfo) {
+        console.log(`${pkg} has no license file. 🤷‍`); // eslint-disable-line
       }
 
       let packageJsonPath = require.resolve(`${packagePath}/package.json`);
@@ -75,7 +80,7 @@ const addMissingLicenseHeaders = (filePath, source) => {
       if (licenseInfo) {
         return `/*!\n@license ${pkg}@${version}\n${licenseInfo}*/\n${source}`;
       } else if (license) {
-        console.log(`${pkg} has a "license" property. 🤷‍`);// eslint-disable-line
+        console.log(`${pkg} has a "license" property. 🤷‍`); // eslint-disable-line
         return `/*! @license ${pkg}@${version} (${license}) */\n${source}`;
       }
     }

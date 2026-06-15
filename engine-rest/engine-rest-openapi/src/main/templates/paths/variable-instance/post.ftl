@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryVariableInstances"
       tag = "Variable Instance"
-      summary = "Get Variable Instances (POST)"
+      summary = "List Variable Instances"
       desc = "Query for variable instances that fulfill given parameters through a JSON object.
               This method is slightly more powerful than the
               [Get Variable Instances](${docsUrl}/reference/rest/variable-
@@ -118,8 +118,9 @@
                 for variable comparison is used. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

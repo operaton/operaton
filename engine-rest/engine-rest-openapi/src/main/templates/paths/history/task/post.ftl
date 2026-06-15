@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "queryHistoricTaskInstances"
       tag = "Historic Task Instance"
-      summary = "Get Tasks (Historic) (POST)"
+      summary = "List Historic Task Instances"
       desc = "Queries for historic tasks that fulfill the given parameters. This method is slightly more powerful
               than the [Get Tasks (Historic)](${docsUrl}/reference/rest/history/task/get-task-query/) method because
               it allows filtering by multiple process or task variables of types `String`, `Number` or `Boolean`.
@@ -101,8 +101,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

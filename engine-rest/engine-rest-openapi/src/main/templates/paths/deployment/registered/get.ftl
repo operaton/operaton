@@ -13,7 +13,6 @@
       mediaType = "application/json"
       flatType="string"
       array = true
-      last = true
       desc = "Request successful."
       examples = ['"example-1": {
                      "summary": "Status 200 Response",
@@ -24,6 +23,8 @@
                        "deploymentId3"
                      ]
                    }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

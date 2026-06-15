@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "queryHistoricActivityInstances"
       tag = "Historic Activity Instance"
-      summary = "Get List (POST)"
+      summary = "List Historic Activity Instances"
       desc = "Queries for historic activity instances that fulfill the given parameters.
               The size of the result set can be retrieved by using the
               [Get Historic Activity Instance Count](${docsUrl}/reference/rest/history/activity-instance/get-activity-instance-query-count/) method." />
@@ -73,10 +73,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Returned if some of the query parameters are invalid, for example if a sortOrder parameter is supplied, but no sortBy.
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

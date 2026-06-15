@@ -41,7 +41,7 @@ public class ScriptTaskTest extends BpmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("scriptFormat"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "resultVariable"),
       new AttributeAssumption(OPERATON_NS, "resource")
     );

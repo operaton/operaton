@@ -44,8 +44,5 @@
 
     <module name="org.operaton.bpm.operaton-engine-plugins" optional="true" />
 
-    <!-- for LDAP plugin only -->
-    <module name="sun.jdk" />
-
   </dependencies>
 </module>

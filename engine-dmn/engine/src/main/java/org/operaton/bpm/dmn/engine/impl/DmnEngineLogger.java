@@ -119,4 +119,10 @@ public class DmnEngineLogger extends DmnLogger {
     );
   }
 
+  public void logClosingScriptEngineFailed(Exception e) {
+    logDebug(
+      "014",
+      "Failed to close script engine: {}", e.getMessage());
+  }
+
 }

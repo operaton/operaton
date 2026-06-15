@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import org.operaton.bpm.engine.impl.HistoryLevelSetupCommand;
+import org.operaton.bpm.engine.impl.DefaultHistoryLevelSetupCommand;
 import org.operaton.bpm.engine.impl.db.sql.DbSqlSessionFactory;
 import org.operaton.bpm.engine.impl.history.HistoryLevel;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -88,7 +88,7 @@ class ConcurrentHistoryLevelTest extends ConcurrencyTestCase {
 
       monitor.sync(); // thread will block here until makeContinue() is called from main thread
 
-      new HistoryLevelSetupCommand().execute(commandContext);
+      new DefaultHistoryLevelSetupCommand().execute(commandContext);
 
       monitor.sync(); // thread will block here until waitUntilDone() is called form main thread
 

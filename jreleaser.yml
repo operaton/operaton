@@ -9,7 +9,7 @@ project:
     contact: mail (at) operaton.org
     contribute: https://{{repoHost}}/{{repoOwner}}/{{repoName}}/blob/main/CONTRIBUTING.md
   inceptionYear: '2024'
-  copyright: ©️2024 Operaton
+  copyright: ©️2026 Operaton
   license: Apache-2.0
   authors:
     - Committers of Operaton
@@ -40,7 +40,6 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
     owner: operaton
     draft: false
     skipTag: false
-    previousTagName: v2.0.0-M3
     releaseName: '{{tagName}}'
     prerelease:
       enabled: true
@@ -151,6 +150,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
           - '[bot]'
           - 'GitHub'
           - 'ageduldig'
+          - 'Copilot'
         categories:
           - 'merge'
           - 'wip'
@@ -183,7 +183,8 @@ deploy:
 
 signing:
   active: ALWAYS
-  armored: true
+  pgp:
+    armored: true
 
 files:
   artifacts:
@@ -216,17 +217,6 @@ distributions:
         platform: osx
       - path: 'distro/run/distro/target/operaton-bpm-{{projectVersion}}.zip'
         platform: windows
-    brew:
-      active: RELEASE
-      continueOnError: true
-      formulaName: operaton
-      multiPlatform: true
-      repository:
-        active: RELEASE
-        commitMessage: 'Operaton {{tagName}}'
-      commitAuthor:
-        name: GitHub Actions
-        email: github-actions[bot]@users.noreply.github.com
   operaton-tomcat:
     type: BINARY
     executable:
@@ -243,17 +233,6 @@ distributions:
         platform: osx
       - path: 'distro/tomcat/distro/target/operaton-bpm-tomcat-{{projectVersion}}.zip'
         platform: windows
-    brew:
-      active: RELEASE
-      continueOnError: true
-      formulaName: operaton-tomcat
-      multiPlatform: true
-      repository:
-        active: RELEASE
-        commitMessage: 'Operaton Tomcat {{tagName}}'
-      commitAuthor:
-        name: GitHub Actions
-        email: github-actions[bot]@users.noreply.github.com
   operaton-wildfly:
     type: BINARY
     executable:
@@ -270,14 +249,11 @@ distributions:
         platform: osx
       - path: 'distro/wildfly/distro/target/operaton-bpm-wildfly-{{projectVersion}}.zip'
         platform: windows
-    brew:
-      active: RELEASE
-      continueOnError: true
-      formulaName: operaton-wildfly
-      multiPlatform: true
-      repository:
-        active: RELEASE
-        commitMessage: 'Operaton Wildfly {{tagName}}'
-      commitAuthor:
-        name: GitHub Actions
-        email: github-actions[bot]@users.noreply.github.com
+
+announce:
+  slack:
+    active: RELEASE
+    token: '{{SLACK_BOT_TOKEN}}'
+    webhook: '{{SLACK_WEBHOOK_URL}}'
+    channel: '#general'
+    message: '🚀 {{projectNameCapitalized}} {{projectVersion}} has been released! {{releaseNotesUrl}}'

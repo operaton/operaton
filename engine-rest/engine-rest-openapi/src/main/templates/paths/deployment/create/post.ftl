@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "createDeployment"
       tag = "Deployment"
-      summary = "Create"
+      summary = "Create Deployment"
       desc = "Creates a deployment.
 
               **Security Consideration**
@@ -62,7 +62,6 @@
     <@lib.response
         code = "400"
         dto = "ParseExceptionDto"
-        last = true
         desc = "Bad Request. In case one of the bpmn resources cannot be parsed.
 
                 See the [Introduction](${docsUrl}/reference/rest/overview/#parse-exceptions) for
@@ -102,6 +101,8 @@
                        }
                      }' 
                    ] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

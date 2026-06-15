@@ -40,3 +40,4 @@ out/jreleaser
 *.class
 *.zip
 sloc.txt
+/docs/superpowers

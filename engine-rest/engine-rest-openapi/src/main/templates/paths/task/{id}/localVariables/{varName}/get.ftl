@@ -52,7 +52,7 @@
         dto = "VariableValueDto"
         desc = "Request successful."
         examples = ['"example-1": {
-                       "summary": "GET `/task/aTaskId/variables/myObject123`",
+                       "summary": "GET `/task/aTaskId/localVariables/myObject123`",
                        "value": {
                          "value": {
                            "prop1": "a",
@@ -66,7 +66,7 @@
                        }
                      }',
                     '"example-2": {
-                       "summary": "GET `/task/aTaskId/variables/myObject123?deserializeValue=false`",
+                       "summary": "GET `/task/aTaskId/localVariables/myObject123?deserializeValue=false`",
                        "value": {
                          "value": "ab",
                          "type": "Object",
@@ -88,10 +88,11 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "Task id is `null` or does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 

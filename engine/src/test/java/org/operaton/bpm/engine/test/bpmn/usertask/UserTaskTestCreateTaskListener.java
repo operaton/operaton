@@ -20,20 +20,14 @@ import org.operaton.bpm.engine.delegate.DelegateTask;
 import org.operaton.bpm.engine.delegate.Expression;
 import org.operaton.bpm.engine.delegate.TaskListener;
 
-
-
 /**
+ * This is for test case UserTaskTest.testCompleteAfterParallelGateway
+ *
  * @author Tom Baeyens
  * @author Daniel Meyer
  * @author Falko Menge
  * @author Saeid Mirzaei
  */
-
-/**
- * This is for test case UserTaskTest.testCompleteAfterParallelGateway
- *
- */
-
 public class UserTaskTestCreateTaskListener implements TaskListener {
 
   private Expression expression;

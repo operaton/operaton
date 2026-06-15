@@ -40,7 +40,7 @@ public interface SendTask extends Task {
 
   void setOperation(Operation operation);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   String getOperatonClass();
 

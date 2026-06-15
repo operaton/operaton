@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "deleteHistoricProcessInstancesAsync"
       tag = "Historic Process Instance"
-      summary = "Delete Async (POST)"
+      summary = "Delete Historic Process Instances Async"
       desc = "Delete multiple historic process instances asynchronously (batch).
               At least `historicProcessInstanceIds` or `historicProcessInstanceQuery` has to be provided.
               If both are provided then all instances matching query criterion and instances from the list will be deleted." />
@@ -52,10 +52,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Returned if some of the query parameters are invalid, i.e. neither historicProcessInstanceIds,
                 nor historicProcessInstanceQuery is present. See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

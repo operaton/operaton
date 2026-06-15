@@ -4,7 +4,7 @@
   <@lib.endpointInfo
       id = "getProcessDefinition"
       tag = "Process Definition"
-      summary = "Get"
+      summary = "Get Process Definition"
       desc = "Retrieves a process definition according to the `ProcessDefinition` interface in the engine." />
 
   "parameters" : [
@@ -46,12 +46,13 @@
                      }'] />
 
     <@lib.response
-        code = "400"
+        code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Process definition with given `id` does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

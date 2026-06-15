@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "setRemovalTimeAsync"
       tag = "Historic Process Instance"
-      summary = "Set Removal Time Async (POST)"
+      summary = "Set Removal Time Async"
       desc = "Sets the removal time to multiple historic process instances asynchronously (batch).
 
               At least `historicProcessInstanceIds` or `historicProcessInstanceQuery` has to be provided.
@@ -70,12 +70,13 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Bad Request
                 Request was unsuccessfull due to a bad user request. This occurs if some of the query parameters are invalid,
                 e. g. if neither `historicProcessInstances` nor `historicProcessInstanceQuery` is present or if no mode is specified.
 
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

@@ -41,7 +41,7 @@ public class UserTaskTest extends BpmnModelElementInstanceTest {
   public Collection<AttributeAssumption> getAttributesAssumptions() {
     return List.of(
       new AttributeAssumption("implementation", false, false, "##unspecified"),
-      /** operaton extensions */
+      // Operaton extensions
       new AttributeAssumption(OPERATON_NS, "assignee"),
       new AttributeAssumption(OPERATON_NS, "candidateGroups"),
       new AttributeAssumption(OPERATON_NS, "candidateUsers"),

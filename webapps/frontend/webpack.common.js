@@ -132,13 +132,14 @@ module.exports = (_env, argv = {}) => {
               options: {
                 // Optional: helps sass-loader handle modern Sass features
                 implementation: require('sass'),
-                additionalData: `$ce-banner-height: ${eeBuild ? '0' : '20px'};`,
                 sassOptions: {
                   // Keep unicode escapes in generated CSS (e.g. "\f4da")
                   // so icon codepoints are not emitted as raw UTF-8 bytes.
                   style: 'expanded',
                   // This tells Sass to look inside the 'frontend' folder automatically
                   includePaths: [path.resolve(__dirname, 'frontend')],
+                  // Suppress deprecation warnings from third-party dependencies (e.g. Bootstrap)
+                  quietDeps: true,
                 },
               },
             },

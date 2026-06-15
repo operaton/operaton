@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "setVariablesAsyncOperation"
       tag = "Process Instance"
-      summary = "Set Variables Async (POST)"
+      summary = "Set Variables Async"
       desc = "Update or create runtime process variables in the root scope of process instances." />
 
 
@@ -67,11 +67,12 @@
     <@lib.response
         code = "403"
         dto = "AuthorizationExceptionDto"
-        last = true
         desc = "Returned if the user is not allowed to create the batch.
 
                 See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling) for the
                 error response format."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
   }
 }
 </#macro>

@@ -33,10 +33,11 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        last = true
         desc = "Process instance doesn't exist or history is not enabled.
                             See the [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                             for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
    }
   }

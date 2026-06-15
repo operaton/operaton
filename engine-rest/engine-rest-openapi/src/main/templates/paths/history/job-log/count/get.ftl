@@ -41,8 +41,9 @@
         code = "400"
         dto = "ExceptionDto"
         desc = "Returned if some of the query parameters are invalid."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

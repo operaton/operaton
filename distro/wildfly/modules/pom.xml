@@ -4,13 +4,12 @@
   <parent>
     <groupId>org.operaton.bpm.wildfly</groupId>
     <artifactId>operaton-wildfly</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-wildfly-modules</artifactId>
   <name>Operaton - Wildfly Modules</name>
   <description>${project.name}</description>
   <properties>
-    <org.jboss.shrinkwrap.resolver.version>1.0.0-beta-5</org.jboss.shrinkwrap.resolver.version>
     <!-- generate a bom of compile time dependencies for the license book.
     Note: Every compile time dependency will end up in the license book. Please
     declare only dependencies that are actually needed -->
@@ -55,6 +54,10 @@
     </dependency>
     <dependency>
       <groupId>org.operaton.bpm</groupId>
+      <artifactId>operaton-engine-cdi</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.operaton.bpm</groupId>
       <artifactId>operaton-engine-plugin-spin</artifactId>
     </dependency>
     <dependency>
@@ -72,6 +75,11 @@
     <dependency>
       <groupId>org.operaton.connect</groupId>
       <artifactId>operaton-connect-http-client</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5-h2</artifactId>
+      <version>${version.httpcore5-h2}</version>
     </dependency>
     <dependency>
       <groupId>org.operaton.connect</groupId>
@@ -139,6 +147,11 @@
     <dependency>
       <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
+    </dependency>
+    <!-- Scala library needed for feel-engine 1.20.0+ due to jackson-module-scala -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
     </dependency>
   </dependencies>
   <build>
@@ -241,6 +254,19 @@
                     </chainedmapper>
                   </mapper>
                 </copy>
+                <!-- Place httpcore5-h2 in the httpcore5 module. -->
+                <copy todir="target/modules" flatten="false">
+                  <fileset dir="target/modules">
+                    <include name="org/apache/httpcomponents/core5/httpcore5-h2/main/*.jar"/>
+                  </fileset>
+                  <chainedmapper>
+                    <regexpmapper
+                      from="^org/apache/httpcomponents/core5/httpcore5-h2/main/(.*)$$"
+                      to="org/apache/httpcomponents/core5/httpcore5/main/\1"
+                      handledirsep="yes"/>
+                  </chainedmapper>
+                </copy>
+                <delete dir="target/modules/org/apache/httpcomponents/core5/httpcore5-h2"/>
                 <!-- copy groovy dependencies to single dir -->
                 <delete dir="target/modules/org/apache/groovy"/>
                 <copy todir="target/modules" flatten="false">
@@ -285,6 +311,9 @@
                 <replace dir="target/modules" token="@version.httpcore5@" value="${version.httpcore5}">
                   <include name="**/module.xml"/>
                 </replace>
+                <replace dir="target/modules" token="@version.httpcore5-h2@" value="${version.httpcore5-h2}">
+                  <include name="**/module.xml"/>
+                </replace>
                 <replace dir="target/modules" token="@version.jackson@" value="${version.jackson}">
                   <include name="**/module.xml"/>
                 </replace>
@@ -313,6 +342,9 @@
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.feel-scala@" value="${version.feel-scala}">
+                  <include name="**/module.xml"/>
+                </replace>
+                <replace dir="target/modules" token="@version.scala@" value="${version.scala}">
                   <include name="**/module.xml"/>
                 </replace>
                 <replace dir="target/modules" token="@version.graal.js@" value="${version.graal.js}">

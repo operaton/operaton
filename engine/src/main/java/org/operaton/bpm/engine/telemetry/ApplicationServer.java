@@ -20,10 +20,6 @@ package org.operaton.bpm.engine.telemetry;
  * This class represents the data structure used for collecting information
  * about the application server.
  *
- * <p>
- * This information is sent to Operaton when telemetry is enabled.
- * </p>
- *
  * @see <a href=
  *      "https://docs.operaton.org/manual/latest/introduction/telemetry/#collected-data">Operaton
  *      Documentation: Collected Telemetry Data</a>

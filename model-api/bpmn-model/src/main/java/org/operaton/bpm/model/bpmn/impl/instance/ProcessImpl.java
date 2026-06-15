@@ -67,7 +67,7 @@ public class ProcessImpl extends CallableElementImpl implements Process {
   protected static ChildElementCollection<CorrelationSubscription> correlationSubscriptionCollection;
   protected static ElementReferenceCollection<Process, Supports> supportsCollection;
 
-  /** operaton extensions */
+  // Operaton extensions
 
   protected static Attribute<String> operatonCandidateStarterGroupsAttribute;
   protected static Attribute<String> operatonCandidateStarterUsersAttribute;
@@ -124,7 +124,7 @@ public class ProcessImpl extends CallableElementImpl implements Process {
       .qNameElementReferenceCollection(Process.class)
       .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonCandidateStarterGroupsAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_CANDIDATE_STARTER_GROUPS)
       .namespace(OPERATON_NS)
@@ -252,7 +252,7 @@ public class ProcessImpl extends CallableElementImpl implements Process {
     return supportsCollection.getReferenceTargetElements(this);
   }
 
-  /** operaton extensions */
+  // Operaton extensions
 
   @Override
   public String getOperatonCandidateStarterGroups() {

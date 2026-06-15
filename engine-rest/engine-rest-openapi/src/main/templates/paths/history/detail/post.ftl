@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "queryHistoricDetails"
       tag = "Historic Detail"
-      summary = "Get Historic Details (POST)"
+      summary = "List Historic Details"
       desc = "Queries for historic details that fulfill the given parameters. This method is slightly more
               powerful than the [Get Historic Details](${docsUrl}/reference/rest/history/detail/get-detail-query/)
               method because it allows sorting by multiple parameters. The size of the result set can be retrieved by
@@ -118,8 +118,9 @@
                 parameter is supplied, but no `sortBy`. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format."
-        last = true
     />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 

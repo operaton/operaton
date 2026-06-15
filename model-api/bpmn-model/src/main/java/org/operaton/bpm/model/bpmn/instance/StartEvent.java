@@ -33,7 +33,7 @@ public interface StartEvent extends CatchEvent {
 
   void setInterrupting(boolean isInterrupting);
 
-  /** operaton extensions */
+  // Operaton extensions
 
   /**
    * @deprecated Use isOperatonAsyncBefore() instead.

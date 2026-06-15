@@ -120,7 +120,7 @@ public class ProcessTaskImpl extends TaskImpl implements ProcessTask {
     processRefAttribute = typeBuilder.stringAttribute(CMMN_ATTRIBUTE_PROCESS_REF)
         .build();
 
-    /** operaton extensions */
+    // Operaton extensions
 
     operatonProcessBindingAttribute = typeBuilder.stringAttribute(OPERATON_ATTRIBUTE_PROCESS_BINDING)
       .namespace(OPERATON_NS)

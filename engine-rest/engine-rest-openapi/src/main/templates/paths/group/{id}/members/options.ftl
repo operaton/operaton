@@ -26,7 +26,6 @@
     <@lib.response
         code = "200"
         dto = "ResourceOptionsDto"
-        last = true
         desc = "Request successful."
         examples = ['"example-1": {
                        "summary": "Status 200 response",
@@ -36,6 +35,8 @@
                                     {"method":"PUT","href":"http://localhost:8080/engine-rest/group/sales/members","rel":"create"}]
                                 }
                       }'] />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
     }
 }
 

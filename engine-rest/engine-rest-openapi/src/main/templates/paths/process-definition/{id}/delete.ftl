@@ -3,7 +3,7 @@
   <@lib.endpointInfo
       id = "deleteProcessDefinition"
       tag = "Process Definition"
-      summary = "Delete"
+      summary = "Delete Process Definition"
       desc = "Deletes a process definition by id." />
 
   "parameters": [
@@ -48,11 +48,12 @@
     <@lib.response
         code = "404"
         dto = "ExceptionDto"
-        last = true
         desc = "Not found
                 Process definition with given id does not exist. See the
                 [Introduction](${docsUrl}/reference/rest/overview/#error-handling)
                 for the error response format." />
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

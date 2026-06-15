@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.operaton.bpm.webapp</groupId>
     <artifactId>operaton-webapp-root</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
+    <version>2.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>operaton-webapp</artifactId>
   <packaging>war</packaging>
@@ -111,13 +111,6 @@
       <artifactId>operaton-engine</artifactId>
       <classifier>junit6</classifier>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.operaton.bpm</groupId>
-      <artifactId>operaton-engine-rest-core</artifactId>
-      <version>${project.version}</version>
-      <scope>test</scope>
-      <classifier>tests</classifier>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -346,7 +339,7 @@
       <dependencies>
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
+          <artifactId>resteasy-core</artifactId>
           <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -483,7 +476,7 @@
       <dependencies>
         <dependency>
           <groupId>org.jboss.resteasy</groupId>
-          <artifactId>resteasy-jaxrs</artifactId>
+          <artifactId>resteasy-core</artifactId>
           <scope>runtime</scope>
         </dependency>
       </dependencies>
@@ -721,6 +714,23 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>no-test-skip</id>
+      <activation>
+        <property>
+          <name>!maven.test.skip</name>
+        </property>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.operaton.bpm</groupId>
+          <artifactId>operaton-engine-rest-core</artifactId>
+          <version>${project.version}</version>
+          <scope>test</scope>
+          <classifier>tests</classifier>
+        </dependency>
+      </dependencies>
     </profile>
   </profiles>
 </project>

@@ -37,6 +37,8 @@ import org.operaton.bpm.engine.impl.scripting.ExecutableScript;
 import org.operaton.bpm.engine.impl.scripting.ScriptFactory;
 import org.operaton.bpm.engine.impl.scripting.engine.ScriptingEngines;
 
+import static org.operaton.bpm.engine.impl.ProcessEngineLogger.SCRIPT_LOGGER;
+
 /**
  * <p>The scripting environment contains scripts that provide an environment to
  * a user provided script. The environment may contain additional libraries
@@ -85,7 +87,11 @@ public class ScriptingEnvironment {
     // create bindings
     Bindings bindings = scriptingEngines.createBindings(scriptEngine, scope);
 
-    return execute(script, scope, bindings, scriptEngine);
+    try {
+      return execute(script, scope, bindings, scriptEngine);
+    } finally {
+      closeNonCachedEngine(scriptEngine);
+    }
   }
 
   public Object execute(ExecutableScript script, VariableScope scope, Bindings bindings, ScriptEngine scriptEngine) {
@@ -172,6 +178,26 @@ public class ScriptingEnvironment {
     }
 
     return scripts;
+  }
+
+  /**
+   * Closes a non-cached script engine that implements {@link AutoCloseable}.
+   * <p>
+   * Script engines that report {@code THREADING} as {@code null} are not cached
+   * by the engine resolver (see {@link ScriptingEngines#isCachableEngine(ScriptEngine)}).
+   * For such engines (e.g., GraalJS), each evaluation creates a fresh engine instance
+   * whose internal resources (polyglot context, AST caches, interop metadata) must be
+   * explicitly released to prevent memory leaks under sustained load.
+   * </p>
+   */
+  static void closeNonCachedEngine(ScriptEngine scriptEngine) {
+    if (scriptEngine instanceof AutoCloseable closeable && !ScriptingEngines.isCachableEngine(scriptEngine)) {
+      try {
+        closeable.close();
+      } catch (Exception e) {
+        SCRIPT_LOGGER.logClosingScriptEngineFailed(e);
+      }
+    }
   }
 
 }

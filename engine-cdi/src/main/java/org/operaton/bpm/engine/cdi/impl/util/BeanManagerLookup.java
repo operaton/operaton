@@ -17,6 +17,7 @@
 package org.operaton.bpm.engine.cdi.impl.util;
 
 import jakarta.enterprise.inject.spi.BeanManager;
+import jakarta.enterprise.inject.spi.CDI;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -44,43 +45,52 @@ public final class BeanManagerLookup {
 
   public static BeanManager getBeanManager() {
 
-    BeanManager beanManager = lookupBeanManagerInJndi();
+    BeanManager beanManager = lookupBeanManager();
 
-    if(beanManager != null) {
+    if (beanManager != null) {
       return beanManager;
-
-    } else {
-      if (localInstance != null) {
-        return localInstance;
-      } else {
-        throw new ProcessEngineException(
-            "Could not lookup beanmanager in jndi. If no jndi is available, set the beanmanger to the 'localInstance' property of this class.");
-      }
     }
+
+    if (localInstance != null) {
+      return localInstance;
+    }
+
+    throw new ProcessEngineException(
+        "Could not lookup BeanManager. If no CDI container is available, set the BeanManager via the 'localInstance' property of this class.");
   }
 
-  private static BeanManager lookupBeanManagerInJndi() {
+  private static BeanManager lookupBeanManager() {
 
+    // custom JNDI name takes precedence
     if (jndiName != null) {
       try {
         return (BeanManager) InitialContext.doLookup(jndiName);
       } catch (NamingException e) {
-        throw new ProcessEngineException("Could not lookup beanmanager in jndi using name: '%s'.".formatted(jndiName), e);
+        throw new ProcessEngineException("Could not lookup BeanManager in JNDI using name: '%s'.".formatted(jndiName), e);
       }
     }
 
+    // JNDI lookup for application servers — returns the deployment-local BeanManager
+    // (java:comp is component-scoped and resolves to the correct WAR/EJB BeanManager)
     try {
-      // in an application server
       return (BeanManager) InitialContext.doLookup("java:comp/BeanManager");
+    } catch (NamingException e) {
+      // silently ignore — not available from server module classloader context
+    }
+
+    // JNDI fallback for servlet containers
+    try {
+      return (BeanManager) InitialContext.doLookup("java:comp/env/BeanManager");
     } catch (NamingException e) {
       // silently ignore
     }
 
+    // CDI 4.1 standard programmatic lookup — used when java:comp/BeanManager is
+    // not available (e.g. when engine-cdi is loaded as a WildFly server module)
     try {
-      // in a servlet container
-      return (BeanManager) InitialContext.doLookup("java:comp/env/BeanManager");
-    } catch (NamingException e) {
-      // silently ignore
+      return CDI.current().getBeanManager();
+    } catch (RuntimeException e) {
+      // no CDI container available or accessible from this classloader
     }
 
     return null;

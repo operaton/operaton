@@ -17,6 +17,7 @@
 package org.operaton.bpm.spring.boot.starter.webapp.filter;
 
 import java.io.IOException;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,10 +27,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet filter to ensure request paths always have a trailing slash. Before Spring Boot 3, missing trailing slashes were
- * handled automatically. This filter implements the Spring Boot 2 behavior for the registered request patterns.
+ * Servlet filter to ensure request paths always have a trailing slash. Transparent trailing slash matching was deprecated
+ * in Spring Framework 6 and removed in Spring Framework 7. This filter keeps the legacy webapp entry points working for
+ * the registered request patterns by redirecting them to their canonical trailing-slash URLs.
  *
- * @see https://github.com/spring-projects/spring-framework/issues/28552
+ * @see <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/filters.html">Spring Framework URL Handler Filter</a>
  */
 public class AppendTrailingSlashFilter implements Filter {
 
@@ -37,7 +39,18 @@ public class AppendTrailingSlashFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     String requestURI = ((HttpServletRequest) request).getRequestURI();
-    ((HttpServletResponse) response).sendRedirect(requestURI + "/");
+    if (isLocalPath(requestURI)) {
+      ((HttpServletResponse) response).sendRedirect(requestURI + "/");
+    } else {
+      chain.doFilter(request, response);
+    }
+  }
+
+  protected boolean isLocalPath(String requestURI) {
+    return requestURI != null
+        && requestURI.startsWith("/")
+        && !requestURI.startsWith("//")
+        && !requestURI.contains("://");
   }
 
 }

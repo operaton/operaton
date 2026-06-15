@@ -75,16 +75,16 @@ public final class ReflectUtil {
 
     try {
       clazz = loadClassFromClassLoader(className, getCustomClassLoader(), "custom classloader");
-    } catch (Throwable t) {
-      throwable = t;
+    } catch (Exception | LinkageError err) {
+      throwable = err;
     }
 
     if (clazz == null) {
       try {
         clazz = loadClassFromClassLoader(className, ClassLoaderUtil.getContextClassloader(), "current thread context classloader");
-      } catch (Throwable t) {
+      } catch (Exception | LinkageError err) {
         if (throwable == null) {
-          throwable = t;
+          throwable = err;
         }
       }
     }
@@ -92,9 +92,9 @@ public final class ReflectUtil {
     if (clazz == null) {
       try {
         clazz = loadClassFromClassLoader(className, ClassLoaderUtil.getClassloader(ReflectUtil.class), "local classloader");
-      } catch (Throwable t) {
+      } catch (Exception | LinkageError err) {
         if (throwable == null) {
-          throwable = t;
+          throwable = err;
         }
       }
     }

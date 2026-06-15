@@ -60,8 +60,9 @@
     <@lib.response
         code = "500"
         dto = "ExceptionDto"
-        last = true
         desc = "Update or delete could not be executed, for example because the process instance does not exist."/>
+
+    <@lib.errorResponses docsUrl=docsUrl last = true />
 
   }
 }

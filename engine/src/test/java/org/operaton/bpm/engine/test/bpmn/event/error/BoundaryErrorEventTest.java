@@ -33,7 +33,6 @@ import org.operaton.bpm.engine.ProcessEngineException;
 import org.operaton.bpm.engine.RepositoryService;
 import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.TaskService;
-import org.operaton.bpm.engine.delegate.BpmnError;
 import org.operaton.bpm.engine.history.HistoricProcessInstance;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
@@ -303,8 +302,9 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  @Disabled("Exception is expected but not thrown")
   void testUncaughtError() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
     // given
     runtimeService.startProcessInstanceByKey("simpleSubProcess");
     Task task = taskService.createTaskQuery().singleResult();
@@ -315,8 +315,10 @@ class BoundaryErrorEventTest {
     // Completing the task will reach the end error event,
     // which is never caught in the process
     assertThatThrownBy(() -> taskService.complete(taskId))
-        .isInstanceOf(BpmnError.class)
-        .hasMessageContaining("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process");
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-02042 Execution with id 'theEnd' throws an error event with errorCode 'myError' and errorMessage 'null', but no error handler was defined.");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
 
@@ -325,8 +327,9 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.subprocess.bpmn20.xml"
   })
   @Test
-  @Disabled("Exception is expected but not thrown")
   void testUncaughtErrorOnCallActivity() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
     // given
     runtimeService.startProcessInstanceByKey("uncaughtErrorOnCallActivity");
     Task task = taskService.createTaskQuery().singleResult();
@@ -337,8 +340,10 @@ class BoundaryErrorEventTest {
     // Completing the task will reach the end error event,
     // which is never caught in the process
     assertThatThrownBy(() -> taskService.complete(taskId))
-        .isInstanceOf(BpmnError.class)
-        .hasMessageContaining("No catching boundary event found for error with errorCode 'myError', neither in same process nor in parent process");
+            .isInstanceOf(ProcessEngineException.class)
+            .hasMessageContaining("ENGINE-02042 Execution with id 'theEnd' throws an error event with errorCode 'myError' and errorMessage 'null', but no error handler was defined.");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment(resources = {
@@ -500,12 +505,15 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
-  @Disabled("Exception is expected but not thrown")
   void testUncaughtErrorThrownByJavaDelegateOnServiceTask() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("catchErrorThrownByJavaDelegateOnCallActivity-child"))
-        .isInstanceOf(BpmnError.class)
-        .hasMessageContaining("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process");
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ENGINE-02042 Execution with id 'serviceTask' throws an error event with errorCode '23' and errorMessage 'This is a business fault, which can be caught by a BPMN Error Event.', but no error handler was defined. ");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment(resources = {
@@ -718,12 +726,15 @@ class BoundaryErrorEventTest {
       "org/operaton/bpm/engine/test/bpmn/event/error/BoundaryErrorEventTest.testCatchErrorThrownByJavaDelegateOnCallActivity-child.bpmn20.xml"
   })
   @Test
-  @Disabled("Exception is expected but not thrown")
   void testUncaughtErrorThrownByJavaDelegateOnCallActivity() {
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(true);
+
     // when/then
     assertThatThrownBy(() -> runtimeService.startProcessInstanceByKey("uncaughtErrorThrownByJavaDelegateOnCallActivity-parent"))
-        .isInstanceOf(BpmnError.class)
-        .hasMessageContaining("No catching boundary event found for error with errorCode '23', neither in same process nor in parent process");
+        .isInstanceOf(ProcessEngineException.class)
+        .hasMessageContaining("ENGINE-02042 Execution with id 'serviceTask' throws an error event with errorCode '23' and errorMessage 'This is a business fault, which can be caught by a BPMN Error Event.', but no error handler was defined. ");
+
+    processEngineConfiguration.setEnableExceptionsAfterUnhandledBpmnError(false);
   }
 
   @Deployment

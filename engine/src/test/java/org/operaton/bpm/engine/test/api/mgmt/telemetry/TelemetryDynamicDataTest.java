@@ -92,7 +92,7 @@ class TelemetryDynamicDataTest {
         "GetTableMetaDataCmd",
         "HistoryCleanupCmd",
         "SchemaOperationsProcessEngineBuild",
-        "HistoryLevelSetupCommand",
+        "DefaultHistoryLevelSetupCommand",
         "BootstrapEngineCommand");
     for (String commandName : entries.keySet()) {
       assertThat(entries.get(commandName).get()).isOne();

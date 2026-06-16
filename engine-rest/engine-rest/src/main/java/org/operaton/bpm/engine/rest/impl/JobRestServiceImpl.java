@@ -36,6 +36,7 @@ import org.operaton.bpm.engine.management.SetJobRetriesByJobsAsyncBuilder;
 import org.operaton.bpm.engine.rest.JobRestService;
 import org.operaton.bpm.engine.rest.dto.CountResultDto;
 import org.operaton.bpm.engine.rest.dto.JobDeletionResponse;
+import org.operaton.bpm.engine.rest.dto.JobOperationResponse;
 import org.operaton.bpm.engine.rest.dto.JobSuspensionResponse;
 import org.operaton.bpm.engine.rest.dto.ResponseStatus;
 import org.operaton.bpm.engine.rest.dto.batch.BatchDto;
@@ -221,11 +222,7 @@ public class JobRestServiceImpl extends AbstractRestProcessEngineAware
     return Response.status(Status.OK).entity(responseEntity).build();
   }
 
-  private boolean hasFailure(JobSuspensionResponse response) {
-    return ResponseStatus.FAILURE.equals(response.getStatus());
-  }
-
-  private boolean hasFailure(JobDeletionResponse response) {
+  private boolean hasFailure(JobOperationResponse response) {
     return ResponseStatus.FAILURE.equals(response.getStatus());
   }
 

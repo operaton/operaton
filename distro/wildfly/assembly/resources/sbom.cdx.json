@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:2ef56e42-c597-409d-bb39-5e5126769041",
+  "serialNumber": "urn:uuid:ebba24d0-c912-4054-9e47-9f868dcb3538",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-06-15T19:47:11Z",
+    "timestamp": "2026-06-17T02:06:24Z",
     "tools": {
       "components": [
         {
@@ -56,7 +56,7 @@
           },
           "group": "aquasecurity",
           "name": "trivy",
-          "version": "0.71.0-SNAPSHOT-3960fac99"
+          "version": "0.71.0-SNAPSHOT-e68f3d2d3"
         }
       ]
     },
@@ -31068,7 +31068,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "ff71b837-a98a-4801-be56-66ecac572f64",
+      "bom-ref": "60de0af3-9e25-47ea-8128-efaf6164707b",
       "name": "package-lock.json",
       "properties": [
         {
@@ -34151,9 +34151,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/form-data@4.0.5",
+      "bom-ref": "pkg:npm/form-data@4.0.6",
       "name": "form-data",
-      "version": "4.0.5",
+      "version": "4.0.6",
       "licenses": [
         {
           "license": {
@@ -34161,11 +34161,11 @@
           }
         }
       ],
-      "purl": "pkg:npm/form-data@4.0.5",
+      "purl": "pkg:npm/form-data@4.0.6",
       "properties": [
         {
           "name": "aquasecurity:trivy:PkgID",
-          "value": "form-data@4.0.5"
+          "value": "form-data@4.0.6"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -34406,6 +34406,30 @@
         {
           "name": "aquasecurity:trivy:PkgID",
           "value": "hasown@2.0.2"
+        },
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "npm"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/hasown@2.0.4",
+      "name": "hasown",
+      "version": "2.0.4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/hasown@2.0.4",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgID",
+          "value": "hasown@2.0.4"
         },
         {
           "name": "aquasecurity:trivy:PkgType",
@@ -36127,7 +36151,7 @@
     },
     {
       "type": "application",
-      "bom-ref": "54df8c21-7edd-46a5-b146-23a90a70593f",
+      "bom-ref": "1af2c008-a478-43d9-a016-80f6dd5ba72b",
       "name": "/repo/webapps/frontend",
       "properties": [
         {
@@ -39812,13 +39836,13 @@
       "dependsOn": []
     },
     {
-      "ref": "54df8c21-7edd-46a5-b146-23a90a70593f",
+      "ref": "1af2c008-a478-43d9-a016-80f6dd5ba72b",
       "dependsOn": [
-        "ff71b837-a98a-4801-be56-66ecac572f64"
+        "60de0af3-9e25-47ea-8128-efaf6164707b"
       ]
     },
     {
-      "ref": "ff71b837-a98a-4801-be56-66ecac572f64",
+      "ref": "60de0af3-9e25-47ea-8128-efaf6164707b",
       "dependsOn": [
         "pkg:npm/%40bpmn-io/dmn-migrate@0.7.1",
         "pkg:npm/%40bpmn-io/form-js@1.21.3",
@@ -40756,12 +40780,12 @@
       ]
     },
     {
-      "ref": "pkg:npm/form-data@4.0.5",
+      "ref": "pkg:npm/form-data@4.0.6",
       "dependsOn": [
         "pkg:npm/asynckit@0.4.0",
         "pkg:npm/combined-stream@1.0.8",
         "pkg:npm/es-set-tostringtag@2.1.0",
-        "pkg:npm/hasown@2.0.2",
+        "pkg:npm/hasown@2.0.4",
         "pkg:npm/mime-types@2.1.35"
       ]
     },
@@ -40825,6 +40849,12 @@
     },
     {
       "ref": "pkg:npm/hasown@2.0.2",
+      "dependsOn": [
+        "pkg:npm/function-bind@1.1.2"
+      ]
+    },
+    {
+      "ref": "pkg:npm/hasown@2.0.4",
       "dependsOn": [
         "pkg:npm/function-bind@1.1.2"
       ]
@@ -41135,7 +41165,7 @@
         "pkg:npm/cookiejar@2.1.4",
         "pkg:npm/debug@4.4.3",
         "pkg:npm/fast-safe-stringify@2.1.1",
-        "pkg:npm/form-data@4.0.5",
+        "pkg:npm/form-data@4.0.6",
         "pkg:npm/formidable@3.5.4",
         "pkg:npm/methods@1.1.2",
         "pkg:npm/mime@2.6.0",
@@ -42293,6 +42323,50 @@
           "versions": [
             {
               "version": "1.8.3",
+              "status": "affected"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "GHSA-vxr8-fq34-vvx9",
+      "source": {
+        "name": "ghsa",
+        "url": "https://github.com/advisories?query=type%3Areviewed\u002Becosystem%3Anpm"
+      },
+      "ratings": [
+        {
+          "source": {
+            "name": "ghsa"
+          },
+          "score": 2.1,
+          "severity": "low",
+          "method": "CVSSv4",
+          "vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:A/VC:N/VI:N/VA:N/SC:L/SI:L/SA:N"
+        }
+      ],
+      "description": "## Impact\n\nA DOMPurify instance that is reused across trust boundaries can stay bound to a previously supplied \u0060TRUSTED_TYPES_POLICY\u0060 even after \u0060clearConfig()\u0060 is called. A later caller that requests \u0060RETURN_TRUSTED_TYPE\u0060 receives a \u0060TrustedHTML\u0060 object created by the old policy, not by a clean default configuration.\n\nIf the old policy is unsafe or controlled by a less-trusted integration, this turns a later \u0022default\u0022 sanitize call into script execution at a Trusted Types sink. \u0060TRUSTED_TYPES_POLICY: null\u0060 on the later call also does not clear the retained policy.\n[dompurify-trusted-types-policy-survives-clearconfig-poc.js](https://github.com/user-attachments/files/28604913/dompurify-trusted-types-policy-survives-clearconfig-poc.js)\n\n\n## Affected version\n\nTested against DOMPurify \u00603.4.8\u0060, repository commit \u0060825e617753ac1169306a542d3174a77f717a0cf6\u0060.\n\n## Root cause\n\n\u0060_parseConfig()\u0060 overwrites \u0060trustedTypesPolicy\u0060 when \u0060cfg.TRUSTED_TYPES_POLICY\u0060 is truthy, but the default/null path only initializes the internal policy when \u0060trustedTypesPolicy === undefined\u0060. Once a custom policy has been set, later default config parsing leaves it in place.\n\nRelevant code:\n\n- \u0060src/purify.ts:786-812\u0060 accepts and stores \u0060cfg.TRUSTED_TYPES_POLICY\u0060.\n- \u0060src/purify.ts:813-832\u0060 does not reset an existing policy when config has no policy or has \u0060TRUSTED_TYPES_POLICY: null\u0060.\n- \u0060src/purify.ts:2123-2125\u0060 signs the final serialized HTML with the retained policy when \u0060RETURN_TRUSTED_TYPE\u0060 is true.\n- \u0060src/purify.ts:2133-2136\u0060 \u0060clearConfig()\u0060 only clears \u0060CONFIG\u0060 and \u0060SET_CONFIG\u0060; it does not reset \u0060trustedTypesPolicy\u0060 or \u0060emptyHTML\u0060.\n\n## Local PoC\n\nRun from the DOMPurify checkout, or set \u0060DOMPURIFY_REPO\u0060:\n\n\u0060\u0060\u0060bash\nnode /home/dompurify-trusted-types-policy-survives-clearconfig-poc.js\n\u0060\u0060\u0060\n\nObserved output:\n\n\u0060\u0060\u0060json\n{\n  \u0022result\u0022: {\n    \u0022baseline\u0022: \u0022\u003Cb\u003Ebaseline\u003C/b\u003E\u0022,\n    \u0022duringPolicy\u0022: \u0022\u003Cimg src=x onerror=alert(\\\u0022TT_POLICY_SURVIVED_CLEARCONFIG\\\u0022)\u003E\u0022,\n    \u0022afterClearString\u0022: \u0022\u003Cimg src=\\\u0022x\\\u0022\u003E\u0022,\n    \u0022afterClearTrustedType\u0022: \u0022[object TrustedHTML]\u0022,\n    \u0022afterClearTrusted\u0022: \u0022\u003Cimg src=x onerror=alert(\\\u0022TT_POLICY_SURVIVED_CLEARCONFIG\\\u0022)\u003E\u0022,\n    \u0022afterNullTrusted\u0022: \u0022\u003Cimg src=x onerror=alert(\\\u0022TT_POLICY_SURVIVED_CLEARCONFIG\\\u0022)\u003E\u0022,\n    \u0022mountedHTML\u0022: \u0022\u003Cimg src=\\\u0022x\\\u0022 onerror=\\\u0022alert(\u0026quot;TT_POLICY_SURVIVED_CLEARCONFIG\u0026quot;)\\\u0022\u003E\u0022\n  },\n  \u0022dialogs\u0022: [\n    \u0022TT_POLICY_SURVIVED_CLEARCONFIG\u0022\n  ]\n}\n\u0060\u0060\u0060\n\nThe important part is the split behavior after cleanup:\n\n- \u0060purify.clearConfig(); purify.sanitize(...);\u0060 returns a normal sanitized string (\u0060\u003Cimg src=\u0022x\u0022\u003E\u0060), because the later call is not asking for a Trusted Type.\n- \u0060purify.clearConfig(); purify.sanitize(..., { RETURN_TRUSTED_TYPE: true });\u0060 still uses the old policy and returns attacker-controlled \u0060TrustedHTML\u0060.\n- Passing \u0060{ TRUSTED_TYPES_POLICY: null, RETURN_TRUSTED_TYPE: true }\u0060 also still returns attacker-controlled \u0060TrustedHTML\u0060.\n\n## Preconditions\n\nThis is a shared-instance state contamination issue. It matters when one DOMPurify instance is reused by multiple integrations, plugins, request handlers, or components with different trust levels, and a cleanup step relies on \u0060clearConfig()\u0060 to restore safe defaults.\n\nThis is not a default string-input bypass. An attacker must be able to influence a prior \u0060TRUSTED_TYPES_POLICY\u0060 on the reused instance, or a less-trusted integration must have installed an unsafe policy.\n\n## Severity\n\n impact is XSS at a Trusted Types sink in applications that reuse a DOMPurify instance across trust boundaries. Attack complexity is high because exploitation depends on prior policy injection or a less-trusted integration and a later \u0060RETURN_TRUSTED_TYPE\u0060 sink.\n\n## Suggested fix\n\nMake \u0060clearConfig()\u0060 reset Trusted Types state as part of restoring defaults, or have \u0060_parseConfig()\u0060 explicitly clear \u0060trustedTypesPolicy\u0060 and \u0060emptyHTML\u0060 when \u0060TRUSTED_TYPES_POLICY: null\u0060 is supplied.",
+      "recommendation": "Upgrade dompurify to version 3.4.9",
+      "advisories": [
+        {
+          "url": "https://github.com/advisories/GHSA-vxr8-fq34-vvx9"
+        },
+        {
+          "url": "https://github.com/cure53/DOMPurify"
+        },
+        {
+          "url": "https://github.com/cure53/DOMPurify/security/advisories/GHSA-vxr8-fq34-vvx9"
+        }
+      ],
+      "published": "2026-06-15T20:12:53Z",
+      "updated": "2026-06-15T20:12:53Z",
+      "affects": [
+        {
+          "ref": "pkg:npm/dompurify@3.4.8",
+          "versions": [
+            {
+              "version": "3.4.8",
               "status": "affected"
             }
           ]

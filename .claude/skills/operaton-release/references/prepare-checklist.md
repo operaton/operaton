@@ -20,6 +20,8 @@ gh run list --repo operaton/operaton --branch BRANCH --workflow migration-test.y
 - [ ] `integration-build.yml` latest = success
 - [ ] `migration-test.yml` latest = success
 
+If integration-build.yml fails in the `Release` job due to a cache miss, re-trigger the `Documentation` job.
+
 A red required build is a 🔴 blocker.
 
 ## 3. Docker images current on Docker Hub
@@ -50,9 +52,16 @@ See `references/release-notes.md`. Type-dependent:
 - **Minor/Milestone (`.0` / `-Mx`)**: release notes must exist per the `ai_release_notes` template. If missing → create draft PR. Missing required `.0` notes = 🔴 blocker.
 - [ ] `changelog.tpl` points to the correct `release-notes/MM_` URL.
 - [ ] Server versions documented (Spring Boot/Framework, Tomcat, Wildfly, Quarkus) for `.0`.
+- [ ] Backports of features or noteworthy bugfixes from other forks documented below _Versions & Compatibility_
+- [ ] For milestone releases, add suffix `(DRAFT)` to the title and description until the release is ready.
+- [ ] When the upcoming release is a final minor/major, remove the `(DRAFT)` suffix from the title.
 
 ## 7. Smoke tests
 See `references/smoke-tests.md` (hybrid: browser-drive Docker images, guided manual for OS distros).
+
+Perform the smoke tests.
+
+A failing smoke test is a 🔴 blocker.
 
 ## 8. Raise PRs
 For every fixable gap (release-notes additions, changelog.tpl, dependabot.yml, config), create a branch + PR against the right repo. Never push directly to `main` or a `release/*` branch. Collect every PR URL for the final report.

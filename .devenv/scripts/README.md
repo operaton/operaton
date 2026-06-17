@@ -114,6 +114,55 @@ none
 
 `jq` must be installed.  
 
+# Directory `smoketest`
+
+Automated smoke tests against the Operaton Docker SNAPSHOT images. Used during release preparation (PREPARE phase) and post-release verification (PERFORM phase).
+
+Each image runs on a dedicated port to avoid conflicts with locally-running Operaton instances or other services on 8080:
+
+| Image | Port |
+|-------|------|
+| `operaton/operaton` | 18080 |
+| `operaton/wildfly` | 18081 |
+| `operaton/tomcat` | 18082 |
+
+**Requirements:** `docker`, `node` (playwright is installed automatically on first run into `/tmp`)
+
+## `smoke-all.sh`
+
+Run smoke tests against all three SNAPSHOT images sequentially.
+
+```bash
+.devenv/scripts/smoketest/smoke-all.sh
+# Specific tag:
+.devenv/scripts/smoketest/smoke-all.sh --tag=2.1.2
+```
+
+## `smoke-test.sh`
+
+Run the smoke test for a single image.
+
+**Options:**
+- `--image=operaton|wildfly|tomcat` — which image to test (default: `operaton`)
+- `--tag=TAG` — Docker tag to pull (default: `SNAPSHOT`)
+- `--port=PORT` — override the default port
+- `--keep` — leave the container running after the test
+
+```bash
+.devenv/scripts/smoketest/smoke-test.sh --image=operaton
+.devenv/scripts/smoketest/smoke-test.sh --image=wildfly --tag=2.1.2
+```
+
+## `browser-flows.mjs`
+
+Node.js/Playwright script that drives the Tasklist and Cockpit browser flows. Called automatically by `smoke-test.sh`. Can also be run directly:
+
+```bash
+node .devenv/scripts/smoketest/browser-flows.mjs http://localhost:18080 /tmp/screenshots
+```
+
+Screenshots are saved to `.devenv/scripts/smoketest/screenshots/<image>/` during automated runs.
+
 # Directory `maintenance`
 
 ## `code-cleanup.sh`

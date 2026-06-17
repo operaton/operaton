@@ -1,16 +1,17 @@
 ---
 name: operaton-release
-description: Use when preparing or performing an Operaton release. Triggers include "prepare release X.Y.Z", "prepare the upcoming releases", "perform release X.Y.Z" and "X.Y.Z-Mx". Use for release pre-flight checks, build/Docker-image/documentation status, noteworthy-label and milestone hygiene, distribution smoke tests, release notes, go/no-go confidence votes, and driving the release.yml workflow.
+description: Use when preparing, performing, or announcing an Operaton release. Triggers include "prepare release X.Y.Z", "prepare the upcoming releases", "perform release X.Y.Z", "X.Y.Z-Mx", and "announce release X.Y.Z" / "announce the release(s)". Use for release pre-flight checks, build/Docker-image/documentation status, noteworthy-label and milestone hygiene, distribution smoke tests, release notes, go/no-go confidence votes, driving the release.yml workflow, and post-release announcements (website, blog, Slack, forum) plus branch-cleanup listing.
 ---
 
 # Operaton Release
 
-Two actions over the Operaton release process, sharing one knowledge base.
+Three actions over the Operaton release process, sharing one knowledge base.
 
 | Action | Trigger phrases | What it does | Releases anything? |
 |--------|-----------------|--------------|--------------------|
 | **PREPARE** | "prepare release X.Y.Z", "prepare the upcoming releases" | Pre-flight checks → fixes via PRs → **go/no-go confidence vote** | **NEVER** |
 | **PERFORM** | "perform release X.Y.Z", "perform release X.Y.Z-Mx" | Dispatches `release.yml` (dry-run first), then verifies | Yes (gated) |
+| **ANNOUNCE** | "announce release X.Y.Z", "announce the release(s)" | Post-release: website + blog PR, Slack, forum, branch-cleanup list, housekeeping | No (outward-facing; gated by confirmation) |
 
 ## The Iron Guardrail
 
@@ -68,9 +69,19 @@ See `references/perform-release.md`. In short:
 5. **Verify:** GitHub release created, Maven Central artifacts present, `operaton-docker` build dispatched / `latest` tag updated, next `-SNAPSHOT` version committed.
 6. **Report** run URLs and verification results.
 
+## ANNOUNCE workflow
+
+See `references/announce.md`. **Only after PERFORM verified the release is live.** Every channel is public and irreversible — draft, show the user, post only on explicit confirmation. In short:
+
+1. **Website** (`operaton/operaton.org`, PR) — update the `index.html` `#changelog` card to the **highest** version released that day; write a blog post in `_posts/` modelled on `2026-04-24-operaton-2-1-released.md`. Scaffolds via `.devenv/scripts/release/update-website.py`.
+2. **Slack** `general` — compact `@channel` post with highlights + release-notes link. Draft → confirm → post.
+3. **Forum** (forum.operaton.org, "Announcement" category) — fuller markdown version. Draft → confirm → post.
+4. **Branch cleanup** — `.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>"` lists merged branches with links. **List only — you MUST NOT delete any branch.** Hand the list to the user.
+5. **Housekeeping** — `jreleaser` `previousTagName` / `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
+
 ## Output
 
-Both actions end with a structured report: per-release status, confidence vote (PREPARE) or verification results (PERFORM), and a flat list of every PR raised with its URL.
+PREPARE and PERFORM end with a structured report: per-release status, confidence vote (PREPARE) or verification results (PERFORM), and a flat list of every PR raised with its URL. ANNOUNCE ends with: links to the website PR, the Slack/forum posts (or drafts awaiting the user), and the merged-branch list for the user to delete.
 
 ## Red flags — STOP
 
@@ -78,3 +89,6 @@ Both actions end with a structured report: per-release status, confidence vote (
 - About to give a 🟢 GO without having actually run the build/image/doc checks → verify first, evidence before assertion.
 - About to run PERFORM with `dry_run=false` without a prior dry-run or user confirmation → STOP.
 - Branch pom version ≠ target version → blocker, do not proceed.
+- About to delete a branch during ANNOUNCE (`git push origin --delete`, `git branch -D`) → **STOP.** List branches only; the human deletes them.
+- About to post to Slack `@channel` or the forum without showing the user the draft first → STOP, draft and confirm.
+- About to announce a release whose GitHub release / Maven Central / release-notes page is not yet live → STOP, verify the links resolve first.

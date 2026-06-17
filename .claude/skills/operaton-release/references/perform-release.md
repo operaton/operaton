@@ -41,3 +41,5 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 
 ## Report
 List: dry-run URL + result, real-run URL + result, release URL, Maven Central status, Docker status, next-version commit. Note anything the workflow left for manual follow-up (announcements, `changelog.tpl` reset, `jreleaser.yml` `previousTagName` bump — these are post-release items, not done here).
+
+Once the release is verified live, the post-release announcement is the **ANNOUNCE** action — see `announce.md` (website + blog, Slack, forum, branch-cleanup list, housekeeping).

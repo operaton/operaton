@@ -249,3 +249,25 @@ python3 .devenv/scripts/maintenance/init-database-version.py --new-version 7.25.
 ### Notes
 - Always run this script from the repository root.
 - Review and commit the changes after running the script.
+
+# Directory `release`
+
+Helpers for the post-release announcement phase (the ANNOUNCE action of the `operaton-release` skill). They prepare and list only — they never publish or delete.
+
+## `list-merged-branches.sh`
+
+List the branches of merged PRs in a release milestone, with links, so a human can review and delete them. Read-only; never deletes.
+
+```bash
+.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>" [--repo OWNER/REPO]
+```
+
+## `update-website.py`
+
+Bump the `#changelog` card in operaton.org `index.html` and scaffold a blog post under `_posts/` from the most recent release post. Edits a local operaton.org checkout; does not commit, push, or open a PR.
+
+```bash
+.devenv/scripts/release/update-website.py --version 2.1.2 --summary "..." [--repo PATH]
+```
+
+When several releases ship the same day, pass the highest version; the single changelog card always shows the highest. See `.devenv/scripts/release/README.md` for details.

@@ -78,6 +78,35 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
 
   @Deployment
   @Test
+  public void testParallelOrderingStartsConfiguredActivitiesInParallel() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessParallelOrdering");
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskA);
+    assertNotNull(taskB);
+
+    taskService.complete(taskA.getId());
+    taskService.complete(taskB.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment
+  @Test
   public void testParallelActivationRespectsActiveTasksList() {
     ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(
         "adHocSubProcessBasic",
@@ -858,6 +887,24 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
     } catch (ParseException e) {
       testRule.assertTextPresent(
           "Invalid value 'maybe' for ad-hoc extension attribute 'autoComplete'; expected boolean value",
+          e.getMessage());
+    }
+  }
+
+  @Test
+  public void testSequentialOrderingFailsParse() {
+    String resource = "org/operaton/bpm/engine/test/bpmn/subprocess/"
+        + "AdHocSubProcessTest.testSequentialOrderingFailsParse.bpmn20.xml";
+
+    try {
+      repositoryService.createDeployment()
+          .name(resource)
+          .addClasspathResource(resource)
+          .deploy();
+      fail("Expected ParseException");
+    } catch (ParseException e) {
+      testRule.assertTextPresent(
+          "Unsupported value 'Sequential' for ad-hoc subprocess attribute 'ordering'; sequential ordering is not implemented yet",
           e.getMessage());
     }
   }

@@ -218,6 +218,7 @@ public class BpmnParse extends Parse {
   public static final String PROPERTYNAME_AD_HOC_COMPLETION_CONDITION_TEXT = "adHocCompletionConditionText";
   public static final String PROPERTYNAME_AD_HOC_ACTIVE_TASKS_COLLECTION = "adHocActiveTasksCollection";
   public static final String PROPERTYNAME_AD_HOC_ACTIVE_TASKS_COLLECTION_TEXT = "adHocActiveTasksCollectionText";
+  public static final String PROPERTYNAME_AD_HOC_ORDERING = "adHocOrdering";
   public static final String PROPERTYNAME_EXTERNAL_TASK_TOPIC = "topic";
   public static final String PROPERTYNAME_CLASS = "class";
   public static final String PROPERTYNAME_EXPRESSION = "expression";
@@ -3938,6 +3939,23 @@ public class BpmnParse extends Parse {
     boolean cancelRemainingInstances = parseBooleanAttribute(adHocSubProcessElement.attribute("cancelRemainingInstances"), true);
     adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_CANCEL_REMAINING, cancelRemainingInstances);
     adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_AUTO_COMPLETE, true);
+
+    String orderingAttributeText = adHocSubProcessElement.attribute("ordering");
+    if (orderingAttributeText == null) {
+      adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_ORDERING, "Parallel");
+    } else {
+      String trimmedOrderingAttributeText = orderingAttributeText.trim();
+      if ("Sequential".equals(trimmedOrderingAttributeText)) {
+        addError("Unsupported value 'Sequential' for ad-hoc subprocess attribute 'ordering'; sequential ordering is not implemented yet",
+            adHocSubProcessElement);
+      } else if (!"Parallel".equals(trimmedOrderingAttributeText)) {
+        addError("Invalid value '" + trimmedOrderingAttributeText
+            + "' for ad-hoc subprocess attribute 'ordering'; expected 'Parallel' or 'Sequential'",
+            adHocSubProcessElement);
+      } else {
+        adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_ORDERING, trimmedOrderingAttributeText);
+      }
+    }
 
     String autoCompleteAttributeText = adHocSubProcessElement.attributeNS(OPERATON_BPMN_EXTENSIONS_NS, "autoComplete");
     if (autoCompleteAttributeText != null) {

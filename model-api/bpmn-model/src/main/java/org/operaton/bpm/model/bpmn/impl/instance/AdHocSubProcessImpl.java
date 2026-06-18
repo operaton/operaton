@@ -35,7 +35,7 @@ import org.operaton.bpm.model.xml.type.child.SequenceBuilder;
  *
  * <p>Note: the {@code ordering} attribute is persisted as BPMN model metadata.
  * In the current engine implementation, ad-hoc runtime activation is
- * parallel-only and "Sequential" is not enforced.
+ * parallel-only and "Sequential" BPMN deployments are rejected by the engine.
  *
  */
 public class AdHocSubProcessImpl extends SubProcessImpl implements AdHocSubProcess {

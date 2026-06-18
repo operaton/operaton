@@ -31,8 +31,8 @@ public interface AdHocSubProcess extends SubProcess {
     * Typical values are "Parallel" (default) and "Sequential".
     *
     * <p>This is model metadata. In the current engine implementation,
-    * ad-hoc runtime activation is parallel-only and "Sequential" is not
-    * enforced as execution behavior.
+    * ad-hoc runtime activation is parallel-only and "Sequential" BPMN
+    * deployments are rejected by the engine.
    */
   String getOrdering();
 

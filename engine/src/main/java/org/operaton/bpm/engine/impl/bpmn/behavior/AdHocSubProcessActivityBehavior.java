@@ -40,7 +40,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * of Activities that can be performed in any order, and some of which may not
  * be performed at all. Initial activities are activated from the
  * {@code activeTasksCollection} extension property and additional starter activities may be
- * activated via {@code RuntimeService#triggerAdHocActivities(String, Collection, Map)}.
+ * activated via {@code RuntimeService#triggerAdHocActivities(String, Collection, Map)}. BPMN
+ * {@code ordering} determines whether child activities may run in parallel or only one at a time.
  *
  * <p>The subprocess completes when the {@code completionCondition} evaluates to
  * {@code true} after any inner activity completes. If no completion condition
@@ -57,7 +58,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   /**
    * On entry into an ad-hoc subprocess, only starter activities named in the
-    * optional {@code activeTasksCollection} extension property are activated in parallel.
+   * optional {@code activeTasksCollection} extension property are activated.
    */
   @Override
   public void execute(ActivityExecution execution) throws Exception {
@@ -65,11 +66,13 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     List<String> configuredActiveTaskIds = getConfiguredActiveTaskIds(execution);
     validateConfiguredActiveTaskIds(execution, starterActivities, configuredActiveTaskIds);
     List<ActivityImpl> adHocActivities = filterStarterActivities(starterActivities, configuredActiveTaskIds);
-    boolean adHocActivityStarted = !adHocActivities.isEmpty();
+    validateOrderingAllowsInitialActivities(execution, adHocActivities);
+    boolean adHocActivityStarted = false;
 
     for (ActivityImpl activity : adHocActivities) {
-      if (!isActivityAlreadyActiveInScope(execution, activity.getId())) {
+      if (startability.isStartableActivity(execution, activity)) {
         startAdHocActivity(execution, activity);
+        adHocActivityStarted = true;
       }
     }
 
@@ -190,7 +193,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   protected boolean hasActiveChildExecutions(ActivityExecution scopeExecution) {
-    return scopeExecution.getExecutions().stream().anyMatch(ActivityExecution::isActive);
+    return startability.hasActiveChildExecutions(scopeExecution);
   }
 
   protected boolean isAutoCompleteEnabled(ActivityImpl scopeActivity) {
@@ -282,11 +285,15 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
         .collect(Collectors.toList());
   }
 
-  protected boolean isActivityAlreadyActiveInScope(ActivityExecution scopeExecution, String activityId) {
-    return startability.isActivityAlreadyActiveInScope(scopeExecution, activityId);
+  protected void validateOrderingAllowsInitialActivities(ActivityExecution scopeExecution,
+      List<ActivityImpl> adHocActivities) {
+    ActivityImpl adHocActivity = (ActivityImpl) scopeExecution.getActivity();
+    if (startability.isSequentialOrdering(adHocActivity) && adHocActivities.size() > 1) {
+      throw new BadUserRequestException(
+          "Sequential adHocSubProcess '" + adHocActivity.getId()
+              + "' can activate only one activity from activeTasksCollection");
+    }
   }
-
-
 
   protected void startAdHocActivity(ActivityExecution scopeExecution, ActivityImpl targetActivity) {
     ActivityExecution childExecution = scopeExecution.createExecution();

@@ -30,9 +30,7 @@ public interface AdHocSubProcess extends SubProcess {
     * Returns the BPMN {@code ordering} attribute of the ad-hoc activities.
     * Typical values are "Parallel" (default) and "Sequential".
     *
-    * <p>This is model metadata. In the current engine implementation,
-    * ad-hoc runtime activation is parallel-only and "Sequential" BPMN
-    * deployments are rejected by the engine.
+    * <p>When omitted, the engine uses the BPMN default value "Parallel".
    */
   String getOrdering();
 

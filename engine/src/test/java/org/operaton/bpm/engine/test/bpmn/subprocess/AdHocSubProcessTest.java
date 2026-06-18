@@ -113,6 +113,147 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
     assertNotNull(taskAfter);
   }
 
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
+  @Test
+  public void testParallelOrderingAllowsSameActivityWhileActive() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    List<Task> taskAInstances = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .list();
+
+    assertEquals(2, taskAInstances.size());
+
+    for (Task task : taskAInstances) {
+      taskService.complete(task.getId());
+    }
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingStartsSingleConfiguredActivity.bpmn20.xml")
+  @Test
+  public void testSequentialOrderingStartsSingleConfiguredActivity() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskA);
+    assertNull(taskB);
+
+    taskService.complete(taskA.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingAllowsOneActiveActivityAtATime.bpmn20.xml")
+  @Test
+  public void testSequentialOrderingAllowsOneActiveActivityAtATime() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    assertNotNull(taskA);
+
+    try {
+      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
+      testRule.assertTextPresent("Sequential adHocSubProcess 'adHocSubProcess' already has an active child activity",
+          e.getMessage());
+    }
+
+    assertNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult());
+
+    taskService.complete(taskA.getId());
+
+    adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    try {
+      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskA", "taskB"), null);
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
+      testRule.assertTextPresent("Sequential adHocSubProcess 'adHocSubProcess' can trigger only one activity per request",
+          e.getMessage());
+    }
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskB);
+
+    taskService.complete(taskB.getId());
+
+    adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    runtimeService.completeAdHocSubProcess(adHocExecution.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
   @Deployment
   @Test
   public void testParallelActivationRespectsActiveTasksList() {
@@ -904,20 +1045,15 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
     }
   }
 
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingRejectsMultipleConfiguredInitialActivities.bpmn20.xml")
   @Test
-  public void testSequentialOrderingFailsParse() {
-    String resource = "org/operaton/bpm/engine/test/bpmn/subprocess/"
-        + "AdHocSubProcessTest.testSequentialOrderingFailsParse.bpmn20.xml";
-
+  public void testSequentialOrderingRejectsMultipleConfiguredInitialActivities() {
     try {
-      repositoryService.createDeployment()
-          .name(resource)
-          .addClasspathResource(resource)
-          .deploy();
-      fail("Expected ParseException");
-    } catch (ParseException e) {
+      runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
       testRule.assertTextPresent(
-          "Unsupported value 'Sequential' for ad-hoc subprocess attribute 'ordering'; sequential ordering is not implemented yet",
+          "Sequential adHocSubProcess 'adHocSubProcess' can activate only one activity from activeTasksCollection",
           e.getMessage());
     }
   }

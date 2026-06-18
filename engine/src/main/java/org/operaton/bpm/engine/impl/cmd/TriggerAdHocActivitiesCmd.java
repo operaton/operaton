@@ -108,12 +108,10 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
             "adHoc activity '" + activityId + "' is not startable in adHocSubProcess " + adHocActivity.getId());
       }
 
-      if (startability.isActivityAlreadyActiveInScope(execution, activityId)) {
-        throw new BadUserRequestException("adHoc activity '" + activityId + "' is already active in adHocSubProcess " + adHocActivity.getId());
-      }
-
       targetActivities.add(targetActivity);
     }
+
+    ensureOrderingAllowsTrigger(execution, adHocActivity, targetActivities);
 
     for (ActivityImpl targetActivity : targetActivities) {
       ActivityExecution childExecution = execution.createExecution();
@@ -134,5 +132,23 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
 
   protected boolean isStartableInAdHocScope(ActivityImpl adHocScope, ActivityImpl activity) {
     return startability.isPotentiallyStartableActivity(adHocScope, activity);
+  }
+
+  protected void ensureOrderingAllowsTrigger(ActivityExecution execution,
+      ActivityImpl adHocActivity,
+      List<ActivityImpl> targetActivities) {
+    if (!startability.isSequentialOrdering(adHocActivity)) {
+      return;
+    }
+
+    if (targetActivities.size() > 1) {
+      throw new BadUserRequestException(
+          "Sequential adHocSubProcess '" + adHocActivity.getId() + "' can trigger only one activity per request");
+    }
+
+    if (startability.hasActiveChildExecutions(execution)) {
+      throw new BadUserRequestException(
+          "Sequential adHocSubProcess '" + adHocActivity.getId() + "' already has an active child activity");
+    }
   }
 }

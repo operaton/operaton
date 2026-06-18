@@ -3945,10 +3945,8 @@ public class BpmnParse extends Parse {
       adHocSubProcessActivity.setProperty(PROPERTYNAME_AD_HOC_ORDERING, "Parallel");
     } else {
       String trimmedOrderingAttributeText = orderingAttributeText.trim();
-      if ("Sequential".equals(trimmedOrderingAttributeText)) {
-        addError("Unsupported value 'Sequential' for ad-hoc subprocess attribute 'ordering'; sequential ordering is not implemented yet",
-            adHocSubProcessElement);
-      } else if (!"Parallel".equals(trimmedOrderingAttributeText)) {
+      if (!"Parallel".equals(trimmedOrderingAttributeText)
+          && !"Sequential".equals(trimmedOrderingAttributeText)) {
         addError("Invalid value '" + trimmedOrderingAttributeText
             + "' for ad-hoc subprocess attribute 'ordering'; expected 'Parallel' or 'Sequential'",
             adHocSubProcessElement);

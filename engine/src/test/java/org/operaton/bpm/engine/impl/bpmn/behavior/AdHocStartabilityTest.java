@@ -81,6 +81,7 @@ public class AdHocStartabilityTest {
   public void shouldHandleMissingRuntimeContext() {
     assertThat(startability.getStartableActivities(null)).isEmpty();
     assertThat(startability.isStartableActivity(null, null)).isFalse();
+    assertThat(startability.hasActiveChildExecutions(null)).isFalse();
     assertThat(startability.isActivityAlreadyActiveInScope(null, "task")).isFalse();
   }
 }

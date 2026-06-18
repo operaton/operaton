@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 import org.operaton.bpm.engine.ActivityTypes;
 import org.operaton.bpm.engine.impl.bpmn.helper.BpmnProperties;
+import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.pvm.PvmTransition;
 import org.operaton.bpm.engine.impl.pvm.delegate.ActivityExecution;
 import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
@@ -31,16 +32,17 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
 /**
  * Central startability support for ad-hoc subprocess activities.
  *
- * <p>The current implementation keeps the MVP rules: task-like activities,
- * call activities, subprocesses, and transactions are potentially startable
- * unless they are compensation handlers or downstream activities with an
- * incoming sequence flow from inside the ad-hoc scope. Runtime checks such as
- * "already active" are kept here as well so future discovery APIs and
+ * <p>Task-like activities, call activities, subprocesses, and transactions are
+ * potentially startable unless they are compensation handlers or downstream
+ * activities with an incoming sequence flow from inside the ad-hoc scope.
+ * Runtime ordering checks are kept here as well so future discovery APIs and
  * scheduler integration can reuse the same decision point.
  */
 public class AdHocStartability {
 
   public static final AdHocStartability INSTANCE = new AdHocStartability();
+
+  public static final String ORDERING_SEQUENTIAL = "Sequential";
 
   private static final Set<String> STARTABLE_ACTIVITY_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
       ActivityTypes.TASK,
@@ -77,9 +79,11 @@ public class AdHocStartability {
    */
   public List<ActivityImpl> getStartableActivities(ActivityExecution adHocScopeExecution) {
     ActivityImpl adHocScope = getAdHocScope(adHocScopeExecution);
-    return getPotentiallyStartableActivities(adHocScope).stream()
-        .filter(activity -> !isActivityAlreadyActiveInScope(adHocScopeExecution, activity.getId()))
-        .collect(Collectors.toList());
+    if (isSequentialOrdering(adHocScope) && hasActiveChildExecutions(adHocScopeExecution)) {
+      return Collections.emptyList();
+    }
+
+    return getPotentiallyStartableActivities(adHocScope);
   }
 
   /**
@@ -87,8 +91,11 @@ public class AdHocStartability {
    */
   public boolean isStartableActivity(ActivityExecution adHocScopeExecution, ActivityImpl activity) {
     ActivityImpl adHocScope = getAdHocScope(adHocScopeExecution);
-    return isPotentiallyStartableActivity(adHocScope, activity)
-        && !isActivityAlreadyActiveInScope(adHocScopeExecution, activity.getId());
+    if (!isPotentiallyStartableActivity(adHocScope, activity)) {
+      return false;
+    }
+
+    return !isSequentialOrdering(adHocScope) || !hasActiveChildExecutions(adHocScopeExecution);
   }
 
   /**
@@ -112,6 +119,22 @@ public class AdHocStartability {
    */
   public boolean isStartableActivityType(String type) {
     return type != null && STARTABLE_ACTIVITY_TYPES.contains(type);
+  }
+
+  /**
+   * Checks if the ad-hoc scope uses BPMN sequential ordering.
+   */
+  public boolean isSequentialOrdering(ActivityImpl adHocScope) {
+    return adHocScope != null
+        && ORDERING_SEQUENTIAL.equals(adHocScope.getProperty(BpmnParse.PROPERTYNAME_AD_HOC_ORDERING));
+  }
+
+  /**
+   * Checks if any active child execution exists in the ad-hoc scope.
+   */
+  public boolean hasActiveChildExecutions(ActivityExecution adHocScopeExecution) {
+    return adHocScopeExecution != null
+        && adHocScopeExecution.getExecutions().stream().anyMatch(ActivityExecution::isActive);
   }
 
   /**

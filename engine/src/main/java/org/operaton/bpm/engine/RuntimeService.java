@@ -1184,7 +1184,8 @@ public interface RuntimeService {
    *          when the executionId/activityIds are null or empty, the execution does
    *          not exist, the execution is not an ad-hoc subprocess scope, one or more
    *          target activities do not exist or are not startable inside the ad-hoc
-   *          subprocess, or one or more activities are already active.
+   *          subprocess, or the ad-hoc subprocess uses sequential ordering and
+   *          already has an active child activity.
    */
   void triggerAdHocActivities(String executionId,
                               Collection<String> activityIds,

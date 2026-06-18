@@ -54,6 +54,13 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehavior {
 
+  public static final String NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES = "nrOfActiveAdHocActivities";
+  public static final String NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES = "nrOfCompletedAdHocActivities";
+  public static final String AD_HOC_ACTIVE_ACTIVITY_IDS = "adHocActiveActivityIds";
+  public static final String AD_HOC_COMPLETED_ACTIVITY_IDS = "adHocCompletedActivityIds";
+  public static final String AD_HOC_LAST_COMPLETED_ACTIVITY_ID = "adHocLastCompletedActivityId";
+  public static final String AD_HOC_COMPLETION_CONDITION_SATISFIED = "adHocCompletionConditionSatisfied";
+
   protected final AdHocStartability startability = AdHocStartability.INSTANCE;
 
   /**
@@ -88,8 +95,10 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   @Override
   public void concurrentChildExecutionEnded(ActivityExecution scopeExecution, ActivityExecution endedExecution) {
     ActivityImpl adHocScopeActivity = (ActivityImpl) scopeExecution.getActivity();
+    String completedActivityId = getCompletedActivityId(endedExecution);
     endedExecution.remove();
     scopeExecution.forceUpdate();
+    recordCompletedAdHocActivity(scopeExecution, adHocScopeActivity, completedActivityId);
 
     // Evaluate before pruning so ad-hoc scope metadata and active children are still intact.
     evaluateCompletionCondition(scopeExecution, adHocScopeActivity, true);
@@ -111,6 +120,8 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
    */
   @Override
   public void complete(ActivityExecution scopeExecution) {
+    ActivityImpl scopeActivity = (ActivityImpl) scopeExecution.getActivity();
+    recordPreviouslyActiveAdHocActivities(scopeExecution, scopeActivity);
     evaluateCompletionCondition(scopeExecution, true);
   }
 
@@ -130,8 +141,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       return;
     }
 
-    Condition completionCondition = (Condition) scopeActivity
-        .getProperty(BpmnParse.PROPERTYNAME_AD_HOC_COMPLETION_CONDITION);
+    Condition completionCondition = getCompletionCondition(scopeActivity);
 
     boolean conditionMet;
     if (completionCondition == null) {
@@ -142,7 +152,12 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
           && isAdHocScopeActivity(scopeActivity)
           && !hasActiveChildExecutions(scopeExecution);
     } else {
-      conditionMet = completionCondition.evaluate(scopeExecution, scopeExecution);
+      updateAdHocCompletionContext(scopeExecution);
+      conditionMet = isAdHocCompletionConditionSatisfied(scopeExecution)
+          || completionCondition.evaluate(scopeExecution, scopeExecution);
+      if (conditionMet) {
+        scopeExecution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, true);
+      }
     }
 
     if (!conditionMet) {
@@ -194,6 +209,125 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected boolean hasActiveChildExecutions(ActivityExecution scopeExecution) {
     return startability.hasActiveChildExecutions(scopeExecution);
+  }
+
+  protected Condition getCompletionCondition(ActivityImpl scopeActivity) {
+    return scopeActivity != null
+        ? (Condition) scopeActivity.getProperty(BpmnParse.PROPERTYNAME_AD_HOC_COMPLETION_CONDITION)
+        : null;
+  }
+
+  protected void recordCompletedAdHocActivity(ActivityExecution scopeExecution, ActivityImpl scopeActivity,
+      String completedActivityId) {
+    if (getCompletionCondition(scopeActivity) == null || completedActivityId == null) {
+      return;
+    }
+
+    List<String> completedActivityIds = getCompletedAdHocActivityIds(scopeExecution);
+    completedActivityIds.add(completedActivityId);
+    scopeExecution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, completedActivityIds);
+    scopeExecution.setVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES, completedActivityIds.size());
+    scopeExecution.setVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID, completedActivityId);
+    updateActiveAdHocActivityContext(scopeExecution);
+  }
+
+  protected void recordPreviouslyActiveAdHocActivities(ActivityExecution scopeExecution, ActivityImpl scopeActivity) {
+    if (getCompletionCondition(scopeActivity) == null || hasActiveChildExecutions(scopeExecution)) {
+      return;
+    }
+
+    List<String> activeActivityIds = getAdHocActivityIds(scopeExecution, AD_HOC_ACTIVE_ACTIVITY_IDS);
+    if (activeActivityIds.isEmpty()) {
+      return;
+    }
+
+    List<String> completedActivityIds = getCompletedAdHocActivityIds(scopeExecution);
+    for (String activeActivityId : activeActivityIds) {
+      completedActivityIds.add(activeActivityId);
+      scopeExecution.setVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID, activeActivityId);
+    }
+
+    scopeExecution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, completedActivityIds);
+    scopeExecution.setVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES, completedActivityIds.size());
+    updateActiveAdHocActivityContext(scopeExecution);
+  }
+
+  protected List<String> getCompletedAdHocActivityIds(ActivityExecution scopeExecution) {
+    return getAdHocActivityIds(scopeExecution, AD_HOC_COMPLETED_ACTIVITY_IDS);
+  }
+
+  protected List<String> getAdHocActivityIds(ActivityExecution scopeExecution, String variableName) {
+    Object activityIds = scopeExecution.getVariableLocal(variableName);
+    if (activityIds instanceof Collection<?>) {
+      List<String> result = new ArrayList<>();
+      for (Object activityId : (Collection<?>) activityIds) {
+        if (activityId != null) {
+          result.add(String.valueOf(activityId));
+        }
+      }
+      return result;
+    }
+    return new ArrayList<>();
+  }
+
+  protected void updateAdHocCompletionContext(ActivityExecution scopeExecution) {
+    if (!scopeExecution.hasVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS)) {
+      scopeExecution.setVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS, new ArrayList<String>());
+    }
+    if (!scopeExecution.hasVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS)) {
+      scopeExecution.setVariableLocal(AD_HOC_COMPLETED_ACTIVITY_IDS, new ArrayList<String>());
+    }
+    if (!scopeExecution.hasVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)) {
+      scopeExecution.setVariableLocal(NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES, 0);
+    }
+    if (!scopeExecution.hasVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID)) {
+      scopeExecution.setVariableLocal(AD_HOC_LAST_COMPLETED_ACTIVITY_ID, null);
+    }
+    if (!scopeExecution.hasVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED)) {
+      scopeExecution.setVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED, false);
+    }
+
+    updateActiveAdHocActivityContext(scopeExecution);
+  }
+
+  protected boolean isAdHocCompletionConditionSatisfied(ActivityExecution scopeExecution) {
+    return Boolean.TRUE.equals(scopeExecution.getVariableLocal(AD_HOC_COMPLETION_CONDITION_SATISFIED));
+  }
+
+  protected void updateActiveAdHocActivityContext(ActivityExecution scopeExecution) {
+    scopeExecution.setVariableLocal(AD_HOC_ACTIVE_ACTIVITY_IDS, getActiveAdHocActivityIds(scopeExecution));
+    scopeExecution.setVariableLocal(NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES, countActiveAdHocActivities(scopeExecution));
+  }
+
+  protected List<String> getActiveAdHocActivityIds(ActivityExecution scopeExecution) {
+    if (scopeExecution == null) {
+      return new ArrayList<>();
+    }
+
+    return scopeExecution.getExecutions().stream()
+        .filter(child -> !child.isEnded())
+        .map(this::getCompletedActivityId)
+        .filter(activityId -> activityId != null)
+        .collect(Collectors.toCollection(ArrayList::new));
+  }
+
+  protected int countActiveAdHocActivities(ActivityExecution scopeExecution) {
+    if (scopeExecution == null) {
+      return 0;
+    }
+    return (int) scopeExecution.getExecutions().stream()
+        .filter(child -> !child.isEnded())
+        .count();
+  }
+
+  protected String getCompletedActivityId(ActivityExecution endedExecution) {
+    if (endedExecution == null) {
+      return null;
+    }
+    if (endedExecution.getCurrentActivityId() != null) {
+      return endedExecution.getCurrentActivityId();
+    }
+    return endedExecution.getActivity() != null ? endedExecution.getActivity().getId() : null;
   }
 
   protected boolean isAutoCompleteEnabled(ActivityImpl scopeActivity) {

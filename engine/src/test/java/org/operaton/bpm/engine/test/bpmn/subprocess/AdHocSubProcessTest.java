@@ -20,6 +20,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_ACTIVE_ACTIVITY_IDS;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETION_CONDITION_SATISFIED;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_COMPLETED_ACTIVITY_IDS;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.AD_HOC_LAST_COMPLETED_ACTIVITY_ID;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES;
+import static org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior.NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -1176,6 +1182,127 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionUsesCompletedActivityContext.bpmn20.xml")
+  @Test
+  public void testCompletionConditionUsesCompletedActivityContext() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithCompletionContext");
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskA);
+    assertNotNull(taskB);
+
+    taskService.complete(taskA.getId());
+
+    taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskB);
+    assertEquals(1, ((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
+        NUMBER_OF_COMPLETED_AD_HOC_ACTIVITIES)).intValue());
+    assertEquals(1, ((Number) runtimeService.getVariableLocal(taskB.getExecutionId(),
+        NUMBER_OF_ACTIVE_AD_HOC_ACTIVITIES)).intValue());
+    assertEquals(Collections.singletonList("taskB"),
+        runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_ACTIVE_ACTIVITY_IDS));
+    assertEquals(Collections.singletonList("taskA"),
+        runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETED_ACTIVITY_IDS));
+    assertEquals("taskA", runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_LAST_COMPLETED_ACTIVITY_ID));
+
+    assertNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult());
+
+    taskService.complete(taskB.getId());
+
+    assertNotNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult());
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionUsesActiveCountContext.bpmn20.xml")
+  @Test
+  public void testCompletionConditionUsesActiveCountContext() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithActiveCountContext");
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskA);
+    assertNotNull(taskB);
+
+    taskService.complete(taskA.getId());
+
+    assertNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult());
+
+    assertNotNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult());
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testCompletionConditionSatisfactionIsLatched.bpmn20.xml")
+  @Test
+  public void testCompletionConditionSatisfactionIsLatchedUntilActiveActivitiesFinish() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithLatchedCompletion");
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskA);
+    assertNotNull(taskB);
+
+    taskService.complete(taskA.getId());
+
+    taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskB);
+    assertEquals(Boolean.TRUE,
+        runtimeService.getVariableLocal(taskB.getExecutionId(), AD_HOC_COMPLETION_CONDITION_SATISFIED));
+    assertNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult());
+
+    taskService.complete(taskB.getId());
+
+    assertNotNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult());
   }
 
   @Deployment

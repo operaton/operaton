@@ -119,6 +119,10 @@ public class ExecutionResourceImpl implements ExecutionResource {
       String errorMessage = String.format("Cannot trigger ad-hoc activities for execution %s: %s", executionId, e.getMessage());
       throw new InvalidRequestException(e.getStatus(), e, errorMessage);
 
+    } catch (BadUserRequestException e) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, e,
+          "Cannot trigger ad-hoc activities for execution " + executionId + ": " + e.getMessage());
+
     } catch (AuthorizationException e) {
       throw e;
 

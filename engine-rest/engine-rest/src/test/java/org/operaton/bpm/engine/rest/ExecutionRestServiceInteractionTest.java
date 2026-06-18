@@ -282,24 +282,19 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
   }
 
   @Test
-  @SuppressWarnings("unchecked")
-  public void testTriggerAdHocActivitiesWithNullActivities() {
+  public void testTriggerAdHocActivitiesWithNullActivitiesThrowsBadUserRequestException() {
+    doThrow(new BadUserRequestException("activityIds is empty")).when(runtimeServiceMock)
+      .triggerAdHocActivities(anyString(), any(), any());
+
     Map<String, Object> payload = new HashMap<>();
     payload.put("activities", null);
 
-    List<String> expectedActivityIds = new ArrayList<>();
-    ArgumentCaptor<Map<String, Map<String, Object>>> activityVariablesCaptor =
-      (ArgumentCaptor<Map<String, Map<String, Object>>>) (ArgumentCaptor<?>) ArgumentCaptor.forClass(Map.class);
-
     given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID).contentType(ContentType.JSON).body(payload)
-      .then().expect().statusCode(Status.NO_CONTENT.getStatusCode())
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot trigger ad-hoc activities for execution " + MockProvider.EXAMPLE_EXECUTION_ID
+          + ": activityIds is empty"))
       .when().post(TRIGGER_AD_HOC_ACTIVITIES_URL);
-
-    verify(runtimeServiceMock).triggerAdHocActivities(eq(MockProvider.EXAMPLE_EXECUTION_ID),
-      argThat(new EqualsList(expectedActivityIds)),
-      activityVariablesCaptor.capture());
-
-    assertThat(activityVariablesCaptor.getValue()).isEmpty();
   }
 
   @Test

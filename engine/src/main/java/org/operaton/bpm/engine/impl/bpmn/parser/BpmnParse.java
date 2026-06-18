@@ -3978,7 +3978,6 @@ public class BpmnParse extends Parse {
     adHocSubProcessActivity.setScope(true);
     adHocSubProcessActivity.setActivityBehavior(new AdHocSubProcessActivityBehavior());
     parseScope(adHocSubProcessElement, adHocSubProcessActivity);
-    parseActivityInputOutput(adHocSubProcessElement, adHocSubProcessActivity);
 
     for (BpmnParseListener parseListener : parseListeners) {
       parseListener.parseSubProcess(adHocSubProcessElement, scope, adHocSubProcessActivity);

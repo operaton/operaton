@@ -21,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Map;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
 import org.operaton.bpm.engine.impl.bpmn.parser.BpmnParse;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
@@ -41,6 +42,7 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
 
   protected final String executionId;
   protected final Map<String, Object> variables;
+  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
 
   public CompleteAdHocSubProcessCmd(String executionId) {
     this(executionId, null);
@@ -71,8 +73,8 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
 
     boolean cancelRemainingInstances = resolveCancelRemainingInstances(execution, adHocActivity);
 
-    boolean hasActiveChildren = execution.getExecutions().stream().anyMatch(ActivityExecution::isActive);
-    if (hasActiveChildren && !cancelRemainingInstances) {
+    boolean hasOpenChildren = startability.hasOpenChildExecutions(execution);
+    if (hasOpenChildren && !cancelRemainingInstances) {
       throw new BadUserRequestException(
           "adHocSubProcess " + adHocActivity.getId() + " has active child activities and cannot be completed");
     }
@@ -84,15 +86,17 @@ public class CompleteAdHocSubProcessCmd implements Command<Void>, Serializable {
     AdHocSubProcessActivityBehavior behavior =
       (AdHocSubProcessActivityBehavior) adHocActivity.getActivityBehavior();
 
-    if (hasActiveChildren) {
+    if (hasOpenChildren) {
       for (ActivityExecution child : new ArrayList<>(execution.getExecutions())) {
-        if (child.isActive()) {
+        if (!child.isEnded()) {
           child.interrupt("adHocSubProcessManuallyCompleted");
         }
       }
 
       for (ActivityExecution child : new ArrayList<>(execution.getExecutions())) {
-        child.remove();
+        if (!child.isEnded()) {
+          child.remove();
+        }
       }
 
       execution.forceUpdate();

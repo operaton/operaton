@@ -32,6 +32,7 @@ import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ParseException;
 import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
+import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
 import org.operaton.bpm.engine.test.Deployment;
@@ -318,6 +319,125 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob.bpmn20.xml")
+  @Test
+  public void testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialAsync");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    Job asyncBeforeJob = managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .singleResult();
+
+    assertNotNull(asyncBeforeJob);
+    assertEquals(0, runtimeService.getStartableAdHocActivities(adHocExecution.getId()).size());
+
+    try {
+      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
+      testRule.assertTextPresent("Sequential adHocSubProcess 'adHocSubProcess' already has an active child activity",
+          e.getMessage());
+    }
+
+    managementService.executeJob(asyncBeforeJob.getId());
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    assertNotNull(taskA);
+    taskService.complete(taskA.getId());
+
+    adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskB"), null);
+
+    Task taskB = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskB")
+        .singleResult();
+
+    assertNotNull(taskB);
+    taskService.complete(taskB.getId());
+
+    adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    runtimeService.completeAdHocSubProcess(adHocExecution.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingBlocksWhileAsyncBeforeActivityWaitsForJob.bpmn20.xml")
+  @Test
+  public void testCompleteAdHocSubProcessFailsWhileAsyncBeforeActivityWaitsForJob() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialAsync");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    try {
+      runtimeService.completeAdHocSubProcess(adHocExecution.getId());
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
+      testRule.assertTextPresent("has active child activities and cannot be completed", e.getMessage());
+    }
+
+    Job asyncBeforeJob = managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .singleResult();
+
+    assertNotNull(asyncBeforeJob);
+    managementService.executeJob(asyncBeforeJob.getId());
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    assertNotNull(taskA);
+    taskService.complete(taskA.getId());
+
+    runtimeService.completeAdHocSubProcess(adHocExecution.getId());
+
+    assertNotNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult());
   }
 
   @Deployment
@@ -773,6 +893,199 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
       fail("Expected BadUserRequestException");
     } catch (BadUserRequestException e) {
       testRule.assertTextPresent("adHoc activity 'taskC' is not startable in adHocSubProcess adHocSubProcess", e.getMessage());
+    }
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerEmbeddedSubProcessAdHocActivity.bpmn20.xml")
+  @Test
+  public void testTriggerEmbeddedSubProcessAdHocActivity() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithEmbeddedSubProcess");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "embeddedSubProcess", "Embedded SubProcess", "subProcess");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("embeddedSubProcess"), null);
+
+    Task embeddedTask = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("embeddedTask")
+        .singleResult();
+
+    assertNotNull(embeddedTask);
+    taskService.complete(embeddedTask.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerTransactionAdHocActivity.bpmn20.xml")
+  @Test
+  public void testTriggerTransactionAdHocActivity() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithTransaction");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "transaction", "Transaction", "transaction");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("transaction"), null);
+
+    Task transactionTask = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("transactionTask")
+        .singleResult();
+
+    assertNotNull(transactionTask);
+    taskService.complete(transactionTask.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testTriggerCallActivityAdHocActivity.bpmn20.xml")
+  @Test
+  public void testTriggerCallActivityAdHocActivity() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithCallActivity");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "callActivity", "Call Activity", "callActivity");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("callActivity"), null);
+
+    ProcessInstance calledProcessInstance = runtimeService.createProcessInstanceQuery()
+        .superProcessInstanceId(processInstance.getId())
+        .singleResult();
+
+    assertNotNull(calledProcessInstance);
+
+    Task calledTask = taskService.createTaskQuery()
+        .processInstanceId(calledProcessInstance.getId())
+        .taskDefinitionKey("calledTask")
+        .singleResult();
+
+    assertNotNull(calledTask);
+    taskService.complete(calledTask.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testBoundaryEventOnTriggeredAdHocActivityContinuesInsideScope.bpmn20.xml")
+  @Test
+  public void testBoundaryEventOnTriggeredAdHocActivityContinuesInsideScope() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithChildBoundaryEvent");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    assertNotNull(taskA);
+
+    Job boundaryTimer = managementService.createJobQuery()
+        .processInstanceId(processInstance.getId())
+        .singleResult();
+
+    assertNotNull(boundaryTimer);
+    managementService.executeJob(boundaryTimer.getId());
+
+    assertNull(taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult());
+
+    Task boundaryTask = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("boundaryTask")
+        .singleResult();
+
+    assertNotNull(boundaryTask);
+    taskService.complete(boundaryTask.getId());
+
+    Task taskAfter = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskAfter")
+        .singleResult();
+
+    assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testStartabilityExcludesEventSubProcessesAndCompensationHandlers.bpmn20.xml")
+  @Test
+  public void testStartabilityExcludesEventSubProcessesAndCompensationHandlers() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessWithNonStartableHandlers");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
+    assertEquals(1, startableActivities.size());
+
+    try {
+      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("eventSubProcess"), null);
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
+      testRule.assertTextPresent("adHoc activity 'eventSubProcess' is not startable in adHocSubProcess adHocSubProcess",
+          e.getMessage());
+    }
+
+    try {
+      runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("compensationTask"), null);
+      fail("Expected BadUserRequestException");
+    } catch (BadUserRequestException e) {
+      testRule.assertTextPresent("adHoc activity 'compensationTask' is not startable in adHocSubProcess adHocSubProcess",
+          e.getMessage());
     }
   }
 

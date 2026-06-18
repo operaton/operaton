@@ -33,8 +33,9 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  * Central startability support for ad-hoc subprocess activities.
  *
  * <p>Task-like activities, call activities, subprocesses, and transactions are
- * potentially startable unless they are compensation handlers or downstream
- * activities with an incoming sequence flow from inside the ad-hoc scope.
+ * potentially startable unless they are compensation handlers, event
+ * subprocesses, or downstream activities with an incoming sequence flow from
+ * inside the ad-hoc scope.
  * Runtime ordering checks are kept here as well so future discovery APIs and
  * scheduler integration can reuse the same decision point.
  */
@@ -79,7 +80,7 @@ public class AdHocStartability {
    */
   public List<ActivityImpl> getStartableActivities(ActivityExecution adHocScopeExecution) {
     ActivityImpl adHocScope = getAdHocScope(adHocScopeExecution);
-    if (isSequentialOrdering(adHocScope) && hasActiveChildExecutions(adHocScopeExecution)) {
+    if (isSequentialOrdering(adHocScope) && hasOpenChildExecutions(adHocScopeExecution)) {
       return Collections.emptyList();
     }
 
@@ -95,14 +96,15 @@ public class AdHocStartability {
       return false;
     }
 
-    return !isSequentialOrdering(adHocScope) || !hasActiveChildExecutions(adHocScopeExecution);
+    return !isSequentialOrdering(adHocScope) || !hasOpenChildExecutions(adHocScopeExecution);
   }
 
   /**
    * Checks if an activity is startable according to static ad-hoc model rules.
    */
   public boolean isPotentiallyStartableActivity(ActivityImpl adHocScope, ActivityImpl activity) {
-    if (adHocScope == null || activity == null || activity.isCompensationHandler()) {
+    if (adHocScope == null || activity == null || activity.isCompensationHandler()
+        || activity.isTriggeredByEvent()) {
       return false;
     }
 
@@ -130,11 +132,22 @@ public class AdHocStartability {
   }
 
   /**
-   * Checks if any active child execution exists in the ad-hoc scope.
+   * Checks if any child execution still represents running ad-hoc work.
    */
   public boolean hasActiveChildExecutions(ActivityExecution adHocScopeExecution) {
+    return hasOpenChildExecutions(adHocScopeExecution);
+  }
+
+  /**
+   * Checks if any open child execution exists in the ad-hoc scope.
+   *
+   * <p>Async continuations and scope activities may leave child executions that
+   * are not currently active but still represent running ad-hoc work. Those
+   * executions must still block sequential triggers and auto-completion.
+   */
+  public boolean hasOpenChildExecutions(ActivityExecution adHocScopeExecution) {
     return adHocScopeExecution != null
-        && adHocScopeExecution.getExecutions().stream().anyMatch(ActivityExecution::isActive);
+        && adHocScopeExecution.getExecutions().stream().anyMatch(child -> !child.isEnded());
   }
 
   /**

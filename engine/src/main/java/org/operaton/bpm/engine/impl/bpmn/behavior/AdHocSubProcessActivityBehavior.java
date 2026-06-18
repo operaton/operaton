@@ -53,6 +53,8 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehavior {
 
+  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
+
   /**
    * On entry into an ad-hoc subprocess, only starter activities named in the
     * optional {@code activeTasksCollection} extension property are activated in parallel.
@@ -198,14 +200,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
   protected List<ActivityImpl> getInitiallyActivatableChildActivities(ActivityExecution scopeExecution) {
     ActivityImpl adHocSubProcess = (ActivityImpl) scopeExecution.getActivity();
-    return adHocSubProcess.getActivities().stream()
-        .filter(this::isAutoActivatable)
-        .filter(activity -> !hasIncomingTransitionFromAdHocScope(adHocSubProcess, activity))
-        .collect(Collectors.toList());
-  }
-
-  protected boolean hasIncomingTransitionFromAdHocScope(ActivityImpl adHocScope, ActivityImpl activity) {
-    return AdHocSubProcessValidationHelper.hasIncomingTransitionFromAdHocScope(adHocScope, activity);
+    return startability.getPotentiallyStartableActivities(adHocSubProcess);
   }
 
   protected List<String> getConfiguredActiveTaskIds(ActivityExecution scopeExecution) {
@@ -288,15 +283,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
   }
 
   protected boolean isActivityAlreadyActiveInScope(ActivityExecution scopeExecution, String activityId) {
-    return scopeExecution.getExecutions().stream()
-        .anyMatch(child -> child.getActivity() != null
-            && activityId.equals(child.getActivity().getId())
-            && child.isActive());
-  }
-
-  protected boolean isAutoActivatable(ActivityImpl activity) {
-    return AdHocSubProcessValidationHelper.isStartableActivityInAdHocScope(
-        (ActivityImpl) activity.getFlowScope(), activity);
+    return startability.isActivityAlreadyActiveInScope(scopeExecution, activityId);
   }
 
 

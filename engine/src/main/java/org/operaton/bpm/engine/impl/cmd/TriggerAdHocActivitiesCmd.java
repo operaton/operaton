@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.operaton.bpm.engine.BadUserRequestException;
+import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocStartability;
 import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessActivityBehavior;
-import org.operaton.bpm.engine.impl.bpmn.behavior.AdHocSubProcessValidationHelper;
 import org.operaton.bpm.engine.impl.cfg.CommandChecker;
 import org.operaton.bpm.engine.impl.interceptor.Command;
 import org.operaton.bpm.engine.impl.interceptor.CommandContext;
@@ -44,6 +44,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
   protected final String executionId;
   protected final Collection<String> activityIds;
   protected final Map<String, Map<String, Object>> activityVariables;
+  protected final AdHocStartability startability = AdHocStartability.INSTANCE;
 
   public TriggerAdHocActivitiesCmd(String executionId,
                                    Collection<String> activityIds,
@@ -107,12 +108,7 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
             "adHoc activity '" + activityId + "' is not startable in adHocSubProcess " + adHocActivity.getId());
       }
 
-      boolean alreadyActive = execution.getExecutions().stream()
-        .anyMatch(child -> child.getActivity() != null
-          && activityId.equals(child.getActivity().getId())
-          && child.isActive());
-
-      if (alreadyActive) {
+      if (startability.isActivityAlreadyActiveInScope(execution, activityId)) {
         throw new BadUserRequestException("adHoc activity '" + activityId + "' is already active in adHocSubProcess " + adHocActivity.getId());
       }
 
@@ -137,6 +133,6 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
   }
 
   protected boolean isStartableInAdHocScope(ActivityImpl adHocScope, ActivityImpl activity) {
-    return AdHocSubProcessValidationHelper.isStartableActivityInAdHocScope(adHocScope, activity);
+    return startability.isPotentiallyStartableActivity(adHocScope, activity);
   }
 }

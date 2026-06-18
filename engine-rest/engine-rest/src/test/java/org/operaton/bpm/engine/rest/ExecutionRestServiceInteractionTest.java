@@ -74,6 +74,7 @@ import org.operaton.bpm.engine.rest.helper.variable.EqualsPrimitiveValue;
 import org.operaton.bpm.engine.rest.helper.variable.EqualsUntypedValue;
 import org.operaton.bpm.engine.rest.util.VariablesBuilder;
 import org.operaton.bpm.engine.rest.util.container.TestContainerExtension;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.DeserializationTypeValidator;
 import org.operaton.bpm.engine.runtime.EventSubscription;
 import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
@@ -108,6 +109,7 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
 
   protected static final String EXECUTION_URL = TEST_RESOURCE_ROOT_PATH + "/execution/{id}";
   protected static final String SIGNAL_EXECUTION_URL = EXECUTION_URL + "/signal";
+  protected static final String STARTABLE_AD_HOC_ACTIVITIES_URL = EXECUTION_URL + "/ad-hoc-activities";
   protected static final String TRIGGER_AD_HOC_ACTIVITIES_URL = EXECUTION_URL + "/ad-hoc-activities/trigger";
   protected static final String COMPLETE_AD_HOC_SUB_PROCESS_URL = EXECUTION_URL + "/ad-hoc-activities/complete";
   protected static final String EXECUTION_LOCAL_VARIABLES_URL = EXECUTION_URL + "/localVariables";
@@ -188,6 +190,60 @@ public class ExecutionRestServiceInteractionTest extends AbstractRestServiceTest
     expectedSignalVariables.put(variableKey, variableValue);
 
     verify(runtimeServiceMock).signal(eq(MockProvider.EXAMPLE_EXECUTION_ID), argThat(new EqualsMap(expectedSignalVariables)));
+  }
+
+  @Test
+  public void testGetStartableAdHocActivities() {
+    AdHocActivity taskA = mock(AdHocActivity.class);
+    when(taskA.getActivityId()).thenReturn("taskA");
+    when(taskA.getActivityName()).thenReturn("Task A");
+    when(taskA.getActivityType()).thenReturn("userTask");
+
+    AdHocActivity taskB = mock(AdHocActivity.class);
+    when(taskB.getActivityId()).thenReturn("taskB");
+    when(taskB.getActivityName()).thenReturn("Task B");
+    when(taskB.getActivityType()).thenReturn("serviceTask");
+
+    when(runtimeServiceMock.getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID))
+      .thenReturn(Arrays.asList(taskA, taskB));
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
+      .then().expect().statusCode(Status.OK.getStatusCode())
+      .body("[0].activityId", equalTo("taskA"))
+      .body("[0].activityName", equalTo("Task A"))
+      .body("[0].activityType", equalTo("userTask"))
+      .body("[1].activityId", equalTo("taskB"))
+      .body("[1].activityName", equalTo("Task B"))
+      .body("[1].activityType", equalTo("serviceTask"))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
+
+    verify(runtimeServiceMock).getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
+  }
+
+  @Test
+  public void testGetStartableAdHocActivitiesThrowsBadUserRequestException() {
+    doThrow(new BadUserRequestException("execution " + MockProvider.EXAMPLE_EXECUTION_ID + " is not waiting in an adHocSubProcess"))
+      .when(runtimeServiceMock).getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
+      .then().expect().statusCode(Status.BAD_REQUEST.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(InvalidRequestException.class.getSimpleName()))
+      .body("message", equalTo("Cannot get startable ad-hoc activities for execution " + MockProvider.EXAMPLE_EXECUTION_ID
+          + ": execution " + MockProvider.EXAMPLE_EXECUTION_ID + " is not waiting in an adHocSubProcess"))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
+  }
+
+  @Test
+  public void testGetStartableAdHocActivitiesThrowsAuthorizationException() {
+    String message = "expected exception";
+    doThrow(new AuthorizationException(message)).when(runtimeServiceMock)
+      .getStartableAdHocActivities(MockProvider.EXAMPLE_EXECUTION_ID);
+
+    given().pathParam("id", MockProvider.EXAMPLE_EXECUTION_ID)
+      .then().expect().statusCode(Status.FORBIDDEN.getStatusCode()).contentType(ContentType.JSON)
+      .body("type", equalTo(AuthorizationException.class.getSimpleName()))
+      .body("message", equalTo(message))
+      .when().get(STARTABLE_AD_HOC_ACTIVITIES_URL);
   }
 
   @Test

@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.migration.MigrationPlanExecutionBuilder;
 import org.operaton.bpm.engine.repository.Deployment;
 import org.operaton.bpm.engine.repository.ProcessDefinition;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
 import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
 import org.operaton.bpm.engine.runtime.Execution;
@@ -1168,6 +1169,23 @@ public interface RuntimeService {
    *          or no {@link Permissions#UPDATE_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
    */
   void signal(String executionId, Map<String, Object> processVariables);
+
+  /**
+   * Returns the activities that can currently be triggered in an active ad-hoc subprocess execution.
+   *
+   * <p>The result observes the BPMN {@code ordering} of the ad-hoc subprocess. For
+   * sequential ordering, the result is empty while any inner activity is active.
+   *
+   * @param executionId the execution id of the active ad-hoc subprocess scope
+   *
+   * @throws BadUserRequestException
+   *          when the executionId is null, the execution does not exist, or the
+   *          execution is not an ad-hoc subprocess scope.
+   * @throws AuthorizationException
+   *          if the user has no {@link Permissions#READ} permission on {@link Resources#PROCESS_INSTANCE}
+   *          or no {@link Permissions#READ_INSTANCE} permission on {@link Resources#PROCESS_DEFINITION}.
+   */
+  List<AdHocActivity> getStartableAdHocActivities(String executionId);
 
   /**
    * Triggers one or more activities contained in an active ad-hoc subprocess execution.

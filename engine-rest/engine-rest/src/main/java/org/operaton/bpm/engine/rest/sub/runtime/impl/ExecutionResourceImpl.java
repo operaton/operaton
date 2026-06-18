@@ -19,6 +19,7 @@ package org.operaton.bpm.engine.rest.sub.runtime.impl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import jakarta.ws.rs.core.Response.Status;
@@ -33,6 +34,7 @@ import org.operaton.bpm.engine.RuntimeService;
 import org.operaton.bpm.engine.rest.dto.CreateIncidentDto;
 import org.operaton.bpm.engine.rest.dto.VariableValueDto;
 import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivitiesTriggerDto;
+import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivityDto;
 import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivityTriggerInstructionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.AdHocSubProcessCompletionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionDto;
@@ -43,6 +45,7 @@ import org.operaton.bpm.engine.rest.exception.RestException;
 import org.operaton.bpm.engine.rest.sub.VariableResource;
 import org.operaton.bpm.engine.rest.sub.runtime.EventSubscriptionResource;
 import org.operaton.bpm.engine.rest.sub.runtime.ExecutionResource;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.Incident;
 import org.operaton.bpm.engine.variable.VariableMap;
@@ -87,6 +90,27 @@ public class ExecutionResourceImpl implements ExecutionResource {
 
     } catch (ProcessEngineException e) {
       throw new RestException(Status.INTERNAL_SERVER_ERROR, e, "Cannot signal execution %s: %s".formatted(executionId, e.getMessage()));
+
+    }
+  }
+
+  @Override
+  public List<AdHocActivityDto> getStartableAdHocActivities() {
+    RuntimeService runtimeService = engine.getRuntimeService();
+    try {
+      List<AdHocActivity> activities = runtimeService.getStartableAdHocActivities(executionId);
+      return AdHocActivityDto.fromAdHocActivities(activities);
+
+    } catch (BadUserRequestException e) {
+      throw new InvalidRequestException(Status.BAD_REQUEST, e,
+          "Cannot get startable ad-hoc activities for execution " + executionId + ": " + e.getMessage());
+
+    } catch (AuthorizationException e) {
+      throw e;
+
+    } catch (ProcessEngineException e) {
+      throw new RestException(Status.INTERNAL_SERVER_ERROR, e,
+          "Cannot get startable ad-hoc activities for execution " + executionId + ": " + e.getMessage());
 
     }
   }

@@ -30,6 +30,7 @@ import java.util.Map;
 
 import org.operaton.bpm.engine.BadUserRequestException;
 import org.operaton.bpm.engine.ParseException;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
 import org.operaton.bpm.engine.task.Task;
@@ -147,6 +148,31 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
     assertNotNull(taskAfter);
   }
 
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml")
+  @Test
+  public void testDiscoverParallelStartableAdHocActivities() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessBasic");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+  }
+
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingStartsSingleConfiguredActivity.bpmn20.xml")
   @Test
   public void testSequentialOrderingStartsSingleConfiguredActivity() {
@@ -173,6 +199,46 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .singleResult();
 
     assertNotNull(taskAfter);
+  }
+
+  @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingAllowsOneActiveActivityAtATime.bpmn20.xml")
+  @Test
+  public void testDiscoverSequentialStartableAdHocActivities() {
+    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("adHocSubProcessSequentialOrdering");
+
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+
+    List<AdHocActivity> startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
+
+    runtimeService.triggerAdHocActivities(adHocExecution.getId(), Collections.singletonList("taskA"), null);
+
+    startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertEquals(0, startableActivities.size());
+
+    Task taskA = taskService.createTaskQuery()
+        .processInstanceId(processInstance.getId())
+        .taskDefinitionKey("taskA")
+        .singleResult();
+
+    taskService.complete(taskA.getId());
+
+    adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    startableActivities = runtimeService.getStartableAdHocActivities(adHocExecution.getId());
+    assertStartableAdHocActivity(startableActivities, "taskA", "Task A", "userTask");
+    assertStartableAdHocActivity(startableActivities, "taskB", "Task B", "userTask");
+    assertEquals(2, startableActivities.size());
   }
 
   @Deployment(resources = "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.testSequentialOrderingAllowsOneActiveActivityAtATime.bpmn20.xml")
@@ -1064,5 +1130,19 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .processInstanceIdIn(processInstanceId)
         .variableName("adHocActivityStarted")
         .count());
+  }
+
+  protected void assertStartableAdHocActivity(List<AdHocActivity> activities,
+      String activityId,
+      String activityName,
+      String activityType) {
+    AdHocActivity activity = activities.stream()
+        .filter(candidate -> activityId.equals(candidate.getActivityId()))
+        .findFirst()
+        .orElse(null);
+
+    assertNotNull(activity);
+    assertEquals(activityName, activity.getActivityName());
+    assertEquals(activityType, activity.getActivityType());
   }
 }

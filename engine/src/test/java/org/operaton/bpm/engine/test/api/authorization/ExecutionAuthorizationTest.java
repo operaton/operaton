@@ -16,9 +16,13 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.operaton.bpm.engine.AuthorizationException;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.Execution;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
 import org.operaton.bpm.engine.runtime.ProcessInstance;
@@ -30,6 +34,7 @@ import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * @author Roman Smirnov
@@ -39,13 +44,15 @@ class ExecutionAuthorizationTest extends AuthorizationTest {
 
   protected static final String ONE_TASK_PROCESS_KEY = "oneTaskProcess";
   protected static final String MESSAGE_BOUNDARY_PROCESS_KEY = "messageBoundaryProcess";
+  protected static final String AD_HOC_PROCESS_KEY = "adHocSubProcessBasic";
 
   @Override
   @BeforeEach
   public void setUp() {
     testRule.deploy(
         "org/operaton/bpm/engine/test/api/oneTaskProcess.bpmn20.xml",
-        "org/operaton/bpm/engine/test/api/authorization/messageBoundaryEventProcess.bpmn20.xml");
+        "org/operaton/bpm/engine/test/api/authorization/messageBoundaryEventProcess.bpmn20.xml",
+        "org/operaton/bpm/engine/test/bpmn/subprocess/AdHocSubProcessTest.modelIdleNoInitialTasks.bpmn20.xml");
     super.setUp();
   }
 
@@ -275,6 +282,43 @@ class ExecutionAuthorizationTest extends AuthorizationTest {
 
     // then
     verifyQueryResults(query, 2);
+  }
+
+  @Test
+  void shouldRequireReadAuthorizationForStartableAdHocActivities() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.getStartableAdHocActivities(executionId))
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageMatching(getMissingPermissionMessageRegex(READ, PROCESS_INSTANCE))
+      .hasMessageMatching(getMissingPermissionMessageRegex(READ_INSTANCE, PROCESS_DEFINITION));
+  }
+
+  @Test
+  void shouldGetStartableAdHocActivitiesWithReadPermissionOnProcessInstance() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+    createGrantAuthorization(PROCESS_INSTANCE, processInstance.getId(), userId, READ);
+
+    // when
+    List<AdHocActivity> activities = runtimeService.getStartableAdHocActivities(executionId);
+
+    // then
+    assertThat(activities)
+      .extracting(AdHocActivity::getActivityId)
+      .containsExactlyInAnyOrder("taskA", "taskB");
+  }
+
+  protected String findAdHocSubProcessExecutionId(String processInstanceId) {
+    return runWithoutAuthorization(() -> runtimeService.createExecutionQuery()
+        .processInstanceId(processInstanceId)
+        .activityId("adHocSubProcess")
+        .singleResult()
+        .getId());
   }
 
 }

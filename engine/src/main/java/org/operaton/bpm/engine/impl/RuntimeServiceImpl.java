@@ -37,6 +37,7 @@ import org.operaton.bpm.engine.impl.cmd.GetExecutionVariableCmd;
 import org.operaton.bpm.engine.impl.cmd.GetExecutionVariableTypedCmd;
 import org.operaton.bpm.engine.impl.cmd.GetExecutionVariablesCmd;
 import org.operaton.bpm.engine.impl.cmd.GetStartFormCmd;
+import org.operaton.bpm.engine.impl.cmd.GetStartableAdHocActivitiesCmd;
 import org.operaton.bpm.engine.impl.cmd.MessageEventReceivedCmd;
 import org.operaton.bpm.engine.impl.cmd.PatchExecutionVariablesCmd;
 import org.operaton.bpm.engine.impl.cmd.RemoveExecutionVariablesCmd;
@@ -55,6 +56,7 @@ import org.operaton.bpm.engine.migration.MigrationPlan;
 import org.operaton.bpm.engine.migration.MigrationPlanBuilder;
 import org.operaton.bpm.engine.migration.MigrationPlanExecutionBuilder;
 import org.operaton.bpm.engine.runtime.ActivityInstance;
+import org.operaton.bpm.engine.runtime.AdHocActivity;
 import org.operaton.bpm.engine.runtime.ConditionEvaluationBuilder;
 import org.operaton.bpm.engine.runtime.EventSubscriptionQuery;
 import org.operaton.bpm.engine.runtime.ExecutionQuery;
@@ -547,6 +549,11 @@ public class RuntimeServiceImpl extends ServiceImpl implements RuntimeService {
   @Override
   public void signal(String executionId, Map<String, Object> processVariables) {
     commandExecutor.execute(new SignalCmd(executionId, null, null, processVariables));
+  }
+
+  @Override
+  public List<AdHocActivity> getStartableAdHocActivities(String executionId) {
+    return commandExecutor.execute(new GetStartableAdHocActivitiesCmd(executionId));
   }
 
   @Override

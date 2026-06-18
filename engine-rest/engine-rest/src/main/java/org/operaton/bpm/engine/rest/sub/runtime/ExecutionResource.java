@@ -19,8 +19,11 @@ package org.operaton.bpm.engine.rest.sub.runtime;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
+import java.util.List;
+
 import org.operaton.bpm.engine.rest.dto.CreateIncidentDto;
 import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivitiesTriggerDto;
+import org.operaton.bpm.engine.rest.dto.runtime.AdHocActivityDto;
 import org.operaton.bpm.engine.rest.dto.runtime.AdHocSubProcessCompletionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionDto;
 import org.operaton.bpm.engine.rest.dto.runtime.ExecutionTriggerDto;
@@ -38,6 +41,11 @@ public interface ExecutionResource {
   @Produces(MediaType.APPLICATION_JSON)
   @Consumes(MediaType.APPLICATION_JSON)
   void signalExecution(ExecutionTriggerDto triggerDto);
+
+  @GET
+  @Path("/ad-hoc-activities")
+  @Produces(MediaType.APPLICATION_JSON)
+  List<AdHocActivityDto> getStartableAdHocActivities();
 
   @POST
   @Path("/ad-hoc-activities/trigger")

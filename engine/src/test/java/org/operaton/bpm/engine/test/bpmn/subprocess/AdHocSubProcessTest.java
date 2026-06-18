@@ -65,6 +65,14 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
     assertNotNull(taskA);
     assertNotNull(taskB);
 
+    Execution adHocExecution = runtimeService.createExecutionQuery()
+        .processInstanceId(processInstance.getId())
+        .activityId("adHocSubProcess")
+        .singleResult();
+
+    assertNotNull(adHocExecution);
+    assertNoAdHocInternalStateVariable(processInstance.getId(), adHocExecution.getId());
+
     taskService.complete(taskA.getId());
     taskService.complete(taskB.getId());
 
@@ -189,7 +197,12 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
         .activityId("adHocSubProcess")
         .singleResult();
 
+    assertNotNull(adHocExecution);
+    assertNoAdHocInternalStateVariable(processInstance.getId(), adHocExecution.getId());
+
     runtimeService.triggerAdHocActivities(adHocExecution.getId(), Arrays.asList("taskA", "taskB"), null);
+
+    assertNoAdHocInternalStateVariable(processInstance.getId(), adHocExecution.getId());
 
     Task taskA = taskService.createTaskQuery()
         .processInstanceId(processInstance.getId())
@@ -907,5 +920,13 @@ public class AdHocSubProcessTest extends PluggableProcessEngineTest {
           "Unsupported value 'Sequential' for ad-hoc subprocess attribute 'ordering'; sequential ordering is not implemented yet",
           e.getMessage());
     }
+  }
+
+  protected void assertNoAdHocInternalStateVariable(String processInstanceId, String adHocExecutionId) {
+    assertNull(runtimeService.getVariableLocal(adHocExecutionId, "adHocActivityStarted"));
+    assertEquals(0, runtimeService.createVariableInstanceQuery()
+        .processInstanceIdIn(processInstanceId)
+        .variableName("adHocActivityStarted")
+        .count());
   }
 }

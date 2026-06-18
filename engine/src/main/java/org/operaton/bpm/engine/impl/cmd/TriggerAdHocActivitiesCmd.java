@@ -120,7 +120,6 @@ public class TriggerAdHocActivitiesCmd implements Command<Void>, Serializable {
     }
 
     for (ActivityImpl targetActivity : targetActivities) {
-      ((AdHocSubProcessActivityBehavior) adHocActivity.getActivityBehavior()).markAdHocActivityStarted(execution);
       ActivityExecution childExecution = execution.createExecution();
       ((ExecutionEntity) execution).forceUpdate();
       childExecution.setConcurrent(true);

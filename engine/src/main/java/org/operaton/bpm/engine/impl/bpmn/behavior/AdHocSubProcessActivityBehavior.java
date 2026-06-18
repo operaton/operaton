@@ -53,8 +53,6 @@ import org.operaton.bpm.engine.impl.pvm.process.ActivityImpl;
  */
 public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavior implements CompositeActivityBehavior {
 
-  protected static final String VARIABLE_AD_HOC_ACTIVITY_STARTED = "adHocActivityStarted";
-
   /**
    * On entry into an ad-hoc subprocess, only starter activities named in the
     * optional {@code activeTasksCollection} extension property are activated in parallel.
@@ -65,6 +63,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     List<String> configuredActiveTaskIds = getConfiguredActiveTaskIds(execution);
     validateConfiguredActiveTaskIds(execution, starterActivities, configuredActiveTaskIds);
     List<ActivityImpl> adHocActivities = filterStarterActivities(starterActivities, configuredActiveTaskIds);
+    boolean adHocActivityStarted = !adHocActivities.isEmpty();
 
     for (ActivityImpl activity : adHocActivities) {
       if (!isActivityAlreadyActiveInScope(execution, activity.getId())) {
@@ -72,7 +71,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       }
     }
 
-    evaluateCompletionCondition(execution);
+    evaluateCompletionCondition(execution, adHocActivityStarted);
   }
 
   /**
@@ -88,7 +87,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
     scopeExecution.forceUpdate();
 
     // Evaluate before pruning so ad-hoc scope metadata and active children are still intact.
-    evaluateCompletionCondition(scopeExecution, adHocScopeActivity);
+    evaluateCompletionCondition(scopeExecution, adHocScopeActivity, true);
 
     // If completion handling moved execution out of the ad-hoc scope, stop here.
     if (scopeExecution.getActivity() != adHocScopeActivity) {
@@ -107,7 +106,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
    */
   @Override
   public void complete(ActivityExecution scopeExecution) {
-    evaluateCompletionCondition(scopeExecution);
+    evaluateCompletionCondition(scopeExecution, true);
   }
 
   /**
@@ -116,11 +115,12 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
    * condition is present but evaluates to {@code false} the scope execution
    * simply remains open.
    */
-  protected void evaluateCompletionCondition(ActivityExecution scopeExecution) {
-    evaluateCompletionCondition(scopeExecution, (ActivityImpl) scopeExecution.getActivity());
+  protected void evaluateCompletionCondition(ActivityExecution scopeExecution, boolean adHocActivityStarted) {
+    evaluateCompletionCondition(scopeExecution, (ActivityImpl) scopeExecution.getActivity(), adHocActivityStarted);
   }
 
-  protected void evaluateCompletionCondition(ActivityExecution scopeExecution, ActivityImpl scopeActivity) {
+  protected void evaluateCompletionCondition(ActivityExecution scopeExecution, ActivityImpl scopeActivity,
+      boolean adHocActivityStarted) {
     if (scopeExecution == null || scopeActivity == null) {
       return;
     }
@@ -133,7 +133,7 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
       // No condition: complete only if auto-complete is enabled and at least one
       // ad-hoc activity has started with no active children left.
       conditionMet = isAutoCompleteEnabled(scopeActivity)
-          && hasStartedAdHocActivity(scopeExecution)
+          && adHocActivityStarted
           && isAdHocScopeActivity(scopeActivity)
           && !hasActiveChildExecutions(scopeExecution);
     } else {
@@ -302,21 +302,11 @@ public class AdHocSubProcessActivityBehavior extends AbstractBpmnActivityBehavio
 
 
   protected void startAdHocActivity(ActivityExecution scopeExecution, ActivityImpl targetActivity) {
-    markAdHocActivityStarted(scopeExecution);
     ActivityExecution childExecution = scopeExecution.createExecution();
     scopeExecution.forceUpdate();
     childExecution.setConcurrent(true);
     childExecution.setScope(false);
     childExecution.executeActivity(targetActivity);
-  }
-
-  protected boolean hasStartedAdHocActivity(ActivityExecution scopeExecution) {
-    return scopeExecution.hasVariableLocal(VARIABLE_AD_HOC_ACTIVITY_STARTED)
-        && Boolean.TRUE.equals(scopeExecution.getVariableLocal(VARIABLE_AD_HOC_ACTIVITY_STARTED));
-  }
-
-  public void markAdHocActivityStarted(ActivityExecution scopeExecution) {
-    scopeExecution.setVariableLocal(VARIABLE_AD_HOC_ACTIVITY_STARTED, true);
   }
 
   @Override

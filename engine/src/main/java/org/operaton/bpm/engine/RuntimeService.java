@@ -1213,14 +1213,18 @@ public interface RuntimeService {
    * Completes an active ad-hoc subprocess execution.
    *
    * <p>This operation is intended for manually completing an ad-hoc subprocess
-   * scope when no inner activities are currently active.
+   * scope. If {@code cancelRemainingInstances} is {@code true}, active inner
+   * activities are cancelled before the scope leaves. If
+   * {@code cancelRemainingInstances} is {@code false}, the operation fails while
+   * inner activities are still active.
    *
    * @param executionId the execution id of the active ad-hoc subprocess scope
    *
    * @throws BadUserRequestException
    *          when the executionId is null, the execution does not exist,
-   *          the execution is not an ad-hoc subprocess scope, or one or more
-   *          inner activities are currently active.
+   *          the execution is not an ad-hoc subprocess scope, or active inner
+   *          activities exist while {@code cancelRemainingInstances} is
+   *          {@code false}.
    */
   void completeAdHocSubProcess(String executionId);
 
@@ -1229,7 +1233,10 @@ public interface RuntimeService {
    * before leaving the ad-hoc scope.
    *
    * <p>This operation is intended for manually completing an ad-hoc subprocess
-   * scope when no inner activities are currently active.
+   * scope. If {@code cancelRemainingInstances} is {@code true}, active inner
+   * activities are cancelled before the scope leaves. If
+   * {@code cancelRemainingInstances} is {@code false}, the operation fails while
+   * inner activities are still active.
    *
    * @param executionId the execution id of the active ad-hoc subprocess scope
    * @param variables optional variables to set on the ad-hoc subprocess execution
@@ -1237,8 +1244,9 @@ public interface RuntimeService {
    *
    * @throws BadUserRequestException
    *          when the executionId is null, the execution does not exist,
-   *          the execution is not an ad-hoc subprocess scope, or one or more
-   *          inner activities are currently active.
+   *          the execution is not an ad-hoc subprocess scope, or active inner
+   *          activities exist while {@code cancelRemainingInstances} is
+   *          {@code false}.
    */
   void completeAdHocSubProcess(String executionId, Map<String, Object> variables);
 

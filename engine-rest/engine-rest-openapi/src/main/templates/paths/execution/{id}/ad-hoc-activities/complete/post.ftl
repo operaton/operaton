@@ -19,7 +19,7 @@
       id = "completeAdHocSubProcess"
       tag = "Execution"
       summary = "Complete Ad-Hoc Subprocess"
-      desc = "Completes an active ad-hoc subprocess execution by id. The request fails if any inner activity is currently active. Optional variables can be set before completion."
+      desc = "Completes an active ad-hoc subprocess execution by id. If the BPMN cancelRemainingInstances attribute is true, active inner activities are cancelled before the subprocess completes. If cancelRemainingInstances is false, the request fails while active inner activities exist. Optional variables can be set before completion."
   />
 
   "parameters" : [
@@ -65,7 +65,7 @@
     <@lib.response
         code = "400"
         dto = "ExceptionDto"
-        desc = "The execution id is invalid, the execution is not an ad-hoc subprocess, or active child activities exist."
+        desc = "The execution id is invalid, the execution is not an ad-hoc subprocess, or active child activities exist while cancelRemainingInstances is false."
     />
 
     <@lib.response

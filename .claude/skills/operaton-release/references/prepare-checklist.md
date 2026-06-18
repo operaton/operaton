@@ -55,6 +55,7 @@ See `references/release-notes.md`. Type-dependent:
 - [ ] Backports of features or noteworthy bugfixes from other forks documented below _Versions & Compatibility_
 - [ ] For milestone releases, add suffix `(DRAFT)` to the title and description until the release is ready.
 - [ ] When the upcoming release is a final minor/major, remove the `(DRAFT)` suffix from the title.
+- [ ] Add a _Security Vulnerabilities_ section if any CVEs are fixed in this release, with links to advisories and list dependency upgrades that fixed CVEs.
 
 ## 7. Smoke tests
 See `references/smoke-tests.md` (hybrid: browser-drive Docker images, guided manual for OS distros).

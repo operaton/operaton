@@ -16,6 +16,7 @@
  */
 package org.operaton.bpm.engine.test.api.authorization;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,8 @@ import org.operaton.bpm.engine.runtime.ProcessInstance;
 import static org.operaton.bpm.engine.authorization.Authorization.ANY;
 import static org.operaton.bpm.engine.authorization.Permissions.READ;
 import static org.operaton.bpm.engine.authorization.Permissions.READ_INSTANCE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE;
+import static org.operaton.bpm.engine.authorization.Permissions.UPDATE_INSTANCE;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_DEFINITION;
 import static org.operaton.bpm.engine.authorization.Resources.PROCESS_INSTANCE;
 import static org.operaton.bpm.engine.test.util.QueryTestHelper.verifyQueryResults;
@@ -313,12 +316,101 @@ class ExecutionAuthorizationTest extends AuthorizationTest {
       .containsExactlyInAnyOrder("taskA", "taskB");
   }
 
+  @Test
+  void shouldRequireUpdateAuthorizationForTriggeringAdHocActivities() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.triggerAdHocActivities(executionId, Collections.singletonList("taskA"), null))
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE, PROCESS_INSTANCE))
+      .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
+  }
+
+  @Test
+  void shouldTriggerAdHocActivitiesWithUpdatePermissionOnProcessInstance() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+    createGrantAuthorization(PROCESS_INSTANCE, processInstance.getId(), userId, UPDATE);
+
+    // when
+    runtimeService.triggerAdHocActivities(executionId, Collections.singletonList("taskA"), null);
+
+    // then
+    assertThat(countTasks(processInstance.getId(), "taskA")).isEqualTo(1L);
+  }
+
+  @Test
+  void shouldTriggerAdHocActivitiesWithUpdateInstancePermissionOnProcessDefinition() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+    createGrantAuthorization(PROCESS_DEFINITION, AD_HOC_PROCESS_KEY, userId, UPDATE_INSTANCE);
+
+    // when
+    runtimeService.triggerAdHocActivities(executionId, Collections.singletonList("taskA"), null);
+
+    // then
+    assertThat(countTasks(processInstance.getId(), "taskA")).isEqualTo(1L);
+  }
+
+  @Test
+  void shouldRequireUpdateAuthorizationForCompletingAdHocSubProcess() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+
+    // when/then
+    assertThatThrownBy(() -> runtimeService.completeAdHocSubProcess(executionId))
+      .isInstanceOf(AuthorizationException.class)
+      .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE, PROCESS_INSTANCE))
+      .hasMessageMatching(getMissingPermissionMessageRegex(UPDATE_INSTANCE, PROCESS_DEFINITION));
+  }
+
+  @Test
+  void shouldCompleteAdHocSubProcessWithUpdatePermissionOnProcessInstance() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+    createGrantAuthorization(PROCESS_INSTANCE, processInstance.getId(), userId, UPDATE);
+
+    // when
+    runtimeService.completeAdHocSubProcess(executionId);
+
+    // then
+    assertThat(countTasks(processInstance.getId(), "taskAfter")).isEqualTo(1L);
+  }
+
+  @Test
+  void shouldCompleteAdHocSubProcessWithUpdateInstancePermissionOnProcessDefinition() {
+    // given
+    ProcessInstance processInstance = startProcessInstanceByKey(AD_HOC_PROCESS_KEY);
+    String executionId = findAdHocSubProcessExecutionId(processInstance.getId());
+    createGrantAuthorization(PROCESS_DEFINITION, AD_HOC_PROCESS_KEY, userId, UPDATE_INSTANCE);
+
+    // when
+    runtimeService.completeAdHocSubProcess(executionId);
+
+    // then
+    assertThat(countTasks(processInstance.getId(), "taskAfter")).isEqualTo(1L);
+  }
+
   protected String findAdHocSubProcessExecutionId(String processInstanceId) {
     return runWithoutAuthorization(() -> runtimeService.createExecutionQuery()
         .processInstanceId(processInstanceId)
         .activityId("adHocSubProcess")
         .singleResult()
         .getId());
+  }
+
+  protected long countTasks(String processInstanceId, String taskDefinitionKey) {
+    return runWithoutAuthorization(() -> taskService.createTaskQuery()
+        .processInstanceId(processInstanceId)
+        .taskDefinitionKey(taskDefinitionKey)
+        .count());
   }
 
 }

@@ -93,9 +93,6 @@ for POM_FILE in "${POM_FILES[@]}"; do
   sed -i "s/$CURRENT_VERSION/$NEW_VERSION/g" $POM_FILE
 done
 
-echo "🔄 Updating version in jreleaser.yml"
-sed -i '' -E "s/previousTagName: v.+/previousTagName: v$CURRENT_VERSION_WITHOUT_SNAPSHOT/" jreleaser.yml
-
 echo "🔄 Updating version in .github/jreleaser/changelog.tpl"
 if [[ $NEW_VERSION_WITHOUT_SNAPSHOT =~ ^([0-9]+)\.([0-9]+)\. ]]; then
   MAJOR="${BASH_REMATCH[1]}"

@@ -77,7 +77,7 @@ See `references/announce.md`. **Only after PERFORM verified the release is live.
 2. **Slack** `general` — compact `@channel` post with highlights + release-notes link. Draft → confirm → post.
 3. **Forum** (forum.operaton.org, "Announcement" category) — fuller markdown version. Draft → confirm → post.
 4. **Branch cleanup** — `.devenv/scripts/release/list-merged-branches.sh "<MILESTONE>"` lists merged branches with links. **List only — you MUST NOT delete any branch.** Hand the list to the user.
-5. **Housekeeping** — `jreleaser` `previousTagName` / `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
+5. **Housekeeping** — `changelog.tpl`, close milestone + open next, calendar, docs/download verification, optional wider social.
 
 ## Output
 

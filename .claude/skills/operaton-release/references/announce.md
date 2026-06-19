@@ -56,7 +56,7 @@ Output: list of merged branches with their GitHub URLs. The human reviews and de
 
 After announcements are out:
 
-- **`changelog.tpl`** — reset `previousTagName` in `.github/jreleaser/jreleaser.yml` to the tag just released; update `changelog.tpl` URL if the minor version changed.
+- **`changelog.tpl`** update `changelog.tpl` URL if the minor version changed.
 - **Close milestone** — `gh api repos/operaton/operaton/milestones/<N> -X PATCH -f state=closed`
 - **Open next milestone** — verify the next milestone exists (e.g. 2.1.3) with a due date matching the calendar (`references/calendar.md`).
 - **Calendar** — mark the released version as done in `references/calendar.md`.

@@ -151,6 +151,7 @@ release: # https://jreleaser.org/guide/latest/reference/release/github.html
           - 'GitHub'
           - 'ageduldig'
           - 'Copilot'
+          - 'Claude Sonnet 4.6'
         categories:
           - 'merge'
           - 'wip'

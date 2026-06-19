@@ -31,9 +31,12 @@ The released version = the branch's pom version minus `-SNAPSHOT` (+ qualifier).
 
 ## Verification (after real run)
 - [ ] GitHub Release created with the tag (`gh release view vX.Y.Z --repo operaton/operaton`). For `-Mx`/`-RCx`, it should be a prerelease.
+- [ ] Update the release notes: Deduplicate contributor, remove bots & LLM users. Update also the RELEASE.md artifact.
 - [ ] Artifacts on **Maven Central** (e.g. check `https://repo1.maven.org/maven2/org/operaton/bpm/operaton-engine/X.Y.Z/`).
-- [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it); confirm `latest` / version tags appear on Docker Hub.
 - [ ] Next development version `-SNAPSHOT` committed back to `BRANCH` (`[releng] Bump version ...`).
+- [ ] **Docker** build dispatched to `operaton/operaton-docker` (the workflow notifies it)
+- [ ] Watch the Docker build
+- [ ] Confirm `latest` / version tags appear on Docker Hub.
 - [ ] Snapshot pre-release tags cleaned up.
 
 ## Report

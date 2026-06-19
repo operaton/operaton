@@ -12,7 +12,7 @@ Three actions over the Operaton release process, sharing one knowledge base.
 | **PREPARE** | "prepare release X.Y.Z", "prepare the upcoming releases" | Pre-flight checks → fixes via PRs → **go/no-go confidence vote** | **NEVER** |
 | **PERFORM** | "perform release X.Y.Z", "perform release X.Y.Z-Mx" | Dispatches `release.yml` (dry-run first), then verifies | Yes (gated) |
 | **ANNOUNCE** | "announce release X.Y.Z", "announce the release(s)" | Post-release: website + blog PR, Slack, forum, branch-cleanup list, housekeeping | No (outward-facing; gated by confirmation) |
-
+move
 ## The Iron Guardrail
 
 **PREPARE must NEVER trigger a release.** It must not run `gh workflow run release.yml`, `mvnw ... deploy`, `jreleaser`, push tags, or anything that publishes. PREPARE only reads state and raises PRs for documentation/label/config fixes. If you catch yourself about to dispatch the release workflow during a "prepare" request — STOP. The user must explicitly say "perform".

@@ -32,7 +32,7 @@
     <!-- Set to true for each module with packaging default/jar that does not have 'main' sources -->
     <install.skip>false</install.skip>
   </properties>
-  <version>2.1.2-SNAPSHOT</version>
+  <version>2.1.2</version>
   <inceptionYear>2024</inceptionYear>
   <build>
     <defaultGoal>verify</defaultGoal>

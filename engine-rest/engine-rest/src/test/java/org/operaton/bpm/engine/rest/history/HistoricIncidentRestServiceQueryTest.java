@@ -388,6 +388,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
     Date returnedRemovalTime = DateTimeUtil.parseDate(from(content).getString("[0].removalTime"));
     String returnedRootProcessInstanceId = from(content).getString("[0].rootProcessInstanceId");
     String returnedAnnotation = from(content).getString("[0].annotation");
+    String returnedRootCauseIncidentMessage = from(content).getString("[0].rootCauseIncidentMessage");
 
     assertThat(returnedId).isEqualTo(MockProvider.EXAMPLE_HIST_INCIDENT_ID);
     assertThat(returnedProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HIST_INCIDENT_PROC_INST_ID);
@@ -411,6 +412,7 @@ public class HistoricIncidentRestServiceQueryTest extends AbstractRestServiceTes
     assertThat(returnedRemovalTime).isEqualTo(DateTimeUtil.parseDate(MockProvider.EXAMPLE_HIST_INCIDENT_REMOVAL_TIME));
     assertThat(returnedRootProcessInstanceId).isEqualTo(MockProvider.EXAMPLE_HIST_INCIDENT_ROOT_PROC_INST_ID);
     assertThat(returnedAnnotation).isEqualTo(MockProvider.EXAMPLE_USER_OPERATION_ANNOTATION);
+    assertThat(returnedRootCauseIncidentMessage).isEqualTo(MockProvider.EXAMPLE_HIST_ROOT_CAUSE_INCIDENT_MESSAGE);
 
   }
 

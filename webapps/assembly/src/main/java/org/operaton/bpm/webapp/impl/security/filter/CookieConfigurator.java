@@ -31,6 +31,7 @@ public class CookieConfigurator {
   protected static final String ENABLE_SAME_SITE_PARAM = "enableSameSiteCookie";
   protected static final String SAME_SITE_OPTION_PARAM = "sameSiteCookieOption";
   protected static final String SAME_SITE_VALUE_PARAM = "sameSiteCookieValue";
+  protected static final String COOKIE_NAME_PARAM = "cookieName";
 
   protected boolean isSecureCookieEnabled;
   protected boolean isSameSiteCookieEnabled;

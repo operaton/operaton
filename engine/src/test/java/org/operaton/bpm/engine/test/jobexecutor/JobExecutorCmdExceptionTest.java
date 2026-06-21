@@ -30,10 +30,12 @@ import org.operaton.bpm.engine.history.HistoricJobLog;
 import org.operaton.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.operaton.bpm.engine.impl.cmd.DeleteJobCmd;
 import org.operaton.bpm.engine.impl.db.DbEntity;
+import org.operaton.bpm.engine.impl.persistence.entity.JobEntity;
 import org.operaton.bpm.engine.impl.persistence.entity.MessageEntity;
 import org.operaton.bpm.engine.runtime.Job;
 import org.operaton.bpm.engine.runtime.JobQuery;
 import org.operaton.bpm.engine.test.Deployment;
+import org.operaton.bpm.engine.test.api.mgmt.AlwaysFailingDelegate;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineExtension;
 import org.operaton.bpm.engine.test.junit5.ProcessEngineTestExtension;
 import org.operaton.bpm.model.bpmn.Bpmn;
@@ -208,6 +210,34 @@ class JobExecutorCmdExceptionTest {
 
     String stacktrace = managementService.getJobExceptionStacktrace(job.getId());
     assertThat(stacktrace).isNotNull().contains("java.lang.RuntimeException: exception in transaction listener");
+  }
+
+  @Test
+  void shouldNotPersistTransientExceptionAfterJobFailure() {
+    testRule.deploy(Bpmn.createExecutableProcess("testProcess")
+      .operatonHistoryTimeToLive(180)
+      .startEvent()
+      .serviceTask("theServiceTask")
+      .operatonAsyncBefore()
+      .operatonClass(AlwaysFailingDelegate.class)
+      .operatonFailedJobRetryTimeCycle("R0/PT30S")
+      .endEvent()
+      .done());
+
+    runtimeService.startProcessInstanceByKey("testProcess");
+    Job job = managementService.createJobQuery().singleResult();
+    assertThat(job).isNotNull();
+    assertThat(job.getExceptionMessage()).isNull();
+    assertThat(((JobEntity) job).getException()).isNull();
+
+    var jobId = job.getId();
+
+    assertThatCode(() -> managementService.executeJob(jobId)).isInstanceOf(RuntimeException.class);
+
+    job = managementService.createJobQuery().singleResult();
+    assertThat(job).isNotNull();
+    assertThat(job.getExceptionMessage()).isEqualTo(AlwaysFailingDelegate.MESSAGE);
+    assertThat(((JobEntity) job).getException()).isNull();
   }
 
   protected void createJob(final String handlerType) {

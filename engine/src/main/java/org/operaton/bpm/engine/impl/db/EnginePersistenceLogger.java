@@ -807,6 +807,16 @@ public class EnginePersistenceLogger extends ProcessEngineLogger {
     );
   }
 
+  public void logFormKeyExpressionEvaluationException(String taskId, String expression, Exception cause) {
+    logWarn(
+      "111",
+      "Failed to evaluate form key expression '{}' for task '{}'. The form key will be set to null. Cause: {}",
+      expression,
+      taskId,
+      cause.getMessage()
+    );
+  }
+
   // exception code 110 is already taken. See requiredOperatonAdminOrPermissionException() for details.
 
   public static List<SQLException> findRelatedSqlExceptions(Throwable exception) {

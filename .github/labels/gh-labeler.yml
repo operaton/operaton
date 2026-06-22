@@ -24,7 +24,6 @@ documentation:
 scope:build:
 - changed-files:
   - any-glob-to-any-file:
-    - '**/pom.xml'
     - '.mvn/**'
     - 'mvnw'
     - 'mvnw.cmd'

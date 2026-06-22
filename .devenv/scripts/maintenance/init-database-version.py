@@ -105,7 +105,7 @@ def get_schema_id_from_upgrade_file(path, current_version):
         return None
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
-            m = re.search(r"values \('(\d+)', CURRENT_TIMESTAMP, '"+re.escape(current_version)+"'\);", line)
+            m = re.search(r"values \('(\d+)', CURRENT_TIMESTAMP, '"+re.escape(current_version)+r"'\);", line)
             if m:
                 return int(m.group(1))
     return None
@@ -173,8 +173,9 @@ def update_liquibase_changelog(cur_vwp, new_vwp, new_version):
         f.writelines(lines)
 
 def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
-    src = f"qa/test-db-instance-migration/test-fixture-{cur_vwpwd}"
-    dst = f"qa/test-db-instance-migration/test-fixture-{new_vwpwd}"
+    base = "qa/test-db-instance-migration"
+    src = f"{base}/test-fixture-{cur_vwpwd}"
+    dst = f"{base}/test-fixture-{new_vwpwd}"
     if not os.path.isdir(src):
         print(f"Warning: Source test fixture directory not found: {src}")
         return
@@ -182,6 +183,8 @@ def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
         print(f"Warning: Target test fixture directory already exists: {dst}")
         return
     shutil.copytree(src, dst)
+
+    # update ENGINE_VERSION in TestFixture.java
     tf_java = os.path.join(dst, "src/main/java/org/operaton/bpm/qa/upgrade/TestFixture.java")
     if os.path.isfile(tf_java):
         with open(tf_java, "r", encoding="utf-8") as f:
@@ -195,7 +198,47 @@ def create_test_fixture(cur_vwpwd, new_vwpwd, current_version, new_version):
             f.write(content)
     else:
         print(f"Warning: TestFixture.java not found in {dst}")
-    print(f"Warning: Do not forget to add the new files at: {dst}")
+
+    # update the copied module pom: artifactId and the version in <name>
+    fixture_pom = os.path.join(dst, "pom.xml")
+    if os.path.isfile(fixture_pom):
+        with open(fixture_pom, "r", encoding="utf-8") as f:
+            content = f.read()
+        content = content.replace(
+            f"operaton-qa-upgrade-test-fixture-{cur_vwpwd}",
+            f"operaton-qa-upgrade-test-fixture-{new_vwpwd}"
+        )
+        content = re.sub(
+            rf"(<name>[^<]*){re.escape(current_version)}",
+            rf"\g<1>{new_version}",
+            content
+        )
+        with open(fixture_pom, "w", encoding="utf-8") as f:
+            f.write(content)
+    else:
+        print(f"Warning: pom.xml not found in {dst}")
+
+    register_fixture_module(base, cur_vwpwd, new_vwpwd)
+
+    print(f"Created test fixture at: {dst} (remember to 'git add' the new files)")
+
+def register_fixture_module(base, cur_vwpwd, new_vwpwd):
+    parent_pom = f"{base}/pom.xml"
+    if not os.path.isfile(parent_pom):
+        print(f"Warning: {parent_pom} not found; register test-fixture-{new_vwpwd} module manually")
+        return
+    with open(parent_pom, "r", encoding="utf-8") as f:
+        content = f.read()
+    new_mod = f"<module>test-fixture-{new_vwpwd}</module>"
+    if new_mod in content:
+        return
+    cur_mod = f"<module>test-fixture-{cur_vwpwd}</module>"
+    if cur_mod in content:
+        content = content.replace(cur_mod, f"{cur_mod}\n    {new_mod}", 1)
+        with open(parent_pom, "w", encoding="utf-8") as f:
+            f.write(content)
+    else:
+        print(f"Warning: could not find {cur_mod} in {parent_pom}; add {new_mod} manually")
 
 def update_old_engine_pom(current_version, previous_version):
     pom = "qa/test-old-engine/pom.xml"
